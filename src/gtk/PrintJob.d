@@ -55,6 +55,7 @@
  * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PrintJob;
@@ -102,7 +103,7 @@ public class PrintJob : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPrintJob;
 	}
@@ -169,7 +170,7 @@ public class PrintJob : ObjectG
 	 * settings =  a GtkPrintSettings
 	 * pageSetup =  a GtkPageSetup
 	 */
-	public this (char[] title, Printer printer, PrintSettings settings, PageSetup pageSetup)
+	public this (string title, Printer printer, PrintSettings settings, PageSetup pageSetup)
 	{
 		// GtkPrintJob* gtk_print_job_new (const gchar *title,  GtkPrinter *printer,  GtkPrintSettings *settings,  GtkPageSetup *page_setup);
 		auto p = gtk_print_job_new(Str.toStringz(title), (printer is null) ? null : printer.getPrinterStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct());
@@ -221,10 +222,10 @@ public class PrintJob : ObjectG
 	 * Since 2.10
 	 * Returns: the title of job
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_print_job_get_title (GtkPrintJob *job);
-		return Str.toString(gtk_print_job_get_title(gtkPrintJob)).dup;
+		return Str.toString(gtk_print_job_get_title(gtkPrintJob));
 	}
 	
 	/**
@@ -250,7 +251,7 @@ public class PrintJob : ObjectG
 	 * error =  return location for errors
 	 * Returns: FALSE if an error occurred
 	 */
-	public int setSourceFile(char[] filename, GError** error)
+	public int setSourceFile(string filename, GError** error)
 	{
 		// gboolean gtk_print_job_set_source_file (GtkPrintJob *job,  const gchar *filename,  GError **error);
 		return gtk_print_job_set_source_file(gtkPrintJob, Str.toStringz(filename), error);

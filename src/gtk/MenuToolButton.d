@@ -57,6 +57,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.MenuToolButton;
@@ -101,7 +102,7 @@ public class MenuToolButton : ToolButton
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkMenuToolButton;
 	}
@@ -129,7 +130,7 @@ public class MenuToolButton : ToolButton
 	 *  iconWidget = a widget that will be used as icon widget, or NULL
 	 *  label = a string that will be used as label, or NULL
 	 */
-	public this(Widget iconWidget, char[] label)
+	public this(Widget iconWidget, string label)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
 		this( cast(GtkMenuToolButton*)gtk_menu_tool_button_new(
@@ -182,7 +183,7 @@ public class MenuToolButton : ToolButton
 	 *    	tipText =
 	 *    	tipPrivate =
 	 */
-	public void setArrowTooltip(char[] tipText, char[] tipPrivate)
+	public void setArrowTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tooltips = new Tooltips();
 		gtk_menu_tool_button_set_arrow_tooltip(
@@ -263,7 +264,7 @@ public class MenuToolButton : ToolButton
 	 * tipText =  text to be used as tooltip text for tool_item
 	 * tipPrivate =  text to be used as private tooltip text
 	 */
-	public void setArrowTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
+	public void setArrowTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip  (GtkMenuToolButton *button,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
 		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
@@ -277,7 +278,7 @@ public class MenuToolButton : ToolButton
 	 * Params:
 	 * text =  text to be used as tooltip text for button's arrow button
 	 */
-	public void setArrowTooltipText(char[] text)
+	public void setArrowTooltipText(string text)
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip_text  (GtkMenuToolButton *button,  const gchar *text);
 		gtk_menu_tool_button_set_arrow_tooltip_text(gtkMenuToolButton, Str.toStringz(text));
@@ -291,7 +292,7 @@ public class MenuToolButton : ToolButton
 	 * Params:
 	 * markup =  markup text to be used as tooltip text for button's arrow button
 	 */
-	public void setArrowTooltipMarkup(char[] markup)
+	public void setArrowTooltipMarkup(string markup)
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip_markup  (GtkMenuToolButton *button,  const gchar *markup);
 		gtk_menu_tool_button_set_arrow_tooltip_markup(gtkMenuToolButton, Str.toStringz(markup));

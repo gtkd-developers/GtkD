@@ -50,6 +50,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdkpixbuf.PixbufFormat;
@@ -162,7 +163,7 @@ public class PixbufFormat
 	 * value =  a nul-terminated string.
 	 * Returns: TRUE on success.
 	 */
-	public static int gdkPixbufSetOption(Pixbuf pixbuf, char[] key, char[] value)
+	public static int gdkPixbufSetOption(Pixbuf pixbuf, string key, string value)
 	{
 		// gboolean gdk_pixbuf_set_option (GdkPixbuf *pixbuf,  const gchar *key,  const gchar *value);
 		return gdk_pixbuf_set_option((pixbuf is null) ? null : pixbuf.getPixbufStruct(), Str.toStringz(key), Str.toStringz(value));
@@ -191,10 +192,10 @@ public class PixbufFormat
 	 * Since 2.2
 	 * Returns: the name of the format.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// gchar* gdk_pixbuf_format_get_name (GdkPixbufFormat *format);
-		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat)).dup;
+		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat));
 	}
 	
 	/**
@@ -202,10 +203,10 @@ public class PixbufFormat
 	 * Since 2.2
 	 * Returns: a description of the format.
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// gchar* gdk_pixbuf_format_get_description (GdkPixbufFormat *format);
-		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat)).dup;
+		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat));
 	}
 	
 	/**
@@ -291,10 +292,10 @@ public class PixbufFormat
 	 * Since 2.6
 	 * Returns: a string describing the license of format.
 	 */
-	public char[] getLicense()
+	public string getLicense()
 	{
 		// gchar* gdk_pixbuf_format_get_license (GdkPixbufFormat *format);
-		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat)).dup;
+		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat));
 	}
 	
 	/**
@@ -306,7 +307,7 @@ public class PixbufFormat
 	 * height =  Return location for the height of the image, or NULL
 	 * Returns: A GdkPixbufFormat describing the image format of the file  or NULL if the image format wasn't recognized. The return value  is owned by GdkPixbuf and should not be freed.
 	 */
-	public static GdkPixbufFormat* getFileInfo(char[] filename, int* width, int* height)
+	public static GdkPixbufFormat* getFileInfo(string filename, int* width, int* height)
 	{
 		// GdkPixbufFormat* gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
 		return gdk_pixbuf_get_file_info(Str.toStringz(filename), width, height);

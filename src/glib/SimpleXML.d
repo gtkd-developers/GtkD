@@ -49,6 +49,7 @@
  * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.SimpleXML;
@@ -140,10 +141,10 @@ public class SimpleXML
 	 * length =  length of text in bytes, or -1 if the text is nul-terminated
 	 * Returns: a newly allocated string with the escaped text
 	 */
-	public static char[] escapeText(char[] text, int length)
+	public static string escapeText(string text, int length)
 	{
 		// gchar* g_markup_escape_text (const gchar *text,  gssize length);
-		return Str.toString(g_markup_escape_text(Str.toStringz(text), length)).dup;
+		return Str.toString(g_markup_escape_text(Str.toStringz(text), length));
 	}
 	
 	/**
@@ -167,10 +168,10 @@ public class SimpleXML
 	 * ... =  the arguments to insert in the format string
 	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
-	public static char[] printfEscaped(char[] format, ... )
+	public static string printfEscaped(string format, ... )
 	{
 		// gchar* g_markup_printf_escaped (const char *format,  ...);
-		return Str.toString(g_markup_printf_escaped(Str.toStringz(format))).dup;
+		return Str.toString(g_markup_printf_escaped(Str.toStringz(format)));
 	}
 	
 	/**
@@ -183,10 +184,10 @@ public class SimpleXML
 	 * args =  variable argument list, similar to vprintf()
 	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
-	public static char[] vprintfEscaped(char[] format, void* args)
+	public static string vprintfEscaped(string format, void* args)
 	{
 		// gchar* g_markup_vprintf_escaped (const char *format,  va_list args);
-		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args)).dup;
+		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args));
 	}
 	
 	/**
@@ -237,10 +238,10 @@ public class SimpleXML
 	 * Since 2.2
 	 * Returns: the name of the currently open element, or NULL
 	 */
-	public char[] getElement()
+	public string getElement()
 	{
 		// const gchar* g_markup_parse_context_get_element (GMarkupParseContext *context);
-		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext)).dup;
+		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext));
 	}
 	
 	/**
@@ -308,7 +309,7 @@ public class SimpleXML
 	 * error =  return location for a GError
 	 * Returns: FALSE if an error occurred, TRUE on success
 	 */
-	public int parse(char[] text, int textLen, GError** error)
+	public int parse(string text, int textLen, GError** error)
 	{
 		// gboolean g_markup_parse_context_parse (GMarkupParseContext *context,  const gchar *text,  gssize text_len,  GError **error);
 		return g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, error);
@@ -363,7 +364,7 @@ public class SimpleXML
 	 *  with G_MARKUP_COLLECT_INVALID.
 	 * Returns: TRUE if successful
 	 */
-	public static int collectAttributes(char[] elementName, char** attributeNames, char** attributeValues, GError** error, GMarkupCollectType firstType, char[] firstAttr, ... )
+	public static int collectAttributes(string elementName, char** attributeNames, char** attributeValues, GError** error, GMarkupCollectType firstType, string firstAttr, ... )
 	{
 		// gboolean g_markup_collect_attributes (const gchar *element_name,  const gchar **attribute_names,  const gchar **attribute_values,  GError **error,  GMarkupCollectType first_type,  const gchar *first_attr,  ...);
 		return g_markup_collect_attributes(Str.toStringz(elementName), attributeNames, attributeValues, error, firstType, Str.toStringz(firstAttr));

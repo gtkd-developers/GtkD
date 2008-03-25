@@ -49,6 +49,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellRendererAccel;
@@ -88,7 +89,7 @@ public class CellRendererAccel : CellRendererText
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellRendererAccel;
 	}
@@ -112,12 +113,12 @@ public class CellRendererAccel : CellRendererText
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(char[], CellRendererAccel)[] onAccelClearedListeners;
+	void delegate(string, CellRendererAccel)[] onAccelClearedListeners;
 	/**
 	 * Gets emitted when the user has removed the accelerator.
 	 * Since 2.10
 	 */
-	void addOnAccelCleared(void delegate(char[], CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAccelCleared(void delegate(string, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-cleared" in connectedSignals) )
 		{
@@ -136,7 +137,7 @@ public class CellRendererAccel : CellRendererText
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], CellRendererAccel) dlg ; cellRendererAccel.onAccelClearedListeners )
+		foreach ( void delegate(string, CellRendererAccel) dlg ; cellRendererAccel.onAccelClearedListeners )
 		{
 			dlg(Str.toString(pathString), cellRendererAccel);
 		}
@@ -144,12 +145,12 @@ public class CellRendererAccel : CellRendererText
 		return consumed;
 	}
 	
-	void delegate(char[], guint, GdkModifierType, guint, CellRendererAccel)[] onAccelEditedListeners;
+	void delegate(string, guint, GdkModifierType, guint, CellRendererAccel)[] onAccelEditedListeners;
 	/**
 	 * Gets emitted when the user has selected a new accelerator.
 	 * Since 2.10
 	 */
-	void addOnAccelEdited(void delegate(char[], guint, GdkModifierType, guint, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAccelEdited(void delegate(string, guint, GdkModifierType, guint, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-edited" in connectedSignals) )
 		{
@@ -168,7 +169,7 @@ public class CellRendererAccel : CellRendererText
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], guint, GdkModifierType, guint, CellRendererAccel) dlg ; cellRendererAccel.onAccelEditedListeners )
+		foreach ( void delegate(string, guint, GdkModifierType, guint, CellRendererAccel) dlg ; cellRendererAccel.onAccelEditedListeners )
 		{
 			dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, cellRendererAccel);
 		}

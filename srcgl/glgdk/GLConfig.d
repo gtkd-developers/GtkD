@@ -53,6 +53,7 @@
  * 	- GdkVisual* -> Visual
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glgdk.GLConfig;
@@ -94,7 +95,7 @@ public class GLConfig : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkGLConfig;
 	}

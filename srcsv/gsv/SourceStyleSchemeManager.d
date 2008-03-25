@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceStyleSchemeManager;
@@ -78,7 +79,7 @@ public class SourceStyleSchemeManager : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceStyleSchemeManager;
 	}
@@ -148,7 +149,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Params:
 	 * path =  a directory or a filename.
 	 */
-	public void appendSearchPath(char[] path)
+	public void appendSearchPath(string path)
 	{
 		// void gtk_source_style_scheme_manager_append_search_path  (GtkSourceStyleSchemeManager *manager,  const gchar *path);
 		gtk_source_style_scheme_manager_append_search_path(gtkSourceStyleSchemeManager, Str.toStringz(path));
@@ -161,7 +162,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Params:
 	 * path =  a directory or a filename.
 	 */
-	public void prependSearchPath(char[] path)
+	public void prependSearchPath(string path)
 	{
 		// void gtk_source_style_scheme_manager_prepend_search_path  (GtkSourceStyleSchemeManager *manager,  const gchar *path);
 		gtk_source_style_scheme_manager_prepend_search_path(gtkSourceStyleSchemeManager, Str.toStringz(path));
@@ -194,7 +195,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * schemeId =  style scheme id to find
 	 * Returns: a GtkSourceStyleScheme object. Returned value is owned bymanager and must not be unref'ed.
 	 */
-	public GtkSourceStyleScheme* getScheme(char[] schemeId)
+	public GtkSourceStyleScheme* getScheme(string schemeId)
 	{
 		// GtkSourceStyleScheme* gtk_source_style_scheme_manager_get_scheme  (GtkSourceStyleSchemeManager *manager,  const gchar *scheme_id);
 		return gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));

@@ -58,6 +58,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RcStyle;
@@ -491,7 +492,7 @@ public class RcStyle : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRcStyle;
 	}
@@ -568,7 +569,7 @@ public class RcStyle : ObjectG
 	 *  when matching against class styles, or G_TYPE_NONE
 	 * Returns: A style created by matching with the supplied paths, or NULL if nothing matching was specified and the default style should be used. The returned value is owned by GTK+ as part of an internal cache, so you must call g_object_ref() on the returned value if you want to keep a reference to it.
 	 */
-	public static Style getStyleByPaths(Settings settings, char[] widgetPath, char[] classPath, GType type)
+	public static Style getStyleByPaths(Settings settings, string widgetPath, string classPath, GType type)
 	{
 		// GtkStyle* gtk_rc_get_style_by_paths (GtkSettings *settings,  const char *widget_path,  const char *class_path,  GType type);
 		auto p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
@@ -587,7 +588,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * pattern = the pattern
 	 */
-	public void addWidgetNameStyle(char[] pattern)
+	public void addWidgetNameStyle(string pattern)
 	{
 		// void gtk_rc_add_widget_name_style (GtkRcStyle *rc_style,  const gchar *pattern);
 		gtk_rc_add_widget_name_style(gtkRcStyle, Str.toStringz(pattern));
@@ -600,7 +601,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * pattern = the pattern
 	 */
-	public void addWidgetClassStyle(char[] pattern)
+	public void addWidgetClassStyle(string pattern)
 	{
 		// void gtk_rc_add_widget_class_style (GtkRcStyle *rc_style,  const gchar *pattern);
 		gtk_rc_add_widget_class_style(gtkRcStyle, Str.toStringz(pattern));
@@ -613,7 +614,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * pattern = the pattern
 	 */
-	public void addClassStyle(char[] pattern)
+	public void addClassStyle(string pattern)
 	{
 		// void gtk_rc_add_class_style (GtkRcStyle *rc_style,  const gchar *pattern);
 		gtk_rc_add_class_style(gtkRcStyle, Str.toStringz(pattern));
@@ -625,7 +626,7 @@ public class RcStyle : ObjectG
 	 * filename = the filename of a file to parse. If filename is not absolute, it
 	 *  is searched in the current directory.
 	 */
-	public static void parse(char[] filename)
+	public static void parse(string filename)
 	{
 		// void gtk_rc_parse (const gchar *filename);
 		gtk_rc_parse(Str.toStringz(filename));
@@ -636,7 +637,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * rcString = a string to parse.
 	 */
-	public static void parseString(char[] rcString)
+	public static void parseString(string rcString)
 	{
 		// void gtk_rc_parse_string (const gchar *rc_string);
 		gtk_rc_parse_string(Str.toStringz(rcString));
@@ -697,7 +698,7 @@ public class RcStyle : ObjectG
 	 * filename =  the pathname to the file. If filename is not absolute, it
 	 *  is searched in the current directory.
 	 */
-	public static void addDefaultFile(char[] filename)
+	public static void addDefaultFile(string filename)
 	{
 		// void gtk_rc_add_default_file (const gchar *filename);
 		gtk_rc_add_default_file(Str.toStringz(filename));
@@ -796,10 +797,10 @@ public class RcStyle : ObjectG
 	 * moduleFile =  name of a theme engine
 	 * Returns: The filename, if found (must be freed with g_free()), otherwise NULL.
 	 */
-	public static char[] findModuleInPath(char[] moduleFile)
+	public static string findModuleInPath(string moduleFile)
 	{
 		// gchar* gtk_rc_find_module_in_path (const gchar *module_file);
-		return Str.toString(gtk_rc_find_module_in_path(Str.toStringz(moduleFile))).dup;
+		return Str.toString(gtk_rc_find_module_in_path(Str.toStringz(moduleFile)));
 	}
 	
 	/**
@@ -813,10 +814,10 @@ public class RcStyle : ObjectG
 	 * pixmapFile =  name of the pixmap file to locate.
 	 * Returns: the filename.
 	 */
-	public static char[] findPixmapInPath(Settings settings, ScannerG scanner, char[] pixmapFile)
+	public static string findPixmapInPath(Settings settings, ScannerG scanner, string pixmapFile)
 	{
 		// gchar* gtk_rc_find_pixmap_in_path (GtkSettings *settings,  GScanner *scanner,  const gchar *pixmap_file);
-		return Str.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), (scanner is null) ? null : scanner.getScannerGStruct(), Str.toStringz(pixmapFile))).dup;
+		return Str.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), (scanner is null) ? null : scanner.getScannerGStruct(), Str.toStringz(pixmapFile)));
 	}
 	
 	/**
@@ -826,10 +827,10 @@ public class RcStyle : ObjectG
 	 * Running GTK+ Applications(3).
 	 * Returns: the directory. (Must be freed with g_free())
 	 */
-	public static char[] getModuleDir()
+	public static string getModuleDir()
 	{
 		// gchar* gtk_rc_get_module_dir (void);
-		return Str.toString(gtk_rc_get_module_dir()).dup;
+		return Str.toString(gtk_rc_get_module_dir());
 	}
 	
 	/**
@@ -840,10 +841,10 @@ public class RcStyle : ObjectG
 	 * not be used by applications under normal circumstances.
 	 * Returns: a newly-allocated string containing the path in which to  look for IM modules.
 	 */
-	public static char[] getImModulePath()
+	public static string getImModulePath()
 	{
 		// gchar* gtk_rc_get_im_module_path (void);
-		return Str.toString(gtk_rc_get_im_module_path()).dup;
+		return Str.toString(gtk_rc_get_im_module_path());
 	}
 	
 	/**
@@ -852,10 +853,10 @@ public class RcStyle : ObjectG
 	 * environment variable for more details.
 	 * Returns: a newly-allocated string containing the name of the filelisting the IM modules available for loading
 	 */
-	public static char[] getImModuleFile()
+	public static string getImModuleFile()
 	{
 		// gchar* gtk_rc_get_im_module_file (void);
-		return Str.toString(gtk_rc_get_im_module_file()).dup;
+		return Str.toString(gtk_rc_get_im_module_file());
 	}
 	
 	/**
@@ -864,10 +865,10 @@ public class RcStyle : ObjectG
 	 * itself.)
 	 * Returns:The directory (must be freed with g_free()).
 	 */
-	public static char[] getThemeDir()
+	public static string getThemeDir()
 	{
 		// gchar* gtk_rc_get_theme_dir (void);
-		return Str.toString(gtk_rc_get_theme_dir()).dup;
+		return Str.toString(gtk_rc_get_theme_dir());
 	}
 	
 	/**

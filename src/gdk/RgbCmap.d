@@ -45,6 +45,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.RgbCmap;

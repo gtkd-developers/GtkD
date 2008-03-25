@@ -78,7 +78,7 @@ class TestImage : VBox
 	Table initTable()
 	{
 
-		char[][] pngs;
+		string[] pngs;
 		
 		pngs ~= "images/gtkD_bevel.png";
 		pngs ~= "images/gtkDlogo_a.png";
@@ -93,7 +93,7 @@ class TestImage : VBox
 		return loadTable(pngs);
 	}
 	
-	private Table loadTable(char[][] imageFiles)
+	private Table loadTable(string[] imageFiles)
 	{
 		//Table table = new Table(1,1,false);
 		if ( table  is  null )
@@ -121,7 +121,7 @@ class TestImage : VBox
 
 		for ( int i=0 ; i<imageFiles.length ;i++)
 		{
-			char[] fileName = imageFiles[i];
+			string fileName = imageFiles[i];
 			if ( fileName[0] != '/' )
 			{
 				version(linux) fileName = fileName;
@@ -151,7 +151,7 @@ private import glib.ListSG;
 	{
 		if ( fs  is  null )
 		{
-			char[][] a;
+			string[] a;
 			ResponseType[] r;
 			a ~= "Lets go!";
 			a ~= "Please don't";
@@ -163,7 +163,7 @@ private import glib.ListSG;
 		ResponseType response = cast(ResponseType) fs.run();
 		if ( response == ResponseType.GTK_RESPONSE_ACCEPT )
 		{
-			char[][] fileNames;
+			string[] fileNames;
 			ListSG list = fs.getFileChooser().getFilenames();
 			
 			
@@ -173,7 +173,7 @@ private import glib.ListSG;
 						Str.toString(cast(char*)list.nthData(i))).newline;
 				else writefln("Testmage.loadImages.File selected = %s", 
 						Str.toString(cast(char*)list.nthData(i)));
-				fileNames ~= Str.toString(cast(char*)list.nthData(i)).dup;
+				fileNames ~= Str.toString(cast(char*)list.nthData(i));
 			}
 			
 			loadTable(fileNames);

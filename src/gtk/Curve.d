@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Curve;
@@ -95,7 +96,7 @@ public class Curve : DrawingArea
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCurve;
 	}

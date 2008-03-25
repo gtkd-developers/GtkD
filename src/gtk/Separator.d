@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Separator;
@@ -79,7 +80,7 @@ public class Separator : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSeparator;
 	}

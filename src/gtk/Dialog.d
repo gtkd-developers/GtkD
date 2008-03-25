@@ -53,6 +53,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Dialog;
@@ -178,7 +179,7 @@ public class Dialog : Window
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkDialog;
 	}
@@ -205,7 +206,7 @@ public class Dialog : Window
 	}
 	
 	/** */
-	public void addButtons(char[][] buttonsText, ResponseType[] responses)
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
 	{
 		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
 		{
@@ -343,7 +344,7 @@ public class Dialog : Window
 	 * firstButtonText =  stock ID or text to go in first button, or NULL
 	 * ... =  response ID for first button, then additional buttons, ending with NULL
 	 */
-	public this (char[] title, Window parent, GtkDialogFlags flags, char[] firstButtonText, ... )
+	public this (string title, Window parent, GtkDialogFlags flags, string firstButtonText, ... )
 	{
 		// GtkWidget* gtk_dialog_new_with_buttons (const gchar *title,  GtkWindow *parent,  GtkDialogFlags flags,  const gchar *first_button_text,  ...);
 		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText));
@@ -408,7 +409,7 @@ public class Dialog : Window
 	 * responseId =  response ID for the button
 	 * Returns: the button widget that was added
 	 */
-	public Widget addButton(char[] buttonText, int responseId)
+	public Widget addButton(string buttonText, int responseId)
 	{
 		// GtkWidget* gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
@@ -429,7 +430,7 @@ public class Dialog : Window
 	 * firstButtonText =  button text or stock ID
 	 * ... =  response ID for first button, then more text-response_id pairs
 	 */
-	public void addButtons(char[] firstButtonText, ... )
+	public void addButtons(string firstButtonText, ... )
 	{
 		// void gtk_dialog_add_buttons (GtkDialog *dialog,  const gchar *first_button_text,  ...);
 		gtk_dialog_add_buttons(gtkDialog, Str.toStringz(firstButtonText));

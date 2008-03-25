@@ -53,6 +53,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ImageMenuItem;
@@ -90,7 +91,7 @@ public class ImageMenuItem : MenuItem
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkImageMenuItem;
 	}
@@ -120,7 +121,7 @@ public class ImageMenuItem : MenuItem
 	 * Returns:
 	 *  a new GtkImageMenuItem.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -197,7 +198,7 @@ public class ImageMenuItem : MenuItem
 	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
 	 *  or NULL.
 	 */
-	public this (char[] stockId, AccelGroup accelGroup)
+	public this (string stockId, AccelGroup accelGroup)
 	{
 		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
 		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());

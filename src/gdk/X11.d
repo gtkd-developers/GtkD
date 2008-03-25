@@ -96,6 +96,7 @@
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.X11;
@@ -259,7 +260,7 @@ public class X11
 	 * NULL key. (A NULL value for a key will cause that key to be
 	 * skipped in the output.)
 	 */
-	public static void displayBroadcastStartupMessage(Display display, char[] messageType, ... )
+	public static void displayBroadcastStartupMessage(Display display, string messageType, ... )
 	{
 		// void gdk_x11_display_broadcast_startup_message  (GdkDisplay *display,  const char *message_type,  ...);
 		gdk_x11_display_broadcast_startup_message((display is null) ? null : display.getDisplayStruct(), Str.toStringz(messageType));
@@ -272,10 +273,10 @@ public class X11
 	 * display =  a GdkDisplay
 	 * Returns: the startup notification ID for display
 	 */
-	public static char[] displayGetStartupNotificationId(Display display)
+	public static string displayGetStartupNotificationId(Display display)
 	{
 		// const gchar* gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
-		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct())).dup;
+		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct()));
 	}
 	
 	/**
@@ -301,10 +302,10 @@ public class X11
 	 * font =  a GdkFont.
 	 * Returns: the name of the font. This string is owned by GDK and must not be modified or freed.
 	 */
-	public static char[] fontGetName(GdkFont* font)
+	public static string fontGetName(GdkFont* font)
 	{
 		// const char* gdk_x11_font_get_name (GdkFont *font);
-		return Str.toString(gdk_x11_font_get_name(font)).dup;
+		return Str.toString(gdk_x11_font_get_name(font));
 	}
 	
 	/**

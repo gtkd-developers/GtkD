@@ -50,6 +50,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Layout;
@@ -95,7 +96,7 @@ public class Layout : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkLayout;
 	}

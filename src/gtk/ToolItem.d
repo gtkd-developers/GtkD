@@ -51,6 +51,9 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- setTooltipText
+ * 	- setTooltipMarkup
  */
 
 module gtk.ToolItem;
@@ -94,7 +97,7 @@ public class ToolItem : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkToolItem;
 	}
@@ -121,7 +124,7 @@ public class ToolItem : Bin
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
 	 */
-	void setTooltip(char[] tipText, char[] tipPrivate)
+	override void setTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
@@ -177,13 +180,13 @@ public class ToolItem : Bin
 		return consumed;
 	}
 	
-	gboolean delegate(Tooltips, char[], char[], ToolItem)[] onSetTooltipListeners;
+	gboolean delegate(Tooltips, string, string, ToolItem)[] onSetTooltipListeners;
 	/**
 	 * This signal is emitted when the toolitem's tooltip changes.
 	 * Application developers can use gtk_tool_item_set_tooltip() to
 	 * set the item's tooltip.
 	 */
-	void addOnSetTooltip(gboolean delegate(Tooltips, char[], char[], ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSetTooltip(gboolean delegate(Tooltips, string, string, ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-tooltip" in connectedSignals) )
 		{
@@ -202,7 +205,7 @@ public class ToolItem : Bin
 	{
 		bool consumed = false;
 		
-		foreach ( gboolean delegate(Tooltips, char[], char[], ToolItem) dlg ; toolItem.onSetTooltipListeners )
+		foreach ( gboolean delegate(Tooltips, string, string, ToolItem) dlg ; toolItem.onSetTooltipListeners )
 		{
 			dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem);
 		}
@@ -341,7 +344,7 @@ public class ToolItem : Bin
 	 * tipText =  text to be used as tooltip text for tool_item
 	 * tipPrivate =  text to be used as private tooltip text
 	 */
-	public void setTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
+	public void setTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{
 		// void gtk_tool_item_set_tooltip (GtkToolItem *tool_item,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
 		gtk_tool_item_set_tooltip(gtkToolItem, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
@@ -354,7 +357,7 @@ public class ToolItem : Bin
 	 * Params:
 	 * text =  text to be used as tooltip for tool_item
 	 */
-	public void setTooltipText(char[] text)
+	public override void setTooltipText(string text)
 	{
 		// void gtk_tool_item_set_tooltip_text (GtkToolItem *tool_item,  const gchar *text);
 		gtk_tool_item_set_tooltip_text(gtkToolItem, Str.toStringz(text));
@@ -367,7 +370,7 @@ public class ToolItem : Bin
 	 * Params:
 	 * markup =  markup text to be used as tooltip for tool_item
 	 */
-	public void setTooltipMarkup(char[] markup)
+	public override void setTooltipMarkup(string markup)
 	{
 		// void gtk_tool_item_set_tooltip_markup (GtkToolItem *tool_item,  const gchar *markup);
 		gtk_tool_item_set_tooltip_markup(gtkToolItem, Str.toStringz(markup));
@@ -565,7 +568,7 @@ public class ToolItem : Bin
 	 * menuItemId =  a string used to identify the menu item
 	 * Returns: The GtkMenuItem passed togtk_tool_item_set_proxy_menu_item(), if the menu_item_ids match.
 	 */
-	public Widget getProxyMenuItem(char[] menuItemId)
+	public Widget getProxyMenuItem(string menuItemId)
 	{
 		// GtkWidget* gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
 		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
@@ -586,7 +589,7 @@ public class ToolItem : Bin
 	 * menuItemId =  a string used to identify menu_item
 	 * menuItem =  a GtkMenuItem to be used in the overflow menu
 	 */
-	public void setProxyMenuItem(char[] menuItemId, Widget menuItem)
+	public void setProxyMenuItem(string menuItemId, Widget menuItem)
 	{
 		// void gtk_tool_item_set_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id,  GtkWidget *menu_item);
 		gtk_tool_item_set_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId), (menuItem is null) ? null : menuItem.getWidgetStruct());

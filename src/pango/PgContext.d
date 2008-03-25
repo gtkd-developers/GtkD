@@ -72,6 +72,7 @@
  * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgContext;
@@ -119,7 +120,7 @@ public class PgContext : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoContext;
 	}
@@ -150,7 +151,7 @@ public class PgContext : ObjectG
 	 * attrs =  an array to store character information in
 	 * attrsLen =  size of the array passed as attrs
 	 */
-	public static void pangoBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
+	public static void pangoBreak(string text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
 		// void pango_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
 		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
@@ -179,7 +180,7 @@ public class PgContext : ObjectG
 	 * cachedIter =  Cached attribute iterator, or NULL
 	 * Returns: a GList of PangoItem structures.
 	 */
-	public ListG itemize(char[] text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
+	public ListG itemize(string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
 		// GList* pango_itemize (PangoContext *context,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
 		auto p = pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
@@ -207,7 +208,7 @@ public class PgContext : ObjectG
 	 * cachedIter =  Cached attribute iterator, or NULL
 	 * Returns: a GList of PangoItem structures. The items should befreed using pango_item_free() probably in combination with g_list_foreach(),and the list itself using g_list_free().
 	 */
-	public ListG itemizeWithBaseDir(PangoDirection baseDir, char[] text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
+	public ListG itemizeWithBaseDir(PangoDirection baseDir, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
 		// GList* pango_itemize_with_base_dir (PangoContext *context,  PangoDirection base_dir,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
 		auto p = pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
@@ -609,7 +610,7 @@ public class PgContext : ObjectG
 	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
 	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
 	 */
-	public static PangoDirection findBaseDir(char[] text, int length)
+	public static PangoDirection findBaseDir(string text, int length)
 	{
 		// PangoDirection pango_find_base_dir (const gchar *text,  gint length);
 		return pango_find_base_dir(Str.toStringz(text), length);
@@ -631,7 +632,7 @@ public class PgContext : ObjectG
 	 * logAttrs =  array with one PangoLogAttr per character in text, plus one extra, to be filled in
 	 * attrsLen =  length of log_attrs array
 	 */
-	public static void getLogAttrs(char[] text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
+	public static void getLogAttrs(string text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
 	{
 		// void pango_get_log_attrs (const char *text,  int length,  int level,  PangoLanguage *language,  PangoLogAttr *log_attrs,  int attrs_len);
 		pango_get_log_attrs(Str.toStringz(text), length, level, (language is null) ? null : language.getPgLanguageStruct(), logAttrs, attrsLen);
@@ -653,7 +654,7 @@ public class PgContext : ObjectG
 	 * paragraphDelimiterIndex =  return location for index of delimiter
 	 * nextParagraphStart =  return location for start of next paragraph
 	 */
-	public static void findParagraphBoundary(char[] text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
+	public static void findParagraphBoundary(string text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
 	{
 		// void pango_find_paragraph_boundary (const gchar *text,  gint length,  gint *paragraph_delimiter_index,  gint *next_paragraph_start);
 		pango_find_paragraph_boundary(Str.toStringz(text), length, paragraphDelimiterIndex, nextParagraphStart);
@@ -674,7 +675,7 @@ public class PgContext : ObjectG
 	 * attrs =  logical attributes to fill in
 	 * attrsLen =  size of the array passed as attrs
 	 */
-	public static void defaultBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
+	public static void defaultBreak(string text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
 		// void pango_default_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
 		pango_default_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
@@ -691,7 +692,7 @@ public class PgContext : ObjectG
 	 * analysis =  PangoAnalysis structure from pango_itemize()
 	 * glyphs =  glyph string in which to store results
 	 */
-	public static void shape(char[] text, int length, PangoAnalysis* analysis, PgGlyphString glyphs)
+	public static void shape(string text, int length, PangoAnalysis* analysis, PgGlyphString glyphs)
 	{
 		// void pango_shape (const gchar *text,  gint length,  const PangoAnalysis *analysis,  PangoGlyphString *glyphs);
 		pango_shape(Str.toStringz(text), length, analysis, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());

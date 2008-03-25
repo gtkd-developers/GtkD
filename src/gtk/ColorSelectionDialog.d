@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ColorSelectionDialog;
@@ -87,7 +88,7 @@ public class ColorSelectionDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkColorSelectionDialog;
 	}
@@ -115,7 +116,7 @@ public class ColorSelectionDialog : Dialog
 	 * Params:
 	 * title = a string containing the title text for the dialog.
 	 */
-	public this (char[] title)
+	public this (string title)
 	{
 		// GtkWidget* gtk_color_selection_dialog_new (const gchar *title);
 		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));

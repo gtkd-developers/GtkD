@@ -47,6 +47,7 @@
  * 	- GChecksum* -> Checksum
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Checksum;
@@ -206,10 +207,10 @@ public class Checksum
 	 * Since 2.16
 	 * Returns: the hexadecimal representation of the checksum. The returned string is owned by the checksum and should not be modified or freed.
 	 */
-	public char[] getString()
+	public string getString()
 	{
 		// const gchar* g_checksum_get_string (GChecksum *checksum);
-		return Str.toString(g_checksum_get_string(gChecksum)).dup;
+		return Str.toString(g_checksum_get_string(gChecksum));
 	}
 	
 	/**
@@ -240,10 +241,10 @@ public class Checksum
 	 * length =  length of data
 	 * Returns: the digest of the binary data as a string in hexadecimal. The returned string should be freed with g_free() when done using it.
 	 */
-	public static char[] gComputeChecksumForData(GChecksumType checksumType, char* data, uint length)
+	public static string gComputeChecksumForData(GChecksumType checksumType, char* data, uint length)
 	{
 		// gchar* g_compute_checksum_for_data (GChecksumType checksum_type,  const guchar *data,  gsize length);
-		return Str.toString(g_compute_checksum_for_data(checksumType, data, length)).dup;
+		return Str.toString(g_compute_checksum_for_data(checksumType, data, length));
 	}
 	
 	/**
@@ -255,9 +256,9 @@ public class Checksum
 	 * length =  the length of the string, or -1 if the string is null-terminated.
 	 * Returns: the checksum as a hexadecimal string. The returned string should be freed with g_free() when done using it.
 	 */
-	public static char[] gComputeChecksumForString(GChecksumType checksumType, char[] str, int length)
+	public static string gComputeChecksumForString(GChecksumType checksumType, string str, int length)
 	{
 		// gchar* g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
-		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), length)).dup;
+		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), length));
 	}
 }

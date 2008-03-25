@@ -57,6 +57,7 @@
  * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgRenderer;
@@ -99,7 +100,7 @@ public class PgRenderer : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoRenderer;
 	}

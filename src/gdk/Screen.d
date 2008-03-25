@@ -66,6 +66,7 @@
  * 	- cairo_font_options_t* -> FontOption
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Screen;
@@ -78,7 +79,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-//private import cairo.FontOption;
+private import cairo.FontOption;
 private import gdk.Screen;
 private import gdk.Colormap;
 private import gdk.Visual;
@@ -118,7 +119,7 @@ public class Screen : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkScreen;
 	}
@@ -536,10 +537,10 @@ public class Screen : ObjectG
 	 * Since 2.2
 	 * Returns: a newly allocated string, free with g_free()
 	 */
-	public char[] makeDisplayName()
+	public string makeDisplayName()
 	{
 		// gchar* gdk_screen_make_display_name (GdkScreen *screen);
-		return Str.toString(gdk_screen_make_display_name(gdkScreen)).dup;
+		return Str.toString(gdk_screen_make_display_name(gdkScreen));
 	}
 	
 	/**
@@ -628,45 +629,45 @@ public class Screen : ObjectG
 	 * value =  location to store the value of the setting
 	 * Returns: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
 	 */
-	public int getSetting(char[] name, Value value)
+	public int getSetting(string name, Value value)
 	{
 		// gboolean gdk_screen_get_setting (GdkScreen *screen,  const gchar *name,  GValue *value);
 		return gdk_screen_get_setting(gdkScreen, Str.toStringz(name), (value is null) ? null : value.getValueStruct());
 	}
 	
-//	/**
-//	 * Gets any options previously set with gdk_screen_set_font_options().
-//	 * Since 2.10
-//	 * Returns: the current font options, or NULL if no default font options have been set.
-//	 */
-//	public FontOption getFontOptions()
-//	{
-//		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
-//		auto p = gdk_screen_get_font_options(gdkScreen);
-//		if(p is null)
-//		{
-//			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-//			else return null;
-//		}
-//		return new FontOption(cast(cairo_font_options_t*) p);
-//	}
-//	
-//	/**
-//	 * Sets the default font options for the screen. These
-//	 * options will be set on any PangoContext's newly created
-//	 * with gdk_pango_context_get_for_screen(). Changing the
-//	 * default set of font options does not affect contexts that
-//	 * have already been created.
-//	 * Since 2.10
-//	 * Params:
-//	 * options =  a cairo_font_options_t, or NULL to unset any
-//	 *  previously set default font options.
-//	 */
-//	public void setFontOptions(FontOption options)
-//	{
-//		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
-//		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
-//	}
+	/**
+	 * Gets any options previously set with gdk_screen_set_font_options().
+	 * Since 2.10
+	 * Returns: the current font options, or NULL if no default font options have been set.
+	 */
+	public FontOption getFontOptions()
+	{
+		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
+		auto p = gdk_screen_get_font_options(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontOption(cast(cairo_font_options_t*) p);
+	}
+	
+	/**
+	 * Sets the default font options for the screen. These
+	 * options will be set on any PangoContext's newly created
+	 * with gdk_pango_context_get_for_screen(). Changing the
+	 * default set of font options does not affect contexts that
+	 * have already been created.
+	 * Since 2.10
+	 * Params:
+	 * options =  a cairo_font_options_t, or NULL to unset any
+	 *  previously set default font options.
+	 */
+	public void setFontOptions(FontOption options)
+	{
+		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
+		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
+	}
 	
 	/**
 	 * Gets the resolution for font handling on the screen; see
@@ -768,7 +769,7 @@ public class Screen : ObjectG
 	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if error is set
 	 */
-	public int gdkSpawnOnScreen(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, GError** error)
+	public int gdkSpawnOnScreen(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, GError** error)
 	{
 		// gboolean gdk_spawn_on_screen (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  GError **error);
 		return gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
@@ -800,7 +801,7 @@ public class Screen : ObjectG
 	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if an error was set
 	 */
-	public int gdkSpawnOnScreenWithPipes(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, int* standardInput, int* standardOutput, int* standardError, GError** error)
+	public int gdkSpawnOnScreenWithPipes(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, int* standardInput, int* standardOutput, int* standardError, GError** error)
 	{
 		// gboolean gdk_spawn_on_screen_with_pipes (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  gint *standard_input,  gint *standard_output,  gint *standard_error,  GError **error);
 		return gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, error);
@@ -819,7 +820,7 @@ public class Screen : ObjectG
 	 * error =  return location for errors
 	 * Returns: TRUE on success, FALSE if error is set.
 	 */
-	public int gdkSpawnCommandLineOnScreen(char[] commandLine, GError** error)
+	public int gdkSpawnCommandLineOnScreen(string commandLine, GError** error)
 	{
 		// gboolean gdk_spawn_command_line_on_screen (GdkScreen *screen,  const gchar *command_line,  GError **error);
 		return gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), error);

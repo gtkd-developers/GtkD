@@ -49,6 +49,7 @@
  * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Date;
@@ -340,7 +341,7 @@ public class Date
 	 * Params:
 	 * str = string to parse
 	 */
-	public void setParse(char[] str)
+	public void setParse(string str)
 	{
 		// void g_date_set_parse (GDate *date,  const gchar *str);
 		g_date_set_parse(gDate, Str.toStringz(str));
@@ -676,7 +677,7 @@ public class Date
 	 * date = valid GDate
 	 * Returns:number of characters written to the buffer, or 0 the buffer was too small
 	 */
-	public static uint strftime(char[] s, uint slen, char[] format, Date date)
+	public static uint strftime(string s, uint slen, string format, Date date)
 	{
 		// gsize g_date_strftime (gchar *s,  gsize slen,  const gchar *format,  const GDate *date);
 		return g_date_strftime(Str.toStringz(s), slen, Str.toStringz(format), (date is null) ? null : date.getDateStruct());

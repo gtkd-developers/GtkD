@@ -53,6 +53,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Toolbar;
@@ -102,7 +103,7 @@ public class Toolbar : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkToolbar;
 	}
@@ -150,26 +151,26 @@ public class Toolbar : Container
 	}
 	
 	/** */
-	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
 	}
 	
 	/** */
-	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, int position)
 	{
 		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
 	}
 	
 	/** */
-	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
 	}
 	
 	/** */
 	Button insertButton(StockID stockID,
-	char[] tooltipText, char[] tooltipPrivateText,
+	string tooltipText, string tooltipPrivateText,
 	gint position)
 	{
 		Button button = new Button(
@@ -531,7 +532,7 @@ public class Toolbar : Container
 	 * userData =  a pointer to any data you wish to be passed to the callback.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
-	public Widget appendItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget appendItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
@@ -558,7 +559,7 @@ public class Toolbar : Container
 	 * userData =  a pointer to any data you wish to be passed to the callback.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
-	public Widget prependItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget prependItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
@@ -587,7 +588,7 @@ public class Toolbar : Container
 	 * position =  the number of widgets to insert this item after.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
-	public Widget insertItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
@@ -655,7 +656,7 @@ public class Toolbar : Container
 	 * userData =  any data you wish to pass to the callback.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
-	public Widget appendElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget appendElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
@@ -688,7 +689,7 @@ public class Toolbar : Container
 	 * userData =  any data you wish to pass to the callback.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
-	public Widget prependElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget prependElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
@@ -723,7 +724,7 @@ public class Toolbar : Container
 	 * position =  the number of widgets to insert this element after.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
-	public Widget insertElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
@@ -744,7 +745,7 @@ public class Toolbar : Container
 	 * tooltipText =  the element's tooltip.
 	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
 	 */
-	public void appendWidget(Widget widget, char[] tooltipText, char[] tooltipPrivateText)
+	public void appendWidget(Widget widget, string tooltipText, string tooltipPrivateText)
 	{
 		// void gtk_toolbar_append_widget (GtkToolbar *toolbar,  GtkWidget *widget,  const char *tooltip_text,  const char *tooltip_private_text);
 		gtk_toolbar_append_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText));
@@ -759,7 +760,7 @@ public class Toolbar : Container
 	 * tooltipText =  the element's tooltip.
 	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
 	 */
-	public void prependWidget(Widget widget, char[] tooltipText, char[] tooltipPrivateText)
+	public void prependWidget(Widget widget, string tooltipText, string tooltipPrivateText)
 	{
 		// void gtk_toolbar_prepend_widget (GtkToolbar *toolbar,  GtkWidget *widget,  const char *tooltip_text,  const char *tooltip_private_text);
 		gtk_toolbar_prepend_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText));
@@ -775,7 +776,7 @@ public class Toolbar : Container
 	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
 	 * position =  the number of widgets to insert this widget after.
 	 */
-	public void insertWidget(Widget widget, char[] tooltipText, char[] tooltipPrivateText, int position)
+	public void insertWidget(Widget widget, string tooltipText, string tooltipPrivateText, int position)
 	{
 		// void gtk_toolbar_insert_widget (GtkToolbar *toolbar,  GtkWidget *widget,  const char *tooltip_text,  const char *tooltip_private_text,  gint position);
 		gtk_toolbar_insert_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), position);
@@ -810,7 +811,7 @@ public class Toolbar : Container
 	 *  -1 means at the end.
 	 * Returns: the inserted widget
 	 */
-	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GtkSignalFunc callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position);

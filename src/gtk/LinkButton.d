@@ -49,6 +49,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.LinkButton;
@@ -93,7 +94,7 @@ public class LinkButton : Button
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkLinkButton;
 	}
@@ -122,7 +123,7 @@ public class LinkButton : Button
 	 * Params:
 	 * uri =  a valid URI
 	 */
-	public this (char[] uri)
+	public this (string uri)
 	{
 		// GtkWidget* gtk_link_button_new (const gchar *uri);
 		auto p = gtk_link_button_new(Str.toStringz(uri));
@@ -142,7 +143,7 @@ public class LinkButton : Button
 	 * uri =  a valid URI
 	 * label =  the text of the button
 	 */
-	public this (char[] uri, char[] label)
+	public this (string uri, string label)
 	{
 		// GtkWidget* gtk_link_button_new_with_label (const gchar *uri,  const gchar *label);
 		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
@@ -160,10 +161,10 @@ public class LinkButton : Button
 	 * Since 2.10
 	 * Returns: a valid URI. The returned string is owned by the link button and should not be modified or freed.
 	 */
-	public char[] getUri()
+	public string getUri()
 	{
 		// const gchar* gtk_link_button_get_uri (GtkLinkButton *link_button);
-		return Str.toString(gtk_link_button_get_uri(gtkLinkButton)).dup;
+		return Str.toString(gtk_link_button_get_uri(gtkLinkButton));
 	}
 	
 	/**
@@ -172,7 +173,7 @@ public class LinkButton : Button
 	 * Params:
 	 * uri =  a valid URI
 	 */
-	public void setUri(char[] uri)
+	public void setUri(string uri)
 	{
 		// void gtk_link_button_set_uri (GtkLinkButton *link_button,  const gchar *uri);
 		gtk_link_button_set_uri(gtkLinkButton, Str.toStringz(uri));

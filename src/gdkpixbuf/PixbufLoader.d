@@ -54,6 +54,7 @@
  * 	- GdkPixbufFormat* -> PixbufFormat
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdkpixbuf.PixbufLoader;
@@ -129,7 +130,7 @@ public class PixbufLoader : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkPixbufLoader;
 	}
@@ -162,7 +163,7 @@ public class PixbufLoader : ObjectG
 	 * Returns:
 	 *  A newly-created pixbuf loader.
 	 */
-	public this (char[] type, GError** error, bool isMimeType=false)
+	public this (string type, GError** error, bool isMimeType=false)
 	{
 		if ( isMimeType )
 		{

@@ -49,6 +49,7 @@
  * 	- GdkKeymap* -> Keymap
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Keymap;
@@ -135,7 +136,7 @@ public class Keymap : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkKeymap;
 	}
@@ -396,10 +397,10 @@ public class Keymap : ObjectG
 	 * keyval = a key value.
 	 * Returns:a string containing the name of the key, or NULL if keyval is nota valid key. The string should not be modified.
 	 */
-	public static char[] gdkKeyvalName(uint keyval)
+	public static string gdkKeyvalName(uint keyval)
 	{
 		// gchar* gdk_keyval_name (guint keyval);
-		return Str.toString(gdk_keyval_name(keyval)).dup;
+		return Str.toString(gdk_keyval_name(keyval));
 	}
 	
 	/**
@@ -408,7 +409,7 @@ public class Keymap : ObjectG
 	 * keyvalName = a key name.
 	 * Returns:the corresponding key value, or GDK_VoidSymbol if the key name isnot a valid key.
 	 */
-	public static uint gdkKeyvalFromName(char[] keyvalName)
+	public static uint gdkKeyvalFromName(string keyvalName)
 	{
 		// guint gdk_keyval_from_name (const gchar *keyval_name);
 		return gdk_keyval_from_name(Str.toStringz(keyvalName));

@@ -56,6 +56,7 @@
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentChooserT;
@@ -436,7 +437,7 @@ public template RecentChooserT(TStruct)
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the URI was found.
 	 */
-	public int setCurrentUri(char[] uri, GError** error)
+	public int setCurrentUri(string uri, GError** error)
 	{
 		// gboolean gtk_recent_chooser_set_current_uri (GtkRecentChooser *chooser,  const gchar *uri,  GError **error);
 		return gtk_recent_chooser_set_current_uri(getRecentChooserTStruct(), Str.toStringz(uri), error);
@@ -447,10 +448,10 @@ public template RecentChooserT(TStruct)
 	 * Since 2.10
 	 * Returns: a newly allocated string holding a URI.
 	 */
-	public char[] getCurrentUri()
+	public string getCurrentUri()
 	{
 		// gchar* gtk_recent_chooser_get_current_uri (GtkRecentChooser *chooser);
-		return Str.toString(gtk_recent_chooser_get_current_uri(getRecentChooserTStruct())).dup;
+		return Str.toString(gtk_recent_chooser_get_current_uri(getRecentChooserTStruct()));
 	}
 	
 	/**
@@ -478,7 +479,7 @@ public template RecentChooserT(TStruct)
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if uri was found.
 	 */
-	public int selectUri(char[] uri, GError** error)
+	public int selectUri(string uri, GError** error)
 	{
 		// gboolean gtk_recent_chooser_select_uri (GtkRecentChooser *chooser,  const gchar *uri,  GError **error);
 		return gtk_recent_chooser_select_uri(getRecentChooserTStruct(), Str.toStringz(uri), error);
@@ -490,7 +491,7 @@ public template RecentChooserT(TStruct)
 	 * Params:
 	 * uri =  a URI
 	 */
-	public void unselectUri(char[] uri)
+	public void unselectUri(string uri)
 	{
 		// void gtk_recent_chooser_unselect_uri (GtkRecentChooser *chooser,  const gchar *uri);
 		gtk_recent_chooser_unselect_uri(getRecentChooserTStruct(), Str.toStringz(uri));

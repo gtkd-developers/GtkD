@@ -62,6 +62,7 @@
  * module aliases:
  * 	- GtkD -> Gtk
  * local aliases:
+ * overrides:
  */
 
 module gtk.GtkD;
@@ -135,11 +136,11 @@ public class GtkD
 	/**
 	 * Call this function before using any other GTK+ functions in your GUI applications.
 	 */
-	public static void init(char[][] args)
+	public static void init(string[] args)
 	{
 		char** argv = (new char*[args.length]).ptr;
 		int argc = 0;
-		foreach (char[] p; args)
+		foreach (string p; args)
 		{
 			argv[argc++] = cast(char*)p;
 		}
@@ -156,7 +157,7 @@ public class GtkD
 	 * and release with gdk_threads_leave() afterwards throughout your code."
 	 * This is to be used on any call to GDK not executed from the main thread.
 	 */
-	public static void initMultiThread(char[][] args)
+	public static void initMultiThread(string[] args)
 	{
 		Thread.init(null);
 		gdkThreadsInit();
@@ -182,10 +183,10 @@ public class GtkD
 	 * locale specific setup of the windowing system used by GDK.
 	 * Returns: a string corresponding to the locale set, typically in theform lang_COUNTRY, where lang is an ISO-639 language code, andCOUNTRY is an ISO-3166 country code. On Unix, this form matches theresult of the setlocale(); it is also used on other machines, such as Windows, where the C library returns a different result. The string is owned by GTK+ and should not be modified or freed.
 	 */
-	public static char[] setLocale()
+	public static string setLocale()
 	{
 		// gchar* gtk_set_locale (void);
-		return Str.toString(gtk_set_locale()).dup;
+		return Str.toString(gtk_set_locale());
 	}
 	
 	/**
@@ -312,7 +313,7 @@ public class GtkD
 	 * error =  a return location for errors
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
-	public static int initWithArgs(int* argc, char*** argv, char[] parameterString, GOptionEntry* entries, char[] translationDomain, GError** error)
+	public static int initWithArgs(int* argc, char*** argv, string parameterString, GOptionEntry* entries, string translationDomain, GError** error)
 	{
 		// gboolean gtk_init_with_args (int *argc,  char ***argv,  char *parameter_string,  GOptionEntry *entries,  char *translation_domain,  GError **error);
 		return gtk_init_with_args(argc, argv, Str.toStringz(parameterString), entries, Str.toStringz(translationDomain), error);

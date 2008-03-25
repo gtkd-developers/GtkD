@@ -48,6 +48,7 @@
  * 	- GValueArray* -> ValueArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.ValueArray;

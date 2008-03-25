@@ -63,6 +63,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentChooserDialog;
@@ -130,7 +131,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentChooserDialog;
 	}
@@ -165,7 +166,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
 	 */
-	public this (char[] title, Window parent, RecentManager manager,  char[][] buttonsText=null, ResponseType[] responses=null )
+	public this (string title, Window parent, RecentManager manager,  string[] buttonsText=null, ResponseType[] responses=null )
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
@@ -191,7 +192,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	 *  stockIDs = stockIDs of the buttons
 	 *  responses = response ID's for the buttons
 	 */
-	public this (char[] title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
+	public this (string title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);

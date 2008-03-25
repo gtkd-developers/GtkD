@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.MappedFile;
@@ -133,7 +134,7 @@ public class MappedFile
 	 * writable =  whether the mapping should be writable
 	 * error =  return location for a GError, or NULL
 	 */
-	public this (char[] filename, int writable, GError** error)
+	public this (string filename, int writable, GError** error)
 	{
 		// GMappedFile* g_mapped_file_new (const gchar *filename,  gboolean writable,  GError **error);
 		auto p = g_mapped_file_new(Str.toStringz(filename), writable, error);
@@ -174,9 +175,9 @@ public class MappedFile
 	 * Since 2.8
 	 * Returns: the contents of file.
 	 */
-	public char[] getContents()
+	public string getContents()
 	{
 		// gchar* g_mapped_file_get_contents (GMappedFile *file);
-		return Str.toString(g_mapped_file_get_contents(gMappedFile)).dup;
+		return Str.toString(g_mapped_file_get_contents(gMappedFile));
 	}
 }

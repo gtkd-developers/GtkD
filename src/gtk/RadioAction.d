@@ -49,6 +49,7 @@
  * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RadioAction;
@@ -87,7 +88,7 @@ public class RadioAction : ToggleAction
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRadioAction;
 	}
@@ -160,7 +161,7 @@ public class RadioAction : ToggleAction
 	 * value =  The value which gtk_radio_action_get_current_value() should
 	 *  return if this action is selected.
 	 */
-	public this (char[] name, char[] label, char[] tooltip, char[] stockId, int value)
+	public this (string name, string label, string tooltip, string stockId, int value)
 	{
 		// GtkRadioAction* gtk_radio_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  gint value);
 		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);

@@ -53,6 +53,13 @@ public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
 
+version(Tango)
+{
+	//avoid some conflicts with other string aliases.
+	static if( !is(string) )
+	private alias char[] string;
+}
+
 
 const uint G_MAXUINT = 4294967295;
 

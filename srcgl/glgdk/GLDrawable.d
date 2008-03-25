@@ -50,6 +50,7 @@
  * 	- GdkGLDrawable* -> GLDrawable
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glgdk.GLDrawable;

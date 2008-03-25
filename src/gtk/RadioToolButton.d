@@ -51,6 +51,7 @@
  * 	- GtkToolItem* -> ToolItem
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RadioToolButton;
@@ -95,7 +96,7 @@ public class RadioToolButton : ToggleToolButton
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRadioToolButton;
 	}
@@ -146,7 +147,7 @@ public class RadioToolButton : ToggleToolButton
 	 * group =  an existing radio button group, or NULL if you are creating a new group
 	 * stockId =  the name of a stock item
 	 */
-	public this (ListSG group, char[] stockId)
+	public this (ListSG group, string stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
 		auto p = gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId));
@@ -184,7 +185,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Params:
 	 * stockId =  the name of a stock item
 	 */
-	public this (char[] stockId)
+	public this (string stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
 		auto p = gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId));

@@ -50,6 +50,7 @@
  * 	- GtkPrinter* -> Printer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Printer;
@@ -93,7 +94,7 @@ public class Printer : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPrinter;
 	}
@@ -160,7 +161,7 @@ public class Printer : ObjectG
 	 * backend =  a GtkPrintBackend
 	 * virtual =  whether the printer is virtual
 	 */
-	public this (char[] name, GtkPrintBackend* backend, int virtual)
+	public this (string name, GtkPrintBackend* backend, int virtual)
 	{
 		// GtkPrinter* gtk_printer_new (const gchar *name,  GtkPrintBackend *backend,  gboolean virtual_);
 		auto p = gtk_printer_new(Str.toStringz(name), backend, virtual);
@@ -189,10 +190,10 @@ public class Printer : ObjectG
 	 * Since 2.10
 	 * Returns: the name of printer
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_printer_get_name (GtkPrinter *printer);
-		return Str.toString(gtk_printer_get_name(gtkPrinter)).dup;
+		return Str.toString(gtk_printer_get_name(gtkPrinter));
 	}
 	
 	/**
@@ -201,10 +202,10 @@ public class Printer : ObjectG
 	 * Since 2.10
 	 * Returns: the state message of printer
 	 */
-	public char[] getStateMessage()
+	public string getStateMessage()
 	{
 		// const gchar* gtk_printer_get_state_message (GtkPrinter *printer);
-		return Str.toString(gtk_printer_get_state_message(gtkPrinter)).dup;
+		return Str.toString(gtk_printer_get_state_message(gtkPrinter));
 	}
 	
 	/**
@@ -212,10 +213,10 @@ public class Printer : ObjectG
 	 * Since 2.10
 	 * Returns: the description of printer
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// const gchar* gtk_printer_get_description (GtkPrinter *printer);
-		return Str.toString(gtk_printer_get_description(gtkPrinter)).dup;
+		return Str.toString(gtk_printer_get_description(gtkPrinter));
 	}
 	
 	/**
@@ -223,10 +224,10 @@ public class Printer : ObjectG
 	 * Since 2.10
 	 * Returns: the location of printer
 	 */
-	public char[] getLocation()
+	public string getLocation()
 	{
 		// const gchar* gtk_printer_get_location (GtkPrinter *printer);
-		return Str.toString(gtk_printer_get_location(gtkPrinter)).dup;
+		return Str.toString(gtk_printer_get_location(gtkPrinter));
 	}
 	
 	/**
@@ -234,10 +235,10 @@ public class Printer : ObjectG
 	 * Since 2.10
 	 * Returns: the icon name for printer
 	 */
-	public char[] getIconName()
+	public string getIconName()
 	{
 		// const gchar* gtk_printer_get_icon_name (GtkPrinter *printer);
-		return Str.toString(gtk_printer_get_icon_name(gtkPrinter)).dup;
+		return Str.toString(gtk_printer_get_icon_name(gtkPrinter));
 	}
 	
 	/**

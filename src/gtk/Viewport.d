@@ -48,6 +48,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Viewport;
@@ -82,7 +83,7 @@ public class Viewport : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkViewport;
 	}

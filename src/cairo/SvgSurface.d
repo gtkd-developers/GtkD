@@ -48,6 +48,7 @@
  * 	- cairo_surface_t* -> SvgSurface
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.SvgSurface;
@@ -80,7 +81,7 @@ public class SvgSurface : Surface
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)cairo_surface;
 	}
@@ -113,7 +114,7 @@ public class SvgSurface : Surface
 	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static SvgSurface create(char[] filename, double widthInPoints, double heightInPoints)
+	public static SvgSurface create(string filename, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t* cairo_svg_surface_create (const char *filename,  double width_in_points,  double height_in_points);
 		auto p = cairo_svg_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
@@ -188,9 +189,9 @@ public class SvgSurface : Surface
 	 * versio =  a version id
 	 * Returns: the string associated to given version.
 	 */
-	public static char[] versionToString(cairo_svg_version_t versio)
+	public static string versionToString(cairo_svg_version_t versio)
 	{
 		// const char* cairo_svg_version_to_string (cairo_svg_version_t version);
-		return Str.toString(cairo_svg_version_to_string(versio)).dup;
+		return Str.toString(cairo_svg_version_to_string(versio));
 	}
 }

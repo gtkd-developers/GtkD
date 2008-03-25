@@ -50,6 +50,7 @@
  * 	- GdkGC* -> GC
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.GCs;

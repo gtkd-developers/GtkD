@@ -50,6 +50,7 @@
  * 	- GdkGLDrawable* -> GLDrawable
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glgdk.GLContext;
@@ -83,7 +84,7 @@ public class GLContext : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkGLContext;
 	}

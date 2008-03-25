@@ -52,6 +52,7 @@
  * 	- GdkDisplayManager* -> DisplayManager
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.DisplayManager;
@@ -91,7 +92,7 @@ public class DisplayManager : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkDisplayManager;
 	}

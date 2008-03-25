@@ -49,6 +49,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Table;
@@ -94,7 +95,7 @@ public class Table : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTable;
 	}
@@ -125,7 +126,7 @@ public class Table : Container
 	/**
 	 * Removes all children and resizes the table to 1,1
 	 */
-	void removeAll()
+	override void removeAll()
 	{
 		super.removeAll();
 		resize(1,1);

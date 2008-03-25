@@ -52,6 +52,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Selections;
@@ -394,7 +395,7 @@ public class Selections
 	 * len =  the length of str, or -1 if str is nul-terminated.
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
 	 */
-	public static int selectionDataSetText(GtkSelectionData* selectionData, char[] str, int len)
+	public static int selectionDataSetText(GtkSelectionData* selectionData, string str, int len)
 	{
 		// gboolean gtk_selection_data_set_text (GtkSelectionData *selection_data,  const gchar *str,  gint len);
 		return gtk_selection_data_set_text(selectionData, Str.toStringz(str), len);

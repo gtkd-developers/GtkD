@@ -51,6 +51,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.EntryCompletion;
@@ -109,7 +110,7 @@ public class EntryCompletion : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkEntryCompletion;
 	}
@@ -200,7 +201,7 @@ public class EntryCompletion : ObjectG
 		return consumed;
 	}
 	
-	gboolean delegate(char[], EntryCompletion)[] onInsertPrefixListeners;
+	gboolean delegate(string, EntryCompletion)[] onInsertPrefixListeners;
 	/**
 	 * Gets emitted when the inline autocompletion is triggered.
 	 * The default behaviour is to make the entry display the
@@ -211,7 +212,7 @@ public class EntryCompletion : ObjectG
 	 * next '/'.
 	 * Since 2.6
 	 */
-	void addOnInsertPrefix(gboolean delegate(char[], EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertPrefix(gboolean delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-prefix" in connectedSignals) )
 		{
@@ -230,7 +231,7 @@ public class EntryCompletion : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( gboolean delegate(char[], EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
+		foreach ( gboolean delegate(string, EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
 		{
 			dlg(Str.toString(prefix), entryCompletion);
 		}
@@ -400,10 +401,10 @@ public class EntryCompletion : ObjectG
 	 * Since 2.12
 	 * Returns: the prefix for the current completion
 	 */
-	public char[] getCompletionPrefix()
+	public string getCompletionPrefix()
 	{
 		// const gchar* gtk_entry_completion_get_completion_prefix  (GtkEntryCompletion *completion);
-		return Str.toString(gtk_entry_completion_get_completion_prefix(gtkEntryCompletion)).dup;
+		return Str.toString(gtk_entry_completion_get_completion_prefix(gtkEntryCompletion));
 	}
 	
 	/**
@@ -425,7 +426,7 @@ public class EntryCompletion : ObjectG
 	 * index =  The index of the item to insert.
 	 * text =  Text of the item to insert.
 	 */
-	public void insertActionText(int index, char[] text)
+	public void insertActionText(int index, string text)
 	{
 		// void gtk_entry_completion_insert_action_text  (GtkEntryCompletion *completion,  gint index_,  const gchar *text);
 		gtk_entry_completion_insert_action_text(gtkEntryCompletion, index, Str.toStringz(text));
@@ -439,7 +440,7 @@ public class EntryCompletion : ObjectG
 	 * index =  The index of the item to insert.
 	 * markup =  Markup of the item to insert.
 	 */
-	public void insertActionMarkup(int index, char[] markup)
+	public void insertActionMarkup(int index, string markup)
 	{
 		// void gtk_entry_completion_insert_action_markup  (GtkEntryCompletion *completion,  gint index_,  const gchar *markup);
 		gtk_entry_completion_insert_action_markup(gtkEntryCompletion, index, Str.toStringz(markup));

@@ -52,6 +52,7 @@
  * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Font;
@@ -239,7 +240,7 @@ public class Font
 	/**
 	 * Create and loads a font
 	 */
-	public this(char[] fontName)
+	public this(string fontName)
 	{
 		this(gdk_font_load(Str.toStringz(fontName)));
 	}
@@ -257,7 +258,7 @@ public class Font
 	 * fontName =  a XLFD describing the font to load.
 	 * Returns: a GdkFont, or NULL if the font could not be loaded.
 	 */
-	public static Font load(char[] fontName)
+	public static Font load(string fontName)
 	{
 		// GdkFont* gdk_font_load (const gchar *font_name);
 		auto p = gdk_font_load(Str.toStringz(fontName));
@@ -281,7 +282,7 @@ public class Font
 	 * fontName =  a XLFD describing the font to load.
 	 * Returns: a GdkFont, or NULL if the font could not be loaded.
 	 */
-	public static Font loadForDisplay(Display display, char[] fontName)
+	public static Font loadForDisplay(Display display, string fontName)
 	{
 		// GdkFont* gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
 		auto p = gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName));
@@ -304,7 +305,7 @@ public class Font
 	 *  the component fonts of the fontset to load.
 	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
-	public static Font fontsetLoad(char[] fontsetName)
+	public static Font fontsetLoad(string fontsetName)
 	{
 		// GdkFont* gdk_fontset_load (const gchar *fontset_name);
 		auto p = gdk_fontset_load(Str.toStringz(fontsetName));
@@ -329,7 +330,7 @@ public class Font
 	 *  the component fonts of the fontset to load.
 	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
-	public static Font fontsetLoadForDisplay(Display display, char[] fontsetName)
+	public static Font fontsetLoadForDisplay(Display display, string fontsetName)
 	{
 		// GdkFont* gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
 		auto p = gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName));
@@ -480,7 +481,7 @@ public class Font
 	 * ascent =  the ascent of the string.
 	 * descent =  the descent of the string.
 	 */
-	public void stringExtents(char[] string, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
+	public void stringExtents(string string, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
 		// void gdk_string_extents (GdkFont *font,  const gchar *string,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
 		gdk_string_extents(gdkFont, Str.toStringz(string), lbearing, rbearing, width, ascent, descent);
@@ -501,7 +502,7 @@ public class Font
 	 * ascent =  the ascent of the string.
 	 * descent =  the descent of the string.
 	 */
-	public void textExtents(char[] text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
+	public void textExtents(string text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
 		// void gdk_text_extents (GdkFont *font,  const gchar *text,  gint text_length,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
 		gdk_text_extents(gdkFont, Str.toStringz(text), textLength, lbearing, rbearing, width, ascent, descent);
@@ -537,7 +538,7 @@ public class Font
 	 * string =  the nul-terminated string to measure
 	 * Returns: the width of the string in pixels.
 	 */
-	public int stringWidth(char[] string)
+	public int stringWidth(string string)
 	{
 		// gint gdk_string_width (GdkFont *font,  const gchar *string);
 		return gdk_string_width(gdkFont, Str.toStringz(string));
@@ -552,7 +553,7 @@ public class Font
 	 * textLength =  the length of the text in bytes.
 	 * Returns: the width of the string in pixels.
 	 */
-	public int textWidth(char[] text, int textLength)
+	public int textWidth(string text, int textLength)
 	{
 		// gint gdk_text_width (GdkFont *font,  const gchar *text,  gint text_length);
 		return gdk_text_width(gdkFont, Str.toStringz(text), textLength);
@@ -614,7 +615,7 @@ public class Font
 	 * string =  the nul-terminated string to measure.
 	 * Returns: the right bearing of the string in pixels.
 	 */
-	public int stringMeasure(char[] string)
+	public int stringMeasure(string string)
 	{
 		// gint gdk_string_measure (GdkFont *font,  const gchar *string);
 		return gdk_string_measure(gdkFont, Str.toStringz(string));
@@ -633,7 +634,7 @@ public class Font
 	 * textLength =  the length of the text in bytes.
 	 * Returns: the right bearing of the string in pixels.
 	 */
-	public int textMeasure(char[] text, int textLength)
+	public int textMeasure(string text, int textLength)
 	{
 		// gint gdk_text_measure (GdkFont *font,  const gchar *text,  gint text_length);
 		return gdk_text_measure(gdkFont, Str.toStringz(text), textLength);
@@ -667,7 +668,7 @@ public class Font
 	 * string =  the nul-terminated string to measure.
 	 * Returns: the height of the string in pixels.
 	 */
-	public int stringHeight(char[] string)
+	public int stringHeight(string string)
 	{
 		// gint gdk_string_height (GdkFont *font,  const gchar *string);
 		return gdk_string_height(gdkFont, Str.toStringz(string));
@@ -685,7 +686,7 @@ public class Font
 	 * textLength =  the length of the text in bytes.
 	 * Returns: the height of the string in pixels.
 	 */
-	public int textHeight(char[] text, int textLength)
+	public int textHeight(string text, int textLength)
 	{
 		// gint gdk_text_height (GdkFont *font,  const gchar *text,  gint text_length);
 		return gdk_text_height(gdkFont, Str.toStringz(text), textLength);
@@ -718,10 +719,10 @@ public class Font
 	 * src =  a wide character string.
 	 * Returns: the multi-byte string corresponding to src, or NULL if theconversion failed. The returned string should be freed with g_free() when nolonger needed.
 	 */
-	public static char[] wcstombs(GdkWChar* src)
+	public static string wcstombs(GdkWChar* src)
 	{
 		// gchar* gdk_wcstombs (const GdkWChar *src);
-		return Str.toString(gdk_wcstombs(src)).dup;
+		return Str.toString(gdk_wcstombs(src));
 	}
 	
 	/**
@@ -736,7 +737,7 @@ public class Font
 	 * destMax =  the maximum number of wide characters to place in dest.
 	 * Returns: the number of wide characters written into dest, or -1 if  the conversion failed.
 	 */
-	public static int mbstowcs(GdkWChar* dest, char[] src, int destMax)
+	public static int mbstowcs(GdkWChar* dest, string src, int destMax)
 	{
 		// gint gdk_mbstowcs (GdkWChar *dest,  const gchar *src,  gint dest_max);
 		return gdk_mbstowcs(dest, Str.toStringz(src), destMax);

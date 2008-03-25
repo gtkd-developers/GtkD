@@ -49,6 +49,7 @@
  * 	- GtkObject* -> ObjectGtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Signals;
@@ -184,7 +185,7 @@ public class Signals
 	 * ... = a list of GTK_TYPE_*, one for each parameter.
 	 * Returns:the signal id.
 	 */
-	public static uint newSignals(char[] name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, ... )
+	public static uint newSignals(string name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, ... )
 	{
 		// guint gtk_signal_new (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  ...);
 		return gtk_signal_new(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs);
@@ -210,7 +211,7 @@ public class Signals
 	 * the callbacks.
 	 * Returns:the signal id.
 	 */
-	public static uint newv(char[] name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, GtkType* args)
+	public static uint newv(string name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, GtkType* args)
 	{
 		// guint gtk_signal_newv (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  GtkType *args);
 		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs, args);
@@ -244,7 +245,7 @@ public class Signals
 	 * ... = the parameters to the function, followed
 	 * by a pointer to the return type, if any.
 	 */
-	public static void emitByName(ObjectGtk object, char[] name, ... )
+	public static void emitByName(ObjectGtk object, string name, ... )
 	{
 		// void gtk_signal_emit_by_name (GtkObject *object,  const gchar *name,  ...);
 		gtk_signal_emit_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name));
@@ -280,7 +281,7 @@ public class Signals
 	 * args = an array of GtkArgs, one for each parameter,
 	 * followed by one which is a pointer to the return type.
 	 */
-	public static void emitvByName(ObjectGtk object, char[] name, GtkArg* args)
+	public static void emitvByName(ObjectGtk object, string name, GtkArg* args)
 	{
 		// void gtk_signal_emitv_by_name (GtkObject *object,  const gchar *name,  GtkArg *args);
 		gtk_signal_emitv_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), args);
@@ -296,7 +297,7 @@ public class Signals
 	 * object = the object whose signal handlers you wish to stop.
 	 * name = the name of the signal you wish to stop.
 	 */
-	public static void emitStopByName(ObjectGtk object, char[] name)
+	public static void emitStopByName(ObjectGtk object, string name)
 	{
 		// void gtk_signal_emit_stop_by_name (GtkObject *object,  const gchar *name);
 		gtk_signal_emit_stop_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name));
@@ -324,7 +325,7 @@ public class Signals
 	 * and GTK_RUN_LAST).
 	 * Returns:the connection id.
 	 */
-	public static uint connectFull(ObjectGtk object, char[] name, GtkSignalFunc func, GtkCallbackMarshal unsupported, void* data, GtkDestroyNotify destroyFunc, int objectSignal, int after)
+	public static uint connectFull(ObjectGtk object, string name, GtkSignalFunc func, GtkCallbackMarshal unsupported, void* data, GtkDestroyNotify destroyFunc, int objectSignal, int after)
 	{
 		// gulong gtk_signal_connect_full (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkCallbackMarshal unsupported,  gpointer data,  GtkDestroyNotify destroy_func,  gint object_signal,  gint after);
 		return gtk_signal_connect_full((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, unsupported, data, destroyFunc, objectSignal, after);
@@ -351,7 +352,7 @@ public class Signals
 	 * aliveObject = object whose death should cause the handler connection
 	 * to be destroyed.
 	 */
-	public static void connectWhileAlive(ObjectGtk object, char[] name, GtkSignalFunc func, void* funcData, ObjectGtk aliveObject)
+	public static void connectWhileAlive(ObjectGtk object, string name, GtkSignalFunc func, void* funcData, ObjectGtk aliveObject)
 	{
 		// void gtk_signal_connect_while_alive (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  gpointer func_data,  GtkObject *alive_object);
 		gtk_signal_connect_while_alive((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, funcData, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());
@@ -376,7 +377,7 @@ public class Signals
 	 * aliveObject = the user data, which must be an object, whose destruction
 	 * should signal the removal of this signal.
 	 */
-	public static void connectObjectWhileAlive(ObjectGtk object, char[] name, GtkSignalFunc func, ObjectGtk aliveObject)
+	public static void connectObjectWhileAlive(ObjectGtk object, string name, GtkSignalFunc func, ObjectGtk aliveObject)
 	{
 		// void gtk_signal_connect_object_while_alive  (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkObject *alive_object);
 		gtk_signal_connect_object_while_alive((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());

@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FileSelection;
@@ -121,7 +122,7 @@ public class FileSelection : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFileSelection;
 	}
@@ -151,7 +152,7 @@ public class FileSelection : Dialog
 	 * Params:
 	 * title = a message that will be placed in the file requestor's titlebar.
 	 */
-	public this (char[] title)
+	public this (string title)
 	{
 		// GtkWidget* gtk_file_selection_new (const gchar *title);
 		auto p = gtk_file_selection_new(Str.toStringz(title));
@@ -178,7 +179,7 @@ public class FileSelection : Dialog
 	 * Params:
 	 * filename =  a string to set as the default file name.
 	 */
-	public void setFilename(char[] filename)
+	public void setFilename(string filename)
 	{
 		// void gtk_file_selection_set_filename (GtkFileSelection *filesel,  const gchar *filename);
 		gtk_file_selection_set_filename(gtkFileSelection, Str.toStringz(filename));
@@ -194,10 +195,10 @@ public class FileSelection : Dialog
 	 * If no file is selected then the selected directory path is returned.
 	 * Returns: currently-selected filename in the on-disk encoding.
 	 */
-	public char[] getFilename()
+	public string getFilename()
 	{
 		// const gchar* gtk_file_selection_get_filename (GtkFileSelection *filesel);
-		return Str.toString(gtk_file_selection_get_filename(gtkFileSelection)).dup;
+		return Str.toString(gtk_file_selection_get_filename(gtkFileSelection));
 	}
 	
 	/**
@@ -210,7 +211,7 @@ public class FileSelection : Dialog
 	 * Params:
 	 * pattern = a string of characters which may or may not match any filenames in the current directory.
 	 */
-	public void complete(char[] pattern)
+	public void complete(string pattern)
 	{
 		// void gtk_file_selection_complete (GtkFileSelection *filesel,  const gchar *pattern);
 		gtk_file_selection_complete(gtkFileSelection, Str.toStringz(pattern));

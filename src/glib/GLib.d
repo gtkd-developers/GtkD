@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.GLib;
@@ -93,9 +94,9 @@ public class Version
 	 * requiredMicro =  the required micro version.
 	 * Returns: NULL if the GLib library is compatible with the given version, or a string describing the version mismatch. The returned string is owned by GLib and must not be modified or freed.
 	 */
-	public static char[] checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
+	public static string checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{
 		// const gchar* glib_check_version (guint required_major,  guint required_minor,  guint required_micro);
-		return Str.toString(glib_check_version(requiredMajor, requiredMinor, requiredMicro)).dup;
+		return Str.toString(glib_check_version(requiredMajor, requiredMinor, requiredMicro));
 	}
 }

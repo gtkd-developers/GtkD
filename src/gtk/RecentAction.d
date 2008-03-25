@@ -51,6 +51,7 @@
  * 	- GtkRecentManager* -> RecentManager
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentAction;
@@ -91,7 +92,7 @@ public class RecentAction : Action
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentAction;
 	}
@@ -123,7 +124,7 @@ public class RecentAction : Action
 	 * stockID =  the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 */
-	public this (char[] name, char[] label, char[] tooltip, StockID stockID)
+	public this (string name, string label, string tooltip, StockID stockID)
 	{
 		// GtkAction* gtk_recent_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
@@ -150,7 +151,7 @@ public class RecentAction : Action
 	 * manager =  a GtkRecentManager, or NULL for using the default
 	 *  GtkRecentManager
 	 */
-	public this (char[] name, char[] label, char[] tooltip, StockID stockID, RecentManager manager)
+	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
 		// GtkAction* gtk_recent_action_new_for_manager (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  GtkRecentManager *manager);
 		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());

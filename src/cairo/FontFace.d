@@ -46,6 +46,7 @@
  * 	- cairo_font_face_t* -> FontFace
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.FontFace;

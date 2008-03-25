@@ -49,6 +49,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Frame;
@@ -102,7 +103,7 @@ public class Frame : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFrame;
 	}
@@ -125,7 +126,7 @@ public class Frame : Bin
 	/**
 	 * Creates frame with label and set it's child widget
 	 */
-	public this(Widget widget, char[] label)
+	public this(Widget widget, string label)
 	{
 		this(label);
 		add(widget);
@@ -140,7 +141,7 @@ public class Frame : Bin
 	 * Params:
 	 * label =  the text to use as the label of the frame
 	 */
-	public this (char[] label)
+	public this (string label)
 	{
 		// GtkWidget* gtk_frame_new (const gchar *label);
 		auto p = gtk_frame_new(Str.toStringz(label));
@@ -159,7 +160,7 @@ public class Frame : Bin
 	 * Params:
 	 * label =  the text to use as the label of the frame
 	 */
-	public void setLabel(char[] label)
+	public void setLabel(string label)
 	{
 		// void gtk_frame_set_label (GtkFrame *frame,  const gchar *label);
 		gtk_frame_set_label(gtkFrame, Str.toStringz(label));
@@ -214,10 +215,10 @@ public class Frame : Bin
 	 * to gtk_frame_new().)
 	 * Returns: the text in the label, or NULL if there was no label widget or the lable widget was not a GtkLabel. This string is owned by GTK+ and must not be modified or freed.
 	 */
-	public char[] getLabel()
+	public string getLabel()
 	{
 		// const gchar* gtk_frame_get_label (GtkFrame *frame);
-		return Str.toString(gtk_frame_get_label(gtkFrame)).dup;
+		return Str.toString(gtk_frame_get_label(gtkFrame));
 	}
 	
 	/**

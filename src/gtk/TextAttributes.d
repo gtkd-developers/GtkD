@@ -47,6 +47,7 @@
  * 	- GtkTextAttributes* -> TextAttributes
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextAttributes;

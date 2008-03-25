@@ -142,7 +142,7 @@ class SimpleGL : DrawingArea
  
 private import glgdk.GLdInit;
 
-void main(char[][] args)
+void main(string[] args)
 {
 	GtkD.init(args);
 

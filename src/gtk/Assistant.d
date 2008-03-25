@@ -51,6 +51,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Assistant;
@@ -90,7 +91,7 @@ public class Assistant : Window
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAssistant;
 	}
@@ -423,7 +424,7 @@ public class Assistant : Window
 	 * page =  a page of assistant
 	 * title =  the new title for page
 	 */
-	public void setPageTitle(Widget page, char[] title)
+	public void setPageTitle(Widget page, string title)
 	{
 		// void gtk_assistant_set_page_title (GtkAssistant *assistant,  GtkWidget *page,  const gchar *title);
 		gtk_assistant_set_page_title(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), Str.toStringz(title));
@@ -436,10 +437,10 @@ public class Assistant : Window
 	 * page =  a page of assistant
 	 * Returns: the title for page.
 	 */
-	public char[] getPageTitle(Widget page)
+	public string getPageTitle(Widget page)
 	{
 		// const gchar* gtk_assistant_get_page_title (GtkAssistant *assistant,  GtkWidget *page);
-		return Str.toString(gtk_assistant_get_page_title(gtkAssistant, (page is null) ? null : page.getWidgetStruct())).dup;
+		return Str.toString(gtk_assistant_get_page_title(gtkAssistant, (page is null) ? null : page.getWidgetStruct()));
 	}
 	
 	/**

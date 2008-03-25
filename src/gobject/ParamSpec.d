@@ -51,6 +51,7 @@
  * 	- GValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.ParamSpec;
@@ -248,30 +249,30 @@ public class ParamSpec
 	 * Returns the name of a GParamSpec.
 	 * Returns:the name of pspec.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* g_param_spec_get_name (GParamSpec *pspec);
-		return Str.toString(g_param_spec_get_name(gParamSpec)).dup;
+		return Str.toString(g_param_spec_get_name(gParamSpec));
 	}
 	
 	/**
 	 * Returns the nickname of a GParamSpec.
 	 * Returns:the nickname of pspec.
 	 */
-	public char[] getNick()
+	public string getNick()
 	{
 		// const gchar* g_param_spec_get_nick (GParamSpec *pspec);
-		return Str.toString(g_param_spec_get_nick(gParamSpec)).dup;
+		return Str.toString(g_param_spec_get_nick(gParamSpec));
 	}
 	
 	/**
 	 * Returns the short description of a GParamSpec.
 	 * Returns:the short description of pspec.
 	 */
-	public char[] getBlurb()
+	public string getBlurb()
 	{
 		// const gchar* g_param_spec_get_blurb (GParamSpec *pspec);
-		return Str.toString(g_param_spec_get_blurb(gParamSpec)).dup;
+		return Str.toString(g_param_spec_get_blurb(gParamSpec));
 	}
 	
 	/**
@@ -377,7 +378,7 @@ public class ParamSpec
 	 * flags = a combination of GParamFlags
 	 * Returns:a newly allocated GParamSpec instance
 	 */
-	public static void* internal(GType paramType, char[] name, char[] nick, char[] blurb, GParamFlags flags)
+	public static void* internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
 		// gpointer g_param_spec_internal (GType param_type,  const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
 		return g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
@@ -393,7 +394,7 @@ public class ParamSpec
 	 * pspecInfo = The GParamSpecTypeInfo for this GParamSpec type.
 	 * Returns:The new type identifier.
 	 */
-	public static GType gParamTypeRegisterStatic(char[] name, GParamSpecTypeInfo* pspecInfo)
+	public static GType gParamTypeRegisterStatic(string name, GParamSpecTypeInfo* pspecInfo)
 	{
 		// GType g_param_type_register_static (const gchar *name,  const GParamSpecTypeInfo *pspec_info);
 		return g_param_type_register_static(Str.toStringz(name), pspecInfo);
@@ -450,7 +451,7 @@ public class ParamSpec
 	 *  owned by an ancestor of owner_type.
 	 * Returns:The found GParamSpec, or NULL if no matching GParamSpec was found.
 	 */
-	public static ParamSpec poolLookup(GParamSpecPool* pool, char[] paramName, GType ownerType, int walkAncestors)
+	public static ParamSpec poolLookup(GParamSpecPool* pool, string paramName, GType ownerType, int walkAncestors)
 	{
 		// GParamSpec* g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
 		auto p = g_param_spec_pool_lookup(pool, Str.toStringz(paramName), ownerType, walkAncestors);

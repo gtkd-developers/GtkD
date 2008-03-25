@@ -49,6 +49,8 @@
  * 	- GdkColormap* -> Colormap
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- toString
  */
 
 module gdk.Color;
@@ -161,7 +163,7 @@ public class Color
 	{
 		this();
 		//printf("Color.this uint %X\n",rgb);
-		set( ((rgb&0xFFFF)),((rgb&0xFFFF00000000)>>32),(rgb&0xFFFF0000)>>16);
+		set( cast(ushort)((rgb&0xFFFF)),cast(ushort)((rgb&0xFFFF00000000)>>32),cast(ushort)((rgb&0xFFFF0000)>>16));
 	}
 	
 	/** */
@@ -169,7 +171,7 @@ public class Color
 	{
 		this();
 		//printf("Color.this int %X\n",rgb);
-		set8( cast(byte)((rgb&0xFF0000)>>16),cast(byte)((rgb&0x00FF00)>>8),cast(byte)(rgb&0xFF));
+		set8( cast(ubyte)((rgb&0xFF0000)>>16),cast(ubyte)((rgb&0x00FF00)>>8),cast(ubyte)(rgb&0xFF));
 	}
 	
 	/** */
@@ -216,9 +218,9 @@ public class Color
 	{
 		//printf("Color.set %X %X %X\n",red,green,blue);
 		
-		gdkColor.red = red * 257;
-		gdkColor.green = green * 257;
-		gdkColor.blue = blue * 257;
+		gdkColor.red = cast(ushort)(red * 257);
+		gdkColor.green = cast(ushort)(green * 257);
+		gdkColor.blue = cast(ushort)(blue * 257);
 		gdkColor.pixel = (red << 16) | (green << 8 ) | blue;
 		//printf("set8 pixel = %X\n", gdkColor.pixel);
 	}
@@ -321,7 +323,7 @@ public class Color
 	 * color =  the GdkColor to fill in
 	 * Returns: TRUE if the parsing succeeded.
 	 */
-	public static int parse(char[] spec, Color color)
+	public static int parse(string spec, Color color)
 	{
 		// gboolean gdk_color_parse (const gchar *spec,  GdkColor *color);
 		return gdk_color_parse(Str.toStringz(spec), (color is null) ? null : color.getColorStruct());
@@ -395,9 +397,9 @@ public class Color
 	 * Since 2.12
 	 * Returns: a newly-allocated text string
 	 */
-	public char[] toString()
+	public override string toString()
 	{
 		// gchar* gdk_color_to_string (const GdkColor *color);
-		return Str.toString(gdk_color_to_string(gdkColor)).dup;
+		return Str.toString(gdk_color_to_string(gdkColor));
 	}
 }

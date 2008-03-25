@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FontButton;
@@ -83,7 +84,7 @@ public class FontButton : Button
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFontButton;
 	}
@@ -170,7 +171,7 @@ public class FontButton : Button
 	 * Params:
 	 * fontname =  Name of font to display in font selection dialog
 	 */
-	public this (char[] fontname)
+	public this (string fontname)
 	{
 		// GtkWidget* gtk_font_button_new_with_font (const gchar *fontname);
 		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
@@ -190,7 +191,7 @@ public class FontButton : Button
 	 * fontname =  Name of font to display in font selection dialog
 	 * Returns: Return value of gtk_font_selection_dialog_set_font_name() if thefont selection dialog exists, otherwise FALSE.
 	 */
-	public int setFontName(char[] fontname)
+	public int setFontName(string fontname)
 	{
 		// gboolean gtk_font_button_set_font_name (GtkFontButton *font_button,  const gchar *fontname);
 		return gtk_font_button_set_font_name(gtkFontButton, Str.toStringz(fontname));
@@ -201,10 +202,10 @@ public class FontButton : Button
 	 * Since 2.4
 	 * Returns: an internal copy of the font name which must not be freed.
 	 */
-	public char[] getFontName()
+	public string getFontName()
 	{
 		// const gchar* gtk_font_button_get_font_name (GtkFontButton *font_button);
-		return Str.toString(gtk_font_button_get_font_name(gtkFontButton)).dup;
+		return Str.toString(gtk_font_button_get_font_name(gtkFontButton));
 	}
 	
 	/**
@@ -305,7 +306,7 @@ public class FontButton : Button
 	 * Params:
 	 * title =  a string containing the font selection dialog title
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_font_button_set_title (GtkFontButton *font_button,  const gchar *title);
 		gtk_font_button_set_title(gtkFontButton, Str.toStringz(title));
@@ -316,9 +317,9 @@ public class FontButton : Button
 	 * Since 2.4
 	 * Returns: an internal copy of the title string which must not be freed.
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_font_button_get_title (GtkFontButton *font_button);
-		return Str.toString(gtk_font_button_get_title(gtkFontButton)).dup;
+		return Str.toString(gtk_font_button_get_title(gtkFontButton));
 	}
 }

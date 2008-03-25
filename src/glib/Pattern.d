@@ -48,6 +48,7 @@
  * 	- GPatternSpec* -> Pattern
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Pattern;
@@ -118,7 +119,7 @@ public class Pattern
 	 * Params:
 	 * pattern = a zero-terminated UTF-8 encoded string
 	 */
-	public this (char[] pattern)
+	public this (string pattern)
 	{
 		// GPatternSpec* g_pattern_spec_new (const gchar *pattern);
 		auto p = g_pattern_spec_new(Str.toStringz(pattern));
@@ -175,7 +176,7 @@ public class Pattern
 	 * stringReversed = the reverse of string or NULL
 	 * Returns:TRUE if string matches pspec
 	 */
-	public int match(uint stringLength, char[] string, char[] stringReversed)
+	public int match(uint stringLength, string string, string stringReversed)
 	{
 		// gboolean g_pattern_match (GPatternSpec *pspec,  guint string_length,  const gchar *string,  const gchar *string_reversed);
 		return g_pattern_match(gPatternSpec, stringLength, Str.toStringz(string), Str.toStringz(stringReversed));
@@ -189,7 +190,7 @@ public class Pattern
 	 * string = the UTF-8 encoded string to match
 	 * Returns:TRUE if string matches pspec
 	 */
-	public int matchString(char[] string)
+	public int matchString(string string)
 	{
 		// gboolean g_pattern_match_string (GPatternSpec *pspec,  const gchar *string);
 		return g_pattern_match_string(gPatternSpec, Str.toStringz(string));
@@ -205,7 +206,7 @@ public class Pattern
 	 * string = the UTF-8 encoded string to match
 	 * Returns:TRUE if string matches pspec
 	 */
-	public static int matchSimple(char[] pattern, char[] string)
+	public static int matchSimple(string pattern, string string)
 	{
 		// gboolean g_pattern_match_simple (const gchar *pattern,  const gchar *string);
 		return g_pattern_match_simple(Str.toStringz(pattern), Str.toStringz(string));

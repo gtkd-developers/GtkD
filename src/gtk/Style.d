@@ -69,6 +69,7 @@
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Style;
@@ -114,7 +115,7 @@ public class Style : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkStyle;
 	}
@@ -338,7 +339,7 @@ public class Style : ObjectG
 	 * color =  the GdkColor to fill in
 	 * Returns: TRUE if the mapping was found.
 	 */
-	public int lookupColor(char[] colorName, Color color)
+	public int lookupColor(string colorName, Color color)
 	{
 		// gboolean gtk_style_lookup_color (GtkStyle *style,  const gchar *color_name,  GdkColor *color);
 		return gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), (color is null) ? null : color.getColorStruct());
@@ -348,7 +349,7 @@ public class Style : ObjectG
 	 * Params:
 	 * Returns:
 	 */
-	public IconSet lookupIconSet(char[] stockId)
+	public IconSet lookupIconSet(string stockId)
 	{
 		// GtkIconSet* gtk_style_lookup_icon_set (GtkStyle *style,  const gchar *stock_id);
 		auto p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
@@ -374,7 +375,7 @@ public class Style : ObjectG
 	 * detail =  a style detail
 	 * Returns: a newly-created GdkPixbuf containing the rendered icon
 	 */
-	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, char[] detail)
+	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
 		// GdkPixbuf* gtk_style_render_icon (GtkStyle *style,  const GtkIconSource *source,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const gchar *detail);
 		auto p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
@@ -551,7 +552,7 @@ public class Style : ObjectG
 	 * y =  y origin
 	 * string =  the string to draw
 	 */
-	public void drawString(Window window, GtkStateType stateType, int x, int y, char[] string)
+	public void drawString(Window window, GtkStateType stateType, int x, int y, string string)
 	{
 		// void gtk_draw_string (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  gint x,  gint y,  const gchar *string);
 		gtk_draw_string(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, x, y, Str.toStringz(string));
@@ -837,7 +838,7 @@ public class Style : ObjectG
 	 * width =  width of the rectangle to draw the arrow in
 	 * height =  height of the rectangle to draw the arrow in
 	 */
-	public void paintArrow(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height)
+	public void paintArrow(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height)
 	{
 		// void gtk_paint_arrow (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GtkArrowType arrow_type,  gboolean fill,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_arrow(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), arrowType, fill, x, y, width, height);
@@ -858,7 +859,7 @@ public class Style : ObjectG
 	 * width =  the width of the box
 	 * height =  the height of the box
 	 */
-	public void paintBox(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintBox(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_box (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_box(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -883,7 +884,7 @@ public class Style : ObjectG
 	 * gapX =  starting position of the gap
 	 * gapWidth =  width of the gap
 	 */
-	public void paintBoxGap(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
+	public void paintBoxGap(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
 	{
 		// void gtk_paint_box_gap (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
 		gtk_paint_box_gap(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
@@ -905,7 +906,7 @@ public class Style : ObjectG
 	 * width =  the width of the rectangle to draw the check in
 	 * height =  the height of the rectangle to draw the check in
 	 */
-	public void paintCheck(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintCheck(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_check (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_check(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -927,7 +928,7 @@ public class Style : ObjectG
 	 * width =  width of the rectangle to draw the diamond in
 	 * height =  height of the rectangle to draw the diamond in
 	 */
-	public void paintDiamond(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintDiamond(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_diamond (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_diamond(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -949,7 +950,7 @@ public class Style : ObjectG
 	 * height =  width of the extension
 	 * gapSide =  the side on to which the extension is attached
 	 */
-	public void paintExtension(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height, GtkPositionType gapSide)
+	public void paintExtension(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide)
 	{
 		// void gtk_paint_extension (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side);
 		gtk_paint_extension(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide);
@@ -970,7 +971,7 @@ public class Style : ObjectG
 	 * width =  the width of the box
 	 * height =  the height of the box
 	 */
-	public void paintFlatBox(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintFlatBox(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_flat_box (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_flat_box(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -991,7 +992,7 @@ public class Style : ObjectG
 	 * width =  the width of the rectangle around which to draw a focus indicator
 	 * height =  the height of the rectangle around which to draw a focus indicator
 	 */
-	public void paintFocus(Window window, GtkStateType stateType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintFocus(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_focus (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_focus(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -1013,7 +1014,7 @@ public class Style : ObjectG
 	 * height =  height of the handle
 	 * orientation =  the orientation of the handle
 	 */
-	public void paintHandle(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height, GtkOrientation orientation)
+	public void paintHandle(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
 		// void gtk_paint_handle (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
 		gtk_paint_handle(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
@@ -1033,7 +1034,7 @@ public class Style : ObjectG
 	 * x2 =  the ending x coordinate
 	 * y =  the y coordinate
 	 */
-	public void paintHline(Window window, GtkStateType stateType, Rectangle area, Widget widget, char[] detail, int x1, int x2, int y)
+	public void paintHline(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x1, int x2, int y)
 	{
 		// void gtk_paint_hline (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x1,  gint x2,  gint y);
 		gtk_paint_hline(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x1, x2, y);
@@ -1055,7 +1056,7 @@ public class Style : ObjectG
 	 * width =  the width of the rectangle to draw the option in
 	 * height =  the height of the rectangle to draw the option in
 	 */
-	public void paintOption(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintOption(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_option (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_option(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -1075,7 +1076,7 @@ public class Style : ObjectG
 	 * npoints =  length of points
 	 * fill =  TRUE if the polygon should be filled
 	 */
-	public void paintPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, GdkPoint* points, int npoints, int fill)
+	public void paintPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GdkPoint* points, int npoints, int fill)
 	{
 		// void gtk_paint_polygon (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GdkPoint *points,  gint npoints,  gboolean fill);
 		gtk_paint_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), points, npoints, fill);
@@ -1097,7 +1098,7 @@ public class Style : ObjectG
 	 * width =  width of the rectangle
 	 * height =  width of the rectangle
 	 */
-	public void paintShadow(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintShadow(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_shadow (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_shadow(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -1123,7 +1124,7 @@ public class Style : ObjectG
 	 * gapX =  starting position of the gap
 	 * gapWidth =  width of the gap
 	 */
-	public void paintShadowGap(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
+	public void paintShadowGap(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
 	{
 		// void gtk_paint_shadow_gap (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
 		gtk_paint_shadow_gap(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
@@ -1146,7 +1147,7 @@ public class Style : ObjectG
 	 * height =  the height of the rectangle in which to draw a slider
 	 * orientation =  the orientation to be used
 	 */
-	public void paintSlider(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height, GtkOrientation orientation)
+	public void paintSlider(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
 		// void gtk_paint_slider (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
 		gtk_paint_slider(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
@@ -1167,7 +1168,7 @@ public class Style : ObjectG
 	 * y =  y origin
 	 * string =  the string to draw
 	 */
-	public void paintString(Window window, GtkStateType stateType, Rectangle area, Widget widget, char[] detail, int x, int y, char[] string)
+	public void paintString(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x, int y, string string)
 	{
 		// void gtk_paint_string (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  const gchar *string);
 		gtk_paint_string(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, Str.toStringz(string));
@@ -1189,7 +1190,7 @@ public class Style : ObjectG
 	 * width =  the width of the rectangle to draw the tab in
 	 * height =  the height of the rectangle to draw the tab in
 	 */
-	public void paintTab(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height)
+	public void paintTab(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_tab (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_tab(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
@@ -1209,7 +1210,7 @@ public class Style : ObjectG
 	 * y2_ =  the ending y coordinate
 	 * x =  the x coordinate
 	 */
-	public void paintVline(Window window, GtkStateType stateType, Rectangle area, Widget widget, char[] detail, int y1_, int y2_, int x)
+	public void paintVline(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int y1_, int y2_, int x)
 	{
 		// void gtk_paint_vline (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint y1_,  gint y2_,  gint x);
 		gtk_paint_vline(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), y1_, y2_, x);
@@ -1238,7 +1239,7 @@ public class Style : ObjectG
 	 *  whether the expander is collapsed, expanded, or in an
 	 *  intermediate state.
 	 */
-	public void paintExpander(Window window, GtkStateType stateType, Rectangle area, Widget widget, char[] detail, int x, int y, GtkExpanderStyle expanderStyle)
+	public void paintExpander(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x, int y, GtkExpanderStyle expanderStyle)
 	{
 		// void gtk_paint_expander (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  GtkExpanderStyle expander_style);
 		gtk_paint_expander(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, expanderStyle);
@@ -1259,7 +1260,7 @@ public class Style : ObjectG
 	 * y =  y origin
 	 * layout =  the layout to draw
 	 */
-	public void paintLayout(Window window, GtkStateType stateType, int useText, Rectangle area, Widget widget, char[] detail, int x, int y, PgLayout layout)
+	public void paintLayout(Window window, GtkStateType stateType, int useText, Rectangle area, Widget widget, string detail, int x, int y, PgLayout layout)
 	{
 		// void gtk_paint_layout (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  gboolean use_text,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  PangoLayout *layout);
 		gtk_paint_layout(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, useText, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, (layout is null) ? null : layout.getPgLayoutStruct());
@@ -1281,7 +1282,7 @@ public class Style : ObjectG
 	 * width =  the width of the rectangle in which to draw the resize grip
 	 * height =  the height of the rectangle in which to draw the resize grip
 	 */
-	public void paintResizeGrip(Window window, GtkStateType stateType, Rectangle area, Widget widget, char[] detail, GdkWindowEdge edge, int x, int y, int width, int height)
+	public void paintResizeGrip(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, GdkWindowEdge edge, int x, int y, int width, int height)
 	{
 		// void gtk_paint_resize_grip (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GdkWindowEdge edge,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_resize_grip(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), edge, x, y, width, height);

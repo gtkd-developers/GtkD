@@ -28,17 +28,14 @@ private import gtk.VBox;
 private import gtk.GtkD;
 private import gtk.Image;
 
-private import gtkc.gdktypes;
-private import gobject.Signals;
 private import gtk.Timeout;
-
 private import gdk.Event;
 
 version(Tango){
     import tango.text.Util;
     import tango.io.Stdout;
-    void writefln( char[] frm, ... ){
-        char[] frm2 = substitute( frm, "%s", "{}" );
+    void writefln( string frm, ... ){
+        string frm2 = substitute( frm, "%s", "{}" );
         Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
     }
 }
@@ -137,14 +134,14 @@ public class OtherTests : Window
 		return 0;
 	}
 
-	char[] toString()
+	string toString()
 	{
 		return "I Am HelloWorld";
 	}
 
 }
 
-void main(char[][] args)
+void main(string[] args)
 {
 	GtkD.init(args);
 	new OtherTests();

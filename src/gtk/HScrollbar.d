@@ -48,6 +48,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.HScrollbar;
@@ -85,7 +86,7 @@ public class HScrollbar : Scrollbar
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkHScrollbar;
 	}

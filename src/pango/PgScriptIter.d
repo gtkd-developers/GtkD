@@ -47,6 +47,7 @@
  * 	- PangoScriptIter* -> PgScriptIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgScriptIter;
@@ -113,7 +114,7 @@ public class PgScriptIter
 	 * text =  a UTF-8 string
 	 * length =  length of text, or -1 if text is nul-terminated.
 	 */
-	public this (char[] text, int length)
+	public this (string text, int length)
 	{
 		// PangoScriptIter* pango_script_iter_new (const char *text,  int length);
 		auto p = pango_script_iter_new(Str.toStringz(text), length);

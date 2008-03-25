@@ -55,6 +55,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PageSetupUnixDialog;
@@ -96,7 +97,7 @@ public class PageSetupUnixDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPageSetupUnixDialog;
 	}
@@ -126,7 +127,7 @@ public class PageSetupUnixDialog : Dialog
 	 * title =  the title of the dialog, or NULL
 	 * parent =  transient parent of the dialog, or NULL
 	 */
-	public this (char[] title, Window parent)
+	public this (string title, Window parent)
 	{
 		// GtkWidget* gtk_page_setup_unix_dialog_new (const gchar *title,  GtkWindow *parent);
 		auto p = gtk_page_setup_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());

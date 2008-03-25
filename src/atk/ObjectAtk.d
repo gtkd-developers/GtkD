@@ -53,6 +53,7 @@
  * 	- AtkStateSet* -> StateSet
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.ObjectAtk;
@@ -105,7 +106,7 @@ public class ObjectAtk : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkObject;
 	}
@@ -259,12 +260,12 @@ public class ObjectAtk : ObjectG
 		return consumed;
 	}
 	
-	void delegate(char[], gboolean, ObjectAtk)[] onStateChangeListeners;
+	void delegate(string, gboolean, ObjectAtk)[] onStateChangeListeners;
 	/**
 	 * The "state-change" signal is emitted when an object's state changes.
 	 * The detail value identifies the state type which has changed.
 	 */
-	void addOnStateChange(void delegate(char[], gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnStateChange(void delegate(string, gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("state-change" in connectedSignals) )
 		{
@@ -283,7 +284,7 @@ public class ObjectAtk : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
+		foreach ( void delegate(string, gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
 		{
 			dlg(Str.toString(arg1), arg2, objectAtk);
 		}
@@ -333,7 +334,7 @@ public class ObjectAtk : ObjectG
 	 * name =  a character string describing the new role.
 	 * Returns: an AtkRole for the new role.
 	 */
-	public static AtkRole roleRegister(char[] name)
+	public static AtkRole roleRegister(string name)
 	{
 		// AtkRole atk_role_register (const gchar *name);
 		return atk_role_register(Str.toStringz(name));
@@ -363,20 +364,20 @@ public class ObjectAtk : ObjectG
 	 * Gets the accessible name of the accessible.
 	 * Returns: a character string representing the accessible name of the object.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* atk_object_get_name (AtkObject *accessible);
-		return Str.toString(atk_object_get_name(atkObject)).dup;
+		return Str.toString(atk_object_get_name(atkObject));
 	}
 	
 	/**
 	 * Gets the accessible description of the accessible.
 	 * Returns: a character string representing the accessible descriptionof the accessible.
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// const gchar* atk_object_get_description (AtkObject *accessible);
-		return Str.toString(atk_object_get_description(atkObject)).dup;
+		return Str.toString(atk_object_get_description(atkObject));
 	}
 	
 	/**
@@ -509,7 +510,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 * name =  a character string to be set as the accessible name
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void atk_object_set_name (AtkObject *accessible,  const gchar *name);
 		atk_object_set_name(atkObject, Str.toStringz(name));
@@ -520,7 +521,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 * description =  a character string to be set as the accessible description
 	 */
-	public void setDescription(char[] description)
+	public void setDescription(string description)
 	{
 		// void atk_object_set_description (AtkObject *accessible,  const gchar *description);
 		atk_object_set_description(atkObject, Str.toStringz(description));
@@ -642,10 +643,10 @@ public class ObjectAtk : ObjectG
 	 * role =  The AtkRole whose name is required
 	 * Returns: the string describing the AtkRole
 	 */
-	public static char[] roleGetName(AtkRole role)
+	public static string roleGetName(AtkRole role)
 	{
 		// const gchar* atk_role_get_name (AtkRole role);
-		return Str.toString(atk_role_get_name(role)).dup;
+		return Str.toString(atk_role_get_name(role));
 	}
 	
 	/**
@@ -654,10 +655,10 @@ public class ObjectAtk : ObjectG
 	 * role =  The AtkRole whose localized name is required
 	 * Returns: the localized string describing the AtkRole
 	 */
-	public static char[] roleGetLocalizedName(AtkRole role)
+	public static string roleGetLocalizedName(AtkRole role)
 	{
 		// const gchar* atk_role_get_localized_name (AtkRole role);
-		return Str.toString(atk_role_get_localized_name(role)).dup;
+		return Str.toString(atk_role_get_localized_name(role));
 	}
 	
 	/**
@@ -666,7 +667,7 @@ public class ObjectAtk : ObjectG
 	 * name =  a string which is the (non-localized) name of an ATK role.
 	 * Returns: the AtkRole enumerated type corresponding to the specifiedname, or ATK_ROLE_INVALID if no matching role is found.
 	 */
-	public static AtkRole roleForName(char[] name)
+	public static AtkRole roleForName(string name)
 	{
 		// AtkRole atk_role_for_name (const gchar *name);
 		return atk_role_for_name(Str.toStringz(name));

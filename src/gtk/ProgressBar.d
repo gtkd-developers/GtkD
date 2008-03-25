@@ -49,6 +49,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ProgressBar;
@@ -112,7 +113,7 @@ public class ProgressBar : Progress
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkProgressBar;
 	}
@@ -169,7 +170,7 @@ public class ProgressBar : Progress
 	 * Params:
 	 * text =  a UTF-8 string, or NULL
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gtk_progress_bar_set_text (GtkProgressBar *pbar,  const gchar *text);
 		gtk_progress_bar_set_text(gtkProgressBar, Str.toStringz(text));
@@ -232,10 +233,10 @@ public class ProgressBar : Progress
 	 * if you change the text in the progress bar.
 	 * Returns: text, or NULL; this string is owned by the widgetand should not be modified or freed.
 	 */
-	public char[] getText()
+	public string getText()
 	{
 		// const gchar* gtk_progress_bar_get_text (GtkProgressBar *pbar);
-		return Str.toString(gtk_progress_bar_get_text(gtkProgressBar)).dup;
+		return Str.toString(gtk_progress_bar_get_text(gtkProgressBar));
 	}
 	
 	/**

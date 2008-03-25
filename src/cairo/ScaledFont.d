@@ -53,6 +53,7 @@
  * 	- cairo_scaled_font_t* -> ScaledFont
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.ScaledFont;
@@ -210,7 +211,7 @@ public class ScaledFont
 	 * utf8 =  a string of text, encoded in UTF-8
 	 * extents =  a cairo_text_extents_t which to store the retrieved extents.
 	 */
-	public void textExtents(char[] utf8, cairo_text_extents_t* extents)
+	public void textExtents(string utf8, cairo_text_extents_t* extents)
 	{
 		// void cairo_scaled_font_text_extents (cairo_scaled_font_t *scaled_font,  const char *utf8,  cairo_text_extents_t *extents);
 		cairo_scaled_font_text_extents(cairo_scaled_font, Str.toStringz(utf8), extents);

@@ -49,6 +49,7 @@
  * 	- GdkFont* -> Font
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FontSelectionDialog;
@@ -93,7 +94,7 @@ public class FontSelectionDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFontSelectionDialog;
 	}
@@ -121,7 +122,7 @@ public class FontSelectionDialog : Dialog
 	 * Params:
 	 * title = the title of the dialog box.
 	 */
-	public this (char[] title)
+	public this (string title)
 	{
 		// GtkWidget* gtk_font_selection_dialog_new (const gchar *title);
 		auto p = gtk_font_selection_dialog_new(Str.toStringz(title));
@@ -161,10 +162,10 @@ public class FontSelectionDialog : Dialog
 	 * if you want to compare two font descriptions.
 	 * Returns: A string with the name of the current font, or NULL if no fontis selected. You must free this string with g_free().
 	 */
-	public char[] getFontName()
+	public string getFontName()
 	{
 		// gchar* gtk_font_selection_dialog_get_font_name  (GtkFontSelectionDialog *fsd);
-		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog)).dup;
+		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog));
 	}
 	
 	/**
@@ -173,7 +174,7 @@ public class FontSelectionDialog : Dialog
 	 * fontname = a fontname.
 	 * Returns:TRUE if the font was found.
 	 */
-	public int setFontName(char[] fontname)
+	public int setFontName(string fontname)
 	{
 		// gboolean gtk_font_selection_dialog_set_font_name  (GtkFontSelectionDialog *fsd,  const gchar *fontname);
 		return gtk_font_selection_dialog_set_font_name(gtkFontSelectionDialog, Str.toStringz(fontname));
@@ -183,10 +184,10 @@ public class FontSelectionDialog : Dialog
 	 * Gets the text displayed in the preview area.
 	 * Returns:the text displayed in the preview area. This string is owned by the widget and should not be modified or freed.
 	 */
-	public char[] getPreviewText()
+	public string getPreviewText()
 	{
 		// const gchar* gtk_font_selection_dialog_get_preview_text  (GtkFontSelectionDialog *fsd);
-		return Str.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog)).dup;
+		return Str.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog));
 	}
 	
 	/**
@@ -194,7 +195,7 @@ public class FontSelectionDialog : Dialog
 	 * Params:
 	 * text = the text to display in the preview area.
 	 */
-	public void setPreviewText(char[] text)
+	public void setPreviewText(string text)
 	{
 		// void gtk_font_selection_dialog_set_preview_text  (GtkFontSelectionDialog *fsd,  const gchar *text);
 		gtk_font_selection_dialog_set_preview_text(gtkFontSelectionDialog, Str.toStringz(text));

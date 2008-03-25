@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Allocator;
@@ -116,7 +117,7 @@ public class Allocator
 	 * (GLib uses 128 elements per block by default.) The value must be between 1
 	 * and 65535.
 	 */
-	public this (char[] name, uint nPreallocs)
+	public this (string name, uint nPreallocs)
 	{
 		// GAllocator* g_allocator_new (const gchar *name,  guint n_preallocs);
 		auto p = g_allocator_new(Str.toStringz(name), nPreallocs);

@@ -61,6 +61,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeViewColumn;
@@ -108,7 +109,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTreeViewColumn;
 	}
@@ -136,7 +137,7 @@ public class TreeViewColumn : ObjectGtk
 	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
 	 *  column = the column number
 	 */
-	this(char [] header, CellRenderer renderer, char [] type, int column)
+	this(string header, CellRenderer renderer, string type, int column)
 	{
 		this(gtk_tree_view_column_new_with_attributes(
 		Str.toStringz(header),
@@ -267,7 +268,7 @@ public class TreeViewColumn : ObjectGtk
 	 * attribute =  An attribute on the renderer
 	 * column =  The column position on the model to get the attribute from.
 	 */
-	public void addAttribute(CellRenderer cellRenderer, char[] attribute, int column)
+	public void addAttribute(CellRenderer cellRenderer, string attribute, int column)
 	{
 		// void gtk_tree_view_column_add_attribute (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  const gchar *attribute,  gint column);
 		gtk_tree_view_column_add_attribute(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), Str.toStringz(attribute), column);
@@ -506,7 +507,7 @@ public class TreeViewColumn : ObjectGtk
 	 * Params:
 	 * title =  The title of the tree_column.
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_tree_view_column_set_title (GtkTreeViewColumn *tree_column,  const gchar *title);
 		gtk_tree_view_column_set_title(gtkTreeViewColumn, Str.toStringz(title));
@@ -516,10 +517,10 @@ public class TreeViewColumn : ObjectGtk
 	 * Returns the title of the widget.
 	 * Returns: the title of the column. This string should not bemodified or freed.
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_tree_view_column_get_title (GtkTreeViewColumn *tree_column);
-		return Str.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn)).dup;
+		return Str.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn));
 	}
 	
 	/**

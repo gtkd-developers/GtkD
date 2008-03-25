@@ -53,6 +53,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.MessageDialog;
@@ -116,7 +117,7 @@ public class MessageDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkMessageDialog;
 	}
@@ -153,7 +154,7 @@ public class MessageDialog : Dialog
 	 * Returns:
 	 *  a new GtkMessageDialog
 	 */
-	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, char[] messageFormat, char[] message=null )
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, string messageFormat, string message=null )
 	{
 		this(parent, flags, type, buttons, false, messageFormat, message );
 	}
@@ -194,7 +195,7 @@ public class MessageDialog : Dialog
 	 *  messageFormat = printf()-style format string, or NULL
 	 *  message = the message - should be null, any formatting should be done prior to call this constructor
 	 */
-	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, char[] messageFormat, char[] message=null )
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, string messageFormat, string message=null )
 	{
 		if ( markup )
 		{
@@ -240,7 +241,7 @@ public class MessageDialog : Dialog
 	 * Params:
 	 * str =  markup string (see Pango markup format)
 	 */
-	public void setMarkup(char[] str)
+	public void setMarkup(string str)
 	{
 		// void gtk_message_dialog_set_markup (GtkMessageDialog *message_dialog,  const gchar *str);
 		gtk_message_dialog_set_markup(gtkMessageDialog, Str.toStringz(str));
@@ -268,7 +269,7 @@ public class MessageDialog : Dialog
 	 * messageFormat =  printf()-style format string, or NULL
 	 * ... =  arguments for message_format
 	 */
-	public void formatSecondaryText(char[] messageFormat, ... )
+	public void formatSecondaryText(string messageFormat, ... )
 	{
 		// void gtk_message_dialog_format_secondary_text  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
 		gtk_message_dialog_format_secondary_text(gtkMessageDialog, Str.toStringz(messageFormat));
@@ -294,7 +295,7 @@ public class MessageDialog : Dialog
 	 *  Pango markup format), or NULL
 	 * ... =  arguments for message_format
 	 */
-	public void formatSecondaryMarkup(char[] messageFormat, ... )
+	public void formatSecondaryMarkup(string messageFormat, ... )
 	{
 		// void gtk_message_dialog_format_secondary_markup  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
 		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, Str.toStringz(messageFormat));

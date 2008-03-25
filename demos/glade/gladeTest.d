@@ -13,8 +13,8 @@ version(Tango){
     import tango.io.Stdout;
     import tango.text.Util;
 
-    void writefln( char[] frm, ... ){
-        char[] frm2 = substitute( frm, "%s", "{}" );
+    void writefln( string frm, ... ){
+        string frm2 = substitute( frm, "%s", "{}" );
         Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
     }
 }
@@ -30,9 +30,9 @@ else{
  *
  */
 
-int main(char[][] args)
+int main(string[] args)
 {
-	char[] gladefile;
+	string gladefile;
 
 	GtkD.init(args);
 

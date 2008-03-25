@@ -44,6 +44,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeNode;
@@ -62,7 +63,7 @@ private import gtkc.gtk;
  */
 public interface TreeNode
 {
-	char[] getNodeValue(int column);
+	string getNodeValue(int column);
 	int columnCount();
 }
 

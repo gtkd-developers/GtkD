@@ -55,6 +55,7 @@
  * 	- GtkBuilder* -> Builder
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.BuildableIF;
@@ -101,7 +102,7 @@ public interface BuildableIF
 	 * Params:
 	 * name =  name to set
 	 */
-	public void buildableSetName(char[] name);
+	public void buildableSetName(string name);
 	
 	/**
 	 * Gets the name of the buildable object.
@@ -111,7 +112,7 @@ public interface BuildableIF
 	 * Since 2.12
 	 * Returns: the name set with gtk_buildable_set_name()
 	 */
-	public char[] buildableGetName();
+	public string buildableGetName();
 	
 	/**
 	 */
@@ -125,7 +126,7 @@ public interface BuildableIF
 	 * child =  child to add
 	 * type =  kind of child or NULL
 	 */
-	public void addChild(Builder builder, ObjectG child, char[] type);
+	public void addChild(Builder builder, ObjectG child, string type);
 	
 	/**
 	 * Sets the property name name to value on the buildable object.
@@ -135,7 +136,7 @@ public interface BuildableIF
 	 * name =  name of property
 	 * value =  value of property
 	 */
-	public void setBuildableProperty(Builder builder, char[] name, Value value);
+	public void setBuildableProperty(Builder builder, string name, Value value);
 	
 	/**
 	 * Constructs a child of buildable with the name name.
@@ -147,7 +148,7 @@ public interface BuildableIF
 	 * name =  name of child to construct
 	 * Returns: the constructed child
 	 */
-	public ObjectG constructChild(Builder builder, char[] name);
+	public ObjectG constructChild(Builder builder, string name);
 	
 	/**
 	 * This is called for each unknown element under <child>.
@@ -161,7 +162,7 @@ public interface BuildableIF
 	 *  to parser functions
 	 * Returns: TRUE if a object has a custom implementation, FALSE if it doesn't.
 	 */
-	public int customTagStart(Builder builder, ObjectG child, char[] tagname, GMarkupParser* parser, void** data);
+	public int customTagStart(Builder builder, ObjectG child, string tagname, GMarkupParser* parser, void** data);
 	
 	/**
 	 * This is called at the end of each custom element handled by
@@ -173,7 +174,7 @@ public interface BuildableIF
 	 * tagname =  name of tag
 	 * data =  user data that will be passed in to parser functions
 	 */
-	public void customTagEnd(Builder builder, ObjectG child, char[] tagname, void** data);
+	public void customTagEnd(Builder builder, ObjectG child, string tagname, void** data);
 	
 	/**
 	 * This is similar to gtk_buildable_parser_finished() but is
@@ -185,7 +186,7 @@ public interface BuildableIF
 	 * tagname =  the name of the tag
 	 * data =  user data created in custom_tag_start
 	 */
-	public void customFinished(Builder builder, ObjectG child, char[] tagname, void* data);
+	public void customFinished(Builder builder, ObjectG child, string tagname, void* data);
 	
 	/**
 	 * Called when the builder finishes the parsing of a
@@ -207,5 +208,5 @@ public interface BuildableIF
 	 * childname =  name of child
 	 * Returns: the internal child of the buildable object
 	 */
-	public ObjectG getInternalChild(Builder builder, char[] childname);
+	public ObjectG getInternalChild(Builder builder, string childname);
 }

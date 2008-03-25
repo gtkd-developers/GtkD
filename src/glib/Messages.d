@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Messages;
@@ -91,7 +92,7 @@ public class Messages
 	 * format = the message format. See the printf() documentation.
 	 * ... = the parameters to insert into the format string.
 	 */
-	public static void print(char[] format, ... )
+	public static void print(string format, ... )
 	{
 		// void g_print (const gchar *format,  ...);
 		g_print(Str.toStringz(format));
@@ -122,7 +123,7 @@ public class Messages
 	 * format = the message format. See the printf() documentation.
 	 * ... = the parameters to insert into the format string.
 	 */
-	public static void printerr(char[] format, ... )
+	public static void printerr(string format, ... )
 	{
 		// void g_printerr (const gchar *format,  ...);
 		g_printerr(Str.toStringz(format));
@@ -147,7 +148,7 @@ public class Messages
 	/**
 	 * Params:
 	 */
-	public static void warnMessage(char[] domain, char[] file, int line, char[] func, char[] warnexpr)
+	public static void warnMessage(string domain, string file, int line, string func, string warnexpr)
 	{
 		// void g_warn_message (const char *domain,  const char *file,  int line,  const char *func,  const char *warnexpr);
 		g_warn_message(Str.toStringz(domain), Str.toStringz(file), line, Str.toStringz(func), Str.toStringz(warnexpr));
@@ -191,7 +192,7 @@ public class Messages
 		 * If prg_name is NULL, g_get_prgname() is called to get the program name
 		 * (which will work correctly if gdk_init() or gtk_init() has been called).
 		 */
-		public static void onErrorQuery(char[] prgName)
+		public static void onErrorQuery(string prgName)
 		{
 			// void g_on_error_query (const gchar *prg_name);
 			g_on_error_query(Str.toStringz(prgName));
@@ -206,7 +207,7 @@ public class Messages
 		 * If prg_name is NULL, g_get_prgname() is called to get the program name
 		 * (which will work correctly if gdk_init() or gtk_init() has been called).
 		 */
-		public static void onErrorStackTrace(char[] prgName)
+		public static void onErrorStackTrace(string prgName)
 		{
 			// void g_on_error_stack_trace (const gchar *prg_name);
 			g_on_error_stack_trace(Str.toStringz(prgName));

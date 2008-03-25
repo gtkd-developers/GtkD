@@ -57,6 +57,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.SizeGroup;
@@ -140,7 +141,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSizeGroup;
 	}

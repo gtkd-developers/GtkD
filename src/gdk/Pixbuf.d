@@ -62,6 +62,7 @@
  * 	- GdkPixbufFormat* -> PixbufFormat
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Pixbuf;
@@ -794,10 +795,10 @@ public class Pixbuf
 	 * key =  a nul-terminated string.
 	 * Returns: the value associated with key. This is a nul-terminated string that should not be freed or NULL if key was not found.
 	 */
-	public char[] getOption(char[] key)
+	public string getOption(string key)
 	{
 		// const gchar* gdk_pixbuf_get_option (GdkPixbuf *pixbuf,  const gchar *key);
-		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key))).dup;
+		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key)));
 	}
 	
 	/**
@@ -808,7 +809,7 @@ public class Pixbuf
 	 * filename =  Name of file to load, in the GLib file name encoding
 	 * error =  Return location for an error
 	 */
-	public this (char[] filename, GError** error)
+	public this (string filename, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file (const char *filename,  GError **error);
 		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), error);
@@ -834,7 +835,7 @@ public class Pixbuf
 	 * height =  The height the image should have or -1 to not constrain the height
 	 * error =  Return location for an error
 	 */
-	public this (char[] filename, int width, int height, GError** error)
+	public this (string filename, int width, int height, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size (const char *filename,  int width,  int height,  GError **error);
 		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error);
@@ -867,7 +868,7 @@ public class Pixbuf
 	 * preserveAspectRatio =  TRUE to preserve the image's aspect ratio
 	 * error =  Return location for an error
 	 */
-	public this (char[] filename, int width, int height, int preserveAspectRatio, GError** error)
+	public this (string filename, int width, int height, int preserveAspectRatio, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
 		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error);
@@ -892,7 +893,7 @@ public class Pixbuf
 	 * error =  return location for error, or NULL
 	 * Returns: whether an error was set
 	 */
-	public int savev(char[] filename, char[] type, char** optionKeys, char** optionValues, GError** error)
+	public int savev(string filename, string type, char** optionKeys, char** optionValues, GError** error)
 	{
 		// gboolean gdk_pixbuf_savev (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  char **option_keys,  char **option_values,  GError **error);
 		return gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), optionKeys, optionValues, error);
@@ -909,7 +910,7 @@ public class Pixbuf
 	 * ... =  list of key-value save options
 	 * Returns: whether an error was set
 	 */
-	public int save(char[] filename, char[] type, GError** error, ... )
+	public int save(string filename, string type, GError** error, ... )
 	{
 		// gboolean gdk_pixbuf_save (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  GError **error,  ...);
 		return gdk_pixbuf_save(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), error);
@@ -933,7 +934,7 @@ public class Pixbuf
 	 * ... =  list of key-value save options
 	 * Returns: whether an error was set
 	 */
-	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, char[] type, GError** error, ... )
+	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, string type, GError** error, ... )
 	{
 		// gboolean gdk_pixbuf_save_to_callback (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  GError **error,  ...);
 		return gdk_pixbuf_save_to_callback(gdkPixbuf, saveFunc, userData, Str.toStringz(type), error);
@@ -954,7 +955,7 @@ public class Pixbuf
 	 * error =  return location for error, or NULL
 	 * Returns: whether an error was set
 	 */
-	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, char[] type, char** optionKeys, char** optionValues, GError** error)
+	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, char** optionKeys, char** optionValues, GError** error)
 	{
 		// gboolean gdk_pixbuf_save_to_callbackv (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  char **option_keys,  char **option_values,  GError **error);
 		return gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), optionKeys, optionValues, error);
@@ -978,7 +979,7 @@ public class Pixbuf
 	 * ... =  list of key-value save options
 	 * Returns: whether an error was set
 	 */
-	public int saveToBuffer(char** buffer, uint* bufferSize, char[] type, GError** error, ... )
+	public int saveToBuffer(char** buffer, uint* bufferSize, string type, GError** error, ... )
 	{
 		// gboolean gdk_pixbuf_save_to_buffer (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  GError **error,  ...);
 		return gdk_pixbuf_save_to_buffer(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), error);
@@ -997,7 +998,7 @@ public class Pixbuf
 	 * error =  return location for error, or NULL
 	 * Returns: whether an error was set
 	 */
-	public int saveToBufferv(char** buffer, uint* bufferSize, char[] type, char** optionKeys, char** optionValues, GError** error)
+	public int saveToBufferv(char** buffer, uint* bufferSize, string type, char** optionKeys, char** optionValues, GError** error)
 	{
 		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
 		return gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), optionKeys, optionValues, error);

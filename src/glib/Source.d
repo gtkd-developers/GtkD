@@ -50,6 +50,7 @@
  * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Source;

@@ -49,6 +49,7 @@
  * 	- GdkColor* -> Color
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ColorSelection;
@@ -89,7 +90,7 @@ public class ColorSelection : VBox
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkColorSelection;
 	}
@@ -328,7 +329,7 @@ public class ColorSelection : VBox
 	 * nColors =  return location for length of array.
 	 * Returns: TRUE if a palette was successfully parsed.
 	 */
-	public static int paletteFromString(char[] str, GdkColor** colors, int* nColors)
+	public static int paletteFromString(string str, GdkColor** colors, int* nColors)
 	{
 		// gboolean gtk_color_selection_palette_from_string  (const gchar *str,  GdkColor **colors,  gint *n_colors);
 		return gtk_color_selection_palette_from_string(Str.toStringz(str), colors, nColors);
@@ -341,10 +342,10 @@ public class ColorSelection : VBox
 	 * nColors =  length of the array.
 	 * Returns: allocated string encoding the palette.
 	 */
-	public static char[] paletteToString(Color colors, int nColors)
+	public static string paletteToString(Color colors, int nColors)
 	{
 		// gchar* gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
-		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors)).dup;
+		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors));
 	}
 	
 	/**

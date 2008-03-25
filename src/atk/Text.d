@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Text;
@@ -256,10 +257,10 @@ public class Text
 	 * endOffset =  end position
 	 * Returns: the text from start_offset up to, but not including end_offset.
 	 */
-	public char[] getText(int startOffset, int endOffset)
+	public string getText(int startOffset, int endOffset)
 	{
 		// gchar* atk_text_get_text (AtkText *text,  gint start_offset,  gint end_offset);
-		return Str.toString(atk_text_get_text(atkText, startOffset, endOffset)).dup;
+		return Str.toString(atk_text_get_text(atkText, startOffset, endOffset));
 	}
 	
 	/**
@@ -309,10 +310,10 @@ public class Text
 	 *  returned substring
 	 * Returns: the text after offset bounded by the specified boundary_type.
 	 */
-	public char[] getTextAfterOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
+	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_after_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset)).dup;
+		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset));
 	}
 	
 	/**
@@ -357,10 +358,10 @@ public class Text
 	 *  returned substring
 	 * Returns: the text at offset bounded by the specified boundary_type.
 	 */
-	public char[] getTextAtOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
+	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_at_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset)).dup;
+		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset));
 	}
 	
 	/**
@@ -403,10 +404,10 @@ public class Text
 	 *  returned substring
 	 * Returns: the text before offset bounded by the specified boundary_type.
 	 */
-	public char[] getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
+	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset)).dup;
+		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset));
 	}
 	
 	/**
@@ -565,10 +566,10 @@ public class Text
 	 * the selected region
 	 * Returns: the selected text.
 	 */
-	public char[] getSelection(int selectionNum, int* startOffset, int* endOffset)
+	public string getSelection(int selectionNum, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_selection (AtkText *text,  gint selection_num,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset)).dup;
+		return Str.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset));
 	}
 	
 	/**
@@ -649,7 +650,7 @@ public class Text
 	 * name =  a name string
 	 * Returns: an AtkTextAttribute associated with name
 	 */
-	public static AtkTextAttribute attributeRegister(char[] name)
+	public static AtkTextAttribute attributeRegister(string name)
 	{
 		// AtkTextAttribute atk_text_attribute_register (const gchar *name);
 		return atk_text_attribute_register(Str.toStringz(name));
@@ -661,10 +662,10 @@ public class Text
 	 * attr =  The AtkTextAttribute whose name is required
 	 * Returns: a string containing the name; this string should not be freed
 	 */
-	public static char[] attributeGetName(AtkTextAttribute attr)
+	public static string attributeGetName(AtkTextAttribute attr)
 	{
 		// const gchar* atk_text_attribute_get_name (AtkTextAttribute attr);
-		return Str.toString(atk_text_attribute_get_name(attr)).dup;
+		return Str.toString(atk_text_attribute_get_name(attr));
 	}
 	
 	/**
@@ -673,7 +674,7 @@ public class Text
 	 * name =  a string which is the (non-localized) name of an ATK text attribute.
 	 * Returns: the AtkTextAttribute enumerated type corresponding to the specifiedname, or ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
 	 */
-	public static AtkTextAttribute attributeForName(char[] name)
+	public static AtkTextAttribute attributeForName(string name)
 	{
 		// AtkTextAttribute atk_text_attribute_for_name (const gchar *name);
 		return atk_text_attribute_for_name(Str.toStringz(name));
@@ -686,9 +687,9 @@ public class Text
 	 * index =  The index of the required value
 	 * Returns: a string containing the value; this string should not be freed;NULL is returned if there are no values maintained for the attr value. Signal DetailsThe "text-attributes-changed" signalvoid user_function (AtkText *atktext, gpointer user_data) : Run LastThe "text-attributes-changed" signal is emitted when the text attributes of the text of an object which implements AtkText changes.
 	 */
-	public static char[] attributeGetValue(AtkTextAttribute attr, int index)
+	public static string attributeGetValue(AtkTextAttribute attr, int index)
 	{
 		// const gchar* atk_text_attribute_get_value (AtkTextAttribute attr,  gint index_);
-		return Str.toString(atk_text_attribute_get_value(attr, index)).dup;
+		return Str.toString(atk_text_attribute_get_value(attr, index));
 	}
 }

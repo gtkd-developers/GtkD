@@ -50,6 +50,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgFontsetSimple;
@@ -90,7 +91,7 @@ public class PgFontsetSimple : PgFontset
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoFontsetSimple;
 	}

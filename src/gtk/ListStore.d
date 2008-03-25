@@ -58,6 +58,7 @@
  * 	- GtkTreeIter* -> TreeIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ListStore;
@@ -212,7 +213,7 @@ public class ListStore : TreeModel, BuildableIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkListStore;
 	}
@@ -281,7 +282,7 @@ public class ListStore : TreeModel, BuildableIF
 	}
 	
 	/** */
-	void set(TreeIter iter, int [] columns, char[][] values)
+	void set(TreeIter iter, int [] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
@@ -296,7 +297,7 @@ public class ListStore : TreeModel, BuildableIF
 	}
 	
 	/** */
-	void setValue(TreeIter iter, int column, char[] value)
+	void setValue(TreeIter iter, int column, string value)
 	{
 		Value v = new Value(value);
 		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());

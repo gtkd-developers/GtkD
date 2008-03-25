@@ -59,6 +59,7 @@
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellView;
@@ -100,7 +101,7 @@ public class CellView : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellView;
 	}
@@ -131,7 +132,7 @@ public class CellView : Widget
 	 * Returns:
 	 *  A newly created GtkCellView widget.
 	 */
-	public this (char[] text, bool markup=true)
+	public this (string text, bool markup=true)
 	{
 		if ( markup )
 		{

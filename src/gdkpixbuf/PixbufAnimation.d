@@ -52,6 +52,7 @@
  * 	- GdkPixbufAnimation* -> PixbufAnimation
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdkpixbuf.PixbufAnimation;
@@ -93,7 +94,7 @@ public class PixbufAnimation : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkPixbufAnimation;
 	}
@@ -125,7 +126,7 @@ public class PixbufAnimation : ObjectG
 	 * filename =  Name of file to load, in the GLib file name encoding
 	 * error =  return location for error
 	 */
-	public this (char[] filename, GError** error)
+	public this (string filename, GError** error)
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file (const char *filename,  GError **error);
 		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), error);

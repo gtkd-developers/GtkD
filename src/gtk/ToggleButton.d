@@ -49,6 +49,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ToggleButton;
@@ -113,7 +114,7 @@ public class ToggleButton : Button
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkToggleButton;
 	}
@@ -141,7 +142,7 @@ public class ToggleButton : Button
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{

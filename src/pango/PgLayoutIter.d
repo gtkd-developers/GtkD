@@ -48,6 +48,7 @@
  * 	- PangoLayoutIter* -> PgLayoutIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgLayoutIter;

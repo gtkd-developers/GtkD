@@ -49,6 +49,7 @@
  * 	- PangoGlyphString* -> PgGlyphString
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgGlyphString;
@@ -224,7 +225,7 @@ public class PgGlyphString
 	 *  or end (TRUE) of the character.
 	 * xPos =  location to store result
 	 */
-	public void indexToX(char[] text, int length, PangoAnalysis* analysis, int index, int trailing, int* xPos)
+	public void indexToX(string text, int length, PangoAnalysis* analysis, int index, int trailing, int* xPos)
 	{
 		// void pango_glyph_string_index_to_x (PangoGlyphString *glyphs,  char *text,  int length,  PangoAnalysis *analysis,  int index_,  gboolean trailing,  int *x_pos);
 		pango_glyph_string_index_to_x(pangoGlyphString, Str.toStringz(text), length, analysis, index, trailing, xPos);
@@ -247,7 +248,7 @@ public class PgGlyphString
 	 *  whether the user clicked on the leading or trailing
 	 *  edge of the character.
 	 */
-	public void xToIndex(char[] text, int length, PangoAnalysis* analysis, int xPos, int* index, int* trailing)
+	public void xToIndex(string text, int length, PangoAnalysis* analysis, int xPos, int* index, int* trailing)
 	{
 		// void pango_glyph_string_x_to_index (PangoGlyphString *glyphs,  char *text,  int length,  PangoAnalysis *analysis,  int x_pos,  int *index_,  int *trailing);
 		pango_glyph_string_x_to_index(pangoGlyphString, Str.toStringz(text), length, analysis, xPos, index, trailing);
@@ -265,7 +266,7 @@ public class PgGlyphString
 	 * logicalWidths =  an array whose length is g_utf8_strlen (text, length)
 	 *  to be filled in with the resulting character widths.
 	 */
-	public void getLogicalWidths(char[] text, int length, int embeddingLevel, int* logicalWidths)
+	public void getLogicalWidths(string text, int length, int embeddingLevel, int* logicalWidths)
 	{
 		// void pango_glyph_string_get_logical_widths  (PangoGlyphString *glyphs,  const char *text,  int length,  int embedding_level,  int *logical_widths);
 		pango_glyph_string_get_logical_widths(pangoGlyphString, Str.toStringz(text), length, embeddingLevel, logicalWidths);

@@ -64,6 +64,7 @@
  * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.Context;
@@ -1489,7 +1490,7 @@ public class Context
 	 * Params:
 	 * utf8 =  a string of text encoded in UTF-8
 	 */
-	public void textPath(char[] utf8)
+	public void textPath(string utf8)
 	{
 		// void cairo_text_path (cairo_t *cr,  const char *utf8);
 		cairo_text_path(cairo, Str.toStringz(utf8));
@@ -1727,7 +1728,7 @@ public class Context
 	 * slant =  the slant for the font
 	 * weight =  the weight for the font
 	 */
-	public void selectFontFace(char[] family, cairo_font_slant_t slant, cairo_font_weight_t weight)
+	public void selectFontFace(string family, cairo_font_slant_t slant, cairo_font_weight_t weight)
 	{
 		// void cairo_select_font_face (cairo_t *cr,  const char *family,  cairo_font_slant_t slant,  cairo_font_weight_t weight);
 		cairo_select_font_face(cairo, Str.toStringz(family), slant, weight);
@@ -1891,7 +1892,7 @@ public class Context
 	 * Params:
 	 * utf8 =  a string of text encoded in UTF-8
 	 */
-	public void showText(char[] utf8)
+	public void showText(string utf8)
 	{
 		// void cairo_show_text (cairo_t *cr,  const char *utf8);
 		cairo_show_text(cairo, Str.toStringz(utf8));
@@ -1940,7 +1941,7 @@ public class Context
 	 * extents =  a cairo_text_extents_t object into which the results
 	 * will be stored
 	 */
-	public void textExtents(char[] utf8, cairo_text_extents_t* extents)
+	public void textExtents(string utf8, cairo_text_extents_t* extents)
 	{
 		// void cairo_text_extents (cairo_t *cr,  const char *utf8,  cairo_text_extents_t *extents);
 		cairo_text_extents(cairo, Str.toStringz(utf8), extents);

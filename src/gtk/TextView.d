@@ -68,6 +68,7 @@
  * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextView;
@@ -115,7 +116,7 @@ public class TextView : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextView;
 	}
@@ -138,7 +139,7 @@ public class TextView : Container
 	/**
 	 * Get the text line at the pixel y
 	 */
-	char[] getLineTextAt(gint y)
+	string getLineTextAt(gint y)
 	{
 		
 		TextIter iter = new TextIter();
@@ -159,7 +160,7 @@ public class TextView : Container
 	 * Params:
 	 *  text = the text to append
 	 */
-	void insertText(char[] text)
+	void insertText(string text)
 	{
 		TextBuffer buf = getBuffer();
 		buf.insertAtCursor(text);
@@ -170,7 +171,7 @@ public class TextView : Container
 	 * Params:
 	 *  text = the text to append
 	 */
-	void appendText(char[] text, bool ensureVisible=true)
+	void appendText(string text, bool ensureVisible=true)
 	body
 	{
 		TextBuffer buf = getBuffer();
@@ -337,10 +338,10 @@ public class TextView : Container
 		return consumed;
 	}
 	
-	void delegate(char[], TextView)[] onInsertAtCursorListeners;
+	void delegate(string, TextView)[] onInsertAtCursorListeners;
 	/**
 	 */
-	void addOnInsertAtCursor(void delegate(char[], TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertAtCursor(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
 		{
@@ -359,7 +360,7 @@ public class TextView : Container
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], TextView) dlg ; textView.onInsertAtCursorListeners )
+		foreach ( void delegate(string, TextView) dlg ; textView.onInsertAtCursorListeners )
 		{
 			dlg(Str.toString(arg1), textView);
 		}

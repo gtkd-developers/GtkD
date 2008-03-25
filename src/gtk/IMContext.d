@@ -51,6 +51,7 @@
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.IMContext;
@@ -87,7 +88,7 @@ public class IMContext : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkIMContext;
 	}
@@ -111,10 +112,10 @@ public class IMContext : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(char[], IMContext)[] onCommitListeners;
+	void delegate(string, IMContext)[] onCommitListeners;
 	/**
 	 */
-	void addOnCommit(void delegate(char[], IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCommit(void delegate(string, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("commit" in connectedSignals) )
 		{
@@ -133,7 +134,7 @@ public class IMContext : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], IMContext) dlg ; iMContext.onCommitListeners )
+		foreach ( void delegate(string, IMContext) dlg ; iMContext.onCommitListeners )
 		{
 			dlg(Str.toString(arg1), iMContext);
 		}
@@ -415,7 +416,7 @@ public class IMContext : ObjectG
 	 * len =  the length of text, or -1 if text is nul-terminated
 	 * cursorIndex =  the byte index of the insertion cursor within text.
 	 */
-	public void setSurrounding(char[] text, int len, int cursorIndex)
+	public void setSurrounding(string text, int len, int cursorIndex)
 	{
 		// void gtk_im_context_set_surrounding (GtkIMContext *context,  const gchar *text,  gint len,  gint cursor_index);
 		gtk_im_context_set_surrounding(gtkIMContext, Str.toStringz(text), len, cursorIndex);

@@ -45,6 +45,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.Version;
@@ -148,9 +149,9 @@ public class Version
 	 * CAIRO_VERSION_STRING and CAIRO_VERSION.
 	 * Returns: a string containing the version.
 	 */
-	public static char[] cairoVersionString()
+	public static string cairoVersionString()
 	{
 		// const char* cairo_version_string (void);
-		return Str.toString(cairo_version_string()).dup;
+		return Str.toString(cairo_version_string());
 	}
 }

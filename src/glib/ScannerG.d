@@ -47,6 +47,7 @@
  * 	- GScanner* -> ScannerG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.ScannerG;
@@ -161,7 +162,7 @@ public class ScannerG
 	 * text = the text buffer to scan.
 	 * textLen = the length of the text buffer.
 	 */
-	public void inputText(char[] text, uint textLen)
+	public void inputText(string text, uint textLen)
 	{
 		// void g_scanner_input_text (GScanner *scanner,  const gchar *text,  guint text_len);
 		g_scanner_input_text(gScanner, Str.toStringz(text), textLen);
@@ -280,7 +281,7 @@ public class ScannerG
 	 * symbol = the symbol to add.
 	 * value = the value of the symbol.
 	 */
-	public void scopeAddSymbol(uint scopeId, char[] symbol, void* value)
+	public void scopeAddSymbol(uint scopeId, string symbol, void* value)
 	{
 		// void g_scanner_scope_add_symbol (GScanner *scanner,  guint scope_id,  const gchar *symbol,  gpointer value);
 		g_scanner_scope_add_symbol(gScanner, scopeId, Str.toStringz(symbol), value);
@@ -309,7 +310,7 @@ public class ScannerG
 	 * symbol = the symbol to look up.
 	 * Returns:the value of symbol in the given scope, or NULLif symbol is not bound in the given scope.
 	 */
-	public void* scopeLookupSymbol(uint scopeId, char[] symbol)
+	public void* scopeLookupSymbol(uint scopeId, string symbol)
 	{
 		// gpointer g_scanner_scope_lookup_symbol (GScanner *scanner,  guint scope_id,  const gchar *symbol);
 		return g_scanner_scope_lookup_symbol(gScanner, scopeId, Str.toStringz(symbol));
@@ -321,7 +322,7 @@ public class ScannerG
 	 * scopeId = the scope id.
 	 * symbol = the symbol to remove.
 	 */
-	public void scopeRemoveSymbol(uint scopeId, char[] symbol)
+	public void scopeRemoveSymbol(uint scopeId, string symbol)
 	{
 		// void g_scanner_scope_remove_symbol (GScanner *scanner,  guint scope_id,  const gchar *symbol);
 		g_scanner_scope_remove_symbol(gScanner, scopeId, Str.toStringz(symbol));
@@ -334,7 +335,7 @@ public class ScannerG
 	 * symbol = the symbol to look up.
 	 * Returns:the value of symbol in the current scope, or NULLif symbol is not bound in the current scope.
 	 */
-	public void* lookupSymbol(char[] symbol)
+	public void* lookupSymbol(string symbol)
 	{
 		// gpointer g_scanner_lookup_symbol (GScanner *scanner,  const gchar *symbol);
 		return g_scanner_lookup_symbol(gScanner, Str.toStringz(symbol));
@@ -347,7 +348,7 @@ public class ScannerG
 	 * documentation.
 	 * ... = the parameters to insert into the format string.
 	 */
-	public void warn(char[] format, ... )
+	public void warn(string format, ... )
 	{
 		// void g_scanner_warn (GScanner *scanner,  const gchar *format,  ...);
 		g_scanner_warn(gScanner, Str.toStringz(format));
@@ -360,7 +361,7 @@ public class ScannerG
 	 * documentation.
 	 * ... = the parameters to insert into the format string.
 	 */
-	public void error(char[] format, ... )
+	public void error(string format, ... )
 	{
 		// void g_scanner_error (GScanner *scanner,  const gchar *format,  ...);
 		g_scanner_error(gScanner, Str.toStringz(format));
@@ -390,7 +391,7 @@ public class ScannerG
 	 * isError = if TRUE it is output as an error. If FALSE it is output as a
 	 *  warning.
 	 */
-	public void unexpToken(GTokenType expectedToken, char[] identifierSpec, char[] symbolSpec, char[] symbolName, char[] message, int isError)
+	public void unexpToken(GTokenType expectedToken, string identifierSpec, string symbolSpec, string symbolName, string message, int isError)
 	{
 		// void g_scanner_unexp_token (GScanner *scanner,  GTokenType expected_token,  const gchar *identifier_spec,  const gchar *symbol_spec,  const gchar *symbol_name,  const gchar *message,  gint is_error);
 		g_scanner_unexp_token(gScanner, expectedToken, Str.toStringz(identifierSpec), Str.toStringz(symbolSpec), Str.toStringz(symbolName), Str.toStringz(message), isError);

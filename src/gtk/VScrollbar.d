@@ -48,6 +48,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.VScrollbar;
@@ -80,7 +81,7 @@ public class VScrollbar : Scrollbar
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkVScrollbar;
 	}

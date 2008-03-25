@@ -48,6 +48,7 @@
  * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Table;
@@ -473,10 +474,10 @@ public class Table
 	 * column =  a gint representing a column in table
 	 * Returns: a gchar* representing the column description, or NULLif value does not implement this interface.
 	 */
-	public char[] getColumnDescription(int column)
+	public string getColumnDescription(int column)
 	{
 		// const gchar* atk_table_get_column_description (AtkTable *table,  gint column);
-		return Str.toString(atk_table_get_column_description(atkTable, column)).dup;
+		return Str.toString(atk_table_get_column_description(atkTable, column));
 	}
 	
 	/**
@@ -485,10 +486,10 @@ public class Table
 	 * row =  a gint representing a row in table
 	 * Returns: a gchar* representing the row description, or NULLif value does not implement this interface.
 	 */
-	public char[] getRowDescription(int row)
+	public string getRowDescription(int row)
 	{
 		// const gchar* atk_table_get_row_description (AtkTable *table,  gint row);
-		return Str.toString(atk_table_get_row_description(atkTable, row)).dup;
+		return Str.toString(atk_table_get_row_description(atkTable, row));
 	}
 	
 	/**
@@ -561,7 +562,7 @@ public class Table
 	 * description =  a gchar representing the description text
 	 * to set for the specified row of table
 	 */
-	public void setRowDescription(int row, char[] description)
+	public void setRowDescription(int row, string description)
 	{
 		// void atk_table_set_row_description (AtkTable *table,  gint row,  const gchar *description);
 		atk_table_set_row_description(atkTable, row, Str.toStringz(description));
@@ -574,7 +575,7 @@ public class Table
 	 * description =  a gchar representing the description text
 	 * to set for the specified column of the table
 	 */
-	public void setColumnDescription(int column, char[] description)
+	public void setColumnDescription(int column, string description)
 	{
 		// void atk_table_set_column_description (AtkTable *table,  gint column,  const gchar *description);
 		atk_table_set_column_description(atkTable, column, Str.toStringz(description));

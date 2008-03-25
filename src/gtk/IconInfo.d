@@ -50,6 +50,7 @@
  * 	- GtkIconInfo* -> IconInfo
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.IconInfo;
@@ -257,10 +258,10 @@ public class IconInfo
 	 * Since 2.4
 	 * Returns: the filename for the icon, or NULL if gtk_icon_info_get_builtin_pixbuf() should be used instead. The return value is owned by GTK+ and should not be modified or freed.
 	 */
-	public char[] getFilename()
+	public string getFilename()
 	{
 		// const gchar* gtk_icon_info_get_filename (GtkIconInfo *icon_info);
-		return Str.toString(gtk_icon_info_get_filename(gtkIconInfo)).dup;
+		return Str.toString(gtk_icon_info_get_filename(gtkIconInfo));
 	}
 	
 	/**
@@ -384,9 +385,9 @@ public class IconInfo
 	 * icon theme.
 	 * Returns: the display name for the icon or NULL, if the icon doesn't have a specified display name. This value is owned icon_info and must not be modified or free.
 	 */
-	public char[] getDisplayName()
+	public string getDisplayName()
 	{
 		// const gchar* gtk_icon_info_get_display_name (GtkIconInfo *icon_info);
-		return Str.toString(gtk_icon_info_get_display_name(gtkIconInfo)).dup;
+		return Str.toString(gtk_icon_info_get_display_name(gtkIconInfo));
 	}
 }

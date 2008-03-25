@@ -49,6 +49,7 @@
  * 	- GdkColor* -> Color
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ColorButton;
@@ -87,7 +88,7 @@ public class ColorButton : Button
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkColorButton;
 	}
@@ -267,7 +268,7 @@ public class ColorButton : Button
 	 * Params:
 	 * title =  String containing new window title.
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_color_button_set_title (GtkColorButton *color_button,  const gchar *title);
 		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
@@ -278,9 +279,9 @@ public class ColorButton : Button
 	 * Since 2.4
 	 * Returns: An internal string, do not free the return value
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_color_button_get_title (GtkColorButton *color_button);
-		return Str.toString(gtk_color_button_get_title(gtkColorButton)).dup;
+		return Str.toString(gtk_color_button_get_title(gtkColorButton));
 	}
 }

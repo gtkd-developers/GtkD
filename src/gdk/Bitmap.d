@@ -49,6 +49,7 @@
  * 	- GdkDrawable* -> Drawable
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Bitmap;
@@ -120,7 +121,7 @@ public class Bitmap
 	 * height = the height of the new pixmap in pixels.
 	 * Returns:the GdkBitmap
 	 */
-	public static Bitmap createFromData(Drawable drawable, char[] data, int width, int height)
+	public static Bitmap createFromData(Drawable drawable, string data, int width, int height)
 	{
 		// GdkBitmap* gdk_bitmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height);
 		auto p = gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height);

@@ -47,6 +47,7 @@
  * 	- cairo_matrix_t* -> Matrix
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.Matrix;

@@ -49,6 +49,7 @@
  * 	- GdkDisplay* -> Display
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glgdk.GLQuery;
@@ -139,7 +140,7 @@ public class GLQuery
 	 * extension =  name of OpenGL extension.
 	 * Returns: TRUE if the OpenGL extension is supported, FALSE if not  supported.
 	 */
-	public static int glExtension(char[] extension)
+	public static int glExtension(string extension)
 	{
 		// gboolean gdk_gl_query_gl_extension (const char *extension);
 		return gdk_gl_query_gl_extension(Str.toStringz(extension));
@@ -151,7 +152,7 @@ public class GLQuery
 	 * procName =  function name.
 	 * Returns: the address of the function named by proc_name.<<InitializationFrame Buffer Configuration>>
 	 */
-	public static GdkGLProc getProcAddress(char[] procName)
+	public static GdkGLProc getProcAddress(string procName)
 	{
 		// GdkGLProc gdk_gl_get_proc_address (const char *proc_name);
 		return gdk_gl_get_proc_address(Str.toStringz(procName));

@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.Status;
@@ -76,10 +77,10 @@ public class Status
 	 * status =  a cairo status
 	 * Returns:a string representation of the status
 	 */
-	public static char[] oString(cairo_status_t status)
+	public static string oString(cairo_status_t status)
 	{
 		// const char* cairo_status_to_string (cairo_status_t status);
-		return Str.toString(cairo_status_to_string(status)).dup;
+		return Str.toString(cairo_status_to_string(status));
 	}
 	
 	/**

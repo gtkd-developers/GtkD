@@ -50,6 +50,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ToolButton;
@@ -101,7 +102,7 @@ public class ToolButton : ToolItem
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkToolButton;
 	}
@@ -122,16 +123,16 @@ public class ToolButton : ToolItem
 	}
 	
 	/** An arbitrary string to be used by the application */
-	private char[] action;
+	private string action;
 	
 	/** */
-	public void setActionName(char[] action)
+	public void setActionName(string action)
 	{
-		this.action = action.dup;
+		this.action = action;
 	}
 	
 	/** */
-	public char[] getActionName()
+	public string getActionName()
 	{
 		return action;
 	}
@@ -203,7 +204,7 @@ public class ToolButton : ToolItem
 	 * iconWidget =  a widget that will be used as icon widget, or NULL
 	 * label =  a string that will be used as label, or NULL
 	 */
-	public this (Widget iconWidget, char[] label)
+	public this (Widget iconWidget, string label)
 	{
 		// GtkToolItem* gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
 		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
@@ -225,7 +226,7 @@ public class ToolButton : ToolItem
 	 * Params:
 	 * stockId =  the name of the stock item
 	 */
-	public this (char[] stockId)
+	public this (string stockId)
 	{
 		// GtkToolItem* gtk_tool_button_new_from_stock (const gchar *stock_id);
 		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
@@ -248,7 +249,7 @@ public class ToolButton : ToolItem
 	 * Params:
 	 * label =  a string that will be used as label, or NULL.
 	 */
-	public void setLabel(char[] label)
+	public void setLabel(string label)
 	{
 		// void gtk_tool_button_set_label (GtkToolButton *button,  const gchar *label);
 		gtk_tool_button_set_label(gtkToolButton, Str.toStringz(label));
@@ -261,10 +262,10 @@ public class ToolButton : ToolItem
 	 * Since 2.4
 	 * Returns: The label, or NULL
 	 */
-	public char[] getLabel()
+	public string getLabel()
 	{
 		// const gchar* gtk_tool_button_get_label (GtkToolButton *button);
-		return Str.toString(gtk_tool_button_get_label(gtkToolButton)).dup;
+		return Str.toString(gtk_tool_button_get_label(gtkToolButton));
 	}
 	
 	/**
@@ -305,7 +306,7 @@ public class ToolButton : ToolItem
 	 * Params:
 	 * stockId =  a name of a stock item, or NULL
 	 */
-	public void setStockId(char[] stockId)
+	public void setStockId(string stockId)
 	{
 		// void gtk_tool_button_set_stock_id (GtkToolButton *button,  const gchar *stock_id);
 		gtk_tool_button_set_stock_id(gtkToolButton, Str.toStringz(stockId));
@@ -317,10 +318,10 @@ public class ToolButton : ToolItem
 	 * Since 2.4
 	 * Returns: the name of the stock item for button.
 	 */
-	public char[] getStockId()
+	public string getStockId()
 	{
 		// const gchar* gtk_tool_button_get_stock_id (GtkToolButton *button);
-		return Str.toString(gtk_tool_button_get_stock_id(gtkToolButton)).dup;
+		return Str.toString(gtk_tool_button_get_stock_id(gtkToolButton));
 	}
 	
 	/**
@@ -333,7 +334,7 @@ public class ToolButton : ToolItem
 	 * Params:
 	 * iconName =  the name of the themed icon
 	 */
-	public void setIconName(char[] iconName)
+	public void setIconName(string iconName)
 	{
 		// void gtk_tool_button_set_icon_name (GtkToolButton *button,  const gchar *icon_name);
 		gtk_tool_button_set_icon_name(gtkToolButton, Str.toStringz(iconName));
@@ -345,10 +346,10 @@ public class ToolButton : ToolItem
 	 * Since 2.8
 	 * Returns: the icon name or NULL if the tool button hasno themed icon
 	 */
-	public char[] getIconName()
+	public string getIconName()
 	{
 		// const gchar* gtk_tool_button_get_icon_name (GtkToolButton *button);
-		return Str.toString(gtk_tool_button_get_icon_name(gtkToolButton)).dup;
+		return Str.toString(gtk_tool_button_get_icon_name(gtkToolButton));
 	}
 	
 	/**

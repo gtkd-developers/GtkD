@@ -6993,7 +6993,7 @@ enum StockID
 }
 
 // Stock strings
-char[][] StockDesc = 
+string[] StockDesc = 
 [	"gtk-about",
 	"gtk-add",
 	"gtk-apply",

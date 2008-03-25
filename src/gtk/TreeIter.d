@@ -52,6 +52,7 @@
  * 	- GtkTreeModel* -> TreeModel
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeIter;
@@ -297,7 +298,7 @@ public class TreeIter
 	 *  column = the column number
 	 * Returns: a string representing the value of the column
 	 */
-	char[] getValueString(int column)
+	string getValueString(int column)
 	{
 		if ( gtkTreeModel  is  null )
 		{
@@ -339,9 +340,9 @@ public class TreeIter
 	/**
 	 * This return the path visible to the user.
 	 */
-	char[] getVisiblePath(char[] separator)
+	string getVisiblePath(string separator)
 	{
-		char[] vPath;
+		string vPath;
 		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError("getVisiblePath", "Tree model not set");

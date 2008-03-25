@@ -47,6 +47,8 @@
  * 	- PangoColor* -> PgColor
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- toString
  */
 
 module pango.PgColor;
@@ -117,7 +119,7 @@ public class PgColor
 	 * spec =  a string specifying the new color
 	 * Returns: TRUE if parsing of the specifier succeeded, otherwise false.
 	 */
-	public int parse(char[] spec)
+	public int parse(string spec)
 	{
 		// gboolean pango_color_parse (PangoColor *color,  const char *spec);
 		return pango_color_parse(pangoColor, Str.toStringz(spec));
@@ -159,9 +161,9 @@ public class PgColor
 	 * Since 1.16
 	 * Returns: a newly-allocated text string that must be freed with g_free().
 	 */
-	public char[] toString()
+	public override string toString()
 	{
 		// gchar* pango_color_to_string (const PangoColor *color);
-		return Str.toString(pango_color_to_string(pangoColor)).dup;
+		return Str.toString(pango_color_to_string(pangoColor));
 	}
 }

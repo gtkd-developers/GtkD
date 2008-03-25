@@ -46,6 +46,7 @@
  * 	- PangoFontMetrics* -> PgFontMetrics
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgFontMetrics;

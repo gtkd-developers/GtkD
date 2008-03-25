@@ -47,6 +47,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdkpixbuf.PixbufSimpleAnimation;
@@ -86,7 +87,7 @@ public class PixbufSimpleAnimation : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkPixbufSimpleAnim;
 	}

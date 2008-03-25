@@ -51,6 +51,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Label;
@@ -155,7 +156,7 @@ public class Label : Misc
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkLabel;
 	}
@@ -194,7 +195,7 @@ public class Label : Misc
 	 *  mnemonic character
 	 *  mnemonic = when false uses the literal text passed in without mnemonic
 	 */
-	public this (char[] str, bool mnemonic=true)
+	public this (string str, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -310,7 +311,7 @@ public class Label : Misc
 	 * Params:
 	 * str =  The text you want to set
 	 */
-	public void setText(char[] str)
+	public void setText(string str)
 	{
 		// void gtk_label_set_text (GtkLabel *label,  const gchar *str);
 		gtk_label_set_text(gtkLabel, Str.toStringz(str));
@@ -337,7 +338,7 @@ public class Label : Misc
 	 * Params:
 	 * str =  a markup string (see Pango markup format)
 	 */
-	public void setMarkup(char[] str)
+	public void setMarkup(string str)
 	{
 		// void gtk_label_set_markup (GtkLabel *label,  const gchar *str);
 		gtk_label_set_markup(gtkLabel, Str.toStringz(str));
@@ -353,7 +354,7 @@ public class Label : Misc
 	 * Params:
 	 * str =  a markup string (see Pango markup format)
 	 */
-	public void setMarkupWithMnemonic(char[] str)
+	public void setMarkupWithMnemonic(string str)
 	{
 		// void gtk_label_set_markup_with_mnemonic (GtkLabel *label,  const gchar *str);
 		gtk_label_set_markup_with_mnemonic(gtkLabel, Str.toStringz(str));
@@ -367,7 +368,7 @@ public class Label : Misc
 	 * Params:
 	 * pattern = The pattern as described above.
 	 */
-	public void setPattern(char[] pattern)
+	public void setPattern(string pattern)
 	{
 		// void gtk_label_set_pattern (GtkLabel *label,  const gchar *pattern);
 		gtk_label_set_pattern(gtkLabel, Str.toStringz(pattern));
@@ -453,7 +454,7 @@ public class Label : Misc
 	 * string = The string you want to parse for underlines.
 	 * Returns:The lowercase keyval of the last character underlined.
 	 */
-	public uint parseUline(char[] string)
+	public uint parseUline(string string)
 	{
 		// guint gtk_label_parse_uline (GtkLabel *label,  const gchar *string);
 		return gtk_label_parse_uline(gtkLabel, Str.toStringz(string));
@@ -538,10 +539,10 @@ public class Label : Misc
 	 * indicating mnemonics or Pango markup. (See gtk_label_get_label())
 	 * Returns: the text in the label widget. This is the internal string used by the label, and must not be modified.
 	 */
-	public char[] getText()
+	public string getText()
 	{
 		// const gchar* gtk_label_get_text (GtkLabel *label);
-		return Str.toString(gtk_label_get_text(gtkLabel)).dup;
+		return Str.toString(gtk_label_get_text(gtkLabel));
 	}
 	
 	/**
@@ -603,7 +604,7 @@ public class Label : Misc
 	 * Params:
 	 * str =  a string
 	 */
-	public void setTextWithMnemonic(char[] str)
+	public void setTextWithMnemonic(string str)
 	{
 		// void gtk_label_set_text_with_mnemonic (GtkLabel *label,  const gchar *str);
 		gtk_label_set_text_with_mnemonic(gtkLabel, Str.toStringz(str));
@@ -675,10 +676,10 @@ public class Label : Misc
 	 * gtk_label_get_text()).
 	 * Returns: the text of the label widget. This string is owned by the widget and must not be modified or freed.
 	 */
-	public char[] getLabel()
+	public string getLabel()
 	{
 		// const gchar* gtk_label_get_label (GtkLabel *label);
-		return Str.toString(gtk_label_get_label(gtkLabel)).dup;
+		return Str.toString(gtk_label_get_label(gtkLabel));
 	}
 	
 	/**
@@ -802,7 +803,7 @@ public class Label : Misc
 	 * Params:
 	 * str =  the new text to set for the label
 	 */
-	public void setLabel(char[] str)
+	public void setLabel(string str)
 	{
 		// void gtk_label_set_label (GtkLabel *label,  const gchar *str);
 		gtk_label_set_label(gtkLabel, Str.toStringz(str));

@@ -61,6 +61,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Action;
@@ -128,7 +129,7 @@ public class Action : ObjectG, BuildableIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAction;
 	}
@@ -204,7 +205,7 @@ public class Action : ObjectG, BuildableIF
 	 * stockId =  the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 */
-	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
+	public this (string name, string label, string tooltip, string stockId)
 	{
 		// GtkAction* gtk_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
@@ -222,10 +223,10 @@ public class Action : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Returns: the name of the action. The string belongs to GTK+ and should not be freed.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_action_get_name (GtkAction *action);
-		return Str.toString(gtk_action_get_name(gtkAction)).dup;
+		return Str.toString(gtk_action_get_name(gtkAction));
 	}
 	
 	/**
@@ -501,10 +502,10 @@ public class Action : ObjectG, BuildableIF
 	 * Since 2.6
 	 * Returns: the accel path for this action, or NULL if none is set. The returned string is owned by GTK+  and must not be freed or modified.
 	 */
-	public char[] getAccelPath()
+	public string getAccelPath()
 	{
 		// const gchar* gtk_action_get_accel_path (GtkAction *action);
-		return Str.toString(gtk_action_get_accel_path(gtkAction)).dup;
+		return Str.toString(gtk_action_get_accel_path(gtkAction));
 	}
 	
 	/**
@@ -515,7 +516,7 @@ public class Action : ObjectG, BuildableIF
 	 * Params:
 	 * accelPath =  the accelerator path
 	 */
-	public void setAccelPath(char[] accelPath)
+	public void setAccelPath(string accelPath)
 	{
 		// void gtk_action_set_accel_path (GtkAction *action,  const gchar *accel_path);
 		gtk_action_set_accel_path(gtkAction, Str.toStringz(accelPath));

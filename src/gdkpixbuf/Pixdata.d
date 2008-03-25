@@ -50,6 +50,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdkpixbuf.Pixdata;
@@ -194,7 +195,7 @@ public class Pixdata
 	 *  source to be generated.
 	 * Returns: a newly-allocated string containing the C source form of pixdata.
 	 */
-	public StringG toCsource(char[] name, GdkPixdataDumpType dumpType)
+	public StringG toCsource(string name, GdkPixdataDumpType dumpType)
 	{
 		// GString* gdk_pixdata_to_csource (GdkPixdata *pixdata,  const gchar *name,  GdkPixdataDumpType dump_type);
 		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);

@@ -51,6 +51,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Tooltips;
@@ -123,7 +124,7 @@ public class Tooltips : ObjectGtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTooltips;
 	}
@@ -208,7 +209,7 @@ public class Tooltips : ObjectGtk
 	 * tipText = a string containing the tip itself.
 	 * tipPrivate = a string of any further information that may be useful if the user gets stuck.
 	 */
-	public void setTip(Widget widget, char[] tipText, char[] tipPrivate)
+	public void setTip(Widget widget, string tipText, string tipPrivate)
 	{
 		// void gtk_tooltips_set_tip (GtkTooltips *tooltips,  GtkWidget *widget,  const gchar *tip_text,  const gchar *tip_private);
 		gtk_tooltips_set_tip(gtkTooltips, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));

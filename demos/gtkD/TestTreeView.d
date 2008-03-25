@@ -46,7 +46,7 @@ else private import std.stdio;
  * idea than inline XPMs.
  */
 
-static char**  book_closed_xpm = [
+static string[]  book_closed_xpm = [
 "16 16 6 1",
 "       c None s None",
 ".      c black",
@@ -148,14 +148,14 @@ class TestTreeView : ScrolledWindow
 	class HTreeNode : TreeNode
 	{
 		
-		char[] gtkDL;
-		char[] gtk;
-		char[] desc;
+		string gtkDL;
+		string gtk;
+		string desc;
 		int percent;
-		char[] author;
+		string author;
 		//TestTreeView ttv;
 		
-		this(char[] gtkDL,char[] gtk,char[] desc,int percent)//, TestTreeView ttv)
+		this(string gtkDL,string gtk,string desc,int percent)//, TestTreeView ttv)
 		{
 			this.gtkDL = gtkDL;
 			this.gtk = gtk;
@@ -176,9 +176,9 @@ class TestTreeView : ScrolledWindow
 			return 5;
 		}
 		
-		char[] getNodeValue(int column)
+		string getNodeValue(int column)
 		{
-			char[] value;
+			string value;
 			switch (column)
 			{
 				//case 0: value = pixbuf; break;

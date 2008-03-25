@@ -48,6 +48,7 @@
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.StringCompletion;
@@ -179,7 +180,7 @@ public class StringCompletion
 	 * This string should be freed when no longer needed.
 	 * Returns:the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
-	public ListG complete(char[] prefix, char** newPrefix)
+	public ListG complete(string prefix, char** newPrefix)
 	{
 		// GList* g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
 		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), newPrefix);
@@ -207,7 +208,7 @@ public class StringCompletion
 	 *  This string should be freed when no longer needed.
 	 * Returns: the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
-	public ListG completeUtf8(char[] prefix, char** newPrefix)
+	public ListG completeUtf8(string prefix, char** newPrefix)
 	{
 		// GList* g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
 		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), newPrefix);

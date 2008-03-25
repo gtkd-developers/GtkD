@@ -53,6 +53,7 @@
  * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RadioMenuItem;
@@ -105,7 +106,7 @@ public class RadioMenuItem : CheckMenuItem
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRadioMenuItem;
 	}
@@ -136,7 +137,7 @@ public class RadioMenuItem : CheckMenuItem
 	 *  group = an existing GtkRadioMenuItem
 	 *  label = the text for the label
 	 */
-	public this (RadioMenuItem radioMenuItem, char[] label, bool mnemonic=true)
+	public this (RadioMenuItem radioMenuItem, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -161,7 +162,7 @@ public class RadioMenuItem : CheckMenuItem
 	 *  label = the text of the button, with an underscore in front of the
 	 *  mnemonic character
 	 */
-	public this (char[] label)
+	public this (string label)
 	{
 	}
 	
@@ -174,7 +175,7 @@ public class RadioMenuItem : CheckMenuItem
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
 	 */
-	public this (ListSG group, char[] label, bool mnemonic=true)
+	public this (ListSG group, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{

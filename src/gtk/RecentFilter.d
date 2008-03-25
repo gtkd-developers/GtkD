@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentFilter;
@@ -94,7 +95,7 @@ public class RecentFilter : ObjectGtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentFilter;
 	}
@@ -144,10 +145,10 @@ public class RecentFilter : ObjectGtk
 	 * Since 2.10
 	 * Returns: the name of the filter, or NULL. The returned string is owned by the filter object and should not be freed.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_recent_filter_get_name (GtkRecentFilter *filter);
-		return Str.toString(gtk_recent_filter_get_name(gtkRecentFilter)).dup;
+		return Str.toString(gtk_recent_filter_get_name(gtkRecentFilter));
 	}
 	
 	/**
@@ -158,7 +159,7 @@ public class RecentFilter : ObjectGtk
 	 * Params:
 	 * name =  then human readable name of filter
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gtk_recent_filter_set_name (GtkRecentFilter *filter,  const gchar *name);
 		gtk_recent_filter_set_name(gtkRecentFilter, Str.toStringz(name));
@@ -170,7 +171,7 @@ public class RecentFilter : ObjectGtk
 	 * Params:
 	 * mimeType =  a MIME type
 	 */
-	public void addMimeType(char[] mimeType)
+	public void addMimeType(string mimeType)
 	{
 		// void gtk_recent_filter_add_mime_type (GtkRecentFilter *filter,  const gchar *mime_type);
 		gtk_recent_filter_add_mime_type(gtkRecentFilter, Str.toStringz(mimeType));
@@ -183,7 +184,7 @@ public class RecentFilter : ObjectGtk
 	 * Params:
 	 * pattern =  a file pattern
 	 */
-	public void addPattern(char[] pattern)
+	public void addPattern(string pattern)
 	{
 		// void gtk_recent_filter_add_pattern (GtkRecentFilter *filter,  const gchar *pattern);
 		gtk_recent_filter_add_pattern(gtkRecentFilter, Str.toStringz(pattern));
@@ -207,7 +208,7 @@ public class RecentFilter : ObjectGtk
 	 * Params:
 	 * application =  an application name
 	 */
-	public void addApplication(char[] application)
+	public void addApplication(string application)
 	{
 		// void gtk_recent_filter_add_application (GtkRecentFilter *filter,  const gchar *application);
 		gtk_recent_filter_add_application(gtkRecentFilter, Str.toStringz(application));
@@ -220,7 +221,7 @@ public class RecentFilter : ObjectGtk
 	 * Params:
 	 * group =  a group name
 	 */
-	public void addGroup(char[] group)
+	public void addGroup(string group)
 	{
 		// void gtk_recent_filter_add_group (GtkRecentFilter *filter,  const gchar *group);
 		gtk_recent_filter_add_group(gtkRecentFilter, Str.toStringz(group));

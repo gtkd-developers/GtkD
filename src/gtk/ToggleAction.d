@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ToggleAction;
@@ -83,7 +84,7 @@ public class ToggleAction : Action
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkToggleAction;
 	}
@@ -150,7 +151,7 @@ public class ToggleAction : Action
 	 * stockId =  The stock icon to display in widgets representing the
 	 *  action, or NULL
 	 */
-	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
+	public this (string name, string label, string tooltip, string stockId)
 	{
 		// GtkToggleAction* gtk_toggle_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));

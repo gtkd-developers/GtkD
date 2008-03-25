@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = PgVersion
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- pango_version_string
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -49,6 +50,7 @@
  * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgVersion;
@@ -76,6 +78,19 @@ public class PgVersion
 {
 	
 	/**
+	 * This is similar to the macro PANGO_VERSION_STRING except that
+	 * it returns the version of Pango available at run-time, as opposed to
+	 * the version available at compile-time.
+	 * Since 1.16
+	 * Returns: A string containing the version of Pango library available at run time. The returned string is owned by Pango and should not be modified or freed.
+	 */
+	public static string strin()
+	{
+		// const char* pango_version_string (void);
+		return Str.toString(pango_version_string());
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -91,19 +106,6 @@ public class PgVersion
 	{
 		// int pango_version (void);
 		return pango_version();
-	}
-	
-	/**
-	 * This is similar to the macro PANGO_VERSION_STRING except that
-	 * it returns the version of Pango available at run-time, as opposed to
-	 * the version available at compile-time.
-	 * Since 1.16
-	 * Returns: A string containing the version of Pango library available at run time. The returned string is owned by Pango and should not be modified or freed.
-	 */
-	public static char[] string()
-	{
-		// const char* pango_version_string (void);
-		return Str.toString(pango_version_string()).dup;
 	}
 	
 	/**
@@ -127,9 +129,9 @@ public class PgVersion
 	 * requiredMicro =  the required major version.
 	 * Returns: NULL if the Pango library is compatible with the given version, or a string describing the version mismatch. The returned string is owned by Pango and should not be modified or freed.
 	 */
-	public static char[] check(int requiredMajor, int requiredMinor, int requiredMicro)
+	public static string check(int requiredMajor, int requiredMinor, int requiredMicro)
 	{
 		// const char* pango_version_check (int required_major,  int required_minor,  int required_micro);
-		return Str.toString(pango_version_check(requiredMajor, requiredMinor, requiredMicro)).dup;
+		return Str.toString(pango_version_check(requiredMajor, requiredMinor, requiredMicro));
 	}
 }

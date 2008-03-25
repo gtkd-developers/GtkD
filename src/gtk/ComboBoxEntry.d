@@ -51,6 +51,7 @@
  * 	- GtkTreeModel* -> TreeModel
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ComboBoxEntry;
@@ -109,7 +110,7 @@ public class ComboBoxEntry : ComboBox
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkComboBoxEntry;
 	}

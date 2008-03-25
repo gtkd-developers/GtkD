@@ -50,6 +50,7 @@
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentInfo;
@@ -174,10 +175,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: the URI of the resource. The returned string is owned by the recent manager, and should not be freed.
 	 */
-	public char[] getUri()
+	public string getUri()
 	{
 		// const gchar* gtk_recent_info_get_uri (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_get_uri(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_get_uri(gtkRecentInfo));
 	}
 	
 	/**
@@ -186,10 +187,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: the display name of the resource. The returned string is owned by the recent manager, and should not be freed.
 	 */
-	public char[] getDisplayName()
+	public string getDisplayName()
 	{
 		// const gchar* gtk_recent_info_get_display_name (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_get_display_name(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_get_display_name(gtkRecentInfo));
 	}
 	
 	/**
@@ -197,10 +198,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: the description of the resource. The returned string is owned by the recent manager, and should not be freed.
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// const gchar* gtk_recent_info_get_description (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_get_description(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_get_description(gtkRecentInfo));
 	}
 	
 	/**
@@ -208,10 +209,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: the MIME type of the resource. The returned string is owned by the recent manager, and should not be freed.
 	 */
-	public char[] getMimeType()
+	public string getMimeType()
 	{
 		// const gchar* gtk_recent_info_get_mime_type (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_get_mime_type(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_get_mime_type(gtkRecentInfo));
 	}
 	
 	/**
@@ -277,7 +278,7 @@ public class RecentInfo
 	 *  for this application
 	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. You should free the returned command line using g_free().
 	 */
-	public int getApplicationInfo(char[] appName, char** appExec, uint* count, uint* time)
+	public int getApplicationInfo(string appName, char** appExec, uint* count, uint* time)
 	{
 		// gboolean gtk_recent_info_get_application_info  (GtkRecentInfo *info,  const gchar *app_name,  gchar **app_exec,  guint *count,  time_t *time_);
 		return gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), appExec, count, time);
@@ -302,10 +303,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: an application name. Use g_free() to free it.
 	 */
-	public char[] lastApplication()
+	public string lastApplication()
 	{
 		// gchar* gtk_recent_info_last_application (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_last_application(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_last_application(gtkRecentInfo));
 	}
 	
 	/**
@@ -331,7 +332,7 @@ public class RecentInfo
 	 * groupName =  name of a group
 	 * Returns: TRUE if the group was found.
 	 */
-	public int hasGroup(char[] groupName)
+	public int hasGroup(string groupName)
 	{
 		// gboolean gtk_recent_info_has_group (GtkRecentInfo *info,  const gchar *group_name);
 		return gtk_recent_info_has_group(gtkRecentInfo, Str.toStringz(groupName));
@@ -344,7 +345,7 @@ public class RecentInfo
 	 * appName =  a string containing an application name
 	 * Returns: TRUE if an application with name app_name was found, FALSE otherwise.
 	 */
-	public int hasApplication(char[] appName)
+	public int hasApplication(string appName)
 	{
 		// gboolean gtk_recent_info_has_application (GtkRecentInfo *info,  const gchar *app_name);
 		return gtk_recent_info_has_application(gtkRecentInfo, Str.toStringz(appName));
@@ -376,10 +377,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: A newly-allocated string in UTF-8 encoding; free it with g_free().
 	 */
-	public char[] getShortName()
+	public string getShortName()
 	{
 		// gchar* gtk_recent_info_get_short_name (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_get_short_name(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_get_short_name(gtkRecentInfo));
 	}
 	
 	/**
@@ -389,10 +390,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: a newly allocated UTF-8 string containing the resource's URI or NULL. Use g_free() when done using it.
 	 */
-	public char[] getUriDisplay()
+	public string getUriDisplay()
 	{
 		// gchar* gtk_recent_info_get_uri_display (GtkRecentInfo *info);
-		return Str.toString(gtk_recent_info_get_uri_display(gtkRecentInfo)).dup;
+		return Str.toString(gtk_recent_info_get_uri_display(gtkRecentInfo));
 	}
 	
 	/**

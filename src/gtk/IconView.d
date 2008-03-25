@@ -60,6 +60,7 @@
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.IconView;
@@ -106,7 +107,7 @@ public class IconView : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkIconView;
 	}

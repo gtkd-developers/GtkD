@@ -76,6 +76,8 @@
  * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- getData
  */
 
 module gdk.Drawable;
@@ -136,7 +138,7 @@ public class Drawable : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkDrawable;
 	}
@@ -234,7 +236,7 @@ public class Drawable : ObjectG
 	 * data =  arbitrary data
 	 * destroyFunc =  function to free data, or NULL
 	 */
-	public void setData(char[] key, void* data, GDestroyNotify destroyFunc)
+	public void setData(string key, void* data, GDestroyNotify destroyFunc)
 	{
 		// void gdk_drawable_set_data (GdkDrawable *drawable,  const gchar *key,  gpointer data,  GDestroyNotify destroy_func);
 		gdk_drawable_set_data(gdkDrawable, Str.toStringz(key), data, destroyFunc);
@@ -249,7 +251,7 @@ public class Drawable : ObjectG
 	 * key =  name the data was stored under
 	 * Returns: the data stored at key
 	 */
-	public void* getData(char[] key)
+	public override void* getData(string key)
 	{
 		// gpointer gdk_drawable_get_data (GdkDrawable *drawable,  const gchar *key);
 		return gdk_drawable_get_data(gdkDrawable, Str.toStringz(key));
@@ -739,7 +741,7 @@ public class Drawable : ObjectG
 	 * y =  the y coordinate of the baseline of the text.
 	 * string =  the string of characters to draw.
 	 */
-	public void drawString(Font font, GC gc, int x, int y, char[] string)
+	public void drawString(Font font, GC gc, int x, int y, string string)
 	{
 		// void gdk_draw_string (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const gchar *string);
 		gdk_draw_string(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, Str.toStringz(string));
@@ -757,7 +759,7 @@ public class Drawable : ObjectG
 	 * text =  the characters to draw.
 	 * textLength =  the number of characters of text to draw.
 	 */
-	public void drawText(Font font, GC gc, int x, int y, char[] text, int textLength)
+	public void drawText(Font font, GC gc, int x, int y, string text, int textLength)
 	{
 		// void gdk_draw_text (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const gchar *text,  gint text_length);
 		gdk_draw_text(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, Str.toStringz(text), textLength);

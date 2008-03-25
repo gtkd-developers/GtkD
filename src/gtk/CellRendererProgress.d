@@ -48,6 +48,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellRendererProgress;
@@ -83,7 +84,7 @@ public class CellRendererProgress : CellRenderer
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellRendererProgress;
 	}

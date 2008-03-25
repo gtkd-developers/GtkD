@@ -22,7 +22,7 @@ import clock;
 import gtk.MainWindow;
 import gtk.GtkD;
 
-void main(char[][] args)
+void main(string[] args)
 {
 	GtkD.init(args);
 	

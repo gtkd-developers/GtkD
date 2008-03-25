@@ -51,6 +51,7 @@
  * 	- GRand* -> RandG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.RandG;

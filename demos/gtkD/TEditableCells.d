@@ -156,7 +156,7 @@
 //		return model;
 //	}
 //
-//	void editedCallback(CellRenderer renderer, TreeModel model, char[] pathString, char[] newText,int column)
+//	void editedCallback(CellRenderer renderer, TreeModel model, string pathString, string newText,int column)
 //	{
 //		//printf("path string %.*s\n",pathString);
 //		//printf("newText     %.*s\n",newText);
@@ -230,9 +230,9 @@
 //	class ListRow : TreeNode
 //	{
 //		int     number;
-//		char[]  product;
+//		string  product;
 //		bit editable;
-//		this(int number, char[] prod, bit editable)
+//		this(int number, string prod, bit editable)
 //		{
 //			this.number = number;
 //			product = prod;
@@ -242,15 +242,15 @@
 //		{
 //			this.number = number;
 //		}
-//		char[] getNumber()
+//		string getNumber()
 //		{
 //			return number;
 //		}
-//		void setProduct(char[] prod)
+//		void setProduct(string prod)
 //		{
 //			product = prod;
 //		}
-//		char[] getProduct()
+//		string getProduct()
 //		{
 //			return product;
 //		}
@@ -263,7 +263,7 @@
 //				case 2: return editable; break;
 //			}
 //		}
-//		char[] toString()
+//		string toString()
 //		{
 //			return ""~number ~ "\t" ~ product ~ "\t" ~ editable;
 //		}

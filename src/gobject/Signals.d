@@ -52,6 +52,7 @@
  * 	- GValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.Signals;
@@ -116,7 +117,7 @@ public class Signals
 {
 	
 	/** */
-	public static uint connectData(void* instanc, char[] detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	public static uint connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
@@ -154,7 +155,7 @@ public class Signals
 	 * ... = a list of types, one for each parameter.
 	 * Returns:the signal id
 	 */
-	public static uint newSignals(char[] signalName, GType itype, GSignalFlags signalFlags, uint classOffset, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, ... )
+	public static uint newSignals(string signalName, GType itype, GSignalFlags signalFlags, uint classOffset, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, ... )
 	{
 		// guint g_signal_new (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  guint class_offset,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  ...);
 		return g_signal_new(Str.toStringz(signalName), itype, signalFlags, classOffset, accumulator, accuData, cMarshaller, returnType, nParams);
@@ -181,7 +182,7 @@ public class Signals
 	 * paramTypes = an array types, one for each parameter.
 	 * Returns:the signal id
 	 */
-	public static uint newv(char[] signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, GType* paramTypes)
+	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, GType* paramTypes)
 	{
 		// guint g_signal_newv (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  GClosure *class_closure,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  GType *param_types);
 		return g_signal_newv(Str.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, paramTypes);
@@ -208,7 +209,7 @@ public class Signals
 	 * args = va_list of GType, one for each parameter.
 	 * Returns:the signal id
 	 */
-	public static uint newValist(char[] signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, void* args)
+	public static uint newValist(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, void* args)
 	{
 		// guint g_signal_new_valist (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  GClosure *class_closure,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  va_list args);
 		return g_signal_new_valist(Str.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, args);
@@ -243,7 +244,7 @@ public class Signals
 	 * itype = the type that the signal operates on.
 	 * Returns:the signal's identifying number, or 0 if no signal was found.
 	 */
-	public static uint lookup(char[] name, GType itype)
+	public static uint lookup(string name, GType itype)
 	{
 		// guint g_signal_lookup (const gchar *name,  GType itype);
 		return g_signal_lookup(Str.toStringz(name), itype);
@@ -256,10 +257,10 @@ public class Signals
 	 * signalId = the signal's identifying number.
 	 * Returns:the signal name, or NULL if the signal number was invalid.
 	 */
-	public static char[] name(uint signalId)
+	public static string name(uint signalId)
 	{
 		// const gchar* g_signal_name (guint signal_id);
-		return Str.toString(g_signal_name(signalId)).dup;
+		return Str.toString(g_signal_name(signalId));
 	}
 	
 	/**
@@ -306,7 +307,7 @@ public class Signals
 	 *  location for the return value. If the return type of the signal
 	 *  is G_TYPE_NONE, the return value location can be omitted.
 	 */
-	public static void emitByName(void* instanc, char[] detailedSignal, ... )
+	public static void emitByName(void* instanc, string detailedSignal, ... )
 	{
 		// void g_signal_emit_by_name (gpointer instance,  const gchar *detailed_signal,  ...);
 		g_signal_emit_by_name(instanc, Str.toStringz(detailedSignal));
@@ -373,7 +374,7 @@ public class Signals
 	 * connectFlags = a combination of GConnnectFlags.
 	 * Returns:the handler id.
 	 */
-	public static uint connectObject(void* instanc, char[] detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
+	public static uint connectObject(void* instanc, string detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_object (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer gobject,  GConnectFlags connect_flags);
 		return g_signal_connect_object(instanc, Str.toStringz(detailedSignal), cHandler, gobject, connectFlags);
@@ -394,7 +395,7 @@ public class Signals
 	 * connectFlags = a combination of GConnectFlags.
 	 * Returns:the handler id
 	 */
-	public static uint connectData(void* instanc, char[] detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	public static uint connectData(void* instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, data, destroyData, connectFlags);
@@ -410,7 +411,7 @@ public class Signals
 	 *  default handler of the signal.
 	 * Returns:the handler id
 	 */
-	public static uint connectClosure(void* instanc, char[] detailedSignal, Closure closure, int after)
+	public static uint connectClosure(void* instanc, string detailedSignal, Closure closure, int after)
 	{
 		// gulong g_signal_connect_closure (gpointer instance,  const gchar *detailed_signal,  GClosure *closure,  gboolean after);
 		return g_signal_connect_closure(instanc, Str.toStringz(detailedSignal), (closure is null) ? null : closure.getClosureStruct(), after);
@@ -647,7 +648,7 @@ public class Signals
 	 * instanc = the object whose signal handlers you wish to stop.
 	 * detailedSignal = a string of the form "signal-name::detail".
 	 */
-	public static void stopEmissionByName(void* instanc, char[] detailedSignal)
+	public static void stopEmissionByName(void* instanc, string detailedSignal)
 	{
 		// void g_signal_stop_emission_by_name (gpointer instance,  const gchar *detailed_signal);
 		g_signal_stop_emission_by_name(instanc, Str.toStringz(detailedSignal));
@@ -727,7 +728,7 @@ public class Signals
 	 * forceDetailQuark = TRUE forces creation of a GQuark for the detail.
 	 * Returns:Whether the signal name could successfully be parsed and signal_id_p and detail_p contain valid return values.
 	 */
-	public static int parseName(char[] detailedSignal, GType itype, uint* signalIdP, Quark detailP, int forceDetailQuark)
+	public static int parseName(string detailedSignal, GType itype, uint* signalIdP, Quark detailP, int forceDetailQuark)
 	{
 		// gboolean g_signal_parse_name (const gchar *detailed_signal,  GType itype,  guint *signal_id_p,  GQuark *detail_p,  gboolean force_detail_quark);
 		return g_signal_parse_name(Str.toStringz(detailedSignal), itype, signalIdP, (detailP is null) ? null : detailP.getQuarkStruct(), forceDetailQuark);

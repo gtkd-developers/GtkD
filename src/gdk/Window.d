@@ -62,6 +62,7 @@
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Window;
@@ -232,7 +233,7 @@ public class Window : Drawable
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkWindow;
 	}
@@ -1452,7 +1453,7 @@ public class Window : Drawable
 	 * Params:
 	 * title =  title of window
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gdk_window_set_title (GdkWindow *window,  const gchar *title);
 		gdk_window_set_title(gdkWindow, Str.toStringz(title));
@@ -1926,7 +1927,7 @@ public class Window : Drawable
 	 * Params:
 	 * name =  name of window while iconified (minimized)
 	 */
-	public void setIconName(char[] name)
+	public void setIconName(string name)
 	{
 		// void gdk_window_set_icon_name (GdkWindow *window,  const gchar *name);
 		gdk_window_set_icon_name(gdkWindow, Str.toStringz(name));
@@ -1963,7 +1964,7 @@ public class Window : Drawable
 	 * Params:
 	 * role =  a string indicating its role
 	 */
-	public void setRole(char[] role)
+	public void setRole(string role)
 	{
 		// void gdk_window_set_role (GdkWindow *window,  const gchar *role);
 		gdk_window_set_role(gdkWindow, Str.toStringz(role));
@@ -1976,7 +1977,7 @@ public class Window : Drawable
 	 * Params:
 	 * startupId =  a string with startup-notification identifier
 	 */
-	public void setStartupId(char[] startupId)
+	public void setStartupId(string startupId)
 	{
 		// void gdk_window_set_startup_id (GdkWindow *window,  const gchar *startup_id);
 		gdk_window_set_startup_id(gdkWindow, Str.toStringz(startupId));

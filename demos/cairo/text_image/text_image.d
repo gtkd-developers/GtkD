@@ -148,7 +148,7 @@ protected:
 }
 
 
-void main(char[][] args)
+void main(string[] args)
 {
 	GtkD.init(args);
 	

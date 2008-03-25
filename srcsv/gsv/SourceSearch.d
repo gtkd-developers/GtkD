@@ -48,6 +48,7 @@
  * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceSearch;
@@ -84,7 +85,7 @@ public class SourceSearch
 	 * limit =  location of last possible match_start, or %NULL for start of buffer.
 	 * Returns: whether a match was found.
 	 */
-	public static int backwardSearch(TextIter iter, char[] str, GtkSourceSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
+	public static int backwardSearch(TextIter iter, string str, GtkSourceSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_source_iter_backward_search (const GtkTextIter *iter,  const gchar *str,  GtkSourceSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
 		return gtk_source_iter_backward_search((iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
@@ -117,7 +118,7 @@ public class SourceSearch
 	 * limit =  bound for the search, or %NULL for the end of the buffer.
 	 * Returns: whether a match was found.
 	 */
-	public static int forwardSearch(TextIter iter, char[] str, GtkSourceSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
+	public static int forwardSearch(TextIter iter, string str, GtkSourceSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_source_iter_forward_search (const GtkTextIter *iter,  const gchar *str,  GtkSourceSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
 		return gtk_source_iter_forward_search((iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());

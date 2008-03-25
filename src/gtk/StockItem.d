@@ -51,6 +51,7 @@
  * 	- GtkStockItem* -> StockItem
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.StockItem;
@@ -206,7 +207,7 @@ public class StockItem
 	 * item =  stock item to initialize with values
 	 * Returns: TRUE if item was initialized
 	 */
-	public static int lookup(char[] stockId, StockItem item)
+	public static int lookup(string stockId, StockItem item)
 	{
 		// gboolean gtk_stock_lookup (const gchar *stock_id,  GtkStockItem *item);
 		return gtk_stock_lookup(Str.toStringz(stockId), (item is null) ? null : item.getStockItemStruct());
@@ -225,7 +226,7 @@ public class StockItem
 	 * notify =  a GtkDestroyNotify that is called when data is
 	 *  no longer needed
 	 */
-	public static void setTranslateFunc(char[] domain, GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
+	public static void setTranslateFunc(string domain, GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
 	{
 		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
 		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);

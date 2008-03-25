@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.ShellUtils;
@@ -86,7 +87,7 @@ public class ShellUtils
 	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if error set
 	 */
-	public static int parseArgv(char[] commandLine, int* argcp, char*** argvp, GError** error)
+	public static int parseArgv(string commandLine, int* argcp, char*** argvp, GError** error)
 	{
 		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
 		return g_shell_parse_argv(Str.toStringz(commandLine), argcp, argvp, error);
@@ -103,10 +104,10 @@ public class ShellUtils
 	 * unquotedString =  a literal string
 	 * Returns: quoted string
 	 */
-	public static char[] quote(char[] unquotedString)
+	public static string quote(string unquotedString)
 	{
 		// gchar* g_shell_quote (const gchar *unquoted_string);
-		return Str.toString(g_shell_quote(Str.toStringz(unquotedString))).dup;
+		return Str.toString(g_shell_quote(Str.toStringz(unquotedString)));
 	}
 	
 	/**
@@ -135,9 +136,9 @@ public class ShellUtils
 	 * error =  error return location or NULL
 	 * Returns: an unquoted string
 	 */
-	public static char[] unquote(char[] quotedString, GError** error)
+	public static string unquote(string quotedString, GError** error)
 	{
 		// gchar* g_shell_unquote (const gchar *quoted_string,  GError **error);
-		return Str.toString(g_shell_unquote(Str.toStringz(quotedString), error)).dup;
+		return Str.toString(g_shell_unquote(Str.toStringz(quotedString), error));
 	}
 }

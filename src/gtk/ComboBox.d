@@ -60,6 +60,7 @@
  * 	- GtkTreeModel* -> TreeModel
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ComboBox;
@@ -121,7 +122,7 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkComboBox;
 	}
@@ -176,7 +177,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	/** */
-	public void setActiveText(char[] text, bool insert=false)
+	public void setActiveText(string text, bool insert=false)
 	{
 		int active = 0;
 		setActive(0);
@@ -195,7 +196,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	/** */
-	int getIndex(char[] text)
+	int getIndex(string text)
 	{
 		TreeIter iter = new TreeIter();
 		TreeModel model = getModel();
@@ -223,7 +224,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	/** */
-	void prependOrReplaceText(char[] text)
+	void prependOrReplaceText(string text)
 	{
 		int index = getIndex(text);
 		if ( index > 0 )
@@ -577,7 +578,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Params:
 	 * text =  A string
 	 */
-	public void appendText(char[] text)
+	public void appendText(string text)
 	{
 		// void gtk_combo_box_append_text (GtkComboBox *combo_box,  const gchar *text);
 		gtk_combo_box_append_text(gtkComboBox, Str.toStringz(text));
@@ -592,7 +593,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 * position =  An index to insert text
 	 * text =  A string
 	 */
-	public void insertText(int position, char[] text)
+	public void insertText(int position, string text)
 	{
 		// void gtk_combo_box_insert_text (GtkComboBox *combo_box,  gint position,  const gchar *text);
 		gtk_combo_box_insert_text(gtkComboBox, position, Str.toStringz(text));
@@ -606,7 +607,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Params:
 	 * text =  A string
 	 */
-	public void prependText(char[] text)
+	public void prependText(string text)
 	{
 		// void gtk_combo_box_prepend_text (GtkComboBox *combo_box,  const gchar *text);
 		gtk_combo_box_prepend_text(gtkComboBox, Str.toStringz(text));
@@ -633,10 +634,10 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Since 2.6
 	 * Returns: a newly allocated string containing the currently active text.
 	 */
-	public char[] getActiveText()
+	public string getActiveText()
 	{
 		// gchar* gtk_combo_box_get_active_text (GtkComboBox *combo_box);
-		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox)).dup;
+		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox));
 	}
 	
 	/**
@@ -738,7 +739,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Params:
 	 * title =  a title for the menu in tearoff mode
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_combo_box_set_title (GtkComboBox *combo_box,  const gchar *title);
 		gtk_combo_box_set_title(gtkComboBox, Str.toStringz(title));
@@ -750,10 +751,10 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Since 2.10
 	 * Returns: the menu's title in tearoff mode. This is an internal copy of thestring which must not be freed.
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_combo_box_get_title (GtkComboBox *combo_box);
-		return Str.toString(gtk_combo_box_get_title(gtkComboBox)).dup;
+		return Str.toString(gtk_combo_box_get_title(gtkComboBox));
 	}
 	
 	/**

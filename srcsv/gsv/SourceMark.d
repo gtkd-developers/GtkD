@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceMark;
@@ -90,7 +91,7 @@ public class SourceMark : TextMark
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceMark;
 	}
@@ -127,7 +128,7 @@ public class SourceMark : TextMark
 	 * category, or all the marks representing a compilation error could belong to
 	 * "error" category).
 	 */
-	public this (char[] name, char[] category)
+	public this (string name, string category)
 	{
 		// GtkSourceMark* gtk_source_mark_new (const gchar *name,  const gchar *category);
 		auto p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
@@ -145,10 +146,10 @@ public class SourceMark : TextMark
 	 * Since 2.2
 	 * Returns: the category of the GtkSourceMark
 	 */
-	public char[] getCategory()
+	public string getCategory()
 	{
 		// const gchar* gtk_source_mark_get_category (GtkSourceMark *mark);
-		return Str.toString(gtk_source_mark_get_category(gtkSourceMark)).dup;
+		return Str.toString(gtk_source_mark_get_category(gtkSourceMark));
 	}
 	
 	/**
@@ -160,7 +161,7 @@ public class SourceMark : TextMark
 	 * category =  a string specifying the mark category or NULL
 	 * Returns: the next GtkSourceMark or NULL
 	 */
-	public GtkSourceMark* next(char[] category)
+	public GtkSourceMark* next(string category)
 	{
 		// GtkSourceMark* gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
 		return gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
@@ -175,7 +176,7 @@ public class SourceMark : TextMark
 	 * category =  a string specifying the mark category or NULL
 	 * Returns: the previous GtkSourceMark or NULL
 	 */
-	public GtkSourceMark* prev(char[] category)
+	public GtkSourceMark* prev(string category)
 	{
 		// GtkSourceMark* gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
 		return gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));

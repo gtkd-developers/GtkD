@@ -49,6 +49,7 @@
  * 	- GtkTextBuffer* -> TextBuffer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextMark;
@@ -102,7 +103,7 @@ public class TextMark : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextMark;
 	}
@@ -140,7 +141,7 @@ public class TextMark : ObjectG
 	 * name =  mark name or NULL
 	 * leftGravity =  whether the mark should have left gravity
 	 */
-	public this (char[] name, int leftGravity)
+	public this (string name, int leftGravity)
 	{
 		// GtkTextMark* gtk_text_mark_new (const gchar *name,  gboolean left_gravity);
 		auto p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
@@ -195,10 +196,10 @@ public class TextMark : ObjectG
 	 * Returns the mark name; returns NULL for anonymous marks.
 	 * Returns: mark name
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_text_mark_get_name (GtkTextMark *mark);
-		return Str.toString(gtk_text_mark_get_name(gtkTextMark)).dup;
+		return Str.toString(gtk_text_mark_get_name(gtkTextMark));
 	}
 	
 	/**

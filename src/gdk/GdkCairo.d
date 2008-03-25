@@ -59,6 +59,7 @@
  * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.GdkCairo;

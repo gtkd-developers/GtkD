@@ -45,6 +45,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.NoOpObjectFactory;
@@ -79,7 +80,7 @@ public class NoOpObjectFactory : ObjectFactory
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkNoOpObjectFactory;
 	}

@@ -48,6 +48,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.TimeVal;
@@ -184,7 +185,7 @@ public class TimeVal
 	 * time =  a GTimeVal
 	 * Returns: TRUE if the conversion was successful.
 	 */
-	public static int fromIso8601(char[] isoDate, GTimeVal* time)
+	public static int fromIso8601(string isoDate, GTimeVal* time)
 	{
 		// gboolean g_time_val_from_iso8601 (const gchar *iso_date,  GTimeVal *time_);
 		return g_time_val_from_iso8601(Str.toStringz(isoDate), time);
@@ -196,9 +197,9 @@ public class TimeVal
 	 * Since 2.12
 	 * Returns: a newly allocated string containing a ISO 8601 date
 	 */
-	public char[] toIso8601()
+	public string toIso8601()
 	{
 		// gchar* g_time_val_to_iso8601 (GTimeVal *time_);
-		return Str.toString(g_time_val_to_iso8601(gTimeVal)).dup;
+		return Str.toString(g_time_val_to_iso8601(gTimeVal));
 	}
 }

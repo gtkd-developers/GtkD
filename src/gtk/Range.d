@@ -48,6 +48,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Range;
@@ -88,7 +89,7 @@ public class Range : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRange;
 	}

@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.OptionGroup;
@@ -190,7 +191,7 @@ public class OptionGroup
 	 *  the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
 	 * destroy =  a function that will be called to free user_data, or NULL
 	 */
-	public this (char[] name, char[] description, char[] helpDescription, void* userData, GDestroyNotify destroy)
+	public this (string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
 	{
 		// GOptionGroup* g_option_group_new (const gchar *name,  const gchar *description,  const gchar *help_description,  gpointer user_data,  GDestroyNotify destroy);
 		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
@@ -286,7 +287,7 @@ public class OptionGroup
 	 * Params:
 	 * domain =  the domain to use
 	 */
-	public void setTranslationDomain(char[] domain)
+	public void setTranslationDomain(string domain)
 	{
 		// void g_option_group_set_translation_domain  (GOptionGroup *group,  const gchar *domain);
 		g_option_group_set_translation_domain(gOptionGroup, Str.toStringz(domain));

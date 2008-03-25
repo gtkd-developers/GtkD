@@ -53,6 +53,7 @@
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Entry;
@@ -95,7 +96,7 @@ public class Entry : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkEntry;
 	}
@@ -116,14 +117,14 @@ public class Entry : Widget
 	}
 	
 	/** */
-	public this (char[] text)
+	public this (string text)
 	{
 		this();
 		setText(text);
 	}
 	
 	/** */
-	public this (char[] text, int max)
+	public this (string text, int max)
 	{
 		this(max);
 		setText(text);
@@ -283,10 +284,10 @@ public class Entry : Widget
 		return consumed;
 	}
 	
-	void delegate(char[], Entry)[] onInsertAtCursorListeners;
+	void delegate(string, Entry)[] onInsertAtCursorListeners;
 	/**
 	 */
-	void addOnInsertAtCursor(void delegate(char[], Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertAtCursor(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
 		{
@@ -305,7 +306,7 @@ public class Entry : Widget
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], Entry) dlg ; entry.onInsertAtCursorListeners )
+		foreach ( void delegate(string, Entry) dlg ; entry.onInsertAtCursorListeners )
 		{
 			dlg(Str.toString(arg1), entry);
 		}
@@ -487,7 +488,7 @@ public class Entry : Widget
 	 * Params:
 	 * text =  the new text
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gtk_entry_set_text (GtkEntry *entry,  const gchar *text);
 		gtk_entry_set_text(gtkEntry, Str.toStringz(text));
@@ -502,7 +503,7 @@ public class Entry : Widget
 	 * Params:
 	 * text =  the text to append
 	 */
-	public void appendText(char[] text)
+	public void appendText(string text)
 	{
 		// void gtk_entry_append_text (GtkEntry *entry,  const gchar *text);
 		gtk_entry_append_text(gtkEntry, Str.toStringz(text));
@@ -517,7 +518,7 @@ public class Entry : Widget
 	 * Params:
 	 * text =  the text to prepend
 	 */
-	public void prependText(char[] text)
+	public void prependText(string text)
 	{
 		// void gtk_entry_prepend_text (GtkEntry *entry,  const gchar *text);
 		gtk_entry_prepend_text(gtkEntry, Str.toStringz(text));
@@ -546,10 +547,10 @@ public class Entry : Widget
 	 * See also gtk_editable_get_chars().
 	 * Returns: a pointer to the contents of the widget as a string. This string points to internally allocated storage in the widget and must not be freed, modified or stored.
 	 */
-	public char[] getText()
+	public string getText()
 	{
 		// const gchar* gtk_entry_get_text (GtkEntry *entry);
-		return Str.toString(gtk_entry_get_text(gtkEntry)).dup;
+		return Str.toString(gtk_entry_get_text(gtkEntry));
 	}
 	
 	/**

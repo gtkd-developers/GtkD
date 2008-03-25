@@ -54,6 +54,7 @@
  * 	- GdkVisual* -> Visual
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Colormap;

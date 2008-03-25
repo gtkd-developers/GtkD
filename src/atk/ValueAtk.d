@@ -47,6 +47,7 @@
  * 	- GValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.ValueAtk;

@@ -50,6 +50,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgMiscellaneous;
@@ -90,7 +91,7 @@ public class PgMiscellaneous
 	 * str =  a G_SEARCHPATH_SEPARATOR separated list of filenames
 	 * Returns: a list of strings to be freed with g_strfreev()
 	 */
-	public static char** splitFileList(char[] str)
+	public static char** splitFileList(string str)
 	{
 		// char** pango_split_file_list (const char *str);
 		return pango_split_file_list(Str.toStringz(str));
@@ -102,10 +103,10 @@ public class PgMiscellaneous
 	 * str =  a string
 	 * Returns: A newly-allocated string that must be freed with g_free()
 	 */
-	public static char[] trimString(char[] str)
+	public static string trimString(string str)
 	{
 		// char* pango_trim_string (const char *str);
-		return Str.toString(pango_trim_string(Str.toStringz(str))).dup;
+		return Str.toString(pango_trim_string(Str.toStringz(str)));
 	}
 	
 	/**
@@ -192,10 +193,10 @@ public class PgMiscellaneous
 	 * key =  Key to look up, in the form "SECTION/KEY".
 	 * Returns: the value, if found, otherwise NULL. The value is anewly-allocated string and must be freed with g_free().
 	 */
-	public static char[] configKeyGet(char[] key)
+	public static string configKeyGet(string key)
 	{
 		// char* pango_config_key_get (const char *key);
-		return Str.toString(pango_config_key_get(Str.toStringz(key))).dup;
+		return Str.toString(pango_config_key_get(Str.toStringz(key)));
 	}
 	
 	/**
@@ -208,7 +209,7 @@ public class PgMiscellaneous
 	 *  this array is owned by pango and should not be freed.
 	 * nFamilies =  will be set to the length of the families array.
 	 */
-	public static void lookupAliases(char[] fontname, char*** families, int* nFamilies)
+	public static void lookupAliases(string fontname, char*** families, int* nFamilies)
 	{
 		// void pango_lookup_aliases (const char *fontname,  char ***families,  int *n_families);
 		pango_lookup_aliases(Str.toStringz(fontname), families, nFamilies);
@@ -231,7 +232,7 @@ public class PgMiscellaneous
 	 * possibleValues =  place to store list of possible values on failure, or NULL.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseEnum(GType type, char[] str, int* value, int warn, char** possibleValues)
+	public static int parseEnum(GType type, string str, int* value, int warn, char** possibleValues)
 	{
 		// gboolean pango_parse_enum (GType type,  const char *str,  int *value,  gboolean warn,  char **possible_values);
 		return pango_parse_enum(type, Str.toStringz(str), value, warn, possibleValues);
@@ -247,7 +248,7 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseStyle(char[] str, PangoStyle* style, int warn)
+	public static int parseStyle(string str, PangoStyle* style, int warn)
 	{
 		// gboolean pango_parse_style (const char *str,  PangoStyle *style,  gboolean warn);
 		return pango_parse_style(Str.toStringz(str), style, warn);
@@ -263,7 +264,7 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseVariant(char[] str, PangoVariant* variant, int warn)
+	public static int parseVariant(string str, PangoVariant* variant, int warn)
 	{
 		// gboolean pango_parse_variant (const char *str,  PangoVariant *variant,  gboolean warn);
 		return pango_parse_variant(Str.toStringz(str), variant, warn);
@@ -279,7 +280,7 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseWeight(char[] str, PangoWeight* weight, int warn)
+	public static int parseWeight(string str, PangoWeight* weight, int warn)
 	{
 		// gboolean pango_parse_weight (const char *str,  PangoWeight *weight,  gboolean warn);
 		return pango_parse_weight(Str.toStringz(str), weight, warn);
@@ -297,7 +298,7 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseStretch(char[] str, PangoStretch* stretch, int warn)
+	public static int parseStretch(string str, PangoStretch* stretch, int warn)
 	{
 		// gboolean pango_parse_stretch (const char *str,  PangoStretch *stretch,  gboolean warn);
 		return pango_parse_stretch(Str.toStringz(str), stretch, warn);
@@ -310,10 +311,10 @@ public class PgMiscellaneous
 	 * the DLL's location, or stored in the Registry).
 	 * Returns: the Pango sysconf directory. The returned string shouldnot be freed.
 	 */
-	public static char[] getSysconfSubdirectory()
+	public static string getSysconfSubdirectory()
 	{
 		// const char* pango_get_sysconf_subdirectory (void);
-		return Str.toString(pango_get_sysconf_subdirectory()).dup;
+		return Str.toString(pango_get_sysconf_subdirectory());
 	}
 	
 	/**
@@ -324,10 +325,10 @@ public class PgMiscellaneous
 	 * not be freed.
 	 * Returns: the Pango lib directory. The returned string shouldnot be freed.
 	 */
-	public static char[] getLibSubdirectory()
+	public static string getLibSubdirectory()
 	{
 		// const char* pango_get_lib_subdirectory (void);
-		return Str.toString(pango_get_lib_subdirectory()).dup;
+		return Str.toString(pango_get_lib_subdirectory());
 	}
 	
 	/**
@@ -340,7 +341,7 @@ public class PgMiscellaneous
 	 * pbaseDir =  input base direction, and output resolved direction.
 	 * Returns: a newly allocated array of embedding levels, one item per character (not byte), that should be freed using g_free.
 	 */
-	public static byte* log2visGetEmbeddingLevels(char[] text, int length, PangoDirection* pbaseDir)
+	public static byte* log2visGetEmbeddingLevels(string text, int length, PangoDirection* pbaseDir)
 	{
 		// guint8* pango_log2vis_get_embedding_levels (const gchar *text,  int length,  PangoDirection *pbase_dir);
 		return pango_log2vis_get_embedding_levels(Str.toStringz(text), length, pbaseDir);
@@ -393,10 +394,10 @@ public class PgMiscellaneous
 	 * language =  a PangoLanguage
 	 * Returns: the sample string. This value is owned by Pango and must not be freed.
 	 */
-	public static char[] languageGetSampleString(PgLanguage language)
+	public static string languageGetSampleString(PgLanguage language)
 	{
 		// const char* pango_language_get_sample_string (PangoLanguage *language);
-		return Str.toString(pango_language_get_sample_string((language is null) ? null : language.getPgLanguageStruct())).dup;
+		return Str.toString(pango_language_get_sample_string((language is null) ? null : language.getPgLanguageStruct()));
 	}
 	
 	/**

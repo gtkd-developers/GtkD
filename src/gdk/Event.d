@@ -55,6 +55,7 @@
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Event;
@@ -489,7 +490,7 @@ public class Event
 	 * value =  location to store the value of the setting.
 	 * Returns:: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
 	 */
-	public static int gdkSettingGet(char[] name, Value value)
+	public static int gdkSettingGet(string name, Value value)
 	{
 		// gboolean gdk_setting_get (const gchar *name,  GValue *value);
 		return gdk_setting_get(Str.toStringz(name), (value is null) ? null : value.getValueStruct());

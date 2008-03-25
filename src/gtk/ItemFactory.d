@@ -53,6 +53,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ItemFactory;
@@ -88,7 +89,7 @@ public class ItemFactory : ObjectGtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkItemFactory;
 	}
@@ -124,7 +125,7 @@ public class ItemFactory : ObjectGtk
 	 * accelGroup =  a GtkAccelGroup to which the accelerators for the
 	 *  menu items will be added, or NULL to create a new one
 	 */
-	public this (GType containerType, char[] path, AccelGroup accelGroup)
+	public this (GType containerType, string path, AccelGroup accelGroup)
 	{
 		// GtkItemFactory* gtk_item_factory_new (GType container_type,  const gchar *path,  GtkAccelGroup *accel_group);
 		auto p = gtk_item_factory_new(containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
@@ -149,7 +150,7 @@ public class ItemFactory : ObjectGtk
 	 * accelGroup =  a GtkAccelGroup to which the accelerators for the
 	 *  menu items will be added, or NULL to create a new one
 	 */
-	public void construct(GType containerType, char[] path, AccelGroup accelGroup)
+	public void construct(GType containerType, string path, AccelGroup accelGroup)
 	{
 		// void gtk_item_factory_construct (GtkItemFactory *ifactory,  GType container_type,  const gchar *path,  GtkAccelGroup *accel_group);
 		gtk_item_factory_construct(gtkItemFactory, containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
@@ -174,7 +175,7 @@ public class ItemFactory : ObjectGtk
 	 * keyval =  key value of the accelerator
 	 * modifiers =  modifier combination of the accelerator
 	 */
-	public static void addForeign(Widget accelWidget, char[] fullPath, AccelGroup accelGroup, uint keyval, GdkModifierType modifiers)
+	public static void addForeign(Widget accelWidget, string fullPath, AccelGroup accelGroup, uint keyval, GdkModifierType modifiers)
 	{
 		// void gtk_item_factory_add_foreign (GtkWidget *accel_widget,  const gchar *full_path,  GtkAccelGroup *accel_group,  guint keyval,  GdkModifierType modifiers);
 		gtk_item_factory_add_foreign((accelWidget is null) ? null : accelWidget.getWidgetStruct(), Str.toStringz(fullPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), keyval, modifiers);
@@ -211,10 +212,10 @@ public class ItemFactory : ObjectGtk
 	 * widget =  a widget
 	 * Returns: the full path to widget if it has been created by an item factory, NULL otherwise. This value is owned by GTK+ and must not be modified or freed.
 	 */
-	public static char[] pathFromWidget(Widget widget)
+	public static string pathFromWidget(Widget widget)
 	{
 		// const gchar* gtk_item_factory_path_from_widget (GtkWidget *widget);
-		return Str.toString(gtk_item_factory_path_from_widget((widget is null) ? null : widget.getWidgetStruct())).dup;
+		return Str.toString(gtk_item_factory_path_from_widget((widget is null) ? null : widget.getWidgetStruct()));
 	}
 	
 	/**
@@ -228,7 +229,7 @@ public class ItemFactory : ObjectGtk
 	 * path =  the path to the menu item
 	 * Returns: the menu item for the given path, or NULL if path doesn't lead to a menu item
 	 */
-	public Widget getItem(char[] path)
+	public Widget getItem(string path)
 	{
 		// GtkWidget* gtk_item_factory_get_item (GtkItemFactory *ifactory,  const gchar *path);
 		auto p = gtk_item_factory_get_item(gtkItemFactory, Str.toStringz(path));
@@ -251,7 +252,7 @@ public class ItemFactory : ObjectGtk
 	 * path =  the path to the widget
 	 * Returns: the widget for the given path, or NULL if path doesn't lead to a widget
 	 */
-	public Widget getWidget(char[] path)
+	public Widget getWidget(string path)
 	{
 		// GtkWidget* gtk_item_factory_get_widget (GtkItemFactory *ifactory,  const gchar *path);
 		auto p = gtk_item_factory_get_widget(gtkItemFactory, Str.toStringz(path));
@@ -366,7 +367,7 @@ public class ItemFactory : ObjectGtk
 	 * Params:
 	 * path =  a path
 	 */
-	public void deleteItem(char[] path)
+	public void deleteItem(string path)
 	{
 		// void gtk_item_factory_delete_item (GtkItemFactory *ifactory,  const gchar *path);
 		gtk_item_factory_delete_item(gtkItemFactory, Str.toStringz(path));
@@ -497,7 +498,7 @@ public class ItemFactory : ObjectGtk
 	 *  "<name>"
 	 * Returns: the GtkItemFactory created for the given factory path, or NULL
 	 */
-	public static ItemFactory fromPath(char[] path)
+	public static ItemFactory fromPath(string path)
 	{
 		// GtkItemFactory* gtk_item_factory_from_path (const gchar *path);
 		auto p = gtk_item_factory_from_path(Str.toStringz(path));
@@ -518,7 +519,7 @@ public class ItemFactory : ObjectGtk
 	 *  starts with a factory path
 	 * path =  a path
 	 */
-	public static void itemFactoriesPathDelete(char[] ifactoryPath, char[] path)
+	public static void itemFactoriesPathDelete(string ifactoryPath, string path)
 	{
 		// void gtk_item_factories_path_delete (const gchar *ifactory_path,  const gchar *path);
 		gtk_item_factories_path_delete(Str.toStringz(ifactoryPath), Str.toStringz(path));

@@ -51,6 +51,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FileChooserWidget;
@@ -95,7 +96,7 @@ public class FileChooserWidget : VBox
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFileChooserWidget;
 	}
@@ -162,7 +163,7 @@ public class FileChooserWidget : VBox
 	 * action =  Open or save mode for the widget
 	 * backend =  The name of the specific filesystem backend to use.
 	 */
-	public this (GtkFileChooserAction action, char[] backend)
+	public this (GtkFileChooserAction action, string backend)
 	{
 		// GtkWidget* gtk_file_chooser_widget_new_with_backend  (GtkFileChooserAction action,  const gchar *backend);
 		auto p = gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend));

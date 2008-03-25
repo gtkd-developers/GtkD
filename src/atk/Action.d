@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Action;
@@ -150,10 +151,10 @@ public class Action
 	 * i =  the action index corresponding to the action to be performed
 	 * Returns:a description string, or NULLif action does not implement this interface.
 	 */
-	public char[] getDescription(int i)
+	public string getDescription(int i)
 	{
 		// const gchar* atk_action_get_description (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_description(atkAction, i)).dup;
+		return Str.toString(atk_action_get_description(atkAction, i));
 	}
 	
 	/**
@@ -174,10 +175,10 @@ public class Action
 	 * i =  the action index corresponding to the action to be performed
 	 * Returns:a name string, or NULLif action does not implement this interface.
 	 */
-	public char[] getName(int i)
+	public string getName(int i)
 	{
 		// const gchar* atk_action_get_name (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_name(atkAction, i)).dup;
+		return Str.toString(atk_action_get_name(atkAction, i));
 	}
 	
 	/**
@@ -186,10 +187,10 @@ public class Action
 	 * i =  the action index corresponding to the action to be performed
 	 * Returns:a name string, or NULLif action does not implement this interface.
 	 */
-	public char[] getLocalizedName(int i)
+	public string getLocalizedName(int i)
 	{
 		// const gchar* atk_action_get_localized_name (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_localized_name(atkAction, i)).dup;
+		return Str.toString(atk_action_get_localized_name(atkAction, i));
 	}
 	
 	/**
@@ -208,10 +209,10 @@ public class Action
 	 * i =  the action index corresponding to the action to be performed
 	 * Returns:a string representing the available keybindings, or NULLif there is no keybinding for this action.
 	 */
-	public char[] getKeybinding(int i)
+	public string getKeybinding(int i)
 	{
 		// const gchar* atk_action_get_keybinding (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_keybinding(atkAction, i)).dup;
+		return Str.toString(atk_action_get_keybinding(atkAction, i));
 	}
 	
 	/**
@@ -221,7 +222,7 @@ public class Action
 	 * desc =  the description to be assigned to this action
 	 * Returns: a gboolean representing if the description was successfully set;
 	 */
-	public int setDescription(int i, char[] desc)
+	public int setDescription(int i, string desc)
 	{
 		// gboolean atk_action_set_description (AtkAction *action,  gint i,  const gchar *desc);
 		return atk_action_set_description(atkAction, i, Str.toStringz(desc));

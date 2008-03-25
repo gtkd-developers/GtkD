@@ -51,6 +51,7 @@
  * 	- GtkAccelMap* -> AccelMap
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.AccelMap;
@@ -87,7 +88,7 @@ public class AccelMap : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAccelMap;
 	}
@@ -111,7 +112,7 @@ public class AccelMap : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(char[], guint, GdkModifierType, AccelMap)[] onChangedListeners;
+	void delegate(string, guint, GdkModifierType, AccelMap)[] onChangedListeners;
 	/**
 	 * Notifies of a change in the global accelerator map.
 	 * The path is also used as the detail for the signal,
@@ -119,7 +120,7 @@ public class AccelMap : ObjectG
 	 * changed::accel_path.
 	 * Since 2.4
 	 */
-	void addOnChanged(void delegate(char[], guint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChanged(void delegate(string, guint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -138,7 +139,7 @@ public class AccelMap : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], guint, GdkModifierType, AccelMap) dlg ; accelMap.onChangedListeners )
+		foreach ( void delegate(string, guint, GdkModifierType, AccelMap) dlg ; accelMap.onChangedListeners )
 		{
 			dlg(Str.toString(accelPath), accelKey, accelMods, accelMap);
 		}
@@ -165,7 +166,7 @@ public class AccelMap : ObjectG
 	 * accelKey =  the accelerator key
 	 * accelMods =  the accelerator modifiers
 	 */
-	public static void addEntry(char[] accelPath, uint accelKey, GdkModifierType accelMods)
+	public static void addEntry(string accelPath, uint accelKey, GdkModifierType accelMods)
 	{
 		// void gtk_accel_map_add_entry (const gchar *accel_path,  guint accel_key,  GdkModifierType accel_mods);
 		gtk_accel_map_add_entry(Str.toStringz(accelPath), accelKey, accelMods);
@@ -178,7 +179,7 @@ public class AccelMap : ObjectG
 	 * key =  the accelerator key to be filled in (optional)
 	 * Returns: TRUE if accel_path is known, FALSE otherwise
 	 */
-	public static int lookupEntry(char[] accelPath, GtkAccelKey* key)
+	public static int lookupEntry(string accelPath, GtkAccelKey* key)
 	{
 		// gboolean gtk_accel_map_lookup_entry (const gchar *accel_path,  GtkAccelKey *key);
 		return gtk_accel_map_lookup_entry(Str.toStringz(accelPath), key);
@@ -198,7 +199,7 @@ public class AccelMap : ObjectG
 	 * replace =  TRUE if other accelerators may be deleted upon conflicts
 	 * Returns: TRUE if the accelerator could be changed, FALSE otherwise
 	 */
-	public static int changeEntry(char[] accelPath, uint accelKey, GdkModifierType accelMods, int replace)
+	public static int changeEntry(string accelPath, uint accelKey, GdkModifierType accelMods, int replace)
 	{
 		// gboolean gtk_accel_map_change_entry (const gchar *accel_path,  guint accel_key,  GdkModifierType accel_mods,  gboolean replace);
 		return gtk_accel_map_change_entry(Str.toStringz(accelPath), accelKey, accelMods, replace);
@@ -211,7 +212,7 @@ public class AccelMap : ObjectG
 	 * fileName =  a file containing accelerator specifications,
 	 *  in the GLib file name encoding
 	 */
-	public static void load(char[] fileName)
+	public static void load(string fileName)
 	{
 		// void gtk_accel_map_load (const gchar *file_name);
 		gtk_accel_map_load(Str.toStringz(fileName));
@@ -226,7 +227,7 @@ public class AccelMap : ObjectG
 	 * fileName =  the name of the file to contain accelerator specifications,
 	 *  in the GLib file name encoding
 	 */
-	public static void save(char[] fileName)
+	public static void save(string fileName)
 	{
 		// void gtk_accel_map_save (const gchar *file_name);
 		gtk_accel_map_save(Str.toStringz(fileName));
@@ -295,7 +296,7 @@ public class AccelMap : ObjectG
 	 * Params:
 	 * filterPattern =  a pattern (see GPatternSpec)
 	 */
-	public static void addFilter(char[] filterPattern)
+	public static void addFilter(string filterPattern)
 	{
 		// void gtk_accel_map_add_filter (const gchar *filter_pattern);
 		gtk_accel_map_add_filter(Str.toStringz(filterPattern));
@@ -355,7 +356,7 @@ public class AccelMap : ObjectG
 	 * Params:
 	 * accelPath =  a valid accelerator path
 	 */
-	public static void lockPath(char[] accelPath)
+	public static void lockPath(string accelPath)
 	{
 		// void gtk_accel_map_lock_path (const gchar *accel_path);
 		gtk_accel_map_lock_path(Str.toStringz(accelPath));
@@ -381,7 +382,7 @@ public class AccelMap : ObjectG
 	 * accelPath =  a valid accelerator path
 	 * accelPath =  the path of the accelerator that changed
 	 */
-	public static void unlockPath(char[] accelPath)
+	public static void unlockPath(string accelPath)
 	{
 		// void gtk_accel_map_unlock_path (const gchar *accel_path);
 		gtk_accel_map_unlock_path(Str.toStringz(accelPath));

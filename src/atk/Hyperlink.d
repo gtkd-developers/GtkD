@@ -48,6 +48,7 @@
  * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Hyperlink;
@@ -88,7 +89,7 @@ public class Hyperlink : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkHyperlink;
 	}
@@ -152,10 +153,10 @@ public class Hyperlink : ObjectG
 	 * i =  a (zero-index) integer specifying the desired anchor
 	 * Returns: a string specifying the URI
 	 */
-	public char[] getUri(int i)
+	public string getUri(int i)
 	{
 		// gchar* atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
-		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i)).dup;
+		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i));
 	}
 	
 	/**

@@ -48,6 +48,7 @@
  * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgFontFace;
@@ -87,7 +88,7 @@ public class PgFontFace : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoFontFace;
 	}
@@ -117,10 +118,10 @@ public class PgFontFace : ObjectG
 	 * for displaying to users.
 	 * Returns: the face name for the face. This string is owned by the face object and must not be modified or freed.
 	 */
-	public char[] getFaceName()
+	public string getFaceName()
 	{
 		// const char* pango_font_face_get_face_name (PangoFontFace *face);
-		return Str.toString(pango_font_face_get_face_name(pangoFontFace)).dup;
+		return Str.toString(pango_font_face_get_face_name(pangoFontFace));
 	}
 	
 	/**

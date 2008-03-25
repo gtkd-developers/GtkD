@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.SeparatorMenuItem;
@@ -80,7 +81,7 @@ public class SeparatorMenuItem : MenuItem
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSeparatorMenuItem;
 	}

@@ -51,6 +51,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellLayoutIF;
@@ -185,7 +186,7 @@ public interface CellLayoutIF
 	 * attribute =  An attribute on the renderer.
 	 * column =  The column position on the model to get the attribute from.
 	 */
-	public void addAttribute(CellRenderer cell, char[] attribute, int column);
+	public void addAttribute(CellRenderer cell, string attribute, int column);
 	
 	/**
 	 * Sets the GtkCellLayoutDataFunc to use for cell_layout. This function

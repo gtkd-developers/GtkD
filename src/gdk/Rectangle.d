@@ -47,6 +47,7 @@
  * 	- GdkRectangle* -> Rectangle
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Rectangle;

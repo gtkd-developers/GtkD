@@ -47,6 +47,7 @@
  * 	- GFlagsValue* -> Flags
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.Flags;
@@ -136,7 +137,7 @@ public class Flags
 	 * name = the name to look up
 	 * Returns:the GFlagsValue with name name, or NULL if there is no flag withthat name
 	 */
-	public static Flags getValueByName(GFlagsClass* flagsClass, char[] name)
+	public static Flags getValueByName(GFlagsClass* flagsClass, string name)
 	{
 		// GFlagsValue* g_flags_get_value_by_name (GFlagsClass *flags_class,  const gchar *name);
 		auto p = g_flags_get_value_by_name(flagsClass, Str.toStringz(name));
@@ -155,7 +156,7 @@ public class Flags
 	 * nick = the nickname to look up
 	 * Returns:the GFlagsValue with nickname nick, or NULL if there is no flagwith that nickname
 	 */
-	public static Flags getValueByNick(GFlagsClass* flagsClass, char[] nick)
+	public static Flags getValueByNick(GFlagsClass* flagsClass, string nick)
 	{
 		// GFlagsValue* g_flags_get_value_by_nick (GFlagsClass *flags_class,  const gchar *nick);
 		auto p = g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick));
@@ -176,7 +177,7 @@ public class Flags
 	 * name = A nul-terminated string used as the name of the new type.
 	 * Returns:The new type identifier.
 	 */
-	public static GType registerStatic(char[] name, Flags _StaticValues)
+	public static GType registerStatic(string name, Flags _StaticValues)
 	{
 		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const_static_values);
 		return g_flags_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());

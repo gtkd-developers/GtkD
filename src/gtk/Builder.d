@@ -55,6 +55,7 @@
  * 	- GValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Builder;
@@ -265,7 +266,7 @@ public class Builder : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkBuilder;
 	}
@@ -314,7 +315,7 @@ public class Builder : ObjectG
 	 * error =  return location for an error, or NULL
 	 * Returns: A positive value on success, 0 if an error occurred
 	 */
-	public uint addFromFile(char[] filename, GError** error)
+	public uint addFromFile(string filename, GError** error)
 	{
 		// guint gtk_builder_add_from_file (GtkBuilder *builder,  const gchar *filename,  GError **error);
 		return gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), error);
@@ -330,7 +331,7 @@ public class Builder : ObjectG
 	 * error =  return location for an error, or NULL
 	 * Returns: A positive value on success, 0 if an error occurred
 	 */
-	public uint addFromString(char[] buffer, uint length, GError** error)
+	public uint addFromString(string buffer, uint length, GError** error)
 	{
 		// guint gtk_builder_add_from_string (GtkBuilder *builder,  const gchar *buffer,  gsize length,  GError **error);
 		return gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), length, error);
@@ -344,7 +345,7 @@ public class Builder : ObjectG
 	 * name =  name of object to get
 	 * Returns: the object named name or NULL if it could not be  found in the object tree.
 	 */
-	public ObjectG getObject(char[] name)
+	public ObjectG getObject(string name)
 	{
 		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
 		auto p = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
@@ -415,7 +416,7 @@ public class Builder : ObjectG
 	 * Params:
 	 * domain =  the translation domain or NULL
 	 */
-	public void setTranslationDomain(char[] domain)
+	public void setTranslationDomain(string domain)
 	{
 		// void gtk_builder_set_translation_domain (GtkBuilder *builder,  const gchar *domain);
 		gtk_builder_set_translation_domain(gtkBuilder, Str.toStringz(domain));
@@ -426,10 +427,10 @@ public class Builder : ObjectG
 	 * Since 2.12
 	 * Returns: the translation domain. This string is ownedby the builder object and must not be modified or freed.
 	 */
-	public char[] getTranslationDomain()
+	public string getTranslationDomain()
 	{
 		// const gchar* gtk_builder_get_translation_domain (GtkBuilder *builder);
-		return Str.toString(gtk_builder_get_translation_domain(gtkBuilder)).dup;
+		return Str.toString(gtk_builder_get_translation_domain(gtkBuilder));
 	}
 	
 	/**
@@ -441,7 +442,7 @@ public class Builder : ObjectG
 	 * typeName =  type name to lookup
 	 * Returns: the GType found for type_name or G_TYPE_INVALID  if no type was found
 	 */
-	public GType getTypeFromName(char[] typeName)
+	public GType getTypeFromName(string typeName)
 	{
 		// GType gtk_builder_get_type_from_name (GtkBuilder *builder,  const char *type_name);
 		return gtk_builder_get_type_from_name(gtkBuilder, Str.toStringz(typeName));
@@ -463,7 +464,7 @@ public class Builder : ObjectG
 	 * error =  return location for an error, or NULL
 	 * Returns: TRUE on success
 	 */
-	public int valueFromString(ParamSpec pspec, char[] string, Value value, GError** error)
+	public int valueFromString(ParamSpec pspec, string string, Value value, GError** error)
 	{
 		// gboolean gtk_builder_value_from_string (GtkBuilder *builder,  GParamSpec *pspec,  const gchar *string,  GValue *value,  GError **error);
 		return gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(string), (value is null) ? null : value.getValueStruct(), error);
@@ -482,7 +483,7 @@ public class Builder : ObjectG
 	 * error =  return location for an error, or NULL
 	 * Returns: TRUE on success
 	 */
-	public int valueFromStringType(GType type, char[] string, Value value, GError** error)
+	public int valueFromStringType(GType type, string string, Value value, GError** error)
 	{
 		// gboolean gtk_builder_value_from_string_type (GtkBuilder *builder,  GType type,  const gchar *string,  GValue *value,  GError **error);
 		return gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(string), (value is null) ? null : value.getValueStruct(), error);

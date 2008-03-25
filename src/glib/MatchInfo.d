@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.MatchInfo;
@@ -166,10 +167,10 @@ public class MatchInfo
 	 * Since 2.14
 	 * Returns: the string searched with match_info
 	 */
-	public char[] getString()
+	public string getString()
 	{
 		// const gchar* g_match_info_get_string (const GMatchInfo *match_info);
-		return Str.toString(g_match_info_get_string(gMatchInfo)).dup;
+		return Str.toString(g_match_info_get_string(gMatchInfo));
 	}
 	
 	/**
@@ -286,10 +287,10 @@ public class MatchInfo
 	 * error =  location to store the error occuring, or NULL to ignore errors
 	 * Returns: the expanded string, or NULL if an error occurred
 	 */
-	public char[] expandReferences(char[] stringToExpand, GError** error)
+	public string expandReferences(string stringToExpand, GError** error)
 	{
 		// gchar* g_match_info_expand_references (const GMatchInfo *match_info,  const gchar *string_to_expand,  GError **error);
-		return Str.toString(g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), error)).dup;
+		return Str.toString(g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), error));
 	}
 	
 	/**
@@ -311,10 +312,10 @@ public class MatchInfo
 	 * matchNum =  number of the sub expression
 	 * Returns: The matched substring, or NULL if an error occurred. You have to free the string yourself
 	 */
-	public char[] fetch(int matchNum)
+	public string fetch(int matchNum)
 	{
 		// gchar* g_match_info_fetch (const GMatchInfo *match_info,  gint match_num);
-		return Str.toString(g_match_info_fetch(gMatchInfo, matchNum)).dup;
+		return Str.toString(g_match_info_fetch(gMatchInfo, matchNum));
 	}
 	
 	/**
@@ -354,10 +355,10 @@ public class MatchInfo
 	 * name =  name of the subexpression
 	 * Returns: The matched substring, or NULL if an error occurred. You have to free the string yourself
 	 */
-	public char[] fetchNamed(char[] name)
+	public string fetchNamed(string name)
 	{
 		// gchar* g_match_info_fetch_named (const GMatchInfo *match_info,  const gchar *name);
-		return Str.toString(g_match_info_fetch_named(gMatchInfo, Str.toStringz(name))).dup;
+		return Str.toString(g_match_info_fetch_named(gMatchInfo, Str.toStringz(name)));
 	}
 	
 	/**
@@ -372,7 +373,7 @@ public class MatchInfo
 	 * endPos =  pointer to location where to store the end position
 	 * Returns: TRUE if the position was fetched, FALSE otherwise. If  the position cannot be fetched, start_pos and end_pos are left unchanged
 	 */
-	public int fetchNamedPos(char[] name, int* startPos, int* endPos)
+	public int fetchNamedPos(string name, int* startPos, int* endPos)
 	{
 		// gboolean g_match_info_fetch_named_pos (const GMatchInfo *match_info,  const gchar *name,  gint *start_pos,  gint *end_pos);
 		return g_match_info_fetch_named_pos(gMatchInfo, Str.toStringz(name), startPos, endPos);

@@ -73,6 +73,7 @@
  * 	- GtkTreeViewColumn* -> TreeViewColumn
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeView;
@@ -157,7 +158,7 @@ public class TreeView : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTreeView;
 	}
@@ -276,7 +277,7 @@ public class TreeView : Container
 	 *  editable =
 	 * Returns: number of columns including the new one
 	 */
-	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bool editable)
+	gint insertEditableColumn(int position, string title, CellRenderer renderer, bool editable)
 	{
 		// OK, this is a trick because of my ignorance on how to pass variable argument lists
 		if ( position < 0 )
@@ -1129,7 +1130,7 @@ public class TreeView : Container
 	 * ... =  A NULL-terminated list of attributes.
 	 * Returns: The number of columns in tree_view after insertion.
 	 */
-	public int insertColumnWithAttributes(int position, char[] title, CellRenderer cell, ... )
+	public int insertColumnWithAttributes(int position, string title, CellRenderer cell, ... )
 	{
 		// gint gtk_tree_view_insert_column_with_attributes  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  ...);
 		return gtk_tree_view_insert_column_with_attributes(gtkTreeView, position, Str.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct());
@@ -1151,7 +1152,7 @@ public class TreeView : Container
 	 * dnotify =  destroy notifier for data
 	 * Returns: number of columns in the tree view post-insert
 	 */
-	public int insertColumnWithDataFunc(int position, char[] title, CellRenderer cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify)
+	public int insertColumnWithDataFunc(int position, string title, CellRenderer cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify)
 	{
 		// gint gtk_tree_view_insert_column_with_data_func  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  GtkTreeCellDataFunc func,  gpointer data,  GDestroyNotify dnotify);
 		return gtk_tree_view_insert_column_with_data_func(gtkTreeView, position, Str.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct(), func, data, dnotify);

@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Unicode;
@@ -533,7 +534,7 @@ public class Unicode
 	 * p =  a pointer to Unicode character encoded as UTF-8
 	 * Returns: the resulting character
 	 */
-	public static gunichar utf8_GetChar(char[] p)
+	public static gunichar utf8_GetChar(string p)
 	{
 		// gunichar g_utf8_get_char (const gchar *p);
 		return g_utf8_get_char(Str.toStringz(p));
@@ -550,7 +551,7 @@ public class Unicode
 	 *  if p is nul-terminated
 	 * Returns: the resulting character. If p points to a partial sequence at the end of a string that could begin a valid  character (or if max_len is zero), returns (gunichar)-2;  otherwise, if p does not point to a valid UTF-8 encoded  Unicode character, returns (gunichar)-1.
 	 */
-	public static gunichar utf8_GetCharValidated(char[] p, int maxLen)
+	public static gunichar utf8_GetCharValidated(string p, int maxLen)
 	{
 		// gunichar g_utf8_get_char_validated (const gchar *p,  gssize max_len);
 		return g_utf8_get_char_validated(Str.toStringz(p), maxLen);
@@ -568,10 +569,10 @@ public class Unicode
 	 * offset =  a character offset within str
 	 * Returns: the resulting pointer
 	 */
-	public static char[] utf8_OffsetToPointer(char[] str, int offset)
+	public static string utf8_OffsetToPointer(string str, int offset)
 	{
 		// gchar* g_utf8_offset_to_pointer (const gchar *str,  glong offset);
-		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset)).dup;
+		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset));
 	}
 	
 	/**
@@ -584,7 +585,7 @@ public class Unicode
 	 * pos =  a pointer to a position within str
 	 * Returns: the resulting character offset
 	 */
-	public static int utf8_PointerToOffset(char[] str, char[] pos)
+	public static int utf8_PointerToOffset(string str, string pos)
 	{
 		// glong g_utf8_pointer_to_offset (const gchar *str,  const gchar *pos);
 		return g_utf8_pointer_to_offset(Str.toStringz(str), Str.toStringz(pos));
@@ -600,10 +601,10 @@ public class Unicode
 	 * p =  a pointer to a position within a UTF-8 encoded string
 	 * Returns: a pointer to the found character.
 	 */
-	public static char[] utf8_PrevChar(char[] p)
+	public static string utf8_PrevChar(string p)
 	{
 		// gchar* g_utf8_prev_char (const gchar *p);
-		return Str.toString(g_utf8_prev_char(Str.toStringz(p))).dup;
+		return Str.toString(g_utf8_prev_char(Str.toStringz(p)));
 	}
 	
 	/**
@@ -618,10 +619,10 @@ public class Unicode
 	 *  the returned value will be
 	 * Returns: a pointer to the found character or NULL
 	 */
-	public static char[] utf8_FindNextChar(char[] p, char[] end)
+	public static string utf8_FindNextChar(string p, string end)
 	{
 		// gchar* g_utf8_find_next_char (const gchar *p,  const gchar *end);
-		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end))).dup;
+		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end)));
 	}
 	
 	/**
@@ -636,10 +637,10 @@ public class Unicode
 	 * p =  pointer to some position within str
 	 * Returns: a pointer to the found character or NULL.
 	 */
-	public static char[] utf8_FindPrevChar(char[] str, char[] p)
+	public static string utf8_FindPrevChar(string str, string p)
 	{
 		// gchar* g_utf8_find_prev_char (const gchar *str,  const gchar *p);
-		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p))).dup;
+		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p)));
 	}
 	
 	/**
@@ -652,7 +653,7 @@ public class Unicode
 	 *  may be NULL.
 	 * Returns: the length of the string in characters
 	 */
-	public static int utf8_Strlen(char[] p, int max)
+	public static int utf8_Strlen(string p, int max)
 	{
 		// glong g_utf8_strlen (const gchar *p,  gssize max);
 		return g_utf8_strlen(Str.toStringz(p), max);
@@ -670,10 +671,10 @@ public class Unicode
 	 * n =  character count
 	 * Returns: dest
 	 */
-	public static char[] utf8_Strncpy(char[] dest, char[] src, uint n)
+	public static string utf8_Strncpy(string dest, string src, uint n)
 	{
 		// gchar* g_utf8_strncpy (gchar *dest,  const gchar *src,  gsize n);
-		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n)).dup;
+		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n));
 	}
 	
 	/**
@@ -686,10 +687,10 @@ public class Unicode
 	 * c =  a Unicode character
 	 * Returns: NULL if the string does not contain the character,  otherwise, a pointer to the start of the leftmost occurrence of  the character in the string.
 	 */
-	public static char[] utf8_Strchr(char[] p, int len, gunichar c)
+	public static string utf8_Strchr(string p, int len, gunichar c)
 	{
 		// gchar* g_utf8_strchr (const gchar *p,  gssize len,  gunichar c);
-		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c)).dup;
+		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c));
 	}
 	
 	/**
@@ -702,10 +703,10 @@ public class Unicode
 	 * c =  a Unicode character
 	 * Returns: NULL if the string does not contain the character,  otherwise, a pointer to the start of the rightmost occurrence of the  character in the string.
 	 */
-	public static char[] utf8_Strrchr(char[] p, int len, gunichar c)
+	public static string utf8_Strrchr(string p, int len, gunichar c)
 	{
 		// gchar* g_utf8_strrchr (const gchar *p,  gssize len,  gunichar c);
-		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c)).dup;
+		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c));
 	}
 	
 	/**
@@ -727,10 +728,10 @@ public class Unicode
 	 *  the string is nul-terminated.
 	 * Returns: a newly-allocated string which is the reverse of str.
 	 */
-	public static char[] utf8_Strreverse(char[] str, int len)
+	public static string utf8_Strreverse(string str, int len)
 	{
 		// gchar* g_utf8_strreverse (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strreverse(Str.toStringz(str), len)).dup;
+		return Str.toString(g_utf8_strreverse(Str.toStringz(str), len));
 	}
 	
 	/**
@@ -753,7 +754,7 @@ public class Unicode
 	 * end =  return location for end of valid data
 	 * Returns: TRUE if the text was valid UTF-8
 	 */
-	public static int utf8_Validate(char[] str, int maxLen, char** end)
+	public static int utf8_Validate(string str, int maxLen, char** end)
 	{
 		// gboolean g_utf8_validate (const gchar *str,  gssize max_len,  const gchar **end);
 		return g_utf8_validate(Str.toStringz(str), maxLen, end);
@@ -770,10 +771,10 @@ public class Unicode
 	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string, with all characters converted to uppercase.
 	 */
-	public static char[] utf8_Strup(char[] str, int len)
+	public static string utf8_Strup(string str, int len)
 	{
 		// gchar* g_utf8_strup (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strup(Str.toStringz(str), len)).dup;
+		return Str.toString(g_utf8_strup(Str.toStringz(str), len));
 	}
 	
 	/**
@@ -786,10 +787,10 @@ public class Unicode
 	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string, with all characters converted to lowercase.
 	 */
-	public static char[] utf8_Strdown(char[] str, int len)
+	public static string utf8_Strdown(string str, int len)
 	{
 		// gchar* g_utf8_strdown (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strdown(Str.toStringz(str), len)).dup;
+		return Str.toString(g_utf8_strdown(Str.toStringz(str), len));
 	}
 	
 	/**
@@ -808,10 +809,10 @@ public class Unicode
 	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string, that is a case independent form of str.
 	 */
-	public static char[] utf8_Casefold(char[] str, int len)
+	public static string utf8_Casefold(string str, int len)
 	{
 		// gchar* g_utf8_casefold (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_casefold(Str.toStringz(str), len)).dup;
+		return Str.toString(g_utf8_casefold(Str.toStringz(str), len));
 	}
 	
 	/**
@@ -846,10 +847,10 @@ public class Unicode
 	 * mode =  the type of normalization to perform.
 	 * Returns: a newly allocated string, that is the normalized form of str, or NULL if str is not valid UTF-8.
 	 */
-	public static char[] utf8_Normalize(char[] str, int len, GNormalizeMode mode)
+	public static string utf8_Normalize(string str, int len, GNormalizeMode mode)
 	{
 		// gchar* g_utf8_normalize (const gchar *str,  gssize len,  GNormalizeMode mode);
-		return Str.toString(g_utf8_normalize(Str.toStringz(str), len, mode)).dup;
+		return Str.toString(g_utf8_normalize(Str.toStringz(str), len, mode));
 	}
 	
 	/**
@@ -864,7 +865,7 @@ public class Unicode
 	 * str2 =  a UTF-8 encoded string
 	 * Returns: < 0 if str1 compares before str2,  0 if they compare equal, > 0 if str1 compares after str2.
 	 */
-	public static int utf8_Collate(char[] str1, char[] str2)
+	public static int utf8_Collate(string str1, string str2)
 	{
 		// gint g_utf8_collate (const gchar *str1,  const gchar *str2);
 		return g_utf8_collate(Str.toStringz(str1), Str.toStringz(str2));
@@ -884,10 +885,10 @@ public class Unicode
 	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string. This string should be freed with g_free() when you are done with it.
 	 */
-	public static char[] utf8_CollateKey(char[] str, int len)
+	public static string utf8_CollateKey(string str, int len)
 	{
 		// gchar* g_utf8_collate_key (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_collate_key(Str.toStringz(str), len)).dup;
+		return Str.toString(g_utf8_collate_key(Str.toStringz(str), len));
 	}
 	
 	/**
@@ -907,10 +908,10 @@ public class Unicode
 	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string. This string should be freed with g_free() when you are done with it.
 	 */
-	public static char[] utf8_CollateKeyForFilename(char[] str, int len)
+	public static string utf8_CollateKeyForFilename(string str, int len)
 	{
 		// gchar* g_utf8_collate_key_for_filename (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_collate_key_for_filename(Str.toStringz(str), len)).dup;
+		return Str.toString(g_utf8_collate_key_for_filename(Str.toStringz(str), len));
 	}
 	
 	/**
@@ -933,7 +934,7 @@ public class Unicode
 	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 */
-	public static gunichar2* utf8_ToUtf16(char[] str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static gunichar2* utf8_ToUtf16(string str, int len, int* itemsRead, int* itemsWritten, GError** error)
 	{
 		// gunichar2* g_utf8_to_utf16 (const gchar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		return g_utf8_to_utf16(Str.toStringz(str), len, itemsRead, itemsWritten, error);
@@ -960,7 +961,7 @@ public class Unicode
 	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 */
-	public static gunichar* utf8_ToUcs4(char[] str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static gunichar* utf8_ToUcs4(string str, int len, int* itemsRead, int* itemsWritten, GError** error)
 	{
 		// gunichar* g_utf8_to_ucs4 (const gchar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		return g_utf8_to_ucs4(Str.toStringz(str), len, itemsRead, itemsWritten, error);
@@ -979,7 +980,7 @@ public class Unicode
 	 *  result, or NULL.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free().
 	 */
-	public static gunichar* utf8_ToUcs4_Fast(char[] str, int len, int* itemsWritten)
+	public static gunichar* utf8_ToUcs4_Fast(string str, int len, int* itemsWritten)
 	{
 		// gunichar* g_utf8_to_ucs4_fast (const gchar *str,  glong len,  glong *items_written);
 		return g_utf8_to_ucs4_fast(Str.toStringz(str), len, itemsWritten);
@@ -1035,10 +1036,10 @@ public class Unicode
 	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 */
-	public static char[] utf16_ToUtf8(gunichar2* str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static string utf16_ToUtf8(gunichar2* str, int len, int* itemsRead, int* itemsWritten, GError** error)
 	{
 		// gchar* g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return Str.toString(g_utf16_to_utf8(str, len, itemsRead, itemsWritten, error)).dup;
+		return Str.toString(g_utf16_to_utf8(str, len, itemsRead, itemsWritten, error));
 	}
 	
 	/**
@@ -1081,10 +1082,10 @@ public class Unicode
 	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input  character.
 	 */
-	public static char[] ucs4_ToUtf8(gunichar* str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static string ucs4_ToUtf8(gunichar* str, int len, int* itemsRead, int* itemsWritten, GError** error)
 	{
 		// gchar* g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return Str.toString(g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, error)).dup;
+		return Str.toString(g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, error));
 	}
 	
 	/**
@@ -1096,7 +1097,7 @@ public class Unicode
 	 *  and nothing will be written to outbuf.
 	 * Returns: number of bytes written
 	 */
-	public static int unicharToUtf8(gunichar c, char[] outbuf)
+	public static int unicharToUtf8(gunichar c, string outbuf)
 	{
 		// gint g_unichar_to_utf8 (gunichar c,  gchar *outbuf);
 		return g_unichar_to_utf8(c, Str.toStringz(outbuf));

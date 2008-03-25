@@ -56,6 +56,7 @@
  * 	- GtkTreeIter* -> TreeIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeStore;
@@ -113,7 +114,7 @@ public class TreeStore : TreeModel
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTreeStore;
 	}
@@ -169,7 +170,7 @@ public class TreeStore : TreeModel
 	 *  column = to column number to set
 	 *  value = the value
 	 */
-	void setValue(TreeIter iter, int column, char[] value)
+	void setValue(TreeIter iter, int column, string value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
@@ -214,7 +215,7 @@ public class TreeStore : TreeModel
 	}
 	
 	/** */
-	void set(TreeIter iter, int [] columns, char[][] values)
+	void set(TreeIter iter, int [] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
@@ -241,12 +242,12 @@ public class TreeStore : TreeModel
 	void set(TreeIter iter, TreeNode treeNode)
 	{
 		int[] cols;
-		char[][] vals;
+		string[] vals;
 		for ( int i=0 ; i<treeNode.columnCount() ; i++ )
 		{
 			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
 			cols ~= i;
-			char[] value = treeNode.getNodeValue(i);
+			string value = treeNode.getNodeValue(i);
 			if ( value  is  null )
 			{
 				vals ~= "";

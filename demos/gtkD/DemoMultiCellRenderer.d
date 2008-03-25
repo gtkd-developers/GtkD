@@ -63,7 +63,7 @@ void main(){
         GType.INT,
         GType.INT] );
 
-    void appendRecord( char[] name, char[] value, bool isBoolean ){
+    void appendRecord( string name, string value, bool isBoolean ){
         auto it = store.createIter();
         store.setValue( it, COLUMN_NAME, name );
         store.setValue( it, COLUMN_TEXT, value );
@@ -106,14 +106,14 @@ void main(){
     cell_text.setProperty( "editable", 1 );
 
     // change value in store on toggle event
-    cell_bool.addOnToggled( delegate void(char[] p, CellRendererToggle){
+    cell_bool.addOnToggled( delegate void(string p, CellRendererToggle){
         auto path = new TreePath( p );
         auto it = new TreeIter( store, path );
         store.setValue(it, COLUMN_BOOL, it.getValueInt( COLUMN_BOOL ) ? 0 : 1 );
     });
 
     // change the text in the store on end of edit
-    cell_text.addOnEdited( delegate void(char[] p, char[] v, CellRendererText cell ){
+    cell_text.addOnEdited( delegate void(string p, string v, CellRendererText cell ){
         auto path = new TreePath( p );
         auto it = new TreeIter( store, path );
         store.setValue( it, COLUMN_TEXT, v );

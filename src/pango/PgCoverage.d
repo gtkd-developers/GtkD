@@ -46,6 +46,7 @@
  * 	- PangoCoverage* -> PgCoverage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgCoverage;

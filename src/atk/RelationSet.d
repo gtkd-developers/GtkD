@@ -51,6 +51,7 @@
  * 	- GPtrArray* -> PtrArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.RelationSet;
@@ -91,7 +92,7 @@ public class RelationSet : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkRelationSet;
 	}

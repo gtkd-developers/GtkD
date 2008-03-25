@@ -107,6 +107,10 @@
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- unref
+ * 	- destroy
+ * 	- set
  */
 
 module gtk.Widget;
@@ -194,7 +198,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkWidget;
 	}
@@ -324,7 +328,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Modifies the font for this widget.
 	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
 	 */
-	public void modifyFont(char[] family, int size)
+	public void modifyFont(string family, int size)
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
 		
@@ -355,7 +359,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
 	 */
-	void setTooltip(char[] tipText, char[] tipPrivate)
+	void setTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
@@ -2727,7 +2731,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * ... =  value of first property, followed by more properties,
 	 *  NULL-terminated
 	 */
-	public this (GType type, char[] firstPropertyName, ... )
+	public this (GType type, string firstPropertyName, ... )
 	{
 		// GtkWidget* gtk_widget_new (GType type,  const gchar *first_property_name,  ...);
 		auto p = gtk_widget_new(type, Str.toStringz(firstPropertyName));
@@ -2745,7 +2749,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * gtk_widget_unref has been deprecated since version 2.12 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Inverse of gtk_widget_ref(). Equivalent to g_object_unref().
 	 */
-	public void unref()
+	public override void unref()
 	{
 		// void gtk_widget_unref (GtkWidget *widget);
 		gtk_widget_unref(gtkWidget);
@@ -2766,7 +2770,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * destruction, because when you destroy a toplevel its children will
 	 * be destroyed as well.
 	 */
-	public void destroy()
+	public override void destroy()
 	{
 		// void gtk_widget_destroy (GtkWidget *widget);
 		gtk_widget_destroy(gtkWidget);
@@ -2799,7 +2803,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * ... =  value of first property, followed by more properties,
 	 *  NULL-terminated
 	 */
-	public void set(char[] firstPropertyName, ... )
+	public override void set(string firstPropertyName, ... )
 	{
 		// void gtk_widget_set (GtkWidget *widget,  const gchar *first_property_name,  ...);
 		gtk_widget_set(gtkWidget, Str.toStringz(firstPropertyName));
@@ -3059,7 +3063,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * accelMods =  modifier key combination of the accelerator
 	 * accelFlags =  flag accelerators, e.g. GTK_ACCEL_VISIBLE
 	 */
-	public void addAccelerator(char[] accelSignal, AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods, GtkAccelFlags accelFlags)
+	public void addAccelerator(string accelSignal, AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods, GtkAccelFlags accelFlags)
 	{
 		// void gtk_widget_add_accelerator (GtkWidget *widget,  const gchar *accel_signal,  GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods,  GtkAccelFlags accel_flags);
 		gtk_widget_add_accelerator(gtkWidget, Str.toStringz(accelSignal), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), accelKey, accelMods, accelFlags);
@@ -3100,7 +3104,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * accelPath =  path used to look up the accelerator
 	 * accelGroup =  a GtkAccelGroup.
 	 */
-	public void setAccelPath(char[] accelPath, AccelGroup accelGroup)
+	public void setAccelPath(string accelPath, AccelGroup accelGroup)
 	{
 		// void gtk_widget_set_accel_path (GtkWidget *widget,  const gchar *accel_path,  GtkAccelGroup *accel_group);
 		gtk_widget_set_accel_path(gtkWidget, Str.toStringz(accelPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
@@ -3255,7 +3259,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * name =  name for the widget
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gtk_widget_set_name (GtkWidget *widget,  const gchar *name);
 		gtk_widget_set_name(gtkWidget, Str.toStringz(name));
@@ -3266,10 +3270,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * significance of widget names.
 	 * Returns: name of the widget. This string is owned by GTK+ andshould not be modified or freed
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_widget_get_name (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_name(gtkWidget)).dup;
+		return Str.toString(gtk_widget_get_name(gtkWidget));
 	}
 	
 	/**
@@ -3906,10 +3910,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Obtains the composite name of a widget.
 	 * Returns: the composite name of widget, or NULL if widget is not a composite child. The string should not be freed when it is no  longer needed.
 	 */
-	public char[] getCompositeName()
+	public string getCompositeName()
 	{
 		// gchar* gtk_widget_get_composite_name (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_composite_name(gtkWidget)).dup;
+		return Str.toString(gtk_widget_get_composite_name(gtkWidget));
 	}
 	
 	/**
@@ -4135,7 +4139,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * text =  text to set on the layout (can be NULL)
 	 * Returns: the new PangoLayout
 	 */
-	public PgLayout createPangoLayout(char[] text)
+	public PgLayout createPangoLayout(string text)
 	{
 		// PangoLayout* gtk_widget_create_pango_layout (GtkWidget *widget,  const gchar *text);
 		auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
@@ -4166,7 +4170,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * detail =  render detail to pass to theme engine
 	 * Returns: a new pixbuf, or NULL if the stock ID wasn't known
 	 */
-	public Pixbuf renderIcon(char[] stockId, GtkIconSize size, char[] detail)
+	public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
 	{
 		// GdkPixbuf* gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
 		auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
@@ -4351,7 +4355,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * name =  the name to set
 	 */
-	public void setCompositeName(char[] name)
+	public void setCompositeName(string name)
 	{
 		// void gtk_widget_set_composite_name (GtkWidget *widget,  const gchar *name);
 		gtk_widget_set_composite_name(gtkWidget, Str.toStringz(name));
@@ -4418,7 +4422,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * propertyName =  the name of the style property to find
 	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name.
 	 */
-	public static GParamSpec* classFindStyleProperty(GtkWidgetClass* klass, char[] propertyName)
+	public static GParamSpec* classFindStyleProperty(GtkWidgetClass* klass, string propertyName)
 	{
 		// GParamSpec* gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
 		return gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
@@ -4489,7 +4493,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  return the property values, starting with the location for
 	 *  first_property_name, terminated by NULL.
 	 */
-	public void styleGet(char[] firstPropertyName, ... )
+	public void styleGet(string firstPropertyName, ... )
 	{
 		// void gtk_widget_style_get (GtkWidget *widget,  const gchar *first_property_name,  ...);
 		gtk_widget_style_get(gtkWidget, Str.toStringz(firstPropertyName));
@@ -4501,7 +4505,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * propertyName =  the name of a style property
 	 * value =  location to return the property value
 	 */
-	public void styleGetProperty(char[] propertyName, Value value)
+	public void styleGetProperty(string propertyName, Value value)
 	{
 		// void gtk_widget_style_get_property (GtkWidget *widget,  const gchar *property_name,  GValue *value);
 		gtk_widget_style_get_property(gtkWidget, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
@@ -4516,7 +4520,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  locations to return the property values, starting with the location
 	 *  for first_property_name.
 	 */
-	public void styleGetValist(char[] firstPropertyName, void* varArgs)
+	public void styleGetValist(string firstPropertyName, void* varArgs)
 	{
 		// void gtk_widget_style_get_valist (GtkWidget *widget,  const gchar *first_property_name,  va_list var_args);
 		gtk_widget_style_get_valist(gtkWidget, Str.toStringz(firstPropertyName), varArgs);
@@ -4589,7 +4593,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * childProperty =  the name of a child property installed on the
 	 *  class of widget's parent
 	 */
-	public void childNotify(char[] childProperty)
+	public void childNotify(string childProperty)
 	{
 		// void gtk_widget_child_notify (GtkWidget *widget,  const gchar *child_property);
 		gtk_widget_child_notify(gtkWidget, Str.toStringz(childProperty));
@@ -5011,10 +5015,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.12
 	 * Returns: the tooltip text, or NULL. You should free the returned string with g_free() when done.
 	 */
-	public char[] getTooltipMarkup()
+	public string getTooltipMarkup()
 	{
 		// gchar* gtk_widget_get_tooltip_markup (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_tooltip_markup(gtkWidget)).dup;
+		return Str.toString(gtk_widget_get_tooltip_markup(gtkWidget));
 	}
 	
 	/**
@@ -5028,7 +5032,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * markup =  the contents of the tooltip for widget, or NULL
 	 */
-	public void setTooltipMarkup(char[] markup)
+	public void setTooltipMarkup(string markup)
 	{
 		// void gtk_widget_set_tooltip_markup (GtkWidget *widget,  const gchar *markup);
 		gtk_widget_set_tooltip_markup(gtkWidget, Str.toStringz(markup));
@@ -5039,10 +5043,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.12
 	 * Returns: the tooltip text, or NULL. You should free the returned string with g_free() when done.
 	 */
-	public char[] getTooltipText()
+	public string getTooltipText()
 	{
 		// gchar* gtk_widget_get_tooltip_text (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_tooltip_text(gtkWidget)).dup;
+		return Str.toString(gtk_widget_get_tooltip_text(gtkWidget));
 	}
 	
 	/**
@@ -5054,7 +5058,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * text =  the contents of the tooltip for widget
 	 */
-	public void setTooltipText(char[] text)
+	public void setTooltipText(string text)
 	{
 		// void gtk_widget_set_tooltip_text (GtkWidget *widget,  const gchar *text);
 		gtk_widget_set_tooltip_text(gtkWidget, Str.toStringz(text));

@@ -48,6 +48,7 @@
  * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceLanguageManager;
@@ -81,7 +82,7 @@ public class SourceLanguageManager : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceLanguageManager;
 	}
@@ -177,7 +178,7 @@ public class SourceLanguageManager : ObjectG
 	 * id =  a language id.
 	 * Returns: a GtkSourceLanguage, or NULL if there is no languageidentified by the given id. Return value is owned by lm and should notbe freed.
 	 */
-	public GtkSourceLanguage* getLanguage(char[] id)
+	public GtkSourceLanguage* getLanguage(string id)
 	{
 		// GtkSourceLanguage* gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
 		return gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));

@@ -56,6 +56,7 @@
  * 	- GtkBuilder* -> Builder
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.BuildableT;
@@ -105,7 +106,7 @@ public template BuildableT(TStruct)
 	 * Params:
 	 * name =  name to set
 	 */
-	public void buildableSetName(char[] name)
+	public void buildableSetName(string name)
 	{
 		// void gtk_buildable_set_name (GtkBuildable *buildable,  const gchar *name);
 		gtk_buildable_set_name(getBuildableTStruct(), Str.toStringz(name));
@@ -119,10 +120,10 @@ public template BuildableT(TStruct)
 	 * Since 2.12
 	 * Returns: the name set with gtk_buildable_set_name()
 	 */
-	public char[] buildableGetName()
+	public string buildableGetName()
 	{
 		// const gchar* gtk_buildable_get_name (GtkBuildable *buildable);
-		return Str.toString(gtk_buildable_get_name(getBuildableTStruct())).dup;
+		return Str.toString(gtk_buildable_get_name(getBuildableTStruct()));
 	}
 	
 	/**
@@ -137,7 +138,7 @@ public template BuildableT(TStruct)
 	 * child =  child to add
 	 * type =  kind of child or NULL
 	 */
-	public void addChild(Builder builder, ObjectG child, char[] type)
+	public void addChild(Builder builder, ObjectG child, string type)
 	{
 		// void gtk_buildable_add_child (GtkBuildable *buildable,  GtkBuilder *builder,  GObject *child,  const gchar *type);
 		gtk_buildable_add_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), (child is null) ? null : child.getObjectGStruct(), Str.toStringz(type));
@@ -151,7 +152,7 @@ public template BuildableT(TStruct)
 	 * name =  name of property
 	 * value =  value of property
 	 */
-	public void setBuildableProperty(Builder builder, char[] name, Value value)
+	public void setBuildableProperty(Builder builder, string name, Value value)
 	{
 		// void gtk_buildable_set_buildable_property  (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *name,  const GValue *value);
 		gtk_buildable_set_buildable_property(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name), (value is null) ? null : value.getValueStruct());
@@ -167,7 +168,7 @@ public template BuildableT(TStruct)
 	 * name =  name of child to construct
 	 * Returns: the constructed child
 	 */
-	public ObjectG constructChild(Builder builder, char[] name)
+	public ObjectG constructChild(Builder builder, string name)
 	{
 		// GObject* gtk_buildable_construct_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *name);
 		auto p = gtk_buildable_construct_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
@@ -191,7 +192,7 @@ public template BuildableT(TStruct)
 	 *  to parser functions
 	 * Returns: TRUE if a object has a custom implementation, FALSE if it doesn't.
 	 */
-	public int customTagStart(Builder builder, ObjectG child, char[] tagname, GMarkupParser* parser, void** data)
+	public int customTagStart(Builder builder, ObjectG child, string tagname, GMarkupParser* parser, void** data)
 	{
 		// gboolean gtk_buildable_custom_tag_start (GtkBuildable *buildable,  GtkBuilder *builder,  GObject *child,  const gchar *tagname,  GMarkupParser *parser,  gpointer *data);
 		return gtk_buildable_custom_tag_start(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), (child is null) ? null : child.getObjectGStruct(), Str.toStringz(tagname), parser, data);
@@ -207,7 +208,7 @@ public template BuildableT(TStruct)
 	 * tagname =  name of tag
 	 * data =  user data that will be passed in to parser functions
 	 */
-	public void customTagEnd(Builder builder, ObjectG child, char[] tagname, void** data)
+	public void customTagEnd(Builder builder, ObjectG child, string tagname, void** data)
 	{
 		// void gtk_buildable_custom_tag_end (GtkBuildable *buildable,  GtkBuilder *builder,  GObject *child,  const gchar *tagname,  gpointer *data);
 		gtk_buildable_custom_tag_end(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), (child is null) ? null : child.getObjectGStruct(), Str.toStringz(tagname), data);
@@ -223,7 +224,7 @@ public template BuildableT(TStruct)
 	 * tagname =  the name of the tag
 	 * data =  user data created in custom_tag_start
 	 */
-	public void customFinished(Builder builder, ObjectG child, char[] tagname, void* data)
+	public void customFinished(Builder builder, ObjectG child, string tagname, void* data)
 	{
 		// void gtk_buildable_custom_finished (GtkBuildable *buildable,  GtkBuilder *builder,  GObject *child,  const gchar *tagname,  gpointer data);
 		gtk_buildable_custom_finished(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), (child is null) ? null : child.getObjectGStruct(), Str.toStringz(tagname), data);
@@ -253,7 +254,7 @@ public template BuildableT(TStruct)
 	 * childname =  name of child
 	 * Returns: the internal child of the buildable object
 	 */
-	public ObjectG getInternalChild(Builder builder, char[] childname)
+	public ObjectG getInternalChild(Builder builder, string childname)
 	{
 		// GObject* gtk_buildable_get_internal_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *childname);
 		auto p = gtk_buildable_get_internal_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));

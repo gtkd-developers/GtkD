@@ -53,6 +53,9 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- select
+ * 	- deselect
  */
 
 module gtk.MenuItem;
@@ -94,7 +97,7 @@ public class MenuItem : Item
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkMenuItem;
 	}
@@ -116,10 +119,10 @@ public class MenuItem : Item
 	
 	
 	/** store the action code passed in by the applcation */
-	private char[] actionLabel;
+	private string actionLabel;
 	
 	/** Gets the application set action code */
-	public char[] getActionName()
+	public string getActionName()
 	{
 		if ( actionLabel is null )
 		{
@@ -132,7 +135,7 @@ public class MenuItem : Item
 	 * Creates a new menu item with a label and a listener and a action.
 	 * used for backward compatibily with DUI.
 	 */
-	this(char[] label, void delegate(MenuItem)dlg, char[] action)
+	this(string label, void delegate(MenuItem)dlg, string action)
 	{
 		this(label);
 		this.actionLabel = action;
@@ -145,7 +148,7 @@ public class MenuItem : Item
 	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 * and optionally accelGroup
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, char[] action,
+	public this(void delegate(MenuItem) dlg, string label, string action,
 	bool mnemonic=true,
 	AccelGroup accelGroup=null,
 	char accelKey='\0',
@@ -167,7 +170,7 @@ public class MenuItem : Item
 	/**
 	 * Creates a new Item associated with a "activate" delegate
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, bool mnemonic=true)
+	public this(void delegate(MenuItem) dlg, string label, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnActivate(dlg);
@@ -181,7 +184,7 @@ public class MenuItem : Item
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -404,7 +407,7 @@ public class MenuItem : Item
 	 * accelPath =  accelerator path, corresponding to this menu item's
 	 *  functionality, or NULL to unset the current path.
 	 */
-	public void setAccelPath(char[] accelPath)
+	public void setAccelPath(string accelPath)
 	{
 		// void gtk_menu_item_set_accel_path (GtkMenuItem *menu_item,  const gchar *accel_path);
 		gtk_menu_item_set_accel_path(gtkMenuItem, Str.toStringz(accelPath));
@@ -427,7 +430,7 @@ public class MenuItem : Item
 	 * Emits the "select" signal on the given item. Behaves exactly like
 	 * gtk_item_select.
 	 */
-	public void select()
+	public override void select()
 	{
 		// void gtk_menu_item_select (GtkMenuItem *menu_item);
 		gtk_menu_item_select(gtkMenuItem);
@@ -437,7 +440,7 @@ public class MenuItem : Item
 	 * Emits the "deselect" signal on the given item. Behaves exactly like
 	 * gtk_item_deselect.
 	 */
-	public void deselect()
+	public override void deselect()
 	{
 		// void gtk_menu_item_deselect (GtkMenuItem *menu_item);
 		gtk_menu_item_deselect(gtkMenuItem);

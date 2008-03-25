@@ -52,6 +52,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.MenuBar;
@@ -87,7 +88,7 @@ public class MenuBar : MenuShell
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkMenuBar;
 	}
@@ -108,7 +109,7 @@ public class MenuBar : MenuShell
 	}
 	
 	/** */
-	Menu append(char[] label, bool rightJustify=false)
+	Menu append(string label, bool rightJustify=false)
 	{
 		MenuItem item = new MenuItem(label);
 		super.append(item);
@@ -119,7 +120,7 @@ public class MenuBar : MenuShell
 	}
 	
 	/** */
-	public void append(Widget widget)
+	public override void append(Widget widget)
 	{
 		super.append(widget);
 	}

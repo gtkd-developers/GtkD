@@ -50,6 +50,7 @@
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Gdk;
@@ -137,10 +138,10 @@ public class Gdk
 	 * Since 2.2
 	 * Returns: the display name, if specified explicitely, otherwise NULL this string is owned by GTK+ and must not be modified or freed.
 	 */
-	public static char[] getDisplayArgName()
+	public static string getDisplayArgName()
 	{
 		// const gchar* gdk_get_display_arg_name (void);
-		return Str.toString(gdk_get_display_arg_name()).dup;
+		return Str.toString(gdk_get_display_arg_name());
 	}
 	
 	/**
@@ -150,10 +151,10 @@ public class Gdk
 	 * The locale to use is determined by the LANG environment variable,
 	 * Returns:the resulting locale.
 	 */
-	public static char[] setLocale()
+	public static string setLocale()
 	{
 		// gchar* gdk_set_locale (void);
-		return Str.toString(gdk_set_locale()).dup;
+		return Str.toString(gdk_set_locale());
 	}
 	
 	/**
@@ -168,7 +169,7 @@ public class Gdk
 	 * smClientId =  the client id assigned by the session manager when the
 	 *  connection was opened, or NULL to remove the property.
 	 */
-	public static void setSmClientId(char[] smClientId)
+	public static void setSmClientId(string smClientId)
 	{
 		// void gdk_set_sm_client_id (const gchar *sm_client_id);
 		gdk_set_sm_client_id(Str.toStringz(smClientId));
@@ -219,7 +220,7 @@ public class Gdk
 	 * startupId =  a startup-notification identifier, for which notification
 	 *  process should be completed
 	 */
-	public static void notifyStartupCompleteWithId(char[] startupId)
+	public static void notifyStartupCompleteWithId(string startupId)
 	{
 		// void gdk_notify_startup_complete_with_id (const gchar *startup_id);
 		gdk_notify_startup_complete_with_id(Str.toStringz(startupId));
@@ -232,10 +233,10 @@ public class Gdk
 	 * with g_get_prgname()) with the first character converted to uppercase.
 	 * Returns:the program class.
 	 */
-	public static char[] getProgramClass()
+	public static string getProgramClass()
 	{
 		// const char* gdk_get_program_class (void);
-		return Str.toString(gdk_get_program_class()).dup;
+		return Str.toString(gdk_get_program_class());
 	}
 	
 	/**
@@ -245,7 +246,7 @@ public class Gdk
 	 * Params:
 	 * programClass = a string.
 	 */
-	public static void setProgramClass(char[] programClass)
+	public static void setProgramClass(string programClass)
 	{
 		// void gdk_set_program_class (const char *program_class);
 		gdk_set_program_class(Str.toStringz(programClass));
@@ -256,10 +257,10 @@ public class Gdk
 	 * environment variable or the --display command line option.
 	 * Returns:the name of the display.
 	 */
-	public static char[] getDisplay()
+	public static string getDisplay()
 	{
 		// gchar* gdk_get_display (void);
-		return Str.toString(gdk_get_display()).dup;
+		return Str.toString(gdk_get_display());
 	}
 	
 	/**

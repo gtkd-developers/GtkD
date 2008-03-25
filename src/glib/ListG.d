@@ -46,6 +46,7 @@
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.ListG;

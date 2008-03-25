@@ -59,6 +59,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentChooserWidget;
@@ -107,7 +108,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentChooserWidget;
 	}

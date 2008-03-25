@@ -48,6 +48,7 @@
  * 	- GdkDisplay* -> Display
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Plug;
@@ -93,7 +94,7 @@ public class Plug : Window
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPlug;
 	}

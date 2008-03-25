@@ -50,6 +50,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CheckButton;
@@ -85,7 +86,7 @@ public class CheckButton : ToggleButton
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCheckButton;
 	}
@@ -115,7 +116,7 @@ public class CheckButton : ToggleButton
 	 *  mnemonic character
 	 *  mnemonic = true if the button has an mnemnonic
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -130,7 +131,7 @@ public class CheckButton : ToggleButton
 	}
 	
 	/** */
-	public this(char[] label, void delegate(CheckButton) onClicked, bool mnemonic=true)
+	public this(string label, void delegate(CheckButton) onClicked, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(cast(void delegate(Button))onClicked);

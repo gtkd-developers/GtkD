@@ -174,9 +174,12 @@ class TTextView : Window
 		buffer.createTag("red_background",
 			      "background", "red");
 
-const int gray50_width = 2;
-const int gray50_height = 2;
-static char gray50_bits[] = [0x02, 0x01];
+enum {
+	gray50_width = 2,
+	gray50_height = 2
+}
+
+static string gray50_bits = [0x02, 0x01];
 				  
     	stipple = Bitmap.createFromData(null,   // drawablw
 					 gray50_bits, gray50_width,
@@ -258,7 +261,7 @@ static char gray50_bits[] = [0x02, 0x01];
 		Pixbuf pixbuf;
 		Pixbuf scaled;
 		TextChildAnchor anchor;
-		char[] filename;
+		string filename;
 		
 		/* demo_find_file() looks in the the current directory first,
 		* so you can run gtk-demo without installing GTK, then looks

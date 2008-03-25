@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.KeyFile;
@@ -210,7 +211,7 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 */
-	public int loadFromFile(char[] file, GKeyFileFlags flags, GError** error)
+	public int loadFromFile(string file, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_file (GKeyFile *key_file,  const gchar *file,  GKeyFileFlags flags,  GError **error);
 		return g_key_file_load_from_file(gKeyFile, Str.toStringz(file), flags, error);
@@ -227,7 +228,7 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 */
-	public int loadFromData(char[] data, uint length, GKeyFileFlags flags, GError** error)
+	public int loadFromData(string data, uint length, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_data (GKeyFile *key_file,  const gchar *data,  gsize length,  GKeyFileFlags flags,  GError **error);
 		return g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, error);
@@ -248,7 +249,7 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 */
-	public int loadFromDataDirs(char[] file, char** fullPath, GKeyFileFlags flags, GError** error)
+	public int loadFromDataDirs(string file, char** fullPath, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_data_dirs (GKeyFile *key_file,  const gchar *file,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
 		return g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), fullPath, flags, error);
@@ -270,7 +271,7 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 */
-	public int loadFromDirs(char[] file, char** searchDirs, char** fullPath, GKeyFileFlags flags, GError** error)
+	public int loadFromDirs(string file, char** searchDirs, char** fullPath, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_dirs (GKeyFile *key_file,  const gchar *file,  const gchar **search_dirs,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
 		return g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), searchDirs, fullPath, flags, error);
@@ -285,10 +286,10 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string holding the contents of the GKeyFile
 	 */
-	public char[] toData(uint* length, GError** error)
+	public string toData(uint* length, GError** error)
 	{
 		// gchar* g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
-		return Str.toString(g_key_file_to_data(gKeyFile, length, error)).dup;
+		return Str.toString(g_key_file_to_data(gKeyFile, length, error));
 	}
 	
 	/**
@@ -296,10 +297,10 @@ public class KeyFile
 	 * Since 2.6
 	 * Returns: The start group of the key file.
 	 */
-	public char[] getStartGroup()
+	public string getStartGroup()
 	{
 		// gchar* g_key_file_get_start_group (GKeyFile *key_file);
-		return Str.toString(g_key_file_get_start_group(gKeyFile)).dup;
+		return Str.toString(g_key_file_get_start_group(gKeyFile));
 	}
 	
 	/**
@@ -330,7 +331,7 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 */
-	public char** getKeys(char[] groupName, uint* length, GError** error)
+	public char** getKeys(string groupName, uint* length, GError** error)
 	{
 		// gchar** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
 		return g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), length, error);
@@ -343,7 +344,7 @@ public class KeyFile
 	 * groupName =  a group name
 	 * Returns: TRUE if group_name is a part of key_file, FALSEotherwise.
 	 */
-	public int hasGroup(char[] groupName)
+	public int hasGroup(string groupName)
 	{
 		// gboolean g_key_file_has_group (GKeyFile *key_file,  const gchar *group_name);
 		return g_key_file_has_group(gKeyFile, Str.toStringz(groupName));
@@ -359,7 +360,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: TRUE if key is a part of group_name, FALSEotherwise.
 	 */
-	public int hasKey(char[] groupName, char[] key, GError** error)
+	public int hasKey(string groupName, string key, GError** error)
 	{
 		// gboolean g_key_file_has_key (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		return g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
@@ -378,10 +379,10 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 */
-	public char[] getValue(char[] groupName, char[] key, GError** error)
+	public string getValue(string groupName, string key, GError** error)
 	{
 		// gchar* g_key_file_get_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error)).dup;
+		return Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error));
 	}
 	
 	/**
@@ -397,10 +398,10 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 */
-	public char[] getString(char[] groupName, char[] key, GError** error)
+	public string getString(string groupName, string key, GError** error)
 	{
 		// gchar* g_key_file_get_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error)).dup;
+		return Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error));
 	}
 	
 	/**
@@ -419,10 +420,10 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 */
-	public char[] getLocaleString(char[] groupName, char[] key, char[] locale, GError** error)
+	public string getLocaleString(string groupName, string key, string locale, GError** error)
 	{
 		// gchar* g_key_file_get_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  GError **error);
-		return Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), error)).dup;
+		return Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), error));
 	}
 	
 	/**
@@ -439,7 +440,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: the value associated with the key as a boolean,  or FALSE if the key was not found or could not be parsed.
 	 */
-	public int getBoolean(char[] groupName, char[] key, GError** error)
+	public int getBoolean(string groupName, string key, GError** error)
 	{
 		// gboolean g_key_file_get_boolean (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		return g_key_file_get_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
@@ -459,7 +460,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: the value associated with the key as an integer, or 0 if the key was not found or could not be parsed.
 	 */
-	public int getInteger(char[] groupName, char[] key, GError** error)
+	public int getInteger(string groupName, string key, GError** error)
 	{
 		// gint g_key_file_get_integer (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		return g_key_file_get_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
@@ -479,7 +480,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: the value associated with the key as a double, or 0.0 if the key was not found or could not be parsed.
 	 */
-	public double getDouble(char[] groupName, char[] key, GError** error)
+	public double getDouble(string groupName, string key, GError** error)
 	{
 		// gdouble g_key_file_get_double (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		return g_key_file_get_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
@@ -499,7 +500,7 @@ public class KeyFile
 	 * error =  return location for a GError, or NULL
 	 * Returns: a NULL-terminated string array or NULL if the specified  key cannot be found. The array should be freed with g_strfreev().
 	 */
-	public char** getStringList(char[] groupName, char[] key, uint* length, GError** error)
+	public char** getStringList(string groupName, string key, uint* length, GError** error)
 	{
 		// gchar** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		return g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
@@ -524,7 +525,7 @@ public class KeyFile
 	 * error =  return location for a GError or NULL
 	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev().
 	 */
-	public char** getLocaleStringList(char[] groupName, char[] key, char[] locale, uint* length, GError** error)
+	public char** getLocaleStringList(string groupName, string key, string locale, uint* length, GError** error)
 	{
 		// gchar** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
 		return g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), length, error);
@@ -545,7 +546,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: the values associated with the key as a list of booleans, or NULL if the key was not found or could not be parsed.
 	 */
-	public int* getBooleanList(char[] groupName, char[] key, uint* length, GError** error)
+	public int* getBooleanList(string groupName, string key, uint* length, GError** error)
 	{
 		// gboolean* g_key_file_get_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		return g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
@@ -566,7 +567,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: the values associated with the key as a list of integers, or NULL if the key was not found or could not be parsed.
 	 */
-	public int* getIntegerList(char[] groupName, char[] key, uint* length, GError** error)
+	public int* getIntegerList(string groupName, string key, uint* length, GError** error)
 	{
 		// gint* g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		return g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
@@ -587,7 +588,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: the values associated with the key as a list of doubles, or NULL if the key was not found or could not be parsed.
 	 */
-	public double* getDoubleList(char[] groupName, char[] key, uint* length, GError** error)
+	public double* getDoubleList(string groupName, string key, uint* length, GError** error)
 	{
 		// gdouble* g_key_file_get_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		return g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
@@ -605,10 +606,10 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: a comment that should be freed with g_free()
 	 */
-	public char[] getComment(char[] groupName, char[] key, GError** error)
+	public string getComment(string groupName, string key, GError** error)
 	{
 		// gchar* g_key_file_get_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error)).dup;
+		return Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error));
 	}
 	
 	/**
@@ -621,7 +622,7 @@ public class KeyFile
 	 * key =  a key
 	 * value =  a string
 	 */
-	public void setValue(char[] groupName, char[] key, char[] value)
+	public void setValue(string groupName, string key, string value)
 	{
 		// void g_key_file_set_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *value);
 		g_key_file_set_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(value));
@@ -637,7 +638,7 @@ public class KeyFile
 	 * key =  a key
 	 * string =  a string
 	 */
-	public void setString(char[] groupName, char[] key, char[] string)
+	public void setString(string groupName, string key, string string)
 	{
 		// void g_key_file_set_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *string);
 		g_key_file_set_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(string));
@@ -653,7 +654,7 @@ public class KeyFile
 	 * locale =  a locale
 	 * string =  a string
 	 */
-	public void setLocaleString(char[] groupName, char[] key, char[] locale, char[] string)
+	public void setLocaleString(string groupName, string key, string locale, string string)
 	{
 		// void g_key_file_set_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar *string);
 		g_key_file_set_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringz(string));
@@ -668,7 +669,7 @@ public class KeyFile
 	 * key =  a key
 	 * value =  TRUE or FALSE
 	 */
-	public void setBoolean(char[] groupName, char[] key, int value)
+	public void setBoolean(string groupName, string key, int value)
 	{
 		// void g_key_file_set_boolean (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gboolean value);
 		g_key_file_set_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
@@ -683,7 +684,7 @@ public class KeyFile
 	 * key =  a key
 	 * value =  an integer value
 	 */
-	public void setInteger(char[] groupName, char[] key, int value)
+	public void setInteger(string groupName, string key, int value)
 	{
 		// void g_key_file_set_integer (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint value);
 		g_key_file_set_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
@@ -698,7 +699,7 @@ public class KeyFile
 	 * key =  a key
 	 * value =  an double value
 	 */
-	public void setDouble(char[] groupName, char[] key, double value)
+	public void setDouble(string groupName, string key, double value)
 	{
 		// void g_key_file_set_double (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gdouble value);
 		g_key_file_set_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
@@ -715,7 +716,7 @@ public class KeyFile
 	 * list =  an array of locale string values
 	 * length =  number of locale string values in list
 	 */
-	public void setStringList(char[] groupName, char[] key, char*[] list, uint length)
+	public void setStringList(string groupName, string key, char*[] list, uint length)
 	{
 		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar * const list[],  gsize length);
 		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -733,7 +734,7 @@ public class KeyFile
 	 * list =  a NULL-terminated array of locale string values
 	 * length =  the length of list
 	 */
-	public void setLocaleStringList(char[] groupName, char[] key, char[] locale, char*[] list, uint length)
+	public void setLocaleStringList(string groupName, string key, string locale, char*[] list, uint length)
 	{
 		// void g_key_file_set_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar * const list[],  gsize length);
 		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), list, length);
@@ -750,7 +751,7 @@ public class KeyFile
 	 * list =  an array of boolean values
 	 * length =  length of list
 	 */
-	public void setBooleanList(char[] groupName, char[] key, int[] list, uint length)
+	public void setBooleanList(string groupName, string key, int[] list, uint length)
 	{
 		// void g_key_file_set_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gboolean list[],  gsize length);
 		g_key_file_set_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -766,7 +767,7 @@ public class KeyFile
 	 * list =  an array of integer values
 	 * length =  number of integer values in list
 	 */
-	public void setIntegerList(char[] groupName, char[] key, int[] list, uint length)
+	public void setIntegerList(string groupName, string key, int[] list, uint length)
 	{
 		// void g_key_file_set_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint list[],  gsize length);
 		g_key_file_set_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -782,7 +783,7 @@ public class KeyFile
 	 * list =  an array of double values
 	 * length =  number of double values in list
 	 */
-	public void setDoubleList(char[] groupName, char[] key, double[] list, uint length)
+	public void setDoubleList(string groupName, string key, double[] list, uint length)
 	{
 		// void g_key_file_set_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gdouble list[],  gsize length);
 		g_key_file_set_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -801,7 +802,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: TRUE if the comment was written, FALSE otherwise
 	 */
-	public int setComment(char[] groupName, char[] key, char[] comment, GError** error)
+	public int setComment(string groupName, string key, string comment, GError** error)
 	{
 		// gboolean g_key_file_set_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *comment,  GError **error);
 		return g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), error);
@@ -816,7 +817,7 @@ public class KeyFile
 	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the group was removed, FALSE otherwise
 	 */
-	public int removeGroup(char[] groupName, GError** error)
+	public int removeGroup(string groupName, GError** error)
 	{
 		// gboolean g_key_file_remove_group (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		return g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), error);
@@ -831,7 +832,7 @@ public class KeyFile
 	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the key was removed, FALSE otherwise
 	 */
-	public int removeKey(char[] groupName, char[] key, GError** error)
+	public int removeKey(string groupName, string key, GError** error)
 	{
 		// gboolean g_key_file_remove_key (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		return g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
@@ -849,7 +850,7 @@ public class KeyFile
 	 * error =  return location for a GError
 	 * Returns: TRUE if the comment was removed, FALSE otherwise
 	 */
-	public int removeComment(char[] groupName, char[] key, GError** error)
+	public int removeComment(string groupName, string key, GError** error)
 	{
 		// gboolean g_key_file_remove_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		return g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);

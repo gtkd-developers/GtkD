@@ -52,6 +52,7 @@
  * 	- GtkPaperSize* -> PaperSize
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PaperSize;
@@ -126,7 +127,7 @@ public class PaperSize
 	 * Params:
 	 * name =  a paper size name, or NULL
 	 */
-	public this (char[] name)
+	public this (string name)
 	{
 		// GtkPaperSize* gtk_paper_size_new (const gchar *name);
 		auto p = gtk_paper_size_new(Str.toStringz(name));
@@ -152,7 +153,7 @@ public class PaperSize
 	 * width =  the paper width, in points
 	 * height =  the paper height in points
 	 */
-	public this (char[] ppdName, char[] ppdDisplayName, double width, double height)
+	public this (string ppdName, string ppdDisplayName, double width, double height)
 	{
 		// GtkPaperSize* gtk_paper_size_new_from_ppd (const gchar *ppd_name,  const gchar *ppd_display_name,  gdouble width,  gdouble height);
 		auto p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
@@ -176,7 +177,7 @@ public class PaperSize
 	 * height =  the paper height, in units of unit
 	 * unit =  the unit for width and height
 	 */
-	public this (char[] name, char[] displayName, double width, double height, GtkUnit unit)
+	public this (string name, string displayName, double width, double height, GtkUnit unit)
 	{
 		// GtkPaperSize* gtk_paper_size_new_custom (const gchar *name,  const gchar *display_name,  gdouble width,  gdouble height,  GtkUnit unit);
 		auto p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
@@ -254,10 +255,10 @@ public class PaperSize
 	 * Since 2.10
 	 * Returns: the name of size
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_paper_size_get_name (GtkPaperSize *size);
-		return Str.toString(gtk_paper_size_get_name(gtkPaperSize)).dup;
+		return Str.toString(gtk_paper_size_get_name(gtkPaperSize));
 	}
 	
 	/**
@@ -265,10 +266,10 @@ public class PaperSize
 	 * Since 2.10
 	 * Returns: the human-readable name of size
 	 */
-	public char[] getDisplayName()
+	public string getDisplayName()
 	{
 		// const gchar* gtk_paper_size_get_display_name (GtkPaperSize *size);
-		return Str.toString(gtk_paper_size_get_display_name(gtkPaperSize)).dup;
+		return Str.toString(gtk_paper_size_get_display_name(gtkPaperSize));
 	}
 	
 	/**
@@ -277,10 +278,10 @@ public class PaperSize
 	 * Since 2.10
 	 * Returns: the PPD name of size
 	 */
-	public char[] getPpdName()
+	public string getPpdName()
 	{
 		// const gchar* gtk_paper_size_get_ppd_name (GtkPaperSize *size);
-		return Str.toString(gtk_paper_size_get_ppd_name(gtkPaperSize)).dup;
+		return Str.toString(gtk_paper_size_get_ppd_name(gtkPaperSize));
 	}
 	
 	/**
@@ -393,10 +394,10 @@ public class PaperSize
 	 * Since 2.10
 	 * Returns: the name of the default paper size. The stringis owned by GTK+ and should not be modified.
 	 */
-	public static char[] getDefault()
+	public static string getDefault()
 	{
 		// const gchar* gtk_paper_size_get_default (void);
-		return Str.toString(gtk_paper_size_get_default()).dup;
+		return Str.toString(gtk_paper_size_get_default());
 	}
 	
 	/**
@@ -409,7 +410,7 @@ public class PaperSize
 	 *  or NULL to read the first group
 	 * error =  return location for an error, or NULL
 	 */
-	public this (KeyFile keyFile, char[] groupName, GError** error)
+	public this (KeyFile keyFile, string groupName, GError** error)
 	{
 		// GtkPaperSize* gtk_paper_size_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
@@ -429,7 +430,7 @@ public class PaperSize
 	 * keyFile =  the GKeyFile to save the paper size to
 	 * groupName =  the group to add the settings to in key_file
 	 */
-	public void toKeyFile(KeyFile keyFile, char[] groupName)
+	public void toKeyFile(KeyFile keyFile, string groupName)
 	{
 		// void gtk_paper_size_to_key_file (GtkPaperSize *size,  GKeyFile *key_file,  const gchar *group_name);
 		gtk_paper_size_to_key_file(gtkPaperSize, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName));

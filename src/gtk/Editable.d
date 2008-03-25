@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Editable;
@@ -201,7 +202,7 @@ public class Editable
 		return consumed;
 	}
 	
-	void delegate(char[], gint, gint*, Editable)[] onInsertTextListeners;
+	void delegate(string, gint, gint*, Editable)[] onInsertTextListeners;
 	/**
 	 * This signal is emitted when text is inserted into
 	 * the widget by the user. The default handler for
@@ -211,7 +212,7 @@ public class Editable
 	 * is possible to modify the inserted text, or prevent
 	 * it from being inserted entirely.
 	 */
-	void addOnInsertText(void delegate(char[], gint, gint*, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertText(void delegate(string, gint, gint*, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -230,7 +231,7 @@ public class Editable
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], gint, gint*, Editable) dlg ; editable.onInsertTextListeners )
+		foreach ( void delegate(string, gint, gint*, Editable) dlg ; editable.onInsertTextListeners )
 		{
 			dlg(Str.toString(newText), newTextLength, position, editable);
 		}
@@ -279,7 +280,7 @@ public class Editable
 	 *  call it points at the position after the newly
 	 *  inserted text.
 	 */
-	public void insertText(char[] newText, int newTextLength, int* position)
+	public void insertText(string newText, int newTextLength, int* position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
 		gtk_editable_insert_text(gtkEditable, Str.toStringz(newText), newTextLength, position);
@@ -314,10 +315,10 @@ public class Editable
 	 * endPos = the end position.
 	 * Returns:the characters in the indicated region. The result must be freed with g_free() when the application is finished with it.
 	 */
-	public char[] getChars(int startPos, int endPos)
+	public string getChars(int startPos, int endPos)
 	{
 		// gchar* gtk_editable_get_chars (GtkEditable *editable,  gint start_pos,  gint end_pos);
-		return Str.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos)).dup;
+		return Str.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos));
 	}
 	
 	/**

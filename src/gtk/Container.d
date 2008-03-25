@@ -57,6 +57,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Container;
@@ -180,7 +181,7 @@ public class Container : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkContainer;
 	}
@@ -387,7 +388,7 @@ public class Container : Widget
 	 * ... =  a NULL-terminated list of property names and values, starting
 	 *  with first_prop_name
 	 */
-	public void addWithProperties(Widget widget, char[] firstPropName, ... )
+	public void addWithProperties(Widget widget, string firstPropName, ... )
 	{
 		// void gtk_container_add_with_properties (GtkContainer *container,  GtkWidget *widget,  const gchar *first_prop_name,  ...);
 		gtk_container_add_with_properties(gtkContainer, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(firstPropName));
@@ -592,7 +593,7 @@ public class Container : Widget
 	 * ... =  a NULL-terminated list of property names and GValue*,
 	 *  starting with first_prop_name
 	 */
-	public void childGet(Widget child, char[] firstPropName, ... )
+	public void childGet(Widget child, string firstPropName, ... )
 	{
 		// void gtk_container_child_get (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
 		gtk_container_child_get(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropName));
@@ -606,7 +607,7 @@ public class Container : Widget
 	 * ... =  a NULL-terminated list of property names and values, starting
 	 *  with first_prop_name
 	 */
-	public void childSet(Widget child, char[] firstPropName, ... )
+	public void childSet(Widget child, string firstPropName, ... )
 	{
 		// void gtk_container_child_set (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
 		gtk_container_child_set(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropName));
@@ -619,7 +620,7 @@ public class Container : Widget
 	 * propertyName =  the name of the property to get
 	 * value =  a location to return the value
 	 */
-	public void childGetProperty(Widget child, char[] propertyName, Value value)
+	public void childGetProperty(Widget child, string propertyName, Value value)
 	{
 		// void gtk_container_child_get_property (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  GValue *value);
 		gtk_container_child_get_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
@@ -632,7 +633,7 @@ public class Container : Widget
 	 * propertyName =  the name of the property to set
 	 * value =  the value to set the property to
 	 */
-	public void childSetProperty(Widget child, char[] propertyName, Value value)
+	public void childSetProperty(Widget child, string propertyName, Value value)
 	{
 		// void gtk_container_child_set_property (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  const GValue *value);
 		gtk_container_child_set_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
@@ -646,7 +647,7 @@ public class Container : Widget
 	 * varArgs =  a NULL-terminated list of property names and GValue*,
 	 *  starting with first_prop_name.
 	 */
-	public void childGetValist(Widget child, char[] firstPropertyName, void* varArgs)
+	public void childGetValist(Widget child, string firstPropertyName, void* varArgs)
 	{
 		// void gtk_container_child_get_valist (GtkContainer *container,  GtkWidget *child,  const gchar *first_property_name,  va_list var_args);
 		gtk_container_child_get_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropertyName), varArgs);
@@ -660,7 +661,7 @@ public class Container : Widget
 	 * varArgs =  a NULL-terminated list of property names and values, starting
 	 *  with first_prop_name
 	 */
-	public void childSetValist(Widget child, char[] firstPropertyName, void* varArgs)
+	public void childSetValist(Widget child, string firstPropertyName, void* varArgs)
 	{
 		// void gtk_container_child_set_valist (GtkContainer *container,  GtkWidget *child,  const gchar *first_property_name,  va_list var_args);
 		gtk_container_child_set_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropertyName), varArgs);
@@ -788,7 +789,7 @@ public class Container : Widget
 	 * propertyName =  the name of the child property to find
 	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name.
 	 */
-	public static ParamSpec classFindChildProperty(GObjectClass* cclass, char[] propertyName)
+	public static ParamSpec classFindChildProperty(GObjectClass* cclass, string propertyName)
 	{
 		// GParamSpec* gtk_container_class_find_child_property  (GObjectClass *cclass,  const gchar *property_name);
 		auto p = gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));

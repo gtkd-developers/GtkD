@@ -47,6 +47,7 @@
  * 	- GArray* -> ArrayG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.ArrayG;
@@ -350,9 +351,9 @@ public class ArrayG
 	 * freeSegment = if TRUE the actual element data is freed as well.
 	 * Returns:the element data if free_segment is FALSE, otherwise NULL.	The element data should be freed using g_free().
 	 */
-	public char[] free(int freeSegment)
+	public string free(int freeSegment)
 	{
 		// gchar* g_array_free (GArray *array,  gboolean free_segment);
-		return Str.toString(g_array_free(gArray, freeSegment)).dup;
+		return Str.toString(g_array_free(gArray, freeSegment));
 	}
 }

@@ -11,6 +11,8 @@
 
 module gtkc.paths;
 
+version(Tango) private import gtkc.glibtypes; //For alias char[] string
+
 /*
  * Define the Libraries that gtkD will be using.
  *   This is a growable list, as long as the programmer
@@ -43,7 +45,7 @@ enum LIBRARY
 
 version (Windows)
 {
-const char[][LIBRARY.max+1] importLibs =
+const string[LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:		"libatk-1.0-0.dll",
 	LIBRARY.CAIRO:  	"libcairo-2.dll",
@@ -69,7 +71,7 @@ const char[][LIBRARY.max+1] importLibs =
 
 version(linux)
 {
-const char[][LIBRARY.max+1] importLibs =
+const string[LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:		"libatk-1.0.so",
 	LIBRARY.CAIRO:  	"libcairo.so.2",
@@ -124,9 +126,9 @@ version(Windows)
 		return buf[0 .. size];
 	}
 
-	char[] libPath()
+	string libPath()
 	{
-		char[] libPath;
+		string libPath;
 
 		libPath = GetEnvironmentVariable("%GTK_BASEPATH%");
 
@@ -173,7 +175,7 @@ version(Windows)
 
 version(linux)
 {
-	char[] libPath()
+	string libPath()
 	{
 		return "";
 	}

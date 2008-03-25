@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Internationalization;
@@ -89,10 +90,10 @@ public class Internationalization
 	 * msgval =  another string
 	 * Returns: msgval, unless msgval is identical to msgid and contains a '|' character, in which case a pointer to the substring of msgid after the first '|' character is returned.
 	 */
-	public static char[] stripContext(char[] msgid, char[] msgval)
+	public static string stripContext(string msgid, string msgval)
 	{
 		// const gchar* g_strip_context (const gchar *msgid,  const gchar *msgval);
-		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval))).dup;
+		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval)));
 	}
 	
 	/**
@@ -114,10 +115,10 @@ public class Internationalization
 	 * msgidoffset =  the offset of the message id in msgctxid
 	 * Returns: The translated string
 	 */
-	public static char[] dpgettext(char[] domain, char[] msgctxtid, uint msgidoffset)
+	public static string dpgettext(string domain, string msgctxtid, uint msgidoffset)
 	{
 		// const gchar* g_dpgettext (const gchar *domain,  const gchar *msgctxtid,  gsize msgidoffset);
-		return Str.toString(g_dpgettext(Str.toStringz(domain), Str.toStringz(msgctxtid), msgidoffset)).dup;
+		return Str.toString(g_dpgettext(Str.toStringz(domain), Str.toStringz(msgctxtid), msgidoffset));
 	}
 	
 	/**

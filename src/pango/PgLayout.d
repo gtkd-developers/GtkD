@@ -62,6 +62,7 @@
  * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgLayout;
@@ -106,7 +107,7 @@ public class PgLayout : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoLayout;
 	}
@@ -131,7 +132,7 @@ public class PgLayout : ObjectG
 	 * Params:
 	 *  text = a UTF-8 string
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
 		pango_layout_set_text(pangoLayout, Str.toStringz(text), text.length);
@@ -211,10 +212,10 @@ public class PgLayout : ObjectG
 	 * be freed or modified.
 	 * Returns: the text in the layout.
 	 */
-	public char[] getText()
+	public string getText()
 	{
 		// const char* pango_layout_get_text (PangoLayout *layout);
-		return Str.toString(pango_layout_get_text(pangoLayout)).dup;
+		return Str.toString(pango_layout_get_text(pangoLayout));
 	}
 	
 	/**
@@ -225,7 +226,7 @@ public class PgLayout : ObjectG
 	 * length =  length of marked-up text in bytes, or -1 if markup is
 	 * nul-terminated
 	 */
-	public void setMarkup(char[] markup, int length)
+	public void setMarkup(string markup, int length)
 	{
 		// void pango_layout_set_markup (PangoLayout *layout,  const char *markup,  int length);
 		pango_layout_set_markup(pangoLayout, Str.toStringz(markup), length);
@@ -250,7 +251,7 @@ public class PgLayout : ObjectG
 	 * accelMarker =  marker for accelerators in the text
 	 * accelChar =  return location for first located accelerator, or NULL
 	 */
-	public void setMarkupWithAccel(char[] markup, int length, gunichar accelMarker, gunichar* accelChar)
+	public void setMarkupWithAccel(string markup, int length, gunichar accelMarker, gunichar* accelChar)
 	{
 		// void pango_layout_set_markup_with_accel (PangoLayout *layout,  const char *markup,  int length,  gunichar accel_marker,  gunichar *accel_char);
 		pango_layout_set_markup_with_accel(pangoLayout, Str.toStringz(markup), length, accelMarker, accelChar);

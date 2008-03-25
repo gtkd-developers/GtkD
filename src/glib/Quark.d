@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Quark;
@@ -122,7 +123,7 @@ public class Quark
 	 * string = a string.
 	 * Returns:the GQuark identifying the string, or 0 if string is NULL.
 	 */
-	public static GQuark fromString(char[] string)
+	public static GQuark fromString(string string)
 	{
 		// GQuark g_quark_from_string (const gchar *string);
 		return g_quark_from_string(Str.toStringz(string));
@@ -144,7 +145,7 @@ public class Quark
 	 * string = a string.
 	 * Returns:the GQuark identifying the string, or 0 if string is NULL.
 	 */
-	public static GQuark fromStaticString(char[] string)
+	public static GQuark fromStaticString(string string)
 	{
 		// GQuark g_quark_from_static_string (const gchar *string);
 		return g_quark_from_static_string(Str.toStringz(string));
@@ -156,10 +157,10 @@ public class Quark
 	 * quark = a GQuark.
 	 * Returns:the string associated with the GQuark.
 	 */
-	public static char[] toString(GQuark quark)
+	public static string toString(GQuark quark)
 	{
 		// const gchar* g_quark_to_string (GQuark quark);
-		return Str.toString(g_quark_to_string(quark)).dup;
+		return Str.toString(g_quark_to_string(quark));
 	}
 	
 	/**
@@ -171,7 +172,7 @@ public class Quark
 	 * string = a string.
 	 * Returns:the GQuark associated with the string, or 0 if string isNULL or there is no GQuark associated with it.
 	 */
-	public static GQuark tryString(char[] string)
+	public static GQuark tryString(string string)
 	{
 		// GQuark g_quark_try_string (const gchar *string);
 		return g_quark_try_string(Str.toStringz(string));
@@ -185,10 +186,10 @@ public class Quark
 	 * string =  a string
 	 * Returns: a canonical representation for the string
 	 */
-	public static char[] gInternString(char[] string)
+	public static string gInternString(string string)
 	{
 		// const gchar* g_intern_string (const gchar *string);
-		return Str.toString(g_intern_string(Str.toStringz(string))).dup;
+		return Str.toString(g_intern_string(Str.toStringz(string)));
 	}
 	
 	/**
@@ -201,9 +202,9 @@ public class Quark
 	 * string =  a static string
 	 * Returns: a canonical representation for the string
 	 */
-	public static char[] gInternStaticString(char[] string)
+	public static string gInternStaticString(string string)
 	{
 		// const gchar* g_intern_static_string (const gchar *string);
-		return Str.toString(g_intern_static_string(Str.toStringz(string))).dup;
+		return Str.toString(g_intern_static_string(Str.toStringz(string)));
 	}
 }

@@ -49,6 +49,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellRendererText;
@@ -90,7 +91,7 @@ public class CellRendererText : CellRenderer
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellRendererText;
 	}
@@ -114,13 +115,13 @@ public class CellRendererText : CellRenderer
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(char[], char[], CellRendererText)[] onEditedListeners;
+	void delegate(string, string, CellRendererText)[] onEditedListeners;
 	/**
 	 * This signal is emitted after renderer has been edited.
 	 * It is the responsibility of the application to update the model
 	 * and store new_text at the position indicated by path.
 	 */
-	void addOnEdited(void delegate(char[], char[], CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnEdited(void delegate(string, string, CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("edited" in connectedSignals) )
 		{
@@ -139,7 +140,7 @@ public class CellRendererText : CellRenderer
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], char[], CellRendererText) dlg ; cellRendererText.onEditedListeners )
+		foreach ( void delegate(string, string, CellRendererText) dlg ; cellRendererText.onEditedListeners )
 		{
 			dlg(Str.toString(path), Str.toString(newText), cellRendererText);
 		}

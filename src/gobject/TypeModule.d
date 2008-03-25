@@ -50,6 +50,7 @@
  * 	- GFlagsValue* -> Flags
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.TypeModule;
@@ -109,7 +110,7 @@ public class TypeModule : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gTypeModule;
 	}
@@ -161,7 +162,7 @@ public class TypeModule : ObjectG
 	 * Params:
 	 * name = a human-readable name to use in error messages.
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void g_type_module_set_name (GTypeModule *module,  const gchar *name);
 		g_type_module_set_name(gTypeModule, Str.toStringz(name));
@@ -184,7 +185,7 @@ public class TypeModule : ObjectG
 	 * flags =  flags field providing details about the type
 	 * Returns:the new or existing type ID
 	 */
-	public GType registerType(GType parentType, char[] typeName, GTypeInfo* typeInfo, GTypeFlags flags)
+	public GType registerType(GType parentType, string typeName, GTypeInfo* typeInfo, GTypeFlags flags)
 	{
 		// GType g_type_module_register_type (GTypeModule *module,  GType parent_type,  const gchar *type_name,  const GTypeInfo *type_info,  GTypeFlags flags);
 		return g_type_module_register_type(gTypeModule, parentType, Str.toStringz(typeName), typeInfo, flags);
@@ -219,7 +220,7 @@ public class TypeModule : ObjectG
 	 * name =  name for the type
 	 * Returns:the new or existing type ID
 	 */
-	public GType registerEnum(char[] name, Enums _StaticValues)
+	public GType registerEnum(string name, Enums _StaticValues)
 	{
 		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const_static_values);
 		return g_type_module_register_enum(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
@@ -237,7 +238,7 @@ public class TypeModule : ObjectG
 	 * name =  name for the type
 	 * Returns:the new or existing type ID
 	 */
-	public GType registerFlags(char[] name, Flags _StaticValues)
+	public GType registerFlags(string name, Flags _StaticValues)
 	{
 		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const_static_values);
 		return g_type_module_register_flags(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());

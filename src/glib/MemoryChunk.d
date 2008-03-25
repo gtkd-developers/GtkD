@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = MemoryChunk
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,12 +41,14 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_mem_chunk_print
  * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.MemoryChunk;
@@ -169,6 +171,31 @@ public class MemoryChunk
 	}
 	
 	/**
+	 * Warning
+	 * g_mem_chunk_print has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
+	 *  allocator instead
+	 * Outputs debugging information for a GMemChunk.
+	 * It outputs the name of the GMemChunk (set with g_mem_chunk_new()),
+	 * the number of bytes used, and the number of blocks of memory allocated.
+	 */
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_mem_chunk_print (GMemChunk *mem_chunk);
+			g_mem_chunk_print(gMemChunk);
+		}
+	}
+	else
+	{
+		public override void print()
+		{
+			// void g_mem_chunk_print (GMemChunk *mem_chunk);
+			g_mem_chunk_print(gMemChunk);
+		}
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -189,7 +216,7 @@ public class MemoryChunk
 	 * G_ALLOC_ONLY is quicker, since it does not need to track free atoms,
 	 * but it obviously wastes memory if you no longer need many of the atoms.
 	 */
-	public this (char[] name, int atomSize, uint areaSize, int type)
+	public this (string name, int atomSize, uint areaSize, int type)
 	{
 		// GMemChunk* g_mem_chunk_new (const gchar *name,  gint atom_size,  gsize area_size,  gint type);
 		auto p = g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type);
@@ -302,19 +329,5 @@ public class MemoryChunk
 	{
 		// void g_mem_chunk_info (void);
 		g_mem_chunk_info();
-	}
-	
-	/**
-	 * Warning
-	 * g_mem_chunk_print has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
-	 *  allocator instead
-	 * Outputs debugging information for a GMemChunk.
-	 * It outputs the name of the GMemChunk (set with g_mem_chunk_new()),
-	 * the number of bytes used, and the number of blocks of memory allocated.
-	 */
-	public void print()
-	{
-		// void g_mem_chunk_print (GMemChunk *mem_chunk);
-		g_mem_chunk_print(gMemChunk);
 	}
 }

@@ -49,6 +49,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellRendererToggle;
@@ -88,7 +89,7 @@ public class CellRendererToggle : CellRenderer
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellRendererToggle;
 	}
@@ -112,11 +113,11 @@ public class CellRendererToggle : CellRenderer
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(char[], CellRendererToggle)[] onToggledListeners;
+	void delegate(string, CellRendererToggle)[] onToggledListeners;
 	/**
 	 * The ::toggled signal is emitted when the cell is toggled.
 	 */
-	void addOnToggled(void delegate(char[], CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToggled(void delegate(string, CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
 		{
@@ -135,7 +136,7 @@ public class CellRendererToggle : CellRenderer
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], CellRendererToggle) dlg ; cellRendererToggle.onToggledListeners )
+		foreach ( void delegate(string, CellRendererToggle) dlg ; cellRendererToggle.onToggledListeners )
 		{
 			dlg(Str.toString(path), cellRendererToggle);
 		}

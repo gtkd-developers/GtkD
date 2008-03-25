@@ -79,6 +79,7 @@
  * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextBuffer;
@@ -136,7 +137,7 @@ public class TextBuffer : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextBuffer;
 	}
@@ -162,7 +163,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *  text = UTF-8 text to insert
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), text.length);
@@ -180,7 +181,7 @@ public class TextBuffer : ObjectG
 	 *  iter = a position in the buffer
 	 *  text = UTF-8 format text to insert
 	 */
-	public void insert(TextIter iter, char[] text)
+	public void insert(TextIter iter, string text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
 		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length);
@@ -192,7 +193,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *  text = some text in UTF-8 format
 	 */
-	public void insertAtCursor(char[] text)
+	public void insertAtCursor(string text)
 	{
 		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length);
@@ -213,7 +214,7 @@ public class TextBuffer : ObjectG
 	 * Returns:
 	 *  whether text was actually inserted
 	 */
-	public int insertInteractive(TextIter iter, char[] text, int defaultEditable)
+	public int insertInteractive(TextIter iter, string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, defaultEditable);
@@ -231,7 +232,7 @@ public class TextBuffer : ObjectG
 	 * Returns:
 	 *  whether text was actually inserted
 	 */
-	public int insertInteractiveAtCursor(char[] text, int defaultEditable)
+	public int insertInteractiveAtCursor(string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length, defaultEditable);
@@ -249,7 +250,7 @@ public class TextBuffer : ObjectG
 	 *  ... = NULL-terminated list of tags to apply
 	 */
 	//version(Tango){} else -- still doesn't work on tango, but it compiles now
-	public void insertWithTags(TextIter iter, char[] text, ... )
+	public void insertWithTags(TextIter iter, string text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
 		{
@@ -268,11 +269,11 @@ public class TextBuffer : ObjectG
 	 *  ... = more tag names
 	 */
 	// version(Tango){} else  -- still doesn't work on tango, but it compiles now
-	public void insertWithTagsByName(TextIter iter, char[] text, ... )
+	public void insertWithTagsByName(TextIter iter, string text, ... )
 	{
-		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)
+		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(string)); i++)
 		{
-			char[] tagName = va_arg!(char[])(_argptr);
+			string tagName = va_arg!(string)(_argptr);
 			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
 			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, Str.toStringz(tagName), null);
 		}
@@ -285,8 +286,8 @@ public class TextBuffer : ObjectG
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue,
-	char[] propertyName1, char[] propertyValue1)
+	TextTag createTag(string tagName, string propertyName, int propertyValue,
+	string propertyName1, string propertyValue1)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer,
@@ -305,7 +306,7 @@ public class TextBuffer : ObjectG
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue)
+	TextTag createTag(string tagName, string propertyName, int propertyValue)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer,
@@ -322,7 +323,7 @@ public class TextBuffer : ObjectG
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
+	TextTag createTag(string tagName, string propertyName, double propertyValue)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue,null)
@@ -339,7 +340,7 @@ public class TextBuffer : ObjectG
 	 *  propertyName2=
 	 *  propertyValue2=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
+	TextTag createTag(string tagName, string propertyName, int propertyValue, string propertyName2, int propertyValue2)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, null)
@@ -347,7 +348,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	/** Create a new tag for this buffer */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
+	TextTag createTag(string tagName, string propertyName, int propertyValue, string propertyName2, int propertyValue2, string propertyName3, int propertyValue3, string propertyName4, int propertyValue4, string propertyName5, int propertyValue5)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, Str.toStringz(propertyName3), propertyValue3, Str.toStringz(propertyName4), propertyValue4, Str.toStringz(propertyName5), propertyValue5, null)
@@ -361,7 +362,7 @@ public class TextBuffer : ObjectG
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
+	TextTag createTag(string tagName, string propertyName, string propertyValue)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),Str.toStringz(propertyValue),null)
@@ -376,7 +377,7 @@ public class TextBuffer : ObjectG
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
+	TextTag createTag(string tagName, string propertyName, Bitmap propertyValue)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
@@ -386,9 +387,9 @@ public class TextBuffer : ObjectG
 	
 	/**
 	 * Obtain the entire text
-	 * Returns: The text char[]
+	 * Returns: The text string
 	 */
-	char[] getText()
+	string getText()
 	{
 		TextIter start = new TextIter();
 		TextIter end = new TextIter();
@@ -405,9 +406,9 @@ public class TextBuffer : ObjectG
 	 *  propertyName2=
 	 *  propertyValue2=
 	 */
-	TextTag createTag(char[] tagName,
-	char[] propertyName, char[] propertyValue,
-	char[] propertyName2, int propertyValue2)
+	TextTag createTag(string tagName,
+	string propertyName, string propertyValue,
+	string propertyName2, int propertyValue2)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName),
@@ -685,7 +686,7 @@ public class TextBuffer : ObjectG
 		return consumed;
 	}
 	
-	void delegate(TextIter, char[], gint, TextBuffer)[] onInsertTextListeners;
+	void delegate(TextIter, string, gint, TextBuffer)[] onInsertTextListeners;
 	/**
 	 * The insert_text signal is emitted to insert text in a GtkTextBuffer.
 	 * Insertion actually occurs in the default handler.
@@ -697,7 +698,7 @@ public class TextBuffer : ObjectG
 	 * gtk_text_buffer_insert(),
 	 * gtk_text_buffer_insert_range().
 	 */
-	void addOnInsertText(void delegate(TextIter, char[], gint, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertText(void delegate(TextIter, string, gint, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -716,7 +717,7 @@ public class TextBuffer : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(TextIter, char[], gint, TextBuffer) dlg ; textBuffer.onInsertTextListeners )
+		foreach ( void delegate(TextIter, string, gint, TextBuffer) dlg ; textBuffer.onInsertTextListeners )
 		{
 			dlg(new TextIter(location), Str.toString(text), len, textBuffer);
 		}
@@ -934,7 +935,7 @@ public class TextBuffer : ObjectG
 	 * text =  UTF-8 format text to insert
 	 * len =  length of text in bytes, or -1
 	 */
-	public void insert(TextIter iter, char[] text, int len)
+	public void insert(TextIter iter, string text, int len)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
 		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len);
@@ -947,7 +948,7 @@ public class TextBuffer : ObjectG
 	 * text =  some text in UTF-8 format
 	 * len =  length of text, in bytes
 	 */
-	public void insertAtCursor(char[] text, int len)
+	public void insertAtCursor(string text, int len)
 	{
 		// void gtk_text_buffer_insert_at_cursor (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), len);
@@ -968,7 +969,7 @@ public class TextBuffer : ObjectG
 	 * defaultEditable =  default editability of buffer
 	 * Returns: whether text was actually inserted
 	 */
-	public int insertInteractive(TextIter iter, char[] text, int len, int defaultEditable)
+	public int insertInteractive(TextIter iter, string text, int len, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len, defaultEditable);
@@ -986,7 +987,7 @@ public class TextBuffer : ObjectG
 	 * defaultEditable =  default editability of buffer
 	 * Returns: whether text was actually inserted
 	 */
-	public int insertInteractiveAtCursor(char[] text, int len, int defaultEditable)
+	public int insertInteractiveAtCursor(string text, int len, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), len, defaultEditable);
@@ -1103,10 +1104,10 @@ public class TextBuffer : ObjectG
 	 * includeHiddenChars =  whether to include invisible text
 	 * Returns: an allocated UTF-8 string
 	 */
-	public char[] getText(TextIter start, TextIter end, int includeHiddenChars)
+	public string getText(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_text (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return Str.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars)).dup;
+		return Str.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars));
 	}
 	
 	/**
@@ -1126,10 +1127,10 @@ public class TextBuffer : ObjectG
 	 * includeHiddenChars =  whether to include invisible text
 	 * Returns: an allocated UTF-8 string
 	 */
-	public char[] getSlice(TextIter start, TextIter end, int includeHiddenChars)
+	public string getSlice(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_slice (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars)).dup;
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars));
 	}
 	
 	/**
@@ -1217,7 +1218,7 @@ public class TextBuffer : ObjectG
 	 * leftGravity =  whether the mark has left gravity
 	 * Returns: the new GtkTextMark object
 	 */
-	public TextMark createMark(char[] markName, TextIter where, int leftGravity)
+	public TextMark createMark(string markName, TextIter where, int leftGravity)
 	{
 		// GtkTextMark* gtk_text_buffer_create_mark (GtkTextBuffer *buffer,  const gchar *mark_name,  const GtkTextIter *where,  gboolean left_gravity);
 		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
@@ -1249,7 +1250,7 @@ public class TextBuffer : ObjectG
 	 * name =  name of a mark
 	 * where =  new location for mark
 	 */
-	public void moveMarkByName(char[] name, TextIter where)
+	public void moveMarkByName(string name, TextIter where)
 	{
 		// void gtk_text_buffer_move_mark_by_name (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *where);
 		gtk_text_buffer_move_mark_by_name(gtkTextBuffer, Str.toStringz(name), (where is null) ? null : where.getTextIterStruct());
@@ -1297,7 +1298,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 * name =  name of a mark in buffer
 	 */
-	public void deleteMarkByName(char[] name)
+	public void deleteMarkByName(string name)
 	{
 		// void gtk_text_buffer_delete_mark_by_name (GtkTextBuffer *buffer,  const gchar *name);
 		gtk_text_buffer_delete_mark_by_name(gtkTextBuffer, Str.toStringz(name));
@@ -1310,7 +1311,7 @@ public class TextBuffer : ObjectG
 	 * name =  a mark name
 	 * Returns: a GtkTextMark, or NULL
 	 */
-	public TextMark getMark(char[] name)
+	public TextMark getMark(string name)
 	{
 		// GtkTextMark* gtk_text_buffer_get_mark (GtkTextBuffer *buffer,  const gchar *name);
 		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
@@ -1451,7 +1452,7 @@ public class TextBuffer : ObjectG
 	 * start =  one bound of range to be tagged
 	 * end =  other bound of range to be tagged
 	 */
-	public void applyTagByName(char[] name, TextIter start, TextIter end)
+	public void applyTagByName(string name, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_apply_tag_by_name (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
 		gtk_text_buffer_apply_tag_by_name(gtkTextBuffer, Str.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
@@ -1465,7 +1466,7 @@ public class TextBuffer : ObjectG
 	 * start =  one bound of range to be untagged
 	 * end =  other bound of range to be untagged
 	 */
-	public void removeTagByName(char[] name, TextIter start, TextIter end)
+	public void removeTagByName(string name, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_remove_tag_by_name (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
 		gtk_text_buffer_remove_tag_by_name(gtkTextBuffer, Str.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
@@ -1909,7 +1910,7 @@ public class TextBuffer : ObjectG
 	 * userDataDestroy =  a function to call when user_data is no longer needed
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
-	public GdkAtom registerDeserializeFormat(char[] mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
+	public GdkAtom registerDeserializeFormat(string mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
 	{
 		// GdkAtom gtk_text_buffer_register_deserialize_format  (GtkTextBuffer *buffer,  const gchar *mime_type,  GtkTextBufferDeserializeFunc function,  gpointer user_data,  GDestroyNotify user_data_destroy);
 		return gtk_text_buffer_register_deserialize_format(gtkTextBuffer, Str.toStringz(mimeType), funct, userData, userDataDestroy);
@@ -1924,7 +1925,7 @@ public class TextBuffer : ObjectG
 	 * tagsetName =  an optional tagset name, on NULL
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
-	public GdkAtom registerDeserializeTagset(char[] tagsetName)
+	public GdkAtom registerDeserializeTagset(string tagsetName)
 	{
 		// GdkAtom gtk_text_buffer_register_deserialize_tagset  (GtkTextBuffer *buffer,  const gchar *tagset_name);
 		return gtk_text_buffer_register_deserialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));
@@ -1941,7 +1942,7 @@ public class TextBuffer : ObjectG
 	 * userDataDestroy =  a function to call when user_data is no longer needed
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
-	public GdkAtom registerSerializeFormat(char[] mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
+	public GdkAtom registerSerializeFormat(string mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
 	{
 		// GdkAtom gtk_text_buffer_register_serialize_format  (GtkTextBuffer *buffer,  const gchar *mime_type,  GtkTextBufferSerializeFunc function,  gpointer user_data,  GDestroyNotify user_data_destroy);
 		return gtk_text_buffer_register_serialize_format(gtkTextBuffer, Str.toStringz(mimeType), funct, userData, userDataDestroy);
@@ -1968,7 +1969,7 @@ public class TextBuffer : ObjectG
 	 * tagsetName =  an optional tagset name, on NULL
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
-	public GdkAtom registerSerializeTagset(char[] tagsetName)
+	public GdkAtom registerSerializeTagset(string tagsetName)
 	{
 		// GdkAtom gtk_text_buffer_register_serialize_tagset  (GtkTextBuffer *buffer,  const gchar *tagset_name);
 		return gtk_text_buffer_register_serialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));

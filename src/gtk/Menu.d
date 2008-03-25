@@ -56,6 +56,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Menu;
@@ -135,7 +136,7 @@ public class Menu : MenuShell
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkMenu;
 	}
@@ -153,12 +154,6 @@ public class Menu : MenuShell
 		}
 		super(cast(GtkMenuShell*)gtkMenu);
 		this.gtkMenu = gtkMenu;
-	}
-	
-	/** */
-	public void append(Widget widget)
-	{
-		super.append(widget);
 	}
 	
 	/**
@@ -179,7 +174,7 @@ public class Menu : MenuShell
 	 *  label = the sub menu item label
 	 * Returns: the new menu
 	 */
-	Menu appendSubmenu(char[] label)
+	Menu appendSubmenu(string label)
 	{
 		MenuItem item = new MenuItem(label);
 		append(item);
@@ -189,7 +184,7 @@ public class Menu : MenuShell
 	}
 	
 	/** */
-	void appendSubmenu(char[] label, Menu submenu)
+	void appendSubmenu(string label, Menu submenu)
 	{
 		MenuItem item = new MenuItem(label);
 		append(item);
@@ -197,7 +192,7 @@ public class Menu : MenuShell
 	}
 	
 	/** */
-	Menu prependSubmenu(char[] label)
+	Menu prependSubmenu(string label)
 	{
 		MenuItem item = new MenuItem(label);
 		prepend(item);
@@ -379,7 +374,7 @@ public class Menu : MenuShell
 	 * Params:
 	 * accelPath =  a valid accelerator path
 	 */
-	public void setAccelPath(char[] accelPath)
+	public void setAccelPath(string accelPath)
 	{
 		// void gtk_menu_set_accel_path (GtkMenu *menu,  const gchar *accel_path);
 		gtk_menu_set_accel_path(gtkMenu, Str.toStringz(accelPath));
@@ -393,7 +388,7 @@ public class Menu : MenuShell
 	 * Params:
 	 * title =  a string containing the title for the menu.
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_menu_set_title (GtkMenu *menu,  const gchar *title);
 		gtk_menu_set_title(gtkMenu, Str.toStringz(title));
@@ -414,10 +409,10 @@ public class Menu : MenuShell
 	 * Returns the title of the menu. See gtk_menu_set_title().
 	 * Returns: the title of the menu, or NULL if the menu has notitle set on it. This string is owned by the widget and shouldnot be modified or freed.
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_menu_get_title (GtkMenu *menu);
-		return Str.toString(gtk_menu_get_title(gtkMenu)).dup;
+		return Str.toString(gtk_menu_get_title(gtkMenu));
 	}
 	
 	/**

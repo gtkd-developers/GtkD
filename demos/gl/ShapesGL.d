@@ -742,12 +742,12 @@ static float dy = 0.0;
 //	}
 //
 
-//	void activateCallback(MenuItem menuItem, char[] action)
+//	void activateCallback(MenuItem menuItem, string action)
 //	{
 //	}
 	void activateItemCallback(MenuItem menuItem)
 	{
-		char[] action = menuItem.getActionName();
+		string action = menuItem.getActionName();
 		version(Tango)
 		{
 			Stdout("activateItemCallback action = %s ")( action).newline;
@@ -940,7 +940,7 @@ class TestGL : MainWindow
  
 private import glgdk.GLdInit;
 
-void main(char [][]args)
+void main(string[] args)
 {
 	
 	

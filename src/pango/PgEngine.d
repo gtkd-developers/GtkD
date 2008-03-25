@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgEngine;
@@ -91,7 +92,7 @@ public class PgEngine : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoEngine;
 	}
@@ -158,7 +159,7 @@ public class PgEngine : ObjectG
 	 * id =  the ID of an engine as reported by script_engine_list.
 	 * Returns: a newly created PangoEngine of the specified type, or NULL if an error occurred. (In normal operation, a module should not return NULL. A NULL return is only acceptable in the case where system misconfiguration or bugs in the driver routine are encountered.)
 	 */
-	public static PangoEngine* create(char[] id)
+	public static PangoEngine* create(string id)
 	{
 		// PangoEngine* script_engine_create (const char *id);
 		return script_engine_create(Str.toStringz(id));

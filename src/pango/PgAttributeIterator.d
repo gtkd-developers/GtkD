@@ -50,6 +50,7 @@
  * 	- PangoAttribute* -> PgAttribute
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgAttributeIterator;

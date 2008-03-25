@@ -49,6 +49,7 @@
  * 	- GtkToolItem* -> ToolItem
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ToggleToolButton;
@@ -89,7 +90,7 @@ public class ToggleToolButton : ToolButton
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkToggleToolButton;
 	}
@@ -183,7 +184,7 @@ public class ToggleToolButton : ToolButton
 	 * Params:
 	 * stockId =  the name of the stock item
 	 */
-	public this (char[] stockId)
+	public this (string stockId)
 	{
 		// GtkToolItem* gtk_toggle_tool_button_new_from_stock  (const gchar *stock_id);
 		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));

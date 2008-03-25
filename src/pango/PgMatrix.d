@@ -49,6 +49,7 @@
  * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgMatrix;

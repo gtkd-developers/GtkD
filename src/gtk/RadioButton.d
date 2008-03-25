@@ -53,6 +53,7 @@
  * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RadioButton;
@@ -132,7 +133,7 @@ public class RadioButton : CheckButton
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRadioButton;
 	}
@@ -162,7 +163,7 @@ public class RadioButton : CheckButton
 	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
 	 *  mnemonic for the button.
 	 */
-	public this (ListSG group, char[] label, bool mnemonic=true)
+	public this (ListSG group, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -192,7 +193,7 @@ public class RadioButton : CheckButton
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
 	 */
-	public this (RadioButton radioButton, char[] label, bool mnemonic=true)
+	public this (RadioButton radioButton, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{

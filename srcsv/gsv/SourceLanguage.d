@@ -48,6 +48,7 @@
  * 	- GtkSourceStyleScheme* -> SourceStyleScheme
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceLanguage;
@@ -81,7 +82,7 @@ public class SourceLanguage : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceLanguage;
 	}
@@ -108,20 +109,20 @@ public class SourceLanguage : ObjectG
 	 * Returns the ID of the language. The ID is not locale-dependent.
 	 * Returns: the ID of language.The returned string is owned by language and should not be freedor modified.
 	 */
-	public char[] gtkSourceLanguageGetId()
+	public string gtkSourceLanguageGetId()
 	{
 		// const gchar* gtk_source_language_get_id (GtkSourceLanguage *language);
-		return Str.toString(gtk_source_language_get_id(gtkSourceLanguage)).dup;
+		return Str.toString(gtk_source_language_get_id(gtkSourceLanguage));
 	}
 	
 	/**
 	 * Returns the localized name of the language.
 	 * Returns: the name of language.The returned string is owned by language and should not be freedor modified.
 	 */
-	public char[] gtkSourceLanguageGetName()
+	public string gtkSourceLanguageGetName()
 	{
 		// const gchar* gtk_source_language_get_name (GtkSourceLanguage *language);
-		return Str.toString(gtk_source_language_get_name(gtkSourceLanguage)).dup;
+		return Str.toString(gtk_source_language_get_name(gtkSourceLanguage));
 	}
 	
 	/**
@@ -130,10 +131,10 @@ public class SourceLanguage : ObjectG
 	 * Markup section).
 	 * Returns: the section of language.The returned string is owned by language and should not be freedor modified.
 	 */
-	public char[] gtkSourceLanguageGetSection()
+	public string gtkSourceLanguageGetSection()
 	{
 		// const gchar* gtk_source_language_get_section (GtkSourceLanguage *language);
-		return Str.toString(gtk_source_language_get_section(gtkSourceLanguage)).dup;
+		return Str.toString(gtk_source_language_get_section(gtkSourceLanguage));
 	}
 	
 	/**
@@ -151,10 +152,10 @@ public class SourceLanguage : ObjectG
 	 * name =  metadata property name.
 	 * Returns: value of property name stored in the metadata of languageor NULL if language doesn't contain that metadata property.The returned string is owned by language and should not be freedor modified.
 	 */
-	public char[] gtkSourceLanguageGetMetadata(char[] name)
+	public string gtkSourceLanguageGetMetadata(string name)
 	{
 		// const gchar* gtk_source_language_get_metadata (GtkSourceLanguage *language,  const gchar *name);
-		return Str.toString(gtk_source_language_get_metadata(gtkSourceLanguage, Str.toStringz(name))).dup;
+		return Str.toString(gtk_source_language_get_metadata(gtkSourceLanguage, Str.toStringz(name)));
 	}
 	
 	/**
@@ -188,10 +189,10 @@ public class SourceLanguage : ObjectG
 	 * styleId =  a style ID
 	 * Returns: the name of the style with ID style_id defined by this language orNULL if the style has no name or there is no style with ID style_id definedby this language. The returned string is owned by the language and mustnot be modified.
 	 */
-	public char[] gtkSourceLanguageGetStyleName(char[] styleId)
+	public string gtkSourceLanguageGetStyleName(string styleId)
 	{
 		// const char* gtk_source_language_get_style_name (GtkSourceLanguage *language,  const char *style_id);
-		return Str.toString(gtk_source_language_get_style_name(gtkSourceLanguage, Str.toStringz(styleId))).dup;
+		return Str.toString(gtk_source_language_get_style_name(gtkSourceLanguage, Str.toStringz(styleId)));
 	}
 	
 	/**

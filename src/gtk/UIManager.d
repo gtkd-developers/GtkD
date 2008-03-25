@@ -65,6 +65,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.UIManager;
@@ -283,7 +284,7 @@ public class UIManager : ObjectG, BuildableIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkUIManager;
 	}
@@ -642,7 +643,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * path =  a path
 	 * Returns: the widget found by following the path, or NULL if no widget was found.
 	 */
-	public Widget getWidget(char[] path)
+	public Widget getWidget(string path)
 	{
 		// GtkWidget* gtk_ui_manager_get_widget (GtkUIManager *self,  const gchar *path);
 		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
@@ -683,7 +684,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * path =  a path
 	 * Returns: the action whose proxy widget is found by following the path,  or NULL if no widget was found.
 	 */
-	public Action getAction(char[] path)
+	public Action getAction(string path)
 	{
 		// GtkAction* gtk_ui_manager_get_action (GtkUIManager *self,  const gchar *path);
 		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
@@ -706,7 +707,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * error =  return location for an error
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
 	 */
-	public uint addUiFromString(char[] buffer, int length, GError** error)
+	public uint addUiFromString(string buffer, int length, GError** error)
 	{
 		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *self,  const gchar *buffer,  gssize length,  GError **error);
 		return gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, error);
@@ -721,7 +722,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * error =  return location for an error
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
 	 */
-	public uint addUiFromFile(char[] filename, GError** error)
+	public uint addUiFromFile(string filename, GError** error)
 	{
 		// guint gtk_ui_manager_add_ui_from_file (GtkUIManager *self,  const gchar *filename,  GError **error);
 		return gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), error);
@@ -757,7 +758,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * top =  if TRUE, the UI element is added before its siblings, otherwise it
 	 *  is added after its siblings.
 	 */
-	public void addUi(uint mergeId, char[] path, char[] name, char[] action, GtkUIManagerItemType type, int top)
+	public void addUi(uint mergeId, string path, string name, string action, GtkUIManagerItemType type, int top)
 	{
 		// void gtk_ui_manager_add_ui (GtkUIManager *self,  guint merge_id,  const gchar *path,  const gchar *name,  const gchar *action,  GtkUIManagerItemType type,  gboolean top);
 		gtk_ui_manager_add_ui(gtkUIManager, mergeId, Str.toStringz(path), Str.toStringz(name), Str.toStringz(action), type, top);
@@ -780,10 +781,10 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Returns: A newly allocated string containing an XML representation of the merged UI.
 	 */
-	public char[] getUi()
+	public string getUi()
 	{
 		// gchar* gtk_ui_manager_get_ui (GtkUIManager *self);
-		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager)).dup;
+		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager));
 	}
 	
 	/**

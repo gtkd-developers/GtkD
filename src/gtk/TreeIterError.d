@@ -44,6 +44,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeIterError;
@@ -67,7 +68,7 @@ public class TreeIterError : Exception
 	 * thrown<br>
 	 * - trying to access a method that requires a tree model and the tree model was never set
 	 */
-	public this(char[] method, char[] message)
+	public this(string method, string message)
 	{
 		super("TreeIter."~method~" : "~message);
 	}

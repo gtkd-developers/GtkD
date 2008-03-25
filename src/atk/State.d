@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.State;
@@ -77,7 +78,7 @@ public class State
 	 * name =  a character string describing the new state.
 	 * Returns: an AtkState value for the new state.
 	 */
-	public static AtkStateType typeRegister(char[] name)
+	public static AtkStateType typeRegister(string name)
 	{
 		// AtkStateType atk_state_type_register (const gchar *name);
 		return atk_state_type_register(Str.toStringz(name));
@@ -89,10 +90,10 @@ public class State
 	 * type =  The AtkStateType whose name is required
 	 * Returns: the string describing the AtkStateType
 	 */
-	public static char[] typeGetName(AtkStateType type)
+	public static string typeGetName(AtkStateType type)
 	{
 		// const gchar* atk_state_type_get_name (AtkStateType type);
-		return Str.toString(atk_state_type_get_name(type)).dup;
+		return Str.toString(atk_state_type_get_name(type));
 	}
 	
 	/**
@@ -101,7 +102,7 @@ public class State
 	 * name =  a character string state name
 	 * Returns: an AtkStateType corresponding to name
 	 */
-	public static AtkStateType typeForName(char[] name)
+	public static AtkStateType typeForName(string name)
 	{
 		// AtkStateType atk_state_type_for_name (const gchar *name);
 		return atk_state_type_for_name(Str.toStringz(name));

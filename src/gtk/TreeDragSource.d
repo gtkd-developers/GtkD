@@ -50,6 +50,7 @@
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeDragSource;

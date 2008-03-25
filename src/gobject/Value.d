@@ -53,6 +53,7 @@
  * 	- GValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.Value;
@@ -133,7 +134,7 @@ public class Value
 	}
 	
 	/** */
-	this(char[] value)
+	this(string value)
 	{
 		this();
 		init(GType.STRING);
@@ -320,10 +321,10 @@ public class Value
 	 * between different GLib versions.
 	 * Returns:Newly allocated string.
 	 */
-	public char[] gStrdupValueContents()
+	public string gStrdupValueContents()
 	{
 		// gchar* g_strdup_value_contents (const GValue *value);
-		return Str.toString(g_strdup_value_contents(gValue)).dup;
+		return Str.toString(g_strdup_value_contents(gValue));
 	}
 	
 	/**
@@ -338,7 +339,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecBoolean(char[] name, char[] nick, char[] blurb, int defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecBoolean(string name, string nick, string blurb, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
 		auto p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
@@ -383,7 +384,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecChar(char[] name, char[] nick, char[] blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecChar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -428,7 +429,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUchar(char[] name, char[] nick, char[] blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUchar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -474,7 +475,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecInt(char[] name, char[] nick, char[] blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecInt(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
 		auto p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -520,7 +521,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUint(char[] name, char[] nick, char[] blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUint(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
 		auto p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -566,7 +567,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecLong(char[] name, char[] nick, char[] blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecLong(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
 		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -612,7 +613,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUlong(char[] name, char[] nick, char[] blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUlong(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
 		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -658,7 +659,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecInt64(char[] name, char[] nick, char[] blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecInt64(string name, string nick, string blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
 		auto p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -705,7 +706,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUint64(char[] name, char[] nick, char[] blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUint64(string name, string nick, string blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -751,7 +752,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecFloat(char[] name, char[] nick, char[] blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecFloat(string name, string nick, string blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
 		auto p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -798,7 +799,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecDouble(char[] name, char[] nick, char[] blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecDouble(string name, string nick, string blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
 		auto p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -844,7 +845,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecEnum(char[] name, char[] nick, char[] blurb, GType enumType, int defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecEnum(string name, string nick, string blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
 		auto p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
@@ -890,7 +891,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecFlags(char[] name, char[] nick, char[] blurb, GType flagsType, uint defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecFlags(string name, string nick, string blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
 		auto p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
@@ -934,7 +935,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecString(char[] name, char[] nick, char[] blurb, char[] defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecString(string name, string nick, string blurb, string defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
 		auto p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
@@ -951,7 +952,7 @@ public class Value
 	 * Params:
 	 * vString = string to be set
 	 */
-	public void setString(char[] vString)
+	public void setString(string vString)
 	{
 		// void g_value_set_string (GValue *value,  const gchar *v_string);
 		g_value_set_string(gValue, Str.toStringz(vString));
@@ -964,7 +965,7 @@ public class Value
 	 * Params:
 	 * vString = static string to be set
 	 */
-	public void setStaticString(char[] vString)
+	public void setStaticString(string vString)
 	{
 		// void g_value_set_static_string (GValue *value,  const gchar *v_string);
 		g_value_set_static_string(gValue, Str.toStringz(vString));
@@ -976,7 +977,7 @@ public class Value
 	 * Params:
 	 * vString = duplicated unowned string to be set
 	 */
-	public void takeString(char[] vString)
+	public void takeString(string vString)
 	{
 		// void g_value_take_string (GValue *value,  gchar *v_string);
 		g_value_take_string(gValue, Str.toStringz(vString));
@@ -989,7 +990,7 @@ public class Value
 	 * Params:
 	 * vString = duplicated unowned string to be set
 	 */
-	public void setStringTakeOwnership(char[] vString)
+	public void setStringTakeOwnership(string vString)
 	{
 		// void g_value_set_string_take_ownership (GValue *value,  gchar *v_string);
 		g_value_set_string_take_ownership(gValue, Str.toStringz(vString));
@@ -999,20 +1000,20 @@ public class Value
 	 * Get the contents of a G_TYPE_STRING GValue.
 	 * Returns:string content of value
 	 */
-	public char[] getString()
+	public string getString()
 	{
 		// const gchar* g_value_get_string (const GValue *value);
-		return Str.toString(g_value_get_string(gValue)).dup;
+		return Str.toString(g_value_get_string(gValue));
 	}
 	
 	/**
 	 * Get a copy the contents of a G_TYPE_STRING GValue.
 	 * Returns:a newly allocated copy of the string content of value
 	 */
-	public char[] dupString()
+	public string dupString()
 	{
 		// gchar* g_value_dup_string (const GValue *value);
-		return Str.toString(g_value_dup_string(gValue)).dup;
+		return Str.toString(g_value_dup_string(gValue));
 	}
 	
 	/**
@@ -1027,7 +1028,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecParam(char[] name, char[] nick, char[] blurb, GType paramType, GParamFlags flags)
+	public static ParamSpec gParamSpecParam(string name, string nick, string blurb, GType paramType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
 		auto p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
@@ -1121,7 +1122,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecBoxed(char[] name, char[] nick, char[] blurb, GType boxedType, GParamFlags flags)
+	public static ParamSpec gParamSpecBoxed(string name, string nick, string blurb, GType boxedType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
 		auto p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
@@ -1216,7 +1217,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecPointer(char[] name, char[] nick, char[] blurb, GParamFlags flags)
+	public static ParamSpec gParamSpecPointer(string name, string nick, string blurb, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
 		auto p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
@@ -1261,7 +1262,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecObject(char[] name, char[] nick, char[] blurb, GType objectType, GParamFlags flags)
+	public static ParamSpec gParamSpecObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
 		auto p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
@@ -1356,7 +1357,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUnichar(char[] name, char[] nick, char[] blurb, gunichar defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUnichar(string name, string nick, string blurb, gunichar defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
 		auto p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
@@ -1383,7 +1384,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecValueArray(char[] name, char[] nick, char[] blurb, ParamSpec elementSpec, GParamFlags flags)
+	public static ParamSpec gParamSpecValueArray(string name, string nick, string blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
 		auto p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
@@ -1405,7 +1406,7 @@ public class Value
 	 * overridden = The property that is being overridden
 	 * Returns:the newly created GParamSpec
 	 */
-	public static ParamSpec gParamSpecOverride(char[] name, ParamSpec overridden)
+	public static ParamSpec gParamSpecOverride(string name, ParamSpec overridden)
 	{
 		// GParamSpec* g_param_spec_override (const gchar *name,  GParamSpec *overridden);
 		auto p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
@@ -1431,7 +1432,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns:a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecGtype(char[] name, char[] nick, char[] blurb, GType isAType, GParamFlags flags)
+	public static ParamSpec gParamSpecGtype(string name, string nick, string blurb, GType isAType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
 		auto p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);

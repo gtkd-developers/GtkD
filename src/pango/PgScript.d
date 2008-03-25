@@ -49,6 +49,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgScript;

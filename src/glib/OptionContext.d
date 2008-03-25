@@ -49,6 +49,7 @@
  * 	- GOptionGroup* -> OptionGroup
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.OptionContext;
@@ -202,7 +203,7 @@ public class OptionContext
 	 *  usage summary
 	 *  programname [OPTION...]
 	 */
-	public this (char[] parameterString)
+	public this (string parameterString)
 	{
 		// GOptionContext* g_option_context_new (const gchar *parameter_string);
 		auto p = g_option_context_new(Str.toStringz(parameterString));
@@ -226,7 +227,7 @@ public class OptionContext
 	 * summary =  a string to be shown in --help output
 	 *  before the list of options, or NULL
 	 */
-	public void setSummary(char[] summary)
+	public void setSummary(string summary)
 	{
 		// void g_option_context_set_summary (GOptionContext *context,  const gchar *summary);
 		g_option_context_set_summary(gOptionContext, Str.toStringz(summary));
@@ -237,10 +238,10 @@ public class OptionContext
 	 * Since 2.12
 	 * Returns: the summary
 	 */
-	public char[] getSummary()
+	public string getSummary()
 	{
 		// const gchar* g_option_context_get_summary (GOptionContext *context);
-		return Str.toString(g_option_context_get_summary(gOptionContext)).dup;
+		return Str.toString(g_option_context_get_summary(gOptionContext));
 	}
 	
 	/**
@@ -254,7 +255,7 @@ public class OptionContext
 	 * description =  a string to be shown in --help output
 	 *  after the list of options, or NULL
 	 */
-	public void setDescription(char[] description)
+	public void setDescription(string description)
 	{
 		// void g_option_context_set_description (GOptionContext *context,  const gchar *description);
 		g_option_context_set_description(gOptionContext, Str.toStringz(description));
@@ -265,10 +266,10 @@ public class OptionContext
 	 * Since 2.12
 	 * Returns: the description
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// const gchar* g_option_context_get_description (GOptionContext *context);
-		return Str.toString(g_option_context_get_description(gOptionContext)).dup;
+		return Str.toString(g_option_context_get_description(gOptionContext));
 	}
 	
 	/**
@@ -300,7 +301,7 @@ public class OptionContext
 	 * Params:
 	 * domain =  the domain to use
 	 */
-	public void setTranslationDomain(char[] domain)
+	public void setTranslationDomain(string domain)
 	{
 		// void g_option_context_set_translation_domain  (GOptionContext *context,  const gchar *domain);
 		g_option_context_set_translation_domain(gOptionContext, Str.toStringz(domain));
@@ -422,10 +423,10 @@ public class OptionContext
 	 * group =  the GOptionGroup to create help for, or NULL
 	 * Returns: A newly allocated string containing the help text
 	 */
-	public char[] getHelp(int mainHelp, OptionGroup group)
+	public string getHelp(int mainHelp, OptionGroup group)
 	{
 		// gchar* g_option_context_get_help (GOptionContext *context,  gboolean main_help,  GOptionGroup *group);
-		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct())).dup;
+		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct()));
 	}
 	
 	/**
@@ -438,7 +439,7 @@ public class OptionContext
 	 *  the --help output for the options in entries
 	 *  with gettext(), or NULL
 	 */
-	public void addMainEntries(GOptionEntry* entries, char[] translationDomain)
+	public void addMainEntries(GOptionEntry* entries, string translationDomain)
 	{
 		// void g_option_context_add_main_entries (GOptionContext *context,  const GOptionEntry *entries,  const gchar *translation_domain);
 		g_option_context_add_main_entries(gOptionContext, entries, Str.toStringz(translationDomain));

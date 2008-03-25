@@ -48,6 +48,7 @@
  * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Util;
@@ -135,7 +136,7 @@ public class Util
 	 * eventType =  the type of event for which notification is requested
 	 * Returns: added event listener id, or 0 on failure.
 	 */
-	public static uint addGlobalEventListener(GSignalEmissionHook listener, char[] eventType)
+	public static uint addGlobalEventListener(GSignalEmissionHook listener, string eventType)
 	{
 		// guint atk_add_global_event_listener (GSignalEmissionHook listener,  const gchar *event_type);
 		return atk_add_global_event_listener(listener, Str.toStringz(eventType));
@@ -215,19 +216,19 @@ public class Util
 	 * Gets name string for the GUI toolkit implementing ATK for this application.
 	 * Returns: name string for the GUI toolkit implementing ATK for this application
 	 */
-	public static char[] getToolkitName()
+	public static string getToolkitName()
 	{
 		// const gchar* atk_get_toolkit_name (void);
-		return Str.toString(atk_get_toolkit_name()).dup;
+		return Str.toString(atk_get_toolkit_name());
 	}
 	
 	/**
 	 * Gets version string for the GUI toolkit implementing ATK for this application.
 	 * Returns: version string for the GUI toolkit implementing ATK for this application
 	 */
-	public static char[] getToolkitVersion()
+	public static string getToolkitVersion()
 	{
 		// const gchar* atk_get_toolkit_version (void);
-		return Str.toString(atk_get_toolkit_version()).dup;
+		return Str.toString(atk_get_toolkit_version());
 	}
 }

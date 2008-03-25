@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.EditableText;
@@ -126,7 +127,7 @@ public class EditableText
 	 * Params:
 	 * string =  string to set for text contents of text
 	 */
-	public void setTextContents(char[] string)
+	public void setTextContents(string string)
 	{
 		// void atk_editable_text_set_text_contents (AtkEditableText *text,  const gchar *string);
 		atk_editable_text_set_text_contents(atkEditableText, Str.toStringz(string));
@@ -141,7 +142,7 @@ public class EditableText
 	 * the position at which to insert the text. After the call it
 	 * points at the position after the newly inserted text.
 	 */
-	public void insertText(char[] string, int length, int* position)
+	public void insertText(string string, int length, int* position)
 	{
 		// void atk_editable_text_insert_text (AtkEditableText *text,  const gchar *string,  gint length,  gint *position);
 		atk_editable_text_insert_text(atkEditableText, Str.toStringz(string), length, position);

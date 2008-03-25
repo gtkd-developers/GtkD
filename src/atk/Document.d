@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Document;
@@ -219,10 +220,10 @@ public class Document
 	 * Gets a string indicating the document type.
 	 * Returns: a string indicating the document type
 	 */
-	public char[] getDocumentType()
+	public string getDocumentType()
 	{
 		// const gchar* atk_document_get_document_type (AtkDocument *document);
-		return Str.toString(atk_document_get_document_type(atkDocument)).dup;
+		return Str.toString(atk_document_get_document_type(atkDocument));
 	}
 	
 	/**
@@ -243,10 +244,10 @@ public class Document
 	 *  whose value is being queried.
 	 * Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document.Since ATK 1.12
 	 */
-	public char[] getAttributeValue(char[] attributeName)
+	public string getAttributeValue(string attributeName)
 	{
 		// const gchar* atk_document_get_attribute_value (AtkDocument *document,  const gchar *attribute_name);
-		return Str.toString(atk_document_get_attribute_value(atkDocument, Str.toStringz(attributeName))).dup;
+		return Str.toString(atk_document_get_attribute_value(atkDocument, Str.toStringz(attributeName)));
 	}
 	
 	/**
@@ -256,7 +257,7 @@ public class Document
 	 * attributeValue =  a string value to be associated with attribute_name.
 	 * Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified).Since ATK 1.12
 	 */
-	public int setAttributeValue(char[] attributeName, char[] attributeValue)
+	public int setAttributeValue(string attributeName, string attributeValue)
 	{
 		// gboolean atk_document_set_attribute_value (AtkDocument *document,  const gchar *attribute_name,  const gchar *attribute_value);
 		return atk_document_set_attribute_value(atkDocument, Str.toStringz(attributeName), Str.toStringz(attributeValue));
@@ -281,9 +282,9 @@ public class Document
 	 *  atk_image_get_image_locale.
 	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of the document content as a whole, or NULL if the document content does not specify a locale.Signal DetailsThe "load-complete" signalvoid user_function (AtkDocument *atkdocument, gpointer user_data) : Run LastThe 'load-complete' signal is emitted when a pending load of a staticdocument has completed. This signal is to be expected by ATK clients if and when AtkDocument implementors expose ATK_STATE_BUSY. If the stateof an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,it should be safe for clients to assume that the AtkDocument's static contentsare fully loaded into the container. (Dynamic document contents shouldbe exposed via other signals.)
 	 */
-	public char[] getLocale()
+	public string getLocale()
 	{
 		// const gchar* atk_document_get_locale (AtkDocument *document);
-		return Str.toString(atk_document_get_locale(atkDocument)).dup;
+		return Str.toString(atk_document_get_locale(atkDocument));
 	}
 }

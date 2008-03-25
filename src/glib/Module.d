@@ -47,6 +47,7 @@
  * 	- GModule* -> Module
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Module;
@@ -187,10 +188,10 @@ public class Module
 	 * moduleName = the name of the module.
 	 * Returns:the complete path of the module, including the standard libraryprefix and suffix. This should be freed when no longer needed.
 	 */
-	public static char[] buildPath(char[] directory, char[] moduleName)
+	public static string buildPath(string directory, string moduleName)
 	{
 		// gchar* g_module_build_path (const gchar *directory,  const gchar *module_name);
-		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName))).dup;
+		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName)));
 	}
 	
 	/**
@@ -211,7 +212,7 @@ public class Module
 	 * OR of any of the GModuleFlags.
 	 * Returns:a GModule on success, or NULL on failure.
 	 */
-	public static Module open(char[] fileName, GModuleFlags flags)
+	public static Module open(string fileName, GModuleFlags flags)
 	{
 		// GModule* g_module_open (const gchar *file_name,  GModuleFlags flags);
 		auto p = g_module_open(Str.toStringz(fileName), flags);
@@ -231,7 +232,7 @@ public class Module
 	 * symbol = returns the pointer to the symbol value.
 	 * Returns:TRUE on success.
 	 */
-	public int symbol(char[] symbolName, void** symbol)
+	public int symbol(string symbolName, void** symbol)
 	{
 		// gboolean g_module_symbol (GModule *module,  const gchar *symbol_name,  gpointer *symbol);
 		return g_module_symbol(gModule, Str.toStringz(symbolName), symbol);
@@ -241,10 +242,10 @@ public class Module
 	 * Gets the filename from a GModule.
 	 * Returns:the filename of the module, or "main" if the module is the mainprogram itself.
 	 */
-	public char[] name()
+	public string name()
 	{
 		// const gchar* g_module_name (GModule *module);
-		return Str.toString(g_module_name(gModule)).dup;
+		return Str.toString(g_module_name(gModule));
 	}
 	
 	/**
@@ -271,9 +272,9 @@ public class Module
 	 * Gets a string describing the last module error.
 	 * Returns:a string describing the last module error.
 	 */
-	public static char[] error()
+	public static string error()
 	{
 		// const gchar* g_module_error (void);
-		return Str.toString(g_module_error()).dup;
+		return Str.toString(g_module_error());
 	}
 }

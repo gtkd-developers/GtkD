@@ -54,6 +54,7 @@
  * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextTag;
@@ -100,7 +101,7 @@ public class TextTag : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextTag;
 	}
@@ -163,7 +164,7 @@ public class TextTag : ObjectG
 	 * Params:
 	 * name =  tag name, or NULL
 	 */
-	public this (char[] name)
+	public this (string name)
 	{
 		// GtkTextTag* gtk_text_tag_new (const gchar *name);
 		auto p = gtk_text_tag_new(Str.toStringz(name));

@@ -52,6 +52,7 @@
  * 	- GtkPaperSize* -> PaperSize
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PageSetup;
@@ -116,7 +117,7 @@ public class PageSetup : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPageSetup;
 	}
@@ -417,7 +418,7 @@ public class PageSetup : ObjectG
 	 * fileName =  the filename to read the page setup from
 	 * error =  return location for an error, or NULL
 	 */
-	public this (char[] fileName, GError** error)
+	public this (string fileName, GError** error)
 	{
 		// GtkPageSetup* gtk_page_setup_new_from_file (const gchar *file_name,  GError **error);
 		auto p = gtk_page_setup_new_from_file(Str.toStringz(fileName), error);
@@ -441,7 +442,7 @@ public class PageSetup : ObjectG
 	 *  to use the default name "Page Setup"
 	 * error =  return location for an error, or NULL
 	 */
-	public this (KeyFile keyFile, char[] groupName, GError** error)
+	public this (KeyFile keyFile, string groupName, GError** error)
 	{
 		// GtkPageSetup* gtk_page_setup_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		auto p = gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
@@ -462,7 +463,7 @@ public class PageSetup : ObjectG
 	 * error =  return location for errors, or NULL
 	 * Returns: TRUE on success
 	 */
-	public int toFile(char[] fileName, GError** error)
+	public int toFile(string fileName, GError** error)
 	{
 		// gboolean gtk_page_setup_to_file (GtkPageSetup *setup,  const char *file_name,  GError **error);
 		return gtk_page_setup_to_file(gtkPageSetup, Str.toStringz(fileName), error);
@@ -476,7 +477,7 @@ public class PageSetup : ObjectG
 	 * groupName =  the group to add the settings to in key_file,
 	 *  or NULL to use the default name "Page Setup"
 	 */
-	public void toKeyFile(KeyFile keyFile, char[] groupName)
+	public void toKeyFile(KeyFile keyFile, string groupName)
 	{
 		// void gtk_page_setup_to_key_file (GtkPageSetup *setup,  GKeyFile *key_file,  const gchar *group_name);
 		gtk_page_setup_to_key_file(gtkPageSetup, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName));

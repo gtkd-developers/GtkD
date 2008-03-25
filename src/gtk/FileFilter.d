@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FileFilter;
@@ -92,7 +93,7 @@ public class FileFilter : ObjectGtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFileFilter;
 	}
@@ -145,7 +146,7 @@ public class FileFilter : ObjectGtk
 	 * name =  the human-readable-name for the filter, or NULL
 	 *  to remove any existing name.
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gtk_file_filter_set_name (GtkFileFilter *filter,  const gchar *name);
 		gtk_file_filter_set_name(gtkFileFilter, Str.toStringz(name));
@@ -156,10 +157,10 @@ public class FileFilter : ObjectGtk
 	 * Since 2.4
 	 * Returns: The human-readable name of the filter, or NULL. This value is owned by GTK+ and must not be modified or freed.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_file_filter_get_name (GtkFileFilter *filter);
-		return Str.toString(gtk_file_filter_get_name(gtkFileFilter)).dup;
+		return Str.toString(gtk_file_filter_get_name(gtkFileFilter));
 	}
 	
 	/**
@@ -168,7 +169,7 @@ public class FileFilter : ObjectGtk
 	 * Params:
 	 * mimeType =  name of a MIME type
 	 */
-	public void addMimeType(char[] mimeType)
+	public void addMimeType(string mimeType)
 	{
 		// void gtk_file_filter_add_mime_type (GtkFileFilter *filter,  const gchar *mime_type);
 		gtk_file_filter_add_mime_type(gtkFileFilter, Str.toStringz(mimeType));
@@ -180,7 +181,7 @@ public class FileFilter : ObjectGtk
 	 * Params:
 	 * pattern =  a shell style glob
 	 */
-	public void addPattern(char[] pattern)
+	public void addPattern(string pattern)
 	{
 		// void gtk_file_filter_add_pattern (GtkFileFilter *filter,  const gchar *pattern);
 		gtk_file_filter_add_pattern(gtkFileFilter, Str.toStringz(pattern));

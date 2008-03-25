@@ -56,6 +56,7 @@
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeModel;
@@ -242,7 +243,7 @@ public class TreeModel
 	 * Get the value of a column as a char array.
 	 * this is the same calling getValue and get the string from the value object
 	 */
-	char[] getValueString(TreeIter iter, int column)
+	string getValueString(TreeIter iter, int column)
 	{
 		Value value = new Value();
 		getValue(iter, column, value);
@@ -497,7 +498,7 @@ public class TreeModel
 	 * pathString =  A string representation of a GtkTreePath.
 	 * Returns: TRUE, if iter was set.
 	 */
-	public int getIterFromString(TreeIter iter, char[] pathString)
+	public int getIterFromString(TreeIter iter, string pathString)
 	{
 		// gboolean gtk_tree_model_get_iter_from_string (GtkTreeModel *tree_model,  GtkTreeIter *iter,  const gchar *path_string);
 		return gtk_tree_model_get_iter_from_string(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), Str.toStringz(pathString));
@@ -647,10 +648,10 @@ public class TreeModel
 	 * iter =  An GtkTreeIter.
 	 * Returns: A newly-allocated string. Must be freed with g_free().
 	 */
-	public char[] getStringFromIter(TreeIter iter)
+	public string getStringFromIter(TreeIter iter)
 	{
 		// gchar* gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return Str.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct())).dup;
+		return Str.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct()));
 	}
 	
 	/**

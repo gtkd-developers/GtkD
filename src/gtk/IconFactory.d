@@ -49,6 +49,7 @@
  * 	- GtkIconSet* -> IconSet
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.IconFactory;
@@ -99,7 +100,7 @@ public class IconFactory : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkIconFactory;
 	}
@@ -137,7 +138,7 @@ public class IconFactory : ObjectG
 	 * stockId =  icon name
 	 * iconSet =  icon set
 	 */
-	public void add(char[] stockId, IconSet iconSet)
+	public void add(string stockId, IconSet iconSet)
 	{
 		// void gtk_icon_factory_add (GtkIconFactory *factory,  const gchar *stock_id,  GtkIconSet *icon_set);
 		gtk_icon_factory_add(gtkIconFactory, Str.toStringz(stockId), (iconSet is null) ? null : iconSet.getIconSetStruct());
@@ -167,7 +168,7 @@ public class IconFactory : ObjectG
 	 * stockId =  an icon name
 	 * Returns: icon set of stock_id.
 	 */
-	public IconSet lookup(char[] stockId)
+	public IconSet lookup(string stockId)
 	{
 		// GtkIconSet* gtk_icon_factory_lookup (GtkIconFactory *factory,  const gchar *stock_id);
 		auto p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
@@ -189,7 +190,7 @@ public class IconFactory : ObjectG
 	 * stockId =  an icon name
 	 * Returns: a GtkIconSet, or NULL
 	 */
-	public static IconSet lookupDefault(char[] stockId)
+	public static IconSet lookupDefault(string stockId)
 	{
 		// GtkIconSet* gtk_icon_factory_lookup_default (const gchar *stock_id);
 		auto p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));

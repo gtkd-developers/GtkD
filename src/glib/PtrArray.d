@@ -46,6 +46,7 @@
  * 	- GPtrArray* -> PtrArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.PtrArray;

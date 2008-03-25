@@ -36,8 +36,8 @@ private import gtk.Image;
 version(Tango){
     import tango.text.Util;
     import tango.io.Stdout;
-    void writefln( char[] frm, ... ){
-        char[] frm2 = substitute( frm, "%s", "{}" );
+    void writefln( string frm, ... ){
+        string frm2 = substitute( frm, "%s", "{}" );
         Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
     }
 }
@@ -83,17 +83,17 @@ class SpawnWindow : MainWindow
 	private void execInput(Button button)
 	{
         version(Tango){
-          char[][] args = split( viewInput.getBuffer().getText(), " " );
+          string[] args = split( viewInput.getBuffer().getText(), " " );
         }
         else{
-		  char[][] args = std.string.split(viewInput.getBuffer().getText());
+		  string[] args = std.string.split(viewInput.getBuffer().getText());
         }
 		exec(args);
 	}
 
-	private bool exec(char[][] args)
+	private bool exec(string[] args)
 	{
-		foreach ( int i, char[] arg ; args)
+		foreach ( int i, string arg ; args)
 		{
 			writefln("[%s] >%s<", i, arg);
 		}
@@ -170,7 +170,7 @@ class SpawnWindow : MainWindow
 		return true;
 	}
 
-        public bool syncOutput(char[] line)
+        public bool syncOutput(string line)
         {
             TextIter iter = new TextIter();
             viewOutput.getBuffer().getEndIter(iter);
@@ -178,7 +178,7 @@ class SpawnWindow : MainWindow
             return true;
         }
 
-        public bool syncError(char[] line)
+        public bool syncError(string line)
         {
             TextIter iter = new TextIter();
             viewError.getBuffer().getEndIter(iter);
@@ -186,11 +186,11 @@ class SpawnWindow : MainWindow
             return true;
         }
 
-	public void setInput(char[][] args)
+	public void setInput(string[] args)
 	{
 		TextBuffer inBuffer = viewInput.getBuffer();
-		char[] t;
-		foreach ( int count, char[] arg; args)
+		string t;
+		foreach ( int count, string arg; args)
 		{
 			if ( count > 0 ) t ~= " ";
 			t ~= arg;
@@ -198,7 +198,7 @@ class SpawnWindow : MainWindow
 		inBuffer.setText(t);
 	}
 
-	public void setInput(char[] arg)
+	public void setInput(string arg)
 	{
 		viewInput.getBuffer().setText(arg);
 	}
@@ -206,7 +206,7 @@ class SpawnWindow : MainWindow
 
 }
 
-void main(char[][] args)
+void main(string[] args)
 {
 	GtkD.init(args);
 

@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.StringGChunk;
@@ -150,10 +151,10 @@ public class StringGChunk
 	 * string =  the string to add
 	 * Returns: a pointer to the copy of string within  the GStringChunk
 	 */
-	public char[] insert(char[] string)
+	public string insert(string string)
 	{
 		// gchar* g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
-		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string))).dup;
+		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string)));
 	}
 	
 	/**
@@ -172,10 +173,10 @@ public class StringGChunk
 	 * string =  the string to add
 	 * Returns: a pointer to the new or existing copy of string  within the GStringChunk
 	 */
-	public char[] insertConst(char[] string)
+	public string insertConst(string string)
 	{
 		// gchar* g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
-		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string))).dup;
+		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string)));
 	}
 	
 	/**
@@ -193,10 +194,10 @@ public class StringGChunk
 	 *  nul-terminated string
 	 * Returns: a pointer to the copy of string within the GStringChunk
 	 */
-	public char[] insertLen(char[] string, int len)
+	public string insertLen(string string, int len)
 	{
 		// gchar* g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
-		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len)).dup;
+		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len));
 	}
 	
 	/**

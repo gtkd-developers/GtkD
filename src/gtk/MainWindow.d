@@ -48,6 +48,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.MainWindow;
@@ -77,7 +78,7 @@ public class MainWindow : Window
 	/**
 	 * Creates a new MainWindow with a title
 	 */
-	public this(char[] title)
+	public this(string title)
 	{
 		super(title);
 		countTotalMainWindows++;

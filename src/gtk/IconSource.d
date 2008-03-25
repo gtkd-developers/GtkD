@@ -52,6 +52,7 @@
  * 	- GtkIconSource* -> IconSource
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.IconSource;
@@ -177,10 +178,10 @@ public class IconSource
 	 * persist beyond the lifetime of the icon source.
 	 * Returns: image filename. This string must not be modifiedor freed.
 	 */
-	public char[] getFilename()
+	public string getFilename()
 	{
 		// const gchar* gtk_icon_source_get_filename (const GtkIconSource *source);
-		return Str.toString(gtk_icon_source_get_filename(gtkIconSource)).dup;
+		return Str.toString(gtk_icon_source_get_filename(gtkIconSource));
 	}
 	
 	/**
@@ -211,10 +212,10 @@ public class IconSource
 	 * persist beyond the lifetime of the icon source.
 	 * Returns: icon name. This string must not be modified or freed.
 	 */
-	public char[] getIconName()
+	public string getIconName()
 	{
 		// const gchar* gtk_icon_source_get_icon_name (const GtkIconSource *source);
-		return Str.toString(gtk_icon_source_get_icon_name(gtkIconSource)).dup;
+		return Str.toString(gtk_icon_source_get_icon_name(gtkIconSource));
 	}
 	
 	/**
@@ -339,7 +340,7 @@ public class IconSource
 	 * Params:
 	 * filename =  image file to use
 	 */
-	public void setFilename(char[] filename)
+	public void setFilename(string filename)
 	{
 		// void gtk_icon_source_set_filename (GtkIconSource *source,  const gchar *filename);
 		gtk_icon_source_set_filename(gtkIconSource, Str.toStringz(filename));
@@ -363,7 +364,7 @@ public class IconSource
 	 * Params:
 	 * iconName =  name of icon to use
 	 */
-	public void setIconName(char[] iconName)
+	public void setIconName(string iconName)
 	{
 		// void gtk_icon_source_set_icon_name (GtkIconSource *source,  const gchar *icon_name);
 		gtk_icon_source_set_icon_name(gtkIconSource, Str.toStringz(iconName));

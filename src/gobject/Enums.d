@@ -48,6 +48,7 @@
  * 	- GEnumValue* -> Enums
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.Enums;
@@ -137,7 +138,7 @@ public class Enums
 	 * name = the name to look up
 	 * Returns:the GEnumValue with name name, or NULL if the enumeration doesn't have a member with that name
 	 */
-	public static Enums getValueByName(GEnumClass* enumClass, char[] name)
+	public static Enums getValueByName(GEnumClass* enumClass, string name)
 	{
 		// GEnumValue* g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
 		auto p = g_enum_get_value_by_name(enumClass, Str.toStringz(name));
@@ -156,7 +157,7 @@ public class Enums
 	 * nick = the nickname to look up
 	 * Returns:the GEnumValue with nickname nick, or NULL if the enumeration doesn't have a member with that nickname
 	 */
-	public static Enums getValueByNick(GEnumClass* enumClass, char[] nick)
+	public static Enums getValueByNick(GEnumClass* enumClass, string nick)
 	{
 		// GEnumValue* g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
 		auto p = g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
@@ -177,7 +178,7 @@ public class Enums
 	 * name = A nul-terminated string used as the name of the new type.
 	 * Returns:The new type identifier.
 	 */
-	public static GType registerStatic(char[] name, Enums _StaticValues)
+	public static GType registerStatic(string name, Enums _StaticValues)
 	{
 		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const_static_values);
 		return g_enum_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());

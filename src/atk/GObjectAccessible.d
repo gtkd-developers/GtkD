@@ -49,6 +49,7 @@
  * 	- GObject* -> ObjectG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.GObjectAccessible;
@@ -86,7 +87,7 @@ public class GObjectAccessible : ObjectAtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkGObjectAccessible;
 	}

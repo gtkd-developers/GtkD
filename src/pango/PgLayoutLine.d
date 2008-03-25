@@ -46,6 +46,7 @@
  * 	- PangoLayoutLine* -> PgLayoutLine
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgLayoutLine;

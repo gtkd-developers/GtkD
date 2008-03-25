@@ -47,6 +47,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgLanguage;
@@ -119,7 +120,7 @@ public class PgLanguage
 	 * language =  a string representing a language tag
 	 * Returns: an opaque pointer to a PangoLanguage structure. this will be valid forever after.
 	 */
-	public static PgLanguage fromString(char[] language)
+	public static PgLanguage fromString(string language)
 	{
 		// PangoLanguage* pango_language_from_string (const char *language);
 		auto p = pango_language_from_string(Str.toStringz(language));
@@ -144,7 +145,7 @@ public class PgLanguage
 	 *  canonicalized as by pango_language_from_string()
 	 * Returns: TRUE if a match was found.
 	 */
-	public int matches(char[] rangeList)
+	public int matches(string rangeList)
 	{
 		// gboolean pango_language_matches (PangoLanguage *language,  const char *range_list);
 		return pango_language_matches(pangoLanguage, Str.toStringz(rangeList));

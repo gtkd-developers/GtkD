@@ -63,6 +63,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextIter;
@@ -287,10 +288,10 @@ public class TextIter
 	 * end =  iterator at end of a range
 	 * Returns: slice of text from the buffer
 	 */
-	public char[] getSlice(TextIter end)
+	public string getSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
+		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
 	/**
@@ -303,10 +304,10 @@ public class TextIter
 	 * end =  iterator at end of a range
 	 * Returns: array of characters from the buffer
 	 */
-	public char[] getText(TextIter end)
+	public string getText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
+		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
 	/**
@@ -317,10 +318,10 @@ public class TextIter
 	 * end =  iterator at end of range
 	 * Returns: slice of text from the buffer
 	 */
-	public char[] getVisibleSlice(TextIter end)
+	public string getVisibleSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
+		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
 	/**
@@ -331,10 +332,10 @@ public class TextIter
 	 * end =  iterator at end of range
 	 * Returns: string containing visible text in the range
 	 */
-	public char[] getVisibleText(TextIter end)
+	public string getVisibleText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
+		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
 	/**
@@ -1404,7 +1405,7 @@ public class TextIter
 	 * limit =  bound for the search, or NULL for the end of the buffer
 	 * Returns: whether a match was found
 	 */
-	public int forwardSearch(char[] str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
+	public int forwardSearch(string str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_text_iter_forward_search (const GtkTextIter *iter,  const gchar *str,  GtkTextSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
 		return gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
@@ -1420,7 +1421,7 @@ public class TextIter
 	 * limit =  location of last possible match_start, or NULL for start of buffer
 	 * Returns: whether a match was found
 	 */
-	public int backwardSearch(char[] str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
+	public int backwardSearch(string str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_text_iter_backward_search (const GtkTextIter *iter,  const gchar *str,  GtkTextSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
 		return gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());

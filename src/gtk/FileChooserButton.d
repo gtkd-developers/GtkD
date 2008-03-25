@@ -53,6 +53,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FileChooserButton;
@@ -113,7 +114,7 @@ public class FileChooserButton : HBox
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFileChooserButton;
 	}
@@ -189,7 +190,7 @@ public class FileChooserButton : HBox
 	 * title =  the title of the browse dialog.
 	 * action =  the open mode for the widget.
 	 */
-	public this (char[] title, GtkFileChooserAction action)
+	public this (string title, GtkFileChooserAction action)
 	{
 		// GtkWidget* gtk_file_chooser_button_new (const gchar *title,  GtkFileChooserAction action);
 		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
@@ -210,7 +211,7 @@ public class FileChooserButton : HBox
 	 * action =  the open mode for the widget.
 	 * backend =  the name of the GtkFileSystem backend to use.
 	 */
-	public this (char[] title, GtkFileChooserAction action, char[] backend)
+	public this (string title, GtkFileChooserAction action, string backend)
 	{
 		// GtkWidget* gtk_file_chooser_button_new_with_backend  (const gchar *title,  GtkFileChooserAction action,  const gchar *backend);
 		auto p = gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend));
@@ -255,10 +256,10 @@ public class FileChooserButton : HBox
 	 * Since 2.6
 	 * Returns: a pointer to the browse dialog's title.
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_file_chooser_button_get_title (GtkFileChooserButton *button);
-		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton)).dup;
+		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton));
 	}
 	
 	/**
@@ -267,7 +268,7 @@ public class FileChooserButton : HBox
 	 * Params:
 	 * title =  the new browse dialog title.
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_file_chooser_button_set_title (GtkFileChooserButton *button,  const gchar *title);
 		gtk_file_chooser_button_set_title(gtkFileChooserButton, Str.toStringz(title));

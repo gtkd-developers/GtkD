@@ -47,6 +47,8 @@
  * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- toString
  */
 
 module pango.PgFontDescription;
@@ -109,7 +111,7 @@ public class PgFontDescription
 	 *  family = Family
 	 *  size = Size
 	 */
-	public this(char[] family, int size)
+	public this(string family, int size)
 	{
 		this();
 		setFamily("Sans");
@@ -216,7 +218,7 @@ public class PgFontDescription
 	 * Params:
 	 * family =  a string representing the family name.
 	 */
-	public void setFamily(char[] family)
+	public void setFamily(string family)
 	{
 		// void pango_font_description_set_family (PangoFontDescription *desc,  const char *family);
 		pango_font_description_set_family(pangoFontDescription, Str.toStringz(family));
@@ -232,7 +234,7 @@ public class PgFontDescription
 	 * Params:
 	 * family =  a string representing the family name.
 	 */
-	public void setFamilyStatic(char[] family)
+	public void setFamilyStatic(string family)
 	{
 		// void pango_font_description_set_family_static  (PangoFontDescription *desc,  const char *family);
 		pango_font_description_set_family_static(pangoFontDescription, Str.toStringz(family));
@@ -243,10 +245,10 @@ public class PgFontDescription
 	 * pango_font_description_set_family().
 	 * Returns: the family name field for the font description, or NULL if not previously set. This has the same life-time as the font description itself and should not be freed.
 	 */
-	public char[] getFamily()
+	public string getFamily()
 	{
 		// const char* pango_font_description_get_family (const PangoFontDescription *desc);
-		return Str.toString(pango_font_description_get_family(pangoFontDescription)).dup;
+		return Str.toString(pango_font_description_get_family(pangoFontDescription));
 	}
 	
 	/**
@@ -526,7 +528,7 @@ public class PgFontDescription
 	 * str =  string representation of a font description.
 	 * Returns: a new PangoFontDescription.
 	 */
-	public static PgFontDescription fromString(char[] str)
+	public static PgFontDescription fromString(string str)
 	{
 		// PangoFontDescription* pango_font_description_from_string  (const char *str);
 		auto p = pango_font_description_from_string(Str.toStringz(str));
@@ -546,10 +548,10 @@ public class PgFontDescription
 	 * last word of the list is a valid style option.
 	 * Returns: a new string that must be freed with g_free().
 	 */
-	public char[] toString()
+	public override string toString()
 	{
 		// char* pango_font_description_to_string (const PangoFontDescription *desc);
-		return Str.toString(pango_font_description_to_string(pangoFontDescription)).dup;
+		return Str.toString(pango_font_description_to_string(pangoFontDescription));
 	}
 	
 	/**
@@ -559,9 +561,9 @@ public class PgFontDescription
 	 * characters that are untypical in filenames, and in lower case only.
 	 * Returns: a new string that must be freed with g_free().
 	 */
-	public char[] toFilename()
+	public string toFilename()
 	{
 		// char* pango_font_description_to_filename (const PangoFontDescription *desc);
-		return Str.toString(pango_font_description_to_filename(pangoFontDescription)).dup;
+		return Str.toString(pango_font_description_to_filename(pangoFontDescription));
 	}
 }

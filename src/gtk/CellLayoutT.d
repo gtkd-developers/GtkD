@@ -52,6 +52,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellLayoutT;
@@ -219,7 +220,7 @@ public template CellLayoutT(TStruct)
 	 * attribute =  An attribute on the renderer.
 	 * column =  The column position on the model to get the attribute from.
 	 */
-	public void addAttribute(CellRenderer cell, char[] attribute, int column)
+	public void addAttribute(CellRenderer cell, string attribute, int column)
 	{
 		// void gtk_cell_layout_add_attribute (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  const gchar *attribute,  gint column);
 		gtk_cell_layout_add_attribute(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), Str.toStringz(attribute), column);

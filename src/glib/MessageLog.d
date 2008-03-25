@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.MessageLog;
@@ -84,7 +85,7 @@ public class MessageLog
 	 * documentation.
 	 * ... = the parameters to insert into the format string.
 	 */
-	public static void log(char[] logDomain, GLogLevelFlags logLevel, char[] format, ... )
+	public static void log(string logDomain, GLogLevelFlags logLevel, string format, ... )
 	{
 		// void g_log (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *format,  ...);
 		g_log(Str.toStringz(logDomain), logLevel, Str.toStringz(format));
@@ -101,7 +102,7 @@ public class MessageLog
 	 * documentation.
 	 * args = the parameters to insert into the format string.
 	 */
-	public static void logv(char[] logDomain, GLogLevelFlags logLevel, char[] format, void* args)
+	public static void logv(string logDomain, GLogLevelFlags logLevel, string format, void* args)
 	{
 		// void g_logv (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *format,  va_list args);
 		g_logv(Str.toStringz(logDomain), logLevel, Str.toStringz(format), args);
@@ -135,7 +136,7 @@ public class MessageLog
 	 * userData = data passed to the log handler.
 	 * Returns:the id of the new handler.
 	 */
-	public static uint logSetHandler(char[] logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData)
+	public static uint logSetHandler(string logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData)
 	{
 		// guint g_log_set_handler (const gchar *log_domain,  GLogLevelFlags log_levels,  GLogFunc log_func,  gpointer user_data);
 		return g_log_set_handler(Str.toStringz(logDomain), logLevels, logFunc, userData);
@@ -147,7 +148,7 @@ public class MessageLog
 	 * logDomain = the log domain.
 	 * handlerId = the id of the handler, which was returned in g_log_set_handler().
 	 */
-	public static void logRemoveHandler(char[] logDomain, uint handlerId)
+	public static void logRemoveHandler(string logDomain, uint handlerId)
 	{
 		// void g_log_remove_handler (const gchar *log_domain,  guint handler_id);
 		g_log_remove_handler(Str.toStringz(logDomain), handlerId);
@@ -180,7 +181,7 @@ public class MessageLog
 	 * fatalMask = the new fatal mask.
 	 * Returns:the old fatal mask for the log domain.
 	 */
-	public static GLogLevelFlags logSetFatalMask(char[] logDomain, GLogLevelFlags fatalMask)
+	public static GLogLevelFlags logSetFatalMask(string logDomain, GLogLevelFlags fatalMask)
 	{
 		// GLogLevelFlags g_log_set_fatal_mask (const gchar *log_domain,  GLogLevelFlags fatal_mask);
 		return g_log_set_fatal_mask(Str.toStringz(logDomain), fatalMask);
@@ -200,7 +201,7 @@ public class MessageLog
 	 * message = the message.
 	 * unusedData = data passed from g_log() which is unused.
 	 */
-	public static void logDefaultHandler(char[] logDomain, GLogLevelFlags logLevel, char[] message, void* unusedData)
+	public static void logDefaultHandler(string logDomain, GLogLevelFlags logLevel, string message, void* unusedData)
 	{
 		// void g_log_default_handler (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer unused_data);
 		g_log_default_handler(Str.toStringz(logDomain), logLevel, Str.toStringz(message), unusedData);

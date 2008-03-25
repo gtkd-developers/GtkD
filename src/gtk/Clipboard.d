@@ -57,6 +57,7 @@
  * 	- GtkTextBuffer* -> TextBuffer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Clipboard;
@@ -149,7 +150,7 @@ public class Clipboard : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkClipboard;
 	}
@@ -379,7 +380,7 @@ public class Clipboard : ObjectG
 	 * len =  length of text, in bytes, or -1, in which case
 	 *  the length will be determined with strlen().
 	 */
-	public void setText(char[] text, int len)
+	public void setText(string text, int len)
 	{
 		// void gtk_clipboard_set_text (GtkClipboard *clipboard,  const gchar *text,  gint len);
 		gtk_clipboard_set_text(gtkClipboard, Str.toStringz(text), len);
@@ -523,10 +524,10 @@ public class Clipboard : ObjectG
 	 * timeouts, etc, may be dispatched during the wait.
 	 * Returns: a newly-allocated UTF-8 string which must be freed with g_free(), or NULL if retrieving the selection data failed. (This could happen for various reasons, in particular if the clipboard was empty or if the contents of the clipboard could not be converted into text form.)
 	 */
-	public char[] waitForText()
+	public string waitForText()
 	{
 		// gchar* gtk_clipboard_wait_for_text (GtkClipboard *clipboard);
-		return Str.toString(gtk_clipboard_wait_for_text(gtkClipboard)).dup;
+		return Str.toString(gtk_clipboard_wait_for_text(gtkClipboard));
 	}
 	
 	/**

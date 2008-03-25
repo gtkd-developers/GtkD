@@ -46,6 +46,7 @@
  * 	- GSequence* -> Sequence
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Sequence;

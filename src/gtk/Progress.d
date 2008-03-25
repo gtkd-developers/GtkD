@@ -49,6 +49,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Progress;
@@ -85,7 +86,7 @@ public class Progress : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkProgress;
 	}
@@ -146,7 +147,7 @@ public class Progress : Widget
 	 * format = a string used to display progress text, or NULL
 	 *  to restore to the default format.
 	 */
-	public void setFormatString(char[] format)
+	public void setFormatString(string format)
 	{
 		// void gtk_progress_set_format_string (GtkProgress *progress,  const gchar *format);
 		gtk_progress_set_format_string(gtkProgress, Str.toStringz(format));
@@ -232,10 +233,10 @@ public class Progress : Widget
 	 * are made.
 	 * Returns:the text indicating the current progress.
 	 */
-	public char[] getCurrentText()
+	public string getCurrentText()
 	{
 		// gchar* gtk_progress_get_current_text (GtkProgress *progress);
-		return Str.toString(gtk_progress_get_current_text(gtkProgress)).dup;
+		return Str.toString(gtk_progress_get_current_text(gtkProgress));
 	}
 	
 	/**
@@ -247,10 +248,10 @@ public class Progress : Widget
 	 * value = an absolute progress value to use when formatting the progress text.
 	 * Returns:a string indicating the progress.
 	 */
-	public char[] getTextFromValue(double value)
+	public string getTextFromValue(double value)
 	{
 		// gchar* gtk_progress_get_text_from_value (GtkProgress *progress,  gdouble value);
-		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value)).dup;
+		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value));
 	}
 	
 	/**

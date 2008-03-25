@@ -48,6 +48,7 @@
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextChildAnchor;
@@ -253,10 +254,10 @@ public class TextChildAnchor
 		return consumed;
 	}
 	
-	void delegate(char[], TextChildAnchor)[] onInsertAtCursorListeners;
+	void delegate(string, TextChildAnchor)[] onInsertAtCursorListeners;
 	/**
 	 */
-	void addOnInsertAtCursor(void delegate(char[], TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertAtCursor(void delegate(string, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
 		{
@@ -275,7 +276,7 @@ public class TextChildAnchor
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(char[], TextChildAnchor) dlg ; textChildAnchor.onInsertAtCursorListeners )
+		foreach ( void delegate(string, TextChildAnchor) dlg ; textChildAnchor.onInsertAtCursorListeners )
 		{
 			dlg(Str.toString(arg1), textChildAnchor);
 		}

@@ -50,6 +50,7 @@
  * 	- GPtrArray* -> PtrArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Relation;
@@ -87,7 +88,7 @@ public class Relation : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkRelation;
 	}
@@ -116,7 +117,7 @@ public class Relation : ObjectG
 	 * name =  a name string
 	 * Returns: an AtkRelationType associated with name
 	 */
-	public static AtkRelationType typeRegister(char[] name)
+	public static AtkRelationType typeRegister(string name)
 	{
 		// AtkRelationType atk_relation_type_register (const gchar *name);
 		return atk_relation_type_register(Str.toStringz(name));
@@ -128,10 +129,10 @@ public class Relation : ObjectG
 	 * type =  The AtkRelationType whose name is required
 	 * Returns: the string describing the AtkRelationType
 	 */
-	public static char[] typeGetName(AtkRelationType type)
+	public static string typeGetName(AtkRelationType type)
 	{
 		// const gchar* atk_relation_type_get_name (AtkRelationType type);
-		return Str.toString(atk_relation_type_get_name(type)).dup;
+		return Str.toString(atk_relation_type_get_name(type));
 	}
 	
 	/**
@@ -140,7 +141,7 @@ public class Relation : ObjectG
 	 * name =  a string which is the (non-localized) name of an ATK relation type.
 	 * Returns: the AtkRelationType enumerated type corresponding to the specified name, or ATK_RELATION_NULL if no matching relation type is found.
 	 */
-	public static AtkRelationType typeForName(char[] name)
+	public static AtkRelationType typeForName(string name)
 	{
 		// AtkRelationType atk_relation_type_for_name (const gchar *name);
 		return atk_relation_type_for_name(Str.toStringz(name));

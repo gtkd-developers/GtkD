@@ -49,6 +49,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CheckMenuItem;
@@ -89,7 +90,7 @@ public class CheckMenuItem : MenuItem
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCheckMenuItem;
 	}
@@ -117,7 +118,7 @@ public class CheckMenuItem : MenuItem
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{

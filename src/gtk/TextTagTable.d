@@ -50,6 +50,7 @@
  * 	- GtkTextTagTable* -> TextTagTable
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TextTagTable;
@@ -88,7 +89,7 @@ public class TextTagTable : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextTagTable;
 	}
@@ -256,7 +257,7 @@ public class TextTagTable : ObjectG
 	 * name =  name of a tag
 	 * Returns: The tag, or NULL if none by that name is in the table.
 	 */
-	public TextTag tableLookup(char[] name)
+	public TextTag tableLookup(string name)
 	{
 		// GtkTextTag* gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));

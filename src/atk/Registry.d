@@ -49,6 +49,7 @@
  * 	- AtkRegistry* -> Registry
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Registry;
@@ -87,7 +88,7 @@ public class Registry : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkRegistry;
 	}

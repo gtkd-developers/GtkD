@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Relation
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- g_tuples_
  * omit code:
+ * 	- g_relation_print
  * omit signals:
  * imports:
  * 	- glib.Tuples
@@ -48,6 +49,7 @@
  * 	- GTuples* -> Tuples
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Relation;
@@ -119,6 +121,27 @@ public class Relation
 			else return;
 		}
 		this.gRelation = gRelation;
+	}
+	
+	/**
+	 * Outputs information about all records in a GRelation, as well as the indexes.
+	 * It is for debugging.
+	 */
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+	else
+	{
+		public override void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
 	}
 	
 	/**
@@ -242,15 +265,5 @@ public class Relation
 	{
 		// void g_relation_destroy (GRelation *relation);
 		g_relation_destroy(gRelation);
-	}
-	
-	/**
-	 * Outputs information about all records in a GRelation, as well as the indexes.
-	 * It is for debugging.
-	 */
-	public void print()
-	{
-		// void g_relation_print (GRelation *relation);
-		g_relation_print(gRelation);
 	}
 }

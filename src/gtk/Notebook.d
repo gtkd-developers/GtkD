@@ -50,6 +50,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Notebook;
@@ -115,7 +116,7 @@ public class Notebook : Container
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkNotebook;
 	}
@@ -146,7 +147,7 @@ public class Notebook : Container
 	/**
 	 * Append a page with a widget and a text for a label
 	 */
-	public int appendPage(Widget child, char[] tabLabel)
+	public int appendPage(Widget child, string tabLabel)
 	{
 		return appendPage(child, new Label(tabLabel));
 	}
@@ -879,7 +880,7 @@ public class Notebook : Container
 	 * child =  the child widget
 	 * menuText =  the label text
 	 */
-	public void setMenuLabelText(Widget child, char[] menuText)
+	public void setMenuLabelText(Widget child, string menuText)
 	{
 		// void gtk_notebook_set_menu_label_text (GtkNotebook *notebook,  GtkWidget *child,  const gchar *menu_text);
 		gtk_notebook_set_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(menuText));
@@ -935,7 +936,7 @@ public class Notebook : Container
 	 * child =  the page
 	 * tabText =  the label text
 	 */
-	public void setTabLabelText(Widget child, char[] tabText)
+	public void setTabLabelText(Widget child, string tabText)
 	{
 		// void gtk_notebook_set_tab_label_text (GtkNotebook *notebook,  GtkWidget *child,  const gchar *tab_text);
 		gtk_notebook_set_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(tabText));
@@ -1016,10 +1017,10 @@ public class Notebook : Container
 	 * child =  the child widget of a page of the notebook.
 	 * Returns: the text of the tab label, or NULL if the widget does not have a menu label other than the default menu label, or the menu label widget is not a GtkLabel. The string is owned by the widget and must not be freed.
 	 */
-	public char[] getMenuLabelText(Widget child)
+	public string getMenuLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_menu_label_text (GtkNotebook *notebook,  GtkWidget *child);
-		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct())).dup;
+		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()));
 	}
 	
 	/**
@@ -1062,10 +1063,10 @@ public class Notebook : Container
 	 * child =  a widget contained in a page of notebook
 	 * Returns: the text of the tab label, or NULL if the tab label widget is not a GtkLabel. The string is owned by the widget and must not be freed.
 	 */
-	public char[] getTabLabelText(Widget child)
+	public string getTabLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_tab_label_text (GtkNotebook *notebook,  GtkWidget *child);
-		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct())).dup;
+		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()));
 	}
 	
 	/**

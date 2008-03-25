@@ -57,6 +57,7 @@
  * 	- GtkSettings* -> Settings
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Settings;
@@ -94,7 +95,7 @@ public class Settings : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSettings;
 	}
@@ -265,7 +266,7 @@ public class Settings : ObjectG
 	/**
 	 * Params:
 	 */
-	public void setPropertyValue(char[] name, GtkSettingsValue* svalue)
+	public void setPropertyValue(string name, GtkSettingsValue* svalue)
 	{
 		// void gtk_settings_set_property_value (GtkSettings *settings,  const gchar *name,  const GtkSettingsValue *svalue);
 		gtk_settings_set_property_value(gtkSettings, Str.toStringz(name), svalue);
@@ -274,7 +275,7 @@ public class Settings : ObjectG
 	/**
 	 * Params:
 	 */
-	public void setStringProperty(char[] name, char[] vString, char[] origin)
+	public void setStringProperty(string name, string vString, string origin)
 	{
 		// void gtk_settings_set_string_property (GtkSettings *settings,  const gchar *name,  const gchar *v_string,  const gchar *origin);
 		gtk_settings_set_string_property(gtkSettings, Str.toStringz(name), Str.toStringz(vString), Str.toStringz(origin));
@@ -283,7 +284,7 @@ public class Settings : ObjectG
 	/**
 	 * Params:
 	 */
-	public void setLongProperty(char[] name, int vLong, char[] origin)
+	public void setLongProperty(string name, int vLong, string origin)
 	{
 		// void gtk_settings_set_long_property (GtkSettings *settings,  const gchar *name,  glong v_long,  const gchar *origin);
 		gtk_settings_set_long_property(gtkSettings, Str.toStringz(name), vLong, Str.toStringz(origin));
@@ -292,7 +293,7 @@ public class Settings : ObjectG
 	/**
 	 * Params:
 	 */
-	public void setDoubleProperty(char[] name, double vDouble, char[] origin)
+	public void setDoubleProperty(string name, double vDouble, string origin)
 	{
 		// void gtk_settings_set_double_property (GtkSettings *settings,  const gchar *name,  gdouble v_double,  const gchar *origin);
 		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));

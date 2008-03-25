@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PopupBox;
@@ -72,7 +73,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void information(char[] message, char[] title)
+	public static void information(string message, string title)
 	{
 		information(null, message, title);
 	}
@@ -84,7 +85,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void information(Window parent, char[] message, char[] title)
+	public static void information(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 		MessageType.INFO,
@@ -103,7 +104,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void error(char[] message, char[] title)
+	public static void error(string message, string title)
 	{
 		error(null, message, title);
 	}
@@ -115,7 +116,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void error(Window parent, char[] message, char[] title)
+	public static void error(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 		MessageType.ERROR,
@@ -135,7 +136,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static bool yesNo(char[] message, char[] title)
+	public static bool yesNo(string message, string title)
 	{
 		return yesNo(null, message, title);
 	}
@@ -147,7 +148,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static bool yesNo(Window parent, char[] message, char[] title)
+	public static bool yesNo(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(
 		parent, cast(GtkDialogFlags)0,
@@ -169,7 +170,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static ResponseType yesNoCancel(char[] message, char[] title)
+	public static ResponseType yesNoCancel(string message, string title)
 	{
 		return yesNoCancel(null, message, title);
 	}
@@ -181,7 +182,7 @@ public class PopupBox
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
+	public static ResponseType yesNoCancel(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(
 		parent, cast(GtkDialogFlags)0,

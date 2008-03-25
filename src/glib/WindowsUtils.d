@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.WindowsUtils;
@@ -83,10 +84,10 @@ public class WindowsUtils
 	 * error =  error code.
 	 * Returns: newly-allocated error message
 	 */
-	public static char[] errorMessage(int error)
+	public static string errorMessage(int error)
 	{
 		// gchar* g_win32_error_message (gint error);
-		return Str.toString(g_win32_error_message(error)).dup;
+		return Str.toString(g_win32_error_message(error));
 	}
 	
 	/**
@@ -99,10 +100,10 @@ public class WindowsUtils
 	 * g_free().
 	 * Returns: newly-allocated locale name.
 	 */
-	public static char[] getlocale()
+	public static string getlocale()
 	{
 		// gchar* g_win32_getlocale (void);
-		return Str.toString(g_win32_getlocale()).dup;
+		return Str.toString(g_win32_getlocale());
 	}
 	
 	/**
@@ -144,10 +145,10 @@ public class WindowsUtils
 	 * dllName =  The name of a DLL that a package provides in UTF-8, or NULL.
 	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding,i.e. UTF-8. The return value should be freed with g_free() when notneeded any longer. If the function fails NULL is returned.
 	 */
-	public static char[] getPackageInstallationDirectory(char[] p, char[] dllName)
+	public static string getPackageInstallationDirectory(string p, string dllName)
 	{
 		// gchar* g_win32_get_package_installation_directory  (const gchar *package,  const gchar *dll_name);
-		return Str.toString(g_win32_get_package_installation_directory(Str.toStringz(p), Str.toStringz(dllName))).dup;
+		return Str.toString(g_win32_get_package_installation_directory(Str.toStringz(p), Str.toStringz(dllName)));
 	}
 	
 	/**
@@ -176,10 +177,10 @@ public class WindowsUtils
 	 * hmodule =  The Win32 handle for a DLL loaded into the current process, or NULL
 	 * Returns: a string containing the guessed installation directory forthe software package hmodule is from. The string is in the GLibfile name encoding, i.e. UTF-8. The return value should be freedwith g_free() when not needed any longer. If the function failsNULL is returned.
 	 */
-	public static char[] getPackageInstallationDirectoryOfModule(void* hmodule)
+	public static string getPackageInstallationDirectoryOfModule(void* hmodule)
 	{
 		// gchar* g_win32_get_package_installation_directory_of_module  (gpointer hmodule);
-		return Str.toString(g_win32_get_package_installation_directory_of_module(hmodule)).dup;
+		return Str.toString(g_win32_get_package_installation_directory_of_module(hmodule));
 	}
 	
 	/**
@@ -198,10 +199,10 @@ public class WindowsUtils
 	 * subdir =  A subdirectory of the package installation directory, also in UTF-8
 	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8. The return value should befreed with g_free() when no longer needed. If something goes wrong,NULL is returned.
 	 */
-	public static char[] getPackageInstallationSubdirectory(char[] p, char[] dllName, char[] subdir)
+	public static string getPackageInstallationSubdirectory(string p, string dllName, string subdir)
 	{
 		// gchar* g_win32_get_package_installation_subdirectory  (const gchar *package,  const gchar *dll_name,  const gchar *subdir);
-		return Str.toString(g_win32_get_package_installation_subdirectory(Str.toStringz(p), Str.toStringz(dllName), Str.toStringz(subdir))).dup;
+		return Str.toString(g_win32_get_package_installation_subdirectory(Str.toStringz(p), Str.toStringz(dllName), Str.toStringz(subdir)));
 	}
 	
 	/**
@@ -245,9 +246,9 @@ public class WindowsUtils
 	 * utf8filename =  a UTF-8 encoded filename.
 	 * Returns: The converted filename, or NULL on conversionfailure and lack of short names.
 	 */
-	public static char[] localeFilenameFromUtf8(char[] utf8filename)
+	public static string localeFilenameFromUtf8(string utf8filename)
 	{
 		// gchar* g_win32_locale_filename_from_utf8 (const gchar *utf8filename);
-		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename))).dup;
+		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename)));
 	}
 }

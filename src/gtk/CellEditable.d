@@ -48,6 +48,7 @@
  * 	- GdkEvent* -> Event
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.CellEditable;

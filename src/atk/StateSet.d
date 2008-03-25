@@ -47,6 +47,7 @@
  * 	- AtkStateSet* -> StateSet
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.StateSet;

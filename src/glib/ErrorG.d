@@ -47,6 +47,7 @@
  * 	- GError* -> ErrorG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.ErrorG;
@@ -331,7 +332,7 @@ public class ErrorG
 	 * format =  printf()-style format for error message
 	 * ... =  parameters for message format
 	 */
-	public this (GQuark domain, int code, char[] format, ... )
+	public this (GQuark domain, int code, string format, ... )
 	{
 		// GError* g_error_new (GQuark domain,  gint code,  const gchar *format,  ...);
 		auto p = g_error_new(domain, code, Str.toStringz(format));
@@ -354,7 +355,7 @@ public class ErrorG
 	 * code =  error code
 	 * message =  error message
 	 */
-	public this (GQuark domain, int code, char[] message)
+	public this (GQuark domain, int code, string message)
 	{
 		// GError* g_error_new_literal (GQuark domain,  gint code,  const gchar *message);
 		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
@@ -416,7 +417,7 @@ public class ErrorG
 	 * format =  printf()-style format
 	 * ... =  args for format
 	 */
-	public static void gSetError(GError** err, GQuark domain, int code, char[] format, ... )
+	public static void gSetError(GError** err, GQuark domain, int code, string format, ... )
 	{
 		// void g_set_error (GError **err,  GQuark domain,  gint code,  const gchar *format,  ...);
 		g_set_error(err, domain, code, Str.toStringz(format));
@@ -463,7 +464,7 @@ public class ErrorG
 	 * format =  printf()-style format string
 	 * ... =  arguments to format
 	 */
-	public static void gPrefixError(GError** err, char[] format, ... )
+	public static void gPrefixError(GError** err, string format, ... )
 	{
 		// void g_prefix_error (GError **err,  const gchar *format,  ...);
 		g_prefix_error(err, Str.toStringz(format));
@@ -481,7 +482,7 @@ public class ErrorG
 	 * format =  printf()-style format string
 	 * ... =  arguments to format
 	 */
-	public static void gPropagatePrefixedError(GError** dest, ErrorG src, char[] format, ... )
+	public static void gPropagatePrefixedError(GError** dest, ErrorG src, string format, ... )
 	{
 		// void g_propagate_prefixed_error (GError **dest,  GError *src,  const gchar *format,  ...);
 		g_propagate_prefixed_error(dest, (src is null) ? null : src.getErrorGStruct(), Str.toStringz(format));

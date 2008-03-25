@@ -51,6 +51,7 @@
  * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glgdk.GLFont;

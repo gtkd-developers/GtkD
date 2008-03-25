@@ -59,6 +59,7 @@
  * 	- GtkIconSet* -> IconSet
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Image;
@@ -160,7 +161,7 @@ public class Image : Misc
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkImage;
 	}
@@ -197,7 +198,7 @@ public class Image : Misc
 	public this (StockID stockID, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_stock(StockDesc[stockID].ptr, size) );
+		this(cast(GtkImage*)gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size) );
 	}
 	
 	/**
@@ -211,7 +212,7 @@ public class Image : Misc
 	 * Returns:
 	 *  a new GtkImage displaying the themed icon
 	 */
-	public this (char[] iconName, GtkIconSize size)
+	public this (string iconName, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
 		this(cast(GtkImage*)gtk_image_new_from_icon_name(Str.toStringz(iconName), size) );
@@ -363,7 +364,7 @@ public class Image : Misc
 	 * Params:
 	 * filename =  a filename
 	 */
-	public this (char[] filename)
+	public this (string filename)
 	{
 		// GtkWidget* gtk_image_new_from_file (const gchar *filename);
 		auto p = gtk_image_new_from_file(Str.toStringz(filename));
@@ -504,7 +505,7 @@ public class Image : Misc
 	 * Params:
 	 * filename =  a filename or NULL
 	 */
-	public void setFromFile(char[] filename)
+	public void setFromFile(string filename)
 	{
 		// void gtk_image_set_from_file (GtkImage *image,  const gchar *filename);
 		gtk_image_set_from_file(gtkImage, Str.toStringz(filename));
@@ -563,7 +564,7 @@ public class Image : Misc
 	 * stockId =  a stock icon name
 	 * size =  a stock icon size
 	 */
-	public void setFromStock(char[] stockId, GtkIconSize size)
+	public void setFromStock(string stockId, GtkIconSize size)
 	{
 		// void gtk_image_set_from_stock (GtkImage *image,  const gchar *stock_id,  GtkIconSize size);
 		gtk_image_set_from_stock(gtkImage, Str.toStringz(stockId), size);
@@ -588,7 +589,7 @@ public class Image : Misc
 	 * iconName =  an icon name
 	 * size =  an icon size
 	 */
-	public void setFromIconName(char[] iconName, GtkIconSize size)
+	public void setFromIconName(string iconName, GtkIconSize size)
 	{
 		// void gtk_image_set_from_icon_name (GtkImage *image,  const gchar *icon_name,  GtkIconSize size);
 		gtk_image_set_from_icon_name(gtkImage, Str.toStringz(iconName), size);

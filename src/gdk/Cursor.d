@@ -55,6 +55,7 @@
  * 	- GdkPixmap* -> Pixmap
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Cursor;
@@ -240,7 +241,7 @@ public class Cursor
 	 * display =  the GdkDisplay for which the cursor will be created
 	 * name =  the name of the cursor
 	 */
-	public this (Display display, char[] name)
+	public this (Display display, string name)
 	{
 		// GdkCursor* gdk_cursor_new_from_name (GdkDisplay *display,  const gchar *name);
 		auto p = gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name));

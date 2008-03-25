@@ -55,6 +55,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FileChooserDialog;
@@ -175,7 +176,7 @@ public class FileChooserDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFileChooserDialog;
 	}
@@ -220,7 +221,7 @@ public class FileChooserDialog : Dialog
 	 * Returns:
 	 *  a new GtkFileChooserDialog
 	 */
-	this(char[] title, Window parent, FileChooserAction action,  char[][] buttonsText=null, ResponseType[] responses=null)
+	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
 		if ( buttonsText  is  null )
 		{
@@ -261,7 +262,7 @@ public class FileChooserDialog : Dialog
 	 * See_Also:
 	 *  GtkFileChooser, GtkDialog
 	 */
-	public this (char[] title, Window parent, GtkFileChooserAction action, char[] backend,  char[][] buttonsText=null, ResponseType[] responses=null)
+	public this (string title, Window parent, GtkFileChooserAction action, string backend,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
 		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
 		this(
@@ -287,7 +288,7 @@ public class FileChooserDialog : Dialog
 		addButtons(buttonsText, responses);
 	}
 	
-	//	this(char[] title, Window parent, FileChooserAction action,  StockID[] buttons=null, ResponseType[] responses=null)
+	//	this(string title, Window parent, FileChooserAction action,  StockID[] buttons=null, ResponseType[] responses=null)
 	//	{
 		//		if ( buttons  is  null )
 		//		{

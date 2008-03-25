@@ -56,6 +56,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PrintOperationPreviewT;

@@ -55,6 +55,7 @@
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.AccelLabel;
@@ -127,7 +128,7 @@ public class AccelLabel : Label
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAccelLabel;
 	}
@@ -155,7 +156,7 @@ public class AccelLabel : Label
 	 * Params:
 	 * string = the label string. Must be non-NULL.
 	 */
-	public this (char[] string)
+	public this (string string)
 	{
 		// GtkWidget* gtk_accel_label_new (const gchar *string);
 		auto p = gtk_accel_label_new(Str.toStringz(string));

@@ -55,6 +55,7 @@
  * 	- GtkAccelGroup* -> AccelGroup
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.AccelGroup;
@@ -107,7 +108,7 @@ public class AccelGroup : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAccelGroup;
 	}
@@ -250,7 +251,7 @@ public class AccelGroup : ObjectG
 	 * accelPath =  path used for determining key and modifiers.
 	 * closure =  closure to be executed upon accelerator activation
 	 */
-	public void connectByPath(char[] accelPath, Closure closure)
+	public void connectByPath(string accelPath, Closure closure)
 	{
 		// void gtk_accel_group_connect_by_path (GtkAccelGroup *accel_group,  const gchar *accel_path,  GClosure *closure);
 		gtk_accel_group_connect_by_path(gtkAccelGroup, Str.toStringz(accelPath), (closure is null) ? null : closure.getClosureStruct());
@@ -432,7 +433,7 @@ public class AccelGroup : ObjectG
 	 * acceleratorKey =  return location for accelerator keyval
 	 * acceleratorMods =  return location for accelerator modifier mask
 	 */
-	public static void acceleratorParse(char[] accelerator, uint* acceleratorKey, GdkModifierType* acceleratorMods)
+	public static void acceleratorParse(string accelerator, uint* acceleratorKey, GdkModifierType* acceleratorMods)
 	{
 		// void gtk_accelerator_parse (const gchar *accelerator,  guint *accelerator_key,  GdkModifierType *accelerator_mods);
 		gtk_accelerator_parse(Str.toStringz(accelerator), acceleratorKey, acceleratorMods);
@@ -450,10 +451,10 @@ public class AccelGroup : ObjectG
 	 * acceleratorMods =  accelerator modifier mask
 	 * Returns: a newly-allocated accelerator name
 	 */
-	public static char[] acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
+	public static string acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		// gchar* gtk_accelerator_name (guint accelerator_key,  GdkModifierType accelerator_mods);
-		return Str.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods)).dup;
+		return Str.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods));
 	}
 	
 	/**
@@ -465,10 +466,10 @@ public class AccelGroup : ObjectG
 	 * acceleratorMods =  accelerator modifier mask
 	 * Returns: a newly-allocated string representing the accelerator.
 	 */
-	public static char[] acceleratorGetLabel(uint acceleratorKey, GdkModifierType acceleratorMods)
+	public static string acceleratorGetLabel(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		// gchar* gtk_accelerator_get_label (guint accelerator_key,  GdkModifierType accelerator_mods);
-		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods)).dup;
+		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods));
 	}
 	
 	/**

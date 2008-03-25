@@ -64,6 +64,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glade.Glade;
@@ -108,7 +109,7 @@ public class Glade : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gladeXML;
 	}
@@ -137,7 +138,7 @@ public class Glade : ObjectG
 	 * Returns:
 	 *  the widget matching name, or NULL if none exists.
 	 */
-	public Widget getWidget(char[] name)
+	public Widget getWidget(string name)
 	{
 		// GtkWidget* glade_xml_get_widget (GladeXML *self,  const char *name);
 		return newFromWidget(cast(void *) glade_xml_get_widget(gladeXML, Str.toStringz(name)) );
@@ -160,7 +161,7 @@ public class Glade : ObjectG
 	 *  root = the widget node in fname to start building from (or NULL)
 	 *  domain = the translation domain for the XML file (or NULL for default)
 	 */
-	public this (char[] fname, char[] root = null, char[] domain=null)
+	public this (string fname, string root = null, string domain=null)
 	{
 		// GladeXML* glade_xml_new (const char *fname,  const char *root,  const char *domain);
 		this(cast(GladeXML*)glade_xml_new(Str.toStringz(fname),
@@ -179,7 +180,7 @@ public class Glade : ObjectG
 	 *  A list of the widget that match name as the start of their
 	 *  name, or NULL if none exists.
 	 */
-	public Widget[] getWidgetPrefix(char[] name)
+	public Widget[] getWidgetPrefix(string name)
 	{
 		// GList* glade_xml_get_widget_prefix (GladeXML *self,  const char *name);
 		Widget[] ret;
@@ -314,7 +315,7 @@ public class Glade : ObjectG
 		int* pt2 =cast(int*) (cast(int*)(*pt));
 		uint utype =  cast(uint)(*pt2);
 		
-		char[] tname = Type.name(cast(GType)utype);
+		string tname = Type.name(cast(GType)utype);
 		
 		switch(tname) {
 			case "GtkAboutDialog": return new AboutDialog(cast(GtkAboutDialog *)ptr);
@@ -449,7 +450,7 @@ public class Glade : ObjectG
 	 * root =  the widget node in buffer to start building from (or NULL)
 	 * domain =  the translation domain to use for this interface (or NULL)
 	 */
-	public this (char[] buffer, int size, char[] root, char[] domain)
+	public this (string buffer, int size, string root, string domain)
 	{
 		// GladeXML* glade_xml_new_from_buffer (const char *buffer,  int size,  const char *root,  const char *domain);
 		auto p = glade_xml_new_from_buffer(Str.toStringz(buffer), size, Str.toStringz(root), Str.toStringz(domain));
@@ -471,7 +472,7 @@ public class Glade : ObjectG
 	 * domain =  the translation domain (or NULL for the default)
 	 * Returns: TRUE if the construction succeeded.
 	 */
-	public int construct(char[] fname, char[] root, char[] domain)
+	public int construct(string fname, string root, string domain)
 	{
 		// gboolean glade_xml_construct (GladeXML *self,  const char *fname,  const char *root,  const char *domain);
 		return glade_xml_construct(gladeXML, Str.toStringz(fname), Str.toStringz(root), Str.toStringz(domain));
@@ -483,10 +484,10 @@ public class Glade : ObjectG
 	 * widget =  the widget
 	 * Returns: the name of the widget.
 	 */
-	public static char[] gladeGetWidgetName(Widget widget)
+	public static string gladeGetWidgetName(Widget widget)
 	{
 		// const char* glade_get_widget_name (GtkWidget *widget);
-		return Str.toString(glade_get_widget_name((widget is null) ? null : widget.getWidgetStruct())).dup;
+		return Str.toString(glade_get_widget_name((widget is null) ? null : widget.getWidgetStruct()));
 	}
 	
 	/**
@@ -526,7 +527,7 @@ public class Glade : ObjectG
 	 * Params:
 	 * library =  the required library
 	 */
-	public static void require(char[] library)
+	public static void require(string library)
 	{
 		// void glade_require (const gchar *library);
 		glade_require(Str.toStringz(library));
@@ -540,7 +541,7 @@ public class Glade : ObjectG
 	 * Params:
 	 * library =  the provided library
 	 */
-	public static void provide(char[] library)
+	public static void provide(string library)
 	{
 		// void glade_provide (const gchar *library);
 		glade_provide(Str.toStringz(library));

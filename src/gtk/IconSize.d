@@ -48,6 +48,7 @@
  * 	- GtkSettings* -> Settings
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.IconSize;
@@ -148,7 +149,7 @@ public class IconSize
 	 * height =  the icon height
 	 * Returns: integer value representing the size
 	 */
-	public static GtkIconSize register(char[] name, int width, int height)
+	public static GtkIconSize register(string name, int width, int height)
 	{
 		// GtkIconSize gtk_icon_size_register (const gchar *name,  gint width,  gint height);
 		return gtk_icon_size_register(Str.toStringz(name), width, height);
@@ -162,7 +163,7 @@ public class IconSize
 	 * alia =  an alias for target
 	 * target =  an existing icon size
 	 */
-	public static void registerAlias(char[] alia, GtkIconSize target)
+	public static void registerAlias(string alia, GtkIconSize target)
 	{
 		// void gtk_icon_size_register_alias (const gchar *alias,  GtkIconSize target);
 		gtk_icon_size_register_alias(Str.toStringz(alia), target);
@@ -174,7 +175,7 @@ public class IconSize
 	 * name =  the name to look up.
 	 * Returns: the icon size with the given name.
 	 */
-	public static GtkIconSize fromName(char[] name)
+	public static GtkIconSize fromName(string name)
 	{
 		// GtkIconSize gtk_icon_size_from_name (const gchar *name);
 		return gtk_icon_size_from_name(Str.toStringz(name));
@@ -187,9 +188,9 @@ public class IconSize
 	 * size =  a GtkIconSize.
 	 * Returns: the name of the given icon size.
 	 */
-	public static char[] getName(GtkIconSize size)
+	public static string getName(GtkIconSize size)
 	{
 		// const gchar* gtk_icon_size_get_name (GtkIconSize size);
-		return Str.toString(gtk_icon_size_get_name(size)).dup;
+		return Str.toString(gtk_icon_size_get_name(size));
 	}
 }

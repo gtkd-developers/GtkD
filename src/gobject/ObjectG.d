@@ -54,6 +54,7 @@
  * 	- GValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.ObjectG;
@@ -159,7 +160,7 @@ public class ObjectG
 		if ( gObject !is  null )
 		{
 			//writefln("ObjectG.this\n");
-			setDataFull("GObject",cast(void*)this);
+			objectGSetDataFull("GObject",cast(void*)this);
 		}
 	}
 	
@@ -169,7 +170,7 @@ public class ObjectG
 	 *  key = the data identifier
 	 *  data = a pointer
 	 */
-	public: void setDataFull(char[] key, gpointer data)
+	public: void objectGSetDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		version(Tango) GC.addRoot(data);
@@ -319,7 +320,7 @@ public class ObjectG
 	//	 *  key = the data identifier
 	//	 *  data = a pointer
 	//	 */
-	//	private void setDestroyNotify(char[] key, gpointer data)
+	//	private void setDestroyNotify(string key, gpointer data)
 	//	{
 		//		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		//		//std.gc.addRoot(data);
@@ -344,26 +345,26 @@ public class ObjectG
 	//	}
 	
 	/** */
-	public void setProperty(char[] propertyName, int value)
+	public void setProperty(string propertyName, int value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
 	/** */
-	public void setProperty(char[] propertyName, char[] value)
+	public void setProperty(string propertyName, string value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
 	/** */
-	public void setProperty(char[] propertyName, long value)
+	public void setProperty(string propertyName, long value)
 	{
 		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 	
 	/** */
-	public void setProperty(char[] propertyName, ulong value)
+	public void setProperty(string propertyName, ulong value)
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
@@ -438,7 +439,7 @@ public class ObjectG
 	 * propertyName = the name of the property to look up
 	 * Returns:the GParamSpec for the property, or NULL if the class doesn't havea property of that name
 	 */
-	public static ParamSpec classFindProperty(GObjectClass* oclass, char[] propertyName)
+	public static ParamSpec classFindProperty(GObjectClass* oclass, string propertyName)
 	{
 		// GParamSpec* g_object_class_find_property (GObjectClass *oclass,  const gchar *property_name);
 		auto p = g_object_class_find_property(oclass, Str.toStringz(propertyName));
@@ -487,7 +488,7 @@ public class ObjectG
 	 * name = the name of a property registered in a parent class or
 	 *  in an interface of this class.
 	 */
-	public static void classOverrideProperty(GObjectClass* oclass, uint propertyId, char[] name)
+	public static void classOverrideProperty(GObjectClass* oclass, uint propertyId, string name)
 	{
 		// void g_object_class_override_property (GObjectClass *oclass,  guint property_id,  const gchar *name);
 		g_object_class_override_property(oclass, propertyId, Str.toStringz(name));
@@ -532,7 +533,7 @@ public class ObjectG
 	 * propertyName = name of a property to lookup.
 	 * Returns:the GParamSpec for the property of the interface with the name property_name, or NULL if no such property exists.
 	 */
-	public static ParamSpec interfaceFindProperty(void* gIface, char[] propertyName)
+	public static ParamSpec interfaceFindProperty(void* gIface, string propertyName)
 	{
 		// GParamSpec* g_object_interface_find_property (gpointer g_iface,  const gchar *property_name);
 		auto p = g_object_interface_find_property(gIface, Str.toStringz(propertyName));
@@ -572,7 +573,7 @@ public class ObjectG
 	 * ... = the value of the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
 	 */
-	public this (GType objectType, char[] firstPropertyName, ... )
+	public this (GType objectType, string firstPropertyName, ... )
 	{
 		// gpointer g_object_new (GType object_type,  const gchar *first_property_name,  ...);
 		auto p = g_object_new(objectType, Str.toStringz(firstPropertyName));
@@ -825,7 +826,7 @@ public class ObjectG
 	 *  followed by NULL
 	 * Returns:object
 	 */
-	public static void* connect(void* object, char[] signalSpec, ... )
+	public static void* connect(void* object, string signalSpec, ... )
 	{
 		// gpointer g_object_connect (gpointer object,  const gchar *signal_spec,  ...);
 		return g_object_connect(object, Str.toStringz(signalSpec));
@@ -843,7 +844,7 @@ public class ObjectG
 	 *  followed optionally by more signal spec/callback/data triples,
 	 *  followed by NULL
 	 */
-	public static void disconnect(void* object, char[] signalSpec, ... )
+	public static void disconnect(void* object, string signalSpec, ... )
 	{
 		// void g_object_disconnect (gpointer object,  const gchar *signal_spec,  ...);
 		g_object_disconnect(object, Str.toStringz(signalSpec));
@@ -857,7 +858,7 @@ public class ObjectG
 	 * ... = value for the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
 	 */
-	public static void set(void* object, char[] firstPropertyName, ... )
+	public static void set(void* object, string firstPropertyName, ... )
 	{
 		// void g_object_set (gpointer object,  const gchar *first_property_name,  ...);
 		g_object_set(object, Str.toStringz(firstPropertyName));
@@ -889,7 +890,7 @@ public class ObjectG
 	 * ... = return location for the first property, followed optionally by more
 	 *  name/return location pairs, followed by NULL
 	 */
-	public static void get(void* object, char[] firstPropertyName, ... )
+	public static void get(void* object, string firstPropertyName, ... )
 	{
 		// void g_object_get (gpointer object,  const gchar *first_property_name,  ...);
 		g_object_get(object, Str.toStringz(firstPropertyName));
@@ -900,7 +901,7 @@ public class ObjectG
 	 * Params:
 	 * propertyName = the name of a property installed on the class of object.
 	 */
-	public void notify(char[] propertyName)
+	public void notify(string propertyName)
 	{
 		// void g_object_notify (GObject *object,  const gchar *property_name);
 		g_object_notify(gObject, Str.toStringz(propertyName));
@@ -934,7 +935,7 @@ public class ObjectG
 	 * key = name of the key for that association
 	 * Returns:the data if found, or NULL if no such data exists.
 	 */
-	public void* getData(char[] key)
+	public void* getData(string key)
 	{
 		// gpointer g_object_get_data (GObject *object,  const gchar *key);
 		return g_object_get_data(gObject, Str.toStringz(key));
@@ -949,7 +950,7 @@ public class ObjectG
 	 * key = name of the key
 	 * data = data to associate with that key
 	 */
-	public void setData(char[] key, void* data)
+	public void setData(string key, void* data)
 	{
 		// void g_object_set_data (GObject *object,  const gchar *key,  gpointer data);
 		g_object_set_data(gObject, Str.toStringz(key), data);
@@ -962,7 +963,7 @@ public class ObjectG
 	 * key = name of the key
 	 * Returns:the data if found, or NULL if no such data exists.
 	 */
-	public void* stealData(char[] key)
+	public void* stealData(string key)
 	{
 		// gpointer g_object_steal_data (GObject *object,  const gchar *key);
 		return g_object_steal_data(gObject, Str.toStringz(key));
@@ -1039,7 +1040,7 @@ public class ObjectG
 	 * propertyName = the name of the property to set
 	 * value = the value
 	 */
-	public void setProperty(char[] propertyName, Value value)
+	public void setProperty(string propertyName, Value value)
 	{
 		// void g_object_set_property (GObject *object,  const gchar *property_name,  const GValue *value);
 		g_object_set_property(gObject, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
@@ -1055,7 +1056,7 @@ public class ObjectG
 	 * propertyName = the name of the property to get
 	 * value = return location for the property value
 	 */
-	public void getProperty(char[] propertyName, Value value)
+	public void getProperty(string propertyName, Value value)
 	{
 		// void g_object_get_property (GObject *object,  const gchar *property_name,  GValue *value);
 		g_object_get_property(gObject, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
@@ -1071,7 +1072,7 @@ public class ObjectG
 	 * varArgs = the value of the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
 	 */
-	public this (GType objectType, char[] firstPropertyName, void* varArgs)
+	public this (GType objectType, string firstPropertyName, void* varArgs)
 	{
 		// GObject* g_object_new_valist (GType object_type,  const gchar *first_property_name,  va_list var_args);
 		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
@@ -1091,7 +1092,7 @@ public class ObjectG
 	 * varArgs = value for the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
 	 */
-	public void setValist(char[] firstPropertyName, void* varArgs)
+	public void setValist(string firstPropertyName, void* varArgs)
 	{
 		// void g_object_set_valist (GObject *object,  const gchar *first_property_name,  va_list var_args);
 		g_object_set_valist(gObject, Str.toStringz(firstPropertyName), varArgs);
@@ -1108,7 +1109,7 @@ public class ObjectG
 	 * varArgs = return location for the first property, followed optionally by more
 	 *  name/return location pairs, followed by NULL
 	 */
-	public void getValist(char[] firstPropertyName, void* varArgs)
+	public void getValist(string firstPropertyName, void* varArgs)
 	{
 		// void g_object_get_valist (GObject *object,  const gchar *first_property_name,  va_list var_args);
 		g_object_get_valist(gObject, Str.toStringz(firstPropertyName), varArgs);

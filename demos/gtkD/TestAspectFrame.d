@@ -29,7 +29,7 @@ class TestAspectFrame : AspectFrame
 {
 	this()
 	{
-		// char[] label, gfloat xalign, gfloat yalign, gfloat ratio, bit obeyChild)
+		// string label, gfloat xalign, gfloat yalign, gfloat ratio, bit obeyChild)
 		super("Aspect 3x1", .5, .5, 3.0, false);
 		add(new TestDrawingArea());
 	}

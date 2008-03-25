@@ -55,6 +55,7 @@
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gdk.Display;
@@ -103,7 +104,7 @@ public class Display : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkDisplay;
 	}
@@ -168,7 +169,7 @@ public class Display : ObjectG
 	 * displayName =  the name of the display to open
 	 * Returns: a GdkDisplay, or NULL if the display could not be opened.
 	 */
-	public static Display open(char[] displayName)
+	public static Display open(string displayName)
 	{
 		// GdkDisplay* gdk_display_open (const gchar *display_name);
 		auto p = gdk_display_open(Str.toStringz(displayName));
@@ -202,10 +203,10 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Returns: a string representing the display name. This string is ownedby GDK and should not be modified or freed.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gdk_display_get_name (GdkDisplay *display);
-		return Str.toString(gdk_display_get_name(gdkDisplay)).dup;
+		return Str.toString(gdk_display_get_name(gdkDisplay));
 	}
 	
 	/**

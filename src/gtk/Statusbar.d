@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Statusbar;
@@ -104,7 +105,7 @@ public class Statusbar : HBox
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkStatusbar;
 	}
@@ -128,11 +129,11 @@ public class Statusbar : HBox
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(guint, char[], Statusbar)[] onTextPoppedListeners;
+	void delegate(guint, string, Statusbar)[] onTextPoppedListeners;
 	/**
 	 * Is emitted whenever a new message is popped off a statusbar's stack.
 	 */
-	void addOnTextPopped(void delegate(guint, char[], Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnTextPopped(void delegate(guint, string, Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-popped" in connectedSignals) )
 		{
@@ -151,7 +152,7 @@ public class Statusbar : HBox
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(guint, char[], Statusbar) dlg ; statusbar.onTextPoppedListeners )
+		foreach ( void delegate(guint, string, Statusbar) dlg ; statusbar.onTextPoppedListeners )
 		{
 			dlg(contextId, Str.toString(text), statusbar);
 		}
@@ -159,11 +160,11 @@ public class Statusbar : HBox
 		return consumed;
 	}
 	
-	void delegate(guint, char[], Statusbar)[] onTextPushedListeners;
+	void delegate(guint, string, Statusbar)[] onTextPushedListeners;
 	/**
 	 * Is emitted whenever a new message gets pushed onto a statusbar's stack.
 	 */
-	void addOnTextPushed(void delegate(guint, char[], Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnTextPushed(void delegate(guint, string, Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-pushed" in connectedSignals) )
 		{
@@ -182,7 +183,7 @@ public class Statusbar : HBox
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(guint, char[], Statusbar) dlg ; statusbar.onTextPushedListeners )
+		foreach ( void delegate(guint, string, Statusbar) dlg ; statusbar.onTextPushedListeners )
 		{
 			dlg(contextId, Str.toString(text), statusbar);
 		}
@@ -216,7 +217,7 @@ public class Statusbar : HBox
 	 *  the new message is being used in
 	 * Returns: an integer id
 	 */
-	public uint getContextId(char[] contextDescription)
+	public uint getContextId(string contextDescription)
 	{
 		// guint gtk_statusbar_get_context_id (GtkStatusbar *statusbar,  const gchar *context_description);
 		return gtk_statusbar_get_context_id(gtkStatusbar, Str.toStringz(contextDescription));
@@ -230,7 +231,7 @@ public class Statusbar : HBox
 	 * text =  the message to add to the statusbar
 	 * Returns: a message id that can be used with  gtk_statusbar_remove().
 	 */
-	public uint push(uint contextId, char[] text)
+	public uint push(uint contextId, string text)
 	{
 		// guint gtk_statusbar_push (GtkStatusbar *statusbar,  guint context_id,  const gchar *text);
 		return gtk_statusbar_push(gtkStatusbar, contextId, Str.toStringz(text));

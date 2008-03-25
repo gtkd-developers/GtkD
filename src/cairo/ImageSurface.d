@@ -47,6 +47,7 @@
  * 	- cairo_surface_t* -> ImageSurface
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.ImageSurface;
@@ -82,7 +83,7 @@ public class ImageSurface : Surface
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)cairo_surface;
 	}
@@ -222,7 +223,7 @@ public class ImageSurface : Surface
 	 * filename =  name of PNG file to load
 	 * Returns: a new cairo_surface_t initialized with the contentsof the PNG file, or a "nil" surface if any error occurred. A nilsurface can be checked for with cairo_surface_status(surface) which
 	 */
-	public static ImageSurface createFromPng(char[] filename)
+	public static ImageSurface createFromPng(string filename)
 	{
 		// cairo_surface_t* cairo_image_surface_create_from_png (const char *filename);
 		auto p = cairo_image_surface_create_from_png(Str.toStringz(filename));
@@ -261,7 +262,7 @@ public class ImageSurface : Surface
 	 * filename =  the name of a file to write to
 	 * Returns: CAIRO_STATUS_SUCCESS if the PNG file was writtensuccessfully. Otherwise, CAIRO_STATUS_NO_MEMORY if memory could notbe allocated for the operation orCAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not havepixel contents, or CAIRO_STATUS_WRITE_ERROR if an I/O error occurswhile attempting to write the file.
 	 */
-	public cairo_status_t writeToPng(char[] filename)
+	public cairo_status_t writeToPng(string filename)
 	{
 		// cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface,  const char *filename);
 		return cairo_surface_write_to_png(cairo_surface, Str.toStringz(filename));

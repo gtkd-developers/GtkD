@@ -52,6 +52,7 @@
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeModelFilter;
@@ -99,7 +100,7 @@ public class TreeModelFilter : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTreeModelFilter;
 	}

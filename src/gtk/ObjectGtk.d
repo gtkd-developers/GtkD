@@ -47,6 +47,9 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- setData
+ * 	- getData
  */
 
 module gtk.ObjectGtk;
@@ -128,7 +131,7 @@ public class ObjectGtk : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkObject;
 	}
@@ -149,7 +152,7 @@ public class ObjectGtk : ObjectG
 	}
 	
 	/** */
-	public static char[] getId(StockID id)
+	public static string getId(StockID id)
 	{
 		return StockDesc[id];
 	}
@@ -208,7 +211,7 @@ public class ObjectGtk : ObjectG
 	 * ... = the first argument's value, followed by any number of
 	 * name/argument-value pairs, terminated with NULL.
 	 */
-	public this (GtkType type, char[] firstPropertyName, ... )
+	public this (GtkType type, string firstPropertyName, ... )
 	{
 		// GtkObject* gtk_object_new (GtkType type,  const gchar *first_property_name,  ...);
 		auto p = gtk_object_new(type, Str.toStringz(firstPropertyName));
@@ -311,7 +314,7 @@ public class ObjectGtk : ObjectG
 	 * firstPropertyName = name of first property to get the value for.
 	 * ... = NULL-terminated list of name-return location pairs.
 	 */
-	public void get(char[] firstPropertyName, ... )
+	public void get(string firstPropertyName, ... )
 	{
 		// void gtk_object_get (GtkObject *object,  const gchar *first_property_name,  ...);
 		gtk_object_get(gtkObject, Str.toStringz(firstPropertyName));
@@ -332,7 +335,7 @@ public class ObjectGtk : ObjectG
 	 * ... = the value of the first argument, followed optionally
 	 * by more name/value pairs, followed by NULL.
 	 */
-	public void set(char[] firstPropertyName, ... )
+	public void set(string firstPropertyName, ... )
 	{
 		// void gtk_object_set (GtkObject *object,  const gchar *first_property_name,  ...);
 		gtk_object_set(gtkObject, Str.toStringz(firstPropertyName));
@@ -349,7 +352,7 @@ public class ObjectGtk : ObjectG
 	 * key = name of the key.
 	 * data = data to associate with that key.
 	 */
-	public void setData(char[] key, void* data)
+	public override void setData(string key, void* data)
 	{
 		// void gtk_object_set_data (GtkObject *object,  const gchar *key,  gpointer data);
 		gtk_object_set_data(gtkObject, Str.toStringz(key), data);
@@ -366,7 +369,7 @@ public class ObjectGtk : ObjectG
 	 * data = data to associate with that key.
 	 * destroy = function to call when the association is destroyed.
 	 */
-	public void setDataFull(char[] key, void* data, GtkDestroyNotify destroy)
+	public void setDataFull(string key, void* data, GtkDestroyNotify destroy)
 	{
 		// void gtk_object_set_data_full (GtkObject *object,  const gchar *key,  gpointer data,  GtkDestroyNotify destroy);
 		gtk_object_set_data_full(gtkObject, Str.toStringz(key), data, destroy);
@@ -382,7 +385,7 @@ public class ObjectGtk : ObjectG
 	 * Params:
 	 * key = name of the key for that association.
 	 */
-	public void removeData(char[] key)
+	public void removeData(string key)
 	{
 		// void gtk_object_remove_data (GtkObject *object,  const gchar *key);
 		gtk_object_remove_data(gtkObject, Str.toStringz(key));
@@ -396,7 +399,7 @@ public class ObjectGtk : ObjectG
 	 * key = name of the key for that association.
 	 * Returns:the data if found, or NULL if no such data exists.
 	 */
-	public void* getData(char[] key)
+	public override void* getData(string key)
 	{
 		// gpointer gtk_object_get_data (GtkObject *object,  const gchar *key);
 		return gtk_object_get_data(gtkObject, Str.toStringz(key));
@@ -413,7 +416,7 @@ public class ObjectGtk : ObjectG
 	 * Params:
 	 * key = name of the key for that association.
 	 */
-	public void removeNoNotify(char[] key)
+	public void removeNoNotify(string key)
 	{
 		// void gtk_object_remove_no_notify (GtkObject *object,  const gchar *key);
 		gtk_object_remove_no_notify(gtkObject, Str.toStringz(key));
@@ -461,7 +464,7 @@ public class ObjectGtk : ObjectG
 	 * argId = an internal number, passed in from here to the "set_arg" and
 	 * "get_arg" handlers of the object.
 	 */
-	public static void addArgType(char[] argName, GtkType argType, uint argFlags, uint argId)
+	public static void addArgType(string argName, GtkType argType, uint argFlags, uint argId)
 	{
 		// void gtk_object_add_arg_type (const gchar *arg_name,  GtkType arg_type,  guint arg_flags,  guint arg_id);
 		gtk_object_add_arg_type(Str.toStringz(argName), argType, argFlags, argId);

@@ -46,6 +46,7 @@
  * 	- GTimer* -> Timer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Timer;

@@ -48,6 +48,8 @@
  * 	- GdkScreen* -> Screen
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- getScreen
  */
 
 module gtk.Invisible;
@@ -84,7 +86,7 @@ public class Invisible : Widget
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkInvisible;
 	}
@@ -160,7 +162,7 @@ public class Invisible : Widget
 	 * Since 2.2
 	 * Returns: the associated GdkScreen.
 	 */
-	public Screen getScreen()
+	public override Screen getScreen()
 	{
 		// GdkScreen* gtk_invisible_get_screen (GtkInvisible *invisible);
 		auto p = gtk_invisible_get_screen(gtkInvisible);

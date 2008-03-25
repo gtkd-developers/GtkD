@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Directory;
@@ -129,7 +130,7 @@ public class Directory
 	 *  g_dir_open() fails.
 	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
 	 */
-	public static GDir* open(char[] path, uint flags, GError** error)
+	public static GDir* open(string path, uint flags, GError** error)
 	{
 		// GDir* g_dir_open (const gchar *path,  guint flags,  GError **error);
 		return g_dir_open(Str.toStringz(path), flags, error);
@@ -141,10 +142,10 @@ public class Directory
 	 * UTF-8. On Unix, it is in the on-disk encoding.
 	 * Returns: The entry's name or NULL if there are no  more entries. The return value is owned by GLib and must not be modified or freed.
 	 */
-	public char[] readName()
+	public string readName()
 	{
 		// const gchar* g_dir_read_name (GDir *dir);
-		return Str.toString(g_dir_read_name(gDir)).dup;
+		return Str.toString(g_dir_read_name(gDir));
 	}
 	
 	/**

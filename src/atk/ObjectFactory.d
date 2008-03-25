@@ -49,6 +49,7 @@
  * 	- GObject* -> ObjectG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.ObjectFactory;
@@ -87,7 +88,7 @@ public class ObjectFactory : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkObjectFactory;
 	}

@@ -48,6 +48,7 @@
  * 	- GtkObject* -> ObjectGtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Adjustment;
@@ -93,7 +94,7 @@ public class Adjustment : ObjectGtk
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAdjustment;
 	}

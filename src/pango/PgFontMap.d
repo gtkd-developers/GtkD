@@ -56,6 +56,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgFontMap;
@@ -99,7 +100,7 @@ public class PgFontMap : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoFontMap;
 	}
@@ -182,9 +183,9 @@ public class PgFontMap : ObjectG
 	 * Since 1.4
 	 * Returns: the ID string for shape engines for this fontmap. Owned by Pango, should not be modified or freed.
 	 */
-	public char[] getShapeEngineType()
+	public string getShapeEngineType()
 	{
 		// const char* pango_font_map_get_shape_engine_type  (PangoFontMap *fontmap);
-		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap)).dup;
+		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap));
 	}
 }

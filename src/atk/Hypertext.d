@@ -47,6 +47,7 @@
  * 	- AtkHyperlink* -> Hyperlink
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Hypertext;

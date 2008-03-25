@@ -49,6 +49,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.FileUtils;
@@ -131,7 +132,7 @@ public class FileUtils
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE on success, FALSE if an error occurred
 	 */
-	public static int fileGetContents(char[] filename, char** contents, uint* length, GError** error)
+	public static int fileGetContents(string filename, char** contents, uint* length, GError** error)
 	{
 		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
 		return g_file_get_contents(Str.toStringz(filename), contents, length, error);
@@ -150,7 +151,7 @@ public class FileUtils
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE on success, FALSE if an error occurred
 	 */
-	public static int fileSetContents(char[] filename, char[] contents, int length, GError** error)
+	public static int fileSetContents(string filename, string contents, int length, GError** error)
 	{
 		// gboolean g_file_set_contents (const gchar *filename,  const gchar *contents,  gssize length,  GError **error);
 		return g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), length, error);
@@ -196,7 +197,7 @@ public class FileUtils
 	 * test =  bitfield of GFileTest flags
 	 * Returns: whether a test was TRUE
 	 */
-	public static int fileTest(char[] filename, GFileTest test)
+	public static int fileTest(string filename, GFileTest test)
 	{
 		// gboolean g_file_test (const gchar *filename,  GFileTest test);
 		return g_file_test(Str.toStringz(filename), test);
@@ -217,7 +218,7 @@ public class FileUtils
 	 * tmpl =  template filename
 	 * Returns: A file handle (as from open()) to the fileopened for reading and writing. The file is opened in binary modeon platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned.
 	 */
-	public static int mkstemp(char[] tmpl)
+	public static int mkstemp(string tmpl)
 	{
 		// gint g_mkstemp (gchar *tmpl);
 		return g_mkstemp(Str.toStringz(tmpl));
@@ -243,7 +244,7 @@ public class FileUtils
 	 * error =  return location for a GError
 	 * Returns: A file handle (as from open()) to the file opened for reading and writing. The file is opened in binary mode on platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned and error will be set.
 	 */
-	public static int fileOpenTmp(char[] tmpl, char** nameUsed, GError** error)
+	public static int fileOpenTmp(string tmpl, char** nameUsed, GError** error)
 	{
 		// gint g_file_open_tmp (const gchar *tmpl,  gchar **name_used,  GError **error);
 		return g_file_open_tmp(Str.toStringz(tmpl), nameUsed, error);
@@ -259,10 +260,10 @@ public class FileUtils
 	 * error =  return location for a GError
 	 * Returns: A newly allocated string with the contents of the symbolic link,  or NULL if an error occurred.
 	 */
-	public static char[] fileReadLink(char[] filename, GError** error)
+	public static string fileReadLink(string filename, GError** error)
 	{
 		// gchar* g_file_read_link (const gchar *filename,  GError **error);
-		return Str.toString(g_file_read_link(Str.toStringz(filename), error)).dup;
+		return Str.toString(g_file_read_link(Str.toStringz(filename), error));
 	}
 	
 	/**
@@ -274,7 +275,7 @@ public class FileUtils
 	 * mode =  permissions to use for newly created directories
 	 * Returns: 0 if the directory already exists, or was successfullycreated. Returns -1 if an error occurred, with errno set.
 	 */
-	public static int mkdirWithParents(char[] pathname, int mode)
+	public static int mkdirWithParents(string pathname, int mode)
 	{
 		// int g_mkdir_with_parents (const gchar *pathname,  int mode);
 		return g_mkdir_with_parents(Str.toStringz(pathname), mode);
@@ -295,7 +296,7 @@ public class FileUtils
 	 * mode =  as in open()
 	 * Returns: a new file descriptor, or -1 if an error occurred. Thereturn value can be used exactly like the return value from open().
 	 */
-	public static int open(char[] filename, int flags, int mode)
+	public static int open(string filename, int flags, int mode)
 	{
 		// int g_open (const gchar *filename,  int flags,  int mode);
 		return g_open(Str.toStringz(filename), flags, mode);
@@ -314,7 +315,7 @@ public class FileUtils
 	 * newfilename =  a pathname in the GLib file name encoding
 	 * Returns: 0 if the renaming succeeded, -1 if an error occurred
 	 */
-	public static int rename(char[] oldfilename, char[] newfilename)
+	public static int rename(string oldfilename, string newfilename)
 	{
 		// int g_rename (const gchar *oldfilename,  const gchar *newfilename);
 		return g_rename(Str.toStringz(oldfilename), Str.toStringz(newfilename));
@@ -331,7 +332,7 @@ public class FileUtils
 	 * mode =  permissions to use for the newly created directory
 	 * Returns: 0 if the directory was successfully created, -1 if an error  occurred
 	 */
-	public static int mkdir(char[] filename, int mode)
+	public static int mkdir(string filename, int mode)
 	{
 		// int g_mkdir (const gchar *filename,  int mode);
 		return g_mkdir(Str.toStringz(filename), mode);
@@ -351,7 +352,7 @@ public class FileUtils
 	 *  will be filled with the file information
 	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
-	public static int stat(char[] filename, void* buf)
+	public static int stat(string filename, void* buf)
 	{
 		// int g_stat (const gchar *filename,  struct stat *buf);
 		return g_stat(Str.toStringz(filename), buf);
@@ -371,7 +372,7 @@ public class FileUtils
 	 *  will be filled with the file information
 	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
-	public static int lstat(char[] filename, void* buf)
+	public static int lstat(string filename, void* buf)
 	{
 		// int g_lstat (const gchar *filename,  struct stat *buf);
 		return g_lstat(Str.toStringz(filename), buf);
@@ -390,7 +391,7 @@ public class FileUtils
 	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * Returns: 0 if the name was successfully deleted, -1 if an error  occurred
 	 */
-	public static int unlink(char[] filename)
+	public static int unlink(string filename)
 	{
 		// int g_unlink (const gchar *filename);
 		return g_unlink(Str.toStringz(filename));
@@ -416,7 +417,7 @@ public class FileUtils
 	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * Returns: 0 if the file was successfully removed, -1 if an error  occurred
 	 */
-	public static int remove(char[] filename)
+	public static int remove(string filename)
 	{
 		// int g_remove (const gchar *filename);
 		return g_remove(Str.toStringz(filename));
@@ -432,7 +433,7 @@ public class FileUtils
 	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * Returns: 0 if the directory was successfully removed, -1 if an error  occurred
 	 */
-	public static int rmdir(char[] filename)
+	public static int rmdir(string filename)
 	{
 		// int g_rmdir (const gchar *filename);
 		return g_rmdir(Str.toStringz(filename));
@@ -449,7 +450,7 @@ public class FileUtils
 	 *  opened
 	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred
 	 */
-	public static FILE* fopen(char[] filename, char[] mode)
+	public static FILE* fopen(string filename, string mode)
 	{
 		// FILE* g_fopen (const gchar *filename,  const gchar *mode);
 		return g_fopen(Str.toStringz(filename), Str.toStringz(mode));
@@ -467,7 +468,7 @@ public class FileUtils
 	 * stream =  an existing stream which will be reused, or NULL
 	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred.
 	 */
-	public static FILE* freopen(char[] filename, char[] mode, FILE* stream)
+	public static FILE* freopen(string filename, string mode, FILE* stream)
 	{
 		// FILE* g_freopen (const gchar *filename,  const gchar *mode,  FILE *stream);
 		return g_freopen(Str.toStringz(filename), Str.toStringz(mode), stream);
@@ -488,7 +489,7 @@ public class FileUtils
 	 * mode =  as in chmod()
 	 * Returns: zero if the operation succeeded, -1 on error.
 	 */
-	public static int chmod(char[] filename, int mode)
+	public static int chmod(string filename, int mode)
 	{
 		// int g_chmod (const gchar *filename,  int mode);
 		return g_chmod(Str.toStringz(filename), mode);
@@ -508,7 +509,7 @@ public class FileUtils
 	 * mode =  as in access()
 	 * Returns: zero if the pathname refers to an existing file systemobject that has all the tested permissions, or -1 otherwise or onerror.
 	 */
-	public static int access(char[] filename, int mode)
+	public static int access(string filename, int mode)
 	{
 		// int g_access (const gchar *filename,  int mode);
 		return g_access(Str.toStringz(filename), mode);
@@ -528,7 +529,7 @@ public class FileUtils
 	 * mode =  as in creat()
 	 * Returns: a new file descriptor, or -1 if an error occurred. Thereturn value can be used exactly like the return value from creat().
 	 */
-	public static int creat(char[] filename, int mode)
+	public static int creat(string filename, int mode)
 	{
 		// int g_creat (const gchar *filename,  int mode);
 		return g_creat(Str.toStringz(filename), mode);
@@ -543,7 +544,7 @@ public class FileUtils
 	 * path =  a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * Returns: 0 on success, -1 if an error occurred.
 	 */
-	public static int chdir(char[] path)
+	public static int chdir(string path)
 	{
 		// int g_chdir (const gchar *path);
 		return g_chdir(Str.toStringz(path));

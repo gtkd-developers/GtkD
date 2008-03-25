@@ -141,7 +141,7 @@ class TestDrawingArea : VBox
 		
 		bool buttonIsDown;
 		
-		char[] primitiveType;
+		string primitiveType;
 		PgFontDescription font;
 		Image image;
 		Pixbuf scaledPixbuf;
@@ -430,9 +430,9 @@ class TestDrawingArea : VBox
 			{
 				xx = x * dx;
 				yy = y * dy;
-				color.set8(	cast(byte)xx,
-							cast(byte)yy,
-							cast(byte)(sqrt((xx*xx)+(yy*yy))));
+				color.set8(	cast(ubyte)xx,
+							cast(ubyte)yy,
+							cast(ubyte)(sqrt((xx*xx)+(yy*yy))));
 				gc.setForeground(color);
 				if ( square > 1 )
 				{

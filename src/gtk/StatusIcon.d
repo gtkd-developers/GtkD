@@ -58,6 +58,7 @@
  * 	- GtkMenu* -> Menu
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.StatusIcon;
@@ -113,7 +114,7 @@ public class StatusIcon : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkStatusIcon;
 	}
@@ -147,7 +148,7 @@ public class StatusIcon : ObjectG
 	public this (StockID stockID)
 	{
 		// GtkStatusIcon* gtk_status_icon_new_from_stock (const gchar *stock_id);
-		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(StockDesc[stockID].ptr) );
+		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID])) );
 	}
 	
 	/**
@@ -160,7 +161,7 @@ public class StatusIcon : ObjectG
 	 *  loadFromFile = treat iconName as a filename and load that image
 	 *  with gtk_status_icon_new_from_file.
 	 */
-	public this (char[] iconName, bool loadFromFile = false)
+	public this (string iconName, bool loadFromFile = false)
 	{
 		//TODO: look at a better way to do this.
 		if(loadFromFile)
@@ -340,7 +341,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 * filename =  a filename
 	 */
-	public void setFromFile(char[] filename)
+	public void setFromFile(string filename)
 	{
 		// void gtk_status_icon_set_from_file (GtkStatusIcon *status_icon,  const gchar *filename);
 		gtk_status_icon_set_from_file(gtkStatusIcon, Str.toStringz(filename));
@@ -353,7 +354,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 * stockId =  a stock icon id
 	 */
-	public void setFromStock(char[] stockId)
+	public void setFromStock(string stockId)
 	{
 		// void gtk_status_icon_set_from_stock (GtkStatusIcon *status_icon,  const gchar *stock_id);
 		gtk_status_icon_set_from_stock(gtkStatusIcon, Str.toStringz(stockId));
@@ -367,7 +368,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 * iconName =  an icon name
 	 */
-	public void setFromIconName(char[] iconName)
+	public void setFromIconName(string iconName)
 	{
 		// void gtk_status_icon_set_from_icon_name (GtkStatusIcon *status_icon,  const gchar *icon_name);
 		gtk_status_icon_set_from_icon_name(gtkStatusIcon, Str.toStringz(iconName));
@@ -416,10 +417,10 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Returns: stock id of the displayed stock icon, or NULL if the image is empty.
 	 */
-	public char[] getStock()
+	public string getStock()
 	{
 		// const gchar* gtk_status_icon_get_stock (GtkStatusIcon *status_icon);
-		return Str.toString(gtk_status_icon_get_stock(gtkStatusIcon)).dup;
+		return Str.toString(gtk_status_icon_get_stock(gtkStatusIcon));
 	}
 	
 	/**
@@ -431,10 +432,10 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Returns: name of the displayed icon, or NULL if the image is empty.
 	 */
-	public char[] getIconName()
+	public string getIconName()
 	{
 		// const gchar* gtk_status_icon_get_icon_name (GtkStatusIcon *status_icon);
-		return Str.toString(gtk_status_icon_get_icon_name(gtkStatusIcon)).dup;
+		return Str.toString(gtk_status_icon_get_icon_name(gtkStatusIcon));
 	}
 	
 	/**
@@ -491,7 +492,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 * tooltipText =  the tooltip text, or NULL
 	 */
-	public void setTooltip(char[] tooltipText)
+	public void setTooltip(string tooltipText)
 	{
 		// void gtk_status_icon_set_tooltip (GtkStatusIcon *status_icon,  const gchar *tooltip_text);
 		gtk_status_icon_set_tooltip(gtkStatusIcon, Str.toStringz(tooltipText));

@@ -47,6 +47,7 @@
  * 	- GString* -> StringG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.StringG;
@@ -109,7 +110,7 @@ public class StringG
 	 * Params:
 	 * init =  the initial text to copy into the string
 	 */
-	public this (char[] init)
+	public this (string init)
 	{
 		// GString* g_string_new (const gchar *init);
 		auto p = g_string_new(Str.toStringz(init));
@@ -133,7 +134,7 @@ public class StringG
 	 * init =  initial contents of the string
 	 * len =  length of init to use
 	 */
-	public this (char[] init, int len)
+	public this (string init, int len)
 	{
 		// GString* g_string_new_len (const gchar *init,  gssize len);
 		auto p = g_string_new_len(Str.toStringz(init), len);
@@ -174,10 +175,12 @@ public class StringG
 	 * the standard strcpy() function, except that you do not
 	 * have to worry about having enough space to copy the string.
 	 * Params:
+	 * string =  the destination GString. Its current contents
+	 *  are destroyed.
 	 * rval =  the string to copy into string
 	 * Returns: string
 	 */
-	public StringG assign(char[] rval)
+	public StringG assign(string rval)
 	{
 		// GString* g_string_assign (GString *string,  const gchar *rval);
 		auto p = g_string_assign(gString, Str.toStringz(rval));
@@ -195,10 +198,11 @@ public class StringG
 	 * the arguments to the format string are passed as a va_list.
 	 * Since 2.14
 	 * Params:
+	 * string =  a GString
 	 * format =  the string format. See the printf() documentation
 	 * args =  the parameters to insert into the format string
 	 */
-	public void vprintf(char[] format, void* args)
+	public void vprintf(string format, void* args)
 	{
 		// void g_string_vprintf (GString *string,  const gchar *format,  va_list args);
 		g_string_vprintf(gString, Str.toStringz(format), args);
@@ -211,10 +215,11 @@ public class StringG
 	 * as a va_list.
 	 * Since 2.14
 	 * Params:
+	 * string =  a GString
 	 * format =  the string format. See the printf() documentation
 	 * args =  the list of arguments to insert in the output
 	 */
-	public void appendVprintf(char[] format, void* args)
+	public void appendVprintf(string format, void* args)
 	{
 		// void g_string_append_vprintf (GString *string,  const gchar *format,  va_list args);
 		g_string_append_vprintf(gString, Str.toStringz(format), args);
@@ -227,10 +232,11 @@ public class StringG
 	 * to contain the results. The previous contents of the
 	 * GString are destroyed.
 	 * Params:
+	 * string =  a GString
 	 * format =  the string format. See the printf() documentation
 	 * ... =  the parameters to insert into the format string
 	 */
-	public void printf(char[] format, ... )
+	public void printf(string format, ... )
 	{
 		// void g_string_printf (GString *string,  const gchar *format,  ...);
 		g_string_printf(gString, Str.toStringz(format));
@@ -241,10 +247,11 @@ public class StringG
 	 * This function is similar to g_string_printf() except
 	 * that the text is appended to the GString.
 	 * Params:
+	 * string =  a GString
 	 * format =  the string format. See the printf() documentation
 	 * ... =  the parameters to insert into the format string
 	 */
-	public void appendPrintf(char[] format, ... )
+	public void appendPrintf(string format, ... )
 	{
 		// void g_string_append_printf (GString *string,  const gchar *format,  ...);
 		g_string_append_printf(gString, Str.toStringz(format));
@@ -254,10 +261,11 @@ public class StringG
 	 * Adds a string onto the end of a GString, expanding
 	 * it if necessary.
 	 * Params:
+	 * string =  a GString
 	 * val =  the string to append onto the end of string
 	 * Returns: string
 	 */
-	public StringG append(char[] val)
+	public StringG append(string val)
 	{
 		// GString* g_string_append (GString *string,  const gchar *val);
 		auto p = g_string_append(gString, Str.toStringz(val));
@@ -315,11 +323,12 @@ public class StringG
 	 * the caller's responsibility to ensure that val has at
 	 * least len addressable bytes.
 	 * Params:
+	 * string =  a GString
 	 * val =  bytes to append
 	 * len =  number of bytes of val to use
 	 * Returns: string
 	 */
-	public StringG appendLen(char[] val, int len)
+	public StringG appendLen(string val, int len)
 	{
 		// GString* g_string_append_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
@@ -336,12 +345,13 @@ public class StringG
 	 * are reserved in URIs using URI-style escape sequences.
 	 * Since 2.16
 	 * Params:
+	 * string =  a GString
 	 * unescaped =  a string
 	 * reservedCharsAllowed =  a string of reserved characters allowed to be used
 	 * allowUtf8 =  set TRUE if the escaped string may include UTF8 characters
 	 * Returns: string
 	 */
-	public StringG appendUriEscaped(char[] unescaped, char[] reservedCharsAllowed, int allowUtf8)
+	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
 		// GString* g_string_append_uri_escaped (GString *string,  const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
@@ -357,10 +367,11 @@ public class StringG
 	 * Adds a string on to the start of a GString,
 	 * expanding it if necessary.
 	 * Params:
+	 * string =  a GString
 	 * val =  the string to prepend on the start of string
 	 * Returns: string
 	 */
-	public StringG prepend(char[] val)
+	public StringG prepend(string val)
 	{
 		// GString* g_string_prepend (GString *string,  const gchar *val);
 		auto p = g_string_prepend(gString, Str.toStringz(val));
@@ -418,11 +429,12 @@ public class StringG
 	 * it is the caller's responsibility to ensure that
 	 * val has at least len addressable bytes.
 	 * Params:
+	 * string =  a GString
 	 * val =  bytes to prepend
 	 * len =  number of bytes in val to prepend
 	 * Returns: string
 	 */
-	public StringG prependLen(char[] val, int len)
+	public StringG prependLen(string val, int len)
 	{
 		// GString* g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
@@ -438,11 +450,12 @@ public class StringG
 	 * Inserts a copy of a string into a GString,
 	 * expanding it if necessary.
 	 * Params:
+	 * string =  a GString
 	 * pos =  the position to insert the copy of the string
 	 * val =  the string to insert
 	 * Returns: string
 	 */
-	public StringG insert(int pos, char[] val)
+	public StringG insert(int pos, string val)
 	{
 		// GString* g_string_insert (GString *string,  gssize pos,  const gchar *val);
 		auto p = g_string_insert(gString, pos, Str.toStringz(val));
@@ -503,13 +516,14 @@ public class StringG
 	 * the caller's responsibility to ensure that val has at
 	 * least len addressable bytes.
 	 * Params:
+	 * string =  a GString
 	 * pos =  position in string where insertion should
 	 *  happen, or -1 for at the end
 	 * val =  bytes to insert
 	 * len =  number of bytes of val to insert
 	 * Returns: string
 	 */
-	public StringG insertLen(int pos, char[] val, int len)
+	public StringG insertLen(int pos, string val, int len)
 	{
 		// GString* g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
 		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
@@ -525,11 +539,12 @@ public class StringG
 	 * Overwrites part of a string, lengthening it if necessary.
 	 * Since 2.14
 	 * Params:
+	 * string =  a GString
 	 * pos =  the position at which to start overwriting
 	 * val =  the string that will overwrite the string starting at pos
 	 * Returns: string
 	 */
-	public StringG overwrite(uint pos, char[] val)
+	public StringG overwrite(uint pos, string val)
 	{
 		// GString* g_string_overwrite (GString *string,  gsize pos,  const gchar *val);
 		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
@@ -546,12 +561,13 @@ public class StringG
 	 * This function will work with embedded nuls.
 	 * Since 2.14
 	 * Params:
+	 * string =  a GString
 	 * pos =  the position at which to start overwriting
 	 * val =  the string that will overwrite the string starting at pos
 	 * len =  the number of bytes to write from val
 	 * Returns: string
 	 */
-	public StringG overwriteLen(uint pos, char[] val, int len)
+	public StringG overwriteLen(uint pos, string val, int len)
 	{
 		// GString* g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
 		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
@@ -628,13 +644,14 @@ public class StringG
 	 * Frees the memory allocated for the GString.
 	 * If free_segment is TRUE it also frees the character data.
 	 * Params:
+	 * string =  a GString
 	 * freeSegment =  if TRUE the actual character data is freed as well
 	 * Returns: the character data of string  (i.e. NULL if free_segment is TRUE)
 	 */
-	public char[] free(int freeSegment)
+	public string free(int freeSegment)
 	{
 		// gchar* g_string_free (GString *string,  gboolean free_segment);
-		return Str.toString(g_string_free(gString, freeSegment)).dup;
+		return Str.toString(g_string_free(gString, freeSegment));
 	}
 	
 	/**

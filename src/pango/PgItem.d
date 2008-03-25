@@ -46,6 +46,7 @@
  * 	- PangoItem* -> PgItem
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgItem;

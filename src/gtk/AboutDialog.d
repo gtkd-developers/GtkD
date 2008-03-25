@@ -51,6 +51,9 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- getName
+ * 	- setName
  */
 
 module gtk.AboutDialog;
@@ -115,7 +118,7 @@ public class AboutDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAboutDialog;
 	}
@@ -163,10 +166,10 @@ public class AboutDialog : Dialog
 	 * @Deprecated: 2.12: Use gtk_about_dialog_get_program_name() instead.
 	 * Returns: The program name. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getName()
+	public override string getName()
 	{
 		// const gchar* gtk_about_dialog_get_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog));
 	}
 	
 	/**
@@ -179,7 +182,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * name =  the program name
 	 */
-	public void setName(char[] name)
+	public override void setName(string name)
 	{
 		// void gtk_about_dialog_set_name (GtkAboutDialog *about,  const gchar *name);
 		gtk_about_dialog_set_name(gtkAboutDialog, Str.toStringz(name));
@@ -190,10 +193,10 @@ public class AboutDialog : Dialog
 	 * Since 2.12
 	 * Returns: The program name. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getProgramName()
+	public string getProgramName()
 	{
 		// const gchar* gtk_about_dialog_get_program_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog));
 	}
 	
 	/**
@@ -203,7 +206,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * name =  the program name
 	 */
-	public void setProgramName(char[] name)
+	public void setProgramName(string name)
 	{
 		// void gtk_about_dialog_set_program_name (GtkAboutDialog *about,  const gchar *name);
 		gtk_about_dialog_set_program_name(gtkAboutDialog, Str.toStringz(name));
@@ -214,10 +217,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The version string. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getVersion()
+	public string getVersion()
 	{
 		// const gchar* gtk_about_dialog_get_version (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_version(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_version(gtkAboutDialog));
 	}
 	
 	/**
@@ -226,7 +229,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * versio =  the version string
 	 */
-	public void setVersion(char[] versio)
+	public void setVersion(string versio)
 	{
 		// void gtk_about_dialog_set_version (GtkAboutDialog *about,  const gchar *version);
 		gtk_about_dialog_set_version(gtkAboutDialog, Str.toStringz(versio));
@@ -237,10 +240,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The copyright string. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getCopyright()
+	public string getCopyright()
 	{
 		// const gchar* gtk_about_dialog_get_copyright (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_copyright(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_copyright(gtkAboutDialog));
 	}
 	
 	/**
@@ -250,7 +253,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * copyright =  the copyright string
 	 */
-	public void setCopyright(char[] copyright)
+	public void setCopyright(string copyright)
 	{
 		// void gtk_about_dialog_set_copyright (GtkAboutDialog *about,  const gchar *copyright);
 		gtk_about_dialog_set_copyright(gtkAboutDialog, Str.toStringz(copyright));
@@ -261,10 +264,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The comments. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getComments()
+	public string getComments()
 	{
 		// const gchar* gtk_about_dialog_get_comments (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_comments(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_comments(gtkAboutDialog));
 	}
 	
 	/**
@@ -275,7 +278,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * comments =  a comments string
 	 */
-	public void setComments(char[] comments)
+	public void setComments(string comments)
 	{
 		// void gtk_about_dialog_set_comments (GtkAboutDialog *about,  const gchar *comments);
 		gtk_about_dialog_set_comments(gtkAboutDialog, Str.toStringz(comments));
@@ -286,10 +289,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The license information. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getLicense()
+	public string getLicense()
 	{
 		// const gchar* gtk_about_dialog_get_license (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_license(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_license(gtkAboutDialog));
 	}
 	
 	/**
@@ -300,7 +303,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * license =  the license information or NULL
 	 */
-	public void setLicense(char[] license)
+	public void setLicense(string license)
 	{
 		// void gtk_about_dialog_set_license (GtkAboutDialog *about,  const gchar *license);
 		gtk_about_dialog_set_license(gtkAboutDialog, Str.toStringz(license));
@@ -336,10 +339,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The website URL. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getWebsite()
+	public string getWebsite()
 	{
 		// const gchar* gtk_about_dialog_get_website (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_website(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_website(gtkAboutDialog));
 	}
 	
 	/**
@@ -348,7 +351,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * website =  a URL string starting with "http://"
 	 */
-	public void setWebsite(char[] website)
+	public void setWebsite(string website)
 	{
 		// void gtk_about_dialog_set_website (GtkAboutDialog *about,  const gchar *website);
 		gtk_about_dialog_set_website(gtkAboutDialog, Str.toStringz(website));
@@ -359,10 +362,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The label used for the website link. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getWebsiteLabel()
+	public string getWebsiteLabel()
 	{
 		// const gchar* gtk_about_dialog_get_website_label (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_website_label(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_website_label(gtkAboutDialog));
 	}
 	
 	/**
@@ -372,7 +375,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * websiteLabel =  the label used for the website link
 	 */
-	public void setWebsiteLabel(char[] websiteLabel)
+	public void setWebsiteLabel(string websiteLabel)
 	{
 		// void gtk_about_dialog_set_website_label (GtkAboutDialog *about,  const gchar *website_label);
 		gtk_about_dialog_set_website_label(gtkAboutDialog, Str.toStringz(websiteLabel));
@@ -459,10 +462,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: The translator credits string. The string is owned by the about dialog and must not be modified.
 	 */
-	public char[] getTranslatorCredits()
+	public string getTranslatorCredits()
 	{
 		// const gchar* gtk_about_dialog_get_translator_credits  (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog));
 	}
 	
 	/**
@@ -475,7 +478,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * translatorCredits =  the translator credits
 	 */
-	public void setTranslatorCredits(char[] translatorCredits)
+	public void setTranslatorCredits(string translatorCredits)
 	{
 		// void gtk_about_dialog_set_translator_credits  (GtkAboutDialog *about,  const gchar *translator_credits);
 		gtk_about_dialog_set_translator_credits(gtkAboutDialog, Str.toStringz(translatorCredits));
@@ -518,10 +521,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: the icon name displayed as logo. The string is owned by the dialog. If you want to keep a reference to it, you have to call g_strdup() on it.
 	 */
-	public char[] getLogoIconName()
+	public string getLogoIconName()
 	{
 		// const gchar* gtk_about_dialog_get_logo_icon_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog)).dup;
+		return Str.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog));
 	}
 	
 	/**
@@ -533,7 +536,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * iconName =  an icon name, or NULL
 	 */
-	public void setLogoIconName(char[] iconName)
+	public void setLogoIconName(string iconName)
 	{
 		// void gtk_about_dialog_set_logo_icon_name (GtkAboutDialog *about,  const gchar *icon_name);
 		gtk_about_dialog_set_logo_icon_name(gtkAboutDialog, Str.toStringz(iconName));
@@ -581,7 +584,7 @@ public class AboutDialog : Dialog
 	 * firstPropertyName =  the name of the first property
 	 * ... =  value of first property, followed by more properties, NULL-terminated
 	 */
-	public static void showAboutDialog(Window parent, char[] firstPropertyName, ... )
+	public static void showAboutDialog(Window parent, string firstPropertyName, ... )
 	{
 		// void gtk_show_about_dialog (GtkWindow *parent,  const gchar *first_property_name,  ...);
 		gtk_show_about_dialog((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(firstPropertyName));

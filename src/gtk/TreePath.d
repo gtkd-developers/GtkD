@@ -49,6 +49,8 @@
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- toString
  */
 
 module gtk.TreePath;
@@ -436,7 +438,7 @@ public class TreePath
 	 * Params:
 	 * path =  The string representation of a path.
 	 */
-	public this (char[] path)
+	public this (string path)
 	{
 		// GtkTreePath* gtk_tree_path_new_from_string (const gchar *path);
 		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
@@ -474,10 +476,10 @@ public class TreePath
 	 * separated list of numbers. For example, "4:10:0:3" would be an acceptable return value for this string.
 	 * Returns: A newly-allocated string. Must be freed with g_free().
 	 */
-	public char[] toString()
+	public override string toString()
 	{
 		// gchar* gtk_tree_path_to_string (GtkTreePath *path);
-		return Str.toString(gtk_tree_path_to_string(gtkTreePath)).dup;
+		return Str.toString(gtk_tree_path_to_string(gtkTreePath));
 	}
 	
 	/**

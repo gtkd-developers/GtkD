@@ -51,6 +51,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Expander;
@@ -135,7 +136,7 @@ public class Expander : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkExpander;
 	}
@@ -166,7 +167,7 @@ public class Expander : Bin
 	 *  underscores). The first underlined character represents a keyboard
 	 *  accelerator called a mnemonic.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -273,7 +274,7 @@ public class Expander : Bin
 	 * Params:
 	 * label =  a string
 	 */
-	public void setLabel(char[] label)
+	public void setLabel(string label)
 	{
 		// void gtk_expander_set_label (GtkExpander *expander,  const gchar *label);
 		gtk_expander_set_label(gtkExpander, Str.toStringz(label));
@@ -288,10 +289,10 @@ public class Expander : Bin
 	 * Since 2.4
 	 * Returns: The text of the label widget. This string is ownedby the widget and must not be modified or freed.
 	 */
-	public char[] getLabel()
+	public string getLabel()
 	{
 		// const gchar* gtk_expander_get_label (GtkExpander *expander);
-		return Str.toString(gtk_expander_get_label(gtkExpander)).dup;
+		return Str.toString(gtk_expander_get_label(gtkExpander));
 	}
 	
 	/**

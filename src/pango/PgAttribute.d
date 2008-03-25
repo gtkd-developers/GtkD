@@ -56,6 +56,7 @@
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgAttribute;
@@ -139,7 +140,7 @@ public class PgAttribute
 	 * error =  address of return location for errors, or NULL
 	 * Returns: FALSE if error is set, otherwise TRUE
 	 */
-	public static int parseMarkup(char[] markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error)
+	public static int parseMarkup(string markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error)
 	{
 		// gboolean pango_parse_markup (const char *markup_text,  int length,  gunichar accel_marker,  PangoAttrList **attr_list,  char **text,  gunichar *accel_char,  GError **error);
 		return pango_parse_markup(Str.toStringz(markupText), length, accelMarker, attrList, text, accelChar, error);
@@ -151,7 +152,7 @@ public class PgAttribute
 	 * name =  an identifier for the type (currently unused.)
 	 * Returns: the new type ID.
 	 */
-	public static PangoAttrType typeRegister(char[] name)
+	public static PangoAttrType typeRegister(string name)
 	{
 		// PangoAttrType pango_attr_type_register (const gchar *name);
 		return pango_attr_type_register(Str.toStringz(name));
@@ -239,7 +240,7 @@ public class PgAttribute
 	 * family =  the family or comma separated list of families
 	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
-	public static PgAttribute familyNew(char[] family)
+	public static PgAttribute familyNew(string family)
 	{
 		// PangoAttribute* pango_attr_family_new (const char *family);
 		auto p = pango_attr_family_new(Str.toStringz(family));

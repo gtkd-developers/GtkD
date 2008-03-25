@@ -55,6 +55,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Tooltip;
@@ -124,7 +125,7 @@ public class Tooltip : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTooltip;
 	}
@@ -155,7 +156,7 @@ public class Tooltip : ObjectG
 	 * Params:
 	 * markup =  a markup string (see Pango markup format) or NULL
 	 */
-	public void setMarkup(char[] markup)
+	public void setMarkup(string markup)
 	{
 		// void gtk_tooltip_set_markup (GtkTooltip *tooltip,  const gchar *markup);
 		gtk_tooltip_set_markup(gtkTooltip, Str.toStringz(markup));
@@ -168,7 +169,7 @@ public class Tooltip : ObjectG
 	 * Params:
 	 * text =  a text string or NULL
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gtk_tooltip_set_text (GtkTooltip *tooltip,  const gchar *text);
 		gtk_tooltip_set_text(gtkTooltip, Str.toStringz(text));
@@ -196,7 +197,7 @@ public class Tooltip : ObjectG
 	 * stockId =  a stock icon name, or NULL
 	 * size =  a stock icon size
 	 */
-	public void setIconFromStock(char[] stockId, GtkIconSize size)
+	public void setIconFromStock(string stockId, GtkIconSize size)
 	{
 		// void gtk_tooltip_set_icon_from_stock (GtkTooltip *tooltip,  const gchar *stock_id,  GtkIconSize size);
 		gtk_tooltip_set_icon_from_stock(gtkTooltip, Str.toStringz(stockId), size);

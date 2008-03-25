@@ -46,6 +46,7 @@
  * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgTabArray;

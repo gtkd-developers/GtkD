@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.Boxed;
@@ -110,7 +111,7 @@ public class Boxed
 	 * boxedFree = Boxed structure free function.
 	 * Returns:New G_TYPE_BOXED derived type id for name.
 	 */
-	public static GType boxedTypeRegisterStatic(char[] name, GBoxedCopyFunc boxedCopy, GBoxedFreeFunc boxedFree)
+	public static GType boxedTypeRegisterStatic(string name, GBoxedCopyFunc boxedCopy, GBoxedFreeFunc boxedFree)
 	{
 		// GType g_boxed_type_register_static (const gchar *name,  GBoxedCopyFunc boxed_copy,  GBoxedFreeFunc boxed_free);
 		return g_boxed_type_register_static(Str.toStringz(name), boxedCopy, boxedFree);
@@ -123,7 +124,7 @@ public class Boxed
 	 * name = the name of the new pointer type.
 	 * Returns:a new G_TYPE_POINTER derived type id for name.
 	 */
-	public static GType pointerTypeRegisterStatic(char[] name)
+	public static GType pointerTypeRegisterStatic(string name)
 	{
 		// GType g_pointer_type_register_static (const gchar *name);
 		return g_pointer_type_register_static(Str.toStringz(name));

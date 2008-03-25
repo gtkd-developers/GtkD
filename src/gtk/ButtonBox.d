@@ -51,6 +51,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ButtonBox;
@@ -101,7 +102,7 @@ public class ButtonBox : Box
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkButtonBox;
 	}
@@ -125,7 +126,7 @@ public class ButtonBox : Box
 	static ButtonBox createActionBox(
 	void delegate(Button) onClicked,
 	StockID[] stocks,
-	char[][] actions,
+	string[] actions,
 	bool vertical=false
 	)
 	{
@@ -154,7 +155,7 @@ public class ButtonBox : Box
 	static ButtonBox createOkBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK];
-		char[][] actions;
+		string[] actions;
 		actions ~= "action.ok";
 		return createActionBox(onClicked, stocks, actions);
 	}
@@ -163,7 +164,7 @@ public class ButtonBox : Box
 	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
-		char[][] actions;
+		string[] actions;
 		actions ~= "action.ok";
 		actions ~= "action.cancel";
 		return createActionBox(onClicked, stocks, actions);

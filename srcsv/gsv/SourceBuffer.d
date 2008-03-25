@@ -54,6 +54,7 @@
  * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceBuffer;
@@ -102,7 +103,7 @@ public class SourceBuffer : TextBuffer
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceBuffer;
 	}
@@ -463,7 +464,7 @@ public class SourceBuffer : TextBuffer
 	 * where =  location to place the mark.
 	 * Returns: a new GtkSourceMark, owned by the buffer.
 	 */
-	public SourceMark createSourceMark(char[] name, char[] category, TextIter where)
+	public SourceMark createSourceMark(string name, string category, TextIter where)
 	{
 		// GtkSourceMark* gtk_source_buffer_create_source_mark  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *category,  const GtkTextIter *where);
 		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
@@ -484,7 +485,7 @@ public class SourceBuffer : TextBuffer
 	 * category =  category to search for or NULL
 	 * Returns: a newly allocated GSList.
 	 */
-	public ListSG getSourceMarksAtLine(int line, char[] category)
+	public ListSG getSourceMarksAtLine(int line, string category)
 	{
 		// GSList* gtk_source_buffer_get_source_marks_at_line  (GtkSourceBuffer *buffer,  gint line,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
@@ -505,7 +506,7 @@ public class SourceBuffer : TextBuffer
 	 * category =  category to search for or NULL
 	 * Returns: a newly allocated GSList.
 	 */
-	public ListSG getSourceMarksAtIter(TextIter iter, char[] category)
+	public ListSG getSourceMarksAtIter(TextIter iter, string category)
 	{
 		// GSList* gtk_source_buffer_get_source_marks_at_iter  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
@@ -526,7 +527,7 @@ public class SourceBuffer : TextBuffer
 	 * end =  a GtkTextIter
 	 * category =  category to search for or NULL
 	 */
-	public void removeSourceMarks(TextIter start, TextIter end, char[] category)
+	public void removeSourceMarks(TextIter start, TextIter end, string category)
 	{
 		// void gtk_source_buffer_remove_source_marks  (GtkSourceBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  const gchar *category);
 		gtk_source_buffer_remove_source_marks(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), Str.toStringz(category));
@@ -542,7 +543,7 @@ public class SourceBuffer : TextBuffer
 	 * category =  category to search for or NULL
 	 * Returns: whether iter moved.
 	 */
-	public int forwardIterToSourceMark(TextIter iter, char[] category)
+	public int forwardIterToSourceMark(TextIter iter, string category)
 	{
 		// gboolean gtk_source_buffer_forward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
 		return gtk_source_buffer_forward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
@@ -558,7 +559,7 @@ public class SourceBuffer : TextBuffer
 	 * category =  category to search for or NULL
 	 * Returns: whether iter moved.
 	 */
-	public int backwardIterToSourceMark(TextIter iter, char[] category)
+	public int backwardIterToSourceMark(TextIter iter, string category)
 	{
 		// gboolean gtk_source_buffer_backward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
 		return gtk_source_buffer_backward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));

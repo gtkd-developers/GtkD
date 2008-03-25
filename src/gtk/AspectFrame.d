@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.AspectFrame;
@@ -86,7 +87,7 @@ public class AspectFrame : Frame
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkAspectFrame;
 	}
@@ -123,7 +124,7 @@ public class AspectFrame : Frame
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 *  ratio is taken from the requistion of the child.
 	 */
-	public this (char[] label, float xalign, float yalign, float ratio, int obeyChild)
+	public this (string label, float xalign, float yalign, float ratio, int obeyChild)
 	{
 		// GtkWidget* gtk_aspect_frame_new (const gchar *label,  gfloat xalign,  gfloat yalign,  gfloat ratio,  gboolean obey_child);
 		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);

@@ -36,6 +36,7 @@ private import gtk.CellRendererPixbuf;
 private import gtk.CellRendererText;
 private import gtk.ScrolledWindow;
 private import gdk.Pixbuf;	
+private import glib.Str;
 version(Tango) private import tango.io.Stdout;
 version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
@@ -67,10 +68,10 @@ public class TestTreeView1 : VBox
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2").newline;
 		else writefln("TestTreeView1.this 2");
 		
-		pixbuf = new Pixbuf(greenClass_xpm);
+		pixbuf = new Pixbuf(Str.toStringzArray(greenClass_xpm));
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.1").newline;
 		else writefln("TestTreeView1.this 2.1");
-		pixbufTest = new Pixbuf(book_closed_xpm);
+		pixbufTest = new Pixbuf(Str.toStringzArray(book_closed_xpm));
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.2").newline;
 		else writefln("TestTreeView1.this 2.2");
 		image = new Image(pixbufTest);
@@ -121,19 +122,19 @@ public class TestTreeView1 : VBox
 	{
 		TreeIter iterChild;
 		TreeIter iterTop = treeStore.createIter();
-		treeStore.setValue(iterTop, 0, new Pixbuf(package_xpm) );
+		treeStore.setValue(iterTop, 0, new Pixbuf(Str.toStringzArray(package_xpm)) );
 		treeStore.setValue(iterTop, 1, "Icon for packages" );
 							
 		iterChild = treeStore.append(iterTop);
-		treeStore.setValue(iterChild, 0,new Pixbuf(greenTemplate_xpm) );
+		treeStore.setValue(iterChild, 0,new Pixbuf(Str.toStringzArray(greenTemplate_xpm)) );
 		treeStore.setValue(iterChild, 1, "Icon for templates" );
 		
 		iterChild = treeStore.append(iterTop);
-		treeStore.setValue(iterChild, 0, new Pixbuf(greenInterface_xpm) );
+		treeStore.setValue(iterChild, 0, new Pixbuf(Str.toStringzArray(greenInterface_xpm)) );
 		treeStore.setValue(iterChild, 1, "Icon for interfaces" );
 		
 		iterChild = treeStore.append(iterTop);
-		treeStore.setValue(iterChild, 0, new Pixbuf(greenClass_xpm) );
+		treeStore.setValue(iterChild, 0, new Pixbuf(Str.toStringzArray(greenClass_xpm)) );
 		treeStore.setValue(iterChild, 1, "Icon for classes" );
 		
 	}
@@ -246,7 +247,7 @@ public class TestTreeView1 : VBox
 	
 	
 	/* XPM */
-	static char** greenClass_xpm = [
+	static string[] greenClass_xpm = [
 	"16 16 67 1",
 	" 	c None",
 	".	c #00CF2E",
@@ -334,7 +335,7 @@ public class TestTreeView1 : VBox
 	
 	
 	/* XPM */
-	static char** greenInterface_xpm = [
+	static string[] greenInterface_xpm = [
 	"16 16 62 1",
 	" 	c None",
 	".	c #00CF2E",
@@ -417,7 +418,7 @@ public class TestTreeView1 : VBox
 	
 	
 	/* XPM */
-	static char** greenTemplate_xpm = [
+	static string[] greenTemplate_xpm = [
 	"16 16 63 1",
 	" 	c None",
 	".	c #008A1E",
@@ -500,7 +501,7 @@ public class TestTreeView1 : VBox
 	"                "];
 	
 	/* XPM */
-	static char** package_xpm = [
+	static string[] package_xpm = [
 	"16 16 25 1",
 	" 	c None",
 	".	c #713C17",
@@ -547,7 +548,7 @@ public class TestTreeView1 : VBox
 	/* Don't copy this bad example; inline RGB data is always a better
 	 * idea than inline XPMs.
 	 */
-	static char**  book_closed_xpm = [
+	static string[]  book_closed_xpm = [
 	"16 16 7 1",
 	"       c None s None",
 	".      c black",

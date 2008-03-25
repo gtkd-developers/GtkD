@@ -55,6 +55,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FileChooser;
@@ -795,7 +796,7 @@ public class FileChooser
 		 * Params:
 		 * name =  the filename to use, as a UTF-8 string
 		 */
-		public void setCurrentName(char[] name)
+		public void setCurrentName(string name)
 		{
 			// void gtk_file_chooser_set_current_name (GtkFileChooser *chooser,  const gchar *name);
 			gtk_file_chooser_set_current_name(gtkFileChooser, Str.toStringz(name));
@@ -810,10 +811,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: The currently selected filename, or NULL if no file is selected, or the selected file can't be represented with a local filename. Free with g_free().
 		 */
-		public char[] getFilename()
+		public string getFilename()
 		{
 			// gchar* gtk_file_chooser_get_filename (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_filename(gtkFileChooser)).dup;
+			return Str.toString(gtk_file_chooser_get_filename(gtkFileChooser));
 		}
 		
 		/**
@@ -837,7 +838,7 @@ public class FileChooser
 		 * filename =  the filename to set as current
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 */
-		public int setFilename(char[] filename)
+		public int setFilename(string filename)
 		{
 			// gboolean gtk_file_chooser_set_filename (GtkFileChooser *chooser,  const char *filename);
 			return gtk_file_chooser_set_filename(gtkFileChooser, Str.toStringz(filename));
@@ -852,7 +853,7 @@ public class FileChooser
 		 * filename =  the filename to select
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 */
-		public int selectFilename(char[] filename)
+		public int selectFilename(string filename)
 		{
 			// gboolean gtk_file_chooser_select_filename (GtkFileChooser *chooser,  const char *filename);
 			return gtk_file_chooser_select_filename(gtkFileChooser, Str.toStringz(filename));
@@ -866,7 +867,7 @@ public class FileChooser
 		 * Params:
 		 * filename =  the filename to unselect
 		 */
-		public void unselectFilename(char[] filename)
+		public void unselectFilename(string filename)
 		{
 			// void gtk_file_chooser_unselect_filename (GtkFileChooser *chooser,  const char *filename);
 			gtk_file_chooser_unselect_filename(gtkFileChooser, Str.toStringz(filename));
@@ -921,7 +922,7 @@ public class FileChooser
 		 * filename =  the full path of the new current folder
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 */
-		public int setCurrentFolder(char[] filename)
+		public int setCurrentFolder(string filename)
 		{
 			// gboolean gtk_file_chooser_set_current_folder (GtkFileChooser *chooser,  const gchar *filename);
 			return gtk_file_chooser_set_current_folder(gtkFileChooser, Str.toStringz(filename));
@@ -940,10 +941,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: the full path of the current folder, or NULL if the currentpath cannot be represented as a local filename. Free with g_free(). Thisfunction will also return NULL if the file chooser was unable to load thelast folder that was requested from it; for example, as would be for callinggtk_file_chooser_set_current_folder() on a nonexistent folder.
 		 */
-		public char[] getCurrentFolder()
+		public string getCurrentFolder()
 		{
 			// gchar* gtk_file_chooser_get_current_folder (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_current_folder(gtkFileChooser)).dup;
+			return Str.toString(gtk_file_chooser_get_current_folder(gtkFileChooser));
 		}
 		
 		/**
@@ -955,10 +956,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: The currently selected URI, or NULL if no file is selected. Free with g_free()
 		 */
-		public char[] getUri()
+		public string getUri()
 		{
 			// gchar* gtk_file_chooser_get_uri (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_uri(gtkFileChooser)).dup;
+			return Str.toString(gtk_file_chooser_get_uri(gtkFileChooser));
 		}
 		
 		/**
@@ -982,7 +983,7 @@ public class FileChooser
 		 * uri =  the URI to set as current
 		 * Returns: TRUE if both the folder could be changed and the URI wasselected successfully, FALSE otherwise.
 		 */
-		public int setUri(char[] uri)
+		public int setUri(string uri)
 		{
 			// gboolean gtk_file_chooser_set_uri (GtkFileChooser *chooser,  const char *uri);
 			return gtk_file_chooser_set_uri(gtkFileChooser, Str.toStringz(uri));
@@ -997,7 +998,7 @@ public class FileChooser
 		 * uri =  the URI to select
 		 * Returns: TRUE if both the folder could be changed and the URI wasselected successfully, FALSE otherwise.
 		 */
-		public int selectUri(char[] uri)
+		public int selectUri(string uri)
 		{
 			// gboolean gtk_file_chooser_select_uri (GtkFileChooser *chooser,  const char *uri);
 			return gtk_file_chooser_select_uri(gtkFileChooser, Str.toStringz(uri));
@@ -1011,7 +1012,7 @@ public class FileChooser
 		 * Params:
 		 * uri =  the URI to unselect
 		 */
-		public void unselectUri(char[] uri)
+		public void unselectUri(string uri)
 		{
 			// void gtk_file_chooser_unselect_uri (GtkFileChooser *chooser,  const char *uri);
 			gtk_file_chooser_unselect_uri(gtkFileChooser, Str.toStringz(uri));
@@ -1044,7 +1045,7 @@ public class FileChooser
 		 * uri =  the URI for the new current folder
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 */
-		public int setCurrentFolderUri(char[] uri)
+		public int setCurrentFolderUri(string uri)
 		{
 			// gboolean gtk_file_chooser_set_current_folder_uri  (GtkFileChooser *chooser,  const gchar *uri);
 			return gtk_file_chooser_set_current_folder_uri(gtkFileChooser, Str.toStringz(uri));
@@ -1063,10 +1064,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: the URI for the current folder. Free with g_free(). Thisfunction will also return NULL if the file chooser was unable to load thelast folder that was requested from it; for example, as would be for callinggtk_file_chooser_set_current_folder_uri() on a nonexistent folder.
 		 */
-		public char[] getCurrentFolderUri()
+		public string getCurrentFolderUri()
 		{
 			// gchar* gtk_file_chooser_get_current_folder_uri  (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_current_folder_uri(gtkFileChooser)).dup;
+			return Str.toString(gtk_file_chooser_get_current_folder_uri(gtkFileChooser));
 		}
 		
 		/**
@@ -1173,10 +1174,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: the filename to preview, or NULL if no file is selected, or if the selected file cannot be represented as a local filename. Free with g_free()
 		 */
-		public char[] getPreviewFilename()
+		public string getPreviewFilename()
 		{
 			// char* gtk_file_chooser_get_preview_filename  (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_preview_filename(gtkFileChooser)).dup;
+			return Str.toString(gtk_file_chooser_get_preview_filename(gtkFileChooser));
 		}
 		
 		/**
@@ -1185,10 +1186,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: the URI for the file to preview, or NULL if no file isselected. Free with g_free().
 		 */
-		public char[] getPreviewUri()
+		public string getPreviewUri()
 		{
 			// char* gtk_file_chooser_get_preview_uri (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_preview_uri(gtkFileChooser)).dup;
+			return Str.toString(gtk_file_chooser_get_preview_uri(gtkFileChooser));
 		}
 		
 		/**
@@ -1312,7 +1313,7 @@ public class FileChooser
 		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
 		 */
-		public int addShortcutFolder(char[] folder, GError** error)
+		public int addShortcutFolder(string folder, GError** error)
 		{
 			// gboolean gtk_file_chooser_add_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
 			return gtk_file_chooser_add_shortcut_folder(gtkFileChooser, Str.toStringz(folder), error);
@@ -1326,7 +1327,7 @@ public class FileChooser
 		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder()
 		 */
-		public int removeShortcutFolder(char[] folder, GError** error)
+		public int removeShortcutFolder(string folder, GError** error)
 		{
 			// gboolean gtk_file_chooser_remove_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
 			return gtk_file_chooser_remove_shortcut_folder(gtkFileChooser, Str.toStringz(folder), error);
@@ -1361,7 +1362,7 @@ public class FileChooser
 		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
 		 */
-		public int addShortcutFolderUri(char[] uri, GError** error)
+		public int addShortcutFolderUri(string uri, GError** error)
 		{
 			// gboolean gtk_file_chooser_add_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
 			return gtk_file_chooser_add_shortcut_folder_uri(gtkFileChooser, Str.toStringz(uri), error);
@@ -1375,7 +1376,7 @@ public class FileChooser
 		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder_uri()
 		 */
-		public int removeShortcutFolderUri(char[] uri, GError** error)
+		public int removeShortcutFolderUri(string uri, GError** error)
 		{
 			// gboolean gtk_file_chooser_remove_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
 			return gtk_file_chooser_remove_shortcut_folder_uri(gtkFileChooser, Str.toStringz(uri), error);

@@ -54,6 +54,7 @@
  * 	- GMainLoop* -> MainLoop
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Spawn;
@@ -88,12 +89,13 @@ version(Tango) {
 public class Spawn
 {
 	
+	
 	version(Tango) alias splitLines splitlines;
 	
 	
-	char[] workingDirectory = ".";
-	char[][] argv;
-	char[][] envp;
+	string workingDirectory = ".";
+	string[] argv;
+	string[] envp;
 	GSpawnFlags flags = SpawnFlags.SEARCH_PATH;
 	GSpawnChildSetupFunc childSetup;
 	void* userData;
@@ -117,7 +119,7 @@ public class Spawn
 	/**
 	 * Creates a Spawn for execution.
 	 */
-	public this(char[] program, char[][] envp=null)
+	public this(string program, string[] envp=null)
 	{
 		argv ~= program;
 		this.envp = envp;
@@ -126,7 +128,7 @@ public class Spawn
 	/**
 	 * Creates a Spawn for execution.
 	 */
-	public this(char[][] program, char[][] envp=null)
+	public this(string[] program, string[] envp=null)
 	{
 		argv = program;
 		this.envp = envp;
@@ -172,7 +174,7 @@ public class Spawn
 	/**
 	 * Adds a parameter to the execution program
 	 */
-	public void addParm(char[] parm)
+	public void addParm(string parm)
 	{
 		argv ~= parm;
 	}
@@ -180,7 +182,7 @@ public class Spawn
 	/**
 	 * Gets the last error message
 	 */
-	public char[] getLastError()
+	public string getLastError()
 	{
 		if ( error != null )
 		{
@@ -202,8 +204,8 @@ public class Spawn
 	 */
 	public int execAsyncWithPipes(
 	ChildWatch externalWatch = null,
-	bool delegate(char[]) readOutput = null,
-	bool delegate(char[]) readError = null )
+	bool delegate(string) readOutput = null,
+	bool delegate(string) readError = null )
 	{
 		int result = g_spawn_async_with_pipes(
 		Str.toStringz(workingDirectory),
@@ -242,36 +244,56 @@ public class Spawn
 	
 	class ReadFile : Thread
 	{
-		bool delegate(char[]) read;
+		bool delegate(string) read;
 		FILE* file;
 		
 		int lineCount;
 		
-		this(FILE* file, bool delegate (char[]) read )
+		this(FILE* file, bool delegate (string) read )
 		{
 			this.file = file;
 			this.read = read;
 		}
 		
-		public int run()
+		version(Tango)
 		{
-			char[] line = readLine(file);
-			while( line !is null )
+			public int run()
 			{
-				++lineCount;
-				//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
-				//printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
-				if ( read !is null )
+				string line = readLine(file);
+				while( line !is null )
 				{
-					read(line);
+					++lineCount;
+					if ( read !is null )
+					{
+						read(line);
+					}
+					line = readLine(file);
 				}
-				line = readLine(file);
+				return 0;
 			}
-			return 0;
+		}
+		else
+		{
+			public override int run()
+			{
+				string line = readLine(file);
+				while( line !is null )
+				{
+					++lineCount;
+					//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
+					//printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
+					if ( read !is null )
+					{
+						read(line);
+					}
+					line = readLine(file);
+				}
+				return 0;
+			}
 		}
 	}
 	
-	private char[] readLine(FILE* stream, int max=4096)
+	private string readLine(FILE* stream, int max=4096)
 	{
 		if ( feof(stream) )
 		{
@@ -281,9 +303,9 @@ public class Spawn
 			}
 			return null;
 		}
-		char[] line;
+		string line;
 		line.length = max+1;
-		char* lineP = fgets(line.ptr, max, stream);
+		char* lineP = fgets(Str.toStringz(line), max, stream);
 		if ( lineP is null )
 		{
 			return "";
@@ -293,7 +315,7 @@ public class Spawn
 		//printf("\nreadLine\n");
 		//foreach ( char c ; line )
 		//{
-			//        printf("%c", c);
+			//       printf("%c", c);
 		//}
 		//printf("\n\n");
 		return line[0..l];
@@ -323,12 +345,12 @@ public class Spawn
 		return feof(standardError) != 0;
 	}
 	
-	char[] getOutputString()
+	string getOutputString()
 	{
 		return Str.toString(strOutput);
 	}
 	
-	char[] getErrorString()
+	string getErrorString()
 	{
 		return Str.toString(strError);
 	}
@@ -345,11 +367,11 @@ public class Spawn
 	 */
 	public int commandLineSync(
 	ChildWatch externalWatch = null,
-	bool delegate(char[]) readOutput = null,
-	bool delegate(char[]) readError = null )
+	bool delegate(string) readOutput = null,
+	bool delegate(string) readError = null )
 	{
-		char[] commandLine;
-		foreach ( int count, char[] arg; argv)
+		string commandLine;
+		foreach ( int count, string arg; argv)
 		{
 			if ( count > 0 )
 			{
@@ -365,14 +387,14 @@ public class Spawn
 		&error);
 		if ( readOutput != null )
 		{
-			foreach ( char[] line ; splitlines(Str.toString(strOutput)) )
+			foreach ( string line ; splitlines(Str.toString(strOutput)) )
 			{
 				readOutput(line);
 			}
 		}
 		if ( readError != null )
 		{
-			foreach ( char[] line ; splitlines(Str.toString(strError)) )
+			foreach ( string line ; splitlines(Str.toString(strError)) )
 			{
 				readError(line);
 			}
@@ -383,9 +405,6 @@ public class Spawn
 		}
 		return status;
 	}
-	
-	
-	
 	
 	/**
 	 */
@@ -409,7 +428,7 @@ public class Spawn
 	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if error is set
 	 */
-	public static int async(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** error)
+	public static int async(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** error)
 	{
 		// gboolean g_spawn_async (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  GPid *child_pid,  GError **error);
 		return g_spawn_async(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
@@ -444,7 +463,7 @@ public class Spawn
 	 * error =  return location for error, or NULL
 	 * Returns: TRUE on success, FALSE if an error was set.
 	 */
-	public static int sync(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** error)
+	public static int sync(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** error)
 	{
 		// gboolean g_spawn_sync (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
 		return g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, error);
@@ -464,7 +483,7 @@ public class Spawn
 	 * error =  return location for errors
 	 * Returns: TRUE on success, FALSE if error is set.
 	 */
-	public static int commandLineAsync(char[] commandLine, GError** error)
+	public static int commandLineAsync(string commandLine, GError** error)
 	{
 		// gboolean g_spawn_command_line_async (const gchar *command_line,  GError **error);
 		return g_spawn_command_line_async(Str.toStringz(commandLine), error);
@@ -499,7 +518,7 @@ public class Spawn
 	 * error =  return location for errors
 	 * Returns: TRUE on success, FALSE if an error was set
 	 */
-	public static int commandLineSync(char[] commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** error)
+	public static int commandLineSync(string commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** error)
 	{
 		// gboolean g_spawn_command_line_sync (const gchar *command_line,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
 		return g_spawn_command_line_sync(Str.toStringz(commandLine), standardOutput, standardError, exitStatus, error);

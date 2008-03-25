@@ -147,7 +147,7 @@ protected:
 		else
 		{
 			d_time lNow;
-			char[] lNowString;
+			string lNowString;
 			
 			// Grab the date and time relative to UTC
 			lNow = std.date.getUTCtime();

@@ -52,6 +52,7 @@
  * 	- GtkPrintSettings* -> PrintSettings
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PrintSettings;
@@ -96,7 +97,7 @@ public class PrintSettings : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPrintSettings;
 	}
@@ -160,7 +161,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * Returns: TRUE, if key has a value
 	 */
-	public int hasKey(char[] key)
+	public int hasKey(string key)
 	{
 		// gboolean gtk_print_settings_has_key (GtkPrintSettings *settings,  const gchar *key);
 		return gtk_print_settings_has_key(gtkPrintSettings, Str.toStringz(key));
@@ -173,10 +174,10 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * Returns: the string value for key
 	 */
-	public char[] get(char[] key)
+	public string get(string key)
 	{
 		// const gchar* gtk_print_settings_get (GtkPrintSettings *settings,  const gchar *key);
-		return Str.toString(gtk_print_settings_get(gtkPrintSettings, Str.toStringz(key))).dup;
+		return Str.toString(gtk_print_settings_get(gtkPrintSettings, Str.toStringz(key)));
 	}
 	
 	/**
@@ -186,7 +187,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * value =  a string value, or NULL
 	 */
-	public void set(char[] key, char[] value)
+	public void set(string key, string value)
 	{
 		// void gtk_print_settings_set (GtkPrintSettings *settings,  const gchar *key,  const gchar *value);
 		gtk_print_settings_set(gtkPrintSettings, Str.toStringz(key), Str.toStringz(value));
@@ -199,7 +200,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * key =  a key
 	 */
-	public void unset(char[] key)
+	public void unset(string key)
 	{
 		// void gtk_print_settings_unset (GtkPrintSettings *settings,  const gchar *key);
 		gtk_print_settings_unset(gtkPrintSettings, Str.toStringz(key));
@@ -228,7 +229,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * Returns: TRUE, if key maps to a true value.
 	 */
-	public int getBool(char[] key)
+	public int getBool(string key)
 	{
 		// gboolean gtk_print_settings_get_bool (GtkPrintSettings *settings,  const gchar *key);
 		return gtk_print_settings_get_bool(gtkPrintSettings, Str.toStringz(key));
@@ -241,7 +242,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * value =  a boolean
 	 */
-	public void setBool(char[] key, int value)
+	public void setBool(string key, int value)
 	{
 		// void gtk_print_settings_set_bool (GtkPrintSettings *settings,  const gchar *key,  gboolean value);
 		gtk_print_settings_set_bool(gtkPrintSettings, Str.toStringz(key), value);
@@ -254,7 +255,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * Returns: the double value of key
 	 */
-	public double getDouble(char[] key)
+	public double getDouble(string key)
 	{
 		// gdouble gtk_print_settings_get_double (GtkPrintSettings *settings,  const gchar *key);
 		return gtk_print_settings_get_double(gtkPrintSettings, Str.toStringz(key));
@@ -271,7 +272,7 @@ public class PrintSettings : ObjectG
 	 * def =  the default value
 	 * Returns: the floating point number associated with key
 	 */
-	public double getDoubleWithDefault(char[] key, double def)
+	public double getDoubleWithDefault(string key, double def)
 	{
 		// gdouble gtk_print_settings_get_double_with_default  (GtkPrintSettings *settings,  const gchar *key,  gdouble def);
 		return gtk_print_settings_get_double_with_default(gtkPrintSettings, Str.toStringz(key), def);
@@ -284,7 +285,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * value =  a double value
 	 */
-	public void setDouble(char[] key, double value)
+	public void setDouble(string key, double value)
 	{
 		// void gtk_print_settings_set_double (GtkPrintSettings *settings,  const gchar *key,  gdouble value);
 		gtk_print_settings_set_double(gtkPrintSettings, Str.toStringz(key), value);
@@ -299,7 +300,7 @@ public class PrintSettings : ObjectG
 	 * unit =  the unit of the return value
 	 * Returns: the length value of key, converted to unit
 	 */
-	public double getLength(char[] key, GtkUnit unit)
+	public double getLength(string key, GtkUnit unit)
 	{
 		// gdouble gtk_print_settings_get_length (GtkPrintSettings *settings,  const gchar *key,  GtkUnit unit);
 		return gtk_print_settings_get_length(gtkPrintSettings, Str.toStringz(key), unit);
@@ -313,7 +314,7 @@ public class PrintSettings : ObjectG
 	 * value =  a length
 	 * unit =  the unit of length
 	 */
-	public void setLength(char[] key, double value, GtkUnit unit)
+	public void setLength(string key, double value, GtkUnit unit)
 	{
 		// void gtk_print_settings_set_length (GtkPrintSettings *settings,  const gchar *key,  gdouble value,  GtkUnit unit);
 		gtk_print_settings_set_length(gtkPrintSettings, Str.toStringz(key), value, unit);
@@ -326,7 +327,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * Returns: the integer value of key
 	 */
-	public int getInt(char[] key)
+	public int getInt(string key)
 	{
 		// gint gtk_print_settings_get_int (GtkPrintSettings *settings,  const gchar *key);
 		return gtk_print_settings_get_int(gtkPrintSettings, Str.toStringz(key));
@@ -341,7 +342,7 @@ public class PrintSettings : ObjectG
 	 * def =  the default value
 	 * Returns: the integer value of key
 	 */
-	public int getIntWithDefault(char[] key, int def)
+	public int getIntWithDefault(string key, int def)
 	{
 		// gint gtk_print_settings_get_int_with_default  (GtkPrintSettings *settings,  const gchar *key,  gint def);
 		return gtk_print_settings_get_int_with_default(gtkPrintSettings, Str.toStringz(key), def);
@@ -354,7 +355,7 @@ public class PrintSettings : ObjectG
 	 * key =  a key
 	 * value =  an integer
 	 */
-	public void setInt(char[] key, int value)
+	public void setInt(string key, int value)
 	{
 		// void gtk_print_settings_set_int (GtkPrintSettings *settings,  const gchar *key,  gint value);
 		gtk_print_settings_set_int(gtkPrintSettings, Str.toStringz(key), value);
@@ -366,10 +367,10 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: the printer name
 	 */
-	public char[] getPrinter()
+	public string getPrinter()
 	{
 		// const gchar* gtk_print_settings_get_printer (GtkPrintSettings *settings);
-		return Str.toString(gtk_print_settings_get_printer(gtkPrintSettings)).dup;
+		return Str.toString(gtk_print_settings_get_printer(gtkPrintSettings));
 	}
 	
 	/**
@@ -379,7 +380,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * printer =  the printer name
 	 */
-	public void setPrinter(char[] printer)
+	public void setPrinter(string printer)
 	{
 		// void gtk_print_settings_set_printer (GtkPrintSettings *settings,  const gchar *printer);
 		gtk_print_settings_set_printer(gtkPrintSettings, Str.toStringz(printer));
@@ -779,10 +780,10 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: the default source
 	 */
-	public char[] getDefaultSource()
+	public string getDefaultSource()
 	{
 		// const gchar* gtk_print_settings_get_default_source  (GtkPrintSettings *settings);
-		return Str.toString(gtk_print_settings_get_default_source(gtkPrintSettings)).dup;
+		return Str.toString(gtk_print_settings_get_default_source(gtkPrintSettings));
 	}
 	
 	/**
@@ -791,7 +792,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * defaultSource =  the default source
 	 */
-	public void setDefaultSource(char[] defaultSource)
+	public void setDefaultSource(string defaultSource)
 	{
 		// void gtk_print_settings_set_default_source  (GtkPrintSettings *settings,  const gchar *default_source);
 		gtk_print_settings_set_default_source(gtkPrintSettings, Str.toStringz(defaultSource));
@@ -803,10 +804,10 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: the media type
 	 */
-	public char[] getMediaType()
+	public string getMediaType()
 	{
 		// const gchar* gtk_print_settings_get_media_type (GtkPrintSettings *settings);
-		return Str.toString(gtk_print_settings_get_media_type(gtkPrintSettings)).dup;
+		return Str.toString(gtk_print_settings_get_media_type(gtkPrintSettings));
 	}
 	
 	/**
@@ -816,7 +817,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * mediaType =  the media type
 	 */
-	public void setMediaType(char[] mediaType)
+	public void setMediaType(string mediaType)
 	{
 		// void gtk_print_settings_set_media_type (GtkPrintSettings *settings,  const gchar *media_type);
 		gtk_print_settings_set_media_type(gtkPrintSettings, Str.toStringz(mediaType));
@@ -827,10 +828,10 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: the dithering that is used
 	 */
-	public char[] getDither()
+	public string getDither()
 	{
 		// const gchar* gtk_print_settings_get_dither (GtkPrintSettings *settings);
-		return Str.toString(gtk_print_settings_get_dither(gtkPrintSettings)).dup;
+		return Str.toString(gtk_print_settings_get_dither(gtkPrintSettings));
 	}
 	
 	/**
@@ -839,7 +840,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * dither =  the dithering that is used
 	 */
-	public void setDither(char[] dither)
+	public void setDither(string dither)
 	{
 		// void gtk_print_settings_set_dither (GtkPrintSettings *settings,  const gchar *dither);
 		gtk_print_settings_set_dither(gtkPrintSettings, Str.toStringz(dither));
@@ -850,10 +851,10 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: the finishings
 	 */
-	public char[] getFinishings()
+	public string getFinishings()
 	{
 		// const gchar* gtk_print_settings_get_finishings (GtkPrintSettings *settings);
-		return Str.toString(gtk_print_settings_get_finishings(gtkPrintSettings)).dup;
+		return Str.toString(gtk_print_settings_get_finishings(gtkPrintSettings));
 	}
 	
 	/**
@@ -862,7 +863,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * finishings =  the finishings
 	 */
-	public void setFinishings(char[] finishings)
+	public void setFinishings(string finishings)
 	{
 		// void gtk_print_settings_set_finishings (GtkPrintSettings *settings,  const gchar *finishings);
 		gtk_print_settings_set_finishings(gtkPrintSettings, Str.toStringz(finishings));
@@ -873,10 +874,10 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: the output bin
 	 */
-	public char[] getOutputBin()
+	public string getOutputBin()
 	{
 		// const gchar* gtk_print_settings_get_output_bin (GtkPrintSettings *settings);
-		return Str.toString(gtk_print_settings_get_output_bin(gtkPrintSettings)).dup;
+		return Str.toString(gtk_print_settings_get_output_bin(gtkPrintSettings));
 	}
 	
 	/**
@@ -885,7 +886,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * outputBin =  the output bin
 	 */
-	public void setOutputBin(char[] outputBin)
+	public void setOutputBin(string outputBin)
 	{
 		// void gtk_print_settings_set_output_bin (GtkPrintSettings *settings,  const gchar *output_bin);
 		gtk_print_settings_set_output_bin(gtkPrintSettings, Str.toStringz(outputBin));
@@ -900,7 +901,7 @@ public class PrintSettings : ObjectG
 	 * fileName =  the filename to read the settings from
 	 * error =  return location for errors, or NULL
 	 */
-	public this (char[] fileName, GError** error)
+	public this (string fileName, GError** error)
 	{
 		// GtkPrintSettings* gtk_print_settings_new_from_file (const gchar *file_name,  GError **error);
 		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), error);
@@ -923,7 +924,7 @@ public class PrintSettings : ObjectG
 	 * groupName =  the name of the group to use
 	 * error =  return location for errors, or NULL
 	 */
-	public this (KeyFile keyFile, char[] groupName, GError** error)
+	public this (KeyFile keyFile, string groupName, GError** error)
 	{
 		// GtkPrintSettings* gtk_print_settings_new_from_key_file  (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
@@ -944,7 +945,7 @@ public class PrintSettings : ObjectG
 	 * error =  return location for errors, or NULL
 	 * Returns: TRUE on success
 	 */
-	public int toFile(char[] fileName, GError** error)
+	public int toFile(string fileName, GError** error)
 	{
 		// gboolean gtk_print_settings_to_file (GtkPrintSettings *settings,  const gchar *file_name,  GError **error);
 		return gtk_print_settings_to_file(gtkPrintSettings, Str.toStringz(fileName), error);
@@ -958,7 +959,7 @@ public class PrintSettings : ObjectG
 	 * groupName =  the group to add the settings to in key_file, or
 	 *  NULL to use the default "Print Settings"
 	 */
-	public void toKeyFile(KeyFile keyFile, char[] groupName)
+	public void toKeyFile(KeyFile keyFile, string groupName)
 	{
 		// void gtk_print_settings_to_key_file (GtkPrintSettings *settings,  GKeyFile *key_file,  const gchar *group_name);
 		gtk_print_settings_to_key_file(gtkPrintSettings, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName));

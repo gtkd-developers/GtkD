@@ -46,6 +46,7 @@
  * 	- GNode* -> Node
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Node;

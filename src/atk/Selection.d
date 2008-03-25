@@ -47,6 +47,7 @@
  * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Selection;

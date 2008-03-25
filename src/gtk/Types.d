@@ -47,6 +47,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Types;
@@ -195,7 +196,7 @@ public class Types
 	 * valueName = the name to look for.
 	 * Returns:GtkEnumValue*
 	 */
-	public static GtkEnumValue* enumFindValue(GtkType enumType, char[] valueName)
+	public static GtkEnumValue* enumFindValue(GtkType enumType, string valueName)
 	{
 		// GtkEnumValue* gtk_type_enum_find_value (GtkType enum_type,  const gchar *value_name);
 		return gtk_type_enum_find_value(enumType, Str.toStringz(valueName));
@@ -210,7 +211,7 @@ public class Types
 	 * valueName = the name to look for.
 	 * Returns:GtkFlagValue*
 	 */
-	public static GtkFlagValue* flagsFindValue(GtkType flagsType, char[] valueName)
+	public static GtkFlagValue* flagsFindValue(GtkType flagsType, string valueName)
 	{
 		// GtkFlagValue* gtk_type_flags_find_value (GtkType flags_type,  const gchar *value_name);
 		return gtk_type_flags_find_value(flagsType, Str.toStringz(valueName));

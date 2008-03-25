@@ -22,12 +22,6 @@ private import gtk.MainWindow;
 private import gtk.Label;
 private import gtk.GtkD;
 
-private import gtk.Dialog;
-private import gtk.VBox;
-private import gtk.HButtonBox;
-
-private import gtkc.gtktypes;
-
 class HelloWorld : MainWindow
 {
 	this()
@@ -41,9 +35,7 @@ class HelloWorld : MainWindow
 
 }
 
-private import gtkc.Loader;
-
-void main(char[][] args)
+void main(string[] args)
 {
 
 	Gtk.init(args);

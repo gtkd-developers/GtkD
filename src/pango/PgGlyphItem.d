@@ -51,6 +51,7 @@
  * 	- PangoGlyphItem* -> PgGlyphItem
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgGlyphItem;
@@ -126,7 +127,7 @@ public class PgGlyphItem
 	 * splitIndex =  byte index of position to split item, relative to the start of the item
 	 * Returns: the newly allocated item representing text before split_index, which should be freed with pango_glyph_item_free().
 	 */
-	public PgGlyphItem split(char[] text, int splitIndex)
+	public PgGlyphItem split(string text, int splitIndex)
 	{
 		// PangoGlyphItem* pango_glyph_item_split (PangoGlyphItem *orig,  const char *text,  int split_index);
 		auto p = pango_glyph_item_split(pangoGlyphItem, Str.toStringz(text), splitIndex);
@@ -159,7 +160,7 @@ public class PgGlyphItem
 	 * list =  a PangoAttrList
 	 * Returns: a list of glyph items resulting from splitting glyph_item. Free the elements using pango_glyph_item_free(), the list using g_slist_free().
 	 */
-	public ListSG applyAttrs(char[] text, PgAttributeList list)
+	public ListSG applyAttrs(string text, PgAttributeList list)
 	{
 		// GSList* pango_glyph_item_apply_attrs (PangoGlyphItem *glyph_item,  const char *text,  PangoAttrList *list);
 		auto p = pango_glyph_item_apply_attrs(pangoGlyphItem, Str.toStringz(text), (list is null) ? null : list.getPgAttributeListStruct());
@@ -186,7 +187,7 @@ public class PgGlyphItem
 	 *  in Pango units. May be negative, though too large
 	 *  negative values will give ugly results.
 	 */
-	public void letterSpace(char[] text, PangoLogAttr* logAttrs, int letterSpacing)
+	public void letterSpace(string text, PangoLogAttr* logAttrs, int letterSpacing)
 	{
 		// void pango_glyph_item_letter_space (PangoGlyphItem *glyph_item,  const char *text,  PangoLogAttr *log_attrs,  int letter_spacing);
 		pango_glyph_item_letter_space(pangoGlyphItem, Str.toStringz(text), logAttrs, letterSpacing);

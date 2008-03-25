@@ -53,6 +53,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Button;
@@ -95,7 +96,7 @@ public class Button : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkButton;
 	}
@@ -118,7 +119,7 @@ public class Button : Bin
 	private static IconSize currentIconSize = IconSize.BUTTON;
 	
 	/** An arbitrary string to be used by the application */
-	private char[] action;
+	private string action;
 	
 	/** */
 	public static void setIconSize(IconSize iconSize)
@@ -133,13 +134,13 @@ public class Button : Bin
 	}
 	
 	/** */
-	public void setActionName(char[] action)
+	public void setActionName(string action)
 	{
-		this.action = action.dup;
+		this.action = action;
 	}
 	
 	/** */
-	public char[] getActionName()
+	public string getActionName()
 	{
 		return action;
 	}
@@ -158,7 +159,7 @@ public class Button : Bin
 	 * Returns:
 	 *  a new GtkButton
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -192,7 +193,7 @@ public class Button : Bin
 		}
 		else
 		{
-			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID].ptr) );
+			this(cast(GtkButton*)gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID])) );
 		}
 		
 	}
@@ -205,14 +206,14 @@ public class Button : Bin
 	}
 	
 	/** */
-	public this(char[] label, void delegate(Button) dlg, bool mnemonic=true)
+	public this(string label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
 	}
 	
 	/** */
-	public this(char[] label, void delegate(Button) dlg, char[] action)
+	public this(string label, void delegate(Button) dlg, string action)
 	{
 		this(label);
 		setActionName(action);
@@ -511,10 +512,10 @@ public class Button : Bin
 	 * use as a container.
 	 * Returns: The text of the label widget. This string is ownedby the widget and must not be modified or freed.
 	 */
-	public char[] getLabel()
+	public string getLabel()
 	{
 		// const gchar* gtk_button_get_label (GtkButton *button);
-		return Str.toString(gtk_button_get_label(gtkButton)).dup;
+		return Str.toString(gtk_button_get_label(gtkButton));
 	}
 	
 	/**
@@ -525,7 +526,7 @@ public class Button : Bin
 	 * Params:
 	 * label =  a string
 	 */
-	public void setLabel(char[] label)
+	public void setLabel(string label)
 	{
 		// void gtk_button_set_label (GtkButton *button,  const gchar *label);
 		gtk_button_set_label(gtkButton, Str.toStringz(label));

@@ -48,6 +48,7 @@
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.Util;
@@ -84,10 +85,10 @@ public class Util
 	 * Since 2.2
 	 * Returns: human-readable application name. may return NULL
 	 */
-	public static char[] getApplicationName()
+	public static string getApplicationName()
 	{
 		// const gchar* g_get_application_name (void);
-		return Str.toString(g_get_application_name()).dup;
+		return Str.toString(g_get_application_name());
 	}
 	
 	/**
@@ -104,7 +105,7 @@ public class Util
 	 * Params:
 	 * applicationName =  localized name of the application
 	 */
-	public static void setApplicationName(char[] applicationName)
+	public static void setApplicationName(string applicationName)
 	{
 		// void g_set_application_name (const gchar *application_name);
 		g_set_application_name(Str.toStringz(applicationName));
@@ -118,10 +119,10 @@ public class Util
 	 * the last component of argv[0].)
 	 * Returns: the name of the program. The returned string belongs to GLib and must not be modified or freed.
 	 */
-	public static char[] getPrgname()
+	public static string getPrgname()
 	{
 		// gchar* g_get_prgname (void);
-		return Str.toString(g_get_prgname()).dup;
+		return Str.toString(g_get_prgname());
 	}
 	
 	/**
@@ -131,7 +132,7 @@ public class Util
 	 * Params:
 	 * prgname =  the name of the program.
 	 */
-	public static void setPrgname(char[] prgname)
+	public static void setPrgname(string prgname)
 	{
 		// void g_set_prgname (const gchar *prgname);
 		g_set_prgname(Str.toStringz(prgname));
@@ -148,10 +149,10 @@ public class Util
 	 * variable =  the environment variable to get, in the GLib file name encoding.
 	 * Returns: the value of the environment variable, or NULL ifthe environment variable is not found. The returned string may beoverwritten by the next call to g_getenv(), g_setenv() org_unsetenv().
 	 */
-	public static char[] getenv(char[] variable)
+	public static string getenv(string variable)
 	{
 		// const gchar* g_getenv (const gchar *variable);
-		return Str.toString(g_getenv(Str.toStringz(variable))).dup;
+		return Str.toString(g_getenv(Str.toStringz(variable)));
 	}
 	
 	/**
@@ -168,7 +169,7 @@ public class Util
 	 * overwrite =  whether to change the variable if it already exists.
 	 * Returns: FALSE if the environment variable couldn't be set.
 	 */
-	public static int setenv(char[] variable, char[] value, int overwrite)
+	public static int setenv(string variable, string value, int overwrite)
 	{
 		// gboolean g_setenv (const gchar *variable,  const gchar *value,  gboolean overwrite);
 		return g_setenv(Str.toStringz(variable), Str.toStringz(value), overwrite);
@@ -184,7 +185,7 @@ public class Util
 	 * Params:
 	 * variable =  the environment variable to remove, must not contain '='.
 	 */
-	public static void unsetenv(char[] variable)
+	public static void unsetenv(string variable)
 	{
 		// void g_unsetenv (const gchar *variable);
 		g_unsetenv(Str.toStringz(variable));
@@ -208,10 +209,10 @@ public class Util
 	 * consistent on a machine. On Windows, it is always UTF-8.
 	 * Returns: the user name of the current user.
 	 */
-	public static char[] getUserName()
+	public static string getUserName()
 	{
 		// const gchar* g_get_user_name (void);
-		return Str.toString(g_get_user_name()).dup;
+		return Str.toString(g_get_user_name());
 	}
 	
 	/**
@@ -222,10 +223,10 @@ public class Util
 	 * returned.
 	 * Returns: the user's real name.
 	 */
-	public static char[] getRealName()
+	public static string getRealName()
 	{
 		// const gchar* g_get_real_name (void);
-		return Str.toString(g_get_real_name()).dup;
+		return Str.toString(g_get_real_name());
 	}
 	
 	/**
@@ -237,10 +238,10 @@ public class Util
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
-	public static char[] getUserCacheDir()
+	public static string getUserCacheDir()
 	{
 		// const gchar* g_get_user_cache_dir (void);
-		return Str.toString(g_get_user_cache_dir()).dup;
+		return Str.toString(g_get_user_cache_dir());
 	}
 	
 	/**
@@ -252,10 +253,10 @@ public class Util
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
-	public static char[] getUserDataDir()
+	public static string getUserDataDir()
 	{
 		// const gchar* g_get_user_data_dir (void);
-		return Str.toString(g_get_user_data_dir()).dup;
+		return Str.toString(g_get_user_data_dir());
 	}
 	
 	/**
@@ -267,10 +268,10 @@ public class Util
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
-	public static char[] getUserConfigDir()
+	public static string getUserConfigDir()
 	{
 		// const gchar* g_get_user_config_dir (void);
-		return Str.toString(g_get_user_config_dir()).dup;
+		return Str.toString(g_get_user_config_dir());
 	}
 	
 	/**
@@ -284,10 +285,10 @@ public class Util
 	 * directory =  the logical id of special directory
 	 * Returns: the path to the specified special directory, or NULL if the logical id was not found. The returned string is owned by GLib and should not be modified or freed.
 	 */
-	public static char[] getUserSpecialDir(GUserDirectory directory)
+	public static string getUserSpecialDir(GUserDirectory directory)
 	{
 		// const gchar* g_get_user_special_dir (GUserDirectory directory);
-		return Str.toString(g_get_user_special_dir(directory)).dup;
+		return Str.toString(g_get_user_special_dir(directory));
 	}
 	
 	/**
@@ -352,10 +353,10 @@ public class Util
 	 * Since 2.8
 	 * Returns: the host name of the machine.
 	 */
-	public static char[] getHostName()
+	public static string getHostName()
 	{
 		// const gchar* g_get_host_name (void);
-		return Str.toString(g_get_host_name()).dup;
+		return Str.toString(g_get_host_name());
 	}
 	
 	/**
@@ -376,10 +377,10 @@ public class Util
 	 * return the real home directory for the user. If applications
 	 * Returns: the current user's home directory
 	 */
-	public static char[] getHomeDir()
+	public static string getHomeDir()
 	{
 		// const gchar* g_get_home_dir (void);
-		return Str.toString(g_get_home_dir()).dup;
+		return Str.toString(g_get_home_dir());
 	}
 	
 	/**
@@ -391,10 +392,10 @@ public class Util
 	 * it is always UTF-8. The return value is never NULL.
 	 * Returns: the directory to use for temporary files.
 	 */
-	public static char[] getTmpDir()
+	public static string getTmpDir()
 	{
 		// const gchar* g_get_tmp_dir (void);
-		return Str.toString(g_get_tmp_dir()).dup;
+		return Str.toString(g_get_tmp_dir());
 	}
 	
 	/**
@@ -403,10 +404,10 @@ public class Util
 	 * of the returned string is system defined. On Windows, it is always UTF-8.
 	 * Returns: the current directory.
 	 */
-	public static char[] getCurrentDir()
+	public static string getCurrentDir()
 	{
 		// gchar* g_get_current_dir (void);
-		return Str.toString(g_get_current_dir()).dup;
+		return Str.toString(g_get_current_dir());
 	}
 	
 	/**
@@ -420,10 +421,10 @@ public class Util
 	 * fileName =  the name of the file.
 	 * Returns: the name of the file without any leading directory components.
 	 */
-	public static char[] basename(char[] fileName)
+	public static string basename(string fileName)
 	{
 		// const gchar* g_basename (const gchar *file_name);
-		return Str.toString(g_basename(Str.toStringz(fileName))).dup;
+		return Str.toString(g_basename(Str.toStringz(fileName)));
 	}
 	
 	/**
@@ -434,7 +435,7 @@ public class Util
 	 * fileName =  a file name.
 	 * Returns: TRUE if file_name is an absolute path.
 	 */
-	public static int pathIsAbsolute(char[] fileName)
+	public static int pathIsAbsolute(string fileName)
 	{
 		// gboolean g_path_is_absolute (const gchar *file_name);
 		return g_path_is_absolute(Str.toStringz(fileName));
@@ -448,10 +449,10 @@ public class Util
 	 * fileName =  a file name.
 	 * Returns: a pointer into file_name after the root component.
 	 */
-	public static char[] pathSkipRoot(char[] fileName)
+	public static string pathSkipRoot(string fileName)
 	{
 		// const gchar* g_path_skip_root (const gchar *file_name);
-		return Str.toString(g_path_skip_root(Str.toStringz(fileName))).dup;
+		return Str.toString(g_path_skip_root(Str.toStringz(fileName)));
 	}
 	
 	/**
@@ -464,10 +465,10 @@ public class Util
 	 * fileName =  the name of the file.
 	 * Returns: a newly allocated string containing the last component of  the filename.
 	 */
-	public static char[] pathGetBasename(char[] fileName)
+	public static string pathGetBasename(string fileName)
 	{
 		// gchar* g_path_get_basename (const gchar *file_name);
-		return Str.toString(g_path_get_basename(Str.toStringz(fileName))).dup;
+		return Str.toString(g_path_get_basename(Str.toStringz(fileName)));
 	}
 	
 	/**
@@ -478,10 +479,10 @@ public class Util
 	 * fileName =  the name of the file.
 	 * Returns: the directory components of the file.
 	 */
-	public static char[] pathGetDirname(char[] fileName)
+	public static string pathGetDirname(string fileName)
 	{
 		// gchar* g_path_get_dirname (const gchar *file_name);
-		return Str.toString(g_path_get_dirname(Str.toStringz(fileName))).dup;
+		return Str.toString(g_path_get_dirname(Str.toStringz(fileName)));
 	}
 	
 	/**
@@ -503,10 +504,10 @@ public class Util
 	 * ... =  remaining elements in path, terminated by NULL
 	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
-	public static char[] buildFilename(char[] firstElement, ... )
+	public static string buildFilename(string firstElement, ... )
 	{
 		// gchar* g_build_filename (const gchar *first_element,  ...);
-		return Str.toString(g_build_filename(Str.toStringz(firstElement))).dup;
+		return Str.toString(g_build_filename(Str.toStringz(firstElement)));
 	}
 	
 	/**
@@ -518,10 +519,10 @@ public class Util
 	 * args =  NULL-terminated array of strings containing the path elements.
 	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
-	public static char[] buildFilenamev(char** args)
+	public static string buildFilenamev(char** args)
 	{
 		// gchar* g_build_filenamev (gchar **args);
-		return Str.toString(g_build_filenamev(args)).dup;
+		return Str.toString(g_build_filenamev(args));
 	}
 	
 	/**
@@ -553,10 +554,10 @@ public class Util
 	 * ... =  remaining elements in path, terminated by NULL
 	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
-	public static char[] buildPath(char[] separator, char[] firstElement, ... )
+	public static string buildPath(string separator, string firstElement, ... )
 	{
 		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
-		return Str.toString(g_build_path(Str.toStringz(separator), Str.toStringz(firstElement))).dup;
+		return Str.toString(g_build_path(Str.toStringz(separator), Str.toStringz(firstElement)));
 	}
 	
 	/**
@@ -569,10 +570,10 @@ public class Util
 	 * args =  NULL-terminated array of strings containing the path elements.
 	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
-	public static char[] buildPathv(char[] separator, char** args)
+	public static string buildPathv(string separator, char** args)
 	{
 		// gchar* g_build_pathv (const gchar *separator,  gchar **args);
-		return Str.toString(g_build_pathv(Str.toStringz(separator), args)).dup;
+		return Str.toString(g_build_pathv(Str.toStringz(separator), args));
 	}
 	
 	/**
@@ -586,10 +587,10 @@ public class Util
 	 * size =  a size in bytes.
 	 * Returns: a formatted string containing a human readable file size.
 	 */
-	public static char[] formatSizeForDisplay(long size)
+	public static string formatSizeForDisplay(long size)
 	{
 		// char* g_format_size_for_display (goffset size);
-		return Str.toString(g_format_size_for_display(size)).dup;
+		return Str.toString(g_format_size_for_display(size));
 	}
 	
 	/**
@@ -612,10 +613,10 @@ public class Util
 	 * program =  a program name in the GLib file name encoding
 	 * Returns: absolute path, or NULL
 	 */
-	public static char[] findProgramInPath(char[] program)
+	public static string findProgramInPath(string program)
 	{
 		// gchar* g_find_program_in_path (const gchar *program);
-		return Str.toString(g_find_program_in_path(Str.toStringz(program))).dup;
+		return Str.toString(g_find_program_in_path(Str.toStringz(program)));
 	}
 	
 	/**
@@ -726,7 +727,7 @@ public class Util
 	 * nkeys =  the number of GDebugKeys in the array.
 	 * Returns: the combined set of bit flags.
 	 */
-	public static uint parseDebugString(char[] string, GDebugKey* keys, uint nkeys)
+	public static uint parseDebugString(string string, GDebugKey* keys, uint nkeys)
 	{
 		// guint g_parse_debug_string (const gchar *string,  const GDebugKey *keys,  guint nkeys);
 		return g_parse_debug_string(Str.toStringz(string), keys, nkeys);

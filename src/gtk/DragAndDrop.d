@@ -63,6 +63,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.DragAndDrop;
@@ -472,7 +473,7 @@ public class DragAndDrop
 	 * hotX =  the X offset within the icon of the hotspot.
 	 * hotY =  the Y offset within the icon of the hotspot.
 	 */
-	public void setIconStock(char[] stockId, int hotX, int hotY)
+	public void setIconStock(string stockId, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_stock (GdkDragContext *context,  const gchar *stock_id,  gint hot_x,  gint hot_y);
 		gtk_drag_set_icon_stock(gdkDragContext, Str.toStringz(stockId), hotX, hotY);
@@ -490,7 +491,7 @@ public class DragAndDrop
 	 * hotX =  the X offset of the hotspot within the icon
 	 * hotY =  the Y offset of the hotspot within the icon
 	 */
-	public void setIconName(char[] iconName, int hotX, int hotY)
+	public void setIconName(string iconName, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_name (GdkDragContext *context,  const gchar *icon_name,  gint hot_x,  gint hot_y);
 		gtk_drag_set_icon_name(gdkDragContext, Str.toStringz(iconName), hotX, hotY);
@@ -600,7 +601,7 @@ public class DragAndDrop
 	 * widget =  a GtkWidget
 	 * stockId =  the ID of the stock icon to use
 	 */
-	public static void sourceSetIconStock(Widget widget, char[] stockId)
+	public static void sourceSetIconStock(Widget widget, string stockId)
 	{
 		// void gtk_drag_source_set_icon_stock (GtkWidget *widget,  const gchar *stock_id);
 		gtk_drag_source_set_icon_stock((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(stockId));
@@ -614,7 +615,7 @@ public class DragAndDrop
 	 * widget =  a GtkWidget
 	 * iconName =  name of icon to use
 	 */
-	public static void sourceSetIconName(Widget widget, char[] iconName)
+	public static void sourceSetIconName(Widget widget, string iconName)
 	{
 		// void gtk_drag_source_set_icon_name (GtkWidget *widget,  const gchar *icon_name);
 		gtk_drag_source_set_icon_name((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(iconName));

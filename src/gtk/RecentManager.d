@@ -54,6 +54,7 @@
  * 	- GtkRecentManager* -> RecentManager
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentManager;
@@ -126,7 +127,7 @@ public class RecentManager : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentManager;
 	}
@@ -286,7 +287,7 @@ public class RecentManager : ObjectG
 	 * uri =  a valid URI
 	 * Returns: TRUE if the new item was successfully added to the recently used resources list
 	 */
-	public int addItem(char[] uri)
+	public int addItem(string uri)
 	{
 		// gboolean gtk_recent_manager_add_item (GtkRecentManager *manager,  const gchar *uri);
 		return gtk_recent_manager_add_item(gtkRecentManager, Str.toStringz(uri));
@@ -315,7 +316,7 @@ public class RecentManager : ObjectG
 	 * recentData =  metadata of the resource
 	 * Returns: TRUE if the new item was successfully added to therecently used resources list, FALSE otherwise.
 	 */
-	public int addFull(char[] uri, GtkRecentData* recentData)
+	public int addFull(string uri, GtkRecentData* recentData)
 	{
 		// gboolean gtk_recent_manager_add_full (GtkRecentManager *manager,  const gchar *uri,  const GtkRecentData *recent_data);
 		return gtk_recent_manager_add_full(gtkRecentManager, Str.toStringz(uri), recentData);
@@ -330,7 +331,7 @@ public class RecentManager : ObjectG
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the item pointed by uri has been successfully removed by the recently used resources list, and FALSE otherwise.
 	 */
-	public int removeItem(char[] uri, GError** error)
+	public int removeItem(string uri, GError** error)
 	{
 		// gboolean gtk_recent_manager_remove_item (GtkRecentManager *manager,  const gchar *uri,  GError **error);
 		return gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), error);
@@ -346,7 +347,7 @@ public class RecentManager : ObjectG
 	 * error =  a return location for a GError, or NULL
 	 * Returns: a GtkRecentInfo structure containing information about the resource pointed by uri, or NULL if the URI was not registered in the recently used resources list. Free with gtk_recent_info_unref().
 	 */
-	public RecentInfo lookupItem(char[] uri, GError** error)
+	public RecentInfo lookupItem(string uri, GError** error)
 	{
 		// GtkRecentInfo* gtk_recent_manager_lookup_item (GtkRecentManager *manager,  const gchar *uri,  GError **error);
 		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), error);
@@ -366,7 +367,7 @@ public class RecentManager : ObjectG
 	 * uri =  a URI
 	 * Returns: TRUE if the resource was found, FALSE otherwise.
 	 */
-	public int hasItem(char[] uri)
+	public int hasItem(string uri)
 	{
 		// gboolean gtk_recent_manager_has_item (GtkRecentManager *manager,  const gchar *uri);
 		return gtk_recent_manager_has_item(gtkRecentManager, Str.toStringz(uri));
@@ -384,7 +385,7 @@ public class RecentManager : ObjectG
 	 * error =  a return location for a GError, or NULL
 	 * Returns: TRUE on success.
 	 */
-	public int moveItem(char[] uri, char[] newUri, GError** error)
+	public int moveItem(string uri, string newUri, GError** error)
 	{
 		// gboolean gtk_recent_manager_move_item (GtkRecentManager *manager,  const gchar *uri,  const gchar *new_uri,  GError **error);
 		return gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), error);

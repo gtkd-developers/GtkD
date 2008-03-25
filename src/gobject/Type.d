@@ -48,6 +48,7 @@
  * 	- GTypePlugin* -> TypePlugin
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gobject.Type;
@@ -132,10 +133,10 @@ public class Type
 	 * type = 		Type to return name for.
 	 * Returns:	Static type name or NULL.
 	 */
-	public static char[] name(GType type)
+	public static string name(GType type)
 	{
 		// const gchar* g_type_name (GType type);
-		return Str.toString(g_type_name(type)).dup;
+		return Str.toString(g_type_name(type));
 	}
 	
 	/**
@@ -157,7 +158,7 @@ public class Type
 	 * name =  Type name to lookup.
 	 * Returns:Corresponding type ID or 0.
 	 */
-	public static GType fromName(char[] name)
+	public static GType fromName(string name)
 	{
 		// GType g_type_from_name (const gchar *name);
 		return g_type_from_name(Str.toStringz(name));
@@ -517,7 +518,7 @@ public class Type
 	 * flags = 		Bitwise combination of GTypeFlags values.
 	 * Returns:	The new type identifier.
 	 */
-	public static GType registerStatic(GType parentType, char[] typeName, GTypeInfo* info, GTypeFlags flags)
+	public static GType registerStatic(GType parentType, string typeName, GTypeInfo* info, GTypeFlags flags)
 	{
 		// GType g_type_register_static (GType parent_type,  const gchar *type_name,  const GTypeInfo *info,  GTypeFlags flags);
 		return g_type_register_static(parentType, Str.toStringz(typeName), info, flags);
@@ -539,7 +540,7 @@ public class Type
 	 * flags = 	Bitwise combination of GTypeFlags values.
 	 * Returns:	The new type identifier.
 	 */
-	public static GType registerStaticSimple(GType parentType, char[] typeName, uint classSize, GClassInitFunc classInit, uint instanceSize, GInstanceInitFunc instanceInit, GTypeFlags flags)
+	public static GType registerStaticSimple(GType parentType, string typeName, uint classSize, GClassInitFunc classInit, uint instanceSize, GInstanceInitFunc instanceInit, GTypeFlags flags)
 	{
 		// GType g_type_register_static_simple (GType parent_type,  const gchar *type_name,  guint class_size,  GClassInitFunc class_init,  guint instance_size,  GInstanceInitFunc instance_init,  GTypeFlags flags);
 		return g_type_register_static_simple(parentType, Str.toStringz(typeName), classSize, classInit, instanceSize, instanceInit, flags);
@@ -558,7 +559,7 @@ public class Type
 	 * flags = 		Bitwise combination of GTypeFlags values.
 	 * Returns:	The new type identifier or G_TYPE_INVALID if registration failed.
 	 */
-	public static GType registerDynamic(GType parentType, char[] typeName, TypePlugin plugin, GTypeFlags flags)
+	public static GType registerDynamic(GType parentType, string typeName, TypePlugin plugin, GTypeFlags flags)
 	{
 		// GType g_type_register_dynamic (GType parent_type,  const gchar *type_name,  GTypePlugin *plugin,  GTypeFlags flags);
 		return g_type_register_dynamic(parentType, Str.toStringz(typeName), (plugin is null) ? null : plugin.getTypePluginStruct(), flags);
@@ -579,7 +580,7 @@ public class Type
 	 * flags = 		Bitwise combination of GTypeFlags values.
 	 * Returns:	The predefined type identifier.
 	 */
-	public static GType registerFundamental(GType typeId, char[] typeName, GTypeInfo* info, GTypeFundamentalInfo* finfo, GTypeFlags flags)
+	public static GType registerFundamental(GType typeId, string typeName, GTypeInfo* info, GTypeFundamentalInfo* finfo, GTypeFlags flags)
 	{
 		// GType g_type_register_fundamental (GType type_id,  const gchar *type_name,  const GTypeInfo *info,  const GTypeFundamentalInfo *finfo,  GTypeFlags flags);
 		return g_type_register_fundamental(typeId, Str.toStringz(typeName), info, finfo, flags);

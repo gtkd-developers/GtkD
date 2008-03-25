@@ -49,6 +49,7 @@
  * 	- GtkSourceBuffer* -> SourceBuffer
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gsv.SourceView;
@@ -88,7 +89,7 @@ public class SourceView : TextView
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceView;
 	}
@@ -115,7 +116,7 @@ public class SourceView : TextView
 	 * Returns:
 	 *  a GtkSourceBuffer
 	 */
-	public SourceBuffer getBuffer()
+	public override SourceBuffer getBuffer()
 	{
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
 		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
@@ -350,7 +351,7 @@ public class SourceView : TextView
 	 * category =  a mark category.
 	 * pixbuf =  a GdkPixbuf or NULL.
 	 */
-	public void setMarkCategoryPixbuf(char[] category, GdkPixbuf* pixbuf)
+	public void setMarkCategoryPixbuf(string category, GdkPixbuf* pixbuf)
 	{
 		// void gtk_source_view_set_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
 		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), pixbuf);
@@ -363,7 +364,7 @@ public class SourceView : TextView
 	 * category =  a mark category.
 	 * Returns: the associated GdkPixbuf, or NULL if not found.
 	 */
-	public GdkPixbuf* getMarkCategoryPixbuf(char[] category)
+	public GdkPixbuf* getMarkCategoryPixbuf(string category)
 	{
 		// GdkPixbuf* gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
 		return gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
@@ -378,7 +379,7 @@ public class SourceView : TextView
 	 * category =  a mark category.
 	 * priority =  the priority for the category
 	 */
-	public void setMarkCategoryPriority(char[] category, int priority)
+	public void setMarkCategoryPriority(string category, int priority)
 	{
 		// void gtk_source_view_set_mark_category_priority  (GtkSourceView *view,  const gchar *category,  gint priority);
 		gtk_source_view_set_mark_category_priority(gtkSourceView, Str.toStringz(category), priority);
@@ -391,7 +392,7 @@ public class SourceView : TextView
 	 * category =  a mark category.
 	 * Returns: the priority or if categoryexists but no priority was set, it defaults to 0.
 	 */
-	public int getMarkCategoryPriority(char[] category)
+	public int getMarkCategoryPriority(string category)
 	{
 		// gint gtk_source_view_get_mark_category_priority  (GtkSourceView *view,  const gchar *category);
 		return gtk_source_view_get_mark_category_priority(gtkSourceView, Str.toStringz(category));

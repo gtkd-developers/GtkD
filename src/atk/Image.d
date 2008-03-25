@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.Image;
@@ -128,10 +129,10 @@ public class Image
 	 * Get a textual description of this image.
 	 * Returns: a string representing the image description
 	 */
-	public char[] getImageDescription()
+	public string getImageDescription()
 	{
 		// const gchar* atk_image_get_image_description (AtkImage *image);
-		return Str.toString(atk_image_get_image_description(atkImage)).dup;
+		return Str.toString(atk_image_get_image_description(atkImage));
 	}
 	
 	/**
@@ -140,7 +141,7 @@ public class Image
 	 * description =  a string description to set for image
 	 * Returns: boolean TRUE, or FALSE if operation couldnot be completed.
 	 */
-	public int setImageDescription(char[] description)
+	public int setImageDescription(string description)
 	{
 		// gboolean atk_image_set_image_description (AtkImage *image,  const gchar *description);
 		return atk_image_set_image_description(atkImage, Str.toStringz(description));
@@ -164,9 +165,9 @@ public class Image
 	 * Since ATK 1.12
 	 * Returns:a string corresponding to the POSIX LC_MESSAGES locale used by the image description, or NULL if the image does not specify a locale.
 	 */
-	public char[] getImageLocale()
+	public string getImageLocale()
 	{
 		// const gchar* atk_image_get_image_locale (AtkImage *image);
-		return Str.toString(atk_image_get_image_locale(atkImage)).dup;
+		return Str.toString(atk_image_get_image_locale(atkImage));
 	}
 }

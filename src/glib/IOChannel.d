@@ -51,6 +51,7 @@
  * 	- GString* -> StringG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.IOChannel;
@@ -283,7 +284,7 @@ public class IOChannel
 	 *  the same meaning as in fopen()
 	 * error =  A location to return an error of type G_FILE_ERROR
 	 */
-	public this (char[] filename, char[] mode, GError** error)
+	public this (string filename, string mode, GError** error)
 	{
 		// GIOChannel* g_io_channel_new_file (const gchar *filename,  const gchar *mode,  GError **error);
 		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), error);
@@ -312,7 +313,7 @@ public class IOChannel
 	 *  or GIOChannelError.
 	 * Returns: the status of the operation.
 	 */
-	public GIOStatus readChars(char[] buf, uint count, uint* bytesRead, GError** error)
+	public GIOStatus readChars(string buf, uint count, uint* bytesRead, GError** error)
 	{
 		// GIOStatus g_io_channel_read_chars (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read,  GError **error);
 		return g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, bytesRead, error);
@@ -410,7 +411,7 @@ public class IOChannel
 	 *  or GIOChannelError
 	 * Returns: the status of the operation.
 	 */
-	public GIOStatus writeChars(char[] buf, int count, uint* bytesWritten, GError** error)
+	public GIOStatus writeChars(string buf, int count, uint* bytesWritten, GError** error)
 	{
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
 		return g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, bytesWritten, error);
@@ -642,10 +643,10 @@ public class IOChannel
 	 * length =  a location to return the length of the line terminator
 	 * Returns: The line termination string. This value is owned by GLib and must not be freed.
 	 */
-	public char[] getLineTerm(int* length)
+	public string getLineTerm(int* length)
 	{
 		// const gchar* g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
-		return Str.toString(g_io_channel_get_line_term(gIOChannel, length)).dup;
+		return Str.toString(g_io_channel_get_line_term(gIOChannel, length));
 	}
 	
 	/**
@@ -660,7 +661,7 @@ public class IOChannel
 	 *  string is assumed to be nul-terminated. This option allows
 	 *  termination strings with embedded nuls.
 	 */
-	public void setLineTerm(char[] lineTerm, int length)
+	public void setLineTerm(string lineTerm, int length)
 	{
 		// void g_io_channel_set_line_term (GIOChannel *channel,  const gchar *line_term,  gint length);
 		g_io_channel_set_line_term(gIOChannel, Str.toStringz(lineTerm), length);
@@ -708,10 +709,10 @@ public class IOChannel
 	 * makes the channel safe for binary data.
 	 * Returns: A string containing the encoding, this string is owned by GLib and must not be freed.
 	 */
-	public char[] getEncoding()
+	public string getEncoding()
 	{
 		// const gchar* g_io_channel_get_encoding (GIOChannel *channel);
-		return Str.toString(g_io_channel_get_encoding(gIOChannel)).dup;
+		return Str.toString(g_io_channel_get_encoding(gIOChannel));
 	}
 	
 	/**
@@ -725,7 +726,7 @@ public class IOChannel
 	 * error =  location to store an error of type GConvertError
 	 * Returns: G_IO_STATUS_NORMAL if the encoding was successfully set.
 	 */
-	public GIOStatus setEncoding(char[] encoding, GError** error)
+	public GIOStatus setEncoding(string encoding, GError** error)
 	{
 		// GIOStatus g_io_channel_set_encoding (GIOChannel *channel,  const gchar *encoding,  GError **error);
 		return g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), error);
@@ -770,7 +771,7 @@ public class IOChannel
 	 * bytesRead =  returns the number of bytes actually read
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError read(char[] buf, uint count, uint* bytesRead)
+	public GIOError read(string buf, uint count, uint* bytesRead)
 	{
 		// GIOError g_io_channel_read (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read);
 		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, bytesRead);
@@ -786,7 +787,7 @@ public class IOChannel
 	 * bytesWritten =  the number of bytes actually written
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError write(char[] buf, uint count, uint* bytesWritten)
+	public GIOError write(string buf, uint count, uint* bytesWritten)
 	{
 		// GIOError g_io_channel_write (GIOChannel *channel,  const gchar *buf,  gsize count,  gsize *bytes_written);
 		return g_io_channel_write(gIOChannel, Str.toStringz(buf), count, bytesWritten);

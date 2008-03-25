@@ -59,6 +59,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PrintUnixDialog;
@@ -136,7 +137,7 @@ public class PrintUnixDialog : Dialog
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPrintUnixDialog;
 	}
@@ -200,7 +201,7 @@ public class PrintUnixDialog : Dialog
 	 * title =  Title of the dialog, or NULL
 	 * parent =  Transient parent of the dialog, or NULL
 	 */
-	public this (char[] title, Window parent)
+	public this (string title, Window parent)
 	{
 		// GtkWidget* gtk_print_unix_dialog_new (const gchar *title,  GtkWindow *parent);
 		auto p = gtk_print_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());

@@ -56,6 +56,7 @@
  * 	- GtkObject* -> ObjectGtk
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.BindingSet;
@@ -183,7 +184,7 @@ public class BindingSet
 	 * signalName =  signal name to be bound
 	 * bindingArgs =  list of GtkBindingArg signal arguments
 	 */
-	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, char[] signalName, ListSG bindingArgs)
+	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, string signalName, ListSG bindingArgs)
 	{
 		// void gtk_binding_entry_add_signall (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  GSList *binding_args);
 		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), (bindingArgs is null) ? null : bindingArgs.getListSGStruct());
@@ -221,7 +222,7 @@ public class BindingSet
 	 * Params:
 	 * setName =  unique name of this binding set
 	 */
-	public this (char[] setName)
+	public this (string setName)
 	{
 		// GtkBindingSet* gtk_binding_set_new (const gchar *set_name);
 		auto p = gtk_binding_set_new(Str.toStringz(setName));
@@ -262,7 +263,7 @@ public class BindingSet
 	 * setName =  unique binding set name
 	 * Returns: NULL or the specified binding set
 	 */
-	public static BindingSet find(char[] setName)
+	public static BindingSet find(string setName)
 	{
 		// GtkBindingSet* gtk_binding_set_find (const gchar *set_name);
 		auto p = gtk_binding_set_find(Str.toStringz(setName));
@@ -330,7 +331,7 @@ public class BindingSet
 	 * nArgs =  number of arguments to signal_name
 	 * @: arguments to signal_name
 	 */
-	public void bindingEntryAddSignal(uint keyval, GdkModifierType modifiers, char[] signalName, uint nArgs, ... )
+	public void bindingEntryAddSignal(uint keyval, GdkModifierType modifiers, string signalName, uint nArgs, ... )
 	{
 		// void gtk_binding_entry_add_signal (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  guint n_args,  ...);
 		gtk_binding_entry_add_signal(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), nArgs);
@@ -372,7 +373,7 @@ public class BindingSet
 	 * pathPattern =  the actual match pattern
 	 * priority =  binding priority
 	 */
-	public void addPath(GtkPathType pathType, char[] pathPattern, GtkPathPriorityType priority)
+	public void addPath(GtkPathType pathType, string pathPattern, GtkPathPriorityType priority)
 	{
 		// void gtk_binding_set_add_path (GtkBindingSet *binding_set,  GtkPathType path_type,  const gchar *path_pattern,  GtkPathPriorityType priority);
 		gtk_binding_set_add_path(gtkBindingSet, pathType, Str.toStringz(pathPattern), priority);

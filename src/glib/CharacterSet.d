@@ -50,6 +50,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module glib.CharacterSet;
@@ -184,10 +185,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 */
-	public static char[] convert(char[] str, int len, char[] toCodeset, char[] fromCodeset, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string convert(string str, int len, string toCodeset, string fromCodeset, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, error)).dup;
+		return Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, error));
 	}
 	
 	/**
@@ -222,10 +223,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 */
-	public static char[] convertWithFallback(char[] str, int len, char[] toCodeset, char[] fromCodeset, char[] fallback, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string convertWithFallback(string str, int len, string toCodeset, string fromCodeset, string fallback, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, error)).dup;
+		return Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, error));
 	}
 	
 	/**
@@ -252,10 +253,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
 	 */
-	public static char[] localeToUtf8(char[] opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string localeToUtf8(string opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error)).dup;
+		return Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error));
 	}
 	
 	/**
@@ -281,10 +282,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
 	 */
-	public static char[] filenameToUtf8(char[] opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string filenameToUtf8(string opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error)).dup;
+		return Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error));
 	}
 	
 	/**
@@ -310,10 +311,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
 	 */
-	public static char[] filenameFromUtf8(char[] utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string filenameFromUtf8(string utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error)).dup;
+		return Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error));
 	}
 	
 	/**
@@ -328,10 +329,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
 	 */
-	public static char[] filenameFromUri(char[] uri, char** hostname, GError** error)
+	public static string filenameFromUri(string uri, char** hostname, GError** error)
 	{
 		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		return Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, error)).dup;
+		return Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, error));
 	}
 	
 	/**
@@ -346,10 +347,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: a newly-allocated string holding the resulting URI, or NULL on an error.
 	 */
-	public static char[] filenameToUri(char[] filename, char[] hostname, GError** error)
+	public static string filenameToUri(string filename, string hostname, GError** error)
 	{
 		// gchar* g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
-		return Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), error)).dup;
+		return Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), error));
 	}
 	
 	/**
@@ -404,10 +405,10 @@ public class CharacterSet
 	 * filename =  a pathname hopefully in the GLib file name encoding
 	 * Returns: a newly allocated string containing a rendition of the filename in valid UTF-8
 	 */
-	public static char[] filenameDisplayName(char[] filename)
+	public static string filenameDisplayName(string filename)
 	{
 		// gchar* g_filename_display_name (const gchar *filename);
-		return Str.toString(g_filename_display_name(Str.toStringz(filename))).dup;
+		return Str.toString(g_filename_display_name(Str.toStringz(filename)));
 	}
 	
 	/**
@@ -429,10 +430,10 @@ public class CharacterSet
 	 * filename =  an absolute pathname in the GLib file name encoding
 	 * Returns: a newly allocated string containing a rendition of the basename of the filename in valid UTF-8
 	 */
-	public static char[] filenameDisplayBasename(char[] filename)
+	public static string filenameDisplayBasename(string filename)
 	{
 		// gchar* g_filename_display_basename (const gchar *filename);
-		return Str.toString(g_filename_display_basename(Str.toStringz(filename))).dup;
+		return Str.toString(g_filename_display_basename(Str.toStringz(filename)));
 	}
 	
 	/**
@@ -444,7 +445,7 @@ public class CharacterSet
 	 * uriList =  an URI list
 	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev().
 	 */
-	public static char** uriListExtractUris(char[] uriList)
+	public static char** uriListExtractUris(string uriList)
 	{
 		// gchar** g_uri_list_extract_uris (const gchar *uri_list);
 		return g_uri_list_extract_uris(Str.toStringz(uriList));
@@ -473,10 +474,10 @@ public class CharacterSet
 	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
 	 */
-	public static char[] localeFromUtf8(char[] utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string localeFromUtf8(string utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error)).dup;
+		return Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error));
 	}
 	
 	/**

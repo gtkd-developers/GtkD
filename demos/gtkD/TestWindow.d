@@ -178,7 +178,7 @@ class TestWindow : MainWindow
 		setup();
 		showAll();
 
-		char[] versionCompare = Version.checkVersion(2,8,0);
+		string versionCompare = Version.checkVersion(2,8,0);
 
 		if ( versionCompare.length > 0 )
 		{
@@ -317,7 +317,7 @@ class TestWindow : MainWindow
 	{
 		this()
 		{
-			char[][] names;
+			string[] names;
 			names ~= "Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
 			names ~= "www.gtk.org (base C library)";
 
@@ -331,7 +331,7 @@ class TestWindow : MainWindow
 
 	void onMenuActivate(MenuItem menuItem)
 	{
-		char[] action = menuItem.getActionName();
+		string action = menuItem.getActionName();
 		switch( action )
 		{
 			case "help.about":
@@ -518,9 +518,9 @@ class TestWindow : MainWindow
 
 		// comboBoxTextEntry from a list of strings
 		mainBox.packStart(new Label("String combo"),false,true,0);
-		static char[][] cbList = ["item 1","item 2","item 3","item 4","item 5","item 6","item 7","item 8","item 9"];
+		static string[] cbList = ["item 1","item 2","item 3","item 4","item 5","item 6","item 7","item 8","item 9"];
 		comboText = new ComboBoxEntry();
-		char[] entry3 = "Combo box text entry 3";
+		string entry3 = "Combo box text entry 3";
 		comboText.appendText("Combo box text entry 1");
 		comboText.appendText("Combo box text entry 2");
 		comboText.appendText(entry3);
@@ -781,7 +781,7 @@ class TestWindow : MainWindow
 
 	void showFileChooser(Button button)
 	{
-		char[][] a;
+		string[] a;
 		ResponseType[] r;
 		a ~= "Lets go!";
 		a ~= "Please don't";
@@ -796,7 +796,7 @@ class TestWindow : MainWindow
 		fcd.run();
 //		writefln("file selected = %s",fcd.getFileName());
 //
-//		foreach ( int i, char[] selection ; fs.getSelections())
+//		foreach ( int i, string selection ; fs.getSelections())
 //		{
 //			printf("File(s) selected [%d] %.*s\n",i,selection);
 //		}
@@ -815,7 +815,7 @@ class TestWindow : MainWindow
 		//fs.setMultiple(true);
 		fs.run();
 		//printf("file selected = %.*s\n",fs.getFileName());
-//		char[][] selections = fs.getSelections();
+//		string[] selections = fs.getSelections();
 //		for ( int i=0 ;i<selections.length ; i++)
 //		{
 //			printf("File(s) selected [%d] %.*s\n",i,selections[i]);
@@ -864,7 +864,7 @@ class TestWindow : MainWindow
 			f = new FontSelectionDialog("Select the font");
 		}
 		f.run();
-		char[] fontName = f.getFontName();
+		string fontName = f.getFontName();
 		f.hide();
 	}
 
@@ -924,11 +924,11 @@ class TestWindow : MainWindow
 			this.num = num;
 		}
 
-		version(Tango) void run()
+		version(Tango) override void run()
 		{
 			runCommon();
 		}
-		else int run()
+		else override int run()
 		{
 			return runCommon();
 		}
@@ -1095,28 +1095,28 @@ class TestWindow : MainWindow
 		TreeIter iterTop = testListStore.createIter();
 
 		static int [3] cols = [0,1,2];
-		char[][] vals;
+		string[] vals;
 		vals ~= "Antonio";
 		vals ~= "Canada";
 		vals ~= "Ontario";
 		testListStore.set(iterTop,cols,vals);
 
 		testListStore.append(iterTop);
-		char[][] vals1;
+		string[] vals1;
 		vals1 ~= "John Reimer";
 		vals1 ~= "Canada";
 		vals1 ~= "BC";
 		testListStore.set(iterTop,cols,vals1);
 
 		testListStore.append(iterTop);
-		char[][] vals2;
+		string[] vals2;
 		vals2 ~= "Friend of GtkD 2";
 		vals2 ~= "Poland";
 		vals2 ~= "Torun";
 		testListStore.set(iterTop,cols,vals2);
 
 		testListStore.append(iterTop);
-		char[][] vals3;
+		string[] vals3;
 		vals3 ~= "Friend of GtkD 3";
 		vals3 ~= "Norway";
 		vals3 ~= "Norway";
@@ -1213,7 +1213,7 @@ class TestWindow : MainWindow
 
 private import gtkc.Loader;
 
-void main(char[][] args)
+void main(string[] args)
 {
 
 	Linker.dumpFailedLoads();

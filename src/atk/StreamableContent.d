@@ -48,6 +48,7 @@
  * 	- GIOChannel* -> IOChannel
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module atk.StreamableContent;
@@ -131,10 +132,10 @@ public class StreamableContent
 	 * i =  a gint representing the position of the mime type starting from 0
 	 * Returns:: a gchar* representing the specified mime type; the callershould not free the character string.
 	 */
-	public char[] getMimeType(int i)
+	public string getMimeType(int i)
 	{
 		// const gchar* atk_streamable_content_get_mime_type  (AtkStreamableContent *streamable,  gint i);
-		return Str.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i)).dup;
+		return Str.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i));
 	}
 	
 	/**
@@ -143,7 +144,7 @@ public class StreamableContent
 	 * mimeType =  a gchar* representing the mime type
 	 * Returns: A GIOChannel which contains the content in the specified mimetype.
 	 */
-	public IOChannel getStream(char[] mimeType)
+	public IOChannel getStream(string mimeType)
 	{
 		// GIOChannel* atk_streamable_content_get_stream (AtkStreamableContent *streamable,  const gchar *mime_type);
 		auto p = atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType));
@@ -168,9 +169,9 @@ public class StreamableContent
 	 * for the default mime type.
 	 * Returns: Returns a string representing a URI, or NULL if no corresponding URIcan be constructed.Since ATK 1.12
 	 */
-	public char[] getUri(char[] mimeType)
+	public string getUri(string mimeType)
 	{
 		// gchar* atk_streamable_content_get_uri (AtkStreamableContent *streamable,  const gchar *mime_type);
-		return Str.toString(atk_streamable_content_get_uri(atkStreamableContent, Str.toStringz(mimeType))).dup;
+		return Str.toString(atk_streamable_content_get_uri(atkStreamableContent, Str.toStringz(mimeType)));
 	}
 }

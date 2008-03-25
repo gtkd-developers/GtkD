@@ -54,6 +54,7 @@
  * 	- GtkTreeRowReference* -> TreeRowReference
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.TreeRowReference;

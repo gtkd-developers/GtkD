@@ -55,6 +55,7 @@
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.RecentChooserIF;
@@ -295,14 +296,14 @@ public interface RecentChooserIF
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the URI was found.
 	 */
-	public int setCurrentUri(char[] uri, GError** error);
+	public int setCurrentUri(string uri, GError** error);
 	
 	/**
 	 * Gets the URI currently selected by chooser.
 	 * Since 2.10
 	 * Returns: a newly allocated string holding a URI.
 	 */
-	public char[] getCurrentUri();
+	public string getCurrentUri();
 	
 	/**
 	 * Gets the GtkRecentInfo currently selected by chooser.
@@ -319,7 +320,7 @@ public interface RecentChooserIF
 	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if uri was found.
 	 */
-	public int selectUri(char[] uri, GError** error);
+	public int selectUri(string uri, GError** error);
 	
 	/**
 	 * Unselects uri inside chooser.
@@ -327,7 +328,7 @@ public interface RecentChooserIF
 	 * Params:
 	 * uri =  a URI
 	 */
-	public void unselectUri(char[] uri);
+	public void unselectUri(string uri);
 	
 	/**
 	 * Selects all the items inside chooser, if the chooser supports

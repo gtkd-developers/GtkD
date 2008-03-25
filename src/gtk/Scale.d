@@ -48,6 +48,7 @@
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.Scale;
@@ -91,7 +92,7 @@ public class Scale : Range
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkScale;
 	}
@@ -115,7 +116,7 @@ public class Scale : Range
 	 */
 	int[char[]] connectedSignals;
 	
-	char[] delegate(gdouble, Scale)[] onFormatValueListeners;
+	string delegate(gdouble, Scale)[] onFormatValueListeners;
 	/**
 	 * Signal which allows you to change how the scale value is displayed. Connect a
 	 * signal handler which returns an allocated string representing value.
@@ -130,7 +131,7 @@ public class Scale : Range
 		 *  gtk_scale_get_digits (scale), value);
 	 * }
 	 */
-	void addOnFormatValue(char[] delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFormatValue(string delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("format-value" in connectedSignals) )
 		{
@@ -149,7 +150,7 @@ public class Scale : Range
 	{
 		bool consumed = false;
 		
-		foreach ( char[] delegate(gdouble, Scale) dlg ; scale.onFormatValueListeners )
+		foreach ( string delegate(gdouble, Scale) dlg ; scale.onFormatValueListeners )
 		{
 			dlg(arg1, scale);
 		}

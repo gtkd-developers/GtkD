@@ -49,6 +49,7 @@
  * 	- GdkFont* -> Font
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.FontSelection;
@@ -91,7 +92,7 @@ public class FontSelection : VBox
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkFontSelection;
 	}
@@ -157,10 +158,10 @@ public class FontSelection : VBox
 	 * if you want to compare two font descriptions.
 	 * Returns: A string with the name of the current font, or NULL if no fontis selected. You must free this string with g_free().
 	 */
-	public char[] getFontName()
+	public string getFontName()
 	{
 		// gchar* gtk_font_selection_get_font_name (GtkFontSelection *fontsel);
-		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection)).dup;
+		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection));
 	}
 	
 	/**
@@ -172,7 +173,7 @@ public class FontSelection : VBox
 	 * fontname =  a font name like "Helvetica 12" or "Times Bold 18"
 	 * Returns: TRUE if the font could be set successfully; FALSE if no suchfont exists or if the fontsel doesn't belong to a particular screen yet.
 	 */
-	public int setFontName(char[] fontname)
+	public int setFontName(string fontname)
 	{
 		// gboolean gtk_font_selection_set_font_name (GtkFontSelection *fontsel,  const gchar *fontname);
 		return gtk_font_selection_set_font_name(gtkFontSelection, Str.toStringz(fontname));
@@ -182,10 +183,10 @@ public class FontSelection : VBox
 	 * Gets the text displayed in the preview area.
 	 * Returns:the text displayed in the preview area. This string is owned by the widget and should not be modified or freed.
 	 */
-	public char[] getPreviewText()
+	public string getPreviewText()
 	{
 		// const gchar* gtk_font_selection_get_preview_text (GtkFontSelection *fontsel);
-		return Str.toString(gtk_font_selection_get_preview_text(gtkFontSelection)).dup;
+		return Str.toString(gtk_font_selection_get_preview_text(gtkFontSelection));
 	}
 	
 	/**
@@ -193,7 +194,7 @@ public class FontSelection : VBox
 	 * Params:
 	 * text = the text to display in the preview area.
 	 */
-	public void setPreviewText(char[] text)
+	public void setPreviewText(string text)
 	{
 		// void gtk_font_selection_set_preview_text (GtkFontSelection *fontsel,  const gchar *text);
 		gtk_font_selection_set_preview_text(gtkFontSelection, Str.toStringz(text));

@@ -62,6 +62,8 @@
  * 	- GtkWindowGroup* -> WindowGroup
  * module aliases:
  * local aliases:
+ * overrides:
+ * 	- getScreen
  */
 
 module gtk.Window;
@@ -104,7 +106,7 @@ public class Window : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkWindow;
 	}
@@ -129,7 +131,7 @@ public class Window : Bin
 	 * Params:
 	 * 		title = The Window title
 	 */
-	public this(char[] title)
+	public this(string title)
 	{
 		this(GtkWindowType.TOPLEVEL);
 		setTitle(title);
@@ -340,7 +342,7 @@ public class Window : Bin
 	 * Params:
 	 * title =  title of the window
 	 */
-	public void setTitle(char[] title)
+	public void setTitle(string title)
 	{
 		// void gtk_window_set_title (GtkWindow *window,  const gchar *title);
 		gtk_window_set_title(gtkWindow, Str.toStringz(title));
@@ -359,7 +361,7 @@ public class Window : Bin
 	 * wmclassName =  window name hint
 	 * wmclassClass =  window class hint
 	 */
-	public void setWmclass(char[] wmclassName, char[] wmclassClass)
+	public void setWmclass(string wmclassName, string wmclassClass)
 	{
 		// void gtk_window_set_wmclass (GtkWindow *window,  const gchar *wmclass_name,  const gchar *wmclass_class);
 		gtk_window_set_wmclass(gtkWindow, Str.toStringz(wmclassName), Str.toStringz(wmclassClass));
@@ -605,7 +607,7 @@ public class Window : Bin
 	 * Since 2.2
 	 * Returns: a GdkScreen.
 	 */
-	public Screen getScreen()
+	public override Screen getScreen()
 	{
 		// GdkScreen* gtk_window_get_screen (GtkWindow *window);
 		auto p = gtk_window_get_screen(gtkWindow);
@@ -1157,7 +1159,7 @@ public class Window : Bin
 	 * Params:
 	 * role =  unique identifier for the window to be used when restoring a session
 	 */
-	public void setRole(char[] role)
+	public void setRole(string role)
 	{
 		// void gtk_window_set_role (GtkWindow *window,  const gchar *role);
 		gtk_window_set_role(gtkWindow, Str.toStringz(role));
@@ -1262,7 +1264,7 @@ public class Window : Bin
 	 * Params:
 	 * startupId =  a string with startup-notification identifier
 	 */
-	public void setStartupId(char[] startupId)
+	public void setStartupId(string startupId)
 	{
 		// void gtk_window_set_startup_id (GtkWindow *window,  const gchar *startup_id);
 		gtk_window_set_startup_id(gtkWindow, Str.toStringz(startupId));
@@ -1410,10 +1412,10 @@ public class Window : Bin
 	 * Since 2.6
 	 * Returns: the icon name or NULL if the window has no themed icon
 	 */
-	public char[] getIconName()
+	public string getIconName()
 	{
 		// gchar* gtk_window_get_icon_name (GtkWindow *window);
-		return Str.toString(gtk_window_get_icon_name(gtkWindow)).dup;
+		return Str.toString(gtk_window_get_icon_name(gtkWindow));
 	}
 	
 	/**
@@ -1484,10 +1486,10 @@ public class Window : Bin
 	 * further explanation.
 	 * Returns: the role of the window if set, or NULL. The returned is owned by the widget and must not be modified or freed.
 	 */
-	public char[] getRole()
+	public string getRole()
 	{
 		// const gchar* gtk_window_get_role (GtkWindow *window);
-		return Str.toString(gtk_window_get_role(gtkWindow)).dup;
+		return Str.toString(gtk_window_get_role(gtkWindow));
 	}
 	
 	/**
@@ -1544,10 +1546,10 @@ public class Window : Bin
 	 * Retrieves the title of the window. See gtk_window_set_title().
 	 * Returns: the title of the window, or NULL if none has been set explicitely. The returned string is owned by the widget and must not be modified or freed.
 	 */
-	public char[] getTitle()
+	public string getTitle()
 	{
 		// const gchar* gtk_window_get_title (GtkWindow *window);
-		return Str.toString(gtk_window_get_title(gtkWindow)).dup;
+		return Str.toString(gtk_window_get_title(gtkWindow));
 	}
 	
 	/**
@@ -1724,7 +1726,7 @@ public class Window : Bin
 	 * geometry =  geometry string
 	 * Returns: TRUE if string was parsed successfully
 	 */
-	public int parseGeometry(char[] geometry)
+	public int parseGeometry(string geometry)
 	{
 		// gboolean gtk_window_parse_geometry (GtkWindow *window,  const gchar *geometry);
 		return gtk_window_parse_geometry(gtkWindow, Str.toStringz(geometry));
@@ -1799,7 +1801,7 @@ public class Window : Bin
 	 * err =  location to store error, or NULL.
 	 * Returns: TRUE if setting the icon succeeded.
 	 */
-	public static int setDefaultIconFromFile(char[] filename, GError** err)
+	public static int setDefaultIconFromFile(string filename, GError** err)
 	{
 		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
 		return gtk_window_set_default_icon_from_file(Str.toStringz(filename), err);
@@ -1813,7 +1815,7 @@ public class Window : Bin
 	 * Params:
 	 * name =  the name of the themed icon
 	 */
-	public static void setDefaultIconName(char[] name)
+	public static void setDefaultIconName(string name)
 	{
 		// void gtk_window_set_default_icon_name (const gchar *name);
 		gtk_window_set_default_icon_name(Str.toStringz(name));
@@ -1883,7 +1885,7 @@ public class Window : Bin
 	 * err =  location to store error, or NULL.
 	 * Returns: TRUE if setting the icon succeeded.
 	 */
-	public int setIconFromFile(char[] filename, GError** err)
+	public int setIconFromFile(string filename, GError** err)
 	{
 		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
 		return gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), err);
@@ -1898,7 +1900,7 @@ public class Window : Bin
 	 * Params:
 	 * name =  the name of the themed icon
 	 */
-	public void setIconName(char[] name)
+	public void setIconName(string name)
 	{
 		// void gtk_window_set_icon_name (GtkWindow *window,  const gchar *name);
 		gtk_window_set_icon_name(gtkWindow, Str.toStringz(name));

@@ -46,6 +46,7 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module pango.PgFontFamily;
@@ -84,7 +85,7 @@ public class PgFontFamily : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)pangoFontFamily;
 	}
@@ -113,10 +114,10 @@ public class PgFontFamily : ObjectG
 	 * to specify that a face from this family is desired.
 	 * Returns: the name of the family. This string is owned by the family object and must not be modified or freed.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const char* pango_font_family_get_name (PangoFontFamily *family);
-		return Str.toString(pango_font_family_get_name(pangoFontFamily)).dup;
+		return Str.toString(pango_font_family_get_name(pangoFontFamily));
 	}
 	
 	/**

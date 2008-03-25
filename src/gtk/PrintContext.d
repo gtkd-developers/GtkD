@@ -56,6 +56,7 @@
  * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PrintContext;
@@ -141,7 +142,7 @@ public class PrintContext : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPrintContext;
 	}

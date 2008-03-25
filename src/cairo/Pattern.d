@@ -50,6 +50,7 @@
  * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module cairo.Pattern;

@@ -56,6 +56,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.PrintOperation;
@@ -141,7 +142,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkPrintOperation;
 	}
@@ -709,7 +710,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 * jobName =  a string that identifies the print job
 	 */
-	public void setJobName(char[] jobName)
+	public void setJobName(string jobName)
 	{
 		// void gtk_print_operation_set_job_name (GtkPrintOperation *op,  const gchar *job_name);
 		gtk_print_operation_set_job_name(gtkPrintOperation, Str.toStringz(jobName));
@@ -793,7 +794,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 * filename =  the filename for the exported file
 	 */
-	public void setExportFilename(char[] filename)
+	public void setExportFilename(string filename)
 	{
 		// void gtk_print_operation_set_export_filename  (GtkPrintOperation *op,  const gchar *filename);
 		gtk_print_operation_set_export_filename(gtkPrintOperation, Str.toStringz(filename));
@@ -835,7 +836,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 * label =  the label to use, or NULL to use the default label
 	 */
-	public void setCustomTabLabel(char[] label)
+	public void setCustomTabLabel(string label)
 	{
 		// void gtk_print_operation_set_custom_tab_label  (GtkPrintOperation *op,  const gchar *label);
 		gtk_print_operation_set_custom_tab_label(gtkPrintOperation, Str.toStringz(label));
@@ -932,10 +933,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Since 2.10
 	 * Returns: a string representation of the status of the print operation
 	 */
-	public char[] getStatusString()
+	public string getStatusString()
 	{
 		// const gchar* gtk_print_operation_get_status_string  (GtkPrintOperation *op);
-		return Str.toString(gtk_print_operation_get_status_string(gtkPrintOperation)).dup;
+		return Str.toString(gtk_print_operation_get_status_string(gtkPrintOperation));
 	}
 	
 	/**

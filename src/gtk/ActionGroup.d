@@ -57,6 +57,7 @@
  * 	- GtkAction* -> Action
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gtk.ActionGroup;
@@ -135,7 +136,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkActionGroup;
 	}
@@ -317,7 +318,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 * name =  the name of the action group.
 	 */
-	public this (char[] name)
+	public this (string name)
 	{
 		// GtkActionGroup* gtk_action_group_new (const gchar *name);
 		auto p = gtk_action_group_new(Str.toStringz(name));
@@ -335,10 +336,10 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Returns: the name of the action group.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gtk_action_group_get_name (GtkActionGroup *action_group);
-		return Str.toString(gtk_action_group_get_name(gtkActionGroup)).dup;
+		return Str.toString(gtk_action_group_get_name(gtkActionGroup));
 	}
 	
 	/**
@@ -400,7 +401,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * actionName =  the name of the action
 	 * Returns: the action, or NULL if no action by that name exists
 	 */
-	public Action getAction(char[] actionName)
+	public Action getAction(string actionName)
 	{
 		// GtkAction* gtk_action_group_get_action (GtkActionGroup *action_group,  const gchar *action_name);
 		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
@@ -459,7 +460,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *  the format understood by gtk_accelerator_parse(), or "" for no accelerator, or
 	 *  NULL to use the stock accelerator
 	 */
-	public void addActionWithAccel(Action action, char[] accelerator)
+	public void addActionWithAccel(Action action, string accelerator)
 	{
 		// void gtk_action_group_add_action_with_accel  (GtkActionGroup *action_group,  GtkAction *action,  const gchar *accelerator);
 		gtk_action_group_add_action_with_accel(gtkActionGroup, (action is null) ? null : action.getActionStruct(), Str.toStringz(accelerator));
@@ -613,7 +614,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 * domain =  the translation domain to use for dgettext() calls
 	 */
-	public void setTranslationDomain(char[] domain)
+	public void setTranslationDomain(string domain)
 	{
 		// void gtk_action_group_set_translation_domain  (GtkActionGroup *action_group,  const gchar *domain);
 		gtk_action_group_set_translation_domain(gtkActionGroup, Str.toStringz(domain));
@@ -627,9 +628,9 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * string =  a string
 	 * Returns: the translation of string
 	 */
-	public char[] translateString(char[] string)
+	public string translateString(string string)
 	{
 		// const gchar* gtk_action_group_translate_string (GtkActionGroup *action_group,  const gchar *string);
-		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string))).dup;
+		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string)));
 	}
 }
