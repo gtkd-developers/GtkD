@@ -24,20 +24,30 @@ private import gtk.GtkD;
 private import gtk.ScrolledWindow;
 private import gtk.Widget;
 
-private import glib.ListSG;
+private import glib.Str;
 
 private import gsv.SourceView;
 private import gsv.SourceBuffer;
 private import gsv.SourceLanguage;
-private import gsv.SourceLanguagesManager;
-
-private import gsvc.gsvtypes;
-
+private import gsv.SourceLanguageManager;
 private import gsv.SourceBuffer;
 
-private import std.stdio;
-private import std.file;
+version(Tango)
+{
+	private import tango.io.Stdout;
+	private import tango.text.Util;
+	private import tango.io.FileConduit;
 
+    void writefln( string frm, ... ){
+        string frm2 = substitute( frm, "%s", "{}" );
+        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
+    }
+}
+else
+{
+	private import std.stdio;
+	private import std.file;
+}
 
 /**
  * Demos for SourceView.
@@ -58,18 +68,33 @@ class HelloWorld : MainWindow
 		showAll();
 	}
 	
-	private char[] getDemoText()
+	private string getDemoText()
 	{
-		char[] text = "";
-		try
-		{
-			version(Win32) text = cast(char[])std.file.read("demos\\sourceView\\SVTest.d");
-			else text = cast(char[])std.file.read("demos/sourceView/SVTest.d");
-		}
-		catch ( FileException fe )
-		{
+		string text;
 
+		version(Tango)
+		{
+			try
+			{
+				auto file = new FileConduit ("SVTest.d");
+				text = new char[file.length];
+				file.input.read(text);
+
+			}
+			catch (Exception) { }
 		}
+		else
+		{
+			try
+			{
+				text = cast(string)std.file.read("SVTest.d");
+			}
+			catch ( FileException fe )
+			{
+
+			}
+		}
+
 		return text;
 	}
 	
@@ -79,7 +104,7 @@ class HelloWorld : MainWindow
 		sourceView.setShowLineNumbers(true);
 		
 		sourceView.setInsertSpacesInsteadOfTabs(false);
-		sourceView.setTabsWidth(4);
+		sourceView.setTabWidth(4);
 		sourceView.setHighlightCurrentLine(true);
 		
 		SourceBuffer sb = sourceView.getBuffer();
@@ -89,35 +114,19 @@ class HelloWorld : MainWindow
 		scWindow.add(sourceView);
 
 		
-		SourceLanguagesManager slm = new SourceLanguagesManager();
-		ListSG list = slm.getAvailableLanguages();
-		
-		writefln("%s available languages", list.length());
-		
-		SourceLanguage dLang;
-		
-		for(int i=0 ; i<list.length() ; i++ )
-		{
-			SourceLanguage sl = new SourceLanguage(cast(GtkSourceLanguage*)list.nthData(i));
-			char[] name = sl.gtkSourceLanguageGetName();
-			if ( "D" == name )
-			{
-				dLang = sl;
-			}
-			writefln("\t[%s] %s", i, name);
-		}
-
+		SourceLanguageManager slm = new SourceLanguageManager();
+		SourceLanguage dLang = new SourceLanguage(slm.getLanguage("d"));
 		
 		if ( dLang !is null )
 		{
 			writefln("Setting language to D");
 			sb.setLanguage(dLang);
-			sb.setHighlight(true);
+			sb.setHighlightSyntax(true);
 		}
 		
 		//sourceView.modifyFont("Courier", 9);
-		sourceView.setMargin(72);
-		sourceView.setShowMargin(true);
+		sourceView.setRightMarginPosition(72);
+		sourceView.setShowRightMargin(true);
 		sourceView.setAutoIndent(true);
 		
 		
@@ -125,12 +134,9 @@ class HelloWorld : MainWindow
 	}
 }
 
-private import gtkc.Loader;
-
-void main(char[][] args)
+void main(string[] args)
 {
-	
-	Gtk.init(args);
+	Gtk.init(null);
 	new HelloWorld();
 	Gtk.main();
 
