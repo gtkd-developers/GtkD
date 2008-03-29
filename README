@@ -16,7 +16,6 @@ Requirements:
 optionally:
 - openGL libs (mesa is fine on linux)
 - gtkglext
-- compd(dool) http://svn.dsource.org/projects/dool/trunk
 
 Who are you?
 ------------
@@ -40,12 +39,6 @@ to the license.
 
 compile the lib and the test programs:
 --------------------------------------
-to compile gtkD gtkDgl and the tests execute
+to compile gtkD, please refer to the README of your choice.
 
-$ makeAll.sh on linux 
-$ makeAll.bat on windows
-
-then run the tests
-$ gtkDTests - tests the wrapping for Gtk+
-$ SimpleGL - simple test for openGL extension
-$ ShapesGL - test for openGL extension
+we HIGHLY recommend following README_DSSS and using dsss to compile
