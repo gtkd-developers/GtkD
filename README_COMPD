@@ -1,6 +1,11 @@
 INSTALL
 --------------------------------
 
+TO USE COMPD, YOU'LL NEED TO COPY EVERYTHING FROM THE compd FOLDER TO ROOT!
+
+CompD is being phased out of GtkD. By Release 1.0, CompD will no longer be included 
+or be a supported method of compiling!
+
 Install instructions for GtkD 
 a) make sure you have installed dool 
 http://svn.dsource.org/projects/dool
@@ -29,3 +34,4 @@ For GDA (www.gnome-db.org)
 See wrap/Readme.txt for details on how to generate the code.
 
 
+You can also use the included .sh or .bat scripts to compile gtkD.
