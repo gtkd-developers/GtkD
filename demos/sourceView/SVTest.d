@@ -134,12 +134,8 @@ class HelloWorld : MainWindow
 	}
 }
 
-private import gtkc.Loader;
-
 void main(string[] args)
 {
-	Linker.dumpFailedLoads();
-
 	Gtk.init(null);
 	new HelloWorld();
 	Gtk.main();
