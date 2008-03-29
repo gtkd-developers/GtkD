@@ -42,10 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gsv.SourceStyleScheme
  * 	- glib.Str
  * structWrap:
- * 	- GtkSourceStyleScheme* -> SourceStyleScheme
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,7 +56,6 @@ public  import gsvc.gsvtypes;
 private import gsvc.gsv;
 
 
-private import gsv.SourceStyleScheme;
 private import glib.Str;
 
 

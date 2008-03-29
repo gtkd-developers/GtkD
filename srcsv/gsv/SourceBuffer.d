@@ -42,16 +42,20 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gsv.SourceLanguage
- * 	- gsv.SourceMark
- * 	- gtk.TextIter
  * 	- glib.Str
+ * 	- gtk.TextTagTable
+ * 	- gsv.SourceLanguage
+ * 	- gsv.SourceStyleScheme
+ * 	- gsv.SourceMark
  * 	- glib.ListSG
+ * 	- gtk.TextIter
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkSourceLanguage* -> SourceLanguage
  * 	- GtkSourceMark* -> SourceMark
+ * 	- GtkSourceStyleScheme* -> SourceStyleScheme
  * 	- GtkTextIter* -> TextIter
+ * 	- GtkTextTagTable* -> TextTagTable
  * module aliases:
  * local aliases:
  * overrides:
@@ -66,11 +70,13 @@ private import gsvc.gsv;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gsv.SourceLanguage;
-private import gsv.SourceMark;
-private import gtk.TextIter;
 private import glib.Str;
+private import gtk.TextTagTable;
+private import gsv.SourceLanguage;
+private import gsv.SourceStyleScheme;
+private import gsv.SourceMark;
 private import glib.ListSG;
+private import gtk.TextIter;
 
 
 
@@ -201,10 +207,10 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 * table =  a GtkTextTagTable, or NULL to create a new one.
 	 */
-	public this (GtkTextTagTable* table)
+	public this (TextTagTable table)
 	{
 		// GtkSourceBuffer* gtk_source_buffer_new (GtkTextTagTable *table);
-		auto p = gtk_source_buffer_new(table);
+		auto p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
 			this = null;
@@ -327,20 +333,26 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 * scheme =  style scheme.
 	 */
-	public void setStyleScheme(GtkSourceStyleScheme* scheme)
+	public void setStyleScheme(SourceStyleScheme scheme)
 	{
 		// void gtk_source_buffer_set_style_scheme (GtkSourceBuffer *buffer,  GtkSourceStyleScheme *scheme);
-		gtk_source_buffer_set_style_scheme(gtkSourceBuffer, scheme);
+		gtk_source_buffer_set_style_scheme(gtkSourceBuffer, (scheme is null) ? null : scheme.getSourceStyleSchemeStruct());
 	}
 	
 	/**
 	 * Returns the GtkSourceStyleScheme currently used in buffer.
 	 * Returns: the GtkSourceStyleScheme set bygtk_source_buffer_set_style_scheme(), or NULL.
 	 */
-	public GtkSourceStyleScheme* getStyleScheme()
+	public SourceStyleScheme getStyleScheme()
 	{
 		// GtkSourceStyleScheme* gtk_source_buffer_get_style_scheme  (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
+		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**

@@ -44,6 +44,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * 	- GtkSourceMark* -> SourceMark
  * module aliases:
  * local aliases:
  * overrides:
@@ -161,10 +162,16 @@ public class SourceMark : TextMark
 	 * category =  a string specifying the mark category or NULL
 	 * Returns: the next GtkSourceMark or NULL
 	 */
-	public GtkSourceMark* next(string category)
+	public SourceMark next(string category)
 	{
 		// GtkSourceMark* gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
-		return gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
+		auto p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceMark(cast(GtkSourceMark*) p);
 	}
 	
 	/**
@@ -176,9 +183,15 @@ public class SourceMark : TextMark
 	 * category =  a string specifying the mark category or NULL
 	 * Returns: the previous GtkSourceMark or NULL
 	 */
-	public GtkSourceMark* prev(string category)
+	public SourceMark prev(string category)
 	{
 		// GtkSourceMark* gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
-		return gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
+		auto p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceMark(cast(GtkSourceMark*) p);
 	}
 }

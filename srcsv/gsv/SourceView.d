@@ -42,10 +42,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gdk.Pixbuf
  * 	- gsv.SourceBuffer
  * 	- gtkc.gtk
  * 	- glib.Str
  * structWrap:
+ * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkSourceBuffer* -> SourceBuffer
  * module aliases:
  * local aliases:
@@ -61,6 +63,7 @@ private import gsvc.gsv;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gdk.Pixbuf;
 private import gsv.SourceBuffer;
 private import gtkc.gtk;
 private import glib.Str;
@@ -351,10 +354,10 @@ public class SourceView : TextView
 	 * category =  a mark category.
 	 * pixbuf =  a GdkPixbuf or NULL.
 	 */
-	public void setMarkCategoryPixbuf(string category, GdkPixbuf* pixbuf)
+	public void setMarkCategoryPixbuf(string category, Pixbuf pixbuf)
 	{
 		// void gtk_source_view_set_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
-		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), pixbuf);
+		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**
@@ -364,10 +367,16 @@ public class SourceView : TextView
 	 * category =  a mark category.
 	 * Returns: the associated GdkPixbuf, or NULL if not found.
 	 */
-	public GdkPixbuf* getMarkCategoryPixbuf(string category)
+	public Pixbuf getMarkCategoryPixbuf(string category)
 	{
 		// GdkPixbuf* gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
-		return gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
+		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

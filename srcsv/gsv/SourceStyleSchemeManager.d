@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gsv.SourceStyleScheme
  * 	- glib.Str
  * structWrap:
+ * 	- GtkSourceStyleScheme* -> SourceStyleScheme
  * module aliases:
  * local aliases:
  * overrides:
@@ -56,6 +58,7 @@ public  import gsvc.gsvtypes;
 private import gsvc.gsv;
 
 
+private import gsv.SourceStyleScheme;
 private import glib.Str;
 
 
@@ -195,10 +198,16 @@ public class SourceStyleSchemeManager : ObjectG
 	 * schemeId =  style scheme id to find
 	 * Returns: a GtkSourceStyleScheme object. Returned value is owned bymanager and must not be unref'ed.
 	 */
-	public GtkSourceStyleScheme* getScheme(string schemeId)
+	public SourceStyleScheme getScheme(string schemeId)
 	{
 		// GtkSourceStyleScheme* gtk_source_style_scheme_manager_get_scheme  (GtkSourceStyleSchemeManager *manager,  const gchar *scheme_id);
-		return gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
+		auto p = gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**

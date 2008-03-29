@@ -112,6 +112,20 @@ public struct GtkSourceLanguageManager{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkSourcePrintCompositor{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkSourceStyle structure is used to describe text attributes
+ * which are set when given style is used.
+ */
+public struct GtkSourceStyle{}
+
+
+/**
+ * Main Gtk struct.
  * GtkSourceStyleScheme structure contains only
  * private members and should not be accessed directly.
  */
@@ -122,12 +136,4 @@ public struct GtkSourceStyleScheme{}
  * Main Gtk struct.
  */
 public struct GtkSourceStyleSchemeManager{}
-
-
-/**
- * Main Gtk struct.
- * The GtkSourceStyle structure is used to describe text attributes
- * which are set when given style is used.
- */
-public struct GtkSourceStyle{}
 

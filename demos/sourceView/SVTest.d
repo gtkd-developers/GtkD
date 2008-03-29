@@ -115,7 +115,7 @@ class HelloWorld : MainWindow
 
 		
 		SourceLanguageManager slm = new SourceLanguageManager();
-		SourceLanguage dLang = new SourceLanguage(slm.getLanguage("d"));
+		SourceLanguage dLang = slm.getLanguage("d");
 		
 		if ( dLang !is null )
 		{
@@ -134,8 +134,12 @@ class HelloWorld : MainWindow
 	}
 }
 
+private import gtkc.Loader;
+
 void main(string[] args)
 {
+	Linker.dumpFailedLoads();
+
 	Gtk.init(null);
 	new HelloWorld();
 	Gtk.main();

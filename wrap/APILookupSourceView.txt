@@ -70,8 +70,10 @@ file: GtkSourceView.html
 struct: GtkSourceView
 class: SourceView
 prefix: gtk_source_view_
-structWrap: GtkSourceBuffer* SourceBuffer
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
 import: gsv.SourceBuffer
+structWrap: GtkSourceBuffer* SourceBuffer
 import: gtkc.gtk
 import: glib.Str
 
@@ -100,21 +102,19 @@ file: GtkSourceBuffer.html
 struct: GtkSourceBuffer
 class: SourceBuffer
 prefix: gtk_source_buffer_
-#import: gsv.SourceBuffer
-#structWrap: GtkSourceBuffer* SourceBuffer
-#import: gsv.SourceTagTable
-#structWrap: GtkSourceTagTable* SourceTagTable
+import: glib.Str
+import: gtk.TextTagTable
+structWrap: GtkTextTagTable* TextTagTable
 import: gsv.SourceLanguage
 structWrap: GtkSourceLanguage* SourceLanguage
-#import: gsv.SourceTagStyle
-#structWrap: GtkSourceTagStyle* SourceTagStyle
+import: gsv.SourceStyleScheme
+structWrap: GtkSourceStyleScheme* SourceStyleScheme
 import: gsv.SourceMark
 structWrap: GtkSourceMark* SourceMark
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
 outFile: SourceBuffer
 
 file: gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
@@ -130,6 +130,7 @@ file: GtkSourceMark.html
 struct: GtkSourceMark
 class: SourceMark
 prefix: gtk_source_mark_
+structWrap: GtkSourceMark* SourceMark
 import: glib.Str
 outFile: SourceMark
 
@@ -137,8 +138,6 @@ file: GtkSourceLanguage.html
 struct: GtkSourceLanguage
 class: SourceLanguage
 prefix: gtk_source_iter_
-structWrap: GtkSourceStyleScheme* SourceStyleScheme
-import: gsv.SourceStyleScheme
 import: glib.Str
 outFile: SourceLanguage
 
@@ -146,18 +145,36 @@ file: GtkSourceLanguageManager.html
 struct: GtkSourceLanguageManager
 class: SourceLanguageManager
 prefix: gtk_source_language_manager_
-import: glib.ListSG
-structWrap: GSList* ListSG
 import: glib.Str
+import: gsv.SourceLanguage
+structWrap: GtkSourceLanguage* SourceLanguage
 outFile: SourceLanguageManager
 
+file: GtkSourcePrintCompositor.html
+struct: GtkSourcePrintCompositor
+class: SourcePrintCompositor
+prefix: gtk_source_print_compositor_
+import: gsv.SourceBuffer
+structWrap: GtkSourceBuffer* SourceBuffer
+import: gsv.SourceView
+structWrap: GtkSourceView* SourceView
+import: gtk.PrintContext
+structWrap: GtkPrintContext* PrintContext
+import: glib.Str
+outFile: SourcePrintCompositor
 
+file: GtkSourceStyle.html
+struct: GtkSourceStyle
+class: SourceStyle
+prefix: gtk_source_style_
+outFile: SourceStyle
 
 file: GtkSourceStyleScheme.html
 struct: GtkSourceStyleScheme
 class: SourceStyleScheme
 prefix: gtk_source_style_scheme_
-#structWrap: 
+import: gsv.SourceStyle
+structWrap: GtkSourceStyle* SourceStyle
 import: glib.Str
 outFile: SourceStyleScheme
 
@@ -165,45 +182,8 @@ file: GtkSourceStyleSchemeManager.html
 struct: GtkSourceStyleSchemeManager
 class: SourceStyleSchemeManager
 prefix: gtk_source_style_scheme_manager_
-#structWrap: 
+import: gsv.SourceStyleScheme
+structWrap: GtkSourceStyleScheme* SourceStyleScheme
 import: glib.Str
 outFile: SourceStyleSchemeManager
-
-
-#file: GtkSourceTag.html
-#struct: GtkSourceTag
-#class: SourceTag
-#prefix: gtk_source_tag_
-#structWrap: GtkSourceTagStyle* SourceTagStyle
-#import: gsv.SourceTagStyle
-#import: glib.Str
-#outFile: SourceTag
-
-
-#file: GtkSourceTagTable.html
-#struct: GtkSourceTagTable
-#class: SourceTagTable
-#prefix: gtk_source_tag_table_
-##structWrap: 
-#outFile: SourceTagTable
-
-
-file: GtkSourceStyle.html
-struct: GtkSourceStyle
-class: SourceStyle
-prefix: gtk_source_style_
-#structWrap: 
-outFile: SourceStyle
-
-
-
-
-##### depends on gnome - not wrapped
-#file: GtkSourcePrintJob.html
-#struct: GtkSourcePrintJob
-#class: SourcePrintJob
-#prefix: gtk_source_print_job_
-##structWrap: 
-#outFile: SourcePrintJob
-
 

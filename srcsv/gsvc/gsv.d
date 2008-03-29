@@ -156,6 +156,50 @@ extern(C)
 	gchar** function(GtkSourceLanguageManager* lm)gtk_source_language_manager_get_language_ids;
 	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* id)gtk_source_language_manager_get_language;
 	
+	// gsv.SourcePrintCompositor
+	
+	GtkSourcePrintCompositor* function(GtkSourceBuffer* buffer)gtk_source_print_compositor_new;
+	GtkSourcePrintCompositor* function(GtkSourceView* view)gtk_source_print_compositor_new_from_view;
+	GtkSourceBuffer* function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_buffer;
+	void function(GtkSourcePrintCompositor* compositor, guint width)gtk_source_print_compositor_set_tab_width;
+	guint function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_tab_width;
+	void function(GtkSourcePrintCompositor* compositor, GtkWrapMode wrapMode)gtk_source_print_compositor_set_wrap_mode;
+	GtkWrapMode function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_wrap_mode;
+	void function(GtkSourcePrintCompositor* compositor, gboolean highlight)gtk_source_print_compositor_set_highlight_syntax;
+	gboolean function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_highlight_syntax;
+	void function(GtkSourcePrintCompositor* compositor, guint interval)gtk_source_print_compositor_set_print_line_numbers;
+	guint function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_print_line_numbers;
+	void function(GtkSourcePrintCompositor* compositor, gchar* fontName)gtk_source_print_compositor_set_body_font_name;
+	gchar* function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_body_font_name;
+	void function(GtkSourcePrintCompositor* compositor, gchar* fontName)gtk_source_print_compositor_set_line_numbers_font_name;
+	gchar* function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_line_numbers_font_name;
+	void function(GtkSourcePrintCompositor* compositor, gchar* fontName)gtk_source_print_compositor_set_header_font_name;
+	gchar* function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_header_font_name;
+	void function(GtkSourcePrintCompositor* compositor, gchar* fontName)gtk_source_print_compositor_set_footer_font_name;
+	gchar* function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_footer_font_name;
+	gdouble function(GtkSourcePrintCompositor* compositor, GtkUnit unit)gtk_source_print_compositor_get_top_margin;
+	void function(GtkSourcePrintCompositor* compositor, gdouble margin, GtkUnit unit)gtk_source_print_compositor_set_top_margin;
+	gdouble function(GtkSourcePrintCompositor* compositor, GtkUnit unit)gtk_source_print_compositor_get_bottom_margin;
+	void function(GtkSourcePrintCompositor* compositor, gdouble margin, GtkUnit unit)gtk_source_print_compositor_set_bottom_margin;
+	gdouble function(GtkSourcePrintCompositor* compositor, GtkUnit unit)gtk_source_print_compositor_get_left_margin;
+	void function(GtkSourcePrintCompositor* compositor, gdouble margin, GtkUnit unit)gtk_source_print_compositor_set_left_margin;
+	gdouble function(GtkSourcePrintCompositor* compositor, GtkUnit unit)gtk_source_print_compositor_get_right_margin;
+	void function(GtkSourcePrintCompositor* compositor, gdouble margin, GtkUnit unit)gtk_source_print_compositor_set_right_margin;
+	void function(GtkSourcePrintCompositor* compositor, gboolean print)gtk_source_print_compositor_set_print_header;
+	gboolean function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_print_header;
+	void function(GtkSourcePrintCompositor* compositor, gboolean print)gtk_source_print_compositor_set_print_footer;
+	gboolean function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_print_footer;
+	void function(GtkSourcePrintCompositor* compositor, gboolean separator, gchar* left, gchar* center, gchar* right)gtk_source_print_compositor_set_header_format;
+	void function(GtkSourcePrintCompositor* compositor, gboolean separator, gchar* left, gchar* center, gchar* right)gtk_source_print_compositor_set_footer_format;
+	gint function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_n_pages;
+	gboolean function(GtkSourcePrintCompositor* compositor, GtkPrintContext* context)gtk_source_print_compositor_paginate;
+	gdouble function(GtkSourcePrintCompositor* compositor)gtk_source_print_compositor_get_pagination_progress;
+	void function(GtkSourcePrintCompositor* compositor, GtkPrintContext* context, gint pageNr)gtk_source_print_compositor_draw_page;
+	
+	// gsv.SourceStyle
+	
+	GtkSourceStyle* function(GtkSourceStyle* style)gtk_source_style_copy;
+	
 	// gsv.SourceStyleScheme
 	
 	gchar* function(GtkSourceStyleScheme* scheme)gtk_source_style_scheme_get_id;
@@ -176,10 +220,6 @@ extern(C)
 	gchar** function(GtkSourceStyleSchemeManager* manager)gtk_source_style_scheme_manager_get_scheme_ids;
 	GtkSourceStyleScheme* function(GtkSourceStyleSchemeManager* manager, gchar* schemeId)gtk_source_style_scheme_manager_get_scheme;
 	void function(GtkSourceStyleSchemeManager* manager)gtk_source_style_scheme_manager_force_rescan;
-	
-	// gsv.SourceStyle
-	
-	GtkSourceStyle* function(GtkSourceStyle* style)gtk_source_style_copy;
 
 
 }
@@ -261,6 +301,44 @@ Symbol[] gsvLinks =
 	{ "gtk_source_language_manager_get_search_path",  cast(void**)& gtk_source_language_manager_get_search_path},
 	{ "gtk_source_language_manager_get_language_ids",  cast(void**)& gtk_source_language_manager_get_language_ids},
 	{ "gtk_source_language_manager_get_language",  cast(void**)& gtk_source_language_manager_get_language},
+	{ "gtk_source_print_compositor_new",  cast(void**)& gtk_source_print_compositor_new},
+	{ "gtk_source_print_compositor_new_from_view",  cast(void**)& gtk_source_print_compositor_new_from_view},
+	{ "gtk_source_print_compositor_get_buffer",  cast(void**)& gtk_source_print_compositor_get_buffer},
+	{ "gtk_source_print_compositor_set_tab_width",  cast(void**)& gtk_source_print_compositor_set_tab_width},
+	{ "gtk_source_print_compositor_get_tab_width",  cast(void**)& gtk_source_print_compositor_get_tab_width},
+	{ "gtk_source_print_compositor_set_wrap_mode",  cast(void**)& gtk_source_print_compositor_set_wrap_mode},
+	{ "gtk_source_print_compositor_get_wrap_mode",  cast(void**)& gtk_source_print_compositor_get_wrap_mode},
+	{ "gtk_source_print_compositor_set_highlight_syntax",  cast(void**)& gtk_source_print_compositor_set_highlight_syntax},
+	{ "gtk_source_print_compositor_get_highlight_syntax",  cast(void**)& gtk_source_print_compositor_get_highlight_syntax},
+	{ "gtk_source_print_compositor_set_print_line_numbers",  cast(void**)& gtk_source_print_compositor_set_print_line_numbers},
+	{ "gtk_source_print_compositor_get_print_line_numbers",  cast(void**)& gtk_source_print_compositor_get_print_line_numbers},
+	{ "gtk_source_print_compositor_set_body_font_name",  cast(void**)& gtk_source_print_compositor_set_body_font_name},
+	{ "gtk_source_print_compositor_get_body_font_name",  cast(void**)& gtk_source_print_compositor_get_body_font_name},
+	{ "gtk_source_print_compositor_set_line_numbers_font_name",  cast(void**)& gtk_source_print_compositor_set_line_numbers_font_name},
+	{ "gtk_source_print_compositor_get_line_numbers_font_name",  cast(void**)& gtk_source_print_compositor_get_line_numbers_font_name},
+	{ "gtk_source_print_compositor_set_header_font_name",  cast(void**)& gtk_source_print_compositor_set_header_font_name},
+	{ "gtk_source_print_compositor_get_header_font_name",  cast(void**)& gtk_source_print_compositor_get_header_font_name},
+	{ "gtk_source_print_compositor_set_footer_font_name",  cast(void**)& gtk_source_print_compositor_set_footer_font_name},
+	{ "gtk_source_print_compositor_get_footer_font_name",  cast(void**)& gtk_source_print_compositor_get_footer_font_name},
+	{ "gtk_source_print_compositor_get_top_margin",  cast(void**)& gtk_source_print_compositor_get_top_margin},
+	{ "gtk_source_print_compositor_set_top_margin",  cast(void**)& gtk_source_print_compositor_set_top_margin},
+	{ "gtk_source_print_compositor_get_bottom_margin",  cast(void**)& gtk_source_print_compositor_get_bottom_margin},
+	{ "gtk_source_print_compositor_set_bottom_margin",  cast(void**)& gtk_source_print_compositor_set_bottom_margin},
+	{ "gtk_source_print_compositor_get_left_margin",  cast(void**)& gtk_source_print_compositor_get_left_margin},
+	{ "gtk_source_print_compositor_set_left_margin",  cast(void**)& gtk_source_print_compositor_set_left_margin},
+	{ "gtk_source_print_compositor_get_right_margin",  cast(void**)& gtk_source_print_compositor_get_right_margin},
+	{ "gtk_source_print_compositor_set_right_margin",  cast(void**)& gtk_source_print_compositor_set_right_margin},
+	{ "gtk_source_print_compositor_set_print_header",  cast(void**)& gtk_source_print_compositor_set_print_header},
+	{ "gtk_source_print_compositor_get_print_header",  cast(void**)& gtk_source_print_compositor_get_print_header},
+	{ "gtk_source_print_compositor_set_print_footer",  cast(void**)& gtk_source_print_compositor_set_print_footer},
+	{ "gtk_source_print_compositor_get_print_footer",  cast(void**)& gtk_source_print_compositor_get_print_footer},
+	{ "gtk_source_print_compositor_set_header_format",  cast(void**)& gtk_source_print_compositor_set_header_format},
+	{ "gtk_source_print_compositor_set_footer_format",  cast(void**)& gtk_source_print_compositor_set_footer_format},
+	{ "gtk_source_print_compositor_get_n_pages",  cast(void**)& gtk_source_print_compositor_get_n_pages},
+	{ "gtk_source_print_compositor_paginate",  cast(void**)& gtk_source_print_compositor_paginate},
+	{ "gtk_source_print_compositor_get_pagination_progress",  cast(void**)& gtk_source_print_compositor_get_pagination_progress},
+	{ "gtk_source_print_compositor_draw_page",  cast(void**)& gtk_source_print_compositor_draw_page},
+	{ "gtk_source_style_copy",  cast(void**)& gtk_source_style_copy},
 	{ "gtk_source_style_scheme_get_id",  cast(void**)& gtk_source_style_scheme_get_id},
 	{ "gtk_source_style_scheme_get_name",  cast(void**)& gtk_source_style_scheme_get_name},
 	{ "gtk_source_style_scheme_get_description",  cast(void**)& gtk_source_style_scheme_get_description},
@@ -276,6 +354,5 @@ Symbol[] gsvLinks =
 	{ "gtk_source_style_scheme_manager_get_scheme_ids",  cast(void**)& gtk_source_style_scheme_manager_get_scheme_ids},
 	{ "gtk_source_style_scheme_manager_get_scheme",  cast(void**)& gtk_source_style_scheme_manager_get_scheme},
 	{ "gtk_source_style_scheme_manager_force_rescan",  cast(void**)& gtk_source_style_scheme_manager_force_rescan},
-	{ "gtk_source_style_copy",  cast(void**)& gtk_source_style_copy},
 
 ];

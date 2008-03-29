@@ -42,10 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ListSG
  * 	- glib.Str
+ * 	- gsv.SourceLanguage
  * structWrap:
- * 	- GSList* -> ListSG
+ * 	- GtkSourceLanguage* -> SourceLanguage
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,8 +58,8 @@ public  import gsvc.gsvtypes;
 private import gsvc.gsv;
 
 
-private import glib.ListSG;
 private import glib.Str;
+private import gsv.SourceLanguage;
 
 
 
@@ -178,9 +178,15 @@ public class SourceLanguageManager : ObjectG
 	 * id =  a language id.
 	 * Returns: a GtkSourceLanguage, or NULL if there is no languageidentified by the given id. Return value is owned by lm and should notbe freed.
 	 */
-	public GtkSourceLanguage* getLanguage(string id)
+	public SourceLanguage getLanguage(string id)
 	{
 		// GtkSourceLanguage* gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
-		return gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
+		auto p = gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
 }
