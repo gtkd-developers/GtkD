@@ -128,8 +128,16 @@ public class ListSG
 	/** */
 	void* data()
 	{
-		int* pt = cast(int*)getStruct();
-		return cast(void *)(*pt);
+		return getListSGStruct().data;
+	}
+	
+	/**
+	 * get the next element
+	 * Returns: the next element, or NULL if there are no more elements.
+	 */
+	ListSG next()
+	{
+		return new ListSG(getListSGStruct().next);
 	}
 	
 	/**

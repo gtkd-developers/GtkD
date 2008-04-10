@@ -128,8 +128,25 @@ public class ListG
 	/** */
 	void* data()
 	{
-		int* pt = cast(int*)getStruct();
-		return cast(void *)(*pt);
+		return getListGStruct().data;
+	}
+	
+	/**
+	 * get the next element
+	 * Returns: the next element, or NULL if there are no more elements.
+	 */
+	ListG next()
+	{
+		return new ListG(getListGStruct().next);
+	}
+	
+	/**
+	 * get the previous element
+	 * Returns: the previous element, or NULL if there are no more elements.
+	 */
+	ListG previous()
+	{
+		return new ListG(getListGStruct().prev);
 	}
 	
 	/**
