@@ -114,7 +114,7 @@ public class PgFontDescription
 	public this(string family, int size)
 	{
 		this();
-		setFamily("Sans");
+		setFamily(family);
 		setSize(size * PANGO_SCALE);
 	}
 	
