@@ -138,11 +138,11 @@ protected:
 		
 		version(Tango)
 		{
-			auto date = tangoClock.WallClock.toDate.time.span;
+			auto time = tangoClock.WallClock.now.time;
 		
-			double minutes = date.minutes * PI / 30;
-			double hours = date.hours * PI / 6;
-			double seconds = date.seconds * PI / 30;
+			double minutes = time.minutes * PI / 30;
+			double hours = time.hours * PI / 6;
+			double seconds = time.seconds * PI / 30;
 		}
 		else
 		{
