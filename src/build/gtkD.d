@@ -209,7 +209,7 @@ private import gdk.Device;
 private import gdk.X11;
 private import gdk.GdkCairo;
 
-private import gtk.GtkD;
+private import gtk.Main;
 private import gtk.Timeout;
 private import gtk.Idle;
 private import gtk.AccelGroup;
@@ -436,9 +436,10 @@ private import gsv.SourceSearch;
 private import gsv.SourceMark;
 private import gsv.SourceLanguage;
 private import gsv.SourceLanguageManager;
+private import gsv.SourcePrintCompositor;
+private import gsv.SourceStyle;
 private import gsv.SourceStyleScheme;
 private import gsv.SourceStyleSchemeManager;
-private import gsv.SourceStyle;
 
 private import gtkc.paths.d;
 private import gtkc.Loader.d;
