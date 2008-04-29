@@ -30,8 +30,8 @@
  * ctorStrct=
  * clss    = BuildableT
  * interf  = BuildableIF
- * class Code: Yes
- * interface Code: Yes
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -41,8 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_buildable_set_name
- * 	- gtk_buildable_get_name
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -55,6 +53,8 @@
  * 	- GtkBuilder* -> Builder
  * module aliases:
  * local aliases:
+ * 	- getName -> buildableGetName
+ * 	- setName -> buildableSetName
  * overrides:
  */
 
@@ -97,6 +97,9 @@ public interface BuildableIF
 	
 	
 	/**
+	 */
+	
+	/**
 	 * Sets the name of the buildable object.
 	 * Since 2.12
 	 * Params:
@@ -113,9 +116,6 @@ public interface BuildableIF
 	 * Returns: the name set with gtk_buildable_set_name()
 	 */
 	public string buildableGetName();
-	
-	/**
-	 */
 	
 	/**
 	 * Adds a child to buildable. type is an optional string

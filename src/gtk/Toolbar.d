@@ -41,7 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_toolbar_get_style
  * 	- gtk_toolbar_insert
  * omit signals:
  * imports:
@@ -53,6 +52,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * 	- getStyle -> toolbarGetStyle
  * overrides:
  */
 
@@ -121,20 +121,6 @@ public class Toolbar : Container
 		}
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
-	}
-	
-	/**
-	 * Retrieves whether the toolbar has text, icons, or both . See
-	 * gtk_toolbar_set_style().
-	 * Params:
-	 *  toolbar = a GtkToolbar
-	 * Returns:
-	 *  the current style of toolbar
-	 */
-	public GtkToolbarStyle toolbarGetStyle()
-	{
-		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
-		return gtk_toolbar_get_style(gtkToolbar);
 	}
 	
 	/**
@@ -481,6 +467,17 @@ public class Toolbar : Container
 	{
 		// GtkOrientation gtk_toolbar_get_orientation (GtkToolbar *toolbar);
 		return gtk_toolbar_get_orientation(gtkToolbar);
+	}
+	
+	/**
+	 * Retrieves whether the toolbar has text, icons, or both . See
+	 * gtk_toolbar_set_style().
+	 * Returns: the current style of toolbar
+	 */
+	public GtkToolbarStyle toolbarGetStyle()
+	{
+		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
+		return gtk_toolbar_get_style(gtkToolbar);
 	}
 	
 	/**

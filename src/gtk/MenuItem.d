@@ -41,7 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_menu_item_activate
  * 	- gtk_menu_item_new_with_label
  * 	- gtk_menu_item_new_with_mnemonic
  * omit signals:
@@ -53,6 +52,7 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
+ * 	- activate -> itemActivate
  * overrides:
  * 	- select
  * 	- deselect
@@ -198,18 +198,6 @@ public class MenuItem : Item
 		}
 		setName(label);
 	}
-	
-	/**
-	 * Emits the "activate" signal on the given item
-	 * Params:
-	 *  menu_item = the menu item
-	 */
-	public void itemActivate()
-	{
-		// void gtk_menu_item_activate (GtkMenuItem *menu_item);
-		gtk_menu_item_activate(gtkMenuItem);
-	}
-	
 	
 	/**
 	 */
@@ -444,6 +432,15 @@ public class MenuItem : Item
 	{
 		// void gtk_menu_item_deselect (GtkMenuItem *menu_item);
 		gtk_menu_item_deselect(gtkMenuItem);
+	}
+	
+	/**
+	 * Emits the "activate" signal on the given item
+	 */
+	public void itemActivate()
+	{
+		// void gtk_menu_item_activate (GtkMenuItem *menu_item);
+		gtk_menu_item_activate(gtkMenuItem);
 	}
 	
 	/**

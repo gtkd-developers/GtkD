@@ -3819,12 +3819,10 @@ import: gtk.Widget
 import: gtk.AccelGroup
 structWrap: GtkWidget* Widget
 
-# method conflict with parent method
-nocode: gtk_menu_item_activate
 nocode: gtk_menu_item_new_with_label
 nocode: gtk_menu_item_new_with_mnemonic
-# replace the method
-# TODO create a method rename instead of replacing the entire code
+
+alias: activate itemActivate
 
 override: select
 override: deselect
@@ -3910,19 +3908,7 @@ code: start
 			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label)) );
 		}
 		setName(label);
-	}
-
-	/**
-	 * Emits the "activate" signal on the given item
-	 * Params:
-	 *  menu_item = the menu item
-	 */
-	public void itemActivate()
-	{
-		// void gtk_menu_item_activate (GtkMenuItem *menu_item);
-		gtk_menu_item_activate(gtkMenuItem);
-	}
-	
+	}	
 code: end
 outFile: MenuItem
 
@@ -4111,24 +4097,11 @@ import: gtk.Button
 import: gtk.ToolItem
 structWrap: GtkWidget* Widget
 
-nocode: gtk_toolbar_get_style
+alias: getStyle toolbarGetStyle
+
 nocode: gtk_toolbar_insert
 
 code: start
-	/**
-	 * Retrieves whether the toolbar has text, icons, or both . See
-	 * gtk_toolbar_set_style().
-	 * Params:
-	 *  toolbar = a GtkToolbar
-	 * Returns:
-	 *  the current style of toolbar
-	 */
-	public GtkToolbarStyle toolbarGetStyle()
-	{
-		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
-		return gtk_toolbar_get_style(gtkToolbar);
-	}
-
 	/**
 	 * Insert a GtkToolItem into the toolbar at position pos.
 	 * If pos is 0 the item is prepended to the start of the toolbar. If pos is negative, the item is appended to the end of the toolbar.
@@ -5535,44 +5508,8 @@ structWrap: GtkPageSetup* PageSetup
 import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
 
-nocode: gtk_print_unix_dialog_set_settings
-nocode: gtk_print_unix_dialog_get_settings
-#Conflicts with Widget.getSettings
-code: start
-	/**
-	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,
-	 * this is used to restore saved print settings from a previous print
-	 * operation before the print dialog is shown.
-	 * Since 2.10
-	 * Params:
-	 * settings =  a GtkPrintSettings, or NULL
-	 */
-	public void setPrintSettings(PrintSettings settings)
-	{
-		// void gtk_print_unix_dialog_set_settings (GtkPrintUnixDialog *dialog,  GtkPrintSettings *settings);
-		gtk_print_unix_dialog_set_settings(gtkPrintUnixDialog, (settings is null) ? null : settings.getPrintSettingsStruct());
-	}
-
-	/**
-	 * Gets a new GtkPrintSettings object that represents the
-	 * current values in the print dialog. Note that this creates a
-	 * new object, and you need to unref it
-	 * if don't want to keep it.
-	 * Since 2.10
-	 * Returns: a new GtkPrintSettings object with the values from dialog
-	 */
-	public PrintSettings getPrintSettings()
-	{
-		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
-		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new PrintSettings(p);
-	}
-code: end
+alias: setSettings setPrintSettings
+alias: getSettings getPrintSettings
 outFile: PrintUnixDialog
 
 file: GtkPageSetupUnixDialog.html
@@ -6484,57 +6421,9 @@ structWrap: GtkBuilder* Builder
 #import: glib.MarkupParser
 #structWrap: GMarkupParser* MarkupParser
 
-nocode: gtk_buildable_set_name
-nocode: gtk_buildable_get_name
-#Conflict with get/setName functions in other classes.
+alias: setName buildableSetName
+alias: getName buildableGetName
 
-interfaceCode: start
-	/**
-	 * Sets the name of the buildable object.
-	 * Since 2.12
-	 * Params:
-	 * name =  name to set
-	 */
-	public void buildableSetName(string name);
-	
-	/**
-	 * Gets the name of the buildable object.
-	 * GtkBuilder sets the name based on the the
-	 * GtkBuilder UI definition
-	 * used to construct the buildable.
-	 * Since 2.12
-	 * Returns: the name set with gtk_buildable_set_name()
-	 */
-	public string buildableGetName();
-interfaceCode: end
-
-code: start
-	/**
-	 * Sets the name of the buildable object.
-	 * Since 2.12
-	 * Params:
-	 * name =  name to set
-	 */
-	public void buildableSetName(string name)
-	{
-		// void gtk_buildable_set_name (GtkBuildable *buildable,  const gchar *name);
-		gtk_buildable_set_name(getBuildableTStruct(), Str.toStringz(name));
-	}
-	
-	/**
-	 * Gets the name of the buildable object.
-	 * GtkBuilder sets the name based on the the
-	 * GtkBuilder UI definition
-	 * used to construct the buildable.
-	 * Since 2.12
-	 * Returns: the name set with gtk_buildable_set_name()
-	 */
-	public string buildableGetName()
-	{
-		// const gchar* gtk_buildable_get_name (GtkBuildable *buildable);
-		return Str.toString(gtk_buildable_get_name(getBuildableTStruct()));
-	}
-code: end
 interface: BuildableIF
 outFile: BuildableT
 

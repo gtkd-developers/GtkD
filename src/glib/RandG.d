@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = RandG
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,16 +41,16 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- g_rand_int
- * 	- g_rand_int_range
- * 	- g_rand_double
- * 	- g_rand_double_range
  * omit signals:
  * imports:
  * structWrap:
  * 	- GRand* -> RandG
  * module aliases:
  * local aliases:
+ * 	- double -> randDouble
+ * 	- doubleRange -> randDoubleRange
+ * 	- int -> randInt
+ * 	- intRange -> randIntRange
  * overrides:
  */
 
@@ -127,62 +127,6 @@ public class RandG
 			else return;
 		}
 		this.gRand = gRand;
-	}
-	
-	/**
-	 * Returns the next random guint32 from rand_ equally distributed over
-	 * the range [0..2^32-1].
-	 * Params:
-	 * rand =  a GRand.
-	 * Returns: A random number.
-	 */
-	public uint randInt()
-	{
-		// guint32 g_rand_int (GRand *rand_);
-		return g_rand_int(gRand);
-	}
-	
-	/**
-	 * Returns the next random gint32 from rand_ equally distributed over
-	 * the range [begin..end-1].
-	 * Params:
-	 * rand =  a GRand.
-	 * begin =  lower closed bound of the interval.
-	 * end =  upper open bound of the interval.
-	 * Returns: A random number.
-	 */
-	public int randIntRange(int begin, int end)
-	{
-		// gint32 g_rand_int_range (GRand *rand_,  gint32 begin,  gint32 end);
-		return g_rand_int_range(gRand, begin, end);
-	}
-	
-	/**
-	 * Returns the next random gdouble from rand_ equally distributed over
-	 * the range [0..1).
-	 * Params:
-	 * rand =  a GRand.
-	 * Returns: A random number.
-	 */
-	public double randDouble()
-	{
-		// gdouble g_rand_double (GRand *rand_);
-		return g_rand_double(gRand);
-	}
-	
-	/**
-	 * Returns the next random gdouble from rand_ equally distributed over
-	 * the range [begin..end).
-	 * Params:
-	 * rand =  a GRand.
-	 * begin =  lower closed bound of the interval.
-	 * end =  upper open bound of the interval.
-	 * Returns: A random number.
-	 */
-	public double randDoubleRange(double begin, double end)
-	{
-		// gdouble g_rand_double_range (GRand *rand_,  gdouble begin,  gdouble end);
-		return g_rand_double_range(gRand, begin, end);
 	}
 	
 	/**
@@ -298,6 +242,56 @@ public class RandG
 	{
 		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
 		g_rand_set_seed_array(gRand, seed, seedLength);
+	}
+	
+	/**
+	 * Returns the next random guint32 from rand_ equally distributed over
+	 * the range [0..2^32-1].
+	 * Returns: A random number.
+	 */
+	public uint randInt()
+	{
+		// guint32 g_rand_int (GRand *rand_);
+		return g_rand_int(gRand);
+	}
+	
+	/**
+	 * Returns the next random gint32 from rand_ equally distributed over
+	 * the range [begin..end-1].
+	 * Params:
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
+	 */
+	public int randIntRange(int begin, int end)
+	{
+		// gint32 g_rand_int_range (GRand *rand_,  gint32 begin,  gint32 end);
+		return g_rand_int_range(gRand, begin, end);
+	}
+	
+	/**
+	 * Returns the next random gdouble from rand_ equally distributed over
+	 * the range [0..1).
+	 * Returns: A random number.
+	 */
+	public double randDouble()
+	{
+		// gdouble g_rand_double (GRand *rand_);
+		return g_rand_double(gRand);
+	}
+	
+	/**
+	 * Returns the next random gdouble from rand_ equally distributed over
+	 * the range [begin..end).
+	 * Params:
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
+	 */
+	public double randDoubleRange(double begin, double end)
+	{
+		// gdouble g_rand_double_range (GRand *rand_,  gdouble begin,  gdouble end);
+		return g_rand_double_range(gRand, begin, end);
 	}
 	
 	/**

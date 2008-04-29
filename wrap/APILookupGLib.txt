@@ -588,68 +588,11 @@ prefix: g_rand_
 prefix: g_
 structWrap: GRand* RandG
 
-nocode: g_rand_int
-nocode: g_rand_int_range
-nocode: g_rand_double
-nocode: g_rand_double_range
+alias: int randInt
+alias: intRange randIntRange
+alias: double randDouble
+alias: doubleRange randDoubleRange
 
-code: start
-	/**
-	 * Returns the next random guint32 from rand_ equally distributed over
-	 * the range [0..2^32-1].
-	 * Params:
-	 * rand =  a GRand.
-	 * Returns: A random number.
-	 */
-	public uint randInt()
-	{
-		// guint32 g_rand_int (GRand *rand_);
-		return g_rand_int(gRand);
-	}
-	
-	/**
-	 * Returns the next random gint32 from rand_ equally distributed over
-	 * the range [begin..end-1].
-	 * Params:
-	 * rand =  a GRand.
-	 * begin =  lower closed bound of the interval.
-	 * end =  upper open bound of the interval.
-	 * Returns: A random number.
-	 */
-	public int randIntRange(int begin, int end)
-	{
-		// gint32 g_rand_int_range (GRand *rand_,  gint32 begin,  gint32 end);
-		return g_rand_int_range(gRand, begin, end);
-	}
-	
-	/**
-	 * Returns the next random gdouble from rand_ equally distributed over
-	 * the range [0..1).
-	 * Params:
-	 * rand =  a GRand.
-	 * Returns: A random number.
-	 */
-	public double randDouble()
-	{
-		// gdouble g_rand_double (GRand *rand_);
-		return g_rand_double(gRand);
-	}
-	
-	/**
-	 * Returns the next random gdouble from rand_ equally distributed over
-	 * the range [begin..end).
-	 * Params:
-	 * rand =  a GRand.
-	 * begin =  lower closed bound of the interval.
-	 * end =  upper open bound of the interval.
-	 * Returns: A random number.
-	 */
-	public double randDoubleRange(double begin, double end)
-	{
-		// gdouble g_rand_double_range (GRand *rand_,  gdouble begin,  gdouble end);
-		return g_rand_double_range(gRand, begin, end);
-	}
-code: end
 outFile: RandG
 
 #file: glib-Hook-Functions.html

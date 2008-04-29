@@ -30,8 +30,8 @@
  * ctorStrct=
  * clss    = BuildableT
  * interf  = BuildableIF
- * class Code: Yes
- * interface Code: Yes
+ * class Code: No
+ * interface Code: No
  * template for:
  * 	- TStruct
  * extend  = 
@@ -42,8 +42,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_buildable_set_name
- * 	- gtk_buildable_get_name
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -56,6 +54,8 @@
  * 	- GtkBuilder* -> Builder
  * module aliases:
  * local aliases:
+ * 	- getName -> buildableGetName
+ * 	- setName -> buildableSetName
  * overrides:
  */
 
@@ -101,6 +101,9 @@ public template BuildableT(TStruct)
 	
 	
 	/**
+	 */
+	
+	/**
 	 * Sets the name of the buildable object.
 	 * Since 2.12
 	 * Params:
@@ -125,9 +128,6 @@ public template BuildableT(TStruct)
 		// const gchar* gtk_buildable_get_name (GtkBuildable *buildable);
 		return Str.toString(gtk_buildable_get_name(getBuildableTStruct()));
 	}
-	
-	/**
-	 */
 	
 	/**
 	 * Adds a child to buildable. type is an optional string

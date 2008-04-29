@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = PrintUnixDialog
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,8 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_print_unix_dialog_set_settings
- * 	- gtk_print_unix_dialog_get_settings
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -59,6 +57,8 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * 	- getSettings -> getPrintSettings
+ * 	- setSettings -> setPrintSettings
  * overrides:
  */
 
@@ -158,40 +158,6 @@ public class PrintUnixDialog : Dialog
 	}
 	
 	/**
-	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,
-	 * this is used to restore saved print settings from a previous print
-	 * operation before the print dialog is shown.
-	 * Since 2.10
-	 * Params:
-	 * settings =  a GtkPrintSettings, or NULL
-	 */
-	public void setPrintSettings(PrintSettings settings)
-	{
-		// void gtk_print_unix_dialog_set_settings (GtkPrintUnixDialog *dialog,  GtkPrintSettings *settings);
-		gtk_print_unix_dialog_set_settings(gtkPrintUnixDialog, (settings is null) ? null : settings.getPrintSettingsStruct());
-	}
-	
-	/**
-	 * Gets a new GtkPrintSettings object that represents the
-	 * current values in the print dialog. Note that this creates a
-	 * new object, and you need to unref it
-	 * if don't want to keep it.
-	 * Since 2.10
-	 * Returns: a new GtkPrintSettings object with the values from dialog
-	 */
-	public PrintSettings getPrintSettings()
-	{
-		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
-		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new PrintSettings(p);
-	}
-	
-	/**
 	 */
 	
 	/**
@@ -265,6 +231,40 @@ public class PrintUnixDialog : Dialog
 	{
 		// gint gtk_print_unix_dialog_get_current_page  (GtkPrintUnixDialog *dialog);
 		return gtk_print_unix_dialog_get_current_page(gtkPrintUnixDialog);
+	}
+	
+	/**
+	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,
+	 * this is used to restore saved print settings from a previous print
+	 * operation before the print dialog is shown.
+	 * Since 2.10
+	 * Params:
+	 * settings =  a GtkPrintSettings, or NULL
+	 */
+	public void setPrintSettings(PrintSettings settings)
+	{
+		// void gtk_print_unix_dialog_set_settings (GtkPrintUnixDialog *dialog,  GtkPrintSettings *settings);
+		gtk_print_unix_dialog_set_settings(gtkPrintUnixDialog, (settings is null) ? null : settings.getPrintSettingsStruct());
+	}
+	
+	/**
+	 * Gets a new GtkPrintSettings object that represents the
+	 * current values in the print dialog. Note that this creates a
+	 * new object, and you need to unref it
+	 * if don't want to keep it.
+	 * Since 2.10
+	 * Returns: a new GtkPrintSettings object with the values from dialog
+	 */
+	public PrintSettings getPrintSettings()
+	{
+		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
+		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
