@@ -38,7 +38,7 @@ import tango.util.collection.LinkSeq;
 import Stringz = tango.stdc.stringz;
 
 //gtkD imports:
-import gtk.GtkD;
+import gtk.Main;
 import gtk.MainWindow;
 import gtk.VBox;
 import gtk.Button;
@@ -376,7 +376,7 @@ public:
 			break;
 			case GstMessageType.EOS:
 				debug(GnonlinHello) Stdout("End-of-stream.").newline;
-				//GtkD.mainQuit();
+				//Main.quit();
 			break;
 
 			case GstMessageType.ERROR:
@@ -387,7 +387,7 @@ public:
 				//g_free (dbug);
 				Stdout("Error: ")( Stringz.fromUtf8z(err.message) )(" dbug: ")( Stringz.fromUtf8z(dbug) ).newline;
 				//g_error_free (err);
-				//GtkD.mainQuit();
+				//Main.quit();
 			break;
 			}
 			default:
@@ -442,7 +442,7 @@ int main(char[][] args)
 
 	debug(GnonlinHello) Stdout("Trying to init...").newline;
 
-	GtkD.init(args);
+	Main.init(args);
 	GStreamer.init(args);
 
 	// check input arguments
@@ -458,7 +458,7 @@ int main(char[][] args)
 	
 	GnonlinHello gstHello = new GnonlinHello( args[1], args[2], args[3], args[4] );
 
-	GtkD.main();
+	Main.run();
 
 	return 0;
 }

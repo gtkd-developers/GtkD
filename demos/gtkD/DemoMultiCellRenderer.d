@@ -33,7 +33,7 @@
 *****************************************************************************/
 module DemoMultiCellRenderer;
 
-import gtk.GtkD;
+import gtk.Main;
 import gdk.Event;
 import gtk.Window;
 import gtk.Widget;
@@ -55,7 +55,7 @@ enum {
 }
 
 void main(){
-    GtkD.init(null);
+    Main.init(null);
     ListStore store = new ListStore( [
         GType.STRING,
         GType.STRING,
@@ -124,10 +124,10 @@ void main(){
 
     wnd.addOnDelete( delegate gboolean (Event event, Widget widget) {
         widget.destroy();
-        GtkD.mainQuit();
+        Main.quit();
         return 0;
     });
 
-    GtkD.main();
+    Main.run();
 }
 

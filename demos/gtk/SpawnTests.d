@@ -19,7 +19,7 @@
 module gtk.SpawnTests;
 
 private import glib.Spawn;
-private import gtk.GtkD;
+private import gtk.Main;
 
 private import gtk.TextView;
 private import gtk.TextBuffer;
@@ -208,7 +208,7 @@ class SpawnWindow : MainWindow
 
 void main(string[] args)
 {
-	GtkD.init(args);
+	Main.init(args);
 
 	SpawnWindow sw = new SpawnWindow();
 	if ( args.length > 1 )
@@ -220,5 +220,5 @@ void main(string[] args)
 		sw.setInput("/bin/ls");
 	}
 
-	GtkD.main();
+	Main.run();
 }

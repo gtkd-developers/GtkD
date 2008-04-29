@@ -43,7 +43,7 @@
  * imports:
  * 	- gtk.Widget
  * 	- gtk.Window
- * 	- gtk.GtkD
+ * 	- gtk.Main
  * 	- gdk.Event
  * structWrap:
  * module aliases:
@@ -60,7 +60,7 @@ private import gtkc.gtk;
 
 private import gtk.Widget;
 private import gtk.Window;
-private import gtk.GtkD;
+private import gtk.Main;
 private import gdk.Event;
 
 
@@ -96,7 +96,7 @@ public class MainWindow : Window
 		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
 		if ( exit(0, false) || countTotalMainWindows==0 )
 		{
-			GtkD.mainQuit();
+			Main.quit();
 			return false;
 		}
 		return false;

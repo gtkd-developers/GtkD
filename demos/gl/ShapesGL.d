@@ -191,7 +191,7 @@ private import gtkglc.glgtktypes;
 private import glgtk.GLCapability;
 private import glgtk.GLWidget;
 
-private import gtk.GtkD;
+private import gtk.Main;
 
 private import gtk.DrawingArea;
 private import gtk.Layout;
@@ -944,7 +944,7 @@ void main(string[] args)
 {
 	
 	
-	GtkD.init(args);
+	Main.init(args);
 
 	GLdInit.init(null, null);
 	
@@ -955,7 +955,7 @@ void main(string[] args)
 	testGL.add(new ShapesGL(testGL));
 	testGL.showAll();
 	
-	GtkD.main();
+	Main.run();
 
 	
 } 

@@ -25,7 +25,7 @@ private import gtk.Window;
 private import gtk.Label;
 private import gtk.Button;
 private import gtk.VBox;
-private import gtk.GtkD;
+private import gtk.Main;
 private import gtk.Image;
 
 private import gtk.Timeout;
@@ -130,7 +130,7 @@ public class OtherTests : Window
 	{
 		destroy();
 		writefln("Exit by request from HelloWorld");
-		GtkD.exit(0);
+		Main.exit(0);
 		return 0;
 	}
 
@@ -143,8 +143,8 @@ public class OtherTests : Window
 
 void main(string[] args)
 {
-	GtkD.init(args);
+	Main.init(args);
 	new OtherTests();
-	GtkD.main();
+	Main.run();
 }
 

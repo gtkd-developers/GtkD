@@ -2734,6 +2734,10 @@ public class GtkDClass
 		{
 			converted = aliases[gToken];
 		}
+		else if ( (convParms.aliases !is null) && (gToken in convParms.aliases) )
+		{
+			converted = convParms.aliases[gToken];
+		}
 		else if ( endsWith(gToken, "_t") && startsWith(gToken,"cairo_") )
 		{
 			converted = gToken.dup;

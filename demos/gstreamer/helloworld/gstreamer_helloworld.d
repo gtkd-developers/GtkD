@@ -36,7 +36,7 @@ import Stringz = tango.stdc.stringz;
 
 //gtkD imports:
 
-import gtk.GtkD;
+import gtk.Main;
 
 //gstreamerD imports:
 
@@ -72,7 +72,7 @@ public:
 			break;
 			case GstMessageType.EOS:
 				Stdout("End-of-stream.").newline;
-				GtkD.mainQuit();
+				Main.quit();
 			break;
 
 			case GstMessageType.ERROR:
@@ -83,7 +83,7 @@ public:
 				//g_free (dbug);
 				Stdout("Error: ")( Stringz.fromUtf8z(err.message) )(" dbug: ")( Stringz.fromUtf8z(dbug) ).newline;
 				//g_error_free (err);
-				GtkD.mainQuit();
+				Main.quit();
 			break;
 			}
 			default:
@@ -189,7 +189,7 @@ int main(char[][] args)
 
 	Stdout("Trying to init...").newline;
 
-	//GtkD.init(args);
+	//Main.init(args);
 	GStreamer.init(args);
 
 	// check input arguments
@@ -207,7 +207,7 @@ int main(char[][] args)
 	GstHello gstHello = new GstHello( args[1] );
 
 	//We must use the gtkD mainloop to run gstreamerD apps.
-	GtkD.main();
+	Main.run();
 
 	return 0;
 }

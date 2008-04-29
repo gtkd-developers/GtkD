@@ -2,7 +2,7 @@ module glade.textGlade;
 
 
 import glade.Glade;
-import gtk.GtkD;
+import gtk.Main;
 import gtk.Window;
 import gtk.Widget;
 import gtk.Button;
@@ -34,7 +34,7 @@ int main(string[] args)
 {
 	string gladefile;
 
-	GtkD.init(args);
+	Main.init(args);
 
         if(args.length > 1)
         {
@@ -75,7 +75,7 @@ int main(string[] args)
 	}
         w.showAll();
 
-	GtkD.main();
+	Main.run();
 	return 0;
 
 }

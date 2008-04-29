@@ -20,11 +20,11 @@ module main;
 import clock;
 
 import gtk.MainWindow;
-import gtk.GtkD;
+import gtk.Main;
 
 void main(string[] args)
 {
-	GtkD.init(args);
+	Main.init(args);
 	
 	MainWindow win = new MainWindow("gtkD Cairo Clock");
 	
@@ -35,6 +35,6 @@ void main(string[] args)
 	c.show();
 	win.showAll();
 
-	GtkD.main();
+	Main.run();
 }
 

@@ -20,7 +20,7 @@ module sourceView.SVTest;
 
 
 private import gtk.MainWindow;
-private import gtk.GtkD;
+private import gtk.Main;
 private import gtk.ScrolledWindow;
 private import gtk.Widget;
 
@@ -136,8 +136,8 @@ class HelloWorld : MainWindow
 
 void main(string[] args)
 {
-	Gtk.init(null);
+	Main.init(null);
 	new HelloWorld();
-	Gtk.main();
+	Main.run();
 
 }

@@ -29,8 +29,6 @@ version(Tango)
 }
 else import std.date;
 
-import gtk.GtkD;
-
 import gtk.Timeout;
 
 import cairo.Context;

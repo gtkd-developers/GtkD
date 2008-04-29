@@ -35,9 +35,7 @@ else private import std.random;
 
 import gdk.Threads;
 
-
-private import gtkc.gtktypes;
-private import gtk.GtkD;
+private import gtk.Main;
 private import gtk.MainWindow;
 private import gtk.Adjustment;
 private import gtk.AccelGroup;
@@ -161,7 +159,7 @@ class TestWindow : MainWindow
 		int responce = d.run();
 		if ( responce == ResponseType.GTK_RESPONSE_YES )
 		{
-			GtkD.exit(0);
+			Main.exit(0);
 		}
 		d.destroy();
 		return true;
@@ -169,7 +167,7 @@ class TestWindow : MainWindow
 
 	void anyButtonExits(Button button)
 	{
-			GtkD.exit(0);
+			Main.exit(0);
 	}
 
 	this()
@@ -1221,20 +1219,20 @@ void main(string[] args)
 	version(Win32)
 	{
 		// todo threads are still broken on windows...
-		GtkD.init(args);
+		Main.init(args);
 	}
 	else version(Tango)
 	{
-		GtkD.init(args);
+		Main.init(args);
 	}
 	else
 	{
-		GtkD.initMultiThread(args);
+		Main.initMultiThread(args);
 	}
 
 	TestWindow window = new TestWindow();
 
-	debug(1)writefln("before GtkD.main");
-	GtkD.main();
-	debug(1)writefln("after GtkD.main");
+	debug(1)writefln("before Main.run");
+	Main.run();
+	debug(1)writefln("after Main.run");
 }

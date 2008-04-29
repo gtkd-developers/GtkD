@@ -20,7 +20,7 @@ module gtk.HelloWorld;
 
 private import gtk.MainWindow;
 private import gtk.Label;
-private import gtk.GtkD;
+private import gtk.Main;
 
 class HelloWorld : MainWindow
 {
@@ -38,8 +38,8 @@ class HelloWorld : MainWindow
 void main(string[] args)
 {
 
-	Gtk.init(args);
+	Main.init(args);
 	new HelloWorld();
-	Gtk.main();
+	Main.run();
 
 }

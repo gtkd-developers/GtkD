@@ -24,11 +24,11 @@
  * Conversion parameters:
  * inFile  = gtk-General.html
  * outPack = gtk
- * outFile = GtkD
+ * outFile = Main
  * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = GtkD
+ * clss    = Main
  * interf  = 
  * class Code: Yes
  * interface Code: No
@@ -36,6 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
+ * 	- gtk_main_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
@@ -60,12 +61,12 @@
  * 	- GtkWidget* -> Widget
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
- * 	- GtkD -> Gtk
  * local aliases:
+ * 	- main -> run
  * overrides:
  */
 
-module gtk.GtkD;
+module gtk.Main;
 
 public  import gtkc.gtktypes;
 
@@ -82,7 +83,7 @@ private import gthread.Thread;
 private import gdk.Threads;
 
 
-public alias GtkD Gtk;
+
 
 /**
  * Description
@@ -130,7 +131,7 @@ public alias GtkD Gtk;
  * though it involves slightly more typing. See GMainLoop in the GLib
  * documentation.
  */
-public class GtkD
+public class Main
 {
 	
 	/**
@@ -375,7 +376,7 @@ public class GtkD
 	 * gtk_main(). In that case gtk_main_quit() will make the innermost invocation
 	 * of the main loop return.
 	 */
-	public static void main()
+	public static void run()
 	{
 		// void gtk_main (void);
 		gtk_main();
@@ -386,7 +387,7 @@ public class GtkD
 	 * when calling gtk_quit_add().
 	 * Returns:the nesting level of the current invocation of the main loop.
 	 */
-	public static uint mainLevel()
+	public static uint level()
 	{
 		// guint gtk_main_level (void);
 		return gtk_main_level();
@@ -396,7 +397,7 @@ public class GtkD
 	 * Makes the innermost invocation of the main loop return when it regains
 	 * control.
 	 */
-	public static void mainQuit()
+	public static void quit()
 	{
 		// void gtk_main_quit (void);
 		gtk_main_quit();
@@ -409,7 +410,7 @@ public class GtkD
 	 * pending with gtk_events_pending() first.
 	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
-	public static int mainIteration()
+	public static int iteration()
 	{
 		// gboolean gtk_main_iteration (void);
 		return gtk_main_iteration();
@@ -422,7 +423,7 @@ public class GtkD
 	 * blocking = TRUE if you want GTK+ to block if no events are pending.
 	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
-	public static int mainIterationDo(int blocking)
+	public static int iterationDo(int blocking)
 	{
 		// gboolean gtk_main_iteration_do (gboolean blocking);
 		return gtk_main_iteration_do(blocking);
@@ -436,7 +437,7 @@ public class GtkD
 	 * Params:
 	 * event = An event to process (normally) passed by GDK.
 	 */
-	public static void mainDoEvent(Event event)
+	public static void doEvent(Event event)
 	{
 		// void gtk_main_do_event (GdkEvent *event);
 		gtk_main_do_event((event is null) ? null : event.getEventStruct());

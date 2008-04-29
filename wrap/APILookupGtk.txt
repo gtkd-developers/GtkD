@@ -108,8 +108,9 @@ wrap: gtk
 file: gtk-General.html
 
 #struct: 
-class: GtkD
+class: Main
 #prefix: 
+prefix: gtk_main_
 prefix: gtk_
 noprefix: gtk_true
 noprefix: gtk_false
@@ -135,7 +136,9 @@ import: glib.Str
 import: gtkc.gtk
 import: gthread.Thread
 import: gdk.Threads
-moduleAlias: GtkD Gtk
+
+alias: main run
+
 code: start
 
 	/**
@@ -170,7 +173,7 @@ code: start
 	}
 	
 code: end
-outFile: GtkD
+outFile: Main
 
 class: Timeout
 prefix: gtk_timeout_
@@ -1095,7 +1098,7 @@ outFile: Window
 file: 
 import: gtk.Widget
 import: gtk.Window
-import: gtk.GtkD
+import: gtk.Main
 import: gdk.Event
 	
 
@@ -1131,7 +1134,7 @@ public class MainWindow : Window
 		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
 		if ( exit(0, false) || countTotalMainWindows==0 )
 		{
-			GtkD.mainQuit();
+			Main.quit();
 			return false;
 		}
 		return false;

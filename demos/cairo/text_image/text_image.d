@@ -6,7 +6,7 @@ else import std.stdio;
 version(Tango) import tango.math.Math;
 else import std.math;
 
-import gtk.GtkD;
+import gtk.Main;
 import gtk.MainWindow;
 
 import cairo.FontOption;
@@ -150,7 +150,7 @@ protected:
 
 void main(string[] args)
 {
-	GtkD.init(args);
+	Main.init(args);
 	
 	MainWindow win = new MainWindow("gtkD Cairo text & image");
 	
@@ -161,7 +161,7 @@ void main(string[] args)
 	c.show();
 	win.showAll();
 
-	GtkD.main();
+	Main.run();
 }
 
 
