@@ -62,6 +62,10 @@ private import gtkc.cairo;
 
 /**
  * Description
+ * The font options specify how fonts should be rendered. Most of the time the
+ * font options implied by a surface are just right and do not need any changes,
+ * but for pixel-based targets tweaking font options may result in superior
+ * output on a particular display.
  */
 public class FontOption
 {
@@ -184,7 +188,7 @@ public class FontOption
 	 * Compares two font options objects for equality.
 	 * Params:
 	 * other =  another cairo_font_options_t
-	 * Returns: TRUE if all fields of the two font options objects match
+	 * Returns: TRUE if all fields of the two font options objects match.Note that this function will return FALSE if either object is inerror.
 	 */
 	public cairo_bool_t equal(FontOption other)
 	{

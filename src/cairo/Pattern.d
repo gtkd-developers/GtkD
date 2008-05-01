@@ -68,6 +68,13 @@ private import cairo.Surface;
 
 /**
  * Description
+ * cairo_pattern_t is the paint with which cairo draws.
+ * The primary use of patterns is as the source for all cairo drawing operations,
+ * although they can also be used as masks, that is, as the brush too.
+ * A cairo pattern is created by using one of the many constructors,
+ * of the form cairo_pattern_create_type()
+ * or implicitly through
+ * cairo_set_source_type() functions.
  */
 public class Pattern
 {
@@ -429,6 +436,8 @@ public class Pattern
 	 * Sets the mode to be used for drawing outside the area of a pattern.
 	 * See cairo_extend_t for details on the semantics of each extend
 	 * strategy.
+	 * The default extend mode is CAIRO_EXTEND_NONE for surface patterns
+	 * and CAIRO_EXTEND_PAD for gradient patterns.
 	 * Params:
 	 * extend =  a cairo_extend_t describing how the area outside of the
 	 * pattern will be drawn
@@ -453,6 +462,10 @@ public class Pattern
 	/**
 	 * Sets the filter to be used for resizing when using this pattern.
 	 * See cairo_filter_t for details on each filter.
+	 * * Note that you might want to control filtering even when you do not
+	 * have an explicit cairo_pattern_t object, (for example when using
+	 * cairo_set_source_surface()). In these cases, it is convenient to
+	 * use cairo_get_source() to get access to the pattern that cairo
 	 * Params:
 	 * filter =  a cairo_filter_t describing the filter to use for resizing
 	 * the pattern

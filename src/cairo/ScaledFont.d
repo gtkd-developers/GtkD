@@ -73,6 +73,8 @@ private import glib.Str;
 
 /**
  * Description
+ * cairo_scaled_font_t represents a realization of a font face at a particular
+ * size and transformation and a certain set of font options.
  */
 public class ScaledFont
 {
@@ -124,7 +126,8 @@ public class ScaledFont
 	 * ctm =  user to device transformation matrix with which the font will
 	 *  be used.
 	 * options =  options to use when getting metrics for the font and
-	 *  rendering with it.
+	 *  rendering with it. A NULL pointer will be interpreted as
+	 *  meaning the default options.
 	 * Returns: a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
 	 */
 	public static ScaledFont create(FontFace fontFace, Matrix fontMatrix, Matrix ctm, FontOption options)

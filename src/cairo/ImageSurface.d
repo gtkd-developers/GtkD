@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- cairo_image_surface_
+ * 	- cairo_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -65,9 +66,9 @@ private import cairo.Surface;
 
 /**
  * Description
- *  Image surfaces provide the ability to render to memory buffers
- *  either allocated by cairo or by the calling code. The supported
- *  image formats are those defined in cairo_format_t.
+ * Image surfaces provide the ability to render to memory buffers
+ * either allocated by cairo or by the calling code. The supported
+ * image formats are those defined in cairo_format_t.
  */
 public class ImageSurface : Surface
 {
@@ -105,7 +106,24 @@ public class ImageSurface : Surface
 	
 	/**
 	 * Description
+	 * The PNG functions allow reading PNG images into image surfaces, and writing
+	 * any surface to a PNG file.
 	 */
+	
+	/**
+	 * This function provides a stride value that will respect all
+	 * alignment requirements of the accelerated image-rendering code
+	 * Since 1.6
+	 * Params:
+	 * format =  A cairo_format_t value
+	 * width =  The desired width of an image surface to be created.
+	 * Returns: the appropriate stride to use given the desiredformat and width, or -1 if either the format is invalid or the widthtoo large.
+	 */
+	public static int formatStrideForWidth(cairo_format_t format, int width)
+	{
+		// int cairo_format_stride_for_width (cairo_format_t format,  int width);
+		return cairo_format_stride_for_width(format, width);
+	}
 	
 	/**
 	 * Creates an image surface of the specified format and
@@ -117,7 +135,7 @@ public class ImageSurface : Surface
 	 * format =  format of pixels in the surface to create
 	 * width =  width of the surface, in pixels
 	 * height =  height of the surface, in pixels
-	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
+	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static ImageSurface create(cairo_format_t format, int width, int height)
 	{
@@ -138,17 +156,26 @@ public class ImageSurface : Surface
 	 * contents of buffer will be used as the initial image contents; you
 	 * must explicitly clear the buffer, using, for example,
 	 * cairo_rectangle() and cairo_fill() if you want it cleared.
+	 * Note that the stride may be larger than
+	 * width*bytes_per_pixel to provide proper alignment for each pixel
+	 * and row. This alignment is required to allow high-performance rendering
+	 * within cairo. The correct way to obtain a legal stride value is to
+	 * call cairo_format_stride_for_width() with the desired format and
+	 * maximum image width value, and the use the resulting stride value
+	 * to allocate the data and to create the image surface. See
+	 * cairo_format_stride_for_width() for example code.
 	 * Params:
-	 * data =  a pointer to a buffer supplied by the application
-	 *  in which to write contents.
+	 * data =  a pointer to a buffer supplied by the application in which
+	 *  to write contents. This pointer must be suitably aligned for any
+	 *  kind of variable, (for example, a pointer returned by malloc).
 	 * format =  the format of pixels in the buffer
 	 * width =  the width of the image to be stored in the buffer
 	 * height =  the height of the image to be stored in the buffer
-	 * stride =  the number of bytes between the start of rows
-	 *  in the buffer. Having this be specified separate from width
-	 *  allows for padding at the end of rows, or for writing
-	 *  to a subportion of a larger image.
-	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.See cairo_surface_set_user_data() for a means of attaching adestroy-notification fallback to the surface if necessary.
+	 * stride =  the number of bytes between the start of rows in the
+	 *  buffer as allocated. This value should always be computed by
+	 *  cairo_format_stride_for_width() before allocating the data
+	 *  buffer.
+	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface in the case of an error such as out ofmemory or an invalid stride value. In case of invalid stride valuethe error status of the returned surface will beCAIRO_STATUS_INVALID_STRIDE. You can usecairo_surface_status() to check for this.See cairo_surface_set_user_data() for a means of attaching adestroy-notification fallback to the surface if necessary.
 	 */
 	public static ImageSurface createForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
 	{
@@ -259,10 +286,11 @@ public class ImageSurface : Surface
 	 * Writes the contents of surface to a new file filename as a PNG
 	 * image.
 	 * Params:
+	 * surface =  a cairo_surface_t with pixel contents
 	 * filename =  the name of a file to write to
 	 * Returns: CAIRO_STATUS_SUCCESS if the PNG file was writtensuccessfully. Otherwise, CAIRO_STATUS_NO_MEMORY if memory could notbe allocated for the operation orCAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not havepixel contents, or CAIRO_STATUS_WRITE_ERROR if an I/O error occurswhile attempting to write the file.
 	 */
-	public cairo_status_t writeToPng(string filename)
+	public cairo_status_t surfaceWriteToPng(string filename)
 	{
 		// cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface,  const char *filename);
 		return cairo_surface_write_to_png(cairo_surface, Str.toStringz(filename));
@@ -271,11 +299,12 @@ public class ImageSurface : Surface
 	/**
 	 * Writes the image surface to the write function.
 	 * Params:
+	 * surface =  a cairo_surface_t with pixel contents
 	 * writeFunc =  a cairo_write_func_t
 	 * closure =  closure data for the write function
 	 * Returns: CAIRO_STATUS_SUCCESS if the PNG file was writtensuccessfully. Otherwise, CAIRO_STATUS_NO_MEMORY is returned ifmemory could not be allocated for the operation,CAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not havepixel contents.
 	 */
-	public cairo_status_t writeToPngStream(cairo_write_func_t writeFunc, void* closure)
+	public cairo_status_t surfaceWriteToPngStream(cairo_write_func_t writeFunc, void* closure)
 	{
 		// cairo_status_t cairo_surface_write_to_png_stream (cairo_surface_t *surface,  cairo_write_func_t write_func,  void *closure);
 		return cairo_surface_write_to_png_stream(cairo_surface, writeFunc, closure);

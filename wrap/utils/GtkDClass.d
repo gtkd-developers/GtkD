@@ -1565,15 +1565,19 @@ public class GtkDClass
 
 					debug(enumPrefix)writefln("\t\t%s", value);
 					char[] v = replace(value, enumPrefix, "");
-					if ( v.length > 2 )
+					if ( enumName == "cairo_ps_level_t" )
+					{
+						v = "LEVEL_"~v;
+					}
+					else if ( v.length > 2 )
 					{
 						switch (v[0..3])
 						{
 							case "2BI": v = "TOO_"~v[1..v.length]; break;
 							case "2BU": v = "DOUBLE_"~v[1..v.length]; break;
 							case "3BU": v = "TRIPPLE_"~v[1..v.length]; break;
-							case "1_1": v = "VERSION_"~v[1..v.length]; break;
-							case "1_2": v = "VERSION_"~v[1..v.length]; break;
+							case "1_1": v = "VERSION_"~v; break;
+							case "1_2": v = "VERSION_"~v; break;
 							default:
 								// nothing
 								break;

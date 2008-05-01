@@ -221,14 +221,38 @@ public class Context
 	
 	/**
 	 * Description
+	 * Paths are the most basic drawing tools and are primarily used to implicitly
+	 * generate simple masks.
 	 */
 	
 	/**
 	 * Description
+	 * The current transformation matrix, ctm, is a
+	 * two-dimensional affine transformation that maps all coordinates and other
+	 * drawing instruments from the user space into the
+	 * surface's canonical coordinate system, also known as the device
+	 * space.
 	 */
 	
 	/**
 	 * Description
+	 * Cairo has two sets of text rendering capabilities:
+	 *  The functions with text in their name form cairo's
+	 *  toy text API. The toy API takes UTF-8 encoded
+	 *  text and is limited in its functionality to rendering simple
+	 *  left-to-right text with no advanced features. That means for example
+	 *  that most complex scripts like Hebrew, Arabic, and Indic scripts are
+	 *  out of question. No kerning or correct positioning of diacritical marks
+	 *  either. The font selection is pretty limited too and doesn't handle the
+	 *  case that the selected font does not cover the characters in the text.
+	 *  This set of functions are really that, a toy text API, for testing and
+	 *  demonstration purposes. Any serious application should avoid them.
+	 *  The functions with glyphs in their name form cairo's
+	 *  low-level text API. The low-level API relies on
+	 *  the user to convert text to a set of glyph indexes and positions. This
+	 *  is a very hard problem and is best handled by external libraries, like
+	 *  the pangocairo that is part of the Pango text layout and rendering library.
+	 *  Pango is available from http://www.pango.org/.
 	 */
 	
 	/**
@@ -236,7 +260,7 @@ public class Context
 	 * default values and with target as a target surface. The target
 	 * surface should be constructed with a backend-specific function such
 	 * as cairo_image_surface_create() (or any other
-	 * cairo_<backend>_surface_create variant).
+	 * cairo_backend_surface_create variant).
 	 * This function references target, so you can immediately
 	 * call cairo_surface_destroy() on it if you don't need to
 	 * maintain a separate reference to it.
@@ -289,7 +313,7 @@ public class Context
 	
 	/**
 	 * Checks whether an error has previously occurred for this context.
-	 * Returns:the current status of this context, see cairo_status_t
+	 * Returns: the current status of this context, see cairo_status_t
 	 */
 	public cairo_status_t status()
 	{
@@ -390,7 +414,7 @@ public class Context
 	 * detailed description of group rendering.
 	 * Since 1.2
 	 * Params:
-	 * content =  a cairo_content_t indicating the type of group that
+	 * content =  a %cairo_content_t indicating the type of group that
 	 *  will be created
 	 */
 	public void pushGroupWithContent(cairo_content_t content)
@@ -431,14 +455,17 @@ public class Context
 	}
 	
 	/**
-	 * Gets the target surface for the current group as started by the
-	 * most recent call to cairo_push_group() or
-	 * cairo_push_group_with_content().
-	 * This function will return NULL if called "outside" of any group
-	 * rendering blocks, (that is, after the last balancing call to
-	 * cairo_pop_group() or cairo_pop_group_to_source()).
+	 * Gets the current destination surface for the context. This is either
+	 * the original target surface as passed to cairo_create() or the target
+	 * surface for the current group as started by the most recent call to
+	 * cairo_push_group() or cairo_push_group_with_content().
+	 * This function will always return a valid pointer, but the result
+	 * can be a "nil" surface if cr is already in an error state,
+	 * (ie. cairo_status() != CAIRO_STATUS_SUCCESS).
+	 * A nil surface is indicated by cairo_surface_status()
+	 * != CAIRO_STATUS_SUCCESS.
 	 * Since 1.2
-	 * Returns: the target group surface, or NULL if none. Thisobject is owned by cairo. To keep a reference to it, you must callcairo_surface_reference().
+	 * Returns: the target surface. This object is owned by cairo. Tokeep a reference to it, you must call cairo_surface_reference().
 	 */
 	public Surface getGroupTarget()
 	{
@@ -459,6 +486,8 @@ public class Context
 	 * The color components are floating point numbers in the range 0 to
 	 * 1. If the values passed in are outside that range, they will be
 	 * clamped.
+	 * The default source pattern is opaque black, (that is, it is
+	 * equivalent to cairo_set_source_rgb (cr, 0.0, 0.0, 0.0)).
 	 * Params:
 	 * red =  red component of color
 	 * green =  green component of color
@@ -477,6 +506,8 @@ public class Context
 	 * The color and alpha components are floating point numbers in the
 	 * range 0 to 1. If the values passed in are outside that range, they
 	 * will be clamped.
+	 * The default source pattern is opaque black, (that is, it is
+	 * equivalent to cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0)).
 	 * Params:
 	 * red =  red component of color
 	 * green =  green component of color
@@ -497,9 +528,9 @@ public class Context
 	 * user space in effect at the time of cairo_set_source(). This means
 	 * that further modifications of the current transformation matrix
 	 * will not affect the source pattern. See cairo_pattern_set_matrix().
-	 * XXX: I'd also like to direct the reader's attention to some
-	 * (not-yet-written) section on cairo's imaging model. How would I do
-	 * that if such a section existed? (cworth).
+	 * The default source pattern is a solid pattern that is opaque black,
+	 * (that is, it is equivalent to cairo_set_source_rgb (cr, 0.0, 0.0,
+	 * 0.0)).
 	 * Params:
 	 * source =  a cairo_pattern_t to be used as the source for
 	 * subsequent drawing operations.
@@ -589,8 +620,8 @@ public class Context
 	 * on and off portions of the size specified by the single value in
 	 * dashes.
 	 * If any value in dashes is negative, or if all values are 0, then
-	 * cairo_t will be put into an error state with a status of
-	 * CAIRO_STATUS_INVALID_DASH.
+	 * cr will be put into an error state with a status of
+	 * #CAIRO_STATUS_INVALID_DASH.
 	 * Params:
 	 * dashes =  an array specifying alternate lengths of on and off stroke portions
 	 * numDashes =  the length of the dashes array
@@ -636,6 +667,7 @@ public class Context
 	 * (potentially self-intersecting) path. The current fill rule affects
 	 * both cairo_fill() and cairo_clip(). See cairo_fill_rule_t for details
 	 * on the semantics of each available fill rule.
+	 * The default fill rule is CAIRO_FILL_RULE_WINDING.
 	 * Params:
 	 * fillRule =  a fill rule, specified as a cairo_fill_rule_t
 	 */
@@ -663,6 +695,7 @@ public class Context
 	 * examined by cairo_stroke(), cairo_stroke_extents(), and
 	 * cairo_stroke_to_path(), but does not have any effect during path
 	 * construction.
+	 * The default line cap style is CAIRO_LINE_CAP_BUTT.
 	 * Params:
 	 * lineCap =  a line cap style
 	 */
@@ -690,8 +723,9 @@ public class Context
 	 * examined by cairo_stroke(), cairo_stroke_extents(), and
 	 * cairo_stroke_to_path(), but does not have any effect during path
 	 * construction.
+	 * The default line join style is CAIRO_LINE_JOIN_MITER.
 	 * Params:
-	 * lineJoin =  a line joint style
+	 * lineJoin =  a line join style
 	 */
 	public void setLineJoin(cairo_line_join_t lineJoin)
 	{
@@ -761,6 +795,13 @@ public class Context
 	 * examined by cairo_stroke(), cairo_stroke_extents(), and
 	 * cairo_stroke_to_path(), but does not have any effect during path
 	 * construction.
+	 * The default miter limit value is 10.0, which will convert joins
+	 * with interior angles less than 11 degrees to bevels instead of
+	 * miters. For reference, a miter limit of 2.0 makes the miter cutoff
+	 * at 60 degrees, and a miter limit of 1.414 makes the cutoff at 90
+	 * degrees.
+	 * A miter limit for a desired angle can be computed as: miter limit =
+	 * 1/sin(angle/2)
 	 * Params:
 	 * limit =  miter limit to set
 	 */
@@ -784,9 +825,7 @@ public class Context
 	 * Sets the compositing operator to be used for all drawing
 	 * operations. See cairo_operator_t for details on the semantics of
 	 * each available compositing operator.
-	 * XXX: I'd also like to direct the reader's attention to some
-	 * (not-yet-written) section on cairo's imaging model. How would I do
-	 * that if such a section existed? (cworth).
+	 * The default operator is CAIRO_OPERATOR_OVER.
 	 * Params:
 	 * op =  a compositing operator, specified as a cairo_operator_t
 	 */
@@ -837,7 +876,7 @@ public class Context
 	 * Establishes a new clip region by intersecting the current clip
 	 * region with the current path as it would be filled by cairo_fill()
 	 * and according to the current fill rule (see cairo_set_fill_rule()).
-	 * After cairo_clip, the current path will be cleared from the cairo
+	 * After cairo_clip(), the current path will be cleared from the cairo
 	 * context.
 	 * The current clip region affects all drawing operations by
 	 * effectively masking out any changes to the surface that are outside
@@ -859,7 +898,7 @@ public class Context
 	 * Establishes a new clip region by intersecting the current clip
 	 * region with the current path as it would be filled by cairo_fill()
 	 * and according to the current fill rule (see cairo_set_fill_rule()).
-	 * Unlike cairo_clip(), cairo_clip_preserve preserves the path within
+	 * Unlike cairo_clip(), cairo_clip_preserve() preserves the path within
 	 * the cairo context.
 	 * The current clip region affects all drawing operations by
 	 * effectively masking out any changes to the surface that are outside
@@ -932,10 +971,8 @@ public class Context
 	 * indicate that the clip region cannot be represented as a list of
 	 * user-space rectangles. The status may have other values to indicate
 	 * other errors.
-	 * The caller must always call cairo_rectangle_list_destroy on the result of
-	 * this function.
 	 * Since 1.4
-	 * Returns: the current clip region as a list of rectangles in user coordinates.
+	 * Returns: the current clip region as a list of rectangles in user coordinates,which should be destroyed using cairo_rectangle_list_destroy().
 	 */
 	public cairo_rectangle_list_t* copyClipRectangleList()
 	{
@@ -946,7 +983,7 @@ public class Context
 	/**
 	 * A drawing operator that fills the current path according to the
 	 * current fill rule, (each sub-path is implicitly closed before being
-	 * filled). After cairo_fill, the current path will be cleared from
+	 * filled). After cairo_fill(), the current path will be cleared from
 	 * the cairo context. See cairo_set_fill_rule() and
 	 * cairo_fill_preserve().
 	 */
@@ -959,7 +996,7 @@ public class Context
 	/**
 	 * A drawing operator that fills the current path according to the
 	 * current fill rule, (each sub-path is implicitly closed before being
-	 * filled). Unlike cairo_fill(), cairo_fill_preserve preserves the
+	 * filled). Unlike cairo_fill(), cairo_fill_preserve() preserves the
 	 * path within the cairo context.
 	 * See cairo_set_fill_rule() and cairo_fill().
 	 */
@@ -971,10 +1008,17 @@ public class Context
 	
 	/**
 	 * Computes a bounding box in user coordinates covering the area that
-	 * would be affected by a cairo_fill() operation given the current path
-	 * and fill parameters. If the current path is empty, returns an empty
-	 * rectangle (0,0, 0,0). Surface dimensions and clipping are not taken
-	 * into account.
+	 * would be affected, (the "inked" area), by a cairo_fill() operation
+	 * given the current path and fill parameters. If the current path is
+	 * empty, returns an empty rectangle ((0,0), (0,0)). Surface
+	 * dimensions and clipping are not taken into account.
+	 * Contrast with cairo_path_extents(), which is similar, but returns
+	 * non-zero extents for some paths with no inked area, (such as a
+	 * simple line segment).
+	 * Note that cairo_fill_extents() must necessarily do more work to
+	 * compute the precise inked areas in light of the fill rule, so
+	 * cairo_path_extents() may be more desirable for sake of performance
+	 * if the non-inked path extents are desired.
 	 * See cairo_fill(), cairo_set_fill_rule() and cairo_fill_preserve().
 	 * Params:
 	 * x1 =  left of the resulting extents
@@ -1078,7 +1122,7 @@ public class Context
 	/**
 	 * A drawing operator that strokes the current path according to the
 	 * current line width, line join, line cap, and dash settings. Unlike
-	 * cairo_stroke(), cairo_stroke_preserve preserves the path within the
+	 * cairo_stroke(), cairo_stroke_preserve() preserves the path within the
 	 * cairo context.
 	 * See cairo_set_line_width(), cairo_set_line_join(),
 	 * cairo_set_line_cap(), cairo_set_dash(), and
@@ -1092,8 +1136,22 @@ public class Context
 	
 	/**
 	 * Computes a bounding box in user coordinates covering the area that
-	 * would be affected by a cairo_stroke() operation operation given the
-	 * current path and stroke parameters. If the current path is empty,
+	 * would be affected, (the "inked" area), by a cairo_stroke()
+	 * operation operation given the current path and stroke
+	 * parameters. If the current path is empty, returns an empty
+	 * rectangle ((0,0), (0,0)). Surface dimensions and clipping are not
+	 * taken into account.
+	 * Note that if the line width is set to exactly zero, then
+	 * cairo_stroke_extents() will return an empty rectangle. Contrast with
+	 * cairo_path_extents() which can be used to compute the non-empty
+	 * bounds as the line width approaches zero.
+	 * Note that cairo_stroke_extents() must necessarily do more work to
+	 * compute the precise inked areas in light of the stroke parameters,
+	 * so cairo_path_extents() may be more desirable for sake of
+	 * performance if non-inked path extents are desired.
+	 * See cairo_stroke(), cairo_set_line_width(), cairo_set_line_join(),
+	 * cairo_set_line_cap(), cairo_set_dash(), and
+	 * cairo_stroke_preserve().
 	 * Params:
 	 * x1 =  left of the resulting extents
 	 * y1 =  top of the resulting extents
@@ -1130,6 +1188,8 @@ public class Context
 	 * doesn't clear it, so, the contents of the current page will be retained
 	 * for the next page too. Use cairo_show_page() if you want to get an
 	 * empty page after the emission.
+	 * This is a convenience function that simply calls
+	 * cairo_surface_copy_page() on cr's target.
 	 */
 	public void copyPage()
 	{
@@ -1140,6 +1200,8 @@ public class Context
 	/**
 	 * Emits and clears the current page for backends that support multiple
 	 * pages. Use cairo_copy_page() if you don't want to clear the page.
+	 * This is a convenience function that simply calls
+	 * cairo_surface_show_page() on cr's target.
 	 */
 	public void showPage()
 	{
@@ -1233,7 +1295,7 @@ public class Context
 	 * Immediately releases all memory associated with path. After a call
 	 * to cairo_path_destroy() the path pointer is no longer valid and
 	 * should not be used further.
-	 * NOTE: cairo_path_destroy function should only be called with a
+	 * Note: cairo_path_destroy() should only be called with a
 	 * pointer to a cairo_path_t returned by a cairo function. Any path
 	 * that is created manually (ie. outside of cairo) should be destroyed
 	 * manually as well.
@@ -1264,11 +1326,24 @@ public class Context
 	}
 	
 	/**
+	 * Returns whether a current point is defined on the current path.
+	 * See cairo_get_current_point() for details on the current point.
+	 * Since 1.6
+	 * Returns: whether a current point is defined.
+	 */
+	public cairo_bool_t hasCurrentPoint()
+	{
+		// cairo_bool_t cairo_has_current_point (cairo_t *cr);
+		return cairo_has_current_point(cairo);
+	}
+	
+	/**
 	 * Gets the current point of the current path, which is
 	 * conceptually the final point reached by the path so far.
 	 * The current point is returned in the user-space coordinate
-	 * system. If there is no defined current point then x and y will
-	 * both be set to 0.0.
+	 * system. If there is no defined current point or if cr is in an
+	 * error status, x and y will both be set to 0.0. It is possible to
+	 * check this in advance with cairo_has_current_point().
 	 * Most path construction functions alter the current point. See the
 	 * Params:
 	 * x =  return value for X coordinate of the current point
@@ -1318,9 +1393,9 @@ public class Context
 	 * stroking. When a closed sub-path is stroked, there are no caps on
 	 * the ends of the sub-path. Instead, there is a line join connecting
 	 * the final and initial segments of the sub-path.
-	 * If there is no current point before the call to cairo_close_path,
+	 * If there is no current point before the call to cairo_close_path(),
 	 * this function will have no effect.
-	 * Note: As of cairo version 1.2.4 any call to cairo_close_path will
+	 * Note: As of cairo version 1.2.4 any call to cairo_close_path() will
 	 * place an explicit MOVE_TO element into the path immediately after
 	 * the CLOSE_PATH element, (which can be seen in cairo_copy_path() for
 	 * example). This can simplify path processing in some cases as it may
@@ -1342,7 +1417,8 @@ public class Context
 	 * until it is greater than angle1.
 	 * If there is a current point, an initial line segment will be added
 	 * to the path to connect the current point to the beginning of the
-	 * arc.
+	 * arc. If this initial line is undesired, it can be avoided by
+	 * calling cairo_new_sub_path() before calling cairo_arc().
 	 * Angles are measured in radians. An angle of 0.0 is in the direction
 	 * of the positive X axis (in user space). An angle of M_PI/2.0 radians
 	 * (90 degrees) is in the direction of the positive Y axis (in
@@ -1482,7 +1558,7 @@ public class Context
 	 * the origin of the final glyph offset by its advance values.
 	 * This allows for chaining multiple calls to to cairo_text_path()
 	 * without having to set current point in between.
-	 * NOTE: The cairo_text_path() function call is part of what the cairo
+	 * Note: The cairo_text_path() function call is part of what the cairo
 	 * designers call the "toy" text API. It is convenient for short demos
 	 * and simple programs, but it is not expected to be adequate for
 	 * serious text-using applications. See cairo_glyph_path() for the
@@ -1563,10 +1639,41 @@ public class Context
 	}
 	
 	/**
+	 * Computes a bounding box in user-space coordinates covering the
+	 * points on the current path. If the current path is empty, returns
+	 * an empty rectangle ((0,0), (0,0)). Stroke parameters, fill rule,
+	 * surface dimensions and clipping are not taken into account.
+	 * Contrast with cairo_fill_extents() and cairo_stroke_extents() which
+	 * return the extents of only the area that would be "inked" by
+	 * the corresponding drawing operations.
+	 * The result of cairo_path_extents() is defined as equivalent to the
+	 * limit of cairo_stroke_extents() with CAIRO_LINE_CAP_ROUND as the
+	 * line width approaches 0.0, (but never reaching the empty-rectangle
+	 * returned by cairo_stroke_extents() for a line width of 0.0).
+	 * Specifically, this means that zero-area sub-paths such as
+	 * cairo_move_to();cairo_line_to() segments, (even degenerate cases
+	 * where the coordinates to both calls are identical), will be
+	 * considered as contributing to the extents. However, a lone
+	 * cairo_move_to() will not contribute to the results of
+	 * cairo_path_extents().
+	 * Since 1.6
+	 * Params:
+	 * x1 =  left of the resulting extents
+	 * y1 =  top of the resulting extents
+	 * x2 =  right of the resulting extents
+	 * y2 =  bottom of the resulting extents
+	 */
+	public void pathExtents(double* x1, double* y1, double* x2, double* y2)
+	{
+		// void cairo_path_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
+		cairo_path_extents(cairo, x1, y1, x2, y2);
+	}
+	
+	/**
 	 * Modifies the current transformation matrix (CTM) by translating the
 	 * user-space origin by (tx, ty). This offset is interpreted as a
 	 * user-space coordinate according to the CTM in place before the new
-	 * call to cairo_translate. In other words, the translation of the
+	 * call to cairo_translate(). In other words, the translation of the
 	 * user-space origin takes place after any existing transformation.
 	 * Params:
 	 * tx =  amount to translate in the X direction
@@ -1716,13 +1823,33 @@ public class Context
 	}
 	
 	/**
+	 * Note: The cairo_select_font_face() function call is part of what
+	 * the cairo designers call the "toy" text API. It is convenient for
+	 * short demos and simple programs, but it is not expected to be
+	 * adequate for serious text-using applications.
 	 * Selects a family and style of font from a simplified description as
-	 * a family name, slant and weight. This function is meant to be used
-	 * only for applications with simple font needs: Cairo doesn't provide
-	 * for operations such as listing all available fonts on the system,
-	 * and it is expected that most applications will need to use a more
-	 * comprehensive font handling and text layout library in addition to
-	 * cairo.
+	 * a family name, slant and weight. Cairo provides no operation to
+	 * list available family names on the system (this is a "toy",
+	 * remember"), but the standard CSS2 generic family names, ("serif",
+	 * "sans-serif", "cursive", "fantasy", "monospace"), are likely to
+	 * work as expected.
+	 * For "real" font selection, see the font-backend-specific
+	 * font_face_create functions for the font backend you are using. (For
+	 * example, if you are using the freetype-based cairo-ft font backend,
+	 * see cairo_ft_font_face_create_for_ft_face() or
+	 * cairo_ft_font_face_create_for_pattern().) The resulting font face
+	 * could then be used with cairo_scaled_font_create() and
+	 * cairo_set_scaled_font().
+	 * Similarly, when using the "real" font support, you can call
+	 * directly into the underlying font system, (such as fontconfig or
+	 * freetype), for operations such as listing available fonts, etc.
+	 * It is expected that most applications will need to use a more
+	 * comprehensive font handling and text layout library, (for example,
+	 * pango), in conjunction with cairo.
+	 * If text is drawn without a call to cairo_select_font_face(), (nor
+	 * cairo_set_font_face() nor cairo_set_scaled_font()), the default
+	 * family is "sans", slant is CAIRO_FONT_SLANT_NORMAL, and weight is
+	 * CAIRO_FONT_WEIGHT_NORMAL.
 	 * Params:
 	 * family =  a font family name, encoded in UTF-8
 	 * slant =  the slant for the font
@@ -1740,6 +1867,9 @@ public class Context
 	 * cairo_set_font_matrix(). This results in a font size of size user space
 	 * units. (More precisely, this matrix will result in the font's
 	 * em-square being a size by size square in user space.)
+	 * If text is drawn without a call to cairo_set_font_size(), (nor
+	 * cairo_set_font_matrix() nor cairo_set_scaled_font()), the default
+	 * font size is 10.0.
 	 * Params:
 	 * size =  the new font size, in user space units
 	 */
@@ -1884,7 +2014,7 @@ public class Context
 	 * the current point will be at the origin of the final glyph offset
 	 * by its advance values. This allows for easy display of a single
 	 * logical string with multiple calls to cairo_show_text().
-	 * NOTE: The cairo_show_text() function call is part of what the cairo
+	 * Note: The cairo_show_text() function call is part of what the cairo
 	 * designers call the "toy" text API. It is convenient for short demos
 	 * and simple programs, but it is not expected to be adequate for
 	 * serious text-using applications. See cairo_show_glyphs() for the

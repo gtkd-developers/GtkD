@@ -62,6 +62,14 @@ private import gtkc.cairo;
 
 /**
  * Description
+ * cairo_font_face_t represents a particular font at a particular weight,
+ * slant, and other characteristic but no size, transformation, or size.
+ * Font faces are created using font-backend-specific
+ * constructors, typically of the form
+ * cairo_backend_font_face_create(),
+ * or implicitly using the toy text API by way of
+ * cairo_select_font_face(). The resulting face can be accessed using
+ * cairo_get_font_face().
  */
 public class FontFace
 {

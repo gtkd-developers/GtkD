@@ -129,6 +129,7 @@ extern(C)
 	cairo_path_t* function(cairo_t* cr)cairo_copy_path_flat;
 	void function(cairo_path_t* path)cairo_path_destroy;
 	void function(cairo_t* cr, cairo_path_t* path)cairo_append_path;
+	cairo_bool_t function(cairo_t* cr)cairo_has_current_point;
 	void function(cairo_t* cr, double* x, double* y)cairo_get_current_point;
 	void function(cairo_t* cr)cairo_new_path;
 	void function(cairo_t* cr)cairo_new_sub_path;
@@ -144,6 +145,7 @@ extern(C)
 	void function(cairo_t* cr, double dx1, double dy1, double dx2, double dy2, double dx3, double dy3)cairo_rel_curve_to;
 	void function(cairo_t* cr, double dx, double dy)cairo_rel_line_to;
 	void function(cairo_t* cr, double dx, double dy)cairo_rel_move_to;
+	void function(cairo_t* cr, double* x1, double* y1, double* x2, double* y2)cairo_path_extents;
 	void function(cairo_t* cr, double tx, double ty)cairo_translate;
 	void function(cairo_t* cr, double sx, double sy)cairo_scale;
 	void function(cairo_t* cr, double angle)cairo_rotate;
@@ -265,9 +267,12 @@ extern(C)
 	uint function(cairo_surface_t* surface)cairo_surface_get_reference_count;
 	cairo_status_t function(cairo_surface_t* surface, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)cairo_surface_set_user_data;
 	void* function(cairo_surface_t* surface, cairo_user_data_key_t* key)cairo_surface_get_user_data;
+	void function(cairo_surface_t* surface)cairo_surface_copy_page;
+	void function(cairo_surface_t* surface)cairo_surface_show_page;
 	
 	// cairo.ImageSurface
 	
+	int function(cairo_format_t format, int width)cairo_format_stride_for_width;
 	cairo_surface_t* function(cairo_format_t format, int width, int height)cairo_image_surface_create;
 	cairo_surface_t* function(uchar* data, cairo_format_t format, int width, int height, int stride)cairo_image_surface_create_for_data;
 	uchar* function(cairo_surface_t* surface)cairo_image_surface_get_data;
@@ -290,6 +295,11 @@ extern(C)
 	
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints)cairo_ps_surface_create;
 	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)cairo_ps_surface_create_for_stream;
+	void function(cairo_surface_t* surface, cairo_ps_level_t level)cairo_ps_surface_restrict_to_level;
+	void function(cairo_ps_level_t** levels, int* numLevels)cairo_ps_get_levels;
+	char* function(cairo_ps_level_t level)cairo_ps_level_to_string;
+	void function(cairo_surface_t* surface, cairo_bool_t eps)cairo_ps_surface_set_eps;
+	cairo_bool_t function(cairo_surface_t* surface)cairo_ps_surface_get_eps;
 	void function(cairo_surface_t* surface, double widthInPoints, double heightInPoints)cairo_ps_surface_set_size;
 	void function(cairo_surface_t* surface)cairo_ps_surface_dsc_begin_setup;
 	void function(cairo_surface_t* surface)cairo_ps_surface_dsc_begin_page_setup;
@@ -400,6 +410,7 @@ Symbol[] cairoLinks =
 	{ "cairo_copy_path_flat",  cast(void**)& cairo_copy_path_flat},
 	{ "cairo_path_destroy",  cast(void**)& cairo_path_destroy},
 	{ "cairo_append_path",  cast(void**)& cairo_append_path},
+	{ "cairo_has_current_point",  cast(void**)& cairo_has_current_point},
 	{ "cairo_get_current_point",  cast(void**)& cairo_get_current_point},
 	{ "cairo_new_path",  cast(void**)& cairo_new_path},
 	{ "cairo_new_sub_path",  cast(void**)& cairo_new_sub_path},
@@ -415,6 +426,7 @@ Symbol[] cairoLinks =
 	{ "cairo_rel_curve_to",  cast(void**)& cairo_rel_curve_to},
 	{ "cairo_rel_line_to",  cast(void**)& cairo_rel_line_to},
 	{ "cairo_rel_move_to",  cast(void**)& cairo_rel_move_to},
+	{ "cairo_path_extents",  cast(void**)& cairo_path_extents},
 	{ "cairo_translate",  cast(void**)& cairo_translate},
 	{ "cairo_scale",  cast(void**)& cairo_scale},
 	{ "cairo_rotate",  cast(void**)& cairo_rotate},
@@ -521,6 +533,9 @@ Symbol[] cairoLinks =
 	{ "cairo_surface_get_reference_count",  cast(void**)& cairo_surface_get_reference_count},
 	{ "cairo_surface_set_user_data",  cast(void**)& cairo_surface_set_user_data},
 	{ "cairo_surface_get_user_data",  cast(void**)& cairo_surface_get_user_data},
+	{ "cairo_surface_copy_page",  cast(void**)& cairo_surface_copy_page},
+	{ "cairo_surface_show_page",  cast(void**)& cairo_surface_show_page},
+	{ "cairo_format_stride_for_width",  cast(void**)& cairo_format_stride_for_width},
 	{ "cairo_image_surface_create",  cast(void**)& cairo_image_surface_create},
 	{ "cairo_image_surface_create_for_data",  cast(void**)& cairo_image_surface_create_for_data},
 	{ "cairo_image_surface_get_data",  cast(void**)& cairo_image_surface_get_data},
@@ -537,6 +552,11 @@ Symbol[] cairoLinks =
 	{ "cairo_pdf_surface_set_size",  cast(void**)& cairo_pdf_surface_set_size},
 	{ "cairo_ps_surface_create",  cast(void**)& cairo_ps_surface_create},
 	{ "cairo_ps_surface_create_for_stream",  cast(void**)& cairo_ps_surface_create_for_stream},
+	{ "cairo_ps_surface_restrict_to_level",  cast(void**)& cairo_ps_surface_restrict_to_level},
+	{ "cairo_ps_get_levels",  cast(void**)& cairo_ps_get_levels},
+	{ "cairo_ps_level_to_string",  cast(void**)& cairo_ps_level_to_string},
+	{ "cairo_ps_surface_set_eps",  cast(void**)& cairo_ps_surface_set_eps},
+	{ "cairo_ps_surface_get_eps",  cast(void**)& cairo_ps_surface_get_eps},
 	{ "cairo_ps_surface_set_size",  cast(void**)& cairo_ps_surface_set_size},
 	{ "cairo_ps_surface_dsc_begin_setup",  cast(void**)& cairo_ps_surface_dsc_begin_setup},
 	{ "cairo_ps_surface_dsc_begin_page_setup",  cast(void**)& cairo_ps_surface_dsc_begin_page_setup},

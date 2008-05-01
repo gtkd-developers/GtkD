@@ -64,6 +64,12 @@ private import glib.Str;
 
 /**
  * Description
+ * cairo_surface_t is the abstract type representing all different drawing
+ * targets that cairo can render to. The actual drawings are
+ * performed using a cairo context.
+ * A cairo surface is created by using backend-specific
+ * constructors, typically of the form
+ * cairo_backend_surface_create().
  */
 public class Surface
 {
@@ -114,7 +120,7 @@ public class Surface
 	 * content =  the content for the new surface
 	 * width =  width of the new surface, (in device-space units)
 	 * height =  height of the new surface (in device-space units)
-	 * Returns: a pointer to the newly allocated surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if other is already in an error stateor any other error occurs.
+	 * Returns: a pointer to the newly allocated surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if other is already in an error stateor any other error occurs.
 	 */
 	public Surface createSimilar(cairo_content_t content, int width, int height)
 	{
@@ -312,10 +318,12 @@ public class Surface
 	 * still possible, but they are always performed at the native
 	 * device resolution. So this function has no effect on those
 	 * backends.
-	 * NOTE: The fallback resolution only takes effect at the time of
+	 * Note: The fallback resolution only takes effect at the time of
 	 * completing a page (with cairo_show_page() or cairo_copy_page()) so
 	 * there is currently no way to have more than one fallback resolution
 	 * in effect on a single page.
+	 * The default fallback resoultion is 300 pixels per inch in both
+	 * dimensions.
 	 * Since 1.2
 	 * Params:
 	 * xPixelsPerInch =  horizontal setting for pixels per inch
@@ -383,5 +391,29 @@ public class Surface
 	{
 		// void* cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
 		return cairo_surface_get_user_data(cairo_surface, key);
+	}
+	
+	/**
+	 * Emits the current page for backends that support multiple pages,
+	 * but doesn't clear it, so that the contents of the current page will
+	 * be retained for the next page. Use cairo_surface_show_page() if you
+	 * want to get an empty page after the emission.
+	 * Since 1.6
+	 */
+	public void copyPage()
+	{
+		// void cairo_surface_copy_page (cairo_surface_t *surface);
+		cairo_surface_copy_page(cairo_surface);
+	}
+	
+	/**
+	 * Emits and clears the current page for backends that support multiple
+	 * pages. Use cairo_surface_copy_page() if you don't want to clear the page.
+	 * Since 1.6
+	 */
+	public void showPage()
+	{
+		// void cairo_surface_show_page (cairo_surface_t *surface);
+		cairo_surface_show_page(cairo_surface);
 	}
 }

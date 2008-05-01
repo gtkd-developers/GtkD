@@ -67,6 +67,7 @@ public enum cairo_antialias_t
  * or have a tricky intersection such as intersecting tangent to the path.
  * (Note that filling is not actually implemented in this way. This
  * is just a description of the rule that is applied.)
+ * The default fill rule is CAIRO_FILL_RULE_WINDING.
  * New entries may be added in future versions.
  * CAIRO_FILL_RULE_WINDING
  */
@@ -76,7 +77,8 @@ public enum cairo_fill_rule_t
 	EVEN_ODD
 }
 /**
- * Specifies how to render the endpoint of a line when stroking.
+ * Specifies how to render the endpoints of the path when stroking.
+ * The default line cap style is CAIRO_LINE_CAP_BUTT.
  * CAIRO_LINE_CAP_BUTT
  */
 public enum cairo_line_cap_t
@@ -87,6 +89,7 @@ public enum cairo_line_cap_t
 }
 /**
  * Specifies how to render the junction of two lines when stroking.
+ * The default line join style is CAIRO_LINE_JOIN_MITER.
  * CAIRO_LINE_JOIN_MITER
  */
 public enum cairo_line_join_t
@@ -95,6 +98,23 @@ public enum cairo_line_join_t
 	ROUND,
 	BEVEL
 }
+/**
+ * cairo_operator_t is used to set the compositing operator for all cairo
+ * drawing operations.
+ * The default operator is CAIRO_OPERATOR_OVER.
+ * The operators marked as unbounded modify their
+ * destination even outside of the mask layer (that is, their effect is not
+ * bound by the mask layer). However, their effect can still be limited by
+ * way of clipping.
+ * To keep things simple, the operator descriptions here
+ * document the behavior for when both source and destination are either fully
+ * transparent or fully opaque. The actual implementation works for
+ * translucent layers too.
+ * For a more detailed explanation of the effects of each operator, including
+ * the mathematical definitions, see
+ * http://cairographics.org/operators/.
+ * CAIRO_OPERATOR_CLEAR
+ */
 public enum cairo_operator_t
 {
 	CLEAR,
@@ -145,8 +165,12 @@ public enum cairo_font_weight_t
 	BOLD
 }
 /**
- * cairo_extend_t is used to describe how the area outside
- * of a pattern will be drawn.
+ * cairo_extend_t is used to describe how pattern color/alpha will be
+ * determined for areas "outside" the pattern's natural area, (for
+ * example, outside the surface bounds or outside the gradient
+ * geometry).
+ * The default extend mode is CAIRO_EXTEND_NONE for surface patterns
+ * and CAIRO_EXTEND_PAD for gradient patterns.
  * New entries may be added in future versions.
  * CAIRO_EXTEND_NONE
  */
@@ -157,6 +181,13 @@ public enum cairo_extend_t
 	REFLECT,
 	PAD
 }
+/**
+ * cairo_filter_t is used to indicate what filtering should be
+ * applied when reading pixel values from patterns. See
+ * cairo_pattern_set_source() for indicating the desired filter to be
+ * used with a particular pattern.
+ * CAIRO_FILTER_FAST
+ */
 public enum cairo_filter_t
 {
 	FAST,
@@ -174,7 +205,7 @@ public enum cairo_filter_t
  * cairo_pattern_create functions map to pattern types in obvious
  * ways.
  * The pattern type can be queried with cairo_pattern_get_type()
- * Most cairo_pattern functions can be called with a pattern of any
+ * Most cairo_pattern_t functions can be called with a pattern of any
  * type, (though trying to change the extend or filter for a solid
  * pattern will have no effect). A notable exception is
  * cairo_pattern_add_color_stop_rgb() and
@@ -199,16 +230,16 @@ public enum cairo_pattern_type_t
  * create it, which will generally be of the form
  * cairo_type_font_face_create. The font face type can be queried
  * with cairo_font_face_get_type()
- * The various cairo_font_face functions can be used with a font face
+ * The various cairo_font_face_t functions can be used with a font face
  * of any type.
  * The type of a scaled font is determined by the type of the font
- * face passed to cairo_scaled_font_create. The scaled font type can
+ * face passed to cairo_scaled_font_create(). The scaled font type can
  * be queried with cairo_scaled_font_get_type()
- * The various cairo_scaled_font functions can be used with scaled
+ * The various cairo_scaled_font_t functions can be used with scaled
  * fonts of any type, but some font backends also provide
  * type-specific functions that must only be called with a scaled font
  * of the appropriate type. These functions have names that begin with
- * cairo_type_scaled_font such as cairo_ft_scaled_font_lock_face.
+ * cairo_type_scaled_font such as cairo_ft_scaled_font_lock_face().
  * The behavior of calling a type-specific function with a scaled font
  * of the wrong type is undefined.
  * New entries may be added in future versions.
@@ -219,7 +250,7 @@ public enum cairo_font_type_t
 	TOY,
 	FT,
 	WIN32,
-	ATSUI
+	QUARTZ
 }
 /**
  * The subpixel order specifies the order of color elements within
@@ -287,10 +318,10 @@ public enum cairo_content_t
  * surface. The surface types are also known as "backends" or "surface
  * backends" within cairo.
  * The type of a surface is determined by the function used to create
- * it, which will generally be of the form cairo_type_surface_create,
- * (though see cairo_surface_create_similar as well).
+ * it, which will generally be of the form cairo_type_surface_create(),
+ * (though see cairo_surface_create_similar() as well).
  * The surface type can be queried with cairo_surface_get_type()
- * The various cairo_surface functions can be used with surfaces of
+ * The various cairo_surface_t functions can be used with surfaces of
  * any type, but some backends also provide type-specific functions
  * that must only be called with a surface of the appropriate
  * type. These functions have names that begin with
@@ -313,7 +344,9 @@ public enum cairo_surface_type_t
 	BEOS,
 	DIRECTFB,
 	SVG,
-	OS2
+	OS2,
+	WIN32_PRINTING,
+	QUARTZ_IMAGE
 }
 /**
  * cairo_format_t is used to identify the memory format of
@@ -333,14 +366,25 @@ public enum cairo_format_t
 	+/
 }
 /**
+ * cairo_ps_level_t is used to describe the language level of the
+ * PostScript Language Reference that a generated PostScript file will
+ * conform to.
+ * CAIRO_PS_LEVEL_2
+ */
+public enum cairo_ps_level_t
+{
+	LEVEL_2,
+	LEVEL_3
+}
+/**
  * cairo_svg_version_t is used to describe the version number of the SVG
  * specification that a generated SVG file will conform to.
  * CAIRO_SVG_VERSION_1_1
  */
 public enum cairo_svg_version_t
 {
-	VERSION__1,
-	VERSION__2
+	VERSION_1_1,
+	VERSION_1_2
 }
 /**
  * cairo_status_t is used to indicate errors that can occur when
@@ -375,7 +419,10 @@ public enum cairo_status_t
 	INVALID_DASH,
 	INVALID_DSC_COMMENT,
 	INVALID_INDEX,
-	CLIP_NOT_REPRESENTABLE
+	CLIP_NOT_REPRESENTABLE,
+	TEMP_FILE_ERROR,
+	INVALID_STRIDE
+	/+* after adding a new error: update LAST_STATUS inn cairoint.h +/
 }
 
 /**
@@ -466,9 +513,9 @@ public struct cairo_glyph_t
  * for different types of sources; for example,
  * cairo_pattern_create_rgb() creates a pattern for a solid
  * opaque color.
- * Other than various cairo_pattern_create_type
+ * Other than various cairo_pattern_create_type()
  * functions, some of the pattern types can be implicitly created
- * using vairous cairo_set_source_type functions;
+ * using various cairo_set_source_type() functions;
  * for example cairo_set_source_rgb().
  * The type of a pattern can be queried with cairo_pattern_get_type().
  * Memory management of cairo_pattern_t is done with
@@ -636,7 +683,7 @@ public struct cairo_user_data_key_t
 
 /*
  * cairo_read_func_t is the type of function which is called when a
- * backend needs to read data from an intput stream. It is passed the
+ * backend needs to read data from an input stream. It is passed the
  * closure which was specified by the user at the time the read
  * function was registered, the buffer to read the data into and the
  * length of the data in bytes. The read function should return

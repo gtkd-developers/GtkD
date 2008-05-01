@@ -274,6 +274,7 @@ struct: cairo_surface_t
 class: ImageSurface
 extend: cairo_surface_t
 prefix: cairo_image_surface_
+prefix: cairo_
 structWrap: cairo_surface_t* ImageSurface
 import: glib.Str
 openFile: ImageSurface

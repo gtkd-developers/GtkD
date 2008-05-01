@@ -64,7 +64,7 @@ static ~this()
 
 extern(C) 
 {	
-	// gtk.GtkD
+	// gtk.Main
 	
 	gchar* function()gtk_set_locale;
 	void function()gtk_disable_setlocale;

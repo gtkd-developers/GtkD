@@ -65,6 +65,8 @@ private import cairo.Surface;
 
 /**
  * Description
+ * The PostScript surface is used to render cairo graphics to Adobe
+ * PostScript files and is a multi-page vector surface backend.
  */
 public class PostScriptSurface : Surface
 {
@@ -115,7 +117,7 @@ public class PostScriptSurface : Surface
 	 * filename =  a filename for the PS output (must be writable)
 	 * widthInPoints =  width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
-	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
+	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static PostScriptSurface create(string filename, double widthInPoints, double heightInPoints)
 	{
@@ -142,7 +144,7 @@ public class PostScriptSurface : Surface
 	 * closure =  the closure argument for write_func
 	 * widthInPoints =  width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
-	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
+	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static PostScriptSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
 	{
@@ -154,6 +156,82 @@ public class PostScriptSurface : Surface
 			else return null;
 		}
 		return new PostScriptSurface(cast(cairo_surface_t*) p);
+	}
+	
+	/**
+	 * Restricts the generated PostSript file to level. See
+	 * cairo_ps_get_levels() for a list of available level values that
+	 * can be used here.
+	 * This function should only be called before any drawing operations
+	 * have been performed on the given surface. The simplest way to do
+	 * this is to call this function immediately after creating the
+	 * surface.
+	 * Since 1.6
+	 * Params:
+	 * level =  PostScript level
+	 */
+	public void restrictToLevel(cairo_ps_level_t level)
+	{
+		// void cairo_ps_surface_restrict_to_level (cairo_surface_t *surface,  cairo_ps_level_t level);
+		cairo_ps_surface_restrict_to_level(cairo_surface, level);
+	}
+	
+	/**
+	 * Used to retrieve the list of supported levels. See
+	 * cairo_ps_surface_restrict_to_level().
+	 * Since 1.6
+	 * Params:
+	 * levels =  supported level list
+	 * numLevels =  list length
+	 */
+	public static void cairoPsGetLevels(cairo_ps_level_t** levels, int* numLevels)
+	{
+		// void cairo_ps_get_levels (cairo_ps_level_t const **levels,  int *num_levels);
+		cairo_ps_get_levels(levels, numLevels);
+	}
+	
+	/**
+	 * Get the string representation of the given level id. This function
+	 * will return NULL if level id isn't valid. See cairo_ps_get_levels()
+	 * for a way to get the list of valid level ids.
+	 * Since 1.6
+	 * Params:
+	 * level =  a level id
+	 * Returns: the string associated to given level.
+	 */
+	public static string cairoPsLevelToString(cairo_ps_level_t level)
+	{
+		// const char* cairo_ps_level_to_string (cairo_ps_level_t level);
+		return Str.toString(cairo_ps_level_to_string(level));
+	}
+	
+	/**
+	 * If eps is TRUE, the PostScript surface will output Encapsulated
+	 * PostScript.
+	 * This function should only be called before any drawing operations
+	 * have been performed on the current page. The simplest way to do
+	 * this is to call this function immediately after creating the
+	 * surface. An Encapsulated PostScript file should never contain more
+	 * than one page.
+	 * Since 1.6
+	 * Params:
+	 * eps =  TRUE to output EPS format PostScript
+	 */
+	public void setEps(cairo_bool_t eps)
+	{
+		// void cairo_ps_surface_set_eps (cairo_surface_t *surface,  cairo_bool_t eps);
+		cairo_ps_surface_set_eps(cairo_surface, eps);
+	}
+	
+	/**
+	 * Check whether the PostScript surface will output Encapsulated PostScript.
+	 * Since 1.6
+	 * Returns: TRUE if the surface will output Encapsulated PostScript.
+	 */
+	public cairo_bool_t getEps()
+	{
+		// cairo_bool_t cairo_ps_surface_get_eps (cairo_surface_t *surface);
+		return cairo_ps_surface_get_eps(cairo_surface);
 	}
 	
 	/**
