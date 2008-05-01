@@ -2884,12 +2884,13 @@ code: start
 	 */
 	TreeIter getSelectedIter()
 	{
-		TreeIter iter = new TreeIter();
+		TreeIter iter = null;
 		TreeSelection selection = getSelection();
 		TreeModel model = getModel();
 		TreePath[] paths = selection.getSelectedRows(model);
 		if ( paths.length > 0 )
 		{
+			iter = new TreeIter();
 			model.getIter(iter,paths[0]);
 		}
 		return iter;
