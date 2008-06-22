@@ -1489,6 +1489,10 @@ public class GtkDClass
 		{
 			gtkDEnumName = enumName[1..enumName.length];
 		}
+		else if ( startsWith(enumName, "cairo") )
+		{
+			gtkDEnumName = "C" ~ removeUnderscore(enumName[1 .. $-2]);
+		}
 		//char[] enumName = removeUnderscore(lines[0][5..lines[0].length]);
 		debug(enums)writefln("enum %s", enumName);
 		char[][] values;
