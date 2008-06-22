@@ -5996,6 +5996,50 @@ code: start
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
 	}
+
+	/**
+	 * The widget's allocated size.
+	 * Returns: the GtkAllocation for this widget
+	 */
+	public GtkAllocation getAllocation()
+	{
+		GtkAllocation allo;
+		int* pt = cast(int*)getStruct();
+
+		pt += 36/4;
+		allo.x = *pt;
+
+		pt++;
+		allo.y = *pt;
+
+		pt++;
+		allo.width = *pt;
+
+		pt++;
+		allo.height = *pt;
+
+		return allo;
+	}
+
+	/**
+	 * The widget's allocated size.
+	 */
+	public void setAllocation(GtkAllocation allo)
+	{
+		int* pt = cast(int*)getStruct();
+
+		pt += 36/4;
+		*pt = allo.x;
+
+		pt++;
+		*pt = allo.y;
+
+		pt++;
+		*pt = allo.width;
+
+		pt++;
+		*pt = allo.height;
+	}
 	
 	/**
 	 * Gets the drawable for this widget

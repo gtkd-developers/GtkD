@@ -236,6 +236,43 @@ public class Widget : ObjectGtk, BuildableIF
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
 	}
+
+	public GtkAllocation getAllocation()
+	{
+		GtkAllocation allo;
+		int* pt = cast(int*)getStruct();
+
+		pt += 36/4;
+		allo.x = *pt;
+
+		pt++;
+		allo.y = *pt;
+
+		pt++;
+		allo.width = *pt;
+
+		pt++;
+		allo.height = *pt;
+
+		return allo;
+	}
+
+	public void setAllocation(GtkAllocation allo)
+	{
+		int* pt = cast(int*)getStruct();
+
+		pt += 36/4;
+		*pt = allo.x;
+
+		pt++;
+		*pt = allo.y;
+
+		pt++;
+		*pt = allo.width;
+
+		pt++;
+		*pt = allo.height;
+	}
 	
 	/**
 	 * Gets the drawable for this widget
