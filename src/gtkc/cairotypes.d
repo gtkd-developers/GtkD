@@ -58,6 +58,8 @@ public enum cairo_antialias_t
 	GRAY,
 	SUBPIXEL
 }
+alias cairo_antialias_t CairoAntialias;
+
 /**
  * cairo_fill_rule_t is used to select how paths are filled. For both
  * fill rules, whether or not a point is included in the fill is
@@ -76,6 +78,8 @@ public enum cairo_fill_rule_t
 	WINDING,
 	EVEN_ODD
 }
+alias cairo_fill_rule_t CairoFillRule;
+
 /**
  * Specifies how to render the endpoints of the path when stroking.
  * The default line cap style is CAIRO_LINE_CAP_BUTT.
@@ -87,6 +91,8 @@ public enum cairo_line_cap_t
 	ROUND,
 	SQUARE
 }
+alias cairo_line_cap_t CairoLineCap;
+
 /**
  * Specifies how to render the junction of two lines when stroking.
  * The default line join style is CAIRO_LINE_JOIN_MITER.
@@ -98,6 +104,8 @@ public enum cairo_line_join_t
 	ROUND,
 	BEVEL
 }
+alias cairo_line_join_t CairoLineJoin;
+
 /**
  * cairo_operator_t is used to set the compositing operator for all cairo
  * drawing operations.
@@ -132,6 +140,8 @@ public enum cairo_operator_t
 	ADD,
 	SATURATE
 }
+alias cairo_operator_t CairoOperator;
+
 /**
  * cairo_path_data_t is used to describe the type of one portion
  * of a path when represented as a cairo_path_t.
@@ -145,6 +155,8 @@ public enum cairo_path_data_type_t
 	CURVE_TO,
 	CLOSE_PATH
 }
+alias cairo_path_data_type_t CairoPathDataType;
+
 /**
  * Specifies variants of a font face based on their slant.
  * CAIRO_FONT_SLANT_NORMAL
@@ -155,6 +167,8 @@ public enum cairo_font_slant_t
 	ITALIC,
 	OBLIQUE
 }
+alias cairo_font_slant_t CairoFontSlant;
+
 /**
  * Specifies variants of a font face based on their weight.
  * CAIRO_FONT_WEIGHT_NORMAL
@@ -164,6 +178,8 @@ public enum cairo_font_weight_t
 	NORMAL,
 	BOLD
 }
+alias cairo_font_weight_t CairoFontWeight;
+
 /**
  * cairo_extend_t is used to describe how pattern color/alpha will be
  * determined for areas "outside" the pattern's natural area, (for
@@ -181,6 +197,8 @@ public enum cairo_extend_t
 	REFLECT,
 	PAD
 }
+alias cairo_extend_t CairoExtend;
+
 /**
  * cairo_filter_t is used to indicate what filtering should be
  * applied when reading pixel values from patterns. See
@@ -197,6 +215,8 @@ public enum cairo_filter_t
 	BILINEAR,
 	GAUSSIAN
 }
+alias cairo_filter_t CairoFilter;
+
 /**
  * cairo_pattern_type_t is used to describe the type of a given pattern.
  * The type of a pattern is determined by the function used to create
@@ -222,6 +242,8 @@ public enum cairo_pattern_type_t
 	LINEAR,
 	RADIAL
 }
+alias cairo_pattern_type_t CairoPatternType;
+
 /**
  * cairo_font_type_t is used to describe the type of a given font
  * face or scaled font. The font types are also known as "font
@@ -252,6 +274,8 @@ public enum cairo_font_type_t
 	WIN32,
 	QUARTZ
 }
+alias cairo_font_type_t CairoFontType;
+
 /**
  * The subpixel order specifies the order of color elements within
  * each pixel on the display device when rendering with an
@@ -266,6 +290,8 @@ public enum cairo_subpixel_order_t
 	VRGB,
 	VBGR
 }
+alias cairo_subpixel_order_t CairoSubpixelOrder;
+
 /**
  * Specifies the type of hinting to do on font outlines. Hinting
  * is the process of fitting outlines to the pixel grid in order
@@ -284,6 +310,8 @@ public enum cairo_hint_style_t
 	MEDIUM,
 	FULL
 }
+alias cairo_hint_style_t CairoHintStyle;
+
 /**
  * Specifies whether to hint font metrics; hinting font metrics
  * means quantizing them so that they are integer values in
@@ -298,6 +326,8 @@ public enum cairo_hint_metrics_t
 	OFF,
 	ON
 }
+alias cairo_hint_metrics_t CairoHintMetrics;
+
 /**
  * cairo_content_t is used to describe the content that a surface will
  * contain, whether color information, alpha information (translucence
@@ -313,6 +343,8 @@ public enum cairo_content_t
 	ALPHA = 0x2000,
 	COLOR_ALPHA = 0x3000
 }
+alias cairo_content_t CairoContent;
+
 /**
  * cairo_surface_type_t is used to describe the type of a given
  * surface. The surface types are also known as "backends" or "surface
@@ -348,6 +380,8 @@ public enum cairo_surface_type_t
 	WIN32_PRINTING,
 	QUARTZ_IMAGE
 }
+alias cairo_surface_type_t CairoSurfaceType;
+
 /**
  * cairo_format_t is used to identify the memory format of
  * image data.
@@ -365,6 +399,8 @@ public enum cairo_format_t
 	RGB16_565 = 4,
 	+/
 }
+alias cairo_format_t CairoFormat;
+
 /**
  * cairo_ps_level_t is used to describe the language level of the
  * PostScript Language Reference that a generated PostScript file will
@@ -376,6 +412,8 @@ public enum cairo_ps_level_t
 	LEVEL_2,
 	LEVEL_3
 }
+alias cairo_ps_level_t CairoPsLevel;
+
 /**
  * cairo_svg_version_t is used to describe the version number of the SVG
  * specification that a generated SVG file will conform to.
@@ -386,6 +424,8 @@ public enum cairo_svg_version_t
 	VERSION_1_1,
 	VERSION_1_2
 }
+alias cairo_svg_version_t CairoSvgVersion;
+
 /**
  * cairo_status_t is used to indicate errors that can occur when
  * using Cairo. In some cases it is returned directly by functions.
@@ -424,6 +464,8 @@ public enum cairo_status_t
 	INVALID_STRIDE
 	/+* after adding a new error: update LAST_STATUS inn cairoint.h +/
 }
+alias cairo_status_t CairoStatus;
+
 
 /**
  * Main Gtk struct.

@@ -47,6 +47,7 @@
  * 	- cairo.Matrix
  * 	- cairo.ScaledFont
  * 	- cairo.Surface
+ * 	- cairo.Pattern
  * 	- glib.Str
  * 	- gdk.Region
  * 	- gdk.Rectangle
@@ -59,6 +60,7 @@
  * 	- cairo_font_face_t* -> FontFace
  * 	- cairo_font_options_t* -> FontOption
  * 	- cairo_matrix_t* -> Matrix
+ * 	- cairo_pattern_t* -> Pattern
  * 	- cairo_scaled_font_t* -> ScaledFont
  * 	- cairo_surface_t* -> Surface
  * 	- cairo_t* -> Context
@@ -79,6 +81,7 @@ private import cairo.FontOption;
 private import cairo.Matrix;
 private import cairo.ScaledFont;
 private import cairo.Surface;
+private import cairo.Pattern;
 private import glib.Str;
 private import gdk.Region;
 private import gdk.Rectangle;
@@ -435,10 +438,16 @@ public class Context
 	 * Since 1.2
 	 * Returns: a newly created (surface) pattern containing theresults of all drawing operations performed to the group. Thecaller owns the returned object and should callcairo_pattern_destroy() when finished with it.
 	 */
-	public cairo_pattern_t* popGroup()
+	public Pattern popGroup()
 	{
 		// cairo_pattern_t* cairo_pop_group (cairo_t *cr);
-		return cairo_pop_group(cairo);
+		auto p = cairo_pop_group(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -535,10 +544,10 @@ public class Context
 	 * source =  a cairo_pattern_t to be used as the source for
 	 * subsequent drawing operations.
 	 */
-	public void setSource(cairo_pattern_t* source)
+	public void setSource(Pattern source)
 	{
 		// void cairo_set_source (cairo_t *cr,  cairo_pattern_t *source);
-		cairo_set_source(cairo, source);
+		cairo_set_source(cairo, (source is null) ? null : source.getPatternStruct());
 	}
 	
 	/**
@@ -570,10 +579,16 @@ public class Context
 	 * Gets the current source pattern for cr.
 	 * Returns: the current source pattern. This object is owned bycairo. To keep a reference to it, you must callcairo_pattern_reference().
 	 */
-	public cairo_pattern_t* getSource()
+	public Pattern getSource()
 	{
 		// cairo_pattern_t* cairo_get_source (cairo_t *cr);
-		return cairo_get_source(cairo);
+		auto p = cairo_get_source(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -1057,10 +1072,10 @@ public class Context
 	 * Params:
 	 * pattern =  a cairo_pattern_t
 	 */
-	public void mask(cairo_pattern_t* pattern)
+	public void mask(Pattern pattern)
 	{
 		// void cairo_mask (cairo_t *cr,  cairo_pattern_t *pattern);
-		cairo_mask(cairo, pattern);
+		cairo_mask(cairo, (pattern is null) ? null : pattern.getPatternStruct());
 	}
 	
 	/**

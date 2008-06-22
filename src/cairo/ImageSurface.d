@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- cairo_image_surface_
+ * 	- cairo_surface_
  * 	- cairo_
  * omit structs:
  * omit prefixes:
@@ -286,11 +287,10 @@ public class ImageSurface : Surface
 	 * Writes the contents of surface to a new file filename as a PNG
 	 * image.
 	 * Params:
-	 * surface =  a cairo_surface_t with pixel contents
 	 * filename =  the name of a file to write to
 	 * Returns: CAIRO_STATUS_SUCCESS if the PNG file was writtensuccessfully. Otherwise, CAIRO_STATUS_NO_MEMORY if memory could notbe allocated for the operation orCAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not havepixel contents, or CAIRO_STATUS_WRITE_ERROR if an I/O error occurswhile attempting to write the file.
 	 */
-	public cairo_status_t surfaceWriteToPng(string filename)
+	public cairo_status_t writeToPng(string filename)
 	{
 		// cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface,  const char *filename);
 		return cairo_surface_write_to_png(cairo_surface, Str.toStringz(filename));
@@ -299,12 +299,11 @@ public class ImageSurface : Surface
 	/**
 	 * Writes the image surface to the write function.
 	 * Params:
-	 * surface =  a cairo_surface_t with pixel contents
 	 * writeFunc =  a cairo_write_func_t
 	 * closure =  closure data for the write function
 	 * Returns: CAIRO_STATUS_SUCCESS if the PNG file was writtensuccessfully. Otherwise, CAIRO_STATUS_NO_MEMORY is returned ifmemory could not be allocated for the operation,CAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not havepixel contents.
 	 */
-	public cairo_status_t surfaceWriteToPngStream(cairo_write_func_t writeFunc, void* closure)
+	public cairo_status_t writeToPngStream(cairo_write_func_t writeFunc, void* closure)
 	{
 		// cairo_status_t cairo_surface_write_to_png_stream (cairo_surface_t *surface,  cairo_write_func_t write_func,  void *closure);
 		return cairo_surface_write_to_png_stream(cairo_surface, writeFunc, closure);
