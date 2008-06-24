@@ -236,42 +236,81 @@ public class Widget : ObjectGtk, BuildableIF
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
 	}
-
+	
+	/**
+	 * The widget's desired size.
+	 * Returns: the GtkRequisition for this widget
+	 */
+	public GtkRequisition getRequisition()
+	{
+		GtkRequisition req;
+		int* pt = cast(int*)getStruct();
+		
+		pt += 28/4;
+		req.width = *pt;
+		
+		pt++;
+		req.height = *pt;
+		
+		return req;
+	}
+	
+	/**
+	 * The widget's desired size.
+	 */
+	public void setRequisition(GtkRequisition req)
+	{
+		int* pt = cast(int*)getStruct();
+		
+		pt += 28/4;
+		 *pt = req.width;
+		
+		pt++;
+		 *pt = req.height;
+	}
+	
+	/**
+	 * The widget's allocated size.
+	 * Returns: the GtkAllocation for this widget
+	 */
 	public GtkAllocation getAllocation()
 	{
 		GtkAllocation allo;
 		int* pt = cast(int*)getStruct();
-
+		
 		pt += 36/4;
 		allo.x = *pt;
-
+		
 		pt++;
 		allo.y = *pt;
-
+		
 		pt++;
 		allo.width = *pt;
-
+		
 		pt++;
 		allo.height = *pt;
-
+		
 		return allo;
 	}
-
+	
+	/**
+	 * The widget's allocated size.
+	 */
 	public void setAllocation(GtkAllocation allo)
 	{
 		int* pt = cast(int*)getStruct();
-
+		
 		pt += 36/4;
-		*pt = allo.x;
-
+		 *pt = allo.x;
+		
 		pt++;
-		*pt = allo.y;
-
+		 *pt = allo.y;
+		
 		pt++;
-		*pt = allo.width;
-
+		 *pt = allo.width;
+		
 		pt++;
-		*pt = allo.height;
+		 *pt = allo.height;
 	}
 	
 	/**

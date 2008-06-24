@@ -5998,6 +5998,38 @@ code: start
 	}
 
 	/**
+	 * The widget's desired size.
+	 * Returns: the GtkRequisition for this widget
+	 */
+	public GtkRequisition getRequisition()
+	{
+		GtkRequisition req;
+		int* pt = cast(int*)getStruct();
+
+		pt += 28/4;
+		req.width = *pt;
+
+		pt++;
+		req.height = *pt;
+
+		return req;
+	}
+
+	/**
+	 * The widget's desired size.
+	 */
+	public void setRequisition(GtkRequisition req)
+	{
+		int* pt = cast(int*)getStruct();
+
+		pt += 28/4;
+		*pt = req.width;
+
+		pt++;
+		*pt = req.height;
+	}
+
+	/**
 	 * The widget's allocated size.
 	 * Returns: the GtkAllocation for this widget
 	 */
