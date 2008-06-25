@@ -70,7 +70,6 @@ private import gtkglc.glgtk;
 public import glgtk.GLWidget;
 private import glgdk.GLDrawable;
 public import gdk.Event;
-public import gtkglc.gl;
 
 version(Tango) private import tango.core.Memory;
 else private import std.gc;
