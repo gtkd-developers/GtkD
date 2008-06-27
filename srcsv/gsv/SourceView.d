@@ -108,6 +108,13 @@ public class SourceView : TextView
 			version(Exceptions) throw new Exception("Null gtkSourceView passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceView);
+		if( ptr !is null )
+		{
+			this = cast(SourceView)ptr;
+			return;
+		}
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
 	}

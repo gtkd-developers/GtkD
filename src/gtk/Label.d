@@ -172,6 +172,13 @@ public class Label : Misc
 			version(Exceptions) throw new Exception("Null gtkLabel passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkLabel);
+		if( ptr !is null )
+		{
+			this = cast(Label)ptr;
+			return;
+		}
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}

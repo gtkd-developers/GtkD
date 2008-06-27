@@ -110,6 +110,13 @@ public class LinkButton : Button
 			version(Exceptions) throw new Exception("Null gtkLinkButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkLinkButton);
+		if( ptr !is null )
+		{
+			this = cast(LinkButton)ptr;
+			return;
+		}
 		super(cast(GtkButton*)gtkLinkButton);
 		this.gtkLinkButton = gtkLinkButton;
 	}

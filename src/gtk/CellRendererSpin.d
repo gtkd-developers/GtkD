@@ -108,6 +108,13 @@ public class CellRendererSpin : CellRendererText
 			version(Exceptions) throw new Exception("Null gtkCellRendererSpin passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellRendererSpin);
+		if( ptr !is null )
+		{
+			this = cast(CellRendererSpin)ptr;
+			return;
+		}
 		super(cast(GtkCellRendererText*)gtkCellRendererSpin);
 		this.gtkCellRendererSpin = gtkCellRendererSpin;
 	}

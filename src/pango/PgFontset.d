@@ -106,6 +106,13 @@ public class PgFontset : ObjectG
 			version(Exceptions) throw new Exception("Null pangoFontset passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoFontset);
+		if( ptr !is null )
+		{
+			this = cast(PgFontset)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoFontset);
 		this.pangoFontset = pangoFontset;
 	}

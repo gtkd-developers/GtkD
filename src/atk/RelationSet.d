@@ -108,6 +108,13 @@ public class RelationSet : ObjectG
 			version(Exceptions) throw new Exception("Null atkRelationSet passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkRelationSet);
+		if( ptr !is null )
+		{
+			this = cast(RelationSet)ptr;
+			return;
+		}
 		super(cast(GObject*)atkRelationSet);
 		this.atkRelationSet = atkRelationSet;
 	}

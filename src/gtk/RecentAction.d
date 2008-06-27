@@ -108,6 +108,13 @@ public class RecentAction : Action
 			version(Exceptions) throw new Exception("Null gtkRecentAction passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRecentAction);
+		if( ptr !is null )
+		{
+			this = cast(RecentAction)ptr;
+			return;
+		}
 		super(cast(GtkAction*)gtkRecentAction);
 		this.gtkRecentAction = gtkRecentAction;
 	}

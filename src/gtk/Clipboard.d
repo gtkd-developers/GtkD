@@ -166,6 +166,13 @@ public class Clipboard : ObjectG
 			version(Exceptions) throw new Exception("Null gtkClipboard passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkClipboard);
+		if( ptr !is null )
+		{
+			this = cast(Clipboard)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkClipboard);
 		this.gtkClipboard = gtkClipboard;
 	}

@@ -106,6 +106,13 @@ public class ColorSelection : VBox
 			version(Exceptions) throw new Exception("Null gtkColorSelection passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkColorSelection);
+		if( ptr !is null )
+		{
+			this = cast(ColorSelection)ptr;
+			return;
+		}
 		super(cast(GtkVBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;
 	}

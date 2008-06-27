@@ -98,6 +98,13 @@ public class Item : Bin
 			version(Exceptions) throw new Exception("Null gtkItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkItem);
+		if( ptr !is null )
+		{
+			this = cast(Item)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkItem);
 		this.gtkItem = gtkItem;
 	}

@@ -110,6 +110,13 @@ public class Printer : ObjectG
 			version(Exceptions) throw new Exception("Null gtkPrinter passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPrinter);
+		if( ptr !is null )
+		{
+			this = cast(Printer)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkPrinter);
 		this.gtkPrinter = gtkPrinter;
 	}

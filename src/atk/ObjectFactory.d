@@ -104,6 +104,13 @@ public class ObjectFactory : ObjectG
 			version(Exceptions) throw new Exception("Null atkObjectFactory passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkObjectFactory);
+		if( ptr !is null )
+		{
+			this = cast(ObjectFactory)ptr;
+			return;
+		}
 		super(cast(GObject*)atkObjectFactory);
 		this.atkObjectFactory = atkObjectFactory;
 	}

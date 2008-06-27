@@ -111,6 +111,13 @@ public class CellRendererPixbuf : CellRenderer
 			version(Exceptions) throw new Exception("Null gtkCellRendererPixbuf passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellRendererPixbuf);
+		if( ptr !is null )
+		{
+			this = cast(CellRendererPixbuf)ptr;
+			return;
+		}
 		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf);
 		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;
 	}

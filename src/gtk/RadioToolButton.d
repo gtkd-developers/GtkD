@@ -112,6 +112,13 @@ public class RadioToolButton : ToggleToolButton
 			version(Exceptions) throw new Exception("Null gtkRadioToolButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRadioToolButton);
+		if( ptr !is null )
+		{
+			this = cast(RadioToolButton)ptr;
+			return;
+		}
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton);
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}

@@ -33,7 +33,7 @@
  * class Code: Yes
  * interface Code: Yes
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gtk_tree_model_
@@ -75,6 +75,7 @@ private import gobject.Value;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -206,7 +207,7 @@ private import gobject.Value;
 	 *  }
  * }
  */
-public class TreeModel
+public class TreeModel : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -220,7 +221,7 @@ public class TreeModel
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTreeModel;
 	}
@@ -236,6 +237,14 @@ public class TreeModel
 			version(Exceptions) throw new Exception("Null gtkTreeModel passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeModel);
+		if( ptr !is null )
+		{
+			this = cast(TreeModel)ptr;
+			return;
+		}
+		super(cast(GObject*)gtkTreeModel);
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	

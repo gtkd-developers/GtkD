@@ -132,6 +132,13 @@ public class TextView : Container
 			version(Exceptions) throw new Exception("Null gtkTextView passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTextView);
+		if( ptr !is null )
+		{
+			this = cast(TextView)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}

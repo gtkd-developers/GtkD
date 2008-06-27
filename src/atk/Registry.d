@@ -104,6 +104,13 @@ public class Registry : ObjectG
 			version(Exceptions) throw new Exception("Null atkRegistry passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkRegistry);
+		if( ptr !is null )
+		{
+			this = cast(Registry)ptr;
+			return;
+		}
 		super(cast(GObject*)atkRegistry);
 		this.atkRegistry = atkRegistry;
 	}

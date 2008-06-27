@@ -97,6 +97,13 @@ public class EventBox : Bin
 			version(Exceptions) throw new Exception("Null gtkEventBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkEventBox);
+		if( ptr !is null )
+		{
+			this = cast(EventBox)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkEventBox);
 		this.gtkEventBox = gtkEventBox;
 	}

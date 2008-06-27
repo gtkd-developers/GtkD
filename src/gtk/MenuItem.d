@@ -113,6 +113,13 @@ public class MenuItem : Item
 			version(Exceptions) throw new Exception("Null gtkMenuItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkMenuItem);
+		if( ptr !is null )
+		{
+			this = cast(MenuItem)ptr;
+			return;
+		}
 		super(cast(GtkItem*)gtkMenuItem);
 		this.gtkMenuItem = gtkMenuItem;
 	}

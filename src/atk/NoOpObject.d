@@ -102,6 +102,13 @@ public class NoOpObject : ObjectAtk
 			version(Exceptions) throw new Exception("Null atkNoOpObject passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkNoOpObject);
+		if( ptr !is null )
+		{
+			this = cast(NoOpObject)ptr;
+			return;
+		}
 		super(cast(AtkObject*)atkNoOpObject);
 		this.atkNoOpObject = atkNoOpObject;
 	}

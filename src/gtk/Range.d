@@ -105,6 +105,13 @@ public class Range : Widget
 			version(Exceptions) throw new Exception("Null gtkRange passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRange);
+		if( ptr !is null )
+		{
+			this = cast(Range)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}

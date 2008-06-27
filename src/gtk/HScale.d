@@ -101,6 +101,13 @@ public class HScale : Scale
 			version(Exceptions) throw new Exception("Null gtkHScale passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkHScale);
+		if( ptr !is null )
+		{
+			this = cast(HScale)ptr;
+			return;
+		}
 		super(cast(GtkScale*)gtkHScale);
 		this.gtkHScale = gtkHScale;
 	}

@@ -105,6 +105,13 @@ public class MenuShell : Container
 			version(Exceptions) throw new Exception("Null gtkMenuShell passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkMenuShell);
+		if( ptr !is null )
+		{
+			this = cast(MenuShell)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkMenuShell);
 		this.gtkMenuShell = gtkMenuShell;
 	}

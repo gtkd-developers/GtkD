@@ -104,6 +104,13 @@ public class AccelMap : ObjectG
 			version(Exceptions) throw new Exception("Null gtkAccelMap passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAccelMap);
+		if( ptr !is null )
+		{
+			this = cast(AccelMap)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkAccelMap);
 		this.gtkAccelMap = gtkAccelMap;
 	}

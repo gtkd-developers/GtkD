@@ -111,6 +111,13 @@ public class GLConfig : ObjectG
 			version(Exceptions) throw new Exception("Null gdkGLConfig passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkGLConfig);
+		if( ptr !is null )
+		{
+			this = cast(GLConfig)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkGLConfig);
 		this.gdkGLConfig = gdkGLConfig;
 	}

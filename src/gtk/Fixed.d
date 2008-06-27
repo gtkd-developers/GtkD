@@ -124,6 +124,13 @@ public class Fixed : Container
 			version(Exceptions) throw new Exception("Null gtkFixed passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkFixed);
+		if( ptr !is null )
+		{
+			this = cast(Fixed)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkFixed);
 		this.gtkFixed = gtkFixed;
 	}

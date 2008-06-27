@@ -134,6 +134,13 @@ public class Box : Container
 			version(Exceptions) throw new Exception("Null gtkBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkBox);
+		if( ptr !is null )
+		{
+			this = cast(Box)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}

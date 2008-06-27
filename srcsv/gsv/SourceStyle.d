@@ -93,6 +93,13 @@ public class SourceStyle : ObjectG
 			version(Exceptions) throw new Exception("Null gtkSourceStyle passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceStyle);
+		if( ptr !is null )
+		{
+			this = cast(SourceStyle)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkSourceStyle);
 		this.gtkSourceStyle = gtkSourceStyle;
 	}

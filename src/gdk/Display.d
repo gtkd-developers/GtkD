@@ -120,6 +120,13 @@ public class Display : ObjectG
 			version(Exceptions) throw new Exception("Null gdkDisplay passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkDisplay);
+		if( ptr !is null )
+		{
+			this = cast(Display)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkDisplay);
 		this.gdkDisplay = gdkDisplay;
 	}

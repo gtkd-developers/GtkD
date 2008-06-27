@@ -100,6 +100,13 @@ public class CellRendererProgress : CellRenderer
 			version(Exceptions) throw new Exception("Null gtkCellRendererProgress passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellRendererProgress);
+		if( ptr !is null )
+		{
+			this = cast(CellRendererProgress)ptr;
+			return;
+		}
 		super(cast(GtkCellRenderer*)gtkCellRendererProgress);
 		this.gtkCellRendererProgress = gtkCellRendererProgress;
 	}

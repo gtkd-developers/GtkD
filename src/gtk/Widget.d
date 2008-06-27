@@ -214,6 +214,13 @@ public class Widget : ObjectGtk, BuildableIF
 			version(Exceptions) throw new Exception("Null gtkWidget passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkWidget);
+		if( ptr !is null )
+		{
+			this = cast(Widget)ptr;
+			return;
+		}
 		super(cast(GtkObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;
 	}

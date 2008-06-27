@@ -106,6 +106,13 @@ public class Alignment : Bin
 			version(Exceptions) throw new Exception("Null gtkAlignment passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAlignment);
+		if( ptr !is null )
+		{
+			this = cast(Alignment)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}

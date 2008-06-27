@@ -175,6 +175,13 @@ public class IconTheme : ObjectG
 			version(Exceptions) throw new Exception("Null gtkIconTheme passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkIconTheme);
+		if( ptr !is null )
+		{
+			this = cast(IconTheme)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkIconTheme);
 		this.gtkIconTheme = gtkIconTheme;
 	}

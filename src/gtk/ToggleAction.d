@@ -100,6 +100,13 @@ public class ToggleAction : Action
 			version(Exceptions) throw new Exception("Null gtkToggleAction passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkToggleAction);
+		if( ptr !is null )
+		{
+			this = cast(ToggleAction)ptr;
+			return;
+		}
 		super(cast(GtkAction*)gtkToggleAction);
 		this.gtkToggleAction = gtkToggleAction;
 	}

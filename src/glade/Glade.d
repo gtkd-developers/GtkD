@@ -125,6 +125,13 @@ public class Glade : ObjectG
 			version(Exceptions) throw new Exception("Null gladeXML passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gladeXML);
+		if( ptr !is null )
+		{
+			this = cast(Glade)ptr;
+			return;
+		}
 		super(cast(GObject*)gladeXML);
 		this.gladeXML = gladeXML;
 	}

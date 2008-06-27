@@ -107,6 +107,13 @@ public class CellRendererText : CellRenderer
 			version(Exceptions) throw new Exception("Null gtkCellRendererText passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellRendererText);
+		if( ptr !is null )
+		{
+			this = cast(CellRendererText)ptr;
+			return;
+		}
 		super(cast(GtkCellRenderer*)gtkCellRendererText);
 		this.gtkCellRendererText = gtkCellRendererText;
 	}

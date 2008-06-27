@@ -105,6 +105,13 @@ public class CellRendererToggle : CellRenderer
 			version(Exceptions) throw new Exception("Null gtkCellRendererToggle passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellRendererToggle);
+		if( ptr !is null )
+		{
+			this = cast(CellRendererToggle)ptr;
+			return;
+		}
 		super(cast(GtkCellRenderer*)gtkCellRendererToggle);
 		this.gtkCellRendererToggle = gtkCellRendererToggle;
 	}

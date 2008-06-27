@@ -97,6 +97,13 @@ public class VSeparator : Separator
 			version(Exceptions) throw new Exception("Null gtkVSeparator passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkVSeparator);
+		if( ptr !is null )
+		{
+			this = cast(VSeparator)ptr;
+			return;
+		}
 		super(cast(GtkSeparator*)gtkVSeparator);
 		this.gtkVSeparator = gtkVSeparator;
 	}

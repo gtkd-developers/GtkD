@@ -195,6 +195,13 @@ public class Dialog : Window
 			version(Exceptions) throw new Exception("Null gtkDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkDialog);
+		if( ptr !is null )
+		{
+			this = cast(Dialog)ptr;
+			return;
+		}
 		super(cast(GtkWindow*)gtkDialog);
 		this.gtkDialog = gtkDialog;
 	}

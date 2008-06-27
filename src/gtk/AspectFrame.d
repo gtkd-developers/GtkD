@@ -103,6 +103,13 @@ public class AspectFrame : Frame
 			version(Exceptions) throw new Exception("Null gtkAspectFrame passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAspectFrame);
+		if( ptr !is null )
+		{
+			this = cast(AspectFrame)ptr;
+			return;
+		}
 		super(cast(GtkFrame*)gtkAspectFrame);
 		this.gtkAspectFrame = gtkAspectFrame;
 	}

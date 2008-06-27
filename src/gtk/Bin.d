@@ -102,6 +102,13 @@ public class Bin : Container
 			version(Exceptions) throw new Exception("Null gtkBin passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkBin);
+		if( ptr !is null )
+		{
+			this = cast(Bin)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkBin);
 		this.gtkBin = gtkBin;
 	}

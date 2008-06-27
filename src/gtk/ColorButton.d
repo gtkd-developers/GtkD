@@ -104,6 +104,13 @@ public class ColorButton : Button
 			version(Exceptions) throw new Exception("Null gtkColorButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkColorButton);
+		if( ptr !is null )
+		{
+			this = cast(ColorButton)ptr;
+			return;
+		}
 		super(cast(GtkButton*)gtkColorButton);
 		this.gtkColorButton = gtkColorButton;
 	}

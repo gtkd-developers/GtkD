@@ -107,6 +107,13 @@ public class Assistant : Window
 			version(Exceptions) throw new Exception("Null gtkAssistant passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAssistant);
+		if( ptr !is null )
+		{
+			this = cast(Assistant)ptr;
+			return;
+		}
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}

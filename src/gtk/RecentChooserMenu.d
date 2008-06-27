@@ -132,6 +132,13 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 			version(Exceptions) throw new Exception("Null gtkRecentChooserMenu passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRecentChooserMenu);
+		if( ptr !is null )
+		{
+			this = cast(RecentChooserMenu)ptr;
+			return;
+		}
 		super(cast(GtkMenu*)gtkRecentChooserMenu);
 		this.gtkRecentChooserMenu = gtkRecentChooserMenu;
 	}

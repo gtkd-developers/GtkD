@@ -107,6 +107,13 @@ public class ImageMenuItem : MenuItem
 			version(Exceptions) throw new Exception("Null gtkImageMenuItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkImageMenuItem);
+		if( ptr !is null )
+		{
+			this = cast(ImageMenuItem)ptr;
+			return;
+		}
 		super(cast(GtkMenuItem*)gtkImageMenuItem);
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}

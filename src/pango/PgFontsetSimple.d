@@ -107,6 +107,13 @@ public class PgFontsetSimple : PgFontset
 			version(Exceptions) throw new Exception("Null pangoFontsetSimple passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoFontsetSimple);
+		if( ptr !is null )
+		{
+			this = cast(PgFontsetSimple)ptr;
+			return;
+		}
 		super(cast(PangoFontset*)pangoFontsetSimple);
 		this.pangoFontsetSimple = pangoFontsetSimple;
 	}

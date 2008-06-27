@@ -106,6 +106,13 @@ public class ToggleToolButton : ToolButton
 			version(Exceptions) throw new Exception("Null gtkToggleToolButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkToggleToolButton);
+		if( ptr !is null )
+		{
+			this = cast(ToggleToolButton)ptr;
+			return;
+		}
 		super(cast(GtkToolButton*)gtkToggleToolButton);
 		this.gtkToggleToolButton = gtkToggleToolButton;
 	}

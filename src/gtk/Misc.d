@@ -102,6 +102,13 @@ public class Misc : Widget
 			version(Exceptions) throw new Exception("Null gtkMisc passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkMisc);
+		if( ptr !is null )
+		{
+			this = cast(Misc)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkMisc);
 		this.gtkMisc = gtkMisc;
 	}

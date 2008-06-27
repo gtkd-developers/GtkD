@@ -109,6 +109,13 @@ public class VButtonBox : ButtonBox
 			version(Exceptions) throw new Exception("Null gtkVButtonBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkVButtonBox);
+		if( ptr !is null )
+		{
+			this = cast(VButtonBox)ptr;
+			return;
+		}
 		super(cast(GtkButtonBox*)gtkVButtonBox);
 		this.gtkVButtonBox = gtkVButtonBox;
 	}

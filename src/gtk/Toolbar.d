@@ -119,6 +119,13 @@ public class Toolbar : Container
 			version(Exceptions) throw new Exception("Null gtkToolbar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkToolbar);
+		if( ptr !is null )
+		{
+			this = cast(Toolbar)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}

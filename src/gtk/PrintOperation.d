@@ -158,6 +158,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			version(Exceptions) throw new Exception("Null gtkPrintOperation passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPrintOperation);
+		if( ptr !is null )
+		{
+			this = cast(PrintOperation)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkPrintOperation);
 		this.gtkPrintOperation = gtkPrintOperation;
 	}

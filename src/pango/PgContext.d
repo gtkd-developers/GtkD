@@ -136,6 +136,13 @@ public class PgContext : ObjectG
 			version(Exceptions) throw new Exception("Null pangoContext passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoContext);
+		if( ptr !is null )
+		{
+			this = cast(PgContext)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoContext);
 		this.pangoContext = pangoContext;
 	}

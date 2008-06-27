@@ -94,6 +94,13 @@ public class Accessible : ObjectAtk
 			version(Exceptions) throw new Exception("Null gtkAccessible passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAccessible);
+		if( ptr !is null )
+		{
+			this = cast(Accessible)ptr;
+			return;
+		}
 		super(cast(AtkObject*)gtkAccessible);
 		this.gtkAccessible = gtkAccessible;
 	}

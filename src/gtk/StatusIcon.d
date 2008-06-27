@@ -130,6 +130,13 @@ public class StatusIcon : ObjectG
 			version(Exceptions) throw new Exception("Null gtkStatusIcon passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkStatusIcon);
+		if( ptr !is null )
+		{
+			this = cast(StatusIcon)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkStatusIcon);
 		this.gtkStatusIcon = gtkStatusIcon;
 	}

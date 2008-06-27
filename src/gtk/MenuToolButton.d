@@ -118,6 +118,13 @@ public class MenuToolButton : ToolButton
 			version(Exceptions) throw new Exception("Null gtkMenuToolButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkMenuToolButton);
+		if( ptr !is null )
+		{
+			this = cast(MenuToolButton)ptr;
+			return;
+		}
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}

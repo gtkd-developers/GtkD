@@ -104,6 +104,13 @@ public class IMContext : ObjectG
 			version(Exceptions) throw new Exception("Null gtkIMContext passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkIMContext);
+		if( ptr !is null )
+		{
+			this = cast(IMContext)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkIMContext);
 		this.gtkIMContext = gtkIMContext;
 	}

@@ -111,6 +111,13 @@ public class RecentFilter : ObjectGtk
 			version(Exceptions) throw new Exception("Null gtkRecentFilter passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRecentFilter);
+		if( ptr !is null )
+		{
+			this = cast(RecentFilter)ptr;
+			return;
+		}
 		super(cast(GtkObject*)gtkRecentFilter);
 		this.gtkRecentFilter = gtkRecentFilter;
 	}

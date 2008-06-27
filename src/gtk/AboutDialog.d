@@ -134,6 +134,13 @@ public class AboutDialog : Dialog
 			version(Exceptions) throw new Exception("Null gtkAboutDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAboutDialog);
+		if( ptr !is null )
+		{
+			this = cast(AboutDialog)ptr;
+			return;
+		}
 		super(cast(GtkDialog*)gtkAboutDialog);
 		this.gtkAboutDialog = gtkAboutDialog;
 	}

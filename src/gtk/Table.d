@@ -111,6 +111,13 @@ public class Table : Container
 			version(Exceptions) throw new Exception("Null gtkTable passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTable);
+		if( ptr !is null )
+		{
+			this = cast(Table)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkTable);
 		this.gtkTable = gtkTable;
 	}

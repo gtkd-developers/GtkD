@@ -116,6 +116,13 @@ public class PgFontMap : ObjectG
 			version(Exceptions) throw new Exception("Null pangoFontMap passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoFontMap);
+		if( ptr !is null )
+		{
+			this = cast(PgFontMap)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoFontMap);
 		this.pangoFontMap = pangoFontMap;
 	}

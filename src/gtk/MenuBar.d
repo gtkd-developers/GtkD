@@ -104,6 +104,13 @@ public class MenuBar : MenuShell
 			version(Exceptions) throw new Exception("Null gtkMenuBar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkMenuBar);
+		if( ptr !is null )
+		{
+			this = cast(MenuBar)ptr;
+			return;
+		}
 		super(cast(GtkMenuShell*)gtkMenuBar);
 		this.gtkMenuBar = gtkMenuBar;
 	}

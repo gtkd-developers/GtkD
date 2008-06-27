@@ -114,6 +114,13 @@ public class SourcePrintCompositor : ObjectG
 			version(Exceptions) throw new Exception("Null gtkSourcePrintCompositor passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourcePrintCompositor);
+		if( ptr !is null )
+		{
+			this = cast(SourcePrintCompositor)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkSourcePrintCompositor);
 		this.gtkSourcePrintCompositor = gtkSourcePrintCompositor;
 	}

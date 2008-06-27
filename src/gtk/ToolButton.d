@@ -118,6 +118,13 @@ public class ToolButton : ToolItem
 			version(Exceptions) throw new Exception("Null gtkToolButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkToolButton);
+		if( ptr !is null )
+		{
+			this = cast(ToolButton)ptr;
+			return;
+		}
 		super(cast(GtkToolItem*)gtkToolButton);
 		this.gtkToolButton = gtkToolButton;
 	}

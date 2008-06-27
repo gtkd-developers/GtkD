@@ -152,6 +152,13 @@ public class Keymap : ObjectG
 			version(Exceptions) throw new Exception("Null gdkKeymap passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkKeymap);
+		if( ptr !is null )
+		{
+			this = cast(Keymap)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkKeymap);
 		this.gdkKeymap = gdkKeymap;
 	}

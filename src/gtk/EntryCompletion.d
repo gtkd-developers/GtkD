@@ -126,6 +126,13 @@ public class EntryCompletion : ObjectG
 			version(Exceptions) throw new Exception("Null gtkEntryCompletion passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkEntryCompletion);
+		if( ptr !is null )
+		{
+			this = cast(EntryCompletion)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}

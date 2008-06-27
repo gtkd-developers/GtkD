@@ -112,6 +112,13 @@ public class FileChooserWidget : VBox
 			version(Exceptions) throw new Exception("Null gtkFileChooserWidget passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkFileChooserWidget);
+		if( ptr !is null )
+		{
+			this = cast(FileChooserWidget)ptr;
+			return;
+		}
 		super(cast(GtkVBox*)gtkFileChooserWidget);
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}

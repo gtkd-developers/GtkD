@@ -614,17 +614,29 @@ public class GtkDClass
 							text ~= " */";
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
-							char[] tabs = "\t\t"; //What is this for?
-                            /* Deprecated */ /*
-							text ~= getAssertStructNotNull(var); */
-                            char[][] checkIfNull = [
+
+							char[][] checkIfNull = [
                             	"if("~var~" is null)",
                                 "{",
                                 "	this = null;",
 								"	version(Exceptions) throw new Exception(\"Null "~var~" passed to constructor.\");",
 								"	else return;",
 								"}" ];
+
+                            char[][] checkObject = [
+								""
+								"//Check if there already is a D object for this gtk struct",
+								"void* ptr = getDObject(cast(GObject*)"~var~");",
+								"if( ptr !is null )",
+								"{",
+								"	this = cast("~convParms.clss~")ptr;",
+								"	return;",
+								"}" ];
+
 							text ~= checkIfNull;
+							if ( gtkDParentName.length > 0 && gtkDParentName != "Surface" )
+								text ~= checkObject;
+
 							if ( parentName.length > 0 )
 							{
 								text ~= "super("~castToParent(var)~");";

@@ -282,6 +282,13 @@ public class Builder : ObjectG
 			version(Exceptions) throw new Exception("Null gtkBuilder passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkBuilder);
+		if( ptr !is null )
+		{
+			this = cast(Builder)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkBuilder);
 		this.gtkBuilder = gtkBuilder;
 	}

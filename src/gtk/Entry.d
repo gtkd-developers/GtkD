@@ -112,6 +112,13 @@ public class Entry : Widget
 			version(Exceptions) throw new Exception("Null gtkEntry passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkEntry);
+		if( ptr !is null )
+		{
+			this = cast(Entry)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkEntry);
 		this.gtkEntry = gtkEntry;
 	}

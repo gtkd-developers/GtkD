@@ -102,6 +102,13 @@ public class Progress : Widget
 			version(Exceptions) throw new Exception("Null gtkProgress passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkProgress);
+		if( ptr !is null )
+		{
+			this = cast(Progress)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkProgress);
 		this.gtkProgress = gtkProgress;
 	}

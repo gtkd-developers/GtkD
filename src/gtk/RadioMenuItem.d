@@ -122,6 +122,13 @@ public class RadioMenuItem : CheckMenuItem
 			version(Exceptions) throw new Exception("Null gtkRadioMenuItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRadioMenuItem);
+		if( ptr !is null )
+		{
+			this = cast(RadioMenuItem)ptr;
+			return;
+		}
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}

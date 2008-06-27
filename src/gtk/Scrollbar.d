@@ -104,6 +104,13 @@ public class Scrollbar : Range
 			version(Exceptions) throw new Exception("Null gtkScrollbar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkScrollbar);
+		if( ptr !is null )
+		{
+			this = cast(Scrollbar)ptr;
+			return;
+		}
 		super(cast(GtkRange*)gtkScrollbar);
 		this.gtkScrollbar = gtkScrollbar;
 	}

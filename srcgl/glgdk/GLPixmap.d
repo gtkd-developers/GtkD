@@ -101,6 +101,13 @@ public class GLPixmap : Drawable
 			version(Exceptions) throw new Exception("Null gdkGLPixmap passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkGLPixmap);
+		if( ptr !is null )
+		{
+			this = cast(GLPixmap)ptr;
+			return;
+		}
 		super(cast(GdkDrawable*)gdkGLPixmap);
 		this.gdkGLPixmap = gdkGLPixmap;
 	}

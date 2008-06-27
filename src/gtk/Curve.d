@@ -112,6 +112,13 @@ public class Curve : DrawingArea
 			version(Exceptions) throw new Exception("Null gtkCurve passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCurve);
+		if( ptr !is null )
+		{
+			this = cast(Curve)ptr;
+			return;
+		}
 		super(cast(GtkDrawingArea*)gtkCurve);
 		this.gtkCurve = gtkCurve;
 	}

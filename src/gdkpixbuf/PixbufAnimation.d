@@ -110,6 +110,13 @@ public class PixbufAnimation : ObjectG
 			version(Exceptions) throw new Exception("Null gdkPixbufAnimation passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkPixbufAnimation);
+		if( ptr !is null )
+		{
+			this = cast(PixbufAnimation)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkPixbufAnimation);
 		this.gdkPixbufAnimation = gdkPixbufAnimation;
 	}

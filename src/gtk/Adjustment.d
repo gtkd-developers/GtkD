@@ -110,6 +110,13 @@ public class Adjustment : ObjectGtk
 			version(Exceptions) throw new Exception("Null gtkAdjustment passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAdjustment);
+		if( ptr !is null )
+		{
+			this = cast(Adjustment)ptr;
+			return;
+		}
 		super(cast(GtkObject*)gtkAdjustment);
 		this.gtkAdjustment = gtkAdjustment;
 	}

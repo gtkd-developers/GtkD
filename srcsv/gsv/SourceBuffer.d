@@ -125,6 +125,13 @@ public class SourceBuffer : TextBuffer
 			version(Exceptions) throw new Exception("Null gtkSourceBuffer passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceBuffer);
+		if( ptr !is null )
+		{
+			this = cast(SourceBuffer)ptr;
+			return;
+		}
 		super(cast(GtkTextBuffer*)gtkSourceBuffer);
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}

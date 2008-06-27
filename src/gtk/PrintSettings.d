@@ -113,6 +113,13 @@ public class PrintSettings : ObjectG
 			version(Exceptions) throw new Exception("Null gtkPrintSettings passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPrintSettings);
+		if( ptr !is null )
+		{
+			this = cast(PrintSettings)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkPrintSettings);
 		this.gtkPrintSettings = gtkPrintSettings;
 	}

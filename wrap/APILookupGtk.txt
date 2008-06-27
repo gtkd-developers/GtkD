@@ -2328,6 +2328,7 @@ file: GtkTreeModel.html
 
 struct: GtkTreeModel
 class: TreeModel
+extend: GObject
 prefix: gtk_tree_model_
 noprefix: gtk_tree_row_reference_
 noprefix: gtk_tree_path_

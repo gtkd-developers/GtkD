@@ -100,6 +100,13 @@ public class IMMulticontext : IMContext
 			version(Exceptions) throw new Exception("Null gtkIMMulticontext passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkIMMulticontext);
+		if( ptr !is null )
+		{
+			this = cast(IMMulticontext)ptr;
+			return;
+		}
 		super(cast(GtkIMContext*)gtkIMMulticontext);
 		this.gtkIMMulticontext = gtkIMMulticontext;
 	}

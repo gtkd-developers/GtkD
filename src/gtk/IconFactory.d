@@ -116,6 +116,13 @@ public class IconFactory : ObjectG
 			version(Exceptions) throw new Exception("Null gtkIconFactory passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkIconFactory);
+		if( ptr !is null )
+		{
+			this = cast(IconFactory)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkIconFactory);
 		this.gtkIconFactory = gtkIconFactory;
 	}

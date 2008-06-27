@@ -110,6 +110,13 @@ public class GammaCurve : VBox
 			version(Exceptions) throw new Exception("Null gtkGammaCurve passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkGammaCurve);
+		if( ptr !is null )
+		{
+			this = cast(GammaCurve)ptr;
+			return;
+		}
 		super(cast(GtkVBox*)gtkGammaCurve);
 		this.gtkGammaCurve = gtkGammaCurve;
 	}

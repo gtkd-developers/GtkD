@@ -125,6 +125,13 @@ public class TreeViewColumn : ObjectGtk
 			version(Exceptions) throw new Exception("Null gtkTreeViewColumn passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeViewColumn);
+		if( ptr !is null )
+		{
+			this = cast(TreeViewColumn)ptr;
+			return;
+		}
 		super(cast(GtkObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}

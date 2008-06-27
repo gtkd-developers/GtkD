@@ -96,6 +96,13 @@ public class PgEngineLang : PgEngine
 			version(Exceptions) throw new Exception("Null pangoEngineLang passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoEngineLang);
+		if( ptr !is null )
+		{
+			this = cast(PgEngineLang)ptr;
+			return;
+		}
 		super(cast(PangoEngine*)pangoEngineLang);
 		this.pangoEngineLang = pangoEngineLang;
 	}

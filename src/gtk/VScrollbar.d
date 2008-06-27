@@ -97,6 +97,13 @@ public class VScrollbar : Scrollbar
 			version(Exceptions) throw new Exception("Null gtkVScrollbar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkVScrollbar);
+		if( ptr !is null )
+		{
+			this = cast(VScrollbar)ptr;
+			return;
+		}
 		super(cast(GtkScrollbar*)gtkVScrollbar);
 		this.gtkVScrollbar = gtkVScrollbar;
 	}

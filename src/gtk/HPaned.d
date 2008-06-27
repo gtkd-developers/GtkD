@@ -101,6 +101,13 @@ public class HPaned : Paned
 			version(Exceptions) throw new Exception("Null gtkHPaned passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkHPaned);
+		if( ptr !is null )
+		{
+			this = cast(HPaned)ptr;
+			return;
+		}
 		super(cast(GtkPaned*)gtkHPaned);
 		this.gtkHPaned = gtkHPaned;
 	}

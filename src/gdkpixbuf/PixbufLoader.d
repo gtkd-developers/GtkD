@@ -146,6 +146,13 @@ public class PixbufLoader : ObjectG
 			version(Exceptions) throw new Exception("Null gdkPixbufLoader passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkPixbufLoader);
+		if( ptr !is null )
+		{
+			this = cast(PixbufLoader)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkPixbufLoader);
 		this.gdkPixbufLoader = gdkPixbufLoader;
 	}

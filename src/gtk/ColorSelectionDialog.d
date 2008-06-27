@@ -104,6 +104,13 @@ public class ColorSelectionDialog : Dialog
 			version(Exceptions) throw new Exception("Null gtkColorSelectionDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkColorSelectionDialog);
+		if( ptr !is null )
+		{
+			this = cast(ColorSelectionDialog)ptr;
+			return;
+		}
 		super(cast(GtkDialog*)gtkColorSelectionDialog);
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}

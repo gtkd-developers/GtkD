@@ -115,6 +115,13 @@ public class HandleBox : Bin
 			version(Exceptions) throw new Exception("Null gtkHandleBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkHandleBox);
+		if( ptr !is null )
+		{
+			this = cast(HandleBox)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkHandleBox);
 		this.gtkHandleBox = gtkHandleBox;
 	}

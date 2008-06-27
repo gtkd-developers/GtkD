@@ -144,6 +144,13 @@ public class AccelLabel : Label
 			version(Exceptions) throw new Exception("Null gtkAccelLabel passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAccelLabel);
+		if( ptr !is null )
+		{
+			this = cast(AccelLabel)ptr;
+			return;
+		}
 		super(cast(GtkLabel*)gtkAccelLabel);
 		this.gtkAccelLabel = gtkAccelLabel;
 	}

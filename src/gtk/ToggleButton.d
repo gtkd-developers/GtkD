@@ -130,6 +130,13 @@ public class ToggleButton : Button
 			version(Exceptions) throw new Exception("Null gtkToggleButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkToggleButton);
+		if( ptr !is null )
+		{
+			this = cast(ToggleButton)ptr;
+			return;
+		}
 		super(cast(GtkButton*)gtkToggleButton);
 		this.gtkToggleButton = gtkToggleButton;
 	}

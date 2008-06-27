@@ -158,6 +158,13 @@ public class PrintContext : ObjectG
 			version(Exceptions) throw new Exception("Null gtkPrintContext passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPrintContext);
+		if( ptr !is null )
+		{
+			this = cast(PrintContext)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkPrintContext);
 		this.gtkPrintContext = gtkPrintContext;
 	}

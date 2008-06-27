@@ -113,6 +113,13 @@ public class PageSetupUnixDialog : Dialog
 			version(Exceptions) throw new Exception("Null gtkPageSetupUnixDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPageSetupUnixDialog);
+		if( ptr !is null )
+		{
+			this = cast(PageSetupUnixDialog)ptr;
+			return;
+		}
 		super(cast(GtkDialog*)gtkPageSetupUnixDialog);
 		this.gtkPageSetupUnixDialog = gtkPageSetupUnixDialog;
 	}

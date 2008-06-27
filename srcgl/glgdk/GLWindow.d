@@ -100,6 +100,13 @@ public class GLWindow : Drawable
 			version(Exceptions) throw new Exception("Null gdkGLWindow passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkGLWindow);
+		if( ptr !is null )
+		{
+			this = cast(GLWindow)ptr;
+			return;
+		}
 		super(cast(GdkDrawable*)gdkGLWindow);
 		this.gdkGLWindow = gdkGLWindow;
 	}

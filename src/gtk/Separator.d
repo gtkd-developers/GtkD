@@ -96,6 +96,13 @@ public class Separator : Widget
 			version(Exceptions) throw new Exception("Null gtkSeparator passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSeparator);
+		if( ptr !is null )
+		{
+			this = cast(Separator)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkSeparator);
 		this.gtkSeparator = gtkSeparator;
 	}

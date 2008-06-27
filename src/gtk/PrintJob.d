@@ -119,6 +119,13 @@ public class PrintJob : ObjectG
 			version(Exceptions) throw new Exception("Null gtkPrintJob passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPrintJob);
+		if( ptr !is null )
+		{
+			this = cast(PrintJob)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkPrintJob);
 		this.gtkPrintJob = gtkPrintJob;
 	}

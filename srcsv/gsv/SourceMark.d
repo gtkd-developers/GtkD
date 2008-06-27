@@ -108,6 +108,13 @@ public class SourceMark : TextMark
 			version(Exceptions) throw new Exception("Null gtkSourceMark passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceMark);
+		if( ptr !is null )
+		{
+			this = cast(SourceMark)ptr;
+			return;
+		}
 		super(cast(GtkTextMark*)gtkSourceMark);
 		this.gtkSourceMark = gtkSourceMark;
 	}

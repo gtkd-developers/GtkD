@@ -160,6 +160,15 @@ public class ObjectG
 		if ( gObject !is  null )
 		{
 			//writefln("ObjectG.this\n");
+			
+			//Check if there already is a D object for this gtk struct
+			void* ptr = getDObject(gObject);
+			if( ptr !is null )
+			{
+				this = cast(ObjectG)ptr;
+				return;
+			}
+			
 			objectGSetDataFull("GObject",cast(void*)this);
 		}
 	}
@@ -189,6 +198,18 @@ public class ObjectG
 			else std.gc.removeRoot(data);
 			//writefln("objectg.destroy exit");
 		}
+	}
+	
+	/**
+	 * Gets a D Object from the objects table of associations.
+	 * Params:
+	 *  object = GObject containing the associations.
+	 * Returns: the D Object if found, or NULL if no such Object exists.
+	 */
+	public static void* getDObject(GObject* obj)
+	{
+		//gpointer g_object_get_data(GObject *object, const gchar *key);
+		return g_object_get_data(obj, Str.toStringz("GObject"));
 	}
 	
 	//debug = objectstore;
@@ -368,7 +389,6 @@ public class ObjectG
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
-	
 	
 	/**
 	 */

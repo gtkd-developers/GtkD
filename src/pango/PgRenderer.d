@@ -116,6 +116,13 @@ public class PgRenderer : ObjectG
 			version(Exceptions) throw new Exception("Null pangoRenderer passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoRenderer);
+		if( ptr !is null )
+		{
+			this = cast(PgRenderer)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoRenderer);
 		this.pangoRenderer = pangoRenderer;
 	}

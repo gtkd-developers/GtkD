@@ -105,6 +105,13 @@ public class ItemFactory : ObjectGtk
 			version(Exceptions) throw new Exception("Null gtkItemFactory passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkItemFactory);
+		if( ptr !is null )
+		{
+			this = cast(ItemFactory)ptr;
+			return;
+		}
 		super(cast(GtkObject*)gtkItemFactory);
 		this.gtkItemFactory = gtkItemFactory;
 	}

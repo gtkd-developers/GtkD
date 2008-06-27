@@ -300,6 +300,13 @@ public class UIManager : ObjectG, BuildableIF
 			version(Exceptions) throw new Exception("Null gtkUIManager passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkUIManager);
+		if( ptr !is null )
+		{
+			this = cast(UIManager)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkUIManager);
 		this.gtkUIManager = gtkUIManager;
 	}

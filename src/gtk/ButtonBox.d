@@ -118,6 +118,13 @@ public class ButtonBox : Box
 			version(Exceptions) throw new Exception("Null gtkButtonBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkButtonBox);
+		if( ptr !is null )
+		{
+			this = cast(ButtonBox)ptr;
+			return;
+		}
 		super(cast(GtkBox*)gtkButtonBox);
 		this.gtkButtonBox = gtkButtonBox;
 	}

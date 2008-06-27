@@ -106,6 +106,13 @@ public class CheckMenuItem : MenuItem
 			version(Exceptions) throw new Exception("Null gtkCheckMenuItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCheckMenuItem);
+		if( ptr !is null )
+		{
+			this = cast(CheckMenuItem)ptr;
+			return;
+		}
 		super(cast(GtkMenuItem*)gtkCheckMenuItem);
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}

@@ -119,6 +119,13 @@ public class TextMark : ObjectG
 			version(Exceptions) throw new Exception("Null gtkTextMark passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTextMark);
+		if( ptr !is null )
+		{
+			this = cast(TextMark)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkTextMark);
 		this.gtkTextMark = gtkTextMark;
 	}

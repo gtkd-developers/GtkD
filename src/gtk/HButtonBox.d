@@ -109,6 +109,13 @@ public class HButtonBox : ButtonBox
 			version(Exceptions) throw new Exception("Null gtkHButtonBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkHButtonBox);
+		if( ptr !is null )
+		{
+			this = cast(HButtonBox)ptr;
+			return;
+		}
 		super(cast(GtkButtonBox*)gtkHButtonBox);
 		this.gtkHButtonBox = gtkHButtonBox;
 	}

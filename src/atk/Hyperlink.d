@@ -105,6 +105,13 @@ public class Hyperlink : ObjectG
 			version(Exceptions) throw new Exception("Null atkHyperlink passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkHyperlink);
+		if( ptr !is null )
+		{
+			this = cast(Hyperlink)ptr;
+			return;
+		}
 		super(cast(GObject*)atkHyperlink);
 		this.atkHyperlink = atkHyperlink;
 	}

@@ -125,6 +125,13 @@ public class PgFont : ObjectG
 			version(Exceptions) throw new Exception("Null pangoFont passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoFont);
+		if( ptr !is null )
+		{
+			this = cast(PgFont)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoFont);
 		this.pangoFont = pangoFont;
 	}

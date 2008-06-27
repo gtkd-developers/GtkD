@@ -101,6 +101,13 @@ public class VScale : Scale
 			version(Exceptions) throw new Exception("Null gtkVScale passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkVScale);
+		if( ptr !is null )
+		{
+			this = cast(VScale)ptr;
+			return;
+		}
 		super(cast(GtkScale*)gtkVScale);
 		this.gtkVScale = gtkVScale;
 	}

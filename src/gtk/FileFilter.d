@@ -109,6 +109,13 @@ public class FileFilter : ObjectGtk
 			version(Exceptions) throw new Exception("Null gtkFileFilter passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkFileFilter);
+		if( ptr !is null )
+		{
+			this = cast(FileFilter)ptr;
+			return;
+		}
 		super(cast(GtkObject*)gtkFileFilter);
 		this.gtkFileFilter = gtkFileFilter;
 	}

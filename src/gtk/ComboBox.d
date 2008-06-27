@@ -138,6 +138,13 @@ public class ComboBox : Bin, CellLayoutIF
 			version(Exceptions) throw new Exception("Null gtkComboBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkComboBox);
+		if( ptr !is null )
+		{
+			this = cast(ComboBox)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkComboBox);
 		this.gtkComboBox = gtkComboBox;
 	}

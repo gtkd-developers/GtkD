@@ -108,6 +108,13 @@ public class FontSelection : VBox
 			version(Exceptions) throw new Exception("Null gtkFontSelection passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkFontSelection);
+		if( ptr !is null )
+		{
+			this = cast(FontSelection)ptr;
+			return;
+		}
 		super(cast(GtkVBox*)gtkFontSelection);
 		this.gtkFontSelection = gtkFontSelection;
 	}

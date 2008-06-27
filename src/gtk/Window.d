@@ -122,6 +122,13 @@ public class Window : Bin
 			version(Exceptions) throw new Exception("Null gtkWindow passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkWindow);
+		if( ptr !is null )
+		{
+			this = cast(Window)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkWindow);
 		this.gtkWindow = gtkWindow;
 	}

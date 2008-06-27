@@ -110,6 +110,13 @@ public class Plug : Window
 			version(Exceptions) throw new Exception("Null gtkPlug passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPlug);
+		if( ptr !is null )
+		{
+			this = cast(Plug)ptr;
+			return;
+		}
 		super(cast(GtkWindow*)gtkPlug);
 		this.gtkPlug = gtkPlug;
 	}

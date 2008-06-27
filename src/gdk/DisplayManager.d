@@ -108,6 +108,13 @@ public class DisplayManager : ObjectG
 			version(Exceptions) throw new Exception("Null gdkDisplayManager passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkDisplayManager);
+		if( ptr !is null )
+		{
+			this = cast(DisplayManager)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkDisplayManager);
 		this.gdkDisplayManager = gdkDisplayManager;
 	}

@@ -97,6 +97,13 @@ public class SeparatorMenuItem : MenuItem
 			version(Exceptions) throw new Exception("Null gtkSeparatorMenuItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSeparatorMenuItem);
+		if( ptr !is null )
+		{
+			this = cast(SeparatorMenuItem)ptr;
+			return;
+		}
 		super(cast(GtkMenuItem*)gtkSeparatorMenuItem);
 		this.gtkSeparatorMenuItem = gtkSeparatorMenuItem;
 	}

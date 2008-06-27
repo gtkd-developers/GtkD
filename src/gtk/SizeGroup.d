@@ -157,6 +157,13 @@ public class SizeGroup : ObjectG, BuildableIF
 			version(Exceptions) throw new Exception("Null gtkSizeGroup passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSizeGroup);
+		if( ptr !is null )
+		{
+			this = cast(SizeGroup)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkSizeGroup);
 		this.gtkSizeGroup = gtkSizeGroup;
 	}

@@ -102,6 +102,13 @@ public class CheckButton : ToggleButton
 			version(Exceptions) throw new Exception("Null gtkCheckButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCheckButton);
+		if( ptr !is null )
+		{
+			this = cast(CheckButton)ptr;
+			return;
+		}
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;
 	}

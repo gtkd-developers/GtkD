@@ -102,6 +102,13 @@ public class Invisible : Widget
 			version(Exceptions) throw new Exception("Null gtkInvisible passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkInvisible);
+		if( ptr !is null )
+		{
+			this = cast(Invisible)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkInvisible);
 		this.gtkInvisible = gtkInvisible;
 	}

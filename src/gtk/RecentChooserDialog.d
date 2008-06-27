@@ -147,6 +147,13 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 			version(Exceptions) throw new Exception("Null gtkRecentChooserDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRecentChooserDialog);
+		if( ptr !is null )
+		{
+			this = cast(RecentChooserDialog)ptr;
+			return;
+		}
 		super(cast(GtkDialog*)gtkRecentChooserDialog);
 		this.gtkRecentChooserDialog = gtkRecentChooserDialog;
 	}

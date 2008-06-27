@@ -96,6 +96,13 @@ public class NoOpObjectFactory : ObjectFactory
 			version(Exceptions) throw new Exception("Null atkNoOpObjectFactory passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkNoOpObjectFactory);
+		if( ptr !is null )
+		{
+			this = cast(NoOpObjectFactory)ptr;
+			return;
+		}
 		super(cast(AtkObjectFactory*)atkNoOpObjectFactory);
 		this.atkNoOpObjectFactory = atkNoOpObjectFactory;
 	}

@@ -177,6 +177,13 @@ public class Image : Misc
 			version(Exceptions) throw new Exception("Null gtkImage passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkImage);
+		if( ptr !is null )
+		{
+			this = cast(Image)ptr;
+			return;
+		}
 		super(cast(GtkMisc*)gtkImage);
 		this.gtkImage = gtkImage;
 	}

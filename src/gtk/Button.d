@@ -112,6 +112,13 @@ public class Button : Bin
 			version(Exceptions) throw new Exception("Null gtkButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkButton);
+		if( ptr !is null )
+		{
+			this = cast(Button)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkButton);
 		this.gtkButton = gtkButton;
 	}

@@ -143,6 +143,13 @@ public class RecentManager : ObjectG
 			version(Exceptions) throw new Exception("Null gtkRecentManager passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRecentManager);
+		if( ptr !is null )
+		{
+			this = cast(RecentManager)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkRecentManager);
 		this.gtkRecentManager = gtkRecentManager;
 	}

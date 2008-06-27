@@ -147,6 +147,13 @@ public class ObjectGtk : ObjectG
 			version(Exceptions) throw new Exception("Null gtkObject passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkObject);
+		if( ptr !is null )
+		{
+			this = cast(ObjectGtk)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkObject);
 		this.gtkObject = gtkObject;
 	}

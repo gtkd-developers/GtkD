@@ -108,6 +108,13 @@ public class Scale : Range
 			version(Exceptions) throw new Exception("Null gtkScale passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkScale);
+		if( ptr !is null )
+		{
+			this = cast(Scale)ptr;
+			return;
+		}
 		super(cast(GtkRange*)gtkScale);
 		this.gtkScale = gtkScale;
 	}

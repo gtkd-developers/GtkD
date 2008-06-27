@@ -102,6 +102,13 @@ public class HScrollbar : Scrollbar
 			version(Exceptions) throw new Exception("Null gtkHScrollbar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkHScrollbar);
+		if( ptr !is null )
+		{
+			this = cast(HScrollbar)ptr;
+			return;
+		}
 		super(cast(GtkScrollbar*)gtkHScrollbar);
 		this.gtkHScrollbar = gtkHScrollbar;
 	}

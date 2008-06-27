@@ -132,6 +132,13 @@ public class Notebook : Container
 			version(Exceptions) throw new Exception("Null gtkNotebook passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkNotebook);
+		if( ptr !is null )
+		{
+			this = cast(Notebook)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkNotebook);
 		this.gtkNotebook = gtkNotebook;
 	}

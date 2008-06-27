@@ -136,6 +136,13 @@ public class GC : ObjectG
 			version(Exceptions) throw new Exception("Null gdkGC passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkGC);
+		if( ptr !is null )
+		{
+			this = cast(GC)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkGC);
 		this.gdkGC = gdkGC;
 	}

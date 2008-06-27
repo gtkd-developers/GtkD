@@ -111,6 +111,13 @@ public class Settings : ObjectG
 			version(Exceptions) throw new Exception("Null gtkSettings passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSettings);
+		if( ptr !is null )
+		{
+			this = cast(Settings)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkSettings);
 		this.gtkSettings = gtkSettings;
 	}

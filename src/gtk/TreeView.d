@@ -174,6 +174,13 @@ public class TreeView : Container
 			version(Exceptions) throw new Exception("Null gtkTreeView passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeView);
+		if( ptr !is null )
+		{
+			this = cast(TreeView)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}

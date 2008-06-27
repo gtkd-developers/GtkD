@@ -117,6 +117,13 @@ public class CellView : Widget
 			version(Exceptions) throw new Exception("Null gtkCellView passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellView);
+		if( ptr !is null )
+		{
+			this = cast(CellView)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkCellView);
 		this.gtkCellView = gtkCellView;
 	}

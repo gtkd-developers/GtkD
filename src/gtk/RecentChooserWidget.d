@@ -124,6 +124,13 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 			version(Exceptions) throw new Exception("Null gtkRecentChooserWidget passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRecentChooserWidget);
+		if( ptr !is null )
+		{
+			this = cast(RecentChooserWidget)ptr;
+			return;
+		}
 		super(cast(GtkVBox*)gtkRecentChooserWidget);
 		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
 	}

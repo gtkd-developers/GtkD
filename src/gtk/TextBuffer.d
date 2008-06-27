@@ -153,6 +153,13 @@ public class TextBuffer : ObjectG
 			version(Exceptions) throw new Exception("Null gtkTextBuffer passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTextBuffer);
+		if( ptr !is null )
+		{
+			this = cast(TextBuffer)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkTextBuffer);
 		this.gtkTextBuffer = gtkTextBuffer;
 	}

@@ -126,6 +126,13 @@ public class ComboBoxEntry : ComboBox
 			version(Exceptions) throw new Exception("Null gtkComboBoxEntry passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkComboBoxEntry);
+		if( ptr !is null )
+		{
+			this = cast(ComboBoxEntry)ptr;
+			return;
+		}
 		super(cast(GtkComboBox*)gtkComboBoxEntry);
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}

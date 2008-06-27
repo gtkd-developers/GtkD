@@ -135,6 +135,13 @@ public class Screen : ObjectG
 			version(Exceptions) throw new Exception("Null gdkScreen passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkScreen);
+		if( ptr !is null )
+		{
+			this = cast(Screen)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkScreen);
 		this.gdkScreen = gdkScreen;
 	}

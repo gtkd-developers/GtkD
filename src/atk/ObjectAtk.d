@@ -122,6 +122,13 @@ public class ObjectAtk : ObjectG
 			version(Exceptions) throw new Exception("Null atkObject passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkObject);
+		if( ptr !is null )
+		{
+			this = cast(ObjectAtk)ptr;
+			return;
+		}
 		super(cast(GObject*)atkObject);
 		this.atkObject = atkObject;
 	}

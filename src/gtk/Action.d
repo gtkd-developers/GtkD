@@ -145,6 +145,13 @@ public class Action : ObjectG, BuildableIF
 			version(Exceptions) throw new Exception("Null gtkAction passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAction);
+		if( ptr !is null )
+		{
+			this = cast(Action)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkAction);
 		this.gtkAction = gtkAction;
 	}

@@ -197,6 +197,13 @@ public class Container : Widget
 			version(Exceptions) throw new Exception("Null gtkContainer passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkContainer);
+		if( ptr !is null )
+		{
+			this = cast(Container)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkContainer);
 		this.gtkContainer = gtkContainer;
 	}

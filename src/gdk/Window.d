@@ -249,6 +249,13 @@ public class Window : Drawable
 			version(Exceptions) throw new Exception("Null gdkWindow passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkWindow);
+		if( ptr !is null )
+		{
+			this = cast(Window)ptr;
+			return;
+		}
 		super(cast(GdkDrawable*)gdkWindow);
 		this.gdkWindow = gdkWindow;
 	}

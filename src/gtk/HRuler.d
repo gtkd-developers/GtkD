@@ -108,6 +108,13 @@ public class HRuler : Ruler
 			version(Exceptions) throw new Exception("Null gtkHRuler passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkHRuler);
+		if( ptr !is null )
+		{
+			this = cast(HRuler)ptr;
+			return;
+		}
 		super(cast(GtkRuler*)gtkHRuler);
 		this.gtkHRuler = gtkHRuler;
 	}

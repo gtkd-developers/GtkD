@@ -116,6 +116,13 @@ public class TreeModelFilter : ObjectG
 			version(Exceptions) throw new Exception("Null gtkTreeModelFilter passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeModelFilter);
+		if( ptr !is null )
+		{
+			this = cast(TreeModelFilter)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkTreeModelFilter);
 		this.gtkTreeModelFilter = gtkTreeModelFilter;
 	}

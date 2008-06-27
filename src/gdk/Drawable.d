@@ -154,6 +154,13 @@ public class Drawable : ObjectG
 			version(Exceptions) throw new Exception("Null gdkDrawable passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkDrawable);
+		if( ptr !is null )
+		{
+			this = cast(Drawable)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkDrawable);
 		this.gdkDrawable = gdkDrawable;
 	}

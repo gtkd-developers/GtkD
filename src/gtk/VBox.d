@@ -98,6 +98,13 @@ public class VBox : Box
 			version(Exceptions) throw new Exception("Null gtkVBox passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkVBox);
+		if( ptr !is null )
+		{
+			this = cast(VBox)ptr;
+			return;
+		}
 		super(cast(GtkBox*)gtkVBox);
 		this.gtkVBox = gtkVBox;
 	}

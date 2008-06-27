@@ -135,6 +135,13 @@ public class ScrolledWindow : Bin
 			version(Exceptions) throw new Exception("Null gtkScrolledWindow passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkScrolledWindow);
+		if( ptr !is null )
+		{
+			this = cast(ScrolledWindow)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkScrolledWindow);
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}

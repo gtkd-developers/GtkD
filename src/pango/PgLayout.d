@@ -123,6 +123,13 @@ public class PgLayout : ObjectG
 			version(Exceptions) throw new Exception("Null pangoLayout passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoLayout);
+		if( ptr !is null )
+		{
+			this = cast(PgLayout)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoLayout);
 		this.pangoLayout = pangoLayout;
 	}

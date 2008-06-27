@@ -100,6 +100,13 @@ public class GLContext : ObjectG
 			version(Exceptions) throw new Exception("Null gdkGLContext passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkGLContext);
+		if( ptr !is null )
+		{
+			this = cast(GLContext)ptr;
+			return;
+		}
 		super(cast(GObject*)gdkGLContext);
 		this.gdkGLContext = gdkGLContext;
 	}

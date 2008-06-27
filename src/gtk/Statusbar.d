@@ -121,6 +121,13 @@ public class Statusbar : HBox
 			version(Exceptions) throw new Exception("Null gtkStatusbar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkStatusbar);
+		if( ptr !is null )
+		{
+			this = cast(Statusbar)ptr;
+			return;
+		}
 		super(cast(GtkHBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;
 	}

@@ -99,6 +99,13 @@ public class Viewport : Bin
 			version(Exceptions) throw new Exception("Null gtkViewport passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkViewport);
+		if( ptr !is null )
+		{
+			this = cast(Viewport)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkViewport);
 		this.gtkViewport = gtkViewport;
 	}

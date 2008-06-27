@@ -108,6 +108,13 @@ public class PgEngine : ObjectG
 			version(Exceptions) throw new Exception("Null pangoEngine passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)pangoEngine);
+		if( ptr !is null )
+		{
+			this = cast(PgEngine)ptr;
+			return;
+		}
 		super(cast(GObject*)pangoEngine);
 		this.pangoEngine = pangoEngine;
 	}

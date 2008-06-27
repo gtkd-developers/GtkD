@@ -149,6 +149,13 @@ public class RadioButton : CheckButton
 			version(Exceptions) throw new Exception("Null gtkRadioButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRadioButton);
+		if( ptr !is null )
+		{
+			this = cast(RadioButton)ptr;
+			return;
+		}
 		super(cast(GtkCheckButton*)gtkRadioButton);
 		this.gtkRadioButton = gtkRadioButton;
 	}

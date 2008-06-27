@@ -141,6 +141,13 @@ public class Tooltip : ObjectG
 			version(Exceptions) throw new Exception("Null gtkTooltip passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTooltip);
+		if( ptr !is null )
+		{
+			this = cast(Tooltip)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkTooltip);
 		this.gtkTooltip = gtkTooltip;
 	}

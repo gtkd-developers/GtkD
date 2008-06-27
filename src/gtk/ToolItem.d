@@ -113,6 +113,13 @@ public class ToolItem : Bin
 			version(Exceptions) throw new Exception("Null gtkToolItem passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkToolItem);
+		if( ptr !is null )
+		{
+			this = cast(ToolItem)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}

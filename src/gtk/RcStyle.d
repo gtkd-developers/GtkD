@@ -508,6 +508,13 @@ public class RcStyle : ObjectG
 			version(Exceptions) throw new Exception("Null gtkRcStyle passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRcStyle);
+		if( ptr !is null )
+		{
+			this = cast(RcStyle)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkRcStyle);
 		this.gtkRcStyle = gtkRcStyle;
 	}

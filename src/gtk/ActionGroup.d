@@ -152,6 +152,13 @@ public class ActionGroup : ObjectG, BuildableIF
 			version(Exceptions) throw new Exception("Null gtkActionGroup passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkActionGroup);
+		if( ptr !is null )
+		{
+			this = cast(ActionGroup)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkActionGroup);
 		this.gtkActionGroup = gtkActionGroup;
 	}

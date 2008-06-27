@@ -126,6 +126,13 @@ public class TypeModule : ObjectG
 			version(Exceptions) throw new Exception("Null gTypeModule passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gTypeModule);
+		if( ptr !is null )
+		{
+			this = cast(TypeModule)ptr;
+			return;
+		}
 		super(cast(GObject*)gTypeModule);
 		this.gTypeModule = gTypeModule;
 	}

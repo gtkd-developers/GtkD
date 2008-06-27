@@ -180,6 +180,13 @@ public class SourceStyleScheme : ObjectG
 			version(Exceptions) throw new Exception("Null gtkSourceStyleScheme passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceStyleScheme);
+		if( ptr !is null )
+		{
+			this = cast(SourceStyleScheme)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkSourceStyleScheme);
 		this.gtkSourceStyleScheme = gtkSourceStyleScheme;
 	}

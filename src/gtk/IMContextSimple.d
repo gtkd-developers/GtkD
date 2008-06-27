@@ -97,6 +97,13 @@ public class IMContextSimple : IMContext
 			version(Exceptions) throw new Exception("Null gtkIMContextSimple passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkIMContextSimple);
+		if( ptr !is null )
+		{
+			this = cast(IMContextSimple)ptr;
+			return;
+		}
 		super(cast(GtkIMContext*)gtkIMContextSimple);
 		this.gtkIMContextSimple = gtkIMContextSimple;
 	}

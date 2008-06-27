@@ -135,6 +135,13 @@ public class TreeSelection : ObjectG
 			version(Exceptions) throw new Exception("Null gtkTreeSelection passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeSelection);
+		if( ptr !is null )
+		{
+			this = cast(TreeSelection)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkTreeSelection);
 		this.gtkTreeSelection = gtkTreeSelection;
 	}

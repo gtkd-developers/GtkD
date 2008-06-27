@@ -133,6 +133,13 @@ public class PageSetup : ObjectG
 			version(Exceptions) throw new Exception("Null gtkPageSetup passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPageSetup);
+		if( ptr !is null )
+		{
+			this = cast(PageSetup)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkPageSetup);
 		this.gtkPageSetup = gtkPageSetup;
 	}

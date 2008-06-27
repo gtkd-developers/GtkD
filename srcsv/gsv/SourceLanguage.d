@@ -95,6 +95,13 @@ public class SourceLanguage : ObjectG
 			version(Exceptions) throw new Exception("Null gtkSourceLanguage passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceLanguage);
+		if( ptr !is null )
+		{
+			this = cast(SourceLanguage)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkSourceLanguage);
 		this.gtkSourceLanguage = gtkSourceLanguage;
 	}

@@ -104,6 +104,13 @@ public class RadioAction : ToggleAction
 			version(Exceptions) throw new Exception("Null gtkRadioAction passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRadioAction);
+		if( ptr !is null )
+		{
+			this = cast(RadioAction)ptr;
+			return;
+		}
 		super(cast(GtkToggleAction*)gtkRadioAction);
 		this.gtkRadioAction = gtkRadioAction;
 	}

@@ -119,6 +119,13 @@ public class Frame : Bin
 			version(Exceptions) throw new Exception("Null gtkFrame passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkFrame);
+		if( ptr !is null )
+		{
+			this = cast(Frame)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkFrame);
 		this.gtkFrame = gtkFrame;
 	}

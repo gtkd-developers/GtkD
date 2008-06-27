@@ -141,6 +141,13 @@ public class Paned : Container
 			version(Exceptions) throw new Exception("Null gtkPaned passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPaned);
+		if( ptr !is null )
+		{
+			this = cast(Paned)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}

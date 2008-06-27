@@ -118,6 +118,13 @@ public class InputDialog : Dialog
 			version(Exceptions) throw new Exception("Null gtkInputDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkInputDialog);
+		if( ptr !is null )
+		{
+			this = cast(InputDialog)ptr;
+			return;
+		}
 		super(cast(GtkDialog*)gtkInputDialog);
 		this.gtkInputDialog = gtkInputDialog;
 	}

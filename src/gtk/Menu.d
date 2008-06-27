@@ -152,6 +152,13 @@ public class Menu : MenuShell
 			version(Exceptions) throw new Exception("Null gtkMenu passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkMenu);
+		if( ptr !is null )
+		{
+			this = cast(Menu)ptr;
+			return;
+		}
 		super(cast(GtkMenuShell*)gtkMenu);
 		this.gtkMenu = gtkMenu;
 	}

@@ -229,6 +229,13 @@ public class ListStore : TreeModel, BuildableIF
 			version(Exceptions) throw new Exception("Null gtkListStore passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkListStore);
+		if( ptr !is null )
+		{
+			this = cast(ListStore)ptr;
+			return;
+		}
 		super(cast(GtkTreeModel*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}

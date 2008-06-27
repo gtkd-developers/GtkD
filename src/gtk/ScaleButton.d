@@ -108,6 +108,13 @@ public class ScaleButton : Button
 			version(Exceptions) throw new Exception("Null gtkScaleButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkScaleButton);
+		if( ptr !is null )
+		{
+			this = cast(ScaleButton)ptr;
+			return;
+		}
 		super(cast(GtkButton*)gtkScaleButton);
 		this.gtkScaleButton = gtkScaleButton;
 	}

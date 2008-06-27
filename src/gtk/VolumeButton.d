@@ -102,6 +102,13 @@ public class VolumeButton : ScaleButton
 			version(Exceptions) throw new Exception("Null gtkVolumeButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkVolumeButton);
+		if( ptr !is null )
+		{
+			this = cast(VolumeButton)ptr;
+			return;
+		}
 		super(cast(GtkScaleButton*)gtkVolumeButton);
 		this.gtkVolumeButton = gtkVolumeButton;
 	}

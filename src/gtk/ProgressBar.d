@@ -129,6 +129,13 @@ public class ProgressBar : Progress
 			version(Exceptions) throw new Exception("Null gtkProgressBar passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkProgressBar);
+		if( ptr !is null )
+		{
+			this = cast(ProgressBar)ptr;
+			return;
+		}
 		super(cast(GtkProgress*)gtkProgressBar);
 		this.gtkProgressBar = gtkProgressBar;
 	}

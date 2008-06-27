@@ -152,6 +152,13 @@ public class Expander : Bin
 			version(Exceptions) throw new Exception("Null gtkExpander passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkExpander);
+		if( ptr !is null )
+		{
+			this = cast(Expander)ptr;
+			return;
+		}
 		super(cast(GtkBin*)gtkExpander);
 		this.gtkExpander = gtkExpander;
 	}

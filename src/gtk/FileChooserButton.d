@@ -130,6 +130,13 @@ public class FileChooserButton : HBox
 			version(Exceptions) throw new Exception("Null gtkFileChooserButton passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkFileChooserButton);
+		if( ptr !is null )
+		{
+			this = cast(FileChooserButton)ptr;
+			return;
+		}
 		super(cast(GtkHBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}

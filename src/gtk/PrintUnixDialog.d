@@ -153,6 +153,13 @@ public class PrintUnixDialog : Dialog
 			version(Exceptions) throw new Exception("Null gtkPrintUnixDialog passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkPrintUnixDialog);
+		if( ptr !is null )
+		{
+			this = cast(PrintUnixDialog)ptr;
+			return;
+		}
 		super(cast(GtkDialog*)gtkPrintUnixDialog);
 		this.gtkPrintUnixDialog = gtkPrintUnixDialog;
 	}

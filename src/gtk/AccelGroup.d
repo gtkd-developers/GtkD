@@ -124,6 +124,13 @@ public class AccelGroup : ObjectG
 			version(Exceptions) throw new Exception("Null gtkAccelGroup passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkAccelGroup);
+		if( ptr !is null )
+		{
+			this = cast(AccelGroup)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkAccelGroup);
 		this.gtkAccelGroup = gtkAccelGroup;
 	}

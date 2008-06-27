@@ -148,6 +148,13 @@ public class Socket : Container
 			version(Exceptions) throw new Exception("Null gtkSocket passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSocket);
+		if( ptr !is null )
+		{
+			this = cast(Socket)ptr;
+			return;
+		}
 		super(cast(GtkContainer*)gtkSocket);
 		this.gtkSocket = gtkSocket;
 	}

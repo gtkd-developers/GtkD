@@ -105,6 +105,13 @@ public class TextTagTable : ObjectG
 			version(Exceptions) throw new Exception("Null gtkTextTagTable passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTextTagTable);
+		if( ptr !is null )
+		{
+			this = cast(TextTagTable)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkTextTagTable);
 		this.gtkTextTagTable = gtkTextTagTable;
 	}

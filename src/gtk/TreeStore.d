@@ -130,6 +130,13 @@ public class TreeStore : TreeModel
 			version(Exceptions) throw new Exception("Null gtkTreeStore passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeStore);
+		if( ptr !is null )
+		{
+			this = cast(TreeStore)ptr;
+			return;
+		}
 		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
 	}

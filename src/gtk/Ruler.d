@@ -108,6 +108,13 @@ public class Ruler : Widget
 			version(Exceptions) throw new Exception("Null gtkRuler passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkRuler);
+		if( ptr !is null )
+		{
+			this = cast(Ruler)ptr;
+			return;
+		}
 		super(cast(GtkWidget*)gtkRuler);
 		this.gtkRuler = gtkRuler;
 	}
