@@ -347,7 +347,7 @@ public class Widget : ObjectGtk, BuildableIF
 		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
 		int* pt =cast(int*)getStruct();
 		pt += 52/4;
-		return new Drawable(cast(GdkDrawable*)(*pt));
+		return new Window(cast(GdkWindow*)(*pt));
 	}
 	
 	/**
