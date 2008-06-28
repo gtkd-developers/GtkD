@@ -268,8 +268,11 @@ public class Linker
 				if ( alternateHandle !is null )
 				{
 					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").dup.ptr);
-					version(Tango) Stdout.formatln("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name);
-					else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
+					debug
+					{
+						version(Tango) Stdout.formatln("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name);
+						else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
+					}
 				}
 				if (*link.pointer is null)
 				{
