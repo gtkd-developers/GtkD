@@ -34,6 +34,7 @@ else
 	private import std.stdio;
 
 private import gtkc.pangotypes;
+private import gtkc.cairotypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
@@ -41,7 +42,7 @@ private Linker pango_Linker;
 
 static this()
 {
- pango_Linker = new Linker(libPath ~ importLibs[LIBRARY.PANGO] );
+ pango_Linker = new Linker(libPath ~ importLibs[LIBRARY.PANGO], libPath ~ importLibs[LIBRARY.PANGOCAIRO] );
  pango_Linker.link(pangoLinks);
 
  debug
@@ -420,6 +421,37 @@ extern(C)
 	PangoGravity function(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)pango_gravity_get_for_script;
 	double function(PangoGravity gravity)pango_gravity_to_rotation;
 	
+	// pango.PgCairoFontMap
+	
+	PangoFontMap* function()pango_cairo_font_map_get_default;
+	PangoFontMap* function()pango_cairo_font_map_new;
+	PangoFontMap* function(cairo_font_type_t fonttype)pango_cairo_font_map_new_for_font_type;
+	cairo_font_type_t function(PangoCairoFontMap* fontmap)pango_cairo_font_map_get_font_type;
+	void function(PangoCairoFontMap* fontmap, double dpi)pango_cairo_font_map_set_resolution;
+	double function(PangoCairoFontMap* fontmap)pango_cairo_font_map_get_resolution;
+	PangoContext* function(PangoCairoFontMap* fontmap)pango_cairo_font_map_create_context;
+	
+	// pango.PgCairo
+	
+	cairo_scaled_font_t* function(PangoCairoFont* font)pango_cairo_font_get_scaled_font;
+	void function(PangoContext* context, double dpi)pango_cairo_context_set_resolution;
+	double function(PangoContext* context)pango_cairo_context_get_resolution;
+	void function(PangoContext* context, cairo_font_options_t* options)pango_cairo_context_set_font_options;
+	cairo_font_options_t* function(PangoContext* context)pango_cairo_context_get_font_options;
+	void function(PangoContext* context, PangoCairoShapeRendererFunc func, gpointer data, GDestroyNotify dnotify)pango_cairo_context_set_shape_renderer;
+	PangoCairoShapeRendererFunc function(PangoContext* context, gpointer* data)pango_cairo_context_get_shape_renderer;
+	void function(cairo_t* cr, PangoContext* context)pango_cairo_update_context;
+	PangoLayout* function(cairo_t* cr)pango_cairo_create_layout;
+	void function(cairo_t* cr, PangoLayout* layout)pango_cairo_update_layout;
+	void function(cairo_t* cr, PangoFont* font, PangoGlyphString* glyphs)pango_cairo_show_glyph_string;
+	void function(cairo_t* cr, PangoLayoutLine* line)pango_cairo_show_layout_line;
+	void function(cairo_t* cr, PangoLayout* layout)pango_cairo_show_layout;
+	void function(cairo_t* cr, double x, double y, double width, double height)pango_cairo_show_error_underline;
+	void function(cairo_t* cr, PangoFont* font, PangoGlyphString* glyphs)pango_cairo_glyph_string_path;
+	void function(cairo_t* cr, PangoLayoutLine* line)pango_cairo_layout_line_path;
+	void function(cairo_t* cr, PangoLayout* layout)pango_cairo_layout_path;
+	void function(cairo_t* cr, double x, double y, double width, double height)pango_cairo_error_underline_path;
+	
 	// pango.PgRenderer
 	
 	void function(PangoRenderer* renderer, PangoLayout* layout, int x, int y)pango_renderer_draw_layout;
@@ -781,6 +813,31 @@ Symbol[] pangoLinks =
 	{ "pango_gravity_get_for_matrix",  cast(void**)& pango_gravity_get_for_matrix},
 	{ "pango_gravity_get_for_script",  cast(void**)& pango_gravity_get_for_script},
 	{ "pango_gravity_to_rotation",  cast(void**)& pango_gravity_to_rotation},
+	{ "pango_cairo_font_map_get_default",  cast(void**)& pango_cairo_font_map_get_default},
+	{ "pango_cairo_font_map_new",  cast(void**)& pango_cairo_font_map_new},
+	{ "pango_cairo_font_map_new_for_font_type",  cast(void**)& pango_cairo_font_map_new_for_font_type},
+	{ "pango_cairo_font_map_get_font_type",  cast(void**)& pango_cairo_font_map_get_font_type},
+	{ "pango_cairo_font_map_set_resolution",  cast(void**)& pango_cairo_font_map_set_resolution},
+	{ "pango_cairo_font_map_get_resolution",  cast(void**)& pango_cairo_font_map_get_resolution},
+	{ "pango_cairo_font_map_create_context",  cast(void**)& pango_cairo_font_map_create_context},
+	{ "pango_cairo_font_get_scaled_font",  cast(void**)& pango_cairo_font_get_scaled_font},
+	{ "pango_cairo_context_set_resolution",  cast(void**)& pango_cairo_context_set_resolution},
+	{ "pango_cairo_context_get_resolution",  cast(void**)& pango_cairo_context_get_resolution},
+	{ "pango_cairo_context_set_font_options",  cast(void**)& pango_cairo_context_set_font_options},
+	{ "pango_cairo_context_get_font_options",  cast(void**)& pango_cairo_context_get_font_options},
+	{ "pango_cairo_context_set_shape_renderer",  cast(void**)& pango_cairo_context_set_shape_renderer},
+	{ "pango_cairo_context_get_shape_renderer",  cast(void**)& pango_cairo_context_get_shape_renderer},
+	{ "pango_cairo_update_context",  cast(void**)& pango_cairo_update_context},
+	{ "pango_cairo_create_layout",  cast(void**)& pango_cairo_create_layout},
+	{ "pango_cairo_update_layout",  cast(void**)& pango_cairo_update_layout},
+	{ "pango_cairo_show_glyph_string",  cast(void**)& pango_cairo_show_glyph_string},
+	{ "pango_cairo_show_layout_line",  cast(void**)& pango_cairo_show_layout_line},
+	{ "pango_cairo_show_layout",  cast(void**)& pango_cairo_show_layout},
+	{ "pango_cairo_show_error_underline",  cast(void**)& pango_cairo_show_error_underline},
+	{ "pango_cairo_glyph_string_path",  cast(void**)& pango_cairo_glyph_string_path},
+	{ "pango_cairo_layout_line_path",  cast(void**)& pango_cairo_layout_line_path},
+	{ "pango_cairo_layout_path",  cast(void**)& pango_cairo_layout_path},
+	{ "pango_cairo_error_underline_path",  cast(void**)& pango_cairo_error_underline_path},
 	{ "pango_renderer_draw_layout",  cast(void**)& pango_renderer_draw_layout},
 	{ "pango_renderer_draw_layout_line",  cast(void**)& pango_renderer_draw_layout_line},
 	{ "pango_renderer_draw_glyphs",  cast(void**)& pango_renderer_draw_glyphs},

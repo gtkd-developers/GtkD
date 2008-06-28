@@ -29,6 +29,7 @@
 
 addTypedefs: start
 
+public import gtkc.cairotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
@@ -484,17 +485,40 @@ outFile: PgVertical
 #prefix: pango_xft_
 #outFile: PgXft
 
-#file: pango-Cairo-Rendering.html
-#struct: PangoCairoFontMap
-#class: PgCairoFontMap
-#prefix: pango_cairo_font_map_
-#strictPrefix: Yes
-#outFile: PgCairoFontMap
+file: pango-Cairo-Rendering.html
+struct: PangoCairoFontMap
+ctorStruct: PangoFontMap
+extend: PangoFontMap
+class: PgCairoFontMap
+prefix: pango_cairo_font_map_
+strictPrefix: Yes
+import: glib.Str
+import: pango.PgFontMap
+import: pango.PgContext
+structWrap: PangoFontMap* PgFontMap
+structWrap: PangoContext* PgContext
+outFile: PgCairoFontMap
 
-#class: PgCairo
-#prefix: pango_cairo_
-#noprefix: pango_cairo_font_map_
-#outFile: PgCairo
+class: PgCairo
+prefix: pango_cairo_
+noprefix: pango_cairo_font_map_
+import: cairo.Context
+import: cairo.ScaledFont
+import: cairo.FontOption
+import: pango.PgContext
+import: pango.PgFont
+import: pango.PgGlyphString
+import: pango.PgLayout
+import: pango.PgLayoutLine
+structWrap: cairo_t* Context
+structWrap: cairo_scaled_font_t* ScaledFont
+structWrap: cairo_font_options_t* FontOption
+structWrap: PangoContext* PgContext
+structWrap: PangoFont* PgFont
+structWrap: PangoGlyphString* PgGlyphString
+structWrap: PangoLayout* PgLayout
+structWrap: PangoLayoutLine* PgLayoutLine
+outFile: PgCairo
 
 #file: pango-ATSUI-Fonts.html
 #class: 

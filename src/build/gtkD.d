@@ -142,6 +142,8 @@ private import pango.PgLayoutLine;
 private import pango.PgScript;
 private import pango.PgScriptIter;
 private import pango.PgVertical;
+private import pango.PgCairoFontMap;
+private import pango.PgCairo;
 private import pango.PgRenderer;
 private import pango.PgCoverage;
 private import pango.PgEngine;

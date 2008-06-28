@@ -819,7 +819,7 @@ public class GtkWrapper : WrapperIF
         {
             externalText ~= "\nprivate import "~bindingsDir~".gthreadtypes;";
         }
-        if ( loaderTableName == "gdk" )
+        if ( loaderTableName == "gdk" || loaderTableName == "pango" )
         {
             externalText ~= "\nprivate import "~bindingsDir~".cairotypes;";
         }
@@ -842,7 +842,12 @@ public class GtkWrapper : WrapperIF
                 externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
                          ~std.string.toupper(loaderTableName.dup)~"], libPath ~ importLibs[LIBRARY.GDKPIXBUF] );";
             }
-            else
+            else if ( loaderTableName == "pango" )
+            {
+                externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
+                         ~std.string.toupper(loaderTableName.dup)~"], libPath ~ importLibs[LIBRARY.PANGOCAIRO] );";
+            }
+			else
             {
                 externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
                          ~std.string.toupper(loaderTableName.dup)~"] );";

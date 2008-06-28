@@ -23,6 +23,7 @@
 module gtkc.pangotypes;
 
 
+public import gtkc.cairotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
@@ -1209,6 +1210,24 @@ public struct PangoScriptIter{}
 
 
 /**
+ * PangoCairoFont is an interface exported by fonts for
+ * use with Cairo. The actual type of the font will depend
+ * on the particular font technology Cairo was compiled to use.
+ * Since 1.18
+ */
+public struct PangoCairoFont{}
+
+
+/**
+ * PangoCairoFontMap is an interface exported by font maps for
+ * use with Cairo. The actual type of the font map will depend
+ * on the particular font technology Cairo was compiled to use.
+ * Since 1.10
+ */
+public struct PangoCairoFontMap{}
+
+
+/**
  * Main Gtk struct.
  * PangoRenderer is a base class for objects that are used to
  * render Pango objects such as PangoGlyphString and
@@ -1670,3 +1689,22 @@ public typedef extern(C) void*  function (void*) PangoAttrDataCopyFunc;
  */
 // gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer data);
 public typedef extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;
+
+/*
+ * Function type for rendering attributes of type PANGO_ATTR_SHAPE
+ * with Pango's Cairo renderer.
+ * cr :
+ * a Cairo context with current point set to where the shape should
+ *  be rendered
+ * attr :
+ * the PANGO_ATTR_SHAPE to render
+ * do_path :
+ * whether only the shape path should be appended to current
+ *  path of cr and no filling/stroking done. This will be set
+ * 	 to TRUE when called from pango_cairo_layout_path() and
+ * 	 pango_cairo_layout_line_path() rendering functions.
+ * data :
+ * user data passed to pango_cairo_context_set_shape_renderer()
+ */
+// void (*PangoCairoShapeRendererFunc) (cairo_t *cr,  PangoAttrShape *attr,  gboolean do_path,  gpointer data);
+public typedef extern(C) void  function (cairo_t*, PangoAttrShape*, int, void*) PangoCairoShapeRendererFunc;
