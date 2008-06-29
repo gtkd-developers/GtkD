@@ -29,7 +29,7 @@ class PangoText : DrawingArea
 {
 	int m_radius = 150;
 	int m_nWords = 10;
-	char[] m_font = "Sans Bold 27";
+	string m_font = "Sans Bold 27";
 
 	public this()
 	{
