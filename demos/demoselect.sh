@@ -12,7 +12,7 @@ sed -i -e '/^.*$/ { N; s/\n\[/\n&/ }' "${DEMOSCONF}"
 for param in "$@"; do
     case "${param}" in
         disable-all|only) sed -i -e '/^\[.*/ { s/^./#&/; :a; n; s/^./#&/; t a; }' "${DEMOSCONF}";;
-        gtk) sed -i -re '/^#\[(cairo|glade|gtk|gtkD)\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
+        gtk) sed -i -re '/^#\[(cairo|glade|gtk|gtkD|pango)\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
         gda) sed -i -re '/^#\[gda\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
         sv) sed -i -re '/^#\[sourceView\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
         gl) sed -i -re '/^#\[gl\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
