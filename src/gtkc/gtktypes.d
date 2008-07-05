@@ -5117,6 +5117,22 @@ public struct GtkProgress{}
 
 /*
  * Warning
+ * gtk_tree_model_get_iter_root is deprecated and should not be used in newly-written code.
+ * A alternate name for gtk_tree_model_get_iter_first() provided for
+ * compatibility reasons; this macro will be deprecated in future
+ * versions of GTK+.
+ * tree_model:
+ *  A GtkTreeModel.
+ * iter:
+ * uninitialized GtkTreeIter.
+ * Returns:
+ *  TRUE, if iter was set.
+ */
+// TODO
+// #define gtk_tree_model_get_iter_root(tree_model, iter) gtk_tree_model_get_iter_first(tree_model, iter)
+
+/*
+ * Warning
  * gtk_menu_append is deprecated and should not be used in newly-written code. Use gtk_menu_shell_append() instead.
  * Adds a new GtkMenuItem to the end of the menu's item list.
  * menu:

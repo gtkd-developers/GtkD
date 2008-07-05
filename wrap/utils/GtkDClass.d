@@ -1041,11 +1041,6 @@ public class GtkDClass
 			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~gtkDSignal~"Listeners )";
 			text ~= "	{";
 			char[] dlgCall = "dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~");";
-			//if ( dlgCall == "dlg(widget, container);" )
-			//{
-			//	// special case
-			//	dlgCall = "dlg(new Widget(widget), container);";
-			//}
 			text ~= "		"~dlgCall;
 			text ~= "	}";
 			text ~= "	";

@@ -46,8 +46,9 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * structWrap:
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -66,6 +67,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 
 
 
@@ -173,7 +175,7 @@ public class EntryCompletion : ObjectG
 		return consumed;
 	}
 	
-	gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
+	gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
 	/**
 	 * Gets emitted when a match from the cursor is on a match
 	 * of the list.The default behaviour is to replace the contents
@@ -181,7 +183,7 @@ public class EntryCompletion : ObjectG
 	 * pointed to by iter.
 	 * Since 2.12
 	 */
-	void addOnCursorOnMatch(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCursorOnMatch(gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cursor-on-match" in connectedSignals) )
 		{
@@ -200,7 +202,7 @@ public class EntryCompletion : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
+		foreach ( gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
 		{
 			dlg(new TreeModel(model), iter, entryCompletion);
 		}
@@ -246,7 +248,7 @@ public class EntryCompletion : ObjectG
 		return consumed;
 	}
 	
-	gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
+	gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
 	/**
 	 * Gets emitted when a match from the list is selected.
 	 * The default behaviour is to replace the contents of the
@@ -254,7 +256,7 @@ public class EntryCompletion : ObjectG
 	 * pointed to by iter.
 	 * Since 2.4
 	 */
-	void addOnMatchSelected(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMatchSelected(gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("match-selected" in connectedSignals) )
 		{
@@ -273,7 +275,7 @@ public class EntryCompletion : ObjectG
 	{
 		bool consumed = false;
 		
-		foreach ( gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
+		foreach ( gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
 		{
 			dlg(new TreeModel(model), iter, entryCompletion);
 		}
@@ -324,10 +326,10 @@ public class EntryCompletion : ObjectG
 	 * Params:
 	 * model =  The GtkTreeModel.
 	 */
-	public void setModel(TreeModel model)
+	public void setModel(TreeModelIF model)
 	{
 		// void gtk_entry_completion_set_model (GtkEntryCompletion *completion,  GtkTreeModel *model);
-		gtk_entry_completion_set_model(gtkEntryCompletion, (model is null) ? null : model.getTreeModelStruct());
+		gtk_entry_completion_set_model(gtkEntryCompletion, (model is null) ? null : model.getTreeModelTStruct());
 	}
 	
 	/**
@@ -336,7 +338,7 @@ public class EntryCompletion : ObjectG
 	 * Since 2.4
 	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
 	 */
-	public TreeModel getModel()
+	public TreeModelIF getModel()
 	{
 		// GtkTreeModel* gtk_entry_completion_get_model (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);

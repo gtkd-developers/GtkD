@@ -44,9 +44,9 @@
  * omit signals:
  * imports:
  * 	- gtk.TreePath
- * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * structWrap:
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -61,7 +61,7 @@ private import gtkc.gtk;
 
 
 private import gtk.TreePath;
-private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 
 
 
@@ -210,10 +210,10 @@ public class TreeDragSource
 	 * path =  a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static int treeSetRowDragData(GtkSelectionData* selectionData, TreeModel treeModel, TreePath path)
+	public static int treeSetRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path)
 	{
 		// gboolean gtk_tree_set_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel *tree_model,  GtkTreePath *path);
-		return gtk_tree_set_row_drag_data(selectionData, (treeModel is null) ? null : treeModel.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
+		return gtk_tree_set_row_drag_data(selectionData, (treeModel is null) ? null : treeModel.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**

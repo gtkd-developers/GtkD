@@ -49,6 +49,7 @@
  * 	- atk.ObjectAtk
  * 	- glib.Str
  * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreeIter
  * 	- gtk.CellRenderer
  * 	- glib.ListG
@@ -57,7 +58,7 @@
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GtkTreeIter* -> TreeIter
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * module aliases:
  * local aliases:
  * overrides:
@@ -75,6 +76,7 @@ public  import gtkc.gdktypes;
 private import atk.ObjectAtk;
 private import glib.Str;
 private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreeIter;
 private import gtk.CellRenderer;
 private import glib.ListG;
@@ -206,7 +208,7 @@ public class ComboBox : Bin, CellLayoutIF
 	int getIndex(string text)
 	{
 		TreeIter iter = new TreeIter();
-		TreeModel model = getModel();
+		TreeModelIF model = getModel();
 		iter.setModel(model);
 		int index = 0;
 		bool found = false;
@@ -400,10 +402,10 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Params:
 	 * model =  A GtkTreeModel.
 	 */
-	public this (TreeModel model)
+	public this (TreeModelIF model)
 	{
 		// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
-		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
 			this = null;
@@ -549,7 +551,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Since 2.4
 	 * Returns: A GtkTreeModel which was passed during construction.
 	 */
-	public TreeModel getModel()
+	public TreeModelIF getModel()
 	{
 		// GtkTreeModel* gtk_combo_box_get_model (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_model(gtkComboBox);
@@ -571,10 +573,10 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Params:
 	 * model =  A GtkTreeModel
 	 */
-	public void setModel(TreeModel model)
+	public void setModel(TreeModelIF model)
 	{
 		// void gtk_combo_box_set_model (GtkComboBox *combo_box,  GtkTreeModel *model);
-		gtk_combo_box_set_model(gtkComboBox, (model is null) ? null : model.getTreeModelStruct());
+		gtk_combo_box_set_model(gtkComboBox, (model is null) ? null : model.getTreeModelTStruct());
 	}
 	
 	/**

@@ -448,9 +448,6 @@ public class Widget : ObjectGtk, BuildableIF
 		tt.setTip(this, tipText, tipPrivate);
 	}
 	
-	//get the addOnDestroy from ObjectGtk
-	alias ObjectGtk.addOnDestroy addOnDestroy;
-	
 	/**
 	 */
 	int[char[]] connectedSignals;

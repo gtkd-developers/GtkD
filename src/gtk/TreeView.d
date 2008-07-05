@@ -45,6 +45,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreeSelection
  * 	- gtk.Adjustment
  * 	- gtk.TreeViewColumn
@@ -67,7 +68,7 @@
  * 	- GtkEntry* -> Entry
  * 	- GtkTooltip* -> Tooltip
  * 	- GtkTreeIter* -> TreeIter
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * 	- GtkTreeSelection* -> TreeSelection
  * 	- GtkTreeViewColumn* -> TreeViewColumn
@@ -87,6 +88,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreeSelection;
 private import gtk.Adjustment;
 private import gtk.TreeViewColumn;
@@ -192,7 +194,7 @@ public class TreeView : Container
 	 *  openAll =
 	 *  Returns =
 	 */
-	int expandRow(TreeIter iter, TreeModel model, int openAll)
+	int expandRow(TreeIter iter, TreeModelIF model, int openAll)
 	{
 		return expandRow(model.getPath(iter), openAll);
 	}
@@ -241,7 +243,7 @@ public class TreeView : Container
 	{
 		TreeIter iter = null;
 		TreeSelection selection = getSelection();
-		TreeModel model = getModel();
+		TreeModelIF model = getModel();
 		TreePath[] paths = selection.getSelectedRows(model);
 		if ( paths.length > 0 )
 		{
@@ -258,7 +260,7 @@ public class TreeView : Container
 		
 		TreeIter iter = new TreeIter();
 		TreeSelection selection = getSelection();
-		TreeModel model = getModel();
+		TreeModelIF model = getModel();
 		TreePath[] paths = selection.getSelectedRows(model);
 		foreach ( TreePath p; selection.getSelectedRows(model) )
 		{
@@ -885,10 +887,10 @@ public class TreeView : Container
 	 * Params:
 	 * model =  the model.
 	 */
-	public this (TreeModel model)
+	public this (TreeModelIF model)
 	{
 		// GtkWidget* gtk_tree_view_new_with_model (GtkTreeModel *model);
-		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
 			this = null;
@@ -903,7 +905,7 @@ public class TreeView : Container
 	 * model is unset.
 	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
 	 */
-	public TreeModel getModel()
+	public TreeModelIF getModel()
 	{
 		// GtkTreeModel* gtk_tree_view_get_model (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_model(gtkTreeView);
@@ -922,10 +924,10 @@ public class TreeView : Container
 	 * Params:
 	 * model =  The model.
 	 */
-	public void setModel(TreeModel model)
+	public void setModel(TreeModelIF model)
 	{
 		// void gtk_tree_view_set_model (GtkTreeView *tree_view,  GtkTreeModel *model);
-		gtk_tree_view_set_model(gtkTreeView, (model is null) ? null : model.getTreeModelStruct());
+		gtk_tree_view_set_model(gtkTreeView, (model is null) ? null : model.getTreeModelTStruct());
 	}
 	
 	/**

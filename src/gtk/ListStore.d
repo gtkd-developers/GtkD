@@ -33,9 +33,10 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = GtkTreeModel
+ * extend  = 
  * implements:
  * 	- BuildableIF
+ * 	- TreeModelIF
  * prefixes:
  * 	- gtk_list_store_
  * 	- gtk_
@@ -53,6 +54,10 @@
  * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
+ * 	- gtk.TreePath
+ * 	- gtk.TreeModelT
+ * 	- gtk.TreeModelIF
+ * 	- gobject.Signals
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -76,10 +81,14 @@ private import gobject.ObjectG;
 private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
+private import gtk.TreePath;
+private import gtk.TreeModelT;
+private import gtk.TreeModelIF;
+private import gobject.Signals;
 
 
 
-private import gtk.TreeModel;
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -199,7 +208,7 @@ private import gtk.TreeModel;
  *  </data>
  * </object>
  */
-public class ListStore : TreeModel, BuildableIF
+public class ListStore : ObjectG, BuildableIF, TreeModelIF
 {
 	
 	/** the main Gtk struct */
@@ -236,12 +245,15 @@ public class ListStore : TreeModel, BuildableIF
 			this = cast(ListStore)ptr;
 			return;
 		}
-		super(cast(GtkTreeModel*)gtkListStore);
+		super(cast(GObject*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}
 	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkListStore);
+	
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkListStore);
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

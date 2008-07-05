@@ -481,7 +481,10 @@ public struct Funct
 			else
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-				parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~parmsWrap[i]~"Struct()";
+				if(GtkDClass.endsWith(parmsWrap[i], "IF"))
+					parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~ parmsWrap[i][0..$-2] ~ "T" ~"Struct()";
+				else
+					parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~ parmsWrap[i] ~"Struct()";
 			}
 		}
 		else
@@ -502,9 +505,12 @@ public struct Funct
 							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
 							~")";
 			}
+			else if (GtkDClass.endsWith(parmsWrap[i], "IF"))
+			{
+				parmToGtkD = "new "~parmsWrap[i][0..$-2]~"("~GtkDClass.idsToGtkD(parms[i], convParms, aliases)~")";
+			}
 			else
 			{
-				//parmToGtkD = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 				parmToGtkD = "new "~parmsWrap[i]~"("~GtkDClass.idsToGtkD(parms[i], convParms, aliases)~")";
 			}
 		}
@@ -658,7 +664,10 @@ public struct Funct
 						/* What's with all the casting? */
 						/* A; Casting is needed because some GTK+
 						 *    functions can return void pointers. */
-						bd ~= "return new " ~ typeWrap ~ "(cast(" ~ type ~ ") p);";
+						if( GtkDClass.endsWith(typeWrap, "IF") )
+							bd ~= "return new " ~ typeWrap[0..$-2] ~ "(cast(" ~ type ~ ") p);";
+						else
+							bd ~= "return new " ~ typeWrap ~ "(cast(" ~ type ~ ") p);";
 
 						return bd;
 					}

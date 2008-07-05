@@ -44,11 +44,11 @@
  * 	- gtk_combo_box_entry_new_text
  * omit signals:
  * imports:
- * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.Adjustment
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * module aliases:
  * local aliases:
  * overrides:
@@ -61,7 +61,7 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.Adjustment;
 
 
@@ -174,10 +174,10 @@ public class ComboBoxEntry : ComboBox
 	 * model =  A GtkTreeModel.
 	 * textColumn =  A column in model to get the strings from.
 	 */
-	public this (TreeModel model, int textColumn)
+	public this (TreeModelIF model, int textColumn)
 	{
 		// GtkWidget* gtk_combo_box_entry_new_with_model (GtkTreeModel *model,  gint text_column);
-		auto p = gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelStruct(), textColumn);
+		auto p = gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelTStruct(), textColumn);
 		if(p is null)
 		{
 			this = null;

@@ -47,7 +47,7 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
- * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gdk.Color
  * 	- glib.ListG
@@ -55,7 +55,7 @@
  * 	- GList* -> ListG
  * 	- GdkColor* -> Color
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -71,7 +71,7 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gdk.Pixbuf;
-private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gdk.Color;
 private import glib.ListG;
@@ -201,10 +201,10 @@ public class CellView : Widget
 	 * Params:
 	 * model =  a GtkTreeModel
 	 */
-	public void setModel(TreeModel model)
+	public void setModel(TreeModelIF model)
 	{
 		// void gtk_cell_view_set_model (GtkCellView *cell_view,  GtkTreeModel *model);
-		gtk_cell_view_set_model(gtkCellView, (model is null) ? null : model.getTreeModelStruct());
+		gtk_cell_view_set_model(gtkCellView, (model is null) ? null : model.getTreeModelTStruct());
 	}
 	
 	/**

@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = TreeModelSort
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- TreeModelIF
  * prefixes:
  * 	- gtk_tree_model_sort_
  * 	- gtk_
@@ -45,11 +46,15 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gtk.TreeIter
+ * 	- gobject.Value
+ * 	- gtk.TreeModelT
+ * 	- gobject.Signals
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -65,8 +70,12 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeIter;
+private import gobject.Value;
+private import gtk.TreeModelT;
+private import gobject.Signals;
 
 
 
@@ -152,7 +161,7 @@ private import gobject.ObjectG;
 	 *  g_free (modified_data);
  * }
  */
-public class TreeModelSort : ObjectG
+public class TreeModelSort : ObjectG, TreeModelIF
 {
 	
 	/** the main Gtk struct */
@@ -193,6 +202,9 @@ public class TreeModelSort : ObjectG
 		this.gtkTreeModelSort = gtkTreeModelSort;
 	}
 	
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkTreeModelSort);
+	
 	/**
 	 */
 	
@@ -202,10 +214,10 @@ public class TreeModelSort : ObjectG
 	 * childModel =  A GtkTreeModel
 	 * Returns: A new GtkTreeModel.
 	 */
-	public static TreeModel newWithModel(TreeModel childModel)
+	public static TreeModelIF newWithModel(TreeModelIF childModel)
 	{
 		// GtkTreeModel* gtk_tree_model_sort_new_with_model (GtkTreeModel *child_model);
-		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct());
+		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelTStruct());
 		if(p is null)
 		{
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -218,7 +230,7 @@ public class TreeModelSort : ObjectG
 	 * Returns the model the GtkTreeModelSort is sorting.
 	 * Returns: the "child model" being sorted
 	 */
-	public TreeModel getModel()
+	public TreeModelIF getModel()
 	{
 		// GtkTreeModel* gtk_tree_model_sort_get_model (GtkTreeModelSort *tree_model);
 		auto p = gtk_tree_model_sort_get_model(gtkTreeModelSort);

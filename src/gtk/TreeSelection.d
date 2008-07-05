@@ -49,7 +49,7 @@
  * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gtk.TreePath
- * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreeIter
  * structWrap:
  * 	- GList* -> ListG
@@ -74,7 +74,7 @@ private import gtk.TreeView;
 private import gtk.TreeIter;
 private import glib.ListG;
 private import gtk.TreePath;
-private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreeIter;
 
 
@@ -158,9 +158,9 @@ public class TreeSelection : ObjectG
 	 * Returns:
 	 *  TRUE, if there is a selected node.
 	 */
-	int getSelected(TreeModel model, TreeIter iter)
+	int getSelected(TreeModelIF model, TreeIter iter)
 	{
-		GtkTreeModel* m = model.getTreeModelStruct();
+		GtkTreeModel* m = model.getTreeModelTStruct();
 		return gtk_tree_selection_get_selected(gtkTreeSelection, &m, iter.getTreeIterStruct())==0 ? false : true;
 	}
 	
@@ -178,10 +178,10 @@ public class TreeSelection : ObjectG
 	 * Returns:
 	 *  A GList containing a GtkTreePath for each selected row.
 	 */
-	TreePath[] getSelectedRows(TreeModel model)
+	TreePath[] getSelectedRows(TreeModelIF model)
 	{
 		TreePath[] paths;
-		GtkTreeModel* m = model.getTreeModelStruct();
+		GtkTreeModel* m = model.getTreeModelTStruct();
 		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &m);
 		if ( gList !is null )
 		{

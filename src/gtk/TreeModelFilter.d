@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = TreeModelFilter
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- TreeModelIF
  * prefixes:
  * 	- gtk_tree_model_filter_
  * 	- gtk_
@@ -44,11 +45,16 @@
  * omit signals:
  * imports:
  * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gtk.TreeIter
+ * 	- glib.Str
+ * 	- gobject.Value
+ * 	- gtk.TreeModelT
+ * 	- gobject.Signals
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -63,8 +69,13 @@ private import gtkc.gtk;
 
 
 private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeIter;
+private import glib.Str;
+private import gobject.Value;
+private import gtk.TreeModelT;
+private import gobject.Signals;
 
 
 
@@ -86,7 +97,7 @@ private import gobject.ObjectG;
  * Set a different root node, also known as a "virtual root". You can pass in
  * a GtkTreePath indicating the root node for the filter at construction time.
  */
-public class TreeModelFilter : ObjectG
+public class TreeModelFilter : ObjectG, TreeModelIF
 {
 	
 	/** the main Gtk struct */
@@ -127,6 +138,9 @@ public class TreeModelFilter : ObjectG
 		this.gtkTreeModelFilter = gtkTreeModelFilter;
 	}
 	
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkTreeModelFilter);
+	
 	/**
 	 */
 	
@@ -139,10 +153,10 @@ public class TreeModelFilter : ObjectG
 	 * root =  A GtkTreePath or NULL.
 	 * Returns: A new GtkTreeModel.
 	 */
-	public static TreeModel newTreeModelFilter(TreeModel childModel, TreePath root)
+	public static TreeModelIF newTreeModelFilter(TreeModelIF childModel, TreePath root)
 	{
 		// GtkTreeModel* gtk_tree_model_filter_new (GtkTreeModel *child_model,  GtkTreePath *root);
-		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
+		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelTStruct(), (root is null) ? null : root.getTreePathStruct());
 		if(p is null)
 		{
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -213,7 +227,7 @@ public class TreeModelFilter : ObjectG
 	 * Since 2.4
 	 * Returns: A pointer to a GtkTreeModel.
 	 */
-	public TreeModel getModel()
+	public TreeModelIF getModel()
 	{
 		// GtkTreeModel* gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
 		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);

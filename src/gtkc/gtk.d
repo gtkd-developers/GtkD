@@ -1340,7 +1340,31 @@ extern(C)
 	GList* function(GtkTextChildAnchor* anchor)gtk_text_child_anchor_get_widgets;
 	gboolean function(GtkTextChildAnchor* anchor)gtk_text_child_anchor_get_deleted;
 	
-	// gtk.TreeModel
+	// gtk.TreePath
+	
+	GtkTreePath* function()gtk_tree_path_new;
+	GtkTreePath* function(gchar* path)gtk_tree_path_new_from_string;
+	GtkTreePath* function(gint firstIndex, ... )gtk_tree_path_new_from_indices;
+	gchar* function(GtkTreePath* path)gtk_tree_path_to_string;
+	GtkTreePath* function()gtk_tree_path_new_first;
+	void function(GtkTreePath* path, gint index)gtk_tree_path_append_index;
+	void function(GtkTreePath* path, gint index)gtk_tree_path_prepend_index;
+	gint function(GtkTreePath* path)gtk_tree_path_get_depth;
+	gint* function(GtkTreePath* path)gtk_tree_path_get_indices;
+	void function(GtkTreePath* path)gtk_tree_path_free;
+	GtkTreePath* function(GtkTreePath* path)gtk_tree_path_copy;
+	gint function(GtkTreePath* a, GtkTreePath* b)gtk_tree_path_compare;
+	void function(GtkTreePath* path)gtk_tree_path_next;
+	gboolean function(GtkTreePath* path)gtk_tree_path_prev;
+	gboolean function(GtkTreePath* path)gtk_tree_path_up;
+	void function(GtkTreePath* path)gtk_tree_path_down;
+	gboolean function(GtkTreePath* path, GtkTreePath* descendant)gtk_tree_path_is_ancestor;
+	gboolean function(GtkTreePath* path, GtkTreePath* ancestor)gtk_tree_path_is_descendant;
+	
+	// gtk.TreeModelT
+	
+	
+	// gtk.TreeModelT
 	
 	GtkTreeModelFlags function(GtkTreeModel* treeModel)gtk_tree_model_get_flags;
 	gint function(GtkTreeModel* treeModel)gtk_tree_model_get_n_columns;
@@ -1373,27 +1397,6 @@ extern(C)
 	GtkTreeIter* function(GtkTreeIter* iter)gtk_tree_iter_copy;
 	void function(GtkTreeIter* iter)gtk_tree_iter_free;
 	
-	// gtk.TreePath
-	
-	GtkTreePath* function()gtk_tree_path_new;
-	GtkTreePath* function(gchar* path)gtk_tree_path_new_from_string;
-	GtkTreePath* function(gint firstIndex, ... )gtk_tree_path_new_from_indices;
-	gchar* function(GtkTreePath* path)gtk_tree_path_to_string;
-	GtkTreePath* function()gtk_tree_path_new_first;
-	void function(GtkTreePath* path, gint index)gtk_tree_path_append_index;
-	void function(GtkTreePath* path, gint index)gtk_tree_path_prepend_index;
-	gint function(GtkTreePath* path)gtk_tree_path_get_depth;
-	gint* function(GtkTreePath* path)gtk_tree_path_get_indices;
-	void function(GtkTreePath* path)gtk_tree_path_free;
-	GtkTreePath* function(GtkTreePath* path)gtk_tree_path_copy;
-	gint function(GtkTreePath* a, GtkTreePath* b)gtk_tree_path_compare;
-	void function(GtkTreePath* path)gtk_tree_path_next;
-	gboolean function(GtkTreePath* path)gtk_tree_path_prev;
-	gboolean function(GtkTreePath* path)gtk_tree_path_up;
-	void function(GtkTreePath* path)gtk_tree_path_down;
-	gboolean function(GtkTreePath* path, GtkTreePath* descendant)gtk_tree_path_is_ancestor;
-	gboolean function(GtkTreePath* path, GtkTreePath* ancestor)gtk_tree_path_is_descendant;
-	
 	// gtk.TreeRowReference
 	
 	GtkTreeRowReference* function(GtkTreeModel* model, GtkTreePath* path)gtk_tree_row_reference_new;
@@ -1408,6 +1411,9 @@ extern(C)
 	void function(GObject* proxy, GtkTreePath* path, GtkTreeIter* iter, gint* newOrder)gtk_tree_row_reference_reordered;
 	
 	// gtk.TreeIterError
+	
+	
+	// gtk.TreeModel
 	
 	
 	// gtk.TreeSelection
@@ -4530,6 +4536,24 @@ Symbol[] gtkLinks =
 	{ "gtk_text_child_anchor_new",  cast(void**)& gtk_text_child_anchor_new},
 	{ "gtk_text_child_anchor_get_widgets",  cast(void**)& gtk_text_child_anchor_get_widgets},
 	{ "gtk_text_child_anchor_get_deleted",  cast(void**)& gtk_text_child_anchor_get_deleted},
+	{ "gtk_tree_path_new",  cast(void**)& gtk_tree_path_new},
+	{ "gtk_tree_path_new_from_string",  cast(void**)& gtk_tree_path_new_from_string},
+	{ "gtk_tree_path_new_from_indices",  cast(void**)& gtk_tree_path_new_from_indices},
+	{ "gtk_tree_path_to_string",  cast(void**)& gtk_tree_path_to_string},
+	{ "gtk_tree_path_new_first",  cast(void**)& gtk_tree_path_new_first},
+	{ "gtk_tree_path_append_index",  cast(void**)& gtk_tree_path_append_index},
+	{ "gtk_tree_path_prepend_index",  cast(void**)& gtk_tree_path_prepend_index},
+	{ "gtk_tree_path_get_depth",  cast(void**)& gtk_tree_path_get_depth},
+	{ "gtk_tree_path_get_indices",  cast(void**)& gtk_tree_path_get_indices},
+	{ "gtk_tree_path_free",  cast(void**)& gtk_tree_path_free},
+	{ "gtk_tree_path_copy",  cast(void**)& gtk_tree_path_copy},
+	{ "gtk_tree_path_compare",  cast(void**)& gtk_tree_path_compare},
+	{ "gtk_tree_path_next",  cast(void**)& gtk_tree_path_next},
+	{ "gtk_tree_path_prev",  cast(void**)& gtk_tree_path_prev},
+	{ "gtk_tree_path_up",  cast(void**)& gtk_tree_path_up},
+	{ "gtk_tree_path_down",  cast(void**)& gtk_tree_path_down},
+	{ "gtk_tree_path_is_ancestor",  cast(void**)& gtk_tree_path_is_ancestor},
+	{ "gtk_tree_path_is_descendant",  cast(void**)& gtk_tree_path_is_descendant},
 	{ "gtk_tree_model_get_flags",  cast(void**)& gtk_tree_model_get_flags},
 	{ "gtk_tree_model_get_n_columns",  cast(void**)& gtk_tree_model_get_n_columns},
 	{ "gtk_tree_model_get_column_type",  cast(void**)& gtk_tree_model_get_column_type},
@@ -4557,24 +4581,6 @@ Symbol[] gtkLinks =
 	{ "gtk_tree_model_rows_reordered",  cast(void**)& gtk_tree_model_rows_reordered},
 	{ "gtk_tree_iter_copy",  cast(void**)& gtk_tree_iter_copy},
 	{ "gtk_tree_iter_free",  cast(void**)& gtk_tree_iter_free},
-	{ "gtk_tree_path_new",  cast(void**)& gtk_tree_path_new},
-	{ "gtk_tree_path_new_from_string",  cast(void**)& gtk_tree_path_new_from_string},
-	{ "gtk_tree_path_new_from_indices",  cast(void**)& gtk_tree_path_new_from_indices},
-	{ "gtk_tree_path_to_string",  cast(void**)& gtk_tree_path_to_string},
-	{ "gtk_tree_path_new_first",  cast(void**)& gtk_tree_path_new_first},
-	{ "gtk_tree_path_append_index",  cast(void**)& gtk_tree_path_append_index},
-	{ "gtk_tree_path_prepend_index",  cast(void**)& gtk_tree_path_prepend_index},
-	{ "gtk_tree_path_get_depth",  cast(void**)& gtk_tree_path_get_depth},
-	{ "gtk_tree_path_get_indices",  cast(void**)& gtk_tree_path_get_indices},
-	{ "gtk_tree_path_free",  cast(void**)& gtk_tree_path_free},
-	{ "gtk_tree_path_copy",  cast(void**)& gtk_tree_path_copy},
-	{ "gtk_tree_path_compare",  cast(void**)& gtk_tree_path_compare},
-	{ "gtk_tree_path_next",  cast(void**)& gtk_tree_path_next},
-	{ "gtk_tree_path_prev",  cast(void**)& gtk_tree_path_prev},
-	{ "gtk_tree_path_up",  cast(void**)& gtk_tree_path_up},
-	{ "gtk_tree_path_down",  cast(void**)& gtk_tree_path_down},
-	{ "gtk_tree_path_is_ancestor",  cast(void**)& gtk_tree_path_is_ancestor},
-	{ "gtk_tree_path_is_descendant",  cast(void**)& gtk_tree_path_is_descendant},
 	{ "gtk_tree_row_reference_new",  cast(void**)& gtk_tree_row_reference_new},
 	{ "gtk_tree_row_reference_new_proxy",  cast(void**)& gtk_tree_row_reference_new_proxy},
 	{ "gtk_tree_row_reference_get_model",  cast(void**)& gtk_tree_row_reference_get_model},

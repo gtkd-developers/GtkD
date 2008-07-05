@@ -33,8 +33,9 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = GtkTreeModel
+ * extend  = 
  * implements:
+ * 	- TreeModelIF
  * prefixes:
  * 	- gtk_tree_store_
  * 	- gtk_
@@ -50,7 +51,10 @@
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
  * 	- gobject.Value;
- * 	- gtk.TreeModel
+ * 	- gtk.TreePath
+ * 	- gtk.TreeModelT
+ * 	- gtk.TreeModelIF
+ * 	- gobject.Signals
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -72,11 +76,14 @@ private import gobject.Value;
 private import gtk.TreeNode;
 private import gdk.Pixbuf;;
 private import gobject.Value;;
-private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gtk.TreeModelT;
+private import gtk.TreeModelIF;
+private import gobject.Signals;
 
 
 
-private import gtk.TreeModel;
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -100,7 +107,7 @@ private import gtk.TreeModel;
  *  </columns>
  * </object>
  */
-public class TreeStore : TreeModel
+public class TreeStore : ObjectG, TreeModelIF
 {
 	
 	/** the main Gtk struct */
@@ -137,9 +144,12 @@ public class TreeStore : TreeModel
 			this = cast(TreeStore)ptr;
 			return;
 		}
-		super(cast(GtkTreeModel*)gtkTreeStore);
+		super(cast(GObject*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
 	}
+	
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkTreeStore);
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

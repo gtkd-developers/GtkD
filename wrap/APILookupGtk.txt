@@ -1782,7 +1782,8 @@ import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 outFile: EntryCompletion
 
 file: GtkHScale.html
@@ -2326,15 +2327,56 @@ outFile: TextChildAnchor
 
 file: GtkTreeModel.html
 
+struct: GtkTreePath
+class: TreePath
+strictPrefix: Y
+prefix: gtk_tree_path_
+#prefix: gtk_
+import: glib.Str
+structWrap: GtkTreePath* TreePath
+
+override: toString
+
+nocode: gtk_tree_path_new
+nocode: gtk_tree_path_new_first
+
+nosignal: row-changed
+nosignal: row-deleted
+nosignal: row-has-child-toggled
+nosignal: row-inserted
+nosignal: rows-reordered
+
+code: start
+	/**
+	 * Creates a new GtkTreePath. This structure refers to a row.
+	 * Params:
+	 * firstRow = if true this is the string representation of this path is "0"
+	 */
+	public this (bool firstRow=false)
+	{
+		if ( firstRow )
+		{
+			// GtkTreePath* gtk_tree_path_new_first (void);
+			this(cast(GtkTreePath*)gtk_tree_path_new_first() );
+		}
+		else
+		{
+			// GtkTreePath* gtk_tree_path_new (void);
+			this(cast(GtkTreePath*)gtk_tree_path_new() );
+		}
+	}
+code: end
+outFile: TreePath
+
+
 struct: GtkTreeModel
-class: TreeModel
-extend: GObject
+class: TreeModelT
+template: TStruct
 prefix: gtk_tree_model_
 noprefix: gtk_tree_row_reference_
 noprefix: gtk_tree_path_
 noprefix: gtk_tree_iter_
 import: glib.Str
-#noprefix: gtk_
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gtk.TreePath
@@ -2355,11 +2397,15 @@ interfaceCode: start
 	 */
 	int getValueInt(TreeIter iter, int column);
 
-	/** */
-	void setValue(TreeIter iter, int column, string value);
-
-	/** */
-	void setValue(TreeIter iter, int column, int value);
+	/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path);
 
 interfaceCode: end
 
@@ -2405,8 +2451,9 @@ code: start
 
 code: end
 
-#interface: TreeModelIF
-outFile: TreeModel
+interface: TreeModelIF
+outFile: TreeModelT
+
 
 struct: GtkTreeIter
 class: TreeIter
@@ -2415,39 +2462,43 @@ prefix: gtk_tree_iter_
 #prefix: gtk_
 import: glib.Str
 structWrap: GtkTreeIter* TreeIter
-import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
 import: gtk.TreePath
 import: gtk.TreeIterError
-import: gobject.Value;
+import: gobject.Value
+
+nosignal: row-changed
+nosignal: row-deleted
+nosignal: row-has-child-toggled
+nosignal: row-inserted
+nosignal: rows-reordered
 
 code: start
-
 	/**
 	 * this will be set only when the iter
 	 * is created from the model.
 	 */
-	GtkTreeModel *gtkTreeModel; 
+	GtkTreeModel* gtkTreeModel; 
 
 	/** */
-	public void setModel(GtkTreeModel *gtkTreeModel)
+	public void setModel(GtkTreeModel* gtkTreeModel)
 	{
 		this.gtkTreeModel = gtkTreeModel;
 	}
 
 	/** */       
-	public void setModel(TreeModel treeModel)
+	public void setModel(TreeModelIF treeModel)
 	{
-		this.gtkTreeModel = treeModel.getTreeModelStruct();
+		this.gtkTreeModel = treeModel.getTreeModelTStruct();
 	}
 	   
 	/** */
-	public this(TreeModel treeModel, TreePath treePath)
+	public this(TreeModelIF treeModel, TreePath treePath)
 	{
 		this();
 		setModel(treeModel);
 		if ( gtk_tree_model_get_iter_from_string(
-				treeModel.getTreeModelStruct(),
+				treeModel.getTreeModelTStruct(),
 				getTreeIterStruct(), Str.toStringz(treePath.toString())) )
 		{
 			// ???
@@ -2586,51 +2637,9 @@ code: start
 		
 		return grandParent;
 	}
-
-
-
-	
-
 code: end
-
 outFile: TreeIter
 
-
-
-struct: GtkTreePath
-class: TreePath
-strictPrefix: Y
-prefix: gtk_tree_path_
-#prefix: gtk_
-import: glib.Str
-structWrap: GtkTreePath* TreePath
-
-override: toString
-
-nocode: gtk_tree_path_new
-nocode: gtk_tree_path_new_first
-
-code: start
-	/**
-	 * Creates a new GtkTreePath. This structure refers to a row.
-	 * Params:
-	 * firstRow = if true this is the string representation of this path is "0"
-	 */
-	public this (bool firstRow=false)
-	{
-		if ( firstRow )
-		{
-			// GtkTreePath* gtk_tree_path_new_first (void);
-			this(cast(GtkTreePath*)gtk_tree_path_new_first() );
-		}
-		else
-		{
-			// GtkTreePath* gtk_tree_path_new (void);
-			this(cast(GtkTreePath*)gtk_tree_path_new() );
-		}
-	}
-code: end
-outFile: TreePath
 
 struct: GtkTreeRowReference
 class: TreeRowReference
@@ -2638,7 +2647,8 @@ strictPrefix: Y
 prefix: gtk_tree_row_reference_
 #prefix: gtk_
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 import: gobject.ObjectG
@@ -2646,6 +2656,13 @@ structWrap: GObject* ObjectG
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 structWrap: GtkTreeRowReference* TreeRowReference
+
+nosignal: row-changed
+nosignal: row-deleted
+nosignal: row-has-child-toggled
+nosignal: row-inserted
+nosignal: rows-reordered
+
 outFile: TreeRowReference
 
 file:
@@ -2668,6 +2685,57 @@ code: end
 outFile: TreeIterError
 
 
+file:
+class: TreeModel
+extend: ObjectG
+implements: TreeModelIF
+import: gobject.ObjectG;
+import: gtk.TreeModel
+
+# imports for TreeModel Interface
+import: glib.Str
+import: gtk.TreeIter
+import: gtk.TreePath
+import: gobject.Value
+import: gtk.TreeModelT
+import: gtk.TreeModelIF
+import: gobject.Signals
+
+code: start
+	// Minimal implementation.
+	mixin TreeModelT!(GtkTreeModel);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkTreeModel;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GtkTreeModel* gtkTreeModel)
+	{
+		if(gtkTreeModel is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTreeModel passed to constructor.");
+			else return;
+		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkTreeModel);
+		if( ptr !is null )
+		{
+			this = cast(TreeModel)ptr;
+			return;
+		}
+		super(cast(GObject*)gtkTreeModel);
+		this.gtkTreeModel = gtkTreeModel;
+	}
+code: end
+outFile: TreeModel
+
+
 file: GtkTreeSelection.html
 struct: GtkTreeSelection
 class: TreeSelection
@@ -2683,7 +2751,7 @@ import: glib.ListG
 structWrap: GList* ListG
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
-import: gtk.TreeModel
+import: gtk.TreeModelIF
 import: gtk.TreeIter
 
 nocode: gtk_tree_selection_get_selected
@@ -2702,9 +2770,9 @@ code: start
 	 * Returns:
 	 *  TRUE, if there is a selected node.
 	 */
-	int getSelected(TreeModel model, TreeIter iter)
+	int getSelected(TreeModelIF model, TreeIter iter)
 	{
-		GtkTreeModel* m = model.getTreeModelStruct();
+		GtkTreeModel* m = model.getTreeModelTStruct();
 		return gtk_tree_selection_get_selected(gtkTreeSelection, &m, iter.getTreeIterStruct())==0 ? false : true;
 	}
 	
@@ -2722,10 +2790,10 @@ code: start
 	 * Returns:
 	 *  A GList containing a GtkTreePath for each selected row.
 	 */
-	TreePath[] getSelectedRows(TreeModel model)
+	TreePath[] getSelectedRows(TreeModelIF model)
 	{
 		TreePath[] paths;
-		GtkTreeModel* m = model.getTreeModelStruct();
+		GtkTreeModel* m = model.getTreeModelTStruct();
 		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &m);
 		if ( gList !is null )
 		{  
@@ -2755,8 +2823,8 @@ import: glib.ListG
 structWrap: GList* ListG
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gdk.Rectangle
@@ -2796,7 +2864,8 @@ prefix: gtk_tree_view_
 prefix: gtk_
 import: glib.Str
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreeSelection
 structWrap: GtkTreeSelection* TreeSelection
 import: gtk.Adjustment
@@ -2838,7 +2907,7 @@ code: start
 	 *  openAll =
 	 *  Returns =
 	 */
-	int expandRow(TreeIter iter, TreeModel model, int openAll)
+	int expandRow(TreeIter iter, TreeModelIF model, int openAll)
 	{
 		return expandRow(model.getPath(iter), openAll);
 	}
@@ -2887,7 +2956,7 @@ code: start
 	{
 		TreeIter iter = null;
 		TreeSelection selection = getSelection();
-		TreeModel model = getModel();
+		TreeModelIF model = getModel();
 		TreePath[] paths = selection.getSelectedRows(model);
 		if ( paths.length > 0 )
 		{
@@ -2904,7 +2973,7 @@ code: start
 		
 		TreeIter iter = new TreeIter();
 		TreeSelection selection = getSelection();
-		TreeModel model = getModel();
+		TreeModelIF model = getModel();
 		TreePath[] paths = selection.getSelectedRows(model);
 		foreach ( TreePath p; selection.getSelectedRows(model) )
 		{
@@ -2965,8 +3034,8 @@ structWrap: GtkTreePath* TreePath
 #structWrap: GtkSelectionData* SelectionData
 #import: gtk.TreeDragDest
 #structWrap: GtkTreeDragDest* TreeDragDest
-import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 outFile: TreeDragSource
 
 file: GtkCellView.html
@@ -2977,8 +3046,8 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 #import: gtk.Requisition
@@ -3026,7 +3095,8 @@ class: IconView
 prefix: gtk_icon_view_
 prefix: gtk_
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 #import: gtk.TreePath*
@@ -3061,30 +3131,60 @@ outFile: TreeSortable
 file: GtkTreeModelSort.html
 struct: GtkTreeModelSort
 class: TreeModelSort
-import: glib.Str
+implements: TreeModelIF
 prefix: gtk_tree_model_sort_
 prefix: gtk_
+import: glib.Str
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+
+# imports for TreeModel Interface
+#import: glib.Str
+#import: gtk.TreeIter
+#import: gtk.TreePath
+import: gobject.Value
+import: gtk.TreeModelT
+#import: gtk.TreeModelIF
+import: gobject.Signals
+
+code: start
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkTreeModelSort);
+cade: end
 outFile: TreeModelSort
 
 file: GtkTreeModelFilter.html
 struct: GtkTreeModelFilter
 class: TreeModelFilter
+implements: TreeModelIF
 prefix: gtk_tree_model_filter_
 prefix: gtk_
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
-#import: gobject.Type
-#structWrap: GType* Type
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+
+# imports for TreeModel Interface
+import: glib.Str
+#import: gtk.TreeIter
+#import: gtk.TreePath
+import: gobject.Value
+import: gtk.TreeModelT
+#import: gtk.TreeModelIF
+import: gobject.Signals
+
+code: start
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkTreeModelFilter);
+cade: end
 outFile: TreeModelFilter
 
 file: GtkCellLayout.html
@@ -3219,13 +3319,11 @@ file: GtkListStore.html
 struct: GtkListStore
 class: ListStore
 implements: BuildableIF
-extend: GtkTreeModel
+implements: TreeModelIF
 prefix: gtk_list_store_
 prefix: gtk_
 import: gtk.TreeModel
 import: glib.Str
-#import: gobject.Type
-#structWrap: GType* Type
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
@@ -3240,11 +3338,23 @@ import: gtk.Builder
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
+# imports for TreeModel Interface
+#import: glib.Str
+#import: gtk.TreeIter
+import: gtk.TreePath
+#import: gobject.Value
+import: gtk.TreeModelT
+import: gtk.TreeModelIF
+import: gobject.Signals
+
 nocode: gtk_list_store_set
 
 code: start
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkListStore);
+
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkListStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -3327,12 +3437,10 @@ outFile: ListStore
 file: GtkTreeStore.html
 struct: GtkTreeStore
 class: TreeStore
-extend: GtkTreeModel
+implements: TreeModelIF
 prefix: gtk_tree_store_
 prefix: gtk_
 import: glib.Str
-#import: gobject.Type
-#structWrap: GType* Type
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
@@ -3340,11 +3448,21 @@ structWrap: GValue* Value
 import: gtk.TreeNode
 import: gdk.Pixbuf;
 import: gobject.Value;
-import: gtk.TreeModel
+
+# imports for TreeModel Interface
+#import: glib.Str
+#import: gtk.TreeIter
+import: gtk.TreePath
+#import: gobject.Value
+import: gtk.TreeModelT
+import: gtk.TreeModelIF
+import: gobject.Signals
 
 nocode: gtk_tree_store_set
 
 code: start
+	// add the TreeModel capabilities
+	mixin TreeModelT!(GtkTreeStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -3533,7 +3651,8 @@ prefix: gtk_
 #noprefix: gtk_combo_box_remove_text
 import: glib.Str
 import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
@@ -3545,7 +3664,7 @@ import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
 nocode: gtk_combo_box_new
-nocode:gtk_combo_box_new_text
+nocode: gtk_combo_box_new_text
 
 code: start
 
@@ -3606,7 +3725,7 @@ code: start
 	int getIndex(string text)
 	{
 		TreeIter iter = new TreeIter();
-		TreeModel model = getModel();
+		TreeModelIF model = getModel();
 		iter.setModel(model);
 		int index = 0;
 		bool found = false;
@@ -3671,8 +3790,8 @@ prefix: gtk_combo_box_entry_
 #noprefix: gtk_combo_box_insert_text
 #noprefix: gtk_combo_box_prepend_text
 #noprefix: gtk_combo_box_remove_text
-import: gtk.TreeModel
-structWrap: GtkTreeModel* TreeModel
+import: gtk.TreeModelIF
+structWrap: GtkTreeModel* TreeModelIF
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 

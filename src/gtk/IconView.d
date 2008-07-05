@@ -44,6 +44,7 @@
  * omit signals:
  * imports:
  * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gtk.CellRenderer
  * 	- gtk.Tooltip
@@ -56,7 +57,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTooltip* -> Tooltip
  * 	- GtkTreeIter* -> TreeIter
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -73,6 +74,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.CellRenderer;
 private import gtk.Tooltip;
@@ -432,10 +434,10 @@ public class IconView : Container
 	 * Params:
 	 * model =  The model.
 	 */
-	public this (TreeModel model)
+	public this (TreeModelIF model)
 	{
 		// GtkWidget* gtk_icon_view_new_with_model (GtkTreeModel *model);
-		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
 			this = null;
@@ -454,10 +456,10 @@ public class IconView : Container
 	 * Params:
 	 * model =  The model.
 	 */
-	public void setModel(TreeModel model)
+	public void setModel(TreeModelIF model)
 	{
 		// void gtk_icon_view_set_model (GtkIconView *icon_view,  GtkTreeModel *model);
-		gtk_icon_view_set_model(gtkIconView, (model is null) ? null : model.getTreeModelStruct());
+		gtk_icon_view_set_model(gtkIconView, (model is null) ? null : model.getTreeModelTStruct());
 	}
 	
 	/**
@@ -466,7 +468,7 @@ public class IconView : Container
 	 * Since 2.6
 	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
 	 */
-	public TreeModel getModel()
+	public TreeModelIF getModel()
 	{
 		// GtkTreeModel* gtk_icon_view_get_model (GtkIconView *icon_view);
 		auto p = gtk_icon_view_get_model(gtkIconView);

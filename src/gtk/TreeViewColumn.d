@@ -48,7 +48,7 @@
  * 	- gtk.CellRenderer
  * 	- glib.ListG
  * 	- gtk.Widget
- * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreeIter
  * 	- gdk.Rectangle
  * 	- glib.Str
@@ -57,7 +57,7 @@
  * 	- GdkRectangle* -> Rectangle
  * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTreeIter* -> TreeIter
- * 	- GtkTreeModel* -> TreeModel
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -77,7 +77,7 @@ private import glib.Str;
 private import gtk.CellRenderer;
 private import glib.ListG;
 private import gtk.Widget;
-private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreeIter;
 private import gdk.Rectangle;
 private import glib.Str;
@@ -741,10 +741,10 @@ public class TreeViewColumn : ObjectGtk
 	 * isExpander =  TRUE, if the row has children
 	 * isExpanded =  TRUE, if the row has visible children
 	 */
-	public void cellSetCellData(TreeModel treeModel, TreeIter iter, int isExpander, int isExpanded)
+	public void cellSetCellData(TreeModelIF treeModel, TreeIter iter, int isExpander, int isExpanded)
 	{
 		// void gtk_tree_view_column_cell_set_cell_data  (GtkTreeViewColumn *tree_column,  GtkTreeModel *tree_model,  GtkTreeIter *iter,  gboolean is_expander,  gboolean is_expanded);
-		gtk_tree_view_column_cell_set_cell_data(gtkTreeViewColumn, (treeModel is null) ? null : treeModel.getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct(), isExpander, isExpanded);
+		gtk_tree_view_column_cell_set_cell_data(gtkTreeViewColumn, (treeModel is null) ? null : treeModel.getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), isExpander, isExpanded);
 	}
 	
 	/**
