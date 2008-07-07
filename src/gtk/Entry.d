@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- CellEditableIF
  * prefixes:
  * 	- gtk_entry_
  * 	- gtk_
@@ -47,6 +48,10 @@
  * 	- gtk.Adjustment
  * 	- gtk.EntryCompletion
  * 	- pango.PgLayout
+ * 	- gdk.Event
+ * 	- gtk.CellEditableT
+ * 	- gtk.CellEditableIF
+ * 	- gobject.Signals
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkEntryCompletion* -> EntryCompletion
@@ -69,6 +74,10 @@ private import glib.Str;
 private import gtk.Adjustment;
 private import gtk.EntryCompletion;
 private import pango.PgLayout;
+private import gdk.Event;
+private import gtk.CellEditableT;
+private import gtk.CellEditableIF;
+private import gobject.Signals;
 
 
 
@@ -82,7 +91,7 @@ private import gtk.Widget;
  * of the widget, the widget will scroll so that the cursor
  * position is visible.
  */
-public class Entry : Widget
+public class Entry : Widget, CellEditableIF
 {
 	
 	/** the main Gtk struct */
@@ -122,6 +131,9 @@ public class Entry : Widget
 		super(cast(GtkWidget*)gtkEntry);
 		this.gtkEntry = gtkEntry;
 	}
+	
+	// add the CellEditable capabilities
+	mixin CellEditableT!(GtkEntry);
 	
 	/** */
 	public this (string text)

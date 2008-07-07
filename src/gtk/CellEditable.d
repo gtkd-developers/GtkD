@@ -22,30 +22,32 @@
 
 /*
  * Conversion parameters:
- * inFile  = GtkCellEditable.html
+ * inFile  = 
  * outPack = gtk
  * outFile = CellEditable
- * strct   = GtkCellEditable
+ * strct   = 
  * realStrct=
  * ctorStrct=
  * clss    = CellEditable
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = ObjectG
  * implements:
+ * 	- CellEditableIF
  * prefixes:
- * 	- gtk_cell_editable_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- gobject.ObjectG;
  * 	- gdk.Event
+ * 	- gtk.CellEditableT
+ * 	- gtk.CellEditableIF
+ * 	- gobject.Signals
  * structWrap:
- * 	- GdkEvent* -> Event
  * module aliases:
  * local aliases:
  * overrides:
@@ -57,34 +59,26 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 
+private import gobject.ObjectG;;
 private import gdk.Event;
+private import gtk.CellEditableT;
+private import gtk.CellEditableIF;
+private import gobject.Signals;
 
 
 
 
 /**
- * Description
- * The GtkCellEditable interface must be implemented for widgets
- * to be usable when editing the contents of a GtkTreeView cell.
  */
-public class CellEditable
+public class CellEditable : ObjectG, CellEditableIF
 {
 	
-	/** the main Gtk struct */
-	protected GtkCellEditable* gtkCellEditable;
-	
-	
-	public GtkCellEditable* getCellEditableStruct()
-	{
-		return gtkCellEditable;
-	}
-	
+	// Minimal implementation.
+	mixin CellEditableT!(GtkCellEditable);
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellEditable;
 	}
@@ -100,118 +94,17 @@ public class CellEditable
 			version(Exceptions) throw new Exception("Null gtkCellEditable passed to constructor.");
 			else return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellEditable);
+		if( ptr !is null )
+		{
+			this = cast(CellEditable)ptr;
+			return;
+		}
+		super(cast(GObject*)gtkCellEditable);
 		this.gtkCellEditable = gtkCellEditable;
 	}
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
-	
-	void delegate(CellEditable)[] onEditingDoneListeners;
-	/**
-	 * This signal is a sign for the cell renderer to update its
-	 * value from the cell_editable.
-	 * Implementations of GtkCellEditable are responsible for
-	 * emitting this signal when they are done editing, e.g.
-	 * GtkEntry is emitting it when the user presses Enter.
-	 * gtk_cell_editable_editing_done() is a convenience method
-	 * for emitting ::editing-done.
-	 */
-	void addOnEditingDone(void delegate(CellEditable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("editing-done" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"editing-done",
-			cast(GCallback)&callBackEditingDone,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["editing-done"] = 1;
-		}
-		onEditingDoneListeners ~= dlg;
-	}
-	extern(C) static void callBackEditingDone(GtkCellEditable* cellEditableStruct, CellEditable cellEditable)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(CellEditable) dlg ; cellEditable.onEditingDoneListeners )
-		{
-			dlg(cellEditable);
-		}
-		
-		return consumed;
-	}
-	
-	void delegate(CellEditable)[] onRemoveWidgetListeners;
-	/**
-	 * This signal is meant to indicate that the cell is finished
-	 * editing, and the widget may now be destroyed.
-	 * Implementations of GtkCellEditable are responsible for
-	 * emitting this signal when they are done editing. It must
-	 * be emitted after the "editing-done" signal,
-	 * to give the cell renderer a chance to update the cell's value
-	 * before the widget is removed.
-	 * gtk_cell_editable_remove_widget() is a convenience method
-	 * for emitting ::remove-widget.
-	 */
-	void addOnRemoveWidget(void delegate(CellEditable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("remove-widget" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"remove-widget",
-			cast(GCallback)&callBackRemoveWidget,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["remove-widget"] = 1;
-		}
-		onRemoveWidgetListeners ~= dlg;
-	}
-	extern(C) static void callBackRemoveWidget(GtkCellEditable* cellEditableStruct, CellEditable cellEditable)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(CellEditable) dlg ; cellEditable.onRemoveWidgetListeners )
-		{
-			dlg(cellEditable);
-		}
-		
-		return consumed;
-	}
-	
-	
-	/**
-	 * Begins editing on a cell_editable. event is the GdkEvent that began
-	 * the editing process. It may be NULL, in the instance that editing was
-	 * initiated through programatic means.
-	 * Params:
-	 * event =  A GdkEvent, or NULL
-	 */
-	public void startEditing(Event event)
-	{
-		// void gtk_cell_editable_start_editing (GtkCellEditable *cell_editable,  GdkEvent *event);
-		gtk_cell_editable_start_editing(gtkCellEditable, (event is null) ? null : event.getEventStruct());
-	}
-	
-	/**
-	 * Emits the "editing-done" signal.
-	 */
-	public void editingDone()
-	{
-		// void gtk_cell_editable_editing_done (GtkCellEditable *cell_editable);
-		gtk_cell_editable_editing_done(gtkCellEditable);
-	}
-	
-	/**
-	 * Emits the "remove-widget" signal.
-	 */
-	public void removeWidget()
-	{
-		// void gtk_cell_editable_remove_widget (GtkCellEditable *cell_editable);
-		gtk_cell_editable_remove_widget(gtkCellEditable);
-	}
 }

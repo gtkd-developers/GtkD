@@ -1737,11 +1737,17 @@ extern(C)
 	void function(GtkCellRenderer* cell, gint* width, gint* height)gtk_cell_renderer_get_fixed_size;
 	void function(GtkCellRenderer* cell, gint width, gint height)gtk_cell_renderer_set_fixed_size;
 	
-	// gtk.CellEditable
+	// gtk.CellEditableT
+	
+	
+	// gtk.CellEditableT
 	
 	void function(GtkCellEditable* cellEditable, GdkEvent* event)gtk_cell_editable_start_editing;
 	void function(GtkCellEditable* cellEditable)gtk_cell_editable_editing_done;
 	void function(GtkCellEditable* cellEditable)gtk_cell_editable_remove_widget;
+	
+	// gtk.CellEditable
+	
 	
 	// gtk.CellRendererAccel
 	

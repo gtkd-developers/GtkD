@@ -290,6 +290,8 @@ private import gtk.TreeModelFilter;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellRenderer;
+private import gtk.CellEditableIF;
+private import gtk.CellEditableT;
 private import gtk.CellEditable;
 private import gtk.CellRendererAccel;
 private import gtk.CellRendererCombo;

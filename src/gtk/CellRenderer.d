@@ -49,11 +49,12 @@
  * 	- gdk.Window
  * 	- gdk.Event
  * 	- gtk.CellEditable
+ * 	- gtk.CellEditableIF
  * structWrap:
  * 	- GdkEvent* -> Event
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
- * 	- GtkCellEditable* -> CellEditable
+ * 	- GtkCellEditable* -> CellEditableIF
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -75,6 +76,7 @@ private import gdk.Rectangle;
 private import gdk.Window;
 private import gdk.Event;
 private import gtk.CellEditable;
+private import gtk.CellEditableIF;
 
 
 
@@ -189,7 +191,7 @@ public class CellRenderer : ObjectGtk
 		return consumed;
 	}
 	
-	void delegate(CellEditable, string, CellRenderer)[] onEditingStartedListeners;
+	void delegate(CellEditableIF, string, CellRenderer)[] onEditingStartedListeners;
 	/**
 	 * This signal gets emitted when a cell starts to be edited.
 	 * The indended use of this signal is to do special setup
@@ -217,7 +219,7 @@ public class CellRenderer : ObjectGtk
 	 * See Also
 	 * GtkCellRendererText,GtkCellRendererPixbuf,GtkCellRendererToggle
 	 */
-	void addOnEditingStarted(void delegate(CellEditable, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnEditingStarted(void delegate(CellEditableIF, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-started" in connectedSignals) )
 		{
@@ -236,7 +238,7 @@ public class CellRenderer : ObjectGtk
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(CellEditable, string, CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
+		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
 		{
 			dlg(new CellEditable(editable), Str.toString(path), cellRenderer);
 		}
@@ -325,7 +327,7 @@ public class CellRenderer : ObjectGtk
 	 * flags =  render flags
 	 * Returns: A new GtkCellEditable, or NULL
 	 */
-	public CellEditable startEditing(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public CellEditableIF startEditing(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// GtkCellEditable* gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
 		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);

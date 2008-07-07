@@ -1745,6 +1745,7 @@ outFile: VolumeButton
 file: GtkEntry.html
 struct: GtkEntry
 class: Entry
+implements: CellEditableIF
 prefix: gtk_entry_
 prefix: gtk_
 import: glib.Str
@@ -1755,7 +1756,16 @@ structWrap: GtkEntryCompletion* EntryCompletion
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
+# imports for CellEditable Interface
+import: gdk.Event
+import: gtk.CellEditableT
+import: gtk.CellEditableIF
+import: gobject.Signals
+
 code: start
+	// add the CellEditable capabilities
+	mixin CellEditableT!(GtkEntry);
+
 	/** */
 	public this (string text)
 	{
@@ -3216,16 +3226,65 @@ structWrap: GdkWindow* Window
 import: gdk.Event
 structWrap: GdkEvent* Event
 import: gtk.CellEditable
-structWrap: GtkCellEditable* CellEditable
+import: gtk.CellEditableIF
+structWrap: GtkCellEditable* CellEditableIF
 outFile: CellRenderer
 
 file: GtkCellEditable.html
 struct: GtkCellEditable
-class: CellEditable
+class: CellEditableT
+template: TStruct
 prefix: gtk_cell_editable_
 prefix: gtk_
 import: gdk.Event
 structWrap: GdkEvent* Event
+interface: CellEditableIF
+outFile: CellEditableT
+
+file:
+class: CellEditable
+extend: ObjectG
+implements: CellEditableIF
+import: gobject.ObjectG;
+
+# imports for CellEditable Interface
+import: gdk.Event
+import: gtk.CellEditableT
+import: gtk.CellEditableIF
+import: gobject.Signals
+
+code: start
+	// Minimal implementation.
+	mixin CellEditableT!(GtkCellEditable);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkCellEditable;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GtkCellEditable* gtkCellEditable)
+	{
+		if(gtkCellEditable is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkCellEditable passed to constructor.");
+			else return;
+		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellEditable);
+		if( ptr !is null )
+		{
+			this = cast(CellEditable)ptr;
+			return;
+		}
+		super(cast(GObject*)gtkCellEditable);
+		this.gtkCellEditable = gtkCellEditable;
+	}
+code: end
 outFile: CellEditable
 
 file: GtkCellRendererAccel.html
@@ -3640,6 +3699,7 @@ file: GtkComboBox.html
 struct: GtkComboBox
 class: ComboBox
 implements: CellLayoutIF
+implements: CellEditableIF
 import: atk.ObjectAtk
 structWrap: AtkObject* ObjectAtk
 prefix: gtk_combo_box_
@@ -3663,6 +3723,12 @@ import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
+# imports for CellEditable Interface
+import: gdk.Event
+import: gtk.CellEditableT
+import: gtk.CellEditableIF
+import: gobject.Signals
+
 nocode: gtk_combo_box_new
 nocode: gtk_combo_box_new_text
 
@@ -3674,6 +3740,9 @@ code: start
 
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
+
+	// add the CellEditable capabilities
+	mixin CellEditableT!(GtkComboBox);
 
 	/**
 	 * Creates a new empty GtkComboBox.

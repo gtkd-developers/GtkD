@@ -36,6 +36,7 @@
  * extend  = 
  * implements:
  * 	- CellLayoutIF
+ * 	- CellEditableIF
  * prefixes:
  * 	- gtk_combo_box_
  * 	- gtk_
@@ -55,6 +56,10 @@
  * 	- glib.ListG
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
+ * 	- gdk.Event
+ * 	- gtk.CellEditableT
+ * 	- gtk.CellEditableIF
+ * 	- gobject.Signals
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GtkTreeIter* -> TreeIter
@@ -82,6 +87,10 @@ private import gtk.CellRenderer;
 private import glib.ListG;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
+private import gdk.Event;
+private import gtk.CellEditableT;
+private import gtk.CellEditableIF;
+private import gobject.Signals;
 
 
 
@@ -110,7 +119,7 @@ private import gtk.Bin;
  * gtk_combo_box_prepend_text(), gtk_combo_box_remove_text() and
  * gtk_combo_box_get_active_text().
  */
-public class ComboBox : Bin, CellLayoutIF
+public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 {
 	
 	/** the main Gtk struct */
@@ -157,6 +166,9 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
+	
+	// add the CellEditable capabilities
+	mixin CellEditableT!(GtkComboBox);
 	
 	/**
 	 * Creates a new empty GtkComboBox.
