@@ -1786,6 +1786,7 @@ outFile: Entry
 file: GtkEntryCompletion.html
 struct: GtkEntryCompletion
 class: EntryCompletion
+implements: CellLayoutIF
 prefix: gtk_entry_completion_
 prefix: gtk_
 import: glib.Str
@@ -1794,6 +1795,18 @@ structWrap: GtkWidget* Widget
 import: gtk.TreeModel
 import: gtk.TreeModelIF
 structWrap: GtkTreeModel* TreeModelIF
+
+#imports for CellLayout Interface.
+#import: glib.Str
+import: gtk.CellRenderer
+import: glib.ListG
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
+
+code: start
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkEntryCompletion);
+code: end
 outFile: EntryCompletion
 
 file: GtkHScale.html
@@ -2824,6 +2837,7 @@ outFile: TreeSelection
 file: GtkTreeViewColumn.html
 struct: GtkTreeViewColumn
 class: TreeViewColumn
+implements: CellLayoutIF
 prefix: gtk_tree_view_column_
 prefix: gtk_
 import: glib.Str
@@ -2840,9 +2854,20 @@ structWrap: GtkTreeIter* TreeIter
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
 import: glib.Str
+
+#imports for CellLayout Interface.
+#import: glib.Str
+#import: gtk.CellRenderer
+#import: glib.ListG
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
+
 nocode: gtk_tree_view_column_new_with_attributes
 
 code: start
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkTreeViewColumn);
+
 	/**
 	 * Creates a new Tree view column
 	 * Params:
@@ -2861,8 +2886,6 @@ code: start
 				null)
 			);
 	}
-
-
 code: end
 
 outFile: TreeViewColumn
@@ -3051,6 +3074,7 @@ outFile: TreeDragSource
 file: GtkCellView.html
 struct: GtkCellView
 class: CellView
+implements: CellLayoutIF
 prefix: gtk_cell_view_
 prefix: gtk_
 import: glib.Str
@@ -3067,10 +3091,20 @@ structWrap: GdkColor* Color
 import: glib.ListG
 structWrap: GList* ListG
 
+#imports for CellLayout Interface.
+#import: glib.Str
+import: gtk.CellRenderer
+#import: glib.ListG
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
+
 nocode: gtk_cell_view_new_with_text
 nocode: gtk_cell_view_new_with_markup
 
 code: start
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkCellView);
+
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
 	 * to it, and makes its show text.
@@ -3102,6 +3136,7 @@ outFile: CellView
 file: GtkIconView.html
 struct: GtkIconView
 class: IconView
+implements: CellLayoutIF
 prefix: gtk_icon_view_
 prefix: gtk_
 import: gtk.TreeModel
@@ -3127,6 +3162,18 @@ structWrap: GList* ListG
 #structWrap: GtkIconViewDropPosition* IconViewDropPosition
 import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
+
+#imports for CellLayout Interface.
+import: glib.Str
+#import: gtk.CellRenderer
+#import: glib.ListG
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
+
+code: start
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkIconView);
+code: end
 outFile: IconView
 
 file: GtkTreeSortable.html
@@ -3716,7 +3763,7 @@ structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
-#imports for CellLauout Interface.
+#imports for CellLayout Interface.
 #import: glib.Str
 import: gtk.CellRenderer
 import: glib.ListG

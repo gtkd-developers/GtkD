@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_tree_view_column_
  * 	- gtk_
@@ -52,6 +53,8 @@
  * 	- gtk.TreeIter
  * 	- gdk.Rectangle
  * 	- glib.Str
+ * 	- gtk.CellLayoutIF
+ * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -81,6 +84,8 @@ private import gtk.TreeModelIF;
 private import gtk.TreeIter;
 private import gdk.Rectangle;
 private import glib.Str;
+private import gtk.CellLayoutIF;
+private import gtk.CellLayoutT;
 
 
 
@@ -95,7 +100,7 @@ private import gtk.ObjectGtk;
  * for an overview of all the objects and data types related to the tree widget and how
  * they work together.
  */
-public class TreeViewColumn : ObjectGtk
+public class TreeViewColumn : ObjectGtk, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -136,6 +141,9 @@ public class TreeViewColumn : ObjectGtk
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
 	
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkTreeViewColumn);
+	
 	/**
 	 * Creates a new Tree view column
 	 * Params:
@@ -154,7 +162,6 @@ public class TreeViewColumn : ObjectGtk
 		null)
 		);
 	}
-	
 	
 	/**
 	 */

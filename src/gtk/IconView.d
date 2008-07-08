@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = IconView
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_icon_view_
  * 	- gtk_
@@ -51,6 +52,9 @@
  * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gdk.Pixmap
+ * 	- glib.Str
+ * 	- gtk.CellLayoutIF
+ * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixmap* -> Pixmap
@@ -81,6 +85,9 @@ private import gtk.Tooltip;
 private import gtk.TreeIter;
 private import glib.ListG;
 private import gdk.Pixmap;
+private import glib.Str;
+private import gtk.CellLayoutIF;
+private import gtk.CellLayoutT;
 
 
 
@@ -95,7 +102,7 @@ private import gtk.Container;
  * In addition to selection with the arrow keys, GtkIconView supports
  * rubberband selection, which is controlled by dragging the pointer.
  */
-public class IconView : Container
+public class IconView : Container, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -135,6 +142,9 @@ public class IconView : Container
 		super(cast(GtkContainer*)gtkIconView);
 		this.gtkIconView = gtkIconView;
 	}
+	
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkIconView);
 	
 	/**
 	 */

@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = EntryCompletion
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_entry_completion_
  * 	- gtk_
@@ -47,6 +48,10 @@
  * 	- gtk.Widget
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
+ * 	- gtk.CellRenderer
+ * 	- glib.ListG
+ * 	- gtk.CellLayoutIF
+ * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkWidget* -> Widget
@@ -68,6 +73,10 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
+private import gtk.CellRenderer;
+private import glib.ListG;
+private import gtk.CellLayoutIF;
+private import gtk.CellLayoutT;
 
 
 
@@ -98,7 +107,7 @@ private import gobject.ObjectG;
  * to differentiate them clearly from completion strings. When an action is
  * selected, the ::action-activated signal is emitted.
  */
-public class EntryCompletion : ObjectG
+public class EntryCompletion : ObjectG, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -138,6 +147,9 @@ public class EntryCompletion : ObjectG
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}
+	
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkEntryCompletion);
 	
 	/**
 	 */
