@@ -3069,18 +3069,63 @@ outFile: TreeView
 
 file: gtk-GtkTreeView-drag-and-drop.html
 struct: GtkTreeDragSource
-class: TreeDragSource
-prefix: gtk_tree_drag_
-prefix: gtk_
+class: TreeDragSourceT
+template: TStruct
+prefix: gtk_tree_drag_source_
+prefix: gtk_tree_
+noprefix: gtk_tree_drag_dest_
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 #import: gtk.SelectionData
 #structWrap: GtkSelectionData* SelectionData
-#import: gtk.TreeDragDest
-#structWrap: GtkTreeDragDest* TreeDragDest
 import: gtk.TreeModelIF
 structWrap: GtkTreeModel* TreeModelIF
-outFile: TreeDragSource
+interface: TreeDragSourceIF
+outFile: TreeDragSourceT
+
+struct: GtkTreeDragDest
+class: TreeDragDestT
+template: TStruct
+prefix: gtk_tree_drag_dest_
+strictPrefix: Y
+import: gtk.TreeModelIF
+import: gtk.TreePath
+structWrap: GtkTreePath* TreePath
+#import: gtk.SelectionData
+#structWrap: GtkSelectionData* SelectionData
+
+interfaceCode: start
+	/**
+	 * Sets selection data of target type GTK_TREE_MODEL_ROW. Normally used
+	 * in a drag_data_get handler.
+	 * Params:
+	 * selectionData =  some GtkSelectionData
+	 * treeModel =  a GtkTreeModel
+	 * path =  a row in tree_model
+	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
+	 */
+	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path);
+	
+	/**
+	 * Obtains a tree_model and path from selection data of target type
+	 * GTK_TREE_MODEL_ROW. Normally called from a drag_data_received handler.
+	 * This function can only be used if selection_data originates from the same
+	 * process that's calling this function, because a pointer to the tree model
+	 * is being passed around. If you aren't in the same process, then you'll
+	 * get memory corruption. In the GtkTreeDragDest drag_data_received handler,
+	 * you can assume that selection data of type GTK_TREE_MODEL_ROW is
+	 * in from the current process. The returned path must be freed with
+	 * gtk_tree_path_free().
+	 * Params:
+	 * selectionData =  a GtkSelectionData
+	 * treeModel =  a GtkTreeModel
+	 * path =  row in tree_model
+	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
+	 */
+	public static int getRowDragData(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path);
+interfaceCode: end
+interface: TreeDragDestIF
+outFile: TreeDragDestT
 
 file: GtkCellView.html
 struct: GtkCellView
@@ -3200,6 +3245,7 @@ file: GtkTreeModelSort.html
 struct: GtkTreeModelSort
 class: TreeModelSort
 implements: TreeModelIF
+implements: TreeDragSourceIF
 prefix: gtk_tree_model_sort_
 prefix: gtk_
 import: glib.Str
@@ -3220,9 +3266,18 @@ import: gtk.TreeModelT
 #import: gtk.TreeModelIF
 import: gobject.Signals
 
+# imports for TreeDragSource Interface
+#import: gtk.TreePath
+#import: gtk.TreeModelIF
+import: gtk.TreeDragSourceT
+import: gtk.TreeDragSourceIF
+
 code: start
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelSort);
+
+	// add the TreeDragSource capabilities
+	mixin TreeDragSourceT!(GtkTreeModelSort);
 cade: end
 outFile: TreeModelSort
 
@@ -3230,6 +3285,7 @@ file: GtkTreeModelFilter.html
 struct: GtkTreeModelFilter
 class: TreeModelFilter
 implements: TreeModelIF
+implements: TreeDragSourceIF
 prefix: gtk_tree_model_filter_
 prefix: gtk_
 import: gtk.TreeModel
@@ -3249,9 +3305,18 @@ import: gtk.TreeModelT
 #import: gtk.TreeModelIF
 import: gobject.Signals
 
+# imports for TreeDragSource Interface
+#import: gtk.TreePath
+#import: gtk.TreeModelIF
+import: gtk.TreeDragSourceT
+import: gtk.TreeDragSourceIF
+
 code: start
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelFilter);
+
+	// add the TreeDragSource capabilities
+	mixin TreeDragSourceT!(GtkTreeModelFilter);
 cade: end
 outFile: TreeModelFilter
 
@@ -3437,6 +3502,8 @@ struct: GtkListStore
 class: ListStore
 implements: BuildableIF
 implements: TreeModelIF
+implements: TreeDragSourceIF
+implements: TreeDragDestIF
 prefix: gtk_list_store_
 prefix: gtk_
 import: gtk.TreeModel
@@ -3464,6 +3531,17 @@ import: gtk.TreeModelT
 import: gtk.TreeModelIF
 import: gobject.Signals
 
+# imports for TreeDragSource Interface
+#import: gtk.TreePath
+#import: gtk.TreeModelIF
+import: gtk.TreeDragSourceT
+import: gtk.TreeDragSourceIF
+
+# imports for GtkTreeDragDest Interface
+#import: gtk.TreePath
+import: gtk.TreeDragDestT
+import: gtk.TreeDragDestIF
+
 nocode: gtk_list_store_set
 
 code: start
@@ -3472,6 +3550,12 @@ code: start
 
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkListStore);
+
+	// add the TreeDragSource capabilities
+	mixin TreeDragSourceT!(GtkListStore);
+
+	// add the GtkTreeDragDest capabilities
+	mixin TreeDragDestT!(GtkListStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -3555,6 +3639,8 @@ file: GtkTreeStore.html
 struct: GtkTreeStore
 class: TreeStore
 implements: TreeModelIF
+implements: TreeDragSourceIF
+implements: TreeDragDestIF
 prefix: gtk_tree_store_
 prefix: gtk_
 import: glib.Str
@@ -3575,11 +3661,28 @@ import: gtk.TreeModelT
 import: gtk.TreeModelIF
 import: gobject.Signals
 
+# imports for TreeDragSource Interface
+#import: gtk.TreePath
+#import: gtk.TreeModelIF
+import: gtk.TreeDragSourceT
+import: gtk.TreeDragSourceIF
+
+# imports for GtkTreeDragDest Interface
+#import: gtk.TreePath
+import: gtk.TreeDragDestT
+import: gtk.TreeDragDestIF
+
 nocode: gtk_tree_store_set
 
 code: start
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeStore);
+
+	// add the TreeDragSource capabilities
+	mixin TreeDragSourceT!(GtkTreeStore);
+
+	// add the GtkTreeDragDest capabilities
+	mixin TreeDragDestT!(GtkTreeStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

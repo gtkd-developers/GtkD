@@ -36,6 +36,7 @@
  * extend  = 
  * implements:
  * 	- TreeModelIF
+ * 	- TreeDragSourceIF
  * prefixes:
  * 	- gtk_tree_model_filter_
  * 	- gtk_
@@ -52,6 +53,8 @@
  * 	- gobject.Value
  * 	- gtk.TreeModelT
  * 	- gobject.Signals
+ * 	- gtk.TreeDragSourceT
+ * 	- gtk.TreeDragSourceIF
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModelIF
@@ -76,6 +79,8 @@ private import glib.Str;
 private import gobject.Value;
 private import gtk.TreeModelT;
 private import gobject.Signals;
+private import gtk.TreeDragSourceT;
+private import gtk.TreeDragSourceIF;
 
 
 
@@ -97,7 +102,7 @@ private import gobject.ObjectG;
  * Set a different root node, also known as a "virtual root". You can pass in
  * a GtkTreePath indicating the root node for the filter at construction time.
  */
-public class TreeModelFilter : ObjectG, TreeModelIF
+public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 {
 	
 	/** the main Gtk struct */
@@ -140,6 +145,9 @@ public class TreeModelFilter : ObjectG, TreeModelIF
 	
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelFilter);
+	
+	// add the TreeDragSource capabilities
+	mixin TreeDragSourceT!(GtkTreeModelFilter);
 	
 	/**
 	 */

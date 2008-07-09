@@ -36,6 +36,8 @@
  * extend  = 
  * implements:
  * 	- TreeModelIF
+ * 	- TreeDragSourceIF
+ * 	- TreeDragDestIF
  * prefixes:
  * 	- gtk_tree_store_
  * 	- gtk_
@@ -55,6 +57,10 @@
  * 	- gtk.TreeModelT
  * 	- gtk.TreeModelIF
  * 	- gobject.Signals
+ * 	- gtk.TreeDragSourceT
+ * 	- gtk.TreeDragSourceIF
+ * 	- gtk.TreeDragDestT
+ * 	- gtk.TreeDragDestIF
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -80,6 +86,10 @@ private import gtk.TreePath;
 private import gtk.TreeModelT;
 private import gtk.TreeModelIF;
 private import gobject.Signals;
+private import gtk.TreeDragSourceT;
+private import gtk.TreeDragSourceIF;
+private import gtk.TreeDragDestT;
+private import gtk.TreeDragDestIF;
 
 
 
@@ -107,7 +117,7 @@ private import gobject.ObjectG;
  *  </columns>
  * </object>
  */
-public class TreeStore : ObjectG, TreeModelIF
+public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF
 {
 	
 	/** the main Gtk struct */
@@ -150,6 +160,12 @@ public class TreeStore : ObjectG, TreeModelIF
 	
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeStore);
+	
+	// add the TreeDragSource capabilities
+	mixin TreeDragSourceT!(GtkTreeStore);
+	
+	// add the GtkTreeDragDest capabilities
+	mixin TreeDragDestT!(GtkTreeStore);
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

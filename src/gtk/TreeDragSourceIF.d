@@ -24,22 +24,23 @@
  * Conversion parameters:
  * inFile  = gtk-GtkTreeView-drag-and-drop.html
  * outPack = gtk
- * outFile = TreeDragSource
+ * outFile = TreeDragSourceIF
  * strct   = GtkTreeDragSource
  * realStrct=
  * ctorStrct=
- * clss    = TreeDragSource
- * interf  = 
+ * clss    = TreeDragSourceT
+ * interf  = TreeDragSourceIF
  * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
- * 	- gtk_tree_drag_
- * 	- gtk_
+ * 	- gtk_tree_drag_source_
+ * 	- gtk_tree_
  * omit structs:
  * omit prefixes:
+ * 	- gtk_tree_drag_dest_
  * omit code:
  * omit signals:
  * imports:
@@ -53,7 +54,7 @@
  * overrides:
  */
 
-module gtk.TreeDragSource;
+module gtk.TreeDragSourceIF;
 
 public  import gtkc.gtktypes;
 
@@ -82,38 +83,15 @@ private import gtk.TreeModelIF;
  * and auto-scroll, but your models have to implement the
  * GtkTreeDragSource and GtkTreeDragDest interfaces.
  */
-public class TreeDragSource
+public interface TreeDragSourceIF
 {
 	
-	/** the main Gtk struct */
-	protected GtkTreeDragSource* gtkTreeDragSource;
 	
-	
-	public GtkTreeDragSource* getTreeDragSourceStruct()
-	{
-		return gtkTreeDragSource;
-	}
-	
+	public GtkTreeDragSource* getTreeDragSourceTStruct();
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gtkTreeDragSource;
-	}
+	protected void* getStruct();
 	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkTreeDragSource* gtkTreeDragSource)
-	{
-		if(gtkTreeDragSource is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeDragSource passed to constructor.");
-			else return;
-		}
-		this.gtkTreeDragSource = gtkTreeDragSource;
-	}
 	
 	/**
 	 */
@@ -128,11 +106,7 @@ public class TreeDragSource
 	 * path =  row that was being dragged
 	 * Returns: TRUE if the row was successfully deleted
 	 */
-	public int sourceDragDataDelete(TreePath path)
-	{
-		// gboolean gtk_tree_drag_source_drag_data_delete  (GtkTreeDragSource *drag_source,  GtkTreePath *path);
-		return gtk_tree_drag_source_drag_data_delete(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct());
-	}
+	public int dragDataDelete(TreePath path);
 	
 	/**
 	 * Asks the GtkTreeDragSource to fill in selection_data with a
@@ -144,11 +118,7 @@ public class TreeDragSource
 	 * selectionData =  a GtkSelectionData to fill with data from the dragged row
 	 * Returns: TRUE if data of the required type was provided
 	 */
-	public int sourceDragDataGet(TreePath path, GtkSelectionData* selectionData)
-	{
-		// gboolean gtk_tree_drag_source_drag_data_get (GtkTreeDragSource *drag_source,  GtkTreePath *path,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_source_drag_data_get(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct(), selectionData);
-	}
+	public int dragDataGet(TreePath path, GtkSelectionData* selectionData);
 	
 	/**
 	 * Asks the GtkTreeDragSource whether a particular row can be used as
@@ -158,48 +128,7 @@ public class TreeDragSource
 	 * path =  row on which user is initiating a drag
 	 * Returns: TRUE if the row can be dragged
 	 */
-	public int sourceRowDraggable(TreePath path)
-	{
-		// gboolean gtk_tree_drag_source_row_draggable (GtkTreeDragSource *drag_source,  GtkTreePath *path);
-		return gtk_tree_drag_source_row_draggable(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct());
-	}
-	
-	/**
-	 * Asks the GtkTreeDragDest to insert a row before the path dest,
-	 * deriving the contents of the row from selection_data. If dest is
-	 * outside the tree so that inserting before it is impossible, FALSE
-	 * will be returned. Also, FALSE may be returned if the new row is
-	 * not created for some model-specific reason. Should robustly handle
-	 * a dest no longer found in the model!
-	 * Params:
-	 * dragDest =  a GtkTreeDragDest
-	 * dest =  row to drop in front of
-	 * selectionData =  data to drop
-	 * Returns: whether a new row was created before position dest
-	 */
-	public static int destDragDataReceived(GtkTreeDragDest* dragDest, TreePath dest, GtkSelectionData* selectionData)
-	{
-		// gboolean gtk_tree_drag_dest_drag_data_received  (GtkTreeDragDest *drag_dest,  GtkTreePath *dest,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_dest_drag_data_received(dragDest, (dest is null) ? null : dest.getTreePathStruct(), selectionData);
-	}
-	
-	/**
-	 * Determines whether a drop is possible before the given dest_path,
-	 * at the same depth as dest_path. i.e., can we drop the data in
-	 * selection_data at that location. dest_path does not have to
-	 * exist; the return value will almost certainly be FALSE if the
-	 * parent of dest_path doesn't exist, though.
-	 * Params:
-	 * dragDest =  a GtkTreeDragDest
-	 * destPath =  destination row
-	 * selectionData =  the data being dragged
-	 * Returns: TRUE if a drop is possible before dest_path
-	 */
-	public static int destRowDropPossible(GtkTreeDragDest* dragDest, TreePath destPath, GtkSelectionData* selectionData)
-	{
-		// gboolean gtk_tree_drag_dest_row_drop_possible  (GtkTreeDragDest *drag_dest,  GtkTreePath *dest_path,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_dest_row_drop_possible(dragDest, (destPath is null) ? null : destPath.getTreePathStruct(), selectionData);
-	}
+	public int rowDraggable(TreePath path);
 	
 	/**
 	 * Sets selection data of target type GTK_TREE_MODEL_ROW. Normally used
@@ -210,11 +139,7 @@ public class TreeDragSource
 	 * path =  a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static int treeSetRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path)
-	{
-		// gboolean gtk_tree_set_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel *tree_model,  GtkTreePath *path);
-		return gtk_tree_set_row_drag_data(selectionData, (treeModel is null) ? null : treeModel.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
-	}
+	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path);
 	
 	/**
 	 * Obtains a tree_model and path from selection data of target type
@@ -232,9 +157,5 @@ public class TreeDragSource
 	 * path =  row in tree_model
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
-	public static int treeGetRowDragData(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path)
-	{
-		// gboolean gtk_tree_get_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel **tree_model,  GtkTreePath **path);
-		return gtk_tree_get_row_drag_data(selectionData, treeModel, path);
-	}
+	public static int getRowDragData(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path);
 }

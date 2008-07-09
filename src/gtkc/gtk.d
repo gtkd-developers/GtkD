@@ -1597,15 +1597,24 @@ extern(C)
 	gint function(GtkTreeView* treeView)gtk_tree_view_get_tooltip_column;
 	void function(GtkTreeView* treeView, gint column)gtk_tree_view_set_tooltip_column;
 	
-	// gtk.TreeDragSource
+	// gtk.TreeDragSourceT
+	
+	
+	// gtk.TreeDragSourceT
 	
 	gboolean function(GtkTreeDragSource* dragSource, GtkTreePath* path)gtk_tree_drag_source_drag_data_delete;
 	gboolean function(GtkTreeDragSource* dragSource, GtkTreePath* path, GtkSelectionData* selectionData)gtk_tree_drag_source_drag_data_get;
 	gboolean function(GtkTreeDragSource* dragSource, GtkTreePath* path)gtk_tree_drag_source_row_draggable;
-	gboolean function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GtkSelectionData* selectionData)gtk_tree_drag_dest_drag_data_received;
-	gboolean function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GtkSelectionData* selectionData)gtk_tree_drag_dest_row_drop_possible;
 	gboolean function(GtkSelectionData* selectionData, GtkTreeModel* treeModel, GtkTreePath* path)gtk_tree_set_row_drag_data;
 	gboolean function(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path)gtk_tree_get_row_drag_data;
+	
+	// gtk.TreeDragDestT
+	
+	
+	// gtk.TreeDragDestT
+	
+	gboolean function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GtkSelectionData* selectionData)gtk_tree_drag_dest_drag_data_received;
+	gboolean function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GtkSelectionData* selectionData)gtk_tree_drag_dest_row_drop_possible;
 	
 	// gtk.CellView
 	
@@ -4772,10 +4781,10 @@ Symbol[] gtkLinks =
 	{ "gtk_tree_drag_source_drag_data_delete",  cast(void**)& gtk_tree_drag_source_drag_data_delete},
 	{ "gtk_tree_drag_source_drag_data_get",  cast(void**)& gtk_tree_drag_source_drag_data_get},
 	{ "gtk_tree_drag_source_row_draggable",  cast(void**)& gtk_tree_drag_source_row_draggable},
-	{ "gtk_tree_drag_dest_drag_data_received",  cast(void**)& gtk_tree_drag_dest_drag_data_received},
-	{ "gtk_tree_drag_dest_row_drop_possible",  cast(void**)& gtk_tree_drag_dest_row_drop_possible},
 	{ "gtk_tree_set_row_drag_data",  cast(void**)& gtk_tree_set_row_drag_data},
 	{ "gtk_tree_get_row_drag_data",  cast(void**)& gtk_tree_get_row_drag_data},
+	{ "gtk_tree_drag_dest_drag_data_received",  cast(void**)& gtk_tree_drag_dest_drag_data_received},
+	{ "gtk_tree_drag_dest_row_drop_possible",  cast(void**)& gtk_tree_drag_dest_row_drop_possible},
 	{ "gtk_cell_view_new",  cast(void**)& gtk_cell_view_new},
 	{ "gtk_cell_view_new_with_text",  cast(void**)& gtk_cell_view_new_with_text},
 	{ "gtk_cell_view_new_with_markup",  cast(void**)& gtk_cell_view_new_with_markup},
