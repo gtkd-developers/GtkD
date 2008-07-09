@@ -1055,7 +1055,10 @@ extern(C)
 	gdouble function(GtkSpinButton* spinButton)gtk_spin_button_get_value;
 	gboolean function(GtkSpinButton* spinButton)gtk_spin_button_get_wrap;
 	
-	// gtk.Editable
+	// gtk.EditableT
+	
+	
+	// gtk.EditableT
 	
 	void function(GtkEditable* editable, gint start, gint end)gtk_editable_select_region;
 	gboolean function(GtkEditable* editable, gint* start, gint* end)gtk_editable_get_selection_bounds;

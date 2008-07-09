@@ -1745,6 +1745,7 @@ outFile: VolumeButton
 file: GtkEntry.html
 struct: GtkEntry
 class: Entry
+implements: EditableIF
 implements: CellEditableIF
 prefix: gtk_entry_
 prefix: gtk_
@@ -1756,6 +1757,11 @@ structWrap: GtkEntryCompletion* EntryCompletion
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
+# imports for TreeModel Interface
+#import: glib.Str
+import: gtk.EditableT
+import: gtk.EditableIF
+
 # imports for CellEditable Interface
 import: gdk.Event
 import: gtk.CellEditableT
@@ -1763,6 +1769,9 @@ import: gtk.CellEditableIF
 import: gobject.Signals
 
 code: start
+	// add the Editable capabilities
+	mixin EditableT!(GtkEntry);
+
 	// add the CellEditable capabilities
 	mixin CellEditableT!(GtkEntry);
 
@@ -1840,11 +1849,13 @@ outFile: SpinButton
 
 file: GtkEditable.html
 struct: GtkEditable
-class: Editable
+class: EditableT
+template: TStruct
 prefix: gtk_editable_
 prefix: gtk_
 import: glib.Str
-outFile: Editable
+interface: EditableIF
+outFile: EditableT
 
 ###########################################################
 ### Multiline Text Editor #################################

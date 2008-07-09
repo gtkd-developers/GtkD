@@ -24,15 +24,16 @@
  * Conversion parameters:
  * inFile  = GtkEditable.html
  * outPack = gtk
- * outFile = Editable
+ * outFile = EditableT
  * strct   = GtkEditable
  * realStrct=
  * ctorStrct=
- * clss    = Editable
- * interf  = 
+ * clss    = EditableT
+ * interf  = EditableIF
  * class Code: No
  * interface Code: No
  * template for:
+ * 	- TStruct
  * extend  = 
  * implements:
  * prefixes:
@@ -50,7 +51,7 @@
  * overrides:
  */
 
-module gtk.Editable;
+module gtk.EditableT;
 
 public  import gtkc.gtktypes;
 
@@ -94,49 +95,33 @@ private import glib.Str;
 	 *  g_free (result);
  * }
  */
-public class Editable
+public template EditableT(TStruct)
 {
 	
 	/** the main Gtk struct */
 	protected GtkEditable* gtkEditable;
 	
 	
-	public GtkEditable* getEditableStruct()
+	public GtkEditable* getEditableTStruct()
 	{
-		return gtkEditable;
+		return cast(GtkEditable*)getStruct();
 	}
 	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gtkEditable;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkEditable* gtkEditable)
-	{
-		if(gtkEditable is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Null gtkEditable passed to constructor.");
-			else return;
-		}
-		this.gtkEditable = gtkEditable;
-	}
 	
 	/**
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(Editable)[] onChangedListeners;
+	void delegate(EditableIF)[] _onChangedListeners;
+	void delegate(EditableIF)[] onChangedListeners()
+	{
+		return  _onChangedListeners;
+	}
 	/**
 	 * Indicates that the user has changed the contents
 	 * of the widget.
 	 */
-	void addOnChanged(void delegate(Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -144,26 +129,30 @@ public class Editable
 			getStruct(),
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)this,
+			cast(void*)cast(EditableIF)this,
 			null,
 			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
-		onChangedListeners ~= dlg;
+		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkEditable* editableStruct, Editable editable)
+	extern(C) static void callBackChanged(GtkEditable* editableStruct, EditableIF editableIF)
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(Editable) dlg ; editable.onChangedListeners )
+		foreach ( void delegate(EditableIF) dlg ; editableIF.onChangedListeners )
 		{
-			dlg(editable);
+			dlg(editableIF);
 		}
 		
 		return consumed;
 	}
 	
-	void delegate(gint, gint, Editable)[] onDeleteTextListeners;
+	void delegate(gint, gint, EditableIF)[] _onDeleteTextListeners;
+	void delegate(gint, gint, EditableIF)[] onDeleteTextListeners()
+	{
+		return  _onDeleteTextListeners;
+	}
 	/**
 	 * This signal is emitted when text is deleted from
 	 * the widget by the user. The default handler for
@@ -175,7 +164,7 @@ public class Editable
 	 * and end_pos parameters are interpreted as for
 	 * gtk_editable_delete_text()
 	 */
-	void addOnDeleteText(void delegate(gint, gint, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDeleteText(void delegate(gint, gint, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-text" in connectedSignals) )
 		{
@@ -183,26 +172,30 @@ public class Editable
 			getStruct(),
 			"delete-text",
 			cast(GCallback)&callBackDeleteText,
-			cast(void*)this,
+			cast(void*)cast(EditableIF)this,
 			null,
 			connectFlags);
 			connectedSignals["delete-text"] = 1;
 		}
-		onDeleteTextListeners ~= dlg;
+		_onDeleteTextListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, Editable editable)
+	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, EditableIF editableIF)
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(gint, gint, Editable) dlg ; editable.onDeleteTextListeners )
+		foreach ( void delegate(gint, gint, EditableIF) dlg ; editableIF.onDeleteTextListeners )
 		{
-			dlg(startPos, endPos, editable);
+			dlg(startPos, endPos, editableIF);
 		}
 		
 		return consumed;
 	}
 	
-	void delegate(string, gint, gint*, Editable)[] onInsertTextListeners;
+	void delegate(string, gint, gint*, EditableIF)[] _onInsertTextListeners;
+	void delegate(string, gint, gint*, EditableIF)[] onInsertTextListeners()
+	{
+		return  _onInsertTextListeners;
+	}
 	/**
 	 * This signal is emitted when text is inserted into
 	 * the widget by the user. The default handler for
@@ -212,7 +205,7 @@ public class Editable
 	 * is possible to modify the inserted text, or prevent
 	 * it from being inserted entirely.
 	 */
-	void addOnInsertText(void delegate(string, gint, gint*, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertText(void delegate(string, gint, gint*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -220,20 +213,20 @@ public class Editable
 			getStruct(),
 			"insert-text",
 			cast(GCallback)&callBackInsertText,
-			cast(void*)this,
+			cast(void*)cast(EditableIF)this,
 			null,
 			connectFlags);
 			connectedSignals["insert-text"] = 1;
 		}
-		onInsertTextListeners ~= dlg;
+		_onInsertTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gint* position, Editable editable)
+	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gint* position, EditableIF editableIF)
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(string, gint, gint*, Editable) dlg ; editable.onInsertTextListeners )
+		foreach ( void delegate(string, gint, gint*, EditableIF) dlg ; editableIF.onInsertTextListeners )
 		{
-			dlg(Str.toString(newText), newTextLength, position, editable);
+			dlg(Str.toString(newText), newTextLength, position, editableIF);
 		}
 		
 		return consumed;
@@ -254,7 +247,7 @@ public class Editable
 	public void selectRegion(int start, int end)
 	{
 		// void gtk_editable_select_region (GtkEditable *editable,  gint start,  gint end);
-		gtk_editable_select_region(gtkEditable, start, end);
+		gtk_editable_select_region(getEditableTStruct(), start, end);
 	}
 	
 	/**
@@ -267,7 +260,7 @@ public class Editable
 	public int getSelectionBounds(int* start, int* end)
 	{
 		// gboolean gtk_editable_get_selection_bounds (GtkEditable *editable,  gint *start,  gint *end);
-		return gtk_editable_get_selection_bounds(gtkEditable, start, end);
+		return gtk_editable_get_selection_bounds(getEditableTStruct(), start, end);
 	}
 	
 	/**
@@ -283,7 +276,7 @@ public class Editable
 	public void insertText(string newText, int newTextLength, int* position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
-		gtk_editable_insert_text(gtkEditable, Str.toStringz(newText), newTextLength, position);
+		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), newTextLength, position);
 	}
 	
 	/**
@@ -300,7 +293,7 @@ public class Editable
 	public void deleteText(int startPos, int endPos)
 	{
 		// void gtk_editable_delete_text (GtkEditable *editable,  gint start_pos,  gint end_pos);
-		gtk_editable_delete_text(gtkEditable, startPos, endPos);
+		gtk_editable_delete_text(getEditableTStruct(), startPos, endPos);
 	}
 	
 	/**
@@ -318,7 +311,7 @@ public class Editable
 	public string getChars(int startPos, int endPos)
 	{
 		// gchar* gtk_editable_get_chars (GtkEditable *editable,  gint start_pos,  gint end_pos);
-		return Str.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos));
+		return Str.toString(gtk_editable_get_chars(getEditableTStruct(), startPos, endPos));
 	}
 	
 	/**
@@ -329,7 +322,7 @@ public class Editable
 	public void cutClipboard()
 	{
 		// void gtk_editable_cut_clipboard (GtkEditable *editable);
-		gtk_editable_cut_clipboard(gtkEditable);
+		gtk_editable_cut_clipboard(getEditableTStruct());
 	}
 	
 	/**
@@ -339,7 +332,7 @@ public class Editable
 	public void copyClipboard()
 	{
 		// void gtk_editable_copy_clipboard (GtkEditable *editable);
-		gtk_editable_copy_clipboard(gtkEditable);
+		gtk_editable_copy_clipboard(getEditableTStruct());
 	}
 	
 	/**
@@ -349,7 +342,7 @@ public class Editable
 	public void pasteClipboard()
 	{
 		// void gtk_editable_paste_clipboard (GtkEditable *editable);
-		gtk_editable_paste_clipboard(gtkEditable);
+		gtk_editable_paste_clipboard(getEditableTStruct());
 	}
 	
 	/**
@@ -359,7 +352,7 @@ public class Editable
 	public void deleteSelection()
 	{
 		// void gtk_editable_delete_selection (GtkEditable *editable);
-		gtk_editable_delete_selection(gtkEditable);
+		gtk_editable_delete_selection(getEditableTStruct());
 	}
 	
 	/**
@@ -377,7 +370,7 @@ public class Editable
 	public void setPosition(int position)
 	{
 		// void gtk_editable_set_position (GtkEditable *editable,  gint position);
-		gtk_editable_set_position(gtkEditable, position);
+		gtk_editable_set_position(getEditableTStruct(), position);
 	}
 	
 	/**
@@ -387,7 +380,7 @@ public class Editable
 	public int getPosition()
 	{
 		// gint gtk_editable_get_position (GtkEditable *editable);
-		return gtk_editable_get_position(gtkEditable);
+		return gtk_editable_get_position(getEditableTStruct());
 	}
 	
 	/**
@@ -400,7 +393,7 @@ public class Editable
 	public void setEditable(int isEditable)
 	{
 		// void gtk_editable_set_editable (GtkEditable *editable,  gboolean is_editable);
-		gtk_editable_set_editable(gtkEditable, isEditable);
+		gtk_editable_set_editable(getEditableTStruct(), isEditable);
 	}
 	
 	/**
@@ -411,6 +404,6 @@ public class Editable
 	public int getEditable()
 	{
 		// gboolean gtk_editable_get_editable (GtkEditable *editable);
-		return gtk_editable_get_editable(gtkEditable);
+		return gtk_editable_get_editable(getEditableTStruct());
 	}
 }
