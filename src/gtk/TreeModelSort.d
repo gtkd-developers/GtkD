@@ -37,6 +37,7 @@
  * implements:
  * 	- TreeModelIF
  * 	- TreeDragSourceIF
+ * 	- TreeSortableIF
  * prefixes:
  * 	- gtk_tree_model_sort_
  * 	- gtk_
@@ -55,6 +56,8 @@
  * 	- gobject.Signals
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
+ * 	- gtk.TreeSortableT
+ * 	- gtk.TreeSortableIF
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModelIF
@@ -81,6 +84,8 @@ private import gtk.TreeModelT;
 private import gobject.Signals;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
+private import gtk.TreeSortableT;
+private import gtk.TreeSortableIF;
 
 
 
@@ -166,7 +171,7 @@ private import gobject.ObjectG;
 	 *  g_free (modified_data);
  * }
  */
-public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF
+public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortableIF
 {
 	
 	/** the main Gtk struct */
@@ -212,6 +217,9 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF
 	
 	// add the TreeDragSource capabilities
 	mixin TreeDragSourceT!(GtkTreeModelSort);
+	
+	// add the TreeSortable capabilities
+	mixin TreeSortableT!(GtkTreeModelSort);
 	
 	/**
 	 */

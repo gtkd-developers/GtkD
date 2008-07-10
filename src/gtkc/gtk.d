@@ -1688,7 +1688,10 @@ extern(C)
 	gboolean function(GtkIconView* iconView, gint dragX, gint dragY, GtkTreePath** path, GtkIconViewDropPosition* pos)gtk_icon_view_get_dest_item_at_pos;
 	GdkPixmap* function(GtkIconView* iconView, GtkTreePath* path)gtk_icon_view_create_drag_icon;
 	
-	// gtk.TreeSortable
+	// gtk.TreeSortableT
+	
+	
+	// gtk.TreeSortableT
 	
 	void function(GtkTreeSortable* sortable)gtk_tree_sortable_sort_column_changed;
 	gboolean function(GtkTreeSortable* sortable, gint* sortColumnId, GtkSortType* order)gtk_tree_sortable_get_sort_column_id;

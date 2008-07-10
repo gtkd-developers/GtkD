@@ -24,12 +24,12 @@
  * Conversion parameters:
  * inFile  = GtkTreeSortable.html
  * outPack = gtk
- * outFile = TreeSortable
+ * outFile = TreeSortableIF
  * strct   = GtkTreeSortable
  * realStrct=
  * ctorStrct=
- * clss    = TreeSortable
- * interf  = 
+ * clss    = TreeSortableT
+ * interf  = TreeSortableIF
  * class Code: No
  * interface Code: No
  * template for:
@@ -49,7 +49,7 @@
  * overrides:
  */
 
-module gtk.TreeSortable;
+module gtk.TreeSortableIF;
 
 public  import gtkc.gtktypes;
 
@@ -68,84 +68,30 @@ public  import gtkc.gdktypes;
  * support sorting. The GtkTreeView uses the methods provided by this interface
  * to sort the model.
  */
-public class TreeSortable
+public interface TreeSortableIF
 {
 	
-	/** the main Gtk struct */
-	protected GtkTreeSortable* gtkTreeSortable;
 	
-	
-	public GtkTreeSortable* getTreeSortableStruct()
-	{
-		return gtkTreeSortable;
-	}
-	
+	public GtkTreeSortable* getTreeSortableTStruct();
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gtkTreeSortable;
-	}
+	protected void* getStruct();
 	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkTreeSortable* gtkTreeSortable)
-	{
-		if(gtkTreeSortable is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeSortable passed to constructor.");
-			else return;
-		}
-		this.gtkTreeSortable = gtkTreeSortable;
-	}
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
 	
-	void delegate(TreeSortable)[] onSortColumnChangedListeners;
+	void delegate(TreeSortableIF)[] onSortColumnChangedListeners();
 	/**
 	 * See Also
 	 * GtkTreeModel, GtkTreeView
 	 */
-	void addOnSortColumnChanged(void delegate(TreeSortable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("sort-column-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"sort-column-changed",
-			cast(GCallback)&callBackSortColumnChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["sort-column-changed"] = 1;
-		}
-		onSortColumnChangedListeners ~= dlg;
-	}
-	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, TreeSortable treeSortable)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(TreeSortable) dlg ; treeSortable.onSortColumnChangedListeners )
-		{
-			dlg(treeSortable);
-		}
-		
-		return consumed;
-	}
-	
+	void addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Emits a GtkTreeSortable::sort_column_changed signal on
 	 */
-	public void sortColumnChanged()
-	{
-		// void gtk_tree_sortable_sort_column_changed  (GtkTreeSortable *sortable);
-		gtk_tree_sortable_sort_column_changed(gtkTreeSortable);
-	}
+	public void sortColumnChanged();
 	
 	/**
 	 * Fills in sort_column_id and order with the current sort column and the
@@ -157,11 +103,7 @@ public class TreeSortable
 	 * order =  The GtkSortType to be filled in
 	 * Returns: TRUE if the sort column is not one of the special sort column ids.
 	 */
-	public int getSortColumnId(int* sortColumnId, GtkSortType* order)
-	{
-		// gboolean gtk_tree_sortable_get_sort_column_id  (GtkTreeSortable *sortable,  gint *sort_column_id,  GtkSortType *order);
-		return gtk_tree_sortable_get_sort_column_id(gtkTreeSortable, sortColumnId, order);
-	}
+	public int getSortColumnId(int* sortColumnId, GtkSortType* order);
 	
 	/**
 	 * Sets the current sort column to be sort_column_id. The sortable will
@@ -173,11 +115,7 @@ public class TreeSortable
 	 * sortColumnId =  the sort column id to set
 	 * order =  The sort order of the column
 	 */
-	public void setSortColumnId(int sortColumnId, GtkSortType order)
-	{
-		// void gtk_tree_sortable_set_sort_column_id  (GtkTreeSortable *sortable,  gint sort_column_id,  GtkSortType order);
-		gtk_tree_sortable_set_sort_column_id(gtkTreeSortable, sortColumnId, order);
-	}
+	public void setSortColumnId(int sortColumnId, GtkSortType order);
 	
 	/**
 	 * Sets the comparison function used when sorting to be sort_func. If the
@@ -189,11 +127,7 @@ public class TreeSortable
 	 * userData =  User data to pass to sort_func, or NULL
 	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
-	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy)
-	{
-		// void gtk_tree_sortable_set_sort_func (GtkTreeSortable *sortable,  gint sort_column_id,  GtkTreeIterCompareFunc sort_func,  gpointer user_data,  GtkDestroyNotify destroy);
-		gtk_tree_sortable_set_sort_func(gtkTreeSortable, sortColumnId, sortFunc, userData, destroy);
-	}
+	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy);
 	
 	/**
 	 * Sets the default comparison function used when sorting to be sort_func.
@@ -209,11 +143,7 @@ public class TreeSortable
 	 * userData =  User data to pass to sort_func, or NULL
 	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
-	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy)
-	{
-		// void gtk_tree_sortable_set_default_sort_func  (GtkTreeSortable *sortable,  GtkTreeIterCompareFunc sort_func,  gpointer user_data,  GtkDestroyNotify destroy);
-		gtk_tree_sortable_set_default_sort_func(gtkTreeSortable, sortFunc, userData, destroy);
-	}
+	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy);
 	
 	/**
 	 * Returns TRUE if the model has a default sort function. This is used
@@ -221,9 +151,5 @@ public class TreeSortable
 	 * to the default state, or not.
 	 * Returns: TRUE, if the model has a default sort functionSignal DetailsThe "sort-column-changed" signalvoid user_function (GtkTreeSortable *treesortable, gpointer user_data) : Run Last
 	 */
-	public int hasDefaultSortFunc()
-	{
-		// gboolean gtk_tree_sortable_has_default_sort_func  (GtkTreeSortable *sortable);
-		return gtk_tree_sortable_has_default_sort_func(gtkTreeSortable);
-	}
+	public int hasDefaultSortFunc();
 }

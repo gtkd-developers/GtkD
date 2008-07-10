@@ -3234,18 +3234,21 @@ outFile: IconView
 
 file: GtkTreeSortable.html
 struct: GtkTreeSortable
-class: TreeSortable
+class: TreeSortableT
+template: TStruct
 prefix: gtk_tree_sortable_
 prefix: gtk_
 #import: gtk.SortType
 #structWrap: GtkSortType* SortType
-outFile: TreeSortable
+interface: TreeSortableIF
+outFile: TreeSortableT
 
 file: GtkTreeModelSort.html
 struct: GtkTreeModelSort
 class: TreeModelSort
 implements: TreeModelIF
 implements: TreeDragSourceIF
+implements: TreeSortableIF
 prefix: gtk_tree_model_sort_
 prefix: gtk_
 import: glib.Str
@@ -3272,12 +3275,19 @@ import: gobject.Signals
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
+# imports for TreeSortable Interface
+import: gtk.TreeSortableT
+import: gtk.TreeSortableIF
+
 code: start
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelSort);
 
 	// add the TreeDragSource capabilities
 	mixin TreeDragSourceT!(GtkTreeModelSort);
+
+	// add the TreeSortable capabilities
+	mixin TreeSortableT!(GtkTreeModelSort);
 cade: end
 outFile: TreeModelSort
 
@@ -3504,6 +3514,7 @@ implements: BuildableIF
 implements: TreeModelIF
 implements: TreeDragSourceIF
 implements: TreeDragDestIF
+implements: TreeSortableIF
 prefix: gtk_list_store_
 prefix: gtk_
 import: gtk.TreeModel
@@ -3542,6 +3553,10 @@ import: gtk.TreeDragSourceIF
 import: gtk.TreeDragDestT
 import: gtk.TreeDragDestIF
 
+# imports for TreeSortable Interface
+import: gtk.TreeSortableT
+import: gtk.TreeSortableIF
+
 nocode: gtk_list_store_set
 
 code: start
@@ -3554,8 +3569,11 @@ code: start
 	// add the TreeDragSource capabilities
 	mixin TreeDragSourceT!(GtkListStore);
 
-	// add the GtkTreeDragDest capabilities
+	// add the TreeDragDest capabilities
 	mixin TreeDragDestT!(GtkListStore);
+
+	// add the TreeSortable capabilities
+	mixin TreeSortableT!(GtkListStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -3641,6 +3659,7 @@ class: TreeStore
 implements: TreeModelIF
 implements: TreeDragSourceIF
 implements: TreeDragDestIF
+implements: TreeSortableIF
 prefix: gtk_tree_store_
 prefix: gtk_
 import: glib.Str
@@ -3672,6 +3691,10 @@ import: gtk.TreeDragSourceIF
 import: gtk.TreeDragDestT
 import: gtk.TreeDragDestIF
 
+# imports for TreeSortable Interface
+import: gtk.TreeSortableT
+import: gtk.TreeSortableIF
+
 nocode: gtk_tree_store_set
 
 code: start
@@ -3681,8 +3704,11 @@ code: start
 	// add the TreeDragSource capabilities
 	mixin TreeDragSourceT!(GtkTreeStore);
 
-	// add the GtkTreeDragDest capabilities
+	// add the TreeDragDest capabilities
 	mixin TreeDragDestT!(GtkTreeStore);
+
+	// add the TreeSortable capabilities
+	mixin TreeSortableT!(GtkTreeStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
