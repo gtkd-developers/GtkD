@@ -576,7 +576,7 @@ class TestWindow : MainWindow
 		CellRenderer renderer = new CellRendererText();
 		treeCombo.packStart(renderer, true);
 		treeCombo.addAttribute(renderer, "text",0);
-
+		
 		// TODO something is wrong gettign the ier from the path
 		//TreePath path = new TreePath("0,0");
 		//comboStore.getIter(iterChild, path);
@@ -790,7 +790,7 @@ class TestWindow : MainWindow
 			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.OPEN, a, r);
 		}
 
-		fcd.getFileChooser().setSelectMultiple(true);
+		fcd.setSelectMultiple(true);
 		fcd.run();
 //		writefln("file selected = %s",fcd.getFileName());
 //

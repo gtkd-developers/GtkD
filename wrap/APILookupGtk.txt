@@ -4953,7 +4953,8 @@ outFile: ColorSelectionDialog
 
 file: GtkFileChooser.html
 struct: GtkFileChooser
-class: FileChooser
+class: FileChooserT
+template: TStruct
 prefix: gtk_file_chooser_
 prefix: gtk_
 import: glib.Str
@@ -4965,63 +4966,63 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.FileFilter
 structWrap: GtkFileFilter* FileFilter
-outFile: FileChooser
+
+alias: setAction setFileChooserAction
+alias: getAction getFileChooserAction
+
+interface: FileChooserIF
+outFile: FileChooserT
 
 file: GtkFileChooserButton.html
 struct: GtkFileChooserButton
 class: FileChooserButton
+implements: FileChooserIF
 prefix: gtk_file_chooser_button_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-import: glib.ListSG;
-import: gtk.Widget;
-import: gtk.FileFilter;
-import: gtk.FileChooser;
+
+# imports for FileChooser Interface
+#import: glib.Str
+import: glib.ListSG
+#import: gtk.Widget
+import: gtk.Window
+import: gtk.FileFilter
+import: gtk.FileChooserT
+import: gtk.FileChooserIF
 
 code: start
-	private FileChooser fileChooser;
-
-	/** */
-	public FileChooser getFileChooser()
-	{
-		if ( fileChooser is null )
-		{
-			fileChooser = new FileChooser(cast(GtkFileChooser*)getFileChooserButtonStruct());
-		}
-		return fileChooser;
-	}
-code: end
+	// add the FileChooser capabilities
+	mixin FileChooserT!(GtkFileChooserButton);
+cade: end
 outFile: FileChooserButton
 
 file: GtkFileChooserDialog.html
 struct: GtkFileChooserDialog
 class: FileChooserDialog
+implements: FileChooserIF
 prefix: gtk_file_chooser_dialog_
 prefix: gtk_
 import: glib.Str
 import: gtk.Window
-structWrap: GtkWindow* Window
-import: glib.ListSG;
-import: gtk.Widget;
-import: gtk.FileFilter;
-import: gtk.FileChooser;
+
+# imports for FileChooser Interface
+#import: glib.Str
+import: glib.ListSG
+import: gtk.Widget
+#import: gtk.Window
+import: gtk.FileFilter
+import: gtk.FileChooserT
+import: gtk.FileChooserIF
+import: gobject.Signals
+
 nocode: gtk_file_chooser_dialog_new
 nocode: gtk_file_chooser_dialog_new_with_backend
 
 code: start
-	private FileChooser fileChooser;
-
-	/** */
-	public FileChooser getFileChooser()
-	{
-		if ( fileChooser is null )
-		{
-			fileChooser = new FileChooser(cast(GtkFileChooser*)getFileChooserDialogStruct());
-		}
-		return fileChooser;
-	}
+	// add the FileChooser capabilities
+	mixin FileChooserT!(GtkFileChooserDialog);
 
 	/**
 	 * Creates a new GtkFileChooserDialog. This function is analogous to
@@ -5102,56 +5103,31 @@ code: start
 
 		addButtons(buttonsText, responses);
 	}
-	
-//	this(string title, Window parent, FileChooserAction action,  StockID[] buttons=null, ResponseType[] responses=null)
-//	{
-//		if ( buttons  is  null )
-//		{
-//			buttons ~= STOCK_OK;
-//			buttons ~= STOCK_CANCEL;
-//		}
-//		if ( responses  is  null )
-//		{
-//			responses ~= ResponseType.GTK_RESPONSE_OK;
-//			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
-//		}
-//
-//		this(gtk_file_chooser_dialog_new(
-//				title.toStringz(),
-//				parent.getWindowStruct(),
-//				action,
-//				null,
-//				0));
-//		addButtons(buttons, responses);
-//	}
-
 code: end
 outFile: FileChooserDialog
 
 file: GtkFileChooserWidget.html
 struct: GtkFileChooserWidget
+ctorStruct: GtkWidget
 class: FileChooserWidget
 prefix: gtk_file_chooser_widget_
 prefix: gtk_
 import: glib.Str
-import: glib.ListSG;
-import: gtk.Widget;
-import: gtk.FileFilter;
-import: gtk.FileChooser;
+
+# imports for FileChooser Interface
+#import: glib.Str
+import: glib.ListSG
+import: gtk.Widget
+import: gtk.Window
+import: gtk.FileFilter
+import: gtk.FileChooserT
+import: gtk.FileChooserIF
+import: gobject.Signals
 
 code: start
-	private FileChooser fileChooser;
-
-	/** */
-	public FileChooser getFileChooser()
-	{
-		if ( fileChooser is null )
-		{
-			fileChooser = new FileChooser(cast(GtkFileChooser*)getFileChooserWidgetStruct());
-		}
-		return fileChooser;
-	}
-code: end
+	// add the FileChooser capabilities
+	mixin FileChooserT!(FileChooserWidget);
+cade: end
 outFile: FileChooserWidget
 
 file: gtk-gtkfilefilter.html

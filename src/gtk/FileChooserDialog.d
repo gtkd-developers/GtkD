@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- FileChooserIF
  * prefixes:
  * 	- gtk_file_chooser_dialog_
  * 	- gtk_
@@ -47,12 +48,13 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Window
- * 	- glib.ListSG;
- * 	- gtk.Widget;
- * 	- gtk.FileFilter;
- * 	- gtk.FileChooser;
+ * 	- glib.ListSG
+ * 	- gtk.Widget
+ * 	- gtk.FileFilter
+ * 	- gtk.FileChooserT
+ * 	- gtk.FileChooserIF
+ * 	- gobject.Signals
  * structWrap:
- * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,10 +69,12 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Window;
-private import glib.ListSG;;
-private import gtk.Widget;;
-private import gtk.FileFilter;;
-private import gtk.FileChooser;;
+private import glib.ListSG;
+private import gtk.Widget;
+private import gtk.FileFilter;
+private import gtk.FileChooserT;
+private import gtk.FileChooserIF;
+private import gobject.Signals;
 
 
 
@@ -162,7 +166,7 @@ private import gtk.Dialog;
  * 	code when you use GtkFileChooserDialog to ensure
  * 	proper operation.
  */
-public class FileChooserDialog : Dialog
+public class FileChooserDialog : Dialog, FileChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -203,17 +207,8 @@ public class FileChooserDialog : Dialog
 		this.gtkFileChooserDialog = gtkFileChooserDialog;
 	}
 	
-	private FileChooser fileChooser;
-	
-	/** */
-	public FileChooser getFileChooser()
-	{
-		if ( fileChooser is null )
-		{
-			fileChooser = new FileChooser(cast(GtkFileChooser*)getFileChooserDialogStruct());
-		}
-		return fileChooser;
-	}
+	// add the FileChooser capabilities
+	mixin FileChooserT!(GtkFileChooserDialog);
 	
 	/**
 	 * Creates a new GtkFileChooserDialog. This function is analogous to
@@ -294,28 +289,6 @@ public class FileChooserDialog : Dialog
 		
 		addButtons(buttonsText, responses);
 	}
-	
-	//	this(string title, Window parent, FileChooserAction action,  StockID[] buttons=null, ResponseType[] responses=null)
-	//	{
-		//		if ( buttons  is  null )
-		//		{
-			//			buttons ~= STOCK_OK;
-			//			buttons ~= STOCK_CANCEL;
-		//		}
-		//		if ( responses  is  null )
-		//		{
-			//			responses ~= ResponseType.GTK_RESPONSE_OK;
-			//			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
-		//		}
-		//
-		//		this(gtk_file_chooser_dialog_new(
-		//				title.toStringz(),
-		//				parent.getWindowStruct(),
-		//				action,
-		//				null,
-		//				0));
-		//		addButtons(buttons, responses);
-	//	}
 	
 	/**
 	 */

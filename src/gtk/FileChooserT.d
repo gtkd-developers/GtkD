@@ -24,15 +24,16 @@
  * Conversion parameters:
  * inFile  = GtkFileChooser.html
  * outPack = gtk
- * outFile = FileChooser
+ * outFile = FileChooserT
  * strct   = GtkFileChooser
  * realStrct=
  * ctorStrct=
- * clss    = FileChooser
- * interf  = 
+ * clss    = FileChooserT
+ * interf  = FileChooserIF
  * class Code: No
  * interface Code: No
  * template for:
+ * 	- TStruct
  * extend  = 
  * implements:
  * prefixes:
@@ -55,10 +56,12 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * 	- getAction -> getFileChooserAction
+ * 	- setAction -> setFileChooserAction
  * overrides:
  */
 
-module gtk.FileChooser;
+module gtk.FileChooserT;
 
 public  import gtkc.gtktypes;
 
@@ -346,44 +349,28 @@ private import gtk.FileFilter;
  * user_data:
  * 		user data set when the signal handler was connected.
  */
-public class FileChooser
+public template FileChooserT(TStruct)
 {
 	
 	/** the main Gtk struct */
 	protected GtkFileChooser* gtkFileChooser;
 	
 	
-	public GtkFileChooser* getFileChooserStruct()
+	public GtkFileChooser* getFileChooserTStruct()
 	{
-		return gtkFileChooser;
+		return cast(GtkFileChooser*)getStruct();
 	}
 	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gtkFileChooser;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkFileChooser* gtkFileChooser)
-	{
-		if(gtkFileChooser is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Null gtkFileChooser passed to constructor.");
-			else return;
-		}
-		this.gtkFileChooser = gtkFileChooser;
-	}
 	
 	/**
 	 */
 	int[char[]] connectedSignals;
 	
-	GtkFileChooserConfirmation delegate(FileChooser)[] onConfirmOverwriteListeners;
+	GtkFileChooserConfirmation delegate(FileChooserIF)[] _onConfirmOverwriteListeners;
+	GtkFileChooserConfirmation delegate(FileChooserIF)[] onConfirmOverwriteListeners()
+	{
+		return  _onConfirmOverwriteListeners;
+	}
 	/**
 	 *  This signal gets emitted whenever it is appropriate to present a
 	 *  confirmation dialog when the user has selected a file name that
@@ -440,7 +427,7 @@ public class FileChooser
 		 *  Since 2.8
 		 *
 		 */
-		void addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		void addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( !("confirm-overwrite" in connectedSignals) )
 			{
@@ -448,26 +435,30 @@ public class FileChooser
 				getStruct(),
 				"confirm-overwrite",
 				cast(GCallback)&callBackConfirmOverwrite,
-				cast(void*)this,
+				cast(void*)cast(FileChooserIF)this,
 				null,
 				connectFlags);
 				connectedSignals["confirm-overwrite"] = 1;
 			}
-			onConfirmOverwriteListeners ~= dlg;
+			_onConfirmOverwriteListeners ~= dlg;
 		}
-		extern(C) static void callBackConfirmOverwrite(GtkFileChooser* filechooserStruct, FileChooser fileChooser)
+		extern(C) static void callBackConfirmOverwrite(GtkFileChooser* filechooserStruct, FileChooserIF fileChooserIF)
 		{
 			bool consumed = false;
 			
-			foreach ( GtkFileChooserConfirmation delegate(FileChooser) dlg ; fileChooser.onConfirmOverwriteListeners )
+			foreach ( GtkFileChooserConfirmation delegate(FileChooserIF) dlg ; fileChooserIF.onConfirmOverwriteListeners )
 			{
-				dlg(fileChooser);
+				dlg(fileChooserIF);
 			}
 			
 			return consumed;
 		}
 		
-		void delegate(FileChooser)[] onCurrentFolderChangedListeners;
+		void delegate(FileChooserIF)[] _onCurrentFolderChangedListeners;
+		void delegate(FileChooserIF)[] onCurrentFolderChangedListeners()
+		{
+			return  _onCurrentFolderChangedListeners;
+		}
 		/**
 		 * This signal is emitted when the current folder in a GtkFileChooser
 		 * changes. This can happen due to the user performing some action that
@@ -481,7 +472,7 @@ public class FileChooser
 		 * gtk_file_chooser_set_current_folder_uri(),
 		 * gtk_file_chooser_get_current_folder_uri().
 		 */
-		void addOnCurrentFolderChanged(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		void addOnCurrentFolderChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( !("current-folder-changed" in connectedSignals) )
 			{
@@ -489,26 +480,30 @@ public class FileChooser
 				getStruct(),
 				"current-folder-changed",
 				cast(GCallback)&callBackCurrentFolderChanged,
-				cast(void*)this,
+				cast(void*)cast(FileChooserIF)this,
 				null,
 				connectFlags);
 				connectedSignals["current-folder-changed"] = 1;
 			}
-			onCurrentFolderChangedListeners ~= dlg;
+			_onCurrentFolderChangedListeners ~= dlg;
 		}
-		extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* chooserStruct, FileChooser fileChooser)
+		extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
 			bool consumed = false;
 			
-			foreach ( void delegate(FileChooser) dlg ; fileChooser.onCurrentFolderChangedListeners )
+			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onCurrentFolderChangedListeners )
 			{
-				dlg(fileChooser);
+				dlg(fileChooserIF);
 			}
 			
 			return consumed;
 		}
 		
-		void delegate(FileChooser)[] onFileActivatedListeners;
+		void delegate(FileChooserIF)[] _onFileActivatedListeners;
+		void delegate(FileChooserIF)[] onFileActivatedListeners()
+		{
+			return  _onFileActivatedListeners;
+		}
 		/**
 		 * This signal is emitted when the user "activates" a file in the file
 		 * chooser. This can happen by double-clicking on a file in the file list, or
@@ -520,7 +515,7 @@ public class FileChooser
 		 * gtk_file_chooser_get_filenames(), gtk_file_chooser_get_uri(),
 		 * gtk_file_chooser_get_uris().
 		 */
-		void addOnFileActivated(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		void addOnFileActivated(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( !("file-activated" in connectedSignals) )
 			{
@@ -528,26 +523,30 @@ public class FileChooser
 				getStruct(),
 				"file-activated",
 				cast(GCallback)&callBackFileActivated,
-				cast(void*)this,
+				cast(void*)cast(FileChooserIF)this,
 				null,
 				connectFlags);
 				connectedSignals["file-activated"] = 1;
 			}
-			onFileActivatedListeners ~= dlg;
+			_onFileActivatedListeners ~= dlg;
 		}
-		extern(C) static void callBackFileActivated(GtkFileChooser* chooserStruct, FileChooser fileChooser)
+		extern(C) static void callBackFileActivated(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
 			bool consumed = false;
 			
-			foreach ( void delegate(FileChooser) dlg ; fileChooser.onFileActivatedListeners )
+			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onFileActivatedListeners )
 			{
-				dlg(fileChooser);
+				dlg(fileChooserIF);
 			}
 			
 			return consumed;
 		}
 		
-		void delegate(FileChooser)[] onSelectionChangedListeners;
+		void delegate(FileChooserIF)[] _onSelectionChangedListeners;
+		void delegate(FileChooserIF)[] onSelectionChangedListeners()
+		{
+			return  _onSelectionChangedListeners;
+		}
 		/**
 		 * This signal is emitted when there is a change in the set of selected files
 		 * in a GtkFileChooser. This can happen when the user modifies the selection
@@ -562,7 +561,7 @@ public class FileChooser
 		 * gtk_file_chooser_unselect_uri(), gtk_file_chooser_get_uri(),
 		 * gtk_file_chooser_get_uris().
 		 */
-		void addOnSelectionChanged(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		void addOnSelectionChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( !("selection-changed" in connectedSignals) )
 			{
@@ -570,26 +569,30 @@ public class FileChooser
 				getStruct(),
 				"selection-changed",
 				cast(GCallback)&callBackSelectionChanged,
-				cast(void*)this,
+				cast(void*)cast(FileChooserIF)this,
 				null,
 				connectFlags);
 				connectedSignals["selection-changed"] = 1;
 			}
-			onSelectionChangedListeners ~= dlg;
+			_onSelectionChangedListeners ~= dlg;
 		}
-		extern(C) static void callBackSelectionChanged(GtkFileChooser* chooserStruct, FileChooser fileChooser)
+		extern(C) static void callBackSelectionChanged(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
 			bool consumed = false;
 			
-			foreach ( void delegate(FileChooser) dlg ; fileChooser.onSelectionChangedListeners )
+			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onSelectionChangedListeners )
 			{
-				dlg(fileChooser);
+				dlg(fileChooserIF);
 			}
 			
 			return consumed;
 		}
 		
-		void delegate(FileChooser)[] onUpdatePreviewListeners;
+		void delegate(FileChooserIF)[] _onUpdatePreviewListeners;
+		void delegate(FileChooserIF)[] onUpdatePreviewListeners()
+		{
+			return  _onUpdatePreviewListeners;
+		}
 		/**
 		 * This signal is emitted when the preview in a file chooser should be
 		 * regenerated. For example, this can happen when the currently selected file
@@ -613,7 +616,7 @@ public class FileChooser
 		 *  GtkFileChooserDialog, GtkFileChooserWidget, GtkFileChooserButton
 		 *
 		 */
-		void addOnUpdatePreview(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		void addOnUpdatePreview(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( !("update-preview" in connectedSignals) )
 			{
@@ -621,20 +624,20 @@ public class FileChooser
 				getStruct(),
 				"update-preview",
 				cast(GCallback)&callBackUpdatePreview,
-				cast(void*)this,
+				cast(void*)cast(FileChooserIF)this,
 				null,
 				connectFlags);
 				connectedSignals["update-preview"] = 1;
 			}
-			onUpdatePreviewListeners ~= dlg;
+			_onUpdatePreviewListeners ~= dlg;
 		}
-		extern(C) static void callBackUpdatePreview(GtkFileChooser* chooserStruct, FileChooser fileChooser)
+		extern(C) static void callBackUpdatePreview(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
 			bool consumed = false;
 			
-			foreach ( void delegate(FileChooser) dlg ; fileChooser.onUpdatePreviewListeners )
+			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onUpdatePreviewListeners )
 			{
-				dlg(fileChooser);
+				dlg(fileChooserIF);
 			}
 			
 			return consumed;
@@ -651,10 +654,10 @@ public class FileChooser
 		 * Params:
 		 * action =  the action that the file selector is performing
 		 */
-		public void setAction(GtkFileChooserAction action)
+		public void setFileChooserAction(GtkFileChooserAction action)
 		{
 			// void gtk_file_chooser_set_action (GtkFileChooser *chooser,  GtkFileChooserAction action);
-			gtk_file_chooser_set_action(gtkFileChooser, action);
+			gtk_file_chooser_set_action(getFileChooserTStruct(), action);
 		}
 		
 		/**
@@ -663,10 +666,10 @@ public class FileChooser
 		 * Since 2.4
 		 * Returns: the action that the file selector is performing
 		 */
-		public GtkFileChooserAction getAction()
+		public GtkFileChooserAction getFileChooserAction()
 		{
 			// GtkFileChooserAction gtk_file_chooser_get_action (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_action(gtkFileChooser);
+			return gtk_file_chooser_get_action(getFileChooserTStruct());
 		}
 		
 		/**
@@ -686,7 +689,7 @@ public class FileChooser
 		public void setLocalOnly(int localOnly)
 		{
 			// void gtk_file_chooser_set_local_only (GtkFileChooser *chooser,  gboolean local_only);
-			gtk_file_chooser_set_local_only(gtkFileChooser, localOnly);
+			gtk_file_chooser_set_local_only(getFileChooserTStruct(), localOnly);
 		}
 		
 		/**
@@ -698,7 +701,7 @@ public class FileChooser
 		public int getLocalOnly()
 		{
 			// gboolean gtk_file_chooser_get_local_only (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_local_only(gtkFileChooser);
+			return gtk_file_chooser_get_local_only(getFileChooserTStruct());
 		}
 		
 		/**
@@ -712,7 +715,7 @@ public class FileChooser
 		public void setSelectMultiple(int selectMultiple)
 		{
 			// void gtk_file_chooser_set_select_multiple  (GtkFileChooser *chooser,  gboolean select_multiple);
-			gtk_file_chooser_set_select_multiple(gtkFileChooser, selectMultiple);
+			gtk_file_chooser_set_select_multiple(getFileChooserTStruct(), selectMultiple);
 		}
 		
 		/**
@@ -724,7 +727,7 @@ public class FileChooser
 		public int getSelectMultiple()
 		{
 			// gboolean gtk_file_chooser_get_select_multiple  (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_select_multiple(gtkFileChooser);
+			return gtk_file_chooser_get_select_multiple(getFileChooserTStruct());
 		}
 		
 		/**
@@ -736,7 +739,7 @@ public class FileChooser
 		public void setShowHidden(int showHidden)
 		{
 			// void gtk_file_chooser_set_show_hidden (GtkFileChooser *chooser,  gboolean show_hidden);
-			gtk_file_chooser_set_show_hidden(gtkFileChooser, showHidden);
+			gtk_file_chooser_set_show_hidden(getFileChooserTStruct(), showHidden);
 		}
 		
 		/**
@@ -748,7 +751,7 @@ public class FileChooser
 		public int getShowHidden()
 		{
 			// gboolean gtk_file_chooser_get_show_hidden (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_show_hidden(gtkFileChooser);
+			return gtk_file_chooser_get_show_hidden(getFileChooserTStruct());
 		}
 		
 		/**
@@ -768,7 +771,7 @@ public class FileChooser
 		public void setDoOverwriteConfirmation(int doOverwriteConfirmation)
 		{
 			// void gtk_file_chooser_set_do_overwrite_confirmation  (GtkFileChooser *chooser,  gboolean do_overwrite_confirmation);
-			gtk_file_chooser_set_do_overwrite_confirmation(gtkFileChooser, doOverwriteConfirmation);
+			gtk_file_chooser_set_do_overwrite_confirmation(getFileChooserTStruct(), doOverwriteConfirmation);
 		}
 		
 		/**
@@ -780,7 +783,7 @@ public class FileChooser
 		public int getDoOverwriteConfirmation()
 		{
 			// gboolean gtk_file_chooser_get_do_overwrite_confirmation  (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_do_overwrite_confirmation(gtkFileChooser);
+			return gtk_file_chooser_get_do_overwrite_confirmation(getFileChooserTStruct());
 		}
 		
 		/**
@@ -799,7 +802,7 @@ public class FileChooser
 		public void setCurrentName(string name)
 		{
 			// void gtk_file_chooser_set_current_name (GtkFileChooser *chooser,  const gchar *name);
-			gtk_file_chooser_set_current_name(gtkFileChooser, Str.toStringz(name));
+			gtk_file_chooser_set_current_name(getFileChooserTStruct(), Str.toStringz(name));
 		}
 		
 		/**
@@ -814,7 +817,7 @@ public class FileChooser
 		public string getFilename()
 		{
 			// gchar* gtk_file_chooser_get_filename (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_filename(gtkFileChooser));
+			return Str.toString(gtk_file_chooser_get_filename(getFileChooserTStruct()));
 		}
 		
 		/**
@@ -841,7 +844,7 @@ public class FileChooser
 		public int setFilename(string filename)
 		{
 			// gboolean gtk_file_chooser_set_filename (GtkFileChooser *chooser,  const char *filename);
-			return gtk_file_chooser_set_filename(gtkFileChooser, Str.toStringz(filename));
+			return gtk_file_chooser_set_filename(getFileChooserTStruct(), Str.toStringz(filename));
 		}
 		
 		/**
@@ -856,7 +859,7 @@ public class FileChooser
 		public int selectFilename(string filename)
 		{
 			// gboolean gtk_file_chooser_select_filename (GtkFileChooser *chooser,  const char *filename);
-			return gtk_file_chooser_select_filename(gtkFileChooser, Str.toStringz(filename));
+			return gtk_file_chooser_select_filename(getFileChooserTStruct(), Str.toStringz(filename));
 		}
 		
 		/**
@@ -870,7 +873,7 @@ public class FileChooser
 		public void unselectFilename(string filename)
 		{
 			// void gtk_file_chooser_unselect_filename (GtkFileChooser *chooser,  const char *filename);
-			gtk_file_chooser_unselect_filename(gtkFileChooser, Str.toStringz(filename));
+			gtk_file_chooser_unselect_filename(getFileChooserTStruct(), Str.toStringz(filename));
 		}
 		
 		/**
@@ -880,7 +883,7 @@ public class FileChooser
 		public void selectAll()
 		{
 			// void gtk_file_chooser_select_all (GtkFileChooser *chooser);
-			gtk_file_chooser_select_all(gtkFileChooser);
+			gtk_file_chooser_select_all(getFileChooserTStruct());
 		}
 		
 		/**
@@ -890,7 +893,7 @@ public class FileChooser
 		public void unselectAll()
 		{
 			// void gtk_file_chooser_unselect_all (GtkFileChooser *chooser);
-			gtk_file_chooser_unselect_all(gtkFileChooser);
+			gtk_file_chooser_unselect_all(getFileChooserTStruct());
 		}
 		
 		/**
@@ -904,7 +907,7 @@ public class FileChooser
 		public ListSG getFilenames()
 		{
 			// GSList* gtk_file_chooser_get_filenames (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_get_filenames(gtkFileChooser);
+			auto p = gtk_file_chooser_get_filenames(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -925,7 +928,7 @@ public class FileChooser
 		public int setCurrentFolder(string filename)
 		{
 			// gboolean gtk_file_chooser_set_current_folder (GtkFileChooser *chooser,  const gchar *filename);
-			return gtk_file_chooser_set_current_folder(gtkFileChooser, Str.toStringz(filename));
+			return gtk_file_chooser_set_current_folder(getFileChooserTStruct(), Str.toStringz(filename));
 		}
 		
 		/**
@@ -944,7 +947,7 @@ public class FileChooser
 		public string getCurrentFolder()
 		{
 			// gchar* gtk_file_chooser_get_current_folder (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_current_folder(gtkFileChooser));
+			return Str.toString(gtk_file_chooser_get_current_folder(getFileChooserTStruct()));
 		}
 		
 		/**
@@ -959,7 +962,7 @@ public class FileChooser
 		public string getUri()
 		{
 			// gchar* gtk_file_chooser_get_uri (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_uri(gtkFileChooser));
+			return Str.toString(gtk_file_chooser_get_uri(getFileChooserTStruct()));
 		}
 		
 		/**
@@ -986,7 +989,7 @@ public class FileChooser
 		public int setUri(string uri)
 		{
 			// gboolean gtk_file_chooser_set_uri (GtkFileChooser *chooser,  const char *uri);
-			return gtk_file_chooser_set_uri(gtkFileChooser, Str.toStringz(uri));
+			return gtk_file_chooser_set_uri(getFileChooserTStruct(), Str.toStringz(uri));
 		}
 		
 		/**
@@ -1001,7 +1004,7 @@ public class FileChooser
 		public int selectUri(string uri)
 		{
 			// gboolean gtk_file_chooser_select_uri (GtkFileChooser *chooser,  const char *uri);
-			return gtk_file_chooser_select_uri(gtkFileChooser, Str.toStringz(uri));
+			return gtk_file_chooser_select_uri(getFileChooserTStruct(), Str.toStringz(uri));
 		}
 		
 		/**
@@ -1015,7 +1018,7 @@ public class FileChooser
 		public void unselectUri(string uri)
 		{
 			// void gtk_file_chooser_unselect_uri (GtkFileChooser *chooser,  const char *uri);
-			gtk_file_chooser_unselect_uri(gtkFileChooser, Str.toStringz(uri));
+			gtk_file_chooser_unselect_uri(getFileChooserTStruct(), Str.toStringz(uri));
 		}
 		
 		/**
@@ -1027,7 +1030,7 @@ public class FileChooser
 		public ListSG getUris()
 		{
 			// GSList* gtk_file_chooser_get_uris (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_get_uris(gtkFileChooser);
+			auto p = gtk_file_chooser_get_uris(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -1048,7 +1051,7 @@ public class FileChooser
 		public int setCurrentFolderUri(string uri)
 		{
 			// gboolean gtk_file_chooser_set_current_folder_uri  (GtkFileChooser *chooser,  const gchar *uri);
-			return gtk_file_chooser_set_current_folder_uri(gtkFileChooser, Str.toStringz(uri));
+			return gtk_file_chooser_set_current_folder_uri(getFileChooserTStruct(), Str.toStringz(uri));
 		}
 		
 		/**
@@ -1067,7 +1070,7 @@ public class FileChooser
 		public string getCurrentFolderUri()
 		{
 			// gchar* gtk_file_chooser_get_current_folder_uri  (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_current_folder_uri(gtkFileChooser));
+			return Str.toString(gtk_file_chooser_get_current_folder_uri(getFileChooserTStruct()));
 		}
 		
 		/**
@@ -1090,7 +1093,7 @@ public class FileChooser
 		public void setPreviewWidget(Widget previewWidget)
 		{
 			// void gtk_file_chooser_set_preview_widget (GtkFileChooser *chooser,  GtkWidget *preview_widget);
-			gtk_file_chooser_set_preview_widget(gtkFileChooser, (previewWidget is null) ? null : previewWidget.getWidgetStruct());
+			gtk_file_chooser_set_preview_widget(getFileChooserTStruct(), (previewWidget is null) ? null : previewWidget.getWidgetStruct());
 		}
 		
 		/**
@@ -1102,7 +1105,7 @@ public class FileChooser
 		public Widget getPreviewWidget()
 		{
 			// GtkWidget* gtk_file_chooser_get_preview_widget (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_get_preview_widget(gtkFileChooser);
+			auto p = gtk_file_chooser_get_preview_widget(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -1125,7 +1128,7 @@ public class FileChooser
 		public void setPreviewWidgetActive(int active)
 		{
 			// void gtk_file_chooser_set_preview_widget_active  (GtkFileChooser *chooser,  gboolean active);
-			gtk_file_chooser_set_preview_widget_active(gtkFileChooser, active);
+			gtk_file_chooser_set_preview_widget_active(getFileChooserTStruct(), active);
 		}
 		
 		/**
@@ -1138,7 +1141,7 @@ public class FileChooser
 		public int getPreviewWidgetActive()
 		{
 			// gboolean gtk_file_chooser_get_preview_widget_active  (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_preview_widget_active(gtkFileChooser);
+			return gtk_file_chooser_get_preview_widget_active(getFileChooserTStruct());
 		}
 		
 		/**
@@ -1154,7 +1157,7 @@ public class FileChooser
 		public void setUsePreviewLabel(int useLabel)
 		{
 			// void gtk_file_chooser_set_use_preview_label  (GtkFileChooser *chooser,  gboolean use_label);
-			gtk_file_chooser_set_use_preview_label(gtkFileChooser, useLabel);
+			gtk_file_chooser_set_use_preview_label(getFileChooserTStruct(), useLabel);
 		}
 		
 		/**
@@ -1165,7 +1168,7 @@ public class FileChooser
 		public int getUsePreviewLabel()
 		{
 			// gboolean gtk_file_chooser_get_use_preview_label  (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_use_preview_label(gtkFileChooser);
+			return gtk_file_chooser_get_use_preview_label(getFileChooserTStruct());
 		}
 		
 		/**
@@ -1177,7 +1180,7 @@ public class FileChooser
 		public string getPreviewFilename()
 		{
 			// char* gtk_file_chooser_get_preview_filename  (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_preview_filename(gtkFileChooser));
+			return Str.toString(gtk_file_chooser_get_preview_filename(getFileChooserTStruct()));
 		}
 		
 		/**
@@ -1189,7 +1192,7 @@ public class FileChooser
 		public string getPreviewUri()
 		{
 			// char* gtk_file_chooser_get_preview_uri (GtkFileChooser *chooser);
-			return Str.toString(gtk_file_chooser_get_preview_uri(gtkFileChooser));
+			return Str.toString(gtk_file_chooser_get_preview_uri(getFileChooserTStruct()));
 		}
 		
 		/**
@@ -1201,7 +1204,7 @@ public class FileChooser
 		public void setExtraWidget(Widget extraWidget)
 		{
 			// void gtk_file_chooser_set_extra_widget (GtkFileChooser *chooser,  GtkWidget *extra_widget);
-			gtk_file_chooser_set_extra_widget(gtkFileChooser, (extraWidget is null) ? null : extraWidget.getWidgetStruct());
+			gtk_file_chooser_set_extra_widget(getFileChooserTStruct(), (extraWidget is null) ? null : extraWidget.getWidgetStruct());
 		}
 		
 		/**
@@ -1213,7 +1216,7 @@ public class FileChooser
 		public Widget getExtraWidget()
 		{
 			// GtkWidget* gtk_file_chooser_get_extra_widget (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_get_extra_widget(gtkFileChooser);
+			auto p = gtk_file_chooser_get_extra_widget(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -1235,7 +1238,7 @@ public class FileChooser
 		public void addFilter(FileFilter filter)
 		{
 			// void gtk_file_chooser_add_filter (GtkFileChooser *chooser,  GtkFileFilter *filter);
-			gtk_file_chooser_add_filter(gtkFileChooser, (filter is null) ? null : filter.getFileFilterStruct());
+			gtk_file_chooser_add_filter(getFileChooserTStruct(), (filter is null) ? null : filter.getFileFilterStruct());
 		}
 		
 		/**
@@ -1247,7 +1250,7 @@ public class FileChooser
 		public void removeFilter(FileFilter filter)
 		{
 			// void gtk_file_chooser_remove_filter (GtkFileChooser *chooser,  GtkFileFilter *filter);
-			gtk_file_chooser_remove_filter(gtkFileChooser, (filter is null) ? null : filter.getFileFilterStruct());
+			gtk_file_chooser_remove_filter(getFileChooserTStruct(), (filter is null) ? null : filter.getFileFilterStruct());
 		}
 		
 		/**
@@ -1259,7 +1262,7 @@ public class FileChooser
 		public ListSG listFilters()
 		{
 			// GSList* gtk_file_chooser_list_filters (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_list_filters(gtkFileChooser);
+			auto p = gtk_file_chooser_list_filters(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -1282,7 +1285,7 @@ public class FileChooser
 		public void setFilter(FileFilter filter)
 		{
 			// void gtk_file_chooser_set_filter (GtkFileChooser *chooser,  GtkFileFilter *filter);
-			gtk_file_chooser_set_filter(gtkFileChooser, (filter is null) ? null : filter.getFileFilterStruct());
+			gtk_file_chooser_set_filter(getFileChooserTStruct(), (filter is null) ? null : filter.getFileFilterStruct());
 		}
 		
 		/**
@@ -1293,7 +1296,7 @@ public class FileChooser
 		public FileFilter getFilter()
 		{
 			// GtkFileFilter* gtk_file_chooser_get_filter (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_get_filter(gtkFileChooser);
+			auto p = gtk_file_chooser_get_filter(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -1316,7 +1319,7 @@ public class FileChooser
 		public int addShortcutFolder(string folder, GError** error)
 		{
 			// gboolean gtk_file_chooser_add_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
-			return gtk_file_chooser_add_shortcut_folder(gtkFileChooser, Str.toStringz(folder), error);
+			return gtk_file_chooser_add_shortcut_folder(getFileChooserTStruct(), Str.toStringz(folder), error);
 		}
 		
 		/**
@@ -1330,7 +1333,7 @@ public class FileChooser
 		public int removeShortcutFolder(string folder, GError** error)
 		{
 			// gboolean gtk_file_chooser_remove_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
-			return gtk_file_chooser_remove_shortcut_folder(gtkFileChooser, Str.toStringz(folder), error);
+			return gtk_file_chooser_remove_shortcut_folder(getFileChooserTStruct(), Str.toStringz(folder), error);
 		}
 		
 		/**
@@ -1342,7 +1345,7 @@ public class FileChooser
 		public ListSG listShortcutFolders()
 		{
 			// GSList* gtk_file_chooser_list_shortcut_folders  (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_list_shortcut_folders(gtkFileChooser);
+			auto p = gtk_file_chooser_list_shortcut_folders(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -1365,7 +1368,7 @@ public class FileChooser
 		public int addShortcutFolderUri(string uri, GError** error)
 		{
 			// gboolean gtk_file_chooser_add_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
-			return gtk_file_chooser_add_shortcut_folder_uri(gtkFileChooser, Str.toStringz(uri), error);
+			return gtk_file_chooser_add_shortcut_folder_uri(getFileChooserTStruct(), Str.toStringz(uri), error);
 		}
 		
 		/**
@@ -1379,7 +1382,7 @@ public class FileChooser
 		public int removeShortcutFolderUri(string uri, GError** error)
 		{
 			// gboolean gtk_file_chooser_remove_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
-			return gtk_file_chooser_remove_shortcut_folder_uri(gtkFileChooser, Str.toStringz(uri), error);
+			return gtk_file_chooser_remove_shortcut_folder_uri(getFileChooserTStruct(), Str.toStringz(uri), error);
 		}
 		
 		/**
@@ -1391,7 +1394,7 @@ public class FileChooser
 		public ListSG listShortcutFolderUris()
 		{
 			// GSList* gtk_file_chooser_list_shortcut_folder_uris  (GtkFileChooser *chooser);
-			auto p = gtk_file_chooser_list_shortcut_folder_uris(gtkFileChooser);
+			auto p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserTStruct());
 			if(p is null)
 			{
 				version(Exceptions) throw new Exception("Null GObject from GTK+.");

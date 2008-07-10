@@ -159,12 +159,12 @@ private import glib.ListSG;
 			r ~= ResponseType.GTK_RESPONSE_CANCEL;
 			fs = new FileChooserDialog("File Selection", window, FileChooserAction.OPEN, a, r);
 		}
-		fs.getFileChooser().setSelectMultiple(true);
+		fs.setSelectMultiple(true);
 		ResponseType response = cast(ResponseType) fs.run();
 		if ( response == ResponseType.GTK_RESPONSE_ACCEPT )
 		{
 			string[] fileNames;
-			ListSG list = fs.getFileChooser().getFilenames();
+			ListSG list = fs.getFilenames();
 			
 			
 			for ( int i = 0; i<list.length() ; i++)

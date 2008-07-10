@@ -2231,7 +2231,10 @@ extern(C)
 	
 	GtkWidget* function(gchar* title)gtk_color_selection_dialog_new;
 	
-	// gtk.FileChooser
+	// gtk.FileChooserT
+	
+	
+	// gtk.FileChooserT
 	
 	void function(GtkFileChooser* chooser, GtkFileChooserAction action)gtk_file_chooser_set_action;
 	GtkFileChooserAction function(GtkFileChooser* chooser)gtk_file_chooser_get_action;

@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- FileChooserIF
  * prefixes:
  * 	- gtk_file_chooser_button_
  * 	- gtk_
@@ -45,10 +46,11 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- glib.ListSG;
- * 	- gtk.Widget;
- * 	- gtk.FileFilter;
- * 	- gtk.FileChooser;
+ * 	- glib.ListSG
+ * 	- gtk.Window
+ * 	- gtk.FileFilter
+ * 	- gtk.FileChooserT
+ * 	- gtk.FileChooserIF
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -67,10 +69,11 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
-private import glib.ListSG;;
-private import gtk.Widget;;
-private import gtk.FileFilter;;
-private import gtk.FileChooser;;
+private import glib.ListSG;
+private import gtk.Window;
+private import gtk.FileFilter;
+private import gtk.FileChooserT;
+private import gtk.FileChooserIF;
 
 
 
@@ -100,7 +103,7 @@ private import gtk.HBox;
  * gtk_file_chooser_button_set_width_chars(), or pack the button in
  * such a way that other interface elements give space to the widget.
  */
-public class FileChooserButton : HBox
+public class FileChooserButton : HBox, FileChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -141,17 +144,8 @@ public class FileChooserButton : HBox
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}
 	
-	private FileChooser fileChooser;
-	
-	/** */
-	public FileChooser getFileChooser()
-	{
-		if ( fileChooser is null )
-		{
-			fileChooser = new FileChooser(cast(GtkFileChooser*)getFileChooserButtonStruct());
-		}
-		return fileChooser;
-	}
+	// add the FileChooser capabilities
+	mixin FileChooserT!(GtkFileChooserButton);
 	
 	/**
 	 */

@@ -27,7 +27,7 @@
  * outFile = FileChooserWidget
  * strct   = GtkFileChooserWidget
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GtkWidget
  * clss    = FileChooserWidget
  * interf  = 
  * class Code: Yes
@@ -44,10 +44,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.ListSG;
- * 	- gtk.Widget;
- * 	- gtk.FileFilter;
- * 	- gtk.FileChooser;
+ * 	- glib.ListSG
+ * 	- gtk.Widget
+ * 	- gtk.Window
+ * 	- gtk.FileFilter
+ * 	- gtk.FileChooserT
+ * 	- gtk.FileChooserIF
+ * 	- gobject.Signals
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,10 +65,13 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
-private import glib.ListSG;;
-private import gtk.Widget;;
-private import gtk.FileFilter;;
-private import gtk.FileChooser;;
+private import glib.ListSG;
+private import gtk.Widget;
+private import gtk.Window;
+private import gtk.FileFilter;
+private import gtk.FileChooserT;
+private import gtk.FileChooserIF;
+private import gobject.Signals;
 
 
 
@@ -123,17 +129,8 @@ public class FileChooserWidget : VBox
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}
 	
-	private FileChooser fileChooser;
-	
-	/** */
-	public FileChooser getFileChooser()
-	{
-		if ( fileChooser is null )
-		{
-			fileChooser = new FileChooser(cast(GtkFileChooser*)getFileChooserWidgetStruct());
-		}
-		return fileChooser;
-	}
+	// add the FileChooser capabilities
+	mixin FileChooserT!(FileChooserWidget);
 	
 	/**
 	 */
