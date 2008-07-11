@@ -1,4 +1,4 @@
-module DraRect;
+module gtk.DrawRect;
 
 import gtk.Main;
 import gtk.MainWindow;
