@@ -179,7 +179,7 @@ public class ObjectG
 	 *  key = the data identifier
 	 *  data = a pointer
 	 */
-	public: void objectGSetDataFull(string key, gpointer data)
+	public void objectGSetDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		version(Tango) GC.addRoot(data);
