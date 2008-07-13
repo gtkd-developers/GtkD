@@ -9,8 +9,6 @@ import gtk.ImageMenuItem;
 import gtk.Widget;
 import gtk.AccelGroup;
 
-import tango.io.Stdout;
-
 class ExampleWindow : MainWindow
 {
 	Menu menu;
@@ -39,8 +37,6 @@ class ExampleWindow : MainWindow
 	{
 		if(event.type == GdkEventType.BUTTON_PRESS && event.button == 3)
 		{
-			Stdout("test").newline;
-
 			menu.showAll();
 			menu.popup(event.button, event.time);
 		}
