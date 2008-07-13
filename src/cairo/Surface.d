@@ -98,8 +98,7 @@ public class Surface
 		if(cairo_surface is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_surface passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo_surface = cairo_surface;
 	}
@@ -128,8 +127,7 @@ public class Surface
 		auto p = cairo_surface_create_similar(cairo_surface, content, width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Surface(cast(cairo_surface_t*) p);
 	}
@@ -148,8 +146,7 @@ public class Surface
 		auto p = cairo_surface_reference(cairo_surface);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Surface(cast(cairo_surface_t*) p);
 	}

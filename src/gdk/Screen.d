@@ -132,8 +132,7 @@ public class Screen : ObjectG
 		if(gdkScreen is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkScreen passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkScreen);
@@ -229,8 +228,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -246,8 +244,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_default_colormap(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -275,8 +272,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_system_colormap(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -294,8 +290,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_system_visual(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -315,8 +310,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_rgb_colormap(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -337,8 +331,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_rgb_visual(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -364,8 +357,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_rgba_colormap(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -383,8 +375,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_rgba_visual(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -415,8 +406,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_root_window(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -432,8 +422,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_display(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -511,8 +500,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_list_visuals(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -532,8 +520,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -653,8 +640,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_font_options(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
@@ -724,8 +710,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_active_window(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -751,8 +736,7 @@ public class Screen : ObjectG
 		auto p = gdk_screen_get_window_stack(gdkScreen);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

@@ -192,8 +192,7 @@ public class Dialog : Window
 		if(gtkDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkDialog);
@@ -318,9 +317,7 @@ public class Dialog : Window
 		auto p = gtk_dialog_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkDialog*) p);
 	}
@@ -357,9 +354,7 @@ public class Dialog : Window
 		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkDialog*) p);
 	}
@@ -422,8 +417,7 @@ public class Dialog : Window
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

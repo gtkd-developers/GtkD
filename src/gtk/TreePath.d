@@ -229,8 +229,7 @@ public class TreePath
 		if(gtkTreePath is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreePath passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkTreePath = gtkTreePath;
 	}
@@ -272,9 +271,7 @@ public class TreePath
 		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreePath*) p);
 	}
@@ -292,9 +289,7 @@ public class TreePath
 		auto p = gtk_tree_path_new_from_indices(firstIndex);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreePath*) p);
 	}
@@ -374,8 +369,7 @@ public class TreePath
 		auto p = gtk_tree_path_copy(gtkTreePath);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}

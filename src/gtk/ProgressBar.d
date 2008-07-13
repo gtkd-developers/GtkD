@@ -126,8 +126,7 @@ public class ProgressBar : Progress
 		if(gtkProgressBar is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkProgressBar passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkProgressBar);
@@ -152,9 +151,7 @@ public class ProgressBar : Progress
 		auto p = gtk_progress_bar_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkProgressBar*) p);
 	}
@@ -301,9 +298,7 @@ public class ProgressBar : Progress
 		auto p = gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkProgressBar*) p);
 	}

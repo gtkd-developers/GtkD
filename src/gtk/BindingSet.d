@@ -165,8 +165,7 @@ public class BindingSet
 		if(gtkBindingSet is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkBindingSet passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkBindingSet = gtkBindingSet;
 	}
@@ -228,9 +227,7 @@ public class BindingSet
 		auto p = gtk_binding_set_new(Str.toStringz(setName));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkBindingSet*) p);
 	}
@@ -249,8 +246,7 @@ public class BindingSet
 		auto p = gtk_binding_set_by_class(objectClass);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new BindingSet(cast(GtkBindingSet*) p);
 	}
@@ -269,8 +265,7 @@ public class BindingSet
 		auto p = gtk_binding_set_find(Str.toStringz(setName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new BindingSet(cast(GtkBindingSet*) p);
 	}

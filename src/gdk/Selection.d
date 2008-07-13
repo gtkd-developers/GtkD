@@ -158,8 +158,7 @@ public class Selection
 		auto p = gdk_selection_owner_get(selection);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -181,8 +180,7 @@ public class Selection
 		auto p = gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}

@@ -97,8 +97,7 @@ public class VPaned : Paned
 		if(gtkVPaned is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkVPaned passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkVPaned);
@@ -137,9 +136,7 @@ public class VPaned : Paned
 		auto p = gtk_vpaned_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkVPaned*) p);
 	}

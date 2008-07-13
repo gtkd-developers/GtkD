@@ -110,8 +110,7 @@ public class StringCompletion
 		if(gCompletion is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gCompletion passed to constructor.");
-			else return;
+			return;
 		}
 		this.gCompletion = gCompletion;
 	}
@@ -132,9 +131,7 @@ public class StringCompletion
 		auto p = g_completion_new(func);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GCompletion*) p);
 	}
@@ -186,8 +183,7 @@ public class StringCompletion
 		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), newPrefix);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -214,8 +210,7 @@ public class StringCompletion
 		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), newPrefix);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

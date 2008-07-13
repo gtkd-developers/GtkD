@@ -102,8 +102,7 @@ public class CellRendererAccel : CellRendererText
 		if(gtkCellRendererAccel is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCellRendererAccel passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCellRendererAccel);
@@ -195,9 +194,7 @@ public class CellRendererAccel : CellRendererText
 		auto p = gtk_cell_renderer_accel_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCellRendererAccel*) p);
 	}

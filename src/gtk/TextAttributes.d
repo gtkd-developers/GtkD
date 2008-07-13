@@ -103,8 +103,7 @@ public class TextAttributes
 		if(gtkTextAttributes is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextAttributes passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkTextAttributes = gtkTextAttributes;
 	}
@@ -156,9 +155,7 @@ public class TextAttributes
 		auto p = gtk_text_attributes_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTextAttributes*) p);
 	}
@@ -173,8 +170,7 @@ public class TextAttributes
 		auto p = gtk_text_attributes_copy(gtkTextAttributes);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextAttributes(cast(GtkTextAttributes*) p);
 	}
@@ -211,8 +207,7 @@ public class TextAttributes
 		auto p = gtk_text_attributes_ref(gtkTextAttributes);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextAttributes(cast(GtkTextAttributes*) p);
 	}

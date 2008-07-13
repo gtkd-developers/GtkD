@@ -95,8 +95,7 @@ public class SourceLanguageManager : ObjectG
 		if(gtkSourceLanguageManager is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSourceLanguageManager passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSourceLanguageManager);
@@ -123,9 +122,7 @@ public class SourceLanguageManager : ObjectG
 		auto p = gtk_source_language_manager_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourceLanguageManager*) p);
 	}
@@ -191,8 +188,7 @@ public class SourceLanguageManager : ObjectG
 		auto p = gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SourceLanguage(cast(GtkSourceLanguage*) p);
 	}

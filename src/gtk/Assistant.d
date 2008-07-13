@@ -104,8 +104,7 @@ public class Assistant : Window
 		if(gtkAssistant is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAssistant passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAssistant);
@@ -272,9 +271,7 @@ public class Assistant : Window
 		auto p = gtk_assistant_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkAssistant*) p);
 	}
@@ -331,8 +328,7 @@ public class Assistant : Window
 		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -477,8 +473,7 @@ public class Assistant : Window
 		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -510,8 +505,7 @@ public class Assistant : Window
 		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

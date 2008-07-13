@@ -103,8 +103,7 @@ public class PgFontset : ObjectG
 		if(pangoFontset is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFontset passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoFontset);
@@ -133,8 +132,7 @@ public class PgFontset : ObjectG
 		auto p = pango_fontset_get_font(pangoFontset, wc);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFont(cast(PangoFont*) p);
 	}
@@ -149,8 +147,7 @@ public class PgFontset : ObjectG
 		auto p = pango_fontset_get_metrics(pangoFontset);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMetrics(cast(PangoFontMetrics*) p);
 	}

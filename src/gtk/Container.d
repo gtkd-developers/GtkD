@@ -194,8 +194,7 @@ public class Container : Widget
 		if(gtkContainer is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkContainer passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkContainer);
@@ -471,8 +470,7 @@ public class Container : Widget
 		auto p = gtk_container_get_children(gtkContainer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -510,8 +508,7 @@ public class Container : Widget
 		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -546,8 +543,7 @@ public class Container : Widget
 		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -802,8 +798,7 @@ public class Container : Widget
 		auto p = gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}

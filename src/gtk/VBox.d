@@ -95,8 +95,7 @@ public class VBox : Box
 		if(gtkVBox is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkVBox passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkVBox);
@@ -124,9 +123,7 @@ public class VBox : Box
 		auto p = gtk_vbox_new(homogeneous, spacing);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkVBox*) p);
 	}

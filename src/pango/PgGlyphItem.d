@@ -102,8 +102,7 @@ public class PgGlyphItem
 		if(pangoGlyphItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoGlyphItem passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoGlyphItem = pangoGlyphItem;
 	}
@@ -133,8 +132,7 @@ public class PgGlyphItem
 		auto p = pango_glyph_item_split(pangoGlyphItem, Str.toStringz(text), splitIndex);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgGlyphItem(cast(PangoGlyphItem*) p);
 	}
@@ -166,8 +164,7 @@ public class PgGlyphItem
 		auto p = pango_glyph_item_apply_attrs(pangoGlyphItem, Str.toStringz(text), (list is null) ? null : list.getPgAttributeListStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -204,8 +201,7 @@ public class PgGlyphItem
 		auto p = pango_glyph_item_copy(pangoGlyphItem);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgGlyphItem(cast(PangoGlyphItem*) p);
 	}

@@ -94,8 +94,7 @@ public class Types
 		if(gtkType is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkType passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkType = gtkType;
 	}

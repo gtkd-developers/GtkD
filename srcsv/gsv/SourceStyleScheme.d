@@ -177,8 +177,7 @@ public class SourceStyleScheme : ObjectG
 		if(gtkSourceStyleScheme is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSourceStyleScheme passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSourceStyleScheme);
@@ -256,8 +255,7 @@ public class SourceStyleScheme : ObjectG
 		auto p = gtk_source_style_scheme_get_style(gtkSourceStyleScheme, Str.toStringz(styleId));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SourceStyle(cast(GtkSourceStyle*) p);
 	}

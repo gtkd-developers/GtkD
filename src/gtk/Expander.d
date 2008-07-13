@@ -149,8 +149,7 @@ public class Expander : Bin
 		if(gtkExpander is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkExpander passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkExpander);
@@ -378,8 +377,7 @@ public class Expander : Bin
 		auto p = gtk_expander_get_label_widget(gtkExpander);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

@@ -161,8 +161,7 @@ public class Child
 		auto p = g_child_watch_source_new(pid);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}

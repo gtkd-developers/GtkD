@@ -111,8 +111,7 @@ public class ImageGdk
 		if(gdkImage is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkImage passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkImage = gdkImage;
 	}
@@ -137,9 +136,7 @@ public class ImageGdk
 		auto p = gdk_image_new(type, (visual is null) ? null : visual.getVisualStruct(), width, height);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkImage*) p);
 	}
@@ -164,9 +161,7 @@ public class ImageGdk
 		auto p = gdk_image_new_bitmap((visual is null) ? null : visual.getVisualStruct(), data, width, height);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkImage*) p);
 	}
@@ -192,8 +187,7 @@ public class ImageGdk
 		auto p = gdk_image_get((drawable is null) ? null : drawable.getDrawableStruct(), x, y, width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageGdk(cast(GdkImage*) p);
 	}
@@ -210,8 +204,7 @@ public class ImageGdk
 		auto p = gdk_image_ref(gdkImage);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageGdk(cast(GdkImage*) p);
 	}
@@ -240,8 +233,7 @@ public class ImageGdk
 		auto p = gdk_image_get_colormap(gdkImage);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}

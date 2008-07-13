@@ -113,8 +113,7 @@ public class ThreadPool
 		if(gThreadPool is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gThreadPool passed to constructor.");
-			else return;
+			return;
 		}
 		this.gThreadPool = gThreadPool;
 	}
@@ -157,9 +156,7 @@ public class ThreadPool
 		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GThreadPool*) p);
 	}

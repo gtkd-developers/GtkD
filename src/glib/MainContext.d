@@ -161,8 +161,7 @@ public class MainContext
 		if(gMainContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMainContext passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMainContext = gMainContext;
 	}
@@ -179,9 +178,7 @@ public class MainContext
 		auto p = g_main_context_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GMainContext*) p);
 	}
@@ -196,8 +193,7 @@ public class MainContext
 		auto p = g_main_context_ref(gMainContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new MainContext(cast(GMainContext*) p);
 	}
@@ -224,8 +220,7 @@ public class MainContext
 		auto p = g_main_context_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new MainContext(cast(GMainContext*) p);
 	}
@@ -274,8 +269,7 @@ public class MainContext
 		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}
@@ -294,8 +288,7 @@ public class MainContext
 		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}
@@ -315,8 +308,7 @@ public class MainContext
 		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}

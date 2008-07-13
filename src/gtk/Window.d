@@ -119,8 +119,7 @@ public class Window : Bin
 		if(gtkWindow is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkWindow passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkWindow);
@@ -330,9 +329,7 @@ public class Window : Bin
 		auto p = gtk_window_new(type);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkWindow*) p);
 	}
@@ -620,8 +617,7 @@ public class Window : Bin
 		auto p = gtk_window_get_screen(gtkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -671,8 +667,7 @@ public class Window : Bin
 		auto p = gtk_window_list_toplevels();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -760,8 +755,7 @@ public class Window : Bin
 		auto p = gtk_window_get_focus(gtkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -1313,8 +1307,7 @@ public class Window : Bin
 		auto p = gtk_window_get_default_icon_list();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -1389,8 +1382,7 @@ public class Window : Bin
 		auto p = gtk_window_get_icon(gtkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -1407,8 +1399,7 @@ public class Window : Bin
 		auto p = gtk_window_get_icon_list(gtkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -1570,8 +1561,7 @@ public class Window : Bin
 		auto p = gtk_window_get_transient_for(gtkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GtkWindow*) p);
 	}
@@ -1654,8 +1644,7 @@ public class Window : Bin
 		auto p = gtk_window_get_group(gtkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new WindowGroup(cast(GtkWindowGroup*) p);
 	}

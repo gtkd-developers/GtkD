@@ -101,8 +101,7 @@ public class PgAttributeIterator
 		if(pangoAttrIterator is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoAttrIterator passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoAttrIterator = pangoAttrIterator;
 	}
@@ -120,8 +119,7 @@ public class PgAttributeIterator
 		auto p = pango_attr_iterator_copy(pangoAttrIterator);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttributeIterator(cast(PangoAttrIterator*) p);
 	}
@@ -167,8 +165,7 @@ public class PgAttributeIterator
 		auto p = pango_attr_iterator_get(pangoAttrIterator, type);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttribute(cast(PangoAttribute*) p);
 	}
@@ -206,8 +203,7 @@ public class PgAttributeIterator
 		auto p = pango_attr_iterator_get_attrs(pangoAttrIterator);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

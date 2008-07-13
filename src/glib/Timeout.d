@@ -148,8 +148,7 @@ public class Timeout
 		auto p = g_timeout_source_new(interval);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}
@@ -172,8 +171,7 @@ public class Timeout
 		auto p = g_timeout_source_new_seconds(interval);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}

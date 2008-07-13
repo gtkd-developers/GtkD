@@ -98,8 +98,7 @@ public class VScale : Scale
 		if(gtkVScale is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkVScale passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkVScale);
@@ -126,9 +125,7 @@ public class VScale : Scale
 		auto p = gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkVScale*) p);
 	}
@@ -152,9 +149,7 @@ public class VScale : Scale
 		auto p = gtk_vscale_new_with_range(min, max, step);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkVScale*) p);
 	}

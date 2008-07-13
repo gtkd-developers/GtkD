@@ -116,8 +116,7 @@ public class Pixbuf
 		if(gdkPixbuf is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkPixbuf passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkPixbuf = gdkPixbuf;
 	}
@@ -556,8 +555,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_get_from_image(gdkPixbuf, (src is null) ? null : src.getImageGdkStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -602,9 +600,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_data(data, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -621,9 +617,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_xpm_data(data);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -650,9 +644,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -676,9 +668,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -694,8 +684,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_copy(gdkPixbuf);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -815,9 +804,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -841,9 +828,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -874,9 +859,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -1027,8 +1010,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_scale_simple(gdkPixbuf, destWidth, destHeight, interpType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -1083,8 +1065,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -1166,8 +1147,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_rotate_simple(gdkPixbuf, angle);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -1186,8 +1166,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_flip(gdkPixbuf, horizontal);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -1214,8 +1193,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_add_alpha(gdkPixbuf, substituteColor, r, g, b);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -1279,8 +1257,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_apply_embedded_orientation(gdkPixbuf);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

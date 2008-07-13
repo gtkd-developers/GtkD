@@ -611,9 +611,7 @@ public struct Funct
 				
 				char[][] check = [	"if(p is null)",
 								  	"{",
-								  	"	this = null;",
-									"	version(Exceptions) throw new Exception(\"Construction failure.\");",
-									"	else return;",
+								  	"	throw new Exception(\"Construction failure.\");",
 									"}"	];
 				bd ~= check;
 				/* What's with all the casting? */
@@ -657,8 +655,7 @@ public struct Funct
 
 						char[][] check = [	"if(p is null)",
 								  			"{",
-										  	"	version(Exceptions) throw new Exception(\"Null GObject from GTK+.\");",
-											"	else return null;",
+										  	"	return null;",
 											"}"	];
 						bd ~= check;
 						/* What's with all the casting? */

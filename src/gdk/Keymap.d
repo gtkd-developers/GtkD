@@ -149,8 +149,7 @@ public class Keymap : ObjectG
 		if(gdkKeymap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkKeymap passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkKeymap);
@@ -244,8 +243,7 @@ public class Keymap : ObjectG
 		auto p = gdk_keymap_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Keymap(cast(GdkKeymap*) p);
 	}
@@ -263,8 +261,7 @@ public class Keymap : ObjectG
 		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Keymap(cast(GdkKeymap*) p);
 	}

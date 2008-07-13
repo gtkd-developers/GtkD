@@ -149,8 +149,7 @@ public class Menu : MenuShell
 		if(gtkMenu is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkMenu passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkMenu);
@@ -252,9 +251,7 @@ public class Menu : MenuShell
 		auto p = gtk_menu_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkMenu*) p);
 	}
@@ -361,8 +358,7 @@ public class Menu : MenuShell
 		auto p = gtk_menu_get_accel_group(gtkMenu);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new AccelGroup(cast(GtkAccelGroup*) p);
 	}
@@ -451,8 +447,7 @@ public class Menu : MenuShell
 		auto p = gtk_menu_get_active(gtkMenu);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -519,8 +514,7 @@ public class Menu : MenuShell
 		auto p = gtk_menu_get_attach_widget(gtkMenu);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -539,8 +533,7 @@ public class Menu : MenuShell
 		auto p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

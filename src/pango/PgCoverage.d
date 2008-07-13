@@ -94,8 +94,7 @@ public class PgCoverage
 		if(pangoCoverage is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoCoverage passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoCoverage = pangoCoverage;
 	}
@@ -112,9 +111,7 @@ public class PgCoverage
 		auto p = pango_coverage_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoCoverage*) p);
 	}
@@ -129,8 +126,7 @@ public class PgCoverage
 		auto p = pango_coverage_ref(pangoCoverage);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgCoverage(cast(PangoCoverage*) p);
 	}
@@ -156,8 +152,7 @@ public class PgCoverage
 		auto p = pango_coverage_copy(pangoCoverage);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgCoverage(cast(PangoCoverage*) p);
 	}
@@ -225,8 +220,7 @@ public class PgCoverage
 		auto p = pango_coverage_from_bytes(bytes, nBytes);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgCoverage(cast(PangoCoverage*) p);
 	}

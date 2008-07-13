@@ -234,8 +234,7 @@ public class TreeIter
 		if(gtkTreeIter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeIter passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkTreeIter = gtkTreeIter;
 	}
@@ -420,8 +419,7 @@ public class TreeIter
 		auto p = gtk_tree_iter_copy(gtkTreeIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeIter(cast(GtkTreeIter*) p);
 	}

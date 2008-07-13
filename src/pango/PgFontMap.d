@@ -113,8 +113,7 @@ public class PgFontMap : ObjectG
 		if(pangoFontMap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFontMap passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoFontMap);
@@ -143,8 +142,7 @@ public class PgFontMap : ObjectG
 		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFont(cast(PangoFont*) p);
 	}
@@ -164,8 +162,7 @@ public class PgFontMap : ObjectG
 		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontset(cast(PangoFontset*) p);
 	}

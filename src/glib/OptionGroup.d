@@ -166,8 +166,7 @@ public class OptionGroup
 		if(gOptionGroup is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gOptionGroup passed to constructor.");
-			else return;
+			return;
 		}
 		this.gOptionGroup = gOptionGroup;
 	}
@@ -197,9 +196,7 @@ public class OptionGroup
 		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GOptionGroup*) p);
 	}

@@ -97,8 +97,7 @@ public class PgLanguage
 		if(pangoLanguage is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoLanguage passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoLanguage = pangoLanguage;
 	}
@@ -126,8 +125,7 @@ public class PgLanguage
 		auto p = pango_language_from_string(Str.toStringz(language));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
 	}

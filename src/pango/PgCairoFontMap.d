@@ -194,8 +194,7 @@ public class PgCairoFontMap : PgFontMap
 		if(pangoCairoFontMap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoCairoFontMap passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoCairoFontMap);
@@ -226,8 +225,7 @@ public class PgCairoFontMap : PgFontMap
 		auto p = pango_cairo_font_map_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMap(cast(PangoFontMap*) p);
 	}
@@ -250,9 +248,7 @@ public class PgCairoFontMap : PgFontMap
 		auto p = pango_cairo_font_map_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoCairoFontMap*) p);
 	}
@@ -273,9 +269,7 @@ public class PgCairoFontMap : PgFontMap
 		auto p = pango_cairo_font_map_new_for_font_type(fonttype);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoCairoFontMap*) p);
 	}
@@ -329,8 +323,7 @@ public class PgCairoFontMap : PgFontMap
 		auto p = pango_cairo_font_map_create_context(pangoCairoFontMap);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgContext(cast(PangoContext*) p);
 	}

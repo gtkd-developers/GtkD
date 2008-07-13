@@ -113,8 +113,7 @@ public class IconFactory : ObjectG
 		if(gtkIconFactory is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIconFactory passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkIconFactory);
@@ -181,8 +180,7 @@ public class IconFactory : ObjectG
 		auto p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconSet(cast(GtkIconSet*) p);
 	}
@@ -203,8 +201,7 @@ public class IconFactory : ObjectG
 		auto p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconSet(cast(GtkIconSet*) p);
 	}
@@ -230,9 +227,7 @@ public class IconFactory : ObjectG
 		auto p = gtk_icon_factory_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconFactory*) p);
 	}

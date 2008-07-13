@@ -129,8 +129,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 		if(gtkTreeModelFilter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeModelFilter passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTreeModelFilter);
@@ -167,8 +166,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelTStruct(), (root is null) ? null : root.getTreePathStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}
@@ -241,8 +239,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}
@@ -295,8 +292,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 		auto p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}
@@ -318,8 +314,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 		auto p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}

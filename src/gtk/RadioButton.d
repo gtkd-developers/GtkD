@@ -146,8 +146,7 @@ public class RadioButton : CheckButton
 		if(gtkRadioButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRadioButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRadioButton);
@@ -278,9 +277,7 @@ public class RadioButton : CheckButton
 		auto p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioButton*) p);
 	}
@@ -295,9 +292,7 @@ public class RadioButton : CheckButton
 		auto p = gtk_radio_button_new_from_widget(gtkRadioButton);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioButton*) p);
 	}
@@ -327,8 +322,7 @@ public class RadioButton : CheckButton
 		auto p = gtk_radio_button_get_group(gtkRadioButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

@@ -107,8 +107,7 @@ public class Printer : ObjectG
 		if(gtkPrinter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPrinter passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPrinter);
@@ -174,9 +173,7 @@ public class Printer : ObjectG
 		auto p = gtk_printer_new(Str.toStringz(name), backend, virtual);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrinter*) p);
 	}
@@ -332,8 +329,7 @@ public class Printer : ObjectG
 		auto p = gtk_printer_list_papers(gtkPrinter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

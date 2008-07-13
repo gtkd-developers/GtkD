@@ -193,8 +193,7 @@ public class FileChooserDialog : Dialog, FileChooserIF
 		if(gtkFileChooserDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkFileChooserDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkFileChooserDialog);

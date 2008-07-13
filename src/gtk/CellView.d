@@ -121,8 +121,7 @@ public class CellView : Widget, CellLayoutIF
 		if(gtkCellView is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCellView passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCellView);
@@ -176,9 +175,7 @@ public class CellView : Widget, CellLayoutIF
 		auto p = gtk_cell_view_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCellView*) p);
 	}
@@ -196,9 +193,7 @@ public class CellView : Widget, CellLayoutIF
 		auto p = gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCellView*) p);
 	}
@@ -247,8 +242,7 @@ public class CellView : Widget, CellLayoutIF
 		auto p = gtk_cell_view_get_displayed_row(gtkCellView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}
@@ -291,8 +285,7 @@ public class CellView : Widget, CellLayoutIF
 		auto p = gtk_cell_view_get_cell_renderers(gtkCellView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

@@ -133,8 +133,7 @@ public class PixbufFormat
 		if(gdkPixbufFormat is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkPixbufFormat passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkPixbufFormat = gdkPixbufFormat;
 	}
@@ -181,8 +180,7 @@ public class PixbufFormat
 		auto p = gdk_pixbuf_get_formats();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

@@ -112,8 +112,7 @@ public class Tuples
 		if(gTuples is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gTuples passed to constructor.");
-			else return;
+			return;
 		}
 		this.gTuples = gTuples;
 	}

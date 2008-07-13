@@ -141,8 +141,7 @@ public class AccelLabel : Label
 		if(gtkAccelLabel is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAccelLabel passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAccelLabel);
@@ -169,9 +168,7 @@ public class AccelLabel : Label
 		auto p = gtk_accel_label_new(Str.toStringz(string));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkAccelLabel*) p);
 	}
@@ -199,8 +196,7 @@ public class AccelLabel : Label
 		auto p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

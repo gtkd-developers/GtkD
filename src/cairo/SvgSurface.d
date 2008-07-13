@@ -96,8 +96,7 @@ public class SvgSurface : Surface
 		if(cairo_surface is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_surface passed to constructor.");
-			else return;
+			return;
 		}
 		super(cast(cairo_surface_t*)cairo_surface);
 		this.cairo_surface = cairo_surface;
@@ -122,8 +121,7 @@ public class SvgSurface : Surface
 		auto p = cairo_svg_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SvgSurface(cast(cairo_surface_t*) p);
 	}
@@ -145,8 +143,7 @@ public class SvgSurface : Surface
 		auto p = cairo_svg_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SvgSurface(cast(cairo_surface_t*) p);
 	}

@@ -134,8 +134,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		if(gtkEntryCompletion is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkEntryCompletion passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkEntryCompletion);
@@ -306,9 +305,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		auto p = gtk_entry_completion_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkEntryCompletion*) p);
 	}
@@ -324,8 +321,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -356,8 +352,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}

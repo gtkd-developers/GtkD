@@ -94,8 +94,7 @@ public class FontOption
 		if(cairo_font_options is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_font_options passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo_font_options = cairo_font_options;
 	}
@@ -114,8 +113,7 @@ public class FontOption
 		auto p = cairo_font_options_create();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
@@ -131,8 +129,7 @@ public class FontOption
 		auto p = cairo_font_options_copy(cairo_font_options);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}

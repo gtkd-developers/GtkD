@@ -123,8 +123,7 @@ public class ComboBoxEntry : ComboBox
 		if(gtkComboBoxEntry is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkComboBoxEntry passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkComboBoxEntry);
@@ -180,9 +179,7 @@ public class ComboBoxEntry : ComboBox
 		auto p = gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelTStruct(), textColumn);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkComboBoxEntry*) p);
 	}

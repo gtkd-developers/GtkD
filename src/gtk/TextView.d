@@ -129,8 +129,7 @@ public class TextView : Container
 		if(gtkTextView is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextView passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTextView);
@@ -740,9 +739,7 @@ public class TextView : Container
 		auto p = gtk_text_view_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTextView*) p);
 	}
@@ -763,9 +760,7 @@ public class TextView : Container
 		auto p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTextView*) p);
 	}
@@ -797,8 +792,7 @@ public class TextView : Container
 		auto p = gtk_text_view_get_buffer(gtkTextView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextBuffer(cast(GtkTextBuffer*) p);
 	}
@@ -1046,8 +1040,7 @@ public class TextView : Container
 		auto p = gtk_text_view_get_window(gtkTextView, win);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -1542,8 +1535,7 @@ public class TextView : Container
 		auto p = gtk_text_view_get_tabs(gtkTextView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgTabArray(cast(PangoTabArray*) p);
 	}
@@ -1593,8 +1585,7 @@ public class TextView : Container
 		auto p = gtk_text_view_get_default_attributes(gtkTextView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextAttributes(cast(GtkTextAttributes*) p);
 	}

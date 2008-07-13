@@ -101,8 +101,7 @@ public class TearoffMenuItem : MenuItem
 		if(gtkTearoffMenuItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTearoffMenuItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTearoffMenuItem);
@@ -127,9 +126,7 @@ public class TearoffMenuItem : MenuItem
 		auto p = gtk_tearoff_menu_item_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTearoffMenuItem*) p);
 	}

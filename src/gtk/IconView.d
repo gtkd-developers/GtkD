@@ -129,8 +129,7 @@ public class IconView : Container, CellLayoutIF
 		if(gtkIconView is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIconView passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkIconView);
@@ -431,9 +430,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconView*) p);
 	}
@@ -450,9 +447,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconView*) p);
 	}
@@ -484,8 +479,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_get_model(gtkIconView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}
@@ -582,8 +576,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}
@@ -927,8 +920,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_get_selected_items(gtkIconView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -1232,8 +1224,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}

@@ -161,8 +161,7 @@ public template CellLayoutT(TStruct)
 		auto p = gtk_cell_layout_get_cells(getCellLayoutTStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

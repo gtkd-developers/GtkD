@@ -132,8 +132,7 @@ public class Context
 		if(cairo is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo = cairo;
 	}
@@ -277,8 +276,7 @@ public class Context
 		auto p = cairo_create((target is null) ? null : target.getSurfaceStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Context(cast(cairo_t*) p);
 	}
@@ -297,8 +295,7 @@ public class Context
 		auto p = cairo_reference(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Context(cast(cairo_t*) p);
 	}
@@ -369,8 +366,7 @@ public class Context
 		auto p = cairo_get_target(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Surface(cast(cairo_surface_t*) p);
 	}
@@ -444,8 +440,7 @@ public class Context
 		auto p = cairo_pop_group(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -482,8 +477,7 @@ public class Context
 		auto p = cairo_get_group_target(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Surface(cast(cairo_surface_t*) p);
 	}
@@ -585,8 +579,7 @@ public class Context
 		auto p = cairo_get_source(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -1976,8 +1969,7 @@ public class Context
 		auto p = cairo_get_font_face(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontFace(cast(cairo_font_face_t*) p);
 	}
@@ -2009,8 +2001,7 @@ public class Context
 		auto p = cairo_get_scaled_font(cairo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}

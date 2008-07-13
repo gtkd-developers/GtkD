@@ -231,8 +231,7 @@ public class Font
 		if(gdkFont is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkFont passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkFont = gdkFont;
 	}
@@ -264,8 +263,7 @@ public class Font
 		auto p = gdk_font_load(Str.toStringz(fontName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}
@@ -288,8 +286,7 @@ public class Font
 		auto p = gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}
@@ -311,8 +308,7 @@ public class Font
 		auto p = gdk_fontset_load(Str.toStringz(fontsetName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}
@@ -336,8 +332,7 @@ public class Font
 		auto p = gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}
@@ -360,8 +355,7 @@ public class Font
 		auto p = gdk_font_from_description((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}
@@ -386,8 +380,7 @@ public class Font
 		auto p = gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}
@@ -405,8 +398,7 @@ public class Font
 		auto p = gdk_font_get_display(gdkFont);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -423,8 +415,7 @@ public class Font
 		auto p = gdk_font_ref(gdkFont);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}

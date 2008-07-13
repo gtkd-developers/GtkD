@@ -163,8 +163,7 @@ public class MainLoop
 		if(gMainLoop is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMainLoop passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMainLoop = gMainLoop;
 	}
@@ -186,9 +185,7 @@ public class MainLoop
 		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GMainLoop*) p);
 	}
@@ -203,8 +200,7 @@ public class MainLoop
 		auto p = g_main_loop_ref(gMainLoop);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new MainLoop(cast(GMainLoop*) p);
 	}
@@ -263,8 +259,7 @@ public class MainLoop
 		auto p = g_main_loop_get_context(gMainLoop);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new MainContext(cast(GMainContext*) p);
 	}
@@ -296,8 +291,7 @@ public class MainLoop
 		auto p = g_main_current_source();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}
@@ -317,8 +311,7 @@ public class MainLoop
 		auto p = g_idle_source_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}

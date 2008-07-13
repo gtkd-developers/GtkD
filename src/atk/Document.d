@@ -99,8 +99,7 @@ public class Document
 		if(atkDocument is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkDocument passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkDocument = atkDocument;
 	}

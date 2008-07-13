@@ -105,8 +105,7 @@ public class Region
 		if(gdkRegion is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkRegion passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkRegion = gdkRegion;
 	}
@@ -123,9 +122,7 @@ public class Region
 		auto p = gdk_region_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkRegion*) p);
 	}
@@ -146,8 +143,7 @@ public class Region
 		auto p = gdk_region_polygon(points, npoints, fillRule);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}
@@ -162,8 +158,7 @@ public class Region
 		auto p = gdk_region_copy(gdkRegion);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}
@@ -180,8 +175,7 @@ public class Region
 		auto p = gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}

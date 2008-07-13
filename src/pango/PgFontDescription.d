@@ -99,8 +99,7 @@ public class PgFontDescription
 		if(pangoFontDescription is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFontDescription passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoFontDescription = pangoFontDescription;
 	}
@@ -130,9 +129,7 @@ public class PgFontDescription
 		auto p = pango_font_description_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoFontDescription*) p);
 	}
@@ -147,8 +144,7 @@ public class PgFontDescription
 		auto p = pango_font_description_copy(pangoFontDescription);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
@@ -166,8 +162,7 @@ public class PgFontDescription
 		auto p = pango_font_description_copy_static(pangoFontDescription);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
@@ -534,8 +529,7 @@ public class PgFontDescription
 		auto p = pango_font_description_from_string(Str.toStringz(str));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}

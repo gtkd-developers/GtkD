@@ -119,8 +119,7 @@ public class ObjectAtk : ObjectG
 		if(atkObject is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkObject passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)atkObject);
@@ -361,8 +360,7 @@ public class ObjectAtk : ObjectG
 		auto p = atk_implementor_ref_accessible(implementor);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -397,8 +395,7 @@ public class ObjectAtk : ObjectG
 		auto p = atk_object_get_parent(atkObject);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -427,8 +424,7 @@ public class ObjectAtk : ObjectG
 		auto p = atk_object_ref_accessible_child(atkObject, i);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -443,8 +439,7 @@ public class ObjectAtk : ObjectG
 		auto p = atk_object_ref_relation_set(atkObject);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RelationSet(cast(AtkRelationSet*) p);
 	}
@@ -495,8 +490,7 @@ public class ObjectAtk : ObjectG
 		auto p = atk_object_ref_state_set(atkObject);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StateSet(cast(AtkStateSet*) p);
 	}

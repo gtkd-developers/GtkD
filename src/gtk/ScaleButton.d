@@ -105,8 +105,7 @@ public class ScaleButton : Button
 		if(gtkScaleButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkScaleButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkScaleButton);
@@ -246,9 +245,7 @@ public class ScaleButton : Button
 		auto p = gtk_scale_button_new(size, min, max, step, icons);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkScaleButton*) p);
 	}
@@ -307,8 +304,7 @@ public class ScaleButton : Button
 		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}

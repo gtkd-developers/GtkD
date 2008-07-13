@@ -101,8 +101,7 @@ public class Arrow : Misc
 		if(gtkArrow is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkArrow passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkArrow);
@@ -130,9 +129,7 @@ public class Arrow : Misc
 		auto p = gtk_arrow_new(arrowType, shadowType);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkArrow*) p);
 	}

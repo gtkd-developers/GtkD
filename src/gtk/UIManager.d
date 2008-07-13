@@ -297,8 +297,7 @@ public class UIManager : ObjectG, BuildableIF
 		if(gtkUIManager is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkUIManager passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkUIManager);
@@ -537,9 +536,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkUIManager*) p);
 	}
@@ -610,8 +607,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -627,8 +623,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new AccelGroup(cast(GtkAccelGroup*) p);
 	}
@@ -656,8 +651,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -677,8 +671,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -697,8 +690,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Action(cast(GtkAction*) p);
 	}

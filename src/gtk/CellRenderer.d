@@ -138,8 +138,7 @@ public class CellRenderer : ObjectGtk
 		if(gtkCellRenderer is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCellRenderer passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCellRenderer);
@@ -333,8 +332,7 @@ public class CellRenderer : ObjectGtk
 		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new CellEditable(cast(GtkCellEditable*) p);
 	}

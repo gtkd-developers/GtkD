@@ -119,8 +119,7 @@ public class RadioMenuItem : CheckMenuItem
 		if(gtkRadioMenuItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRadioMenuItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRadioMenuItem);
@@ -249,9 +248,7 @@ public class RadioMenuItem : CheckMenuItem
 		auto p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioMenuItem*) p);
 	}
@@ -266,9 +263,7 @@ public class RadioMenuItem : CheckMenuItem
 		auto p = gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioMenuItem*) p);
 	}
@@ -295,8 +290,7 @@ public class RadioMenuItem : CheckMenuItem
 		auto p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

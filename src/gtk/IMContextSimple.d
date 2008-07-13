@@ -94,8 +94,7 @@ public class IMContextSimple : IMContext
 		if(gtkIMContextSimple is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIMContextSimple passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkIMContextSimple);
@@ -121,8 +120,7 @@ public class IMContextSimple : IMContext
 		auto p = gtk_im_context_simple_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IMContext(cast(GtkIMContext*) p);
 	}

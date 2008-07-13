@@ -105,8 +105,7 @@ public class DisplayManager : ObjectG
 		if(gdkDisplayManager is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkDisplayManager passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkDisplayManager);
@@ -168,8 +167,7 @@ public class DisplayManager : ObjectG
 		auto p = gdk_display_manager_get();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new DisplayManager(cast(GdkDisplayManager*) p);
 	}
@@ -185,8 +183,7 @@ public class DisplayManager : ObjectG
 		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -214,8 +211,7 @@ public class DisplayManager : ObjectG
 		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -233,8 +229,7 @@ public class DisplayManager : ObjectG
 		auto p = gdk_display_get_core_pointer((display is null) ? null : display.getDisplayStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Device(cast(GdkDevice*) p);
 	}

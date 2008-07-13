@@ -268,17 +268,17 @@ static string gray50_bits = [0x02, 0x01];
 		* in the location where the file is installed.
 		*/
 
-		pixbuf = new Pixbuf("images/gtk-logo-rgb.gif", null);
-		
-		if (pixbuf is null)
+		try
 		{
-			version(Tango) Stdout("Failed to load image file gtk-logo-rgb.gif\n").newline;
-			else printf("Failed to load image file gtk-logo-rgb.gif\n");
-		}
-		else
-		{
+			pixbuf = new Pixbuf("images/gtk-logo-rgb.gif", null);
+
 			scaled = pixbuf.scaleSimple(32, 32, InterpType.BILINEAR);
 			pixbuf = pixbuf.scaleSimple(38, 38, InterpType.BILINEAR);
+		}
+		catch (Exception)
+		{		
+			version(Tango) Stdout("Failed to load image file gtk-logo-rgb.gif").newline;
+			else printf("Failed to load image file gtk-logo-rgb.gif\n");
 		}
 		
 		/* get start of buffer; each insertion will revalidate the

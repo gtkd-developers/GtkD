@@ -94,8 +94,7 @@ public class VSeparator : Separator
 		if(gtkVSeparator is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkVSeparator passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkVSeparator);
@@ -120,9 +119,7 @@ public class VSeparator : Separator
 		auto p = gtk_vseparator_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkVSeparator*) p);
 	}

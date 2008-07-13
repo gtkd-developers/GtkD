@@ -98,8 +98,7 @@ public class FontFace
 		if(cairo_font_face is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_font_face passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo_font_face = cairo_font_face;
 	}
@@ -121,8 +120,7 @@ public class FontFace
 		auto p = cairo_font_face_reference(cairo_font_face);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontFace(cast(cairo_font_face_t*) p);
 	}

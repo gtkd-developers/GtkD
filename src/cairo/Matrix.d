@@ -103,8 +103,7 @@ public class Matrix
 		if(cairo_matrix is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_matrix passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo_matrix = cairo_matrix;
 	}

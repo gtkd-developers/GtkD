@@ -129,8 +129,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 		if(gtkRecentChooserMenu is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRecentChooserMenu passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRecentChooserMenu);
@@ -167,9 +166,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 		auto p = gtk_recent_chooser_menu_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRecentChooserMenu*) p);
 	}
@@ -191,9 +188,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 		auto p = gtk_recent_chooser_menu_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRecentChooserMenu*) p);
 	}

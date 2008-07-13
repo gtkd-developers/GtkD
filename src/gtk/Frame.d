@@ -116,8 +116,7 @@ public class Frame : Bin
 		if(gtkFrame is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkFrame passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkFrame);
@@ -154,9 +153,7 @@ public class Frame : Bin
 		auto p = gtk_frame_new(Str.toStringz(label));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFrame*) p);
 	}
@@ -252,8 +249,7 @@ public class Frame : Bin
 		auto p = gtk_frame_get_label_widget(gtkFrame);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

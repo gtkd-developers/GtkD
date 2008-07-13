@@ -150,8 +150,7 @@ public class PrintUnixDialog : Dialog
 		if(gtkPrintUnixDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPrintUnixDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPrintUnixDialog);
@@ -180,9 +179,7 @@ public class PrintUnixDialog : Dialog
 		auto p = gtk_print_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrintUnixDialog*) p);
 	}
@@ -210,8 +207,7 @@ public class PrintUnixDialog : Dialog
 		auto p = gtk_print_unix_dialog_get_page_setup(gtkPrintUnixDialog);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PageSetup(cast(GtkPageSetup*) p);
 	}
@@ -268,8 +264,7 @@ public class PrintUnixDialog : Dialog
 		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}
@@ -285,8 +280,7 @@ public class PrintUnixDialog : Dialog
 		auto p = gtk_print_unix_dialog_get_selected_printer(gtkPrintUnixDialog);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Printer(cast(GtkPrinter*) p);
 	}

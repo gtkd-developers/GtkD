@@ -103,8 +103,7 @@ public class Enums
 		if(gEnumValue is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gEnumValue passed to constructor.");
-			else return;
+			return;
 		}
 		this.gEnumValue = gEnumValue;
 	}
@@ -125,8 +124,7 @@ public class Enums
 		auto p = g_enum_get_value(enumClass, value);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Enums(cast(GEnumValue*) p);
 	}
@@ -144,8 +142,7 @@ public class Enums
 		auto p = g_enum_get_value_by_name(enumClass, Str.toStringz(name));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Enums(cast(GEnumValue*) p);
 	}
@@ -163,8 +160,7 @@ public class Enums
 		auto p = g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Enums(cast(GEnumValue*) p);
 	}

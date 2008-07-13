@@ -102,8 +102,7 @@ public class Flags
 		if(gFlagsValue is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gFlagsValue passed to constructor.");
-			else return;
+			return;
 		}
 		this.gFlagsValue = gFlagsValue;
 	}
@@ -124,8 +123,7 @@ public class Flags
 		auto p = g_flags_get_first_value(flagsClass, value);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Flags(cast(GFlagsValue*) p);
 	}
@@ -143,8 +141,7 @@ public class Flags
 		auto p = g_flags_get_value_by_name(flagsClass, Str.toStringz(name));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Flags(cast(GFlagsValue*) p);
 	}
@@ -162,8 +159,7 @@ public class Flags
 		auto p = g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Flags(cast(GFlagsValue*) p);
 	}

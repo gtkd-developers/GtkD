@@ -143,8 +143,7 @@ public class PixbufLoader : ObjectG
 		if(gdkPixbufLoader is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkPixbufLoader passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkPixbufLoader);
@@ -343,9 +342,7 @@ public class PixbufLoader : ObjectG
 		auto p = gdk_pixbuf_loader_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixbufLoader*) p);
 	}
@@ -362,8 +359,7 @@ public class PixbufLoader : ObjectG
 		auto p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
@@ -425,8 +421,7 @@ public class PixbufLoader : ObjectG
 		auto p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -445,8 +440,7 @@ public class PixbufLoader : ObjectG
 		auto p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
 	}

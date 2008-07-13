@@ -115,8 +115,7 @@ public class ToolButton : ToolItem
 		if(gtkToolButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkToolButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkToolButton);
@@ -217,9 +216,7 @@ public class ToolButton : ToolItem
 		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkToolButton*) p);
 	}
@@ -239,9 +236,7 @@ public class ToolButton : ToolItem
 		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkToolButton*) p);
 	}
@@ -385,8 +380,7 @@ public class ToolButton : ToolItem
 		auto p = gtk_tool_button_get_icon_widget(gtkToolButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -419,8 +413,7 @@ public class ToolButton : ToolItem
 		auto p = gtk_tool_button_get_label_widget(gtkToolButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

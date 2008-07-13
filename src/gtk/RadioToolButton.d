@@ -109,8 +109,7 @@ public class RadioToolButton : ToggleToolButton
 		if(gtkRadioToolButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRadioToolButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRadioToolButton);
@@ -138,9 +137,7 @@ public class RadioToolButton : ToggleToolButton
 		auto p = gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -160,9 +157,7 @@ public class RadioToolButton : ToggleToolButton
 		auto p = gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -177,9 +172,7 @@ public class RadioToolButton : ToggleToolButton
 		auto p = gtk_radio_tool_button_new_from_widget(gtkRadioToolButton);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -198,9 +191,7 @@ public class RadioToolButton : ToggleToolButton
 		auto p = gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -216,8 +207,7 @@ public class RadioToolButton : ToggleToolButton
 		auto p = gtk_radio_tool_button_get_group(gtkRadioToolButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

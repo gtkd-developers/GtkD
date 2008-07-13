@@ -221,8 +221,7 @@ public class Main
 		auto p = gtk_get_default_language();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
 	}
@@ -466,8 +465,7 @@ public class Main
 		auto p = gtk_grab_get_current();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -647,8 +645,7 @@ public class Main
 		auto p = gtk_get_current_event();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -692,8 +689,7 @@ public class Main
 		auto p = gtk_get_event_widget((event is null) ? null : event.getEventStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

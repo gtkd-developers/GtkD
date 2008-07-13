@@ -99,8 +99,7 @@ public class HScrollbar : Scrollbar
 		if(gtkHScrollbar is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkHScrollbar passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkHScrollbar);
@@ -127,9 +126,7 @@ public class HScrollbar : Scrollbar
 		auto p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkHScrollbar*) p);
 	}

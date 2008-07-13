@@ -105,8 +105,7 @@ public class Calendar : Widget
 		if(gtkCalendar is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCalendar passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCalendar);
@@ -346,9 +345,7 @@ public class Calendar : Widget
 		auto p = gtk_calendar_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCalendar*) p);
 	}

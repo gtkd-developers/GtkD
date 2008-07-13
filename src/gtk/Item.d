@@ -95,8 +95,7 @@ public class Item : Bin
 		if(gtkItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkItem);

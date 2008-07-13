@@ -128,8 +128,7 @@ public class AsyncQueue
 		if(gAsyncQueue is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gAsyncQueue passed to constructor.");
-			else return;
+			return;
 		}
 		this.gAsyncQueue = gAsyncQueue;
 	}
@@ -146,9 +145,7 @@ public class AsyncQueue
 		auto p = g_async_queue_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GAsyncQueue*) p);
 	}
@@ -167,9 +164,7 @@ public class AsyncQueue
 		auto p = g_async_queue_new_full(itemFreeFunc);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GAsyncQueue*) p);
 	}
@@ -185,8 +180,7 @@ public class AsyncQueue
 		auto p = g_async_queue_ref(gAsyncQueue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new AsyncQueue(cast(GAsyncQueue*) p);
 	}

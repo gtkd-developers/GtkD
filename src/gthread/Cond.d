@@ -126,8 +126,7 @@ public class Cond
 		if(gCond is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gCond passed to constructor.");
-			else return;
+			return;
 		}
 		this.gCond = gCond;
 	}
@@ -145,9 +144,7 @@ public class Cond
 		auto p = g_cond_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GCond*) p);
 	}

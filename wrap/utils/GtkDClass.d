@@ -619,8 +619,7 @@ public class GtkDClass
                             	"if("~var~" is null)",
                                 "{",
                                 "	this = null;",
-								"	version(Exceptions) throw new Exception(\"Null "~var~" passed to constructor.\");",
-								"	else return;",
+								"	return;",
 								"}" ];
 
                             char[][] checkObject = [

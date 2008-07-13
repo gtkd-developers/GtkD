@@ -96,8 +96,7 @@ public class EditableText
 		if(atkEditableText is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkEditableText passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkEditableText = atkEditableText;
 	}

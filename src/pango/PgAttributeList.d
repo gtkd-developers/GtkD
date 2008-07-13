@@ -101,8 +101,7 @@ public class PgAttributeList
 		if(pangoAttrList is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoAttrList passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoAttrList = pangoAttrList;
 	}
@@ -119,9 +118,7 @@ public class PgAttributeList
 		auto p = pango_attr_list_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoAttrList*) p);
 	}
@@ -137,8 +134,7 @@ public class PgAttributeList
 		auto p = pango_attr_list_ref(pangoAttrList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttributeList(cast(PangoAttrList*) p);
 	}
@@ -164,8 +160,7 @@ public class PgAttributeList
 		auto p = pango_attr_list_copy(pangoAttrList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttributeList(cast(PangoAttrList*) p);
 	}
@@ -256,8 +251,7 @@ public class PgAttributeList
 		auto p = pango_attr_list_filter(pangoAttrList, func, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttributeList(cast(PangoAttrList*) p);
 	}
@@ -273,8 +267,7 @@ public class PgAttributeList
 		auto p = pango_attr_list_get_iterator(pangoAttrList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttributeIterator(cast(PangoAttrIterator*) p);
 	}

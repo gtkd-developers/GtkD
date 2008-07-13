@@ -110,8 +110,7 @@ public class PrintSettings : ObjectG
 		if(gtkPrintSettings is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPrintSettings passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPrintSettings);
@@ -137,9 +136,7 @@ public class PrintSettings : ObjectG
 		auto p = gtk_print_settings_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrintSettings*) p);
 	}
@@ -155,8 +152,7 @@ public class PrintSettings : ObjectG
 		auto p = gtk_print_settings_copy(gtkPrintSettings);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}
@@ -429,8 +425,7 @@ public class PrintSettings : ObjectG
 		auto p = gtk_print_settings_get_paper_size(gtkPrintSettings);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PaperSize(cast(GtkPaperSize*) p);
 	}
@@ -914,9 +909,7 @@ public class PrintSettings : ObjectG
 		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrintSettings*) p);
 	}
@@ -937,9 +930,7 @@ public class PrintSettings : ObjectG
 		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrintSettings*) p);
 	}

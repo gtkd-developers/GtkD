@@ -96,8 +96,7 @@ public class StringG
 		if(gString is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gString passed to constructor.");
-			else return;
+			return;
 		}
 		this.gString = gString;
 	}
@@ -116,9 +115,7 @@ public class StringG
 		auto p = g_string_new(Str.toStringz(init));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GString*) p);
 	}
@@ -140,9 +137,7 @@ public class StringG
 		auto p = g_string_new_len(Str.toStringz(init), len);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GString*) p);
 	}
@@ -163,8 +158,7 @@ public class StringG
 		auto p = g_string_sized_new(dflSize);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -186,8 +180,7 @@ public class StringG
 		auto p = g_string_assign(gString, Str.toStringz(rval));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -271,8 +264,7 @@ public class StringG
 		auto p = g_string_append(gString, Str.toStringz(val));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -290,8 +282,7 @@ public class StringG
 		auto p = g_string_append_c(gString, c);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -309,8 +300,7 @@ public class StringG
 		auto p = g_string_append_unichar(gString, wc);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -334,8 +324,7 @@ public class StringG
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -357,8 +346,7 @@ public class StringG
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -377,8 +365,7 @@ public class StringG
 		auto p = g_string_prepend(gString, Str.toStringz(val));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -396,8 +383,7 @@ public class StringG
 		auto p = g_string_prepend_c(gString, c);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -415,8 +401,7 @@ public class StringG
 		auto p = g_string_prepend_unichar(gString, wc);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -440,8 +425,7 @@ public class StringG
 		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -461,8 +445,7 @@ public class StringG
 		auto p = g_string_insert(gString, pos, Str.toStringz(val));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -480,8 +463,7 @@ public class StringG
 		auto p = g_string_insert_c(gString, pos, c);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -501,8 +483,7 @@ public class StringG
 		auto p = g_string_insert_unichar(gString, pos, wc);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -529,8 +510,7 @@ public class StringG
 		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -550,8 +530,7 @@ public class StringG
 		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -573,8 +552,7 @@ public class StringG
 		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -594,8 +572,7 @@ public class StringG
 		auto p = g_string_erase(gString, pos, len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -612,8 +589,7 @@ public class StringG
 		auto p = g_string_truncate(gString, len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -634,8 +610,7 @@ public class StringG
 		auto p = g_string_set_size(gString, len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -668,8 +643,7 @@ public class StringG
 		auto p = g_string_up(gString);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -688,8 +662,7 @@ public class StringG
 		auto p = g_string_down(gString);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}

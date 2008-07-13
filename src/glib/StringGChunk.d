@@ -106,8 +106,7 @@ public class StringGChunk
 		if(gStringChunk is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gStringChunk passed to constructor.");
-			else return;
+			return;
 		}
 		this.gStringChunk = gStringChunk;
 	}
@@ -129,9 +128,7 @@ public class StringGChunk
 		auto p = g_string_chunk_new(size);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GStringChunk*) p);
 	}

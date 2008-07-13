@@ -137,8 +137,7 @@ public class Tooltips : ObjectGtk
 		if(gtkTooltips is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTooltips passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTooltips);
@@ -165,9 +164,7 @@ public class Tooltips : ObjectGtk
 		auto p = gtk_tooltips_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTooltips*) p);
 	}

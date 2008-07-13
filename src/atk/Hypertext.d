@@ -99,8 +99,7 @@ public class Hypertext
 		if(atkHypertext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkHypertext passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkHypertext = atkHypertext;
 	}
@@ -157,8 +156,7 @@ public class Hypertext
 		auto p = atk_hypertext_get_link(atkHypertext, linkIndex);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Hyperlink(cast(AtkHyperlink*) p);
 	}

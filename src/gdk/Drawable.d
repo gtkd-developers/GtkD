@@ -151,8 +151,7 @@ public class Drawable : ObjectG
 		if(gdkDrawable is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkDrawable passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkDrawable);
@@ -216,8 +215,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_ref(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Drawable(cast(GdkDrawable*) p);
 	}
@@ -275,8 +273,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_display(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -292,8 +289,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_screen(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -308,8 +304,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_visual(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -343,8 +338,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_colormap(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -392,8 +386,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_clip_region(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}
@@ -411,8 +404,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_visible_region(gdkDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}
@@ -882,8 +874,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_get_image(gdkDrawable, x, y, width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageGdk(cast(GdkImage*) p);
 	}
@@ -909,8 +900,7 @@ public class Drawable : ObjectG
 		auto p = gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageGdk(cast(GdkImage*) p);
 	}

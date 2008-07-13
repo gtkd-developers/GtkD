@@ -110,8 +110,7 @@ public class Node
 		if(gNode is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gNode passed to constructor.");
-			else return;
+			return;
 		}
 		this.gNode = gNode;
 	}
@@ -131,9 +130,7 @@ public class Node
 		auto p = g_node_new(data);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GNode*) p);
 	}
@@ -149,8 +146,7 @@ public class Node
 		auto p = g_node_copy(gNode);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -170,8 +166,7 @@ public class Node
 		auto p = g_node_copy_deep(gNode, copyFunc, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -190,8 +185,7 @@ public class Node
 		auto p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -210,8 +204,7 @@ public class Node
 		auto p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -230,8 +223,7 @@ public class Node
 		auto p = g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -248,8 +240,7 @@ public class Node
 		auto p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -311,8 +302,7 @@ public class Node
 		auto p = g_node_get_root(gNode);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -333,8 +323,7 @@ public class Node
 		auto p = g_node_find(gNode, order, flags, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -353,8 +342,7 @@ public class Node
 		auto p = g_node_find_child(gNode, flags, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -396,8 +384,7 @@ public class Node
 		auto p = g_node_last_child(gNode);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -416,8 +403,7 @@ public class Node
 		auto p = g_node_nth_child(gNode, n);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -433,8 +419,7 @@ public class Node
 		auto p = g_node_first_sibling(gNode);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}
@@ -450,8 +435,7 @@ public class Node
 		auto p = g_node_last_sibling(gNode);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Node(cast(GNode*) p);
 	}

@@ -123,8 +123,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		if(gtkEntry is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkEntry passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkEntry);
@@ -474,9 +473,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkEntry*) p);
 	}
@@ -502,9 +499,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_new_with_max_length(max);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkEntry*) p);
 	}
@@ -820,8 +815,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_get_layout(gtkEntry);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}
@@ -930,8 +924,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_get_completion(gtkEntry);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new EntryCompletion(cast(GtkEntryCompletion*) p);
 	}
@@ -966,8 +959,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_get_cursor_hadjustment(gtkEntry);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}

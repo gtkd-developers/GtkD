@@ -122,8 +122,7 @@ public class SourceBuffer : TextBuffer
 		if(gtkSourceBuffer is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSourceBuffer passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSourceBuffer);
@@ -220,9 +219,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourceBuffer*) p);
 	}
@@ -240,9 +237,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourceBuffer*) p);
 	}
@@ -302,8 +297,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
@@ -356,8 +350,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
 	}
@@ -489,8 +482,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SourceMark(cast(GtkSourceMark*) p);
 	}
@@ -510,8 +502,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -531,8 +522,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

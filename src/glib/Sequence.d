@@ -121,8 +121,7 @@ public class Sequence
 		if(gSequence is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gSequence passed to constructor.");
-			else return;
+			return;
 		}
 		this.gSequence = gSequence;
 	}
@@ -144,9 +143,7 @@ public class Sequence
 		auto p = g_sequence_new(dataDestroy);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GSequence*) p);
 	}
@@ -645,8 +642,7 @@ public class Sequence
 		auto p = g_sequence_iter_get_sequence(iter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Sequence(cast(GSequence*) p);
 	}

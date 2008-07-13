@@ -246,8 +246,7 @@ public class Window : Drawable
 		if(gdkWindow is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkWindow passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkWindow);
@@ -278,9 +277,7 @@ public class Window : Drawable
 		auto p = gdk_window_new(gdkWindow, attributes, attributesMask);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkWindow*) p);
 	}
@@ -327,8 +324,7 @@ public class Window : Drawable
 		auto p = gdk_window_at_pointer(winX, winY);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -1015,8 +1011,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_update_area(gdkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}
@@ -1804,8 +1799,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_pointer(gdkWindow, x, y, mask);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -1825,8 +1819,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_parent(gdkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -1841,8 +1834,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_toplevel(gdkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -1862,8 +1854,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_children(gdkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -1879,8 +1870,7 @@ public class Window : Drawable
 		auto p = gdk_window_peek_children(gdkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -2020,8 +2010,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_group(gdkWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -2096,8 +2085,7 @@ public class Window : Drawable
 		auto p = gdk_window_get_toplevels();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -2113,8 +2101,7 @@ public class Window : Drawable
 		auto p = gdk_get_default_root_window();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}

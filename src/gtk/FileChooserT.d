@@ -910,8 +910,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_get_filenames(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new ListSG(cast(GSList*) p);
 		}
@@ -1033,8 +1032,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_get_uris(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new ListSG(cast(GSList*) p);
 		}
@@ -1108,8 +1106,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_get_preview_widget(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new Widget(cast(GtkWidget*) p);
 		}
@@ -1219,8 +1216,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_get_extra_widget(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new Widget(cast(GtkWidget*) p);
 		}
@@ -1265,8 +1261,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_list_filters(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new ListSG(cast(GSList*) p);
 		}
@@ -1299,8 +1294,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_get_filter(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new FileFilter(cast(GtkFileFilter*) p);
 		}
@@ -1348,8 +1342,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_list_shortcut_folders(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new ListSG(cast(GSList*) p);
 		}
@@ -1397,8 +1390,7 @@ public template FileChooserT(TStruct)
 			auto p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserTStruct());
 			if(p is null)
 			{
-				version(Exceptions) throw new Exception("Null GObject from GTK+.");
-				else return null;
+				return null;
 			}
 			return new ListSG(cast(GSList*) p);
 		}

@@ -101,8 +101,7 @@ public class PgFontFace : ObjectG
 		if(pangoFontFace is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFontFace passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoFontFace);
@@ -160,8 +159,7 @@ public class PgFontFace : ObjectG
 		auto p = pango_font_face_describe(pangoFontFace);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}

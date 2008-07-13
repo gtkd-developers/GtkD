@@ -505,8 +505,7 @@ public class RcStyle : ObjectG
 		if(gtkRcStyle is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRcStyle passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRcStyle);
@@ -531,8 +530,7 @@ public class RcStyle : ObjectG
 		auto p = gtk_rc_scanner_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ScannerG(cast(GScanner*) p);
 	}
@@ -554,8 +552,7 @@ public class RcStyle : ObjectG
 		auto p = gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -582,8 +579,7 @@ public class RcStyle : ObjectG
 		auto p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -889,8 +885,7 @@ public class RcStyle : ObjectG
 		auto p = gtk_rc_style_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RcStyle(cast(GtkRcStyle*) p);
 	}
@@ -907,8 +902,7 @@ public class RcStyle : ObjectG
 		auto p = gtk_rc_style_copy(gtkRcStyle);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RcStyle(cast(GtkRcStyle*) p);
 	}

@@ -147,8 +147,7 @@ public class KeyFile
 		if(gKeyFile is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gKeyFile passed to constructor.");
-			else return;
+			return;
 		}
 		this.gKeyFile = gKeyFile;
 	}
@@ -169,9 +168,7 @@ public class KeyFile
 		auto p = g_key_file_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GKeyFile*) p);
 	}

@@ -120,8 +120,7 @@ public class Mutex
 		if(gMutex is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMutex passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMutex = gMutex;
 	}
@@ -140,9 +139,7 @@ public class Mutex
 		auto p = g_mutex_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GMutex*) p);
 	}

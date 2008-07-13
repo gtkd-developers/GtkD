@@ -105,8 +105,7 @@ public class Scale : Range
 		if(gtkScale is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkScale passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkScale);
@@ -247,8 +246,7 @@ public class Scale : Range
 		auto p = gtk_scale_get_layout(gtkScale);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}

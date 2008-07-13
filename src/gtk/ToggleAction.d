@@ -97,8 +97,7 @@ public class ToggleAction : Action
 		if(gtkToggleAction is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkToggleAction passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkToggleAction);
@@ -164,9 +163,7 @@ public class ToggleAction : Action
 		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkToggleAction*) p);
 	}

@@ -174,8 +174,7 @@ public template BuildableT(TStruct)
 		auto p = gtk_buildable_construct_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectG(cast(GObject*) p);
 	}
@@ -260,8 +259,7 @@ public template BuildableT(TStruct)
 		auto p = gtk_buildable_get_internal_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectG(cast(GObject*) p);
 	}

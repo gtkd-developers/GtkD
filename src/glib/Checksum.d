@@ -104,8 +104,7 @@ public class Checksum
 		if(gChecksum is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gChecksum passed to constructor.");
-			else return;
+			return;
 		}
 		this.gChecksum = gChecksum;
 	}
@@ -149,9 +148,7 @@ public class Checksum
 		auto p = g_checksum_new(checksumType);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GChecksum*) p);
 	}
@@ -169,8 +166,7 @@ public class Checksum
 		auto p = g_checksum_copy(gChecksum);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Checksum(cast(GChecksum*) p);
 	}

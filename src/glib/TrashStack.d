@@ -95,8 +95,7 @@ public class TrashStack
 		if(gTrashStack is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gTrashStack passed to constructor.");
-			else return;
+			return;
 		}
 		this.gTrashStack = gTrashStack;
 	}

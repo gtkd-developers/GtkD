@@ -96,8 +96,7 @@ public class PgLayoutLine
 		if(pangoLayoutLine is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoLayoutLine passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoLayoutLine = pangoLayoutLine;
 	}
@@ -116,8 +115,7 @@ public class PgLayoutLine
 		auto p = pango_layout_line_ref(pangoLayoutLine);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayoutLine(cast(PangoLayoutLine*) p);
 	}

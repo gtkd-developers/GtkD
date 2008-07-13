@@ -135,8 +135,7 @@ public class FileSelection : Dialog
 		if(gtkFileSelection is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkFileSelection passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkFileSelection);
@@ -165,9 +164,7 @@ public class FileSelection : Dialog
 		auto p = gtk_file_selection_new(Str.toStringz(title));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFileSelection*) p);
 	}

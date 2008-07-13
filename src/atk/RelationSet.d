@@ -105,8 +105,7 @@ public class RelationSet : ObjectG
 		if(atkRelationSet is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkRelationSet passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)atkRelationSet);
@@ -195,8 +194,7 @@ public class RelationSet : ObjectG
 		auto p = atk_relation_set_get_relation(atkRelationSet, i);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Relation(cast(AtkRelation*) p);
 	}
@@ -213,8 +211,7 @@ public class RelationSet : ObjectG
 		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Relation(cast(AtkRelation*) p);
 	}

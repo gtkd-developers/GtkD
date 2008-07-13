@@ -173,8 +173,7 @@ public class TreeView : Container
 		if(gtkTreeView is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeView passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTreeView);
@@ -818,9 +817,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreeView*) p);
 	}
@@ -893,9 +890,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreeView*) p);
 	}
@@ -911,8 +906,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_model(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}
@@ -940,8 +934,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_selection(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeSelection(cast(GtkTreeSelection*) p);
 	}
@@ -956,8 +949,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_hadjustment(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -983,8 +975,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_vadjustment(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -1180,8 +1171,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_column(gtkTreeView, n);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
@@ -1197,8 +1187,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_columns(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -1242,8 +1231,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
@@ -1613,8 +1601,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -1855,8 +1842,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}
@@ -1950,8 +1936,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Entry(cast(GtkEntry*) p);
 	}

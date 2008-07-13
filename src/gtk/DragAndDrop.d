@@ -126,8 +126,7 @@ public class DragAndDrop
 		if(gdkDragContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkDragContext passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkDragContext = gdkDragContext;
 	}
@@ -361,8 +360,7 @@ public class DragAndDrop
 		auto p = gtk_drag_get_source_widget(gdkDragContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -413,8 +411,7 @@ public class DragAndDrop
 		auto p = gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), targets, actions, button, (event is null) ? null : event.getEventStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new DragContext(cast(GdkDragContext*) p);
 	}

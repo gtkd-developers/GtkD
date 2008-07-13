@@ -110,8 +110,7 @@ public class ToolItem : Bin
 		if(gtkToolItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkToolItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkToolItem);
@@ -279,9 +278,7 @@ public class ToolItem : Bin
 		auto p = gtk_tool_item_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkToolItem*) p);
 	}
@@ -557,8 +554,7 @@ public class ToolItem : Bin
 		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -581,8 +577,7 @@ public class ToolItem : Bin
 		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

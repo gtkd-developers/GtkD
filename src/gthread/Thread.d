@@ -129,8 +129,7 @@ public class Thread
 		if(gThread is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gThread passed to constructor.");
-			else return;
+			return;
 		}
 		this.gThread = gThread;
 	}
@@ -197,8 +196,7 @@ public class Thread
 		auto p = g_thread_create(func, data, joinable, error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Thread(cast(GThread*) p);
 	}
@@ -247,8 +245,7 @@ public class Thread
 		auto p = g_thread_create_full(func, data, stackSize, joinable, bound, priority, error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Thread(cast(GThread*) p);
 	}
@@ -263,8 +260,7 @@ public class Thread
 		auto p = g_thread_self();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Thread(cast(GThread*) p);
 	}

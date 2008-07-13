@@ -120,8 +120,7 @@ public class StaticPrivate
 		if(gStaticPrivate is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gStaticPrivate passed to constructor.");
-			else return;
+			return;
 		}
 		this.gStaticPrivate = gStaticPrivate;
 	}

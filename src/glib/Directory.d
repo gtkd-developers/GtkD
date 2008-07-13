@@ -109,8 +109,7 @@ public class Directory
 		if(gDir is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gDir passed to constructor.");
-			else return;
+			return;
 		}
 		this.gDir = gDir;
 	}

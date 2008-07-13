@@ -96,8 +96,7 @@ public class Viewport : Bin
 		if(gtkViewport is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkViewport passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkViewport);
@@ -157,9 +156,7 @@ public class Viewport : Bin
 		auto p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkViewport*) p);
 	}
@@ -174,8 +171,7 @@ public class Viewport : Bin
 		auto p = gtk_viewport_get_hadjustment(gtkViewport);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -190,8 +186,7 @@ public class Viewport : Bin
 		auto p = gtk_viewport_get_vadjustment(gtkViewport);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}

@@ -125,8 +125,7 @@ public class TypePlugin
 		if(gTypePlugin is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gTypePlugin passed to constructor.");
-			else return;
+			return;
 		}
 		this.gTypePlugin = gTypePlugin;
 	}

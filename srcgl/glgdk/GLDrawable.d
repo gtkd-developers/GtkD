@@ -96,8 +96,7 @@ public class GLDrawable
 		if(gdkGLDrawable is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkGLDrawable passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkGLDrawable = gdkGLDrawable;
 	}
@@ -185,8 +184,7 @@ public class GLDrawable
 		auto p = gdk_gl_drawable_get_gl_config(gdkGLDrawable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLConfig(cast(GdkGLConfig*) p);
 	}
@@ -214,8 +212,7 @@ public class GLDrawable
 		auto p = gdk_gl_drawable_get_current();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLDrawable(cast(GdkGLDrawable*) p);
 	}

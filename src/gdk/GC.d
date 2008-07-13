@@ -133,8 +133,7 @@ public class GC : ObjectG
 		if(gdkGC is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkGC passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkGC);
@@ -162,9 +161,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGC*) p);
 	}
@@ -184,9 +181,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGC*) p);
 	}
@@ -202,8 +197,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_get_screen(gdkGC);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -220,8 +214,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_ref(gdkGC);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GC(cast(GdkGC*) p);
 	}
@@ -562,8 +555,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_get_colormap(gdkGC);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}

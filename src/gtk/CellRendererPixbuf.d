@@ -108,8 +108,7 @@ public class CellRendererPixbuf : CellRenderer
 		if(gtkCellRendererPixbuf is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCellRendererPixbuf passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCellRendererPixbuf);
@@ -140,9 +139,7 @@ public class CellRendererPixbuf : CellRenderer
 		auto p = gtk_cell_renderer_pixbuf_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCellRendererPixbuf*) p);
 	}

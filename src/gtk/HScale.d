@@ -98,8 +98,7 @@ public class HScale : Scale
 		if(gtkHScale is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkHScale passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkHScale);
@@ -126,9 +125,7 @@ public class HScale : Scale
 		auto p = gtk_hscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkHScale*) p);
 	}
@@ -152,9 +149,7 @@ public class HScale : Scale
 		auto p = gtk_hscale_new_with_range(min, max, step);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkHScale*) p);
 	}

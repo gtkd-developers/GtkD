@@ -144,8 +144,7 @@ public class SpinButton : Entry
 		if(gtkSpinButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSpinButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSpinButton);
@@ -345,9 +344,7 @@ public class SpinButton : Entry
 		auto p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSpinButton*) p);
 	}
@@ -372,9 +369,7 @@ public class SpinButton : Entry
 		auto p = gtk_spin_button_new_with_range(min, max, step);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSpinButton*) p);
 	}
@@ -400,8 +395,7 @@ public class SpinButton : Entry
 		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}

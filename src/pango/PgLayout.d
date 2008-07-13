@@ -120,8 +120,7 @@ public class PgLayout : ObjectG
 		if(pangoLayout is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoLayout passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoLayout);
@@ -161,9 +160,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_new((context is null) ? null : context.getPgContextStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoLayout*) p);
 	}
@@ -180,8 +177,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_copy(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}
@@ -196,8 +192,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_context(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgContext(cast(PangoContext*) p);
 	}
@@ -286,8 +281,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_attributes(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgAttributeList(cast(PangoAttrList*) p);
 	}
@@ -317,8 +311,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_font_description(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
@@ -644,8 +637,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_tabs(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgTabArray(cast(PangoTabArray*) p);
 	}
@@ -957,8 +949,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_lines(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -977,8 +968,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_lines_readonly(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -993,8 +983,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_get_iter(pangoLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayoutIter(cast(PangoLayoutIter*) p);
 	}

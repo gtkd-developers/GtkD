@@ -103,8 +103,7 @@ public class ToggleToolButton : ToolButton
 		if(gtkToggleToolButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkToggleToolButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkToggleToolButton);
@@ -175,9 +174,7 @@ public class ToggleToolButton : ToolButton
 		auto p = gtk_toggle_tool_button_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkToggleToolButton*) p);
 	}
@@ -197,9 +194,7 @@ public class ToggleToolButton : ToolButton
 		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkToggleToolButton*) p);
 	}

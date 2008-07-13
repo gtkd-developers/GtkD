@@ -106,8 +106,7 @@ public class DataList
 		if(gData is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gData passed to constructor.");
-			else return;
+			return;
 		}
 		this.gData = gData;
 	}

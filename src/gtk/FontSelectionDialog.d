@@ -107,8 +107,7 @@ public class FontSelectionDialog : Dialog
 		if(gtkFontSelectionDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkFontSelectionDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkFontSelectionDialog);
@@ -135,9 +134,7 @@ public class FontSelectionDialog : Dialog
 		auto p = gtk_font_selection_dialog_new(Str.toStringz(title));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFontSelectionDialog*) p);
 	}
@@ -154,8 +151,7 @@ public class FontSelectionDialog : Dialog
 		auto p = gtk_font_selection_dialog_get_font(gtkFontSelectionDialog);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}

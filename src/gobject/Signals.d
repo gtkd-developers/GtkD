@@ -762,8 +762,7 @@ public class Signals
 		auto p = g_signal_type_cclosure_new(itype, structOffset);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}

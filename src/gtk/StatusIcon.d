@@ -127,8 +127,7 @@ public class StatusIcon : ObjectG
 		if(gtkStatusIcon is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkStatusIcon passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkStatusIcon);
@@ -300,9 +299,7 @@ public class StatusIcon : ObjectG
 		auto p = gtk_status_icon_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkStatusIcon*) p);
 	}
@@ -321,9 +318,7 @@ public class StatusIcon : ObjectG
 		auto p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkStatusIcon*) p);
 	}
@@ -409,8 +404,7 @@ public class StatusIcon : ObjectG
 		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -487,8 +481,7 @@ public class StatusIcon : ObjectG
 		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}

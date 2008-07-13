@@ -101,8 +101,7 @@ public class Relation : ObjectG
 		if(atkRelation is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkRelation passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)atkRelation);
@@ -169,9 +168,7 @@ public class Relation : ObjectG
 		auto p = atk_relation_new(targets, nTargets, relationship);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(AtkRelation*) p);
 	}
@@ -196,8 +193,7 @@ public class Relation : ObjectG
 		auto p = atk_relation_get_target(atkRelation);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PtrArray(cast(GPtrArray*) p);
 	}

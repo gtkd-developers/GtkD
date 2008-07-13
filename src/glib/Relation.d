@@ -117,8 +117,7 @@ public class Relation
 		if(gRelation is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gRelation passed to constructor.");
-			else return;
+			return;
 		}
 		this.gRelation = gRelation;
 	}
@@ -159,9 +158,7 @@ public class Relation
 		auto p = g_relation_new(fields);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GRelation*) p);
 	}
@@ -236,8 +233,7 @@ public class Relation
 		auto p = g_relation_select(gRelation, key, field);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Tuples(cast(GTuples*) p);
 	}

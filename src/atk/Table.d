@@ -111,8 +111,7 @@ public class Table
 		if(atkTable is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkTable passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkTable = atkTable;
 	}
@@ -361,8 +360,7 @@ public class Table
 		auto p = atk_table_ref_at(atkTable, row, column);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -462,8 +460,7 @@ public class Table
 		auto p = atk_table_get_caption(atkTable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -504,8 +501,7 @@ public class Table
 		auto p = atk_table_get_column_header(atkTable, column);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -522,8 +518,7 @@ public class Table
 		auto p = atk_table_get_row_header(atkTable, row);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -538,8 +533,7 @@ public class Table
 		auto p = atk_table_get_summary(atkTable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}

@@ -97,8 +97,7 @@ public class GLContext : ObjectG
 		if(gdkGLContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkGLContext passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkGLContext);
@@ -131,9 +130,7 @@ public class GLContext : ObjectG
 		auto p = gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLContext*) p);
 	}
@@ -173,8 +170,7 @@ public class GLContext : ObjectG
 		auto p = gdk_gl_context_get_gl_drawable(gdkGLContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLDrawable(cast(GdkGLDrawable*) p);
 	}
@@ -189,8 +185,7 @@ public class GLContext : ObjectG
 		auto p = gdk_gl_context_get_gl_config(gdkGLContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLConfig(cast(GdkGLConfig*) p);
 	}
@@ -206,8 +201,7 @@ public class GLContext : ObjectG
 		auto p = gdk_gl_context_get_share_list(gdkGLContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLContext(cast(GdkGLContext*) p);
 	}
@@ -242,8 +236,7 @@ public class GLContext : ObjectG
 		auto p = gdk_gl_context_get_current();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLContext(cast(GdkGLContext*) p);
 	}

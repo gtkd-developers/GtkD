@@ -94,8 +94,7 @@ public class PgItem
 		if(pangoItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoItem passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoItem = pangoItem;
 	}
@@ -122,8 +121,7 @@ public class PgItem
 		auto p = pango_item_copy(pangoItem);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgItem(cast(PangoItem*) p);
 	}
@@ -137,9 +135,7 @@ public class PgItem
 		auto p = pango_item_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoItem*) p);
 	}
@@ -166,8 +162,7 @@ public class PgItem
 		auto p = pango_item_split(pangoItem, splitIndex, splitOffset);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgItem(cast(PangoItem*) p);
 	}

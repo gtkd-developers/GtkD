@@ -117,8 +117,7 @@ public class Display : ObjectG
 		if(gdkDisplay is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkDisplay passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkDisplay);
@@ -182,8 +181,7 @@ public class Display : ObjectG
 		auto p = gdk_display_open(Str.toStringz(displayName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -199,8 +197,7 @@ public class Display : ObjectG
 		auto p = gdk_display_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -240,8 +237,7 @@ public class Display : ObjectG
 		auto p = gdk_display_get_screen(gdkDisplay, screenNum);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -257,8 +253,7 @@ public class Display : ObjectG
 		auto p = gdk_display_get_default_screen(gdkDisplay);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -365,8 +360,7 @@ public class Display : ObjectG
 		auto p = gdk_display_list_devices(gdkDisplay);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -383,8 +377,7 @@ public class Display : ObjectG
 		auto p = gdk_display_get_event(gdkDisplay);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -403,8 +396,7 @@ public class Display : ObjectG
 		auto p = gdk_display_peek_event(gdkDisplay);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -505,8 +497,7 @@ public class Display : ObjectG
 		auto p = gdk_display_get_window_at_pointer(gdkDisplay, winX, winY);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -616,8 +607,7 @@ public class Display : ObjectG
 		auto p = gdk_display_get_default_group(gdkDisplay);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}

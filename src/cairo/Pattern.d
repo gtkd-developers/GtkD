@@ -103,8 +103,7 @@ public class Pattern
 		if(cairo_pattern is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_pattern passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo_pattern = cairo_pattern;
 	}
@@ -218,8 +217,7 @@ public class Pattern
 		auto p = cairo_pattern_create_rgb(red, green, blue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -242,8 +240,7 @@ public class Pattern
 		auto p = cairo_pattern_create_rgba(red, green, blue, alpha);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -276,8 +273,7 @@ public class Pattern
 		auto p = cairo_pattern_create_for_surface((surface is null) ? null : surface.getSurfaceStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -319,8 +315,7 @@ public class Pattern
 		auto p = cairo_pattern_create_linear(x0, y0, x1, y1);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -365,8 +360,7 @@ public class Pattern
 		auto p = cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
@@ -404,8 +398,7 @@ public class Pattern
 		auto p = cairo_pattern_reference(cairo_pattern);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}

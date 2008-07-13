@@ -130,8 +130,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		if(gtkFileChooserButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkFileChooserButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkFileChooserButton);
@@ -197,9 +196,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}
@@ -218,9 +215,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		auto p = gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}
@@ -244,9 +239,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		auto p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}

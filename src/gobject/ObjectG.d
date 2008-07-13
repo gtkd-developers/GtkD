@@ -179,7 +179,7 @@ public class ObjectG
 	 *  key = the data identifier
 	 *  data = a pointer
 	 */
-	public void objectGSetDataFull(string key, gpointer data)
+	public: void objectGSetDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		version(Tango) GC.addRoot(data);
@@ -465,8 +465,7 @@ public class ObjectG
 		auto p = g_object_class_find_property(oclass, Str.toStringz(propertyName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -559,8 +558,7 @@ public class ObjectG
 		auto p = g_object_interface_find_property(gIface, Str.toStringz(propertyName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -599,9 +597,7 @@ public class ObjectG
 		auto p = g_object_new(objectType, Str.toStringz(firstPropertyName));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GObject*) p);
 	}
@@ -621,9 +617,7 @@ public class ObjectG
 		auto p = g_object_newv(objectType, nParameters, parameters);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GObject*) p);
 	}
@@ -1098,9 +1092,7 @@ public class ObjectG
 		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GObject*) p);
 	}

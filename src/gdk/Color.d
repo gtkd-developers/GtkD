@@ -120,8 +120,7 @@ public class Color
 		if(gdkColor is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkColor passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkColor = gdkColor;
 	}
@@ -258,8 +257,7 @@ public class Color
 		auto p = gdk_color_copy(gdkColor);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Color(cast(GdkColor*) p);
 	}

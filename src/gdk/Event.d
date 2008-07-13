@@ -109,8 +109,7 @@ public class Event
 		if(gdkEvent is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkEvent passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkEvent = gdkEvent;
 	}
@@ -153,8 +152,7 @@ public class Event
 		auto p = gdk_event_peek();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -171,8 +169,7 @@ public class Event
 		auto p = gdk_event_get();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -191,8 +188,7 @@ public class Event
 		auto p = gdk_event_get_graphics_expose((window is null) ? null : window.getWindowStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -220,9 +216,7 @@ public class Event
 		auto p = gdk_event_new(type);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkEvent*) p);
 	}
@@ -238,8 +232,7 @@ public class Event
 		auto p = gdk_event_copy(gdkEvent);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Event(cast(GdkEvent*) p);
 	}
@@ -476,8 +469,7 @@ public class Event
 		auto p = gdk_event_get_screen(gdkEvent);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}

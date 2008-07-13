@@ -118,8 +118,7 @@ public class IconSet
 		if(gtkIconSet is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIconSet passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkIconSet = gtkIconSet;
 	}
@@ -168,8 +167,7 @@ public class IconSet
 		auto p = gtk_icon_set_copy(gtkIconSet);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconSet(cast(GtkIconSet*) p);
 	}
@@ -190,9 +188,7 @@ public class IconSet
 		auto p = gtk_icon_set_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconSet*) p);
 	}
@@ -212,9 +208,7 @@ public class IconSet
 		auto p = gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconSet*) p);
 	}
@@ -229,8 +223,7 @@ public class IconSet
 		auto p = gtk_icon_set_ref(gtkIconSet);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconSet(cast(GtkIconSet*) p);
 	}
@@ -262,8 +255,7 @@ public class IconSet
 		auto p = gtk_icon_set_render_icon(gtkIconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

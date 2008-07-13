@@ -100,8 +100,7 @@ public class GCs
 		auto p = gtk_gc_get(depth, (colormap is null) ? null : colormap.getColormapStruct(), values, valuesMask);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GC(cast(GdkGC*) p);
 	}

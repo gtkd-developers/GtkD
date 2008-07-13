@@ -109,8 +109,7 @@ public class MappedFile
 		if(gMappedFile is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMappedFile passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMappedFile = gMappedFile;
 	}
@@ -140,9 +139,7 @@ public class MappedFile
 		auto p = g_mapped_file_new(Str.toStringz(filename), writable, error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GMappedFile*) p);
 	}

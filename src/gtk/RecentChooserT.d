@@ -465,8 +465,7 @@ public template RecentChooserT(TStruct)
 		auto p = gtk_recent_chooser_get_current_item(getRecentChooserTStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RecentInfo(cast(GtkRecentInfo*) p);
 	}
@@ -531,8 +530,7 @@ public template RecentChooserT(TStruct)
 		auto p = gtk_recent_chooser_get_items(getRecentChooserTStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -590,8 +588,7 @@ public template RecentChooserT(TStruct)
 		auto p = gtk_recent_chooser_list_filters(getRecentChooserTStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -621,8 +618,7 @@ public template RecentChooserT(TStruct)
 		auto p = gtk_recent_chooser_get_filter(getRecentChooserTStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RecentFilter(cast(GtkRecentFilter*) p);
 	}

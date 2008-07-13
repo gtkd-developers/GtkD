@@ -102,8 +102,7 @@ public class Range : Widget
 		if(gtkRange is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRange passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRange);
@@ -356,8 +355,7 @@ public class Range : Widget
 		auto p = gtk_range_get_adjustment(gtkRange);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}

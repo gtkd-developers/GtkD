@@ -101,8 +101,7 @@ public class Bitmap
 		if(gdkBitmap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkBitmap passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkBitmap = gdkBitmap;
 	}
@@ -127,8 +126,7 @@ public class Bitmap
 		auto p = gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Bitmap(cast(GdkBitmap*) p);
 	}

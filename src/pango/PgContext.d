@@ -133,8 +133,7 @@ public class PgContext : ObjectG
 		if(pangoContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoContext passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoContext);
@@ -193,8 +192,7 @@ public class PgContext : ObjectG
 		auto p = pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -221,8 +219,7 @@ public class PgContext : ObjectG
 		auto p = pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -241,8 +238,7 @@ public class PgContext : ObjectG
 		auto p = pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -266,9 +262,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoContext*) p);
 	}
@@ -297,8 +291,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_get_font_map(pangoContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMap(cast(PangoFontMap*) p);
 	}
@@ -313,8 +306,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_get_font_description(pangoContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
@@ -340,8 +332,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_get_language(pangoContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
 	}
@@ -465,8 +456,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_get_matrix(pangoContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgMatrix(cast(PangoMatrix*) p);
 	}
@@ -502,8 +492,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFont(cast(PangoFont*) p);
 	}
@@ -522,8 +511,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontset(cast(PangoFontset*) p);
 	}
@@ -556,8 +544,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMetrics(cast(PangoFontMetrics*) p);
 	}

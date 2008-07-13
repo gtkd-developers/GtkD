@@ -99,8 +99,7 @@ public class Bin : Container
 		if(gtkBin is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkBin passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkBin);
@@ -128,8 +127,7 @@ public class Bin : Container
 		auto p = gtk_bin_get_child(gtkBin);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

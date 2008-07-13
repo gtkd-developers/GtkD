@@ -114,8 +114,7 @@ public class TextTag : ObjectG
 		if(gtkTextTag is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextTag passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTextTag);
@@ -177,9 +176,7 @@ public class TextTag : ObjectG
 		auto p = gtk_text_tag_new(Str.toStringz(name));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTextTag*) p);
 	}

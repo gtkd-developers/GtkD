@@ -140,8 +140,7 @@ public class RecentManager : ObjectG
 		if(gtkRecentManager is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRecentManager passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRecentManager);
@@ -207,9 +206,7 @@ public class RecentManager : ObjectG
 		auto p = gtk_recent_manager_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRecentManager*) p);
 	}
@@ -227,8 +224,7 @@ public class RecentManager : ObjectG
 		auto p = gtk_recent_manager_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RecentManager(cast(GtkRecentManager*) p);
 	}
@@ -257,8 +253,7 @@ public class RecentManager : ObjectG
 		auto p = gtk_recent_manager_get_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RecentManager(cast(GtkRecentManager*) p);
 	}
@@ -360,8 +355,7 @@ public class RecentManager : ObjectG
 		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RecentInfo(cast(GtkRecentInfo*) p);
 	}
@@ -435,8 +429,7 @@ public class RecentManager : ObjectG
 		auto p = gtk_recent_manager_get_items(gtkRecentManager);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

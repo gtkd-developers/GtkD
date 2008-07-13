@@ -149,8 +149,7 @@ public class ActionGroup : ObjectG, BuildableIF
 		if(gtkActionGroup is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkActionGroup passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkActionGroup);
@@ -331,9 +330,7 @@ public class ActionGroup : ObjectG, BuildableIF
 		auto p = gtk_action_group_new(Str.toStringz(name));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkActionGroup*) p);
 	}
@@ -414,8 +411,7 @@ public class ActionGroup : ObjectG, BuildableIF
 		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Action(cast(GtkAction*) p);
 	}
@@ -431,8 +427,7 @@ public class ActionGroup : ObjectG, BuildableIF
 		auto p = gtk_action_group_list_actions(gtkActionGroup);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

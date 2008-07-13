@@ -110,8 +110,7 @@ public class ByteArray
 		if(gByteArray is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gByteArray passed to constructor.");
-			else return;
+			return;
 		}
 		this.gByteArray = gByteArray;
 	}
@@ -128,9 +127,7 @@ public class ByteArray
 		auto p = g_byte_array_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GByteArray*) p);
 	}

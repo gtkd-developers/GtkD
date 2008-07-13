@@ -101,8 +101,7 @@ public class BBTree
 		if(gTree is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gTree passed to constructor.");
-			else return;
+			return;
 		}
 		this.gTree = gTree;
 	}
@@ -125,9 +124,7 @@ public class BBTree
 		auto p = g_tree_new(keyCompareFunc);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GTree*) p);
 	}
@@ -145,9 +142,7 @@ public class BBTree
 		auto p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GTree*) p);
 	}
@@ -172,9 +167,7 @@ public class BBTree
 		auto p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GTree*) p);
 	}

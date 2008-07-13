@@ -125,8 +125,7 @@ public class Colormap
 		if(gdkColormap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkColormap passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkColormap = gdkColormap;
 	}
@@ -148,9 +147,7 @@ public class Colormap
 		auto p = gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkColormap*) p);
 	}
@@ -167,8 +164,7 @@ public class Colormap
 		auto p = gdk_colormap_ref(gdkColormap);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -195,8 +191,7 @@ public class Colormap
 		auto p = gdk_colormap_get_system();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -314,8 +309,7 @@ public class Colormap
 		auto p = gdk_colormap_get_visual(gdkColormap);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -331,8 +325,7 @@ public class Colormap
 		auto p = gdk_colormap_get_screen(gdkColormap);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}

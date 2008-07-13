@@ -99,8 +99,7 @@ public class CheckButton : ToggleButton
 		if(gtkCheckButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCheckButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCheckButton);
@@ -157,9 +156,7 @@ public class CheckButton : ToggleButton
 		auto p = gtk_check_button_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCheckButton*) p);
 	}

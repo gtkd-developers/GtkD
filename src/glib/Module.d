@@ -149,8 +149,7 @@ public class Module
 		if(gModule is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gModule passed to constructor.");
-			else return;
+			return;
 		}
 		this.gModule = gModule;
 	}
@@ -218,8 +217,7 @@ public class Module
 		auto p = g_module_open(Str.toStringz(fileName), flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Module(cast(GModule*) p);
 	}

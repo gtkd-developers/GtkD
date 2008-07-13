@@ -105,8 +105,7 @@ public class ParamSpec
 		if(gParamSpec is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gParamSpec passed to constructor.");
-			else return;
+			return;
 		}
 		this.gParamSpec = gParamSpec;
 	}
@@ -124,8 +123,7 @@ public class ParamSpec
 		auto p = g_param_spec_ref(gParamSpec);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -165,8 +163,7 @@ public class ParamSpec
 		auto p = g_param_spec_ref_sink(gParamSpec);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -355,8 +352,7 @@ public class ParamSpec
 		auto p = g_param_spec_get_redirect_target(gParamSpec);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -457,8 +453,7 @@ public class ParamSpec
 		auto p = g_param_spec_pool_lookup(pool, Str.toStringz(paramName), ownerType, walkAncestors);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -490,8 +485,7 @@ public class ParamSpec
 		auto p = g_param_spec_pool_list_owned(pool, ownerType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

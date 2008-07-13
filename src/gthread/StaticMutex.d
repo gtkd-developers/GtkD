@@ -123,8 +123,7 @@ public class StaticMutex
 		if(gStaticMutex is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gStaticMutex passed to constructor.");
-			else return;
+			return;
 		}
 		this.gStaticMutex = gStaticMutex;
 	}
@@ -192,8 +191,7 @@ public class StaticMutex
 		auto p = g_static_mutex_get_mutex(gStaticMutex);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Mutex(cast(GMutex*) p);
 	}

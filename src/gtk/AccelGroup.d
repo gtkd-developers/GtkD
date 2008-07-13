@@ -121,8 +121,7 @@ public class AccelGroup : ObjectG
 		if(gtkAccelGroup is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAccelGroup passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAccelGroup);
@@ -219,9 +218,7 @@ public class AccelGroup : ObjectG
 		auto p = gtk_accel_group_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkAccelGroup*) p);
 	}
@@ -353,8 +350,7 @@ public class AccelGroup : ObjectG
 		auto p = gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new AccelGroup(cast(GtkAccelGroup*) p);
 	}
@@ -390,8 +386,7 @@ public class AccelGroup : ObjectG
 		auto p = gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

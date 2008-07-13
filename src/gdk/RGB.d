@@ -437,8 +437,7 @@ public class RGB
 		auto p = gdk_rgb_get_visual();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -457,8 +456,7 @@ public class RGB
 		auto p = gdk_rgb_get_colormap();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}

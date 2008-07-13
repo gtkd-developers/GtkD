@@ -147,8 +147,7 @@ public class GLWidget
 		auto p = gtk_widget_get_gl_config((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLConfig(cast(GdkGLConfig*) p);
 	}
@@ -173,8 +172,7 @@ public class GLWidget
 		auto p = gtk_widget_create_gl_context((widget is null) ? null : widget.getWidgetStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLContext(cast(GdkGLContext*) p);
 	}
@@ -195,8 +193,7 @@ public class GLWidget
 		auto p = gtk_widget_get_gl_context((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLContext(cast(GdkGLContext*) p);
 	}
@@ -213,8 +210,7 @@ public class GLWidget
 		auto p = gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLWindow(cast(GdkGLWindow*) p);
 	}

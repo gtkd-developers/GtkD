@@ -102,8 +102,7 @@ public class ItemFactory : ObjectGtk
 		if(gtkItemFactory is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkItemFactory passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkItemFactory);
@@ -138,9 +137,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_new(containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkItemFactory*) p);
 	}
@@ -202,8 +199,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_from_widget((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ItemFactory(cast(GtkItemFactory*) p);
 	}
@@ -242,8 +238,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_get_item(gtkItemFactory, Str.toStringz(path));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -265,8 +260,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_get_widget(gtkItemFactory, Str.toStringz(path));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -289,8 +283,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_get_widget_by_action(gtkItemFactory, action);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -311,8 +304,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_get_item_by_action(gtkItemFactory, action);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -511,8 +503,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_from_path(Str.toStringz(path));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ItemFactory(cast(GtkItemFactory*) p);
 	}

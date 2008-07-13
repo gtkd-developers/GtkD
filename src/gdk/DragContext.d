@@ -109,8 +109,7 @@ public class DragContext
 		if(gdkDragContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkDragContext passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkDragContext = gdkDragContext;
 	}
@@ -164,8 +163,7 @@ public class DragContext
 		auto p = gdk_drag_context_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new DragContext(cast(GdkDragContext*) p);
 	}
@@ -247,8 +245,7 @@ public class DragContext
 		auto p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new DragContext(cast(GdkDragContext*) p);
 	}

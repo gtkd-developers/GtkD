@@ -150,8 +150,7 @@ public class TextBuffer : ObjectG
 		if(gtkTextBuffer is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextBuffer passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTextBuffer);
@@ -882,9 +881,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTextBuffer*) p);
 	}
@@ -923,8 +920,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextTagTable(cast(GtkTextTagTable*) p);
 	}
@@ -1197,8 +1193,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextChildAnchor(cast(GtkTextChildAnchor*) p);
 	}
@@ -1231,8 +1226,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextMark(cast(GtkTextMark*) p);
 	}
@@ -1324,8 +1318,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextMark(cast(GtkTextMark*) p);
 	}
@@ -1343,8 +1336,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_get_insert(gtkTextBuffer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextMark(cast(GtkTextMark*) p);
 	}
@@ -1368,8 +1360,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextMark(cast(GtkTextMark*) p);
 	}

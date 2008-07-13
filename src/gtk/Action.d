@@ -142,8 +142,7 @@ public class Action : ObjectG, BuildableIF
 		if(gtkAction is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAction passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAction);
@@ -218,9 +217,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkAction*) p);
 	}
@@ -341,8 +338,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_create_icon(gtkAction, iconSize);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -358,8 +354,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_create_menu_item(gtkAction);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -375,8 +370,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_create_tool_item(gtkAction);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -394,8 +388,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_create_menu(gtkAction);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -442,8 +435,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_get_proxies(gtkAction);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -540,8 +532,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_get_accel_closure(gtkAction);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}

@@ -109,8 +109,7 @@ public class Pixmap : Drawable
 		if(gdkPixmap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkPixmap passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkPixmap);
@@ -143,9 +142,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_new((drawable is null) ? null : drawable.getDrawableStruct(), width, height, depth);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkPixmap*) p);
 	}
@@ -169,8 +166,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height, depth, (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}
@@ -195,8 +191,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringz(filename));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}
@@ -223,8 +218,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_colormap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringz(filename));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}
@@ -249,8 +243,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}
@@ -278,8 +271,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_colormap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}

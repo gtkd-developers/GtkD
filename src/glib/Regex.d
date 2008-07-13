@@ -140,8 +140,7 @@ public class Regex
 		if(gRegex is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gRegex passed to constructor.");
-			else return;
+			return;
 		}
 		this.gRegex = gRegex;
 	}
@@ -165,9 +164,7 @@ public class Regex
 		auto p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GRegex*) p);
 	}
@@ -183,8 +180,7 @@ public class Regex
 		auto p = g_regex_ref(gRegex);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Regex(cast(GRegex*) p);
 	}

@@ -103,8 +103,7 @@ public class Alignment : Bin
 		if(gtkAlignment is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAlignment passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAlignment);
@@ -213,9 +212,7 @@ public class Alignment : Bin
 		auto p = gtk_alignment_new(xalign, yalign, xscale, yscale);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkAlignment*) p);
 	}

@@ -380,8 +380,7 @@ public class PgMiscellaneous
 		auto p = pango_language_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
 	}

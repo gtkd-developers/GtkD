@@ -107,8 +107,7 @@ public class Plug : Window
 		if(gtkPlug is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPlug passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPlug);
@@ -202,9 +201,7 @@ public class Plug : Window
 		auto p = gtk_plug_new(socketId);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPlug*) p);
 	}
@@ -222,9 +219,7 @@ public class Plug : Window
 		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPlug*) p);
 	}

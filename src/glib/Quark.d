@@ -106,8 +106,7 @@ public class Quark
 		if(gQuark is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gQuark passed to constructor.");
-			else return;
+			return;
 		}
 		this.gQuark = gQuark;
 	}

@@ -118,8 +118,7 @@ public class TextIter
 		if(gtkTextIter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextIter passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkTextIter = gtkTextIter;
 	}
@@ -144,8 +143,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_buffer(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextBuffer(cast(GtkTextBuffer*) p);
 	}
@@ -163,8 +161,7 @@ public class TextIter
 		auto p = gtk_text_iter_copy(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextIter(cast(GtkTextIter*) p);
 	}
@@ -350,8 +347,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_pixbuf(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -370,8 +366,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_marks(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -393,8 +388,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -411,8 +405,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_child_anchor(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextChildAnchor(cast(GtkTextChildAnchor*) p);
 	}
@@ -490,8 +483,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_tags(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -709,8 +701,7 @@ public class TextIter
 		auto p = gtk_text_iter_get_language(gtkTextIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
 	}

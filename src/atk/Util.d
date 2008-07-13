@@ -190,8 +190,7 @@ public class Util
 		auto p = atk_get_root();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -206,8 +205,7 @@ public class Util
 		auto p = atk_get_focus_object();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}

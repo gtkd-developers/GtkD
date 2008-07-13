@@ -108,8 +108,7 @@ public class GLConfig : ObjectG
 		if(gdkGLConfig is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkGLConfig passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkGLConfig);
@@ -186,9 +185,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new(attribList);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -207,9 +204,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -226,9 +221,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new_by_mode(mode);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -246,9 +239,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new_by_mode_for_screen((screen is null) ? null : screen.getScreenStruct(), mode);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -263,8 +254,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_get_screen(gdkGLConfig);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -293,8 +283,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_get_colormap(gdkGLConfig);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -310,8 +299,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_get_visual(gdkGLConfig);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}

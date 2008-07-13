@@ -105,8 +105,7 @@ public class SourceView : TextView
 		if(gtkSourceView is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSourceView passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSourceView);
@@ -210,9 +209,7 @@ public class SourceView : TextView
 		auto p = gtk_source_view_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourceView*) p);
 	}
@@ -229,9 +226,7 @@ public class SourceView : TextView
 		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourceView*) p);
 	}
@@ -380,8 +375,7 @@ public class SourceView : TextView
 		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

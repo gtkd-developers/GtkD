@@ -127,8 +127,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		if(gtkTreeViewColumn is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeViewColumn passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTreeViewColumn);
@@ -209,9 +208,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		auto p = gtk_tree_view_column_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreeViewColumn*) p);
 	}
@@ -264,8 +261,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		auto p = gtk_tree_view_column_get_cell_renderers(gtkTreeViewColumn);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -608,8 +604,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -836,8 +831,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

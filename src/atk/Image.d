@@ -101,8 +101,7 @@ public class Image
 		if(atkImage is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkImage passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkImage = atkImage;
 	}

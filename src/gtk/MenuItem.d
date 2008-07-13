@@ -110,8 +110,7 @@ public class MenuItem : Item
 		if(gtkMenuItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkMenuItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkMenuItem);
@@ -350,9 +349,7 @@ public class MenuItem : Item
 		auto p = gtk_menu_item_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkMenuItem*) p);
 	}
@@ -494,8 +491,7 @@ public class MenuItem : Item
 		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

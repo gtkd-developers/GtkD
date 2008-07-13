@@ -120,8 +120,7 @@ public class Private
 		if(gPrivate is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gPrivate passed to constructor.");
-			else return;
+			return;
 		}
 		this.gPrivate = gPrivate;
 	}
@@ -152,9 +151,7 @@ public class Private
 		auto p = g_private_new(destructor);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GPrivate*) p);
 	}

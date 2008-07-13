@@ -111,8 +111,7 @@ public class SourcePrintCompositor : ObjectG
 		if(gtkSourcePrintCompositor is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSourcePrintCompositor passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSourcePrintCompositor);
@@ -140,9 +139,7 @@ public class SourcePrintCompositor : ObjectG
 		auto p = gtk_source_print_compositor_new((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourcePrintCompositor*) p);
 	}
@@ -165,9 +162,7 @@ public class SourcePrintCompositor : ObjectG
 		auto p = gtk_source_print_compositor_new_from_view((view is null) ? null : view.getSourceViewStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSourcePrintCompositor*) p);
 	}
@@ -185,8 +180,7 @@ public class SourcePrintCompositor : ObjectG
 		auto p = gtk_source_print_compositor_get_buffer(gtkSourcePrintCompositor);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new SourceBuffer(cast(GtkSourceBuffer*) p);
 	}

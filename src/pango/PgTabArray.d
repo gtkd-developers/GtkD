@@ -92,8 +92,7 @@ public class PgTabArray
 		if(pangoTabArray is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoTabArray passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoTabArray = pangoTabArray;
 	}
@@ -115,9 +114,7 @@ public class PgTabArray
 		auto p = pango_tab_array_new(initialSize, positionsInPixels);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoTabArray*) p);
 	}
@@ -140,9 +137,7 @@ public class PgTabArray
 		auto p = pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoTabArray*) p);
 	}
@@ -157,8 +152,7 @@ public class PgTabArray
 		auto p = pango_tab_array_copy(pangoTabArray);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgTabArray(cast(PangoTabArray*) p);
 	}

@@ -1088,8 +1088,7 @@ public class Str
 		auto p = g_string_ascii_up((string is null) ? null : string.getStringGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}
@@ -1106,8 +1105,7 @@ public class Str
 		auto p = g_string_ascii_down((string is null) ? null : string.getStringGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}

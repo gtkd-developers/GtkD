@@ -99,8 +99,7 @@ public class Invisible : Widget
 		if(gtkInvisible is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkInvisible passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkInvisible);
@@ -125,9 +124,7 @@ public class Invisible : Widget
 		auto p = gtk_invisible_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkInvisible*) p);
 	}
@@ -145,9 +142,7 @@ public class Invisible : Widget
 		auto p = gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkInvisible*) p);
 	}
@@ -175,8 +170,7 @@ public class Invisible : Widget
 		auto p = gtk_invisible_get_screen(gtkInvisible);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}

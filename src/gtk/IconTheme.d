@@ -172,8 +172,7 @@ public class IconTheme : ObjectG
 		if(gtkIconTheme is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIconTheme passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkIconTheme);
@@ -238,9 +237,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconTheme*) p);
 	}
@@ -257,8 +254,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_get_default();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconTheme(cast(GtkIconTheme*) p);
 	}
@@ -283,8 +279,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_get_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconTheme(cast(GtkIconTheme*) p);
 	}
@@ -418,8 +413,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_lookup_icon(gtkIconTheme, Str.toStringz(iconName), size, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconInfo(cast(GtkIconInfo*) p);
 	}
@@ -446,8 +440,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, iconNames, size, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconInfo(cast(GtkIconInfo*) p);
 	}
@@ -479,8 +472,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -497,8 +489,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_list_contexts(gtkIconTheme);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -521,8 +512,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_list_icons(gtkIconTheme, Str.toStringz(context));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

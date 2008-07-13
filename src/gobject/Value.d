@@ -111,8 +111,7 @@ public class Value
 		if(gValue is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gValue passed to constructor.");
-			else return;
+			return;
 		}
 		this.gValue = gValue;
 	}
@@ -345,8 +344,7 @@ public class Value
 		auto p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -390,8 +388,7 @@ public class Value
 		auto p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -435,8 +432,7 @@ public class Value
 		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -481,8 +477,7 @@ public class Value
 		auto p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -527,8 +522,7 @@ public class Value
 		auto p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -573,8 +567,7 @@ public class Value
 		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -619,8 +612,7 @@ public class Value
 		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -665,8 +657,7 @@ public class Value
 		auto p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -712,8 +703,7 @@ public class Value
 		auto p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -758,8 +748,7 @@ public class Value
 		auto p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -805,8 +794,7 @@ public class Value
 		auto p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -851,8 +839,7 @@ public class Value
 		auto p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -897,8 +884,7 @@ public class Value
 		auto p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -941,8 +927,7 @@ public class Value
 		auto p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1034,8 +1019,7 @@ public class Value
 		auto p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1088,8 +1072,7 @@ public class Value
 		auto p = g_value_get_param(gValue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1104,8 +1087,7 @@ public class Value
 		auto p = g_value_dup_param(gValue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1128,8 +1110,7 @@ public class Value
 		auto p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1223,8 +1204,7 @@ public class Value
 		auto p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1268,8 +1248,7 @@ public class Value
 		auto p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1363,8 +1342,7 @@ public class Value
 		auto p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1390,8 +1368,7 @@ public class Value
 		auto p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1412,8 +1389,7 @@ public class Value
 		auto p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}
@@ -1438,8 +1414,7 @@ public class Value
 		auto p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ParamSpec(cast(GParamSpec*) p);
 	}

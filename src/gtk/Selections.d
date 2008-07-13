@@ -442,8 +442,7 @@ public class Selections
 		auto p = gtk_selection_data_get_pixbuf(selectionData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

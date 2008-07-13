@@ -120,8 +120,7 @@ public class StaticRecMutex
 		if(gStaticRecMutex is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gStaticRecMutex passed to constructor.");
-			else return;
+			return;
 		}
 		this.gStaticRecMutex = gStaticRecMutex;
 	}

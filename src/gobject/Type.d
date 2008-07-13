@@ -646,8 +646,7 @@ public class Type
 		auto p = g_type_get_plugin(type);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TypePlugin(cast(GTypePlugin*) p);
 	}
@@ -668,8 +667,7 @@ public class Type
 		auto p = g_type_interface_get_plugin(instanceType, interfaceType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TypePlugin(cast(GTypePlugin*) p);
 	}

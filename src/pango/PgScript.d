@@ -108,8 +108,7 @@ public class PgScript
 		auto p = pango_script_get_sample_language(script);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
 	}

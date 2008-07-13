@@ -109,8 +109,7 @@ public class Button : Bin
 		if(gtkButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkButton);
@@ -436,9 +435,7 @@ public class Button : Bin
 		auto p = gtk_button_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkButton*) p);
 	}
@@ -668,8 +665,7 @@ public class Button : Bin
 		auto p = gtk_button_get_image(gtkButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

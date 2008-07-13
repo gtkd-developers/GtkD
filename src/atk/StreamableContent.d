@@ -106,8 +106,7 @@ public class StreamableContent
 		if(atkStreamableContent is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkStreamableContent passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkStreamableContent = atkStreamableContent;
 	}
@@ -150,8 +149,7 @@ public class StreamableContent
 		auto p = atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IOChannel(cast(GIOChannel*) p);
 	}

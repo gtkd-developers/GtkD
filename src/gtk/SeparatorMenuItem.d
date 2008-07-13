@@ -94,8 +94,7 @@ public class SeparatorMenuItem : MenuItem
 		if(gtkSeparatorMenuItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSeparatorMenuItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSeparatorMenuItem);
@@ -120,9 +119,7 @@ public class SeparatorMenuItem : MenuItem
 		auto p = gtk_separator_menu_item_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSeparatorMenuItem*) p);
 	}

@@ -127,8 +127,7 @@ public class Visual
 		if(gdkVisual is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkVisual passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkVisual = gdkVisual;
 	}
@@ -183,8 +182,7 @@ public class Visual
 		auto p = gdk_list_visuals();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -223,8 +221,7 @@ public class Visual
 		auto p = gdk_visual_get_system();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -240,8 +237,7 @@ public class Visual
 		auto p = gdk_visual_get_best();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -261,8 +257,7 @@ public class Visual
 		auto p = gdk_visual_get_best_with_depth(depth);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -282,8 +277,7 @@ public class Visual
 		auto p = gdk_visual_get_best_with_type(visualType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -301,8 +295,7 @@ public class Visual
 		auto p = gdk_visual_get_best_with_both(depth, visualType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -318,8 +311,7 @@ public class Visual
 		auto p = gdk_visual_get_screen(gdkVisual);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}

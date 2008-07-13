@@ -128,8 +128,7 @@ public class IOChannel
 		if(gIOChannel is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gIOChannel passed to constructor.");
-			else return;
+			return;
 		}
 		this.gIOChannel = gIOChannel;
 	}
@@ -164,8 +163,7 @@ public class IOChannel
 		auto p = g_io_channel_unix_new(fd);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IOChannel(cast(GIOChannel*) p);
 	}
@@ -211,8 +209,7 @@ public class IOChannel
 		auto p = g_io_channel_win32_new_fd(fd);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IOChannel(cast(GIOChannel*) p);
 	}
@@ -234,8 +231,7 @@ public class IOChannel
 		auto p = g_io_channel_win32_new_socket(socket);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IOChannel(cast(GIOChannel*) p);
 	}
@@ -254,8 +250,7 @@ public class IOChannel
 		auto p = g_io_channel_win32_new_messages(hwnd);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IOChannel(cast(GIOChannel*) p);
 	}
@@ -290,9 +285,7 @@ public class IOChannel
 		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GIOChannel*) p);
 	}
@@ -498,8 +491,7 @@ public class IOChannel
 		auto p = g_io_channel_ref(gIOChannel);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IOChannel(cast(GIOChannel*) p);
 	}
@@ -532,8 +524,7 @@ public class IOChannel
 		auto p = g_io_create_watch(gIOChannel, condition);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}

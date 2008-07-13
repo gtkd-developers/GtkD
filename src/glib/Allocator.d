@@ -95,8 +95,7 @@ public class Allocator
 		if(gAllocator is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gAllocator passed to constructor.");
-			else return;
+			return;
 		}
 		this.gAllocator = gAllocator;
 	}
@@ -123,9 +122,7 @@ public class Allocator
 		auto p = g_allocator_new(Str.toStringz(name), nPreallocs);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GAllocator*) p);
 	}

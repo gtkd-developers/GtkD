@@ -101,8 +101,7 @@ public class RadioAction : ToggleAction
 		if(gtkRadioAction is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRadioAction passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRadioAction);
@@ -174,9 +173,7 @@ public class RadioAction : ToggleAction
 		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRadioAction*) p);
 	}
@@ -194,8 +191,7 @@ public class RadioAction : ToggleAction
 		auto p = gtk_radio_action_get_group(gtkRadioAction);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

@@ -92,8 +92,7 @@ public class GLFont
 		auto p = gdk_gl_font_use_pango_font((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFont(cast(PangoFont*) p);
 	}
@@ -114,8 +113,7 @@ public class GLFont
 		auto p = gdk_gl_font_use_pango_font_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFont(cast(PangoFont*) p);
 	}

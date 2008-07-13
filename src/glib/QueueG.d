@@ -107,8 +107,7 @@ public class QueueG
 		if(gQueue is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gQueue passed to constructor.");
-			else return;
+			return;
 		}
 		this.gQueue = gQueue;
 	}
@@ -125,9 +124,7 @@ public class QueueG
 		auto p = g_queue_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GQueue*) p);
 	}
@@ -211,8 +208,7 @@ public class QueueG
 		auto p = g_queue_copy(gQueue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new QueueG(cast(GQueue*) p);
 	}
@@ -244,8 +240,7 @@ public class QueueG
 		auto p = g_queue_find(gQueue, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -269,8 +264,7 @@ public class QueueG
 		auto p = g_queue_find_custom(gQueue, data, func);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -526,8 +520,7 @@ public class QueueG
 		auto p = g_queue_pop_head_link(gQueue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -542,8 +535,7 @@ public class QueueG
 		auto p = g_queue_pop_tail_link(gQueue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -561,8 +553,7 @@ public class QueueG
 		auto p = g_queue_pop_nth_link(gQueue, n);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -578,8 +569,7 @@ public class QueueG
 		auto p = g_queue_peek_head_link(gQueue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -595,8 +585,7 @@ public class QueueG
 		auto p = g_queue_peek_tail_link(gQueue);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -614,8 +603,7 @@ public class QueueG
 		auto p = g_queue_peek_nth_link(gQueue, n);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

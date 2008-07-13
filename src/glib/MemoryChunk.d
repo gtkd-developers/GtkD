@@ -164,8 +164,7 @@ public class MemoryChunk
 		if(gMemChunk is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMemChunk passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMemChunk = gMemChunk;
 	}
@@ -222,9 +221,7 @@ public class MemoryChunk
 		auto p = g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GMemChunk*) p);
 	}

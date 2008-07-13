@@ -119,8 +119,7 @@ public class ListG
 		if(gList is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gList passed to constructor.");
-			else return;
+			return;
 		}
 		this.gList = gList;
 	}
@@ -180,8 +179,7 @@ public class ListG
 		auto p = g_list_append(gList, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -205,8 +203,7 @@ public class ListG
 		auto p = g_list_prepend(gList, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -226,8 +223,7 @@ public class ListG
 		auto p = g_list_insert(gList, data, position);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -246,8 +242,7 @@ public class ListG
 		auto p = g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -268,8 +263,7 @@ public class ListG
 		auto p = g_list_insert_sorted(gList, data, func);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -289,8 +283,7 @@ public class ListG
 		auto p = g_list_remove(gList, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -309,8 +302,7 @@ public class ListG
 		auto p = g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -329,8 +321,7 @@ public class ListG
 		auto p = g_list_delete_link(gList, (link is null) ? null : link.getListGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -350,8 +341,7 @@ public class ListG
 		auto p = g_list_remove_all(gList, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -381,8 +371,7 @@ public class ListG
 		auto p = g_list_alloc();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -424,8 +413,7 @@ public class ListG
 		auto p = g_list_copy(gList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -441,8 +429,7 @@ public class ListG
 		auto p = g_list_reverse(gList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -463,8 +450,7 @@ public class ListG
 		auto p = g_list_sort(gList, compareFunc);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -487,8 +473,7 @@ public class ListG
 		auto p = g_list_insert_sorted_with_data(gList, data, func, userData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -507,8 +492,7 @@ public class ListG
 		auto p = g_list_sort_with_data(gList, compareFunc, userData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -527,8 +511,7 @@ public class ListG
 		auto p = g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -555,8 +538,7 @@ public class ListG
 		auto p = g_list_first(gList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -571,8 +553,7 @@ public class ListG
 		auto p = g_list_last(gList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -589,8 +570,7 @@ public class ListG
 		auto p = g_list_nth(gList, n);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -619,8 +599,7 @@ public class ListG
 		auto p = g_list_nth_prev(gList, n);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -638,8 +617,7 @@ public class ListG
 		auto p = g_list_find(gList, data);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -663,8 +641,7 @@ public class ListG
 		auto p = g_list_find_custom(gList, data, func);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

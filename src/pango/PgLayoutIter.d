@@ -99,8 +99,7 @@ public class PgLayoutIter
 		if(pangoLayoutIter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoLayoutIter passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoLayoutIter = pangoLayoutIter;
 	}
@@ -119,8 +118,7 @@ public class PgLayoutIter
 		auto p = pango_layout_iter_copy(pangoLayoutIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayoutIter(cast(PangoLayoutIter*) p);
 	}
@@ -281,8 +279,7 @@ public class PgLayoutIter
 		auto p = pango_layout_iter_get_layout(pangoLayoutIter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}

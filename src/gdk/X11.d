@@ -138,8 +138,7 @@ public class X11
 		auto p = gdk_window_foreign_new(anid);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -170,8 +169,7 @@ public class X11
 		auto p = gdk_window_lookup(anid);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}

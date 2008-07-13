@@ -96,8 +96,7 @@ public class ValueArray
 		if(gValueArray is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gValueArray passed to constructor.");
-			else return;
+			return;
 		}
 		this.gValueArray = gValueArray;
 	}
@@ -117,8 +116,7 @@ public class ValueArray
 		auto p = g_value_array_get_nth(gValueArray, index);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Value(cast(GValue*) p);
 	}
@@ -136,9 +134,7 @@ public class ValueArray
 		auto p = g_value_array_new(nPrealloced);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GValueArray*) p);
 	}
@@ -154,8 +150,7 @@ public class ValueArray
 		auto p = g_value_array_copy(gValueArray);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}
@@ -181,8 +176,7 @@ public class ValueArray
 		auto p = g_value_array_append(gValueArray, (value is null) ? null : value.getValueStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}
@@ -199,8 +193,7 @@ public class ValueArray
 		auto p = g_value_array_prepend(gValueArray, (value is null) ? null : value.getValueStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}
@@ -218,8 +211,7 @@ public class ValueArray
 		auto p = g_value_array_insert(gValueArray, index, (value is null) ? null : value.getValueStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}
@@ -236,8 +228,7 @@ public class ValueArray
 		auto p = g_value_array_remove(gValueArray, index);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}
@@ -256,8 +247,7 @@ public class ValueArray
 		auto p = g_value_array_sort(gValueArray, compareFunc);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}
@@ -277,8 +267,7 @@ public class ValueArray
 		auto p = g_value_array_sort_with_data(gValueArray, compareFunc, userData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ValueArray(cast(GValueArray*) p);
 	}

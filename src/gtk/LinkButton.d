@@ -107,8 +107,7 @@ public class LinkButton : Button
 		if(gtkLinkButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkLinkButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkLinkButton);
@@ -136,9 +135,7 @@ public class LinkButton : Button
 		auto p = gtk_link_button_new(Str.toStringz(uri));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkLinkButton*) p);
 	}
@@ -156,9 +153,7 @@ public class LinkButton : Button
 		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkLinkButton*) p);
 	}

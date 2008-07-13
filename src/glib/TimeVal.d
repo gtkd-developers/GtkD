@@ -131,8 +131,7 @@ public class TimeVal
 		if(gTimeVal is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gTimeVal passed to constructor.");
-			else return;
+			return;
 		}
 		this.gTimeVal = gTimeVal;
 	}

@@ -119,8 +119,7 @@ public class SimpleXML
 		if(gMarkupParseContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMarkupParseContext passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMarkupParseContext = gMarkupParseContext;
 	}
@@ -263,8 +262,7 @@ public class SimpleXML
 		auto p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}
@@ -287,9 +285,7 @@ public class SimpleXML
 		auto p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GMarkupParseContext*) p);
 	}

@@ -123,8 +123,7 @@ public class RandG
 		if(gRand is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gRand passed to constructor.");
-			else return;
+			return;
 		}
 		this.gRand = gRand;
 	}
@@ -143,9 +142,7 @@ public class RandG
 		auto p = g_rand_new_with_seed(seed);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GRand*) p);
 	}
@@ -163,9 +160,7 @@ public class RandG
 		auto p = g_rand_new_with_seed_array(seed, seedLength);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GRand*) p);
 	}
@@ -181,9 +176,7 @@ public class RandG
 		auto p = g_rand_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GRand*) p);
 	}
@@ -201,8 +194,7 @@ public class RandG
 		auto p = g_rand_copy(gRand);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RandG(cast(GRand*) p);
 	}

@@ -115,8 +115,7 @@ public class PtrArray
 		if(gPtrArray is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gPtrArray passed to constructor.");
-			else return;
+			return;
 		}
 		this.gPtrArray = gPtrArray;
 	}
@@ -133,9 +132,7 @@ public class PtrArray
 		auto p = g_ptr_array_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GPtrArray*) p);
 	}
@@ -155,8 +152,7 @@ public class PtrArray
 		auto p = g_ptr_array_sized_new(reservedSize);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PtrArray(cast(GPtrArray*) p);
 	}

@@ -102,8 +102,7 @@ public class Selection
 		if(atkSelection is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkSelection passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkSelection = atkSelection;
 	}
@@ -189,8 +188,7 @@ public class Selection
 		auto p = atk_selection_ref_selection(atkSelection, i);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}

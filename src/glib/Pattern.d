@@ -105,8 +105,7 @@ public class Pattern
 		if(gPatternSpec is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gPatternSpec passed to constructor.");
-			else return;
+			return;
 		}
 		this.gPatternSpec = gPatternSpec;
 	}
@@ -125,9 +124,7 @@ public class Pattern
 		auto p = g_pattern_spec_new(Str.toStringz(pattern));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GPatternSpec*) p);
 	}

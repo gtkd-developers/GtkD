@@ -97,8 +97,7 @@ public class GLWindow : Drawable
 		if(gdkGLWindow is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkGLWindow passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkGLWindow);
@@ -129,9 +128,7 @@ public class GLWindow : Drawable
 		auto p = gdk_gl_window_new(glconfig, (window is null) ? null : window.getWindowStruct(), attribList);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLWindow*) p);
 	}
@@ -158,8 +155,7 @@ public class GLWindow : Drawable
 		auto p = gdk_gl_window_get_window(gdkGLWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -181,8 +177,7 @@ public class GLWindow : Drawable
 		auto p = gdk_window_set_gl_capability((window is null) ? null : window.getWindowStruct(), glconfig, attribList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLWindow(cast(GdkGLWindow*) p);
 	}
@@ -223,8 +218,7 @@ public class GLWindow : Drawable
 		auto p = gdk_window_get_gl_window((window is null) ? null : window.getWindowStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLWindow(cast(GdkGLWindow*) p);
 	}

@@ -154,8 +154,7 @@ public class SizeGroup : ObjectG, BuildableIF
 		if(gtkSizeGroup is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSizeGroup passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSizeGroup);
@@ -185,9 +184,7 @@ public class SizeGroup : ObjectG, BuildableIF
 		auto p = gtk_size_group_new(mode);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSizeGroup*) p);
 	}
@@ -282,8 +279,7 @@ public class SizeGroup : ObjectG, BuildableIF
 		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

@@ -94,8 +94,7 @@ public class WindowGroup : ObjectG
 		if(gtkWindowGroup is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkWindowGroup passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkWindowGroup);
@@ -121,9 +120,7 @@ public class WindowGroup : ObjectG
 		auto p = gtk_window_group_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkWindowGroup*) p);
 	}

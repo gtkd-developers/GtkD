@@ -93,8 +93,7 @@ public class Timer
 		if(gTimer is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gTimer passed to constructor.");
-			else return;
+			return;
 		}
 		this.gTimer = gTimer;
 	}
@@ -112,9 +111,7 @@ public class Timer
 		auto p = g_timer_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GTimer*) p);
 	}

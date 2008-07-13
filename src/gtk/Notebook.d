@@ -129,8 +129,7 @@ public class Notebook : Container
 		if(gtkNotebook is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkNotebook passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkNotebook);
@@ -502,9 +501,7 @@ public class Notebook : Container
 		auto p = gtk_notebook_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkNotebook*) p);
 	}
@@ -785,8 +782,7 @@ public class Notebook : Container
 		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -804,8 +800,7 @@ public class Notebook : Container
 		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -835,8 +830,7 @@ public class Notebook : Container
 		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

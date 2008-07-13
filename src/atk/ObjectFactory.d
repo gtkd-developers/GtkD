@@ -101,8 +101,7 @@ public class ObjectFactory : ObjectG
 		if(atkObjectFactory is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkObjectFactory passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)atkObjectFactory);
@@ -131,8 +130,7 @@ public class ObjectFactory : ObjectG
 		auto p = atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}

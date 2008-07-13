@@ -531,8 +531,7 @@ public template TreeModelT(TStruct)
 		auto p = gtk_tree_model_get_path(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}

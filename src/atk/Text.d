@@ -109,8 +109,7 @@ public class Text
 		if(atkText is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkText passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkText = atkText;
 	}

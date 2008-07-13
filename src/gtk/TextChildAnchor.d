@@ -99,8 +99,7 @@ public class TextChildAnchor
 		if(gtkTextChildAnchor is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextChildAnchor passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkTextChildAnchor = gtkTextChildAnchor;
 	}
@@ -649,9 +648,7 @@ public class TextChildAnchor
 		auto p = gtk_text_child_anchor_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTextChildAnchor*) p);
 	}
@@ -667,8 +664,7 @@ public class TextChildAnchor
 		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}

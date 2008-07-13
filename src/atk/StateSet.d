@@ -94,8 +94,7 @@ public class StateSet
 		if(atkStateSet is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkStateSet passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkStateSet = atkStateSet;
 	}
@@ -112,9 +111,7 @@ public class StateSet
 		auto p = atk_state_set_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(AtkStateSet*) p);
 	}
@@ -214,8 +211,7 @@ public class StateSet
 		auto p = atk_state_set_and_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StateSet(cast(AtkStateSet*) p);
 	}
@@ -232,8 +228,7 @@ public class StateSet
 		auto p = atk_state_set_or_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StateSet(cast(AtkStateSet*) p);
 	}
@@ -252,8 +247,7 @@ public class StateSet
 		auto p = atk_state_set_xor_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StateSet(cast(AtkStateSet*) p);
 	}

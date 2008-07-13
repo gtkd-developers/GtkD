@@ -103,8 +103,7 @@ public class Pixdata
 		if(gdkPixdata is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkPixdata passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkPixdata = gdkPixdata;
 	}
@@ -143,8 +142,7 @@ public class Pixdata
 		auto p = gdk_pixbuf_from_pixdata(gdkPixdata, copyPixels, error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -201,8 +199,7 @@ public class Pixdata
 		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StringG(cast(GString*) p);
 	}

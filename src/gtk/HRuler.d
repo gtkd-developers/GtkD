@@ -105,8 +105,7 @@ public class HRuler : Ruler
 		if(gtkHRuler is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkHRuler passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkHRuler);
@@ -131,9 +130,7 @@ public class HRuler : Ruler
 		auto p = gtk_hruler_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkHRuler*) p);
 	}

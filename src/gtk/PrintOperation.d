@@ -155,8 +155,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		if(gtkPrintOperation is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPrintOperation passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPrintOperation);
@@ -605,9 +604,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		auto p = gtk_print_operation_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrintOperation*) p);
 	}
@@ -668,8 +665,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		auto p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PageSetup(cast(GtkPageSetup*) p);
 	}
@@ -702,8 +698,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		auto p = gtk_print_operation_get_print_settings(gtkPrintOperation);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}
@@ -983,8 +978,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		auto p = gtk_print_run_page_setup_dialog((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PageSetup(cast(GtkPageSetup*) p);
 	}

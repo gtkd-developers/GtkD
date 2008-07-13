@@ -118,8 +118,7 @@ public class Statusbar : HBox
 		if(gtkStatusbar is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkStatusbar passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkStatusbar);
@@ -208,9 +207,7 @@ public class Statusbar : HBox
 		auto p = gtk_statusbar_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkStatusbar*) p);
 	}

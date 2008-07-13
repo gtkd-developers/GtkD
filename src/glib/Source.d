@@ -158,8 +158,7 @@ public class Source
 		if(gSource is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gSource passed to constructor.");
-			else return;
+			return;
 		}
 		this.gSource = gSource;
 	}
@@ -186,9 +185,7 @@ public class Source
 		auto p = g_source_new(sourceFuncs, structSize);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GSource*) p);
 	}
@@ -203,8 +200,7 @@ public class Source
 		auto p = g_source_ref(gSource);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Source(cast(GSource*) p);
 	}
@@ -383,8 +379,7 @@ public class Source
 		auto p = g_source_get_context(gSource);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new MainContext(cast(GMainContext*) p);
 	}

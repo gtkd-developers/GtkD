@@ -113,8 +113,7 @@ public class PgRenderer : ObjectG
 		if(pangoRenderer is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoRenderer passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoRenderer);
@@ -326,8 +325,7 @@ public class PgRenderer : ObjectG
 		auto p = pango_renderer_get_color(pangoRenderer, part);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgColor(cast(PangoColor*) p);
 	}
@@ -357,8 +355,7 @@ public class PgRenderer : ObjectG
 		auto p = pango_renderer_get_matrix(pangoRenderer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgMatrix(cast(PangoMatrix*) p);
 	}
@@ -378,8 +375,7 @@ public class PgRenderer : ObjectG
 		auto p = pango_renderer_get_layout(pangoRenderer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}
@@ -399,8 +395,7 @@ public class PgRenderer : ObjectG
 		auto p = pango_renderer_get_layout_line(pangoRenderer);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayoutLine(cast(PangoLayoutLine*) p);
 	}

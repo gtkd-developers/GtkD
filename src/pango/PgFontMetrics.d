@@ -96,8 +96,7 @@ public class PgFontMetrics
 		if(pangoFontMetrics is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFontMetrics passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoFontMetrics = pangoFontMetrics;
 	}
@@ -115,8 +114,7 @@ public class PgFontMetrics
 		auto p = pango_font_metrics_ref(pangoFontMetrics);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMetrics(cast(PangoFontMetrics*) p);
 	}

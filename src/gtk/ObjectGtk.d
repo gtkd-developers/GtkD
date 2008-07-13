@@ -144,8 +144,7 @@ public class ObjectGtk : ObjectG
 		if(gtkObject is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkObject passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkObject);
@@ -224,9 +223,7 @@ public class ObjectGtk : ObjectG
 		auto p = gtk_object_new(type, Str.toStringz(firstPropertyName));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkObject*) p);
 	}

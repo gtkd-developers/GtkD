@@ -101,8 +101,7 @@ public class SeparatorToolItem : ToolItem
 		if(gtkSeparatorToolItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkSeparatorToolItem passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkSeparatorToolItem);
@@ -128,9 +127,7 @@ public class SeparatorToolItem : ToolItem
 		auto p = gtk_separator_tool_item_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkSeparatorToolItem*) p);
 	}

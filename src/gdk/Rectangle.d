@@ -103,8 +103,7 @@ public class Rectangle
 		if(gdkRectangle is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkRectangle passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkRectangle = gdkRectangle;
 	}

@@ -97,8 +97,7 @@ public class PgMatrix
 		if(pangoMatrix is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoMatrix passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoMatrix = pangoMatrix;
 	}
@@ -171,8 +170,7 @@ public class PgMatrix
 		auto p = pango_matrix_copy(pangoMatrix);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgMatrix(cast(PangoMatrix*) p);
 	}

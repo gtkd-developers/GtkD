@@ -169,8 +169,7 @@ public class Label : Misc
 		if(gtkLabel is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkLabel passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkLabel);
@@ -736,8 +735,7 @@ public class Label : Misc
 		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

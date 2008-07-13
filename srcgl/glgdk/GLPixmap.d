@@ -98,8 +98,7 @@ public class GLPixmap : Drawable
 		if(gdkGLPixmap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkGLPixmap passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gdkGLPixmap);
@@ -130,9 +129,7 @@ public class GLPixmap : Drawable
 		auto p = gdk_gl_pixmap_new((glconfig is null) ? null : glconfig.getGLConfigStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), attribList);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkGLPixmap*) p);
 	}
@@ -159,8 +156,7 @@ public class GLPixmap : Drawable
 		auto p = gdk_gl_pixmap_get_pixmap(gdkGLPixmap);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixmap(cast(GdkPixmap*) p);
 	}
@@ -182,8 +178,7 @@ public class GLPixmap : Drawable
 		auto p = gdk_pixmap_set_gl_capability((pixmap is null) ? null : pixmap.getPixmapStruct(), (glconfig is null) ? null : glconfig.getGLConfigStruct(), attribList);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLPixmap(cast(GdkGLPixmap*) p);
 	}
@@ -224,8 +219,7 @@ public class GLPixmap : Drawable
 		auto p = gdk_pixmap_get_gl_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new GLPixmap(cast(GdkGLPixmap*) p);
 	}

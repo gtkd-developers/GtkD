@@ -132,8 +132,7 @@ public class TreeSelection : ObjectG
 		if(gtkTreeSelection is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeSelection passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTreeSelection);
@@ -295,8 +294,7 @@ public class TreeSelection : ObjectG
 		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeView(cast(GtkTreeView*) p);
 	}

@@ -138,8 +138,7 @@ public class Paned : Container
 		if(gtkPaned is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPaned passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPaned);
@@ -442,8 +441,7 @@ public class Paned : Container
 		auto p = gtk_paned_get_child1(gtkPaned);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -459,8 +457,7 @@ public class Paned : Container
 		auto p = gtk_paned_get_child2(gtkPaned);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

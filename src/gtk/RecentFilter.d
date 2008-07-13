@@ -108,8 +108,7 @@ public class RecentFilter : ObjectGtk
 		if(gtkRecentFilter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRecentFilter passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRecentFilter);
@@ -139,9 +138,7 @@ public class RecentFilter : ObjectGtk
 		auto p = gtk_recent_filter_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRecentFilter*) p);
 	}

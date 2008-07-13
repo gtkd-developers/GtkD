@@ -108,8 +108,7 @@ public class PaperSize
 		if(gtkPaperSize is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPaperSize passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkPaperSize = gtkPaperSize;
 	}
@@ -133,9 +132,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new(Str.toStringz(name));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPaperSize*) p);
 	}
@@ -159,9 +156,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPaperSize*) p);
 	}
@@ -183,9 +178,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPaperSize*) p);
 	}
@@ -201,8 +194,7 @@ public class PaperSize
 		auto p = gtk_paper_size_copy(gtkPaperSize);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PaperSize(cast(GtkPaperSize*) p);
 	}
@@ -244,8 +236,7 @@ public class PaperSize
 		auto p = gtk_paper_size_get_paper_sizes(includeCustom);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -416,9 +407,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPaperSize*) p);
 	}

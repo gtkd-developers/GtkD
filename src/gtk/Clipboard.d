@@ -163,8 +163,7 @@ public class Clipboard : ObjectG
 		if(gtkClipboard is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkClipboard passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkClipboard);
@@ -236,8 +235,7 @@ public class Clipboard : ObjectG
 		auto p = gtk_clipboard_get(selection);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Clipboard(cast(GtkClipboard*) p);
 	}
@@ -278,8 +276,7 @@ public class Clipboard : ObjectG
 		auto p = gtk_clipboard_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Clipboard(cast(GtkClipboard*) p);
 	}
@@ -295,8 +292,7 @@ public class Clipboard : ObjectG
 		auto p = gtk_clipboard_get_display(gtkClipboard);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -358,8 +354,7 @@ public class Clipboard : ObjectG
 		auto p = gtk_clipboard_get_owner(gtkClipboard);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectG(cast(GObject*) p);
 	}
@@ -551,8 +546,7 @@ public class Clipboard : ObjectG
 		auto p = gtk_clipboard_wait_for_image(gtkClipboard);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

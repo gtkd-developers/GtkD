@@ -174,8 +174,7 @@ public class Image : Misc
 		if(gtkImage is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkImage passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkImage);
@@ -273,8 +272,7 @@ public class Image : Misc
 		auto p = gtk_image_get_pixbuf(gtkImage);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -377,9 +375,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_file(Str.toStringz(filename));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -405,9 +401,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_icon_set((iconSet is null) ? null : iconSet.getIconSetStruct(), size);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -428,9 +422,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_image((image is null) ? null : image.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -452,9 +444,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -475,9 +465,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -500,9 +488,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_animation(animation);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -621,9 +607,7 @@ public class Image : Misc
 		auto p = gtk_image_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkImage*) p);
 	}

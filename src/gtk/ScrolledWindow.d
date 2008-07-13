@@ -132,8 +132,7 @@ public class ScrolledWindow : Bin
 		if(gtkScrolledWindow is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkScrolledWindow passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkScrolledWindow);
@@ -277,8 +276,7 @@ public class ScrolledWindow : Bin
 		auto p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -295,8 +293,7 @@ public class ScrolledWindow : Bin
 		auto p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -312,8 +309,7 @@ public class ScrolledWindow : Bin
 		auto p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -329,8 +325,7 @@ public class ScrolledWindow : Bin
 		auto p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}

@@ -98,8 +98,7 @@ public class Cache
 		if(gCache is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gCache passed to constructor.");
-			else return;
+			return;
 		}
 		this.gCache = gCache;
 	}
@@ -132,9 +131,7 @@ public class Cache
 		auto p = g_cache_new(valueNewFunc, valueDestroyFunc, keyDupFunc, keyDestroyFunc, hashKeyFunc, hashValueFunc, keyEqualFunc);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GCache*) p);
 	}

@@ -94,8 +94,7 @@ public class VScrollbar : Scrollbar
 		if(gtkVScrollbar is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkVScrollbar passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkVScrollbar);
@@ -120,9 +119,7 @@ public class VScrollbar : Scrollbar
 		auto p = gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkVScrollbar*) p);
 	}

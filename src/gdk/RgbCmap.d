@@ -161,8 +161,7 @@ public class RgbCmap
 		if(gdkRgbCmap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkRgbCmap passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkRgbCmap = gdkRgbCmap;
 	}
@@ -206,9 +205,7 @@ public class RgbCmap
 		auto p = gdk_rgb_cmap_new(colors, nColors);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GdkRgbCmap*) p);
 	}

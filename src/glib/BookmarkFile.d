@@ -146,8 +146,7 @@ public class BookmarkFile
 		if(gBookmarkFile is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gBookmarkFile passed to constructor.");
-			else return;
+			return;
 		}
 		this.gBookmarkFile = gBookmarkFile;
 	}
@@ -168,9 +167,7 @@ public class BookmarkFile
 		auto p = g_bookmark_file_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GBookmarkFile*) p);
 	}

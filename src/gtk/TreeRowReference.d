@@ -238,8 +238,7 @@ public class TreeRowReference
 		if(gtkTreeRowReference is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeRowReference passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkTreeRowReference = gtkTreeRowReference;
 	}
@@ -262,9 +261,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreeRowReference*) p);
 	}
@@ -299,9 +296,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkTreeRowReference*) p);
 	}
@@ -317,8 +312,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_get_model(gtkTreeRowReference);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}
@@ -334,8 +328,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_get_path(gtkTreeRowReference);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
 	}
@@ -371,8 +364,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_copy(gtkTreeRowReference);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeRowReference(cast(GtkTreeRowReference*) p);
 	}

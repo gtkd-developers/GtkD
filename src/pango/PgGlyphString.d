@@ -99,8 +99,7 @@ public class PgGlyphString
 		if(pangoGlyphString is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoGlyphString passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoGlyphString = pangoGlyphString;
 	}
@@ -117,9 +116,7 @@ public class PgGlyphString
 		auto p = pango_glyph_string_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoGlyphString*) p);
 	}
@@ -134,8 +131,7 @@ public class PgGlyphString
 		auto p = pango_glyph_string_copy(pangoGlyphString);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgGlyphString(cast(PangoGlyphString*) p);
 	}

@@ -97,8 +97,7 @@ public class IMMulticontext : IMContext
 		if(gtkIMMulticontext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIMMulticontext passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkIMMulticontext);
@@ -124,8 +123,7 @@ public class IMMulticontext : IMContext
 		auto p = gtk_im_multicontext_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IMContext(cast(GtkIMContext*) p);
 	}

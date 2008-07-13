@@ -130,8 +130,7 @@ public class CClosure
 		if(gCClosure is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gCClosure passed to constructor.");
-			else return;
+			return;
 		}
 		this.gCClosure = gCClosure;
 	}
@@ -154,8 +153,7 @@ public class CClosure
 		auto p = g_cclosure_new(callbackFunc, userData, destroyData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}
@@ -175,8 +173,7 @@ public class CClosure
 		auto p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}
@@ -197,8 +194,7 @@ public class CClosure
 		auto p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}
@@ -219,8 +215,7 @@ public class CClosure
 		auto p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}

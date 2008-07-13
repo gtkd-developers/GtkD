@@ -138,8 +138,7 @@ public class MatchInfo
 		if(gMatchInfo is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gMatchInfo passed to constructor.");
-			else return;
+			return;
 		}
 		this.gMatchInfo = gMatchInfo;
 	}

@@ -204,8 +204,7 @@ public class PgCairo
 		auto p = pango_cairo_font_get_scaled_font(font);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
@@ -272,8 +271,7 @@ public class PgCairo
 		auto p = pango_cairo_context_get_font_options((context is null) ? null : context.getPgContextStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
@@ -355,8 +353,7 @@ public class PgCairo
 		auto p = pango_cairo_create_layout((cr is null) ? null : cr.getContextStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}

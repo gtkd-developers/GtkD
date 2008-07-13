@@ -110,8 +110,7 @@ public class PageSetupUnixDialog : Dialog
 		if(gtkPageSetupUnixDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPageSetupUnixDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPageSetupUnixDialog);
@@ -140,9 +139,7 @@ public class PageSetupUnixDialog : Dialog
 		auto p = gtk_page_setup_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPageSetupUnixDialog*) p);
 	}
@@ -171,8 +168,7 @@ public class PageSetupUnixDialog : Dialog
 		auto p = gtk_page_setup_unix_dialog_get_page_setup(gtkPageSetupUnixDialog);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PageSetup(cast(GtkPageSetup*) p);
 	}
@@ -201,8 +197,7 @@ public class PageSetupUnixDialog : Dialog
 		auto p = gtk_page_setup_unix_dialog_get_print_settings(gtkPageSetupUnixDialog);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}

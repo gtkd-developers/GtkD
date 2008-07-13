@@ -132,8 +132,7 @@ public class Closure
 		if(gClosure is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gClosure passed to constructor.");
-			else return;
+			return;
 		}
 		this.gClosure = gClosure;
 	}
@@ -158,9 +157,7 @@ public class Closure
 		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GClosure*) p);
 	}
@@ -176,8 +173,7 @@ public class Closure
 		auto p = g_closure_ref(gClosure);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Closure(cast(GClosure*) p);
 	}
@@ -347,9 +343,7 @@ public class Closure
 		auto p = g_closure_new_simple(sizeofClosure, data);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GClosure*) p);
 	}

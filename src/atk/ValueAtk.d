@@ -99,8 +99,7 @@ public class ValueAtk
 		if(atkValue is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkValue passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkValue = atkValue;
 	}

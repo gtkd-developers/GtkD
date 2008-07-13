@@ -103,8 +103,7 @@ public class ColorSelection : VBox
 		if(gtkColorSelection is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkColorSelection passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkColorSelection);
@@ -163,9 +162,7 @@ public class ColorSelection : VBox
 		auto p = gtk_color_selection_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkColorSelection*) p);
 	}

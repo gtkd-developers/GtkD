@@ -94,8 +94,7 @@ public class ScannerG
 		if(gScanner is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gScanner passed to constructor.");
-			else return;
+			return;
 		}
 		this.gScanner = gScanner;
 	}
@@ -117,9 +116,7 @@ public class ScannerG
 		auto p = g_scanner_new(configTempl);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GScanner*) p);
 	}

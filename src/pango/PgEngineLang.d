@@ -93,8 +93,7 @@ public class PgEngineLang : PgEngine
 		if(pangoEngineLang is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoEngineLang passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoEngineLang);

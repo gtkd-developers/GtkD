@@ -314,8 +314,7 @@ public class ErrorG
 		if(gError is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gError passed to constructor.");
-			else return;
+			return;
 		}
 		this.gError = gError;
 	}
@@ -338,9 +337,7 @@ public class ErrorG
 		auto p = g_error_new(domain, code, Str.toStringz(format));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GError*) p);
 	}
@@ -361,9 +358,7 @@ public class ErrorG
 		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GError*) p);
 	}
@@ -387,8 +382,7 @@ public class ErrorG
 		auto p = g_error_copy(gError);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ErrorG(cast(GError*) p);
 	}

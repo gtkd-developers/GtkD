@@ -122,8 +122,7 @@ public class PgFont : ObjectG
 		if(pangoFont is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFont passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoFont);
@@ -153,8 +152,7 @@ public class PgFont : ObjectG
 		auto p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgEngineShape(cast(PangoEngineShape*) p);
 	}
@@ -171,8 +169,7 @@ public class PgFont : ObjectG
 		auto p = pango_font_describe(pangoFont);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
@@ -190,8 +187,7 @@ public class PgFont : ObjectG
 		auto p = pango_font_describe_with_absolute_size(pangoFont);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
@@ -208,8 +204,7 @@ public class PgFont : ObjectG
 		auto p = pango_font_get_coverage(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgCoverage(cast(PangoCoverage*) p);
 	}
@@ -256,8 +251,7 @@ public class PgFont : ObjectG
 		auto p = pango_font_get_metrics(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
@@ -273,8 +267,7 @@ public class PgFont : ObjectG
 		auto p = pango_font_get_font_map(pangoFont);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMap(cast(PangoFontMap*) p);
 	}

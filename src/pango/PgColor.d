@@ -98,8 +98,7 @@ public class PgColor
 		if(pangoColor is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoColor passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoColor = pangoColor;
 	}
@@ -138,8 +137,7 @@ public class PgColor
 		auto p = pango_color_copy(pangoColor);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgColor(cast(PangoColor*) p);
 	}

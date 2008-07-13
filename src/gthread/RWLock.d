@@ -120,8 +120,7 @@ public class RWLock
 		if(gStaticRWLock is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gStaticRWLock passed to constructor.");
-			else return;
+			return;
 		}
 		this.gStaticRWLock = gStaticRWLock;
 	}

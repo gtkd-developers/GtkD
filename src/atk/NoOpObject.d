@@ -99,8 +99,7 @@ public class NoOpObject : ObjectAtk
 		if(atkNoOpObject is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkNoOpObject passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)atkNoOpObject);
@@ -129,8 +128,7 @@ public class NoOpObject : ObjectAtk
 		auto p = atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}

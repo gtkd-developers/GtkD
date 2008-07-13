@@ -103,8 +103,7 @@ public class ScaledFont
 		if(cairo_scaled_font is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_scaled_font passed to constructor.");
-			else return;
+			return;
 		}
 		this.cairo_scaled_font = cairo_scaled_font;
 	}
@@ -136,8 +135,7 @@ public class ScaledFont
 		auto p = cairo_scaled_font_create((fontFace is null) ? null : fontFace.getFontFaceStruct(), (fontMatrix is null) ? null : fontMatrix.getMatrixStruct(), (ctm is null) ? null : ctm.getMatrixStruct(), (options is null) ? null : options.getFontOptionStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
@@ -156,8 +154,7 @@ public class ScaledFont
 		auto p = cairo_scaled_font_reference(cairo_scaled_font);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
@@ -252,8 +249,7 @@ public class ScaledFont
 		auto p = cairo_scaled_font_get_font_face(cairo_scaled_font);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new FontFace(cast(cairo_font_face_t*) p);
 	}

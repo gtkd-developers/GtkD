@@ -279,8 +279,7 @@ public class Builder : ObjectG
 		if(gtkBuilder is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkBuilder passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkBuilder);
@@ -306,9 +305,7 @@ public class Builder : ObjectG
 		auto p = gtk_builder_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkBuilder*) p);
 	}
@@ -358,8 +355,7 @@ public class Builder : ObjectG
 		auto p = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectG(cast(GObject*) p);
 	}
@@ -377,8 +373,7 @@ public class Builder : ObjectG
 		auto p = gtk_builder_get_objects(gtkBuilder);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

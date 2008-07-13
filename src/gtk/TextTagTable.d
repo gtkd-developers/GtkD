@@ -102,8 +102,7 @@ public class TextTagTable : ObjectG
 		if(gtkTextTagTable is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTextTagTable passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkTextTagTable);
@@ -222,8 +221,7 @@ public class TextTagTable : ObjectG
 		auto p = gtk_text_tag_table_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextTagTable(cast(GtkTextTagTable*) p);
 	}
@@ -270,8 +268,7 @@ public class TextTagTable : ObjectG
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TextTag(cast(GtkTextTag*) p);
 	}

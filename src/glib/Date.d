@@ -133,8 +133,7 @@ public class Date
 		if(gDate is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gDate passed to constructor.");
-			else return;
+			return;
 		}
 		this.gDate = gDate;
 	}
@@ -153,9 +152,7 @@ public class Date
 		auto p = g_date_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GDate*) p);
 	}
@@ -175,9 +172,7 @@ public class Date
 		auto p = g_date_new_dmy(day, month, year);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GDate*) p);
 	}
@@ -195,9 +190,7 @@ public class Date
 		auto p = g_date_new_julian(julianDay);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GDate*) p);
 	}

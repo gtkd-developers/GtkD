@@ -160,8 +160,7 @@ public class IconInfo
 		if(gtkIconInfo is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIconInfo passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkIconInfo = gtkIconInfo;
 	}
@@ -215,8 +214,7 @@ public class IconInfo
 		auto p = gtk_icon_info_copy(gtkIconInfo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconInfo(cast(GtkIconInfo*) p);
 	}
@@ -278,8 +276,7 @@ public class IconInfo
 		auto p = gtk_icon_info_get_builtin_pixbuf(gtkIconInfo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -304,8 +301,7 @@ public class IconInfo
 		auto p = gtk_icon_info_load_icon(gtkIconInfo, error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

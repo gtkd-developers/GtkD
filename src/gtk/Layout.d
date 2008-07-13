@@ -109,8 +109,7 @@ public class Layout : Container
 		if(gtkLayout is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkLayout passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkLayout);
@@ -174,9 +173,7 @@ public class Layout : Container
 		auto p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkLayout*) p);
 	}
@@ -270,8 +267,7 @@ public class Layout : Container
 		auto p = gtk_layout_get_hadjustment(gtkLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}
@@ -290,8 +286,7 @@ public class Layout : Container
 		auto p = gtk_layout_get_vadjustment(gtkLayout);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Adjustment(cast(GtkAdjustment*) p);
 	}

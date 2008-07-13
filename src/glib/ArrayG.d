@@ -116,8 +116,7 @@ public class ArrayG
 		if(gArray is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gArray passed to constructor.");
-			else return;
+			return;
 		}
 		this.gArray = gArray;
 	}
@@ -140,9 +139,7 @@ public class ArrayG
 		auto p = g_array_new(zeroTerminated, clear, elementSize);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GArray*) p);
 	}
@@ -165,8 +162,7 @@ public class ArrayG
 		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -184,8 +180,7 @@ public class ArrayG
 		auto p = g_array_append_vals(gArray, data, len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -205,8 +200,7 @@ public class ArrayG
 		auto p = g_array_prepend_vals(gArray, data, len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -225,8 +219,7 @@ public class ArrayG
 		auto p = g_array_insert_vals(gArray, index, data, len);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -244,8 +237,7 @@ public class ArrayG
 		auto p = g_array_remove_index(gArray, index);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -265,8 +257,7 @@ public class ArrayG
 		auto p = g_array_remove_index_fast(gArray, index);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -286,8 +277,7 @@ public class ArrayG
 		auto p = g_array_remove_range(gArray, index, length);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}
@@ -333,8 +323,7 @@ public class ArrayG
 		auto p = g_array_set_size(gArray, length);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
 	}

@@ -115,8 +115,7 @@ public class InputDialog : Dialog
 		if(gtkInputDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkInputDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkInputDialog);
@@ -251,9 +250,7 @@ public class InputDialog : Dialog
 		auto p = gtk_input_dialog_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkInputDialog*) p);
 	}

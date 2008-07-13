@@ -122,8 +122,7 @@ public class Glade : ObjectG
 		if(gladeXML is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gladeXML passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gladeXML);
@@ -463,9 +462,7 @@ public class Glade : ObjectG
 		auto p = glade_xml_new_from_buffer(Str.toStringz(buffer), size, Str.toStringz(root), Str.toStringz(domain));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GladeXML*) p);
 	}
@@ -509,8 +506,7 @@ public class Glade : ObjectG
 		auto p = glade_get_widget_tree((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Glade(cast(GladeXML*) p);
 	}

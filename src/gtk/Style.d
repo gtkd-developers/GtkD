@@ -128,8 +128,7 @@ public class Style : ObjectG
 		if(gtkStyle is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkStyle passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkStyle);
@@ -226,9 +225,7 @@ public class Style : ObjectG
 		auto p = gtk_style_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkStyle*) p);
 	}
@@ -242,8 +239,7 @@ public class Style : ObjectG
 		auto p = gtk_style_copy(gtkStyle);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -267,8 +263,7 @@ public class Style : ObjectG
 		auto p = gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -295,8 +290,7 @@ public class Style : ObjectG
 		auto p = gtk_style_ref(gtkStyle);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -362,8 +356,7 @@ public class Style : ObjectG
 		auto p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconSet(cast(GtkIconSet*) p);
 	}
@@ -388,8 +381,7 @@ public class Style : ObjectG
 		auto p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -409,8 +401,7 @@ public class Style : ObjectG
 		auto p = gtk_style_get_font(gtkStyle);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Font(cast(GdkFont*) p);
 	}

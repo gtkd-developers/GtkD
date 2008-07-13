@@ -170,8 +170,7 @@ public class OptionContext
 		if(gOptionContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gOptionContext passed to constructor.");
-			else return;
+			return;
 		}
 		this.gOptionContext = gOptionContext;
 	}
@@ -209,9 +208,7 @@ public class OptionContext
 		auto p = g_option_context_new(Str.toStringz(parameterString));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GOptionContext*) p);
 	}
@@ -487,8 +484,7 @@ public class OptionContext
 		auto p = g_option_context_get_main_group(gOptionContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new OptionGroup(cast(GOptionGroup*) p);
 	}

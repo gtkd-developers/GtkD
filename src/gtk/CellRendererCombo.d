@@ -106,8 +106,7 @@ public class CellRendererCombo : CellRendererText
 		if(gtkCellRendererCombo is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCellRendererCombo passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkCellRendererCombo);
@@ -139,9 +138,7 @@ public class CellRendererCombo : CellRendererText
 		auto p = gtk_cell_renderer_combo_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkCellRendererCombo*) p);
 	}

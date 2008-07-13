@@ -116,8 +116,7 @@ public class PrintJob : ObjectG
 		if(gtkPrintJob is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPrintJob passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPrintJob);
@@ -183,9 +182,7 @@ public class PrintJob : ObjectG
 		auto p = gtk_print_job_new(Str.toStringz(title), (printer is null) ? null : printer.getPrinterStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkPrintJob*) p);
 	}
@@ -201,8 +198,7 @@ public class PrintJob : ObjectG
 		auto p = gtk_print_job_get_settings(gtkPrintJob);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}
@@ -218,8 +214,7 @@ public class PrintJob : ObjectG
 		auto p = gtk_print_job_get_printer(gtkPrintJob);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Printer(cast(GtkPrinter*) p);
 	}
@@ -278,8 +273,7 @@ public class PrintJob : ObjectG
 		auto p = gtk_print_job_get_surface(gtkPrintJob, error);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Surface(cast(cairo_surface_t*) p);
 	}

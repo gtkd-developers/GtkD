@@ -113,8 +113,7 @@ public class StockItem
 		if(gtkStockItem is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkStockItem passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkStockItem = gtkStockItem;
 	}
@@ -162,8 +161,7 @@ public class StockItem
 		auto p = gtk_stock_item_copy(gtkStockItem);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new StockItem(cast(GtkStockItem*) p);
 	}
@@ -193,8 +191,7 @@ public class StockItem
 		auto p = gtk_stock_list_ids();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListSG(cast(GSList*) p);
 	}

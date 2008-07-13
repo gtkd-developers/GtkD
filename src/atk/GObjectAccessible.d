@@ -100,8 +100,7 @@ public class GObjectAccessible : ObjectAtk
 		if(atkGObjectAccessible is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkGObjectAccessible passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)atkGObjectAccessible);
@@ -129,8 +128,7 @@ public class GObjectAccessible : ObjectAtk
 		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -145,8 +143,7 @@ public class GObjectAccessible : ObjectAtk
 		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectG(cast(GObject*) p);
 	}

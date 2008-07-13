@@ -101,8 +101,7 @@ public class AccelMap : ObjectG
 		if(gtkAccelMap is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAccelMap passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAccelMap);
@@ -339,8 +338,7 @@ public class AccelMap : ObjectG
 		auto p = gtk_accel_map_get();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new AccelMap(cast(GtkAccelMap*) p);
 	}

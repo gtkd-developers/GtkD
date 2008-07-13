@@ -146,8 +146,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		if(gtkComboBox is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkComboBox passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkComboBox);
@@ -420,9 +419,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkComboBox*) p);
 	}
@@ -569,8 +566,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		auto p = gtk_combo_box_get_model(gtkComboBox);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new TreeModel(cast(GtkTreeModel*) p);
 	}
@@ -698,8 +694,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}

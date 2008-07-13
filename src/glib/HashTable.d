@@ -116,8 +116,7 @@ public class HashTable
 		if(gHashTable is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gHashTable passed to constructor.");
-			else return;
+			return;
 		}
 		this.gHashTable = gHashTable;
 	}
@@ -146,9 +145,7 @@ public class HashTable
 		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GHashTable*) p);
 	}
@@ -173,9 +170,7 @@ public class HashTable
 		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GHashTable*) p);
 	}
@@ -402,8 +397,7 @@ public class HashTable
 		auto p = g_hash_table_get_keys(gHashTable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -420,8 +414,7 @@ public class HashTable
 		auto p = g_hash_table_get_values(gHashTable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -452,8 +445,7 @@ public class HashTable
 		auto p = g_hash_table_ref(gHashTable);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new HashTable(cast(GHashTable*) p);
 	}
@@ -523,8 +515,7 @@ public class HashTable
 		auto p = g_hash_table_iter_get_hash_table(iter);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new HashTable(cast(GHashTable*) p);
 	}

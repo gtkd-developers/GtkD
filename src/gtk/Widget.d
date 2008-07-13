@@ -211,8 +211,7 @@ public class Widget : ObjectGtk, BuildableIF
 		if(gtkWidget is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkWidget passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkWidget);
@@ -2823,9 +2822,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_new(type, Str.toStringz(firstPropertyName));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkWidget*) p);
 	}
@@ -3211,8 +3208,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_list_accel_closures(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -3426,8 +3422,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_parent_window(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -3571,8 +3566,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_toplevel(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -3597,8 +3591,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_ancestor(gtkWidget, widgetType);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -3614,8 +3607,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_colormap(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -3644,8 +3636,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_visual(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -3763,8 +3754,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_style(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -3827,8 +3817,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_default_style();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
 	}
@@ -3843,8 +3832,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_default_colormap();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Colormap(cast(GdkColormap*) p);
 	}
@@ -3860,8 +3848,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_default_visual();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Visual(cast(GdkVisual*) p);
 	}
@@ -4048,8 +4035,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_modifier_style(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RcStyle(cast(GtkRcStyle*) p);
 	}
@@ -4181,8 +4167,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_create_pango_context(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgContext(cast(PangoContext*) p);
 	}
@@ -4206,8 +4191,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_pango_context(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgContext(cast(PangoContext*) p);
 	}
@@ -4231,8 +4215,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}
@@ -4262,8 +4245,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -4545,8 +4527,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Region(cast(GdkRegion*) p);
 	}
@@ -4631,8 +4612,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_accessible(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ObjectAtk(cast(AtkObject*) p);
 	}
@@ -4721,8 +4701,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_parent(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
 	}
@@ -4741,8 +4720,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_settings(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Settings(cast(GtkSettings*) p);
 	}
@@ -4767,8 +4745,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_clipboard(gtkWidget, selection);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Clipboard(cast(GtkClipboard*) p);
 	}
@@ -4789,8 +4766,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_display(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Display(cast(GdkDisplay*) p);
 	}
@@ -4812,8 +4788,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_root_window(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
 	}
@@ -4835,8 +4810,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_screen(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
 	}
@@ -4991,8 +4965,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_list_mnemonic_labels(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -5042,8 +5015,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_get_action(gtkWidget);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Action(cast(GtkAction*) p);
 	}

@@ -155,8 +155,7 @@ public class PrintContext : ObjectG
 		if(gtkPrintContext is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkPrintContext passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkPrintContext);
@@ -184,8 +183,7 @@ public class PrintContext : ObjectG
 		auto p = gtk_print_context_get_cairo_context(gtkPrintContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Context(cast(cairo_t*) p);
 	}
@@ -220,8 +218,7 @@ public class PrintContext : ObjectG
 		auto p = gtk_print_context_get_page_setup(gtkPrintContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PageSetup(cast(GtkPageSetup*) p);
 	}
@@ -284,8 +281,7 @@ public class PrintContext : ObjectG
 		auto p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgFontMap(cast(PangoFontMap*) p);
 	}
@@ -302,8 +298,7 @@ public class PrintContext : ObjectG
 		auto p = gtk_print_context_create_pango_context(gtkPrintContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgContext(cast(PangoContext*) p);
 	}
@@ -320,8 +315,7 @@ public class PrintContext : ObjectG
 		auto p = gtk_print_context_create_pango_layout(gtkPrintContext);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
 	}

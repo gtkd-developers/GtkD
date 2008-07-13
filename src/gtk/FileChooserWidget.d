@@ -115,8 +115,7 @@ public class FileChooserWidget : VBox
 		if(gtkFileChooserWidget is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkFileChooserWidget passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkFileChooserWidget);
@@ -149,9 +148,7 @@ public class FileChooserWidget : VBox
 		auto p = gtk_file_chooser_widget_new(action);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFileChooserWidget*) p);
 	}
@@ -173,9 +170,7 @@ public class FileChooserWidget : VBox
 		auto p = gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkFileChooserWidget*) p);
 	}

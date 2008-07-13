@@ -101,8 +101,7 @@ public class ColorSelectionDialog : Dialog
 		if(gtkColorSelectionDialog is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkColorSelectionDialog passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkColorSelectionDialog);
@@ -129,9 +128,7 @@ public class ColorSelectionDialog : Dialog
 		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkColorSelectionDialog*) p);
 	}

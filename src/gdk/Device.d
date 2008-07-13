@@ -160,8 +160,7 @@ public class Device
 		if(gdkDevice is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gdkDevice passed to constructor.");
-			else return;
+			return;
 		}
 		this.gdkDevice = gdkDevice;
 	}
@@ -180,8 +179,7 @@ public class Device
 		auto p = gdk_devices_list();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ListG(cast(GList*) p);
 	}
@@ -247,8 +245,7 @@ public class Device
 		auto p = gdk_device_get_core_pointer();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Device(cast(GdkDevice*) p);
 	}

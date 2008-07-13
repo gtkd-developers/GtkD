@@ -133,8 +133,7 @@ public class RecentInfo
 		if(gtkRecentInfo is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRecentInfo passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkRecentInfo = gtkRecentInfo;
 	}
@@ -153,8 +152,7 @@ public class RecentInfo
 		auto p = gtk_recent_info_ref(gtkRecentInfo);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new RecentInfo(cast(GtkRecentInfo*) p);
 	}
@@ -364,8 +362,7 @@ public class RecentInfo
 		auto p = gtk_recent_info_get_icon(gtkRecentInfo, size);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}

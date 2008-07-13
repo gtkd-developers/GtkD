@@ -115,8 +115,7 @@ public class IconSource
 		if(gtkIconSource is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkIconSource passed to constructor.");
-			else return;
+			return;
 		}
 		this.gtkIconSource = gtkIconSource;
 	}
@@ -134,8 +133,7 @@ public class IconSource
 		auto p = gtk_icon_source_copy(gtkIconSource);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new IconSource(cast(GtkIconSource*) p);
 	}
@@ -200,8 +198,7 @@ public class IconSource
 		auto p = gtk_icon_source_get_pixbuf(gtkIconSource);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -293,9 +290,7 @@ public class IconSource
 		auto p = gtk_icon_source_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkIconSource*) p);
 	}

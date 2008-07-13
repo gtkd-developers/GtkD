@@ -112,8 +112,7 @@ public class Action
 		if(atkAction is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null atkAction passed to constructor.");
-			else return;
+			return;
 		}
 		this.atkAction = atkAction;
 	}

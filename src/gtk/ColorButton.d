@@ -101,8 +101,7 @@ public class ColorButton : Button
 		if(gtkColorButton is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkColorButton passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkColorButton);
@@ -173,9 +172,7 @@ public class ColorButton : Button
 		auto p = gtk_color_button_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkColorButton*) p);
 	}
@@ -192,9 +189,7 @@ public class ColorButton : Button
 		auto p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkColorButton*) p);
 	}

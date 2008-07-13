@@ -100,8 +100,7 @@ public class AspectFrame : Frame
 		if(gtkAspectFrame is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkAspectFrame passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkAspectFrame);
@@ -137,9 +136,7 @@ public class AspectFrame : Frame
 		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkAspectFrame*) p);
 	}

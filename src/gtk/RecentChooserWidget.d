@@ -121,8 +121,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		if(gtkRecentChooserWidget is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkRecentChooserWidget passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkRecentChooserWidget);
@@ -152,9 +151,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		auto p = gtk_recent_chooser_widget_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRecentChooserWidget*) p);
 	}
@@ -173,9 +170,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		auto p = gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkRecentChooserWidget*) p);
 	}

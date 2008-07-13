@@ -142,8 +142,7 @@ public class DrawingArea : Widget
 		if(gtkDrawingArea is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkDrawingArea passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkDrawingArea);
@@ -181,9 +180,7 @@ public class DrawingArea : Widget
 		auto p = gtk_drawing_area_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkDrawingArea*) p);
 	}

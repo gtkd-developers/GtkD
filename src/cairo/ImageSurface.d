@@ -98,8 +98,7 @@ public class ImageSurface : Surface
 		if(cairo_surface is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null cairo_surface passed to constructor.");
-			else return;
+			return;
 		}
 		super(cast(cairo_surface_t*)cairo_surface);
 		this.cairo_surface = cairo_surface;
@@ -144,8 +143,7 @@ public class ImageSurface : Surface
 		auto p = cairo_image_surface_create(format, width, height);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
@@ -184,8 +182,7 @@ public class ImageSurface : Surface
 		auto p = cairo_image_surface_create_for_data(data, format, width, height, stride);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
@@ -257,8 +254,7 @@ public class ImageSurface : Surface
 		auto p = cairo_image_surface_create_from_png(Str.toStringz(filename));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
@@ -277,8 +273,7 @@ public class ImageSurface : Surface
 		auto p = cairo_image_surface_create_from_png_stream(readFunc, closure);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}

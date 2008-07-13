@@ -99,8 +99,7 @@ public class HSeparator : Separator
 		if(gtkHSeparator is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkHSeparator passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkHSeparator);
@@ -125,9 +124,7 @@ public class HSeparator : Separator
 		auto p = gtk_hseparator_new();
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkHSeparator*) p);
 	}

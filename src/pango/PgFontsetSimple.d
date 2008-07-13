@@ -104,8 +104,7 @@ public class PgFontsetSimple : PgFontset
 		if(pangoFontsetSimple is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoFontsetSimple passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)pangoFontsetSimple);
@@ -132,9 +131,7 @@ public class PgFontsetSimple : PgFontset
 		auto p = pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoFontsetSimple*) p);
 	}

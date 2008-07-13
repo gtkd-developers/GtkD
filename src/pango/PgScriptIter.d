@@ -95,8 +95,7 @@ public class PgScriptIter
 		if(pangoScriptIter is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null pangoScriptIter passed to constructor.");
-			else return;
+			return;
 		}
 		this.pangoScriptIter = pangoScriptIter;
 	}
@@ -120,9 +119,7 @@ public class PgScriptIter
 		auto p = pango_script_iter_new(Str.toStringz(text), length);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(PangoScriptIter*) p);
 	}

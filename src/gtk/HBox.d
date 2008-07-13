@@ -95,8 +95,7 @@ public class HBox : Box
 		if(gtkHBox is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkHBox passed to constructor.");
-			else return;
+			return;
 		}
 		//Check if there already is a D object for this gtk struct
 		void* ptr = getDObject(cast(GObject*)gtkHBox);
@@ -124,9 +123,7 @@ public class HBox : Box
 		auto p = gtk_hbox_new(homogeneous, spacing);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new Exception("Construction failure.");
 		}
 		this(cast(GtkHBox*) p);
 	}
