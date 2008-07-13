@@ -43,6 +43,7 @@
  * omit code:
  * 	- gtk_image_menu_item_new_with_label
  * 	- gtk_image_menu_item_new_with_mnemonic
+ * 	- gtk_image_menu_item_new_from_stock
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -142,6 +143,31 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
+	 * Creates a new GtkImageMenuItem containing the image and text from a
+	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
+	 * and GTK_STOCK_APPLY.
+	 * If you want this menu item to have changeable accelerators, then pass in
+	 * NULL for accel_group. Next call gtk_menu_item_set_accel_path() with an
+	 * appropriate path for the menu item, use gtk_stock_lookup() to look up the
+	 * standard accelerator for the stock item, and if one is found, call
+	 * gtk_accel_map_add_entry() to register it.
+	 * Params:
+	 * StockID = the name of the stock item
+	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
+	 *  or NULL.
+	 */
+	public this (StockID stockID, AccelGroup accelGroup)
+	{
+		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
+		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		if(p is null)
+		{
+			throw new Exception("Construction failure.");
+		}
+		this(cast(GtkImageMenuItem*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -180,31 +206,6 @@ public class ImageMenuItem : MenuItem
 	{
 		// GtkWidget* gtk_image_menu_item_new (void);
 		auto p = gtk_image_menu_item_new();
-		if(p is null)
-		{
-			throw new Exception("Construction failure.");
-		}
-		this(cast(GtkImageMenuItem*) p);
-	}
-	
-	/**
-	 * Creates a new GtkImageMenuItem containing the image and text from a
-	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
-	 * and GTK_STOCK_APPLY.
-	 * If you want this menu item to have changeable accelerators, then pass in
-	 * NULL for accel_group. Next call gtk_menu_item_set_accel_path() with an
-	 * appropriate path for the menu item, use gtk_stock_lookup() to look up the
-	 * standard accelerator for the stock item, and if one is found, call
-	 * gtk_accel_map_add_entry() to register it.
-	 * Params:
-	 * stockId =  the name of the stock item.
-	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
-	 *  or NULL.
-	 */
-	public this (string stockId, AccelGroup accelGroup)
-	{
-		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
-		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
