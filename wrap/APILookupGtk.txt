@@ -2977,12 +2977,12 @@ code: start
 	 * Returns:
 	 *  TRUE if a row exists at that coordinate.
 	 */
-	int getPathAtPos(gint x, gint y, inout TreePath path, inout TreeViewColumn column, out gint cellX, out gint cellY)
+	bool getPathAtPos(gint x, gint y, inout TreePath path, inout TreeViewColumn column, out gint cellX, out gint cellY)
 	{
 		GtkTreePath* p = (path is null) ? null : path.getTreePathStruct(); 
 		GtkTreeViewColumn* c = (column is null) ? null : column.getTreeViewColumnStruct();
 
-		int result = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &p, &c, &cellX, &cellY)
+		bool result = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &p, &c, &cellX, &cellY)
 			== 0 ? false : true;
 
 		path = new TreePath(p);
