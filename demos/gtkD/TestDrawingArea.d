@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -25,12 +25,12 @@ private import gdk.Font;
 private import pango.PgContext;
 private import pango.PgLayout;
 private import gdk.ImageGdk;
-		
+
 version(Tango) private import tango.io.Stdout;
 version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 
-version(Tango) private import tango.math.Math; 
+version(Tango) private import tango.math.Math;
 else private import std.math;
 
 private import gtk.Widget;
@@ -44,20 +44,19 @@ private import gdk.Pixbuf;
 private import gdk.Color;
 private import gdk.Drawable;
 private import gdk.GC;
-private import pango.PgFontDescription;	
+private import pango.PgFontDescription;
 
 private import gtk.DrawingArea;
 private import gtk.Image;
 private import gtk.SpinButton;
 
-private import gtkc.gtktypes;		
 private import gdk.Event;
 
 private import gdk.Color;
 
 //private import event.Event;
 
-	
+
 /**
  * This tests the gtkD drawing area widget
  */
@@ -71,9 +70,9 @@ class TestDrawingArea : VBox
 
 		debug(Tango) Stdout("TestDrawingArea.this() 2").newline;
 		TestDrawing drawingArea = new TestDrawing();
-		
+
 		debug(Tango) Stdout("TestDrawingArea.this() 3").newline;
-		
+
 		ComboBox gcOptions = new ComboBox();
 		gcOptions.appendText("GC COPY");
 		gcOptions.appendText("GC INVERT");
@@ -113,39 +112,39 @@ class TestDrawingArea : VBox
 		debug(Tango) Stdout("TestDrawingArea.this() 5").newline;
 
 		packStart(drawingArea,true,true,0);
-		
+
 		HBox hbox = new HBox(false,4);
 		hbox.packStart(gcOptions,false,false,2);
 		hbox.packStart(primOption,false,false,2);
 		hbox.packStart(drawingArea.spin,false,false,2);
 		hbox.packStart(drawingArea.backSpin,false,false,2);
-		
+
 		debug(Tango) Stdout("TestDrawingArea.this() 6").newline;
-		
+
 		packStart(hbox, false, false, 0);
-		
+
 		debug(Tango) Stdout("TestDrawingArea.this() END").newline;
 	}
 
-	
+
 	class TestDrawing : DrawingArea
 	{
 
-		
+
 		GdkFunction gcFunction = GdkFunction.INVERT;
 		Color paintColor;
 		Color black;
 
 		int width;
 		int height;
-		
+
 		bool buttonIsDown;
-		
+
 		string primitiveType;
 		PgFontDescription font;
 		Image image;
 		Pixbuf scaledPixbuf;
-		
+
 		SpinButton spin;
 		SpinButton backSpin;
 		static GdkPoint[] polygonStar = [
@@ -158,11 +157,11 @@ class TestDrawingArea : VBox
 			{-4,0},
 			{-1,1}
 			];
-		
+
 		this()
 		{
 			debug(Tango) Stdout("TestDrawing.this() 1").newline;
-			
+
 			setSizeRequest(333,333);
 			width = getWidth();
 			height = getHeight();
@@ -188,9 +187,9 @@ class TestDrawingArea : VBox
 			spin.addOnValueChanged(&sizeSpinChanged);
 			backSpin = new SpinButton(new Adjustment(5, 4, 100, 1, 10, 10),1,0);
 			backSpin.addOnValueChanged(&backSpinChanged);
-		
 
-			
+
+
 			addOnExpose(&exposeCallback);
 //			addOnMap(&mapCallback);
 			addOnMotionNotify(&onMotionNotify);
@@ -204,8 +203,8 @@ class TestDrawingArea : VBox
 			width = allocation.width;
 			height = allocation.height;
 		}
-		
-		
+
+
 		public int onButtonPress(GdkEventButton* event, Widget widget)
 		{
 			debug(trace) version(Tango) Stdout("button DOWN").newline;
@@ -219,7 +218,7 @@ class TestDrawingArea : VBox
 				GC gc = new GC(d);
 				gc.setForeground(new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0));
 				gc.setFunction(gcFunction);
-				
+
 				drawPrimitive(gc, d, cast(int)event.x, cast(int)event.y); //event.getX(), event.getY());
 
 				gc.setForeground(black);
@@ -247,7 +246,7 @@ class TestDrawingArea : VBox
 			//printf("MAP CALLBACK\n");
 			return false;
 		}
-		
+
 		/**
 		 * This will be called from the expose event call back.
 		 * \bug this is called on get or loose focus - review
@@ -274,12 +273,12 @@ class TestDrawingArea : VBox
 				GC gc = new GC(d);
 				gc.setForeground(paintColor);
 				gc.setFunction(gcFunction);
-				
+
 				drawPrimitive(gc, d, cast(int)event.x, cast(int)event.y);
 				//d.drawPoint(event.getX(),event.getY());
 				//d.drawArc(true,event.getX()-2,event.getY()-2,4,4,0,64*360);
 				//d.drawRectangle(true,event.getX()-2,event.getY()-2,4,4);
-				
+
 				gc.setForeground(black);
 				gc.setFunction(GdkFunction.COPY);
 			}
@@ -293,10 +292,10 @@ class TestDrawingArea : VBox
 		}
 
 		static int backSpinCount = 0;
-		
+
 		public void backSpinChanged(SpinButton spinButton)
 		{
-			
+
 			debug(trace) version(Tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
 			else writefln("backSpinChanged - entry %s", ++backSpinCount);
 			drawPoints(getDrawable());
@@ -311,16 +310,16 @@ class TestDrawingArea : VBox
 			{
 				int width = spinButton.getValueAsInt();
 				scaledPixbuf = image.getPixbuf();
-			
+
 				float ww = width * scaledPixbuf.getWidth() / 30;
 				float hh = width * scaledPixbuf.getHeight() / 30;
-			
+
 				scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
 			}
 		}
-					
 
-		
+
+
 		public void drawPrimitive(GC gc, Drawable d, int x, int y)
 		{
 			int width = spin.getValueAsInt();
@@ -332,7 +331,7 @@ class TestDrawingArea : VBox
 				case "Arc":
 					d.drawArc(gc, false,x-width/2,y-width/2,width,width,0,64*360);
 					break;
-					
+
 				case "Filled Arc":
 					d.drawArc(gc, true,x-width/4,y-width/4,width/2,width/2,0,64*360);
 					break;
@@ -340,26 +339,26 @@ class TestDrawingArea : VBox
 				case "Line":
 					d.drawLine(gc, x, y, x+width, y);
 					break;
-					
+
 				case "Point":
 					d.drawPoint(gc, x, y);
 					break;
-					
+
 				case "Rectangle":
 					d.drawRectangle(gc, false, x-width/2, y-width/4, width, height);
 					break;
-					
+
 				case "Filled Rectangle":
 					d.drawRectangle(gc, true, x-width/2, y-width/4, width, height);
 					break;
-					
+
 				case "Text":
 					Font font = new Font("FreeMono 12");
 					debug(trace) version(Tango) Stdout.format("Text font = {}", font).newline;
 					else writefln("Text font = %s", font);
 					d.drawString( font, gc,x, y, "gtkD toolkit");
 					break;
-				
+
 				case "Pango text":
 					//PgContext pc = getPangoContext();
 					//PgLayout l = new PgLayout(pc);
@@ -368,22 +367,22 @@ class TestDrawingArea : VBox
 					//PgFontDescription fd = l.getFontDescription();
 					PgFontDescription fd = new PgFontDescription("Sans", width);
 					l.setFontDescription(fd);
-					
+
 					d.drawLayout(gc, x,y,l);
 					break;
-				
+
 				case "Image":
 					if ( !(scaledPixbuf is null))
 					{
 						scaledPixbuf.renderToDrawable( d, gc,
-						//d.getDrawableStruct(), gc.getGCStruct(), 
-							0, 0, x, y, 
-							scaledPixbuf.getWidth(), scaledPixbuf.getHeight(), 
+						//d.getDrawableStruct(), gc.getGCStruct(),
+							0, 0, x, y,
+							scaledPixbuf.getWidth(), scaledPixbuf.getHeight(),
 							GdkRgbDither.NONE, 0, 0
 							);
 					}
 					break;
-				
+
 				case "Polygon":
 					GdkPoint[] pol1;
 					pol1.length = polygonStar.length;
@@ -397,13 +396,13 @@ class TestDrawingArea : VBox
 						d.drawPolygon(gc, true , pol1);
 					}
 					break;
-				
+
 				default:
 					d.drawArc(gc, true,x-2,y-2,4,4,0,64*360);
 					break;
 			}
 		}
-		
+
 		private void drawPoints(Drawable d)
 		{
 			int square = backSpin.getValueAsInt();
@@ -421,7 +420,7 @@ class TestDrawingArea : VBox
 
 			debug(trace) version(Tango) Stdout.format("w,h = {} {}",width ,height).newline;
 			else writefln("w,h = %s %s",width ,height);
-			
+
 			float dx = 256.0 / width;
 			float dy = 256.0 / height ;
 			float xx;
@@ -489,19 +488,19 @@ class TestDrawingArea : VBox
 				default: gcFunction = GdkFunction.INVERT; break;
 			}
 		}
-		
+
 		void onPrimOptionChanged(ComboBox comboBox)
 		{
 			primitiveType = comboBox.getActiveText();
 		}
-		
+
 //
 //		void primitive(MenuItem item)
 //		{
 //			printf("TestDrawing.primitive item command = %.*s\n", item.getActionCommand().toString());
 //			primitiveType.set(item.getActionCommand().dup);
 //		}
-		
+
 	}
 
 }

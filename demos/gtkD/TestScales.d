@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -18,7 +18,6 @@
 
 module gtkD.TestScales;
 
-private import gtkc.gtktypes;
 private import gtk.Table;
 
 private import gtk.VScale;
@@ -44,7 +43,7 @@ private import gtk.Range;
  */
 
 class TestScales : Table //, MenuItemListener
-{	
+{
 	VScale vscale;
 	HScale hscale;
 
@@ -57,7 +56,7 @@ class TestScales : Table //, MenuItemListener
 		}
 
 		super(1,1,0);
-		
+
 		createRangeControls();
 	}
 private import gtk.ComboBox;
@@ -74,7 +73,7 @@ private import gtk.ComboBox;
 			Label label;
 			Scale scale;
 			Adjustment adj1, adj2;
-			
+
 			box1 = new VBox(false,0);
 			add(box1);
 
@@ -87,7 +86,7 @@ private import gtk.ComboBox;
 			 * scrollbar widgets, and the highest value you'll get is actually
 			 * (upper - page_size). */
 			adj1 = new Adjustment(0.0, 0.0, 101.0, 0.1, 1.0, 1.0);
-  
+
 			vscale = new VScale(adj1);
 			//scale_set_default_values (GTK_SCALE (vscale));
 			box2.packStart(vscale, true, true, 0);
@@ -117,14 +116,14 @@ private import gtk.ComboBox;
 			cButton.setActive(true);
 			cButton.addOnClicked(&displayValues);
 			box2.packStart(cButton,true,true,0);
-  
+
 			box2 = new HBox(false,10);
 			box2.setBorderWidth(10);
 
 			/* An option menu to change the position of the value */
 			label = new Label("Scale Value Position:");
 			box2.packStart(label,false,false,0);
-  
+
 			positionSelection = new ComboBox();
 			positionSelection.appendText("Top");
 			positionSelection.appendText("Bottom");
@@ -145,7 +144,7 @@ private import gtk.ComboBox;
 			box2.packStart(label,false,false,0);
 
 			updateSelection = new ComboBox();
-  
+
   			updateSelection.appendText("Continuous");
   			updateSelection.appendText("Discontinuous");
   			updateSelection.appendText("Delayed");
@@ -154,17 +153,17 @@ private import gtk.ComboBox;
 
 			box2.packStart(updateSelection,false,false,0);
 			box1.packStart(box2,false,false,0);
-			  
-			  
+
+
 			/**
 			 * Here is a bit a pure C GTK+ code.
-			 * This code would compile and execute in D, 
+			 * This code would compile and execute in D,
 			 * we just need to define the functions as extern.
 			 */
 			/+
 			box2 = gtk_hbox_new (FALSE, 10);
 			gtk_container_set_border_width (GTK_CONTAINER (box2), 10);
-  
+
 			/* An HScale widget for adjusting the number of digits on the
 			 * sample scales. */
 			label = gtk_label_new ("Scale Digits:");
@@ -181,10 +180,10 @@ private import gtk.ComboBox;
 
 			gtk_box_pack_start (GTK_BOX (box1), box2, TRUE, TRUE, 0);
 			gtk_widget_show (box2);
-  
+
 			box2 = gtk_hbox_new (FALSE, 10);
 			gtk_container_set_border_width (GTK_CONTAINER (box2), 10);
-  
+
 			/* And, one last HScale widget for adjusting the page size of the
 			 * scrollbar. */
 			label = gtk_label_new ("Scrollbar Page Size:");
@@ -227,7 +226,7 @@ private import gtk.ComboBox;
 
 	void onPositionSelectionChanged(ComboBox comboBox)
 	{
-		
+
 		switch ( comboBox.getActiveText() )
 		{
 			case "Top":
@@ -251,7 +250,7 @@ private import gtk.ComboBox;
 
 		}
 	}
-	
+
 	void onUpdateSelectionChanged(ComboBox comboBox)
 	{
 		switch ( comboBox.getActiveText() )
@@ -272,14 +271,14 @@ private import gtk.ComboBox;
 				break;
 		}
 	}
-	
-	
-	
+
+
+
 	/*
 	void activateItemCallback(MenuItem menuItem, char [] action)
 	{
 	}
-	
+
 	void activateCallback(MenuItem menuItem, char [] action)
 	{
 		switch ( action )
@@ -315,7 +314,7 @@ private import gtk.ComboBox;
 			default:
 				printf("menuItem.action %.*s received\n",action);
 			break;
-			
+
 		}
 	}
 	*/
@@ -327,5 +326,5 @@ private import gtk.ComboBox;
 		vscale.setDrawValue((cast(CheckButton)checkButton).getActive());
 		hscale.setDrawValue((cast(CheckButton)checkButton).getActive());
 	}
-	
+
 }

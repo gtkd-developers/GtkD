@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -21,10 +21,9 @@ module gtkD.TestTreeView1;
 //debug = trace;
 
 private import gtk.VBox;
-	
+
 private import gobject.Value;
-	
-private import gtkc.gtktypes;
+
 private import gtk.Image;
 private import gtk.TreeView;
 private import gtk.TreeStore;
@@ -35,12 +34,12 @@ private import gtk.TreeSelection;
 private import gtk.CellRendererPixbuf;
 private import gtk.CellRendererText;
 private import gtk.ScrolledWindow;
-private import gdk.Pixbuf;	
+private import gdk.Pixbuf;
 private import glib.Str;
 version(Tango) private import tango.io.Stdout;
 version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
-	
+
 /**
  * This tests the gtkD tree widget
  */
@@ -58,16 +57,16 @@ public class TestTreeView1 : VBox
 
 	TreeStore testTreeStore1;
 	TreeStore testTreeStore2;
-	
+
 	this()
 	{
-		
+
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 1").newline;
 		else writefln("TestTreeView1.this 1");
 		super(false, 0);
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2").newline;
 		else writefln("TestTreeView1.this 2");
-		
+
 		pixbuf = new Pixbuf(Str.toStringzArray(greenClass_xpm));
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.1").newline;
 		else writefln("TestTreeView1.this 2.1");
@@ -96,15 +95,15 @@ public class TestTreeView1 : VBox
 		sw = new ScrolledWindow(null, null);
 		sw.add(treeView2);
 		packStart(sw, true, true, 1);
-		
+
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 6").newline;
 		else writefln("TestTreeView1.this 6");
 		//addWithViewport(treeView);
-		
-		
-		
+
+
+
 	}
-	
+
 	int moveCursorCallback(GtkMovementStep step, int i, TreeView tree)
 	{
 		TreeIter iter = tree.getSelectedIter();
@@ -115,33 +114,33 @@ public class TestTreeView1 : VBox
 		else writefln("cursor on %s", v);
 		return false;
 	}
-	
 
-	
+
+
 	void populate(TreeStore treeStore)
 	{
 		TreeIter iterChild;
 		TreeIter iterTop = treeStore.createIter();
 		treeStore.setValue(iterTop, 0, new Pixbuf(Str.toStringzArray(package_xpm)) );
 		treeStore.setValue(iterTop, 1, "Icon for packages" );
-							
+
 		iterChild = treeStore.append(iterTop);
 		treeStore.setValue(iterChild, 0,new Pixbuf(Str.toStringzArray(greenTemplate_xpm)) );
 		treeStore.setValue(iterChild, 1, "Icon for templates" );
-		
+
 		iterChild = treeStore.append(iterTop);
 		treeStore.setValue(iterChild, 0, new Pixbuf(Str.toStringzArray(greenInterface_xpm)) );
 		treeStore.setValue(iterChild, 1, "Icon for interfaces" );
-		
+
 		iterChild = treeStore.append(iterTop);
 		treeStore.setValue(iterChild, 0, new Pixbuf(Str.toStringzArray(greenClass_xpm)) );
 		treeStore.setValue(iterChild, 1, "Icon for classes" );
-		
+
 	}
 
 	/**
 	 * Creates the treeView and treeStore
-	 * @return 
+	 * @return
 	 */
 	TreeView setup1()
 	{
@@ -150,19 +149,19 @@ public class TestTreeView1 : VBox
 			this()
 			{
 				//int* i = cast(int*)pixbufGetType();
-				
+
 				GType[] columns;
 				columns ~= Pixbuf.getType();
 				columns ~= GType.STRING;
 				super(columns);
-				
+
 			}
 		}
 
 		testTreeStore1 = new TTreeStore();
 		TreeView treeView = new TreeView(testTreeStore1);
 		treeView.setRulesHint(true);
-		
+
 		TreeSelection ts = treeView.getSelection();
 		ts.setMode(SelectionMode.MULTIPLE);
 		TreeViewColumn column;
@@ -170,7 +169,7 @@ public class TestTreeView1 : VBox
 		column = new TreeViewColumn("Icon",new CellRendererPixbuf(),"pixbuf", col);
 		treeView.appendColumn(column);
 		++col;
-		
+
 		column = new TreeViewColumn("Description",new CellRendererText(),"text", col);
 		treeView.appendColumn(column);
 		column.setResizable(true);
@@ -180,12 +179,12 @@ public class TestTreeView1 : VBox
 		++col;
 
 		return treeView;
-		
-	}	
+
+	}
 
 		/**
 	 * Creates the treeView and treeStore
-	 * @return 
+	 * @return
 	 */
 	TreeView setup2()
 	{
@@ -194,40 +193,40 @@ public class TestTreeView1 : VBox
 			this()
 			{
 				//int* i = cast(int*)pixbufGetType();
-				
+
 				GType[] columns;
 				columns ~= Pixbuf.getType();
 				columns ~= GType.STRING;
 				super(columns);
-				
+
 			}
 		}
 
 		testTreeStore2 = new TTreeStore();
 		TreeView treeView = new TreeView(testTreeStore2);
 		treeView.setRulesHint(true);
-		
+
 		TreeSelection ts = treeView.getSelection();
 		ts.setMode(SelectionMode.MULTIPLE);
 		TreeViewColumn column;
 		int col = 0;
-		
+
 		column = new TreeViewColumn();
-		
+
 		CellRendererPixbuf cellPixbuf = new CellRendererPixbuf();
 		CellRendererText cellText = new CellRendererText();
-		
+
 		column.packStart(cellPixbuf, false);
 		column.addAttribute(cellPixbuf, "pixbuf", col);
 		++col;
-		
+
 		column.packEnd(cellText, true);
 		column.addAttribute(cellText, "text", col);
-		
+
 		column.setTitle("Types");
-		
+
 		treeView.appendColumn(column);
-		
+
 		column.setResizable(true);
 		column.setReorderable(true);
 		column.setSortColumnId(col);
@@ -235,17 +234,17 @@ public class TestTreeView1 : VBox
 		++col;
 
 		return treeView;
-		
-	}	
 
-	
+	}
+
+
 	void rowActivatedCallback(TreeView treeView, TreePath path, TreeViewColumn column)
 	{
 		printf("rowActivateCallback for %X \n",treeView);
 		printf("rowActivateCallback for path %.*s\n",path.toString());
 	}
-	
-	
+
+
 	/* XPM */
 	static string[] greenClass_xpm = [
 	"16 16 67 1",
@@ -332,8 +331,8 @@ public class TestTreeView1 : VBox
 	"      Bbh       ",
 	"                ",
 	"                "];
-	
-	
+
+
 	/* XPM */
 	static string[] greenInterface_xpm = [
 	"16 16 62 1",
@@ -415,8 +414,8 @@ public class TestTreeView1 : VBox
 	"      w0c       ",
 	"                ",
 	"                "];
-	
-	
+
+
 	/* XPM */
 	static string[] greenTemplate_xpm = [
 	"16 16 63 1",
@@ -499,7 +498,7 @@ public class TestTreeView1 : VBox
 	"      x|3       ",
 	"                ",
 	"                "];
-	
+
 	/* XPM */
 	static string[] package_xpm = [
 	"16 16 25 1",
@@ -574,7 +573,7 @@ public class TestTreeView1 : VBox
 	"      ..        ",
 	"                "
 	];
-	
+
 
 }
 

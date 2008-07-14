@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -19,9 +19,7 @@
 module gtkD.TestTreeView;
 
 private import gtk.ScrolledWindow;
-	
-	
-private import gtkc.gtktypes;
+
 private import gtk.TreeView;
 private import gtk.TreePath;
 private import gtk.TreeViewColumn;
@@ -31,7 +29,7 @@ private import gtk.TreeModel;
 //private import ddi.Pixbuf;
 private import gtk.TreeSelection;
 private import gtk.CellRendererText;
-	
+
 private import gtk.Image;
 //private import ddi.Pixbuf;
 
@@ -84,7 +82,7 @@ static string[]  book_closed_xpm = [
  */
 class TestTreeView : ScrolledWindow
 {
-	Image image;		
+	Image image;
 	//Pixbuf pixbuf;
 
 	enum columns
@@ -96,31 +94,31 @@ class TestTreeView : ScrolledWindow
 		percentDone = GType.STRING,
 		author = GType.STRING
 	}
-	
+
 	this()
 	{
 		super(null,null);
-		
+
 		TreeView treeView = setup();
 		addWithViewport(treeView);
-		
+
 		treeView.addOnRowActivated(&rowActivatedCallback);
 		treeView.addOnMoveCursor(&moveCursorCallBack);
 	}
-	
+
 	void rowActivatedCallback(TreePath path, TreeViewColumn column, TreeView treeView)
 	{
 		printf("rowActivateCallback for %X \n",treeView);
 		printf("rowActivateCallback for path %.*s\n",path.toString());
 	}
-	
+
 	int moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
 	{
 		printf("moveCursorCallBack for %X \n",treeView);
 		printf("moveCursorCallBack row = %d \n",direction);
 		return false;
 	}
-	
+
 	TreeIter [12] h;
 	int stack = 0;
 	void push(TreeIter ti)
@@ -144,17 +142,17 @@ class TestTreeView : ScrolledWindow
 		}
 		return h[--stack];
 	}
-	
+
 	class HTreeNode : TreeNode
 	{
-		
+
 		string gtkDL;
 		string gtk;
 		string desc;
 		int percent;
 		string author;
 		//TestTreeView ttv;
-		
+
 		this(string gtkDL,string gtk,string desc,int percent)//, TestTreeView ttv)
 		{
 			this.gtkDL = gtkDL;
@@ -163,19 +161,19 @@ class TestTreeView : ScrolledWindow
 			this.percent = percent;
 			this.author = "Ant";
 			//this.ttv = ttv;
-			
+
 		}
 
 		//Pixbuf getNodePixbuf(int colum)
 		//{
 		//	return pixbuf;
 		//}
-		
+
 		int columnCount()
 		{
 			return 5;
 		}
-		
+
 		string getNodeValue(int column)
 		{
 			string value;
@@ -185,7 +183,7 @@ class TestTreeView : ScrolledWindow
 				case 0: value = gtkDL; break;
 				case 1: value = gtk; break;
 				case 2: value = desc; break;
-				case 3: 
+				case 3:
 					switch(percent)
 					{
 						case -1: value = "uggly: won't get in"; break;
@@ -197,14 +195,14 @@ class TestTreeView : ScrolledWindow
 						default:value = "%"; break;
 					}
 					break;
-					
+
 				case 4: value = author; break;
 				default: value = "N/A"; break;
 			}
 			return value;
 		}
 	}
-	
+
 	TreeView setup()
 	{
 
@@ -219,16 +217,16 @@ class TestTreeView : ScrolledWindow
 					GType.STRING,
 					GType.STRING,
 					GType.STRING,
-					GType.STRING]; 
+					GType.STRING];
 				super(columns);
-				
+
 			}
 		}
-		
+
 		TTreeStore testTreeStore = new TTreeStore();
 		TreeView treeView = new TreeView(testTreeStore);
 		treeView.setRulesHint(true);
-		
+
 		TreeSelection ts = treeView.getSelection();
 		ts.setMode(SelectionMode.MULTIPLE);
 
@@ -273,7 +271,7 @@ class TestTreeView : ScrolledWindow
 
 		TreeIter iter;
 		TreeIter iterTop = testTreeStore.createIter(null);
-		
+
 		TreeIter peekIter(bool pushIt)
 		{
 			TreeIter iter = testTreeStore.append(peek());
@@ -283,7 +281,7 @@ class TestTreeView : ScrolledWindow
 			}
 			return iter;
 		}
-		
+
 		TreeIter popIter(bool pushIt)
 		{
 			TreeIter iter = testTreeStore.append(pop());
@@ -293,10 +291,10 @@ class TestTreeView : ScrolledWindow
 			}
 			return iter;
 		}
-		
+
 		push(iterTop);
 		testTreeStore.set(iterTop, new HTreeNode("ObjectG","GObject","Parent of the main GtkD objects",90));
-		
+
 		testTreeStore.set(peekIter(true), new HTreeNode("ObjectGtk","GtkObject","The main gtk object",100));
 		testTreeStore.set(peekIter(true), new HTreeNode("Misc","GtkMisc","Comon for Most widgets",100));
 
@@ -306,7 +304,7 @@ class TestTreeView : ScrolledWindow
 		testTreeStore.set(popIter(false), new HTreeNode("Image","GtkImage","A image",100));
 		testTreeStore.set(peekIter(true), new HTreeNode("Container","GtkContainer","Comon for all widgets that can contain other widgets",90));
 		testTreeStore.set(peekIter(false), new HTreeNode("Bin","GtkBin","Comon for many widgets",90));
-		
+
 		testTreeStore.set(peekIter(false), new HTreeNode("Alignment","GtkAlignment","Aligns a widget in a larger area",100));
 		testTreeStore.set(peekIter(true), new HTreeNode("Frame","GtkFrame","",100));
 		testTreeStore.set(popIter(false), new HTreeNode("AspectFrame","GtkAspectFrame","",100));
@@ -399,8 +397,8 @@ class TestTreeView : ScrolledWindow
 		testTreeStore.set(peekIter(false), new HTreeNode("ListG","GList","a double linked list used to comboBox and stuf",0));
 
 		return treeView;
-		
-	}	
+
+	}
 
 
 }

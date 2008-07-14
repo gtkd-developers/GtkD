@@ -6,7 +6,6 @@ import gtk.Main;
 import gtk.Window;
 import gtk.Widget;
 import gtk.Button;
-import gtkc.gtktypes;
 
 version(Tango){
     import tango.stdc.stdlib : exit;

@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -23,12 +23,11 @@ module gtkD.TestIdle;
 private import gtk.VBox;
 private import gtk.HBox;
 private import gtk.Box;
-	
+
 private import gtk.DrawingArea;
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ComboBox;
-private import gtkc.gtktypes;
 
 private import gdk.Color;
 private import gdk.Drawable;
@@ -43,7 +42,7 @@ else private import std.stdio;
 
 private import gtk.Idle;
 private import gtk.Timeout;
-		
+
 
 /**
  * This tests the gtkD drawing area widget
@@ -52,10 +51,10 @@ class TestIdle : VBox
 {
 
 	SpinButton timeoutSpin;
-	
+
 	this()
 	{
-		
+
 		debug(1)
 		{
 			printf("instantiating TestTimeout\n");
@@ -64,7 +63,7 @@ class TestIdle : VBox
 		super(false,7);
 
 		TestDrawing drawingArea = new TestDrawing();
-		
+
 		ComboBox gcOptions = new ComboBox();
 		gcOptions.appendText("GC COPY");
 		gcOptions.appendText("GC INVERT");
@@ -94,21 +93,21 @@ class TestIdle : VBox
 		timeoutSpin = new SpinButton(new Adjustment(200.0, 1.0, 1000.0, 1.0, 100.0, 1.0),1,0);
 		timeoutSpin.addOnValueChanged(&drawingArea.onTimeoutSpinValueChanged);
 		Box controlBox = new HBox(false, 7);
-		
+
 		controlBox.packStart(gcOptions, false, false, 2);
 		controlBox.packStart(callType, false, false, 2);
 		controlBox.packStart(timeoutSpin, false, false, 2);
-		
+
 		packStart(drawingArea,true,true,0);
 		packStart(controlBox,false,false,0);
 	}
-	
+
 	class TestDrawing : DrawingArea
 	{
 
 		Idle mainIdle;
 		Timeout mainTimeout;
-		
+
 		bool continueIdleCallback;
 		int gcFunction = 0;
 		Color paintColor;
@@ -143,7 +142,7 @@ class TestIdle : VBox
 			addOnSizeAllocate(&onSizeAllocate);
 			//addOnButtonPress(&onButtonPress);
 			//addOnButtonRelease(&onButtonRelease);
-			
+
 		}
 
 		public void onRealize(Widget widget)
@@ -154,7 +153,7 @@ class TestIdle : VBox
 			gc.setFunction(GdkFunction.INVERT);
 			return false;
 		}
-		
+
 		public void onMap(Widget widget)
 		{
 			debug(trace) version(Tango) Stdout("idle.onMap").newline;
@@ -191,7 +190,7 @@ class TestIdle : VBox
 				resetCallType();
 			}
 		}
-		
+
 		void resetCallType()
 		{
 			if ( mainIdle !is null )
@@ -209,7 +208,7 @@ class TestIdle : VBox
 				default: mainIdle = new Idle(&idleCallback); break;
 			}
 		}
-		
+
 		/**
 		 * This will be called from the expose event call back.
 		 * \bug this is called on get or loose focus - review
@@ -226,24 +225,24 @@ class TestIdle : VBox
 
 			//printf("%d %d\n",width,height);
 			//drawable.drawPoint(gc,x,y);
-			
+
 			int xf;
 			int yf;
-			
+
 			if ( xi<0 )xf = x;	// going back
 			else xf = width-x;
-			
+
 			if ( yi<0 )yf = y;	// going up
 			else yf = height-y;
-			
+
 			if ( xf<yf ) yf=xf;
-			
+
 			//writefln("%s %s -> %s %s (%s %s)\n",x,y,xf,yf,x+yf*xi, y+yf*yi);
 			drawable.drawLine(gc,x,y, x+yf*xi, y+yf*yi);
-			
+
 			x += yf*xi;
 			y += yf*yi;
-			
+
 			if ( x>=width || x<=0 ) xi = -xi;
 			if ( y>=height || y<=0 ) yi = -yi;
 
@@ -252,7 +251,7 @@ class TestIdle : VBox
 
 		void onCallTypeChanged(ComboBox comboBox)
 		{
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
@@ -262,10 +261,10 @@ class TestIdle : VBox
 			}
 			resetCallType();
 		}
-		
+
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{

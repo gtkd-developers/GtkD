@@ -44,7 +44,6 @@ import gtk.TreeViewColumn;
 import gtk.CellRendererText;
 import gtk.CellRendererToggle;
 import gtk.ListStore;
-import gtkc.gtktypes;
 
 enum {
     COLUMN_NAME,

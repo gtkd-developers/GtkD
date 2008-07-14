@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -19,7 +19,7 @@
 module gtkD.TestText;
 
 private import gtk.VBox;
-	
+
 private import gtk.ScrolledWindow;
 private import gtk.TextView;
 private import gtk.TextBuffer;
@@ -29,16 +29,15 @@ private import gtk.TextBuffer;
  */
 
 class TestText : VBox
-{	
+{
 
 	private import gtk.ScrolledWindow;
-	private import gtkc.gtktypes;
-	
+
 	this()
 	{
 
 		super(false,0);
-		
+
 		debug(1)
 		{
 			printf("instantiating TestText\n");
@@ -50,7 +49,7 @@ class TestText : VBox
 		TextView textView = new TextView();
 		TextBuffer textBuffer = textView.getBuffer();
 		textBuffer.setText(
-		
+
 "\nGktD preview 8"
 "\n"
 "\nIntroduction"
@@ -75,9 +74,9 @@ class TestText : VBox
 "\nUsage"
 "\nSee the Screen shots and Usage for screenshots and details on how to use GtkD."
 "\nHere is a simple GtkD program:"
-		
+
 		);
-		
+
 		sw.add(textView);
 		packStart(sw,true,true,0);
 
