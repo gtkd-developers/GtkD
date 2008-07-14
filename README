@@ -1,44 +1,34 @@
-gtkD is Digital Mars D programing language OO wrapper for Gtk+.
-gtkD is release on th LGPL license.
-
-Here you can find the development version of gtkD.
-gtkD is to replace DUI, Duit.
-
-gtkD is as stable as the old DUI and much more complete.
-gtkD is a work in progress.
+GtkD is the Digital Mars D programing language OO wrapper for Gtk+.
+GtkD is release on the LGPL license.
 
 Requirements:
 -------------
-- linux or windows(2000, XP)
+- Linux, Windows(2000, XP), or Mac
 - Gtk libs
-- dmd installation
+- dmd or gdc installation
   (on your home directory on linux or the root directory on windows)
-optionally:
-- openGL libs (mesa is fine on linux)
-- gtkglext
+optional:
+- OpenGL libs (mesa is fine on linux)
+- GtkGLext
 
 Who are you?
 ------------
 
-If you want to write some wicked cool D + gtk+ Apps, grab the gtkD release 
-archive at dsource.org/projects/gtkd. It comes with a shiny installer.
+If you want to write some wicked cool D and Gtk+ apps, grab the gtkD release 
+archive at dsource.org/projects/gtkd.
 
-If you want to tweak the automatic wrapper or help with it use subversion...
+If you want to tweak the automatic wrapper or help with it, use subversion...
 http://svn.dsource.org/projects/gtkd/trunk
-Then check out README_SVN
 
-installation:
+Installation:
 -------------
-only the development version of gtkD is supplied for now.
-the installation depends on the setup of your development environment.
-consider leds (http://www.dsource.org/projects/leds/browser/downloads/)
-for your D development projects.
+The installation depends on the setup of your development environment.
 This means that to release your project you must include the gtkD lib
 on your deliverable or statically link to gtkD - please pay attention
 to the license.
 
-compile the lib and the test programs:
+Compile the lib and the test programs:
 --------------------------------------
-to compile gtkD, please refer to the README of your choice.
+To compile gtkD, please refer to the README of your choice.
 
-we HIGHLY recommend following README_DSSS and using dsss to compile
+We HIGHLY recommend following README_DSSS and using dsss to compile.

@@ -1,13 +1,16 @@
-(work in progress)
+*SVN*
 
 To build the libs from the svn source...
 
-./makeAll
+dsss build
+
+To install libs...
+
+dsss install
 
 To make a release archive from the freshly built sources
 
 ./makeRelease
-
 
 To mess with the wrapper...
 

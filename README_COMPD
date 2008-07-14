@@ -3,19 +3,13 @@ INSTALL
 
 TO USE COMPD, YOU'LL NEED TO COPY EVERYTHING FROM THE compd FOLDER TO ROOT!
 
-CompD is being phased out of GtkD. By Release 1.0, CompD will no longer be included 
-or be a supported method of compiling!
+CompD is no longer a supported method of compiling GtkD. We HIGHLY recommend 
+using dsss to compile GtkD.
 
-Install instructions for GtkD 
-a) make sure you have installed dool 
-http://svn.dsource.org/projects/dool
-
-** you really only need compd from this.
-
-b) build dool (using compd)
+--------------------------------
+For GTK bindings
 #compd GtkD.compd
-
-c) build the test application
+Tests
 #compd GtkDTests.compd 
 
 --------------------------------

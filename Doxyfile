@@ -25,7 +25,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = NO
-STRIP_FROM_PATH        = /home/ruimt/devel/D/Duit/trunk/gtkD/
+STRIP_FROM_PATH        = ~/gtkD/
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = YES
@@ -82,7 +82,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /home/ruimt/devel/D/Duit/trunk/gtkD/src
+INPUT                  = ~/gtkD/src
 FILE_PATTERNS          = *.c \
                          *.cc \
                          *.cxx \
@@ -131,7 +131,7 @@ EXCLUDE_PATTERNS       =
 EXAMPLE_PATH           = 
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = /home/ruimt/devel/D/Duit/trunk/gtkD/images/
+IMAGE_PATH             = ~/gtkD/images/
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = NO

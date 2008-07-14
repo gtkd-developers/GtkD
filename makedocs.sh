@@ -6,6 +6,8 @@ dmd -o- -D -Dddocs  modules.ddoc docs/candy.ddoc \
 	src/gtk/*  src/gtkc/* src/glib/* src/gdk/* \
 	src/glade/* src/gobject/* src/gthread/* src/atk/* \
 	src/pango/* src/cairo/* src/gdkpixbuf/* \
-	srcgl/glgdk/*  srcgl/glgtk/*  srcgl/gtkglc/* -op
+	srcgl/glgdk/*  srcgl/glgtk/*  srcgl/gtkglc/* \
+	srcgda/gda/*  srcgda/gdac/* \
+	srcsv/gsv/*  srcsv/gsvc/* -op
 
 
