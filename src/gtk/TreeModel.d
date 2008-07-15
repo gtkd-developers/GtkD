@@ -42,8 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gobject.ObjectG;
- * 	- gtk.TreeModel
+ * 	- gobject.ObjectG
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gtk.TreePath
@@ -64,8 +63,7 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import gobject.ObjectG;;
-private import gtk.TreeModel;
+private import gobject.ObjectG;
 private import glib.Str;
 private import gtk.TreeIter;
 private import gtk.TreePath;
@@ -99,16 +97,9 @@ public class TreeModel : ObjectG, TreeModelIF
 		if(gtkTreeModel is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeModel passed to constructor.");
-			else return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeModel);
-		if( ptr !is null )
-		{
-			this = cast(TreeModel)ptr;
 			return;
 		}
+		
 		super(cast(GObject*)gtkTreeModel);
 		this.gtkTreeModel = gtkTreeModel;
 	}

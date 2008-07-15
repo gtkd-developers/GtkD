@@ -2729,8 +2729,7 @@ file:
 class: TreeModel
 extend: ObjectG
 implements: TreeModelIF
-import: gobject.ObjectG;
-import: gtk.TreeModel
+import: gobject.ObjectG
 
 # imports for TreeModel Interface
 import: glib.Str
@@ -2759,16 +2758,9 @@ code: start
 		if(gtkTreeModel is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkTreeModel passed to constructor.");
-			else return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeModel);
-		if( ptr !is null )
-		{
-			this = cast(TreeModel)ptr;
 			return;
 		}
+
 		super(cast(GObject*)gtkTreeModel);
 		this.gtkTreeModel = gtkTreeModel;
 	}
@@ -3384,7 +3376,7 @@ file:
 class: CellEditable
 extend: ObjectG
 implements: CellEditableIF
-import: gobject.ObjectG;
+import: gobject.ObjectG
 
 # imports for CellEditable Interface
 import: gdk.Event
@@ -3413,13 +3405,7 @@ code: start
 			version(Exceptions) throw new Exception("Null gtkCellEditable passed to constructor.");
 			else return;
 		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellEditable);
-		if( ptr !is null )
-		{
-			this = cast(CellEditable)ptr;
-			return;
-		}
+
 		super(cast(GObject*)gtkCellEditable);
 		this.gtkCellEditable = gtkCellEditable;
 	}
@@ -6724,8 +6710,6 @@ import: glib.ListG
 structWrap: GList* ListG
 import: glib.ListSG
 structWrap: GSList* ListSG
-import: glib.ErrorG
-import: glib.GException
 interface: RecentChooserIF
 outFile: RecentChooserT
 
