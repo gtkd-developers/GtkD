@@ -162,7 +162,7 @@ noprefix: g_static_private_
 structWrap: GThread* Thread
 #import: glib.ThreadFunctions
 #structWrap: GThreadFunctions* ThreadFunctions
-#import: glib.Error*
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 outFile: Thread
 

@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +59,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -131,12 +135,20 @@ public class MappedFile
 	 * Params:
 	 * filename =  The path of the file to load, in the GLib filename encoding
 	 * writable =  whether the mapping should be writable
-	 * error =  return location for a GError, or NULL
+	 * Throws: GException on failure.
 	 */
-	public this (string filename, int writable, GError** error)
+	public this (string filename, int writable)
 	{
 		// GMappedFile* g_mapped_file_new (const gchar *filename,  gboolean writable,  GError **error);
-		auto p = g_mapped_file_new(Str.toStringz(filename), writable, error);
+		GError* err = null;
+		
+		auto p = g_mapped_file_new(Str.toStringz(filename), writable, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");

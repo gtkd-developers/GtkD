@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +59,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -124,15 +128,22 @@ public class Directory
 	 * path =  the path to the directory you are interested in. On Unix
 	 *  in the on-disk encoding. On Windows in UTF-8
 	 * flags =  Currently must be set to 0. Reserved for future use.
-	 * error =  return location for a GError, or NULL.
-	 *  If non-NULL, an error will be set if and only if
-	 *  g_dir_open() fails.
 	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
+	 * Throws: GException on failure.
 	 */
-	public static GDir* open(string path, uint flags, GError** error)
+	public static GDir* open(string path, uint flags)
 	{
 		// GDir* g_dir_open (const gchar *path,  guint flags,  GError **error);
-		return g_dir_open(Str.toStringz(path), flags, error);
+		GError* err = null;
+		
+		auto p = g_dir_open(Str.toStringz(path), flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

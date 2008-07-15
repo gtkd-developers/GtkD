@@ -50,6 +50,8 @@
  * 	- gtk.PrintSettings
  * 	- gtk.PrintOperationPreviewT
  * 	- gtk.PrintOperationPreviewIF
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -74,6 +76,8 @@ private import gtk.PageSetup;
 private import gtk.PrintSettings;
 private import gtk.PrintOperationPreviewT;
 private import gtk.PrintOperationPreviewIF;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -629,13 +633,20 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * gtk_print_operation_run(), or in the "done" signal
 	 * handler. The returned GError will contain more details on what went wrong.
 	 * Since 2.10
-	 * Params:
-	 * error =  return location for the error
+	 * Throws: GException on failure.
 	 */
-	public void getError(GError** error)
+	public void getError()
 	{
 		// void gtk_print_operation_get_error (GtkPrintOperation *op,  GError **error);
-		gtk_print_operation_get_error(gtkPrintOperation, error);
+		GError* err = null;
+		
+		gtk_print_operation_get_error(gtkPrintOperation, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 	}
 	
 	/**
@@ -891,13 +902,22 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 * action =  the action to start
 	 * parent =  Transient parent of the dialog, or NULL
-	 * error =  Return location for errors, or NULL
 	 * Returns: the result of the print operation. A return value of  GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain  the used print settings with gtk_print_operation_get_print_settings()  and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the ::done signal when done.
+	 * Throws: GException on failure.
 	 */
-	public GtkPrintOperationResult run(GtkPrintOperationAction action, Window parent, GError** error)
+	public GtkPrintOperationResult run(GtkPrintOperationAction action, Window parent)
 	{
 		// GtkPrintOperationResult gtk_print_operation_run (GtkPrintOperation *op,  GtkPrintOperationAction action,  GtkWindow *parent,  GError **error);
-		return gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), error);
+		GError* err = null;
+		
+		auto p = gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

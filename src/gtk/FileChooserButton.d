@@ -46,6 +46,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.ListSG
  * 	- gtk.Window
  * 	- gtk.FileFilter
@@ -69,6 +71,8 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.ListSG;
 private import gtk.Window;
 private import gtk.FileFilter;

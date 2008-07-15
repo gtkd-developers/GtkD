@@ -43,6 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.TimeVal
  * 	- gdk.Pixbuf
  * 	- glib.Str
@@ -62,6 +64,8 @@ public  import gtkc.gdkpixbuftypes;
 private import gtkc.gdkpixbuf;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.TimeVal;
 private import gdk.Pixbuf;
 private import glib.Str;
@@ -130,12 +134,20 @@ public class PixbufAnimation : ObjectG
 	 * are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
 	 * Params:
 	 * filename =  Name of file to load, in the GLib file name encoding
-	 * error =  return location for error
+	 * Throws: GException on failure.
 	 */
-	public this (string filename, GError** error)
+	public this (string filename)
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file (const char *filename,  GError **error);
-		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");

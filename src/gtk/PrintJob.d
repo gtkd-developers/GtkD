@@ -48,6 +48,8 @@
  * 	- gtk.Printer
  * 	- gtk.PageSetup
  * 	- gtk.PrintSettings
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -72,6 +74,8 @@ private import cairo.Surface;
 private import gtk.Printer;
 private import gtk.PageSetup;
 private import gtk.PrintSettings;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -250,27 +254,43 @@ public class PrintJob : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * filename =  the file to be printed
-	 * error =  return location for errors
 	 * Returns: FALSE if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public int setSourceFile(string filename, GError** error)
+	public int setSourceFile(string filename)
 	{
 		// gboolean gtk_print_job_set_source_file (GtkPrintJob *job,  const gchar *filename,  GError **error);
-		return gtk_print_job_set_source_file(gtkPrintJob, Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = gtk_print_job_set_source_file(gtkPrintJob, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
 	 * Gets a cairo surface onto which the pages of
 	 * the print job should be rendered.
 	 * Since 2.10
-	 * Params:
-	 * error =  return location for errors, or NULL
 	 * Returns: the cairo surface of job
+	 * Throws: GException on failure.
 	 */
-	public Surface getSurface(GError** error)
+	public Surface getSurface()
 	{
 		// cairo_surface_t* gtk_print_job_get_surface (GtkPrintJob *job,  GError **error);
-		auto p = gtk_print_job_get_surface(gtkPrintJob, error);
+		GError* err = null;
+		
+		auto p = gtk_print_job_get_surface(gtkPrintJob, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;

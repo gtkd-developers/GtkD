@@ -219,7 +219,8 @@ file: glib-Thread-Pools.html
 struct: GThreadPool
 class: ThreadPool
 prefix: g_thread_pool_
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 outFile: ThreadPool
 
 
@@ -251,7 +252,8 @@ file: glib-IO-Channels.html
 struct: GIOChannel
 class: IOChannel
 prefix: g_io_channel_
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 import: glib.StringG
 import: glib.Source
 import: glib.Str
@@ -269,6 +271,30 @@ import: glib.Str
 structWrap: GError* ErrorG
 outFile: ErrorG
 
+file:
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+code: start
+
+class GException : Exception
+{
+	ErrorG error;
+
+	this(ErrorG error)
+	{
+		super( Str.toString(error.getErrorGStruct.message) );
+		this.error = error;
+	}
+
+	string toString()
+	{
+		return msg;
+	}
+}
+
+code: end
+outFile: GException
 
 file: glib-Warnings-and-Assertions.html
 class: Messages
@@ -527,7 +553,8 @@ file: glib-Character-Set-Conversion.html
 class: CharacterSet
 prefix: g_
 import: glib.Str
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 # these fail to compile because of a reference to a struct that size is not known
 noprefix: g_convert_with_iconv
 noprefix: g_iconv_open
@@ -539,7 +566,8 @@ file: glib-Unicode-Manipulation.html
 class: Unicode
 prefix: g_
 import: glib.Str
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 outFile: Unicode
 
 file: glib-Base64-Encoding.html
@@ -643,13 +671,13 @@ outFile: Timer
 file: glib-Spawning-Processes.html
 class: Spawn
 import: glib.ErrorG
+import: glib.GException
 import: glib.MainLoop
 structWrap: GMainLoop* MainLoop
 prefix: g_spawn_
 #import: glib.Pid
 #structWrap: GPid* Pid
 #import: glib.Error*
-#structWrap: GError** Error*
 import: glib.Str
 import: std.thread
 import: std.c.stdio
@@ -985,8 +1013,8 @@ noprefix: g_dir_
 noprefix: g_mapped_file_
 import: std.c.stdio
 import: glib.Str
-#import: glib.ErrorG
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 outFile: FileUtils
 
 struct: GDir
@@ -994,7 +1022,8 @@ class: Directory
 prefix: g_dir_
 strictPrefix: Y
 import: glib.Str
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 outFile: Directory
 
 struct: GMappedFile
@@ -1002,7 +1031,8 @@ class: MappedFile
 prefix: g_mapped_file_
 strictPrefix: Y
 import: glib.Str
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 outFile: MappedFile
 
 file: glib-URI-Functions.html
@@ -1015,7 +1045,8 @@ file: glib-Shell-related-Utilities.html
 class: ShellUtils
 prefix: g_shell_
 import: glib.Str
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 outFile: ShellUtils
 
 file: glib-Commandline-option-parser.html
@@ -1024,8 +1055,8 @@ struct: GOptionContext
 class: OptionContext
 prefix: g_option_context_
 noprefix: g_option_group_
-#import: glib.ErrorG
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 #import: glib.OptionEntry
 #structWrap: GOptionEntry* OptionEntry
 import: glib.OptionGroup
@@ -1058,8 +1089,8 @@ prefix: g_regex_
 noprefix: g_match_info_
 import: glib.Str
 structWrap: GRegex* Regex
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 #import: glib.MatchInfo
 #structWrap: GMatchInfo** MatchInfo*
 outFile: Regex
@@ -1069,8 +1100,8 @@ class: MatchInfo
 prefix: g_match_info_
 strictPrefix: Y
 import: glib.Str
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 outFile: MatchInfo
 
 file: glib-Simple-XML-Subset-Parser.html
@@ -1080,8 +1111,8 @@ prefix: g_markup_parse_context_
 prefix: g_markup_
 import: glib.ListSG
 structWrap: GSList* ListSG
-#import: glib.ErrorG
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 #import: glib.MarkupParser
 #structWrap: GMarkupParser* MarkupParser
 import: glib.Str
@@ -1091,7 +1122,8 @@ file: glib-Key-value-file-parser.html
 struct: GKeyFile
 class: KeyFile
 prefix: g_key_file_
-#import: glib.ErrorG
+import: glib.ErrorG
+import: glib.GException
 import: glib.Str
 outFile: KeyFile
 
@@ -1099,8 +1131,8 @@ file: glib-Bookmark-file-parser.html
 struct: GBookmarkFile
 class: BookmarkFile
 prefix: g_bookmark_file_
-#import: glib.ErrorG
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 import: glib.Str
 outFile: BookmarkFile
 

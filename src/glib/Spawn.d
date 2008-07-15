@@ -44,6 +44,7 @@
  * omit signals:
  * imports:
  * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.MainLoop
  * 	- glib.Str
  * 	- std.thread
@@ -65,6 +66,7 @@ private import gtkc.glib;
 
 
 private import glib.ErrorG;
+private import glib.GException;
 private import glib.MainLoop;
 private import glib.Str;
 
@@ -425,13 +427,22 @@ public class Spawn
 	 * childSetup =  function to run in the child just before exec()
 	 * userData =  user data for child_setup
 	 * childPid =  return location for child process ID, or NULL
-	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if error is set
+	 * Throws: GException on failure.
 	 */
-	public static int async(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** error)
+	public static int async(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid)
 	{
 		// gboolean g_spawn_async (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  GPid *child_pid,  GError **error);
-		return g_spawn_async(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
+		GError* err = null;
+		
+		auto p = g_spawn_async(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -460,13 +471,22 @@ public class Spawn
 	 * standardOutput =  return location for child output, or NULL
 	 * standardError =  return location for child error messages, or NULL
 	 * exitStatus =  return location for child exit status, as returned by waitpid(), or NULL
-	 * error =  return location for error, or NULL
 	 * Returns: TRUE on success, FALSE if an error was set.
+	 * Throws: GException on failure.
 	 */
-	public static int sync(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** error)
+	public static int sync(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus)
 	{
 		// gboolean g_spawn_sync (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
-		return g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, error);
+		GError* err = null;
+		
+		auto p = g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -480,13 +500,22 @@ public class Spawn
 	 * The same concerns on Windows apply as for g_spawn_command_line_sync().
 	 * Params:
 	 * commandLine =  a command line
-	 * error =  return location for errors
 	 * Returns: TRUE on success, FALSE if error is set.
+	 * Throws: GException on failure.
 	 */
-	public static int commandLineAsync(string commandLine, GError** error)
+	public static int commandLineAsync(string commandLine)
 	{
 		// gboolean g_spawn_command_line_async (const gchar *command_line,  GError **error);
-		return g_spawn_command_line_async(Str.toStringz(commandLine), error);
+		GError* err = null;
+		
+		auto p = g_spawn_command_line_async(Str.toStringz(commandLine), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -515,13 +544,22 @@ public class Spawn
 	 * standardOutput =  return location for child output
 	 * standardError =  return location for child errors
 	 * exitStatus =  return location for child exit status, as returned by waitpid()
-	 * error =  return location for errors
 	 * Returns: TRUE on success, FALSE if an error was set
+	 * Throws: GException on failure.
 	 */
-	public static int commandLineSync(string commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** error)
+	public static int commandLineSync(string commandLine, char** standardOutput, char** standardError, int* exitStatus)
 	{
 		// gboolean g_spawn_command_line_sync (const gchar *command_line,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
-		return g_spawn_command_line_sync(Str.toStringz(commandLine), standardOutput, standardError, exitStatus, error);
+		GError* err = null;
+		
+		auto p = g_spawn_command_line_sync(Str.toStringz(commandLine), standardOutput, standardError, exitStatus, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

@@ -318,8 +318,8 @@ noprefix: pango_attr_iterator_
 
 import: glib.Str
 structWrap: PangoAttribute* PgAttribute
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 #import: pango.PgAttributeList
 #structWrap: PangoAttrList** PgAttributeList
 import: pango.PgLanguage

@@ -46,6 +46,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gdkpixbuf.PixbufFormat
  * 	- gdk.Drawable
  * 	- gdk.Bitmap
@@ -73,6 +75,8 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gdkpixbuf.PixbufFormat;
 private import gdk.Drawable;
 private import gdk.Bitmap;
@@ -636,12 +640,20 @@ public class Pixbuf
 	 * data =  Byte data containing a serialized GdkPixdata structure
 	 * copyPixels =  Whether to copy the pixel data, or use direct pointers
 	 *  data for the resulting pixbuf
-	 * error =  GError return location, may be NULL to ignore errors
+	 * Throws: GException on failure.
 	 */
-	public this (int dataLength, byte* data, int copyPixels, GError** error)
+	public this (int dataLength, byte* data, int copyPixels)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_inline (gint data_length,  const guint8 *data,  gboolean copy_pixels,  GError **error);
-		auto p = gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -796,12 +808,20 @@ public class Pixbuf
 	 * Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
 	 * Params:
 	 * filename =  Name of file to load, in the GLib file name encoding
-	 * error =  Return location for an error
+	 * Throws: GException on failure.
 	 */
-	public this (string filename, GError** error)
+	public this (string filename)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file (const char *filename,  GError **error);
-		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -820,12 +840,20 @@ public class Pixbuf
 	 * filename =  Name of file to load, in the GLib file name encoding
 	 * width =  The width the image should have or -1 to not constrain the width
 	 * height =  The height the image should have or -1 to not constrain the height
-	 * error =  Return location for an error
+	 * Throws: GException on failure.
 	 */
-	public this (string filename, int width, int height, GError** error)
+	public this (string filename, int width, int height)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size (const char *filename,  int width,  int height,  GError **error);
-		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -851,12 +879,20 @@ public class Pixbuf
 	 * width =  The width the image should have or -1 to not constrain the width
 	 * height =  The height the image should have or -1 to not constrain the height
 	 * preserveAspectRatio =  TRUE to preserve the image's aspect ratio
-	 * error =  Return location for an error
+	 * Throws: GException on failure.
 	 */
-	public this (string filename, int width, int height, int preserveAspectRatio, GError** error)
+	public this (string filename, int width, int height, int preserveAspectRatio)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
-		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -873,13 +909,22 @@ public class Pixbuf
 	 * type =  name of file format.
 	 * optionKeys =  name of options to set, NULL-terminated
 	 * optionValues =  values for named options
-	 * error =  return location for error, or NULL
 	 * Returns: whether an error was set
+	 * Throws: GException on failure.
 	 */
-	public int savev(string filename, string type, char** optionKeys, char** optionValues, GError** error)
+	public int savev(string filename, string type, char** optionKeys, char** optionValues)
 	{
 		// gboolean gdk_pixbuf_savev (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		return gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), optionKeys, optionValues, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), optionKeys, optionValues, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -889,14 +934,23 @@ public class Pixbuf
 	 * Params:
 	 * filename =  name of file to save.
 	 * type =  name of file format.
-	 * error =  return location for error, or NULL
 	 * ... =  list of key-value save options
 	 * Returns: whether an error was set
+	 * Throws: GException on failure.
 	 */
-	public int save(string filename, string type, GError** error, ... )
+	public int save(string filename, string type, ... )
 	{
 		// gboolean gdk_pixbuf_save (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  GError **error,  ...);
-		return gdk_pixbuf_save(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -913,14 +967,23 @@ public class Pixbuf
 	 *  the save routine generates.
 	 * userData =  user data to pass to the save function.
 	 * type =  name of file format.
-	 * error =  return location for error, or NULL
 	 * ... =  list of key-value save options
 	 * Returns: whether an error was set
+	 * Throws: GException on failure.
 	 */
-	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, string type, GError** error, ... )
+	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, string type, ... )
 	{
 		// gboolean gdk_pixbuf_save_to_callback (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  GError **error,  ...);
-		return gdk_pixbuf_save_to_callback(gdkPixbuf, saveFunc, userData, Str.toStringz(type), error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save_to_callback(gdkPixbuf, saveFunc, userData, Str.toStringz(type), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -935,13 +998,22 @@ public class Pixbuf
 	 * type =  name of file format.
 	 * optionKeys =  name of options to set, NULL-terminated
 	 * optionValues =  values for named options
-	 * error =  return location for error, or NULL
 	 * Returns: whether an error was set
+	 * Throws: GException on failure.
 	 */
-	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, char** optionKeys, char** optionValues, GError** error)
+	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, char** optionKeys, char** optionValues)
 	{
 		// gboolean gdk_pixbuf_save_to_callbackv (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		return gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), optionKeys, optionValues, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), optionKeys, optionValues, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -958,14 +1030,23 @@ public class Pixbuf
 	 * buffer =  location to receive a pointer to the new buffer.
 	 * bufferSize =  location to receive the size of the new buffer.
 	 * type =  name of file format.
-	 * error =  return location for error, or NULL
 	 * ... =  list of key-value save options
 	 * Returns: whether an error was set
+	 * Throws: GException on failure.
 	 */
-	public int saveToBuffer(char** buffer, uint* bufferSize, string type, GError** error, ... )
+	public int saveToBuffer(char** buffer, uint* bufferSize, string type, ... )
 	{
 		// gboolean gdk_pixbuf_save_to_buffer (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  GError **error,  ...);
-		return gdk_pixbuf_save_to_buffer(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save_to_buffer(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -978,13 +1059,22 @@ public class Pixbuf
 	 * type =  name of file format.
 	 * optionKeys =  name of options to set, NULL-terminated
 	 * optionValues =  values for named options
-	 * error =  return location for error, or NULL
 	 * Returns: whether an error was set
+	 * Throws: GException on failure.
 	 */
-	public int saveToBufferv(char** buffer, uint* bufferSize, string type, char** optionKeys, char** optionValues, GError** error)
+	public int saveToBufferv(char** buffer, uint* bufferSize, string type, char** optionKeys, char** optionValues)
 	{
 		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		return gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), optionKeys, optionValues, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), optionKeys, optionValues, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

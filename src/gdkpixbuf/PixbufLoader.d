@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- gdkpixbuf.PixbufFormat
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gdk.Pixbuf
  * 	- gdkpixbuf.PixbufAnimation
  * 	- glib.Str
@@ -67,6 +69,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gdkpixbuf.PixbufFormat;
+private import glib.ErrorG;
+private import glib.GException;
 private import gdk.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import glib.Str;
@@ -374,13 +378,22 @@ public class PixbufLoader : ObjectG
 	 * Params:
 	 * buf =  Pointer to image data.
 	 * count =  Length of the buf buffer in bytes.
-	 * error =  return location for errors
 	 * Returns: TRUE if the write was successful, or FALSE if the loadercannot parse the buffer.
+	 * Throws: GException on failure.
 	 */
-	public int write(char* buf, uint count, GError** error)
+	public int write(char* buf, uint count)
 	{
 		// gboolean gdk_pixbuf_loader_write (GdkPixbufLoader *loader,  const guchar *buf,  gsize count,  GError **error);
-		return gdk_pixbuf_loader_write(gdkPixbufLoader, buf, count, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf, count, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -455,13 +468,21 @@ public class PixbufLoader : ObjectG
 	 * domains. If you're just cancelling a load rather than expecting it
 	 * to be finished, passing NULL for error to ignore it is
 	 * reasonable.
-	 * Params:
-	 * error =  return location for a GError, or NULL to ignore errors
 	 * Returns: TRUE if all image data written so far was successfully passed out via the update_area signalSignal DetailsThe "area-prepared" signalvoid user_function (GdkPixbufLoader *loader, gpointer user_data) : Run LastThis signal is emitted when the pixbuf loader has allocated the pixbuf in the desired size. After this signal is emitted, applications can call gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
+	 * Throws: GException on failure.
 	 */
-	public int close(GError** error)
+	public int close()
 	{
 		// gboolean gdk_pixbuf_loader_close (GdkPixbufLoader *loader,  GError **error);
-		return gdk_pixbuf_loader_close(gdkPixbufLoader, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_loader_close(gdkPixbufLoader, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

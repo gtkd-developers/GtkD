@@ -49,6 +49,8 @@
  * 	- gdk.Screen
  * 	- gtk.IconInfo
  * 	- gdk.Pixbuf
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
@@ -75,6 +77,8 @@ private import gtk.IconTheme;
 private import gdk.Screen;
 private import gtk.IconInfo;
 private import gdk.Pixbuf;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.ListG;
 
 
@@ -463,13 +467,21 @@ public class IconTheme : ObjectG
 	 * size =  the desired icon size. The resulting icon may not be
 	 *  exactly this size; see gtk_icon_info_load_icon().
 	 * flags =  flags modifying the behavior of the icon lookup
-	 * error =  Location to store error information on failure, or NULL.
 	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. NULL if the icon isn't found.
+	 * Throws: GException on failure.
 	 */
-	public Pixbuf loadIcon(string iconName, int size, GtkIconLookupFlags flags, GError** error)
+	public Pixbuf loadIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
 		// GdkPixbuf* gtk_icon_theme_load_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags,  GError **error);
-		auto p = gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, error);
+		GError* err = null;
+		
+		auto p = gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;

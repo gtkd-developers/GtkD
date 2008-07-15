@@ -42,6 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.StringG
  * 	- glib.Source
  * 	- glib.Str
@@ -61,6 +63,8 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.StringG;
 private import glib.Source;
 private import glib.Str;
@@ -277,12 +281,20 @@ public class IOChannel
 	 * filename =  A string containing the name of a file
 	 * mode =  One of "r", "w", "a", "r+", "w+", "a+". These have
 	 *  the same meaning as in fopen()
-	 * error =  A location to return an error of type G_FILE_ERROR
+	 * Throws: GException on failure.
 	 */
-	public this (string filename, string mode, GError** error)
+	public this (string filename, string mode)
 	{
 		// GIOChannel* g_io_channel_new_file (const gchar *filename,  const gchar *mode,  GError **error);
-		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), error);
+		GError* err = null;
+		
+		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -302,14 +314,22 @@ public class IOChannel
 	 *  success if count < 6 and the channel's encoding is non-NULL.
 	 *  This indicates that the next UTF-8 character is too wide for
 	 *  the buffer.
-	 * error =  a location to return an error of type GConvertError
-	 *  or GIOChannelError.
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus readChars(string buf, uint count, uint* bytesRead, GError** error)
+	public GIOStatus readChars(string buf, uint count, uint* bytesRead)
 	{
 		// GIOStatus g_io_channel_read_chars (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read,  GError **error);
-		return g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, bytesRead, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, bytesRead, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -317,14 +337,22 @@ public class IOChannel
 	 * This function cannot be called on a channel with NULL encoding.
 	 * Params:
 	 * thechar =  a location to return a character
-	 * error =  a location to return an error of type GConvertError
-	 *  or GIOChannelError
 	 * Returns: a GIOStatus
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus readUnichar(gunichar* thechar, GError** error)
+	public GIOStatus readUnichar(gunichar* thechar)
 	{
 		// GIOStatus g_io_channel_read_unichar (GIOChannel *channel,  gunichar *thechar,  GError **error);
-		return g_io_channel_read_unichar(gIOChannel, thechar, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_read_unichar(gIOChannel, thechar, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -339,14 +367,22 @@ public class IOChannel
 	 *  If a length of zero is returned, this will be NULL instead.
 	 * length =  location to store length of the read data, or NULL
 	 * terminatorPos =  location to store position of line terminator, or NULL
-	 * error =  A location to return an error of type GConvertError
-	 *  or GIOChannelError
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus readLine(char** strReturn, uint* length, uint* terminatorPos, GError** error)
+	public GIOStatus readLine(char** strReturn, uint* length, uint* terminatorPos)
 	{
 		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
-		return g_io_channel_read_line(gIOChannel, strReturn, length, terminatorPos, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_read_line(gIOChannel, strReturn, length, terminatorPos, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -356,14 +392,22 @@ public class IOChannel
 	 *  If buffer already contains data, the old data will
 	 *  be overwritten.
 	 * terminatorPos =  location to store position of line terminator, or NULL
-	 * error =  a location to store an error of type GConvertError
-	 *  or GIOChannelError
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus readLineString(StringG buffer, uint* terminatorPos, GError** error)
+	public GIOStatus readLineString(StringG buffer, uint* terminatorPos)
 	{
 		// GIOStatus g_io_channel_read_line_string (GIOChannel *channel,  GString *buffer,  gsize *terminator_pos,  GError **error);
-		return g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), terminatorPos, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), terminatorPos, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -375,14 +419,22 @@ public class IOChannel
 	 *  data is terminated by an extra nul character, but there
 	 *  may be other nuls in the intervening data.
 	 * length =  location to store length of the data
-	 * error =  location to return an error of type GConvertError
-	 *  or GIOChannelError
 	 * Returns: G_IO_STATUS_NORMAL on success.  This function never returns G_IO_STATUS_EOF.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus readToEnd(char** strReturn, uint* length, GError** error)
+	public GIOStatus readToEnd(char** strReturn, uint* length)
 	{
 		// GIOStatus g_io_channel_read_to_end (GIOChannel *channel,  gchar **str_return,  gsize *length,  GError **error);
-		return g_io_channel_read_to_end(gIOChannel, strReturn, length, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_read_to_end(gIOChannel, strReturn, length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -400,14 +452,22 @@ public class IOChannel
 	 *  If the return value is G_IO_STATUS_NORMAL and the
 	 *  channel is blocking, this will always be equal
 	 *  to count if count >= 0.
-	 * error =  a location to return an error of type GConvertError
-	 *  or GIOChannelError
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus writeChars(string buf, int count, uint* bytesWritten, GError** error)
+	public GIOStatus writeChars(string buf, int count, uint* bytesWritten)
 	{
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
-		return g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, bytesWritten, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, bytesWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -415,26 +475,42 @@ public class IOChannel
 	 * This function cannot be called on a channel with NULL encoding.
 	 * Params:
 	 * thechar =  a character
-	 * error =  location to return an error of type GConvertError
-	 *  or GIOChannelError
 	 * Returns: a GIOStatus
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus writeUnichar(gunichar thechar, GError** error)
+	public GIOStatus writeUnichar(gunichar thechar)
 	{
 		// GIOStatus g_io_channel_write_unichar (GIOChannel *channel,  gunichar thechar,  GError **error);
-		return g_io_channel_write_unichar(gIOChannel, thechar, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_write_unichar(gIOChannel, thechar, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
 	 * Flushes the write buffer for the GIOChannel.
-	 * Params:
-	 * error =  location to store an error of type GIOChannelError
 	 * Returns: the status of the operation: One of G_IO_CHANNEL_NORMAL, G_IO_CHANNEL_AGAIN, or G_IO_CHANNEL_ERROR.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus flush(GError** error)
+	public GIOStatus flush()
 	{
 		// GIOStatus g_io_channel_flush (GIOChannel *channel,  GError **error);
-		return g_io_channel_flush(gIOChannel, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_flush(gIOChannel, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -445,13 +521,22 @@ public class IOChannel
 	 *  cases where a call to g_io_channel_set_encoding()
 	 *  is allowed. See the documentation for
 	 *  g_io_channel_set_encoding() for details.
-	 * error =  A location to return an error of type GIOChannelError
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus seekPosition(long offset, GSeekType type, GError** error)
+	public GIOStatus seekPosition(long offset, GSeekType type)
 	{
 		// GIOStatus g_io_channel_seek_position (GIOChannel *channel,  gint64 offset,  GSeekType type,  GError **error);
-		return g_io_channel_seek_position(gIOChannel, offset, type, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_seek_position(gIOChannel, offset, type, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -460,13 +545,22 @@ public class IOChannel
 	 * last reference is dropped using g_io_channel_unref().
 	 * Params:
 	 * flush =  if TRUE, flush pending
-	 * err =  location to store a GIOChannelError
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus shutdown(int flush, GError** err)
+	public GIOStatus shutdown(int flush)
 	{
 		// GIOStatus g_io_channel_shutdown (GIOChannel *channel,  gboolean flush,  GError **err);
-		return g_io_channel_shutdown(gIOChannel, flush, err);
+		GError* err = null;
+		
+		auto p = g_io_channel_shutdown(gIOChannel, flush, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -617,13 +711,22 @@ public class IOChannel
 	 * Sets the (writeable) flags in channel to (flags  G_IO_CHANNEL_SET_MASK).
 	 * Params:
 	 * flags =  the flags to set on the IO channel
-	 * error =  A location to return an error of type GIOChannelError
 	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus setFlags(GIOFlags flags, GError** error)
+	public GIOStatus setFlags(GIOFlags flags)
 	{
 		// GIOStatus g_io_channel_set_flags (GIOChannel *channel,  GIOFlags flags,  GError **error);
-		return g_io_channel_set_flags(gIOChannel, flags, error);
+		GError* err = null;
+		
+		auto p = g_io_channel_set_flags(gIOChannel, flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -714,13 +817,22 @@ public class IOChannel
 	 * The encoding can only be set if one of the following conditions
 	 * Params:
 	 * encoding =  the encoding type
-	 * error =  location to store an error of type GConvertError
 	 * Returns: G_IO_STATUS_NORMAL if the encoding was successfully set.
+	 * Throws: GException on failure.
 	 */
-	public GIOStatus setEncoding(string encoding, GError** error)
+	public GIOStatus setEncoding(string encoding)
 	{
 		// GIOStatus g_io_channel_set_encoding (GIOChannel *channel,  const gchar *encoding,  GError **error);
-		return g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), error);
+		GError* err = null;
+		
+		auto p = g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

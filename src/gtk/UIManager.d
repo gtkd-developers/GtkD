@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.ActionGroup
  * 	- glib.ListG
  * 	- gtk.AccelGroup
@@ -78,6 +80,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.ActionGroup;
 private import glib.ListG;
 private import gtk.AccelGroup;
@@ -703,13 +707,22 @@ public class UIManager : ObjectG, BuildableIF
 	 * Params:
 	 * buffer =  the string to parse
 	 * length =  the length of buffer (may be -1 if buffer is nul-terminated)
-	 * error =  return location for an error
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
+	 * Throws: GException on failure.
 	 */
-	public uint addUiFromString(string buffer, int length, GError** error)
+	public uint addUiFromString(string buffer, int length)
 	{
 		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *self,  const gchar *buffer,  gssize length,  GError **error);
-		return gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, error);
+		GError* err = null;
+		
+		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -718,13 +731,22 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * filename =  the name of the file to parse
-	 * error =  return location for an error
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
+	 * Throws: GException on failure.
 	 */
-	public uint addUiFromFile(string filename, GError** error)
+	public uint addUiFromFile(string filename)
 	{
 		// guint gtk_ui_manager_add_ui_from_file (GtkUIManager *self,  const gchar *filename,  GError **error);
-		return gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +59,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -84,13 +88,22 @@ public class ShellUtils
 	 * commandLine =  command line to parse
 	 * argcp =  return location for number of args
 	 * argvp =  return location for array of args
-	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if error set
+	 * Throws: GException on failure.
 	 */
-	public static int parseArgv(string commandLine, int* argcp, char*** argvp, GError** error)
+	public static int parseArgv(string commandLine, int* argcp, char*** argvp)
 	{
 		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
-		return g_shell_parse_argv(Str.toStringz(commandLine), argcp, argvp, error);
+		GError* err = null;
+		
+		auto p = g_shell_parse_argv(Str.toStringz(commandLine), argcp, argvp, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -133,12 +146,21 @@ public class ShellUtils
 	 * literally.
 	 * Params:
 	 * quotedString =  shell-quoted string
-	 * error =  error return location or NULL
 	 * Returns: an unquoted string
+	 * Throws: GException on failure.
 	 */
-	public static string unquote(string quotedString, GError** error)
+	public static string unquote(string quotedString)
 	{
 		// gchar* g_shell_unquote (const gchar *quoted_string,  GError **error);
-		return Str.toString(g_shell_unquote(Str.toStringz(quotedString), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_shell_unquote(Str.toStringz(quotedString), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

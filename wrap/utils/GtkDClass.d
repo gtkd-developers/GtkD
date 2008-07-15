@@ -2198,6 +2198,12 @@ public class GtkDClass
 							if(ret.length > 0)
 								description ~= ret;
 
+							if ( find(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
+							   && find(fun.declaration(convParms,wrapper.getAliases()), "GError**") == -1 )
+							{
+								description ~= "Throws: GException on failure.";
+							}
+
 							return description;
 						}
 

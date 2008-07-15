@@ -45,6 +45,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.PaperSize
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.KeyFile
  * structWrap:
  * 	- GKeyFile* -> KeyFile
@@ -64,6 +66,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.PaperSize;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.KeyFile;
 
 
@@ -418,12 +422,20 @@ public class PageSetup : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * fileName =  the filename to read the page setup from
-	 * error =  return location for an error, or NULL
+	 * Throws: GException on failure.
 	 */
-	public this (string fileName, GError** error)
+	public this (string fileName)
 	{
 		// GtkPageSetup* gtk_page_setup_new_from_file (const gchar *file_name,  GError **error);
-		auto p = gtk_page_setup_new_from_file(Str.toStringz(fileName), error);
+		GError* err = null;
+		
+		auto p = gtk_page_setup_new_from_file(Str.toStringz(fileName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -440,12 +452,20 @@ public class PageSetup : ObjectG
 	 * keyFile =  the GKeyFile to retrieve the page_setup from
 	 * groupName =  the name of the group in the key_file to read, or NULL
 	 *  to use the default name "Page Setup"
-	 * error =  return location for an error, or NULL
+	 * Throws: GException on failure.
 	 */
-	public this (KeyFile keyFile, string groupName, GError** error)
+	public this (KeyFile keyFile, string groupName)
 	{
 		// GtkPageSetup* gtk_page_setup_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
-		auto p = gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
+		GError* err = null;
+		
+		auto p = gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -458,13 +478,22 @@ public class PageSetup : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * fileName =  the file to save to
-	 * error =  return location for errors, or NULL
 	 * Returns: TRUE on success
+	 * Throws: GException on failure.
 	 */
-	public int toFile(string fileName, GError** error)
+	public int toFile(string fileName)
 	{
 		// gboolean gtk_page_setup_to_file (GtkPageSetup *setup,  const char *file_name,  GError **error);
-		return gtk_page_setup_to_file(gtkPageSetup, Str.toStringz(fileName), error);
+		GError* err = null;
+		
+		auto p = gtk_page_setup_to_file(gtkPageSetup, Str.toStringz(fileName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

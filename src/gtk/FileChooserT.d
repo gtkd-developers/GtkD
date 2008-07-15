@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.Window
  * 	- glib.ListSG
  * 	- gtk.Widget
@@ -71,6 +73,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.Window;
 private import glib.ListSG;
 private import gtk.Widget;
@@ -1307,13 +1311,22 @@ public template FileChooserT(TStruct)
 		 * Since 2.4
 		 * Params:
 		 * folder =  filename of the folder to add
-		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
+		 * Throws: GException on failure.
 		 */
-		public int addShortcutFolder(string folder, GError** error)
+		public int addShortcutFolder(string folder)
 		{
 			// gboolean gtk_file_chooser_add_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
-			return gtk_file_chooser_add_shortcut_folder(getFileChooserTStruct(), Str.toStringz(folder), error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_add_shortcut_folder(getFileChooserTStruct(), Str.toStringz(folder), &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
 		}
 		
 		/**
@@ -1321,13 +1334,22 @@ public template FileChooserT(TStruct)
 		 * Since 2.4
 		 * Params:
 		 * folder =  filename of the folder to remove
-		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder()
+		 * Throws: GException on failure.
 		 */
-		public int removeShortcutFolder(string folder, GError** error)
+		public int removeShortcutFolder(string folder)
 		{
 			// gboolean gtk_file_chooser_remove_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
-			return gtk_file_chooser_remove_shortcut_folder(getFileChooserTStruct(), Str.toStringz(folder), error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_remove_shortcut_folder(getFileChooserTStruct(), Str.toStringz(folder), &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
 		}
 		
 		/**
@@ -1355,13 +1377,22 @@ public template FileChooserT(TStruct)
 		 * Since 2.4
 		 * Params:
 		 * uri =  URI of the folder to add
-		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
+		 * Throws: GException on failure.
 		 */
-		public int addShortcutFolderUri(string uri, GError** error)
+		public int addShortcutFolderUri(string uri)
 		{
 			// gboolean gtk_file_chooser_add_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
-			return gtk_file_chooser_add_shortcut_folder_uri(getFileChooserTStruct(), Str.toStringz(uri), error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_add_shortcut_folder_uri(getFileChooserTStruct(), Str.toStringz(uri), &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
 		}
 		
 		/**
@@ -1369,13 +1400,22 @@ public template FileChooserT(TStruct)
 		 * Since 2.4
 		 * Params:
 		 * uri =  URI of the folder to remove
-		 * error =  location to store error, or NULL
 		 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder_uri()
+		 * Throws: GException on failure.
 		 */
-		public int removeShortcutFolderUri(string uri, GError** error)
+		public int removeShortcutFolderUri(string uri)
 		{
 			// gboolean gtk_file_chooser_remove_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
-			return gtk_file_chooser_remove_shortcut_folder_uri(getFileChooserTStruct(), Str.toStringz(uri), error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_remove_shortcut_folder_uri(getFileChooserTStruct(), Str.toStringz(uri), &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
 		}
 		
 		/**

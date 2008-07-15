@@ -47,6 +47,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -61,6 +63,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -181,14 +185,22 @@ public class CharacterSet
 	 *  input sequence.
 	 * bytesWritten =  the number of bytes stored in the output buffer (not
 	 *  including the terminating nul).
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
+	 * Throws: GException on failure.
 	 */
-	public static string convert(string str, int len, string toCodeset, string fromCodeset, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string convert(string str, int len, string toCodeset, string fromCodeset, uint* bytesRead, uint* bytesWritten)
 	{
 		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -219,14 +231,22 @@ public class CharacterSet
 	 *  at the end of the input.
 	 * bytesWritten =  the number of bytes stored in the output buffer (not
 	 *  including the terminating nul).
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
+	 * Throws: GException on failure.
 	 */
-	public static string convertWithFallback(string str, int len, string toCodeset, string fromCodeset, string fallback, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string convertWithFallback(string str, int len, string toCodeset, string fromCodeset, string fallback, uint* bytesRead, uint* bytesWritten)
 	{
 		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -249,14 +269,22 @@ public class CharacterSet
 	 *  input sequence.
 	 * bytesWritten =  the number of bytes stored in the output buffer (not
 	 *  including the terminating nul).
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
+	 * Throws: GException on failure.
 	 */
-	public static string localeToUtf8(string opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string localeToUtf8(string opsysstring, int len, uint* bytesRead, uint* bytesWritten)
 	{
 		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -278,14 +306,22 @@ public class CharacterSet
 	 *  input sequence.
 	 * bytesWritten =  the number of bytes stored in the output buffer (not
 	 *  including the terminating nul).
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
+	 * Throws: GException on failure.
 	 */
-	public static string filenameToUtf8(string opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string filenameToUtf8(string opsysstring, int len, uint* bytesRead, uint* bytesWritten)
 	{
 		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -307,14 +343,22 @@ public class CharacterSet
 	 *  input sequence.
 	 * bytesWritten =  the number of bytes stored in the output buffer (not
 	 *  including the terminating nul).
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
+	 * Throws: GException on failure.
 	 */
-	public static string filenameFromUtf8(string utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string filenameFromUtf8(string utf8string, int len, uint* bytesRead, uint* bytesWritten)
 	{
 		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -325,14 +369,22 @@ public class CharacterSet
 	 * hostname =  Location to store hostname for the URI, or NULL.
 	 *  If there is no hostname in the URI, NULL will be
 	 *  stored in this location.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
+	 * Throws: GException on failure.
 	 */
-	public static string filenameFromUri(string uri, char** hostname, GError** error)
+	public static string filenameFromUri(string uri, char** hostname)
 	{
 		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		return Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -343,14 +395,22 @@ public class CharacterSet
 	 *  which is the on-disk file name bytes on Unix, and UTF-8 on
 	 *  Windows
 	 * hostname =  A UTF-8 encoded hostname, or NULL for none.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: a newly-allocated string holding the resulting URI, or NULL on an error.
+	 * Throws: GException on failure.
 	 */
-	public static string filenameToUri(string filename, string hostname, GError** error)
+	public static string filenameToUri(string filename, string hostname)
 	{
 		// gchar* g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
-		return Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -470,14 +530,22 @@ public class CharacterSet
 	 *  input sequence.
 	 * bytesWritten =  the number of bytes stored in the output buffer (not
 	 *  including the terminating nul).
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError may occur.
 	 * Returns: The converted string, or NULL on an error.
+	 * Throws: GException on failure.
 	 */
-	public static string localeFromUtf8(string utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
+	public static string localeFromUtf8(string utf8string, int len, uint* bytesRead, uint* bytesWritten)
 	{
 		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

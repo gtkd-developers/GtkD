@@ -118,8 +118,8 @@ noprefix: gtk_timeout_
 noprefix: gtk_idle_
 #import: g.OptionEntry
 #structWrap: GOptionEntry* OptionEntry
-#import: g.Error*
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 #import: g.OptionGroup
 #structWrap: GOptionGroup* OptionGroup
 import: gdk.Event
@@ -487,8 +487,8 @@ import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-#import: g.Error*
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 import: glib.ListG
 structWrap: GList* ListG
 outFile: IconTheme
@@ -498,6 +498,8 @@ class: IconInfo
 prefix: gtk_icon_info_
 strictPrefix: Y
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
 import: gdk.Pixbuf
@@ -1046,6 +1048,8 @@ class: Window
 prefix: gtk_window_
 prefix: gtk_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: gtk.Widget
@@ -1910,6 +1914,8 @@ class: TextBuffer
 prefix: gtk_text_buffer_
 prefix: gtk_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 structWrap: GtkTextBuffer* TextBuffer
 import: gtk.TextMark
 structWrap: GtkTextMark* TextMark
@@ -4767,6 +4773,8 @@ implements: BuildableIF
 prefix: gtk_ui_manager_
 prefix: gtk_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.ActionGroup
 structWrap: GtkActionGroup* ActionGroup
 import: glib.ListG
@@ -4984,6 +4992,8 @@ template: TStruct
 prefix: gtk_file_chooser_
 prefix: gtk_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: glib.ListSG
@@ -5011,6 +5021,8 @@ structWrap: GtkWidget* Widget
 
 # imports for FileChooser Interface
 #import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: glib.ListSG
 #import: gtk.Widget
 import: gtk.Window
@@ -5035,6 +5047,8 @@ import: gtk.Window
 
 # imports for FileChooser Interface
 #import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: glib.ListSG
 import: gtk.Widget
 #import: gtk.Window
@@ -5142,6 +5156,8 @@ import: glib.Str
 
 # imports for FileChooser Interface
 #import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: glib.ListSG
 import: gtk.Widget
 import: gtk.Window
@@ -5751,8 +5767,8 @@ import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
 import: gtk.PrintOperationPreviewT
 import: gtk.PrintOperationPreviewIF
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 
 code: start
 	// add the PrintOperationPreview capabilities
@@ -5805,8 +5821,8 @@ import: glib.Str
 import: gtk.PaperSize
 structWrap: GtkPaperSize* PaperSize
 structWrap: GtkPrintSettings* PrintSettings
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 outFile: PrintSettings
@@ -5820,8 +5836,8 @@ import: glib.Str
 import: gtk.PaperSize
 structWrap: GtkPaperSize* PaperSize
 structWrap: GtkPageSetup* PageSetup
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 outFile: PageSetup
@@ -5833,8 +5849,8 @@ prefix: gtk_paper_size_
 prefix: gtk_
 import: glib.Str
 structWrap: GtkPaperSize* PaperSize
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 import: glib.ListG
@@ -5866,8 +5882,8 @@ import: gtk.PageSetup
 structWrap: GtkPageSetup* PageSetup
 import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 outFile: PrintJob
 
 file: GtkPrintUnixDialog.html
@@ -6673,8 +6689,8 @@ structWrap: GdkScreen* Screen
 import: gtk.RecentInfo
 structWrap: GtkRecentInfo* RecentInfo
 structWrap: GtkRecentManager* RecentManager
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 import: glib.ListG
 structWrap: GList* ListG
 outFile: RecentManager
@@ -6698,6 +6714,8 @@ template: TStruct
 prefix: gtk_recent_chooser_
 prefix: gtk_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.RecentInfo
 structWrap: GtkRecentInfo* RecentInfo
 import: gtk.RecentFilter
@@ -6706,8 +6724,8 @@ import: glib.ListG
 structWrap: GList* ListG
 import: glib.ListSG
 structWrap: GSList* ListSG
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 interface: RecentChooserIF
 outFile: RecentChooserT
 
@@ -6727,6 +6745,8 @@ structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
 #import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.RecentInfo
 import: gtk.RecentFilter
 import: glib.ListG
@@ -6810,6 +6830,8 @@ structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
 #import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.RecentInfo
 import: gtk.RecentFilter
 import: glib.ListG
@@ -6837,6 +6859,8 @@ structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gtk.RecentInfo
 import: gtk.RecentFilter
 import: glib.ListG
@@ -6899,8 +6923,8 @@ import: gobject.Value
 structWrap: GValue* Value
 import: glib.ListSG
 structWrap: GSList* ListSG
-#import: glib.ErrorG
-#structWrap: GError** ErrorG*
+import: glib.ErrorG
+import: glib.GException
 outFile: Builder
 
 ###########################################################

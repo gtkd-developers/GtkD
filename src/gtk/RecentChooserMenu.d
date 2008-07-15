@@ -47,6 +47,8 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.RecentManager
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.RecentInfo
  * 	- gtk.RecentFilter
  * 	- glib.ListG
@@ -72,6 +74,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.RecentManager;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.RecentInfo;
 private import gtk.RecentFilter;
 private import glib.ListG;

@@ -43,6 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.OptionGroup
  * 	- glib.Str
  * structWrap:
@@ -59,6 +61,8 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
 
@@ -339,13 +343,22 @@ public class OptionContext
 	 * Params:
 	 * argc =  a pointer to the number of command line arguments
 	 * argv =  a pointer to the array of command line arguments
-	 * error =  a return location for errors
 	 * Returns: TRUE if the parsing was successful,  FALSE if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public int parse(int* argc, char*** argv, GError** error)
+	public int parse(int* argc, char*** argv)
 	{
 		// gboolean g_option_context_parse (GOptionContext *context,  gint *argc,  gchar ***argv,  GError **error);
-		return g_option_context_parse(gOptionContext, argc, argv, error);
+		GError* err = null;
+		
+		auto p = g_option_context_parse(gOptionContext, argc, argv, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

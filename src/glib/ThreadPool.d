@@ -42,6 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -55,6 +57,8 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -148,12 +152,20 @@ public class ThreadPool
 	 * maxThreads =  the maximal number of threads to execute concurrently in
 	 *  the new thread pool, -1 means no limit
 	 * exclusive =  should this thread pool be exclusive?
-	 * error =  return location for error
+	 * Throws: GException on failure.
 	 */
-	public this (GFunc func, void* userData, int maxThreads, int exclusive, GError** error)
+	public this (GFunc func, void* userData, int maxThreads, int exclusive)
 	{
 		// GThreadPool* g_thread_pool_new (GFunc func,  gpointer user_data,  gint max_threads,  gboolean exclusive,  GError **error);
-		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, error);
+		GError* err = null;
+		
+		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -174,12 +186,20 @@ public class ThreadPool
 	 * to do.
 	 * Params:
 	 * data =  a new task for pool
-	 * error =  return location for error
+	 * Throws: GException on failure.
 	 */
-	public void push(void* data, GError** error)
+	public void push(void* data)
 	{
 		// void g_thread_pool_push (GThreadPool *pool,  gpointer data,  GError **error);
-		g_thread_pool_push(gThreadPool, data, error);
+		GError* err = null;
+		
+		g_thread_pool_push(gThreadPool, data, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 	}
 	
 	/**
@@ -198,12 +218,20 @@ public class ThreadPool
 	 * created.
 	 * Params:
 	 * maxThreads =  a new maximal number of threads for pool
-	 * error =  return location for error
+	 * Throws: GException on failure.
 	 */
-	public void setMaxThreads(int maxThreads, GError** error)
+	public void setMaxThreads(int maxThreads)
 	{
 		// void g_thread_pool_set_max_threads (GThreadPool *pool,  gint max_threads,  GError **error);
-		g_thread_pool_set_max_threads(gThreadPool, maxThreads, error);
+		GError* err = null;
+		
+		g_thread_pool_set_max_threads(gThreadPool, maxThreads, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 	}
 	
 	/**

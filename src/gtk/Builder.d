@@ -48,6 +48,8 @@
  * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- glib.ListSG
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
@@ -70,6 +72,8 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import glib.ListSG;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -316,13 +320,22 @@ public class Builder : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * filename =  the name of the file to parse
-	 * error =  return location for an error, or NULL
 	 * Returns: A positive value on success, 0 if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public uint addFromFile(string filename, GError** error)
+	public uint addFromFile(string filename)
 	{
 		// guint gtk_builder_add_from_file (GtkBuilder *builder,  const gchar *filename,  GError **error);
-		return gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -332,13 +345,22 @@ public class Builder : ObjectG
 	 * Params:
 	 * buffer =  the string to parse
 	 * length =  the length of buffer (may be -1 if buffer is nul-terminated)
-	 * error =  return location for an error, or NULL
 	 * Returns: A positive value on success, 0 if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public uint addFromString(string buffer, uint length, GError** error)
+	public uint addFromString(string buffer, uint length)
 	{
 		// guint gtk_builder_add_from_string (GtkBuilder *builder,  const gchar *buffer,  gsize length,  GError **error);
-		return gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), length, error);
+		GError* err = null;
+		
+		auto p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -463,13 +485,22 @@ public class Builder : ObjectG
 	 * pspec =  the GParamSpec for the property
 	 * string =  the string representation of the value
 	 * value =  the GValue to store the result in
-	 * error =  return location for an error, or NULL
 	 * Returns: TRUE on success
+	 * Throws: GException on failure.
 	 */
-	public int valueFromString(ParamSpec pspec, string string, Value value, GError** error)
+	public int valueFromString(ParamSpec pspec, string string, Value value)
 	{
 		// gboolean gtk_builder_value_from_string (GtkBuilder *builder,  GParamSpec *pspec,  const gchar *string,  GValue *value,  GError **error);
-		return gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(string), (value is null) ? null : value.getValueStruct(), error);
+		GError* err = null;
+		
+		auto p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(string), (value is null) ? null : value.getValueStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -482,12 +513,21 @@ public class Builder : ObjectG
 	 * type =  the GType of the value
 	 * string =  the string representation of the value
 	 * value =  the GValue to store the result in
-	 * error =  return location for an error, or NULL
 	 * Returns: TRUE on success
+	 * Throws: GException on failure.
 	 */
-	public int valueFromStringType(GType type, string string, Value value, GError** error)
+	public int valueFromStringType(GType type, string string, Value value)
 	{
 		// gboolean gtk_builder_value_from_string_type (GtkBuilder *builder,  GType type,  const gchar *string,  GValue *value,  GError **error);
-		return gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(string), (value is null) ? null : value.getValueStruct(), error);
+		GError* err = null;
+		
+		auto p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(string), (value is null) ? null : value.getValueStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

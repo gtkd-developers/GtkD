@@ -42,6 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.Str
  * structWrap:
  * module aliases:
@@ -56,6 +58,8 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.Str;
 
 
@@ -189,13 +193,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * filename =  the path of a filename to load, in the GLib file name encoding
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a desktop bookmark file could be loaded
+	 * Throws: GException on failure.
 	 */
-	public int loadFromFile(string filename, GError** error)
+	public int loadFromFile(string filename)
 	{
 		// gboolean g_bookmark_file_load_from_file (GBookmarkFile *bookmark,  const gchar *filename,  GError **error);
-		return g_bookmark_file_load_from_file(gBookmarkFile, Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_load_from_file(gBookmarkFile, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -206,13 +219,22 @@ public class BookmarkFile
 	 * Params:
 	 * data =  desktop bookmarks loaded in memory
 	 * length =  the length of data in bytes
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a desktop bookmark could be loaded.
+	 * Throws: GException on failure.
 	 */
-	public int loadFromData(string data, uint length, GError** error)
+	public int loadFromData(string data, uint length)
 	{
 		// gboolean g_bookmark_file_load_from_data (GBookmarkFile *bookmark,  const gchar *data,  gsize length,  GError **error);
-		return g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), length, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -226,13 +248,22 @@ public class BookmarkFile
 	 * file =  a relative path to a filename to open and parse
 	 * fullPath =  return location for a string containing the full path
 	 *  of the file, or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if a key file could be loaded, FALSE othewise
+	 * Throws: GException on failure.
 	 */
-	public int loadFromDataDirs(string file, char** fullPath, GError** error)
+	public int loadFromDataDirs(string file, char** fullPath)
 	{
 		// gboolean g_bookmark_file_load_from_data_dirs (GBookmarkFile *bookmark,  const gchar *file,  gchar **full_path,  GError **error);
-		return g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), fullPath, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), fullPath, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -240,13 +271,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * length =  return location for the length of the returned string, or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string holding the contents of the GBookmarkFile
+	 * Throws: GException on failure.
 	 */
-	public string toData(uint* length, GError** error)
+	public string toData(uint* length)
 	{
 		// gchar* g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
-		return Str.toString(g_bookmark_file_to_data(gBookmarkFile, length, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_bookmark_file_to_data(gBookmarkFile, length, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -255,13 +295,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * filename =  path of the output file
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the file was successfully written.
+	 * Throws: GException on failure.
 	 */
-	public int toFile(string filename, GError** error)
+	public int toFile(string filename)
 	{
 		// gboolean g_bookmark_file_to_file (GBookmarkFile *bookmark,  const gchar *filename,  GError **error);
-		return g_bookmark_file_to_file(gBookmarkFile, Str.toStringz(filename), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_to_file(gBookmarkFile, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -286,13 +335,22 @@ public class BookmarkFile
 	 * Params:
 	 * uri =  a valid URI
 	 * group =  the group name to be searched
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if group was found.
+	 * Throws: GException on failure.
 	 */
-	public int hasGroup(string uri, string group, GError** error)
+	public int hasGroup(string uri, string group)
 	{
 		// gboolean g_bookmark_file_has_group (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *group,  GError **error);
-		return g_bookmark_file_has_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_has_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -304,13 +362,22 @@ public class BookmarkFile
 	 * Params:
 	 * uri =  a valid URI
 	 * name =  the name of the application
-	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the application name was found
+	 * Throws: GException on failure.
 	 */
-	public int hasApplication(string uri, string name, GError** error)
+	public int hasApplication(string uri, string name)
 	{
 		// gboolean g_bookmark_file_has_application (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *name,  GError **error);
-		return g_bookmark_file_has_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_has_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -347,13 +414,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
+	 * Throws: GException on failure.
 	 */
-	public string getTitle(string uri, GError** error)
+	public string getTitle(string uri)
 	{
 		// gchar* g_bookmark_file_get_title (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return Str.toString(g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -363,13 +439,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
+	 * Throws: GException on failure.
 	 */
-	public string getDescription(string uri, GError** error)
+	public string getDescription(string uri)
 	{
 		// gchar* g_bookmark_file_get_description (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return Str.toString(g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -381,13 +466,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
+	 * Throws: GException on failure.
 	 */
-	public string getMimeType(string uri, GError** error)
+	public string getMimeType(string uri)
 	{
 		// gchar* g_bookmark_file_get_mime_type (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return Str.toString(g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -399,13 +493,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the private flag is set, FALSE otherwise.
+	 * Throws: GException on failure.
 	 */
-	public int getIsPrivate(string uri, GError** error)
+	public int getIsPrivate(string uri)
 	{
 		// gboolean g_bookmark_file_get_is_private (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return g_bookmark_file_get_is_private(gBookmarkFile, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_is_private(gBookmarkFile, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -417,13 +520,22 @@ public class BookmarkFile
 	 * uri =  a valid URI
 	 * href =  return location for the icon's location or NULL
 	 * mimeType =  return location for the icon's MIME type or NULL
-	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the icon for the bookmark for the URI was found. You should free the returned strings.
+	 * Throws: GException on failure.
 	 */
-	public int getIcon(string uri, char** href, char** mimeType, GError** error)
+	public int getIcon(string uri, char** href, char** mimeType)
 	{
 		// gboolean g_bookmark_file_get_icon (GBookmarkFile *bookmark,  const gchar *uri,  gchar **href,  gchar **mime_type,  GError **error);
-		return g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), href, mimeType, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), href, mimeType, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -433,13 +545,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: a timestamp
+	 * Throws: GException on failure.
 	 */
-	public uint getAdded(string uri, GError** error)
+	public uint getAdded(string uri)
 	{
 		// time_t g_bookmark_file_get_added (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return g_bookmark_file_get_added(gBookmarkFile, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_added(gBookmarkFile, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -449,13 +570,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: a timestamp
+	 * Throws: GException on failure.
 	 */
-	public uint getModified(string uri, GError** error)
+	public uint getModified(string uri)
 	{
 		// time_t g_bookmark_file_get_modified (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return g_bookmark_file_get_modified(gBookmarkFile, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_modified(gBookmarkFile, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -465,13 +595,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: a timestamp.
+	 * Throws: GException on failure.
 	 */
-	public uint getVisited(string uri, GError** error)
+	public uint getVisited(string uri)
 	{
 		// time_t g_bookmark_file_get_visited (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return g_bookmark_file_get_visited(gBookmarkFile, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_visited(gBookmarkFile, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -484,13 +623,22 @@ public class BookmarkFile
 	 * Params:
 	 * uri =  a valid URI
 	 * length =  return location for the length of the returned string, or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
+	 * Throws: GException on failure.
 	 */
-	public char** getGroups(string uri, uint* length, GError** error)
+	public char** getGroups(string uri, uint* length)
 	{
 		// gchar** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
-		return g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), length, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -502,13 +650,22 @@ public class BookmarkFile
 	 * Params:
 	 * uri =  a valid URI
 	 * length =  return location of the length of the returned list, or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
+	 * Throws: GException on failure.
 	 */
-	public char** getApplications(string uri, uint* length, GError** error)
+	public char** getApplications(string uri, uint* length)
 	{
 		// gchar** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
-		return g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), length, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -530,13 +687,22 @@ public class BookmarkFile
 	 * exec =  location for the command line of the application, or NULL
 	 * count =  return location for the registration count, or NULL
 	 * stamp =  return location for the last registration time, or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE on success.
+	 * Throws: GException on failure.
 	 */
-	public int getAppInfo(string uri, string name, char** exec, uint* count, uint* stamp, GError** error)
+	public int getAppInfo(string uri, string name, char** exec, uint* count, uint* stamp)
 	{
 		// gboolean g_bookmark_file_get_app_info (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *name,  gchar **exec,  guint *count,  time_t *stamp,  GError **error);
-		return g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), exec, count, stamp, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), exec, count, stamp, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -714,13 +880,22 @@ public class BookmarkFile
 	 * exec =  an application's command line
 	 * count =  the number of registrations done for this application
 	 * stamp =  the time of the last registration for this application
-	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the application's meta-data was successfully changed.
+	 * Throws: GException on failure.
 	 */
-	public int setAppInfo(string uri, string name, string exec, int count, uint stamp, GError** error)
+	public int setAppInfo(string uri, string name, string exec, int count, uint stamp)
 	{
 		// gboolean g_bookmark_file_set_app_info (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *name,  const gchar *exec,  gint count,  time_t stamp,  GError **error);
-		return g_bookmark_file_set_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), Str.toStringz(exec), count, stamp, error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_set_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), Str.toStringz(exec), count, stamp, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -781,13 +956,22 @@ public class BookmarkFile
 	 * Params:
 	 * uri =  a valid URI
 	 * group =  the group name to be removed
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if group was successfully removed.
+	 * Throws: GException on failure.
 	 */
-	public int removeGroup(string uri, string group, GError** error)
+	public int removeGroup(string uri, string group)
 	{
 		// gboolean g_bookmark_file_remove_group (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *group,  GError **error);
-		return g_bookmark_file_remove_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_remove_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -802,13 +986,22 @@ public class BookmarkFile
 	 * Params:
 	 * uri =  a valid URI
 	 * name =  the name of the application
-	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the application was successfully removed.
+	 * Throws: GException on failure.
 	 */
-	public int removeApplication(string uri, string name, GError** error)
+	public int removeApplication(string uri, string name)
 	{
 		// gboolean g_bookmark_file_remove_application (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *name,  GError **error);
-		return g_bookmark_file_remove_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_remove_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -816,13 +1009,22 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the bookmark was removed successfully.
+	 * Throws: GException on failure.
 	 */
-	public int removeItem(string uri, GError** error)
+	public int removeItem(string uri)
 	{
 		// gboolean g_bookmark_file_remove_item (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
-		return g_bookmark_file_remove_item(gBookmarkFile, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_remove_item(gBookmarkFile, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -835,12 +1037,21 @@ public class BookmarkFile
 	 * Params:
 	 * oldUri =  a valid URI
 	 * newUri =  a valid URI, or NULL
-	 * error =  return location for a GError or NULL
 	 * Returns: TRUE if the URI was successfully changed
+	 * Throws: GException on failure.
 	 */
-	public int moveItem(string oldUri, string newUri, GError** error)
+	public int moveItem(string oldUri, string newUri)
 	{
 		// gboolean g_bookmark_file_move_item (GBookmarkFile *bookmark,  const gchar *old_uri,  const gchar *new_uri,  GError **error);
-		return g_bookmark_file_move_item(gBookmarkFile, Str.toStringz(oldUri), Str.toStringz(newUri), error);
+		GError* err = null;
+		
+		auto p = g_bookmark_file_move_item(gBookmarkFile, Str.toStringz(oldUri), Str.toStringz(newUri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

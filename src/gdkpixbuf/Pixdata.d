@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- gdk.Pixbuf
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.StringG
  * 	- glib.Str
  * structWrap:
@@ -61,6 +63,8 @@ private import gtkc.gdkpixbuf;
 
 
 private import gdk.Pixbuf;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.StringG;
 private import glib.Str;
 
@@ -133,13 +137,21 @@ public class Pixdata
 	 * Params:
 	 * copyPixels =  whether to copy raw pixel data; run-length encoded
 	 *  pixel data is always copied.
-	 * error =  location to store possible errors.
 	 * Returns: a new GdkPixbuf.
+	 * Throws: GException on failure.
 	 */
-	public Pixbuf gdkPixbufFromPixdata(int copyPixels, GError** error)
+	public Pixbuf gdkPixbufFromPixdata(int copyPixels)
 	{
 		// GdkPixbuf* gdk_pixbuf_from_pixdata (const GdkPixdata *pixdata,  gboolean copy_pixels,  GError **error);
-		auto p = gdk_pixbuf_from_pixdata(gdkPixdata, copyPixels, error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_from_pixdata(gdkPixdata, copyPixels, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;
@@ -173,13 +185,22 @@ public class Pixdata
 	 * Params:
 	 * streamLength =  length of the stream used for deserialization.
 	 * stream =  stream of bytes containing a serialized GdkPixdata structure.
-	 * error =  GError location to indicate failures (maybe NULL to ignore errors).
 	 * Returns: Upon successful deserialization TRUE is returned,FALSE otherwise.
+	 * Throws: GException on failure.
 	 */
-	public int deserialize(uint streamLength, byte* stream, GError** error)
+	public int deserialize(uint streamLength, byte* stream)
 	{
 		// gboolean gdk_pixdata_deserialize (GdkPixdata *pixdata,  guint stream_length,  const guint8 *stream,  GError **error);
-		return gdk_pixdata_deserialize(gdkPixdata, streamLength, stream, error);
+		GError* err = null;
+		
+		auto p = gdk_pixdata_deserialize(gdkPixdata, streamLength, stream, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

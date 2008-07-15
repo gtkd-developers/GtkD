@@ -39,6 +39,8 @@ private import gdk.Pixbuf;
 
 private import gtk.ComboBox;
 
+private import glib.GException;
+
 version(Tango) private import tango.io.Stdout;
 version(Tango) private import tango.text.convert.Layout;
 
@@ -267,7 +269,7 @@ static string gray50_bits = [0x02, 0x01];
 
 		try
 		{
-			pixbuf = new Pixbuf("images/gtk-logo-rgb.gif", null);
+			pixbuf = new Pixbuf("images/gtk-logo-rgb.gif");
 
 			scaled = pixbuf.scaleSimple(32, 32, InterpType.BILINEAR);
 			pixbuf = pixbuf.scaleSimple(38, 38, InterpType.BILINEAR);

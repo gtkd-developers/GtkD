@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.ListSG
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.Str
  * structWrap:
  * 	- GSList* -> ListSG
@@ -60,6 +62,8 @@ private import gtkc.glib;
 
 
 private import glib.ListSG;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.Str;
 
 
@@ -194,14 +198,22 @@ public class SimpleXML
 	 * fed into the parse context with g_markup_parse_context_parse().
 	 * This function reports an error if the document isn't complete,
 	 * for example if elements are still open.
-	 * Params:
-	 * error =  return location for a GError
 	 * Returns: TRUE on success, FALSE if an error was set
+	 * Throws: GException on failure.
 	 */
-	public int endParse(GError** error)
+	public int endParse()
 	{
 		// gboolean g_markup_parse_context_end_parse (GMarkupParseContext *context,  GError **error);
-		return g_markup_parse_context_end_parse(gMarkupParseContext, error);
+		GError* err = null;
+		
+		auto p = g_markup_parse_context_end_parse(gMarkupParseContext, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -302,13 +314,22 @@ public class SimpleXML
 	 * Params:
 	 * text =  chunk of text to parse
 	 * textLen =  length of text in bytes
-	 * error =  return location for a GError
 	 * Returns: FALSE if an error occurred, TRUE on success
+	 * Throws: GException on failure.
 	 */
-	public int parse(string text, int textLen, GError** error)
+	public int parse(string text, int textLen)
 	{
 		// gboolean g_markup_parse_context_parse (GMarkupParseContext *context,  const gchar *text,  gssize text_len,  GError **error);
-		return g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, error);
+		GError* err = null;
+		
+		auto p = g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -350,7 +371,6 @@ public class SimpleXML
 	 * elementName =  the current tag name
 	 * attributeNames =  the attribute names
 	 * attributeValues =  the attribute values
-	 * error =  a pointer to a GError or NULL
 	 * firstType =  the GMarkupCollectType of the
 	 *  first attribute
 	 * firstAttr =  the name of the first attribute
@@ -359,10 +379,20 @@ public class SimpleXML
 	 *  more types names and pointers, ending
 	 *  with G_MARKUP_COLLECT_INVALID.
 	 * Returns: TRUE if successful
+	 * Throws: GException on failure.
 	 */
-	public static int collectAttributes(string elementName, char** attributeNames, char** attributeValues, GError** error, GMarkupCollectType firstType, string firstAttr, ... )
+	public static int collectAttributes(string elementName, char** attributeNames, char** attributeValues, GMarkupCollectType firstType, string firstAttr, ... )
 	{
 		// gboolean g_markup_collect_attributes (const gchar *element_name,  const gchar **attribute_names,  const gchar **attribute_values,  GError **error,  GMarkupCollectType first_type,  const gchar *first_attr,  ...);
-		return g_markup_collect_attributes(Str.toStringz(elementName), attributeNames, attributeValues, error, firstType, Str.toStringz(firstAttr));
+		GError* err = null;
+		
+		auto p = g_markup_collect_attributes(Str.toStringz(elementName), attributeNames, attributeValues, &err, firstType, Str.toStringz(firstAttr));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

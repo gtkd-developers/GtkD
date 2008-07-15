@@ -45,6 +45,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.PaperSize
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.KeyFile
  * structWrap:
  * 	- GKeyFile* -> KeyFile
@@ -64,6 +66,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.PaperSize;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.KeyFile;
 
 
@@ -901,12 +905,20 @@ public class PrintSettings : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * fileName =  the filename to read the settings from
-	 * error =  return location for errors, or NULL
+	 * Throws: GException on failure.
 	 */
-	public this (string fileName, GError** error)
+	public this (string fileName)
 	{
 		// GtkPrintSettings* gtk_print_settings_new_from_file (const gchar *file_name,  GError **error);
-		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), error);
+		GError* err = null;
+		
+		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -922,12 +934,20 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * keyFile =  the GKeyFile to retrieve the settings from
 	 * groupName =  the name of the group to use
-	 * error =  return location for errors, or NULL
+	 * Throws: GException on failure.
 	 */
-	public this (KeyFile keyFile, string groupName, GError** error)
+	public this (KeyFile keyFile, string groupName)
 	{
 		// GtkPrintSettings* gtk_print_settings_new_from_key_file  (GKeyFile *key_file,  const gchar *group_name,  GError **error);
-		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
+		GError* err = null;
+		
+		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");
@@ -940,13 +960,22 @@ public class PrintSettings : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * fileName =  the file to save to
-	 * error =  return location for errors, or NULL
 	 * Returns: TRUE on success
+	 * Throws: GException on failure.
 	 */
-	public int toFile(string fileName, GError** error)
+	public int toFile(string fileName)
 	{
 		// gboolean gtk_print_settings_to_file (GtkPrintSettings *settings,  const gchar *file_name,  GError **error);
-		return gtk_print_settings_to_file(gtkPrintSettings, Str.toStringz(fileName), error);
+		GError* err = null;
+		
+		auto p = gtk_print_settings_to_file(gtkPrintSettings, Str.toStringz(fileName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

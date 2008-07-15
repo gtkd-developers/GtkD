@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.IconInfo
  * 	- gdk.Pixbuf
  * structWrap:
@@ -63,6 +65,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.IconInfo;
 private import gdk.Pixbuf;
 
@@ -291,14 +295,21 @@ public class IconInfo
 	 * requested size or for which the source image would have to be scaled
 	 * up too far. (This maintains sharpness.)
 	 * Since 2.4
-	 * Params:
-	 * error =  location to store error information on failure, or NULL.
 	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon.
+	 * Throws: GException on failure.
 	 */
-	public Pixbuf loadIcon(GError** error)
+	public Pixbuf loadIcon()
 	{
 		// GdkPixbuf* gtk_icon_info_load_icon (GtkIconInfo *icon_info,  GError **error);
-		auto p = gtk_icon_info_load_icon(gtkIconInfo, error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_icon(gtkIconInfo, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;

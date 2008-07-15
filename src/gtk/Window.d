@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
  * 	- gtk.Window
@@ -76,6 +78,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.AccelGroup;
 private import gtk.Widget;
 private import gtk.Window;
@@ -1794,13 +1798,22 @@ public class Window : Bin
 	 * Since 2.2
 	 * Params:
 	 * filename =  location of icon file
-	 * err =  location to store error, or NULL.
 	 * Returns: TRUE if setting the icon succeeded.
+	 * Throws: GException on failure.
 	 */
-	public static int setDefaultIconFromFile(string filename, GError** err)
+	public static int setDefaultIconFromFile(string filename)
 	{
 		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
-		return gtk_window_set_default_icon_from_file(Str.toStringz(filename), err);
+		GError* err = null;
+		
+		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -1878,13 +1891,22 @@ public class Window : Bin
 	 * Since 2.2
 	 * Params:
 	 * filename =  location of icon file
-	 * err =  location to store error, or NULL.
 	 * Returns: TRUE if setting the icon succeeded.
+	 * Throws: GException on failure.
 	 */
-	public int setIconFromFile(string filename, GError** err)
+	public int setIconFromFile(string filename)
 	{
 		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
-		return gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), err);
+		GError* err = null;
+		
+		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

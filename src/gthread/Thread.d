@@ -50,6 +50,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * 	- GThread* -> Thread
  * module aliases:
@@ -64,6 +66,8 @@ public  import gtkc.gthreadtypes;
 private import gtkc.gthread;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -187,13 +191,21 @@ public class Thread
 	 * func = a function to execute in the new thread.
 	 * data = an argument to supply to the new thread.
 	 * joinable = should this thread be joinable?
-	 * error = return location for error.
 	 * Returns:the new GThread on success.
+	 * Throws: GException on failure.
 	 */
-	public static Thread create(GThreadFunc func, void* data, int joinable, GError** error)
+	public static Thread create(GThreadFunc func, void* data, int joinable)
 	{
 		// GThread* g_thread_create (GThreadFunc func,  gpointer data,  gboolean joinable,  GError **error);
-		auto p = g_thread_create(func, data, joinable, error);
+		GError* err = null;
+		
+		auto p = g_thread_create(func, data, joinable, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;
@@ -236,13 +248,21 @@ public class Thread
 	 * joinable = should this thread be joinable?
 	 * bound = should this thread be bound to a system thread?
 	 * priority = a priority for the thread.
-	 * error = return location for error.
 	 * Returns:the new GThread on success.
+	 * Throws: GException on failure.
 	 */
-	public static Thread createFull(GThreadFunc func, void* data, uint stackSize, int joinable, int bound, GThreadPriority priority, GError** error)
+	public static Thread createFull(GThreadFunc func, void* data, uint stackSize, int joinable, int bound, GThreadPriority priority)
 	{
 		// GThread* g_thread_create_full (GThreadFunc func,  gpointer data,  gulong stack_size,  gboolean joinable,  gboolean bound,  GThreadPriority priority,  GError **error);
-		auto p = g_thread_create_full(func, data, stackSize, joinable, bound, priority, error);
+		GError* err = null;
+		
+		auto p = g_thread_create_full(func, data, stackSize, joinable, bound, priority, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;

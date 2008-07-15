@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +59,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -200,14 +204,22 @@ public class MatchInfo
 	 * The match is done on the string passed to the match function, so you
 	 * cannot free it before calling this function.
 	 * Since 2.14
-	 * Params:
-	 * error =  location to store the error occuring, or NULL to ignore errors
 	 * Returns: TRUE is the string matched, FALSE otherwise
+	 * Throws: GException on failure.
 	 */
-	public int next(GError** error)
+	public int next()
 	{
 		// gboolean g_match_info_next (GMatchInfo *match_info,  GError **error);
-		return g_match_info_next(gMatchInfo, error);
+		GError* err = null;
+		
+		auto p = g_match_info_next(gMatchInfo, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -283,13 +295,22 @@ public class MatchInfo
 	 * Since 2.14
 	 * Params:
 	 * stringToExpand =  the string to expand
-	 * error =  location to store the error occuring, or NULL to ignore errors
 	 * Returns: the expanded string, or NULL if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public string expandReferences(string stringToExpand, GError** error)
+	public string expandReferences(string stringToExpand)
 	{
 		// gchar* g_match_info_expand_references (const GMatchInfo *match_info,  const gchar *string_to_expand,  GError **error);
-		return Str.toString(g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

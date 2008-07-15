@@ -47,6 +47,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gdk.Event
  * 	- gtk.Widget
  * 	- gtk.ObjectGtk
@@ -73,6 +75,8 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
+private import glib.ErrorG;
+private import glib.GException;
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ObjectGtk;
@@ -310,13 +314,22 @@ public class Main
 	 * translationDomain =  a translation domain to use for translating
 	 *  the --help output for the options in entries
 	 *  with gettext(), or NULL
-	 * error =  a return location for errors
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
+	 * Throws: GException on failure.
 	 */
-	public static int initWithArgs(int* argc, char*** argv, string parameterString, GOptionEntry* entries, string translationDomain, GError** error)
+	public static int initWithArgs(int* argc, char*** argv, string parameterString, GOptionEntry* entries, string translationDomain)
 	{
 		// gboolean gtk_init_with_args (int *argc,  char ***argv,  char *parameter_string,  GOptionEntry *entries,  char *translation_domain,  GError **error);
-		return gtk_init_with_args(argc, argv, Str.toStringz(parameterString), entries, Str.toStringz(translationDomain), error);
+		GError* err = null;
+		
+		auto p = gtk_init_with_args(argc, argv, Str.toStringz(parameterString), entries, Str.toStringz(translationDomain), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

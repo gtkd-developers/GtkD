@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.KeyFile
  * 	- glib.ListG
  * structWrap:
@@ -63,6 +65,8 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.KeyFile;
 private import glib.ListG;
 
@@ -399,12 +403,20 @@ public class PaperSize
 	 * keyFile =  the GKeyFile to retrieve the papersize from
 	 * groupName =  the name ofthe group in the key file to read,
 	 *  or NULL to read the first group
-	 * error =  return location for an error, or NULL
+	 * Throws: GException on failure.
 	 */
-	public this (KeyFile keyFile, string groupName, GError** error)
+	public this (KeyFile keyFile, string groupName)
 	{
 		// GtkPaperSize* gtk_paper_size_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
-		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), error);
+		GError* err = null;
+		
+		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			throw new Exception("Construction failure.");

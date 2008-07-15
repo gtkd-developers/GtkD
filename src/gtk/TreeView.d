@@ -221,7 +221,7 @@ public class TreeView : Container
 	 */
 	bool getPathAtPos(gint x, gint y, inout TreePath path, inout TreeViewColumn column, out gint cellX, out gint cellY)
 	{
-		GtkTreePath* p = (path is null) ? null : path.getTreePathStruct(); 
+		GtkTreePath* p = (path is null) ? null : path.getTreePathStruct();
 		GtkTreeViewColumn* c = (column is null) ? null : column.getTreeViewColumnStruct();
 		
 		bool result = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &p, &c, &cellX, &cellY)

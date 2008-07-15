@@ -48,6 +48,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- pango.PgLanguage
  * 	- pango.PgFontDescription
  * structWrap:
@@ -67,6 +69,8 @@ private import gtkc.pango;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import pango.PgLanguage;
 private import pango.PgFontDescription;
 
@@ -136,13 +140,22 @@ public class PgAttribute
 	 * attrList =  address of return location for a PangoAttrList, or NULL
 	 * text =  address of return location for text with tags stripped, or NULL
 	 * accelChar =  address of return location for accelerator char, or NULL
-	 * error =  address of return location for errors, or NULL
 	 * Returns: FALSE if error is set, otherwise TRUE
+	 * Throws: GException on failure.
 	 */
-	public static int parseMarkup(string markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error)
+	public static int parseMarkup(string markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar)
 	{
 		// gboolean pango_parse_markup (const char *markup_text,  int length,  gunichar accel_marker,  PangoAttrList **attr_list,  char **text,  gunichar *accel_char,  GError **error);
-		return pango_parse_markup(Str.toStringz(markupText), length, accelMarker, attrList, text, accelChar, error);
+		GError* err = null;
+		
+		auto p = pango_parse_markup(Str.toStringz(markupText), length, accelMarker, attrList, text, accelChar, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

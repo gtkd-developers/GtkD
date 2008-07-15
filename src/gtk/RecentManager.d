@@ -46,6 +46,8 @@
  * 	- glib.Str
  * 	- gdk.Screen
  * 	- gtk.RecentInfo
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
@@ -69,6 +71,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gdk.Screen;
 private import gtk.RecentInfo;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.ListG;
 
 
@@ -330,13 +334,22 @@ public class RecentManager : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * uri =  the URI of the item you wish to remove
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the item pointed by uri has been successfully removed by the recently used resources list, and FALSE otherwise.
+	 * Throws: GException on failure.
 	 */
-	public int removeItem(string uri, GError** error)
+	public int removeItem(string uri)
 	{
 		// gboolean gtk_recent_manager_remove_item (GtkRecentManager *manager,  const gchar *uri,  GError **error);
-		return gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -346,13 +359,21 @@ public class RecentManager : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * uri =  a URI
-	 * error =  a return location for a GError, or NULL
 	 * Returns: a GtkRecentInfo structure containing information about the resource pointed by uri, or NULL if the URI was not registered in the recently used resources list. Free with gtk_recent_info_unref().
+	 * Throws: GException on failure.
 	 */
-	public RecentInfo lookupItem(string uri, GError** error)
+	public RecentInfo lookupItem(string uri)
 	{
 		// GtkRecentInfo* gtk_recent_manager_lookup_item (GtkRecentManager *manager,  const gchar *uri,  GError **error);
-		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		if(p is null)
 		{
 			return null;
@@ -383,13 +404,22 @@ public class RecentManager : ObjectG
 	 * uri =  the URI of a recently used resource
 	 * newUri =  the new URI of the recently used resource, or NULL to
 	 *  remove the item pointed by uri in the list
-	 * error =  a return location for a GError, or NULL
 	 * Returns: TRUE on success.
+	 * Throws: GException on failure.
 	 */
-	public int moveItem(string uri, string newUri, GError** error)
+	public int moveItem(string uri, string newUri)
 	{
 		// gboolean gtk_recent_manager_move_item (GtkRecentManager *manager,  const gchar *uri,  const gchar *new_uri,  GError **error);
-		return gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), error);
+		GError* err = null;
+		
+		auto p = gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -437,13 +467,21 @@ public class RecentManager : ObjectG
 	/**
 	 * Purges every item from the recently used resources list.
 	 * Since 2.10
-	 * Params:
-	 * error =  a return location for a GError, or NULL
 	 * Returns: the number of items that have been removed from the recently used resources list.
+	 * Throws: GException on failure.
 	 */
-	public int purgeItems(GError** error)
+	public int purgeItems()
 	{
 		// gint gtk_recent_manager_purge_items (GtkRecentManager *manager,  GError **error);
-		return gtk_recent_manager_purge_items(gtkRecentManager, error);
+		GError* err = null;
+		
+		auto p = gtk_recent_manager_purge_items(gtkRecentManager, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

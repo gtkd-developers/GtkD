@@ -285,6 +285,9 @@ extern(C)
 	void function(GError** err, gchar* format, ... )g_prefix_error;
 	void function(GError** dest, GError* src, gchar* format, ... )g_propagate_prefixed_error;
 	
+	// glib.
+	
+	
 	// glib.Messages
 	
 	void function(gchar* format, ... )g_print;

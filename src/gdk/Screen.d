@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- cairo.FontOption
  * 	- gdk.Screen
  * 	- gdk.Colormap
@@ -79,6 +81,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import cairo.FontOption;
 private import gdk.Screen;
 private import gdk.Colormap;
@@ -757,13 +761,22 @@ public class Screen : ObjectG
 	 * childSetup =  function to run in the child just before exec()
 	 * userData =  user data for child_setup
 	 * childPid =  return location for child process ID, or NULL
-	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if error is set
+	 * Throws: GException on failure.
 	 */
-	public int gdkSpawnOnScreen(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, GError** error)
+	public int gdkSpawnOnScreen(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid)
 	{
 		// gboolean gdk_spawn_on_screen (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  GError **error);
-		return gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
+		GError* err = null;
+		
+		auto p = gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -789,13 +802,22 @@ public class Screen : ObjectG
 	 *  stdout, or NULL
 	 * standardError =  return location for file descriptor to read child's
 	 *  stderr, or NULL
-	 * error =  return location for error
 	 * Returns: TRUE on success, FALSE if an error was set
+	 * Throws: GException on failure.
 	 */
-	public int gdkSpawnOnScreenWithPipes(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, int* standardInput, int* standardOutput, int* standardError, GError** error)
+	public int gdkSpawnOnScreenWithPipes(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, int* standardInput, int* standardOutput, int* standardError)
 	{
 		// gboolean gdk_spawn_on_screen_with_pipes (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  gint *standard_input,  gint *standard_output,  gint *standard_error,  GError **error);
-		return gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, error);
+		GError* err = null;
+		
+		auto p = gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -808,12 +830,21 @@ public class Screen : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * commandLine =  a command line
-	 * error =  return location for errors
 	 * Returns: TRUE on success, FALSE if error is set.
+	 * Throws: GException on failure.
 	 */
-	public int gdkSpawnCommandLineOnScreen(string commandLine, GError** error)
+	public int gdkSpawnCommandLineOnScreen(string commandLine)
 	{
 		// gboolean gdk_spawn_command_line_on_screen (GdkScreen *screen,  const gchar *command_line,  GError **error);
-		return gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), error);
+		GError* err = null;
+		
+		auto p = gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

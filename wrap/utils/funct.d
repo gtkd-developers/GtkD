@@ -442,8 +442,14 @@ public struct Funct
 					--parmCount;
 				}
 			}
-			
-			
+
+			if ( GtkDClass.startsWith(parmsType[i], "GError**") && convParms.strct != "GError" )
+			{
+				++i;
+				continue;
+			}			
+		
+
 			if ( parmCount>0 ) dec ~= ", ";
 			if ( parmCount>=0 
 				&& (parmsType[i]!="void" || parms[i].length>0)
@@ -545,6 +551,20 @@ public struct Funct
 	{
 		char[][] bd; /* Return variable. */
 		char[] gtkCall;
+		bool wrapError = false;
+
+		void checkError()
+		{
+			if ( wrapError )
+			{
+				bd ~= "";
+				bd ~= "if (err !is null)";
+				bd ~= "{";
+				bd ~= "\tthrow new GException( new ErrorG(err) );";
+				bd ~= "}";
+				bd ~= "";
+			}
+		}
 
 		/* 1st: construct the actual GTK+ call. */
 		gtkCall ~= name ~ "("; //gtk_function(
@@ -571,6 +591,15 @@ public struct Funct
 					gtkCall ~= parameterToGtk(0, convParms, aliases);
 				}
 			}
+			else if ( parmsType[i] == "GError**" && convParms.strct != "GError")
+			{
+				bd ~= "GError* err = null;";
+				bd ~= "";
+
+				gtkCall ~= ", &err";
+
+				wrapError = true;
+			}
 			else
 			{
 				if ( parms[i].length > 0 )
@@ -591,6 +620,7 @@ public struct Funct
 			 * with it. */
 			gtkCall ~= ";";
 			bd ~= gtkCall;
+			checkError();
 			return bd;
 		}
 		else
@@ -609,6 +639,8 @@ public struct Funct
 				/* Do we need a cast? */
 				bd ~= "auto p = " ~ gtkCall ~ ";"; //GtkStruct* p = gtk_function(arg1...argN);
 				
+				checkError();
+
 				char[][] check = [	"if(p is null)",
 								  	"{",
 								  	"	throw new Exception(\"Construction failure.\");",
@@ -618,8 +650,8 @@ public struct Funct
 				/* A; Casting is needed because some GTK+
 				 *    functions can return void pointers. */
 				bd ~= "this(cast(" ~ strct ~ "*) p);";
-				//bd ~= "this(p);";
-				
+				//bd ~= "this(p);";				
+
 				/* The body is constructed, return. */
 				return bd;
 			}
@@ -630,7 +662,14 @@ public struct Funct
 				{
 					/* We return an object of the same type as the GTK+ function. */
 					//return gtk_function(arg1...argN);
-					bd ~= "return " ~ gtkCall ~ ";";
+					if ( !wrapError )
+						bd ~= "return " ~ gtkCall ~ ";";
+					else
+					{
+						bd ~= "auto p = " ~ gtkCall ~ ";";
+						checkError();
+						bd ~= "return p;";
+					}
 
 					return bd;
 				}
@@ -642,7 +681,14 @@ public struct Funct
 					{
 						/* Returned strings get special care. */
 						//return Str.toString(gtk_function(arg1...argN)).dup;
-						bd ~= "return Str.toString(" ~ gtkCall ~ ");";
+						if ( !wrapError )
+							bd ~= "return Str.toString(" ~ gtkCall ~ ");";
+						else
+						{
+							bd ~= "auto p = Str.toString(" ~ gtkCall ~ ");";
+							checkError();
+							bd ~= "return p;";
+						}
 
 						return bd;
 					}
@@ -652,6 +698,8 @@ public struct Funct
 						/* Why do we need a cast? */
 						//GtkType p = gtk_function(arg1...argN);
 						bd ~= "auto p = " ~ gtkCall ~ ";";
+
+						checkError();
 
 						char[][] check = [	"if(p is null)",
 								  			"{",

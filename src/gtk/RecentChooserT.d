@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.RecentInfo
  * 	- gtk.RecentFilter
  * 	- glib.ListG
@@ -69,6 +71,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.RecentInfo;
 private import gtk.RecentFilter;
 private import glib.ListG;
@@ -434,13 +438,22 @@ public template RecentChooserT(TStruct)
 	 * Since 2.10
 	 * Params:
 	 * uri =  a URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if the URI was found.
+	 * Throws: GException on failure.
 	 */
-	public int setCurrentUri(string uri, GError** error)
+	public int setCurrentUri(string uri)
 	{
 		// gboolean gtk_recent_chooser_set_current_uri (GtkRecentChooser *chooser,  const gchar *uri,  GError **error);
-		return gtk_recent_chooser_set_current_uri(getRecentChooserTStruct(), Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = gtk_recent_chooser_set_current_uri(getRecentChooserTStruct(), Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -475,13 +488,22 @@ public template RecentChooserT(TStruct)
 	 * Since 2.10
 	 * Params:
 	 * uri =  a URI
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE if uri was found.
+	 * Throws: GException on failure.
 	 */
-	public int selectUri(string uri, GError** error)
+	public int selectUri(string uri)
 	{
 		// gboolean gtk_recent_chooser_select_uri (GtkRecentChooser *chooser,  const gchar *uri,  GError **error);
-		return gtk_recent_chooser_select_uri(getRecentChooserTStruct(), Str.toStringz(uri), error);
+		GError* err = null;
+		
+		auto p = gtk_recent_chooser_select_uri(getRecentChooserTStruct(), Str.toStringz(uri), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

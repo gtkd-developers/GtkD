@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.ListSG
  * 	- gtk.Widget
  * 	- gtk.Window
@@ -65,6 +67,8 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.ListSG;
 private import gtk.Widget;
 private import gtk.Window;

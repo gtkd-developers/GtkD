@@ -46,6 +46,8 @@
  * imports:
  * 	- std.c.stdio
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -60,6 +62,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 version(Tango) {
@@ -129,13 +133,22 @@ public class FileUtils
 	 * filename =  name of a file to read contents from, in the GLib file name encoding
 	 * contents =  location to store an allocated string
 	 * length =  location to store length in bytes of the contents, or NULL
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE on success, FALSE if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public static int fileGetContents(string filename, char** contents, uint* length, GError** error)
+	public static int fileGetContents(string filename, char** contents, uint* length)
 	{
 		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
-		return g_file_get_contents(Str.toStringz(filename), contents, length, error);
+		GError* err = null;
+		
+		auto p = g_file_get_contents(Str.toStringz(filename), contents, length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -148,13 +161,22 @@ public class FileUtils
 	 *  encoding
 	 * contents =  string to write to the file
 	 * length =  length of contents, or -1 if contents is a nul-terminated string
-	 * error =  return location for a GError, or NULL
 	 * Returns: TRUE on success, FALSE if an error occurred
+	 * Throws: GException on failure.
 	 */
-	public static int fileSetContents(string filename, string contents, int length, GError** error)
+	public static int fileSetContents(string filename, string contents, int length)
 	{
 		// gboolean g_file_set_contents (const gchar *filename,  const gchar *contents,  gssize length,  GError **error);
-		return g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), length, error);
+		GError* err = null;
+		
+		auto p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -241,13 +263,22 @@ public class FileUtils
 	 * tmpl =  Template for file name, as in g_mkstemp(), basename only,
 	 *  or NULL, to a default template
 	 * nameUsed =  location to store actual name used
-	 * error =  return location for a GError
 	 * Returns: A file handle (as from open()) to the file opened for reading and writing. The file is opened in binary mode on platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned and error will be set.
+	 * Throws: GException on failure.
 	 */
-	public static int fileOpenTmp(string tmpl, char** nameUsed, GError** error)
+	public static int fileOpenTmp(string tmpl, char** nameUsed)
 	{
 		// gint g_file_open_tmp (const gchar *tmpl,  gchar **name_used,  GError **error);
-		return g_file_open_tmp(Str.toStringz(tmpl), nameUsed, error);
+		GError* err = null;
+		
+		auto p = g_file_open_tmp(Str.toStringz(tmpl), nameUsed, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -257,13 +288,22 @@ public class FileUtils
 	 * Since 2.4
 	 * Params:
 	 * filename =  the symbolic link
-	 * error =  return location for a GError
 	 * Returns: A newly allocated string with the contents of the symbolic link,  or NULL if an error occurred.
+	 * Throws: GException on failure.
 	 */
-	public static string fileReadLink(string filename, GError** error)
+	public static string fileReadLink(string filename)
 	{
 		// gchar* g_file_read_link (const gchar *filename,  GError **error);
-		return Str.toString(g_file_read_link(Str.toStringz(filename), error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_file_read_link(Str.toStringz(filename), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

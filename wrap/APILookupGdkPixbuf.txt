@@ -119,8 +119,8 @@ class: Pixdata
 prefix: gdk_pixdata_
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-#import: g.Error*
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 import: glib.StringG
 structWrap: GString* StringG
 import: glib.Str
@@ -146,8 +146,8 @@ struct: GdkPixbufAnimation
 class: PixbufAnimation
 prefix: gdk_pixbuf_animation_
 noprefix: gdk_pixbuf_simple_anim_
-#import: g.Error*
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 structWrap: GdkPixbufAnimation* PixbufAnimation
 #import: gdkpixbuf.PixbufAnimationIter
 #structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
@@ -173,8 +173,8 @@ class: PixbufLoader
 prefix: gdk_pixbuf_loader_
 import: gdkpixbuf.PixbufFormat
 structWrap: GdkPixbufFormat* PixbufFormat
-#import: g.Error*
-#structWrap: GError** Error*
+import: glib.ErrorG
+import: glib.GException
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdkpixbuf.PixbufAnimation

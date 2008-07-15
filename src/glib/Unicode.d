@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +59,8 @@ private import gtkc.glib;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -929,15 +933,22 @@ public class Unicode
 	 * itemsWritten =  location to store number of gunichar2 written,
 	 *  or NULL.
 	 *  The value stored here does not include the trailing 0.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError other than
-	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
+	 * Throws: GException on failure.
 	 */
-	public static gunichar2* utf8_ToUtf16(string str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static gunichar2* utf8_ToUtf16(string str, int len, int* itemsRead, int* itemsWritten)
 	{
 		// gunichar2* g_utf8_to_utf16 (const gchar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return g_utf8_to_utf16(Str.toStringz(str), len, itemsRead, itemsWritten, error);
+		GError* err = null;
+		
+		auto p = g_utf8_to_utf16(Str.toStringz(str), len, itemsRead, itemsWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -956,15 +967,22 @@ public class Unicode
 	 * itemsWritten =  location to store number of characters written or NULL.
 	 *  The value here stored does not include the trailing 0
 	 *  character.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError other than
-	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
+	 * Throws: GException on failure.
 	 */
-	public static gunichar* utf8_ToUcs4(string str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static gunichar* utf8_ToUcs4(string str, int len, int* itemsRead, int* itemsWritten)
 	{
 		// gunichar* g_utf8_to_ucs4 (const gchar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return g_utf8_to_ucs4(Str.toStringz(str), len, itemsRead, itemsWritten, error);
+		GError* err = null;
+		
+		auto p = g_utf8_to_ucs4(Str.toStringz(str), len, itemsRead, itemsWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -1001,15 +1019,22 @@ public class Unicode
 	 * itemsWritten =  location to store number of characters written, or NULL.
 	 *  The value stored here does not include the trailing
 	 *  0 character.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError other than
-	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
+	 * Throws: GException on failure.
 	 */
-	public static gunichar* utf16_ToUcs4(gunichar2* str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static gunichar* utf16_ToUcs4(gunichar2* str, int len, int* itemsRead, int* itemsWritten)
 	{
 		// gunichar* g_utf16_to_ucs4 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return g_utf16_to_ucs4(str, len, itemsRead, itemsWritten, error);
+		GError* err = null;
+		
+		auto p = g_utf16_to_ucs4(str, len, itemsRead, itemsWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -1031,15 +1056,22 @@ public class Unicode
 	 * itemsWritten =  location to store number of bytes written, or NULL.
 	 *  The value stored here does not include the trailing
 	 *  0 byte.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError other than
-	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
+	 * Throws: GException on failure.
 	 */
-	public static string utf16_ToUtf8(gunichar2* str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static string utf16_ToUtf8(gunichar2* str, int len, int* itemsRead, int* itemsWritten)
 	{
 		// gchar* g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return Str.toString(g_utf16_to_utf8(str, len, itemsRead, itemsWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_utf16_to_utf8(str, len, itemsRead, itemsWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -1055,15 +1087,22 @@ public class Unicode
 	 * itemsWritten =  location to store number of gunichar2
 	 *  written, or NULL. The value stored here does not
 	 *  include the trailing 0.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError other than
-	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
+	 * Throws: GException on failure.
 	 */
-	public static gunichar2* ucs4_ToUtf16(gunichar* str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static gunichar2* ucs4_ToUtf16(gunichar* str, int len, int* itemsRead, int* itemsWritten)
 	{
 		// gunichar2* g_ucs4_to_utf16 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return g_ucs4_to_utf16(str, len, itemsRead, itemsWritten, error);
+		GError* err = null;
+		
+		auto p = g_ucs4_to_utf16(str, len, itemsRead, itemsWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -1077,15 +1116,22 @@ public class Unicode
 	 * itemsWritten =  location to store number of bytes written or NULL.
 	 *  The value here stored does not include the trailing 0
 	 *  byte.
-	 * error =  location to store the error occuring, or NULL to ignore
-	 *  errors. Any of the errors in GConvertError other than
-	 *  G_CONVERT_ERROR_NO_CONVERSION may occur.
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input  character.
+	 * Throws: GException on failure.
 	 */
-	public static string ucs4_ToUtf8(gunichar* str, int len, int* itemsRead, int* itemsWritten, GError** error)
+	public static string ucs4_ToUtf8(gunichar* str, int len, int* itemsRead, int* itemsWritten)
 	{
 		// gchar* g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return Str.toString(g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, error));
+		GError* err = null;
+		
+		auto p = Str.toString(g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

@@ -48,6 +48,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.TextMark
  * 	- gtk.TextIter
  * 	- gdk.Rectangle
@@ -92,6 +94,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.TextMark;
 private import gtk.TextIter;
 private import gdk.Rectangle;
@@ -1787,13 +1791,22 @@ public class TextBuffer : ObjectG
 	 * iter =  insertion point for the deserialized text
 	 * data =  data to deserialize
 	 * length =  length of data
-	 * error =  return location for a GError
 	 * Returns: TRUE on success, FALSE otherwise.
+	 * Throws: GException on failure.
 	 */
-	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, byte* data, uint length, GError** error)
+	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, byte* data, uint length)
 	{
 		// gboolean gtk_text_buffer_deserialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  GtkTextIter *iter,  const guint8 *data,  gsize length,  GError **error);
-		return gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data, length, error);
+		GError* err = null;
+		
+		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data, length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
