@@ -59,6 +59,7 @@ module gtk.Tooltips;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -157,6 +158,7 @@ public class Tooltips : ObjectGtk
 	 * Warning
 	 * gtk_tooltips_new has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Creates an empty group of tooltips. This function initialises a GtkTooltips structure. Without at least one such structure, you can not add tips to your application.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -164,7 +166,7 @@ public class Tooltips : ObjectGtk
 		auto p = gtk_tooltips_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tooltips_new()");
 		}
 		this(cast(GtkTooltips*) p);
 	}

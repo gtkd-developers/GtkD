@@ -63,6 +63,7 @@ module gtk.MenuItem;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -342,6 +343,7 @@ public class MenuItem : Item
 	
 	/**
 	 * Creates a new GtkMenuItem.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -349,7 +351,7 @@ public class MenuItem : Item
 		auto p = gtk_menu_item_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_menu_item_new()");
 		}
 		this(cast(GtkMenuItem*) p);
 	}

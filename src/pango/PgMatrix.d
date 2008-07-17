@@ -57,6 +57,7 @@ module pango.PgMatrix;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 

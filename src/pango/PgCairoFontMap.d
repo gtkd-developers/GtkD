@@ -58,6 +58,7 @@ module pango.PgCairoFontMap;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -241,6 +242,7 @@ public class PgCairoFontMap : PgFontMap
 	 * You generally should only use the PangoFontMap and
 	 * PangoCairoFontMap interfaces on the returned object.
 	 * Since 1.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -248,7 +250,7 @@ public class PgCairoFontMap : PgFontMap
 		auto p = pango_cairo_font_map_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_cairo_font_map_new()");
 		}
 		this(cast(PangoCairoFontMap*) p);
 	}
@@ -262,6 +264,7 @@ public class PgCairoFontMap : PgFontMap
 	 * Since 1.18
 	 * Params:
 	 * fonttype =  desired cairo_font_type_t
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (cairo_font_type_t fonttype)
 	{
@@ -269,7 +272,7 @@ public class PgCairoFontMap : PgFontMap
 		auto p = pango_cairo_font_map_new_for_font_type(fonttype);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_cairo_font_map_new_for_font_type(fonttype)");
 		}
 		this(cast(PangoCairoFontMap*) p);
 	}

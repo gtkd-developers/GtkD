@@ -54,6 +54,7 @@ module gtk.EventBox;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -112,6 +113,7 @@ public class EventBox : Bin
 	
 	/**
 	 * Creates a new GtkEventBox.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -119,7 +121,7 @@ public class EventBox : Bin
 		auto p = gtk_event_box_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_event_box_new()");
 		}
 		this(cast(GtkEventBox*) p);
 	}

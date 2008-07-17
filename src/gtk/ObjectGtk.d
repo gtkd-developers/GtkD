@@ -57,6 +57,7 @@ module gtk.ObjectGtk;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -216,6 +217,7 @@ public class ObjectGtk : ObjectG
 	 *  the object.
 	 * ... = the first argument's value, followed by any number of
 	 * name/argument-value pairs, terminated with NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkType type, string firstPropertyName, ... )
 	{
@@ -223,7 +225,7 @@ public class ObjectGtk : ObjectG
 		auto p = gtk_object_new(type, Str.toStringz(firstPropertyName));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_object_new(type, Str.toStringz(firstPropertyName))");
 		}
 		this(cast(GtkObject*) p);
 	}

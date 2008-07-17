@@ -55,6 +55,7 @@ module gtk.FileSelection;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -157,6 +158,7 @@ public class FileSelection : Dialog
 	 * Creates a new file selection dialog box. By default it will contain a GtkTreeView of the application's current working directory, and a file listing. Operation buttons that allow the user to create a directory, delete files and rename files, are also present.
 	 * Params:
 	 * title = a message that will be placed in the file requestor's titlebar.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title)
 	{
@@ -164,7 +166,7 @@ public class FileSelection : Dialog
 		auto p = gtk_file_selection_new(Str.toStringz(title));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_selection_new(Str.toStringz(title))");
 		}
 		this(cast(GtkFileSelection*) p);
 	}

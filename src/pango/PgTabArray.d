@@ -54,6 +54,7 @@ module pango.PgTabArray;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 
@@ -107,6 +108,7 @@ public class PgTabArray
 	 * Params:
 	 * initialSize =  Initial number of tab stops to allocate, can be 0
 	 * positionsInPixels =  whether positions are in pixel units
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int initialSize, int positionsInPixels)
 	{
@@ -114,7 +116,7 @@ public class PgTabArray
 		auto p = pango_tab_array_new(initialSize, positionsInPixels);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_tab_array_new(initialSize, positionsInPixels)");
 		}
 		this(cast(PangoTabArray*) p);
 	}
@@ -130,6 +132,7 @@ public class PgTabArray
 	 * firstAlignment =  alignment of first tab stop
 	 * firstPosition =  position of first tab stop
 	 * ... =  additional alignment/position pairs
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int size, int positionsInPixels, PangoTabAlign firstAlignment, int firstPosition, ... )
 	{
@@ -137,7 +140,7 @@ public class PgTabArray
 		auto p = pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition)");
 		}
 		this(cast(PangoTabArray*) p);
 	}

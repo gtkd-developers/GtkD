@@ -55,6 +55,7 @@ module gsv.SourceMark;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -134,6 +135,7 @@ public class SourceMark : TextMark
 	 * (e.g. all the marks representing a bookmark could belong to the "bookmark"
 	 * category, or all the marks representing a compilation error could belong to
 	 * "error" category).
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string category)
 	{
@@ -141,7 +143,7 @@ public class SourceMark : TextMark
 		auto p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category))");
 		}
 		this(cast(GtkSourceMark*) p);
 	}

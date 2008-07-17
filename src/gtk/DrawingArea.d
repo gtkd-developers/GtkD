@@ -54,6 +54,7 @@ module gtk.DrawingArea;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -173,6 +174,7 @@ public class DrawingArea : Widget
 	
 	/**
 	 * Creates a new drawing area.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -180,7 +182,7 @@ public class DrawingArea : Widget
 		auto p = gtk_drawing_area_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_drawing_area_new()");
 		}
 		this(cast(GtkDrawingArea*) p);
 	}

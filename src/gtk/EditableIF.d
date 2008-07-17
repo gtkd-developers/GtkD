@@ -55,6 +55,7 @@ module gtk.EditableIF;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;

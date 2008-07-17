@@ -56,6 +56,7 @@ module gtk.HScale;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Adjustment;
@@ -118,6 +119,7 @@ public class HScale : Scale
 	 * Creates a new GtkHScale.
 	 * Params:
 	 * adjustment = the GtkAdjustment which sets the range of the scale.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)
 	{
@@ -125,7 +127,7 @@ public class HScale : Scale
 		auto p = gtk_hscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_hscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkHScale*) p);
 	}
@@ -142,6 +144,7 @@ public class HScale : Scale
 	 * min =  minimum value
 	 * max =  maximum value
 	 * step =  step increment (tick size) used with keyboard shortcuts
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double min, double max, double step)
 	{
@@ -149,7 +152,7 @@ public class HScale : Scale
 		auto p = gtk_hscale_new_with_range(min, max, step);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_hscale_new_with_range(min, max, step)");
 		}
 		this(cast(GtkHScale*) p);
 	}

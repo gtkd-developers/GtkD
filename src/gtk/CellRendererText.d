@@ -57,6 +57,7 @@ module gtk.CellRendererText;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -163,6 +164,7 @@ public class CellRendererText : CellRenderer
 	 * you can bind the "text" property on the cell renderer to a string
 	 * value in the model, thus rendering a different string in each row
 	 * of the GtkTreeView
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -170,7 +172,7 @@ public class CellRendererText : CellRenderer
 		auto p = gtk_cell_renderer_text_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_text_new()");
 		}
 		this(cast(GtkCellRendererText*) p);
 	}

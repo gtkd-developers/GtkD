@@ -57,6 +57,7 @@ module gtk.CellRendererToggle;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -159,6 +160,7 @@ public class CellRendererToggle : CellRenderer
 	 * can bind the "active" property on the cell renderer to a boolean value
 	 * in the model, thus causing the check button to reflect the state of
 	 * the model.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -166,7 +168,7 @@ public class CellRendererToggle : CellRenderer
 		auto p = gtk_cell_renderer_toggle_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_toggle_new()");
 		}
 		this(cast(GtkCellRendererToggle*) p);
 	}

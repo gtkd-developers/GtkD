@@ -62,6 +62,7 @@ module gtk.ImageMenuItem;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -201,6 +202,7 @@ public class ImageMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkImageMenuItem with an empty label.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -208,7 +210,7 @@ public class ImageMenuItem : MenuItem
 		auto p = gtk_image_menu_item_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_menu_item_new()");
 		}
 		this(cast(GtkImageMenuItem*) p);
 	}

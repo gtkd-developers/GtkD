@@ -233,7 +233,8 @@ public class GtkDClass
 
 		/* Type information should be publicly imported by all modules. */
 		gtkDText ~= "public  import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
-		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n\n";
+		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n";
+		gtkDText ~= "private import glib.ConstructionException;\n\n";
 		
 		// move signal imports out of classes - JJR
 		if (needSignalImports)
@@ -267,23 +268,6 @@ public class GtkDClass
 		
 		foreach( char[] imprt ; convParms.imprts )
 		{
-		
-//			if ( imprt in tangoImportConvs )
-//			{
-//				gtkDText ~=
-//					"version(Tango) private import "~tangoImportConvs[imprt]~";\n"
-//					"else           private import "~imprt~";\n"
-//					;
-//			}
-//			else
-//			{
-//				gtkDText ~= "private import "~imprt~";\n";
-//			}
-//		
-//			if ( imprt == "std.stdio" )
-//			{
-//			}
-
 			if ( imprt in tangoImportConvs )
 			{
 				++countTango;
@@ -329,13 +313,6 @@ public class GtkDClass
 			gtkDText ~= "public alias "~key~" "~convParms.mAliases[key]~";";
 		}
 		gtkDText ~= "\n";
-
-		//moved to openClass
-		//for ddoc the comments need to be right above the class.
-		//if ( wrapper.includeComments() )
-		//{
-		//	append(gtkDText, description, tabs);
-		//}
 
 		// reset the parent name
 		parentName = null;
@@ -2202,6 +2179,11 @@ public class GtkDClass
 							   && find(fun.declaration(convParms,wrapper.getAliases()), "GError**") == -1 )
 							{
 								description ~= "Throws: GException on failure.";
+							}
+
+							if ( find(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
+							{
+								description ~= "Throws: ConstructionException GTK+ fails to create the object.";
 							}
 
 							return description;

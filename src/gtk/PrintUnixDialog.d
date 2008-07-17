@@ -67,6 +67,7 @@ module gtk.PrintUnixDialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -172,6 +173,7 @@ public class PrintUnixDialog : Dialog
 	 * Params:
 	 * title =  Title of the dialog, or NULL
 	 * parent =  Transient parent of the dialog, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)
 	{
@@ -179,7 +181,7 @@ public class PrintUnixDialog : Dialog
 		auto p = gtk_print_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_print_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct())");
 		}
 		this(cast(GtkPrintUnixDialog*) p);
 	}

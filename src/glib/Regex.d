@@ -58,6 +58,7 @@ module glib.Regex;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -161,6 +162,7 @@ public class Regex
 	 * compileOptions =  compile options for the regular expression
 	 * matchOptions =  match options for the regular expression
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string pattern, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -176,7 +178,7 @@ public class Regex
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err)");
 		}
 		this(cast(GRegex*) p);
 	}

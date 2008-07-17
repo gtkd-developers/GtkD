@@ -62,6 +62,7 @@ module gobject.ObjectG;
 public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -590,6 +591,7 @@ public class ObjectG
 	 * firstPropertyName = the name of the first property
 	 * ... = the value of the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType objectType, string firstPropertyName, ... )
 	{
@@ -597,7 +599,7 @@ public class ObjectG
 		auto p = g_object_new(objectType, Str.toStringz(firstPropertyName));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_object_new(objectType, Str.toStringz(firstPropertyName))");
 		}
 		this(cast(GObject*) p);
 	}
@@ -610,6 +612,7 @@ public class ObjectG
 	 * objectType = the type id of the GObject subtype to instantiate
 	 * nParameters = the length of the parameters array
 	 * parameters = an array of GParameter
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType objectType, uint nParameters, GParameter* parameters)
 	{
@@ -617,7 +620,7 @@ public class ObjectG
 		auto p = g_object_newv(objectType, nParameters, parameters);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_object_newv(objectType, nParameters, parameters)");
 		}
 		this(cast(GObject*) p);
 	}
@@ -1085,6 +1088,7 @@ public class ObjectG
 	 * firstPropertyName = the name of the first property
 	 * varArgs = the value of the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType objectType, string firstPropertyName, void* varArgs)
 	{
@@ -1092,7 +1096,7 @@ public class ObjectG
 		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs)");
 		}
 		this(cast(GObject*) p);
 	}

@@ -58,6 +58,7 @@ module gtk.CheckButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -149,6 +150,7 @@ public class CheckButton : ToggleButton
 	
 	/**
 	 * Creates a new GtkCheckButton.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -156,7 +158,7 @@ public class CheckButton : ToggleButton
 		auto p = gtk_check_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_check_button_new()");
 		}
 		this(cast(GtkCheckButton*) p);
 	}

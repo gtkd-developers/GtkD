@@ -69,6 +69,7 @@ module gtk.Entry;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -466,6 +467,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 * Creates a new entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -473,7 +475,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_entry_new()");
 		}
 		this(cast(GtkEntry*) p);
 	}
@@ -492,6 +494,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * max =  the maximum length of the entry, or 0 for no maximum.
 	 *  (other than the maximum length of entries.) The value passed in will
 	 *  be clamped to the range 0-65536.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int max)
 	{
@@ -499,7 +502,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		auto p = gtk_entry_new_with_max_length(max);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_entry_new_with_max_length(max)");
 		}
 		this(cast(GtkEntry*) p);
 	}

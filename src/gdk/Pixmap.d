@@ -62,6 +62,7 @@ module gdk.Pixmap;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -135,6 +136,7 @@ public class Pixmap : Drawable
 	 * depth = The depth (number of bits per pixel) of the new pixmap.
 	 *  If -1, and drawable is not NULL, the depth of the new
 	 *  pixmap will be equal to that of drawable.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Drawable drawable, int width, int height, int depth)
 	{
@@ -142,7 +144,7 @@ public class Pixmap : Drawable
 		auto p = gdk_pixmap_new((drawable is null) ? null : drawable.getDrawableStruct(), width, height, depth);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixmap_new((drawable is null) ? null : drawable.getDrawableStruct(), width, height, depth)");
 		}
 		this(cast(GdkPixmap*) p);
 	}

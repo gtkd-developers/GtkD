@@ -57,6 +57,7 @@ module gtk.Frame;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -146,6 +147,7 @@ public class Frame : Bin
 	 * If label is NULL, the label is omitted.
 	 * Params:
 	 * label =  the text to use as the label of the frame
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label)
 	{
@@ -153,7 +155,7 @@ public class Frame : Bin
 		auto p = gtk_frame_new(Str.toStringz(label));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_frame_new(Str.toStringz(label))");
 		}
 		this(cast(GtkFrame*) p);
 	}

@@ -54,6 +54,7 @@ module gtk.VSeparator;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -112,6 +113,7 @@ public class VSeparator : Separator
 	
 	/**
 	 * Creates a new GtkVSeparator.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -119,7 +121,7 @@ public class VSeparator : Separator
 		auto p = gtk_vseparator_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_vseparator_new()");
 		}
 		this(cast(GtkVSeparator*) p);
 	}

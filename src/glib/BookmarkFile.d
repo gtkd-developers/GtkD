@@ -56,6 +56,7 @@ module glib.BookmarkFile;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;
@@ -164,6 +165,7 @@ public class BookmarkFile
 	 * or g_bookmark_file_load_from_data_dirs() to read an existing bookmark
 	 * file.
 	 * Since 2.12
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -171,7 +173,7 @@ public class BookmarkFile
 		auto p = g_bookmark_file_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_bookmark_file_new()");
 		}
 		this(cast(GBookmarkFile*) p);
 	}

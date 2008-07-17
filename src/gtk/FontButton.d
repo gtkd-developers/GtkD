@@ -55,6 +55,7 @@ module gtk.FontButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -157,6 +158,7 @@ public class FontButton : Button
 	/**
 	 * Creates a new font picker widget.
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -164,7 +166,7 @@ public class FontButton : Button
 		auto p = gtk_font_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_font_button_new()");
 		}
 		this(cast(GtkFontButton*) p);
 	}
@@ -174,6 +176,7 @@ public class FontButton : Button
 	 * Since 2.4
 	 * Params:
 	 * fontname =  Name of font to display in font selection dialog
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string fontname)
 	{
@@ -181,7 +184,7 @@ public class FontButton : Button
 		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_font_button_new_with_font(Str.toStringz(fontname))");
 		}
 		this(cast(GtkFontButton*) p);
 	}

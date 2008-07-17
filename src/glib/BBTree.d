@@ -53,6 +53,7 @@ module glib.BBTree;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -117,6 +118,7 @@ public class BBTree
 	 *  0 if the two arguments are equal, a negative value if the first argument
 	 *  comes before the second, or a positive value if the first argument comes
 	 *  after the second.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareFunc keyCompareFunc)
 	{
@@ -124,7 +126,7 @@ public class BBTree
 		auto p = g_tree_new(keyCompareFunc);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_tree_new(keyCompareFunc)");
 		}
 		this(cast(GTree*) p);
 	}
@@ -135,6 +137,7 @@ public class BBTree
 	 * Params:
 	 * keyCompareFunc =  qsort()-style comparison function.
 	 * keyCompareData =  data to pass to comparison function.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData)
 	{
@@ -142,7 +145,7 @@ public class BBTree
 		auto p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_tree_new_with_data(keyCompareFunc, keyCompareData)");
 		}
 		this(cast(GTree*) p);
 	}
@@ -160,6 +163,7 @@ public class BBTree
 	 * valueDestroyFunc =  a function to free the memory allocated for the
 	 *  value used when removing the entry from the GTree or NULL if you
 	 *  don't want to supply such a function.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
@@ -167,7 +171,7 @@ public class BBTree
 		auto p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc)");
 		}
 		this(cast(GTree*) p);
 	}

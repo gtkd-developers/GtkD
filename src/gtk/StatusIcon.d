@@ -66,6 +66,7 @@ module gtk.StatusIcon;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -292,6 +293,7 @@ public class StatusIcon : ObjectG
 	/**
 	 * Creates an empty status icon object.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -299,7 +301,7 @@ public class StatusIcon : ObjectG
 		auto p = gtk_status_icon_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_status_icon_new()");
 		}
 		this(cast(GtkStatusIcon*) p);
 	}
@@ -311,6 +313,7 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * pixbuf =  a GdkPixbuf
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
 	{
@@ -318,7 +321,7 @@ public class StatusIcon : ObjectG
 		auto p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct())");
 		}
 		this(cast(GtkStatusIcon*) p);
 	}

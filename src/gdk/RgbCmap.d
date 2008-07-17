@@ -53,6 +53,7 @@ module gdk.RgbCmap;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 
@@ -198,6 +199,7 @@ public class RgbCmap
 	 * Params:
 	 * colors = The colors, represented as 0xRRGGBB integer values.
 	 * nColors = The number of colors in the cmap.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint* colors, int nColors)
 	{
@@ -205,7 +207,7 @@ public class RgbCmap
 		auto p = gdk_rgb_cmap_new(colors, nColors);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_rgb_cmap_new(colors, nColors)");
 		}
 		this(cast(GdkRgbCmap*) p);
 	}

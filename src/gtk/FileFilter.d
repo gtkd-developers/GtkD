@@ -55,6 +55,7 @@ module gtk.FileFilter;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -129,6 +130,7 @@ public class FileFilter : ObjectGtk
 	 * gtk_file_filter_add_mime_type(), gtk_file_filter_add_pattern(),
 	 * or gtk_file_filter_add_custom(). To create a filter
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -136,7 +138,7 @@ public class FileFilter : ObjectGtk
 		auto p = gtk_file_filter_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_filter_new()");
 		}
 		this(cast(GtkFileFilter*) p);
 	}

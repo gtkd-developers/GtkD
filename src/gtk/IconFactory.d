@@ -57,6 +57,7 @@ module gtk.IconFactory;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -220,6 +221,7 @@ public class IconFactory : ObjectG
 	 * gtk_icon_factory_remove_default(). Applications with icons should
 	 * add a default icon factory with their icons, which will allow
 	 * themes to override the icons for the application.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -227,7 +229,7 @@ public class IconFactory : ObjectG
 		auto p = gtk_icon_factory_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_factory_new()");
 		}
 		this(cast(GtkIconFactory*) p);
 	}

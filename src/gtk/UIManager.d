@@ -75,6 +75,7 @@ module gtk.UIManager;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -533,6 +534,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Creates a new ui manager object.
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -540,7 +542,7 @@ public class UIManager : ObjectG, BuildableIF
 		auto p = gtk_ui_manager_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_ui_manager_new()");
 		}
 		this(cast(GtkUIManager*) p);
 	}

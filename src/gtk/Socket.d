@@ -54,6 +54,7 @@ module gtk.Socket;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -235,6 +236,7 @@ public class Socket : Container
 	
 	/**
 	 * Create a new empty GtkSocket.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -242,7 +244,7 @@ public class Socket : Container
 		auto p = gtk_socket_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_socket_new()");
 		}
 		this(cast(GtkSocket*) p);
 	}

@@ -58,6 +58,7 @@ module gtk.ToolButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -209,6 +210,7 @@ public class ToolButton : ToolItem
 	 * Params:
 	 * iconWidget =  a widget that will be used as icon widget, or NULL
 	 * label =  a string that will be used as label, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Widget iconWidget, string label)
 	{
@@ -216,7 +218,7 @@ public class ToolButton : ToolItem
 		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label))");
 		}
 		this(cast(GtkToolButton*) p);
 	}
@@ -229,6 +231,7 @@ public class ToolButton : ToolItem
 	 * Since 2.4
 	 * Params:
 	 * stockId =  the name of the stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string stockId)
 	{
@@ -236,7 +239,7 @@ public class ToolButton : ToolItem
 		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tool_button_new_from_stock(Str.toStringz(stockId))");
 		}
 		this(cast(GtkToolButton*) p);
 	}

@@ -74,6 +74,7 @@ module gtk.ComboBox;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -412,6 +413,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Since 2.4
 	 * Params:
 	 * model =  A GtkTreeModel.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model)
 	{
@@ -419,7 +421,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct())");
 		}
 		this(cast(GtkComboBox*) p);
 	}

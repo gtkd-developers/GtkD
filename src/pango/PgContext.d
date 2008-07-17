@@ -80,6 +80,7 @@ module pango.PgContext;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -255,6 +256,7 @@ public class PgContext : ObjectG
 	 * For instance, the GTK+ toolkit has, among others,
 	 * gdk_pango_context_get_for_screen(), and
 	 * gtk_widget_get_pango_context().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -262,7 +264,7 @@ public class PgContext : ObjectG
 		auto p = pango_context_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_context_new()");
 		}
 		this(cast(PangoContext*) p);
 	}

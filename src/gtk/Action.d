@@ -69,6 +69,7 @@ module gtk.Action;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -210,6 +211,7 @@ public class Action : ObjectG, BuildableIF
 	 * tooltip =  a tooltip for the action, or NULL
 	 * stockId =  the stock icon to display in widgets representing the
 	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId)
 	{
@@ -217,7 +219,7 @@ public class Action : ObjectG, BuildableIF
 		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId))");
 		}
 		this(cast(GtkAction*) p);
 	}

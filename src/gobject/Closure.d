@@ -61,6 +61,7 @@ module gobject.Closure;
 public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
+private import glib.ConstructionException;
 
 
 private import gobject.ObjectG;
@@ -150,6 +151,7 @@ public class Closure
 	 * sizeof (GClosure)
 	 * object = a GObject pointer to store in the data field of the newly
 	 *  allocated GClosure
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint sizeofClosure, ObjectG object)
 	{
@@ -157,7 +159,7 @@ public class Closure
 		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct())");
 		}
 		this(cast(GClosure*) p);
 	}
@@ -336,6 +338,7 @@ public class Closure
 	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 * sizeof (GClosure)
 	 * data = data to store in the data field of the newly allocated GClosure
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint sizeofClosure, void* data)
 	{
@@ -343,7 +346,7 @@ public class Closure
 		auto p = g_closure_new_simple(sizeofClosure, data);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_closure_new_simple(sizeofClosure, data)");
 		}
 		this(cast(GClosure*) p);
 	}

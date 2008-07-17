@@ -56,6 +56,7 @@ module gobject.Type;
 public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

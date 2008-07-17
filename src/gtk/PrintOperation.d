@@ -66,6 +66,7 @@ module gtk.PrintOperation;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -601,6 +602,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	/**
 	 * Creates a new GtkPrintOperation.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -608,7 +610,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		auto p = gtk_print_operation_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_print_operation_new()");
 		}
 		this(cast(GtkPrintOperation*) p);
 	}

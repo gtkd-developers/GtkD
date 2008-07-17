@@ -61,6 +61,7 @@ module gtk.Button;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -428,6 +429,7 @@ public class Button : Bin
 	/**
 	 * Creates a new GtkButton widget. To add a child widget to the button,
 	 * use gtk_container_add().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -435,7 +437,7 @@ public class Button : Bin
 		auto p = gtk_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_button_new()");
 		}
 		this(cast(GtkButton*) p);
 	}

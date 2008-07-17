@@ -54,6 +54,7 @@ module gtk.Separator;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 

@@ -643,7 +643,7 @@ public struct Funct
 
 				char[][] check = [	"if(p is null)",
 								  	"{",
-								  	"	throw new Exception(\"Construction failure.\");",
+								  	"	throw new ConstructionException(\"null returned by " ~ gtkCall ~ "\");",
 									"}"	];
 				bd ~= check;
 				/* What's with all the casting? */

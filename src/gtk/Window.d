@@ -73,6 +73,7 @@ module gtk.Window;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -326,6 +327,7 @@ public class Window : Bin
 	 * gtk_window_set_decorated(), don't use GTK_WINDOW_POPUP.
 	 * Params:
 	 * type =  type of window
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkWindowType type)
 	{
@@ -333,7 +335,7 @@ public class Window : Bin
 		auto p = gtk_window_new(type);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_window_new(type)");
 		}
 		this(cast(GtkWindow*) p);
 	}

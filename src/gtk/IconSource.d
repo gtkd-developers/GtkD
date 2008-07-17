@@ -60,6 +60,7 @@ module gtk.IconSource;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -283,6 +284,7 @@ public class IconSource
 	 * By default, the icon source has all parameters wildcarded. That is,
 	 * the icon source will be used as the base icon for any desired text
 	 * direction, widget state, or icon size.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -290,7 +292,7 @@ public class IconSource
 		auto p = gtk_icon_source_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_source_new()");
 		}
 		this(cast(GtkIconSource*) p);
 	}

@@ -57,6 +57,7 @@ module gtk.FontSelection;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -123,6 +124,7 @@ public class FontSelection : VBox
 	
 	/**
 	 * Creates a new GtkFontSelection.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -130,7 +132,7 @@ public class FontSelection : VBox
 		auto p = gtk_font_selection_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_font_selection_new()");
 		}
 		this(cast(GtkFontSelection*) p);
 	}

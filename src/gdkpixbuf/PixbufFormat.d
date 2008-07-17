@@ -58,6 +58,7 @@ module gdkpixbuf.PixbufFormat;
 public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
+private import glib.ConstructionException;
 
 
 private import gdk.Pixbuf;

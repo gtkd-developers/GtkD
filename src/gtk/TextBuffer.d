@@ -89,6 +89,7 @@ module gtk.TextBuffer;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -878,6 +879,7 @@ public class TextBuffer : ObjectG
 	 * Creates a new text buffer.
 	 * Params:
 	 * table =  a tag table, or NULL to create a new one
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextTagTable table)
 	{
@@ -885,7 +887,7 @@ public class TextBuffer : ObjectG
 		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct())");
 		}
 		this(cast(GtkTextBuffer*) p);
 	}

@@ -57,6 +57,7 @@ module glib.Date;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.TimeVal;
@@ -145,6 +146,7 @@ public class Date
 	 * Allocates a GDate and initializes it to a sane state. The new date will
 	 * be cleared (as if you'd called g_date_clear()) but invalid (it won't
 	 * represent an existing day). Free the return value with g_date_free().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -152,7 +154,7 @@ public class Date
 		auto p = g_date_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_date_new()");
 		}
 		this(cast(GDate*) p);
 	}
@@ -165,6 +167,7 @@ public class Date
 	 * day = day of the month
 	 * month = month of the year
 	 * year = year
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDateDay day, GDateMonth month, GDateYear year)
 	{
@@ -172,7 +175,7 @@ public class Date
 		auto p = g_date_new_dmy(day, month, year);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_date_new_dmy(day, month, year)");
 		}
 		this(cast(GDate*) p);
 	}
@@ -183,6 +186,7 @@ public class Date
 	 * unreasonably large number), the returned date will be valid.
 	 * Params:
 	 * julianDay = days since January 1, Year 1
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint julianDay)
 	{
@@ -190,7 +194,7 @@ public class Date
 		auto p = g_date_new_julian(julianDay);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_date_new_julian(julianDay)");
 		}
 		this(cast(GDate*) p);
 	}

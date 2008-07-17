@@ -58,6 +58,7 @@ module gtk.SpinButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -337,6 +338,7 @@ public class SpinButton : Entry
 	 * adjustment = the GtkAdjustment object that this spin button should use.
 	 * climbRate = specifies how much the spin button changes when an arrow is clicked on.
 	 * digits = the number of decimal places to display.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment, double climbRate, uint digits)
 	{
@@ -344,7 +346,7 @@ public class SpinButton : Entry
 		auto p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits)");
 		}
 		this(cast(GtkSpinButton*) p);
 	}
@@ -362,6 +364,7 @@ public class SpinButton : Entry
 	 * min =  Minimum allowable value
 	 * max =  Maximum allowable value
 	 * step =  Increment added or subtracted by spinning the widget
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double min, double max, double step)
 	{
@@ -369,7 +372,7 @@ public class SpinButton : Entry
 		auto p = gtk_spin_button_new_with_range(min, max, step);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_spin_button_new_with_range(min, max, step)");
 		}
 		this(cast(GtkSpinButton*) p);
 	}

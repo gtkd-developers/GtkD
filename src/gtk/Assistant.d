@@ -59,6 +59,7 @@ module gtk.Assistant;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -264,6 +265,7 @@ public class Assistant : Window
 	/**
 	 * Creates a new GtkAssistant.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -271,7 +273,7 @@ public class Assistant : Window
 		auto p = gtk_assistant_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_assistant_new()");
 		}
 		this(cast(GtkAssistant*) p);
 	}

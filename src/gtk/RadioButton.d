@@ -61,6 +61,7 @@ module gtk.RadioButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -270,6 +271,7 @@ public class RadioButton : CheckButton
 	 * then be packed into the radio button.
 	 * Params:
 	 * group = an existing radio button group, or NULL if you are creating a new group.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
 	{
@@ -277,7 +279,7 @@ public class RadioButton : CheckButton
 		auto p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_radio_button_new((group is null) ? null : group.getListSGStruct())");
 		}
 		this(cast(GtkRadioButton*) p);
 	}
@@ -285,6 +287,7 @@ public class RadioButton : CheckButton
 	/**
 	 * Creates a new GtkRadioButton, adding it to the same group as group. As
 	 * with gtk_radio_button_new(), a widget should be packed into the radio button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -292,7 +295,7 @@ public class RadioButton : CheckButton
 		auto p = gtk_radio_button_new_from_widget(gtkRadioButton);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_radio_button_new_from_widget(gtkRadioButton)");
 		}
 		this(cast(GtkRadioButton*) p);
 	}

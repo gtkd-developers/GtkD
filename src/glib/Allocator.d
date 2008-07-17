@@ -54,6 +54,7 @@ module glib.Allocator;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -115,6 +116,7 @@ public class Allocator
 	 * Larger blocks mean less calls to g_malloc(), but some memory may be wasted.
 	 * (GLib uses 128 elements per block by default.) The value must be between 1
 	 * and 65535.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, uint nPreallocs)
 	{
@@ -122,7 +124,7 @@ public class Allocator
 		auto p = g_allocator_new(Str.toStringz(name), nPreallocs);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_allocator_new(Str.toStringz(name), nPreallocs)");
 		}
 		this(cast(GAllocator*) p);
 	}

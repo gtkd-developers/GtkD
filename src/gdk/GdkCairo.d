@@ -67,6 +67,7 @@ module gdk.GdkCairo;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import cairo.Context;

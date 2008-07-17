@@ -58,6 +58,7 @@ module glgdk.GLWindow;
 public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
+private import glib.ConstructionException;
 
 
 private import glgdk.GLConfig;
@@ -121,6 +122,7 @@ public class GLWindow : Drawable
 	 * glconfig =  a GdkGLConfig.
 	 * window =  the GdkWindow to be used as the rendering area.
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkGLConfig* glconfig, Window window, int* attribList)
 	{
@@ -128,7 +130,7 @@ public class GLWindow : Drawable
 		auto p = gdk_gl_window_new(glconfig, (window is null) ? null : window.getWindowStruct(), attribList);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_window_new(glconfig, (window is null) ? null : window.getWindowStruct(), attribList)");
 		}
 		this(cast(GdkGLWindow*) p);
 	}

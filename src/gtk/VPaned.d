@@ -55,6 +55,7 @@ module gtk.VPaned;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -129,6 +130,7 @@ public class VPaned : Paned
 	
 	/**
 	 * Create a new GtkVPaned
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -136,7 +138,7 @@ public class VPaned : Paned
 		auto p = gtk_vpaned_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_vpaned_new()");
 		}
 		this(cast(GtkVPaned*) p);
 	}

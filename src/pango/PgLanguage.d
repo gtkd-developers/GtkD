@@ -55,6 +55,7 @@ module pango.PgLanguage;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

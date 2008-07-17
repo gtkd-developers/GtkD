@@ -53,6 +53,7 @@ module glib.Cache;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -124,6 +125,7 @@ public class Cache
 	 * hashValueFunc = a function to create a hash value from a value.
 	 * keyEqualFunc = a function to compare two keys. It should return TRUE if
 	 * the two keys are equivalent.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCacheNewFunc valueNewFunc, GCacheDestroyFunc valueDestroyFunc, GCacheDupFunc keyDupFunc, GCacheDestroyFunc keyDestroyFunc, GHashFunc hashKeyFunc, GHashFunc hashValueFunc, GEqualFunc keyEqualFunc)
 	{
@@ -131,7 +133,7 @@ public class Cache
 		auto p = g_cache_new(valueNewFunc, valueDestroyFunc, keyDupFunc, keyDestroyFunc, hashKeyFunc, hashValueFunc, keyEqualFunc);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_cache_new(valueNewFunc, valueDestroyFunc, keyDupFunc, keyDestroyFunc, hashKeyFunc, hashValueFunc, keyEqualFunc)");
 		}
 		this(cast(GCache*) p);
 	}

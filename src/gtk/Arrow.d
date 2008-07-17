@@ -54,6 +54,7 @@ module gtk.Arrow;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -122,6 +123,7 @@ public class Arrow : Misc
 	 * Params:
 	 * arrowType = a valid GtkArrowType.
 	 * shadowType = a valid GtkShadowType.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkArrowType arrowType, GtkShadowType shadowType)
 	{
@@ -129,7 +131,7 @@ public class Arrow : Misc
 		auto p = gtk_arrow_new(arrowType, shadowType);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_arrow_new(arrowType, shadowType)");
 		}
 		this(cast(GtkArrow*) p);
 	}

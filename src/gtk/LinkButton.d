@@ -57,6 +57,7 @@ module gtk.LinkButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -128,6 +129,7 @@ public class LinkButton : Button
 	 * Since 2.10
 	 * Params:
 	 * uri =  a valid URI
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string uri)
 	{
@@ -135,7 +137,7 @@ public class LinkButton : Button
 		auto p = gtk_link_button_new(Str.toStringz(uri));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_link_button_new(Str.toStringz(uri))");
 		}
 		this(cast(GtkLinkButton*) p);
 	}
@@ -146,6 +148,7 @@ public class LinkButton : Button
 	 * Params:
 	 * uri =  a valid URI
 	 * label =  the text of the button
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string uri, string label)
 	{
@@ -153,7 +156,7 @@ public class LinkButton : Button
 		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label))");
 		}
 		this(cast(GtkLinkButton*) p);
 	}

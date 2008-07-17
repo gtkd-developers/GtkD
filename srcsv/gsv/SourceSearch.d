@@ -56,6 +56,7 @@ module gsv.SourceSearch;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 
 private import gtk.TextIter;

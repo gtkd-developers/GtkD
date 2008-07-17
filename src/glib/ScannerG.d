@@ -55,6 +55,7 @@ module glib.ScannerG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -109,6 +110,7 @@ public class ScannerG
 	 * If you pass NULL then the default settings are used.
 	 * Params:
 	 * configTempl = the initial scanner settings.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GScannerConfig* configTempl)
 	{
@@ -116,7 +118,7 @@ public class ScannerG
 		auto p = g_scanner_new(configTempl);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_scanner_new(configTempl)");
 		}
 		this(cast(GScanner*) p);
 	}

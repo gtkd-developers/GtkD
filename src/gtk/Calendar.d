@@ -54,6 +54,7 @@ module gtk.Calendar;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -338,6 +339,7 @@ public class Calendar : Widget
 	
 	/**
 	 * Creates a new calendar, with the current date being selected.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -345,7 +347,7 @@ public class Calendar : Widget
 		auto p = gtk_calendar_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_calendar_new()");
 		}
 		this(cast(GtkCalendar*) p);
 	}

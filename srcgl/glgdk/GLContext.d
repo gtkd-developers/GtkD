@@ -58,6 +58,7 @@ module glgdk.GLContext;
 public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
+private import glib.ConstructionException;
 
 
 private import glgdk.GLDrawable;
@@ -123,6 +124,7 @@ public class GLContext : ObjectG
 	 *  the graphics system.
 	 * renderType =  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GLDrawable gldrawable, GLContext shareList, int direct, int renderType)
 	{
@@ -130,7 +132,7 @@ public class GLContext : ObjectG
 		auto p = gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType)");
 		}
 		this(cast(GdkGLContext*) p);
 	}

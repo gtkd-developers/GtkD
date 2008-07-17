@@ -57,6 +57,7 @@ module gtk.ToggleButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -208,6 +209,7 @@ public class ToggleButton : Button
 	
 	/**
 	 * Creates a new toggle button. A widget should be packed into the button, as in gtk_button_new().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -215,7 +217,7 @@ public class ToggleButton : Button
 		auto p = gtk_toggle_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_toggle_button_new()");
 		}
 		this(cast(GtkToggleButton*) p);
 	}

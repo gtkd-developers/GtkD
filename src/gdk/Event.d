@@ -63,6 +63,7 @@ module gdk.Event;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -209,6 +210,7 @@ public class Event
 	 * Since 2.2
 	 * Params:
 	 * type =  a GdkEventType
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkEventType type)
 	{
@@ -216,7 +218,7 @@ public class Event
 		auto p = gdk_event_new(type);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_event_new(type)");
 		}
 		this(cast(GdkEvent*) p);
 	}

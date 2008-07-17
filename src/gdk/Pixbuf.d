@@ -72,6 +72,7 @@ module gdk.Pixbuf;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -597,6 +598,7 @@ public class Pixbuf
 	 * destroyFn =  Function used to free the data when the pixbuf's reference count
 	 * drops to zero, or NULL if the data should not be freed
 	 * destroyFnData =  Closure data to pass to the destroy notification function
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (char* data, GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
 	{
@@ -604,7 +606,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_data(data, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_data(data, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -614,6 +616,7 @@ public class Pixbuf
 	 * the result of including an XPM file into a program's C source.
 	 * Params:
 	 * data =  Pointer to inline XPM data.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (char** data)
 	{
@@ -621,7 +624,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_from_xpm_data(data);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_xpm_data(data)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -641,6 +644,7 @@ public class Pixbuf
 	 * copyPixels =  Whether to copy the pixel data, or use direct pointers
 	 *  data for the resulting pixbuf
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int dataLength, byte* data, int copyPixels)
 	{
@@ -656,7 +660,7 @@ public class Pixbuf
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -673,6 +677,7 @@ public class Pixbuf
 	 * srcY =  Y coord in src_pixbuf
 	 * width =  width of region in src_pixbuf
 	 * height =  height of region in src_pixbuf
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int srcX, int srcY, int width, int height)
 	{
@@ -680,7 +685,7 @@ public class Pixbuf
 		auto p = gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -809,6 +814,7 @@ public class Pixbuf
 	 * Params:
 	 * filename =  Name of file to load, in the GLib file name encoding
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename)
 	{
@@ -824,7 +830,7 @@ public class Pixbuf
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_file(Str.toStringz(filename), &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -841,6 +847,7 @@ public class Pixbuf
 	 * width =  The width the image should have or -1 to not constrain the width
 	 * height =  The height the image should have or -1 to not constrain the height
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename, int width, int height)
 	{
@@ -856,7 +863,7 @@ public class Pixbuf
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -880,6 +887,7 @@ public class Pixbuf
 	 * height =  The height the image should have or -1 to not constrain the height
 	 * preserveAspectRatio =  TRUE to preserve the image's aspect ratio
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename, int width, int height, int preserveAspectRatio)
 	{
@@ -895,7 +903,7 @@ public class Pixbuf
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}

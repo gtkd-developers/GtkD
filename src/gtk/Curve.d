@@ -54,6 +54,7 @@ module gtk.Curve;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -166,6 +167,7 @@ public class Curve : DrawingArea
 	
 	/**
 	 * Creates a new GtkCurve.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -173,7 +175,7 @@ public class Curve : DrawingArea
 		auto p = gtk_curve_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_curve_new()");
 		}
 		this(cast(GtkCurve*) p);
 	}

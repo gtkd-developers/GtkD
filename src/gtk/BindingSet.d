@@ -64,6 +64,7 @@ module gtk.BindingSet;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -220,6 +221,7 @@ public class BindingSet
 	 * a unique name which needs to be specified upon creation.
 	 * Params:
 	 * setName =  unique name of this binding set
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string setName)
 	{
@@ -227,7 +229,7 @@ public class BindingSet
 		auto p = gtk_binding_set_new(Str.toStringz(setName));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_binding_set_new(Str.toStringz(setName))");
 		}
 		this(cast(GtkBindingSet*) p);
 	}

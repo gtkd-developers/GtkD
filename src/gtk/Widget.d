@@ -118,6 +118,7 @@ module gtk.Widget;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -2815,6 +2816,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * firstPropertyName =  name of first property to set
 	 * ... =  value of first property, followed by more properties,
 	 *  NULL-terminated
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType type, string firstPropertyName, ... )
 	{
@@ -2822,7 +2824,7 @@ public class Widget : ObjectGtk, BuildableIF
 		auto p = gtk_widget_new(type, Str.toStringz(firstPropertyName));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_widget_new(type, Str.toStringz(firstPropertyName))");
 		}
 		this(cast(GtkWidget*) p);
 	}

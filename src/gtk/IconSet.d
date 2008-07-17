@@ -61,6 +61,7 @@ module gtk.IconSet;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -181,6 +182,7 @@ public class IconSet
 	 * using GtkIconSet directly. The one case where you'd use
 	 * GtkIconSet is to create application-specific icon sets to place in
 	 * a GtkIconFactory.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -188,7 +190,7 @@ public class IconSet
 		auto p = gtk_icon_set_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_set_new()");
 		}
 		this(cast(GtkIconSet*) p);
 	}
@@ -201,6 +203,7 @@ public class IconSet
 	 * or make the icon look insensitive/prelighted.
 	 * Params:
 	 * pixbuf =  a GdkPixbuf
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
 	{
@@ -208,7 +211,7 @@ public class IconSet
 		auto p = gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct())");
 		}
 		this(cast(GtkIconSet*) p);
 	}

@@ -57,6 +57,7 @@ module gtk.Invisible;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gdk.Screen;
@@ -117,6 +118,7 @@ public class Invisible : Widget
 	
 	/**
 	 * Creates a new GtkInvisible.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -124,7 +126,7 @@ public class Invisible : Widget
 		auto p = gtk_invisible_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_invisible_new()");
 		}
 		this(cast(GtkInvisible*) p);
 	}
@@ -135,6 +137,7 @@ public class Invisible : Widget
 	 * Params:
 	 * screen =  a GdkScreen which identifies on which
 	 *  the new GtkInvisible will be created.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Screen screen)
 	{
@@ -142,7 +145,7 @@ public class Invisible : Widget
 		auto p = gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct())");
 		}
 		this(cast(GtkInvisible*) p);
 	}

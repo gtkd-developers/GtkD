@@ -56,6 +56,7 @@ module gtk.WindowGroup;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Window;
@@ -113,6 +114,7 @@ public class WindowGroup : ObjectG
 	/**
 	 * Creates a new GtkWindowGroup object. Grabs added with
 	 * gtk_grab_add() only affect windows within the same GtkWindowGroup.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -120,7 +122,7 @@ public class WindowGroup : ObjectG
 		auto p = gtk_window_group_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_window_group_new()");
 		}
 		this(cast(GtkWindowGroup*) p);
 	}

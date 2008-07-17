@@ -56,6 +56,7 @@ module gtk.CellRendererCombo;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.CellRenderer;
@@ -131,6 +132,7 @@ public class CellRendererCombo : CellRendererText
 	 * on the cell renderer to a string value in the model, thus rendering
 	 * a different string in each row of the GtkTreeView.
 	 * Since 2.6
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -138,7 +140,7 @@ public class CellRendererCombo : CellRendererText
 		auto p = gtk_cell_renderer_combo_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_combo_new()");
 		}
 		this(cast(GtkCellRendererCombo*) p);
 	}

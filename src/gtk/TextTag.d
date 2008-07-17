@@ -62,6 +62,7 @@ module gtk.TextTag;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -169,6 +170,7 @@ public class TextTag : ObjectG
 	 * i.e. using g_object_set().
 	 * Params:
 	 * name =  tag name, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
 	{
@@ -176,7 +178,7 @@ public class TextTag : ObjectG
 		auto p = gtk_text_tag_new(Str.toStringz(name));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_tag_new(Str.toStringz(name))");
 		}
 		this(cast(GtkTextTag*) p);
 	}

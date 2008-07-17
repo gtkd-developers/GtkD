@@ -72,6 +72,7 @@ module gdk.GC;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import gdk.Drawable;
@@ -154,6 +155,7 @@ public class GC : ObjectG
 	 * Params:
 	 * drawable =  a GdkDrawable. The created GC must always be used
 	 *  with drawables of the same depth as this one.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Drawable drawable)
 	{
@@ -161,7 +163,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct())");
 		}
 		this(cast(GdkGC*) p);
 	}
@@ -174,6 +176,7 @@ public class GC : ObjectG
 	 * values =  a structure containing initial values for the GC.
 	 * valuesMask =  a bit mask indicating which fields in values
 	 *  are set.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Drawable drawable, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
@@ -181,7 +184,7 @@ public class GC : ObjectG
 		auto p = gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask)");
 		}
 		this(cast(GdkGC*) p);
 	}

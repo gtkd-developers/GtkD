@@ -54,6 +54,7 @@ module gtk.TearoffMenuItem;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -119,6 +120,7 @@ public class TearoffMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkTearoffMenuItem.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -126,7 +128,7 @@ public class TearoffMenuItem : MenuItem
 		auto p = gtk_tearoff_menu_item_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tearoff_menu_item_new()");
 		}
 		this(cast(GtkTearoffMenuItem*) p);
 	}

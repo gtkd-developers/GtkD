@@ -64,6 +64,7 @@ module gtk.RecentManager;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -203,6 +204,7 @@ public class RecentManager : ObjectG
 	 * GtkRecentManager objects are expensive: be sure to create them only when
 	 * needed. You should use gtk_recent_manager_get_default() instead.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -210,7 +212,7 @@ public class RecentManager : ObjectG
 		auto p = gtk_recent_manager_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_recent_manager_new()");
 		}
 		this(cast(GtkRecentManager*) p);
 	}

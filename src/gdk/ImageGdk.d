@@ -60,6 +60,7 @@ module gdk.ImageGdk;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import gdk.Visual;
@@ -129,6 +130,7 @@ public class ImageGdk
 	 * visual = the GdkVisual to use for the image.
 	 * width = the width of the image in pixels.
 	 * height = the height of the image in pixels.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkImageType type, Visual visual, int width, int height)
 	{
@@ -136,7 +138,7 @@ public class ImageGdk
 		auto p = gdk_image_new(type, (visual is null) ? null : visual.getVisualStruct(), width, height);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_image_new(type, (visual is null) ? null : visual.getVisualStruct(), width, height)");
 		}
 		this(cast(GdkImage*) p);
 	}
@@ -154,6 +156,7 @@ public class ImageGdk
 	 * data =  the pixel data.
 	 * width =  the width of the image in pixels.
 	 * height =  the height of the image in pixels.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Visual visual, void* data, int width, int height)
 	{
@@ -161,7 +164,7 @@ public class ImageGdk
 		auto p = gdk_image_new_bitmap((visual is null) ? null : visual.getVisualStruct(), data, width, height);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_image_new_bitmap((visual is null) ? null : visual.getVisualStruct(), data, width, height)");
 		}
 		this(cast(GdkImage*) p);
 	}

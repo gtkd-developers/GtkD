@@ -58,6 +58,7 @@ module pango.PgFontsetSimple;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import pango.PgLanguage;
@@ -124,6 +125,7 @@ public class PgFontsetSimple : PgFontset
 	 * Creates a new PangoFontsetSimple for the given language.
 	 * Params:
 	 * language =  a PangoLanguage tag
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (PgLanguage language)
 	{
@@ -131,7 +133,7 @@ public class PgFontsetSimple : PgFontset
 		auto p = pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct())");
 		}
 		this(cast(PangoFontsetSimple*) p);
 	}

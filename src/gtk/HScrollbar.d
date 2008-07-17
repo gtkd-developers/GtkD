@@ -56,6 +56,7 @@ module gtk.HScrollbar;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Adjustment;
@@ -119,6 +120,7 @@ public class HScrollbar : Scrollbar
 	 * Creates a new horizontal scrollbar.
 	 * Params:
 	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)
 	{
@@ -126,7 +128,7 @@ public class HScrollbar : Scrollbar
 		auto p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkHScrollbar*) p);
 	}

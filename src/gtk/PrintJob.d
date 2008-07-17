@@ -65,6 +65,7 @@ module gtk.PrintJob;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -179,6 +180,7 @@ public class PrintJob : ObjectG
 	 * printer =  a GtkPrinter
 	 * settings =  a GtkPrintSettings
 	 * pageSetup =  a GtkPageSetup
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Printer printer, PrintSettings settings, PageSetup pageSetup)
 	{
@@ -186,7 +188,7 @@ public class PrintJob : ObjectG
 		auto p = gtk_print_job_new(Str.toStringz(title), (printer is null) ? null : printer.getPrinterStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_print_job_new(Str.toStringz(title), (printer is null) ? null : printer.getPrinterStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct())");
 		}
 		this(cast(GtkPrintJob*) p);
 	}

@@ -53,6 +53,7 @@ module glib.ByteArray;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -120,6 +121,7 @@ public class ByteArray
 	
 	/**
 	 * Creates a new GByteArray.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -127,7 +129,7 @@ public class ByteArray
 		auto p = g_byte_array_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_byte_array_new()");
 		}
 		this(cast(GByteArray*) p);
 	}

@@ -56,6 +56,7 @@ module gtk.Adjustment;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -197,6 +198,7 @@ public class Adjustment : ObjectGtk
 	 * stepIncrement = the step increment.
 	 * pageIncrement = the page increment.
 	 * pageSize = the page size.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
@@ -204,7 +206,7 @@ public class Adjustment : ObjectGtk
 		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize)");
 		}
 		this(cast(GtkAdjustment*) p);
 	}

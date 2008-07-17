@@ -54,6 +54,7 @@ module glib.Timer;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -104,6 +105,7 @@ public class Timer
 	/**
 	 * Creates a new timer, and starts timing (i.e. g_timer_start() is implicitly
 	 * called for you).
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -111,7 +113,7 @@ public class Timer
 		auto p = g_timer_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_timer_new()");
 		}
 		this(cast(GTimer*) p);
 	}

@@ -72,6 +72,7 @@ module gtk.TreeViewColumn;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -201,6 +202,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	
 	/**
 	 * Creates a new GtkTreeViewColumn.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -208,7 +210,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		auto p = gtk_tree_view_column_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_view_column_new()");
 		}
 		this(cast(GtkTreeViewColumn*) p);
 	}

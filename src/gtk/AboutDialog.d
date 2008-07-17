@@ -61,6 +61,7 @@ module gtk.AboutDialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -150,6 +151,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Creates a new GtkAboutDialog.
 	 * Since 2.6
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -157,7 +159,7 @@ public class AboutDialog : Dialog
 		auto p = gtk_about_dialog_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_about_dialog_new()");
 		}
 		this(cast(GtkAboutDialog*) p);
 	}

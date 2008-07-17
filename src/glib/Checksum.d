@@ -55,6 +55,7 @@ module glib.Checksum;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -141,6 +142,7 @@ public class Checksum
 	 * Since 2.16
 	 * Params:
 	 * checksumType =  the desired type of checksum
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GChecksumType checksumType)
 	{
@@ -148,7 +150,7 @@ public class Checksum
 		auto p = g_checksum_new(checksumType);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_checksum_new(checksumType)");
 		}
 		this(cast(GChecksum*) p);
 	}

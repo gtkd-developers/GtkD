@@ -54,6 +54,7 @@ module gtk.HSeparator;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -117,6 +118,7 @@ public class HSeparator : Separator
 	
 	/**
 	 * Creates a new GtkHSeparator.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -124,7 +126,7 @@ public class HSeparator : Separator
 		auto p = gtk_hseparator_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_hseparator_new()");
 		}
 		this(cast(GtkHSeparator*) p);
 	}

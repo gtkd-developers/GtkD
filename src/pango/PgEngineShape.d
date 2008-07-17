@@ -53,6 +53,7 @@ module pango.PgEngineShape;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 

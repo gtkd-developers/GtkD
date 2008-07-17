@@ -58,6 +58,7 @@ module gtk.Notebook;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -494,6 +495,7 @@ public class Notebook : Container
 	
 	/**
 	 * Creates a new GtkNotebook widget with no pages.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -501,7 +503,7 @@ public class Notebook : Container
 		auto p = gtk_notebook_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_notebook_new()");
 		}
 		this(cast(GtkNotebook*) p);
 	}

@@ -56,6 +56,7 @@ module glib.MemoryChunk;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -214,6 +215,7 @@ public class MemoryChunk
 	 * G_ALLOC_ONLY should be used if atoms will never be freed individually.
 	 * G_ALLOC_ONLY is quicker, since it does not need to track free atoms,
 	 * but it obviously wastes memory if you no longer need many of the atoms.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, int atomSize, uint areaSize, int type)
 	{
@@ -221,7 +223,7 @@ public class MemoryChunk
 		auto p = g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type)");
 		}
 		this(cast(GMemChunk*) p);
 	}

@@ -55,6 +55,7 @@ module gtk.TextAttributes;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -148,6 +149,7 @@ public class TextAttributes
 	/**
 	 * Creates a GtkTextAttributes, which describes
 	 * a set of properties on some text.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -155,7 +157,7 @@ public class TextAttributes
 		auto p = gtk_text_attributes_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_attributes_new()");
 		}
 		this(cast(GtkTextAttributes*) p);
 	}

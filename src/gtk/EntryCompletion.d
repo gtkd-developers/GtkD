@@ -65,6 +65,7 @@ module gtk.EntryCompletion;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -298,6 +299,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	/**
 	 * Creates a new GtkEntryCompletion object.
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -305,7 +307,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		auto p = gtk_entry_completion_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_entry_completion_new()");
 		}
 		this(cast(GtkEntryCompletion*) p);
 	}

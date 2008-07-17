@@ -64,6 +64,7 @@ module pango.PgFontMap;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

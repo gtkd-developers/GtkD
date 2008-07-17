@@ -53,6 +53,7 @@ module glgtk.GLtInit;
 public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
+private import glib.ConstructionException;
 
 
 

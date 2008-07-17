@@ -57,6 +57,7 @@ module gtk.ProgressBar;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -144,6 +145,7 @@ public class ProgressBar : Progress
 	
 	/**
 	 * Creates a new GtkProgressBar.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -151,7 +153,7 @@ public class ProgressBar : Progress
 		auto p = gtk_progress_bar_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_progress_bar_new()");
 		}
 		this(cast(GtkProgressBar*) p);
 	}
@@ -291,6 +293,7 @@ public class ProgressBar : Progress
 	 * Creates a new GtkProgressBar with an associated GtkAdjustment.
 	 * Params:
 	 * adjustment = a GtkAdjustment.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)
 	{
@@ -298,7 +301,7 @@ public class ProgressBar : Progress
 		auto p = gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkProgressBar*) p);
 	}

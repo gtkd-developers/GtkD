@@ -58,6 +58,7 @@ module gtk.Printer;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -166,6 +167,7 @@ public class Printer : ObjectG
 	 * name =  the name of the printer
 	 * backend =  a GtkPrintBackend
 	 * virtual =  whether the printer is virtual
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, GtkPrintBackend* backend, int virtual)
 	{
@@ -173,7 +175,7 @@ public class Printer : ObjectG
 		auto p = gtk_printer_new(Str.toStringz(name), backend, virtual);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_printer_new(Str.toStringz(name), backend, virtual)");
 		}
 		this(cast(GtkPrinter*) p);
 	}

@@ -59,6 +59,7 @@ module gtk.ScaleButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -238,6 +239,7 @@ public class ScaleButton : Button
 	 *  or up/down arrow event occurs (usually 2)
 	 * icons =  a NULL-terminated array of icon names, or NULL if
 	 *  you want to set the list later with gtk_scale_button_set_icons()
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkIconSize size, double min, double max, double step, char** icons)
 	{
@@ -245,7 +247,7 @@ public class ScaleButton : Button
 		auto p = gtk_scale_button_new(size, min, max, step, icons);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_scale_button_new(size, min, max, step, icons)");
 		}
 		this(cast(GtkScaleButton*) p);
 	}

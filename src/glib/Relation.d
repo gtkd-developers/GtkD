@@ -57,6 +57,7 @@ module glib.Relation;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Tuples;
@@ -151,6 +152,7 @@ public class Relation
 	 * Note that currently the number of fields must be 2.
 	 * Params:
 	 * fields = the number of fields.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int fields)
 	{
@@ -158,7 +160,7 @@ public class Relation
 		auto p = g_relation_new(fields);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_relation_new(fields)");
 		}
 		this(cast(GRelation*) p);
 	}

@@ -56,6 +56,7 @@ module pango.PgFontDescription;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -122,6 +123,7 @@ public class PgFontDescription
 	
 	/**
 	 * Creates a new font description structure with all fields unset.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -129,7 +131,7 @@ public class PgFontDescription
 		auto p = pango_font_description_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_font_description_new()");
 		}
 		this(cast(PangoFontDescription*) p);
 	}

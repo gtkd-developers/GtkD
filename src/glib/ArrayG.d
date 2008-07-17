@@ -55,6 +55,7 @@ module glib.ArrayG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -132,6 +133,7 @@ public class ArrayG
 	 * clear = TRUE if GArray elements should be automatically cleared to 0
 	 * when they are allocated.
 	 * elementSize = the size of each element in bytes.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int zeroTerminated, int clear, uint elementSize)
 	{
@@ -139,7 +141,7 @@ public class ArrayG
 		auto p = g_array_new(zeroTerminated, clear, elementSize);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_array_new(zeroTerminated, clear, elementSize)");
 		}
 		this(cast(GArray*) p);
 	}

@@ -58,6 +58,7 @@ module glib.Source;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.MainContext;
@@ -178,6 +179,7 @@ public class Source
 	 * sourceFuncs =  structure containing functions that implement
 	 *  the sources behavior.
 	 * structSize =  size of the GSource structure to create.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GSourceFuncs* sourceFuncs, uint structSize)
 	{
@@ -185,7 +187,7 @@ public class Source
 		auto p = g_source_new(sourceFuncs, structSize);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_source_new(sourceFuncs, structSize)");
 		}
 		this(cast(GSource*) p);
 	}

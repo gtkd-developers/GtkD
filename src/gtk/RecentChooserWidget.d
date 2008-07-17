@@ -69,6 +69,7 @@ module gtk.RecentChooserWidget;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -148,6 +149,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 	 * Creates a new GtkRecentChooserWidget object. This is an embeddable widget
 	 * used to access the recently used resources list.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -155,7 +157,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		auto p = gtk_recent_chooser_widget_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_recent_chooser_widget_new()");
 		}
 		this(cast(GtkRecentChooserWidget*) p);
 	}
@@ -167,6 +169,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 	 * Since 2.10
 	 * Params:
 	 * manager =  a GtkRecentManager
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RecentManager manager)
 	{
@@ -174,7 +177,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		auto p = gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct())");
 		}
 		this(cast(GtkRecentChooserWidget*) p);
 	}

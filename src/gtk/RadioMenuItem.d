@@ -61,6 +61,7 @@ module gtk.RadioMenuItem;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -241,6 +242,7 @@ public class RadioMenuItem : CheckMenuItem
 	 * Creates a new GtkRadioMenuItem.
 	 * Params:
 	 * group = the group to which the radio menu item is to be attached
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
 	{
@@ -248,7 +250,7 @@ public class RadioMenuItem : CheckMenuItem
 		auto p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct())");
 		}
 		this(cast(GtkRadioMenuItem*) p);
 	}
@@ -256,6 +258,7 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Creates a new GtkRadioMenuItem adding it to the same group as group.
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -263,7 +266,7 @@ public class RadioMenuItem : CheckMenuItem
 		auto p = gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem)");
 		}
 		this(cast(GtkRadioMenuItem*) p);
 	}

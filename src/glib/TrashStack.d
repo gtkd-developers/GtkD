@@ -53,6 +53,7 @@ module glib.TrashStack;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 

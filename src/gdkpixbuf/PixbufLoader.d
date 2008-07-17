@@ -64,6 +64,7 @@ module gdkpixbuf.PixbufLoader;
 public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -339,6 +340,7 @@ public class PixbufLoader : ObjectG
 	
 	/**
 	 * Creates a new pixbuf loader object.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -346,7 +348,7 @@ public class PixbufLoader : ObjectG
 		auto p = gdk_pixbuf_loader_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_loader_new()");
 		}
 		this(cast(GdkPixbufLoader*) p);
 	}

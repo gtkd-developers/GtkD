@@ -55,6 +55,7 @@ module pango.PgScriptIter;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -112,6 +113,7 @@ public class PgScriptIter
 	 * Params:
 	 * text =  a UTF-8 string
 	 * length =  length of text, or -1 if text is nul-terminated.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string text, int length)
 	{
@@ -119,7 +121,7 @@ public class PgScriptIter
 		auto p = pango_script_iter_new(Str.toStringz(text), length);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_script_iter_new(Str.toStringz(text), length)");
 		}
 		this(cast(PangoScriptIter*) p);
 	}

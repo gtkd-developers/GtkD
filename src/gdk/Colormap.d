@@ -62,6 +62,7 @@ module gdk.Colormap;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import gdk.Visual;
@@ -140,6 +141,7 @@ public class Colormap
 	 * allocate =  if TRUE, the newly created colormap will be
 	 * a private colormap, and all colors in it will be
 	 * allocated for the applications use.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Visual visual, int allocate)
 	{
@@ -147,7 +149,7 @@ public class Colormap
 		auto p = gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate)");
 		}
 		this(cast(GdkColormap*) p);
 	}

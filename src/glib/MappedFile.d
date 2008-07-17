@@ -56,6 +56,7 @@ module glib.MappedFile;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -136,6 +137,7 @@ public class MappedFile
 	 * filename =  The path of the file to load, in the GLib filename encoding
 	 * writable =  whether the mapping should be writable
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename, int writable)
 	{
@@ -151,7 +153,7 @@ public class MappedFile
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_mapped_file_new(Str.toStringz(filename), writable, &err)");
 		}
 		this(cast(GMappedFile*) p);
 	}

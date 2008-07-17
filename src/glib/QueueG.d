@@ -56,6 +56,7 @@ module glib.QueueG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -117,6 +118,7 @@ public class QueueG
 	
 	/**
 	 * Creates a new GQueue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -124,7 +126,7 @@ public class QueueG
 		auto p = g_queue_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_queue_new()");
 		}
 		this(cast(GQueue*) p);
 	}

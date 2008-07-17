@@ -59,6 +59,7 @@ module gsv.SourceView;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -202,6 +203,7 @@ public class SourceView : TextView
 	 * Creates a new GtkSourceView. An empty default buffer will be
 	 * created for you. If you want to specify your own buffer, consider
 	 * gtk_source_view_new_with_buffer().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -209,7 +211,7 @@ public class SourceView : TextView
 		auto p = gtk_source_view_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_view_new()");
 		}
 		this(cast(GtkSourceView*) p);
 	}
@@ -219,6 +221,7 @@ public class SourceView : TextView
 	 * buffer. One buffer can be shared among many widgets.
 	 * Params:
 	 * buffer =  a GtkSourceBuffer.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceBuffer buffer)
 	{
@@ -226,7 +229,7 @@ public class SourceView : TextView
 		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct())");
 		}
 		this(cast(GtkSourceView*) p);
 	}

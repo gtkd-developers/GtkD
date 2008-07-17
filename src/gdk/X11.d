@@ -104,6 +104,7 @@ module gdk.X11;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

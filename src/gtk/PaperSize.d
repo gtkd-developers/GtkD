@@ -62,6 +62,7 @@ module gtk.PaperSize;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -129,6 +130,7 @@ public class PaperSize
 	 * Since 2.10
 	 * Params:
 	 * name =  a paper size name, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
 	{
@@ -136,7 +138,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new(Str.toStringz(name));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_paper_size_new(Str.toStringz(name))");
 		}
 		this(cast(GtkPaperSize*) p);
 	}
@@ -153,6 +155,7 @@ public class PaperSize
 	 * ppdDisplayName =  the corresponding human-readable name
 	 * width =  the paper width, in points
 	 * height =  the paper height in points
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string ppdName, string ppdDisplayName, double width, double height)
 	{
@@ -160,7 +163,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height)");
 		}
 		this(cast(GtkPaperSize*) p);
 	}
@@ -175,6 +178,7 @@ public class PaperSize
 	 * width =  the paper width, in units of unit
 	 * height =  the paper height, in units of unit
 	 * unit =  the unit for width and height
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string displayName, double width, double height, GtkUnit unit)
 	{
@@ -182,7 +186,7 @@ public class PaperSize
 		auto p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit)");
 		}
 		this(cast(GtkPaperSize*) p);
 	}
@@ -404,6 +408,7 @@ public class PaperSize
 	 * groupName =  the name ofthe group in the key file to read,
 	 *  or NULL to read the first group
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (KeyFile keyFile, string groupName)
 	{
@@ -419,7 +424,7 @@ public class PaperSize
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err)");
 		}
 		this(cast(GtkPaperSize*) p);
 	}

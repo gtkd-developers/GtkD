@@ -56,6 +56,7 @@ module gtk.SeparatorToolItem;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.ToolItem;
@@ -120,6 +121,7 @@ public class SeparatorToolItem : ToolItem
 	/**
 	 * Create a new GtkSeparatorToolItem
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -127,7 +129,7 @@ public class SeparatorToolItem : ToolItem
 		auto p = gtk_separator_tool_item_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_separator_tool_item_new()");
 		}
 		this(cast(GtkSeparatorToolItem*) p);
 	}

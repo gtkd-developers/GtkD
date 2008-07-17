@@ -68,6 +68,7 @@ module gtk.TreeRowReference;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -254,6 +255,7 @@ public class TreeRowReference
 	 * Params:
 	 * model =  A GtkTreeModel
 	 * path =  A valid GtkTreePath to monitor
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model, TreePath path)
 	{
@@ -261,7 +263,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct())");
 		}
 		this(cast(GtkTreeRowReference*) p);
 	}
@@ -289,6 +291,7 @@ public class TreeRowReference
 	 * proxy =  A proxy GObject
 	 * model =  A GtkTreeModel
 	 * path =  A valid GtkTreePath to monitor
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG proxy, TreeModelIF model, TreePath path)
 	{
@@ -296,7 +299,7 @@ public class TreeRowReference
 		auto p = gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct())");
 		}
 		this(cast(GtkTreeRowReference*) p);
 	}

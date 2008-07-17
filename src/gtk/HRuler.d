@@ -54,6 +54,7 @@ module gtk.HRuler;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -123,6 +124,7 @@ public class HRuler : Ruler
 	
 	/**
 	 * Creates a new horizontal ruler.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -130,7 +132,7 @@ public class HRuler : Ruler
 		auto p = gtk_hruler_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_hruler_new()");
 		}
 		this(cast(GtkHRuler*) p);
 	}

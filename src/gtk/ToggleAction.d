@@ -55,6 +55,7 @@ module gtk.ToggleAction;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -156,6 +157,7 @@ public class ToggleAction : Action
 	 * tooltip =  A tooltip for the action, or NULL
 	 * stockId =  The stock icon to display in widgets representing the
 	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId)
 	{
@@ -163,7 +165,7 @@ public class ToggleAction : Action
 		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId))");
 		}
 		this(cast(GtkToggleAction*) p);
 	}

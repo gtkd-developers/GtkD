@@ -59,6 +59,7 @@ module glgdk.GLPixmap;
 public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
+private import glib.ConstructionException;
 
 
 private import glgdk.GLConfig;
@@ -122,6 +123,7 @@ public class GLPixmap : Drawable
 	 * glconfig =  a GdkGLConfig.
 	 * pixmap =  the GdkPixmap to be used as the rendering area.
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GLConfig glconfig, Pixmap pixmap, int* attribList)
 	{
@@ -129,7 +131,7 @@ public class GLPixmap : Drawable
 		auto p = gdk_gl_pixmap_new((glconfig is null) ? null : glconfig.getGLConfigStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), attribList);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_pixmap_new((glconfig is null) ? null : glconfig.getGLConfigStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), attribList)");
 		}
 		this(cast(GdkGLPixmap*) p);
 	}

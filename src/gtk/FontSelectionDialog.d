@@ -57,6 +57,7 @@ module gtk.FontSelectionDialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -127,6 +128,7 @@ public class FontSelectionDialog : Dialog
 	 * Creates a new GtkFontSelectionDialog.
 	 * Params:
 	 * title = the title of the dialog box.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title)
 	{
@@ -134,7 +136,7 @@ public class FontSelectionDialog : Dialog
 		auto p = gtk_font_selection_dialog_new(Str.toStringz(title));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_font_selection_dialog_new(Str.toStringz(title))");
 		}
 		this(cast(GtkFontSelectionDialog*) p);
 	}

@@ -52,6 +52,7 @@ module glgdk.GLTokens;
 public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
+private import glib.ConstructionException;
 
 
 

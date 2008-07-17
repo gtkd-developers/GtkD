@@ -63,6 +63,7 @@ module gtk.AccelLabel;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -161,6 +162,7 @@ public class AccelLabel : Label
 	 * Creates a new GtkAccelLabel.
 	 * Params:
 	 * string = the label string. Must be non-NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string string)
 	{
@@ -168,7 +170,7 @@ public class AccelLabel : Label
 		auto p = gtk_accel_label_new(Str.toStringz(string));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_accel_label_new(Str.toStringz(string))");
 		}
 		this(cast(GtkAccelLabel*) p);
 	}

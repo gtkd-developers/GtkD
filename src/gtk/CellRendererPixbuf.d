@@ -56,6 +56,7 @@ module gtk.CellRendererPixbuf;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.CellRenderer;
@@ -132,6 +133,7 @@ public class CellRendererPixbuf : CellRenderer
 	 * can bind the "pixbuf" property on the cell renderer to a pixbuf value
 	 * in the model, thus rendering a different image in each row of the
 	 * GtkTreeView.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -139,7 +141,7 @@ public class CellRendererPixbuf : CellRenderer
 		auto p = gtk_cell_renderer_pixbuf_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_pixbuf_new()");
 		}
 		this(cast(GtkCellRendererPixbuf*) p);
 	}

@@ -55,6 +55,7 @@ module gtk.AspectFrame;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -129,6 +130,7 @@ public class AspectFrame : Frame
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 *  ratio is taken from the requistion of the child.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, float xalign, float yalign, float ratio, int obeyChild)
 	{
@@ -136,7 +138,7 @@ public class AspectFrame : Frame
 		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild)");
 		}
 		this(cast(GtkAspectFrame*) p);
 	}

@@ -56,6 +56,7 @@ module atk.Util;
 public  import gtkc.atktypes;
 
 private import gtkc.atk;
+private import glib.ConstructionException;
 
 
 private import atk.ObjectAtk;

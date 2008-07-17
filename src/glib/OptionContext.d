@@ -59,6 +59,7 @@ module glib.OptionContext;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;
@@ -205,6 +206,7 @@ public class OptionContext
 	 *  the first line of --help output, after the
 	 *  usage summary
 	 *  programname [OPTION...]
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string parameterString)
 	{
@@ -212,7 +214,7 @@ public class OptionContext
 		auto p = g_option_context_new(Str.toStringz(parameterString));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_option_context_new(Str.toStringz(parameterString))");
 		}
 		this(cast(GOptionContext*) p);
 	}

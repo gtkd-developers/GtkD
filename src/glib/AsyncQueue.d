@@ -56,6 +56,7 @@ module glib.AsyncQueue;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.TimeVal;
@@ -138,6 +139,7 @@ public class AsyncQueue
 	
 	/**
 	 * Creates a new asynchronous queue with the initial reference count of 1.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -145,7 +147,7 @@ public class AsyncQueue
 		auto p = g_async_queue_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_async_queue_new()");
 		}
 		this(cast(GAsyncQueue*) p);
 	}
@@ -157,6 +159,7 @@ public class AsyncQueue
 	 * Since 2.16
 	 * Params:
 	 * itemFreeFunc =  function to free queue elements
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify itemFreeFunc)
 	{
@@ -164,7 +167,7 @@ public class AsyncQueue
 		auto p = g_async_queue_new_full(itemFreeFunc);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_async_queue_new_full(itemFreeFunc)");
 		}
 		this(cast(GAsyncQueue*) p);
 	}

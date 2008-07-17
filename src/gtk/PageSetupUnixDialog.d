@@ -63,6 +63,7 @@ module gtk.PageSetupUnixDialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -132,6 +133,7 @@ public class PageSetupUnixDialog : Dialog
 	 * Params:
 	 * title =  the title of the dialog, or NULL
 	 * parent =  transient parent of the dialog, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)
 	{
@@ -139,7 +141,7 @@ public class PageSetupUnixDialog : Dialog
 		auto p = gtk_page_setup_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_page_setup_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct())");
 		}
 		this(cast(GtkPageSetupUnixDialog*) p);
 	}

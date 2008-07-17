@@ -54,6 +54,7 @@ module glib.StringGChunk;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -121,6 +122,7 @@ public class StringGChunk
 	 *  allocated to store the strings. If a particular string
 	 *  is larger than this default size, a larger block of
 	 *  memory will be allocated for it.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint size)
 	{
@@ -128,7 +130,7 @@ public class StringGChunk
 		auto p = g_string_chunk_new(size);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_string_chunk_new(size)");
 		}
 		this(cast(GStringChunk*) p);
 	}

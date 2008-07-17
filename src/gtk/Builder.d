@@ -65,6 +65,7 @@ module gtk.Builder;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -302,6 +303,7 @@ public class Builder : ObjectG
 	/**
 	 * Creates a new builder object.
 	 * Since 2.12
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -309,7 +311,7 @@ public class Builder : ObjectG
 		auto p = gtk_builder_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_builder_new()");
 		}
 		this(cast(GtkBuilder*) p);
 	}

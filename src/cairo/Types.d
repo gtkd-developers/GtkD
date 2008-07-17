@@ -53,6 +53,7 @@ module cairo.Types;
 public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
+private import glib.ConstructionException;
 
 
 

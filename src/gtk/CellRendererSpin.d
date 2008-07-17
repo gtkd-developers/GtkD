@@ -56,6 +56,7 @@ module gtk.CellRendererSpin;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.CellRenderer;
@@ -124,6 +125,7 @@ public class CellRendererSpin : CellRendererText
 	/**
 	 * Creates a new GtkCellRendererSpin.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -131,7 +133,7 @@ public class CellRendererSpin : CellRendererText
 		auto p = gtk_cell_renderer_spin_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_spin_new()");
 		}
 		this(cast(GtkCellRendererSpin*) p);
 	}

@@ -80,6 +80,7 @@ module gtk.ListStore;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.TreeModel;
@@ -366,6 +367,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Params:
 	 * nColumns =  number of columns in the list store
 	 * ... =  all GType types for the columns, from first to last
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int nColumns, ... )
 	{
@@ -373,7 +375,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 		auto p = gtk_list_store_new(nColumns);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_list_store_new(nColumns)");
 		}
 		this(cast(GtkListStore*) p);
 	}
@@ -383,6 +385,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Params:
 	 * nColumns =  number of columns in the list store
 	 * types =  an array of GType types for the columns, from first to last
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int nColumns, GType* types)
 	{
@@ -390,7 +393,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 		auto p = gtk_list_store_newv(nColumns, types);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_list_store_newv(nColumns, types)");
 		}
 		this(cast(GtkListStore*) p);
 	}

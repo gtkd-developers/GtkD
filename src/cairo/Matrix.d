@@ -55,6 +55,7 @@ module cairo.Matrix;
 public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

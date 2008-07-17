@@ -62,6 +62,7 @@ module gtk.PrintSettings;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -133,6 +134,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Creates a new GtkPrintSettings object.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -140,7 +142,7 @@ public class PrintSettings : ObjectG
 		auto p = gtk_print_settings_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_print_settings_new()");
 		}
 		this(cast(GtkPrintSettings*) p);
 	}
@@ -906,6 +908,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * fileName =  the filename to read the settings from
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string fileName)
 	{
@@ -921,7 +924,7 @@ public class PrintSettings : ObjectG
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_print_settings_new_from_file(Str.toStringz(fileName), &err)");
 		}
 		this(cast(GtkPrintSettings*) p);
 	}
@@ -935,6 +938,7 @@ public class PrintSettings : ObjectG
 	 * keyFile =  the GKeyFile to retrieve the settings from
 	 * groupName =  the name of the group to use
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (KeyFile keyFile, string groupName)
 	{
@@ -950,7 +954,7 @@ public class PrintSettings : ObjectG
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err)");
 		}
 		this(cast(GtkPrintSettings*) p);
 	}

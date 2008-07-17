@@ -70,6 +70,7 @@ module gdk.Window;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -270,6 +271,7 @@ public class Window : Drawable
 	 * Params:
 	 * attributes =  attributes of the new window
 	 * attributesMask =  mask indicating which fields in attributes are valid
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkWindowAttr* attributes, int attributesMask)
 	{
@@ -277,7 +279,7 @@ public class Window : Drawable
 		auto p = gdk_window_new(gdkWindow, attributes, attributesMask);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_window_new(gdkWindow, attributes, attributesMask)");
 		}
 		this(cast(GdkWindow*) p);
 	}

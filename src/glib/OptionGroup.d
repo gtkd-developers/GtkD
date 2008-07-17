@@ -54,6 +54,7 @@ module glib.OptionGroup;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -189,6 +190,7 @@ public class OptionGroup
 	 * userData =  user data that will be passed to the pre- and post-parse hooks,
 	 *  the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
 	 * destroy =  a function that will be called to free user_data, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
 	{
@@ -196,7 +198,7 @@ public class OptionGroup
 		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy)");
 		}
 		this(cast(GOptionGroup*) p);
 	}

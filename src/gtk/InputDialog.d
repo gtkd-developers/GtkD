@@ -55,6 +55,7 @@ module gtk.InputDialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -243,6 +244,7 @@ public class InputDialog : Dialog
 	
 	/**
 	 * Creates a new GtkInputDialog.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -250,7 +252,7 @@ public class InputDialog : Dialog
 		auto p = gtk_input_dialog_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_input_dialog_new()");
 		}
 		this(cast(GtkInputDialog*) p);
 	}

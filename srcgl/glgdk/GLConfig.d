@@ -61,6 +61,7 @@ module glgdk.GLConfig;
 public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -178,6 +179,7 @@ public class GLConfig : ObjectG
 	 * Params:
 	 * attribList =  a list of attribute/value pairs. The last attribute must
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int* attribList)
 	{
@@ -185,7 +187,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new(attribList);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_config_new(attribList)");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -197,6 +199,7 @@ public class GLConfig : ObjectG
 	 * screen =  target screen.
 	 * attribList =  a list of attribute/value pairs. The last attribute must
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Screen screen, int* attribList)
 	{
@@ -204,7 +207,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList)");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -214,6 +217,7 @@ public class GLConfig : ObjectG
 	 * display mode.
 	 * Params:
 	 * mode =  display mode bit mask.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkGLConfigMode mode)
 	{
@@ -221,7 +225,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new_by_mode(mode);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_config_new_by_mode(mode)");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -232,6 +236,7 @@ public class GLConfig : ObjectG
 	 * Params:
 	 * screen =  target screen.
 	 * mode =  display mode bit mask.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Screen screen, GdkGLConfigMode mode)
 	{
@@ -239,7 +244,7 @@ public class GLConfig : ObjectG
 		auto p = gdk_gl_config_new_by_mode_for_screen((screen is null) ? null : screen.getScreenStruct(), mode);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_gl_config_new_by_mode_for_screen((screen is null) ? null : screen.getScreenStruct(), mode)");
 		}
 		this(cast(GdkGLConfig*) p);
 	}

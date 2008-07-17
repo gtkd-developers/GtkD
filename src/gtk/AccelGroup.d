@@ -63,6 +63,7 @@ module gtk.AccelGroup;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -211,6 +212,7 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 * Creates a new GtkAccelGroup.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -218,7 +220,7 @@ public class AccelGroup : ObjectG
 		auto p = gtk_accel_group_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_accel_group_new()");
 		}
 		this(cast(GtkAccelGroup*) p);
 	}

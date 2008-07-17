@@ -56,6 +56,7 @@ module gsv.SourceStyleSchemeManager;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 
 private import gsv.SourceStyleScheme;
@@ -114,6 +115,7 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Creates a new style manager. If you do not need more than one style
 	 * manager then use gtk_source_style_scheme_manager_get_default() instead.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -121,7 +123,7 @@ public class SourceStyleSchemeManager : ObjectG
 		auto p = gtk_source_style_scheme_manager_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_style_scheme_manager_new()");
 		}
 		this(cast(GtkSourceStyleSchemeManager*) p);
 	}

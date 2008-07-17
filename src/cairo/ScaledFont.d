@@ -61,6 +61,7 @@ module cairo.ScaledFont;
 public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
+private import glib.ConstructionException;
 
 
 private import cairo.FontFace;

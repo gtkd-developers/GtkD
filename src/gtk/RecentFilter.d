@@ -55,6 +55,7 @@ module gtk.RecentFilter;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -131,6 +132,7 @@ public class RecentFilter : ObjectGtk
 	 * gtk_recent_filter_add_pattern(), gtk_recent_filter_add_mime_type(),
 	 * gtk_recent_filter_add_application(), gtk_recent_filter_add_age().
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -138,7 +140,7 @@ public class RecentFilter : ObjectGtk
 		auto p = gtk_recent_filter_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_recent_filter_new()");
 		}
 		this(cast(GtkRecentFilter*) p);
 	}

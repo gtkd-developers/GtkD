@@ -54,6 +54,7 @@ module gtk.VBox;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -116,6 +117,7 @@ public class VBox : Box
 	 * Params:
 	 * homogeneous = TRUE if all children are to be given equal space allotments.
 	 * spacing = the number of pixels to place by default between children.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int homogeneous, int spacing)
 	{
@@ -123,7 +125,7 @@ public class VBox : Box
 		auto p = gtk_vbox_new(homogeneous, spacing);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_vbox_new(homogeneous, spacing)");
 		}
 		this(cast(GtkVBox*) p);
 	}

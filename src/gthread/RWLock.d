@@ -53,6 +53,7 @@ module gthread.RWLock;
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
+private import glib.ConstructionException;
 
 
 

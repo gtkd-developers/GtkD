@@ -60,6 +60,7 @@ module gsv.SourcePrintCompositor;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 
 private import gsv.SourceBuffer;
@@ -132,6 +133,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * buffer =  the GtkSourceBuffer to print
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceBuffer buffer)
 	{
@@ -139,7 +141,7 @@ public class SourcePrintCompositor : ObjectG
 		auto p = gtk_source_print_compositor_new((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_print_compositor_new((buffer is null) ? null : buffer.getSourceBufferStruct())");
 		}
 		this(cast(GtkSourcePrintCompositor*) p);
 	}
@@ -155,6 +157,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * view =  a GtkSourceView to get configuration from.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceView view)
 	{
@@ -162,7 +165,7 @@ public class SourcePrintCompositor : ObjectG
 		auto p = gtk_source_print_compositor_new_from_view((view is null) ? null : view.getSourceViewStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_print_compositor_new_from_view((view is null) ? null : view.getSourceViewStruct())");
 		}
 		this(cast(GtkSourcePrintCompositor*) p);
 	}

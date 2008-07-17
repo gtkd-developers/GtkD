@@ -65,6 +65,7 @@ module gtk.ActionGroup;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -323,6 +324,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * name =  the name of the action group.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
 	{
@@ -330,7 +332,7 @@ public class ActionGroup : ObjectG, BuildableIF
 		auto p = gtk_action_group_new(Str.toStringz(name));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_action_group_new(Str.toStringz(name))");
 		}
 		this(cast(GtkActionGroup*) p);
 	}

@@ -57,6 +57,7 @@ module gthread.Cond;
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
+private import glib.ConstructionException;
 
 
 private import gthread.Mutex;
@@ -137,6 +138,7 @@ public class Cond
 	/**
 	 * Creates a new GCond. This function will abort, if g_thread_init()
 	 * has not been called yet.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -144,7 +146,7 @@ public class Cond
 		auto p = g_cond_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_cond_new()");
 		}
 		this(cast(GCond*) p);
 	}

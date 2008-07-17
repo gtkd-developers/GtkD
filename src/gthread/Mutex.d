@@ -53,6 +53,7 @@ module gthread.Mutex;
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
+private import glib.ConstructionException;
 
 
 
@@ -132,6 +133,7 @@ public class Mutex
 	 * Creates a new GMutex.
 	 * Note
 	 * This function will abort if g_thread_init() has not been called yet.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -139,7 +141,7 @@ public class Mutex
 		auto p = g_mutex_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_mutex_new()");
 		}
 		this(cast(GMutex*) p);
 	}

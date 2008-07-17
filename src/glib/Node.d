@@ -54,6 +54,7 @@ module glib.Node;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -123,6 +124,7 @@ public class Node
 	 * Used to create the first node in a tree.
 	 * Params:
 	 * data =  the data of the new node
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* data)
 	{
@@ -130,7 +132,7 @@ public class Node
 		auto p = g_node_new(data);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_node_new(data)");
 		}
 		this(cast(GNode*) p);
 	}

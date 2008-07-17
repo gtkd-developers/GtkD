@@ -54,6 +54,7 @@ module glib.Sequence;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -136,6 +137,7 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * dataDestroy =  a GDestroyNotify function, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify dataDestroy)
 	{
@@ -143,7 +145,7 @@ public class Sequence
 		auto p = g_sequence_new(dataDestroy);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_sequence_new(dataDestroy)");
 		}
 		this(cast(GSequence*) p);
 	}

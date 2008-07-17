@@ -55,6 +55,7 @@ module gdkpixbuf.PixbufSimpleAnimation;
 public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
+private import glib.ConstructionException;
 
 
 private import gdk.Pixbuf;
@@ -123,6 +124,7 @@ public class PixbufSimpleAnimation : ObjectG
 	 * width =  the width of the animation
 	 * height =  the height of the animation
 	 * rate =  the speed of the animation, in frames per second
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int width, int height, float rate)
 	{
@@ -130,7 +132,7 @@ public class PixbufSimpleAnimation : ObjectG
 		auto p = gdk_pixbuf_simple_anim_new(width, height, rate);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_simple_anim_new(width, height, rate)");
 		}
 		this(cast(GdkPixbufSimpleAnim*) p);
 	}

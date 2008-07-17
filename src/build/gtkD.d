@@ -30,6 +30,7 @@ private import glib.Memory;
 private import glib.IOChannel;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.ConstructionException;
 private import glib.Messages;
 private import glib.MessageLog;
 private import glib.Str;

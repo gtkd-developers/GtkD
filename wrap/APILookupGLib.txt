@@ -296,6 +296,25 @@ class GException : Exception
 code: end
 outFile: GException
 
+file:
+code: start
+
+class ConstructionException : Exception
+{
+	this(string message)
+	{
+		super(message);
+	}
+
+	string toString()
+	{
+		return "Construction failure, " ~ msg;
+	}
+}
+
+code: end
+outFile: ConstructionException
+
 file: glib-Warnings-and-Assertions.html
 class: Messages
 prefix: g_

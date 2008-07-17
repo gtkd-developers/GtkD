@@ -54,6 +54,7 @@ module pango.PgItem;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 
@@ -128,6 +129,7 @@ public class PgItem
 	
 	/**
 	 * Creates a new PangoItem structure initialized to default values.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -135,7 +137,7 @@ public class PgItem
 		auto p = pango_item_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_item_new()");
 		}
 		this(cast(PangoItem*) p);
 	}

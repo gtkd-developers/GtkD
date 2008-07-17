@@ -62,6 +62,7 @@ module gtk.PageSetup;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -153,6 +154,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Creates a new GtkPageSetup.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -160,7 +162,7 @@ public class PageSetup : ObjectG
 		auto p = gtk_page_setup_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_page_setup_new()");
 		}
 		this(cast(GtkPageSetup*) p);
 	}
@@ -423,6 +425,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * fileName =  the filename to read the page setup from
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string fileName)
 	{
@@ -438,7 +441,7 @@ public class PageSetup : ObjectG
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_page_setup_new_from_file(Str.toStringz(fileName), &err)");
 		}
 		this(cast(GtkPageSetup*) p);
 	}
@@ -453,6 +456,7 @@ public class PageSetup : ObjectG
 	 * groupName =  the name of the group in the key_file to read, or NULL
 	 *  to use the default name "Page Setup"
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (KeyFile keyFile, string groupName)
 	{
@@ -468,7 +472,7 @@ public class PageSetup : ObjectG
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err)");
 		}
 		this(cast(GtkPageSetup*) p);
 	}

@@ -56,6 +56,7 @@ module gobject.ValueArray;
 public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
+private import glib.ConstructionException;
 
 
 private import gobject.Value;
@@ -127,6 +128,7 @@ public class ValueArray
 	 * regardless of the value of n_prealloced.
 	 * Params:
 	 * nPrealloced = number of values to preallocate space for
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint nPrealloced)
 	{
@@ -134,7 +136,7 @@ public class ValueArray
 		auto p = g_value_array_new(nPrealloced);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_value_array_new(nPrealloced)");
 		}
 		this(cast(GValueArray*) p);
 	}

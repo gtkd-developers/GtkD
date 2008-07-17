@@ -61,6 +61,7 @@ module glib.IOChannel;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;
@@ -282,6 +283,7 @@ public class IOChannel
 	 * mode =  One of "r", "w", "a", "r+", "w+", "a+". These have
 	 *  the same meaning as in fopen()
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename, string mode)
 	{
@@ -297,7 +299,7 @@ public class IOChannel
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err)");
 		}
 		this(cast(GIOChannel*) p);
 	}

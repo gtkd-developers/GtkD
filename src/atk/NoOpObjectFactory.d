@@ -53,6 +53,7 @@ module atk.NoOpObjectFactory;
 public  import gtkc.atktypes;
 
 private import gtkc.atk;
+private import glib.ConstructionException;
 
 
 

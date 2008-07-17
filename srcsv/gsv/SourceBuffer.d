@@ -66,6 +66,7 @@ module gsv.SourceBuffer;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -212,6 +213,7 @@ public class SourceBuffer : TextBuffer
 	 * Creates a new source buffer.
 	 * Params:
 	 * table =  a GtkTextTagTable, or NULL to create a new one.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextTagTable table)
 	{
@@ -219,7 +221,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct())");
 		}
 		this(cast(GtkSourceBuffer*) p);
 	}
@@ -230,6 +232,7 @@ public class SourceBuffer : TextBuffer
 	 * a new tag table and then calling gtk_source_buffer_set_language().
 	 * Params:
 	 * language =  a GtkSourceLanguage.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceLanguage language)
 	{
@@ -237,7 +240,7 @@ public class SourceBuffer : TextBuffer
 		auto p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct())");
 		}
 		this(cast(GtkSourceBuffer*) p);
 	}

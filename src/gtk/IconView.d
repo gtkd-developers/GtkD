@@ -73,6 +73,7 @@ module gtk.IconView;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -423,6 +424,7 @@ public class IconView : Container, CellLayoutIF
 	/**
 	 * Creates a new GtkIconView widget
 	 * Since 2.6
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -430,7 +432,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_view_new()");
 		}
 		this(cast(GtkIconView*) p);
 	}
@@ -440,6 +442,7 @@ public class IconView : Container, CellLayoutIF
 	 * Since 2.6
 	 * Params:
 	 * model =  The model.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model)
 	{
@@ -447,7 +450,7 @@ public class IconView : Container, CellLayoutIF
 		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelTStruct())");
 		}
 		this(cast(GtkIconView*) p);
 	}

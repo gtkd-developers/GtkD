@@ -57,6 +57,7 @@ module pango.PgGlyphString;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -109,6 +110,7 @@ public class PgGlyphString
 	
 	/**
 	 * Create a new PangoGlyphString.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -116,7 +118,7 @@ public class PgGlyphString
 		auto p = pango_glyph_string_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_glyph_string_new()");
 		}
 		this(cast(PangoGlyphString*) p);
 	}

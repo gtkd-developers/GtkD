@@ -57,6 +57,7 @@ module gtk.TextMark;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -146,6 +147,7 @@ public class TextMark : ObjectG
 	 * Params:
 	 * name =  mark name or NULL
 	 * leftGravity =  whether the mark should have left gravity
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, int leftGravity)
 	{
@@ -153,7 +155,7 @@ public class TextMark : ObjectG
 		auto p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_mark_new(Str.toStringz(name), leftGravity)");
 		}
 		this(cast(GtkTextMark*) p);
 	}

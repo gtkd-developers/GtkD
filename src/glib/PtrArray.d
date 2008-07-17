@@ -54,6 +54,7 @@ module glib.PtrArray;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -125,6 +126,7 @@ public class PtrArray
 	
 	/**
 	 * Creates a new GPtrArray.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -132,7 +134,7 @@ public class PtrArray
 		auto p = g_ptr_array_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_ptr_array_new()");
 		}
 		this(cast(GPtrArray*) p);
 	}

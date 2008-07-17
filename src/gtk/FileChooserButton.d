@@ -65,6 +65,7 @@ module gtk.FileChooserButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -193,6 +194,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * Params:
 	 * title =  the title of the browse dialog.
 	 * action =  the open mode for the widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, GtkFileChooserAction action)
 	{
@@ -200,7 +202,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_chooser_button_new(Str.toStringz(title), action)");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}
@@ -212,6 +214,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * title =  the title of the browse dialog.
 	 * action =  the open mode for the widget.
 	 * backend =  the name of the GtkFileSystem backend to use.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, GtkFileChooserAction action, string backend)
 	{
@@ -219,7 +222,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		auto p = gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend))");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}
@@ -236,6 +239,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * Since 2.6
 	 * Params:
 	 * dialog =  the widget to use as dialog
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Widget dialog)
 	{
@@ -243,7 +247,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		auto p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct())");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}

@@ -57,6 +57,7 @@ module gtk.ColorSelection;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -155,6 +156,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Creates a new GtkColorSelection.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -162,7 +164,7 @@ public class ColorSelection : VBox
 		auto p = gtk_color_selection_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_color_selection_new()");
 		}
 		this(cast(GtkColorSelection*) p);
 	}

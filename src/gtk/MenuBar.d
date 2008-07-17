@@ -60,6 +60,7 @@ module gtk.MenuBar;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -136,6 +137,7 @@ public class MenuBar : MenuShell
 	
 	/**
 	 * Creates the new GtkMenuBar
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -143,7 +145,7 @@ public class MenuBar : MenuShell
 		auto p = gtk_menu_bar_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_menu_bar_new()");
 		}
 		this(cast(GtkMenuBar*) p);
 	}

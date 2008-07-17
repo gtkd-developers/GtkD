@@ -56,6 +56,7 @@ module gtk.VScrollbar;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Adjustment;
@@ -112,6 +113,7 @@ public class VScrollbar : Scrollbar
 	
 	/**
 	 * Params:
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)
 	{
@@ -119,7 +121,7 @@ public class VScrollbar : Scrollbar
 		auto p = gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkVScrollbar*) p);
 	}

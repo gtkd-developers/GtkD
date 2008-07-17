@@ -59,6 +59,7 @@ module gtk.ComboBoxEntry;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.TreeModelIF;
@@ -172,6 +173,7 @@ public class ComboBoxEntry : ComboBox
 	 * Params:
 	 * model =  A GtkTreeModel.
 	 * textColumn =  A column in model to get the strings from.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model, int textColumn)
 	{
@@ -179,7 +181,7 @@ public class ComboBoxEntry : ComboBox
 		auto p = gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelTStruct(), textColumn);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelTStruct(), textColumn)");
 		}
 		this(cast(GtkComboBoxEntry*) p);
 	}

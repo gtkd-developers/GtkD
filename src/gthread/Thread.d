@@ -64,6 +64,7 @@ module gthread.Thread;
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;

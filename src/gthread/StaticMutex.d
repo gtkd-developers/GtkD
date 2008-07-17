@@ -55,6 +55,7 @@ module gthread.StaticMutex;
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
+private import glib.ConstructionException;
 
 
 private import gthread.Mutex;

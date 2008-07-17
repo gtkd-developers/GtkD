@@ -54,6 +54,7 @@ module gtk.VRuler;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -123,6 +124,7 @@ public class VRuler : Ruler
 	
 	/**
 	 * Creates a new vertical ruler
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -130,7 +132,7 @@ public class VRuler : Ruler
 		auto p = gtk_vruler_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_vruler_new()");
 		}
 		this(cast(GtkVRuler*) p);
 	}

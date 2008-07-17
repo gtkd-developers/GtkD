@@ -56,6 +56,7 @@ module glib.StringCompletion;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -124,6 +125,7 @@ public class StringCompletion
 	 * func = the function to be called to return the string representing an item
 	 * in the GCompletion, or NULL if strings are going to be used as the
 	 * GCompletion items.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompletionFunc func)
 	{
@@ -131,7 +133,7 @@ public class StringCompletion
 		auto p = g_completion_new(func);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_completion_new(func)");
 		}
 		this(cast(GCompletion*) p);
 	}

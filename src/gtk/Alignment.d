@@ -55,6 +55,7 @@ module gtk.Alignment;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -205,6 +206,7 @@ public class Alignment : Bin
 	 * space allocated for the GtkAlignment.
 	 * yscale = the amount that the child widget expands vertically to fill up
 	 * unused space, from 0 to 1. The values are similar to xscale.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (float xalign, float yalign, float xscale, float yscale)
 	{
@@ -212,7 +214,7 @@ public class Alignment : Bin
 		auto p = gtk_alignment_new(xalign, yalign, xscale, yscale);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_alignment_new(xalign, yalign, xscale, yscale)");
 		}
 		this(cast(GtkAlignment*) p);
 	}

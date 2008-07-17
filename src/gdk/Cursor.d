@@ -63,6 +63,7 @@ module gdk.Cursor;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -132,6 +133,7 @@ public class Cursor
 	 * a cursor with no pixels in it.
 	 * Params:
 	 * cursorType =  cursor to create
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkCursorType cursorType)
 	{
@@ -139,7 +141,7 @@ public class Cursor
 		auto p = gdk_cursor_new(cursorType);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_cursor_new(cursorType)");
 		}
 		this(cast(GdkCursor*) p);
 	}
@@ -184,6 +186,7 @@ public class Cursor
 	 *  The color does not have to be allocated first.
 	 * x =  the horizontal offset of the 'hotspot' of the cursor.
 	 * y =  the vertical offset of the 'hotspot' of the cursor.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
 	{
@@ -191,7 +194,7 @@ public class Cursor
 		auto p = gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y)");
 		}
 		this(cast(GdkCursor*) p);
 	}
@@ -214,6 +217,7 @@ public class Cursor
 	 * pixbuf =  the GdkPixbuf containing the cursor image
 	 * x =  the horizontal offset of the 'hotspot' of the cursor.
 	 * y =  the vertical offset of the 'hotspot' of the cursor.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, Pixbuf pixbuf, int x, int y)
 	{
@@ -221,7 +225,7 @@ public class Cursor
 		auto p = gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y)");
 		}
 		this(cast(GdkCursor*) p);
 	}
@@ -233,6 +237,7 @@ public class Cursor
 	 * Params:
 	 * display =  the GdkDisplay for which the cursor will be created
 	 * name =  the name of the cursor
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, string name)
 	{
@@ -240,7 +245,7 @@ public class Cursor
 		auto p = gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name))");
 		}
 		this(cast(GdkCursor*) p);
 	}
@@ -251,6 +256,7 @@ public class Cursor
 	 * Params:
 	 * display =  the GdkDisplay for which the cursor will be created
 	 * cursorType =  cursor to create
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, GdkCursorType cursorType)
 	{
@@ -258,7 +264,7 @@ public class Cursor
 		auto p = gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType)");
 		}
 		this(cast(GdkCursor*) p);
 	}

@@ -54,6 +54,7 @@ module pango.PgCoverage;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 
@@ -104,6 +105,7 @@ public class PgCoverage
 	
 	/**
 	 * Create a new PangoCoverage
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -111,7 +113,7 @@ public class PgCoverage
 		auto p = pango_coverage_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_coverage_new()");
 		}
 		this(cast(PangoCoverage*) p);
 	}

@@ -63,6 +63,7 @@ module gtk.TreePath;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -264,6 +265,7 @@ public class TreePath
 	 * path string is passed in, NULL is returned.
 	 * Params:
 	 * path =  The string representation of a path.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string path)
 	{
@@ -271,7 +273,7 @@ public class TreePath
 		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_path_new_from_string(Str.toStringz(path))");
 		}
 		this(cast(GtkTreePath*) p);
 	}
@@ -282,6 +284,7 @@ public class TreePath
 	 * Params:
 	 * firstIndex =  first integer
 	 * ... =  list of integers terminated by -1
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int firstIndex, ... )
 	{
@@ -289,7 +292,7 @@ public class TreePath
 		auto p = gtk_tree_path_new_from_indices(firstIndex);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_path_new_from_indices(firstIndex)");
 		}
 		this(cast(GtkTreePath*) p);
 	}

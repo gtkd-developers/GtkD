@@ -76,6 +76,7 @@ module gtk.TextView;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -732,6 +733,7 @@ public class TextView : Container
 	 * before using the text view, an empty default buffer will be created
 	 * for you. Get the buffer with gtk_text_view_get_buffer(). If you want
 	 * to specify your own buffer, consider gtk_text_view_new_with_buffer().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -739,7 +741,7 @@ public class TextView : Container
 		auto p = gtk_text_view_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_view_new()");
 		}
 		this(cast(GtkTextView*) p);
 	}
@@ -753,6 +755,7 @@ public class TextView : Container
 	 * take over an existing reference.
 	 * Params:
 	 * buffer =  a GtkTextBuffer
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextBuffer buffer)
 	{
@@ -760,7 +763,7 @@ public class TextView : Container
 		auto p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct())");
 		}
 		this(cast(GtkTextView*) p);
 	}

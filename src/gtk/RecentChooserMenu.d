@@ -69,6 +69,7 @@ module gtk.RecentChooserMenu;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -163,6 +164,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 	 * gtk_recent_chooser_menu_new_for_manager() function to know how to create
 	 * a GtkRecentChooserMenu widget bound to another GtkRecentManager object.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -170,7 +172,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 		auto p = gtk_recent_chooser_menu_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_recent_chooser_menu_new()");
 		}
 		this(cast(GtkRecentChooserMenu*) p);
 	}
@@ -185,6 +187,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 	 * Since 2.10
 	 * Params:
 	 * manager =  a GtkRecentManager
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RecentManager manager)
 	{
@@ -192,7 +195,7 @@ public class RecentChooserMenu : Menu, RecentChooserIF
 		auto p = gtk_recent_chooser_menu_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_recent_chooser_menu_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct())");
 		}
 		this(cast(GtkRecentChooserMenu*) p);
 	}

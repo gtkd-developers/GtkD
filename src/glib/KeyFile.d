@@ -56,6 +56,7 @@ module glib.KeyFile;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;
@@ -165,6 +166,7 @@ public class KeyFile
 	 * g_key_file_load_from_dirs() or g_key_file_load_from_data_dirs() to
 	 * read an existing key file.
 	 * Since 2.6
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -172,7 +174,7 @@ public class KeyFile
 		auto p = g_key_file_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_key_file_new()");
 		}
 		this(cast(GKeyFile*) p);
 	}

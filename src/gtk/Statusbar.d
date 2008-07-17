@@ -55,6 +55,7 @@ module gtk.Statusbar;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -200,6 +201,7 @@ public class Statusbar : HBox
 	
 	/**
 	 * Creates a new GtkStatusbar ready for messages.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -207,7 +209,7 @@ public class Statusbar : HBox
 		auto p = gtk_statusbar_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_statusbar_new()");
 		}
 		this(cast(GtkStatusbar*) p);
 	}

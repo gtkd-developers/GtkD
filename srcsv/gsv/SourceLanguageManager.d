@@ -56,6 +56,7 @@ module gsv.SourceLanguageManager;
 public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -115,6 +116,7 @@ public class SourceLanguageManager : ObjectG
 	 * Creates a new language manager. If you do not need more than one language
 	 * manager or a private language manager instance then use
 	 * gtk_source_language_manager_get_default() instead.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -122,7 +124,7 @@ public class SourceLanguageManager : ObjectG
 		auto p = gtk_source_language_manager_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_source_language_manager_new()");
 		}
 		this(cast(GtkSourceLanguageManager*) p);
 	}

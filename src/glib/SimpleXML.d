@@ -59,6 +59,7 @@ module glib.SimpleXML;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ListSG;
@@ -290,6 +291,7 @@ public class SimpleXML
 	 * flags =  one or more GMarkupParseFlags
 	 * userData =  user data to pass to GMarkupParser functions
 	 * userDataDnotify =  user data destroy notifier called when the parse context is freed
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
@@ -297,7 +299,7 @@ public class SimpleXML
 		auto p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_markup_parse_context_new(parser, flags, userData, userDataDnotify)");
 		}
 		this(cast(GMarkupParseContext*) p);
 	}

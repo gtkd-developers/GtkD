@@ -60,6 +60,7 @@ module glib.MainContext;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Source;
@@ -171,6 +172,7 @@ public class MainContext
 	
 	/**
 	 * Creates a new GMainContext structure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -178,7 +180,7 @@ public class MainContext
 		auto p = g_main_context_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_main_context_new()");
 		}
 		this(cast(GMainContext*) p);
 	}

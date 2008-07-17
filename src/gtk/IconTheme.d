@@ -68,6 +68,7 @@ module gtk.IconTheme;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -234,6 +235,7 @@ public class IconTheme : ObjectG
 	 * or gtk_icon_theme_get_for_screen() rather than creating
 	 * a new icon theme object for scratch.
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -241,7 +243,7 @@ public class IconTheme : ObjectG
 		auto p = gtk_icon_theme_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_icon_theme_new()");
 		}
 		this(cast(GtkIconTheme*) p);
 	}

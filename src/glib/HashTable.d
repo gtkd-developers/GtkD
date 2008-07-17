@@ -56,6 +56,7 @@ module glib.HashTable;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -138,6 +139,7 @@ public class HashTable
 	 *  common types of keys. If key_equal_func is NULL, keys are compared
 	 *  directly in a similar fashion to g_direct_equal(), but without the
 	 *  overhead of a function call.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
@@ -145,7 +147,7 @@ public class HashTable
 		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_hash_table_new(hashFunc, keyEqualFunc)");
 		}
 		this(cast(GHashTable*) p);
 	}
@@ -163,6 +165,7 @@ public class HashTable
 	 * valueDestroyFunc =  a function to free the memory allocated for the
 	 *  value used when removing the entry from the GHashTable or NULL if
 	 *  you don't want to supply such a function.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
@@ -170,7 +173,7 @@ public class HashTable
 		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc)");
 		}
 		this(cast(GHashTable*) p);
 	}

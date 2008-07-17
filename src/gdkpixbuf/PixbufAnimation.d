@@ -62,6 +62,7 @@ module gdkpixbuf.PixbufAnimation;
 public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;
@@ -135,6 +136,7 @@ public class PixbufAnimation : ObjectG
 	 * Params:
 	 * filename =  Name of file to load, in the GLib file name encoding
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename)
 	{
@@ -150,7 +152,7 @@ public class PixbufAnimation : ObjectG
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err)");
 		}
 		this(cast(GdkPixbufAnimation*) p);
 	}

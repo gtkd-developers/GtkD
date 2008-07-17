@@ -57,6 +57,7 @@ module gtk.ColorButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -165,6 +166,7 @@ public class ColorButton : Button
 	 * allowing the user to select a color. The swatch will be updated to reflect
 	 * the new color when the user finishes.
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -172,7 +174,7 @@ public class ColorButton : Button
 		auto p = gtk_color_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_color_button_new()");
 		}
 		this(cast(GtkColorButton*) p);
 	}
@@ -182,6 +184,7 @@ public class ColorButton : Button
 	 * Since 2.4
 	 * Params:
 	 * color =  A GdkColor to set the current color with.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Color color)
 	{
@@ -189,7 +192,7 @@ public class ColorButton : Button
 		auto p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct())");
 		}
 		this(cast(GtkColorButton*) p);
 	}

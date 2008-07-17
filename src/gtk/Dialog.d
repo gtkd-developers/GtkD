@@ -61,6 +61,7 @@ module gtk.Dialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -310,6 +311,7 @@ public class Dialog : Window
 	/**
 	 * Creates a new dialog box. Widgets should not be packed into this GtkWindow
 	 * directly, but into the vbox and action_area, as described above.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -317,7 +319,7 @@ public class Dialog : Window
 		auto p = gtk_dialog_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_dialog_new()");
 		}
 		this(cast(GtkDialog*) p);
 	}
@@ -347,6 +349,7 @@ public class Dialog : Window
 	 * flags =  from GtkDialogFlags
 	 * firstButtonText =  stock ID or text to go in first button, or NULL
 	 * ... =  response ID for first button, then additional buttons, ending with NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, GtkDialogFlags flags, string firstButtonText, ... )
 	{
@@ -354,7 +357,7 @@ public class Dialog : Window
 		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText))");
 		}
 		this(cast(GtkDialog*) p);
 	}

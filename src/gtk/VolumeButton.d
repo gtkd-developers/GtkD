@@ -57,6 +57,7 @@ module gtk.VolumeButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -120,6 +121,7 @@ public class VolumeButton : ScaleButton
 	 * a stepping of 0.02. Volume values can be obtained and modified using
 	 * the functions from GtkScaleButton.
 	 * Since 2.12
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -127,7 +129,7 @@ public class VolumeButton : ScaleButton
 		auto p = gtk_volume_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_volume_button_new()");
 		}
 		this(cast(GtkVolumeButton*) p);
 	}

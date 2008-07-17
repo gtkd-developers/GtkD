@@ -56,6 +56,7 @@ module gtk.TextChildAnchor;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -641,6 +642,7 @@ public class TextChildAnchor
 	 * it into a GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
 	 * To perform the creation and insertion in one step, use the
 	 * convenience function gtk_text_buffer_create_child_anchor().
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -648,7 +650,7 @@ public class TextChildAnchor
 		auto p = gtk_text_child_anchor_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_text_child_anchor_new()");
 		}
 		this(cast(GtkTextChildAnchor*) p);
 	}

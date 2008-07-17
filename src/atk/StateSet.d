@@ -55,6 +55,7 @@ module atk.StateSet;
 public  import gtkc.atktypes;
 
 private import gtkc.atk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -104,6 +105,7 @@ public class StateSet
 	
 	/**
 	 * Creates a new empty state set.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -111,7 +113,7 @@ public class StateSet
 		auto p = atk_state_set_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by atk_state_set_new()");
 		}
 		this(cast(AtkStateSet*) p);
 	}

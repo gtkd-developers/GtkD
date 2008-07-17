@@ -54,6 +54,7 @@ module atk.Image;
 public  import gtkc.atktypes;
 
 private import gtkc.atk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

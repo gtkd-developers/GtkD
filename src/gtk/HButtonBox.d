@@ -54,6 +54,7 @@ module gtk.HButtonBox;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -137,6 +138,7 @@ public class HButtonBox : ButtonBox
 	
 	/**
 	 * Creates a new horizontal button box.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -144,7 +146,7 @@ public class HButtonBox : ButtonBox
 		auto p = gtk_hbutton_box_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_hbutton_box_new()");
 		}
 		this(cast(GtkHButtonBox*) p);
 	}

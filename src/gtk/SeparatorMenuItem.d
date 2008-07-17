@@ -54,6 +54,7 @@ module gtk.SeparatorMenuItem;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -112,6 +113,7 @@ public class SeparatorMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkSeparatorMenuItem.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -119,7 +121,7 @@ public class SeparatorMenuItem : MenuItem
 		auto p = gtk_separator_menu_item_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_separator_menu_item_new()");
 		}
 		this(cast(GtkSeparatorMenuItem*) p);
 	}

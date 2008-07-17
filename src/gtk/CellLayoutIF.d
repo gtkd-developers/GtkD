@@ -59,6 +59,7 @@ module gtk.CellLayoutIF;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;

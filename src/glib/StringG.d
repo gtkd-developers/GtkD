@@ -55,6 +55,7 @@ module glib.StringG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -108,6 +109,7 @@ public class StringG
 	 * Creates a new GString, initialized with the given string.
 	 * Params:
 	 * init =  the initial text to copy into the string
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string init)
 	{
@@ -115,7 +117,7 @@ public class StringG
 		auto p = g_string_new(Str.toStringz(init));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_string_new(Str.toStringz(init))");
 		}
 		this(cast(GString*) p);
 	}
@@ -130,6 +132,7 @@ public class StringG
 	 * Params:
 	 * init =  initial contents of the string
 	 * len =  length of init to use
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string init, int len)
 	{
@@ -137,7 +140,7 @@ public class StringG
 		auto p = g_string_new_len(Str.toStringz(init), len);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_string_new_len(Str.toStringz(init), len)");
 		}
 		this(cast(GString*) p);
 	}

@@ -61,6 +61,7 @@ module gtk.ItemFactory;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -130,6 +131,7 @@ public class ItemFactory : ObjectGtk
 	 *  "<name>"
 	 * accelGroup =  a GtkAccelGroup to which the accelerators for the
 	 *  menu items will be added, or NULL to create a new one
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType containerType, string path, AccelGroup accelGroup)
 	{
@@ -137,7 +139,7 @@ public class ItemFactory : ObjectGtk
 		auto p = gtk_item_factory_new(containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_item_factory_new(containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct())");
 		}
 		this(cast(GtkItemFactory*) p);
 	}

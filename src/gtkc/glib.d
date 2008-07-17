@@ -288,6 +288,9 @@ extern(C)
 	// glib.
 	
 	
+	// glib.
+	
+	
 	// glib.Messages
 	
 	void function(gchar* format, ... )g_print;

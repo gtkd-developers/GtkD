@@ -56,6 +56,7 @@ module gtk.Fixed;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -139,6 +140,7 @@ public class Fixed : Container
 	
 	/**
 	 * Creates a new GtkFixed.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -146,7 +148,7 @@ public class Fixed : Container
 		auto p = gtk_fixed_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_fixed_new()");
 		}
 		this(cast(GtkFixed*) p);
 	}

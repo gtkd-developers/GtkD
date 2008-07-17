@@ -56,6 +56,7 @@ module gtk.CellRendererProgress;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.CellRenderer;
@@ -116,6 +117,7 @@ public class CellRendererProgress : CellRenderer
 	/**
 	 * Creates a new GtkCellRendererProgress.
 	 * Since 2.6
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -123,7 +125,7 @@ public class CellRendererProgress : CellRenderer
 		auto p = gtk_cell_renderer_progress_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_progress_new()");
 		}
 		this(cast(GtkCellRendererProgress*) p);
 	}

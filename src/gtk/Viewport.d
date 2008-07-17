@@ -56,6 +56,7 @@ module gtk.Viewport;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -149,6 +150,7 @@ public class Viewport : Bin
 	 * Params:
 	 * hadjustment =  horizontal adjustment.
 	 * vadjustment =  vertical adjustment.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
@@ -156,7 +158,7 @@ public class Viewport : Bin
 		auto p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkViewport*) p);
 	}

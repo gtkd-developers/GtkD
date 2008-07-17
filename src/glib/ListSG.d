@@ -54,6 +54,7 @@ module glib.ListSG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 

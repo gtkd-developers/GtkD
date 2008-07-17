@@ -58,6 +58,7 @@ module gtk.Layout;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -166,6 +167,7 @@ public class Layout : Container
 	 * Params:
 	 * hadjustment =  horizontal scroll adjustment, or NULL
 	 * vadjustment =  vertical scroll adjustment, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
@@ -173,7 +175,7 @@ public class Layout : Container
 		auto p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkLayout*) p);
 	}

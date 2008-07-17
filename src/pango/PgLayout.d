@@ -70,6 +70,7 @@ module pango.PgLayout;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -153,6 +154,7 @@ public class PgLayout : ObjectG
 	 * default values for a particular PangoContext.
 	 * Params:
 	 * context =  a PangoContext
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (PgContext context)
 	{
@@ -160,7 +162,7 @@ public class PgLayout : ObjectG
 		auto p = pango_layout_new((context is null) ? null : context.getPgContextStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_layout_new((context is null) ? null : context.getPgContextStruct())");
 		}
 		this(cast(PangoLayout*) p);
 	}

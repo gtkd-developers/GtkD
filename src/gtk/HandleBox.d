@@ -54,6 +54,7 @@ module gtk.HandleBox;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -196,6 +197,7 @@ public class HandleBox : Bin
 	
 	/**
 	 * Create a new handle box.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -203,7 +205,7 @@ public class HandleBox : Bin
 		auto p = gtk_handle_box_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_handle_box_new()");
 		}
 		this(cast(GtkHandleBox*) p);
 	}

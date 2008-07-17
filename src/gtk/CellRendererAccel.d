@@ -57,6 +57,7 @@ module gtk.CellRendererAccel;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -187,6 +188,7 @@ public class CellRendererAccel : CellRendererText
 	/**
 	 * Creates a new GtkCellRendererAccel.
 	 * Since 2.10
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -194,7 +196,7 @@ public class CellRendererAccel : CellRendererText
 		auto p = gtk_cell_renderer_accel_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_renderer_accel_new()");
 		}
 		this(cast(GtkCellRendererAccel*) p);
 	}

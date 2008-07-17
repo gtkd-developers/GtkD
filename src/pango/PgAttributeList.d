@@ -58,6 +58,7 @@ module pango.PgAttributeList;
 public  import gtkc.pangotypes;
 
 private import gtkc.pango;
+private import glib.ConstructionException;
 
 
 private import pango.PgAttribute;
@@ -111,6 +112,7 @@ public class PgAttributeList
 	
 	/**
 	 * Create a new empty attribute list with a reference count of one.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -118,7 +120,7 @@ public class PgAttributeList
 		auto p = pango_attr_list_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by pango_attr_list_new()");
 		}
 		this(cast(PangoAttrList*) p);
 	}

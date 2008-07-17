@@ -72,6 +72,7 @@ module glade.Glade;
 public  import gtkc.gladetypes;
 
 private import gtkc.glade;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -455,6 +456,7 @@ public class Glade : ObjectG
 	 * size =  the size of the buffer.
 	 * root =  the widget node in buffer to start building from (or NULL)
 	 * domain =  the translation domain to use for this interface (or NULL)
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string buffer, int size, string root, string domain)
 	{
@@ -462,7 +464,7 @@ public class Glade : ObjectG
 		auto p = glade_xml_new_from_buffer(Str.toStringz(buffer), size, Str.toStringz(root), Str.toStringz(domain));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by glade_xml_new_from_buffer(Str.toStringz(buffer), size, Str.toStringz(root), Str.toStringz(domain))");
 		}
 		this(cast(GladeXML*) p);
 	}

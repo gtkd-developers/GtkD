@@ -59,6 +59,7 @@ module glib.RandG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 
@@ -135,6 +136,7 @@ public class RandG
 	 * Creates a new random number generator initialized with seed.
 	 * Params:
 	 * seed =  a value to initialize the random number generator.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint seed)
 	{
@@ -142,7 +144,7 @@ public class RandG
 		auto p = g_rand_new_with_seed(seed);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_rand_new_with_seed(seed)");
 		}
 		this(cast(GRand*) p);
 	}
@@ -153,6 +155,7 @@ public class RandG
 	 * Params:
 	 * seed =  an array of seeds to initialize the random number generator.
 	 * seedLength =  an array of seeds to initialize the random number generator.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint* seed, uint seedLength)
 	{
@@ -160,7 +163,7 @@ public class RandG
 		auto p = g_rand_new_with_seed_array(seed, seedLength);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed, seedLength)");
 		}
 		this(cast(GRand*) p);
 	}
@@ -169,6 +172,7 @@ public class RandG
 	 * Creates a new random number generator initialized with a seed taken
 	 * either from /dev/urandom (if existing) or from
 	 * the current time (as a fallback).
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -176,7 +180,7 @@ public class RandG
 		auto p = g_rand_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_rand_new()");
 		}
 		this(cast(GRand*) p);
 	}

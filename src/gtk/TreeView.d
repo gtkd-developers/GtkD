@@ -82,6 +82,7 @@ module gtk.TreeView;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -810,6 +811,7 @@ public class TreeView : Container
 	
 	/**
 	 * Creates a new GtkTreeView widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -817,7 +819,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_view_new()");
 		}
 		this(cast(GtkTreeView*) p);
 	}
@@ -883,6 +885,7 @@ public class TreeView : Container
 	 * Creates a new GtkTreeView widget with the model initialized to model.
 	 * Params:
 	 * model =  the model.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model)
 	{
@@ -890,7 +893,7 @@ public class TreeView : Container
 		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelTStruct())");
 		}
 		this(cast(GtkTreeView*) p);
 	}

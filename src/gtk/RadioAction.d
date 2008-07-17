@@ -57,6 +57,7 @@ module gtk.RadioAction;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -166,6 +167,7 @@ public class RadioAction : ToggleAction
 	 *  action, or NULL
 	 * value =  The value which gtk_radio_action_get_current_value() should
 	 *  return if this action is selected.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId, int value)
 	{
@@ -173,7 +175,7 @@ public class RadioAction : ToggleAction
 		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value)");
 		}
 		this(cast(GtkRadioAction*) p);
 	}

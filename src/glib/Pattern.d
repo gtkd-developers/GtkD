@@ -56,6 +56,7 @@ module glib.Pattern;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -117,6 +118,7 @@ public class Pattern
 	 * Compiles a pattern to a GPatternSpec.
 	 * Params:
 	 * pattern = a zero-terminated UTF-8 encoded string
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string pattern)
 	{
@@ -124,7 +126,7 @@ public class Pattern
 		auto p = g_pattern_spec_new(Str.toStringz(pattern));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_pattern_spec_new(Str.toStringz(pattern))");
 		}
 		this(cast(GPatternSpec*) p);
 	}

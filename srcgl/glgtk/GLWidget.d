@@ -63,6 +63,7 @@ module glgtk.GLWidget;
 public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;

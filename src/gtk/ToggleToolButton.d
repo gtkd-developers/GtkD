@@ -57,6 +57,7 @@ module gtk.ToggleToolButton;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -167,6 +168,7 @@ public class ToggleToolButton : ToolButton
 	/**
 	 * Returns a new GtkToggleToolButton
 	 * Since 2.4
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -174,7 +176,7 @@ public class ToggleToolButton : ToolButton
 		auto p = gtk_toggle_tool_button_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_toggle_tool_button_new()");
 		}
 		this(cast(GtkToggleToolButton*) p);
 	}
@@ -187,6 +189,7 @@ public class ToggleToolButton : ToolButton
 	 * Since 2.4
 	 * Params:
 	 * stockId =  the name of the stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string stockId)
 	{
@@ -194,7 +197,7 @@ public class ToggleToolButton : ToolButton
 		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId))");
 		}
 		this(cast(GtkToggleToolButton*) p);
 	}

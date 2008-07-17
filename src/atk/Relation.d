@@ -58,6 +58,7 @@ module atk.Relation;
 public  import gtkc.atktypes;
 
 private import gtkc.atk;
+private import glib.ConstructionException;
 
 
 private import atk.ObjectAtk;
@@ -161,6 +162,7 @@ public class Relation : ObjectG
 	 * nTargets =  number of AtkObjects pointed to by targets
 	 * relationship =  an AtkRelationType with which to create the new
 	 *  AtkRelation
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (AtkObject** targets, int nTargets, AtkRelationType relationship)
 	{
@@ -168,7 +170,7 @@ public class Relation : ObjectG
 		auto p = atk_relation_new(targets, nTargets, relationship);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by atk_relation_new(targets, nTargets, relationship)");
 		}
 		this(cast(AtkRelation*) p);
 	}

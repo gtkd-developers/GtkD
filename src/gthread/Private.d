@@ -53,6 +53,7 @@ module gthread.Private;
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
+private import glib.ConstructionException;
 
 
 
@@ -144,6 +145,7 @@ public class Private
 	 * Params:
 	 * destructor = a function to destroy the data keyed to GPrivate when a
 	 * thread ends.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify destructor)
 	{
@@ -151,7 +153,7 @@ public class Private
 		auto p = g_private_new(destructor);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_private_new(destructor)");
 		}
 		this(cast(GPrivate*) p);
 	}

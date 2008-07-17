@@ -67,6 +67,7 @@ module gtk.Image;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -368,6 +369,7 @@ public class Image : Misc
 	 * displaying the file.
 	 * Params:
 	 * filename =  a filename
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename)
 	{
@@ -375,7 +377,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_file(Str.toStringz(filename));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new_from_file(Str.toStringz(filename))");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -394,6 +396,7 @@ public class Image : Misc
 	 * Params:
 	 * iconSet =  a GtkIconSet
 	 * size =  a stock icon size
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconSet iconSet, GtkIconSize size)
 	{
@@ -401,7 +404,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_icon_set((iconSet is null) ? null : iconSet.getIconSetStruct(), size);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new_from_icon_set((iconSet is null) ? null : iconSet.getIconSetStruct(), size)");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -415,6 +418,7 @@ public class Image : Misc
 	 * Params:
 	 * image =  a GdkImage, or NULL
 	 * mask =  a GdkBitmap, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ImageGdk image, Bitmap mask)
 	{
@@ -422,7 +426,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_image((image is null) ? null : image.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new_from_image((image is null) ? null : image.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct())");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -437,6 +441,7 @@ public class Image : Misc
 	 * you should use gtk_image_new_from_icon_set().
 	 * Params:
 	 * pixbuf =  a GdkPixbuf, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
 	{
@@ -444,7 +449,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct())");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -458,6 +463,7 @@ public class Image : Misc
 	 * Params:
 	 * pixmap =  a GdkPixmap, or NULL
 	 * mask =  a GdkBitmap, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixmap pixmap, Bitmap mask)
 	{
@@ -465,7 +471,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new_from_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct())");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -481,6 +487,7 @@ public class Image : Misc
 	 * is not busy with something that has a higher priority.
 	 * Params:
 	 * animation =  an animation
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkPixbufAnimation* animation)
 	{
@@ -488,7 +495,7 @@ public class Image : Misc
 		auto p = gtk_image_new_from_animation(animation);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new_from_animation(animation)");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -600,6 +607,7 @@ public class Image : Misc
 	
 	/**
 	 * Creates a new empty GtkImage widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -607,7 +615,7 @@ public class Image : Misc
 		auto p = gtk_image_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_new()");
 		}
 		this(cast(GtkImage*) p);
 	}

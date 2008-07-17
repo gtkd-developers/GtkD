@@ -56,6 +56,7 @@ module gtk.Plug;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -194,6 +195,7 @@ public class Plug : Window
 	 * can later be plugged into a GtkSocket by gtk_socket_add_id().
 	 * Params:
 	 * socketId =  the window ID of the socket, or 0.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkNativeWindow socketId)
 	{
@@ -201,7 +203,7 @@ public class Plug : Window
 		auto p = gtk_plug_new(socketId);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_plug_new(socketId)");
 		}
 		this(cast(GtkPlug*) p);
 	}
@@ -212,6 +214,7 @@ public class Plug : Window
 	 * Params:
 	 * display =  the GdkDisplay on which socket_id is displayed
 	 * socketId =  the XID of the socket's window.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, GdkNativeWindow socketId)
 	{
@@ -219,7 +222,7 @@ public class Plug : Window
 		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId)");
 		}
 		this(cast(GtkPlug*) p);
 	}

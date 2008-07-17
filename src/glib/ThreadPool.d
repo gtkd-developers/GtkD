@@ -55,6 +55,7 @@ module glib.ThreadPool;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.ErrorG;
@@ -153,6 +154,7 @@ public class ThreadPool
 	 *  the new thread pool, -1 means no limit
 	 * exclusive =  should this thread pool be exclusive?
 	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GFunc func, void* userData, int maxThreads, int exclusive)
 	{
@@ -168,7 +170,7 @@ public class ThreadPool
 		
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_thread_pool_new(func, userData, maxThreads, exclusive, &err)");
 		}
 		this(cast(GThreadPool*) p);
 	}

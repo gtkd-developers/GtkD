@@ -71,6 +71,7 @@ module gtk.CellView;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -168,6 +169,7 @@ public class CellView : Widget, CellLayoutIF
 	/**
 	 * Creates a new GtkCellView widget.
 	 * Since 2.6
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -175,7 +177,7 @@ public class CellView : Widget, CellLayoutIF
 		auto p = gtk_cell_view_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_view_new()");
 		}
 		this(cast(GtkCellView*) p);
 	}
@@ -186,6 +188,7 @@ public class CellView : Widget, CellLayoutIF
 	 * Since 2.6
 	 * Params:
 	 * pixbuf =  the image to display in the cell view
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
 	{
@@ -193,7 +196,7 @@ public class CellView : Widget, CellLayoutIF
 		auto p = gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct())");
 		}
 		this(cast(GtkCellView*) p);
 	}

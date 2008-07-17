@@ -42,7 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gobject.ObjectG
+ * 	- gobject.ObjectG;
  * 	- gdk.Event
  * 	- gtk.CellEditableT
  * 	- gtk.CellEditableIF
@@ -58,9 +58,10 @@ module gtk.CellEditable;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
-private import gobject.ObjectG;
+private import gobject.ObjectG;;
 private import gdk.Event;
 private import gtk.CellEditableT;
 private import gtk.CellEditableIF;
@@ -94,7 +95,13 @@ public class CellEditable : ObjectG, CellEditableIF
 			version(Exceptions) throw new Exception("Null gtkCellEditable passed to constructor.");
 			else return;
 		}
-		
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCellEditable);
+		if( ptr !is null )
+		{
+			this = cast(CellEditable)ptr;
+			return;
+		}
 		super(cast(GObject*)gtkCellEditable);
 		this.gtkCellEditable = gtkCellEditable;
 	}

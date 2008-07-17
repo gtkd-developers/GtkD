@@ -57,6 +57,7 @@ module glib.Str;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.StringG;

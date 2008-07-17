@@ -53,6 +53,7 @@ module glib.DataList;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 

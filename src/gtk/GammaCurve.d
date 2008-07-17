@@ -54,6 +54,7 @@ module gtk.GammaCurve;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 
@@ -125,6 +126,7 @@ public class GammaCurve : VBox
 	
 	/**
 	 * Creates a new GtkGammaCurve.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -132,7 +134,7 @@ public class GammaCurve : VBox
 		auto p = gtk_gamma_curve_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_gamma_curve_new()");
 		}
 		this(cast(GtkGammaCurve*) p);
 	}

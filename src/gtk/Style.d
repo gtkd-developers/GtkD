@@ -77,6 +77,7 @@ module gtk.Style;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -218,6 +219,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Creates a new GtkStyle.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -225,7 +227,7 @@ public class Style : ObjectG
 		auto p = gtk_style_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_style_new()");
 		}
 		this(cast(GtkStyle*) p);
 	}

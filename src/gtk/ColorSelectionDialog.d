@@ -55,6 +55,7 @@ module gtk.ColorSelectionDialog;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -121,6 +122,7 @@ public class ColorSelectionDialog : Dialog
 	 * Creates a new GtkColorSelectionDialog.
 	 * Params:
 	 * title = a string containing the title text for the dialog.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title)
 	{
@@ -128,7 +130,7 @@ public class ColorSelectionDialog : Dialog
 		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_color_selection_dialog_new(Str.toStringz(title))");
 		}
 		this(cast(GtkColorSelectionDialog*) p);
 	}

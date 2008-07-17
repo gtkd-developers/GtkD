@@ -65,6 +65,7 @@ module gtk.SizeGroup;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import gtk.Widget;
@@ -177,6 +178,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * Create a new GtkSizeGroup.
 	 * Params:
 	 * mode =  the mode for the new size group.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkSizeGroupMode mode)
 	{
@@ -184,7 +186,7 @@ public class SizeGroup : ObjectG, BuildableIF
 		auto p = gtk_size_group_new(mode);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_size_group_new(mode)");
 		}
 		this(cast(GtkSizeGroup*) p);
 	}

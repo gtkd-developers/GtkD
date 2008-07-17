@@ -63,6 +63,7 @@ module glib.MainLoop;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.MainContext;
@@ -178,6 +179,7 @@ public class MainLoop
 	 * isRunning =  set to TRUE to indicate that the loop is running. This
 	 * is not very important since calling g_main_loop_run() will set this to
 	 * TRUE anyway.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (MainContext context, int isRunning)
 	{
@@ -185,7 +187,7 @@ public class MainLoop
 		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning)");
 		}
 		this(cast(GMainLoop*) p);
 	}

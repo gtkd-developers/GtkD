@@ -53,6 +53,7 @@ module gobject.TypePlugin;
 public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
+private import glib.ConstructionException;
 
 
 

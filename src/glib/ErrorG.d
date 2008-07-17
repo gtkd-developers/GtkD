@@ -55,6 +55,7 @@ module glib.ErrorG;
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -330,6 +331,7 @@ public class ErrorG
 	 * code =  error code
 	 * format =  printf()-style format for error message
 	 * ... =  parameters for message format
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GQuark domain, int code, string format, ... )
 	{
@@ -337,7 +339,7 @@ public class ErrorG
 		auto p = g_error_new(domain, code, Str.toStringz(format));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_error_new(domain, code, Str.toStringz(format))");
 		}
 		this(cast(GError*) p);
 	}
@@ -351,6 +353,7 @@ public class ErrorG
 	 * domain =  error domain
 	 * code =  error code
 	 * message =  error message
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GQuark domain, int code, string message)
 	{
@@ -358,7 +361,7 @@ public class ErrorG
 		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by g_error_new_literal(domain, code, Str.toStringz(message))");
 		}
 		this(cast(GError*) p);
 	}

@@ -64,6 +64,7 @@ module gtk.FileChooserWidget;
 public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -145,6 +146,7 @@ public class FileChooserWidget : VBox
 	 * Since 2.4
 	 * Params:
 	 * action =  Open or save mode for the widget
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkFileChooserAction action)
 	{
@@ -152,7 +154,7 @@ public class FileChooserWidget : VBox
 		auto p = gtk_file_chooser_widget_new(action);
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_chooser_widget_new(action)");
 		}
 		this(cast(GtkFileChooserWidget*) p);
 	}
@@ -167,6 +169,7 @@ public class FileChooserWidget : VBox
 	 * Params:
 	 * action =  Open or save mode for the widget
 	 * backend =  The name of the specific filesystem backend to use.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkFileChooserAction action, string backend)
 	{
@@ -174,7 +177,7 @@ public class FileChooserWidget : VBox
 		auto p = gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend));
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend))");
 		}
 		this(cast(GtkFileChooserWidget*) p);
 	}

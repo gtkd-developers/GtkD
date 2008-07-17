@@ -56,6 +56,7 @@ module gdk.Region;
 public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
+private import glib.ConstructionException;
 
 
 private import gdk.Rectangle;
@@ -115,6 +116,7 @@ public class Region
 	
 	/**
 	 * Creates a new empty GdkRegion.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
@@ -122,7 +124,7 @@ public class Region
 		auto p = gdk_region_new();
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gdk_region_new()");
 		}
 		this(cast(GdkRegion*) p);
 	}
