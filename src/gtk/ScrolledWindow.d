@@ -168,14 +168,21 @@ public class ScrolledWindow : Bin
 	 * Params:
 	 *  hadjustment = Horizontal adjustment.
 	 *  vadjustment = Vertical adjustment.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// GtkWidget* gtk_scrolled_window_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		this(cast(GtkScrolledWindow*)gtk_scrolled_window_new(
+		auto p = gtk_scrolled_window_new(
 		hadjustment is null ? null : hadjustment.getAdjustmentStruct(),
-		vadjustment is null ? null : vadjustment.getAdjustmentStruct())
-		);
+		vadjustment is null ? null : vadjustment.getAdjustmentStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_scrolled_window_new");
+		}
+		
+		this(cast(GtkScrolledWindow*) p);
 	}
 	
 	/**

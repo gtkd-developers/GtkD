@@ -239,19 +239,29 @@ public class TreePath
 	 * Creates a new GtkTreePath. This structure refers to a row.
 	 * Params:
 	 * firstRow = if true this is the string representation of this path is "0"
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (bool firstRow=false)
 	{
+		GtkTreePath* p;
+		
 		if ( firstRow )
 		{
 			// GtkTreePath* gtk_tree_path_new_first (void);
-			this(cast(GtkTreePath*)gtk_tree_path_new_first() );
+			p = cast(GtkTreePath*)gtk_tree_path_new_first();
 		}
 		else
 		{
 			// GtkTreePath* gtk_tree_path_new (void);
-			this(cast(GtkTreePath*)gtk_tree_path_new() );
+			p = cast(GtkTreePath*)gtk_tree_path_new();
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_path_new()");
+		}
+		
+		this(p);
 	}
 	
 	/**

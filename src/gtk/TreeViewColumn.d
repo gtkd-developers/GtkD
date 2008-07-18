@@ -151,16 +151,23 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 *  renderer = the rederer for the column cells
 	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
 	 *  column = the column number
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	this(string header, CellRenderer renderer, string type, int column)
 	{
-		this(gtk_tree_view_column_new_with_attributes(
+		auto p = gtk_tree_view_column_new_with_attributes(
 		Str.toStringz(header),
 		renderer.getCellRendererStruct(),
 		Str.toStringz(type),
 		column,
-		null)
-		);
+		null);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
+		}
+		
+		this(p);
 	}
 	
 	/**

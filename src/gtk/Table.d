@@ -149,13 +149,20 @@ public class Table : Container
 	 *  columns = The number of columns the new table should have.
 	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
 	 *  containing the largest widget.
-	 * Returns:
-	 *  A pointer to the the newly created table widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint rows, uint columns, int homogeneous)
 	{
 		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
-		this(cast(GtkTable*)gtk_table_new(rows, columns, homogeneous) );
+		auto p = gtk_table_new(rows, columns, homogeneous);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_table_new");
+		}
+		
+		this(cast(GtkTable*) p);
+		
 		row = 0;
 		col = 0;
 		maxRows = rows;

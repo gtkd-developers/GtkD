@@ -148,19 +148,29 @@ public class CellView : Widget, CellLayoutIF
 	 *  text = the text to display in the cell view
 	 * Returns:
 	 *  A newly created GtkCellView widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string text, bool markup=true)
 	{
+		GtkCellView* p;
+		
 		if ( markup )
 		{
 			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text)) );
+			p = cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text));
 		}
 		else
 		{
 			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text)) );
+			p = cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_cell_view_new_with_");
+		}
+		
+		this(p);
 	}
 	
 	/**

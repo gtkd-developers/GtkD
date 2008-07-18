@@ -23,88 +23,55 @@
 /*
  * Conversion parameters:
  * inFile  = 
- * outPack = gtk
- * outFile = TreeModel
+ * outPack = glib
+ * outFile = ConstructionException
  * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = TreeModel
+ * clss    = 
  * interf  = 
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = ObjectG
+ * extend  = 
  * implements:
- * 	- TreeModelIF
  * prefixes:
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gobject.ObjectG
- * 	- glib.Str
- * 	- gtk.TreeIter
- * 	- gtk.TreePath
- * 	- gobject.Value
- * 	- gtk.TreeModelT
- * 	- gtk.TreeModelIF
- * 	- gobject.Signals
  * structWrap:
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gtk.TreeModel;
+module glib.ConstructionException;
 
-public  import gtkc.gtktypes;
+public  import gtkc.glibtypes;
 
-private import gtkc.gtk;
+private import gtkc.glib;
 private import glib.ConstructionException;
 
 
-private import gobject.ObjectG;
-private import glib.Str;
-private import gtk.TreeIter;
-private import gtk.TreePath;
-private import gobject.Value;
-private import gtk.TreeModelT;
-private import gtk.TreeModelIF;
-private import gobject.Signals;
 
 
 
+
+class ConstructionException : Exception
+{
+	this(string message)
+	{
+		super(message);
+	}
+	
+	string toString()
+	{
+		return "Construction failure, " ~ msg;
+	}
+}
 
 /**
  */
-public class TreeModel : ObjectG, TreeModelIF
-{
-	
-	// Minimal implementation.
-	mixin TreeModelT!(GtkTreeModel);
-	
-	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
-	{
-		return cast(void*)gtkTreeModel;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkTreeModel* gtkTreeModel)
-	{
-		if(gtkTreeModel is null)
-		{
-			this = null;
-			return;
-		}
-		
-		super(cast(GObject*)gtkTreeModel);
-		this.gtkTreeModel = gtkTreeModel;
-	}
-	
-	/**
-	 */
-}
+

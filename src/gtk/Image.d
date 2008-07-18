@@ -201,11 +201,17 @@ public class Image : Misc
 	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the stock icon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size) );
+		auto p = gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
+		}
+		this(cast(GtkImage*)p);
 	}
 	
 	/**
@@ -218,11 +224,17 @@ public class Image : Misc
 	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the themed icon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string iconName, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_icon_name(Str.toStringz(iconName), size) );
+		auto p = gtk_image_new_from_icon_name(Str.toStringz(iconName), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_icon_name(Str.toStringz(iconName), size)");
+		}
+		this(cast(GtkImage*)p);
 	}
 	
 	

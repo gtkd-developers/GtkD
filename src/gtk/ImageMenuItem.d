@@ -128,19 +128,29 @@ public class ImageMenuItem : MenuItem
 	 *  label = the text of the menu item.
 	 * Returns:
 	 *  a new GtkImageMenuItem.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkImageMenuItem* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_with_");
+		}
+		
+		this(p);
 	}
 	
 	/**
@@ -156,6 +166,7 @@ public class ImageMenuItem : MenuItem
 	 * StockID = the name of the stock item
 	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
 	 *  or NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, AccelGroup accelGroup)
 	{
@@ -163,7 +174,7 @@ public class ImageMenuItem : MenuItem
 		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_from_stock");
 		}
 		this(cast(GtkImageMenuItem*) p);
 	}

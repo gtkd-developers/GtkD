@@ -190,19 +190,30 @@ public class MenuItem : Item
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkMenuItem* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_menu_item_new_with_mnemonic (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_item_new_with_");
+		}
+		
+		this(p);
+		
 		setName(label);
 	}
 	

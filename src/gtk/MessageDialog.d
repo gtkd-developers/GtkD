@@ -201,14 +201,16 @@ public class MessageDialog : Dialog
 	 *  buttons = set of buttons to use
 	 *  messageFormat = printf()-style format string, or NULL
 	 *  message = the message - should be null, any formatting should be done prior to call this constructor
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, string messageFormat, string message=null )
 	{
+		GtkMessageDialog* p;
+		
 		if ( markup )
 		{
 			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
-			this(
-			cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
+			p = cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
 			parent is null ? null : parent.getWindowStruct(),
 			flags,
 			type,
@@ -216,14 +218,12 @@ public class MessageDialog : Dialog
 			Str.toStringz(messageFormat),
 			Str.toStringz(message),	// this should be null
 			null
-			)
 			);
 		}
 		else
 		{
 			// GtkWidget* gtk_message_dialog_new (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
-			this(
-			cast(GtkMessageDialog*)gtk_message_dialog_new(
+			p = cast(GtkMessageDialog*)gtk_message_dialog_new(
 			parent is null ? null : parent.getWindowStruct(),
 			flags,
 			type,
@@ -231,9 +231,15 @@ public class MessageDialog : Dialog
 			Str.toStringz(messageFormat),
 			Str.toStringz(message),	// this should be null
 			null
-			)
 			);
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new()");
+		}
+		
+		this(p);
 	}
 	
 	

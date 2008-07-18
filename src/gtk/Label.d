@@ -201,19 +201,29 @@ public class Label : Misc
 	 *  str = The text of the label, with an underscore in front of the
 	 *  mnemonic character
 	 *  mnemonic = when false uses the literal text passed in without mnemonic
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string str, bool mnemonic=true)
 	{
+		GtkLabel* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str)) );
+			p = cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str));
 		}
 		else
 		{
 			// GtkWidget* gtk_label_new (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new(Str.toStringz(str)) );
+			p = cast(GtkLabel*)gtk_label_new(Str.toStringz(str));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_label_new");
+		}
+		
+		this(p);
 	}
 	
 	/**

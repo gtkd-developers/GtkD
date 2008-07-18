@@ -165,19 +165,29 @@ public class Button : Bin
 	 *  mnemonic = true if the button has an mnemnonic
 	 * Returns:
 	 *  a new GtkButton
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkButton* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_button_new_with_mnemonic (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_button_new_with_label (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new_with_label");
+		}
+		
+		this(p);
 	}
 	
 	/**
@@ -188,6 +198,7 @@ public class Button : Bin
 	 * label (as for gtk_button_new_with_mnemonic()).
 	 * Params:
 	 *  StockID = the name of the stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, bool hideLabel=false)
 	{
@@ -200,7 +211,14 @@ public class Button : Bin
 		}
 		else
 		{
-			this(cast(GtkButton*)gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID])) );
+			auto p = gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID]));
+			
+			if(p is null)
+			{
+				throw new ConstructionException("null returned by gtk_button_new_from_stock");
+			}
+			
+			this(cast(GtkButton*) p);
 		}
 		
 	}

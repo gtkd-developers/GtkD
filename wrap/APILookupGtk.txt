@@ -864,39 +864,45 @@ code: start
 	 *  buttons = set of buttons to use
 	 *  messageFormat = printf()-style format string, or NULL
 	 *  message = the message - should be null, any formatting should be done prior to call this constructor
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, string messageFormat, string message=null )
 	{
+		GtkMessageDialog* p;
+
 		if ( markup )
 		{
 			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
-			this(
-				cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
-						parent is null ? null : parent.getWindowStruct(), 
-						flags, 
-						type, 
-						buttons, 
-						Str.toStringz(messageFormat),
-						Str.toStringz(message),	// this should be null
-						null
-						)
-			);
+			p = cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
+					parent is null ? null : parent.getWindowStruct(), 
+					flags, 
+					type, 
+					buttons, 
+					Str.toStringz(messageFormat),
+					Str.toStringz(message),	// this should be null
+					null
+				);
 		}
 		else
 		{
 			// GtkWidget* gtk_message_dialog_new (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
-			this(
-				cast(GtkMessageDialog*)gtk_message_dialog_new(
-						parent is null ? null : parent.getWindowStruct(), 
-						flags, 
-						type, 
-						buttons, 
-						Str.toStringz(messageFormat),
-						Str.toStringz(message),	// this should be null
-						null
-						)
-			);
+			p = cast(GtkMessageDialog*)gtk_message_dialog_new(
+					parent is null ? null : parent.getWindowStruct(), 
+					flags, 
+					type, 
+					buttons, 
+					Str.toStringz(messageFormat),
+					Str.toStringz(message),	// this should be null
+					null
+				);
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new()");
+		}
+
+		this(p);
 	}
 	
 code: end
@@ -1265,11 +1271,17 @@ code: start
 	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the stock icon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size) );
+		auto p = gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
+		}
+		this(cast(GtkImage*)p);
 	}
 	
 	/**
@@ -1282,11 +1294,17 @@ code: start
 	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the themed icon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string iconName, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_icon_name(Str.toStringz(iconName), size) );
+		auto p = gtk_image_new_from_icon_name(Str.toStringz(iconName), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_icon_name(Str.toStringz(iconName), size)");
+		}
+		this(cast(GtkImage*)p);
 	}
 	
 code: end
@@ -1322,19 +1340,29 @@ code: start
 	 *  str = The text of the label, with an underscore in front of the
 	 *  mnemonic character
 	 *  mnemonic = when false uses the literal text passed in without mnemonic
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string str, bool mnemonic=true)
 	{
+		GtkLabel* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str)) );
+			p = cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str));
 		}
 		else
 		{
 			// GtkWidget* gtk_label_new (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new(Str.toStringz(str)) );
+			p = cast(GtkLabel*)gtk_label_new(Str.toStringz(str));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_label_new");
+		}
+
+		this(p);
 	}
 code: end
 outFile: Label
@@ -1388,11 +1416,17 @@ code: start
 	 *  stock_id = a stock icon id
 	 * Returns:
 	 *  a new GtkStatusIcon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID)
 	{
 		// GtkStatusIcon* gtk_status_icon_new_from_stock (const gchar *stock_id);
-		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID])) );
+		auto p = gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID]));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_stock");
+		}
+		this(cast(GtkStatusIcon*)p);
 	}
 
 	/**
@@ -1404,20 +1438,30 @@ code: start
 	 *  iconName =  an icon name
 	 *  loadFromFile = treat iconName as a filename and load that image
 	 *  with gtk_status_icon_new_from_file.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string iconName, bool loadFromFile = false)
 	{
 		//TODO: look at a better way to do this.
+		GtkStatusIcon* p;
+
 		if(loadFromFile)
 		{
 			// GtkStatusIcon* gtk_status_icon_new_from_file (const gchar *filename);
-			this(cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName)) );
+			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName));
 		}
 		else
 		{
 			// GtkStatusIcon* gtk_status_icon_new_from_icon_name (const gchar *icon_name);
-			this(cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName)) );
+			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_");
+		}
+
+		this(p);
 	}
 code: end
 outFile: StatusIcon
@@ -1484,19 +1528,29 @@ code: start
 	 *  mnemonic = true if the button has an mnemnonic
 	 * Returns:
 	 *  a new GtkButton
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkButton* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_button_new_with_mnemonic (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_button_new_with_label (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new_with_label");
+		}
+
+		this(p);
 	}
 	
 	/**
@@ -1507,6 +1561,7 @@ code: start
 	 * label (as for gtk_button_new_with_mnemonic()).
 	 * Params:
 	 *  StockID = the name of the stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, bool hideLabel=false)
 	{
@@ -1519,7 +1574,14 @@ code: start
 		}
 		else
 		{
-			this(cast(GtkButton*)gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID])) );
+			auto p = gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID]));
+
+			if(p is null)
+			{
+				throw new ConstructionException("null returned by gtk_button_new_from_stock");
+			}
+
+			this(cast(GtkButton*) p);
 		}
 		
 	}
@@ -1571,19 +1633,29 @@ code: start
 	 *  label = The text of the button, with an underscore in front of the
 	 *  mnemonic character
 	 *  mnemonic = true if the button has an mnemnonic
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkCheckButton* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_check_button_new_with_label (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_check_button_new_");
+		}
+
+		this(p);
 	}
 
 	/** */
@@ -1621,25 +1693,33 @@ code: start
 	 *  mnemonic = if true the label will be created using
 	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
 	 *  mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group, string label, bool mnemonic=true)
 	{
+		GtkRadioButton* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_button_new_with_mnemonic  (GSList *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
 						group is null ? null : group.getListSGStruct(), 
-						Str.toStringz(label)) 
-						);
+						Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_button_new_with_label (GSList *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_label(
 						group is null ? null : group.getListSGStruct(), 
-						Str.toStringz(label)) 
-						);
+						Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_button_new_");
+		}
+
+		this(p);
 	}
 	
 	/**
@@ -1651,25 +1731,33 @@ code: start
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RadioButton radioButton, string label, bool mnemonic=true)
 	{
+		GtkRadioButton* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_button_new_with_mnemonic_from_widget  (GtkRadioButton *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
 						radioButton.getRadioButtonStruct(),
-						Str.toStringz(label))
-						);
+						Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_button_new_with_label_from_widget  (GtkRadioButton *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
 						radioButton.getRadioButtonStruct(), 
-						Str.toStringz(label))
-						);
+						Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_button_new_");
+		}
+
+		this(p);
 	}
 code: end
 outFile: RadioButton
@@ -1692,19 +1780,29 @@ code: start
 	 *  mnemonic =  if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkToggleButton* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_toggle_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_toggle_button_new_with_label  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_toggle_button_new_");
+		}
+
+		this(p);
 	}
 code: end
 
@@ -1946,8 +2044,6 @@ structWrap: GtkClipboard* Clipboard
 import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
 import: std.stdarg
-
-
 
 nocode: gtk_text_buffer_set_text
 nocode: gtk_text_buffer_insert_with_tags
@@ -2391,19 +2487,29 @@ code: start
 	 * Creates a new GtkTreePath. This structure refers to a row.
 	 * Params:
 	 * firstRow = if true this is the string representation of this path is "0"
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (bool firstRow=false)
 	{
+		GtkTreePath* p;
+
 		if ( firstRow )
 		{
 			// GtkTreePath* gtk_tree_path_new_first (void);
-			this(cast(GtkTreePath*)gtk_tree_path_new_first() );
+			p = cast(GtkTreePath*)gtk_tree_path_new_first();
 		}
 		else
 		{
 			// GtkTreePath* gtk_tree_path_new (void);
-			this(cast(GtkTreePath*)gtk_tree_path_new() );
+			p = cast(GtkTreePath*)gtk_tree_path_new();
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_path_new()");
+		}
+
+		this(p);
 	}
 code: end
 outFile: TreePath
@@ -2532,16 +2638,18 @@ code: start
 		this.gtkTreeModel = treeModel.getTreeModelTStruct();
 	}
 	   
-	/** */
+	/**
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
 	public this(TreeModelIF treeModel, TreePath treePath)
 	{
 		this();
 		setModel(treeModel);
-		if ( gtk_tree_model_get_iter_from_string(
+		if ( !gtk_tree_model_get_iter_from_string(
 				treeModel.getTreeModelTStruct(),
 				getTreeIterStruct(), Str.toStringz(treePath.toString())) )
 		{
-			// ???
+			throw new ConstructionException("null returned by gtk_tree_model_get_iter_from_string");
 		}
 	}
 	
@@ -2884,16 +2992,23 @@ code: start
 	 *  renderer = the rederer for the column cells
 	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
 	 *  column = the column number
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	this(string header, CellRenderer renderer, string type, int column)
 	{
-		this(gtk_tree_view_column_new_with_attributes(
+		auto p = gtk_tree_view_column_new_with_attributes(
 				Str.toStringz(header), 
 				renderer.getCellRendererStruct(), 
 				Str.toStringz(type),
 				column,
-				null)
-			);
+				null);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
+		}
+
+		this(p);
 	}
 code: end
 
@@ -3169,19 +3284,29 @@ code: start
 	 *  text = the text to display in the cell view
 	 * Returns:
 	 *  A newly created GtkCellView widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string text, bool markup=true)
 	{
+		GtkCellView* p;
+
 		if ( markup )
 		{
 			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text)) );
+			p = cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text));
 		}
 		else
 		{
 			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text)) );
+			p = cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_cell_view_new_with_");
+		}
+
+		this(p);
 	}
 code: end
 
@@ -3402,8 +3527,7 @@ code: start
 		if(gtkCellEditable is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gtkCellEditable passed to constructor.");
-			else return;
+			return;
 		}
 
 		super(cast(GObject*)gtkCellEditable);
@@ -3573,11 +3697,17 @@ code: start
 	 *  types = an array of GType types for the columns, from first to last
 	 * Returns:
 	 *  a new GtkListStore
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(types.ptr)) );
+		auto p = gtk_list_store_newv(types.length, cast(GType*)(types.ptr));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_list_store_newv");
+		}
+		this(cast(GtkListStore*)p);
 	}
 	
 	/**
@@ -3708,13 +3838,17 @@ code: start
 	 *  types = an array of GType types for the columns, from first to last
 	 * Returns:
 	 *  a new GtkListStore
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkTreeStore*)gtk_tree_store_newv(
-				types.length, cast(GType*)(types.ptr)) 
-			);
+		auto p = gtk_tree_store_newv(types.length, cast(GType*)(types.ptr));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_store_newv");
+		}
+		this(cast(GtkTreeStore*)p);
 	}
 	
 	
@@ -3935,19 +4069,28 @@ code: start
 	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBox.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (bool text=true)
 	{
+		GtkComboBox* p;
 		if ( text )
 		{
 			// GtkWidget* gtk_combo_box_new_text (void);
-			this(cast(GtkComboBox*)gtk_combo_box_new_text() );
+			p = cast(GtkComboBox*)gtk_combo_box_new_text();
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_new (void);
-			this(cast(GtkComboBox*)gtk_combo_box_new() );
+			p = cast(GtkComboBox*)gtk_combo_box_new();
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
 	}
 
 	/** */
@@ -4054,20 +4197,29 @@ code: start
 	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBoxEntry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (bool text=true)
 	{
+		GtkComboBoxEntry* p;
+
 		if ( text )
 		{
 			// GtkWidget* gtk_combo_box_entry_new_text (void);
-			this(cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_text() );
+			p = cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_text();
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_entry_new (void);
-			this(cast(GtkComboBoxEntry*)gtk_combo_box_entry_new() );
+			p = cast(GtkComboBoxEntry*)gtk_combo_box_entry_new();
 		}
-		
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_entry_new");
+		}
+
+		this(p);
 	}
 code: end
 outFile: ComboBoxEntry
@@ -4263,19 +4415,30 @@ code: start
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkMenuItem* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_menu_item_new_with_mnemonic (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_item_new_with_");
+		}
+
+		this(p);
+
 		setName(label);
 	}	
 code: end
@@ -4306,19 +4469,29 @@ code: start
 	 *  label = the text of the menu item.
 	 * Returns:
 	 *  a new GtkImageMenuItem.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkImageMenuItem* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_with_");
+		}
+
+		this(p);
 	}
 
 	/**
@@ -4334,6 +4507,7 @@ code: start
 	 * StockID = the name of the stock item
 	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
 	 *  or NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, AccelGroup accelGroup)
 	{
@@ -4341,7 +4515,7 @@ code: start
 		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 		if(p is null)
 		{
-			throw new Exception("Construction failure.");
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_from_stock");
 		}
 		this(cast(GtkImageMenuItem*) p);
 	}
@@ -4374,34 +4548,31 @@ code: start
 	 * Params:
 	 *  group = an existing GtkRadioMenuItem
 	 *  label = the text for the label
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RadioMenuItem radioMenuItem, string label, bool mnemonic=true)
 	{
+		GtkRadioMenuItem* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
-				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
+				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
-				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
+				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
 		}
-	}
-	
-	/**
-	 * Creates a new GtkRadioMenuItem containing a label. T
-	 * The new GtkRadioMenuItem is added to the same group as group.
-	 * Since 2.4
-	 * Params:
-	 *  group = An existing GtkRadioMenuItem
-	 *  label = the text of the button, with an underscore in front of the
-	 *  mnemonic character
-	 */
-	public this (string label)
-	{
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
+		}
+
+		this(p);
 	}
 	
 	/**
@@ -4412,21 +4583,31 @@ code: start
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group, string label, bool mnemonic=true)
 	{
+		GtkRadioMenuItem* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic  (GSList *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
-				group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
+				group is null ? null : group.getListSGStruct(), Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label  (GSList *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
-				group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
+				group is null ? null : group.getListSGStruct(), Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
+		}
+
+		this(p);
 	}
 code: end
 outFile: RadioMenuItem
@@ -4449,19 +4630,29 @@ code: start
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkCheckMenuItem* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_menu_item_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_check_menu_item_new_with_label  (const gchar *label);
-			this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_label(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_check_menu_item_new_with_");
+		}
+
+		this(p);
 	}
 code: end
 
@@ -4655,14 +4846,20 @@ code: start
 	 * Params:
 	 *  iconWidget = a widget that will be used as icon widget, or NULL
 	 *  label = a string that will be used as label, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Widget iconWidget, string label)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		this( cast(GtkMenuToolButton*)gtk_menu_tool_button_new(
-			(iconWidget is null) ? null : iconWidget.getWidgetStruct(), 
-			Str.toStringz(label))
-		);
+		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), 
+			Str.toStringz(label));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_tool_button_new");
+		}
+
+		this(cast(GtkMenuToolButton*) p);
 	}
 	
 	/**
@@ -4672,14 +4869,20 @@ code: start
 	 * Since 2.6
 	 * Params:
 	 * stockID = the name of a stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(StockID stockId)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new_from_stock  (const gchar *stock_id);
-		this( 
-			cast(GtkMenuToolButton*)gtk_menu_tool_button_new_from_stock(
-			Str.toStringz(StockDesc[stockId]))
-		);
+		auto p = gtk_menu_tool_button_new_from_stock(
+			Str.toStringz(StockDesc[stockId]));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_tool_button_new_from_stock");
+		}
+
+		this(cast(GtkMenuToolButton*) p);
 	}
 
 	/**
@@ -4696,8 +4899,7 @@ code: start
 		auto p =  gtk_menu_tool_button_get_menu(gtkMenuToolButton);
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			return null;
 		}
 		return new Menu(cast(GtkMenu*)p);
 	}
@@ -4896,6 +5098,7 @@ code: start
 	 * tooltip =  a tooltip for the action, or NULL
 	 * stockID =  the stock icon to display in widgets representing the
 	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockID)
 	{
@@ -4903,9 +5106,7 @@ code: start
 		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_action_new");
 		}
 		this(cast(GtkRecentAction*) p);
 	}
@@ -4923,6 +5124,7 @@ code: start
 	 *  action, or NULL
 	 * manager =  a GtkRecentManager, or NULL for using the default
 	 *  GtkRecentManager
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
@@ -4930,9 +5132,7 @@ code: start
 		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_action_new_for_manager");
 		}
 		this(cast(GtkRecentAction*) p);
 	}
@@ -5060,8 +5260,7 @@ code: start
 	 *  action = Open or save mode for the dialog
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
-	 * Returns:
-	 *  a new GtkFileChooserDialog
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
@@ -5076,13 +5275,20 @@ code: start
 			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
 		}
 
-		this(
-			cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new(
+		auto p = gtk_file_chooser_dialog_new(
 				Str.toStringz(title),
 				parent.getWindowStruct(),
 				action,
 				null,
-				0));
+				0);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
+		}
+
+		this(cast(GtkFileChooserDialog*) p);
+
 		addButtons(buttonsText, responses);
 	}
 
@@ -5099,23 +5305,29 @@ code: start
 	 *  backend = The name of the specific filesystem backend to use.
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
-	 * Returns:
-	 *  a new GtkFileChooserDialog
 	 * See_Also:
 	 *  GtkFileChooser, GtkDialog
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, GtkFileChooserAction action, string backend,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
 		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
-		this(
-			cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new_with_backend(
+		auto p = gtk_file_chooser_dialog_new_with_backend(
 				Str.toStringz(title), 
 				parent.getWindowStruct(), 
 				action, 
 				Str.toStringz(backend), 
 				null,
 				0
-				));
+				);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new_with_backend");
+		}
+
+		this(cast(GtkFileChooserDialog*) p);
+
 		if ( buttonsText  is  null )
 		{
 			buttonsText ~= "OK";
@@ -5539,13 +5751,20 @@ code: start
 	 *  columns = The number of columns the new table should have.
 	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
 	 *  containing the largest widget.
-	 * Returns:
-	 *  A pointer to the the newly created table widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint rows, uint columns, int homogeneous)
 	{
 		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
-		this(cast(GtkTable*)gtk_table_new(rows, columns, homogeneous) );
+		auto p = gtk_table_new(rows, columns, homogeneous);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_table_new");
+		}
+
+		this(cast(GtkTable*) p);
+
 		row = 0;
 		col = 0;
 		maxRows = rows;
@@ -5594,19 +5813,29 @@ code: start
 	 *  If you need a literal underscore character in a label, use '__' (two
 	 *  underscores). The first underlined character represents a keyboard
 	 *  accelerator called a mnemonic.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkExpander* p;
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_expander_new_with_mnemonic (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_expander_new (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new(Str.toStringz(label)) );
+			p = cast(GtkExpander*)gtk_expander_new(Str.toStringz(label));
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_expander_new");
+		}
+
+		this(p);
 	}
 code: end
 
@@ -5709,14 +5938,21 @@ code: start
 	 * Params:
 	 *  hadjustment = Horizontal adjustment.
 	 *  vadjustment = Vertical adjustment.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// GtkWidget* gtk_scrolled_window_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		this(cast(GtkScrolledWindow*)gtk_scrolled_window_new(
+		auto p = gtk_scrolled_window_new(
 				hadjustment is null ? null : hadjustment.getAdjustmentStruct(), 
-				vadjustment is null ? null : vadjustment.getAdjustmentStruct()) 
-				);
+				vadjustment is null ? null : vadjustment.getAdjustmentStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_scrolled_window_new");
+		}
+
+		this(cast(GtkScrolledWindow*) p);
 	}
 
 	/**
@@ -6757,16 +6993,14 @@ code: start
 	 *  manager =  a GtkRecentManager, or null
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, RecentManager manager,  string[] buttonsText=null, ResponseType[] responses=null )
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
-		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
 		}
 		this(cast(GtkRecentChooserDialog*) p);
 		addButtons(buttonsText, responses);
@@ -6783,6 +7017,7 @@ code: start
 	 *  manager =  a GtkRecentManager, or null
 	 *  stockIDs = stockIDs of the buttons
 	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
 	{
@@ -6790,9 +7025,7 @@ code: start
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
 		}
 		this(cast(GtkRecentChooserDialog*) p);
 		addButtons(stockIDs, responses);

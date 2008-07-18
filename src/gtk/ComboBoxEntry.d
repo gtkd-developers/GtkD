@@ -144,20 +144,29 @@ public class ComboBoxEntry : ComboBox
 	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBoxEntry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (bool text=true)
 	{
+		GtkComboBoxEntry* p;
+		
 		if ( text )
 		{
 			// GtkWidget* gtk_combo_box_entry_new_text (void);
-			this(cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_text() );
+			p = cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_text();
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_entry_new (void);
-			this(cast(GtkComboBoxEntry*)gtk_combo_box_entry_new() );
+			p = cast(GtkComboBoxEntry*)gtk_combo_box_entry_new();
 		}
 		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_entry_new");
+		}
+		
+		this(p);
 	}
 	
 	/**

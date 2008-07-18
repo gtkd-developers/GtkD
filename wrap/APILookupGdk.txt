@@ -355,9 +355,7 @@ code: start
 		auto p = gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length)");
 		}
 		this(cast(GdkRgbCmap*) p);
 	}

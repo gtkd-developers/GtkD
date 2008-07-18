@@ -122,19 +122,29 @@ public class CheckButton : ToggleButton
 	 *  label = The text of the button, with an underscore in front of the
 	 *  mnemonic character
 	 *  mnemonic = true if the button has an mnemnonic
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkCheckButton* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_check_button_new_with_label (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_check_button_new_");
+		}
+		
+		this(p);
 	}
 	
 	/** */

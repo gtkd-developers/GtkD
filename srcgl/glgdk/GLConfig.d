@@ -128,6 +128,7 @@ public class GLConfig : ObjectG
 	 * Params:
 	 *  mode = display mode bit mask.
 	 *  fallback = Try this mode if first fails.
+	 * Throws: ConstructionException if configuring GL fails
 	 */
 	this(GLConfigMode mode, GLConfigMode fallback)
 	{
@@ -157,7 +158,7 @@ public class GLConfig : ObjectG
 			{
 				writefln("*** No appropriate OpenGL-capable visual found.");
 			}
-			throw new Exception("GL configure failed");
+			throw new ConstructionException("GL configure failed");
 		}
 		this(gdkGLConfig);
 	}

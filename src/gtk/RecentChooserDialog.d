@@ -176,16 +176,14 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	 *  manager =  a GtkRecentManager, or null
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, RecentManager manager,  string[] buttonsText=null, ResponseType[] responses=null )
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
-		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
 		}
 		this(cast(GtkRecentChooserDialog*) p);
 		addButtons(buttonsText, responses);
@@ -202,6 +200,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	 *  manager =  a GtkRecentManager, or null
 	 *  stockIDs = stockIDs of the buttons
 	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
 	{
@@ -209,9 +208,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
 		}
 		this(cast(GtkRecentChooserDialog*) p);
 		addButtons(stockIDs, responses);

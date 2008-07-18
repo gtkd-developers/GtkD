@@ -130,6 +130,7 @@ public class RecentAction : Action
 	 * tooltip =  a tooltip for the action, or NULL
 	 * stockID =  the stock icon to display in widgets representing the
 	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockID)
 	{
@@ -137,9 +138,7 @@ public class RecentAction : Action
 		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_action_new");
 		}
 		this(cast(GtkRecentAction*) p);
 	}
@@ -157,6 +156,7 @@ public class RecentAction : Action
 	 *  action, or NULL
 	 * manager =  a GtkRecentManager, or NULL for using the default
 	 *  GtkRecentManager
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
@@ -164,9 +164,7 @@ public class RecentAction : Action
 		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			throw new ConstructionException("null returned by gtk_recent_action_new_for_manager");
 		}
 		this(cast(GtkRecentAction*) p);
 	}

@@ -169,25 +169,33 @@ public class RadioButton : CheckButton
 	 *  mnemonic = if true the label will be created using
 	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
 	 *  mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group, string label, bool mnemonic=true)
 	{
+		GtkRadioButton* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_button_new_with_mnemonic  (GSList *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
 			group is null ? null : group.getListSGStruct(),
-			Str.toStringz(label))
-			);
+			Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_button_new_with_label (GSList *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_label(
 			group is null ? null : group.getListSGStruct(),
-			Str.toStringz(label))
-			);
+			Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_button_new_");
+		}
+		
+		this(p);
 	}
 	
 	/**
@@ -199,25 +207,33 @@ public class RadioButton : CheckButton
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RadioButton radioButton, string label, bool mnemonic=true)
 	{
+		GtkRadioButton* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_button_new_with_mnemonic_from_widget  (GtkRadioButton *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
 			radioButton.getRadioButtonStruct(),
-			Str.toStringz(label))
-			);
+			Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_button_new_with_label_from_widget  (GtkRadioButton *group,  const gchar *label);
-			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
 			radioButton.getRadioButtonStruct(),
-			Str.toStringz(label))
-			);
+			Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_button_new_");
+		}
+		
+		this(p);
 	}
 	
 	/**

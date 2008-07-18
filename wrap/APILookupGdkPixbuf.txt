@@ -197,18 +197,33 @@ code: start
 	 * Returns:
 	 *  A newly-created pixbuf loader.
 	 */
-	public this (string type, GError** error, bool isMimeType=false)
+	public this (string type, bool isMimeType=false)
 	{
+		GdkPixbufLoader* p;
+		GError* err = null;
+
 		if ( isMimeType )
 		{
 			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_mime_type  (const char *mime_type,  GError **error);
-			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), error) );
+			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), &err);
 		}
 		else
 		{
 			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_type  (const char *image_type,  GError **error);
-			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), error) );
+			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), &err);
 		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new()");
+		}
+
+		this(p);
 	}
 code: end
 

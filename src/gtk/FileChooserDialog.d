@@ -224,8 +224,7 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	 *  action = Open or save mode for the dialog
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
-	 * Returns:
-	 *  a new GtkFileChooserDialog
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
@@ -240,13 +239,20 @@ public class FileChooserDialog : Dialog, FileChooserIF
 			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
 		}
 		
-		this(
-		cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new(
+		auto p = gtk_file_chooser_dialog_new(
 		Str.toStringz(title),
 		parent.getWindowStruct(),
 		action,
 		null,
-		0));
+		0);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
+		}
+		
+		this(cast(GtkFileChooserDialog*) p);
+		
 		addButtons(buttonsText, responses);
 	}
 	
@@ -263,23 +269,29 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	 *  backend = The name of the specific filesystem backend to use.
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
-	 * Returns:
-	 *  a new GtkFileChooserDialog
 	 * See_Also:
 	 *  GtkFileChooser, GtkDialog
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent, GtkFileChooserAction action, string backend,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
 		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
-		this(
-		cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new_with_backend(
+		auto p = gtk_file_chooser_dialog_new_with_backend(
 		Str.toStringz(title),
 		parent.getWindowStruct(),
 		action,
 		Str.toStringz(backend),
 		null,
 		0
-		));
+		);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new_with_backend");
+		}
+		
+		this(cast(GtkFileChooserDialog*) p);
+		
 		if ( buttonsText  is  null )
 		{
 			buttonsText ~= "OK";

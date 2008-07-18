@@ -148,19 +148,29 @@ public class ToggleButton : Button
 	 *  mnemonic =  if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkToggleButton* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_toggle_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_toggle_button_new_with_label  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label)) );
+			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_toggle_button_new_");
+		}
+		
+		this(p);
 	}
 	
 	/**

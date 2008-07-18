@@ -143,34 +143,31 @@ public class RadioMenuItem : CheckMenuItem
 	 * Params:
 	 *  group = an existing GtkRadioMenuItem
 	 *  label = the text for the label
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RadioMenuItem radioMenuItem, string label, bool mnemonic=true)
 	{
+		GtkRadioMenuItem* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
-			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
+			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
-			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
+			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
 		}
-	}
-	
-	/**
-	 * Creates a new GtkRadioMenuItem containing a label. T
-	 * The new GtkRadioMenuItem is added to the same group as group.
-	 * Since 2.4
-	 * Params:
-	 *  group = An existing GtkRadioMenuItem
-	 *  label = the text of the button, with an underscore in front of the
-	 *  mnemonic character
-	 */
-	public this (string label)
-	{
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
+		}
+		
+		this(p);
 	}
 	
 	/**
@@ -181,21 +178,31 @@ public class RadioMenuItem : CheckMenuItem
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group, string label, bool mnemonic=true)
 	{
+		GtkRadioMenuItem* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic  (GSList *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
-			group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
+			group is null ? null : group.getListSGStruct(), Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label  (GSList *group,  const gchar *label);
-			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
-			group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
+			group is null ? null : group.getListSGStruct(), Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
+		}
+		
+		this(p);
 	}
 	
 	/**

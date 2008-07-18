@@ -173,19 +173,29 @@ public class Expander : Bin
 	 *  If you need a literal underscore character in a label, use '__' (two
 	 *  underscores). The first underlined character represents a keyboard
 	 *  accelerator called a mnemonic.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
 	{
+		GtkExpander* p;
+		
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_expander_new_with_mnemonic (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label)) );
+			p = cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label));
 		}
 		else
 		{
 			// GtkWidget* gtk_expander_new (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new(Str.toStringz(label)) );
+			p = cast(GtkExpander*)gtk_expander_new(Str.toStringz(label));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_expander_new");
+		}
+		
+		this(p);
 	}
 	
 	/**

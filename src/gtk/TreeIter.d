@@ -258,16 +258,18 @@ public class TreeIter
 		this.gtkTreeModel = treeModel.getTreeModelTStruct();
 	}
 	
-	/** */
+	/**
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
 	public this(TreeModelIF treeModel, TreePath treePath)
 	{
 		this();
 		setModel(treeModel);
-		if ( gtk_tree_model_get_iter_from_string(
+		if ( !gtk_tree_model_get_iter_from_string(
 		treeModel.getTreeModelTStruct(),
 		getTreeIterStruct(), Str.toStringz(treePath.toString())) )
 		{
-			// ???
+			throw new ConstructionException("null returned by gtk_tree_model_get_iter_from_string");
 		}
 	}
 	

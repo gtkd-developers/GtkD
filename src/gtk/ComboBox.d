@@ -182,19 +182,28 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBox.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (bool text=true)
 	{
+		GtkComboBox* p;
 		if ( text )
 		{
 			// GtkWidget* gtk_combo_box_new_text (void);
-			this(cast(GtkComboBox*)gtk_combo_box_new_text() );
+			p = cast(GtkComboBox*)gtk_combo_box_new_text();
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_new (void);
-			this(cast(GtkComboBox*)gtk_combo_box_new() );
+			p = cast(GtkComboBox*)gtk_combo_box_new();
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+		
+		this(p);
 	}
 	
 	/** */

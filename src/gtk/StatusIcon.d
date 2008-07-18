@@ -151,11 +151,17 @@ public class StatusIcon : ObjectG
 	 *  stock_id = a stock icon id
 	 * Returns:
 	 *  a new GtkStatusIcon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID)
 	{
 		// GtkStatusIcon* gtk_status_icon_new_from_stock (const gchar *stock_id);
-		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID])) );
+		auto p = gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID]));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_stock");
+		}
+		this(cast(GtkStatusIcon*)p);
 	}
 	
 	/**
@@ -167,20 +173,30 @@ public class StatusIcon : ObjectG
 	 *  iconName =  an icon name
 	 *  loadFromFile = treat iconName as a filename and load that image
 	 *  with gtk_status_icon_new_from_file.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string iconName, bool loadFromFile = false)
 	{
 		//TODO: look at a better way to do this.
+		GtkStatusIcon* p;
+		
 		if(loadFromFile)
 		{
 			// GtkStatusIcon* gtk_status_icon_new_from_file (const gchar *filename);
-			this(cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName)) );
+			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName));
 		}
 		else
 		{
 			// GtkStatusIcon* gtk_status_icon_new_from_icon_name (const gchar *icon_name);
-			this(cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName)) );
+			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName));
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_");
+		}
+		
+		this(p);
 	}
 	
 	/**

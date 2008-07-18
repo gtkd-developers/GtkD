@@ -181,13 +181,17 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	 *  types = an array of GType types for the columns, from first to last
 	 * Returns:
 	 *  a new GtkListStore
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkTreeStore*)gtk_tree_store_newv(
-		types.length, cast(GType*)(types.ptr))
-		);
+		auto p = gtk_tree_store_newv(types.length, cast(GType*)(types.ptr));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_store_newv");
+		}
+		this(cast(GtkTreeStore*)p);
 	}
 	
 	
