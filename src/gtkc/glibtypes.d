@@ -1586,10 +1586,10 @@ public struct GSource{}
  */
 public struct GSourceFuncs
 {
-	int  function(GSource *source,int *timeout) prepare;
-	int  function(GSource *source) check;
-	int  function(GSource *source,GSourceFunc callback,void* userData) dispatch;
-	void  function(GSource *source) finalize; /+* Can be NULL +/
+	extern(C) int  function(GSource *source,int *timeout) prepare;
+	extern(C) int  function(GSource *source) check;
+	extern(C) int  function(GSource *source,GSourceFunc callback,void* userData) dispatch;
+	extern(C) void  function(GSource *source) finalize; /+* Can be NULL +/
 	/+* For use by sourceSetClosure +/
 	GSourceFunc closureCallback;
 	GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/
@@ -1608,9 +1608,9 @@ public struct GSourceFuncs
  */
 public struct GSourceCallbackFuncs
 {
-	void  function(void* cbData) doref;
-	void  function(void* cbData) unref;
-	void  function(void* cbData,GSource *source, GSourceFunc *func,void* *data) get;
+	extern(C) void  function(void* cbData) doref;
+	extern(C) void  function(void* cbData) unref;
+	extern(C) void  function(void* cbData,GSource *source, GSourceFunc *func,void* *data) get;
 }
 
 
@@ -1671,13 +1671,13 @@ public struct GModule{}
  */
 public struct GMemVTable
 {
-	void*  function(uint nBytes) malloc;
-	void*  function(void* mem,uint nBytes) realloc;
-	void  function(void* mem) free;
+	extern(C) void*  function(uint nBytes) malloc;
+	extern(C) void*  function(void* mem,uint nBytes) realloc;
+	extern(C) void  function(void* mem) free;
 	/+* optional; set to NULL if not used ! +/
-	void*  function(uint nBlocks,uint nBlockBytes) calloc;
-	void*  function(uint nBytes) tryMalloc;
-	void*  function(void* mem,uint nBytes) tryRealloc;
+	extern(C) void*  function(uint nBlocks,uint nBlockBytes) calloc;
+	extern(C) void*  function(uint nBytes) tryMalloc;
+	extern(C) void*  function(void* mem,uint nBytes) tryRealloc;
 }
 
 
@@ -1695,14 +1695,14 @@ public struct GIOChannel{}
  */
 public struct GIOFuncs
 {
-	GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesRead,GError **err) ioRead;
-	GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesWritten,GError **err) ioWrite;
-	GIOStatus  function(GIOChannel *channel, long offset, GSeekType type,GError **err) ioSeek;
-	GIOStatus  function(GIOChannel *channel,GError **err) ioClose;
-	GSource*  function(GIOChannel *channel,GIOCondition condition) ioCreateWatch;
-	void  function(GIOChannel *channel) ioFree;
-	GIOStatus  function(GIOChannel *channel,GIOFlags flags,GError **err) ioSetFlags;
-	GIOFlags  function(GIOChannel *channel) ioGetFlags;
+	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesRead,GError **err) ioRead;
+	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesWritten,GError **err) ioWrite;
+	extern(C) GIOStatus  function(GIOChannel *channel, long offset, GSeekType type,GError **err) ioSeek;
+	extern(C) GIOStatus  function(GIOChannel *channel,GError **err) ioClose;
+	extern(C) GSource*  function(GIOChannel *channel,GIOCondition condition) ioCreateWatch;
+	extern(C) void  function(GIOChannel *channel) ioFree;
+	extern(C) GIOStatus  function(GIOChannel *channel,GIOFlags flags,GError **err) ioSetFlags;
+	extern(C) GIOFlags  function(GIOChannel *channel) ioGetFlags;
 }
 
 
@@ -2104,22 +2104,22 @@ public struct GMarkupParseContext{}
 public struct GMarkupParser
 {
 	/+* Called for open tags <foo bar="baz"> +/
-	void  function(GMarkupParseContext *context,char *elementName,char **attributeNames,char **attributeValues,void* userData,GError **error) startElement;
+	extern(C) void  function(GMarkupParseContext *context,char *elementName,char **attributeNames,char **attributeValues,void* userData,GError **error) startElement;
 	/+* Called for close tags </foo> +/
-	void  function(GMarkupParseContext *context,char *elementName,void* userData,GError **error) endElement;
+	extern(C) void  function(GMarkupParseContext *context,char *elementName,void* userData,GError **error) endElement;
 	/+* Called for character data +/
 	/+* text is not nul-terminated +/
-	void  function(GMarkupParseContext *context,char *text,uint textLen, void* userData,GError **error) text;
+	extern(C) void  function(GMarkupParseContext *context,char *text,uint textLen, void* userData,GError **error) text;
 	/+* Called for strings that should be re-saved verbatim inn this same
 	 * position, but are not otherwise interpretable. At the moment
 	 * this includes comments and processing instructions.
 	+/
 	/+* text is not nul-terminated. +/
-	void  function(GMarkupParseContext *context,char *passthroughText,uint textLen, void* userData,GError **error) passthrough;
+	extern(C) void  function(GMarkupParseContext *context,char *passthroughText,uint textLen, void* userData,GError **error) passthrough;
 	/+* Called on error, including one set by other
 	 * methods inn the vtable. The GError should not be freed.
 	+/
-	void  function(GMarkupParseContext *context,GError *error,void* userData) error;
+	extern(C) void  function(GMarkupParseContext *context,GError *error,void* userData) error;
 }
 
 

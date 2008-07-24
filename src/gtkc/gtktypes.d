@@ -2669,26 +2669,26 @@ public struct GtkTreeModelIface
 {
 	GTypeInterface gIface;
 	/+* Signals +/
-	void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowChanged;
-	void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowInserted;
-	void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowHasChildToggled;
-	void  function(GtkTreeModel *treeModel,GtkTreePath *path)  rowDeleted;
-	void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter,int *newOrder)  rowsReordered;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowChanged;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowInserted;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowHasChildToggled;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path)  rowDeleted;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter,int *newOrder)  rowsReordered;
 	/+* Virtual Table +/
-	GtkTreeModelFlags  function(GtkTreeModel *treeModel)  getFlags;
-	int  function(GtkTreeModel *treeModel)  getNColumns;
-	GType  function(GtkTreeModel *treeModel,int index)  getColumnType;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreePath *path)  getIter;
-	GtkTreePath * function(GtkTreeModel *treeModel,GtkTreeIter *iter)  getPath;
-	void  function(GtkTreeModel *treeModel,GtkTreeIter *iter,int column,GValue *value)  getValue;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterNext;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *parent)  iterChildren;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterHasChild;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterNChildren;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *parent,int n)  iterNthChild;
-	int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *child)  iterParent;
-	void  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  refNode;
-	void  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  unrefNode;
+	extern(C) GtkTreeModelFlags  function(GtkTreeModel *treeModel)  getFlags;
+	extern(C) int  function(GtkTreeModel *treeModel)  getNColumns;
+	extern(C) GType  function(GtkTreeModel *treeModel,int index)  getColumnType;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreePath *path)  getIter;
+	extern(C) GtkTreePath * function(GtkTreeModel *treeModel,GtkTreeIter *iter)  getPath;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreeIter *iter,int column,GValue *value)  getValue;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterNext;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *parent)  iterChildren;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterHasChild;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterNChildren;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *parent,int n)  iterNthChild;
+	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *child)  iterParent;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  refNode;
+	extern(C) void  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  unrefNode;
 }
 
 
@@ -2727,9 +2727,9 @@ public struct GtkTreeDragSourceIface
 {
 	GTypeInterface gIface;
 	/+* VTable - not signals +/
-	int  function(GtkTreeDragSource *dragSource,GtkTreePath *path)  rowDraggable;
-	int  function(GtkTreeDragSource *dragSource,GtkTreePath *path,GtkSelectionData *selectionData)  dragDataGet;
-	int  function(GtkTreeDragSource *dragSource,GtkTreePath *path)  dragDataDelete;
+	extern(C) int  function(GtkTreeDragSource *dragSource,GtkTreePath *path)  rowDraggable;
+	extern(C) int  function(GtkTreeDragSource *dragSource,GtkTreePath *path,GtkSelectionData *selectionData)  dragDataGet;
+	extern(C) int  function(GtkTreeDragSource *dragSource,GtkTreePath *path)  dragDataDelete;
 }
 
 
@@ -2740,8 +2740,8 @@ public struct GtkTreeDragDestIface
 {
 	GTypeInterface gIface;
 	/+* VTable - not signals +/
-	int  function(GtkTreeDragDest *dragDest,GtkTreePath *dest,GtkSelectionData *selectionData)  dragDataReceived;
-	int  function(GtkTreeDragDest *dragDest,GtkTreePath *destPath,GtkSelectionData *selectionData)  rowDropPossible;
+	extern(C) int  function(GtkTreeDragDest *dragDest,GtkTreePath *dest,GtkSelectionData *selectionData)  dragDataReceived;
+	extern(C) int  function(GtkTreeDragDest *dragDest,GtkTreePath *destPath,GtkSelectionData *selectionData)  rowDropPossible;
 }
 
 
@@ -2769,13 +2769,13 @@ public struct GtkTreeSortableIface
 {
 	GTypeInterface gIface;
 	/+* signals +/
-	void  function(GtkTreeSortable *sortable)  sortColumnChanged;
+	extern(C) void  function(GtkTreeSortable *sortable)  sortColumnChanged;
 	/+* virtual table +/
-	int  function(GtkTreeSortable *sortable,int *sortColumnId,GtkSortType *order)  getSortColumnId;
-	void  function(GtkTreeSortable *sortable,int sortColumnId,GtkSortType order)  setSortColumnId;
-	void  function(GtkTreeSortable *sortable,int sortColumnId,GtkTreeIterCompareFunc func,void* data,GtkDestroyNotify destroy)  setSortFunc;
-	void  function(GtkTreeSortable *sortable,GtkTreeIterCompareFunc func,void* data,GtkDestroyNotify destroy)  setDefaultSortFunc;
-	int  function(GtkTreeSortable *sortable)  hasDefaultSortFunc;
+	extern(C) int  function(GtkTreeSortable *sortable,int *sortColumnId,GtkSortType *order)  getSortColumnId;
+	extern(C) void  function(GtkTreeSortable *sortable,int sortColumnId,GtkSortType order)  setSortColumnId;
+	extern(C) void  function(GtkTreeSortable *sortable,int sortColumnId,GtkTreeIterCompareFunc func,void* data,GtkDestroyNotify destroy)  setSortFunc;
+	extern(C) void  function(GtkTreeSortable *sortable,GtkTreeIterCompareFunc func,void* data,GtkDestroyNotify destroy)  setDefaultSortFunc;
+	extern(C) int  function(GtkTreeSortable *sortable)  hasDefaultSortFunc;
 }
 
 
@@ -2803,14 +2803,14 @@ public struct GtkCellLayoutIface
 {
 	GTypeInterface gIface;
 	/+* Virtual Table +/
-	void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int expand)  packStart;
-	void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int expand)  packEnd;
-	void  function(GtkCellLayout *cellLayout)  clear;
-	void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,char *attribute,int column)  addAttribute;
-	void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,GtkCellLayoutDataFunc func,void* funcData,GDestroyNotify destroy)  setCellDataFunc;
-	void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell)  clearAttributes;
-	void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int position)  reorder;
-	GList*  function(GtkCellLayout *cellLayout)  getCells;
+	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int expand)  packStart;
+	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int expand)  packEnd;
+	extern(C) void  function(GtkCellLayout *cellLayout)  clear;
+	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,char *attribute,int column)  addAttribute;
+	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,GtkCellLayoutDataFunc func,void* funcData,GDestroyNotify destroy)  setCellDataFunc;
+	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell)  clearAttributes;
+	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int position)  reorder;
+	extern(C) GList*  function(GtkCellLayout *cellLayout)  getCells;
 }
 
 
@@ -2824,16 +2824,16 @@ public struct GtkCellRendererClass
 {
 	GtkObjectClass parentClass;
 	/+* vtable - not signals +/
-	void  function(GtkCellRenderer *cell,GtkWidget *widget,GdkRectangle *cellArea,int *xOffset,int *yOffset,int *width,int *height)  getSize;
-	void  function(GtkCellRenderer *cell,GdkDrawable *window,GtkWidget *widget,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GdkRectangle *exposeArea,GtkCellRendererState flags)  render;
-	int  function(GtkCellRenderer *cell,GdkEvent *event,GtkWidget *widget,char *path,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GtkCellRendererState flags)  activate;
-	GtkCellEditable * function(GtkCellRenderer *cell,GdkEvent *event,GtkWidget *widget,char *path,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GtkCellRendererState flags)  startEditing;
+	extern(C) void  function(GtkCellRenderer *cell,GtkWidget *widget,GdkRectangle *cellArea,int *xOffset,int *yOffset,int *width,int *height)  getSize;
+	extern(C) void  function(GtkCellRenderer *cell,GdkDrawable *window,GtkWidget *widget,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GdkRectangle *exposeArea,GtkCellRendererState flags)  render;
+	extern(C) int  function(GtkCellRenderer *cell,GdkEvent *event,GtkWidget *widget,char *path,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GtkCellRendererState flags)  activate;
+	extern(C) GtkCellEditable * function(GtkCellRenderer *cell,GdkEvent *event,GtkWidget *widget,char *path,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GtkCellRendererState flags)  startEditing;
 	/+* Signals +/
-	void  function(GtkCellRenderer *cell)  editingCanceled;
-	void  function(GtkCellRenderer *cell,GtkCellEditable *editable,char *path)  editingStarted;
+	extern(C) void  function(GtkCellRenderer *cell)  editingCanceled;
+	extern(C) void  function(GtkCellRenderer *cell,GtkCellEditable *editable,char *path)  editingStarted;
 	/+* Padding for future expansion +/
-	void  function() _GtkReserved1;
-	void  function() _GtkReserved2;
+	extern(C) void  function() _GtkReserved1;
+	extern(C) void  function() _GtkReserved2;
 }
 
 
@@ -2847,10 +2847,10 @@ public struct GtkCellEditableIface
 {
 	GTypeInterface gIface;
 	/+* signals +/
-	void  function(GtkCellEditable *cellEditable)  editingDone;
-	void  function(GtkCellEditable *cellEditable)  removeWidget;
+	extern(C) void  function(GtkCellEditable *cellEditable)  editingDone;
+	extern(C) void  function(GtkCellEditable *cellEditable)  removeWidget;
 	/+* virtual table +/
-	void  function(GtkCellEditable *cellEditable,GdkEvent *event)  startEditing;
+	extern(C) void  function(GtkCellEditable *cellEditable,GdkEvent *event)  startEditing;
 }
 
 
@@ -4107,23 +4107,23 @@ public struct GtkRecentChooserIface
 	/+*
 	 * Methods
 	+/
-	int  function(GtkRecentChooser *chooser,char *uri,GError **error)  setCurrentUri;
-	char *  function(GtkRecentChooser *chooser)  getCurrentUri;
-	int  function(GtkRecentChooser *chooser,char *uri,GError **error)  selectUri;
-	void  function(GtkRecentChooser *chooser,char *uri)  unselectUri;
-	void  function(GtkRecentChooser *chooser)  selectAll;
-	void  function(GtkRecentChooser *chooser)  unselectAll;
-	GList *  function(GtkRecentChooser *chooser)  getItems;
-	GtkRecentManager * function(GtkRecentChooser *chooser)  getRecentManager;
-	void  function(GtkRecentChooser *chooser,GtkRecentFilter *filter)  addFilter;
-	void  function(GtkRecentChooser *chooser,GtkRecentFilter *filter)  removeFilter;
-	GSList *  function(GtkRecentChooser *chooser)  listFilters;
-	void  function(GtkRecentChooser *chooser,GtkRecentSortFunc sortFunc,void* data,GDestroyNotify destroy)  setSortFunc;
+	extern(C) int  function(GtkRecentChooser *chooser,char *uri,GError **error)  setCurrentUri;
+	extern(C) char *  function(GtkRecentChooser *chooser)  getCurrentUri;
+	extern(C) int  function(GtkRecentChooser *chooser,char *uri,GError **error)  selectUri;
+	extern(C) void  function(GtkRecentChooser *chooser,char *uri)  unselectUri;
+	extern(C) void  function(GtkRecentChooser *chooser)  selectAll;
+	extern(C) void  function(GtkRecentChooser *chooser)  unselectAll;
+	extern(C) GList *  function(GtkRecentChooser *chooser)  getItems;
+	extern(C) GtkRecentManager * function(GtkRecentChooser *chooser)  getRecentManager;
+	extern(C) void  function(GtkRecentChooser *chooser,GtkRecentFilter *filter)  addFilter;
+	extern(C) void  function(GtkRecentChooser *chooser,GtkRecentFilter *filter)  removeFilter;
+	extern(C) GSList *  function(GtkRecentChooser *chooser)  listFilters;
+	extern(C) void  function(GtkRecentChooser *chooser,GtkRecentSortFunc sortFunc,void* data,GDestroyNotify destroy)  setSortFunc;
 	/+*
 	 * Signals
 	+/
-	void  function(GtkRecentChooser *chooser)  itemActivated;
-	void  function(GtkRecentChooser *chooser)  selectionChanged;
+	extern(C) void  function(GtkRecentChooser *chooser)  itemActivated;
+	extern(C) void  function(GtkRecentChooser *chooser)  selectionChanged;
 }
 
 
@@ -4190,16 +4190,16 @@ public struct GtkBuildableIface
 {
 	GTypeInterface gIface;
 	/+* virtual table +/
-	void  function(GtkBuildable *buildable,char *name)  setName;
-	char *  function(GtkBuildable *buildable)  getName;
-	void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *type)  addChild;
-	void  function(GtkBuildable *buildable,GtkBuilder *builder,char *name,GValue *value)  setBuildableProperty;
-	GObject *  function(GtkBuildable *buildable,GtkBuilder *builder,char *name)  constructChild;
-	int  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,GMarkupParser *parser,void* *data)  customTagStart;
-	void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,void* *data)  customTagEnd;
-	void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,void* data)  customFinished;
-	void  function(GtkBuildable *buildable,GtkBuilder *builder)  parserFinished;
-	GObject *  function(GtkBuildable *buildable,GtkBuilder *builder,char *childname)  getInternalChild;
+	extern(C) void  function(GtkBuildable *buildable,char *name)  setName;
+	extern(C) char *  function(GtkBuildable *buildable)  getName;
+	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *type)  addChild;
+	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,char *name,GValue *value)  setBuildableProperty;
+	extern(C) GObject *  function(GtkBuildable *buildable,GtkBuilder *builder,char *name)  constructChild;
+	extern(C) int  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,GMarkupParser *parser,void* *data)  customTagStart;
+	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,void* *data)  customTagEnd;
+	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,void* data)  customFinished;
+	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder)  parserFinished;
+	extern(C) GObject *  function(GtkBuildable *buildable,GtkBuilder *builder,char *childname)  getInternalChild;
 }
 
 

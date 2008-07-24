@@ -59,13 +59,13 @@ public struct GtkSourceView{}
 public struct GtkSourceViewClass
 {
 	GtkTextViewClass parentClass;
-	void  function(GtkSourceView *view) undo;
-	void  function(GtkSourceView *view) redo;
+	extern(C) void  function(GtkSourceView *view) undo;
+	extern(C) void  function(GtkSourceView *view) redo;
 	/+* Padding for future expansion +/
-	void  function() _GtkSourceReserved1;
-	void  function() _GtkSourceReserved2;
-	void  function() _GtkSourceReserved3;
-	void  function() _GtkSourceReserved4;
+	extern(C) void  function() _GtkSourceReserved1;
+	extern(C) void  function() _GtkSourceReserved2;
+	extern(C) void  function() _GtkSourceReserved3;
+	extern(C) void  function() _GtkSourceReserved4;
 }
 
 
@@ -79,12 +79,12 @@ public struct GtkSourceBufferClass
 {
 	GtkTextBufferClass parentClass;
 	/+* Padding for future expansion +/
-	void  function() _GtkSourceReserved1;
-	void  function() _GtkSourceReserved2;
-	void  function() _GtkSourceReserved3;
-	void  function() _GtkSourceReserved4;
-	void  function() _GtkSourceReserved5;
-	void  function() _GtkSourceReserved6;
+	extern(C) void  function() _GtkSourceReserved1;
+	extern(C) void  function() _GtkSourceReserved2;
+	extern(C) void  function() _GtkSourceReserved3;
+	extern(C) void  function() _GtkSourceReserved4;
+	extern(C) void  function() _GtkSourceReserved5;
+	extern(C) void  function() _GtkSourceReserved6;
 }
 
 

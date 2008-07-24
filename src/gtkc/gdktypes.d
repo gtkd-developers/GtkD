@@ -1589,9 +1589,9 @@ public struct GdkDisplay{}
  */
 public struct GdkDisplayPointerHooks
 {
-	void  function(GdkDisplay *display,GdkScreen **screen,int *x,int *y,GdkModifierType *mask) getPointer;
-	GdkWindow*  function(GdkDisplay *display,GdkWindow *window,int *x,int *y,GdkModifierType *mask) windowGetPointer;
-	GdkWindow*  function(GdkDisplay *display,int *winX,int *winY) windowAtPointer;
+	extern(C) void  function(GdkDisplay *display,GdkScreen **screen,int *x,int *y,GdkModifierType *mask) getPointer;
+	extern(C) GdkWindow*  function(GdkDisplay *display,GdkWindow *window,int *x,int *y,GdkModifierType *mask) windowGetPointer;
+	extern(C) GdkWindow*  function(GdkDisplay *display,int *winX,int *winY) windowAtPointer;
 }
 
 
@@ -2055,8 +2055,8 @@ public struct GdkWindowAttr
  */
 public struct GdkPointerHooks
 {
-	GdkWindow*  function(GdkWindow *window,int *x,int *y,GdkModifierType *mask) getPointer;
-	GdkWindow*  function(GdkScreen *screen, /+* unused +/int *winX,int *winY) windowAtPointer;
+	extern(C) GdkWindow*  function(GdkWindow *window,int *x,int *y,GdkModifierType *mask) getPointer;
+	extern(C) GdkWindow*  function(GdkScreen *screen, /+* unused +/int *winX,int *winY) windowAtPointer;
 }
 
 

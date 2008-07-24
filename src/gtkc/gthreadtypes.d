@@ -93,27 +93,27 @@ alias GOnceStatus OnceStatus;
  */
 public struct GThreadFunctions
 {
-	GMutex*  function() mutexNew;
-	void  function(GMutex *mutex) mutexLock;
-	int  function(GMutex *mutex) mutexTrylock;
-	void  function(GMutex *mutex) mutexUnlock;
-	void  function(GMutex *mutex) mutexFree;
-	GCond*  function() condNew;
-	void  function(GCond *cond) condSignal;
-	void  function(GCond *cond) condBroadcast;
-	void  function(GCond *cond,GMutex *mutex) condWait;
-	int  function(GCond *cond,GMutex *mutex,GTimeVal *endTime) condTimedWait;
-	void  function(GCond *cond) condFree;
-	GPrivate*  function(GDestroyNotify destructor) privateNew;
-	void*  function(GPrivate *privateKey) privateGet;
-	void  function(GPrivate *privateKey,void* data) privateSet;
-	void  function(GThreadFunc func,void* data,uint stackSize,int joinable,int bound,GThreadPriority priority,void* thread,GError **error) threadCreate;
-	void  function() threadYield;
-	void  function(void* thread) threadJoin;
-	void  function() threadExit;
-	void  function(void* thread,GThreadPriority priority) threadSetPriorit;
-	void  function(void* thread) threadSelf;
-	int  function(void* thread1,void* thread2) threadEqual;
+	extern(C) GMutex*  function() mutexNew;
+	extern(C) void  function(GMutex *mutex) mutexLock;
+	extern(C) int  function(GMutex *mutex) mutexTrylock;
+	extern(C) void  function(GMutex *mutex) mutexUnlock;
+	extern(C) void  function(GMutex *mutex) mutexFree;
+	extern(C) GCond*  function() condNew;
+	extern(C) void  function(GCond *cond) condSignal;
+	extern(C) void  function(GCond *cond) condBroadcast;
+	extern(C) void  function(GCond *cond,GMutex *mutex) condWait;
+	extern(C) int  function(GCond *cond,GMutex *mutex,GTimeVal *endTime) condTimedWait;
+	extern(C) void  function(GCond *cond) condFree;
+	extern(C) GPrivate*  function(GDestroyNotify destructor) privateNew;
+	extern(C) void*  function(GPrivate *privateKey) privateGet;
+	extern(C) void  function(GPrivate *privateKey,void* data) privateSet;
+	extern(C) void  function(GThreadFunc func,void* data,uint stackSize,int joinable,int bound,GThreadPriority priority,void* thread,GError **error) threadCreate;
+	extern(C) void  function() threadYield;
+	extern(C) void  function(void* thread) threadJoin;
+	extern(C) void  function() threadExit;
+	extern(C) void  function(void* thread,GThreadPriority priority) threadSetPriorit;
+	extern(C) void  function(void* thread) threadSelf;
+	extern(C) int  function(void* thread1,void* thread2) threadEqual;
 }
 
 

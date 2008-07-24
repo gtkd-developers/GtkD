@@ -49,7 +49,7 @@ public struct GladeXMLClass
 {
 	GObjectClass parentClass;
 	/+* Virtual function: gets the appropriate gtype for the typename.+/
-	GType  function(GladeXML*self, char *gtypename)  lookupType;
+	extern(C) GType  function(GladeXML*self, char *gtypename)  lookupType;
 }
 
 

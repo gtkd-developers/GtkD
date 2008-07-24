@@ -314,15 +314,15 @@ public struct GInterfaceInfo
  */
 public struct GTypeValueTable
 {
-	void  function(GValue *value) valueInit;
-	void  function(GValue *value) valueFree;
-	void  function( GValue *srcValue,GValue *destValue) valueCopy;
+	extern(C) void  function(GValue *value) valueInit;
+	extern(C) void  function(GValue *value) valueFree;
+	extern(C) void  function( GValue *srcValue,GValue *destValue) valueCopy;
 	/+* varargs functionality (optional) +/
-	void*  function( GValue *value) valuePeekPointer;
+	extern(C) void*  function( GValue *value) valuePeekPointer;
 	char *collectFormat;
-	char*  function(GValue *value,uint nCollectValues,GTypeCValue *collectValues,uint collectFlags) collectValue;
+	extern(C) char*  function(GValue *value,uint nCollectValues,GTypeCValue *collectValues,uint collectFlags) collectValue;
 	char *lcopyFormat;
-	char*  function( GValue *value,uint nCollectValues,GTypeCValue *collectValues,uint collectFlags) lcopyValue;
+	extern(C) char*  function( GValue *value,uint nCollectValues,GTypeCValue *collectValues,uint collectFlags) lcopyValue;
 }
 
 
@@ -399,8 +399,8 @@ public struct GTypeModule
 public struct GTypeModuleClass
 {
 	GObjectClass parentClass;
-	int  function(GTypeModule *modul)  load;
-	void  function(GTypeModule *modul)  unload;
+	extern(C) int  function(GTypeModule *modul)  load;
+	extern(C) void  function(GTypeModule *modul)  unload;
 }
 
 
@@ -423,18 +423,18 @@ public struct GObjectClass
 {
 	GTypeClass gTypeClass;
 	/+* seldomly overidden +/
-	GObject*  function(GType type,uint nConstructProperties,GObjectConstructParam *constructProperties) constructor;
+	extern(C) GObject*  function(GType type,uint nConstructProperties,GObjectConstructParam *constructProperties) constructor;
 	/+* overridable methods +/
-	void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) setProperty;
-	void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) getProperty;
-	void  function(GObject *object) dispose;
-	void  function(GObject *object) finalize;
+	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) setProperty;
+	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) getProperty;
+	extern(C) void  function(GObject *object) dispose;
+	extern(C) void  function(GObject *object) finalize;
 	/+* seldomly overidden +/
-	void  function(GObject *object,uint nPspecs,GParamSpec **pspecs) dispatchPropertiesChanged;
+	extern(C) void  function(GObject *object,uint nPspecs,GParamSpec **pspecs) dispatchPropertiesChanged;
 	/+* signals +/
-	void  function(GObject *object,GParamSpec *pspec) notify;
+	extern(C) void  function(GObject *object,GParamSpec *pspec) notify;
 	/+* called when done constructing +/
-	void  function(GObject *object) constructed;
+	extern(C) void  function(GObject *object) constructed;
 }
 
 
@@ -914,11 +914,11 @@ public struct GParamSpecClass
 {
 	GTypeClass gTypeClass;
 	GType valueType;
-	void  function(GParamSpec *pspec) finalize;
+	extern(C) void  function(GParamSpec *pspec) finalize;
 	/+* GParam methods +/
-	void  function(GParamSpec *pspec,GValue *value) valueSetDefault;
-	int  function(GParamSpec *pspec,GValue *value) valueValidate;
-	int  function(GParamSpec *pspec,GValue *value1,GValue *value2) valuesCmp;
+	extern(C) void  function(GParamSpec *pspec,GValue *value) valueSetDefault;
+	extern(C) int  function(GParamSpec *pspec,GValue *value) valueValidate;
+	extern(C) int  function(GParamSpec *pspec,GValue *value1,GValue *value2) valuesCmp;
 }
 
 
@@ -948,13 +948,13 @@ public struct GParamSpecTypeInfo
 	/+* type system portion +/
 	ushort instanceSize; /+* obligatory +/
 	ushort nPreallocs; /+* optional +/
-	void  function(GParamSpec *pspec) instanceInit; /+* optional +/
+	extern(C) void  function(GParamSpec *pspec) instanceInit; /+* optional +/
 	/+* class portion +/
 	GType valueType; /+* obligatory +/
-	void  function(GParamSpec *pspec) finalize; /+* optional +/
-	void  function(GParamSpec *pspec, /+* recommended +/GValue *value) valueSetDefault;
-	int  function(GParamSpec *pspec, /+* optional +/GValue *value) valueValidate;
-	int  function(GParamSpec *pspec, /+* recommended +/GValue *value1,GValue *value2) valuesCmp;
+	extern(C) void  function(GParamSpec *pspec) finalize; /+* optional +/
+	extern(C) void  function(GParamSpec *pspec, /+* recommended +/GValue *value) valueSetDefault;
+	extern(C) int  function(GParamSpec *pspec, /+* optional +/GValue *value) valueValidate;
+	extern(C) int  function(GParamSpec *pspec, /+* recommended +/GValue *value1,GValue *value2) valuesCmp;
 }
 
 

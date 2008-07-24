@@ -1835,7 +1835,7 @@ public class GtkDClass
 						break;
 				}
 
-				collectedStructs ~= getFunctionPointer(funct, i);
+				collectedStructs ~= "extern(C) " ~ getFunctionPointer(funct, i);
 			}
 			else if( std.string.find(elem, "{") > 0 )
 			//Nested Structs and unions.

@@ -222,17 +222,17 @@ public struct GdkPixbufFormat
 		char *modulePath;
 		GModule *modul;
 		GdkPixbufFormat *info;
-		GdkPixbuf * function(FILE *f,GError **error)  load;
-		GdkPixbuf * function( char **data)  loadXpmData;
+		extern(C) GdkPixbuf * function(FILE *f,GError **error)  load;
+		extern(C) GdkPixbuf * function( char **data)  loadXpmData;
 		/+* Incremental loading +/
-		void*  function(GdkPixbufModuleSizeFunc sizeFunc,GdkPixbufModulePreparedFunc prepareFunc,GdkPixbufModuleUpdatedFunc updateFunc,void* userData,GError **error)  beginLoad;
-		int  function(void* context,GError **error)  stopLoad;
-		int  function(void* context,char *buf,uint size,GError **error)  loadIncrement;
+		extern(C) void*  function(GdkPixbufModuleSizeFunc sizeFunc,GdkPixbufModulePreparedFunc prepareFunc,GdkPixbufModuleUpdatedFunc updateFunc,void* userData,GError **error)  beginLoad;
+		extern(C) int  function(void* context,GError **error)  stopLoad;
+		extern(C) int  function(void* context,char *buf,uint size,GError **error)  loadIncrement;
 		/+* Animation loading +/
-		GdkPixbufAnimation * function(FILE *f,GError **error)  loadAnimation;
+		extern(C) GdkPixbufAnimation * function(FILE *f,GError **error)  loadAnimation;
 		/+* Saving +/
-		int  function(FILE *f,GdkPixbuf *pixbuf,char **paramKeys,char **paramValues,GError **error)  save;
-		int  function(GdkPixbufSaveFunc saveFunc,void* userData,GdkPixbuf *pixbuf,char **optionKeys,char **optionValues,GError **error) saveToCallback;
+		extern(C) int  function(FILE *f,GdkPixbuf *pixbuf,char **paramKeys,char **paramValues,GError **error)  save;
+		extern(C) int  function(GdkPixbufSaveFunc saveFunc,void* userData,GdkPixbuf *pixbuf,char **optionKeys,char **optionValues,GError **error) saveToCallback;
 	}
 	
 	
@@ -254,10 +254,10 @@ public struct GdkPixbufFormat
 	public struct GdkPixbufAnimationClass
 {
 		GObjectClass parentClass;
-		int  function(GdkPixbufAnimation *anim) isStaticImage;
-		GdkPixbuf*  function(GdkPixbufAnimation *anim) getStaticImage;
-		void  function(GdkPixbufAnimation *anim,int *width,int *height) getSize;
-		GdkPixbufAnimationIter*  function(GdkPixbufAnimation *anim,GTimeVal *startTime) getIter;
+		extern(C) int  function(GdkPixbufAnimation *anim) isStaticImage;
+		extern(C) GdkPixbuf*  function(GdkPixbufAnimation *anim) getStaticImage;
+		extern(C) void  function(GdkPixbufAnimation *anim,int *width,int *height) getSize;
+		extern(C) GdkPixbufAnimationIter*  function(GdkPixbufAnimation *anim,GTimeVal *startTime) getIter;
 	}
 	
 	
@@ -273,10 +273,10 @@ public struct GdkPixbufFormat
 	public struct GdkPixbufAnimationIterClass
 {
 		GObjectClass parentClass;
-		int  function(GdkPixbufAnimationIter *iter) getDelayTime;
-		GdkPixbuf*  function(GdkPixbufAnimationIter *iter) getPixbuf;
-		int  function(GdkPixbufAnimationIter *iter) onCurrentlyLoadingFrame;
-		int  function(GdkPixbufAnimationIter *iter,GTimeVal *currentTime) advance;
+		extern(C) int  function(GdkPixbufAnimationIter *iter) getDelayTime;
+		extern(C) GdkPixbuf*  function(GdkPixbufAnimationIter *iter) getPixbuf;
+		extern(C) int  function(GdkPixbufAnimationIter *iter) onCurrentlyLoadingFrame;
+		extern(C) int  function(GdkPixbufAnimationIter *iter,GTimeVal *currentTime) advance;
 	}
 	
 
