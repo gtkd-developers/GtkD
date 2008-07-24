@@ -95,6 +95,7 @@ public class Linker
 	}
 
 	static string[][string] loadFailures;
+	static string[]         loadedLibs;
 
 	/**
 	 * Gets all the failed loads for a specific library.
@@ -125,6 +126,18 @@ public class Linker
 	}
 
 	/**
+	 * Print all libraries loaded.
+	 */
+	public static void dumpLoadLibraries()
+	{
+		foreach(lib; loadedLibs)
+		{
+			version(Tango) Stdout.formatln("Loaded lib = {}", lib);
+			else writefln("Loaded lib = %s", lib);
+		}
+	}
+
+	/**
 	 * Checks if any symbol failed to load
 	 * Returns: true is ALL symbols loaded
 	 */
@@ -135,7 +148,7 @@ public class Linker
 
 	public static void dumpFailedLoads()
 	{
-		foreach ( string lib ; Linker.getLoadLibraries() )
+		foreach ( string lib ; loadedLibs )
 		{
 			foreach ( string symbol ; Linker.getLoadFailures(lib) )
 			{
@@ -207,8 +220,7 @@ public class Linker
 		}
 		else
 		{
-			version(Tango) Stdout.formatln("Loaded lib = {}", libraryName);
-			else writefln("Loaded lib = %s", libraryName);
+			loadedLibs ~= libraryName;
 		}
 
 	}
