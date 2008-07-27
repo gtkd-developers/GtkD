@@ -196,6 +196,173 @@ prefix: g_timeout_
 strictPrefix: Yes
 import: glib.Source
 structWrap: GSource* Source
+code: start
+	/** Holds all timeout delegates */
+	bool delegate()[] timeoutListeners;
+	/** our gtk timeout ID */
+	uint timeoutID;
+
+	 
+	/**
+	 * Creates a new timeout cycle with the default priority, GPriority.DEFAULT.
+	 *
+	 * Note that timeout functions may be delayed, due to the processing of other
+	 * event sources. Thus they should not be relied on for precise timing.
+	 * After each call to the timeout function, the time of the next timeout is
+	 * recalculated based on the current time and the given interval
+	 * (it does not try to 'catch up' time lost in delays). 
+	 * Params:
+	 *    	interval = 	the timeout in milieconds
+	 *    	delegate() = 	the delegate to be executed
+	 *    	fireNow = 	When true the delegate will be executed emmidiatly
+	 */
+	this(uint interval, bool delegate() dlg, bool fireNow=false)
+	{
+		timeoutListeners ~= dlg;
+		timeoutID = g_timeout_add(interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this);
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				timeoutListeners.length = 0;
+			}
+		}
+	}
+
+	/**
+	 * Creates a new timeout cycle.
+	 * Params:
+	 *    	interval = 	the timeout in milieconds
+	 *    	delegate() = 	the delegate to be executed
+	 *      priority = Priority for the timeout function
+	 *    	fireNow = 	When true the delegate will be executed emmidiatly
+	 */
+	this(uint interval, bool delegate() dlg, GPriority priority, bool fireNow=false)
+	{
+		timeoutListeners ~= dlg;
+		timeoutID = g_timeout_add_full(priority, interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this, null);
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				timeoutListeners.length = 0;
+			}
+		}
+	}
+
+	/**
+	 * Creates a new timeout cycle with the default priority, GPriority.DEFAULT.
+	 * Params:
+	 *    	delegate() = 	the delegate to be executed
+	 *      seconds = interval in seconds.
+	 *    	fireNow = 	When true the delegate will be executed emmidiatly
+	 */
+	this(bool delegate() dlg, uint seconds, bool fireNow=false)
+	{
+		timeoutListeners ~= dlg;
+		timeoutID = g_timeout_add_seconds(seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this);
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				timeoutListeners.length = 0;
+			}
+		}
+	}
+
+	/**
+	 * Creates a new timeout cycle.
+	 * Params:
+	 *    	delegate() = 	the delegate to be executed
+	 *      seconds = interval in seconds.
+	 *      priority = Priority for the timeout function
+	 *    	fireNow = 	When true the delegate will be executed emmidiatly
+	 */
+	this(bool delegate() dlg, uint seconds, GPriority priority, bool fireNow=false)
+	{
+		timeoutListeners ~= dlg;
+		timeoutID = g_timeout_add_seconds_full(priority, seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this, null);
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				timeoutListeners.length = 0;
+			}
+		}
+	}
+
+	/** */
+	public void stop()
+	{
+		if ( timeoutID > 0 )
+		{
+			g_source_remove(timeoutID);
+		}
+		timeoutListeners.length = 0;
+	}
+	
+	/**
+	 * Removes the timeout from gtk
+	 */
+	~this()
+	{
+		stop();
+	}
+	
+	/**
+	 * Adds a new delegate to this timeout cycle
+	 * Params:
+	 *    	dlg = 	
+	 *    	fireNow = 	
+	 */
+	public void addListener(bool delegate() dlg, bool fireNow=false)
+	{
+		timeoutListeners ~= dlg;
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				timeoutListeners.length = timeoutListeners.length - 1;
+			}
+		}
+	}
+
+	/**
+	 * The callback execution from glib
+	 * Params:
+	 *    	timeout = 	
+	 * Returns: 
+	 */
+	extern(C) static bool timeoutCallback(Timeout timeout)
+	{
+		return timeout.callAllListeners();
+	}
+	
+	/**
+	 * Executes all delegates on the execution list
+	 * Returns: 
+	 */
+	private bool callAllListeners()
+	{
+		bool runAgain = false;
+		
+		int i = 0;
+		
+		while ( i<timeoutListeners.length )
+		{
+			if ( !timeoutListeners[i]() )
+			{
+				timeoutListeners = timeoutListeners[0..i] ~ timeoutListeners[i+1..timeoutListeners.length];
+			}
+			else
+			{
+				runAgain = true;
+				++i;
+			}
+		}
+		return runAgain;
+	}
+code: end
 outFile: Timeout
 
 class: Idle
@@ -254,7 +421,7 @@ code: start
 	{
 		if ( idleID > 0 )
 		{
-			g_idle_remove_by_data(cast(void*)this);
+			g_source_remove(idleID);
 		}
 		idleListeners.length = 0;
 	}

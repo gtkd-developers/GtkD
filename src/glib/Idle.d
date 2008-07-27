@@ -181,7 +181,7 @@ public class Idle
 	{
 		if ( idleID > 0 )
 		{
-			g_idle_remove_by_data(cast(void*)this);
+			g_source_remove(idleID);
 		}
 		idleListeners.length = 0;
 	}
