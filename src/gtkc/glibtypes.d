@@ -125,6 +125,16 @@ public alias ushort GDateYear;
  * A GQuark value of zero is associated to NULL.
  */
 public alias uint GQuark;
+
+enum GPriority
+{
+	HIGH = -100,
+	DEFAULT = 0,
+	HIGH_IDLE = 100,
+	DEFAULT_IDLE = 200,
+	LOW = 300
+}
+
 /**
  * Flags passed to g_module_open(). Note that these flags are
  * not supported on all platforms.

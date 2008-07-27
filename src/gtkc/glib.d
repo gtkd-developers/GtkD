@@ -93,10 +93,6 @@ extern(C)
 	GMainContext* function(GMainLoop* loop)g_main_loop_get_context;
 	gint function()g_main_depth;
 	GSource* function()g_main_current_source;
-	GSource* function()g_idle_source_new;
-	guint function(GSourceFunc funct, gpointer data)g_idle_add;
-	guint function(gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_idle_add_full;
-	gboolean function(gpointer data)g_idle_remove_by_data;
 	
 	// glib.MainContext
 	
@@ -131,6 +127,13 @@ extern(C)
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_timeout_add_full;
 	guint function(guint interval, GSourceFunc funct, gpointer data)g_timeout_add_seconds;
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_timeout_add_seconds_full;
+	
+	// glib.Idle
+	
+	GSource* function()g_idle_source_new;
+	guint function(GSourceFunc funct, gpointer data)g_idle_add;
+	guint function(gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_idle_add_full;
+	gboolean function(gpointer data)g_idle_remove_by_data;
 	
 	// glib.Child
 	
@@ -1334,10 +1337,6 @@ Symbol[] glibLinks =
 	{ "g_main_loop_get_context",  cast(void**)& g_main_loop_get_context},
 	{ "g_main_depth",  cast(void**)& g_main_depth},
 	{ "g_main_current_source",  cast(void**)& g_main_current_source},
-	{ "g_idle_source_new",  cast(void**)& g_idle_source_new},
-	{ "g_idle_add",  cast(void**)& g_idle_add},
-	{ "g_idle_add_full",  cast(void**)& g_idle_add_full},
-	{ "g_idle_remove_by_data",  cast(void**)& g_idle_remove_by_data},
 	{ "g_main_context_new",  cast(void**)& g_main_context_new},
 	{ "g_main_context_ref",  cast(void**)& g_main_context_ref},
 	{ "g_main_context_unref",  cast(void**)& g_main_context_unref},
@@ -1366,6 +1365,10 @@ Symbol[] glibLinks =
 	{ "g_timeout_add_full",  cast(void**)& g_timeout_add_full},
 	{ "g_timeout_add_seconds",  cast(void**)& g_timeout_add_seconds},
 	{ "g_timeout_add_seconds_full",  cast(void**)& g_timeout_add_seconds_full},
+	{ "g_idle_source_new",  cast(void**)& g_idle_source_new},
+	{ "g_idle_add",  cast(void**)& g_idle_add},
+	{ "g_idle_add_full",  cast(void**)& g_idle_add_full},
+	{ "g_idle_remove_by_data",  cast(void**)& g_idle_remove_by_data},
 	{ "g_child_watch_source_new",  cast(void**)& g_child_watch_source_new},
 	{ "g_child_watch_add",  cast(void**)& g_child_watch_add},
 	{ "g_child_watch_add_full",  cast(void**)& g_child_watch_add_full},

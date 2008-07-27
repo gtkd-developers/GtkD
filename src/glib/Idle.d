@@ -22,44 +22,35 @@
 
 /*
  * Conversion parameters:
- * inFile  = glib-The-Main-Event-Loop.html
+ * inFile  = 
  * outPack = glib
- * outFile = MainLoop
- * strct   = GMainLoop
+ * outFile = Idle
+ * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = MainLoop
+ * clss    = Idle
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
- * 	- g_main_loop_
- * 	- g_
+ * 	- g_idle_
  * omit structs:
  * omit prefixes:
- * 	- g_main_context_
- * 	- g_timeout_
- * 	- g_idle_
- * 	- g_child_
- * 	- g_source_
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.MainContext
  * 	- glib.Source
  * structWrap:
- * 	- GMainContext* -> MainContext
- * 	- GMainLoop* -> MainLoop
  * 	- GSource* -> Source
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module glib.MainLoop;
+module glib.Idle;
 
 public  import gtkc.glibtypes;
 
@@ -67,7 +58,6 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
-private import glib.MainContext;
 private import glib.Source;
 
 
@@ -138,164 +128,193 @@ private import glib.Source;
  *  of a state diagram, as shown in Figure1, States of a Main Context.
  * Figure1.States of a Main Context
  */
-public class MainLoop
+public class Idle
 {
 	
-	/** the main Gtk struct */
-	protected GMainLoop* gMainLoop;
-	
-	
-	public GMainLoop* getMainLoopStruct()
-	{
-		return gMainLoop;
-	}
-	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gMainLoop;
-	}
+	/** Holds all idle delegates */
+	bool delegate()[] idleListeners;
+	/** our idle ID */
+	uint idleID;
 	
 	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GMainLoop* gMainLoop)
-	{
-		if(gMainLoop is null)
-		{
-			this = null;
-			return;
-		}
-		this.gMainLoop = gMainLoop;
-	}
-	
-	/**
-	 */
-	
-	/**
-	 * Creates a new GMainLoop structure.
+	 * Creates a new idle cycle.
 	 * Params:
-	 * context =  a GMainContext (if NULL, the default context will be used).
-	 * isRunning =  set to TRUE to indicate that the loop is running. This
-	 * is not very important since calling g_main_loop_run() will set this to
-	 * TRUE anyway.
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *    	interval = the idle in milieconds
+	 *    	dlg = the delegate to be executed
+	 *    	fireNow = When true the delegate will be executed emmidiatly
 	 */
-	public this (MainContext context, int isRunning)
+	this(bool delegate() dlg, bool fireNow=false)
 	{
-		// GMainLoop* g_main_loop_new (GMainContext *context,  gboolean is_running);
-		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
-		if(p is null)
+		idleListeners ~= dlg;
+		idleID = g_idle_add(cast(GSourceFunc)&idleCallback, cast(void*)this);
+		if ( fireNow )
 		{
-			throw new ConstructionException("null returned by g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning)");
+			if ( !dlg() )
+			{
+				idleListeners.length = 0;
+			}
 		}
-		this(cast(GMainLoop*) p);
 	}
 	
 	/**
-	 * Increases the reference count on a GMainLoop object by one.
-	 * Returns: loop
+	 * Creates a new idle cycle.
+	 * Params:
+	 *    	dlg = the delegate to be executed
+	 *      priority = Priority for the idle function
+	 *    	fireNow = When true the delegate will be executed emmidiatly
 	 */
-	public MainLoop doref()
+	this(bool delegate() dlg, GPriority priority, bool fireNow=false)
 	{
-		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
-		auto p = g_main_loop_ref(gMainLoop);
-		if(p is null)
+		idleListeners ~= dlg;
+		idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, null);
+		if ( fireNow )
 		{
-			return null;
+			if ( !dlg() )
+			{
+				idleListeners.length = 0;
+			}
 		}
-		return new MainLoop(cast(GMainLoop*) p);
 	}
 	
-	/**
-	 * Decreases the reference count on a GMainLoop object by one. If
-	 * the result is zero, free the loop and free all associated memory.
-	 */
-	public void unref()
+	/** */
+	public void stop()
 	{
-		// void g_main_loop_unref (GMainLoop *loop);
-		g_main_loop_unref(gMainLoop);
-	}
-	
-	/**
-	 * Runs a main loop until g_main_loop_quit() is called on the loop.
-	 * If this is called for the thread of the loop's GMainContext,
-	 * it will process events from the loop, otherwise it will
-	 * simply wait.
-	 */
-	public void run()
-	{
-		// void g_main_loop_run (GMainLoop *loop);
-		g_main_loop_run(gMainLoop);
-	}
-	
-	/**
-	 * Stops a GMainLoop from running. Any calls to g_main_loop_run()
-	 * for the loop will return.
-	 * Note that sources that have already been dispatched when
-	 * g_main_loop_quit() is called will still be executed.
-	 */
-	public void quit()
-	{
-		// void g_main_loop_quit (GMainLoop *loop);
-		g_main_loop_quit(gMainLoop);
-	}
-	
-	/**
-	 * Checks to see if the main loop is currently being run via g_main_loop_run().
-	 * Returns: TRUE if the mainloop is currently being run.
-	 */
-	public int isRunning()
-	{
-		// gboolean g_main_loop_is_running (GMainLoop *loop);
-		return g_main_loop_is_running(gMainLoop);
-	}
-	
-	/**
-	 * Returns the GMainContext of loop.
-	 * Returns: the GMainContext of loop
-	 */
-	public MainContext getContext()
-	{
-		// GMainContext* g_main_loop_get_context (GMainLoop *loop);
-		auto p = g_main_loop_get_context(gMainLoop);
-		if(p is null)
+		if ( idleID > 0 )
 		{
-			return null;
+			g_idle_remove_by_data(cast(void*)this);
 		}
-		return new MainContext(cast(GMainContext*) p);
+		idleListeners.length = 0;
 	}
 	
 	/**
-	 * Returns the depth of the stack of calls to
-	 * g_main_context_dispatch() on any GMainContext in the current thread.
-	 *  That is, when called from the toplevel, it gives 0. When
-	 * called from within a callback from g_main_context_iteration()
-	 * (or g_main_loop_run(), etc.) it returns 1. When called from within
-	 * a callback to a recursive call to g_main_context_iterate(),
-	 * it returns 2. And so forth.
-	 * Returns: The main loop recursion level in the current thread
+	 * Removes the idle from gtk
 	 */
-	public static int mainDepth()
+	~this()
 	{
-		// gint g_main_depth (void);
-		return g_main_depth();
+		stop();
 	}
 	
 	/**
-	 * Returns the currently firing source for this thread.
-	 * Since 2.12
-	 * Returns: The currently firing source or NULL.
+	 * Adds a new delegate to this idle cycle
+	 * Params:
+	 *    	dlg =
+	 *    	fireNow =
 	 */
-	public static Source mainCurrentSource()
+	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
-		// GSource* g_main_current_source (void);
-		auto p = g_main_current_source();
+		idleListeners ~= dlg;
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				idleListeners.length = idleListeners.length - 1;
+			}
+		}
+	}
+	
+	/**
+	 * The callback execution from glib
+	 * Params:
+	 *    	idle =
+	 * Returns:
+	 */
+	extern(C) static bool idleCallback(Idle idle)
+	{
+		return idle.callAllListeners();
+	}
+	
+	/**
+	 * Executes all delegates on the execution list
+	 * Returns:
+	 */
+	private bool callAllListeners()
+	{
+		bool runAgain = false;
+		
+		int i = 0;
+		
+		while ( i<idleListeners.length )
+		{
+			if ( !idleListeners[i]() )
+			{
+				idleListeners = idleListeners[0..i] ~ idleListeners[i+1..idleListeners.length];
+			}
+			else
+			{
+				runAgain = true;
+				++i;
+			}
+		}
+		return runAgain;
+	}
+	
+	/**
+	 */
+	
+	/**
+	 * Creates a new idle source.
+	 * The source will not initially be associated with any GMainContext
+	 * and must be added to one with g_source_attach() before it will be
+	 * executed. Note that the default priority for idle sources is
+	 * G_PRIORITY_DEFAULT_IDLE, as compared to other sources which
+	 * have a default priority of G_PRIORITY_DEFAULT.
+	 * Returns: the newly-created idle source
+	 */
+	public static Source sourceNew()
+	{
+		// GSource* g_idle_source_new (void);
+		auto p = g_idle_source_new();
 		if(p is null)
 		{
 			return null;
 		}
 		return new Source(cast(GSource*) p);
+	}
+	
+	/**
+	 * Adds a function to be called whenever there are no higher priority
+	 * events pending to the default main loop. The function is given the
+	 * default idle priority, G_PRIORITY_DEFAULT_IDLE. If the function
+	 * returns FALSE it is automatically removed from the list of event
+	 * sources and will not be called again.
+	 * Params:
+	 * funct =  function to call
+	 * data =  data to pass to function.
+	 * Returns: the ID (greater than 0) of the event source.
+	 */
+	public static uint add(GSourceFunc funct, void* data)
+	{
+		// guint g_idle_add (GSourceFunc function,  gpointer data);
+		return g_idle_add(funct, data);
+	}
+	
+	/**
+	 * Adds a function to be called whenever there are no higher priority
+	 * events pending. If the function returns FALSE it is automatically
+	 * removed from the list of event sources and will not be called again.
+	 * Params:
+	 * priority =  the priority of the idle source. Typically this will be in the
+	 *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * notify =  function to call when the idle is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
+	 */
+	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+	{
+		// guint g_idle_add_full (gint priority,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
+		return g_idle_add_full(priority, funct, data, notify);
+	}
+	
+	/**
+	 * Removes the idle function with the given data.
+	 * Params:
+	 * data =  the data for the idle source's callback.
+	 * Returns: TRUE if an idle source was found and removed.
+	 */
+	public static int removeByData(void* data)
+	{
+		// gboolean g_idle_remove_by_data (gpointer data);
+		return g_idle_remove_by_data(data);
 	}
 }

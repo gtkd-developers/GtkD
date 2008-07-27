@@ -21,6 +21,7 @@ private import glib.Atomic;
 private import glib.MainLoop;
 private import glib.MainContext;
 private import glib.Timeout;
+private import glib.Idle;
 private import glib.Child;
 private import glib.Source;
 private import glib.ThreadPool;
