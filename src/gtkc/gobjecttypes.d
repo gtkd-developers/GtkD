@@ -232,7 +232,11 @@ struct GValue
 /**
  * An opaque structure used as the base of all interface types.
  */
-public struct GTypeInterface{}
+public struct GTypeInterface
+{
+	GType gType;         /* iface type */
+	GType gInstanceType;
+}
 
 
 /**

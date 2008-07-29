@@ -1416,7 +1416,7 @@ extern(C)
 	// gtk.TreeIterError
 	
 	
-	// gtk.TreeModel
+	// gtk.
 	
 	
 	// gtk.TreeSelection

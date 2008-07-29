@@ -1737,6 +1737,15 @@ public class GtkDClass
 				getStructInternals(structDef, convParms);
 				collectedStructs ~= "\n}";
 			}
+			else if ( structName == "GTypeInterface")
+			{
+				//Special case to get custom treemodels working.
+				collectedStructs ~= "public struct GTypeInterface";
+				collectedStructs ~= "{";
+				collectedStructs ~= "\tGType gType;         /* iface type */";
+				collectedStructs ~= "\tGType gInstanceType;";
+				collectedStructs ~= "}";
+			}
 			else
 			{
 				collectedStructs ~= "public struct "~structName~"{}";
