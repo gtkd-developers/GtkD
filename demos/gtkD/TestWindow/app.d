@@ -1,18 +1,18 @@
-module gtkD.app;
+module app;
 
-private import gtkD.TestWindow;
-private import gtkD.TestTreeView1;
-private import gtkD.TestTreeView;
-private import gtkD.TestThemes;
-private import gtkD.TestText;
-private import gtkD.TestStock;
-private import gtkD.TestScales;
-private import gtkD.TestImage;
-private import gtkD.TestIdle;
-private import gtkD.TestEntries;
-private import gtkD.TestDrawingArea;
-private import gtkD.TestAspectFrame;
-private import gtkD.TTextView;
-//private import gtkD.TEditableCells;
+private import TestWindow;
+private import TestTreeView1;
+private import TestTreeView;
+private import TestThemes;
+private import TestText;
+private import TestStock;
+private import TestScales;
+private import TestImage;
+private import TestIdle;
+private import TestEntries;
+private import TestDrawingArea;
+private import TestAspectFrame;
+private import TTextView;
+//private import TEditableCells;
 
 
