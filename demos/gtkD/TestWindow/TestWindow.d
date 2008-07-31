@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-module gtkD.TestWindow;
+module TestWindow;
 
 //debug = 1;
 
@@ -40,22 +40,22 @@ private import gtk.MainWindow;
 private import gtk.Adjustment;
 private import gtk.AccelGroup;
 
-private import gtkD.TestEntries;
+private import TestEntries;
 
-//private import gtkD.gtkDTree;
-private import gtkD.TestStock;
-private import gtkD.TestDrawingArea;
-private import gtkD.TestScales;
-private import gtkD.TestText;
-//private import gtkD.TestTree;
-private import gtkD.TestTreeView;
-private import gtkD.TestTreeView1;
-private import gtkD.TestImage;
-private import gtkD.TestThemes;
-private import gtkD.TestAspectFrame;
-private import gtkD.TestIdle;
-private import gtkD.TTextView;
-//private import gtkD.TEditableCells;
+//private import gtkDTree;
+private import TestStock;
+private import TestDrawingArea;
+private import TestScales;
+private import TestText;
+//private import TestTree;
+private import TestTreeView;
+private import TestTreeView1;
+private import TestImage;
+private import TestThemes;
+private import TestAspectFrame;
+private import TestIdle;
+private import TTextView;
+//private import TEditableCells;
 
 private import gtk.MenuItem;
 private import gtk.Widget;
@@ -390,7 +390,7 @@ class TestWindow : MainWindow
 		//writefln("exiting Notebook switch to page %s", pageNumber);
 	}
 
-	//private import gtkD.EventBox;
+	//private import EventBox;
 
 	void testEventBox(Notebook notebook)
 	{

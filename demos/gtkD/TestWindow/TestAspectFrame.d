@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-module gtkD.TestAspectFrame;
+module TestAspectFrame;
 
 private import gtk.AspectFrame;
 
-private import gtkD.TestDrawingArea;
+private import TestDrawingArea;
 
 /**
  * This tests the DUI aspect frame
