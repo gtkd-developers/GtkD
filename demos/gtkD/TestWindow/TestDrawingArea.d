@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-module TestDrawingArea;
+module gtkD.TestDrawingArea;
 
 //debug = trace;
 
@@ -171,7 +171,7 @@ class TestDrawingArea : VBox
 			primitiveType = "Filled Arc";
 			font = PgFontDescription.fromString("Courier 48");
 
-			image = new Image("../../images/gtkDlogo_a_small.png");
+			image = new Image("../../../images/gtkDlogo_a_small.png");
 			scaledPixbuf = image.getPixbuf();
 			if (scaledPixbuf is null)
 			{
