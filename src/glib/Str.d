@@ -516,23 +516,6 @@ public class Str
 	}
 	
 	/**
-	 * Similar to the standard C sprintf() function
-	 * but safer, since it calculates the maximum space required and allocates
-	 * memory to hold the result.
-	 * The returned string should be freed when no longer needed.
-	 * Params:
-	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls.
-	 * ... = the parameters to insert into the format string.
-	 * Returns:a newly-allocated string holding the result.
-	 */
-	public static string strdupPrintf(string format, ... )
-	{
-		// gchar* g_strdup_printf (const gchar *format,  ...);
-		return Str.toString(g_strdup_printf(Str.toStringz(format)));
-	}
-	
-	/**
 	 * Similar to the standard C vsprintf() function
 	 * but safer, since it calculates the maximum space required and allocates
 	 * memory to hold the result.
@@ -549,22 +532,6 @@ public class Str
 	{
 		// gchar* g_strdup_vprintf (const gchar *format,  va_list args);
 		return Str.toString(g_strdup_vprintf(Str.toStringz(format), args));
-	}
-	
-	/**
-	 * An implementation of the standard printf() function which supports
-	 * positional parameters, as specified in the Single Unix Specification.
-	 * Since 2.2
-	 * Params:
-	 * format =  a standard printf() format string, but notice
-	 *  string precision pitfalls.
-	 * ... =  the arguments to insert in the output.
-	 * Returns: the number of bytes printed.
-	 */
-	public static int printf(string format, ... )
-	{
-		// gint g_printf (gchar const *format,  ...);
-		return g_printf(Str.toStringz(format));
 	}
 	
 	/**
@@ -591,23 +558,6 @@ public class Str
 	 * file =  the stream to write to.
 	 * format =  a standard printf() format string, but notice
 	 *  string precision pitfalls.
-	 * ... =  the arguments to insert in the output.
-	 * Returns: the number of bytes printed.
-	 */
-	public static int fprintf(FILE* file, string format, ... )
-	{
-		// gint g_fprintf (FILE *file,  gchar const *format,  ...);
-		return g_fprintf(file, Str.toStringz(format));
-	}
-	
-	/**
-	 * An implementation of the standard fprintf() function which supports
-	 * positional parameters, as specified in the Single Unix Specification.
-	 * Since 2.2
-	 * Params:
-	 * file =  the stream to write to.
-	 * format =  a standard printf() format string, but notice
-	 *  string precision pitfalls.
 	 * args =  the list of arguments to insert in the output.
 	 * Returns: the number of bytes printed.
 	 */
@@ -615,25 +565,6 @@ public class Str
 	{
 		// gint g_vfprintf (FILE *file,  gchar const *format,  va_list args);
 		return g_vfprintf(file, Str.toStringz(format), args);
-	}
-	
-	/**
-	 * An implementation of the standard sprintf() function which supports
-	 * positional parameters, as specified in the Single Unix Specification.
-	 * Since 2.2
-	 * Params:
-	 * string =  A pointer to a memory buffer to contain the resulting string. It
-	 *  is up to the caller to ensure that the allocated buffer is large
-	 *  enough to hold the formatted result
-	 * format =  a standard printf() format string, but notice
-	 *  string precision pitfalls.
-	 * ... =  the arguments to insert in the output.
-	 * Returns: the number of bytes printed.
-	 */
-	public static int sprintf(string string, string format, ... )
-	{
-		// gint g_sprintf (gchar *string,  gchar const *format,  ...);
-		return g_sprintf(Str.toStringz(string), Str.toStringz(format));
 	}
 	
 	/**
@@ -651,35 +582,6 @@ public class Str
 	{
 		// gint g_vsprintf (gchar *string,  gchar const *format,  va_list args);
 		return g_vsprintf(Str.toStringz(string), Str.toStringz(format), args);
-	}
-	
-	/**
-	 * A safer form of the standard sprintf() function. The output is guaranteed
-	 * to not exceed n characters (including the terminating nul character), so
-	 * it is easy to ensure that a buffer overflow cannot occur.
-	 * See also g_strdup_printf().
-	 * In versions of GLib prior to 1.2.3, this function may return -1 if the
-	 * output was truncated, and the truncated string may not be nul-terminated.
-	 * In versions prior to 1.3.12, this function returns the length of the output
-	 * string.
-	 * The return value of g_snprintf() conforms to the snprintf()
-	 * function as standardized in ISO C99. Note that this is different from
-	 * traditional snprintf(), which returns the length of the output string.
-	 * The format string may contain positional parameters, as specified in
-	 * the Single Unix Specification.
-	 * Params:
-	 * string =  the buffer to hold the output.
-	 * n =  the maximum number of bytes to produce (including the
-	 *  terminating nul character).
-	 * format =  a standard printf() format string, but notice
-	 *  string precision pitfalls.
-	 * ... =  the arguments to insert in the output.
-	 * Returns: the number of bytes which would be produced if the buffer  was large enough.
-	 */
-	public static int snprintf(string string, uint n, string format, ... )
-	{
-		// gint g_snprintf (gchar *string,  gulong n,  gchar const *format,  ...);
-		return g_snprintf(Str.toStringz(string), n, Str.toStringz(format));
 	}
 	
 	/**
@@ -1523,38 +1425,6 @@ public class Str
 	{
 		// void g_strfreev (gchar **str_array);
 		g_strfreev(strArray);
-	}
-	
-	/**
-	 * Concatenates all of the given strings into one long string. The returned string
-	 * should be freed when no longer needed.
-	 * Warning
-	 * The variable argument list must end with NULL.
-	 * If you forget the NULL, g_strconcat() will start appending
-	 * random memory junk to your string.
-	 * Params:
-	 * string1 = The first string to add, which must not be NULL.
-	 * ... = a NULL-terminated list of strings to append to the string.
-	 * Returns:a newly-allocated string containing all the string arguments.
-	 */
-	public static string strconcat(string string1, ... )
-	{
-		// gchar* g_strconcat (const gchar *string1,  ...);
-		return Str.toString(g_strconcat(Str.toStringz(string1)));
-	}
-	
-	/**
-	 * Joins a number of strings together to form one long string, with the optional
-	 * separator inserted between each of them.
-	 * Params:
-	 * separator = a string to insert between each of the strings, or NULL.
-	 * ... = a NULL-terminated list of strings to join.
-	 * Returns:a newly-allocated string containing all of the strings joinedtogether, with separator between them.
-	 */
-	public static string strjoin(string separator, ... )
-	{
-		// gchar* g_strjoin (const gchar *separator,  ...);
-		return Str.toString(g_strjoin(Str.toStringz(separator)));
 	}
 	
 	/**

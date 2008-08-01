@@ -341,32 +341,6 @@ public class ScannerG
 	}
 	
 	/**
-	 * Outputs a warning message, via the GScanner message handler.
-	 * Params:
-	 * format = the message format. See the printf()
-	 * documentation.
-	 * ... = the parameters to insert into the format string.
-	 */
-	public void warn(string format, ... )
-	{
-		// void g_scanner_warn (GScanner *scanner,  const gchar *format,  ...);
-		g_scanner_warn(gScanner, Str.toStringz(format));
-	}
-	
-	/**
-	 * Outputs an error message, via the GScanner message handler.
-	 * Params:
-	 * format = the message format. See the printf()
-	 * documentation.
-	 * ... = the parameters to insert into the format string.
-	 */
-	public void error(string format, ... )
-	{
-		// void g_scanner_error (GScanner *scanner,  const gchar *format,  ...);
-		g_scanner_error(gScanner, Str.toStringz(format));
-	}
-	
-	/**
 	 * Outputs a message through the scanner's msg_handler, resulting from an
 	 * unexpected token in the input stream.
 	 * Note that you should not call g_scanner_peek_next_token() followed by

@@ -294,21 +294,6 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	
 	/**
-	 * Sets the attributes in the list as the attributes of tree_column.
-	 * The attributes should be in attribute/column order, as in
-	 * gtk_tree_view_column_add_attribute(). All existing attributes
-	 * are removed, and replaced with the new attributes.
-	 * Params:
-	 * cellRenderer =  the GtkCellRenderer we're setting the attributes of
-	 * ... =  A NULL-terminated list of attributes.
-	 */
-	public void setAttributes(CellRenderer cellRenderer, ... )
-	{
-		// void gtk_tree_view_column_set_attributes (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  ...);
-		gtk_tree_view_column_set_attributes(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct());
-	}
-	
-	/**
 	 * Sets the GtkTreeViewColumnFunc to use for the column. This
 	 * function is used instead of the standard attributes mapping for
 	 * setting the column value, and should set the value of tree_column's

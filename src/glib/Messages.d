@@ -82,24 +82,6 @@ public class Messages
 	 */
 	
 	/**
-	 * Outputs a formatted message via the print handler.
-	 * The default print handler simply outputs the message to stdout.
-	 * g_print() should not be used from within libraries for debugging messages,
-	 * since it may be redirected by applications to special purpose message
-	 * windows or even files.
-	 * Instead, libraries should use g_log(), or the convenience functions
-	 * g_message(), g_warning() and g_error().
-	 * Params:
-	 * format = the message format. See the printf() documentation.
-	 * ... = the parameters to insert into the format string.
-	 */
-	public static void print(string format, ... )
-	{
-		// void g_print (const gchar *format,  ...);
-		g_print(Str.toStringz(format));
-	}
-	
-	/**
 	 * Sets the print handler.
 	 * Any messages passed to g_print() will be output via the new handler.
 	 * The default handler simply outputs the message to stdout.
@@ -113,21 +95,6 @@ public class Messages
 	{
 		// GPrintFunc g_set_print_handler (GPrintFunc func);
 		return g_set_print_handler(func);
-	}
-	
-	/**
-	 * Outputs a formatted message via the error message handler.
-	 * The default handler simply outputs the message to stderr.
-	 * g_printerr() should not be used from within libraries. Instead g_log() should
-	 * be used, or the convenience functions g_message(), g_warning() and g_error().
-	 * Params:
-	 * format = the message format. See the printf() documentation.
-	 * ... = the parameters to insert into the format string.
-	 */
-	public static void printerr(string format, ... )
-	{
-		// void g_printerr (const gchar *format,  ...);
-		g_printerr(Str.toStringz(format));
 	}
 	
 	/**

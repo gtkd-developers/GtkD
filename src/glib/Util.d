@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Util
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -71,6 +71,31 @@ private import glib.Str;
  */
 public class Util
 {
+	
+	/**
+	 * Creates a filename from a series of elements using the correct
+	 * separator for filenames.
+	 * On Unix, this function behaves identically to g_build_path
+	 * (G_DIR_SEPARATOR_S, first_element, ....).
+	 * On Windows, it takes into account that either the backslash
+	 * (\ or slash (/) can be used
+	 * as separator in filenames, but otherwise behaves as on Unix. When
+	 * file pathname separators need to be inserted, the one that last
+	 * previously occurred in the parameters (reading from left to right)
+	 * is used.
+	 * No attempt is made to force the resulting filename to be an absolute
+	 * path. If the first element is a relative path, the result will
+	 * be a relative path.
+	 * Params:
+	 * firstElement =  the first element in the path
+	 * ... =  remaining elements in path, terminated by NULL
+	 * Returns: a newly-allocated string that must be freed with g_free().
+	 */
+	public static string buildFilename(string[] firstElement ... )
+	{
+		// gchar* g_build_filename (const gchar *first_element,  ...);
+		return buildFilenamev(Str.toStringzArray(firstElement));
+	}
 	
 	/**
 	 */
@@ -487,31 +512,6 @@ public class Util
 	}
 	
 	/**
-	 * Creates a filename from a series of elements using the correct
-	 * separator for filenames.
-	 * On Unix, this function behaves identically to g_build_path
-	 * (G_DIR_SEPARATOR_S, first_element, ....).
-	 * On Windows, it takes into account that either the backslash
-	 * (\ or slash (/) can be used
-	 * as separator in filenames, but otherwise behaves as on Unix. When
-	 * file pathname separators need to be inserted, the one that last
-	 * previously occurred in the parameters (reading from left to right)
-	 * is used.
-	 * No attempt is made to force the resulting filename to be an absolute
-	 * path. If the first element is a relative path, the result will
-	 * be a relative path.
-	 * Params:
-	 * firstElement =  the first element in the path
-	 * ... =  remaining elements in path, terminated by NULL
-	 * Returns: a newly-allocated string that must be freed with g_free().
-	 */
-	public static string buildFilename(string firstElement, ... )
-	{
-		// gchar* g_build_filename (const gchar *first_element,  ...);
-		return Str.toString(g_build_filename(Str.toStringz(firstElement)));
-	}
-	
-	/**
 	 * Behaves exactly like g_build_filename(), but takes the path elements
 	 * as a string array, instead of varargs. This function is mainly
 	 * meant for language bindings.
@@ -524,41 +524,6 @@ public class Util
 	{
 		// gchar* g_build_filenamev (gchar **args);
 		return Str.toString(g_build_filenamev(args));
-	}
-	
-	/**
-	 * Creates a path from a series of elements using separator as the
-	 * separator between elements. At the boundary between two elements,
-	 * any trailing occurrences of separator in the first element, or
-	 * leading occurrences of separator in the second element are removed
-	 * and exactly one copy of the separator is inserted.
-	 * Empty elements are ignored.
-	 * The number of leading copies of the separator on the result is
-	 * the same as the number of leading copies of the separator on
-	 * the first non-empty element.
-	 * The number of trailing copies of the separator on the result is
-	 * the same as the number of trailing copies of the separator on
-	 * the last non-empty element. (Determination of the number of
-	 * trailing copies is done without stripping leading copies, so
-	 * if the separator is ABA, ABABA
-	 * has 1 trailing copy.)
-	 * However, if there is only a single non-empty element, and there
-	 * are no characters in that element not part of the leading or
-	 * trailing separators, then the result is exactly the original value
-	 * of that element.
-	 * Other than for determination of the number of leading and trailing
-	 * copies of the separator, elements consisting only of copies
-	 * of the separator are ignored.
-	 * Params:
-	 * separator =  a string used to separator the elements of the path.
-	 * firstElement =  the first element in the path
-	 * ... =  remaining elements in path, terminated by NULL
-	 * Returns: a newly-allocated string that must be freed with g_free().
-	 */
-	public static string buildPath(string separator, string firstElement, ... )
-	{
-		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
-		return Str.toString(g_build_path(Str.toStringz(separator), Str.toStringz(firstElement)));
 	}
 	
 	/**

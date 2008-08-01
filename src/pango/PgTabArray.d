@@ -122,30 +122,6 @@ public class PgTabArray
 	}
 	
 	/**
-	 * This is a convenience function that creates a PangoTabArray
-	 * and allows you to specify the alignment and position of each
-	 * tab stop. You must provide an alignment
-	 * and position for size tab stops.
-	 * Params:
-	 * size =  number of tab stops in the array
-	 * positionsInPixels =  whether positions are in pixel units
-	 * firstAlignment =  alignment of first tab stop
-	 * firstPosition =  position of first tab stop
-	 * ... =  additional alignment/position pairs
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int size, int positionsInPixels, PangoTabAlign firstAlignment, int firstPosition, ... )
-	{
-		// PangoTabArray* pango_tab_array_new_with_positions (gint size,  gboolean positions_in_pixels,  PangoTabAlign first_alignment,  gint first_position,  ...);
-		auto p = pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition)");
-		}
-		this(cast(PangoTabArray*) p);
-	}
-	
-	/**
 	 * Copies a PangoTabArray
 	 * Returns: the newly allocated PangoTabArray, which should be freed with pango_tab_array_free().
 	 */

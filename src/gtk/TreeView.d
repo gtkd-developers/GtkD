@@ -1122,25 +1122,6 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Creates a new GtkTreeViewColumn and inserts it into the tree_view at
-	 * position. If position is -1, then the newly created column is inserted at
-	 * the end. The column is initialized with the attributes given. If tree_view
-	 * has "fixed_height" mode enabled, then the new column will have its sizing
-	 * property set to be GTK_TREE_VIEW_COLUMN_FIXED.
-	 * Params:
-	 * position =  The position to insert the new column in.
-	 * title =  The title to set the header to.
-	 * cell =  The GtkCellRenderer.
-	 * ... =  A NULL-terminated list of attributes.
-	 * Returns: The number of columns in tree_view after insertion.
-	 */
-	public int insertColumnWithAttributes(int position, string title, CellRenderer cell, ... )
-	{
-		// gint gtk_tree_view_insert_column_with_attributes  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  ...);
-		return gtk_tree_view_insert_column_with_attributes(gtkTreeView, position, Str.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct());
-	}
-	
-	/**
 	 * Convenience function that inserts a new column into the GtkTreeView
 	 * with the given cell renderer and a GtkCellDataFunc to set cell renderer
 	 * attributes (normally using data from the model). See also

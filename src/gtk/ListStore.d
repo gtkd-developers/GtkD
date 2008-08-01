@@ -364,29 +364,6 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 */
 	
 	/**
-	 * Creates a new list store as with n_columns columns each of the types passed
-	 * in. Note that only types derived from standard GObject fundamental types
-	 * are supported.
-	 * As an example, gtk_tree_store_new (3, G_TYPE_INT, G_TYPE_STRING,
-	 * GDK_TYPE_PIXBUF); will create a new GtkListStore with three columns, of type
-	 * int, string and GdkPixbuf respectively.
-	 * Params:
-	 * nColumns =  number of columns in the list store
-	 * ... =  all GType types for the columns, from first to last
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int nColumns, ... )
-	{
-		// GtkListStore* gtk_list_store_new (gint n_columns,  ...);
-		auto p = gtk_list_store_new(nColumns);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_list_store_new(nColumns)");
-		}
-		this(cast(GtkListStore*) p);
-	}
-	
-	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
 	 * Params:
 	 * nColumns =  number of columns in the list store
@@ -524,34 +501,6 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	{
 		// void gtk_list_store_insert_after (GtkListStore *list_store,  GtkTreeIter *iter,  GtkTreeIter *sibling);
 		gtk_list_store_insert_after(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
-	}
-	
-	/**
-	 * Creates a new row at position. iter will be changed to point to this new
-	 * row. If position is larger than the number of rows on the list, then the
-	 * new row will be appended to the list. The row will be filled with the
-	 * values given to this function.
-	 * Calling
-	 * gtk_list_store_insert_with_values(list_store, iter, position...)
-	 * has the same effect as calling
-	 * gtk_list_store_insert (list_store, iter, position);
-	 * gtk_list_store_set (list_store, iter, ...);
-	 * with the difference that the former will only emit a row_inserted signal,
-	 * while the latter will emit row_inserted, row_changed and, if the list store
-	 * is sorted, rows_reordered. Since emitting the rows_reordered signal
-	 * repeatedly can affect the performance of the program,
-	 * gtk_list_store_insert_with_values() should generally be preferred when
-	 * inserting rows in a sorted list store.
-	 * Since 2.6
-	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the new row, or NULL.
-	 * position =  position to insert the new row
-	 * ... =  pairs of column number and value, terminated with -1
-	 */
-	public void insertWithValues(TreeIter iter, int position, ... )
-	{
-		// void gtk_list_store_insert_with_values (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  ...);
-		gtk_list_store_insert_with_values(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position);
 	}
 	
 	/**

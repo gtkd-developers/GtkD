@@ -936,65 +936,6 @@ public class Pixbuf
 	}
 	
 	/**
-	 * Saves pixbuf to a file in format type. By default, "jpeg", "png", "ico"
-	 * and "bmp" are possible file formats to save in, but more formats may be
-	 * installed. The list of all writable formats can be determined in the
-	 * Params:
-	 * filename =  name of file to save.
-	 * type =  name of file format.
-	 * ... =  list of key-value save options
-	 * Returns: whether an error was set
-	 * Throws: GException on failure.
-	 */
-	public int save(string filename, string type, ... )
-	{
-		// gboolean gdk_pixbuf_save (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  GError **error,  ...);
-		GError* err = null;
-		
-		auto p = gdk_pixbuf_save(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Saves pixbuf in format type by feeding the produced data to a
-	 * callback. Can be used when you want to store the image to something
-	 * other than a file, such as an in-memory buffer or a socket.
-	 * If error is set, FALSE will be returned. Possible errors
-	 * include those in the GDK_PIXBUF_ERROR domain and whatever the save
-	 * function generates.
-	 * See gdk_pixbuf_save() for more details.
-	 * Since 2.4
-	 * Params:
-	 * saveFunc =  a function that is called to save each block of data that
-	 *  the save routine generates.
-	 * userData =  user data to pass to the save function.
-	 * type =  name of file format.
-	 * ... =  list of key-value save options
-	 * Returns: whether an error was set
-	 * Throws: GException on failure.
-	 */
-	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, string type, ... )
-	{
-		// gboolean gdk_pixbuf_save_to_callback (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  GError **error,  ...);
-		GError* err = null;
-		
-		auto p = gdk_pixbuf_save_to_callback(gdkPixbuf, saveFunc, userData, Str.toStringz(type), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
 	 * Saves pixbuf to a callback in format type, which is currently "jpeg",
 	 * "png", "tiff", "ico" or "bmp". If error is set, FALSE will be returned. See
 	 * gdk_pixbuf_save_to_callback() for more details.
@@ -1015,39 +956,6 @@ public class Pixbuf
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), optionKeys, optionValues, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
-	 * "png", "tiff", "ico" or "bmp". This is a convenience function that uses
-	 * gdk_pixbuf_save_to_callback() to do the real work. Note that the buffer
-	 * is not nul-terminated and may contain embedded nuls.
-	 * If error is set, FALSE will be returned and string will be set to
-	 * NULL. Possible errors include those in the GDK_PIXBUF_ERROR
-	 * domain.
-	 * See gdk_pixbuf_save() for more details.
-	 * Since 2.4
-	 * Params:
-	 * buffer =  location to receive a pointer to the new buffer.
-	 * bufferSize =  location to receive the size of the new buffer.
-	 * type =  name of file format.
-	 * ... =  list of key-value save options
-	 * Returns: whether an error was set
-	 * Throws: GException on failure.
-	 */
-	public int saveToBuffer(char** buffer, uint* bufferSize, string type, ... )
-	{
-		// gboolean gdk_pixbuf_save_to_buffer (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  GError **error,  ...);
-		GError* err = null;
-		
-		auto p = gdk_pixbuf_save_to_buffer(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), &err);
 		
 		if (err !is null)
 		{

@@ -2810,26 +2810,6 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	
 	/**
-	 * This is a convenience function for creating a widget and setting
-	 * Params:
-	 * type =  type ID of the widget to create
-	 * firstPropertyName =  name of first property to set
-	 * ... =  value of first property, followed by more properties,
-	 *  NULL-terminated
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GType type, string firstPropertyName, ... )
-	{
-		// GtkWidget* gtk_widget_new (GType type,  const gchar *first_property_name,  ...);
-		auto p = gtk_widget_new(type, Str.toStringz(firstPropertyName));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_widget_new(type, Str.toStringz(firstPropertyName))");
-		}
-		this(cast(GtkWidget*) p);
-	}
-	
-	/**
 	 * Warning
 	 * gtk_widget_unref has been deprecated since version 2.12 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Inverse of gtk_widget_ref(). Equivalent to g_object_unref().
@@ -2877,21 +2857,6 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// void gtk_widget_destroyed (GtkWidget *widget,  GtkWidget **widget_pointer);
 		gtk_widget_destroyed(gtkWidget, widgetPointer);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_widget_set is deprecated and should not be used in newly-written code. Use g_object_set() instead.
-	 * Precursor of g_object_set().
-	 * Params:
-	 * firstPropertyName =  name of first property to set
-	 * ... =  value of first property, followed by more properties,
-	 *  NULL-terminated
-	 */
-	public override void set(string firstPropertyName, ... )
-	{
-		// void gtk_widget_set (GtkWidget *widget,  const gchar *first_property_name,  ...);
-		gtk_widget_set(gtkWidget, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -4552,20 +4517,6 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// gint gtk_widget_send_expose (GtkWidget *widget,  GdkEvent *event);
 		return gtk_widget_send_expose(gtkWidget, (event is null) ? null : event.getEventStruct());
-	}
-	
-	/**
-	 * Gets the values of a multiple style properties of widget.
-	 * Params:
-	 * firstPropertyName =  the name of the first property to get
-	 * ... =  pairs of property names and locations to
-	 *  return the property values, starting with the location for
-	 *  first_property_name, terminated by NULL.
-	 */
-	public void styleGet(string firstPropertyName, ... )
-	{
-		// void gtk_widget_style_get (GtkWidget *widget,  const gchar *first_property_name,  ...);
-		gtk_widget_style_get(gtkWidget, Str.toStringz(firstPropertyName));
 	}
 	
 	/**

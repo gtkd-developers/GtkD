@@ -180,33 +180,6 @@ public class Relation
 	}
 	
 	/**
-	 * Inserts a record into a GRelation.
-	 * Params:
-	 * ... = the fields of the record to add. These must match the number of
-	 * fields in the GRelation, and of type gpointer or gconstpointer.
-	 */
-	public void insert(... )
-	{
-		// void g_relation_insert (GRelation *relation,  ...);
-		g_relation_insert(gRelation);
-	}
-	
-	/**
-	 * Returns TRUE if a record with the given values exists in a GRelation.
-	 * Note that the values are compared directly, so that, for example, two
-	 * copies of the same string will not match.
-	 * Params:
-	 * ... = the fields of the record to compare. The number must match the
-	 * number of fields in the GRelation.
-	 * Returns:TRUE if a record matches.
-	 */
-	public int exists(... )
-	{
-		// gboolean g_relation_exists (GRelation *relation,  ...);
-		return g_relation_exists(gRelation);
-	}
-	
-	/**
 	 * Returns the number of tuples in a GRelation that have the given value
 	 * in the given field.
 	 * Params:

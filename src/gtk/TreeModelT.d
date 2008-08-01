@@ -691,26 +691,6 @@ public template TreeModelT(TStruct)
 	}
 	
 	/**
-	 * Gets the value of one or more cells in the row referenced by iter.
-	 * The variable argument list should contain integer column numbers,
-	 * each column number followed by a place to store the value being
-	 * retrieved. The list is terminated by a -1. For example, to get a
-	 * value from column 0 with type G_TYPE_STRING, you would
-	 * write: gtk_tree_model_get (model, iter, 0, place_string_here, -1),
-	 * where place_string_here is a gchar* to be
-	 * filled with the string.
-	 * If appropriate, the returned values have to be freed or unreferenced.
-	 * Params:
-	 * iter =  a row in tree_model
-	 * ... =  pairs of column number and value return locations, terminated by -1
-	 */
-	public void get(TreeIter iter, ... )
-	{
-		// void gtk_tree_model_get (GtkTreeModel *tree_model,  GtkTreeIter *iter,  ...);
-		gtk_tree_model_get(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct());
-	}
-	
-	/**
 	 * See gtk_tree_model_get(), this version takes a va_list
 	 * for language bindings to use.
 	 * Params:

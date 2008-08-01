@@ -325,44 +325,6 @@ public class Dialog : Window
 	}
 	
 	/**
-	 * Creates a new GtkDialog with title title (or NULL for the default
-	 * title; see gtk_window_set_title()) and transient parent parent (or
-	 * NULL for none; see gtk_window_set_transient_for()). The flags
-	 * argument can be used to make the dialog modal (GTK_DIALOG_MODAL)
-	 * and/or to have it destroyed along with its transient parent
-	 * (GTK_DIALOG_DESTROY_WITH_PARENT). After flags, button
-	 * text/response ID pairs should be listed, with a NULL pointer ending
-	 * the list. Button text can be either a stock ID such as
-	 * GTK_STOCK_OK, or some arbitrary text. A response ID can be
-	 * any positive number, or one of the values in the GtkResponseType
-	 * enumeration. If the user clicks one of these dialog buttons,
-	 * GtkDialog will emit the "response" signal with the corresponding
-	 * response ID. If a GtkDialog receives the "delete-event" signal,
-	 * it will emit ::response with a response ID of GTK_RESPONSE_DELETE_EVENT.
-	 * However, destroying a dialog does not emit the ::response signal;
-	 * so be careful relying on ::response when using the
-	 * GTK_DIALOG_DESTROY_WITH_PARENT flag. Buttons are from left to right,
-	 * so the first button in the list will be the leftmost button in the dialog.
-	 * Params:
-	 * title =  Title of the dialog, or NULL
-	 * parent =  Transient parent of the dialog, or NULL
-	 * flags =  from GtkDialogFlags
-	 * firstButtonText =  stock ID or text to go in first button, or NULL
-	 * ... =  response ID for first button, then additional buttons, ending with NULL
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string title, Window parent, GtkDialogFlags flags, string firstButtonText, ... )
-	{
-		// GtkWidget* gtk_dialog_new_with_buttons (const gchar *title,  GtkWindow *parent,  GtkDialogFlags flags,  const gchar *first_button_text,  ...);
-		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText))");
-		}
-		this(cast(GtkDialog*) p);
-	}
-	
-	/**
 	 * Blocks in a recursive main loop until the dialog either emits the
 	 * "response" signal, or is destroyed. If the dialog is
 	 * destroyed during the call to gtk_dialog_run(), gtk_dialog_run() returns
@@ -423,21 +385,6 @@ public class Dialog : Window
 			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 * Adds more buttons, same as calling gtk_dialog_add_button()
-	 * repeatedly. The variable argument list should be NULL-terminated
-	 * as with gtk_dialog_new_with_buttons(). Each button must have both
-	 * text and response ID.
-	 * Params:
-	 * firstButtonText =  button text or stock ID
-	 * ... =  response ID for first button, then more text-response_id pairs
-	 */
-	public void addButtons(string firstButtonText, ... )
-	{
-		// void gtk_dialog_add_buttons (GtkDialog *dialog,  const gchar *first_button_text,  ...);
-		gtk_dialog_add_buttons(gtkDialog, Str.toStringz(firstButtonText));
 	}
 	
 	/**
@@ -538,29 +485,6 @@ public class Dialog : Window
 	{
 		// gboolean gtk_alternative_dialog_button_order (GdkScreen *screen);
 		return gtk_alternative_dialog_button_order((screen is null) ? null : screen.getScreenStruct());
-	}
-	
-	/**
-	 * Sets an alternative button order. If the
-	 * "gtk-alternative-button-order" setting is set to TRUE,
-	 * the dialog buttons are reordered according to the order of the
-	 * response ids passed to this function.
-	 * By default, GTK+ dialogs use the button order advocated by the Gnome
-	 * Human
-	 * Interface Guidelines with the affirmative button at the far
-	 * right, and the cancel button left of it. But the builtin GTK+ dialogs
-	 * and GtkMessageDialogs do provide an alternative button order,
-	 * which is more suitable on some platforms, e.g. Windows.
-	 * Use this function after adding all the buttons to your dialog, as the
-	 * Since 2.6
-	 * Params:
-	 * firstResponseId =  a response id used by one dialog's buttons
-	 * ... =  a list of more response ids of dialog's buttons, terminated by -1
-	 */
-	public void setAlternativeButtonOrder(int firstResponseId, ... )
-	{
-		// void gtk_dialog_set_alternative_button_order  (GtkDialog *dialog,  gint first_response_id,  ...);
-		gtk_dialog_set_alternative_button_order(gtkDialog, firstResponseId);
 	}
 	
 	/**

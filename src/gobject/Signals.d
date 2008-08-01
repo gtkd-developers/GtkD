@@ -130,40 +130,6 @@ public class Signals
 	
 	/**
 	 * Creates a new signal. (This is usually done in the class initializer.)
-	 * A signal name consists of segments consisting of ASCII letters and
-	 * digits, separated by either the '-' or '_' character. The first
-	 * character of a signal name must be a letter. Names which violate these
-	 * rules lead to undefined behaviour of the GSignal system.
-	 * When registering a signal and looking up a signal, either separator can
-	 * be used, but they cannot be mixed.
-	 * Params:
-	 * signalName = the name for the signal
-	 * itype = the type this signal pertains to. It will also pertain to
-	 *  types which are derived from this type.
-	 * signalFlags = a combination of GSignalFlags specifying detail of when
-	 *  the default handler is to be invoked. You should at least specify
-	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
-	 * classOffset = The offset of the function pointer in the class structure
-	 *  for this type. Used to invoke a class method generically. Pass 0 to
-	 *  not associate a class method with this signal.
-	 * accumulator = the accumulator for this signal; may be NULL.
-	 * accuData = user data for the accumulator.
-	 * cMarshaller = the function to translate arrays of parameter values to
-	 *  signal emissions into C language callback invocations.
-	 * returnType = the type of return value, or G_TYPE_NONE for a signal
-	 *  without a return value.
-	 * nParams = the number of parameter types to follow.
-	 * ... = a list of types, one for each parameter.
-	 * Returns:the signal id
-	 */
-	public static uint newSignals(string signalName, GType itype, GSignalFlags signalFlags, uint classOffset, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, ... )
-	{
-		// guint g_signal_new (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  guint class_offset,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  ...);
-		return g_signal_new(Str.toStringz(signalName), itype, signalFlags, classOffset, accumulator, accuData, cMarshaller, returnType, nParams);
-	}
-	
-	/**
-	 * Creates a new signal. (This is usually done in the class initializer.)
 	 * See g_signal_new() for details on allowed signal names.
 	 * Params:
 	 * signalName = the name for the signal
@@ -277,41 +243,6 @@ public class Signals
 	{
 		// guint* g_signal_list_ids (GType itype,  guint *n_ids);
 		return g_signal_list_ids(itype, nIds);
-	}
-	
-	/**
-	 * Emits a signal.
-	 * Note that g_signal_emit() resets the return value to the default
-	 * if no handlers are connected, in contrast to g_signal_emitv().
-	 * Params:
-	 * instanc = the instance the signal is being emitted on.
-	 * signalId = the signal id
-	 * detail = the detail
-	 * ... = parameters to be passed to the signal, followed by a
-	 *  location for the return value. If the return type of the signal
-	 *  is G_TYPE_NONE, the return value location can be omitted.
-	 */
-	public static void emit(void* instanc, uint signalId, GQuark detail, ... )
-	{
-		// void g_signal_emit (gpointer instance,  guint signal_id,  GQuark detail,  ...);
-		g_signal_emit(instanc, signalId, detail);
-	}
-	
-	/**
-	 * Emits a signal.
-	 * Note that g_signal_emit_by_name() resets the return value to the default
-	 * if no handlers are connected, in contrast to g_signal_emitv().
-	 * Params:
-	 * instanc = the instance the signal is being emitted on.
-	 * detailedSignal = a string of the form "signal-name::detail".
-	 * ... = parameters to be passed to the signal, followed by a
-	 *  location for the return value. If the return type of the signal
-	 *  is G_TYPE_NONE, the return value location can be omitted.
-	 */
-	public static void emitByName(void* instanc, string detailedSignal, ... )
-	{
-		// void g_signal_emit_by_name (gpointer instance,  const gchar *detailed_signal,  ...);
-		g_signal_emit_by_name(instanc, Str.toStringz(detailedSignal));
 	}
 	
 	/**

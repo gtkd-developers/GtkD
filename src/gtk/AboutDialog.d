@@ -578,20 +578,4 @@ public class AboutDialog : Dialog
 		// GtkAboutDialogActivateLinkFunc gtk_about_dialog_set_url_hook  (GtkAboutDialogActivateLinkFunc func,  gpointer data,  GDestroyNotify destroy);
 		return gtk_about_dialog_set_url_hook(func, data, destroy);
 	}
-	
-	/**
-	 * This is a convenience function for showing an application's about box.
-	 * The constructed dialog is associated with the parent window and
-	 * reused for future invocations of this function.
-	 * Since 2.6
-	 * Params:
-	 * parent =  transient parent, or NULL for none
-	 * firstPropertyName =  the name of the first property
-	 * ... =  value of first property, followed by more properties, NULL-terminated
-	 */
-	public static void showAboutDialog(Window parent, string firstPropertyName, ... )
-	{
-		// void gtk_show_about_dialog (GtkWindow *parent,  const gchar *first_property_name,  ...);
-		gtk_show_about_dialog((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(firstPropertyName));
-	}
 }

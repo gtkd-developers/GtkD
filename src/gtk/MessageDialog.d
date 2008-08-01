@@ -271,46 +271,4 @@ public class MessageDialog : Dialog
 		// void gtk_message_dialog_set_image (GtkMessageDialog *dialog,  GtkWidget *image);
 		gtk_message_dialog_set_image(gtkMessageDialog, (image is null) ? null : image.getWidgetStruct());
 	}
-	
-	/**
-	 * Sets the secondary text of the message dialog to be message_format
-	 * (with printf()-style).
-	 * Note that setting a secondary text makes the primary text become
-	 * bold, unless you have provided explicit markup.
-	 * Since 2.6
-	 * Params:
-	 * messageFormat =  printf()-style format string, or NULL
-	 * ... =  arguments for message_format
-	 */
-	public void formatSecondaryText(string messageFormat, ... )
-	{
-		// void gtk_message_dialog_format_secondary_text  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
-		gtk_message_dialog_format_secondary_text(gtkMessageDialog, Str.toStringz(messageFormat));
-	}
-	
-	/**
-	 * Sets the secondary text of the message dialog to be message_format (with
-	 * printf()-style), which is marked up with the
-	 * Pango text markup language.
-	 * Note that setting a secondary text makes the primary text become
-	 * bold, unless you have provided explicit markup.
-	 * Due to an oversight, this function does not escape special XML characters
-	 * like gtk_message_dialog_new_with_markup() does. Thus, if the arguments
-	 * may contain special XML characters, you should use g_markup_printf_escaped()
-	 * to escape it.
-	 * gchar *msg;
-	 * msg = g_markup_printf_escaped (message_format, ...);
-	 * gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
-	 * g_free (msg);
-	 * Since 2.6
-	 * Params:
-	 * messageFormat =  printf()-style markup string (see
-	 *  Pango markup format), or NULL
-	 * ... =  arguments for message_format
-	 */
-	public void formatSecondaryMarkup(string messageFormat, ... )
-	{
-		// void gtk_message_dialog_format_secondary_markup  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
-		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, Str.toStringz(messageFormat));
-	}
 }

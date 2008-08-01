@@ -324,27 +324,6 @@ public class ErrorG
 	 */
 	
 	/**
-	 * Creates a new GError with the given domain and code,
-	 * and a message formatted with format.
-	 * Params:
-	 * domain =  error domain
-	 * code =  error code
-	 * format =  printf()-style format for error message
-	 * ... =  parameters for message format
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GQuark domain, int code, string format, ... )
-	{
-		// GError* g_error_new (GQuark domain,  gint code,  const gchar *format,  ...);
-		auto p = g_error_new(domain, code, Str.toStringz(format));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_error_new(domain, code, Str.toStringz(format))");
-		}
-		this(cast(GError*) p);
-	}
-	
-	/**
 	 * Creates a new GError; unlike g_error_new(), message is not
 	 * a printf()-style format string. Use this
 	 * function if message contains text you don't have control over,
@@ -405,22 +384,6 @@ public class ErrorG
 	}
 	
 	/**
-	 * Does nothing if err is NULL; if err is non-NULL, then *err must
-	 * be NULL. A new GError is created and assigned to *err.
-	 * Params:
-	 * err =  a return location for a GError, or NULL
-	 * domain =  error domain
-	 * code =  error code
-	 * format =  printf()-style format
-	 * ... =  args for format
-	 */
-	public static void gSetError(GError** err, GQuark domain, int code, string format, ... )
-	{
-		// void g_set_error (GError **err,  GQuark domain,  gint code,  const gchar *format,  ...);
-		g_set_error(err, domain, code, Str.toStringz(format));
-	}
-	
-	/**
 	 * If dest is NULL, free src; otherwise, moves src into *dest.
 	 * The error variable dest points to must be NULL.
 	 * Params:
@@ -443,45 +406,5 @@ public class ErrorG
 	{
 		// void g_clear_error (GError **err);
 		g_clear_error(err);
-	}
-	
-	/**
-	 * Formats a string according to format and
-	 * prefix it to an existing error message. If
-	 * err is NULL (ie: no error variable) then do
-	 * nothing.
-	 * If *err is NULL (ie: an error variable is
-	 * present but there is no error condition) then
-	 * also do nothing. Whether or not it makes
-	 * sense to take advantage of this feature is up
-	 * to you.
-	 * Since 2.16
-	 * Params:
-	 * err =  a return location for a GError, or NULL
-	 * format =  printf()-style format string
-	 * ... =  arguments to format
-	 */
-	public static void gPrefixError(GError** err, string format, ... )
-	{
-		// void g_prefix_error (GError **err,  const gchar *format,  ...);
-		g_prefix_error(err, Str.toStringz(format));
-	}
-	
-	/**
-	 * If dest is NULL, free src; otherwise,
-	 * moves src into *dest. *dest must be NULL.
-	 * After the move, add a prefix as with
-	 * g_prefix_error().
-	 * Since 2.16
-	 * Params:
-	 * dest =  error return location
-	 * src =  error to move into the return location
-	 * format =  printf()-style format string
-	 * ... =  arguments to format
-	 */
-	public static void gPropagatePrefixedError(GError** dest, ErrorG src, string format, ... )
-	{
-		// void g_propagate_prefixed_error (GError **dest,  GError *src,  const gchar *format,  ...);
-		g_propagate_prefixed_error(dest, (src is null) ? null : src.getErrorGStruct(), Str.toStringz(format));
 	}
 }

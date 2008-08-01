@@ -152,33 +152,6 @@ public class SimpleXML
 	}
 	
 	/**
-	 * Formats arguments according to format, escaping
-	 * all string and character arguments in the fashion
-	 * of g_markup_escape_text(). This is useful when you
-	 * want to insert literal strings into XML-style markup
-	 * output, without having to worry that the strings
-	 * might themselves contain markup.
-	 * const char *store = "Fortnum  Mason";
-	 * const char *item = "Tea";
-	 * char *output;
-	 * output = g_markup_printf_escaped ("<purchase>"
-	 *  "<store>%s</store>"
-	 *  "<item>%s</item>"
-	 *  "</purchase>",
-	 *  store, item);
-	 * Since 2.4
-	 * Params:
-	 * format =  printf() style format string
-	 * ... =  the arguments to insert in the format string
-	 * Returns: newly allocated result from formatting operation. Free with g_free().
-	 */
-	public static string printfEscaped(string format, ... )
-	{
-		// gchar* g_markup_printf_escaped (const char *format,  ...);
-		return Str.toString(g_markup_printf_escaped(Str.toStringz(format)));
-	}
-	
-	/**
 	 * Formats the data in args according to format, escaping
 	 * all string and character arguments in the fashion
 	 * of g_markup_escape_text(). See g_markup_printf_escaped().
@@ -325,70 +298,6 @@ public class SimpleXML
 		GError* err = null;
 		
 		auto p = g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Collects the attributes of the element from the
-	 * data passed to the GMarkupParser start_element
-	 * function, dealing with common error conditions
-	 * and supporting boolean values.
-	 * This utility function is not required to write
-	 * a parser but can save a lot of typing.
-	 * The element_name, attribute_names,
-	 * attribute_values and error parameters passed
-	 * to the start_element callback should be passed
-	 * unmodified to this function.
-	 * Following these arguments is a list of
-	 * "supported" attributes to collect. It is an
-	 * error to specify multiple attributes with the
-	 * same name. If any attribute not in the list
-	 * appears in the attribute_names array then an
-	 * unknown attribute error will result.
-	 * The GMarkupCollectType field allows specifying
-	 * the type of collection to perform and if a
-	 * given attribute must appear or is optional.
-	 * The attribute name is simply the name of the
-	 * attribute to collect.
-	 * The pointer should be of the appropriate type
-	 * (see the descriptions under
-	 * GMarkupCollectType) and may be NULL in case a
-	 * particular attribute is to be allowed but
-	 * ignored.
-	 * This function deals with issuing errors for missing attributes
-	 * (of type G_MARKUP_ERROR_MISSING_ATTRIBUTE), unknown attributes
-	 * (of type G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE) and duplicate
-	 * attributes (of type G_MARKUP_ERROR_INVALID_CONTENT) as well
-	 * as parse errors for boolean-valued attributes (again of type
-	 * G_MARKUP_ERROR_INVALID_CONTENT). In all of these cases FALSE
-	 * will be returned and error will be set as appropriate.
-	 * Since 2.16
-	 * Params:
-	 * elementName =  the current tag name
-	 * attributeNames =  the attribute names
-	 * attributeValues =  the attribute values
-	 * firstType =  the GMarkupCollectType of the
-	 *  first attribute
-	 * firstAttr =  the name of the first attribute
-	 * ... =  a pointer to the storage location of the
-	 *  first attribute (or NULL), followed by
-	 *  more types names and pointers, ending
-	 *  with G_MARKUP_COLLECT_INVALID.
-	 * Returns: TRUE if successful
-	 * Throws: GException on failure.
-	 */
-	public static int collectAttributes(string elementName, char** attributeNames, char** attributeValues, GMarkupCollectType firstType, string firstAttr, ... )
-	{
-		// gboolean g_markup_collect_attributes (const gchar *element_name,  const gchar **attribute_names,  const gchar **attribute_values,  GError **error,  GMarkupCollectType first_type,  const gchar *first_attr,  ...);
-		GError* err = null;
-		
-		auto p = g_markup_collect_attributes(Str.toStringz(elementName), attributeNames, attributeValues, &err, firstType, Str.toStringz(firstAttr));
 		
 		if (err !is null)
 		{

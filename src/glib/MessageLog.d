@@ -80,23 +80,6 @@ public class MessageLog
 	 * If the log level has been set as fatal, the abort()
 	 * function is called to terminate the program.
 	 * Params:
-	 * logDomain = the log domain, usually G_LOG_DOMAIN.
-	 * logLevel = the log level, either from GLogLevelFlags or a user-defined level.
-	 * format = the message format. See the printf()
-	 * documentation.
-	 * ... = the parameters to insert into the format string.
-	 */
-	public static void log(string logDomain, GLogLevelFlags logLevel, string format, ... )
-	{
-		// void g_log (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *format,  ...);
-		g_log(Str.toStringz(logDomain), logLevel, Str.toStringz(format));
-	}
-	
-	/**
-	 * Logs an error or debugging message.
-	 * If the log level has been set as fatal, the abort()
-	 * function is called to terminate the program.
-	 * Params:
 	 * logDomain = the log domain.
 	 * logLevel = the log level.
 	 * format = the message format. See the printf()

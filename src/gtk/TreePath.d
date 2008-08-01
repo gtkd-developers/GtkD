@@ -289,25 +289,6 @@ public class TreePath
 	}
 	
 	/**
-	 * Creates a new path with first_index and varargs as indices.
-	 * Since 2.2
-	 * Params:
-	 * firstIndex =  first integer
-	 * ... =  list of integers terminated by -1
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int firstIndex, ... )
-	{
-		// GtkTreePath* gtk_tree_path_new_from_indices (gint first_index,  ...);
-		auto p = gtk_tree_path_new_from_indices(firstIndex);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_path_new_from_indices(firstIndex)");
-		}
-		this(cast(GtkTreePath*) p);
-	}
-	
-	/**
 	 * Generates a string representation of the path. This string is a ':'
 	 * separated list of numbers. For example, "4:10:0:3" would be an acceptable return value for this string.
 	 * Returns: A newly-allocated string. Must be freed with g_free().

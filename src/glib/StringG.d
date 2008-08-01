@@ -222,38 +222,6 @@ public class StringG
 	}
 	
 	/**
-	 * Writes a formatted string into a GString.
-	 * This is similar to the standard sprintf() function,
-	 * except that the GString buffer automatically expands
-	 * to contain the results. The previous contents of the
-	 * GString are destroyed.
-	 * Params:
-	 * string =  a GString
-	 * format =  the string format. See the printf() documentation
-	 * ... =  the parameters to insert into the format string
-	 */
-	public void printf(string format, ... )
-	{
-		// void g_string_printf (GString *string,  const gchar *format,  ...);
-		g_string_printf(gString, Str.toStringz(format));
-	}
-	
-	/**
-	 * Appends a formatted string onto the end of a GString.
-	 * This function is similar to g_string_printf() except
-	 * that the text is appended to the GString.
-	 * Params:
-	 * string =  a GString
-	 * format =  the string format. See the printf() documentation
-	 * ... =  the parameters to insert into the format string
-	 */
-	public void appendPrintf(string format, ... )
-	{
-		// void g_string_append_printf (GString *string,  const gchar *format,  ...);
-		g_string_append_printf(gString, Str.toStringz(format));
-	}
-	
-	/**
 	 * Adds a string onto the end of a GString, expanding
 	 * it if necessary.
 	 * Params:

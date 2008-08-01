@@ -206,32 +206,6 @@ public class ObjectGtk : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_object_new is deprecated and should not be used in newly-written code. Use g_object_new() instead.
-	 * Constructs an object given its arguments, enumerated in the call to the
-	 * function.
-	 * Params:
-	 * type = the type identifying this object. Returned by gtk_type_unique()
-	 * (although for a properly-written object it should be accessible through
-	 * a GTK_TYPE_FOO macro.)
-	 * firstPropertyName = name of the first property to set when constructing
-	 *  the object.
-	 * ... = the first argument's value, followed by any number of
-	 * name/argument-value pairs, terminated with NULL.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GtkType type, string firstPropertyName, ... )
-	{
-		// GtkObject* gtk_object_new (GtkType type,  const gchar *first_property_name,  ...);
-		auto p = gtk_object_new(type, Str.toStringz(firstPropertyName));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_object_new(type, Str.toStringz(firstPropertyName))");
-		}
-		this(cast(GtkObject*) p);
-	}
-	
-	/**
-	 * Warning
 	 * gtk_object_sink has been deprecated since version 2.10 and should not be used in newly-written code. Use g_object_ref_sink() instead
 	 * Removes the floating reference from a GtkObject, if it exists;
 	 * otherwise does nothing. See the GtkObject overview documentation at
@@ -310,41 +284,6 @@ public class ObjectGtk : ObjectG
 	{
 		// void gtk_object_destroy (GtkObject *object);
 		gtk_object_destroy(gtkObject);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_object_get is deprecated and should not be used in newly-written code. Use g_object_get() instead.
-	 * Gets properties of an object.
-	 * Params:
-	 * firstPropertyName = name of first property to get the value for.
-	 * ... = NULL-terminated list of name-return location pairs.
-	 */
-	public void get(string firstPropertyName, ... )
-	{
-		// void gtk_object_get (GtkObject *object,  const gchar *first_property_name,  ...);
-		gtk_object_get(gtkObject, Str.toStringz(firstPropertyName));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_object_set is deprecated and should not be used in newly-written code. Use g_object_set() instead.
-	 * Sets properties on an object.
-	 * void set_box_properties (GtkBox* box)
-	 * {
-		 *  gtk_object_set (GTK_OBJECT (box), "homogeneous", TRUE,
-		 *  "spacing", 8,
-		 * 				 NULL);
-	 * }
-	 * Params:
-	 * firstPropertyName = name of the first property to set
-	 * ... = the value of the first argument, followed optionally
-	 * by more name/value pairs, followed by NULL.
-	 */
-	public void set(string firstPropertyName, ... )
-	{
-		// void gtk_object_set (GtkObject *object,  const gchar *first_property_name,  ...);
-		gtk_object_set(gtkObject, Str.toStringz(firstPropertyName));
 	}
 	
 	/**

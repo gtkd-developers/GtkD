@@ -317,24 +317,6 @@ public class BindingSet
 	}
 	
 	/**
-	 * Override or install a new key binding for keyval with modifiers on
-	 * binding_set. When the binding is activated, signal_name will be
-	 * emitted on the target widget, with n_args Varargs used as
-	 * arguments.
-	 * Params:
-	 * keyval =  key value of binding to install
-	 * modifiers =  key modifier of binding to install
-	 * signalName =  signal to execute upon activation
-	 * nArgs =  number of arguments to signal_name
-	 * @: arguments to signal_name
-	 */
-	public void bindingEntryAddSignal(uint keyval, GdkModifierType modifiers, string signalName, uint nArgs, ... )
-	{
-		// void gtk_binding_entry_add_signal (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  guint n_args,  ...);
-		gtk_binding_entry_add_signal(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), nArgs);
-	}
-	
-	/**
 	 * Since 2.12
 	 * Install a binding on @binding_set which causes key lookups
 	 * to be aborted, to prevent bindings from lower priority sets

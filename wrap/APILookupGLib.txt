@@ -962,6 +962,32 @@ prefix: g_
 #import: glib.DebugKey
 #structWrap: GDebugKey* DebugKey
 import: glib.Str
+code: start
+	/**
+	 * Creates a filename from a series of elements using the correct
+	 * separator for filenames.
+	 * On Unix, this function behaves identically to g_build_path
+	 * (G_DIR_SEPARATOR_S, first_element, ....).
+	 * On Windows, it takes into account that either the backslash
+	 * (\ or slash (/) can be used
+	 * as separator in filenames, but otherwise behaves as on Unix. When
+	 * file pathname separators need to be inserted, the one that last
+	 * previously occurred in the parameters (reading from left to right)
+	 * is used.
+	 * No attempt is made to force the resulting filename to be an absolute
+	 * path. If the first element is a relative path, the result will
+	 * be a relative path.
+	 * Params:
+	 * firstElement =  the first element in the path
+	 * ... =  remaining elements in path, terminated by NULL
+	 * Returns: a newly-allocated string that must be freed with g_free().
+	 */
+	public static string buildFilename(string[] firstElement ... )
+	{
+		// gchar* g_build_filename (const gchar *first_element,  ...);
+		return buildFilenamev(Str.toStringzArray(firstElement));
+	}
+code: end
 outFile: Util
 
 file: glib-Lexical-Scanner.html

@@ -387,21 +387,6 @@ public class Container : Widget
 	}
 	
 	/**
-	 * Adds widget to container, setting child properties at the same time.
-	 * See gtk_container_add() and gtk_container_child_set() for more details.
-	 * Params:
-	 * widget =  a widget to be placed inside container
-	 * firstPropName =  the name of the first child property to set
-	 * ... =  a NULL-terminated list of property names and values, starting
-	 *  with first_prop_name
-	 */
-	public void addWithProperties(Widget widget, string firstPropName, ... )
-	{
-		// void gtk_container_add_with_properties (GtkContainer *container,  GtkWidget *widget,  const gchar *first_prop_name,  ...);
-		gtk_container_add_with_properties(gtkContainer, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(firstPropName));
-	}
-	
-	/**
 	 * Returns the resize mode for the container. See
 	 * gtk_container_set_resize_mode().
 	 * Returns: the current resize mode
@@ -587,34 +572,6 @@ public class Container : Widget
 	{
 		// GType gtk_container_child_type (GtkContainer *container);
 		return gtk_container_child_type(gtkContainer);
-	}
-	
-	/**
-	 * Gets the values of one or more child properties for child and container.
-	 * Params:
-	 * child =  a widget which is a child of container
-	 * firstPropName =  the name of the first property to get
-	 * ... =  a NULL-terminated list of property names and GValue*,
-	 *  starting with first_prop_name
-	 */
-	public void childGet(Widget child, string firstPropName, ... )
-	{
-		// void gtk_container_child_get (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
-		gtk_container_child_get(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropName));
-	}
-	
-	/**
-	 * Sets one or more child properties for child and container.
-	 * Params:
-	 * child =  a widget which is a child of container
-	 * firstPropName =  the name of the first property to set
-	 * ... =  a NULL-terminated list of property names and values, starting
-	 *  with first_prop_name
-	 */
-	public void childSet(Widget child, string firstPropName, ... )
-	{
-		// void gtk_container_child_set (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
-		gtk_container_child_set(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropName));
 	}
 	
 	/**

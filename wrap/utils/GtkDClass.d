@@ -2242,7 +2242,7 @@ public class GtkDClass
 							if(addme) externalDeclarations ~= externalDeclaration;
 						}
 						// body
-						if ( !convParms.omitCode(fun.name) )
+						if ( !convParms.omitCode(fun.name) && find(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
 						{
 							char[] rawDeclaration = fun.declaration(convParms,wrapper.getAliases());
 							char[] gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());

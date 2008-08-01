@@ -243,29 +243,6 @@ public class X11
 	}
 	
 	/**
-	 * Sends a startup notification message of type message_type to
-	 * display.
-	 * This is a convenience function for use by code that implements the
-	 * freedesktop startup notification specification. Applications should
-	 * not normally need to call it directly. See the Startup
-	 * Notification Protocol specification for
-	 * definitions of the message types and keys that can be used.
-	 * Since 2.12
-	 * Params:
-	 * display =  a GdkDisplay
-	 * messageType =  startup notification message type ("new", "change",
-	 * or "remove")
-	 * ... =  a list of key/value pairs (as strings), terminated by a
-	 * NULL key. (A NULL value for a key will cause that key to be
-	 * skipped in the output.)
-	 */
-	public static void displayBroadcastStartupMessage(Display display, string messageType, ... )
-	{
-		// void gdk_x11_display_broadcast_startup_message  (GdkDisplay *display,  const char *message_type,  ...);
-		gdk_x11_display_broadcast_startup_message((display is null) ? null : display.getDisplayStruct(), Str.toStringz(messageType));
-	}
-	
-	/**
 	 * Gets the startup notification ID for a display.
 	 * Since 2.12
 	 * Params:

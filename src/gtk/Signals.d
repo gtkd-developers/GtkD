@@ -164,36 +164,6 @@ public class Signals
 	
 	/**
 	 * Warning
-	 * gtk_signal_new is deprecated and should not be used in newly-written code. Use g_signal_new() instead.
-	 * Creates a new signal type. (This is usually done in the
-	 * class initializer.)
-	 * Params:
-	 * name = the event name for the signal, e.g. "clicked".
-	 * signalFlags = a combination of GTK_RUN flags
-	 * specifying detail of when the default handler is to be invoked.
-	 * You should at least specify GTK_RUN_FIRST
-	 * or GTK_RUN_LAST.
-	 * objectType = the type of object this signal pertains to.
-	 * It will also pertain to derivers of this type automatically.
-	 * functionOffset = How many bytes the function pointer is in
-	 * the class structure for this type. Used to invoke a class
-	 * method generically.
-	 * marshaller = the function to translate between an array
-	 * of GtkArgs and the native calling convention. Usually they
-	 * returnVal = the type of return value, or GTK_TYPE_NONE for a signal
-	 * without a return value.
-	 * nArgs = the number of parameter the handlers may take.
-	 * ... = a list of GTK_TYPE_*, one for each parameter.
-	 * Returns:the signal id.
-	 */
-	public static uint newSignals(string name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, ... )
-	{
-		// guint gtk_signal_new (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  ...);
-		return gtk_signal_new(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs);
-	}
-	
-	/**
-	 * Warning
 	 * gtk_signal_newv is deprecated and should not be used in newly-written code. Use g_signal_newv() instead.
 	 * Creates a new signal type. (This is usually done in a
 	 * class initializer.)
@@ -216,40 +186,6 @@ public class Signals
 	{
 		// guint gtk_signal_newv (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  GtkType *args);
 		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs, args);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_signal_emit is deprecated and should not be used in newly-written code. Use g_signal_emit() instead.
-	 * Emits a signal. This causes the default handler and user-defined
-	 * handlers to be run.
-	 * Params:
-	 * object = the object that emits the signal.
-	 * signalId = the signal identifier.
-	 * ... = the parameters to the function, followed
-	 * by a pointer to the return type, if any.
-	 */
-	public static void emit(ObjectGtk object, uint signalId, ... )
-	{
-		// void gtk_signal_emit (GtkObject *object,  guint signal_id,  ...);
-		gtk_signal_emit((object is null) ? null : object.getObjectGtkStruct(), signalId);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_signal_emit_by_name is deprecated and should not be used in newly-written code. Use g_signal_emit_by_name() instead.
-	 * Emits a signal. This causes the default handler and user-connected
-	 * handlers to be run.
-	 * Params:
-	 * object = the object that emits the signal.
-	 * name = the name of the signal.
-	 * ... = the parameters to the function, followed
-	 * by a pointer to the return type, if any.
-	 */
-	public static void emitByName(ObjectGtk object, string name, ... )
-	{
-		// void gtk_signal_emit_by_name (GtkObject *object,  const gchar *name,  ...);
-		gtk_signal_emit_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name));
 	}
 	
 	/**

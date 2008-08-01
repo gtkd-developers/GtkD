@@ -193,22 +193,6 @@ public template CellLayoutT(TStruct)
 	}
 	
 	/**
-	 * Sets the attributes in list as the attributes of cell_layout. The
-	 * attributes should be in attribute/column order, as in
-	 * gtk_cell_layout_add_attribute(). All existing attributes are removed, and
-	 * replaced with the new attributes.
-	 * Since 2.4
-	 * Params:
-	 * cell =  A GtkCellRenderer.
-	 * ... =  A NULL-terminated list of attributes.
-	 */
-	public void setAttributes(CellRenderer cell, ... )
-	{
-		// void gtk_cell_layout_set_attributes (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  ...);
-		gtk_cell_layout_set_attributes(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct());
-	}
-	
-	/**
 	 * Adds an attribute mapping to the list in cell_layout. The column is the
 	 * column of the model to get a value from, and the attribute is the
 	 * parameter on cell to be set from the value. So for example if column 2
