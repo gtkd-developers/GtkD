@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- gda.Row
@@ -53,21 +54,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.DataModel;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -105,29 +100,15 @@ public class DataModel
 	 */
 	public this (GdaDataModel* gdaDataModel)
 	{
-		version(noAssert)
+		if(gdaDataModel is null)
 		{
-			if ( gdaDataModel is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaDataModel is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaDataModel is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaDataModel !is null, "struct gdaDataModel is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaDataModel = gdaDataModel;
 	}
 	
+	/** */
 	this (ListG glist) {
 		this.gdaDataModel = cast(GdaDataModel *) glist.data;
 	}
@@ -135,15 +116,12 @@ public class DataModel
 	/**
 	 */
 	
-	
 	/**
 	 * Notifies listeners of the given data model object of changes
 	 * in the underlying data. Listeners usually will connect
 	 * themselves to the "changed" signal in the GdaDataModel
 	 * class, thus being notified of any new data being appended
 	 * or removed from the data model.
-	 * model :
-	 *  a GdaDataModel object.
 	 */
 	public void changed()
 	{
@@ -153,10 +131,8 @@ public class DataModel
 	
 	/**
 	 * Emits the 'row_inserted' and 'changed' signals on model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * row :
-	 *  row number.
+	 * Params:
+	 * row =  row number.
 	 */
 	public void rowInserted(int row)
 	{
@@ -166,10 +142,8 @@ public class DataModel
 	
 	/**
 	 * Emits the 'row_updated' and 'changed' signals on model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * row :
-	 *  row number.
+	 * Params:
+	 * row =  row number.
 	 */
 	public void rowUpdated(int row)
 	{
@@ -179,10 +153,8 @@ public class DataModel
 	
 	/**
 	 * Emits the 'row_removed' and 'changed' signal on model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * row :
-	 *  row number.
+	 * Params:
+	 * row =  row number.
 	 */
 	public void rowRemoved(int row)
 	{
@@ -192,10 +164,8 @@ public class DataModel
 	
 	/**
 	 * Emits the 'column_inserted' and 'changed' signals on model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number.
+	 * Params:
+	 * col =  column number.
 	 */
 	public void columnInserted(int col)
 	{
@@ -205,10 +175,8 @@ public class DataModel
 	
 	/**
 	 * Emits the 'column_updated' and 'changed' signals on model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number.
+	 * Params:
+	 * col =  column number.
 	 */
 	public void columnUpdated(int col)
 	{
@@ -218,10 +186,8 @@ public class DataModel
 	
 	/**
 	 * Emits the 'column_removed' and 'changed' signal on model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number.
+	 * Params:
+	 * col =  column number.
 	 */
 	public void columnRemoved(int col)
 	{
@@ -233,8 +199,6 @@ public class DataModel
 	 * Disables notifications of changes on the given data model. To
 	 * re-enable notifications again, you should call the
 	 * gda_data_model_thaw function.
-	 * model :
-	 *  a GdaDataModel object.
 	 */
 	public void freeze()
 	{
@@ -244,8 +208,6 @@ public class DataModel
 	
 	/**
 	 * Re-enables notifications of changes on the given data model.
-	 * model :
-	 *  a GdaDataModel object.
 	 */
 	public void thaw()
 	{
@@ -254,10 +216,7 @@ public class DataModel
 	}
 	
 	/**
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  the number of rows in the given data model.
+	 * Returns: the number of rows in the given data model.
 	 */
 	public int getNRows()
 	{
@@ -266,10 +225,7 @@ public class DataModel
 	}
 	
 	/**
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  the number of columns in the given data model.
+	 * Returns: the number of columns in the given data model.
 	 */
 	public int getNColumns()
 	{
@@ -282,43 +238,39 @@ public class DataModel
 	 * of a given column. That description is returned in the form of
 	 * a GdaFieldAttributes structure, which contains all the information
 	 * about the given column in the data model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number.
-	 * Returns :
-	 *  the description of the column.
+	 * Params:
+	 * col =  column number.
+	 * Returns: the description of the column.
 	 */
 	public FieldAttributes describeColumn(int col)
 	{
 		// GdaFieldAttributes* gda_data_model_describe_column (GdaDataModel *model,  gint col);
-		return new FieldAttributes( gda_data_model_describe_column(gdaDataModel, col) );
+		auto p = gda_data_model_describe_column(gdaDataModel, col);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FieldAttributes(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number.
-	 * Returns :
-	 *  the title for the given column in a data model object.
+	 * Params:
+	 * col =  column number.
+	 * Returns: the title for the given column in a data model object.
 	 */
-	public char[] getColumnTitle(int col)
+	public string getColumnTitle(int col)
 	{
 		// const gchar* gda_data_model_get_column_title (GdaDataModel *model,  gint col);
-		return Str.toString(gda_data_model_get_column_title(gdaDataModel, col) );
+		return Str.toString(gda_data_model_get_column_title(gdaDataModel, col));
 	}
 	
 	/**
 	 * Sets the title of the given col in model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number
-	 * title :
-	 *  title for the given column.
+	 * Params:
+	 * col =  column number
+	 * title =  title for the given column.
 	 */
-	public void setColumnTitle(int col, char[] title)
+	public void setColumnTitle(int col, string title)
 	{
 		// void gda_data_model_set_column_title (GdaDataModel *model,  gint col,  const gchar *title);
 		gda_data_model_set_column_title(gdaDataModel, col, Str.toStringz(title));
@@ -327,15 +279,11 @@ public class DataModel
 	/**
 	 * Gets the position of a column on the data model, based on
 	 * the column's title.
-	 * model :
-	 *  a GdaDataModel object.
-	 * title :
-	 *  column title.
-	 * Returns :
-	 *  the position of the column in the data model, or -1
-	 * if the column could not be found.
+	 * Params:
+	 * title =  column title.
+	 * Returns: the position of the column in the data model, or -1if the column could not be found.
 	 */
-	public int getColumnPosition(char[] title)
+	public int getColumnPosition(string title)
 	{
 		// gint gda_data_model_get_column_position (GdaDataModel *model,  const gchar *title);
 		return gda_data_model_get_column_position(gdaDataModel, Str.toStringz(title));
@@ -343,45 +291,44 @@ public class DataModel
 	
 	/**
 	 * Retrieves a given row from a data model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * row :
-	 *  row number.
-	 * Returns :
-	 *  a GdaRow object.
+	 * Params:
+	 * row =  row number.
+	 * Returns: a GdaRow object.
 	 */
 	public Row getRow(int row)
 	{
 		// const GdaRow* gda_data_model_get_row (GdaDataModel *model,  gint row);
-		return new Row( gda_data_model_get_row(gdaDataModel, row) );
+		auto p = gda_data_model_get_row(gdaDataModel, row);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Row(cast(GdaRow*) p);
 	}
 	
 	/**
 	 * Retrieves the data stored in the given position (identified by
 	 * the col and row parameters) on a data model.
 	 * This is the main function for accessing data in a model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  column number.
-	 * row :
-	 *  row number.
-	 * Returns :
-	 *  a GdaValue containing the value stored in the given
-	 * position, or NULL on error (out-of-bound position, etc).
+	 * Params:
+	 * col =  column number.
+	 * row =  row number.
+	 * Returns: a GdaValue containing the value stored in the givenposition, or NULL on error (out-of-bound position, etc).
 	 */
 	public Value getValueAt(int col, int row)
 	{
 		// const GdaValue* gda_data_model_get_value_at (GdaDataModel *model,  gint col,  gint row);
-		return new Value( gda_data_model_get_value_at(gdaDataModel, col, row) );
+		auto p = gda_data_model_get_value_at(gdaDataModel, col, row);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Checks whether the given data model can be updated or not.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  TRUE if it can be updated, FALSE if not.
+	 * Returns: TRUE if it can be updated, FALSE if not.
 	 */
 	public int isUpdatable()
 	{
@@ -391,30 +338,29 @@ public class DataModel
 	
 	/**
 	 * Appends a row to the given data model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * values :
-	 *  GList of GdaValue* representing the row to add. The
+	 * Params:
+	 * values =  GList of GdaValue* representing the row to add. The
 	 *  length must match model's column count. These GdaValue
 	 *  are value-copied. The user is still responsible for freeing them.
-	 * Returns :
-	 *  the added row.
+	 * Returns: the added row.
 	 */
 	public Row appendRow(ListG values)
 	{
 		// const GdaRow* gda_data_model_append_row (GdaDataModel *model,  const GList *values);
-		return new Row( gda_data_model_append_row(gdaDataModel, (values is null) ? null : values.getListGStruct()) );
+		auto p = gda_data_model_append_row(gdaDataModel, (values is null) ? null : values.getListGStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Row(cast(GdaRow*) p);
 	}
 	
 	/**
 	 * Removes a row from the data model. This results in the underlying
 	 * database row being removed in the database.
-	 * model :
-	 *  a GdaDataModel object.
-	 * row :
-	 *  the GdaRow to be removed.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * row =  the GdaRow to be removed.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int removeRow(Row row)
 	{
@@ -425,12 +371,9 @@ public class DataModel
 	/**
 	 * Updates a row data model. This results in the underlying
 	 * database row's values being changed.
-	 * model :
-	 *  a GdaDataModel object.
-	 * row :
-	 *  the GdaRow to be updated.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * row =  the GdaRow to be updated.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int updateRow(Row row)
 	{
@@ -442,12 +385,9 @@ public class DataModel
 	 * Appends a column to the given data model. If successful, the position of
 	 * the new column in the data model is set on col, and you can grab it using
 	 * gda_field_attributes_get_position.
-	 * model :
-	 *  a GdaDataModel object.
-	 * attrs :
-	 *  a GdaFieldAttributes describing the column to add.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * attrs =  a GdaFieldAttributes describing the column to add.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int appendColumn(FieldAttributes attrs)
 	{
@@ -458,14 +398,10 @@ public class DataModel
 	/**
 	 * Updates a column in the given data model. This results in the underlying
 	 * database row's values being changed.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  the column to be updated.
-	 * attrs :
-	 *  attributes for the column.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * col =  the column to be updated.
+	 * attrs =  attributes for the column.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int updateColumn(int col, FieldAttributes attrs)
 	{
@@ -476,12 +412,9 @@ public class DataModel
 	/**
 	 * Removes a column from the data model. This means that all values attached to this
 	 * column in the data model will be destroyed in the underlying database.
-	 * model :
-	 *  a GdaDataModel object.
-	 * col :
-	 *  the column to be removed.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * col =  the column to be removed.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int removeColumn(int col)
 	{
@@ -489,23 +422,13 @@ public class DataModel
 		return gda_data_model_remove_column(gdaDataModel, col);
 	}
 	
-	
 	/**
 	 * Calls the specified callback function for each row in the data model.
 	 * This will just traverse all rows, and call the given callback
 	 * function for each of them.
-	 * The callback function must have the following form:
-	 *  gboolean foreach_func (GdaDataModel *model, GdaRow *row, gpointer user_data)
-	 * where "row" would be the row being read, and "user_data" the parameter
-	 * specified in user_data in the call to gda_data_model_foreach.
-	 * This callback function can return FALSE to stop the processing. If
-	 * it returns TRUE, processing will continue until no rows remain.
-	 * model :
-	 *  a GdaDataModel object.
-	 * func :
-	 *  callback function.
-	 * user_data :
-	 *  context data for the callback function.
+	 * Params:
+	 * func =  callback function.
+	 * userData =  context data for the callback function.
 	 */
 	public void foreac(GdaDataModelForeachFunc func, void* userData)
 	{
@@ -519,10 +442,7 @@ public class DataModel
 	 * called successfully, and is not set back to FALSE until either
 	 * gda_data_model_cancel_update or gda_data_model_end_update have
 	 * been called.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  TRUE if updating mode, FALSE otherwise.
+	 * Returns: TRUE if updating mode, FALSE otherwise.
 	 */
 	public int hasChanged()
 	{
@@ -533,10 +453,7 @@ public class DataModel
 	/**
 	 * Starts update of this data model. This function should be the
 	 * first called when modifying the data model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  TRUE on success, FALSE if there was an error.
+	 * Returns: TRUE on success, FALSE if there was an error.
 	 */
 	public int beginUpdate()
 	{
@@ -547,10 +464,7 @@ public class DataModel
 	/**
 	 * Cancels update of this data model. This means that all changes
 	 * will be discarded, and the old data put back in the model.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  TRUE on success, FALSE if there was an error.
+	 * Returns: TRUE on success, FALSE if there was an error.
 	 */
 	public int cancelUpdate()
 	{
@@ -561,10 +475,7 @@ public class DataModel
 	/**
 	 * Approves all modifications and send them to the underlying
 	 * data source/store.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  TRUE on success, FALSE if there was an error.
+	 * Returns: TRUE on success, FALSE if there was an error.
 	 */
 	public int endUpdate()
 	{
@@ -574,58 +485,43 @@ public class DataModel
 	
 	/**
 	 * Converts the given model into a comma-separated series of rows.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  the representation of the model. You should free this
-	 * string when you no longer need it.
+	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
 	 */
-	public char[] toCommaSeparated()
+	public string toCommaSeparated()
 	{
 		// gchar* gda_data_model_to_comma_separated (GdaDataModel *model);
-		return Str.toString(gda_data_model_to_comma_separated(gdaDataModel) );
+		return Str.toString(gda_data_model_to_comma_separated(gdaDataModel));
 	}
 	
 	/**
 	 * Converts the given model into a tab-separated series of rows.
-	 * model :
-	 *  a GdaDataModel object.
-	 * Returns :
-	 *  the representation of the model. You should free this
-	 * string when you no longer need it.
+	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
 	 */
-	public char[] toTabSeparated()
+	public string toTabSeparated()
 	{
 		// gchar* gda_data_model_to_tab_separated (GdaDataModel *model);
-		return Str.toString(gda_data_model_to_tab_separated(gdaDataModel) );
+		return Str.toString(gda_data_model_to_tab_separated(gdaDataModel));
 	}
 	
 	/**
 	 * Converts the given model into a XML representation.
-	 * model :
-	 *  a GdaDataModel object.
-	 * standalone :
-	 *  whether ...
-	 * Returns :
-	 *  the representation of the model. You should free this
-	 * string when you no longer need it.
+	 * Params:
+	 * standalone =  whether ...
+	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
 	 */
-	public char[] toXml(int standalone)
+	public string toXml(int standalone)
 	{
 		// gchar* gda_data_model_to_xml (GdaDataModel *model,  gboolean standalone);
-		return Str.toString(gda_data_model_to_xml(gdaDataModel, standalone) );
+		return Str.toString(gda_data_model_to_xml(gdaDataModel, standalone));
 	}
 	
 	/**
 	 * Converts a GdaDataModel into a xmlNodePtr (as used in libxml).
-	 * model :
-	 *  a GdaDataModel object.
-	 * name :
-	 *  name to use for the XML resulting table.
-	 * Returns :
-	 *  a xmlNodePtr representing the whole data model.
+	 * Params:
+	 * name =  name to use for the XML resulting table.
+	 * Returns: a xmlNodePtr representing the whole data model.
 	 */
-	public xmlNodePtr toXmlNode(char[] name)
+	public xmlNodePtr toXmlNode(string name)
 	{
 		// xmlNodePtr gda_data_model_to_xml_node (GdaDataModel *model,  const gchar *name);
 		return gda_data_model_to_xml_node(gdaDataModel, Str.toStringz(name));
@@ -633,12 +529,9 @@ public class DataModel
 	
 	/**
 	 * Adds the data from a XML node to the given data model.
-	 * model :
-	 *  a GdaDataModel.
-	 * node :
-	 *  a XML node representing a lt;datagt; XML node.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * node =  a XML node representing a lt;datagt; XML node.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int addDataFromXmlNode(xmlNodePtr node)
 	{
@@ -648,25 +541,20 @@ public class DataModel
 	
 	/**
 	 * Gets the text of command that generated this data model.
-	 * model :
-	 *  a GdaDataModel.
-	 * Returns :
-	 *  a string with the command issued.
+	 * Returns: a string with the command issued.
 	 */
-	public char[] getCommandText()
+	public string getCommandText()
 	{
 		// const gchar* gda_data_model_get_command_text (GdaDataModel *model);
-		return Str.toString(gda_data_model_get_command_text(gdaDataModel) );
+		return Str.toString(gda_data_model_get_command_text(gdaDataModel));
 	}
 	
 	/**
 	 * Sets the command text of the given model.
-	 * model :
-	 *  a GdaDataModel.
-	 * txt :
-	 *  the command text.
+	 * Params:
+	 * txt =  the command text.
 	 */
-	public void setCommandText(char[] txt)
+	public void setCommandText(string txt)
 	{
 		// void gda_data_model_set_command_text (GdaDataModel *model,  const gchar *txt);
 		gda_data_model_set_command_text(gdaDataModel, Str.toStringz(txt));
@@ -674,10 +562,7 @@ public class DataModel
 	
 	/**
 	 * Gets the type of command that generated this data model.
-	 * model :
-	 *  a GdaDataModel.
-	 * Returns :
-	 *  a GdaCommandType.
+	 * Returns: a GdaCommandType.
 	 */
 	public GdaCommandType getCommandType()
 	{
@@ -687,10 +572,8 @@ public class DataModel
 	
 	/**
 	 * Sets the type of command that generated this data model.
-	 * model :
-	 *  a GdaDataModel.
-	 * type :
-	 *  the type of the command (one of GdaCommandType)
+	 * Params:
+	 * type =  the type of the command (one of GdaCommandType)
 	 */
 	public void setCommandType(GdaCommandType type)
 	{

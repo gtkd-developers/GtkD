@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.Client
  * 	- gda.Command
@@ -52,21 +53,15 @@
  * 	- GdaParameterList* -> ParameterList
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Connection;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.Client;
@@ -110,25 +105,10 @@ public class Connection
 	 */
 	public this (GdaConnection* gdaConnection)
 	{
-		version(noAssert)
+		if(gdaConnection is null)
 		{
-			if ( gdaConnection is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaConnection is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaConnection is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaConnection !is null, "struct gdaConnection is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaConnection = gdaConnection;
 	}
@@ -136,43 +116,35 @@ public class Connection
 	/**
 	 */
 	
-	
-	
-	
-	
 	/**
 	 * This function creates a new GdaConnection object. It is not
 	 * intended to be used directly by applications (use
 	 * gda_client_open_connection instead).
-	 * client :
-	 *  a GdaClient object.
-	 * provider :
-	 *  a GdaServerProvider object.
-	 * dsn :
-	 *  GDA data source to connect to.
-	 * username :
-	 *  user name to use to connect.
-	 * password :
-	 *  password for username.
-	 * options :
-	 *  options for the connection.
-	 * Returns :
-	 *  a newly allocated GdaConnection object.
+	 * Params:
+	 * client =  a GdaClient object.
+	 * provider =  a GdaServerProvider object.
+	 * dsn =  GDA data source to connect to.
+	 * username =  user name to use to connect.
+	 * password =  password for username.
+	 * options =  options for the connection.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Client client, GdaServerProvider* provider, char[] dsn, char[] username, char[] password, GdaConnectionOptions options)
+	public this (Client client, GdaServerProvider* provider, string dsn, string username, string password, GdaConnectionOptions options)
 	{
 		// GdaConnection* gda_connection_new (GdaClient *client,  GdaServerProvider *provider,  const gchar *dsn,  const gchar *username,  const gchar *password,  GdaConnectionOptions options);
-		this(cast(GdaConnection*)gda_connection_new((client is null) ? null : client.getClientStruct(), provider, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password), options) );
+		auto p = gda_connection_new((client is null) ? null : client.getClientStruct(), provider, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password), options);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_connection_new((client is null) ? null : client.getClientStruct(), provider, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password), options)");
+		}
+		this(cast(GdaConnection*) p);
 	}
 	
 	/**
 	 * Closes the connection to the underlying data source. After calling this
 	 * function, you should not use anymore the GdaConnection object, since
 	 * it may have been destroyed.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int close()
 	{
@@ -182,10 +154,7 @@ public class Connection
 	
 	/**
 	 * Checks whether a connection is open or not.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  TRUE if the connection is open, FALSE if it's not.
+	 * Returns: TRUE if the connection is open, FALSE if it's not.
 	 */
 	public int isOpen()
 	{
@@ -197,24 +166,24 @@ public class Connection
 	 * Gets the GdaClient object associated with a connection. This
 	 * is always the client that created the connection, as returned
 	 * by gda_client_open_connection.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the client to which the connection belongs to.
+	 * Returns: the client to which the connection belongs to.
 	 */
 	public Client getClient()
 	{
 		// GdaClient* gda_connection_get_client (GdaConnection *cnc);
-		return new Client( gda_connection_get_client(gdaConnection) );
+		auto p = gda_connection_get_client(gdaConnection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Client(cast(GdaClient*) p);
 	}
 	
 	/**
 	 * Associates a GdaClient with this connection. This function is
 	 * not intended to be called by applications.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * client :
-	 *  a GdaClient object.
+	 * Params:
+	 * client =  a GdaClient object.
 	 */
 	public void setClient(Client client)
 	{
@@ -224,10 +193,7 @@ public class Connection
 	
 	/**
 	 * Gets the GdaConnectionOptions used to open this connection.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the connection options.
+	 * Returns: the connection options.
 	 */
 	public GdaConnectionOptions getOptions()
 	{
@@ -237,42 +203,32 @@ public class Connection
 	
 	/**
 	 * Gets the version string of the underlying database server.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the server version string.
+	 * Returns: the server version string.
 	 */
-	public char[] getServerVersion()
+	public string getServerVersion()
 	{
 		// const gchar* gda_connection_get_server_version (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_server_version(gdaConnection) );
+		return Str.toString(gda_connection_get_server_version(gdaConnection));
 	}
 	
 	/**
 	 * Gets the name of the currently active database in the given
 	 * GdaConnection.
-	 * cnc :
-	 *  A GdaConnection object.
-	 * Returns :
-	 *  the name of the current database.
+	 * Returns: the name of the current database.
 	 */
-	public char[] getDatabase()
+	public string getDatabase()
 	{
 		// const gchar* gda_connection_get_database (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_database(gdaConnection) );
+		return Str.toString(gda_connection_get_database(gdaConnection));
 	}
 	
 	/**
-	 * cnc :
-	 *  a GdaConnection object
-	 * Returns :
-	 * the data source name the connection object is connected
-	 * to.
+	 * Returns:the data source name the connection object is connectedto.
 	 */
-	public char[] getDsn()
+	public string getDsn()
 	{
 		// const gchar* gda_connection_get_dsn (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_dsn(gdaConnection) );
+		return Str.toString(gda_connection_get_dsn(gdaConnection));
 	}
 	
 	/**
@@ -280,54 +236,42 @@ public class Connection
 	 * The connection string is the string sent over to the underlying
 	 * database provider, which describes the parameters to be used
 	 * to open a connection on the underlying data source.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the connection string used when opening the connection.
+	 * Returns: the connection string used when opening the connection.
 	 */
-	public char[] getCncString()
+	public string getCncString()
 	{
 		// const gchar* gda_connection_get_cnc_string (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_cnc_string(gdaConnection) );
+		return Str.toString(gda_connection_get_cnc_string(gdaConnection));
 	}
 	
 	/**
 	 * Gets the provider id that this connection is connected to.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the provider ID used to open this connection.
+	 * Returns: the provider ID used to open this connection.
 	 */
-	public char[] getProvider()
+	public string getProvider()
 	{
 		// const gchar* gda_connection_get_provider (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_provider(gdaConnection) );
+		return Str.toString(gda_connection_get_provider(gdaConnection));
 	}
 	
 	/**
 	 * Gets the user name used to open this connection.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the user name.
+	 * Returns: the user name.
 	 */
-	public char[] getUsername()
+	public string getUsername()
 	{
 		// const gchar* gda_connection_get_username (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_username(gdaConnection) );
+		return Str.toString(gda_connection_get_username(gdaConnection));
 	}
 	
 	/**
 	 * Gets the password used to open this connection.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  the password.
+	 * Returns: the password.
 	 */
-	public char[] getPassword()
+	public string getPassword()
 	{
 		// const gchar* gda_connection_get_password (GdaConnection *cnc);
-		return Str.toString(gda_connection_get_password(gdaConnection) );
+		return Str.toString(gda_connection_get_password(gdaConnection));
 	}
 	
 	/**
@@ -338,32 +282,13 @@ public class Connection
 	 * function, the connection object (and the associated GdaClient object)
 	 * emits the "error" signal, to which clients can connect to be
 	 * informed of errors.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * error :
-	 *  is stored internally, so you don't need to unref it.
+	 * Params:
+	 * error =  is stored internally, so you don't need to unref it.
 	 */
 	public void addError(GdaError* error)
 	{
 		// void gda_connection_add_error (GdaConnection *cnc,  GdaError *error);
 		gda_connection_add_error(gdaConnection, error);
-	}
-	
-	/**
-	 * Adds a new error to the given connection object. This is just a convenience
-	 * function that simply creates a GdaError and then calls
-	 * gda_server_connection_add_error.
-	 * cnc :
-	 *  a GdaServerConnection object.
-	 * str :
-	 *  a format string (see the printf(3) documentation).
-	 * ... :
-	 *  the arguments to insert in the error message.
-	 */
-	public void addErrorString(char[] str, ... )
-	{
-		// void gda_connection_add_error_string (GdaConnection *cnc,  const gchar *str,  ...);
-		gda_connection_add_error_string(gdaConnection, Str.toStringz(str));
 	}
 	
 	/**
@@ -375,10 +300,8 @@ public class Connection
 	 * for each error, this function only does one notification for
 	 * the whole list of errors.
 	 * error_list is copied to an internal list and freed.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * error_list :
-	 *  a list of GdaError.
+	 * Params:
+	 * errorList =  a list of GdaError.
 	 */
 	public void addErrorList(ListG errorList)
 	{
@@ -389,14 +312,11 @@ public class Connection
 	/**
 	 * Changes the current database for the given connection. This operation
 	 * is not available in all providers.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * name :
-	 *  name of database to switch to.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * name =  name of database to switch to.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
-	public int changeDatabase(char[] name)
+	public int changeDatabase(string name)
 	{
 		// gboolean gda_connection_change_database (GdaConnection *cnc,  const gchar *name);
 		return gda_connection_change_database(gdaConnection, Str.toStringz(name));
@@ -404,14 +324,11 @@ public class Connection
 	
 	/**
 	 * Creates a new database named name on the given connection.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * name :
-	 *  database name.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * name =  database name.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
-	public int createDatabase(char[] name)
+	public int createDatabase(string name)
 	{
 		// gboolean gda_connection_create_database (GdaConnection *cnc,  const gchar *name);
 		return gda_connection_create_database(gdaConnection, Str.toStringz(name));
@@ -419,14 +336,11 @@ public class Connection
 	
 	/**
 	 * Drops a database from the given connection.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * name :
-	 *  database name.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * name =  database name.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
-	public int dropDatabase(char[] name)
+	public int dropDatabase(string name)
 	{
 		// gboolean gda_connection_drop_database (GdaConnection *cnc,  const gchar *name);
 		return gda_connection_drop_database(gdaConnection, Str.toStringz(name));
@@ -434,16 +348,12 @@ public class Connection
 	
 	/**
 	 * Creates a table on the given connection from the specified set of fields.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * table_name :
-	 *  name of the table to be created.
-	 * attributes :
-	 *  description of all fields for the new table.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * tableName =  name of the table to be created.
+	 * attributes =  description of all fields for the new table.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
-	public int createTable(char[] tableName, GdaFieldAttributes*[] attributes)
+	public int createTable(string tableName, GdaFieldAttributes*[] attributes)
 	{
 		// gboolean gda_connection_create_table (GdaConnection *cnc,  const gchar *table_name,  const GdaFieldAttributes *attributes[]);
 		return gda_connection_create_table(gdaConnection, Str.toStringz(tableName), attributes);
@@ -451,14 +361,11 @@ public class Connection
 	
 	/**
 	 * Drops a table from the database.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * table_name :
-	 *  name of the table to be removed
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * tableName =  name of the table to be removed
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
-	public int dropTable(char[] tableName)
+	public int dropTable(string tableName)
 	{
 		// gboolean gda_connection_drop_table (GdaConnection *cnc,  const gchar *table_name);
 		return gda_connection_drop_table(gdaConnection, Str.toStringz(tableName));
@@ -473,39 +380,34 @@ public class Connection
 	 * of SQL commands separated by ';').
 	 * The return value is a GList of GdaDataModel's, which you
 	 * are responsible to free when not needed anymore.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * cmd :
-	 *  a GdaCommand.
-	 * params :
-	 *  parameter list.
-	 * Returns :
-	 *  a list of GdaDataModel's, as returned by the underlying
-	 * provider.
+	 * Params:
+	 * cmd =  a GdaCommand.
+	 * params =  parameter list.
+	 * Returns: a list of GdaDataModel's, as returned by the underlyingprovider.
 	 */
 	public ListG executeCommand(Command cmd, ParameterList params)
 	{
 		// GList* gda_connection_execute_command (GdaConnection *cnc,  GdaCommand *cmd,  GdaParameterList *params);
-		return new ListG( gda_connection_execute_command(gdaConnection, (cmd is null) ? null : cmd.getCommandStruct(), (params is null) ? null : params.getParameterListStruct()) );
+		auto p = gda_connection_execute_command(gdaConnection, (cmd is null) ? null : cmd.getCommandStruct(), (params is null) ? null : params.getParameterListStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Retrieve from the given GdaConnection the ID of the last inserted row.
 	 * A connection must be specified, and, optionally, a result set. If not NULL,
 	 * the underlying provider should try to get the last insert ID for the given result set.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * recset :
-	 *  recordset.
-	 * Returns :
-	 *  a string representing the ID of the last inserted row, or NULL
-	 * if an error occurred or no row has been inserted. It is the caller's
-	 * reponsibility to free the returned string.
+	 * Params:
+	 * recset =  recordset.
+	 * Returns: a string representing the ID of the last inserted row, or NULLif an error occurred or no row has been inserted. It is the caller'sreponsibility to free the returned string.
 	 */
-	public char[] getLastInsertId(GdaDataModel* recset)
+	public string getLastInsertId(GdaDataModel* recset)
 	{
 		// gchar* gda_connection_get_last_insert_id (GdaConnection *cnc,  GdaDataModel *recset);
-		return Str.toString(gda_connection_get_last_insert_id(gdaConnection, recset) );
+		return Str.toString(gda_connection_get_last_insert_id(gdaConnection, recset));
 	}
 	
 	/**
@@ -513,15 +415,10 @@ public class Connection
 	 * This function lets you retrieve a simple data model from
 	 * the underlying difference, instead of having to retrieve
 	 * a list of them, as is the case with gda_connection_execute_command.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * cmd :
-	 *  a GdaCommand.
-	 * params :
-	 *  parameter list.
-	 * Returns :
-	 *  a GdaDataModel containing the data returned by the
-	 * data source, or NULL on error.
+	 * Params:
+	 * cmd =  a GdaCommand.
+	 * params =  parameter list.
+	 * Returns: a GdaDataModel containing the data returned by thedata source, or NULL on error.
 	 */
 	public GdaDataModel* executeSingleCommand(Command cmd, ParameterList params)
 	{
@@ -532,15 +429,10 @@ public class Connection
 	/**
 	 * Executes a single command on the underlying database, and gets the
 	 * number of rows affected.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * cmd :
-	 *  a GdaCommand.
-	 * params :
-	 *  parameter list.
-	 * Returns :
-	 *  the number of affected rows by the executed command,
-	 * or -1 on error.
+	 * Params:
+	 * cmd =  a GdaCommand.
+	 * params =  parameter list.
+	 * Returns: the number of affected rows by the executed command,or -1 on error.
 	 */
 	public int executeNonQuery(Command cmd, ParameterList params)
 	{
@@ -554,13 +446,9 @@ public class Connection
 	 * Before starting a transaction, you can check whether the underlying
 	 * provider does support transactions or not by using the
 	 * gda_connection_supports function.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  TRUE if the transaction was started successfully, FALSE
-	 * otherwise.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
+	 * Returns: TRUE if the transaction was started successfully, FALSEotherwise.
 	 */
 	public int beginTransaction(GdaTransaction* xaction)
 	{
@@ -571,13 +459,9 @@ public class Connection
 	/**
 	 * Commits the given transaction to the backend database. You need to do
 	 * gda_connection_begin_transaction() first.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  TRUE if the transaction was finished successfully,
-	 * FALSE otherwise.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
+	 * Returns: TRUE if the transaction was finished successfully,FALSE otherwise.
 	 */
 	public int commitTransaction(GdaTransaction* xaction)
 	{
@@ -590,12 +474,9 @@ public class Connection
 	 * made to the underlying data source since the last call to
 	 * gda_connection_begin_transaction or gda_connection_commit_transaction
 	 * will be discarded.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  TRUE if the operation was successful, FALSE otherwise.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
+	 * Returns: TRUE if the operation was successful, FALSE otherwise.
 	 */
 	public int rollbackTransaction(GdaTransaction* xaction)
 	{
@@ -605,13 +486,9 @@ public class Connection
 	
 	/**
 	 * Creates a BLOB (Binary Large OBject) with read/write access.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * blob :
-	 *  a user-allocated GdaBlob structure.
-	 * Returns :
-	 *  FALSE if the database does not support BLOBs. TRUE otherwise
-	 * and the GdaBlob is created and ready to be used.
+	 * Params:
+	 * blob =  a user-allocated GdaBlob structure.
+	 * Returns: FALSE if the database does not support BLOBs. TRUE otherwiseand the GdaBlob is created and ready to be used.
 	 */
 	public int createBlob(GdaBlob* blob)
 	{
@@ -622,33 +499,30 @@ public class Connection
 	/**
 	 * Retrieves a list of the last errors ocurred in the connection.
 	 * You can make a copy of the list using gda_error_list_copy.
-	 * cnc :
-	 *  a GdaConnection.
-	 * Returns :
-	 *  a GList of GdaError.
+	 * Returns: a GList of GdaError.
 	 */
 	public ListG getErrors()
 	{
 		// const GList* gda_connection_get_errors (GdaConnection *cnc);
-		return new ListG( gda_connection_get_errors(gdaConnection) );
+		auto p = gda_connection_get_errors(gdaConnection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
 	
 	/**
 	 * Asks the underlying provider for if a specific feature is supported.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * feature :
-	 *  feature to ask for.
-	 * Returns :
-	 *  TRUE if the provider supports it, FALSE if not.
+	 * Params:
+	 * feature =  feature to ask for.
+	 * Returns: TRUE if the provider supports it, FALSE if not.
 	 */
 	public int supports(GdaConnectionFeature feature)
 	{
 		// gboolean gda_connection_supports (GdaConnection *cnc,  GdaConnectionFeature feature);
 		return gda_connection_supports(gdaConnection, feature);
 	}
-	
 	
 	/**
 	 * Asks the underlying data source for a list of database objects.
@@ -659,15 +533,10 @@ public class Connection
 	 * schema required, and params, which is a list of parameters that can
 	 * be used to give more detail about the objects to be returned.
 	 * The list of parameters is specific to each schema type.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * schema :
-	 *  database schema to get.
-	 * params :
-	 *  parameter list.
-	 * Returns :
-	 *  a GdaDataModel containing the data required. The caller is responsible
-	 * of freeing the returned model.
+	 * Params:
+	 * schema =  database schema to get.
+	 * params =  parameter list.
+	 * Returns: a GdaDataModel containing the data required. The caller is responsibleof freeing the returned model.
 	 */
 	public GdaDataModel* getSchema(GdaConnectionSchema schema, ParameterList params)
 	{

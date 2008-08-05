@@ -40,27 +40,22 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.DataModel
  * structWrap:
  * 	- GdaDataModel* -> DataModel
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.DataModelArray;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.DataModel;
@@ -95,25 +90,10 @@ public class DataModelArray
 	 */
 	public this (GdaDataModelArray* gdaDataModelArray)
 	{
-		version(noAssert)
+		if(gdaDataModelArray is null)
 		{
-			if ( gdaDataModelArray is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaDataModelArray is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaDataModelArray is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaDataModelArray !is null, "struct gdaDataModelArray is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaDataModelArray = gdaDataModelArray;
 	}
@@ -121,26 +101,27 @@ public class DataModelArray
 	/**
 	 */
 	
-	
 	/**
-	 * cols :
-	 *  number of columns for rows in this data model.
-	 * Returns :
-	 *  a pointer to the newly created GdaDataModel.
+	 * Params:
+	 * cols =  number of columns for rows in this data model.
+	 * Returns: a pointer to the newly created GdaDataModel.
 	 */
 	public static DataModel newDataModelArray(int cols)
 	{
 		// GdaDataModel* gda_data_model_array_new (gint cols);
-		return new DataModel( gda_data_model_array_new(cols) );
+		auto p = gda_data_model_array_new(cols);
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
 	 * Sets the number of columns for rows inserted in this model.
 	 * cols must be greated than or equal to 0.
-	 * model :
-	 *  the GdaDataModelArray.
-	 * cols :
-	 *  number of columns for rows this data model should use.
+	 * Params:
+	 * cols =  number of columns for rows this data model should use.
 	 */
 	public void setNColumns(int cols)
 	{
@@ -150,8 +131,6 @@ public class DataModelArray
 	
 	/**
 	 * Frees all the rows inserted in model.
-	 * model :
-	 *  the model to clear.
 	 */
 	public void clear()
 	{

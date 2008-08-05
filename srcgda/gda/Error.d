@@ -40,27 +40,22 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Error;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -95,29 +90,15 @@ public class Error
 	 */
 	public this (GdaError* gdaError)
 	{
-		version(noAssert)
+		if(gdaError is null)
 		{
-			if ( gdaError is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaError is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaError is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaError !is null, "struct gdaError is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaError = gdaError;
 	}
 	
+	/** */
 	this (ListG glist) {
 		this.gdaError = cast(GdaError *) glist.data;
 	}
@@ -125,20 +106,22 @@ public class Error
 	/**
 	 */
 	
-	
 	/**
-	 * Returns :
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
 		// GdaError* gda_error_new (void);
-		this(cast(GdaError*)gda_error_new() );
+		auto p = gda_error_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_error_new()");
+		}
+		this(cast(GdaError*) p);
 	}
 	
 	/**
 	 * Frees the memory allocated by the error object.
-	 * error :
-	 *  the error object.
 	 */
 	public void free()
 	{
@@ -150,23 +133,27 @@ public class Error
 	 * Creates a new list which contains the same errors as errors and
 	 * adds a reference for each error in the list.
 	 * You must free the list using gda_error_list_free.
-	 * errors :
-	 *  a GList holding error objects.
-	 * Returns :
-	 *  a list of errors.
+	 * Params:
+	 * errors =  a GList holding error objects.
+	 * Returns: a list of errors.
 	 */
 	public static ListG listCopy(ListG errors)
 	{
 		// GList* gda_error_list_copy (const GList *errors);
-		return new ListG( gda_error_list_copy((errors is null) ? null : errors.getListGStruct()) );
+		auto p = gda_error_list_copy((errors is null) ? null : errors.getListGStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Frees all error objects in the list and the list itself.
 	 * After this function has been called, the errors parameter doesn't point
 	 * to valid storage any more.
-	 * errors :
-	 *  a GList holding error objects.
+	 * Params:
+	 * errors =  a GList holding error objects.
 	 */
 	public static void listFree(ListG errors)
 	{
@@ -175,35 +162,27 @@ public class Error
 	}
 	
 	/**
-	 * error :
-	 *  a GdaError.
-	 * Returns :
-	 *  error's description.
+	 * Returns: error's description.
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// const gchar* gda_error_get_description (GdaError *error);
-		return Str.toString(gda_error_get_description(gdaError) );
+		return Str.toString(gda_error_get_description(gdaError));
 	}
 	
 	/**
 	 * Sets error's description.
-	 * error :
-	 *  a GdaError.
-	 * description :
-	 *  a description.
+	 * Params:
+	 * description =  a description.
 	 */
-	public void setDescription(char[] description)
+	public void setDescription(string description)
 	{
 		// void gda_error_set_description (GdaError *error,  const gchar *description);
 		gda_error_set_description(gdaError, Str.toStringz(description));
 	}
 	
 	/**
-	 * error :
-	 *  a GdaError.
-	 * Returns :
-	 *  error's number.
+	 * Returns: error's number.
 	 */
 	public int getNumber()
 	{
@@ -213,10 +192,8 @@ public class Error
 	
 	/**
 	 * Sets error's number.
-	 * error :
-	 *  a GdaError.
-	 * number :
-	 *  a number.
+	 * Params:
+	 * number =  a number.
 	 */
 	public void setNumber(int number)
 	{
@@ -225,50 +202,40 @@ public class Error
 	}
 	
 	/**
-	 * error :
-	 *  a GdaError.
-	 * Returns :
-	 *  error's source.
+	 * Returns: error's source.
 	 */
-	public char[] getSource()
+	public string getSource()
 	{
 		// const gchar* gda_error_get_source (GdaError *error);
-		return Str.toString(gda_error_get_source(gdaError) );
+		return Str.toString(gda_error_get_source(gdaError));
 	}
 	
 	/**
 	 * Sets error's source.
-	 * error :
-	 *  a GdaError.
-	 * source :
-	 *  a source.
+	 * Params:
+	 * source =  a source.
 	 */
-	public void setSource(char[] source)
+	public void setSource(string source)
 	{
 		// void gda_error_set_source (GdaError *error,  const gchar *source);
 		gda_error_set_source(gdaError, Str.toStringz(source));
 	}
 	
 	/**
-	 * error :
-	 *  a GdaError.
-	 * Returns :
-	 *  error's SQL state.
+	 * Returns: error's SQL state.
 	 */
-	public char[] getSqlstate()
+	public string getSqlstate()
 	{
 		// const gchar* gda_error_get_sqlstate (GdaError *error);
-		return Str.toString(gda_error_get_sqlstate(gdaError) );
+		return Str.toString(gda_error_get_sqlstate(gdaError));
 	}
 	
 	/**
 	 * Sets error's SQL state.
-	 * error :
-	 *  a GdaError.
-	 * sqlstate :
-	 *  SQL state.
+	 * Params:
+	 * sqlstate =  SQL state.
 	 */
-	public void setSqlstate(char[] sqlstate)
+	public void setSqlstate(string sqlstate)
 	{
 		// void gda_error_set_sqlstate (GdaError *error,  const gchar *sqlstate);
 		gda_error_set_sqlstate(gdaError, Str.toStringz(sqlstate));

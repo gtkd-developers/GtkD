@@ -41,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * 	- gda_init
+ * omit signals:
  * imports:
  * 	- glib.HashTable
  * 	- glib.ListG
@@ -48,21 +49,15 @@
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Gda;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.HashTable;
@@ -80,19 +75,17 @@ public class Gda
 	
 	/**
 	 * Initializes the GDA library.
-	 * app_id :
-	 *  name of the program.
-	 * version :
-	 *  revision number of the program.
-	 * args :
-	 *   args from main().
+	 * Params:
+	 *  appId = name of the program.
+	 *  version = revision number of the program.
+	 *  args = args from main().
 	 */
-	public static void init(char[] appId, char[] versio, char[][] args)
+	public static void init(string appId, string versio, string[] args)
 	{
 		// void gda_init (const gchar *app_id,  const gchar *version,  gint nargs,  gchar *args[]);
 		gchar*[] argv = (new char*[args.length]);
 		int argc = 0;
-		foreach (char[] p; args)
+		foreach (string p; args)
 		{
 			argv[argc++] = cast(gchar*)p;
 		}
@@ -107,18 +100,15 @@ public class Gda
 	 * Description
 	 */
 	
-	
-	
 	/**
 	 * Runs the GDA main loop, which is nothing more than the Bonobo main
 	 * loop, but with internally added stuff specific for applications using
 	 * libgda.
 	 * You can specify a function to be called after everything has been correctly
 	 * initialized (that is, for initializing your own stuff).
-	 * init_func :
-	 *  function to be called when everything has been initialized.
-	 * user_data :
-	 *  data to be passed to the init function.
+	 * Params:
+	 * initFunc =  function to be called when everything has been initialized.
+	 * userData =  data to be passed to the init function.
 	 */
 	public static void mainRun(GdaInitFunc initFunc, void* userData)
 	{
@@ -136,26 +126,22 @@ public class Gda
 	}
 	
 	/**
-	 * type :
-	 *  Type to convert from.
-	 * Returns :
-	 *  the string representing the given GdaValueType.
-	 * This is not necessarily the same string used to describe the column type in a SQL statement.
-	 * Use gda_connection_get_schema() with GDA_CONNECTION_SCHEMA_TYPES to get the actual types supported by the provider.
+	 * Params:
+	 * type =  Type to convert from.
+	 * Returns: the string representing the given GdaValueType.This is not necessarily the same string used to describe the column type in a SQL statement.Use gda_connection_get_schema() with GDA_CONNECTION_SCHEMA_TYPES to get the actual types supported by the provider.
 	 */
-	public static char[] typeToString(GdaValueType type)
+	public static string typeToString(GdaValueType type)
 	{
 		// const gchar* gda_type_to_string (GdaValueType type);
-		return Str.toString(gda_type_to_string(type) );
+		return Str.toString(gda_type_to_string(type));
 	}
 	
 	/**
-	 * str :
-	 *  the name of a GdaValueType, as returned by gda_type_to_string().
-	 * Returns :
-	 *  the GdaValueType represented by the given str.
+	 * Params:
+	 * str =  the name of a GdaValueType, as returned by gda_type_to_string().
+	 * Returns: the GdaValueType represented by the given str.
 	 */
-	public static GdaValueType typeFromString(char[] str)
+	public static GdaValueType typeFromString(string str)
 	{
 		// GdaValueType gda_type_from_string (const gchar *str);
 		return gda_type_from_string(Str.toStringz(str));
@@ -164,64 +150,59 @@ public class Gda
 	/**
 	 * Creates a new list of strings, which contains all keys of a given hash
 	 * table. After using it, you should free this list by calling g_list_free.
-	 * hash_table :
-	 *  a hash table.
-	 * Returns :
-	 *  a new GList.
+	 * Params:
+	 * hashTable =  a hash table.
+	 * Returns: a new GList.
 	 */
 	public static ListG stringHashToList(HashTable hashTable)
 	{
 		// GList* gda_string_hash_to_list (GHashTable *hash_table);
-		return new ListG( gda_string_hash_to_list((hashTable is null) ? null : hashTable.getHashTableStruct()) );
+		auto p = gda_string_hash_to_list((hashTable is null) ? null : hashTable.getHashTableStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Replaces the placeholders (:name) in the given SQL command with
 	 * the values from the GdaParameterList specified as the params
 	 * argument.
-	 * sql :
-	 *  a SQL command containing placeholders for values.
-	 * params :
-	 *  a list of values for the placeholders.
-	 * Returns :
-	 *  the SQL string with all placeholders replaced, or NULL
-	 * on error. On success, the returned string must be freed by the caller
-	 * when no longer needed.
+	 * Params:
+	 * sql =  a SQL command containing placeholders for values.
+	 * params =  a list of values for the placeholders.
+	 * Returns: the SQL string with all placeholders replaced, or NULLon error. On success, the returned string must be freed by the callerwhen no longer needed.
 	 */
-	public static char[] sqlReplacePlaceholders(char[] sql, ParameterList params)
+	public static string sqlReplacePlaceholders(string sql, ParameterList params)
 	{
 		// gchar* gda_sql_replace_placeholders (const gchar *sql,  GdaParameterList *params);
-		return Str.toString(gda_sql_replace_placeholders(Str.toStringz(sql), (params is null) ? null : params.getParameterListStruct()) );
+		return Str.toString(gda_sql_replace_placeholders(Str.toStringz(sql), (params is null) ? null : params.getParameterListStruct()));
 	}
 	
 	/**
 	 * Loads a file, specified by the given uri, and returns the file
 	 * contents as a string.
 	 * It is the caller's responsibility to free the returned value.
-	 * filename :
-	 *  path for the file to be loaded.
-	 * Returns :
-	 *  the file contents as a newly-allocated string, or NULL
-	 * if there is an error.
+	 * Params:
+	 * filename =  path for the file to be loaded.
+	 * Returns: the file contents as a newly-allocated string, or NULLif there is an error.
 	 */
-	public static char[] fileLoad(char[] filename)
+	public static string fileLoad(string filename)
 	{
 		// gchar* gda_file_load (const gchar *filename);
-		return Str.toString(gda_file_load(Str.toStringz(filename)) );
+		return Str.toString(gda_file_load(Str.toStringz(filename)));
 	}
 	
 	/**
 	 * Saves a chunk of data into a file.
-	 * filename :
-	 *  path for the file to be saved.
-	 * buffer :
-	 *  contents of the file.
-	 * len :
-	 *  size of buffer.
-	 * Returns :
-	 *  TRUE if successful, FALSE on error.
+	 * Params:
+	 * filename =  path for the file to be saved.
+	 * buffer =  contents of the file.
+	 * len =  size of buffer.
+	 * Returns: TRUE if successful, FALSE on error.
 	 */
-	public static int fileSave(char[] filename, char[] buffer, int len)
+	public static int fileSave(string filename, string buffer, int len)
 	{
 		// gboolean gda_file_save (const gchar *filename,  const gchar *buffer,  gint len);
 		return gda_file_save(Str.toStringz(filename), Str.toStringz(buffer), len);

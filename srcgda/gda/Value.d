@@ -45,6 +45,7 @@
  * 	- gda_value_new_tinyint
  * 	- gda_value_new_tinyuint
  * 	- gda_value_new_uinteger
+ * omit signals:
  * imports:
  * 	- gobject.ObjectG
  * structWrap:
@@ -52,21 +53,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Value;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gobject.ObjectG;
@@ -101,29 +96,15 @@ public class Value
 	 */
 	public this (GdaValue* gdaValue)
 	{
-		version(noAssert)
+		if(gdaValue is null)
 		{
-			if ( gdaValue is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaValue is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaValue is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaValue !is null, "struct gdaValue is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaValue = gdaValue;
 	}
 	
+	/** */
 	public this (bool val)
 	{
 		// GdaValue* gda_value_new_boolean (gboolean val);
@@ -133,19 +114,8 @@ public class Value
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getGtype()
 	{
@@ -155,299 +125,377 @@ public class Value
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_NULL.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
 		// GdaValue* gda_value_new_null (void);
-		this(cast(GdaValue*)gda_value_new_null() );
+		auto p = gda_value_new_null();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_null()");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_BIGINT with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (long val)
 	{
 		// GdaValue* gda_value_new_bigint (gint64 val);
-		this(cast(GdaValue*)gda_value_new_bigint(val) );
+		auto p = gda_value_new_bigint(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_bigint(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_BIGUINT with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ulong val)
 	{
 		// GdaValue* gda_value_new_biguint (guint64 val);
-		this(cast(GdaValue*)gda_value_new_biguint(val) );
+		auto p = gda_value_new_biguint(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_biguint(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_BINARY with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * size :
-	 *  the size of the memory pool pointer to by val.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * size =  the size of the memory pool pointer to by val.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* val, int size)
 	{
 		// GdaValue* gda_value_new_binary (gconstpointer val,  glong size);
-		this(cast(GdaValue*)gda_value_new_binary(val, size) );
+		auto p = gda_value_new_binary(val, size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_binary(val, size)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
-	 * val :
-	 * Returns :
+	 * Params:
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaBlob* val)
 	{
 		// GdaValue* gda_value_new_blob (const GdaBlob *val);
-		this(cast(GdaValue*)gda_value_new_blob(val) );
+		auto p = gda_value_new_blob(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_blob(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
-	
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_DATE with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaDate* val)
 	{
 		// GdaValue* gda_value_new_date (const GdaDate *val);
-		this(cast(GdaValue*)gda_value_new_date(val) );
+		auto p = gda_value_new_date(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_date(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_DOUBLE with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double val)
 	{
 		// GdaValue* gda_value_new_double (gdouble val);
-		this(cast(GdaValue*)gda_value_new_double(val) );
+		auto p = gda_value_new_double(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_double(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_GEOMETRIC_POINT with value
 	 * val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaGeometricPoint* val)
 	{
 		// GdaValue* gda_value_new_geometric_point (const GdaGeometricPoint *val);
-		this(cast(GdaValue*)gda_value_new_geometric_point(val) );
+		auto p = gda_value_new_geometric_point(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_geometric_point(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_GOBJECT with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG val)
 	{
 		// GdaValue* gda_value_new_gobject (const GObject *val);
-		this(cast(GdaValue*)gda_value_new_gobject((val is null) ? null : val.getObjectGStruct()) );
+		auto p = gda_value_new_gobject((val is null) ? null : val.getObjectGStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_gobject((val is null) ? null : val.getObjectGStruct())");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_INTEGER with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int val)
 	{
 		// GdaValue* gda_value_new_integer (gint val);
-		this(cast(GdaValue*)gda_value_new_integer(val) );
+		auto p = gda_value_new_integer(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_integer(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_LIST with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaValueList* val)
 	{
 		// GdaValue* gda_value_new_list (const GdaValueList *val);
-		this(cast(GdaValue*)gda_value_new_list(val) );
+		auto p = gda_value_new_list(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_list(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
-	 * val :
-	 * Returns :
+	 * Params:
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaMoney* val)
 	{
 		// GdaValue* gda_value_new_money (const GdaMoney *val);
-		this(cast(GdaValue*)gda_value_new_money(val) );
+		auto p = gda_value_new_money(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_money(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_NUMERIC with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaNumeric* val)
 	{
 		// GdaValue* gda_value_new_numeric (const GdaNumeric *val);
-		this(cast(GdaValue*)gda_value_new_numeric(val) );
+		auto p = gda_value_new_numeric(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_numeric(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_SINGLE with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (float val)
 	{
 		// GdaValue* gda_value_new_single (gfloat val);
-		this(cast(GdaValue*)gda_value_new_single(val) );
+		auto p = gda_value_new_single(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_single(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_SMALLINT with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (short val)
 	{
 		// GdaValue* gda_value_new_smallint (gshort val);
-		this(cast(GdaValue*)gda_value_new_smallint(val) );
+		auto p = gda_value_new_smallint(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_smallint(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_SMALLUINT with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ushort val)
 	{
 		// GdaValue* gda_value_new_smalluint (gushort val);
-		this(cast(GdaValue*)gda_value_new_smalluint(val) );
+		auto p = gda_value_new_smalluint(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_smalluint(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_STRING with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] val)
+	public this (string val)
 	{
 		// GdaValue* gda_value_new_string (const gchar *val);
-		this(cast(GdaValue*)gda_value_new_string(Str.toStringz(val)) );
+		auto p = gda_value_new_string(Str.toStringz(val));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_string(Str.toStringz(val))");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_TIME with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaTime* val)
 	{
 		// GdaValue* gda_value_new_time (const GdaTime *val);
-		this(cast(GdaValue*)gda_value_new_time(val) );
+		auto p = gda_value_new_time(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_time(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_TIMESTAMP with value val.
-	 * val :
-	 *  value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaTimestamp* val)
 	{
 		// GdaValue* gda_value_new_timestamp (const GdaTimestamp *val);
-		this(cast(GdaValue*)gda_value_new_timestamp(val) );
+		auto p = gda_value_new_timestamp(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_timestamp(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
-	
-	
-	
 	
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_TYPE with value val.
-	 * val :
-	 *  Value to set for the new GdaValue.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * val =  Value to set for the new GdaValue.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaValueType val)
 	{
 		// GdaValue* gda_value_new_type (GdaValueType val);
-		this(cast(GdaValue*)gda_value_new_type(val) );
+		auto p = gda_value_new_type(val);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_type(val)");
+		}
+		this(cast(GdaValue*) p);
 	}
-	
 	
 	/**
 	 * Makes a new GdaValue of type type from its string representation.
-	 * as_string :
-	 *  stringified representation of the value.
-	 * type :
-	 *  the new value type.
-	 * Returns :
-	 *  the newly created GdaValue or NULL if the string representation
-	 * cannot be converted to the specified type.
+	 * Params:
+	 * asString =  stringified representation of the value.
+	 * type =  the new value type.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] asString, GdaValueType type)
+	public this (string asString, GdaValueType type)
 	{
 		// GdaValue* gda_value_new_from_string (const gchar *as_string,  GdaValueType type);
-		this(cast(GdaValue*)gda_value_new_from_string(Str.toStringz(asString), type) );
+		auto p = gda_value_new_from_string(Str.toStringz(asString), type);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_from_string(Str.toStringz(asString), type)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Creates a GdaValue from a XML representation of it. That XML
-	 * node corresponds to the following string representation:
-	 *  lt;value type="gdatype"gt;valuelt;/valuegt;
-	 * node :
-	 *  a XML node representing the value.
-	 * Returns :
-	 *  the newly created GdaValue.
+	 * Params:
+	 * node =  a XML node representing the value.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (xmlNodePtr node)
 	{
 		// GdaValue* gda_value_new_from_xml (const xmlNodePtr node);
-		this(cast(GdaValue*)gda_value_new_from_xml(node) );
+		auto p = gda_value_new_from_xml(node);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_value_new_from_xml(node)");
+		}
+		this(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Deallocates all memory associated to a GdaValue.
-	 * value :
-	 *  the resource to free.
 	 */
 	public void free()
 	{
@@ -457,10 +505,7 @@ public class Value
 	
 	/**
 	 * Retrieves the type of the given value.
-	 * value :
-	 *  value to get the type from.
-	 * Returns :
-	 *  the GdaValueType of the value.
+	 * Returns: the GdaValueType of the value.
 	 */
 	public GdaValueType getType()
 	{
@@ -468,14 +513,9 @@ public class Value
 		return gda_value_get_type(gdaValue);
 	}
 	
-	
 	/**
 	 * Tests if a given value is of type GDA_VALUE_TYPE_NULL.
-	 * value :
-	 *  value to test.
-	 * Returns :
-	 *  a boolean that says whether or not value is of type
-	 * GDA_VALUE_TYPE_NULL.
+	 * Returns: a boolean that says whether or not value is of typeGDA_VALUE_TYPE_NULL.
 	 */
 	public int isNull()
 	{
@@ -486,10 +526,7 @@ public class Value
 	/**
 	 * Gets whether the value stored in the given GdaValue is of
 	 * numeric type or not.
-	 * value :
-	 *  a GdaValue.
-	 * Returns :
-	 *  TRUE if a number, FALSE otherwise.
+	 * Returns: TRUE if a number, FALSE otherwise.
 	 */
 	public int isNumber()
 	{
@@ -499,23 +536,22 @@ public class Value
 	
 	/**
 	 * Creates a new GdaValue from an existing one.
-	 * value :
-	 *  value to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaValue with a copy of the data in value.
+	 * Returns: a newly allocated GdaValue with a copy of the data in value.
 	 */
 	public Value copy()
 	{
 		// GdaValue* gda_value_copy (GdaValue *value);
-		return new Value( gda_value_copy(gdaValue) );
+		auto p = gda_value_copy(gdaValue);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Gets the value stored in value.
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value contained in value.
+	 * Returns: the value contained in value.
 	 */
 	public long getBigint()
 	{
@@ -525,10 +561,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setBigint(long val)
 	{
@@ -537,10 +571,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public ulong getBiguint()
 	{
@@ -550,10 +581,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setBiguint(ulong val)
 	{
@@ -562,12 +591,9 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * size :
-	 *  holder for length of data.
-	 * Returns :
-	 *  the value stored in value.
+	 * Params:
+	 * size =  holder for length of data.
+	 * Returns: the value stored in value.
 	 */
 	public void* getBinary(int* size)
 	{
@@ -577,12 +603,9 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
-	 * size :
-	 *  the size of the memory pool pointed to by val.
+	 * Params:
+	 * val =  value to be stored in value.
+	 * size =  the size of the memory pool pointed to by val.
 	 */
 	public void setBinary(void* val, int size)
 	{
@@ -591,10 +614,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaBlob* getBlob()
 	{
@@ -604,10 +624,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setBlob(GdaBlob* val)
 	{
@@ -616,10 +634,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public int getBoolean()
 	{
@@ -629,10 +644,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setBoolean(int val)
 	{
@@ -641,10 +654,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaDate* getDate()
 	{
@@ -654,10 +664,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setDate(GdaDate* val)
 	{
@@ -666,10 +674,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public double getDouble()
 	{
@@ -679,10 +684,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setDouble(double val)
 	{
@@ -691,10 +694,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaGeometricPoint* getGeometricPoint()
 	{
@@ -704,10 +704,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setGeometricPoint(GdaGeometricPoint* val)
 	{
@@ -716,23 +714,23 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public ObjectG getGobject()
 	{
 		// const GObject* gda_value_get_gobject (GdaValue *value);
-		return new ObjectG( gda_value_get_gobject(gdaValue) );
+		auto p = gda_value_get_gobject(gdaValue);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ObjectG(cast(GObject*) p);
 	}
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setGobject(ObjectG val)
 	{
@@ -741,10 +739,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public int getInteger()
 	{
@@ -754,10 +749,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setInteger(int val)
 	{
@@ -766,10 +759,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaValueList* getList()
 	{
@@ -779,10 +769,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setList(GdaValueList* val)
 	{
@@ -792,8 +780,6 @@ public class Value
 	
 	/**
 	 * Sets the type of value to GDA_VALUE_TYPE_NULL.
-	 * value :
-	 *  a GdaValue that will store a value of type GDA_VALUE_TYPE_NULL.
 	 */
 	public void setNull()
 	{
@@ -802,10 +788,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaMoney* getMoney()
 	{
@@ -815,10 +798,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setMoney(GdaMoney* val)
 	{
@@ -827,10 +808,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaNumeric* getNumeric()
 	{
@@ -840,10 +818,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setNumeric(GdaNumeric* val)
 	{
@@ -852,10 +828,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public float getSingle()
 	{
@@ -865,10 +838,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setSingle(float val)
 	{
@@ -877,10 +848,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public short getSmallint()
 	{
@@ -890,10 +858,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setSmallint(short val)
 	{
@@ -902,10 +868,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public ushort getSmalluint()
 	{
@@ -915,10 +878,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setSmalluint(ushort val)
 	{
@@ -927,35 +888,27 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
-	public char[] getString()
+	public string getString()
 	{
 		// const gchar* gda_value_get_string (GdaValue *value);
-		return Str.toString(gda_value_get_string(gdaValue) );
+		return Str.toString(gda_value_get_string(gdaValue));
 	}
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
-	public void setString(char[] val)
+	public void setString(string val)
 	{
 		// void gda_value_set_string (GdaValue *value,  const gchar *val);
 		gda_value_set_string(gdaValue, Str.toStringz(val));
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaTime* getTime()
 	{
@@ -965,10 +918,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setTime(GdaTime* val)
 	{
@@ -977,10 +928,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaTimestamp* getTimestamp()
 	{
@@ -990,10 +938,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setTimestamp(GdaTimestamp* val)
 	{
@@ -1002,10 +948,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public char getTinyint()
 	{
@@ -1015,10 +958,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setTinyint(char val)
 	{
@@ -1027,10 +968,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public char getTinyuint()
 	{
@@ -1040,10 +978,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setTinyuint(char val)
 	{
@@ -1052,10 +988,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public uint getUinteger()
 	{
@@ -1065,10 +998,8 @@ public class Value
 	
 	/**
 	 * Stores val into value.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * val :
-	 *  value to be stored in value.
+	 * Params:
+	 * val =  value to be stored in value.
 	 */
 	public void setUinteger(uint val)
 	{
@@ -1077,10 +1008,7 @@ public class Value
 	}
 	
 	/**
-	 * value :
-	 *  a GdaValue whose value we want to get.
-	 * Returns :
-	 *  the value stored in value.
+	 * Returns: the value stored in value.
 	 */
 	public GdaValueType getVtype()
 	{
@@ -1090,10 +1018,8 @@ public class Value
 	
 	/**
 	 * Stores type into value.
-	 * value :
-	 *  a GdaValue that will store type.
-	 * type :
-	 *  value to be stored in value.
+	 * Params:
+	 * type =  value to be stored in value.
 	 */
 	public void setVtype(GdaValueType type)
 	{
@@ -1103,17 +1029,12 @@ public class Value
 	
 	/**
 	 * Stores the value data from its string representation as type.
-	 * value :
-	 *  a GdaValue that will store val.
-	 * as_string :
-	 *  the stringified representation of the value.
-	 * type :
-	 *  the type of the value
-	 * Returns :
-	 *  TRUE if the value has been properly converted to type from
-	 * its string representation. FALSE otherwise.
+	 * Params:
+	 * asString =  the stringified representation of the value.
+	 * type =  the type of the value
+	 * Returns: TRUE if the value has been properly converted to type fromits string representation. FALSE otherwise.
 	 */
-	public int setFromString(char[] asString, GdaValueType type)
+	public int setFromString(string asString, GdaValueType type)
 	{
 		// gboolean gda_value_set_from_string (GdaValue *value,  const gchar *as_string,  GdaValueType type);
 		return gda_value_set_from_string(gdaValue, Str.toStringz(asString), type);
@@ -1124,12 +1045,9 @@ public class Value
 	 * is different from gda_value_copy, which creates a new GdaValue.
 	 * gda_value_set_from_value, on the other hand, copies the contents
 	 * of copy into value, which must already be allocated.
-	 * value :
-	 *  a GdaValue.
-	 * from :
-	 *  the value to copy from.
-	 * Returns :
-	 *  TRUE if successful, FALSE otherwise.
+	 * Params:
+	 * from =  the value to copy from.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int setFromValue(Value from)
 	{
@@ -1139,14 +1057,9 @@ public class Value
 	
 	/**
 	 * Compares two values of the same type.
-	 * value1 :
-	 *  a GdaValue to compare.
-	 * value2 :
-	 *  the other GdaValue to be compared to value1.
-	 * Returns :
-	 *  if both values have the same type, returns 0 if both contain
-	 * the same value, an integer less than 0 if value1 is less than value2 or
-	 * an integer greater than 0 if value1 is greater than value2.
+	 * Params:
+	 * value2 =  the other GdaValue to be compared to value1.
+	 * Returns: if both values have the same type, returns 0 if both containthe same value, an integer less than 0 if value1 is less than value2 oran integer greater than 0 if value1 is greater than value2.
 	 */
 	public int compare(Value value2)
 	{
@@ -1156,26 +1069,17 @@ public class Value
 	
 	/**
 	 * Converts a GdaValue to its string representation as indicated by this
-	 * table:
-	 * value :
-	 *  a GdaValue.
-	 * Returns :
-	 *  a string formatted according to the printf() style indicated in
-	 * the preceding table. Free the value with a g_free() when you've finished
-	 * using it.
+	 * Returns: a string formatted according to the printf() style indicated inthe preceding table. Free the value with a g_free() when you've finishedusing it.
 	 */
-	public char[] stringify()
+	public string stringify()
 	{
 		// gchar* gda_value_stringify (GdaValue *value);
-		return Str.toString(gda_value_stringify(gdaValue) );
+		return Str.toString(gda_value_stringify(gdaValue));
 	}
 	
 	/**
 	 * Serializes the given GdaValue to a XML node string.
-	 * value :
-	 *  a GdaValue.
-	 * Returns :
-	 *  the XML node. Once not needed anymore, you should free it.
+	 * Returns: the XML node. Once not needed anymore, you should free it.
 	 */
 	public xmlNodePtr toXml()
 	{

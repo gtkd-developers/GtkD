@@ -40,25 +40,20 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Log;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 
@@ -93,38 +88,11 @@ public class Log
 	}
 	
 	/**
-	 * Returns :
-	 *  whether GDA logs are enabled (TRUE or FALSE).
+	 * Returns: whether GDA logs are enabled (TRUE or FALSE).
 	 */
 	public static int isEnabled()
 	{
 		// gboolean gda_log_is_enabled (void);
 		return gda_log_is_enabled();
-	}
-	
-	/**
-	 * Logs the given message in the GDA log file.
-	 * format :
-	 *  format string (see the printf(3) documentation).
-	 * ... :
-	 *  arguments to insert in the message.
-	 */
-	public static void message(char[] format, ... )
-	{
-		// void gda_log_message (const gchar *format,  ...);
-		gda_log_message(Str.toStringz(format));
-	}
-	
-	/**
-	 * Logs the given error in the GDA log file.
-	 * format :
-	 *  format string (see the printf(3) documentation).
-	 * ... :
-	 *  arguments to insert in the error.
-	 */
-	public static void error(char[] format, ... )
-	{
-		// void gda_log_error (const gchar *format,  ...);
-		gda_log_error(Str.toStringz(format));
 	}
 }

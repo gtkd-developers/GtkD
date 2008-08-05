@@ -44,37 +44,26 @@
  * 	- gda_provider_
  * omit code:
  * 	- GdaConfigListenerFunc
+ * omit signals:
  * imports:
  * 	- glib.ListG
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.DataSourceInfo;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
-
-
-version(Tango) {
-	private import tango.text.Util;
-} else {
-	private import std.string;
-}
+private import glib.Str;
 
 
 
@@ -109,92 +98,41 @@ public class DataSourceInfo
 	 */
 	public this (GdaDataSourceInfo* gdaDataSourceInfo)
 	{
-		version(noAssert)
+		if(gdaDataSourceInfo is null)
 		{
-			if ( gdaDataSourceInfo is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaDataSourceInfo is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaDataSourceInfo is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaDataSourceInfo !is null, "struct gdaDataSourceInfo is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaDataSourceInfo = gdaDataSourceInfo;
 	}
 	
+	/** */
 	this (ListG glist) {
 		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data;
 	}
-char[] name() { return std.string.toString(this.gdaDataSourceInfo.name); }
-char[] provider() { return std.string.toString(this.gdaDataSourceInfo.provider); }
-char[] cncString() { return std.string.toString(this.gdaDataSourceInfo.cncString); }
-char[] description() { return std.string.toString(this.gdaDataSourceInfo.description); }
-char[] username() { return std.string.toString(this.gdaDataSourceInfo.username); }
-char[] password() { return std.string.toString(this.gdaDataSourceInfo.password); }
+	/** */
+string name() { return Str.toString(this.gdaDataSourceInfo.name); }
+/** */
+string provider() { return Str.toString(this.gdaDataSourceInfo.provider); }
+/** */
+string cncString() { return Str.toString(this.gdaDataSourceInfo.cncString); }
+/** */
+string description() { return Str.toString(this.gdaDataSourceInfo.description); }
+/** */
+string username() { return Str.toString(this.gdaDataSourceInfo.username); }
+/** */
+string password() { return Str.toString(this.gdaDataSourceInfo.password); }
 
 
 /**
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
- * Returns :
+ * Returns:
  */
 public static GType infoGetType()
 {
 	// GType gda_data_source_info_get_type (void);
 	return gda_data_source_info_get_type();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

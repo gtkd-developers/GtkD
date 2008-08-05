@@ -44,37 +44,26 @@
  * 	- gda_data_source_
  * omit code:
  * 	- GdaConfigListenerFunc
+ * omit signals:
  * imports:
  * 	- glib.ListG
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.ProviderInfo;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
-
-
-version(Tango) {
-	private import tango.text.Util;
-} else {
-	private import std.string;
-}
+private import glib.Str;
 
 
 
@@ -109,65 +98,32 @@ public class ProviderInfo
 	 */
 	public this (GdaProviderInfo* gdaProviderInfo)
 	{
-		version(noAssert)
+		if(gdaProviderInfo is null)
 		{
-			if ( gdaProviderInfo is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaProviderInfo is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaProviderInfo is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaProviderInfo !is null, "struct gdaProviderInfo is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaProviderInfo = gdaProviderInfo;
 	}
 	
+	/** */
 	this (ListG glist) {
 		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
 	}
-char[] id() { return std.string.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).id); }
-char[] location() { return std.string.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).location); }
-char[] description() { return std.string.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).description); }
+	/** */
+string id() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).id); }
+/** */
+string location() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).location); }
+/** */
+string description() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).description); }
+/** */
 ListG gda_params() { return new ListG((cast(_GdaProviderInfo*)this.gdaProviderInfo).gda_params); }
-
-
 
 /**
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
- * Returns :
+ * Returns:
  */
 public static GType infoGetType()
 {
@@ -177,11 +133,7 @@ public static GType infoGetType()
 
 /**
  * Creates a new GdaProviderInfo structure from an existing one.
- * src :
- *  provider information to get a copy from.
- * Returns :
- *  a newly allocated GdaProviderInfo with contains a copy of
- * information in src.
+ * Returns: a newly allocated GdaProviderInfo with contains a copy of information in src.
  */
 public GdaProviderInfo* infoCopy()
 {
@@ -191,32 +143,10 @@ public GdaProviderInfo* infoCopy()
 
 /**
  * Deallocates all memory associated to the given GdaProviderInfo.
- * provider_info :
- *  provider information to free.
  */
 public void infoFree()
 {
 	// void gda_provider_info_free (GdaProviderInfo *provider_info);
 	gda_provider_info_free(gdaProviderInfo);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

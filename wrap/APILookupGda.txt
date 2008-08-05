@@ -59,16 +59,8 @@ public struct GdaExport{}
 public struct GdaSelect{}
 public struct GdaTable{}
 
-/*
-public struct Blob{} 
-public struct Date{} 
-public struct Time{} 
-public struct Timestamp{} 
-public struct Money{} 
-public struct ValueList{} 
-public struct Numeric{} 
-public struct GeometricPoint{}
-*/
+public struct GdaServerProviderPrivate{}
+
 struct _GdaProviderInfo {
 	gchar *id;
 	gchar *location;
@@ -119,12 +111,12 @@ code: start
 	 *  version = revision number of the program.
 	 *  args = args from main().
 	 */
-	public static void init(char[] appId, char[] versio, char[][] args)
+	public static void init(string appId, string versio, string[] args)
 	{
 		// void gda_init (const gchar *app_id,  const gchar *version,  gint nargs,  gchar *args[]);
 		gchar*[] argv = (new char*[args.length]);
 		int argc = 0;
-		foreach (char[] p; args)
+		foreach (string p; args)
 		{
 			argv[argc++] = cast(gchar*)p;
 		}
@@ -184,7 +176,7 @@ code: start
 	 *  the opened connection if successful, NULL if there is
 	 *  an error.
 	 */
-	public Connection openConnection(char[] dsn, char[] username, char[] password, GdaConnectionOptions options)
+	public Connection openConnection(string dsn, string username, string password, GdaConnectionOptions options)
 	{
 		// GdaConnection* gda_client_open_connection (GdaClient *client,  const gchar *dsn,  const gchar *username,  const gchar *password,  GdaConnectionOptions options);
 		GdaConnection* connection = gda_client_open_connection(gdaClient, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password), options);
@@ -241,24 +233,24 @@ nocode: GdaConfigListenerFunc
 class: DataSourceInfo
 prefix: gda_data_source_
 import: glib.ListG
-import: std.string
+import: glib.Str
 code: start
 	/** */
 	this (ListG glist) {
 		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data;
 	}
 	/** */
-	char[] name() { return std.string.toString(this.gdaDataSourceInfo.name); }
+	string name() { return Str.toString(this.gdaDataSourceInfo.name); }
 	/** */
-	char[] provider() { return std.string.toString(this.gdaDataSourceInfo.provider); }
+	string provider() { return Str.toString(this.gdaDataSourceInfo.provider); }
 	/** */
-	char[] cncString() { return std.string.toString(this.gdaDataSourceInfo.cncString); }
+	string cncString() { return Str.toString(this.gdaDataSourceInfo.cncString); }
 	/** */
-	char[] description() { return std.string.toString(this.gdaDataSourceInfo.description); }
+	string description() { return Str.toString(this.gdaDataSourceInfo.description); }
 	/** */
-	char[] username() { return std.string.toString(this.gdaDataSourceInfo.username); }
+	string username() { return Str.toString(this.gdaDataSourceInfo.username); }
 	/** */
-	char[] password() { return std.string.toString(this.gdaDataSourceInfo.password); }
+	string password() { return Str.toString(this.gdaDataSourceInfo.password); }
         
 code: end
 
@@ -275,18 +267,18 @@ nostruct: GdaDataSourceInfo
 nocode: GdaConfigListenerFunc
 
 import: glib.ListG
-import: std.string
+import: glib.Str
 code: start
 	/** */
 	this (ListG glist) {
 		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
 	}
 	/** */
-	char[] id() { return std.string.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).id); }
+	string id() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).id); }
 	/** */
-	char[] location() { return std.string.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).location); }
+	string location() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).location); }
 	/** */
-	char[] description() { return std.string.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).description); }
+	string description() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).description); }
 	/** */
 	ListG gda_params() { return new ListG((cast(_GdaProviderInfo*)this.gdaProviderInfo).gda_params); }
 code: end

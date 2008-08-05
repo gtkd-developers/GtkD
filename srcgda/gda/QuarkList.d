@@ -40,27 +40,22 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaQuarkList* -> QuarkList
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.QuarkList;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 
@@ -96,25 +91,10 @@ public class QuarkList
 	 */
 	public this (GdaQuarkList* gdaQuarkList)
 	{
-		version(noAssert)
+		if(gdaQuarkList is null)
 		{
-			if ( gdaQuarkList is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaQuarkList is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaQuarkList is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaQuarkList !is null, "struct gdaQuarkList is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaQuarkList = gdaQuarkList;
 	}
@@ -122,10 +102,8 @@ public class QuarkList
 	/**
 	 */
 	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getType()
 	{
@@ -138,45 +116,53 @@ public class QuarkList
 	 * very similar to GLib's GHashTable, but with the only purpose to
 	 * make easier the parsing and creation of data source connection
 	 * strings.
-	 * Returns :
-	 *  the newly created GdaQuarkList.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
 		// GdaQuarkList* gda_quark_list_new (void);
-		this(cast(GdaQuarkList*)gda_quark_list_new() );
+		auto p = gda_quark_list_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_quark_list_new()");
+		}
+		this(cast(GdaQuarkList*) p);
 	}
 	
 	/**
 	 * Creates a new GdaQuarkList given a connection string.
-	 * string :
-	 *  a connection string.
-	 * Returns :
-	 *  the newly created GdaQuarkList.
+	 * Params:
+	 * string =  a connection string.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] string)
+	public this (string string)
 	{
 		// GdaQuarkList* gda_quark_list_new_from_string (const gchar *string);
-		this(cast(GdaQuarkList*)gda_quark_list_new_from_string(Str.toStringz(string)) );
+		auto p = gda_quark_list_new_from_string(Str.toStringz(string));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_quark_list_new_from_string(Str.toStringz(string))");
+		}
+		this(cast(GdaQuarkList*) p);
 	}
 	
 	/**
 	 * Creates a new GdaQuarkList from an existing one.
-	 * qlist :
-	 *  quark_list to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaQuarkList with a copy of the data in qlist.
+	 * Returns: a newly allocated GdaQuarkList with a copy of the data in qlist.
 	 */
 	public QuarkList copy()
 	{
 		// GdaQuarkList* gda_quark_list_copy (GdaQuarkList *qlist);
-		return new QuarkList( gda_quark_list_copy(gdaQuarkList) );
+		auto p = gda_quark_list_copy(gdaQuarkList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new QuarkList(cast(GdaQuarkList*) p);
 	}
 	
 	/**
 	 * Releases all memory occupied by the given GdaQuarkList.
-	 * qlist :
-	 *  a GdaQuarkList.
 	 */
 	public void free()
 	{
@@ -188,14 +174,11 @@ public class QuarkList
 	 * Adds new key->value pairs from the given string. If cleanup is
 	 * set to TRUE, the previous contents will be discarded before adding
 	 * the new pairs.
-	 * qlist :
-	 *  a GdaQuarkList.
-	 * string :
-	 *  a connection string.
-	 * cleanup :
-	 *  whether to cleanup the previous content or not.
+	 * Params:
+	 * string =  a connection string.
+	 * cleanup =  whether to cleanup the previous content or not.
 	 */
-	public void addFromString(char[] string, int cleanup)
+	public void addFromString(string string, int cleanup)
 	{
 		// void gda_quark_list_add_from_string (GdaQuarkList *qlist,  const gchar *string,  gboolean cleanup);
 		gda_quark_list_add_from_string(gdaQuarkList, Str.toStringz(string), cleanup);
@@ -203,28 +186,22 @@ public class QuarkList
 	
 	/**
 	 * Searches for the value identified by name in the given GdaQuarkList.
-	 * qlist :
-	 *  a GdaQuarkList.
-	 * name :
-	 *  the name of the value to search for.
-	 * Returns :
-	 *  the value associated with the given key if found, or NULL
-	 * if not found.
+	 * Params:
+	 * name =  the name of the value to search for.
+	 * Returns: the value associated with the given key if found, or NULLif not found.
 	 */
-	public char[] find(char[] name)
+	public string find(string name)
 	{
 		// const gchar* gda_quark_list_find (GdaQuarkList *qlist,  const gchar *name);
-		return Str.toString(gda_quark_list_find(gdaQuarkList, Str.toStringz(name)) );
+		return Str.toString(gda_quark_list_find(gdaQuarkList, Str.toStringz(name)));
 	}
 	
 	/**
 	 * Removes an entry from the GdaQuarkList, given its name.
-	 * qlist :
-	 *  a GdaQuarkList structure.
-	 * name :
-	 *  an entry name.
+	 * Params:
+	 * name =  an entry name.
 	 */
-	public void remove(char[] name)
+	public void remove(string name)
 	{
 		// void gda_quark_list_remove (GdaQuarkList *qlist,  const gchar *name);
 		gda_quark_list_remove(gdaQuarkList, Str.toStringz(name));
@@ -232,8 +209,6 @@ public class QuarkList
 	
 	/**
 	 * Removes all strings in the given GdaQuarkList.
-	 * qlist :
-	 *  a GdaQuarkList.
 	 */
 	public void clear()
 	{

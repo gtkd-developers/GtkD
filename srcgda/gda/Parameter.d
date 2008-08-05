@@ -50,6 +50,7 @@
  * 	- gda_parameter_list_find
  * 	- gda_parameter_list_clear
  * 	- gda_parameter_list_get_length
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- gda.Value
@@ -59,21 +60,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Parameter;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -111,25 +106,10 @@ public class Parameter
 	 */
 	public this (GdaParameter* gdaParameter)
 	{
-		version(noAssert)
+		if(gdaParameter is null)
 		{
-			if ( gdaParameter is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaParameter is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaParameter is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaParameter !is null, "struct gdaParameter is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaParameter = gdaParameter;
 	}
@@ -137,10 +117,8 @@ public class Parameter
 	/**
 	 */
 	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getType()
 	{
@@ -151,96 +129,111 @@ public class Parameter
 	/**
 	 * Creates a new GdaParameter object, which is usually used
 	 * with GdaParameterList.
-	 * name :
-	 *  name for the parameter being created.
-	 * value :
-	 *  a GdaValue for this parameter.
-	 * Returns :
-	 *  the newly created GdaParameter.
+	 * Params:
+	 * name =  name for the parameter being created.
+	 * value =  a GdaValue for this parameter.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, Value value)
+	public this (string name, Value value)
 	{
 		// GdaParameter* gda_parameter_new_from_value (const gchar *name,  const GdaValue *value);
-		this(cast(GdaParameter*)gda_parameter_new_from_value(Str.toStringz(name), (value is null) ? null : value.getValueStruct()) );
+		auto p = gda_parameter_new_from_value(Str.toStringz(name), (value is null) ? null : value.getValueStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_parameter_new_from_value(Str.toStringz(name), (value is null) ? null : value.getValueStruct())");
+		}
+		this(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Creates a new GdaParameter from a gboolean value.
-	 * name :
-	 *  name for the parameter being created.
-	 * value :
-	 *  a boolean value.
-	 * Returns :
-	 *  the newly created GdaParameter.
+	 * Params:
+	 * name =  name for the parameter being created.
+	 * value =  a boolean value.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, int value)
+	public this (string name, int value)
 	{
 		// GdaParameter* gda_parameter_new_boolean (const gchar *name,  gboolean value);
-		this(cast(GdaParameter*)gda_parameter_new_boolean(Str.toStringz(name), value) );
+		auto p = gda_parameter_new_boolean(Str.toStringz(name), value);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_parameter_new_boolean(Str.toStringz(name), value)");
+		}
+		this(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Creates a new GdaParameter from a gdouble value.
-	 * name :
-	 *  name for the parameter being created.
-	 * value :
-	 *  a gdouble value.
-	 * Returns :
-	 *  the newly created GdaParameter.
+	 * Params:
+	 * name =  name for the parameter being created.
+	 * value =  a gdouble value.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, double value)
+	public this (string name, double value)
 	{
 		// GdaParameter* gda_parameter_new_double (const gchar *name,  gdouble value);
-		this(cast(GdaParameter*)gda_parameter_new_double(Str.toStringz(name), value) );
+		auto p = gda_parameter_new_double(Str.toStringz(name), value);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_parameter_new_double(Str.toStringz(name), value)");
+		}
+		this(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Creates a new GdaParameter from a GObject.
-	 * name :
-	 *  name for the parameter being created.
-	 * value :
-	 *  a GObject value.
-	 * Returns :
-	 *  the newly created GdaParameter.
+	 * Params:
+	 * name =  name for the parameter being created.
+	 * value =  a GObject value.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, GObject* value)
+	public this (string name, GObject* value)
 	{
 		// GdaParameter* gda_parameter_new_gobject (const gchar *name,  const GObject *value);
-		this(cast(GdaParameter*)gda_parameter_new_gobject(Str.toStringz(name), value) );
+		auto p = gda_parameter_new_gobject(Str.toStringz(name), value);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_parameter_new_gobject(Str.toStringz(name), value)");
+		}
+		this(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Creates a new GdaParameter from a string.
-	 * name :
-	 *  name for the parameter being created.
-	 * value :
-	 *  string value.
-	 * Returns :
-	 *  the newly created GdaParameter.
+	 * Params:
+	 * name =  name for the parameter being created.
+	 * value =  string value.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, char[] value)
+	public this (string name, string value)
 	{
 		// GdaParameter* gda_parameter_new_string (const gchar *name,  const gchar *value);
-		this(cast(GdaParameter*)gda_parameter_new_string(Str.toStringz(name), Str.toStringz(value)) );
+		auto p = gda_parameter_new_string(Str.toStringz(name), Str.toStringz(value));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_parameter_new_string(Str.toStringz(name), Str.toStringz(value))");
+		}
+		this(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Creates a new GdaParameter from an existing one.
-	 * param :
-	 *  parameter to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaParameter with a copy of the data in param.
+	 * Returns: a newly allocated GdaParameter with a copy of the data in param.
 	 */
 	public Parameter copy()
 	{
 		// GdaParameter* gda_parameter_copy (GdaParameter *param);
-		return new Parameter( gda_parameter_copy(gdaParameter) );
+		auto p = gda_parameter_copy(gdaParameter);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Parameter(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Releases all memory occupied by the given GdaParameter.
-	 * param :
-	 *  the GdaParameter to be freed.
 	 */
 	public void free()
 	{
@@ -249,63 +242,47 @@ public class Parameter
 	}
 	
 	/**
-	 * param :
-	 *  a GdaParameter object.
-	 * Returns :
-	 *  the name of the given GdaParameter.
+	 * Returns: the name of the given GdaParameter.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gda_parameter_get_name (GdaParameter *param);
-		return Str.toString(gda_parameter_get_name(gdaParameter) );
+		return Str.toString(gda_parameter_get_name(gdaParameter));
 	}
 	
 	/**
 	 * Sets the name of the given GdaParameter.
-	 * param :
-	 *  a GdaParameter.
-	 * name :
-	 *  new name for the parameter.
+	 * Params:
+	 * name =  new name for the parameter.
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gda_parameter_set_name (GdaParameter *param,  const gchar *name);
 		gda_parameter_set_name(gdaParameter, Str.toStringz(name));
 	}
 	
 	/**
-	 * param :
-	 *  a GdaParameter.
-	 * Returns :
-	 *  the value stored in the given param.
+	 * Returns: the value stored in the given param.
 	 */
 	public Value getValue()
 	{
 		// const GdaValue* gda_parameter_get_value (GdaParameter *param);
-		return new Value( gda_parameter_get_value(gdaParameter) );
+		auto p = gda_parameter_get_value(gdaParameter);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Stores the given value in the given param.
-	 * param :
-	 *  a GdaParameter.
-	 * value :
-	 *  a GdaValue.
+	 * Params:
+	 * value =  a GdaValue.
 	 */
 	public void setValue(Value value)
 	{
 		// void gda_parameter_set_value (GdaParameter *param,  GdaValue *value);
 		gda_parameter_set_value(gdaParameter, (value is null) ? null : value.getValueStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

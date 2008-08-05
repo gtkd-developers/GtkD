@@ -25,8 +25,14 @@
 
 module gdac.gda;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gdac.gdatypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  gda_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDA] );
  gda_Linker.link(gdaLinks);
- debug writefln("* Finished static this(): gda");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): gda").newline;
+ 	else writefln("* Finished static this(): gda");
+ }
 }
 
 static ~this()
 {
  delete gda_Linker;
- debug writefln("* Finished static ~this(): gda");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): gda").newline;
+ 	else writefln("* Finished static ~this(): gda");
+ }
 }
 
 extern(C) 

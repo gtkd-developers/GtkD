@@ -139,7 +139,6 @@ package: atk atk
 package: gdk-pixbuf gdkpixbuf
 package: gdk gdk
 package: gtk gtk
-package: gda gda
 package: glade glade
 bind: gtkc
 
@@ -151,6 +150,10 @@ bind: gtkglc
 srcdir: srcsv
 package: sourceview gsv
 bind: gsvc
+
+srcdir: srcgda
+package: gda gda
+bind: gdac
 
 ##gstreamerD wrapping is not on by default
 ##because of the hand-editing that is still required.
@@ -224,13 +227,13 @@ lookup: APILookupGLt.txt
 
 #J#htod: HTODopenGL.txt
 
-#J#srcdir: srcgda
-#J#bindDir: gdac
-#J#lookup: APILookupGda.txt
-
 srcdir: srcsv
 bindDir: gsvc
 lookup: APILookupSourceView.txt
+
+srcdir: srcgda
+bindDir: gdac
+lookup: APILookupGda.txt
 
 ##gstreamerD wrapping is not on by default
 ##because of the hand-editing that is still required.

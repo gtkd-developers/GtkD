@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.DataModel
  * 	- gda.FieldAttributes
@@ -49,21 +50,15 @@
  * 	- GdaTable* -> Table
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Table;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.DataModel;
@@ -99,25 +94,10 @@ public class Table
 	 */
 	public this (GdaTable* gdaTable)
 	{
-		version(noAssert)
+		if(gdaTable is null)
 		{
-			if ( gdaTable is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaTable is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaTable is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaTable !is null, "struct gdaTable is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaTable = gdaTable;
 	}
@@ -125,21 +105,24 @@ public class Table
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GdaTable object, which is an in-memory representation
 	 * of an entire table. It is mainly used by the GdaXmlDatabase class,
 	 * but you can also use it in your applications for whatever you may need
 	 * it.
-	 * name :
-	 *  name for the new table.
-	 * Returns :
-	 *  the newly created object.
+	 * Params:
+	 * name =  name for the new table.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name)
+	public this (string name)
 	{
 		// GdaTable* gda_table_new (const gchar *name);
-		this(cast(GdaTable*)gda_table_new(Str.toStringz(name)) );
+		auto p = gda_table_new(Str.toStringz(name));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_table_new(Str.toStringz(name))");
+		}
+		this(cast(GdaTable*) p);
 	}
 	
 	/**
@@ -147,41 +130,38 @@ public class Table
 	 * is very useful to maintain an in-memory copy of a given
 	 * recordset obtained from a database. This is also used when
 	 * exporting data to a GdaXmlDatabase object.
-	 * name :
-	 *  name for the new table.
-	 * model :
-	 *  model to create the table from.
-	 * add_data :
-	 *  whether to add model's data or not.
-	 * Returns :
-	 *  the newly created object.
+	 * Params:
+	 * name =  name for the new table.
+	 * model =  model to create the table from.
+	 * addData =  whether to add model's data or not.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, DataModel model, int addData)
+	public this (string name, DataModel model, int addData)
 	{
 		// GdaTable* gda_table_new_from_model (const gchar *name,  const GdaDataModel *model,  gboolean add_data);
-		this(cast(GdaTable*)gda_table_new_from_model(Str.toStringz(name), (model is null) ? null : model.getDataModelStruct(), addData) );
+		auto p = gda_table_new_from_model(Str.toStringz(name), (model is null) ? null : model.getDataModelStruct(), addData);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_table_new_from_model(Str.toStringz(name), (model is null) ? null : model.getDataModelStruct(), addData)");
+		}
+		this(cast(GdaTable*) p);
 	}
 	
 	/**
-	 * table :
-	 *  a GdaTable object.
-	 * Returns :
-	 *  the name of the given GdaTable.
+	 * Returns: the name of the given GdaTable.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gda_table_get_name (GdaTable *table);
-		return Str.toString(gda_table_get_name(gdaTable) );
+		return Str.toString(gda_table_get_name(gdaTable));
 	}
 	
 	/**
 	 * Sets the name of the given GdaTable.
-	 * table :
-	 *  a GdaTable object.
-	 * name :
-	 *  new name for the table.
+	 * Params:
+	 * name =  new name for the table.
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gda_table_set_name (GdaTable *table,  const gchar *name);
 		gda_table_set_name(gdaTable, Str.toStringz(name));
@@ -189,10 +169,8 @@ public class Table
 	
 	/**
 	 * Adds a field to the given GdaTable.
-	 * table :
-	 *  a GdaTable object.
-	 * fa :
-	 *  attributes for the new field.
+	 * Params:
+	 * fa =  attributes for the new field.
 	 */
 	public void addField(FieldAttributes fa)
 	{
@@ -202,10 +180,8 @@ public class Table
 	
 	/**
 	 * Adds data in the given table from the given model.
-	 * table :
-	 *  a GdaTable object.
-	 * model :
-	 *  a GdaDataModel object.
+	 * Params:
+	 * model =  a GdaDataModel object.
 	 */
 	public void addDataFromModel(DataModel model)
 	{

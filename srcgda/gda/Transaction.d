@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * 	- GdaDataModel* -> DataModel
@@ -47,21 +48,15 @@
  * 	- GdaTransaction* -> Transaction
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Transaction;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 
@@ -95,25 +90,10 @@ public class Transaction
 	 */
 	public this (GdaTransaction* gdaTransaction)
 	{
-		version(noAssert)
+		if(gdaTransaction is null)
 		{
-			if ( gdaTransaction is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaTransaction is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaTransaction is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaTransaction !is null, "struct gdaTransaction is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaTransaction = gdaTransaction;
 	}
@@ -121,30 +101,29 @@ public class Transaction
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GdaTransaction object, which allows a fine-tune and
 	 * full control of transactions to be used with providers.
-	 * name :
-	 *  name for the transaction.
-	 * Returns :
-	 *  the newly created object.
+	 * Params:
+	 * name =  name for the transaction.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name)
+	public this (string name)
 	{
 		// GdaTransaction* gda_transaction_new (const gchar *name);
-		this(cast(GdaTransaction*)gda_transaction_new(Str.toStringz(name)) );
+		auto p = gda_transaction_new(Str.toStringz(name));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_transaction_new(Str.toStringz(name))");
+		}
+		this(cast(GdaTransaction*) p);
 	}
-	
 	
 	/**
 	 * Gets the isolation level for the given transaction. This specifies
 	 * the locking behavior for the database connection during the given
 	 * transaction.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  the isolation level.
+	 * Returns: the isolation level.
 	 */
 	public GdaTransactionIsolation getIsolationLevel()
 	{
@@ -154,10 +133,8 @@ public class Transaction
 	
 	/**
 	 * Sets the isolation level for the given transaction.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * level :
-	 *  the isolation level.
+	 * Params:
+	 * level =  the isolation level.
 	 */
 	public void setIsolationLevel(GdaTransactionIsolation level)
 	{
@@ -173,26 +150,21 @@ public class Transaction
 	 * gda_connection_begin_transaction, the name of the transaction if
 	 * it's not been specified by the client application, so this function
 	 * may return, for some providers, values that you don't expect.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  the name of the transaction.
+	 * Returns: the name of the transaction.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gda_transaction_get_name (GdaTransaction *xaction);
-		return Str.toString(gda_transaction_get_name(gdaTransaction) );
+		return Str.toString(gda_transaction_get_name(gdaTransaction));
 	}
 	
 	/**
 	 * Sets the name of the given transaction. This is very useful when
 	 * using providers that support named transactions.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * name :
-	 *  new name for the transaction.
+	 * Params:
+	 * name =  new name for the transaction.
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gda_transaction_set_name (GdaTransaction *xaction,  const gchar *name);
 		gda_transaction_set_name(gdaTransaction, Str.toStringz(name));

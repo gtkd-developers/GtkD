@@ -40,27 +40,22 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.DataModel
  * structWrap:
  * 	- GdaDataModel* -> DataModel
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.DataModelHash;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.DataModel;
@@ -99,25 +94,10 @@ public class DataModelHash
 	 */
 	public this (GdaDataModelHash* gdaDataModelHash)
 	{
-		version(noAssert)
+		if(gdaDataModelHash is null)
 		{
-			if ( gdaDataModelHash is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaDataModelHash is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaDataModelHash is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaDataModelHash !is null, "struct gdaDataModelHash is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaDataModelHash = gdaDataModelHash;
 	}
@@ -125,29 +105,29 @@ public class DataModelHash
 	/**
 	 */
 	
-	
 	/**
-	 * cols :
-	 *  number of columns for rows in this data model.
-	 * Returns :
-	 *  a pointer to the newly created GdaDataModel.
+	 * Params:
+	 * cols =  number of columns for rows in this data model.
+	 * Returns: a pointer to the newly created GdaDataModel.
 	 */
 	public static DataModel newDataModelHash(int cols)
 	{
 		// GdaDataModel* gda_data_model_hash_new (gint cols);
-		return new DataModel( gda_data_model_hash_new(cols) );
+		auto p = gda_data_model_hash_new(cols);
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
 	 * Retrieves the value at a specified column and row.
-	 * model :
-	 *  the GdaDataModelHash to retrieve the value from.
-	 * col :
-	 *  column number (starting from 0).
-	 * row :
-	 *  row number (starting from 0).
-	 * Returns :
-	 *  a pointer to a GdaValue.
+	 * Params:
+	 * model =  the GdaDataModelHash to retrieve the value from.
+	 * col =  column number (starting from 0).
+	 * row =  row number (starting from 0).
+	 * Returns: a pointer to a GdaValue.
 	 */
 	public static GdaValue* getValueAt(DataModel model, int col, int row)
 	{
@@ -157,8 +137,6 @@ public class DataModelHash
 	
 	/**
 	 * Frees all the rows inserted in model.
-	 * model :
-	 *  the model to clear.
 	 */
 	public void clear()
 	{
@@ -171,10 +149,8 @@ public class DataModelHash
 	 * cols must be greater than or equal to 0.
 	 * This function calls gda_data_model_hash_clear to free the
 	 * existing rows if any.
-	 * model :
-	 *  the GdaDataModelHash.
-	 * cols :
-	 *  the number of columns for rows inserted in model.
+	 * Params:
+	 * cols =  the number of columns for rows inserted in model.
 	 */
 	public void setNColumns(int cols)
 	{
@@ -184,12 +160,9 @@ public class DataModelHash
 	
 	/**
 	 * Inserts a row in the model.
-	 * model :
-	 *  the GdaDataModelHash which is gonna hold the row.
-	 * rownum :
-	 *  the number of the row.
-	 * row :
-	 *  the row to insert. The model is responsible of freeing it!
+	 * Params:
+	 * rownum =  the number of the row.
+	 * row =  the row to insert. The model is responsible of freeing it!
 	 */
 	public void insertRow(int rownum, GdaRow* row)
 	{
@@ -199,12 +172,10 @@ public class DataModelHash
 	
 	/**
 	 * Retrieves a row from the underlying hash table.
-	 * model :
-	 *  the GdaDataModelHash
-	 * row :
-	 *  row number
-	 * Returns :
-	 *  a GdaRow or NULL if the requested row is not in the hash table.
+	 * Params:
+	 * model =  the GdaDataModelHash
+	 * row =  row number
+	 * Returns: a GdaRow or NULL if the requested row is not in the hash table.
 	 */
 	public static GdaRow* getRow(DataModel model, int row)
 	{

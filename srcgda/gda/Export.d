@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- gda.Connection
@@ -48,21 +49,15 @@
  * 	- GdaConnection* -> Connection
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Export;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -98,33 +93,16 @@ public class Export
 	 */
 	public this (GdaExport* gdaExport)
 	{
-		version(noAssert)
+		if(gdaExport is null)
 		{
-			if ( gdaExport is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaExport is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaExport is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaExport !is null, "struct gdaExport is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaExport = gdaExport;
 	}
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Creates a new GdaExport object, which allows you to easily add
@@ -136,15 +114,19 @@ public class Export
 	 * When you're done, you just run the export (gda_export_run), first
 	 * connecting to the different signals that will let you be
 	 * informed of the export process progress.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * Returns :
-	 *  a newly allocated GdaExport object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Connection cnc)
 	{
 		// GdaExport* gda_export_new (GdaConnection *cnc);
-		this(cast(GdaExport*)gda_export_new((cnc is null) ? null : cnc.getConnectionStruct()) );
+		auto p = gda_export_new((cnc is null) ? null : cnc.getConnectionStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_export_new((cnc is null) ? null : cnc.getConnectionStruct())");
+		}
+		this(cast(GdaExport*) p);
 	}
 	
 	/**
@@ -153,40 +135,42 @@ public class Export
 	 * useful when you're building, for example, a list for the user
 	 * to select which tables he/she wants in the export process.
 	 * You are responsible to free the returned value yourself.
-	 * exp :
-	 *  a GdaExport object.
-	 * Returns :
-	 *  a GList containing the names of all the tables.
+	 * Returns: a GList containing the names of all the tables.
 	 */
 	public ListG getTables()
 	{
 		// GList* gda_export_get_tables (GdaExport *exp);
-		return new ListG( gda_export_get_tables(gdaExport) );
+		auto p = gda_export_get_tables(gdaExport);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Returns a list with the names of all the currently selected objects
 	 * in the given GdaExport object.
 	 * You are responsible to free the returned value yourself.
-	 * exp :
-	 *  a GdaExport object.
-	 * Returns :
-	 *  a GList containing the names of the selected tables.
+	 * Returns: a GList containing the names of the selected tables.
 	 */
 	public ListG getSelectedTables()
 	{
 		// GList* gda_export_get_selected_tables (GdaExport *exp);
-		return new ListG( gda_export_get_selected_tables(gdaExport) );
+		auto p = gda_export_get_selected_tables(gdaExport);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Adds the given table to the list of selected tables.
-	 * exp :
-	 *  a GdaExport object.
-	 * table :
-	 *  name of the table.
+	 * Params:
+	 * table =  name of the table.
 	 */
-	public void selectTable(char[] table)
+	public void selectTable(string table)
 	{
 		// void gda_export_select_table (GdaExport *exp,  const gchar *table);
 		gda_export_select_table(gdaExport, Str.toStringz(table));
@@ -195,10 +179,8 @@ public class Export
 	/**
 	 * Adds all the tables contained in the given list to the list of
 	 * selected tables.
-	 * exp :
-	 *  a GdaExport object.
-	 * list :
-	 *  list of tables to be selected.
+	 * Params:
+	 * list =  list of tables to be selected.
 	 */
 	public void selectTableList(ListG list)
 	{
@@ -208,12 +190,10 @@ public class Export
 	
 	/**
 	 * Removes the given table name from the list of selected tables.
-	 * exp :
-	 *  a GdaExport object.
-	 * table :
-	 *  name of the table.
+	 * Params:
+	 * table =  name of the table.
 	 */
-	public void unselectTable(char[] table)
+	public void unselectTable(string table)
 	{
 		// void gda_export_unselect_table (GdaExport *exp,  const gchar *table);
 		gda_export_unselect_table(gdaExport, Str.toStringz(table));
@@ -223,10 +203,8 @@ public class Export
 	 * Starts the execution of the given export object. This means that, after
 	 * calling this function, your application will lose control about the export
 	 * process and will only receive notifications via the class signals.
-	 * exp :
-	 *  a GdaExport object.
-	 * flags :
-	 *  execution flags.
+	 * Params:
+	 * flags =  execution flags.
 	 */
 	public void run(GdaExportFlags flags)
 	{
@@ -236,8 +214,6 @@ public class Export
 	
 	/**
 	 * Stops execution of the given export object.
-	 * exp :
-	 *  a GdaExport object.
 	 */
 	public void stop()
 	{
@@ -246,23 +222,23 @@ public class Export
 	}
 	
 	/**
-	 * exp :
-	 *  a GdaExport object.
-	 * Returns :
-	 *  the GdaConnection object associated with the given GdaExport.
+	 * Returns: the GdaConnection object associated with the given GdaExport.
 	 */
 	public Connection getConnection()
 	{
 		// GdaConnection* gda_export_get_connection (GdaExport *exp);
-		return new Connection( gda_export_get_connection(gdaExport) );
+		auto p = gda_export_get_connection(gdaExport);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Connection(cast(GdaConnection*) p);
 	}
 	
 	/**
 	 * Associates the given GdaConnection with the given GdaExport.
-	 * exp :
-	 *  a GdaExport object.
-	 * cnc :
-	 *  a GdaConnection object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
 	 */
 	public void setConnection(Connection cnc)
 	{

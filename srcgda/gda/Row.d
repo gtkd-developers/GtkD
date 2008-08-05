@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.Value
  * 	- gda.DataModel
@@ -49,21 +50,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Row;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.Value;
@@ -99,25 +94,10 @@ public class Row
 	 */
 	public this (GdaRow* gdaRow)
 	{
-		version(noAssert)
+		if(gdaRow is null)
 		{
-			if ( gdaRow is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaRow is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaRow is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaRow !is null, "struct gdaRow is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaRow = gdaRow;
 	}
@@ -125,11 +105,8 @@ public class Row
 	/**
 	 */
 	
-	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getType()
 	{
@@ -139,52 +116,58 @@ public class Row
 	
 	/**
 	 * Creates a GdaRow which can hold count GdaValue.
-	 * model :
-	 *  the GdaDataModel this row belongs to.
-	 * count :
-	 *  number of GdaValue in the new GdaRow.
-	 * Returns :
-	 *  the newly allocated GdaRow.
+	 * Params:
+	 * model =  the GdaDataModel this row belongs to.
+	 * count =  number of GdaValue in the new GdaRow.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (DataModel model, int count)
 	{
 		// GdaRow* gda_row_new (GdaDataModel *model,  gint count);
-		this(cast(GdaRow*)gda_row_new((model is null) ? null : model.getDataModelStruct(), count) );
+		auto p = gda_row_new((model is null) ? null : model.getDataModelStruct(), count);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_row_new((model is null) ? null : model.getDataModelStruct(), count)");
+		}
+		this(cast(GdaRow*) p);
 	}
 	
 	/**
 	 * Creates a GdaRow from a list of GdaValue's. These GdaValue's are
 	 * value-copied and the user are still resposible for freeing them.
-	 * model :
-	 *  a GdaDataModel.
-	 * values :
-	 *  a list of GdaValue's.
-	 * Returns :
-	 *  the newly created row.
+	 * Params:
+	 * model =  a GdaDataModel.
+	 * values =  a list of GdaValue's.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (DataModel model, GList* values)
 	{
 		// GdaRow* gda_row_new_from_list (GdaDataModel *model,  const GList *values);
-		this(cast(GdaRow*)gda_row_new_from_list((model is null) ? null : model.getDataModelStruct(), values) );
+		auto p = gda_row_new_from_list((model is null) ? null : model.getDataModelStruct(), values);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_row_new_from_list((model is null) ? null : model.getDataModelStruct(), values)");
+		}
+		this(cast(GdaRow*) p);
 	}
 	
 	/**
 	 * Creates a new GdaRow from an existing one.
-	 * row :
-	 *  quark_list to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaRow with a copy of the data in row.
+	 * Returns: a newly allocated GdaRow with a copy of the data in row.
 	 */
 	public Row copy()
 	{
 		// GdaRow* gda_row_copy (GdaRow *row);
-		return new Row( gda_row_copy(gdaRow) );
+		auto p = gda_row_copy(gdaRow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Row(cast(GdaRow*) p);
 	}
 	
 	/**
 	 * Deallocates all memory associated to a GdaRow.
-	 * row :
-	 *  the resource to free.
 	 */
 	public void free()
 	{
@@ -194,24 +177,23 @@ public class Row
 	
 	/**
 	 * Gets the GdaDataModel the given GdaRow belongs to.
-	 * row :
-	 *  a GdaRow.
-	 * Returns :
-	 *  a GdaDataModel.
+	 * Returns: a GdaDataModel.
 	 */
 	public DataModel getModel()
 	{
 		// GdaDataModel* gda_row_get_model (GdaRow *row);
-		return new DataModel( gda_row_get_model(gdaRow) );
+		auto p = gda_row_get_model(gdaRow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
 	 * Gets the number of the given row, that is, its position in its containing
 	 * data model.
-	 * row :
-	 *  a GdaRow.
-	 * Returns :
-	 *  the row number, or -1 if there was an error.
+	 * Returns: the row number, or -1 if there was an error.
 	 */
 	public int getNumber()
 	{
@@ -221,10 +203,8 @@ public class Row
 	
 	/**
 	 * Sets the row number for the given row.
-	 * row :
-	 *  a GdaRow.
-	 * number :
-	 *  the new row number.
+	 * Params:
+	 * number =  the new row number.
 	 */
 	public void setNumber(int number)
 	{
@@ -239,26 +219,21 @@ public class Row
 	 * the row has not been created by a provider, or that it the
 	 * provider cannot identify it (ie, modifications to it won't
 	 * take place into the database).
-	 * row :
-	 *  a GdaRow (which contains GdaValue).
-	 * Returns :
-	 *  the unique identifier for this row.
+	 * Returns: the unique identifier for this row.
 	 */
-	public char[] getId()
+	public string getId()
 	{
 		// const gchar* gda_row_get_id (GdaRow *row);
-		return Str.toString(gda_row_get_id(gdaRow) );
+		return Str.toString(gda_row_get_id(gdaRow));
 	}
 	
 	/**
 	 * Assigns a new identifier to the given row. This function is
 	 * usually called by providers.
-	 * row :
-	 *  a GdaRow (which contains GdaValue).
-	 * id :
-	 *  new identifier for the row.
+	 * Params:
+	 * id =  new identifier for the row.
 	 */
-	public void setId(char[] id)
+	public void setId(string id)
 	{
 		// void gda_row_set_id (GdaRow *row,  const gchar *id);
 		gda_row_set_id(gdaRow, Str.toStringz(id));
@@ -268,24 +243,23 @@ public class Row
 	 * Gets a pointer to a GdaValue stored in a GdaRow.
 	 * This is a pointer to the internal array of values. Don't try to free
 	 * or modify it!
-	 * row :
-	 *  a GdaRow (which contains GdaValue).
-	 * num :
-	 *  field index.
-	 * Returns :
-	 *  a pointer to the GdaValue in the position num of row.
+	 * Params:
+	 * num =  field index.
+	 * Returns: a pointer to the GdaValue in the position num of row.
 	 */
 	public Value getValue(int num)
 	{
 		// GdaValue* gda_row_get_value (GdaRow *row,  gint num);
-		return new Value( gda_row_get_value(gdaRow, num) );
+		auto p = gda_row_get_value(gdaRow, num);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GdaValue*) p);
 	}
 	
 	/**
-	 * row :
-	 *  a GdaRow.
-	 * Returns :
-	 *  the number of columns that the row has.
+	 * Returns: the number of columns that the row has.
 	 */
 	public int getLength()
 	{

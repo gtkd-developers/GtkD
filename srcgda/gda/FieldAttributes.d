@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- gda.Value
@@ -50,21 +51,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.FieldAttributes;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import glib.ListG;
@@ -100,25 +95,10 @@ public class FieldAttributes
 	 */
 	public this (GdaFieldAttributes* gdaFieldAttributes)
 	{
-		version(noAssert)
+		if(gdaFieldAttributes is null)
 		{
-			if ( gdaFieldAttributes is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaFieldAttributes is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaFieldAttributes is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaFieldAttributes !is null, "struct gdaFieldAttributes is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaFieldAttributes = gdaFieldAttributes;
 	}
@@ -126,11 +106,8 @@ public class FieldAttributes
 	/**
 	 */
 	
-	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getType()
 	{
@@ -139,33 +116,36 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * Returns :
-	 *  a newly allocated GdaFieldAttributes object.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
 		// GdaFieldAttributes* gda_field_attributes_new (void);
-		this(cast(GdaFieldAttributes*)gda_field_attributes_new() );
+		auto p = gda_field_attributes_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_field_attributes_new()");
+		}
+		this(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
 	 * Creates a new GdaFieldAttributes object from an existing one.
-	 * fa :
-	 *  attributes to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaFieldAttributes with a copy of the data
-	 * in fa.
+	 * Returns: a newly allocated GdaFieldAttributes with a copy of the datain fa.
 	 */
 	public FieldAttributes copy()
 	{
 		// GdaFieldAttributes* gda_field_attributes_copy (GdaFieldAttributes *fa);
-		return new FieldAttributes( gda_field_attributes_copy(gdaFieldAttributes) );
+		auto p = gda_field_attributes_copy(gdaFieldAttributes);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FieldAttributes(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
 	 * Deallocates all memory associated to the given GdaFieldAttributes object.
-	 * fa :
-	 *  the resource to free.
 	 */
 	public void free()
 	{
@@ -175,12 +155,9 @@ public class FieldAttributes
 	
 	/**
 	 * Tests whether two field attributes are equal.
-	 * lhs :
-	 *  a GdaFieldAttributes
-	 * rhs :
-	 *  another GdaFieldAttributes
-	 * Returns :
-	 *  TRUE if the field attributes contain the same information.
+	 * Params:
+	 * rhs =  another GdaFieldAttributes
+	 * Returns: TRUE if the field attributes contain the same information.
 	 */
 	public int equal(FieldAttributes rhs)
 	{
@@ -189,10 +166,7 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  the defined size of fa.
+	 * Returns: the defined size of fa.
 	 */
 	public int getDefinedSize()
 	{
@@ -202,10 +176,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the defined size of a GdaFieldAttributes.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * size :
-	 *  the defined size we want to set.
+	 * Params:
+	 * size =  the defined size we want to set.
 	 */
 	public void setDefinedSize(int size)
 	{
@@ -214,85 +186,67 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  the name of fa.
+	 * Returns: the name of fa.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gda_field_attributes_get_name (GdaFieldAttributes *fa);
-		return Str.toString(gda_field_attributes_get_name(gdaFieldAttributes) );
+		return Str.toString(gda_field_attributes_get_name(gdaFieldAttributes));
 	}
 	
 	/**
 	 * Sets the name of fa to name.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * name :
-	 *  the new name of fa.
+	 * Params:
+	 * name =  the new name of fa.
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gda_field_attributes_set_name (GdaFieldAttributes *fa,  const gchar *name);
 		gda_field_attributes_set_name(gdaFieldAttributes, Str.toStringz(name));
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  the name of the table to which this field belongs.
+	 * Returns: the name of the table to which this field belongs.
 	 */
-	public char[] getTable()
+	public string getTable()
 	{
 		// const gchar* gda_field_attributes_get_table (GdaFieldAttributes *fa);
-		return Str.toString(gda_field_attributes_get_table(gdaFieldAttributes) );
+		return Str.toString(gda_field_attributes_get_table(gdaFieldAttributes));
 	}
 	
 	/**
 	 * Sets the name of the table to which the given field belongs.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * table :
-	 *  table name.
+	 * Params:
+	 * table =  table name.
 	 */
-	public void setTable(char[] table)
+	public void setTable(string table)
 	{
 		// void gda_field_attributes_set_table (GdaFieldAttributes *fa,  const gchar *table);
 		gda_field_attributes_set_table(gdaFieldAttributes, Str.toStringz(table));
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  fa's caption.
+	 * Returns: fa's caption.
 	 */
-	public char[] getCaption()
+	public string getCaption()
 	{
 		// const gchar* gda_field_attributes_get_caption (GdaFieldAttributes *fa);
-		return Str.toString(gda_field_attributes_get_caption(gdaFieldAttributes) );
+		return Str.toString(gda_field_attributes_get_caption(gdaFieldAttributes));
 	}
 	
 	/**
 	 * Sets fa's caption.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * caption :
-	 *  caption.
+	 * Params:
+	 * caption =  caption.
 	 */
-	public void setCaption(char[] caption)
+	public void setCaption(string caption)
 	{
 		// void gda_field_attributes_set_caption (GdaFieldAttributes *fa,  const gchar *caption);
 		gda_field_attributes_set_caption(gdaFieldAttributes, Str.toStringz(caption));
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  the number of decimals of fa.
+	 * Returns: the number of decimals of fa.
 	 */
 	public int getScale()
 	{
@@ -302,10 +256,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the scale of fa to scale.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * scale :
-	 *  number of decimals.
+	 * Params:
+	 * scale =  number of decimals.
 	 */
 	public void setScale(int scale)
 	{
@@ -314,10 +266,7 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  the type of fa.
+	 * Returns: the type of fa.
 	 */
 	public GdaValueType getGdatype()
 	{
@@ -327,10 +276,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the type of fa to type.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * type :
-	 *  the new type of fa.
+	 * Params:
+	 * type =  the new type of fa.
 	 */
 	public void setGdatype(GdaValueType type)
 	{
@@ -340,10 +287,7 @@ public class FieldAttributes
 	
 	/**
 	 * Gets the 'allow null' flag of the given field attributes.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  whether the given field allows null values or not (TRUE or FALSE).
+	 * Returns: whether the given field allows null values or not (TRUE or FALSE).
 	 */
 	public int getAllowNull()
 	{
@@ -353,10 +297,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the 'allow null' flag of the given field attributes.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * allow :
-	 *  whether the given field should allows null values or not.
+	 * Params:
+	 * allow =  whether the given field should allows null values or not.
 	 */
 	public void setAllowNull(int allow)
 	{
@@ -365,10 +307,7 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  whether if the given field is a primary key (TRUE or FALSE).
+	 * Returns: whether if the given field is a primary key (TRUE or FALSE).
 	 */
 	public int getPrimaryKey()
 	{
@@ -378,10 +317,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the 'primary key' flag of the given field attributes.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * pk :
-	 *  whether if the given field should be a primary key.
+	 * Params:
+	 * pk =  whether if the given field should be a primary key.
 	 */
 	public void setPrimaryKey(int pk)
 	{
@@ -390,10 +327,7 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  whether if the given field is an unique key (TRUE or FALSE).
+	 * Returns: whether if the given field is an unique key (TRUE or FALSE).
 	 */
 	public int getUniqueKey()
 	{
@@ -403,10 +337,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the 'unique key' flag of the given field attributes.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * uk :
-	 *  whether if the given field should be an unique key.
+	 * Params:
+	 * uk =  whether if the given field should be an unique key.
 	 */
 	public void setUniqueKey(int uk)
 	{
@@ -415,35 +347,27 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  fa's references.
+	 * Returns: fa's references.
 	 */
-	public char[] getReferences()
+	public string getReferences()
 	{
 		// const gchar* gda_field_attributes_get_references (GdaFieldAttributes *fa);
-		return Str.toString(gda_field_attributes_get_references(gdaFieldAttributes) );
+		return Str.toString(gda_field_attributes_get_references(gdaFieldAttributes));
 	}
 	
 	/**
 	 * Sets fa's references.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * ref :
-	 *  references.
+	 * Params:
+	 * ref =  references.
 	 */
-	public void setReferences(char[] doref)
+	public void setReferences(string doref)
 	{
 		// void gda_field_attributes_set_references (GdaFieldAttributes *fa,  const gchar *ref);
 		gda_field_attributes_set_references(gdaFieldAttributes, Str.toStringz(doref));
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  whether the given field is an auto incremented one (TRUE or FALSE).
+	 * Returns: whether the given field is an auto incremented one (TRUE or FALSE).
 	 */
 	public int getAutoIncrement()
 	{
@@ -453,10 +377,8 @@ public class FieldAttributes
 	
 	/**
 	 * Sets the auto increment flag for the given field.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * is_auto :
-	 *  auto increment status.
+	 * Params:
+	 * isAuto =  auto increment status.
 	 */
 	public void setAutoIncrement(int isAuto)
 	{
@@ -465,11 +387,7 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  the position of the field the attributes refer to in the
-	 * containing data model.
+	 * Returns: the position of the field the attributes refer to in thecontaining data model.
 	 */
 	public int getPosition()
 	{
@@ -480,10 +398,8 @@ public class FieldAttributes
 	/**
 	 * Sets the position of the field the attributes refer to in the containing
 	 * data model.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * position :
-	 *  the wanted position of the field in the containing data model.
+	 * Params:
+	 * position =  the wanted position of the field in the containing data model.
 	 */
 	public void setPosition(int position)
 	{
@@ -492,23 +408,26 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * Returns :
-	 *  fa's default value, as a GdaValue object.
+	 * Params:
+	 * fa =  a GdaFieldAttributes.
+	 * Returns: fa's default value, as a GdaValue object.
 	 */
 	public Value getDefaultValue()
 	{
 		// const GdaValue* gda_field_attributes_get_default_value  (GdaFieldAttributes *fa);
-		return new Value( gda_field_attributes_get_default_value(gdaFieldAttributes) );
+		auto p = gda_field_attributes_get_default_value(gdaFieldAttributes);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GdaValue*) p);
 	}
 	
 	/**
 	 * Sets fa's default GdaValue.
-	 * fa :
-	 *  a GdaFieldAttributes.
-	 * default_value :
-	 *  default GdaValue for the field
+	 * Params:
+	 * fa =  a GdaFieldAttributes.
+	 * defaultValue =  default GdaValue for the field
 	 */
 	public void setDefaultValue(Value defaultValue)
 	{

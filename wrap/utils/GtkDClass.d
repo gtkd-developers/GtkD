@@ -2107,14 +2107,15 @@ public class GtkDClass
 							char[][] description;
 							char[][] params;
 							char[] ret;
-							char[] ws = \u00A0; //White space used in some of the documentation.						
 							
 							for(int i; i < comments.length; i++)
 							{
-								if(find(comments[i], ":") == comments[i].length-1 && find(comments[i], "Returns:") == -1 && find(comments[i], "Returns"~ws~":") == -1 )
+								comments[i] = replace(comments[i], \u00A0, " "); //White space used in some of the documentation.
+
+								if(find(comments[i], ":") == comments[i].length-1 && find(comments[i], "Returns:") == -1 && find(comments[i], "Returns :") == -1 )
 								{
 									//Get the GtkD name of the param
-									char[] param = chomp(idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()), ws);
+									char[] param = chomp(idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()), " ");
 
 									//If this param is not in the Gtkd Function Skip it.
 									if(find(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
@@ -2142,7 +2143,7 @@ public class GtkDClass
 											params ~= comments[i];
 									}
 								}
-								else if(find(comments[i], "Returns:") > -1 || find(comments[i], "Returns"~ws~":") > -1)
+								else if(find(comments[i], "Returns:") > -1 || find(comments[i], "Returns :") > -1)
 								{
 									//Skip return for Constructors.
 									if(find(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
@@ -2313,7 +2314,7 @@ public class GtkDClass
 	bool stilInParam(char[] comments)
 	{
 		return !(find(comments, ":")  == comments.length-1 ||
-		         ( find(comments, "Returns:") == 0 || find(comments, "Returns"~\u00A0~":") == 0) ||
+		         ( find(comments, "Returns:") == 0 || find(comments, "Returns"~\u00A0~":") == 0 || find(comments, "Returns :") == 0) ||
 		         ( find(comments, "Since 2.") == 0 || find(comments, "Since 1.") == 0) ||
 		         find(comments, "See Also") == 0 ||
 		         find(comments, "Property Details") == 0 ||

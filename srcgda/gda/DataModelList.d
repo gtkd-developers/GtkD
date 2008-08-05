@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.DataModel
  * 	- gda.Value
@@ -52,21 +53,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.DataModelList;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.DataModel;
@@ -104,25 +99,10 @@ public class DataModelList
 	 */
 	public this (GdaDataModelList* gdaDataModelList)
 	{
-		version(noAssert)
+		if(gdaDataModelList is null)
 		{
-			if ( gdaDataModelList is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaDataModelList is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaDataModelList is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaDataModelList !is null, "struct gdaDataModelList is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaDataModelList = gdaDataModelList;
 	}
@@ -130,42 +110,50 @@ public class DataModelList
 	/**
 	 */
 	
-	
 	/**
-	 * Returns :
-	 *  a newly allocated GdaDataModel.
+	 * Returns: a newly allocated GdaDataModel.
 	 */
 	public static DataModel newDataModelList()
 	{
 		// GdaDataModel* gda_data_model_list_new (void);
-		return new DataModel( gda_data_model_list_new() );
+		auto p = gda_data_model_list_new();
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
-	 * list :
-	 *  a list of strings.
-	 * Returns :
-	 *  a newly allocated GdaDataModel which contains a set of
-	 * GdaValue according to the given list.
+	 * Params:
+	 * list =  a list of strings.
+	 * Returns: a newly allocated GdaDataModel which contains a set ofGdaValue according to the given list.
 	 */
 	public static DataModel newFromStringList(ListG list)
 	{
 		// GdaDataModel* gda_data_model_list_new_from_string_list  (const GList *list);
-		return new DataModel( gda_data_model_list_new_from_string_list((list is null) ? null : list.getListGStruct()) );
+		auto p = gda_data_model_list_new_from_string_list((list is null) ? null : list.getListGStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
 	 * Inserts a row in the model, using value.
-	 * model :
-	 *  the GdaDataModelList which is gonna hold the row.
-	 * value :
-	 *  a GdaValue which will be used to fill the row.
-	 * Returns :
-	 *  the GdaRow which has been inserted, or NULL on failure.
+	 * Params:
+	 * value =  a GdaValue which will be used to fill the row.
+	 * Returns: the GdaRow which has been inserted, or NULL on failure.
 	 */
 	public Row appendValue(Value value)
 	{
 		// const GdaRow* gda_data_model_list_append_value (GdaDataModelList *model,  const GdaValue *value);
-		return new Row( gda_data_model_list_append_value(gdaDataModelList, (value is null) ? null : value.getValueStruct()) );
+		auto p = gda_data_model_list_append_value(gdaDataModelList, (value is null) ? null : value.getValueStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Row(cast(GdaRow*) p);
 	}
 }

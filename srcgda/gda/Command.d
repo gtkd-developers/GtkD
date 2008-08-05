@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.Transaction
  * structWrap:
@@ -47,21 +48,15 @@
  * 	- GdaTransaction* -> Transaction
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Command;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.Transaction;
@@ -112,25 +107,10 @@ public class Command
 	 */
 	public this (GdaCommand* gdaCommand)
 	{
-		version(noAssert)
+		if(gdaCommand is null)
 		{
-			if ( gdaCommand is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaCommand is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaCommand is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaCommand !is null, "struct gdaCommand is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaCommand = gdaCommand;
 	}
@@ -138,13 +118,8 @@ public class Command
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getType()
 	{
@@ -157,25 +132,25 @@ public class Command
 	 * calling gda_command_free.
 	 * If there are conflicting options, this will set options to
 	 * GDA_COMMAND_OPTION_DEFAULT.
-	 * text :
-	 *  the text of the command.
-	 * type :
-	 *  a GdaCommandType value.
-	 * options :
-	 *  a GdaCommandOptions value.
-	 * Returns :
-	 *  a newly allocated GdaCommand.
+	 * Params:
+	 * text =  the text of the command.
+	 * type =  a GdaCommandType value.
+	 * options =  a GdaCommandOptions value.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] text, GdaCommandType type, GdaCommandOptions options)
+	public this (string text, GdaCommandType type, GdaCommandOptions options)
 	{
 		// GdaCommand* gda_command_new (const gchar *text,  GdaCommandType type,  GdaCommandOptions options);
-		this(cast(GdaCommand*)gda_command_new(Str.toStringz(text), type, options) );
+		auto p = gda_command_new(Str.toStringz(text), type, options);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_command_new(Str.toStringz(text), type, options)");
+		}
+		this(cast(GdaCommand*) p);
 	}
 	
 	/**
 	 * Frees the resources allocated by gda_command_new.
-	 * cmd :
-	 *  a GdaCommand.
 	 */
 	public void free()
 	{
@@ -185,38 +160,35 @@ public class Command
 	
 	/**
 	 * Creates a new GdaCommand from an existing one.
-	 * cmd :
-	 *  command to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaCommand with a copy of the data in cmd.
+	 * Returns: a newly allocated GdaCommand with a copy of the data in cmd.
 	 */
 	public Command copy()
 	{
 		// GdaCommand* gda_command_copy (GdaCommand *cmd);
-		return new Command( gda_command_copy(gdaCommand) );
+		auto p = gda_command_copy(gdaCommand);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Command(cast(GdaCommand*) p);
 	}
 	
 	/**
 	 * Gets the command text held by cmd.
-	 * cmd :
-	 *  a GdaCommand.
-	 * Returns :
-	 *  the command string of cmd.
+	 * Returns: the command string of cmd.
 	 */
-	public char[] getText()
+	public string getText()
 	{
 		// const gchar* gda_command_get_text (GdaCommand *cmd);
-		return Str.toString(gda_command_get_text(gdaCommand) );
+		return Str.toString(gda_command_get_text(gdaCommand));
 	}
 	
 	/**
 	 * Sets the command text of cmd.
-	 * cmd :
-	 *  a GdaCommand
-	 * text :
-	 *  the command text.
+	 * Params:
+	 * text =  the command text.
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gda_command_set_text (GdaCommand *cmd,  const gchar *text);
 		gda_command_set_text(gdaCommand, Str.toStringz(text));
@@ -224,10 +196,7 @@ public class Command
 	
 	/**
 	 * Gets the command type of cmd.
-	 * cmd :
-	 *  a GdaCommand.
-	 * Returns :
-	 *  the command type of cmd.
+	 * Returns: the command type of cmd.
 	 */
 	public GdaCommandType getCommandType()
 	{
@@ -237,10 +206,8 @@ public class Command
 	
 	/**
 	 * Sets the command type of cmd.
-	 * cmd :
-	 *  a GdaCommand
-	 * type :
-	 *  the command type.
+	 * Params:
+	 * type =  the command type.
 	 */
 	public void setCommandType(GdaCommandType type)
 	{
@@ -250,10 +217,7 @@ public class Command
 	
 	/**
 	 * Gets the command options of cmd.
-	 * cmd :
-	 *  a GdaCommand.
-	 * Returns :
-	 *  the command options of cmd.
+	 * Returns: the command options of cmd.
 	 */
 	public GdaCommandOptions getOptions()
 	{
@@ -264,10 +228,8 @@ public class Command
 	/**
 	 * Sets the command options of cmd. If there conflicting options, it will just
 	 * leave the value as before.
-	 * cmd :
-	 *  a GdaCommand
-	 * options :
-	 *  the command options.
+	 * Params:
+	 * options =  the command options.
 	 */
 	public void setOptions(GdaCommandOptions options)
 	{
@@ -277,23 +239,23 @@ public class Command
 	
 	/**
 	 * Gets the GdaTransaction associated with the given GdaCommand.
-	 * cmd :
-	 *  a GdaCommand.
-	 * Returns :
-	 *  the transaction for the command.
+	 * Returns: the transaction for the command.
 	 */
 	public Transaction getTransaction()
 	{
 		// GdaTransaction* gda_command_get_transaction (GdaCommand *cmd);
-		return new Transaction( gda_command_get_transaction(gdaCommand) );
+		auto p = gda_command_get_transaction(gdaCommand);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Transaction(cast(GdaTransaction*) p);
 	}
 	
 	/**
 	 * Sets the GdaTransaction associated with the given GdaCommand.
-	 * cmd :
-	 *  a GdaCommand.
-	 * xaction :
-	 *  a GdaTransaction object.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
 	 */
 	public void setTransaction(Transaction xaction)
 	{

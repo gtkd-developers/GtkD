@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gda.DataModel
  * structWrap:
@@ -47,21 +48,15 @@
  * 	- GdaSelect* -> Select
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Select;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.DataModel;
@@ -96,25 +91,10 @@ public class Select
 	 */
 	public this (GdaSelect* gdaSelect)
 	{
-		version(noAssert)
+		if(gdaSelect is null)
 		{
-			if ( gdaSelect is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaSelect is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaSelect is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaSelect !is null, "struct gdaSelect is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaSelect = gdaSelect;
 	}
@@ -122,33 +102,33 @@ public class Select
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GdaSelect object, which allows programs to filter
 	 * GdaDataModel's based on a given SQL SELECT command.
 	 * A GdaSelect is just another GdaDataModel-based class, so it
 	 * can be used in the same way any other data model class is.
-	 * Returns :
-	 *  the newly created object.
+	 * Returns: the newly created object.
 	 */
 	public static DataModel newSelect()
 	{
 		// GdaDataModel* gda_select_new (void);
-		return new DataModel( gda_select_new() );
+		auto p = gda_select_new();
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
 	 * Adds a data model as a source of data for the GdaSelect object. When
 	 * the select object is run (via gda_select_run), it will parse the SQL
 	 * and get the required data from the source data models.
-	 * sel :
-	 *  a GdaSelect object.
-	 * name :
-	 *  name to identify the data model (usually a table name).
-	 * source :
-	 *  a GdaDataModel from which to get data.
+	 * Params:
+	 * name =  name to identify the data model (usually a table name).
+	 * source =  a GdaDataModel from which to get data.
 	 */
-	public void addSource(char[] name, DataModel source)
+	public void addSource(string name, DataModel source)
 	{
 		// void gda_select_add_source (GdaSelect *sel,  const gchar *name,  GdaDataModel *source);
 		gda_select_add_source(gdaSelect, Str.toStringz(name), (source is null) ? null : source.getDataModelStruct());
@@ -158,12 +138,10 @@ public class Select
 	 * Sets the SQL command to be used on the given GdaSelect object
 	 * for filtering rows from the source data model (which is
 	 * set with gda_select_set_source).
-	 * sel :
-	 *  a GdaSelect object.
-	 * sql :
-	 *  the SQL command to be used for filtering rows.
+	 * Params:
+	 * sql =  the SQL command to be used for filtering rows.
 	 */
-	public void setSql(char[] sql)
+	public void setSql(string sql)
 	{
 		// void gda_select_set_sql (GdaSelect *sel,  const gchar *sql);
 		gda_select_set_sql(gdaSelect, Str.toStringz(sql));
@@ -177,10 +155,7 @@ public class Select
 	 * After calling this function, if everything is successful,
 	 * the GdaSelect object will contain the matched rows, which
 	 * can then be accessed like a normal GdaDataModel.
-	 * sel :
-	 *  a GdaSelect object.
-	 * Returns :
-	 *  TRUE if successful, FALSE if there was an error.
+	 * Returns: TRUE if successful, FALSE if there was an error.
 	 */
 	public int run()
 	{

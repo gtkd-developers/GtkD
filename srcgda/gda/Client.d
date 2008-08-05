@@ -41,27 +41,22 @@
  * omit prefixes:
  * omit code:
  * 	- gda_client_open_connection
+ * omit signals:
  * imports:
  * 	- gda.Connection
  * structWrap:
  * 	- GdaConnection* -> Connection
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.Client;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.Connection;
@@ -104,25 +99,10 @@ public class Client
 	 */
 	public this (GdaClient* gdaClient)
 	{
-		version(noAssert)
+		if(gdaClient is null)
 		{
-			if ( gdaClient is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaClient is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaClient is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaClient !is null, "struct gdaClient is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaClient = gdaClient;
 	}
@@ -134,21 +114,16 @@ public class Client
 	 * specify GDA_CONNECTION_OPTIONS_DONT_SHARE as one of the flags in
 	 * the options parameter.
 	 * This function is the way of opening database connections with libgda.
-	 * client :
-	 *  a GdaClient object.
-	 * dsn :
-	 *  data source name.
-	 * username :
-	 *  user name.
-	 * password :
-	 *  password for username.
-	 * options :
-	 *  options for the connection (see GdaConnectionOptions).
+	 * Params:
+	 *  dsn = data source name.
+	 *  username = user name.
+	 *  password = password for username.
+	 *  options = options for the connection (see GdaConnectionOptions).
 	 * Returns :
 	 *  the opened connection if successful, NULL if there is
-	 * an error.
+	 *  an error.
 	 */
-	public Connection openConnection(char[] dsn, char[] username, char[] password, GdaConnectionOptions options)
+	public Connection openConnection(string dsn, string username, string password, GdaConnectionOptions options)
 	{
 		// GdaConnection* gda_client_open_connection (GdaClient *client,  const gchar *dsn,  const gchar *username,  const gchar *password,  GdaConnectionOptions options);
 		GdaConnection* connection = gda_client_open_connection(gdaClient, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password), options);
@@ -158,22 +133,23 @@ public class Client
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new GdaClient object, which is the entry point for libgda
 	 * client applications. This object, once created, can be used for
 	 * opening new database connections and activating other services
 	 * available to GDA clients.
-	 * Returns :
-	 *  the newly created object.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
 		// GdaClient* gda_client_new (void);
-		this(cast(GdaClient*)gda_client_new() );
+		auto p = gda_client_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_client_new()");
+		}
+		this(cast(GdaClient*) p);
 	}
-	
 	
 	/**
 	 * Opens a connection given a provider ID and a connection string. This
@@ -182,34 +158,28 @@ public class Client
 	 * similar to PostgreSQL and MySQL connection strings. It is a ;-separated
 	 * series of key=value pairs. Do not add extra whitespace after the ;
 	 * separator. The possible keys depend on the provider, but
-	 * these keys should work with all providers:
-	 * USER, PASSWORD, HOST, DATABASE, PORT
-	 * client :
-	 *  a GdaClient object.
-	 * provider_id :
-	 *  provider ID to connect to.
-	 * cnc_string :
-	 *  connection string.
-	 * options :
-	 *  options for the connection (see GdaConnectionOptions).
-	 * Returns :
-	 *  the opened connection if successful, NULL if there is
-	 * an error.
+	 * Params:
+	 * providerId =  provider ID to connect to.
+	 * cncString =  connection string.
+	 * options =  options for the connection (see GdaConnectionOptions).
+	 * Returns: the opened connection if successful, NULL if there isan error.
 	 */
-	public Connection openConnectionFromString(char[] providerId, char[] cncString, GdaConnectionOptions options)
+	public Connection openConnectionFromString(string providerId, string cncString, GdaConnectionOptions options)
 	{
 		// GdaConnection* gda_client_open_connection_from_string  (GdaClient *client,  const gchar *provider_id,  const gchar *cnc_string,  GdaConnectionOptions options);
-		return new Connection( gda_client_open_connection_from_string(gdaClient, Str.toStringz(providerId), Str.toStringz(cncString), options) );
+		auto p = gda_client_open_connection_from_string(gdaClient, Str.toStringz(providerId), Str.toStringz(cncString), options);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Connection(cast(GdaConnection*) p);
 	}
 	
 	/**
 	 * Gets the list of all open connections in the given GdaClient object.
 	 * The GList returned is an internal pointer, so DON'T TRY TO
 	 * FREE IT.
-	 * client :
-	 *  a GdaClient object.
-	 * Returns :
-	 *  a GList of GdaConnection objects.
+	 * Returns: a GList of GdaConnection objects.
 	 */
 	public GList* getConnectionList()
 	{
@@ -223,28 +193,25 @@ public class Client
 	 * This function iterates over the list of open connections in the
 	 * given GdaClient and looks for one that matches the given data source
 	 * name, username and password.
-	 * client :
-	 *  a GdaClient object.
-	 * dsn :
-	 *  data source name.
-	 * username :
-	 *  user name.
-	 * password :
-	 *  password for username.
-	 * Returns :
-	 *  a pointer to the found connection, or NULL if it could not
-	 * be found.
+	 * Params:
+	 * dsn =  data source name.
+	 * username =  user name.
+	 * password =  password for username.
+	 * Returns: a pointer to the found connection, or NULL if it could notbe found.
 	 */
-	public Connection findConnection(char[] dsn, char[] username, char[] password)
+	public Connection findConnection(string dsn, string username, string password)
 	{
 		// GdaConnection* gda_client_find_connection (GdaClient *client,  const gchar *dsn,  const gchar *username,  const gchar *password);
-		return new Connection( gda_client_find_connection(gdaClient, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password)) );
+		auto p = gda_client_find_connection(gdaClient, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Connection(cast(GdaConnection*) p);
 	}
 	
 	/**
 	 * Closes all connections opened by the given GdaClient object.
-	 * client :
-	 *  a GdaClient object.
 	 */
 	public void closeAllConnections()
 	{
@@ -256,14 +223,10 @@ public class Client
 	 * Notifies an event to the given GdaClient's listeners. The event can be
 	 * anything (see GdaClientEvent) ranging from a connection opening
 	 * operation, to changes made to a table in an underlying database.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object where the event has occurred.
-	 * event :
-	 *  event ID.
-	 * params :
-	 *  parameters associated with the event.
+	 * Params:
+	 * cnc =  a GdaConnection object where the event has occurred.
+	 * event =  event ID.
+	 * params =  parameters associated with the event.
 	 */
 	public void notifyEvent(Connection cnc, GdaClientEvent event, GdaParameterList* params)
 	{
@@ -273,12 +236,9 @@ public class Client
 	
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_ERROR event.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * error :
-	 *  the error to be notified.
+	 * Params:
+	 * cnc =  a GdaConnection object.
+	 * error =  the error to be notified.
 	 */
 	public void notifyErrorEvent(Connection cnc, GdaError* error)
 	{
@@ -289,10 +249,8 @@ public class Client
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_CONNECTION_OPENED
 	 * event.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
 	 */
 	public void notifyConnectionOpenedEvent(Connection cnc)
 	{
@@ -303,10 +261,8 @@ public class Client
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_CONNECTION_CLOSED
 	 * event.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
 	 */
 	public void notifyConnectionClosedEvent(Connection cnc)
 	{
@@ -317,12 +273,9 @@ public class Client
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_TRANSACTION_STARTED
 	 * event.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * xaction :
-	 *  a GdaTransaction object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
+	 * xaction =  a GdaTransaction object.
 	 */
 	public void notifyTransactionStartedEvent(Connection cnc, GdaTransaction* xaction)
 	{
@@ -333,12 +286,9 @@ public class Client
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_TRANSACTION_COMMITTED
 	 * event.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * xaction :
-	 *  a GdaTransaction object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
+	 * xaction =  a GdaTransaction object.
 	 */
 	public void notifyTransactionCommittedEvent(Connection cnc, GdaTransaction* xaction)
 	{
@@ -349,12 +299,9 @@ public class Client
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_TRANSACTION_CANCELLED
 	 * event.
-	 * client :
-	 *  a GdaClient object.
-	 * cnc :
-	 *  a GdaConnection object.
-	 * xaction :
-	 *  a GdaTransaction object.
+	 * Params:
+	 * cnc =  a GdaConnection object.
+	 * xaction =  a GdaTransaction object.
 	 */
 	public void notifyTransactionCancelledEvent(Connection cnc, GdaTransaction* xaction)
 	{
@@ -370,13 +317,9 @@ public class Client
 	 * To execute a transaction on a unique connection, use
 	 * gda_connection_begin_transaction, gda_connection_commit_transaction
 	 * and gda_connection_rollback_transaction.
-	 * client :
-	 *  a GdaClient object.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  TRUE if all transactions could be started successfully,
-	 * or FALSE if one of them fails.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
+	 * Returns: TRUE if all transactions could be started successfully,or FALSE if one of them fails.
 	 */
 	public int beginTransaction(GdaTransaction* xaction)
 	{
@@ -392,13 +335,9 @@ public class Client
 	 * To execute a transaction on a unique connection, use
 	 * gda_connection_begin_transaction, gda_connection_commit_transaction
 	 * and gda_connection_rollback_transaction.
-	 * client :
-	 *  a GdaClient object.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  TRUE if all transactions could be committed successfully,
-	 * or FALSE if one of them fails.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
+	 * Returns: TRUE if all transactions could be committed successfully,or FALSE if one of them fails.
 	 */
 	public int commitTransaction(GdaTransaction* xaction)
 	{
@@ -414,15 +353,9 @@ public class Client
 	 * To execute a transaction on a unique connection, use
 	 * gda_connection_begin_transaction, gda_connection_commit_transaction
 	 * and gda_connection_rollback_transaction.
-	 * client :
-	 *  a GdaClient object.
-	 * xaction :
-	 *  a GdaTransaction object.
-	 * Returns :
-	 *  TRUE if all transactions could be cancelled successfully,
-	 * or FALSE if one of them fails.
-	 * See Also
-	 *  GdaConnection.
+	 * Params:
+	 * xaction =  a GdaTransaction object.
+	 * Returns: TRUE if all transactions could be cancelled successfully,or FALSE if one of them fails.
 	 */
 	public int rollbackTransaction(GdaTransaction* xaction)
 	{

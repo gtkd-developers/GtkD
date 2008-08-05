@@ -52,6 +52,7 @@
  * 	- gda_parameter_set_name
  * 	- gda_parameter_get_value
  * 	- gda_parameter_set_value
+ * omit signals:
  * imports:
  * 	- gda.Parameter
  * 	- glib.ListG
@@ -62,21 +63,15 @@
  * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gda.ParameterList;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gdac.gdatypes;
+public  import gdac.gdatypes;
 
 private import gdac.gda;
+private import glib.ConstructionException;
 
 
 private import gda.Parameter;
@@ -114,25 +109,10 @@ public class ParameterList
 	 */
 	public this (GdaParameterList* gdaParameterList)
 	{
-		version(noAssert)
+		if(gdaParameterList is null)
 		{
-			if ( gdaParameterList is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdaParameterList is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdaParameterList is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdaParameterList !is null, "struct gdaParameterList is null on constructor");
+			this = null;
+			return;
 		}
 		this.gdaParameterList = gdaParameterList;
 	}
@@ -140,24 +120,8 @@ public class ParameterList
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Returns :
+	 * Returns:
 	 */
 	public static GType getType()
 	{
@@ -167,19 +131,21 @@ public class ParameterList
 	
 	/**
 	 * Creates a new GdaParameterList.
-	 * Returns :
-	 *  the newly created parameter list.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
 		// GdaParameterList* gda_parameter_list_new (void);
-		this(cast(GdaParameterList*)gda_parameter_list_new() );
+		auto p = gda_parameter_list_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gda_parameter_list_new()");
+		}
+		this(cast(GdaParameterList*) p);
 	}
 	
 	/**
 	 * Releases all memory occupied by the given GdaParameterList.
-	 * plist :
-	 *  a GdaParameterList.
 	 */
 	public void free()
 	{
@@ -189,15 +155,17 @@ public class ParameterList
 	
 	/**
 	 * Creates a new GdaParameterList from an existing one.
-	 * plist :
-	 *  parameter list to get a copy from.
-	 * Returns :
-	 *  a newly allocated GdaParameterList with a copy of the data in plist.
+	 * Returns: a newly allocated GdaParameterList with a copy of the data in plist.
 	 */
 	public ParameterList copy()
 	{
 		// GdaParameterList* gda_parameter_list_copy (GdaParameterList *plist);
-		return new ParameterList( gda_parameter_list_copy(gdaParameterList) );
+		auto p = gda_parameter_list_copy(gdaParameterList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ParameterList(cast(GdaParameterList*) p);
 	}
 	
 	/**
@@ -205,10 +173,8 @@ public class ParameterList
 	 * when calling this function, is owned by the GdaParameterList, so the
 	 * caller should just forget about it and not try to free the parameter once
 	 * it's been added to the GdaParameterList.
-	 * plist :
-	 *  a GdaParameterList.
-	 * param :
-	 *  the GdaParameter to be added to the list.
+	 * Params:
+	 * param =  the GdaParameter to be added to the list.
 	 */
 	public void addParameter(Parameter param)
 	{
@@ -218,40 +184,40 @@ public class ParameterList
 	
 	/**
 	 * Gets the names of all parameters in the parameter list.
-	 * plist :
-	 *  a GdaParameterList.
-	 * Returns :
-	 *  a GList containing the names of the parameters. After
-	 * using it, you should free this list by calling g_list_free.
+	 * Returns: a GList containing the names of the parameters. Afterusing it, you should free this list by calling g_list_free.
 	 */
 	public ListG getNames()
 	{
 		// GList* gda_parameter_list_get_names (GdaParameterList *plist);
-		return new ListG( gda_parameter_list_get_names(gdaParameterList) );
+		auto p = gda_parameter_list_get_names(gdaParameterList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Gets a GdaParameter from the parameter list given its name.
-	 * plist :
-	 *  a GdaParameterList.
-	 * name :
-	 *  name of the parameter to search for.
-	 * Returns :
-	 *  the GdaParameter identified by name, if found, or NULL
-	 * if not found.
+	 * Params:
+	 * name =  name of the parameter to search for.
+	 * Returns: the GdaParameter identified by name, if found, or NULLif not found.
 	 */
-	public Parameter find(char[] name)
+	public Parameter find(string name)
 	{
 		// GdaParameter* gda_parameter_list_find (GdaParameterList *plist,  const gchar *name);
-		return new Parameter( gda_parameter_list_find(gdaParameterList, Str.toStringz(name)) );
+		auto p = gda_parameter_list_find(gdaParameterList, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Parameter(cast(GdaParameter*) p);
 	}
 	
 	/**
 	 * Clears the parameter list. This means removing all GdaParameter's currently
 	 * being stored in the parameter list. After calling this function,
 	 * the parameter list is empty.
-	 * plist :
-	 *  a GdaParameterList.
 	 */
 	public void clear()
 	{
@@ -260,10 +226,7 @@ public class ParameterList
 	}
 	
 	/**
-	 * plist :
-	 *  a GdaParameterList.
-	 * Returns :
-	 *  the number of parameters stored in the given parameter list.
+	 * Returns: the number of parameters stored in the given parameter list.
 	 */
 	public uint getLength()
 	{

@@ -198,16 +198,8 @@ public struct GdaExport{}
 public struct GdaSelect{}
 public struct GdaTable{}
 
-/*
-public struct Blob{}
-public struct Date{}
-public struct Time{}
-public struct Timestamp{}
-public struct Money{}
-public struct ValueList{}
-public struct Numeric{}
-public struct GeometricPoint{}
- */
+public struct GdaServerProviderPrivate{}
+
 struct _GdaProviderInfo {
 	gchar *id;
 	gchar *location;
@@ -222,37 +214,22 @@ struct _GdaProviderInfo {
 /**
  * Main Gtk struct.
  */
-public struct GdaBlob{}
-// /+* Private +/
-// libgda-gda-blob.html
-// int (* open) (GdaBlob *blob, GdaBlobMode mode);
-// libgda-gda-blob.html
-// int (* read) (GdaBlob *blob, void* buf, int size,
-// libgda-gda-blob.html
-// int *bytesRead);
-// libgda-gda-blob.html
-// int (* write) (GdaBlob *blob, void* buf, int size,
-// libgda-gda-blob.html
-// int *bytesWritten);
-// libgda-gda-blob.html
-// int (* lseek) (GdaBlob *blob, int offset, int whence);
-// libgda-gda-blob.html
-// int (* close) (GdaBlob *blob);
-// libgda-gda-blob.html
-// int (* remove) (GdaBlob *blob);
-// libgda-gda-blob.html
-// char * (* stringify) (GdaBlob *blob);
-// libgda-gda-blob.html
-// void (* freeData) (GdaBlob *blob);
-// libgda-gda-blob.html
-// void* privData;
-// libgda-gda-blob.html
-// /+* +/
-// libgda-gda-blob.html
-// /+* Public +/
-// libgda-gda-blob.html
-// void* userData;
-// libgda-gda-blob.html
+public struct GdaBlob
+{
+	/+* Private +/
+	extern(C) int  function(GdaBlob *blob, GdaBlobMode mode)  open;
+	extern(C) int  function(GdaBlob *blob, void* buf, int size,int *bytesRead)  read;
+	extern(C) int  function(GdaBlob *blob, void* buf, int size,int *bytesWritten)  write;
+	extern(C) int  function(GdaBlob *blob, int offset, int whence)  lseek;
+	extern(C) int  function(GdaBlob *blob)  close;
+	extern(C) int  function(GdaBlob *blob)  remove;
+	extern(C) char *  function(GdaBlob *blob)  stringify;
+	extern(C) void  function(GdaBlob *blob)  freeData;
+	void* privData;
+	/+* +/
+	/+* Public +/
+	void* userData;
+}
 
 
 public struct GdaClientPrivate{}
@@ -261,32 +238,30 @@ public struct GdaClientPrivate{}
 public struct GdaConnectionPrivate{}
 
 
-public struct GdaServerProvider{}
-// GObject object;
-// libgda-GdaConnection.html
-// GdaServerProviderPrivate *priv;
-// libgda-GdaConnection.html
+public struct GdaServerProvider
+{
+	GObject object;
+	GdaServerProviderPrivate *priv;
+}
 
 
-public struct GdaClient{}
-// GObject object;
-// libgda-GdaConnection.html
-// GdaClientPrivate *priv;
-// libgda-GdaConnection.html
+public struct GdaClient
+{
+	GObject object;
+	GdaClientPrivate *priv;
+}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GdaCommand{}
-// char *text;
-// libgda-gda-command.html
-// GdaCommandType type;
-// libgda-gda-command.html
-// GdaCommandOptions options;
-// libgda-gda-command.html
-// GdaTransaction *xaction;
-// libgda-gda-command.html
+public struct GdaCommand
+{
+	char *text;
+	GdaCommandType type;
+	GdaCommandOptions options;
+	GdaTransaction *xaction;
+}
 
 
 /**
@@ -306,15 +281,13 @@ public struct GdaDataSourceInfo
 /**
  * Main Gtk struct.
  */
-public struct GdaProviderInfo{}
-// char *id;
-// libgda-gda-config.html
-// char *location;
-// libgda-gda-config.html
-// char *description;
-// libgda-gda-config.html
-// GList *gdaParams; /+* A list of GdaProviderParameterInfo pointers +/
-// libgda-gda-config.html
+public struct GdaProviderInfo
+{
+	char *id;
+	char *location;
+	char *description;
+	GList *gdaParams; /+* A list of GdaProviderParameterInfo pointers +/
+}
 
 
 public struct GdaDataModelArrayPrivate{}
@@ -338,56 +311,42 @@ public struct GdaExportPrivate{}
 /**
  * Main Gtk struct.
  */
-public struct GdaFieldAttributes{}
-// int definedSize;
-// libgda-gda-field.html
-// char *name;
-// libgda-gda-field.html
-// char *table;
-// libgda-gda-field.html
-// char *caption;
-// libgda-gda-field.html
-// int scale;
-// libgda-gda-field.html
-// GdaValueType gdaType;
-// libgda-gda-field.html
-// int allowNull;
-// libgda-gda-field.html
-// int primaryKey;
-// libgda-gda-field.html
-// int uniqueKey;
-// libgda-gda-field.html
-// char *references;
-// libgda-gda-field.html
-// int autoIncrement;
-// libgda-gda-field.html
-// int autoIncrementStart;
-// libgda-gda-field.html
-// int autoIncrementStep;
-// libgda-gda-field.html
-// int position;
-// libgda-gda-field.html
-// GdaValue *defaultValue;
-// libgda-gda-field.html
+public struct GdaFieldAttributes
+{
+	int definedSize;
+	char *name;
+	char *table;
+	char *caption;
+	int scale;
+	GdaValueType gdaType;
+	int allowNull;
+	int primaryKey;
+	int uniqueKey;
+	char *references;
+	int autoIncrement;
+	int autoIncrementStart;
+	int autoIncrementStep;
+	int position;
+	GdaValue *defaultValue;
+}
 
 
-public struct GdaField{}
-// int actualSize;
-// libgda-gda-field.html
-// GdaValue *value;
-// libgda-gda-field.html
-// GdaFieldAttributes *attributes;
-// libgda-gda-field.html
+public struct GdaField
+{
+	int actualSize;
+	GdaValue *value;
+	GdaFieldAttributes *attributes;
+}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GdaParameter{}
-// char *name;
-// libgda-gda-parameter.html
-// GdaValue *value;
-// libgda-gda-parameter.html
+public struct GdaParameter
+{
+	char *name;
+	GdaValue *value;
+}
 
 
 public struct GdaParameterList{}
@@ -399,11 +358,11 @@ public struct GdaParameterList{}
 public struct GdaQuarkList{}
 
 
-public struct GdaDataModel{}
-// GObject object;
-// libgda-gda-row.html
-// GdaDataModelPrivate *priv;
-// libgda-gda-row.html
+public struct GdaDataModel
+{
+	GObject object;
+	GdaDataModelPrivate *priv;
+}
 
 
 /**
@@ -476,61 +435,38 @@ public struct GdaTimestamp
 /**
  * Main Gtk struct.
  */
-public struct GdaValue{}
-// GdaValueType type;
-// libgda-gda-value.html
-// unio {
-	// libgda-gda-value.html
-	// long vBigint;
-	// libgda-gda-value.html
-	// ulong vBiguint;
-	// libgda-gda-value.html
-	// void* vBinary;
-	// libgda-gda-value.html
-	// GdaBlob vBlob;
-	// libgda-gda-value.html
-	// int vBoolean;
-	// libgda-gda-value.html
-	// GdaDate vDate;
-	// libgda-gda-value.html
-	// double vDouble;
-	// libgda-gda-value.html
-	// GdaGeometricPoint vPoint;
-	// libgda-gda-value.html
-	// GObject *vGobj;
-	// libgda-gda-value.html
-	// int vInteger;
-	// libgda-gda-value.html
-	// GdaValueList *vList;
-	// libgda-gda-value.html
-	// GdaMoney vMoney;
-	// libgda-gda-value.html
-	// GdaNumeric vNumeric;
-	// libgda-gda-value.html
-	// float vSingle;
-	// libgda-gda-value.html
-	// short vSmallint;
-	// libgda-gda-value.html
-	// ushort vSmalluint;
-	// libgda-gda-value.html
-	// char *vString;
-	// libgda-gda-value.html
-	// GdaTime vTime;
-	// libgda-gda-value.html
-	// GdaTimestamp vTimestamp;
-	// libgda-gda-value.html
-	// char vTinyint;
-	// libgda-gda-value.html
-	// char vTinyuint;
-	// libgda-gda-value.html
-	// GdaValueType vType;
-	// libgda-gda-value.html
-	// uint vUinteger;
-	// libgda-gda-value.html
-// } value;
-// libgda-gda-value.html
-// int binaryLength;
-// libgda-gda-value.html
+public struct GdaValue
+{
+	GdaValueType type;
+	union Value
+	{
+		long vBigint;
+		ulong vBiguint;
+		void* vBinary;
+		GdaBlob vBlob;
+		int vBoolean;
+		GdaDate vDate;
+		double vDouble;
+		GdaGeometricPoint vPoint;
+		GObject *vGobj;
+		int vInteger;
+		GdaValueList *vList;
+		GdaMoney vMoney;
+		GdaNumeric vNumeric;
+		float vSingle;
+		short vSmallint;
+		ushort vSmalluint;
+		char *vString;
+		GdaTime vTime;
+		GdaTimestamp vTimestamp;
+		char vTinyint;
+		char vTinyuint;
+		GdaValueType vType;
+		uint vUinteger;
+	}
+	Value value;
+	int binaryLength;
+}
 
 
 /*
