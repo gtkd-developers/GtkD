@@ -35,6 +35,18 @@ else
 	import std.c.process;
 }
 
+void main (string[] args)
+{
+	Gda.init("TestGDA", "0.1", args);
+	save_ds();
+	do_stuff();
+}   
+
+void save_ds ()
+{
+	Config.saveDataSource("calvaris", "MySQL", "DATABASE=test", "cosa de calvaris", "root", null);
+}
+
 void do_stuff ()
 {
 	list_providers ();
@@ -59,19 +71,7 @@ void do_stuff ()
 
 	//gda_main_quit();
 }
-    
- 
-void main (char[][] args)
-{
-	Gda.init("TestGDA", "0.1", args);
-	save_ds();
-	do_stuff();
-}   
-void save_ds ()
-{
-	Config.saveDataSource("calvaris", "MySQL", "DATABASE=test", "cosa de calvaris", "root", null);
-}
- 
+
 void execute_some_queries (Connection  connection)
 {
 	execute_sql_non_query (connection, "DELETE FROM cliente");
@@ -151,7 +151,7 @@ int execute_sql_non_query (Connection connection, char buffer[])
 	return number;
 } 
 
-bool execute_sql_command (Connection connection, char[] buffer)
+bool execute_sql_command (Connection connection, string buffer)
 {
 	writefln("execute_sql_command %s", buffer); 
 	bool errors=false;
