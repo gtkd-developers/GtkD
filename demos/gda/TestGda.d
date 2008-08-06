@@ -13,8 +13,27 @@ import gda.Value;
 import gda.Error;
 import glib.ListG;
 
-import std.stdio;
-import std.c.process;
+version(Tango)
+{
+	import tango.io.Stdout;
+	import tango.text.Util : substitute;
+	import tango.stdc.stdlib : exit;
+
+    void writef( string frm, ... ){
+        string frm2 = substitute( frm, "%s", "{}" );
+        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 ))();
+    }
+
+    void writefln( string frm, ... ){
+        string frm2 = substitute( frm, "%s", "{}" );
+        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
+    }
+}
+else
+{
+	import std.stdio;
+	import std.c.process;
+}
 
 void do_stuff ()
 {
@@ -89,7 +108,7 @@ void list_datasources ()
 {
 	ListG ds_list = Config.getDataSourceList();
 
-	writefln();
+	writef("\n");
 
 	for (int n=0;n<ds_list.length();n++)
 	{
@@ -101,6 +120,7 @@ void list_datasources ()
 			info.name, info.provider, info.cncString, info.description,
 			info.username, info.password);
 	}
+
 	//gda_config_free_data_source_list (ds_list);
 }
 
@@ -122,7 +142,7 @@ void list_providers ()
 
 int execute_sql_non_query (Connection connection, char buffer[]) 
 {
-	writefln(  "execute_sql_non_query %s", buffer);
+	writefln("execute_sql_non_query %s", buffer);
 	int number;
 	auto command = new Command(buffer, GdaCommandType.TYPE_SQL, GdaCommandOptions.STOP_ON_ERRORS);
 
@@ -133,7 +153,7 @@ int execute_sql_non_query (Connection connection, char buffer[])
 
 bool execute_sql_command (Connection connection, char[] buffer)
 {
-	writefln(  "execute_sql_command %s", buffer); 
+	writefln("execute_sql_command %s", buffer); 
 	bool errors=false;
 
 	auto command = new Command(buffer, GdaCommandType.TYPE_SQL, GdaCommandOptions.STOP_ON_ERRORS);
