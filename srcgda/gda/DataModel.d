@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ListG
  * 	- gda.Row
  * 	- gda.FieldAttributes
@@ -65,6 +66,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ListG;
 private import gda.Row;
 private import gda.FieldAttributes;

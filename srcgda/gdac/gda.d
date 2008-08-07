@@ -105,41 +105,6 @@ extern(C)
 	gboolean function(GdaClient* client, GdaTransaction* xaction)gda_client_commit_transaction;
 	gboolean function(GdaClient* client, GdaTransaction* xaction)gda_client_rollback_transaction;
 	
-	// gda.Connection
-	
-	GdaConnection* function(GdaClient* client, GdaServerProvider* provider, gchar* dsn, gchar* username, gchar* password, GdaConnectionOptions options)gda_connection_new;
-	gboolean function(GdaConnection* cnc)gda_connection_close;
-	gboolean function(GdaConnection* cnc)gda_connection_is_open;
-	GdaClient* function(GdaConnection* cnc)gda_connection_get_client;
-	void function(GdaConnection* cnc, GdaClient* client)gda_connection_set_client;
-	GdaConnectionOptions function(GdaConnection* cnc)gda_connection_get_options;
-	gchar* function(GdaConnection* cnc)gda_connection_get_server_version;
-	gchar* function(GdaConnection* cnc)gda_connection_get_database;
-	gchar* function(GdaConnection* cnc)gda_connection_get_dsn;
-	gchar* function(GdaConnection* cnc)gda_connection_get_cnc_string;
-	gchar* function(GdaConnection* cnc)gda_connection_get_provider;
-	gchar* function(GdaConnection* cnc)gda_connection_get_username;
-	gchar* function(GdaConnection* cnc)gda_connection_get_password;
-	void function(GdaConnection* cnc, GdaError* error)gda_connection_add_error;
-	void function(GdaConnection* cnc, gchar* str, ... )gda_connection_add_error_string;
-	void function(GdaConnection* cnc, GList* errorList)gda_connection_add_error_list;
-	gboolean function(GdaConnection* cnc, gchar* name)gda_connection_change_database;
-	gboolean function(GdaConnection* cnc, gchar* name)gda_connection_create_database;
-	gboolean function(GdaConnection* cnc, gchar* name)gda_connection_drop_database;
-	gboolean function(GdaConnection* cnc, gchar* tableName, GdaFieldAttributes*[] attributes)gda_connection_create_table;
-	gboolean function(GdaConnection* cnc, gchar* tableName)gda_connection_drop_table;
-	GList* function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params)gda_connection_execute_command;
-	gchar* function(GdaConnection* cnc, GdaDataModel* recset)gda_connection_get_last_insert_id;
-	GdaDataModel* function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params)gda_connection_execute_single_command;
-	gint function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params)gda_connection_execute_non_query;
-	gboolean function(GdaConnection* cnc, GdaTransaction* xaction)gda_connection_begin_transaction;
-	gboolean function(GdaConnection* cnc, GdaTransaction* xaction)gda_connection_commit_transaction;
-	gboolean function(GdaConnection* cnc, GdaTransaction* xaction)gda_connection_rollback_transaction;
-	gboolean function(GdaConnection* cnc, GdaBlob* blob)gda_connection_create_blob;
-	GList* function(GdaConnection* cnc)gda_connection_get_errors;
-	gboolean function(GdaConnection* cnc, GdaConnectionFeature feature)gda_connection_supports;
-	GdaDataModel* function(GdaConnection* cnc, GdaConnectionSchema schema, GdaParameterList* params)gda_connection_get_schema;
-	
 	// gda.Command
 	
 	GType function()gda_command_get_type;
@@ -189,15 +154,50 @@ extern(C)
 	void function(GdaDataSourceInfo* dsnInfo)gda_config_save_data_source_info;
 	void function(gchar* name)gda_config_remove_data_source;
 	
-	// gda.DataSourceInfo
-	
-	GType function()gda_data_source_info_get_type;
-	
 	// gda.ProviderInfo
 	
 	GType function()gda_provider_info_get_type;
 	GdaProviderInfo* function(GdaProviderInfo* src)gda_provider_info_copy;
 	void function(GdaProviderInfo* providerInfo)gda_provider_info_free;
+	
+	// gda.DataSourceInfo
+	
+	GType function()gda_data_source_info_get_type;
+	
+	// gda.Connection
+	
+	GdaConnection* function(GdaClient* client, GdaServerProvider* provider, gchar* dsn, gchar* username, gchar* password, GdaConnectionOptions options)gda_connection_new;
+	gboolean function(GdaConnection* cnc)gda_connection_close;
+	gboolean function(GdaConnection* cnc)gda_connection_is_open;
+	GdaClient* function(GdaConnection* cnc)gda_connection_get_client;
+	void function(GdaConnection* cnc, GdaClient* client)gda_connection_set_client;
+	GdaConnectionOptions function(GdaConnection* cnc)gda_connection_get_options;
+	gchar* function(GdaConnection* cnc)gda_connection_get_server_version;
+	gchar* function(GdaConnection* cnc)gda_connection_get_database;
+	gchar* function(GdaConnection* cnc)gda_connection_get_dsn;
+	gchar* function(GdaConnection* cnc)gda_connection_get_cnc_string;
+	gchar* function(GdaConnection* cnc)gda_connection_get_provider;
+	gchar* function(GdaConnection* cnc)gda_connection_get_username;
+	gchar* function(GdaConnection* cnc)gda_connection_get_password;
+	void function(GdaConnection* cnc, GdaError* error)gda_connection_add_error;
+	void function(GdaConnection* cnc, gchar* str, ... )gda_connection_add_error_string;
+	void function(GdaConnection* cnc, GList* errorList)gda_connection_add_error_list;
+	gboolean function(GdaConnection* cnc, gchar* name)gda_connection_change_database;
+	gboolean function(GdaConnection* cnc, gchar* name)gda_connection_create_database;
+	gboolean function(GdaConnection* cnc, gchar* name)gda_connection_drop_database;
+	gboolean function(GdaConnection* cnc, gchar* tableName, GdaFieldAttributes*[] attributes)gda_connection_create_table;
+	gboolean function(GdaConnection* cnc, gchar* tableName)gda_connection_drop_table;
+	GList* function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params)gda_connection_execute_command;
+	gchar* function(GdaConnection* cnc, GdaDataModel* recset)gda_connection_get_last_insert_id;
+	GdaDataModel* function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params)gda_connection_execute_single_command;
+	gint function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params)gda_connection_execute_non_query;
+	gboolean function(GdaConnection* cnc, GdaTransaction* xaction)gda_connection_begin_transaction;
+	gboolean function(GdaConnection* cnc, GdaTransaction* xaction)gda_connection_commit_transaction;
+	gboolean function(GdaConnection* cnc, GdaTransaction* xaction)gda_connection_rollback_transaction;
+	gboolean function(GdaConnection* cnc, GdaBlob* blob)gda_connection_create_blob;
+	GList* function(GdaConnection* cnc)gda_connection_get_errors;
+	gboolean function(GdaConnection* cnc, GdaConnectionFeature feature)gda_connection_supports;
+	GdaDataModel* function(GdaConnection* cnc, GdaConnectionSchema schema, GdaParameterList* params)gda_connection_get_schema;
 	
 	// gda.DataModelArray
 	
@@ -535,38 +535,6 @@ Symbol[] gdaLinks =
 	{ "gda_client_begin_transaction",  cast(void**)& gda_client_begin_transaction},
 	{ "gda_client_commit_transaction",  cast(void**)& gda_client_commit_transaction},
 	{ "gda_client_rollback_transaction",  cast(void**)& gda_client_rollback_transaction},
-	{ "gda_connection_new",  cast(void**)& gda_connection_new},
-	{ "gda_connection_close",  cast(void**)& gda_connection_close},
-	{ "gda_connection_is_open",  cast(void**)& gda_connection_is_open},
-	{ "gda_connection_get_client",  cast(void**)& gda_connection_get_client},
-	{ "gda_connection_set_client",  cast(void**)& gda_connection_set_client},
-	{ "gda_connection_get_options",  cast(void**)& gda_connection_get_options},
-	{ "gda_connection_get_server_version",  cast(void**)& gda_connection_get_server_version},
-	{ "gda_connection_get_database",  cast(void**)& gda_connection_get_database},
-	{ "gda_connection_get_dsn",  cast(void**)& gda_connection_get_dsn},
-	{ "gda_connection_get_cnc_string",  cast(void**)& gda_connection_get_cnc_string},
-	{ "gda_connection_get_provider",  cast(void**)& gda_connection_get_provider},
-	{ "gda_connection_get_username",  cast(void**)& gda_connection_get_username},
-	{ "gda_connection_get_password",  cast(void**)& gda_connection_get_password},
-	{ "gda_connection_add_error",  cast(void**)& gda_connection_add_error},
-	{ "gda_connection_add_error_string",  cast(void**)& gda_connection_add_error_string},
-	{ "gda_connection_add_error_list",  cast(void**)& gda_connection_add_error_list},
-	{ "gda_connection_change_database",  cast(void**)& gda_connection_change_database},
-	{ "gda_connection_create_database",  cast(void**)& gda_connection_create_database},
-	{ "gda_connection_drop_database",  cast(void**)& gda_connection_drop_database},
-	{ "gda_connection_create_table",  cast(void**)& gda_connection_create_table},
-	{ "gda_connection_drop_table",  cast(void**)& gda_connection_drop_table},
-	{ "gda_connection_execute_command",  cast(void**)& gda_connection_execute_command},
-	{ "gda_connection_get_last_insert_id",  cast(void**)& gda_connection_get_last_insert_id},
-	{ "gda_connection_execute_single_command",  cast(void**)& gda_connection_execute_single_command},
-	{ "gda_connection_execute_non_query",  cast(void**)& gda_connection_execute_non_query},
-	{ "gda_connection_begin_transaction",  cast(void**)& gda_connection_begin_transaction},
-	{ "gda_connection_commit_transaction",  cast(void**)& gda_connection_commit_transaction},
-	{ "gda_connection_rollback_transaction",  cast(void**)& gda_connection_rollback_transaction},
-	{ "gda_connection_create_blob",  cast(void**)& gda_connection_create_blob},
-	{ "gda_connection_get_errors",  cast(void**)& gda_connection_get_errors},
-	{ "gda_connection_supports",  cast(void**)& gda_connection_supports},
-	{ "gda_connection_get_schema",  cast(void**)& gda_connection_get_schema},
 	{ "gda_command_get_type",  cast(void**)& gda_command_get_type},
 	{ "gda_command_new",  cast(void**)& gda_command_new},
 	{ "gda_command_free",  cast(void**)& gda_command_free},
@@ -610,10 +578,42 @@ Symbol[] gdaLinks =
 	{ "gda_config_save_data_source",  cast(void**)& gda_config_save_data_source},
 	{ "gda_config_save_data_source_info",  cast(void**)& gda_config_save_data_source_info},
 	{ "gda_config_remove_data_source",  cast(void**)& gda_config_remove_data_source},
-	{ "gda_data_source_info_get_type",  cast(void**)& gda_data_source_info_get_type},
 	{ "gda_provider_info_get_type",  cast(void**)& gda_provider_info_get_type},
 	{ "gda_provider_info_copy",  cast(void**)& gda_provider_info_copy},
 	{ "gda_provider_info_free",  cast(void**)& gda_provider_info_free},
+	{ "gda_data_source_info_get_type",  cast(void**)& gda_data_source_info_get_type},
+	{ "gda_connection_new",  cast(void**)& gda_connection_new},
+	{ "gda_connection_close",  cast(void**)& gda_connection_close},
+	{ "gda_connection_is_open",  cast(void**)& gda_connection_is_open},
+	{ "gda_connection_get_client",  cast(void**)& gda_connection_get_client},
+	{ "gda_connection_set_client",  cast(void**)& gda_connection_set_client},
+	{ "gda_connection_get_options",  cast(void**)& gda_connection_get_options},
+	{ "gda_connection_get_server_version",  cast(void**)& gda_connection_get_server_version},
+	{ "gda_connection_get_database",  cast(void**)& gda_connection_get_database},
+	{ "gda_connection_get_dsn",  cast(void**)& gda_connection_get_dsn},
+	{ "gda_connection_get_cnc_string",  cast(void**)& gda_connection_get_cnc_string},
+	{ "gda_connection_get_provider",  cast(void**)& gda_connection_get_provider},
+	{ "gda_connection_get_username",  cast(void**)& gda_connection_get_username},
+	{ "gda_connection_get_password",  cast(void**)& gda_connection_get_password},
+	{ "gda_connection_add_error",  cast(void**)& gda_connection_add_error},
+	{ "gda_connection_add_error_string",  cast(void**)& gda_connection_add_error_string},
+	{ "gda_connection_add_error_list",  cast(void**)& gda_connection_add_error_list},
+	{ "gda_connection_change_database",  cast(void**)& gda_connection_change_database},
+	{ "gda_connection_create_database",  cast(void**)& gda_connection_create_database},
+	{ "gda_connection_drop_database",  cast(void**)& gda_connection_drop_database},
+	{ "gda_connection_create_table",  cast(void**)& gda_connection_create_table},
+	{ "gda_connection_drop_table",  cast(void**)& gda_connection_drop_table},
+	{ "gda_connection_execute_command",  cast(void**)& gda_connection_execute_command},
+	{ "gda_connection_get_last_insert_id",  cast(void**)& gda_connection_get_last_insert_id},
+	{ "gda_connection_execute_single_command",  cast(void**)& gda_connection_execute_single_command},
+	{ "gda_connection_execute_non_query",  cast(void**)& gda_connection_execute_non_query},
+	{ "gda_connection_begin_transaction",  cast(void**)& gda_connection_begin_transaction},
+	{ "gda_connection_commit_transaction",  cast(void**)& gda_connection_commit_transaction},
+	{ "gda_connection_rollback_transaction",  cast(void**)& gda_connection_rollback_transaction},
+	{ "gda_connection_create_blob",  cast(void**)& gda_connection_create_blob},
+	{ "gda_connection_get_errors",  cast(void**)& gda_connection_get_errors},
+	{ "gda_connection_supports",  cast(void**)& gda_connection_supports},
+	{ "gda_connection_get_schema",  cast(void**)& gda_connection_get_schema},
 	{ "gda_data_model_array_new",  cast(void**)& gda_data_model_array_new},
 	{ "gda_data_model_array_set_n_columns",  cast(void**)& gda_data_model_array_set_n_columns},
 	{ "gda_data_model_array_clear",  cast(void**)& gda_data_model_array_clear},

@@ -1,5 +1,5 @@
 #
-# This file is part of duit.
+# This file is part of gtkD.
 # 
 # duit is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -31,8 +31,6 @@ addTypedefs: start
 
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
-public import glib.Str;
-
 
 addTypedefs: end
 
@@ -61,16 +59,6 @@ public struct GdaTable{}
 
 public struct GdaServerProviderPrivate{}
 
-struct _GdaProviderInfo {
-	gchar *id;
-	gchar *location;
-	gchar *description;
-	GList *gda_params; /* A list of GdaProviderParameterInfo pointers */
-} ;
-
- 
-
-
 addStructs: end
 
 addTypes: start
@@ -95,10 +83,10 @@ srcout: srcgda
 file: libgda-libgda.html 
 class: Gda
 prefix: gda_
+import: glib.Str
 import: glib.HashTable
 import: glib.ListG
 import: gda.ParameterList
-
 
 nocode: gda_init
 
@@ -123,25 +111,13 @@ code: start
 		
 		gda_init(Str.toStringz(appId), Str.toStringz(versio), argc, argv);
 	}
-	 
-	
-
-
 code:end
-
-
 openFile: Gda
-
-#file: libgda-gda-util.html
-#mergeFile:  Gda
 
 file: libgda-gda-util.html
 structWrap: GdaParameterList*  ParameterList
 structWrap: GHashTable* HashTable
 structWrap: GList* ListG
-
-
-
 closeFile:  Gda
 
 
@@ -149,15 +125,21 @@ file: libgda-gda-blob.html
 struct: GdaBlob
 class: Blob
 prefix: gda_blob_
-structWrap: GdaBlob* Blob
 outFile: Blob
 
 file: libgda-GdaClient.html 
 struct: GdaClient
 class: Client
 prefix: gda_client_
+structWrap: GList* ListG
 structWrap: GdaConnection* Connection
+structWrap: GdaError* Error
+structWrap: GdaParameterList* ParameterList
+import: glib.Str
+import: glib.ListG
 import: gda.Connection
+import: gda.Error
+import: gda.ParameterList
 nocode: gda_client_open_connection
 code: start
 	/**
@@ -185,28 +167,13 @@ code: start
 code: end
 outFile: Client
 
-
-file: libgda-GdaConnection.html
-struct: GdaConnection
-class: Connection
-prefix: gda_connection_
-structWrap: GdaClient* Client
-structWrap: GdaCommand* Command
-structWrap: GdaParameterList* ParameterList
-structWrap: GList* ListG
-import: gda.Client
-import: gda.Command
-import: gda.ParameterList
-import: glib.ListG
-
-outFile: Connection
-
 file: libgda-gda-command.html
 struct: GdaCommand
 class: Command
 prefix: gda_command_
-structWrap: GdaTransaction* Transaction
 structWrap: GdaCommand* Command
+structWrap: GdaTransaction* Transaction
+import: glib.Str
 import: gda.Transaction
 outFile: Command
 
@@ -217,21 +184,43 @@ prefix: gda_config_
 noprefix: gda_data_source_
 noprefix: gda_provider_
 structWrap: GList* ListG
-nostruct: GdaDataSourceInfo
-nostruct: GdaProviderInfo
-
+structWrap: GdaDataModel* DataModel
 structWrap: GdaDataSourceInfo DataSourceInfo
+structWrap: GdaProviderInfo* ProviderInfo
+import: glib.Str
 import: glib.ListG
+import: gda.DataModel
+import: gda.DataSourceInfo
+import: gda.ProviderInfo
 outFile: Config
 
-file: libgda-gda-config.html
+struct: GdaProviderInfo
+class: ProviderInfo
+prefix: gda_provider_
+strictPrefix: Y
+structWrap: GdaProviderInfo* ProviderInfo
+import: glib.Str
+import: glib.ListG
+code: start
+	/** */
+	this (ListG glist) {
+		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
+	}
+	/** */
+	string id() { return Str.toString(this.gdaProviderInfo.id); }
+	/** */
+	string location() { return Str.toString(this.gdaProviderInfo.location); }
+	/** */
+	string description() { return Str.toString(this.gdaProviderInfo.description); }
+	/** */
+	ListG gda_params() { return new ListG(this.gdaProviderInfo.gdaParams); }
+code: end
+outFile: ProviderInfo
+
 struct: GdaDataSourceInfo
-noprefix: gda_config_
-noprefix: gda_provider_
-nostruct: GdaProviderInfo
-nocode: GdaConfigListenerFunc
 class: DataSourceInfo
 prefix: gda_data_source_
+strictPrefix: Y
 import: glib.ListG
 import: glib.Str
 code: start
@@ -253,42 +242,23 @@ code: start
 	string password() { return Str.toString(this.gdaDataSourceInfo.password); }
         
 code: end
-
 outFile: DataSourceInfo
- 
-file: libgda-gda-config.html
-struct: GdaProviderInfo
-class: ProviderInfo
 
-noprefix: gda_config_
-noprefix: gda_data_source_
-prefix: gda_provider_
-nostruct: GdaDataSourceInfo
-nocode: GdaConfigListenerFunc
 
-import: glib.ListG
+file: libgda-GdaConnection.html
+struct: GdaConnection
+class: Connection
+prefix: gda_connection_
+structWrap: GdaClient* Client
+structWrap: GdaCommand* Command
+structWrap: GdaParameterList* ParameterList
+structWrap: GList* ListG
 import: glib.Str
-code: start
-	/** */
-	this (ListG glist) {
-		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
-	}
-	/** */
-	string id() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).id); }
-	/** */
-	string location() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).location); }
-	/** */
-	string description() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).description); }
-	/** */
-	ListG gda_params() { return new ListG((cast(_GdaProviderInfo*)this.gdaProviderInfo).gda_params); }
-code: end
-
-outFile: ProviderInfo
-
-
-
-
-
+import: gda.Client
+import: gda.Command
+import: gda.ParameterList
+import: glib.ListG
+outFile: Connection
 
 file: libgda-GdaDataModelArray.html
 struct: GdaDataModelArray
@@ -331,6 +301,7 @@ structWrap: GdaFieldAttributes* FieldAttributes
 structWrap: GdaRow* Row
 structWrap: GdaValue* Value
 structWrap: GList* ListG
+import: glib.Str
 import: glib.ListG
 import: gda.Row
 import: gda.FieldAttributes
@@ -350,6 +321,7 @@ struct: GdaError
 class: Error
 prefix: gda_error_
 structWrap: GList* ListG
+import: glib.Str
 import: glib.ListG
 
 code: start
@@ -367,6 +339,7 @@ class: Export
 prefix: gda_export_
 structWrap: GList* ListG
 structWrap: GdaConnection* Connection
+import: glib.Str
 import: glib.ListG
 import: gda.Connection
 outFile: Export
@@ -380,6 +353,7 @@ structWrap: GList* ListG
 structWrap: GdaConnection* Connection
 structWrap: GdaFieldAttributes* FieldAttributes
 structWrap: GdaValue* Value
+import: glib.Str
 import: glib.ListG
 import: gda.Value
 outFile: FieldAttributes
@@ -400,6 +374,7 @@ structWrap: GList* ListG
 structWrap: GdaValue* Value
 structWrap: GdaParameter*  Parameter
 
+import: glib.Str
 import: glib.ListG
 import: gda.Value
 
@@ -425,6 +400,7 @@ structWrap: GList* ListG
 structWrap: GdaValue* Value
 structWrap: GdaParameter*  Parameter
 structWrap: GdaParameterList*  ParameterList
+import: glib.Str
 import: gda.Parameter
 import: glib.ListG
 nocode: gda_parameter_get_type
@@ -449,7 +425,7 @@ class: QuarkList
 prefix: gda_quark_list_
 structWrap: GList* ListG
 structWrap: GdaQuarkList* QuarkList
-                                            
+import: glib.Str
 outFile: QuarkList
 
 
@@ -459,7 +435,8 @@ class: Row
 prefix: gda_row_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaRow* Row
-structWrap: GdaValue* Value                                
+structWrap: GdaValue* Value
+import: glib.Str
 import: gda.Value
 import: gda.DataModel
 outFile: Row
@@ -471,6 +448,7 @@ class: Select
 prefix: gda_select_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaSelect* Select
+import: glib.Str
 import: gda.DataModel
 outFile: Select
 
@@ -482,6 +460,7 @@ prefix: gda_table_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaTable* Table
 structWrap: GdaFieldAttributes* FieldAttributes
+import: glib.Str
 import: gda.DataModel
 import: gda.FieldAttributes
 outFile: Table
@@ -493,6 +472,7 @@ prefix: gda_transaction_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaTransaction*  Transaction
 structWrap: GdaFieldAttributes* FieldAttributes
+import: glib.Str
 outFile: Transaction
 
 file: libgda-gda-value.html
@@ -509,6 +489,7 @@ structWrap: GdaValue*  Value
 structWrap: GObject* ObjectG
 #structWrap: GdaBlob* Blob
 #structWrap: GdaValueList*  ValueList
+import: glib.Str
 import: gobject.ObjectG
 
 nocode: gda_value_new_boolean

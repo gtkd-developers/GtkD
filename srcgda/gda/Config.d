@@ -38,18 +38,22 @@
  * prefixes:
  * 	- gda_config_
  * omit structs:
- * 	- GdaDataSourceInfo
- * 	- GdaProviderInfo
  * omit prefixes:
  * 	- gda_data_source_
  * 	- gda_provider_
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ListG
+ * 	- gda.DataModel
+ * 	- gda.DataSourceInfo
+ * 	- gda.ProviderInfo
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GdaDataModel* -> DataModel
  * 	- GdaDataSourceInfo -> DataSourceInfo
+ * 	- GdaProviderInfo* -> ProviderInfo
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,7 +67,11 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ListG;
+private import gda.DataModel;
+private import gda.DataSourceInfo;
+private import gda.ProviderInfo;
 
 
 
@@ -350,10 +358,15 @@ public class Config
 	 * name =  name of the provider to search for.
 	 * Returns: a GdaProviderInfo structure, if found, or NULL if not found.
 	 */
-	public static GdaProviderInfo* getProviderByName(string name)
+	public static ProviderInfo getProviderByName(string name)
 	{
 		// GdaProviderInfo* gda_config_get_provider_by_name (const gchar *name);
-		return gda_config_get_provider_by_name(Str.toStringz(name));
+		auto p = gda_config_get_provider_by_name(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new ProviderInfo(cast(GdaProviderInfo*) p);
 	}
 	
 	/**
@@ -363,10 +376,15 @@ public class Config
 	 * 'Id', 'Location' and 'Description'.
 	 * Returns: a new GdaDataModel object.
 	 */
-	public static GdaDataModel* getProviderModel()
+	public static DataModel getProviderModel()
 	{
 		// GdaDataModel* gda_config_get_provider_model (void);
-		return gda_config_get_provider_model();
+		auto p = gda_config_get_provider_model();
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -442,10 +460,15 @@ public class Config
 	 * 'Password'.
 	 * Returns: a new GdaDataModel object.
 	 */
-	public static GdaDataModel* getDataSourceModel()
+	public static DataModel getDataSourceModel()
 	{
 		// GdaDataModel* gda_config_get_data_source_model (void);
-		return gda_config_get_data_source_model();
+		auto p = gda_config_get_data_source_model();
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**

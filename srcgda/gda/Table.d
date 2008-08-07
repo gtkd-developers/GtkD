@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gda.DataModel
  * 	- gda.FieldAttributes
  * structWrap:
@@ -61,6 +62,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import gda.DataModel;
 private import gda.FieldAttributes;
 

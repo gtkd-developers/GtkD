@@ -43,9 +43,16 @@
  * 	- gda_client_open_connection
  * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- glib.ListG
  * 	- gda.Connection
+ * 	- gda.Error
+ * 	- gda.ParameterList
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GdaConnection* -> Connection
+ * 	- GdaError* -> Error
+ * 	- GdaParameterList* -> ParameterList
  * module aliases:
  * local aliases:
  * overrides:
@@ -59,7 +66,11 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
+private import glib.ListG;
 private import gda.Connection;
+private import gda.Error;
+private import gda.ParameterList;
 
 
 
@@ -181,10 +192,15 @@ public class Client
 	 * FREE IT.
 	 * Returns: a GList of GdaConnection objects.
 	 */
-	public GList* getConnectionList()
+	public ListG getConnectionList()
 	{
 		// const GList* gda_client_get_connection_list (GdaClient *client);
-		return gda_client_get_connection_list(gdaClient);
+		auto p = gda_client_get_connection_list(gdaClient);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -228,10 +244,10 @@ public class Client
 	 * event =  event ID.
 	 * params =  parameters associated with the event.
 	 */
-	public void notifyEvent(Connection cnc, GdaClientEvent event, GdaParameterList* params)
+	public void notifyEvent(Connection cnc, GdaClientEvent event, ParameterList params)
 	{
 		// void gda_client_notify_event (GdaClient *client,  GdaConnection *cnc,  GdaClientEvent event,  GdaParameterList *params);
-		gda_client_notify_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), event, params);
+		gda_client_notify_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), event, (params is null) ? null : params.getParameterListStruct());
 	}
 	
 	/**
@@ -240,10 +256,10 @@ public class Client
 	 * cnc =  a GdaConnection object.
 	 * error =  the error to be notified.
 	 */
-	public void notifyErrorEvent(Connection cnc, GdaError* error)
+	public void notifyErrorEvent(Connection cnc, Error error)
 	{
 		// void gda_client_notify_error_event (GdaClient *client,  GdaConnection *cnc,  GdaError *error);
-		gda_client_notify_error_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), error);
+		gda_client_notify_error_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), (error is null) ? null : error.getErrorStruct());
 	}
 	
 	/**

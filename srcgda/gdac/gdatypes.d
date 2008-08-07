@@ -25,8 +25,6 @@ module gdac.gdatypes;
 
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
-public import glib.Str;
-
 
 
 /**
@@ -56,6 +54,40 @@ public enum GdaClientEvent
 	TRANSACTION_CANCELLED /+* params: "transaction" +/
 }
 alias GdaClientEvent daClientEvent;
+
+/**
+ * And OR'ed combination of GDA_COMMAND_OPTIONS_* values.
+ */
+public enum GdaCommandOptions
+{
+	IGNORE_ERRORS = 1,
+	STOP_ON_ERRORS = 1 << 1,
+	BAD_OPTION = 1 << 2
+}
+alias GdaCommandOptions daCommandOptions;
+
+/**
+ * GDA_COMMAND_TYPE_SQL
+ * the text of the command is composed of zero or more SQL
+ * sentences.
+ * GDA_COMMAND_TYPE_XML
+ * GDA_COMMAND_TYPE_PROCEDURE
+ * GDA_COMMAND_TYPE_TABLE
+ * the text of the command is composed of zero or more
+ * table names.
+ * GDA_COMMAND_TYPE_SCHEMA
+ * GDA_COMMAND_TYPE_INVALID
+ */
+public enum GdaCommandType
+{
+	TYPE_SQL,
+	TYPE_XML,
+	TYPE_PROCEDURE,
+	TYPE_TABLE,
+	TYPE_SCHEMA,
+	TYPE_INVALID
+}
+alias GdaCommandType daCommandType;
 
 public enum GdaConnectionOptions
 {
@@ -101,40 +133,6 @@ public enum GdaConnectionSchema
 	VIEWS
 }
 alias GdaConnectionSchema daConnectionSchema;
-
-/**
- * And OR'ed combination of GDA_COMMAND_OPTIONS_* values.
- */
-public enum GdaCommandOptions
-{
-	IGNORE_ERRORS = 1,
-	STOP_ON_ERRORS = 1 << 1,
-	BAD_OPTION = 1 << 2
-}
-alias GdaCommandOptions daCommandOptions;
-
-/**
- * GDA_COMMAND_TYPE_SQL
- * the text of the command is composed of zero or more SQL
- * sentences.
- * GDA_COMMAND_TYPE_XML
- * GDA_COMMAND_TYPE_PROCEDURE
- * GDA_COMMAND_TYPE_TABLE
- * the text of the command is composed of zero or more
- * table names.
- * GDA_COMMAND_TYPE_SCHEMA
- * GDA_COMMAND_TYPE_INVALID
- */
-public enum GdaCommandType
-{
-	TYPE_SQL,
-	TYPE_XML,
-	TYPE_PROCEDURE,
-	TYPE_TABLE,
-	TYPE_SCHEMA,
-	TYPE_INVALID
-}
-alias GdaCommandType daCommandType;
 
 public enum GdaExportFlags
 {
@@ -200,16 +198,6 @@ public struct GdaTable{}
 
 public struct GdaServerProviderPrivate{}
 
-struct _GdaProviderInfo {
-	gchar *id;
-	gchar *location;
-	gchar *description;
-	GList *gda_params; /* A list of GdaProviderParameterInfo pointers */
-} ;
-
-
-
-
 
 /**
  * Main Gtk struct.
@@ -235,6 +223,38 @@ public struct GdaBlob
 public struct GdaClientPrivate{}
 
 
+/**
+ * Main Gtk struct.
+ */
+public struct GdaCommand
+{
+	char *text;
+	GdaCommandType type;
+	GdaCommandOptions options;
+	GdaTransaction *xaction;
+}
+
+
+public struct GdaProviderInfo
+{
+	char *id;
+	char *location;
+	char *description;
+	GList *gdaParams; /+* A list of GdaProviderParameterInfo pointers +/
+}
+
+
+public struct GdaDataSourceInfo
+{
+	char *name;
+	char *provider;
+	char *cncString;
+	char *description;
+	char *username;
+	char *password;
+}
+
+
 public struct GdaConnectionPrivate{}
 
 
@@ -249,44 +269,6 @@ public struct GdaClient
 {
 	GObject object;
 	GdaClientPrivate *priv;
-}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GdaCommand
-{
-	char *text;
-	GdaCommandType type;
-	GdaCommandOptions options;
-	GdaTransaction *xaction;
-}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GdaDataSourceInfo
-{
-	char *name;
-	char *provider;
-	char *cncString;
-	char *description;
-	char *username;
-	char *password;
-}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GdaProviderInfo
-{
-	char *id;
-	char *location;
-	char *description;
-	GList *gdaParams; /+* A list of GdaProviderParameterInfo pointers +/
 }
 
 
@@ -488,20 +470,6 @@ public typedef extern(C) void  function (void*) GdaInitFunc;
  */
 // void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
 public typedef extern(C) void  function (char[], void*) GdaConfigListenerFunc;
-
-/*
- * path :
- * user_data :
- */
-// void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
-
-
-/*
- * path :
- * user_data :
- */
-// void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
-
 
 /*
  * model :

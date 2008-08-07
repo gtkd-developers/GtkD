@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
@@ -58,6 +59,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ListG;
 
 

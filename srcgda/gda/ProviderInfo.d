@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = libgda-gda-config.html
+ * inFile  = 
  * outPack = gda
  * outFile = ProviderInfo
  * strct   = GdaProviderInfo
@@ -38,17 +38,14 @@
  * prefixes:
  * 	- gda_provider_
  * omit structs:
- * 	- GdaDataSourceInfo
  * omit prefixes:
- * 	- gda_config_
- * 	- gda_data_source_
  * omit code:
- * 	- GdaConfigListenerFunc
  * omit signals:
  * imports:
- * 	- glib.ListG
  * 	- glib.Str
+ * 	- glib.ListG
  * structWrap:
+ * 	- GdaProviderInfo* -> ProviderInfo
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,8 +59,8 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
-private import glib.ListG;
 private import glib.Str;
+private import glib.ListG;
 
 
 
@@ -111,13 +108,13 @@ public class ProviderInfo
 		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
 	}
 	/** */
-string id() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).id); }
+string id() { return Str.toString(this.gdaProviderInfo.id); }
 /** */
-string location() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).location); }
+string location() { return Str.toString(this.gdaProviderInfo.location); }
 /** */
-string description() { return Str.toString((cast(_GdaProviderInfo*)this.gdaProviderInfo).description); }
+string description() { return Str.toString(this.gdaProviderInfo.description); }
 /** */
-ListG gda_params() { return new ListG((cast(_GdaProviderInfo*)this.gdaProviderInfo).gda_params); }
+ListG gda_params() { return new ListG(this.gdaProviderInfo.gdaParams); }
 
 /**
  */
@@ -135,10 +132,15 @@ public static GType infoGetType()
  * Creates a new GdaProviderInfo structure from an existing one.
  * Returns: a newly allocated GdaProviderInfo with contains a copy of information in src.
  */
-public GdaProviderInfo* infoCopy()
+public ProviderInfo infoCopy()
 {
 	// GdaProviderInfo* gda_provider_info_copy (GdaProviderInfo *src);
-	return gda_provider_info_copy(gdaProviderInfo);
+	auto p = gda_provider_info_copy(gdaProviderInfo);
+	if(p is null)
+	{
+		return null;
+	}
+	return new ProviderInfo(cast(GdaProviderInfo*) p);
 }
 
 /**

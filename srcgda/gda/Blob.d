@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * structWrap:
- * 	- GdaBlob* -> Blob
  * module aliases:
  * local aliases:
  * overrides:

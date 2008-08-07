@@ -54,6 +54,7 @@
  * 	- gda_parameter_set_value
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gda.Parameter
  * 	- glib.ListG
  * structWrap:
@@ -74,6 +75,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import gda.Parameter;
 private import glib.ListG;
 

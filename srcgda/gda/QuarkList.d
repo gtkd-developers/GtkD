@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaQuarkList* -> QuarkList
@@ -58,6 +59,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 
 
 

@@ -47,6 +47,7 @@
  * 	- gda_value_new_uinteger
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gobject.ObjectG
  * structWrap:
  * 	- GObject* -> ObjectG
@@ -64,6 +65,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import gobject.ObjectG;
 
 

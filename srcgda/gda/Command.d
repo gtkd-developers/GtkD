@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gda.Transaction
  * structWrap:
  * 	- GdaCommand* -> Command
@@ -59,6 +60,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import gda.Transaction;
 
 

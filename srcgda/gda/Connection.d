@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gda.Client
  * 	- gda.Command
  * 	- gda.ParameterList
@@ -64,6 +65,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import gda.Client;
 private import gda.Command;
 private import gda.ParameterList;

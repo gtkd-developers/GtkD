@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = libgda-gda-config.html
+ * inFile  = 
  * outPack = gda
  * outFile = DataSourceInfo
  * strct   = GdaDataSourceInfo
@@ -38,12 +38,8 @@
  * prefixes:
  * 	- gda_data_source_
  * omit structs:
- * 	- GdaProviderInfo
  * omit prefixes:
- * 	- gda_config_
- * 	- gda_provider_
  * omit code:
- * 	- GdaConfigListenerFunc
  * omit signals:
  * imports:
  * 	- glib.ListG
