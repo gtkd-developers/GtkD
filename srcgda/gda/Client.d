@@ -46,12 +46,12 @@
  * 	- glib.Str
  * 	- glib.ListG
  * 	- gda.Connection
- * 	- gda.Error
+ * 	- gda.ErrorGda
  * 	- gda.ParameterList
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaConnection* -> Connection
- * 	- GdaError* -> Error
+ * 	- GdaError* -> ErrorGda
  * 	- GdaParameterList* -> ParameterList
  * module aliases:
  * local aliases:
@@ -69,7 +69,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ListG;
 private import gda.Connection;
-private import gda.Error;
+private import gda.ErrorGda;
 private import gda.ParameterList;
 
 
@@ -256,10 +256,10 @@ public class Client
 	 * cnc =  a GdaConnection object.
 	 * error =  the error to be notified.
 	 */
-	public void notifyErrorEvent(Connection cnc, Error error)
+	public void notifyErrorEvent(Connection cnc, ErrorGda error)
 	{
 		// void gda_client_notify_error_event (GdaClient *client,  GdaConnection *cnc,  GdaError *error);
-		gda_client_notify_error_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), (error is null) ? null : error.getErrorStruct());
+		gda_client_notify_error_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), (error is null) ? null : error.getErrorGdaStruct());
 	}
 	
 	/**

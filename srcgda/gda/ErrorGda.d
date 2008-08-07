@@ -24,11 +24,11 @@
  * Conversion parameters:
  * inFile  = libgda-GdaError.html
  * outPack = gda
- * outFile = Error
+ * outFile = ErrorGda
  * strct   = GdaError
  * realStrct=
  * ctorStrct=
- * clss    = Error
+ * clss    = ErrorGda
  * interf  = 
  * class Code: Yes
  * interface Code: No
@@ -51,7 +51,7 @@
  * overrides:
  */
 
-module gda.Error;
+module gda.ErrorGda;
 
 public  import gdac.gdatypes;
 
@@ -68,14 +68,14 @@ private import glib.ListG;
 /**
  * Description
  */
-public class Error
+public class ErrorGda
 {
 	
 	/** the main Gtk struct */
 	protected GdaError* gdaError;
 	
 	
-	public GdaError* getErrorStruct()
+	public GdaError* getErrorGdaStruct()
 	{
 		return gdaError;
 	}

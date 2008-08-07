@@ -133,12 +133,12 @@ class: Client
 prefix: gda_client_
 structWrap: GList* ListG
 structWrap: GdaConnection* Connection
-structWrap: GdaError* Error
+structWrap: GdaError* ErrorGda
 structWrap: GdaParameterList* ParameterList
 import: glib.Str
 import: glib.ListG
 import: gda.Connection
-import: gda.Error
+import: gda.ErrorGda
 import: gda.ParameterList
 nocode: gda_client_open_connection
 code: start
@@ -318,7 +318,7 @@ outFile: DataModel
 
 file: libgda-GdaError.html
 struct: GdaError
-class: Error
+class: ErrorGda
 prefix: gda_error_
 structWrap: GList* ListG
 import: glib.Str
@@ -330,7 +330,7 @@ code: start
 		this.gdaError = cast(GdaError *) glist.data;
 	}
 code: end
-outFile: Error
+outFile: ErrorGda
 
 
 file: libgda-GdaExport.html

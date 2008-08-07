@@ -261,7 +261,7 @@ extern(C)
 	GdaCommandType function(GdaDataModel* model)gda_data_model_get_command_type;
 	void function(GdaDataModel* model, GdaCommandType type)gda_data_model_set_command_type;
 	
-	// gda.Error
+	// gda.ErrorGda
 	
 	GdaError* function()gda_error_new;
 	void function(GdaError* error)gda_error_free;
