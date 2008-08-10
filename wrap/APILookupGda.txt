@@ -249,68 +249,80 @@ file: libgda-GdaConnection.html
 struct: GdaConnection
 class: Connection
 prefix: gda_connection_
+structWrap: GList* ListG
+structWrap: GdaBlob* Blob
 structWrap: GdaClient* Client
 structWrap: GdaCommand* Command
+structWrap: GdaDataModel* DataModel
+structWrap: GdaError* ErrorGda
+structWrap: GdaFieldAttributes* FieldAttributes
 structWrap: GdaParameterList* ParameterList
-structWrap: GList* ListG
 import: glib.Str
+import: glib.ListG
+import: gda.Blob
 import: gda.Client
 import: gda.Command
+import: gda.DataModel
+import: gda.ErrorGda
+import: gda.FieldAttributes
 import: gda.ParameterList
-import: glib.ListG
 outFile: Connection
 
 file: libgda-GdaDataModelArray.html
 struct: GdaDataModelArray
+ctorStruct: GdaDataModel
 class: DataModelArray
+extend: GdaDataModel
 prefix: gda_data_model_array_
-structWrap: GdaDataModel* DataModel
-import: gda.DataModel
 outFile: DataModelArray
-
 
 file: libgda-GdaDataModelHash.html
 struct: GdaDataModelHash
+ctorStruct: GdaDataModel
 class: DataModelHash
+extend: GdaDataModel
 prefix: gda_data_model_hash_
 structWrap: GdaDataModel* DataModel
+structWrap: GdaValue* Value
+structWrap: GdaRow* Row
 import: gda.DataModel
+import: gda.Value
+import: gda.Row
 outFile: DataModelHash
 
 file: libgda-GdaDataModelList.html
 struct: GdaDataModelList
+ctorStruct: GdaDataModel
 class: DataModelList
+extend: GdaDataModel
 prefix: gda_data_model_list_
-structWrap: GdaDataModel* DataModel
+structWrap: GList* ListG
 structWrap: GdaRow* Row
 structWrap: GdaValue* Value
-structWrap: GList* ListG
-import: gda.DataModel
-import: gda.Value
 import: glib.ListG
+import: gda.Value
 import: gda.Row
 outFile: DataModelList
-
 
 file: libgda-GdaDataModel.html
 struct: GdaDataModel
 class: DataModel
+extend: GObject
 prefix: gda_data_model_
-structWrap: GdaDataModel* DataModel
+structWrap: GList* ListG
 structWrap: GdaFieldAttributes* FieldAttributes
 structWrap: GdaRow* Row
 structWrap: GdaValue* Value
-structWrap: GList* ListG
 import: glib.Str
 import: glib.ListG
-import: gda.Row
 import: gda.FieldAttributes
+import: gda.Row
 import: gda.Value
 
 code: start
 	/** */
 	this (ListG glist) {
-		this.gdaDataModel = cast(GdaDataModel *) glist.data;
+		this( cast(GdaDataModel*)glist.data );
 	}
 code: end
 outFile: DataModel

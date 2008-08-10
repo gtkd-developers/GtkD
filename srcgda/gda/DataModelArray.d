@@ -27,13 +27,13 @@
  * outFile = DataModelArray
  * strct   = GdaDataModelArray
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GdaDataModel
  * clss    = DataModelArray
  * interf  = 
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GdaDataModel
  * implements:
  * prefixes:
  * 	- gda_data_model_array_
@@ -42,9 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gda.DataModel
  * structWrap:
- * 	- GdaDataModel* -> DataModel
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,15 +56,15 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+
+
+
 private import gda.DataModel;
-
-
-
 
 /**
  * Description
  */
-public class DataModelArray
+public class DataModelArray : DataModel
 {
 	
 	/** the main Gtk struct */
@@ -80,7 +78,7 @@ public class DataModelArray
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaDataModelArray;
 	}
@@ -95,6 +93,14 @@ public class DataModelArray
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaDataModelArray);
+		if( ptr !is null )
+		{
+			this = cast(DataModelArray)ptr;
+			return;
+		}
+		super(cast(GdaDataModel*)gdaDataModelArray);
 		this.gdaDataModelArray = gdaDataModelArray;
 	}
 	
@@ -104,17 +110,17 @@ public class DataModelArray
 	/**
 	 * Params:
 	 * cols =  number of columns for rows in this data model.
-	 * Returns: a pointer to the newly created GdaDataModel.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static DataModel newDataModelArray(int cols)
+	public this (int cols)
 	{
 		// GdaDataModel* gda_data_model_array_new (gint cols);
 		auto p = gda_data_model_array_new(cols);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gda_data_model_array_new(cols)");
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		this(cast(GdaDataModelArray*) p);
 	}
 	
 	/**

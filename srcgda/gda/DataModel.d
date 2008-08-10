@@ -33,7 +33,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gda_data_model_
@@ -44,12 +44,11 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
- * 	- gda.Row
  * 	- gda.FieldAttributes
+ * 	- gda.Row
  * 	- gda.Value
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdaDataModel* -> DataModel
  * 	- GdaFieldAttributes* -> FieldAttributes
  * 	- GdaRow* -> Row
  * 	- GdaValue* -> Value
@@ -68,17 +67,18 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.ListG;
-private import gda.Row;
 private import gda.FieldAttributes;
+private import gda.Row;
 private import gda.Value;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-public class DataModel
+public class DataModel : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -92,7 +92,7 @@ public class DataModel
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaDataModel;
 	}
@@ -107,12 +107,20 @@ public class DataModel
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaDataModel);
+		if( ptr !is null )
+		{
+			this = cast(DataModel)ptr;
+			return;
+		}
+		super(cast(GObject*)gdaDataModel);
 		this.gdaDataModel = gdaDataModel;
 	}
 	
 	/** */
 	this (ListG glist) {
-		this.gdaDataModel = cast(GdaDataModel *) glist.data;
+		this( cast(GdaDataModel*)glist.data );
 	}
 	
 	/**

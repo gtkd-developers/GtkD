@@ -27,13 +27,13 @@
  * outFile = DataModelHash
  * strct   = GdaDataModelHash
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GdaDataModel
  * clss    = DataModelHash
  * interf  = 
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GdaDataModel
  * implements:
  * prefixes:
  * 	- gda_data_model_hash_
@@ -43,8 +43,12 @@
  * omit signals:
  * imports:
  * 	- gda.DataModel
+ * 	- gda.Value
+ * 	- gda.Row
  * structWrap:
  * 	- GdaDataModel* -> DataModel
+ * 	- GdaRow* -> Row
+ * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
  * overrides:
@@ -59,9 +63,12 @@ private import glib.ConstructionException;
 
 
 private import gda.DataModel;
+private import gda.Value;
+private import gda.Row;
 
 
 
+private import gda.DataModel;
 
 /**
  * Description
@@ -70,7 +77,7 @@ private import gda.DataModel;
  * requested rows (while in GdaDataModelArray you have to retrieve all the rows
  * until the one requested).
  */
-public class DataModelHash
+public class DataModelHash : DataModel
 {
 	
 	/** the main Gtk struct */
@@ -84,7 +91,7 @@ public class DataModelHash
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaDataModelHash;
 	}
@@ -99,6 +106,14 @@ public class DataModelHash
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaDataModelHash);
+		if( ptr !is null )
+		{
+			this = cast(DataModelHash)ptr;
+			return;
+		}
+		super(cast(GdaDataModel*)gdaDataModelHash);
 		this.gdaDataModelHash = gdaDataModelHash;
 	}
 	
@@ -108,17 +123,17 @@ public class DataModelHash
 	/**
 	 * Params:
 	 * cols =  number of columns for rows in this data model.
-	 * Returns: a pointer to the newly created GdaDataModel.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static DataModel newDataModelHash(int cols)
+	public this (int cols)
 	{
 		// GdaDataModel* gda_data_model_hash_new (gint cols);
 		auto p = gda_data_model_hash_new(cols);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gda_data_model_hash_new(cols)");
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		this(cast(GdaDataModelHash*) p);
 	}
 	
 	/**
@@ -129,10 +144,15 @@ public class DataModelHash
 	 * row =  row number (starting from 0).
 	 * Returns: a pointer to a GdaValue.
 	 */
-	public static GdaValue* getValueAt(DataModel model, int col, int row)
+	public static Value getValueAt(DataModel model, int col, int row)
 	{
 		// const GdaValue* gda_data_model_hash_get_value_at (GdaDataModel *model,  gint col,  gint row);
-		return gda_data_model_hash_get_value_at((model is null) ? null : model.getDataModelStruct(), col, row);
+		auto p = gda_data_model_hash_get_value_at((model is null) ? null : model.getDataModelStruct(), col, row);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -164,10 +184,10 @@ public class DataModelHash
 	 * rownum =  the number of the row.
 	 * row =  the row to insert. The model is responsible of freeing it!
 	 */
-	public void insertRow(int rownum, GdaRow* row)
+	public void insertRow(int rownum, Row row)
 	{
 		// void gda_data_model_hash_insert_row (GdaDataModelHash *model,  gint rownum,  GdaRow *row);
-		gda_data_model_hash_insert_row(gdaDataModelHash, rownum, row);
+		gda_data_model_hash_insert_row(gdaDataModelHash, rownum, (row is null) ? null : row.getRowStruct());
 	}
 	
 	/**
@@ -177,9 +197,14 @@ public class DataModelHash
 	 * row =  row number
 	 * Returns: a GdaRow or NULL if the requested row is not in the hash table.
 	 */
-	public static GdaRow* getRow(DataModel model, int row)
+	public static Row getRow(DataModel model, int row)
 	{
 		// const GdaRow* gda_data_model_hash_get_row (GdaDataModel *model,  gint row);
-		return gda_data_model_hash_get_row((model is null) ? null : model.getDataModelStruct(), row);
+		auto p = gda_data_model_hash_get_row((model is null) ? null : model.getDataModelStruct(), row);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Row(cast(GdaRow*) p);
 	}
 }

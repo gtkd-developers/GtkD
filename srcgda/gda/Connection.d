@@ -43,14 +43,22 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ListG
+ * 	- gda.Blob
  * 	- gda.Client
  * 	- gda.Command
+ * 	- gda.DataModel
+ * 	- gda.ErrorGda
+ * 	- gda.FieldAttributes
  * 	- gda.ParameterList
- * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GdaBlob* -> Blob
  * 	- GdaClient* -> Client
  * 	- GdaCommand* -> Command
+ * 	- GdaDataModel* -> DataModel
+ * 	- GdaError* -> ErrorGda
+ * 	- GdaFieldAttributes* -> FieldAttributes
  * 	- GdaParameterList* -> ParameterList
  * module aliases:
  * local aliases:
@@ -66,10 +74,14 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.ListG;
+private import gda.Blob;
 private import gda.Client;
 private import gda.Command;
+private import gda.DataModel;
+private import gda.ErrorGda;
+private import gda.FieldAttributes;
 private import gda.ParameterList;
-private import glib.ListG;
 
 
 
@@ -287,10 +299,10 @@ public class Connection
 	 * Params:
 	 * error =  is stored internally, so you don't need to unref it.
 	 */
-	public void addError(GdaError* error)
+	public void addError(ErrorGda error)
 	{
 		// void gda_connection_add_error (GdaConnection *cnc,  GdaError *error);
-		gda_connection_add_error(gdaConnection, error);
+		gda_connection_add_error(gdaConnection, (error is null) ? null : error.getErrorGdaStruct());
 	}
 	
 	/**
@@ -406,10 +418,10 @@ public class Connection
 	 * recset =  recordset.
 	 * Returns: a string representing the ID of the last inserted row, or NULLif an error occurred or no row has been inserted. It is the caller'sreponsibility to free the returned string.
 	 */
-	public string getLastInsertId(GdaDataModel* recset)
+	public string getLastInsertId(DataModel recset)
 	{
 		// gchar* gda_connection_get_last_insert_id (GdaConnection *cnc,  GdaDataModel *recset);
-		return Str.toString(gda_connection_get_last_insert_id(gdaConnection, recset));
+		return Str.toString(gda_connection_get_last_insert_id(gdaConnection, (recset is null) ? null : recset.getDataModelStruct()));
 	}
 	
 	/**
@@ -422,10 +434,15 @@ public class Connection
 	 * params =  parameter list.
 	 * Returns: a GdaDataModel containing the data returned by thedata source, or NULL on error.
 	 */
-	public GdaDataModel* executeSingleCommand(Command cmd, ParameterList params)
+	public DataModel executeSingleCommand(Command cmd, ParameterList params)
 	{
 		// GdaDataModel* gda_connection_execute_single_command  (GdaConnection *cnc,  GdaCommand *cmd,  GdaParameterList *params);
-		return gda_connection_execute_single_command(gdaConnection, (cmd is null) ? null : cmd.getCommandStruct(), (params is null) ? null : params.getParameterListStruct());
+		auto p = gda_connection_execute_single_command(gdaConnection, (cmd is null) ? null : cmd.getCommandStruct(), (params is null) ? null : params.getParameterListStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -492,10 +509,10 @@ public class Connection
 	 * blob =  a user-allocated GdaBlob structure.
 	 * Returns: FALSE if the database does not support BLOBs. TRUE otherwiseand the GdaBlob is created and ready to be used.
 	 */
-	public int createBlob(GdaBlob* blob)
+	public int createBlob(Blob blob)
 	{
 		// gboolean gda_connection_create_blob (GdaConnection *cnc,  GdaBlob *blob);
-		return gda_connection_create_blob(gdaConnection, blob);
+		return gda_connection_create_blob(gdaConnection, (blob is null) ? null : blob.getBlobStruct());
 	}
 	
 	/**
@@ -540,9 +557,14 @@ public class Connection
 	 * params =  parameter list.
 	 * Returns: a GdaDataModel containing the data required. The caller is responsibleof freeing the returned model.
 	 */
-	public GdaDataModel* getSchema(GdaConnectionSchema schema, ParameterList params)
+	public DataModel getSchema(GdaConnectionSchema schema, ParameterList params)
 	{
 		// GdaDataModel* gda_connection_get_schema (GdaConnection *cnc,  GdaConnectionSchema schema,  GdaParameterList *params);
-		return gda_connection_get_schema(gdaConnection, schema, (params is null) ? null : params.getParameterListStruct());
+		auto p = gda_connection_get_schema(gdaConnection, schema, (params is null) ? null : params.getParameterListStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataModel(cast(GdaDataModel*) p);
 	}
 }

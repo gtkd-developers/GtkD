@@ -27,13 +27,13 @@
  * outFile = DataModelList
  * strct   = GdaDataModelList
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GdaDataModel
  * clss    = DataModelList
  * interf  = 
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GdaDataModel
  * implements:
  * prefixes:
  * 	- gda_data_model_list_
@@ -42,13 +42,11 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gda.DataModel
- * 	- gda.Value
  * 	- glib.ListG
+ * 	- gda.Value
  * 	- gda.Row
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdaDataModel* -> DataModel
  * 	- GdaRow* -> Row
  * 	- GdaValue* -> Value
  * module aliases:
@@ -64,18 +62,18 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
-private import gda.DataModel;
-private import gda.Value;
 private import glib.ListG;
+private import gda.Value;
 private import gda.Row;
 
 
 
+private import gda.DataModel;
 
 /**
  * Description
  */
-public class DataModelList
+public class DataModelList : DataModel
 {
 	
 	/** the main Gtk struct */
@@ -89,7 +87,7 @@ public class DataModelList
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaDataModelList;
 	}
@@ -104,6 +102,14 @@ public class DataModelList
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaDataModelList);
+		if( ptr !is null )
+		{
+			this = cast(DataModelList)ptr;
+			return;
+		}
+		super(cast(GdaDataModel*)gdaDataModelList);
 		this.gdaDataModelList = gdaDataModelList;
 	}
 	
@@ -111,33 +117,33 @@ public class DataModelList
 	 */
 	
 	/**
-	 * Returns: a newly allocated GdaDataModel.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static DataModel newDataModelList()
+	public this ()
 	{
 		// GdaDataModel* gda_data_model_list_new (void);
 		auto p = gda_data_model_list_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gda_data_model_list_new()");
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		this(cast(GdaDataModelList*) p);
 	}
 	
 	/**
 	 * Params:
 	 * list =  a list of strings.
-	 * Returns: a newly allocated GdaDataModel which contains a set ofGdaValue according to the given list.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static DataModel newFromStringList(ListG list)
+	public this (ListG list)
 	{
 		// GdaDataModel* gda_data_model_list_new_from_string_list  (const GList *list);
 		auto p = gda_data_model_list_new_from_string_list((list is null) ? null : list.getListGStruct());
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gda_data_model_list_new_from_string_list((list is null) ? null : list.getListGStruct())");
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		this(cast(GdaDataModelList*) p);
 	}
 	
 	/**

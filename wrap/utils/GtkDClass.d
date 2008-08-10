@@ -815,6 +815,7 @@ public class GtkDClass
 		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
 		else if ( startsWith(gName, "Gdk") )	prefix = "Gdk";
 		else if ( startsWith(gName, "Gst") )	prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )	prefix = "Gda";
 		else if ( startsWith(gName, "Atk") )	prefix = "Atk";
 		else if ( startsWith(gName, "G") )	prefix = "G";
 		else if ( startsWith(gName, "Pango") )	prefix = "Pg";
