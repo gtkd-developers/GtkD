@@ -123,10 +123,10 @@ public class Event
 	}
 	
 	/** */
-	public static bool isTrippleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	public static bool isTripleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber
-		&& eventButton.type == EventType.TRIPPLE_BUTTON_PRESS;
+		&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
 	}
 	
 	/**
