@@ -44,7 +44,6 @@
  * imports:
  * 	- glib.Str
  * structWrap:
- * 	- GList* -> ListG
  * 	- GdaQuarkList* -> QuarkList
  * module aliases:
  * local aliases:

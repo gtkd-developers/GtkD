@@ -48,7 +48,6 @@
  * structWrap:
  * 	- GdaDataModel* -> DataModel
  * 	- GdaFieldAttributes* -> FieldAttributes
- * 	- GdaTable* -> Table
  * module aliases:
  * local aliases:
  * overrides:

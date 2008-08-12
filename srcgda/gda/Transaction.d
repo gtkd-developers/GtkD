@@ -44,9 +44,6 @@
  * imports:
  * 	- glib.Str
  * structWrap:
- * 	- GdaDataModel* -> DataModel
- * 	- GdaFieldAttributes* -> FieldAttributes
- * 	- GdaTransaction* -> Transaction
  * module aliases:
  * local aliases:
  * overrides:

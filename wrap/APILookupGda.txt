@@ -361,12 +361,9 @@ file: libgda-gda-field.html
 struct: GdaFieldAttributes
 class: FieldAttributes
 prefix: gda_field_attributes_
-structWrap: GList* ListG
-structWrap: GdaConnection* Connection
 structWrap: GdaFieldAttributes* FieldAttributes
 structWrap: GdaValue* Value
 import: glib.Str
-import: glib.ListG
 import: gda.Value
 outFile: FieldAttributes
 
@@ -376,58 +373,27 @@ prefix: gda_log_
 outFile: Log
 
 
-
 file: libgda-gda-parameter.html
 struct: GdaParameter
 class: Parameter
 prefix: gda_parameter_
 noprefix: gda_parameter_list_
-structWrap: GList* ListG
 structWrap: GdaValue* Value
 structWrap: GdaParameter*  Parameter
-
 import: glib.Str
-import: glib.ListG
 import: gda.Value
-
-nocode: gda_parameter_list_get_type         
-nocode: gda_parameter_list_new              
-nocode: gda_parameter_list_free             
-nocode: gda_parameter_list_copy             
-nocode: gda_parameter_list_add_parameter    
-nocode: gda_parameter_list_get_names        
-nocode: gda_parameter_list_find             						
-nocode: gda_parameter_list_clear            
-nocode: gda_parameter_list_get_length       
-
-
 outFile: Parameter
 
 struct: GdaParameterList
 class: ParameterList
 prefix: gda_parameter_list_
 strictPrefix: Y
-
 structWrap: GList* ListG
-structWrap: GdaValue* Value
 structWrap: GdaParameter*  Parameter
 structWrap: GdaParameterList*  ParameterList
 import: glib.Str
-import: gda.Parameter
 import: glib.ListG
-nocode: gda_parameter_get_type
-nocode: gda_parameter_new_from_value    
-nocode: gda_parameter_new_boolean       
-nocode: gda_parameter_new_double        
-nocode: gda_parameter_new_gobject       
-nocode: gda_parameter_new_string        
-nocode: gda_parameter_copy              
-nocode: gda_parameter_free              
-nocode: gda_parameter_get_name          
-nocode: gda_parameter_set_name          
-nocode: gda_parameter_get_value         
-nocode: gda_parameter_set_value         
-                                             
+import: gda.Parameter
 outFile: ParameterList
 
 
@@ -435,7 +401,6 @@ file: libgda-gda-quark-list.html
 struct: GdaQuarkList
 class: QuarkList
 prefix: gda_quark_list_
-structWrap: GList* ListG
 structWrap: GdaQuarkList* QuarkList
 import: glib.Str
 outFile: QuarkList
@@ -456,7 +421,9 @@ outFile: Row
 
 file: libgda-GdaSelect.html
 struct: GdaSelect
+ctorStruct: GdaDataModel
 class: Select
+extend: GdaDataModel
 prefix: gda_select_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaSelect* Select
@@ -470,7 +437,6 @@ struct: GdaTable
 class: Table
 prefix: gda_table_
 structWrap: GdaDataModel*  DataModel
-structWrap: GdaTable* Table
 structWrap: GdaFieldAttributes* FieldAttributes
 import: glib.Str
 import: gda.DataModel
@@ -481,9 +447,6 @@ file: libgda-GdaTransaction.html
 struct: GdaTransaction
 class:  Transaction
 prefix: gda_transaction_
-structWrap: GdaDataModel*  DataModel
-structWrap: GdaTransaction*  Transaction
-structWrap: GdaFieldAttributes* FieldAttributes
 import: glib.Str
 outFile: Transaction
 
@@ -518,6 +481,4 @@ code: start
 		this(cast(GdaValue*)gda_value_new_boolean(val) );
 	}
 code: end
-
-
 outFile: Value

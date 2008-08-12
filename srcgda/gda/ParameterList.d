@@ -40,28 +40,15 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gda_parameter_get_type
- * 	- gda_parameter_new_from_value
- * 	- gda_parameter_new_boolean
- * 	- gda_parameter_new_double
- * 	- gda_parameter_new_gobject
- * 	- gda_parameter_new_string
- * 	- gda_parameter_copy
- * 	- gda_parameter_free
- * 	- gda_parameter_get_name
- * 	- gda_parameter_set_name
- * 	- gda_parameter_get_value
- * 	- gda_parameter_set_value
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gda.Parameter
  * 	- glib.ListG
+ * 	- gda.Parameter
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaParameter* -> Parameter
  * 	- GdaParameterList* -> ParameterList
- * 	- GdaValue* -> Value
  * module aliases:
  * local aliases:
  * overrides:
@@ -76,8 +63,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gda.Parameter;
 private import glib.ListG;
+private import gda.Parameter;
 
 
 

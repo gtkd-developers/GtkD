@@ -27,13 +27,13 @@
  * outFile = Select
  * strct   = GdaSelect
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GdaDataModel
  * clss    = Select
  * interf  = 
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GdaDataModel
  * implements:
  * prefixes:
  * 	- gda_select_
@@ -65,11 +65,12 @@ private import gda.DataModel;
 
 
 
+private import gda.DataModel;
 
 /**
  * Description
  */
-public class Select
+public class Select : DataModel
 {
 	
 	/** the main Gtk struct */
@@ -83,7 +84,7 @@ public class Select
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaSelect;
 	}
@@ -98,6 +99,14 @@ public class Select
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaSelect);
+		if( ptr !is null )
+		{
+			this = cast(Select)ptr;
+			return;
+		}
+		super(cast(GdaDataModel*)gdaSelect);
 		this.gdaSelect = gdaSelect;
 	}
 	
@@ -109,17 +118,17 @@ public class Select
 	 * GdaDataModel's based on a given SQL SELECT command.
 	 * A GdaSelect is just another GdaDataModel-based class, so it
 	 * can be used in the same way any other data model class is.
-	 * Returns: the newly created object.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static DataModel newSelect()
+	public this ()
 	{
 		// GdaDataModel* gda_select_new (void);
 		auto p = gda_select_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gda_select_new()");
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		this(cast(GdaSelect*) p);
 	}
 	
 	/**

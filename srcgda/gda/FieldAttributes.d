@@ -43,11 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.ListG
  * 	- gda.Value
  * structWrap:
- * 	- GList* -> ListG
- * 	- GdaConnection* -> Connection
  * 	- GdaFieldAttributes* -> FieldAttributes
  * 	- GdaValue* -> Value
  * module aliases:
@@ -64,7 +61,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import glib.ListG;
 private import gda.Value;
 
 
