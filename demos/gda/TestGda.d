@@ -10,7 +10,7 @@ import gda.DataModel;
 import gda.DataSourceInfo;
 import gda.ProviderInfo;
 import gda.Value;
-import gda.Error;
+import gda.ErrorGda;
 import glib.ListG;
 
 version(Tango)
@@ -39,22 +39,24 @@ void main (string[] args)
 {
 	Gda.init("TestGDA", "0.1", args);
 	save_ds();
-	do_stuff();
+
+	Gda.mainRun(cast(GdaInitFunc)&do_stuff, null);
+	//do_stuff();
 }   
 
 void save_ds ()
 {
-	Config.saveDataSource("calvaris", "MySQL", "DATABASE=test", "cosa de calvaris", "root", null);
+	Config.saveDataSource("calvaris", "MySQL", "DATABASE=calvaris", "cosa de calvaris", null, null);
 }
 
-void do_stuff ()
+extern(C) void do_stuff ()
 {
 	list_providers ();
 	list_datasources ();
 
 	Client client = new Client();
-	Connection connection = client.openConnection("calvaris", null, null, GdaConnectionOptions.READ_ONLY);
-	if (!connection) {
+	Connection connection = client.openConnection("calvaris", null, null, GdaConnectionOptions.DONT_SHARE);
+	if (connection is null) {
 		writefln("Connection failed!");
 		exit(1);
 	}
@@ -220,8 +222,7 @@ bool get_errors (Connection connection)
 	{
 		ListG  node  = list.nth(n);
 		
-		// wrapper?
-		gda.Error.Error error = new gda.Error.Error(node);
+		ErrorGda error = new ErrorGda(node);
 			 
 		writefln("Error no: %d\tdesc: %s\t source: %s\tsqlstate: %s  ", 
 				error.getNumber(),
