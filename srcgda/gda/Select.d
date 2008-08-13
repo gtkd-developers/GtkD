@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = GdaDataModel
+ * extend  = GdaDataModelArray
  * implements:
  * prefixes:
  * 	- gda_select_
@@ -65,12 +65,12 @@ private import gda.DataModel;
 
 
 
-private import gda.DataModel;
+private import gda.DataModelArray;
 
 /**
  * Description
  */
-public class Select : DataModel
+public class Select : DataModelArray
 {
 	
 	/** the main Gtk struct */
@@ -106,7 +106,7 @@ public class Select : DataModel
 			this = cast(Select)ptr;
 			return;
 		}
-		super(cast(GdaDataModel*)gdaSelect);
+		super(cast(GdaDataModelArray*)gdaSelect);
 		this.gdaSelect = gdaSelect;
 	}
 	

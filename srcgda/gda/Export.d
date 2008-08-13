@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gda_export_
@@ -67,11 +67,12 @@ private import gda.Connection;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-public class Export
+public class Export : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -85,7 +86,7 @@ public class Export
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaExport;
 	}
@@ -100,6 +101,14 @@ public class Export
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaExport);
+		if( ptr !is null )
+		{
+			this = cast(Export)ptr;
+			return;
+		}
+		super(cast(GObject*)gdaExport);
 		this.gdaExport = gdaExport;
 	}
 	

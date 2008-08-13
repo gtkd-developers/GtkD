@@ -33,7 +33,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gda_client_
@@ -74,6 +74,7 @@ private import gda.ParameterList;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -86,7 +87,7 @@ private import gda.ParameterList;
  *  a transaction in all the connections being managed by a unique GdaClient object, or
  *  obtain the list of all tables in all opened connections.
  */
-public class Client
+public class Client : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -100,7 +101,7 @@ public class Client
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaClient;
 	}
@@ -115,6 +116,14 @@ public class Client
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaClient);
+		if( ptr !is null )
+		{
+			this = cast(Client)ptr;
+			return;
+		}
+		super(cast(GObject*)gdaClient);
 		this.gdaClient = gdaClient;
 	}
 	

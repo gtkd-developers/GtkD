@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gda_connection_
@@ -85,6 +85,7 @@ private import gda.ParameterList;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -95,7 +96,7 @@ private import gda.ParameterList;
  *  run transactions, and get information about all objects stored in the
  *  underlying database.
  */
-public class Connection
+public class Connection : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -109,7 +110,7 @@ public class Connection
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaConnection;
 	}
@@ -124,6 +125,14 @@ public class Connection
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaConnection);
+		if( ptr !is null )
+		{
+			this = cast(Connection)ptr;
+			return;
+		}
+		super(cast(GObject*)gdaConnection);
 		this.gdaConnection = gdaConnection;
 	}
 	

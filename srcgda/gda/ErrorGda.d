@@ -33,7 +33,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gda_error_
@@ -64,11 +64,12 @@ private import glib.ListG;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-public class ErrorGda
+public class ErrorGda : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -82,7 +83,7 @@ public class ErrorGda
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaError;
 	}
@@ -97,12 +98,20 @@ public class ErrorGda
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaError);
+		if( ptr !is null )
+		{
+			this = cast(ErrorGda)ptr;
+			return;
+		}
+		super(cast(GObject*)gdaError);
 		this.gdaError = gdaError;
 	}
 	
 	/** */
 	this (ListG glist) {
-		this.gdaError = cast(GdaError *) glist.data;
+		this( cast(GdaError*)glist.data );
 	}
 	
 	/**

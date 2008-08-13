@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GdaDataModelArray
  * implements:
  * prefixes:
  * 	- gda_table_
@@ -67,11 +67,12 @@ private import gda.FieldAttributes;
 
 
 
+private import gda.DataModelArray;
 
 /**
  * Description
  */
-public class Table
+public class Table : DataModelArray
 {
 	
 	/** the main Gtk struct */
@@ -85,7 +86,7 @@ public class Table
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaTable;
 	}
@@ -100,6 +101,14 @@ public class Table
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaTable);
+		if( ptr !is null )
+		{
+			this = cast(Table)ptr;
+			return;
+		}
+		super(cast(GdaDataModelArray*)gdaTable);
 		this.gdaTable = gdaTable;
 	}
 	

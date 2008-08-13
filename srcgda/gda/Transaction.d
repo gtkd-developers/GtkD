@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gda_transaction_
@@ -61,11 +61,12 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-public class Transaction
+public class Transaction : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -79,7 +80,7 @@ public class Transaction
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdaTransaction;
 	}
@@ -94,6 +95,14 @@ public class Transaction
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdaTransaction);
+		if( ptr !is null )
+		{
+			this = cast(Transaction)ptr;
+			return;
+		}
+		super(cast(GObject*)gdaTransaction);
 		this.gdaTransaction = gdaTransaction;
 	}
 	

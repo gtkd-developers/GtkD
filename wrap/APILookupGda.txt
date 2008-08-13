@@ -130,6 +130,7 @@ outFile: Blob
 file: libgda-GdaClient.html 
 struct: GdaClient
 class: Client
+extend: GObject
 prefix: gda_client_
 structWrap: GList* ListG
 structWrap: GdaConnection* Connection
@@ -248,6 +249,7 @@ outFile: DataSourceInfo
 file: libgda-GdaConnection.html
 struct: GdaConnection
 class: Connection
+extend: GObject
 prefix: gda_connection_
 structWrap: GList* ListG
 structWrap: GdaBlob* Blob
@@ -331,6 +333,7 @@ outFile: DataModel
 file: libgda-GdaError.html
 struct: GdaError
 class: ErrorGda
+extend: GObject
 prefix: gda_error_
 structWrap: GList* ListG
 import: glib.Str
@@ -339,7 +342,7 @@ import: glib.ListG
 code: start
 	/** */
 	this (ListG glist) {
-		this.gdaError = cast(GdaError *) glist.data;
+		this( cast(GdaError*)glist.data );
 	}
 code: end
 outFile: ErrorGda
@@ -348,6 +351,7 @@ outFile: ErrorGda
 file: libgda-GdaExport.html
 struct: GdaExport
 class: Export
+extend: GObject
 prefix: gda_export_
 structWrap: GList* ListG
 structWrap: GdaConnection* Connection
@@ -366,6 +370,7 @@ structWrap: GdaValue* Value
 import: glib.Str
 import: gda.Value
 outFile: FieldAttributes
+
 
 file: libgda-gda-log.html 
 class: Log
@@ -423,7 +428,7 @@ file: libgda-GdaSelect.html
 struct: GdaSelect
 ctorStruct: GdaDataModel
 class: Select
-extend: GdaDataModel
+extend: GdaDataModelArray
 prefix: gda_select_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaSelect* Select
@@ -435,6 +440,7 @@ outFile: Select
 file: libgda-GdaTable.html
 struct: GdaTable
 class: Table
+extend: GdaDataModelArray
 prefix: gda_table_
 structWrap: GdaDataModel*  DataModel
 structWrap: GdaFieldAttributes* FieldAttributes
@@ -443,12 +449,15 @@ import: gda.DataModel
 import: gda.FieldAttributes
 outFile: Table
 
+
 file: libgda-GdaTransaction.html
 struct: GdaTransaction
 class:  Transaction
+extend: GObject
 prefix: gda_transaction_
 import: glib.Str
 outFile: Transaction
+
 
 file: libgda-gda-value.html
 struct: GdaValue
