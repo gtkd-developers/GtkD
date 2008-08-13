@@ -39,9 +39,7 @@ void main (string[] args)
 {
 	Gda.init("TestGDA", "0.1", args);
 	save_ds();
-
-	Gda.mainRun(cast(GdaInitFunc)&do_stuff, null);
-	//do_stuff();
+	do_stuff();
 }   
 
 void save_ds ()
@@ -49,14 +47,14 @@ void save_ds ()
 	Config.saveDataSource("calvaris", "MySQL", "DATABASE=calvaris", "cosa de calvaris", null, null);
 }
 
-extern(C) void do_stuff ()
+void do_stuff ()
 {
 	list_providers ();
 	list_datasources ();
 
 	Client client = new Client();
-	Connection connection = client.openConnection("calvaris", null, null, GdaConnectionOptions.DONT_SHARE);
-	if (connection is null) {
+	Connection connection = client.openConnection("calvaris", null, null, GdaConnectionOptions.READ_ONLY);
+	if (!connection) {
 		writefln("Connection failed!");
 		exit(1);
 	}
