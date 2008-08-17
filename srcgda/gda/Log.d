@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Log
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -56,6 +57,7 @@ private import gdac.gda;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 
 
 
@@ -65,6 +67,22 @@ private import glib.ConstructionException;
  */
 public class Log
 {
+	
+	/*
+	 * Logs the given message in the GDA log file.
+	 */
+	void message(string msg)
+	{
+		gda_log_message(Str.toStringz(msg));
+	}
+	
+	/*
+	 * Logs the given error in the GDA log file.
+	 */
+	void error(string err)
+	{
+		gda_log_message(Str.toStringz(err));
+	}
 	
 	/**
 	 */

@@ -375,6 +375,25 @@ outFile: FieldAttributes
 file: libgda-gda-log.html 
 class: Log
 prefix: gda_log_
+import: glib.Str
+
+code: start
+	/*
+	 * Logs the given message in the GDA log file.
+	 */
+	void message(string msg)
+	{
+		gda_log_message(Str.toStringz(msg));
+	}
+
+	/*
+	 * Logs the given error in the GDA log file.
+	 */
+	void error(string err)
+	{
+		gda_log_message(Str.toStringz(err));
+	}
+code: end
 outFile: Log
 
 
