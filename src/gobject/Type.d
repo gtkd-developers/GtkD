@@ -38,6 +38,7 @@
  * prefixes:
  * 	- g_type_
  * omit structs:
+ * 	- GTypeInterface
  * omit prefixes:
  * omit code:
  * omit signals:

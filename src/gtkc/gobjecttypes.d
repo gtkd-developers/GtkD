@@ -207,6 +207,18 @@ public enum GConnectFlags
 }
 alias GConnectFlags ConnectFlags;
 
+
+//We need a corectly warped struct for gtk.TreeModel.
+
+/**
+ * An opaque structure used as the base of all interface types.
+ */
+public struct GTypeInterface
+{
+	GType gType;         /* iface type */
+	GType gInstanceType;
+}
+
 struct GValue
 {
 	align(4)
@@ -228,16 +240,6 @@ struct GValue
 	Data data1;
 	Data data2;
 };
-
-/**
- * An opaque structure used as the base of all interface types.
- */
-public struct GTypeInterface
-{
-	GType gType;         /* iface type */
-	GType gInstanceType;
-}
-
 
 /**
  * An opaque structure used as the base of all type instances.

@@ -41,6 +41,18 @@ addEnums: start
 addEnums: end
 
 addStructs: start
+
+//We need a corectly warped struct for gtk.TreeModel.
+
+/**
+ * An opaque structure used as the base of all interface types.
+ */
+public struct GTypeInterface
+{ 
+	GType gType;         /* iface type */ 
+	GType gInstanceType;
+}
+
 addStructs: end
 
 addTypes: start
@@ -92,6 +104,7 @@ wrap: gobject
 file: gobject-Type-Information.html
 class: Type
 prefix: g_type_
+nostruct: GTypeInterface
 import: glib.Str
 #structWrap: GType* Type
 #import: gobject.TypeQuery
