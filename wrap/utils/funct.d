@@ -125,16 +125,47 @@ public struct Funct
 			{
 				currParm = "";
 			}
-			
-			GtkDClass.adjustTypeName(currParmType, currParm);
 
+			GtkDClass.adjustTypeName(currParmType, currParm);
 			parmsType ~= currParmType.dup;
-			parmsWrap ~= getWrappedType(currParmType.dup, convParms);
+
+			if ( !getOutOrRefType(currParm, currParmType,  convParms) )
+				parmsWrap ~= getWrappedType(currParmType.dup, convParms);
+
 			parms ~= currParm.dup;
 			
 			if ( p<text.length && text[p]==',') ++p;
 		}
+
 		GtkDClass.skip(p, text, ';');
+	}
+
+	bool getOutOrRefType(char[] currParm, char[] currParmType, ConvParms* convParms)
+	{
+		if ( name in convParms.outParms )
+		{
+			foreach (char[] parm; convParms.outParms[name] )
+			{
+				if ( parm == currParm )
+				{
+					parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+					return true;
+				}
+			}
+		}
+		else if ( name in convParms.inoutParms )
+		{
+			foreach (char[] parm; convParms.inoutParms[name] )
+			{
+				if ( parm == currParm )
+				{
+					parmsWrap ~= "ref "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	char[] getStrctVar(ConvParms* convParms)
@@ -483,6 +514,11 @@ public struct Funct
 				parmToGtk = "Str.toStringz("
 							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
 							~")";
+			}
+			else if ( GtkDClass.startsWith(parmsWrap[i], "out") ||
+				GtkDClass.startsWith(parmsWrap[i], "ref") )
+			{
+				parmToGtk = "&" ~ GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 			}
 			else
 			{

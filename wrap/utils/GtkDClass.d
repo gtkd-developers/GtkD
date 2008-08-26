@@ -2239,6 +2239,7 @@ public class GtkDClass
 						{
 							char[] rawDeclaration = fun.declaration(convParms,wrapper.getAliases());
 							char[] gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
+							gtkDDeclaration = gtkDDeclaration.replace(", doref", ", ref").replace("(doref", "(ref"); //TODO stringToGtkD shouldn't replace the ref for the type.
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
 							member ~= gtkDDeclaration~iFaceChar;
@@ -2659,7 +2660,7 @@ public class GtkDClass
 			case "out" : converted = "f_out"; break;
 			case "in" : converted = "f_in"; break;
 			case "inout" : converted = "f_inout"; break;
-			case "ref" : converted = "doref"; break; // TODO why wasn't this converted from the alias on APILookup.txt
+			//case "ref" : converted = "doref"; break; // TODO why wasn't this converted from the alias on APILookup.txt
 			default:
 				// done
 				break;

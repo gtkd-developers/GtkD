@@ -445,6 +445,37 @@ public class GtkWrapper : WrapperIF
         return status;
     }
 
+    /**
+     * Creates an entry on a char[][char[]] associative array
+     * Params:
+     *      aa =
+     *      defReader =
+     * Returns:
+     */
+    private static int loadAA(inout char[][][char[]] aa, DefReader defReader, inout WError*[] errors = null)
+    {
+        int status = ERR_NONE;
+        char[][] vals = std.string.split(defReader.getValue());
+        if ( vals.length == 1 )
+        {
+            vals ~= "";
+        }
+        if ( vals.length == 2 )
+        {
+            aa[vals[0]] ~= vals[1];
+            debug(aa) writefln("added alias %s = %s", vals[0], vals[1]);
+        }
+        else
+        {
+            status = ERR_INVALID_ALIAS;
+            if ( errors !is null )
+            {
+                errors ~= WError.create(defReader.getLineNumber(), status, "Invalid alias");
+            }
+        }
+		return status;
+    }
+
     private char[] loadLicense()
     {
         license = loadText("license");
@@ -527,7 +558,7 @@ public class GtkWrapper : WrapperIF
                       " copy import import(tango) structWrap alias moduleAlias override"
                       " noprefix nostruct nocode nosignal"
                       " code interfaceCode"
-                      " srcout"
+                      " srcout out inout"
                       ;
         if (outPack == "lib") {char[] tmp = pack.dup; pack = outPack.dup; outPack = tmp;} //undo Bind hack...oupPack now holds bind dir.
         convParms.outPack = outPack;
@@ -561,6 +592,8 @@ public class GtkWrapper : WrapperIF
                 case "alias": loadAA(convParms.aliases, defReader, errors); break;
                 case "moduleAlias": loadAA(convParms.mAliases, defReader, errors); break;
                 case "override": convParms.overrides ~= defReader.getValue(); break;
+				case "out": loadAA(convParms.outParms, defReader, errors); break;
+				case "inout": loadAA(convParms.inoutParms, defReader, errors); break;
                 case "text":
                     convParms.text ~= loadTextMultiLine("text");
                     break;

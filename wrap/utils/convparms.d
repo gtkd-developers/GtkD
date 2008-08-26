@@ -47,14 +47,16 @@ public struct ConvParms
 	public char[][char[]]  structWrap;
 	public char[][] noStructs;
 	public char[][] noPrefixes;
-	public char[][] noCode;		/// insert the external declaration but not the wrapping code
+	public char[][] noCode;		    /// insert the external declaration but not the wrapping code
 	public char[][] noSignals;		/// Don't generate Signals
 	public char[][char[]] aliases;
 	public char[][char[]] mAliases;
-	public char[][] overrides;		/// list of functions that need override for gtkD to work with dmd 2
-	public char[] classCode;		/// any valid D code to be copied to the final GtkD class
-	public char[] interfaceCode;	/// any valid D code to be copied to the final GtkD interface
-	public char[][] text;		/// text to be added to the text read from the file
+	public char[][] overrides;		     /// list of functions that need override for gtkD to work with dmd 2
+	public char[][][char[]]  outParms;   /// list of params that should be treated as out parameters
+	public char[][][char[]]  inoutParms; /// list of params that should be treated as inout/ref parameters
+	public char[] classCode;		     /// any valid D code to be copied to the final GtkD class
+	public char[] interfaceCode;	     /// any valid D code to be copied to the final GtkD interface
+	public char[][] text;		         /// text to be added to the text read from the file
 
 	public void clearAll()
 	{
