@@ -1956,6 +1956,11 @@ template: TStruct
 prefix: gtk_editable_
 prefix: gtk_
 import: glib.Str
+
+inout: gtk_editable_insert_text position
+out: gtk_editable_get_selection_bounds start
+out: gtk_editable_get_selection_bounds end
+
 interface: EditableIF
 outFile: EditableT
 

@@ -258,10 +258,10 @@ public template EditableT(TStruct)
 	 * end = location to store the end position, or NULL.
 	 * Returns:TRUE if there is a selection.
 	 */
-	public int getSelectionBounds(int* start, int* end)
+	public int getSelectionBounds(out int start, out int end)
 	{
 		// gboolean gtk_editable_get_selection_bounds (GtkEditable *editable,  gint *start,  gint *end);
-		return gtk_editable_get_selection_bounds(getEditableTStruct(), start, end);
+		return gtk_editable_get_selection_bounds(getEditableTStruct(), &start, &end);
 	}
 	
 	/**
@@ -274,10 +274,10 @@ public template EditableT(TStruct)
 	 *  call it points at the position after the newly
 	 *  inserted text.
 	 */
-	public void insertText(string newText, int newTextLength, int* position)
+	public void insertText(string newText, int newTextLength, ref int position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
-		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), newTextLength, position);
+		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), newTextLength, &position);
 	}
 	
 	/**

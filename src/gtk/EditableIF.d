@@ -159,7 +159,7 @@ public interface EditableIF
 	 * end = location to store the end position, or NULL.
 	 * Returns:TRUE if there is a selection.
 	 */
-	public int getSelectionBounds(int* start, int* end);
+	public int getSelectionBounds(out int start, out int end);
 	
 	/**
 	 * Inserts text at a given position.
@@ -171,7 +171,7 @@ public interface EditableIF
 	 *  call it points at the position after the newly
 	 *  inserted text.
 	 */
-	public void insertText(string newText, int newTextLength, int* position);
+	public void insertText(string newText, int newTextLength, ref int position);
 	
 	/**
 	 * Deletes a sequence of characters. The characters that
