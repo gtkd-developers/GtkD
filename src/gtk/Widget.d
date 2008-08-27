@@ -43,6 +43,8 @@
  * omit prefixes:
  * 	- gtk_widget_ref
  * omit code:
+ * 	- gtk_widget_path
+ * 	- gtk_widget_class_path
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -446,6 +448,57 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
+	}
+	
+	/**
+	 * Obtains the full path to widget. The path is simply the name of a
+	 * widget and all its parents in the container hierarchy, separated by
+	 * periods. The name of a widget comes from
+	 * gtk_widget_get_name(). Paths are used to apply styles to a widget
+	 * in gtkrc configuration files. Widget names are the type of the
+	 * widget by default (e.g. "GtkButton") or can be set to an
+	 * application-specific value with gtk_widget_set_name(). By setting
+	 * the name of a widget, you allow users or theme authors to apply
+	 * styles to that specific widget in their gtkrc
+	 * file. path_reversed_p fills in the path in reverse order,
+	 * i.e. starting with widget's name instead of starting with the name
+	 * of widget's outermost ancestor.
+	 * Params:
+	 * pathLength =  location to store length of the path, or NULL
+	 * path =  location to store allocated path string, or NULL
+	 * pathReversed =  location to store allocated reverse path string, or NULL
+	 */
+	public void path(out uint pathLength, out string path, out string pathReversed)
+	{
+		char* p = null;
+		char* pr = null;
+		
+		// void gtk_widget_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
+		gtk_widget_path(gtkWidget, &pathLength, &p, &pr);
+		
+		path = Str.toString(p);
+		pathReversed = Str.toString(pr);
+	}
+	
+	/**
+	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
+	 * never uses a custom name set with gtk_widget_set_name().
+	 * Params:
+	 * pathLength =  location to store the length of the class path, or NULL
+	 * path =  location to store the class path as an allocated string, or NULL
+	 * pathReversed =  location to store the reverse class path as an allocated
+	 *  string, or NULL
+	 */
+	public void classPath(out uint pathLength, out string path, out string pathReversed)
+	{
+		char* p = null;
+		char* pr = null;
+		
+		// void gtk_widget_class_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
+		gtk_widget_class_path(gtkWidget, &pathLength, &p, &pr);
+		
+		path = Str.toString(p);
+		pathReversed = Str.toString(pr);
 	}
 	
 	//get the addOnDestroy from ObjectGtk
@@ -3662,10 +3715,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * destY =  location to store Y position relative to dest_widget
 	 * Returns: FALSE if either widget was not realized, or there was no common ancestor. In this case, nothing is stored in *dest_x and *dest_y. Otherwise TRUE.
 	 */
-	public int translateCoordinates(Widget destWidget, int srcX, int srcY, int* destX, int* destY)
+	public int translateCoordinates(Widget destWidget, int srcX, int srcY, out int destX, out int destY)
 	{
 		// gboolean gtk_widget_translate_coordinates (GtkWidget *src_widget,  GtkWidget *dest_widget,  gint src_x,  gint src_y,  gint *dest_x,  gint *dest_y);
-		return gtk_widget_translate_coordinates(gtkWidget, (destWidget is null) ? null : destWidget.getWidgetStruct(), srcX, srcY, destX, destY);
+		return gtk_widget_translate_coordinates(gtkWidget, (destWidget is null) ? null : destWidget.getWidgetStruct(), srcX, srcY, &destX, &destY);
 	}
 	
 	/**
@@ -3905,45 +3958,6 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// void gtk_widget_input_shape_combine_mask (GtkWidget *widget,  GdkBitmap *shape_mask,  gint offset_x,  gint offset_y);
 		gtk_widget_input_shape_combine_mask(gtkWidget, (shapeMask is null) ? null : shapeMask.getBitmapStruct(), offsetX, offsetY);
-	}
-	
-	/**
-	 * Obtains the full path to widget. The path is simply the name of a
-	 * widget and all its parents in the container hierarchy, separated by
-	 * periods. The name of a widget comes from
-	 * gtk_widget_get_name(). Paths are used to apply styles to a widget
-	 * in gtkrc configuration files. Widget names are the type of the
-	 * widget by default (e.g. "GtkButton") or can be set to an
-	 * application-specific value with gtk_widget_set_name(). By setting
-	 * the name of a widget, you allow users or theme authors to apply
-	 * styles to that specific widget in their gtkrc
-	 * file. path_reversed_p fills in the path in reverse order,
-	 * i.e. starting with widget's name instead of starting with the name
-	 * of widget's outermost ancestor.
-	 * Params:
-	 * pathLength =  location to store length of the path, or NULL
-	 * path =  location to store allocated path string, or NULL
-	 * pathReversed =  location to store allocated reverse path string, or NULL
-	 */
-	public void path(uint* pathLength, char** path, char** pathReversed)
-	{
-		// void gtk_widget_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
-		gtk_widget_path(gtkWidget, pathLength, path, pathReversed);
-	}
-	
-	/**
-	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
-	 * never uses a custom name set with gtk_widget_set_name().
-	 * Params:
-	 * pathLength =  location to store the length of the class path, or NULL
-	 * path =  location to store the class path as an allocated string, or NULL
-	 * pathReversed =  location to store the reverse class path as an allocated
-	 *  string, or NULL
-	 */
-	public void classPath(uint* pathLength, char** path, char** pathReversed)
-	{
-		// void gtk_widget_class_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
-		gtk_widget_class_path(gtkWidget, pathLength, path, pathReversed);
 	}
 	
 	/**
@@ -4794,10 +4808,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * width =  return location for width, or NULL
 	 * height =  return location for height, or NULL
 	 */
-	public void getSizeRequest(int* width, int* height)
+	public void getSizeRequest(out int width, out int height)
 	{
 		// void gtk_widget_get_size_request (GtkWidget *widget,  gint *width,  gint *height);
-		gtk_widget_get_size_request(gtkWidget, width, height);
+		gtk_widget_get_size_request(gtkWidget, &width, &height);
 	}
 	
 	/**

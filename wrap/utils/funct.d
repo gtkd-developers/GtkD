@@ -650,7 +650,7 @@ public struct Funct
 				}
 				else
 				{
-					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " ("~id~" is null) ? null : "~id~ ".get"~ split(parmsWrap[i])[1] ~"Struct();";
+					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " = ("~id~" is null) ? null : "~id~ ".get"~ split(parmsWrap[i])[1] ~"Struct();";
 				}
 
 				gtkCall ~= ", &" ~ parmsType[i].removechars("*").tolower();

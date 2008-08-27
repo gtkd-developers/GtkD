@@ -158,7 +158,6 @@ public class Window : Bin
 		move(cast(int)x, cast(int)y);
 	}
 	
-	
 	/**
 	 */
 	int[char[]] connectedSignals;
@@ -1540,10 +1539,10 @@ public class Window : Bin
 	 * width =  return location for width, or NULL
 	 * height =  return location for height, or NULL
 	 */
-	public void getSize(int* width, int* height)
+	public void getSize(out int width, out int height)
 	{
 		// void gtk_window_get_size (GtkWindow *window,  gint *width,  gint *height);
-		gtk_window_get_size(gtkWindow, width, height);
+		gtk_window_get_size(gtkWindow, &width, &height);
 	}
 	
 	/**
