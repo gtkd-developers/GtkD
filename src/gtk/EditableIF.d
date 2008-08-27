@@ -171,7 +171,7 @@ public interface EditableIF
 	 *  call it points at the position after the newly
 	 *  inserted text.
 	 */
-	public void insertText(string newText, int newTextLength, ref int position);
+	public void insertText(string newText, int newTextLength, inout int position);
 	
 	/**
 	 * Deletes a sequence of characters. The characters that

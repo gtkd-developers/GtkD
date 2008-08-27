@@ -30,16 +30,14 @@ module utils.funct;
 //debug = externalDec
 //debug = callback;
 
+private import std.string;
+private import std.stdio;
+
+private import utils.convparms;
+private import utils.GtkDClass;
 
 public struct Funct
 {
-
-	private import std.string;
-	private import std.stdio;
-	
-	private import utils.convparms;
-	private import utils.GtkDClass;
-
 	bool ctor;	/// when true this method was found to be a constructor
 	char[] type;
 	char[] typeWrap;
@@ -153,13 +151,13 @@ public struct Funct
 				}
 			}
 		}
-		else if ( name in convParms.inoutParms )
+		if ( name in convParms.inoutParms )
 		{
 			foreach (char[] parm; convParms.inoutParms[name] )
 			{
 				if ( parm == currParm )
 				{
-					parmsWrap ~= "ref "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+					parmsWrap ~= "inout "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
 					return true;
 				}
 			}
@@ -516,9 +514,12 @@ public struct Funct
 							~")";
 			}
 			else if ( GtkDClass.startsWith(parmsWrap[i], "out") ||
-				GtkDClass.startsWith(parmsWrap[i], "ref") )
+				GtkDClass.startsWith(parmsWrap[i], "inout") )
 			{
-				parmToGtk = "&" ~ GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				if ( parmsType[i][0 .. $-1] == split(parmsWrap[i])[1] )
+					parmToGtk = "&" ~ GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				else
+					parmToGtk = "&" ~ parmsType[i].removechars("*").tolower();
 			}
 			else
 			{
@@ -587,6 +588,7 @@ public struct Funct
 	{
 		char[][] bd; /* Return variable. */
 		char[] gtkCall;
+		char[][] end; //Code to be added to the end of the function to wrap ref/out parameters. 
 		bool wrapError = false;
 
 		void checkError()
@@ -636,6 +638,25 @@ public struct Funct
 
 				wrapError = true;
 			}
+			else if ( (GtkDClass.startsWith(parmsWrap[i], "out") ||
+				GtkDClass.startsWith(parmsWrap[i], "inout")) &&
+				parmsType[i][0 .. $-1] != split(parmsWrap[i])[1] )
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+
+				if (GtkDClass.startsWith(parmsWrap[i], "out") )
+				{
+					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " = null;";
+				}
+				else
+				{
+					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " ("~id~" is null) ? null : "~id~ ".get"~ parmsWrap[i] ~"Struct();";
+				}
+
+				gtkCall ~= ", &" ~ parmsType[i].removechars("*").tolower();
+				
+				end ~= id ~" = new "~ parmsWrap[i] ~"("~ parmsType[i].removechars("*").tolower() ~");";
+			}
 			else
 			{
 				if ( parms[i].length > 0 )
@@ -648,6 +669,12 @@ public struct Funct
 
 		gtkCall ~= ")"; //gtk_function(arg1...argN)
 
+		if ( end.length > 0 )
+		{
+			bd ~= "";
+			end = [""] ~ end;
+		}
+
 		/* 2nd: construct the rest of the body according to the type
 		 * of the function. */
 		if (type == "void")
@@ -657,6 +684,10 @@ public struct Funct
 			gtkCall ~= ";";
 			bd ~= gtkCall;
 			checkError();
+
+			if ( end.length > 0 )
+				bd ~= end;
+
 			return bd;
 		}
 		else
@@ -682,6 +713,10 @@ public struct Funct
 								  	"	throw new ConstructionException(\"null returned by " ~ gtkCall ~ "\");",
 									"}"	];
 				bd ~= check;
+
+				if ( end.length > 0 )
+					bd ~= end;
+
 				/* What's with all the casting? */
 				/* A; Casting is needed because some GTK+
 				 *    functions can return void pointers. */
@@ -698,12 +733,16 @@ public struct Funct
 				{
 					/* We return an object of the same type as the GTK+ function. */
 					//return gtk_function(arg1...argN);
-					if ( !wrapError )
+					if ( !wrapError && end.length == 0)
 						bd ~= "return " ~ gtkCall ~ ";";
 					else
 					{
 						bd ~= "auto p = " ~ gtkCall ~ ";";
 						checkError();
+
+						if ( end.length > 0 )
+							bd ~= end;
+
 						bd ~= "return p;";
 					}
 
@@ -717,12 +756,16 @@ public struct Funct
 					{
 						/* Returned strings get special care. */
 						//return Str.toString(gtk_function(arg1...argN)).dup;
-						if ( !wrapError )
+						if ( !wrapError && end.length == 0 )
 							bd ~= "return Str.toString(" ~ gtkCall ~ ");";
 						else
 						{
 							bd ~= "auto p = Str.toString(" ~ gtkCall ~ ");";
 							checkError();
+
+							if ( end.length > 0 )
+								bd ~= end;
+
 							bd ~= "return p;";
 						}
 
@@ -736,6 +779,9 @@ public struct Funct
 						bd ~= "auto p = " ~ gtkCall ~ ";";
 
 						checkError();
+
+						if ( end.length > 0 )
+							bd ~= end;
 
 						char[][] check = [	"if(p is null)",
 								  			"{",

@@ -2239,7 +2239,6 @@ public class GtkDClass
 						{
 							char[] rawDeclaration = fun.declaration(convParms,wrapper.getAliases());
 							char[] gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
-							gtkDDeclaration = gtkDDeclaration.replace(", doref", ", ref").replace("(doref", "(ref"); //TODO stringToGtkD shouldn't replace the ref for the type.
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
 							member ~= gtkDDeclaration~iFaceChar;

@@ -274,7 +274,7 @@ public template EditableT(TStruct)
 	 *  call it points at the position after the newly
 	 *  inserted text.
 	 */
-	public void insertText(string newText, int newTextLength, ref int position)
+	public void insertText(string newText, int newTextLength, inout int position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
 		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), newTextLength, &position);

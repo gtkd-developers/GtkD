@@ -3293,6 +3293,11 @@ structWrap: GtkTreeIter* TreeIter
 import: gtk.Entry
 structWrap: GtkEntry* Entry
 
+inout: gtk_tree_view_get_path_at_pos path
+inout: gtk_tree_view_get_path_at_pos column
+out: gtk_tree_view_get_path_at_pos cell_x
+out: gtk_tree_view_get_path_at_pos cell_y
+
 code: start
 	/**
 	 * Expands the row of the iter.
@@ -3306,43 +3311,6 @@ code: start
 		return expandRow(model.getPath(iter), openAll);
 	}
 
-	/**
-	 * Finds the path at the point (x, y), relative to widget coordinates. That
-	 * is, x and y are relative to an events coordinates. x and y must come
-	 * from an event on the tree_view only where event->window ==
-	 * gtk_tree_view_get_bin (). It is primarily for things
-	 * like popup menus. If path is non-NULL, then it will be filled with the
-	 * GtkTreePath at that point. This path should be freed with gtk_tree_path_free().
-	 * If column is non-NULL, then it will be filled with the column at that point.
-	 * cell_x and cell_y return the coordinates relative to the cell background
-	 * (i.e. the background_area passed to gtk_cell_renderer_render()). This
-	 * function is only meaningful if tree_view is realized.
-	 * Params:
-	 *  x = The x position to be identified.
-	 *  y = The y position to be identified.
-	 *  path = A pointer to a GtkTreePath pointer to be filled in, or NULL
-	 *  column = A pointer to a GtkTreeViewColumn pointer to be filled in, or NULL
-	 *  cellX = A pointer where the X coordinate relative to the cell can be placed, or NULL
-	 *  cellY = A pointer where the Y coordinate relative to the cell can be placed, or NULL
-	 * Returns:
-	 *  TRUE if a row exists at that coordinate.
-	 */
-	bool getPathAtPos(gint x, gint y, inout TreePath path, inout TreeViewColumn column, out gint cellX, out gint cellY)
-	{
-		GtkTreePath* p = (path is null) ? null : path.getTreePathStruct(); 
-		GtkTreeViewColumn* c = (column is null) ? null : column.getTreeViewColumnStruct();
-
-		bool result = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &p, &c, &cellX, &cellY)
-			== 0 ? false : true;
-
-		path = new TreePath(p);
-		column = new TreeViewColumn(c);
-
-		return result;
-	}
-	
-
-	
 	/**
 	 * gets the first selected iter or null if no rows are selected
 	 */
