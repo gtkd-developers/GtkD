@@ -189,6 +189,10 @@ structWrap: GMainContext* MainContext
 #structWrap: GSourceFuncs* SourceFuncs
 #import: glib.PollFD
 #structWrap: GPollFD* PollFD
+
+out: g_main_context_prepare priority
+out: g_main_context_query timeout_
+
 outFile: MainContext
 
 class: Timeout
@@ -563,6 +567,83 @@ import: glib.Str
 structWrap: GString* StringG
 structWrap: GSource* Source
 structWrap: GIOChannel* IOChannel
+
+out: g_io_channel_read_chars bytes_read
+out: g_io_channel_read_unichar thechar
+out: g_io_channel_read_line_string terminator_pos
+out: g_io_channel_write_chars bytes_written
+out: g_io_channel_get_line_term length
+out: g_io_channel_read bytes_read
+out: g_io_channel_write bytes_written
+
+code: start
+/**
+	 * Reads a line, including the terminating character(s),
+	 * from a GIOChannel into a newly-allocated string.
+	 * str_return will contain allocated memory if the return
+	 * is G_IO_STATUS_NORMAL.
+	 * Params:
+	 * strReturn =  The line read from the GIOChannel, including the
+	 *  line terminator. This data should be freed with g_free()
+	 *  when no longer needed. This is a nul-terminated string.
+	 *  If a length of zero is returned, this will be NULL instead.
+	 * length =  location to store length of the read data, or NULL
+	 * terminatorPos =  location to store position of line terminator, or NULL
+	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
+	 */
+	public GIOStatus readLine(out string strReturn, out uint terminatorPos)
+	{
+		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
+		GError* err = null;
+		char* str = null;
+		uint len;
+		
+		auto p = g_io_channel_read_line(gIOChannel, &str, &len, &terminatorPos, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if ( str !is null )
+			strReturn = str[0 .. len-1];
+		
+		return p;
+	}
+
+	/**
+	 * Reads all the remaining data from the file.
+	 * Params:
+	 * strReturn =  Location to store a pointer to a string holding
+	 *  the remaining data in the GIOChannel. This data should
+	 *  be freed with g_free() when no longer needed. This
+	 *  data is terminated by an extra nul character, but there
+	 *  may be other nuls in the intervening data.
+	 * Returns: G_IO_STATUS_NORMAL on success.  This function never returns G_IO_STATUS_EOF.
+	 * Throws: GException on failure.
+	 */
+	public GIOStatus readToEnd(out string strReturn)
+	{
+		// GIOStatus g_io_channel_read_to_end (GIOChannel *channel,  gchar **str_return,  gsize *length,  GError **error);
+		GError* err = null;
+		char* str = null;
+		uint len;
+
+		auto p = g_io_channel_read_to_end(gIOChannel, &str, &len, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+	
+		if ( str !is null )
+			strReturn = str[0 .. len-1];
+		
+		return p;
+	}
+code: end
 outFile: IOChannel
 
 
