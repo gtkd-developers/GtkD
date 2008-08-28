@@ -366,10 +366,10 @@ public class Drawable : ObjectG
 	 * width =  location to store drawable's width, or NULL
 	 * height =  location to store drawable's height, or NULL
 	 */
-	public void getSize(int* width, int* height)
+	public void getSize(out int width, out int height)
 	{
 		// void gdk_drawable_get_size (GdkDrawable *drawable,  gint *width,  gint *height);
-		gdk_drawable_get_size(gdkDrawable, width, height);
+		gdk_drawable_get_size(gdkDrawable, &width, &height);
 	}
 	
 	/**

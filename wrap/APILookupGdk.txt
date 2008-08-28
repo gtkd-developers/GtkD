@@ -108,6 +108,15 @@ structWrap: GdkWindow* Window
 #structWrap: GdkDisplayPointerHooks* DisplayPointerHooks
 #import: gdk.Atom
 #structWrap: GdkAtom* Atom
+
+out: gdk_display_get_pointer x
+out: gdk_display_get_pointer y
+out: gdk_display_get_pointer mask
+out: gdk_display_get_window_at_pointer win_x
+out: gdk_display_get_window_at_pointer win_y
+out: gdk_display_get_maximal_cursor_size width
+out: gdk_display_get_maximal_cursor_size height
+
 outFile: Display
 
 file: GdkDisplayManager.html
@@ -249,6 +258,9 @@ import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
 override: getData
+
+out: gdk_drawable_get_size width
+out: gdk_drawable_get_size height
  
 code: start
 	/**
@@ -301,10 +313,16 @@ structWrap: GdkDrawable* Drawable
 structWrap: GdkPixmap* Pixmap
 import: gdk.Color
 structWrap: GdkColor* Color
-#import: gdk.Bitmap*
-#structWrap: GdkBitmap** Bitmap*
+import: gdk.Bitmap
+structWrap: GdkBitmap* Bitmap
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
+
+out: gdk_pixmap_create_from_xpm mask
+out: gdk_pixmap_create_from_xpm_d mask
+out: gdk_pixmap_colormap_create_from_xpm mask
+out: gdk_pixmap_colormap_create_from_xpm_d mask
+
 outFile: Pixmap
 
 struct: GdkBitmap
@@ -696,6 +714,30 @@ structWrap: GList* ListG
 structWrap: GdkVisual* Visual
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+
+nocode: gdk_query_depths
+
+code: start
+	/**
+	 * This function returns the available bit depths for the default
+	 * screen. It's equivalent to listing the visuals
+	 * (gdk_list_visuals()) and then looking at the depth field in each
+	 * visual, removing duplicates.
+	 * The array returned by this function should not be freed.
+	 * Params:
+	 * depths =  return location for available depths
+	 */
+	public static void gdkQueryDepths(out int[] depths)
+	{
+		int* dep = null;
+		int count;
+
+		// void gdk_query_depths (gint **depths,  gint *count);
+		gdk_query_depths(&dep, &count);
+
+		depths = dep[0 .. count];
+	}
+code: end
 outFile: Visual
 
 file: gdk-Fonts.html
@@ -772,6 +814,10 @@ structWrap: GList* ListG
 #structWrap: GdkWMDecoration* WMDecoration
 #import: gdk.PointerHooks
 #structWrap: GdkPointerHooks* PointerHooks
+
+out: gdk_window_at_pointer win_x
+out: gdk_window_at_pointer win_y
+
 outFile: Window
 
 file: gdk-Events.html
@@ -829,6 +875,77 @@ structWrap: GdkDisplay* Display
 #structWrap: GdkModifierType* ModifierType
 #import: gdk.KeymapKey*
 #structWrap: GdkKeymapKey** KeymapKey*
+
+out: gdk_keymap_translate_keyboard_state keyval
+out: gdk_keymap_translate_keyboard_state effective_group
+out: gdk_keymap_translate_keyboard_state level
+out: gdk_keymap_translate_keyboard_state consumed_modifiers
+#out: gdk_keymap_get_entries_for_keyval keys
+#out: gdk_keymap_get_entries_for_keyval n_keys
+#out: gdk_keymap_get_entries_for_keycode keys
+#out: gdk_keymap_get_entries_for_keycode n_keys
+out: gdk_keyval_convert_case lower
+out: gdk_keyval_convert_case upper
+
+code: start
+/**
+	 * Obtains a list of keycode/group/level combinations that will
+	 * generate keyval. Groups and levels are two kinds of keyboard mode;
+	 * in general, the level determines whether the top or bottom symbol
+	 * on a key is used, and the group determines whether the left or
+	 * right symbol is used. On US keyboards, the shift key changes the
+	 * keyboard level, and there are no groups. A group switch key might
+	 * convert a keyboard between Hebrew to English modes, for example.
+	 * GdkEventKey contains a group field that indicates the active
+	 * keyboard group. The level is computed from the modifier mask.
+	 * The returned array should be freed
+	 * with g_free().
+	 * Params:
+	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
+	 * keys =  return location for an array of GdkKeymapKey
+	 * Returns: TRUE if keys were found and returned
+	 */
+	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
+	{
+		GdkKeymapKey* gdkkeys = null;
+		int nKeys;
+
+		// gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
+		int i = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &gdkkeys, &nKeys);
+
+		keys = gdkkeys[0 .. nKeys];
+
+		return i;
+	}
+	
+	/**
+	 * Returns the keyvals bound to hardware_keycode.
+	 * The Nth GdkKeymapKey in keys is bound to the Nth
+	 * keyval in keyvals. Free the returned arrays with g_free().
+	 * When a keycode is pressed by the user, the keyval from
+	 * this list of entries is selected by considering the effective
+	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
+	 * Params:
+	 * hardwareKeycode =  a keycode
+	 * keys =  return location for array of GdkKeymapKey, or NULL
+	 * keyvals =  return location for array of keyvals, or NULL
+	 * Returns: TRUE if there were any entries
+	 */
+	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, uint[] keyvals)
+	{
+		GdkKeymapKey* gdkkeys = null;
+		uint* gdkkeyvals = null;
+		int  nEntries;
+
+		// gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
+		int i = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &gdkkeys, &gdkkeyvals, &nEntries);
+
+		keys = gdkkeys[0 .. nEntries];
+		keyvals = gdkkeyvals[0 .. nEntries];
+
+		return i;
+	}
+code: end
 outFile: Keymap
 
 file: gdk-Selections.html
@@ -849,8 +966,6 @@ prefix: gdk-drag_context_
 structWrap: GdkDragContext* DragContext
 import: gdk.Window
 structWrap: GdkWindow* Window
-#import: gdk.Window*
-#structWrap: GdkWindow** Window*
 #import: gdk.DragProtocol
 #structWrap: GdkDragProtocol* DragProtocol
 import: gdk.Screen
@@ -859,6 +974,12 @@ import: glib.ListG
 structWrap: GList* ListG
 import: gdk.Display
 structWrap: GdkDisplay* Display
+
+out: gdk_drag_find_window dest_window
+out: gdk_drag_find_window protocol
+out: gdk_drag_find_window_for_screen dest_window
+out: gdk_drag_find_window_for_screen protocol
+
 outFile: DragContext
 
 # no struct
@@ -887,6 +1008,37 @@ structWrap: GList* ListG
 structWrap: GdkDevice* Device
 import: gdk.Window
 structWrap: GdkWindow* Window
+
+out: gdk_device_get_state mask
+nocode: gdk_device_get_history
+
+code: start
+	/**
+	 * Obtains the motion history for a device; given a starting and
+	 * ending timestamp, return all events in the motion history for
+	 * the device in the given range of time. Some windowing systems
+	 * do not support motion history, in which case, FALSE will
+	 * be returned. (This is not distinguishable from the case where
+	 * motion history is supported and no events were found.)
+	 * Params:
+	 * window =  the window with respect to which which the event coordinates will be reported
+	 * start =  starting timestamp for range of events to return
+	 * stop =  ending timestamp for the range of events to return
+	 * events =  location to store a newly-allocated array of GdkTimeCoord, or NULL
+	 * Returns: TRUE if the windowing system supports motion history and at least one event was found.
+	 */
+	public int getHistory(Window window, uint start, uint stop, out GdkTimeCoord*[] events)
+	{
+		int nEvents;
+		GdkTimeCoord** coord = null;
+
+		// gboolean gdk_device_get_history (GdkDevice *device,  GdkWindow *window,  guint32 start,  guint32 stop,  GdkTimeCoord ***events,  gint *n_events);
+		int i = gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, &coord, &nEvents);
+
+		events = coord[0 .. nEvents];
+		return i;
+	}
+code: end
 outFile: Device
 
 #file: gdk-Pango-Interaction.html

@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Device
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gdk_device_get_history
  * omit signals:
  * imports:
  * 	- glib.ListG
@@ -167,6 +168,32 @@ public class Device
 	}
 	
 	/**
+	 * Obtains the motion history for a device; given a starting and
+	 * ending timestamp, return all events in the motion history for
+	 * the device in the given range of time. Some windowing systems
+	 * do not support motion history, in which case, FALSE will
+	 * be returned. (This is not distinguishable from the case where
+	 * motion history is supported and no events were found.)
+	 * Params:
+	 * window =  the window with respect to which which the event coordinates will be reported
+	 * start =  starting timestamp for range of events to return
+	 * stop =  ending timestamp for the range of events to return
+	 * events =  location to store a newly-allocated array of GdkTimeCoord, or NULL
+	 * Returns: TRUE if the windowing system supports motion history and at least one event was found.
+	 */
+	public int getHistory(Window window, uint start, uint stop, out GdkTimeCoord*[] events)
+	{
+		int nEvents;
+		GdkTimeCoord** coord = null;
+		
+		// gboolean gdk_device_get_history (GdkDevice *device,  GdkWindow *window,  guint32 start,  guint32 stop,  GdkTimeCoord ***events,  gint *n_events);
+		int i = gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, &coord, &nEvents);
+		
+		events = coord[0 .. nEvents];
+		return i;
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -259,31 +286,10 @@ public class Device
 	 *  or NULL.
 	 * mask = location to store the modifiers, or NULL.
 	 */
-	public void getState(Window window, double* axes, GdkModifierType* mask)
+	public void getState(Window window, double* axes, out GdkModifierType mask)
 	{
 		// void gdk_device_get_state (GdkDevice *device,  GdkWindow *window,  gdouble *axes,  GdkModifierType *mask);
-		gdk_device_get_state(gdkDevice, (window is null) ? null : window.getWindowStruct(), axes, mask);
-	}
-	
-	/**
-	 * Obtains the motion history for a device; given a starting and
-	 * ending timestamp, return all events in the motion history for
-	 * the device in the given range of time. Some windowing systems
-	 * do not support motion history, in which case, FALSE will
-	 * be returned. (This is not distinguishable from the case where
-	 * motion history is supported and no events were found.)
-	 * Params:
-	 * window =  the window with respect to which which the event coordinates will be reported
-	 * start =  starting timestamp for range of events to return
-	 * stop =  ending timestamp for the range of events to return
-	 * events =  location to store a newly-allocated array of GdkTimeCoord, or NULL
-	 * nEvents =  location to store the length of events, or NULL
-	 * Returns: TRUE if the windowing system supports motion history and at least one event was found.
-	 */
-	public int getHistory(Window window, uint start, uint stop, GdkTimeCoord*** events, int* nEvents)
-	{
-		// gboolean gdk_device_get_history (GdkDevice *device,  GdkWindow *window,  guint32 start,  guint32 stop,  GdkTimeCoord ***events,  gint *n_events);
-		return gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, events, nEvents);
+		gdk_device_get_state(gdkDevice, (window is null) ? null : window.getWindowStruct(), axes, &mask);
 	}
 	
 	/**

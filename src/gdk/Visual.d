@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Visual
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gdk_query_depths
  * omit signals:
  * imports:
  * 	- glib.ListG
@@ -134,9 +135,6 @@ public class Visual
 	}
 	
 	/**
-	 */
-	
-	/**
 	 * This function returns the available bit depths for the default
 	 * screen. It's equivalent to listing the visuals
 	 * (gdk_list_visuals()) and then looking at the depth field in each
@@ -144,13 +142,20 @@ public class Visual
 	 * The array returned by this function should not be freed.
 	 * Params:
 	 * depths =  return location for available depths
-	 * count =  return location for number of available depths
 	 */
-	public static void gdkQueryDepths(int** depths, int* count)
+	public static void gdkQueryDepths(out int[] depths)
 	{
+		int* dep = null;
+		int count;
+		
 		// void gdk_query_depths (gint **depths,  gint *count);
-		gdk_query_depths(depths, count);
+		gdk_query_depths(&dep, &count);
+		
+		depths = dep[0 .. count];
 	}
+	
+	/**
+	 */
 	
 	/**
 	 * This function returns the available visual types for the default

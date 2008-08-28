@@ -42,7 +42,7 @@ protected:
 		int width;
 		int height;
 
-		dr.getSize(&width, &height);
+		dr.getSize(width, height);
 
 		auto cr = new Context (dr);
 

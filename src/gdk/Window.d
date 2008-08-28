@@ -320,10 +320,10 @@ public class Window : Drawable
 	 * winY =  return location for origin of the window under the pointer
 	 * Returns: window under the mouse pointer
 	 */
-	public static Window atPointer(int* winX, int* winY)
+	public static Window atPointer(out int winX, out int winY)
 	{
 		// GdkWindow* gdk_window_at_pointer (gint *win_x,  gint *win_y);
-		auto p = gdk_window_at_pointer(winX, winY);
+		auto p = gdk_window_at_pointer(&winX, &winY);
 		if(p is null)
 		{
 			return null;

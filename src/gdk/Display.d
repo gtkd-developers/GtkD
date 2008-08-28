@@ -475,10 +475,10 @@ public class Display : ObjectG
 	 * y =  location to store root window Y coordinate of pointer, or NULL.
 	 * mask =  location to store current modifier mask, or NULL
 	 */
-	public void getPointer(GdkScreen** screen, int* x, int* y, GdkModifierType* mask)
+	public void getPointer(GdkScreen** screen, out int x, out int y, out GdkModifierType mask)
 	{
 		// void gdk_display_get_pointer (GdkDisplay *display,  GdkScreen **screen,  gint *x,  gint *y,  GdkModifierType *mask);
-		gdk_display_get_pointer(gdkDisplay, screen, x, y, mask);
+		gdk_display_get_pointer(gdkDisplay, screen, &x, &y, &mask);
 	}
 	
 	/**
@@ -492,10 +492,10 @@ public class Display : ObjectG
 	 * winY =  return location for origin of the window under the pointer
 	 * Returns: the window under the mouse pointer, or NULL
 	 */
-	public Window getWindowAtPointer(int* winX, int* winY)
+	public Window getWindowAtPointer(out int winX, out int winY)
 	{
 		// GdkWindow* gdk_display_get_window_at_pointer (GdkDisplay *display,  gint *win_x,  gint *win_y);
-		auto p = gdk_display_get_window_at_pointer(gdkDisplay, winX, winY);
+		auto p = gdk_display_get_window_at_pointer(gdkDisplay, &winX, &winY);
 		if(p is null)
 		{
 			return null;
@@ -589,10 +589,10 @@ public class Display : ObjectG
 	 * width =  the return location for the maximal cursor width
 	 * height =  the return location for the maximal cursor height
 	 */
-	public void getMaximalCursorSize(uint* width, uint* height)
+	public void getMaximalCursorSize(out uint width, out uint height)
 	{
 		// void gdk_display_get_maximal_cursor_size (GdkDisplay *display,  guint *width,  guint *height);
-		gdk_display_get_maximal_cursor_size(gdkDisplay, width, height);
+		gdk_display_get_maximal_cursor_size(gdkDisplay, &width, &height);
 	}
 	
 	/**

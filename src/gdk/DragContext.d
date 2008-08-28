@@ -194,10 +194,14 @@ public class DragContext
 	 * destWindow =  location to store the destination window in.
 	 * protocol =  location to store the DND protocol in.
 	 */
-	public void gdkDragFindWindow(Window dragWindow, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol)
+	public void gdkDragFindWindow(Window dragWindow, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
 		// void gdk_drag_find_window (GdkDragContext *context,  GdkWindow *drag_window,  gint x_root,  gint y_root,  GdkWindow **dest_window,  GdkDragProtocol *protocol);
-		gdk_drag_find_window(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), xRoot, yRoot, destWindow, protocol);
+		GdkWindow* gdkwindow = null;
+		
+		gdk_drag_find_window(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), xRoot, yRoot, &gdkwindow, &protocol);
+		
+		destWindow = new Window(gdkwindow);
 	}
 	
 	/**
@@ -215,10 +219,14 @@ public class DragContext
 	 * destWindow =  location to store the destination window in.
 	 * protocol =  location to store the DND protocol in.
 	 */
-	public void gdkDragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol)
+	public void gdkDragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
 		// void gdk_drag_find_window_for_screen (GdkDragContext *context,  GdkWindow *drag_window,  GdkScreen *screen,  gint x_root,  gint y_root,  GdkWindow **dest_window,  GdkDragProtocol *protocol);
-		gdk_drag_find_window_for_screen(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), (screen is null) ? null : screen.getScreenStruct(), xRoot, yRoot, destWindow, protocol);
+		GdkWindow* gdkwindow = null;
+		
+		gdk_drag_find_window_for_screen(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), (screen is null) ? null : screen.getScreenStruct(), xRoot, yRoot, &gdkwindow, &protocol);
+		
+		destWindow = new Window(gdkwindow);
 	}
 	
 	/**

@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Keymap
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -161,6 +161,64 @@ public class Keymap : ObjectG
 		}
 		super(cast(GObject*)gdkKeymap);
 		this.gdkKeymap = gdkKeymap;
+	}
+	
+	/**
+	 * Obtains a list of keycode/group/level combinations that will
+	 * generate keyval. Groups and levels are two kinds of keyboard mode;
+	 * in general, the level determines whether the top or bottom symbol
+	 * on a key is used, and the group determines whether the left or
+	 * right symbol is used. On US keyboards, the shift key changes the
+	 * keyboard level, and there are no groups. A group switch key might
+	 * convert a keyboard between Hebrew to English modes, for example.
+	 * GdkEventKey contains a group field that indicates the active
+	 * keyboard group. The level is computed from the modifier mask.
+	 * The returned array should be freed
+	 * with g_free().
+	 * Params:
+	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
+	 * keys =  return location for an array of GdkKeymapKey
+	 * Returns: TRUE if keys were found and returned
+	 */
+	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
+	{
+		GdkKeymapKey* gdkkeys = null;
+		int nKeys;
+		
+		// gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
+		int i = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &gdkkeys, &nKeys);
+		
+		keys = gdkkeys[0 .. nKeys];
+		
+		return i;
+	}
+	
+	/**
+	 * Returns the keyvals bound to hardware_keycode.
+	 * The Nth GdkKeymapKey in keys is bound to the Nth
+	 * keyval in keyvals. Free the returned arrays with g_free().
+	 * When a keycode is pressed by the user, the keyval from
+	 * this list of entries is selected by considering the effective
+	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
+	 * Params:
+	 * hardwareKeycode =  a keycode
+	 * keys =  return location for array of GdkKeymapKey, or NULL
+	 * keyvals =  return location for array of keyvals, or NULL
+	 * Returns: TRUE if there were any entries
+	 */
+	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, uint[] keyvals)
+	{
+		GdkKeymapKey* gdkkeys = null;
+		uint* gdkkeyvals = null;
+		int  nEntries;
+		
+		// gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
+		int i = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &gdkkeys, &gdkkeyvals, &nEntries);
+		
+		keys = gdkkeys[0 .. nEntries];
+		keyvals = gdkkeyvals[0 .. nEntries];
+		
+		return i;
 	}
 	
 	/**
@@ -322,10 +380,10 @@ public class Keymap : ObjectG
 	 *  determine the group or level, or NULL
 	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
-	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, uint* keyval, int* effectiveGroup, int* level, GdkModifierType* consumedModifiers)
+	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumedModifiers)
 	{
 		// gboolean gdk_keymap_translate_keyboard_state (GdkKeymap *keymap,  guint hardware_keycode,  GdkModifierType state,  gint group,  guint *keyval,  gint *effective_group,  gint *level,  GdkModifierType *consumed_modifiers);
-		return gdk_keymap_translate_keyboard_state(gdkKeymap, hardwareKeycode, state, group, keyval, effectiveGroup, level, consumedModifiers);
+		return gdk_keymap_translate_keyboard_state(gdkKeymap, hardwareKeycode, state, group, &keyval, &effectiveGroup, &level, &consumedModifiers);
 	}
 	
 	/**
@@ -428,10 +486,10 @@ public class Keymap : ObjectG
 	 * lower =  return location for lowercase version of symbol
 	 * upper =  return location for uppercase version of symbol
 	 */
-	public static void gdkKeyvalConvertCase(uint symbol, uint* lower, uint* upper)
+	public static void gdkKeyvalConvertCase(uint symbol, out uint lower, out uint upper)
 	{
 		// void gdk_keyval_convert_case (guint symbol,  guint *lower,  guint *upper);
-		gdk_keyval_convert_case(symbol, lower, upper);
+		gdk_keyval_convert_case(symbol, &lower, &upper);
 	}
 	
 	/**

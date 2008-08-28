@@ -67,7 +67,7 @@ protected:
 		int width;
 		int height;
 
-		dr.getSize(&width, &height);
+		dr.getSize(width, height);
 
 		auto cr = new Context (dr);
 
@@ -212,7 +212,7 @@ protected:
 			int width;
 			int height;
 
-			win.getSize(&width, &height);
+			win.getSize(width, height);
 
 			//I think this should be also made possible:
 			//width = win.getWidth();
