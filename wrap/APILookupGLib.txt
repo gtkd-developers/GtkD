@@ -576,6 +576,9 @@ out: g_io_channel_get_line_term length
 out: g_io_channel_read bytes_read
 out: g_io_channel_write bytes_written
 
+nocode: g_io_channel_read_line
+nocode: g_io_channel_read_to_end
+
 code: start
 /**
 	 * Reads a line, including the terminating character(s),
@@ -1105,6 +1108,7 @@ prefix: g_rand_
 prefix: g_
 
 nocode: g_rand_new_with_seed_array
+nocode: g_rand_set_seed_array
 
 code: start
 /**
@@ -1839,6 +1843,8 @@ out: g_key_file_get_boolean_list length
 out: g_key_file_get_integer_list length
 out: g_key_file_get_double_list length
 
+nocode: g_key_file_load_from_dirs
+
 code: start
 	/**
 	 * This function looks for a key file named file in the paths
@@ -1893,6 +1899,8 @@ out: g_bookmark_file_get_applications length
 out: g_bookmark_file_get_app_info exec
 out: g_bookmark_file_get_app_info count
 out: g_bookmark_file_get_app_info stamp
+
+nocode: g_bookmark_file_set_groups
 
 code: start
 	/**

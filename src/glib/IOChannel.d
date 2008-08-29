@@ -40,6 +40,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_io_channel_read_line
+ * 	- g_io_channel_read_to_end
  * omit signals:
  * imports:
  * 	- glib.ErrorG
@@ -424,36 +426,6 @@ public class IOChannel
 	}
 	
 	/**
-	 * Reads a line, including the terminating character(s),
-	 * from a GIOChannel into a newly-allocated string.
-	 * str_return will contain allocated memory if the return
-	 * is G_IO_STATUS_NORMAL.
-	 * Params:
-	 * strReturn =  The line read from the GIOChannel, including the
-	 *  line terminator. This data should be freed with g_free()
-	 *  when no longer needed. This is a nul-terminated string.
-	 *  If a length of zero is returned, this will be NULL instead.
-	 * length =  location to store length of the read data, or NULL
-	 * terminatorPos =  location to store position of line terminator, or NULL
-	 * Returns: the status of the operation.
-	 * Throws: GException on failure.
-	 */
-	public GIOStatus readLine(char** strReturn, uint* length, uint* terminatorPos)
-	{
-		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
-		GError* err = null;
-		
-		auto p = g_io_channel_read_line(gIOChannel, strReturn, length, terminatorPos, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
 	 * Reads a line from a GIOChannel, using a GString as a buffer.
 	 * Params:
 	 * buffer =  a GString into which the line will be written.
@@ -469,33 +441,6 @@ public class IOChannel
 		GError* err = null;
 		
 		auto p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), &terminatorPos, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Reads all the remaining data from the file.
-	 * Params:
-	 * strReturn =  Location to store a pointer to a string holding
-	 *  the remaining data in the GIOChannel. This data should
-	 *  be freed with g_free() when no longer needed. This
-	 *  data is terminated by an extra nul character, but there
-	 *  may be other nuls in the intervening data.
-	 * length =  location to store length of the data
-	 * Returns: G_IO_STATUS_NORMAL on success.  This function never returns G_IO_STATUS_EOF.
-	 * Throws: GException on failure.
-	 */
-	public GIOStatus readToEnd(char** strReturn, uint* length)
-	{
-		// GIOStatus g_io_channel_read_to_end (GIOChannel *channel,  gchar **str_return,  gsize *length,  GError **error);
-		GError* err = null;
-		
-		auto p = g_io_channel_read_to_end(gIOChannel, strReturn, length, &err);
 		
 		if (err !is null)
 		{

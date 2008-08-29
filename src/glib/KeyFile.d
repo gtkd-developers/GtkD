@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_key_file_load_from_dirs
  * omit signals:
  * imports:
  * 	- glib.ErrorG
@@ -317,37 +318,6 @@ public class KeyFile
 		}
 		
 		fullPath = Str.toString(outfullPath);
-		return p;
-	}
-	
-	/**
-	 * This function looks for a key file named file in the paths
-	 * specified in search_dirs, loads the file into key_file and
-	 * returns the file's full path in full_path. If the file could not
-	 * be loaded then an error is set to either a GFileError or
-	 * GKeyFileError.
-	 * Since 2.14
-	 * Params:
-	 * file =  a relative path to a filename to open and parse
-	 * searchDirs =  NULL-terminated array of directories to search
-	 * fullPath =  return location for a string containing the full path
-	 *  of the file, or NULL
-	 * flags =  flags from GKeyFileFlags
-	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
-	 * Throws: GException on failure.
-	 */
-	public int loadFromDirs(string file, char** searchDirs, char** fullPath, GKeyFileFlags flags)
-	{
-		// gboolean g_key_file_load_from_dirs (GKeyFile *key_file,  const gchar *file,  const gchar **search_dirs,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
-		GError* err = null;
-		
-		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), searchDirs, fullPath, flags, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
 		return p;
 	}
 	

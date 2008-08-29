@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_bookmark_file_set_groups
  * omit signals:
  * imports:
  * 	- glib.ErrorG
@@ -818,22 +819,6 @@ public class BookmarkFile
 	{
 		// void g_bookmark_file_set_added (GBookmarkFile *bookmark,  const gchar *uri,  time_t added);
 		g_bookmark_file_set_added(gBookmarkFile, Str.toStringz(uri), added);
-	}
-	
-	/**
-	 * Sets a list of group names for the item with URI uri. Each previously
-	 * set group name list is removed.
-	 * If uri cannot be found then an item for it is created.
-	 * Since 2.12
-	 * Params:
-	 * uri =  an item's URI
-	 * groups =  an array of group names, or NULL to remove all groups
-	 * length =  number of group name values in groups
-	 */
-	public void setGroups(string uri, char** groups, uint length)
-	{
-		// void g_bookmark_file_set_groups (GBookmarkFile *bookmark,  const gchar *uri,  const gchar **groups,  gsize length);
-		g_bookmark_file_set_groups(gBookmarkFile, Str.toStringz(uri), groups, length);
 	}
 	
 	/**
