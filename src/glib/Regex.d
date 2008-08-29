@@ -46,7 +46,9 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.MatchInfo
  * structWrap:
+ * 	- GMatchInfo* -> MatchInfo
  * 	- GRegex* -> Regex
  * module aliases:
  * local aliases:
@@ -64,6 +66,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MatchInfo;
 
 
 
@@ -338,10 +341,15 @@ public class Regex
 	 *  or NULL if you do not need it
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
-	public int match(string string, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo)
+	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options,  GMatchInfo **match_info);
-		return g_regex_match(gRegex, Str.toStringz(string), matchOptions, matchInfo);
+		GMatchInfo* gmatchinfo = null;
+		
+		auto p = g_regex_match(gRegex, Str.toStringz(string), matchOptions, &gmatchinfo);
+		
+		matchInfo = new MatchInfo(gmatchinfo);
+		return p;
 	}
 	
 	/**
@@ -397,18 +405,20 @@ public class Regex
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo)
+	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
+		GMatchInfo* gmatchinfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, matchInfo, &err);
+		auto p = g_regex_match_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &gmatchinfo, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		matchInfo = new MatchInfo(gmatchinfo);
 		return p;
 	}
 	
@@ -430,10 +440,15 @@ public class Regex
 	 *  or NULL if you do not need it
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
-	public int matchAll(string string, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo)
+	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_all (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options,  GMatchInfo **match_info);
-		return g_regex_match_all(gRegex, Str.toStringz(string), matchOptions, matchInfo);
+		GMatchInfo* gmatchinfo = null;
+		
+		auto p = g_regex_match_all(gRegex, Str.toStringz(string), matchOptions, &gmatchinfo);
+		
+		matchInfo = new MatchInfo(gmatchinfo);
+		return p;
 	}
 	
 	/**
@@ -475,18 +490,20 @@ public class Regex
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo)
+	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_all_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
+		GMatchInfo* gmatchinfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, matchInfo, &err);
+		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &gmatchinfo, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		matchInfo = new MatchInfo(gmatchinfo);
 		return p;
 	}
 	
@@ -716,12 +733,12 @@ public class Regex
 	 * Returns: whether replacement is a valid replacement string
 	 * Throws: GException on failure.
 	 */
-	public static int checkReplacement(string replacement, int* hasReferences)
+	public static int checkReplacement(string replacement, out int hasReferences)
 	{
 		// gboolean g_regex_check_replacement (const gchar *replacement,  gboolean *has_references,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_check_replacement(Str.toStringz(replacement), hasReferences, &err);
+		auto p = g_regex_check_replacement(Str.toStringz(replacement), &hasReferences, &err);
 		
 		if (err !is null)
 		{

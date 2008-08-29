@@ -394,10 +394,10 @@ public class MainContext
 	 *  source already ready.
 	 * Returns: TRUE if some source is ready to be dispatched prior to polling.
 	 */
-	public int prepare(int* priority)
+	public int prepare(out int priority)
 	{
 		// gboolean g_main_context_prepare (GMainContext *context,  gint *priority);
-		return g_main_context_prepare(gMainContext, priority);
+		return g_main_context_prepare(gMainContext, &priority);
 	}
 	
 	/**
@@ -409,10 +409,10 @@ public class MainContext
 	 * nFds =  length of fds.
 	 * Returns: the number of records actually stored in fds, or, if more than n_fds records need to be stored, the number of records that need to be stored.
 	 */
-	public int query(int maxPriority, int* timeout, GPollFD* fds, int nFds)
+	public int query(int maxPriority, out int timeout, GPollFD* fds, int nFds)
 	{
 		// gint g_main_context_query (GMainContext *context,  gint max_priority,  gint *timeout_,  GPollFD *fds,  gint n_fds);
-		return g_main_context_query(gMainContext, maxPriority, timeout, fds, nFds);
+		return g_main_context_query(gMainContext, maxPriority, &timeout, fds, nFds);
 	}
 	
 	/**

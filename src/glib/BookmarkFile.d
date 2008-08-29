@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = BookmarkFile
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -157,6 +157,22 @@ public class BookmarkFile
 	}
 	
 	/**
+	 * Sets a list of group names for the item with URI uri. Each previously
+	 * set group name list is removed.
+	 * If uri cannot be found then an item for it is created.
+	 * Since 2.12
+	 * Params:
+	 * uri =  an item's URI
+	 * groups =  an array of group names, or NULL to remove all groups
+	 * length =  number of group name values in groups
+	 */
+	public void setGroups(string uri, string[] groups, uint length)
+	{
+		// void g_bookmark_file_set_groups (GBookmarkFile *bookmark,  const gchar *uri,  const gchar **groups,  gsize length);
+		g_bookmark_file_set_groups(gBookmarkFile, Str.toStringz(uri), Str.toStringzArray(groups), length);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -253,18 +269,20 @@ public class BookmarkFile
 	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 * Throws: GException on failure.
 	 */
-	public int loadFromDataDirs(string file, char** fullPath)
+	public int loadFromDataDirs(string file, out string fullPath)
 	{
 		// gboolean g_bookmark_file_load_from_data_dirs (GBookmarkFile *bookmark,  const gchar *file,  gchar **full_path,  GError **error);
+		char* outfullPath = null;
 		GError* err = null;
 		
-		auto p = g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), fullPath, &err);
+		auto p = g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), &outfullPath, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		fullPath = Str.toString(outfullPath);
 		return p;
 	}
 	
@@ -276,12 +294,12 @@ public class BookmarkFile
 	 * Returns: a newly allocated string holding the contents of the GBookmarkFile
 	 * Throws: GException on failure.
 	 */
-	public string toData(uint* length)
+	public string toData(out uint length)
 	{
 		// gchar* g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_bookmark_file_to_data(gBookmarkFile, length, &err));
+		auto p = Str.toString(g_bookmark_file_to_data(gBookmarkFile, &length, &err));
 		
 		if (err !is null)
 		{
@@ -402,10 +420,10 @@ public class BookmarkFile
 	 * length =  return location for the number of returned URIs, or NULL
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public char** getUris(uint* length)
+	public char** getUris(out uint length)
 	{
 		// gchar** g_bookmark_file_get_uris (GBookmarkFile *bookmark,  gsize *length);
-		return g_bookmark_file_get_uris(gBookmarkFile, length);
+		return g_bookmark_file_get_uris(gBookmarkFile, &length);
 	}
 	
 	/**
@@ -525,18 +543,22 @@ public class BookmarkFile
 	 * Returns: TRUE if the icon for the bookmark for the URI was found. You should free the returned strings.
 	 * Throws: GException on failure.
 	 */
-	public int getIcon(string uri, char** href, char** mimeType)
+	public int getIcon(string uri, out string href, out string mimeType)
 	{
 		// gboolean g_bookmark_file_get_icon (GBookmarkFile *bookmark,  const gchar *uri,  gchar **href,  gchar **mime_type,  GError **error);
+		char* outhref = null;
+		char* outmimeType = null;
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), href, mimeType, &err);
+		auto p = g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), &outhref, &outmimeType, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		href = Str.toString(outhref);
+		mimeType = Str.toString(outmimeType);
 		return p;
 	}
 	
@@ -628,12 +650,12 @@ public class BookmarkFile
 	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public char** getGroups(string uri, uint* length)
+	public char** getGroups(string uri, out uint length)
 	{
 		// gchar** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), length, &err);
+		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err);
 		
 		if (err !is null)
 		{
@@ -655,12 +677,12 @@ public class BookmarkFile
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public char** getApplications(string uri, uint* length)
+	public char** getApplications(string uri, out uint length)
 	{
 		// gchar** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), length, &err);
+		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err);
 		
 		if (err !is null)
 		{
@@ -692,18 +714,20 @@ public class BookmarkFile
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */
-	public int getAppInfo(string uri, string name, char** exec, uint* count, uint* stamp)
+	public int getAppInfo(string uri, string name, out string exec, out uint count, out uint stamp)
 	{
 		// gboolean g_bookmark_file_get_app_info (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *name,  gchar **exec,  guint *count,  time_t *stamp,  GError **error);
+		char* outexec = null;
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), exec, count, stamp, &err);
+		auto p = g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &outexec, &count, &stamp, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		exec = Str.toString(outexec);
 		return p;
 	}
 	

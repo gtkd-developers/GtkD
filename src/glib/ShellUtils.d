@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ShellUtils
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_shell_parse_argv
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -73,9 +74,6 @@ public class ShellUtils
 {
 	
 	/**
-	 */
-	
-	/**
 	 * Parses a command line into an argument vector, in much the same way
 	 * the shell would, but without many of the expansions the shell would
 	 * perform (variable expansion, globs, operators, filename expansion,
@@ -92,20 +90,25 @@ public class ShellUtils
 	 * Returns: TRUE on success, FALSE if error set
 	 * Throws: GException on failure.
 	 */
-	public static int parseArgv(string commandLine, int* argcp, char*** argvp)
+	public static int parseArgv(string commandLine, out int argcp, out string[] argvp)
 	{
 		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
 		GError* err = null;
+		char** arg = null;
 		
-		auto p = g_shell_parse_argv(Str.toStringz(commandLine), argcp, argvp, &err);
+		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &arg, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		argvp = Str.toStringArray(arg);
 		return p;
 	}
+	
+	/**
+	 */
 	
 	/**
 	 * Quotes a string so that the shell (/bin/sh) will interpret the

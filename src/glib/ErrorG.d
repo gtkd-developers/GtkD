@@ -389,11 +389,16 @@ public class ErrorG
 	 * Params:
 	 * dest =  error return location
 	 * src =  error to move into the return location
+	 * Throws: GException on failure.
 	 */
-	public static void gPropagateError(GError** dest, ErrorG src)
+	public static void gPropagateError(out ErrorG dest, ErrorG src)
 	{
 		// void g_propagate_error (GError **dest,  GError *src);
-		g_propagate_error(dest, (src is null) ? null : src.getErrorGStruct());
+		GError* gerror = null;
+		
+		g_propagate_error(&gerror, (src is null) ? null : src.getErrorGStruct());
+		
+		dest = new ErrorG(gerror);
 	}
 	
 	/**
@@ -401,10 +406,15 @@ public class ErrorG
 	 * calls g_error_free() on *err and sets *err to NULL.
 	 * Params:
 	 * err =  a GError return location
+	 * Throws: GException on failure.
 	 */
-	public static void gClearError(GError** err)
+	public static void gClearError(inout ErrorG err)
 	{
 		// void g_clear_error (GError **err);
-		g_clear_error(err);
+		GError* gerror = (err is null) ? null : err.getErrorGStruct();
+		
+		g_clear_error(&gerror);
+		
+		err = new ErrorG(gerror);
 	}
 }

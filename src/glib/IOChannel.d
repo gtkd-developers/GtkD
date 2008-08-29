@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = IOChannel
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -136,6 +136,72 @@ public class IOChannel
 			return;
 		}
 		this.gIOChannel = gIOChannel;
+	}
+	
+	/**
+	 * Reads a line, including the terminating character(s),
+	 * from a GIOChannel into a newly-allocated string.
+	 * str_return will contain allocated memory if the return
+	 * is G_IO_STATUS_NORMAL.
+	 * Params:
+	 * strReturn =  The line read from the GIOChannel, including the
+	 *  line terminator. This data should be freed with g_free()
+	 *  when no longer needed. This is a nul-terminated string.
+	 *  If a length of zero is returned, this will be NULL instead.
+	 * terminatorPos =  location to store position of line terminator, or NULL
+	 * Returns: the status of the operation.
+	 * Throws: GException on failure.
+	 */
+	public GIOStatus readLine(out string strReturn, out uint terminatorPos)
+	{
+		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
+		GError* err = null;
+		char* str = null;
+		uint len;
+		
+		auto p = g_io_channel_read_line(gIOChannel, &str, &len, &terminatorPos, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if ( str !is null )
+		strReturn = str[0 .. len-1];
+		
+		return p;
+	}
+	
+	/**
+	 * Reads all the remaining data from the file.
+	 * Params:
+	 * strReturn =  Location to store a pointer to a string holding
+	 *  the remaining data in the GIOChannel. This data should
+	 *  be freed with g_free() when no longer needed. This
+	 *  data is terminated by an extra nul character, but there
+	 *  may be other nuls in the intervening data.
+	 * Returns: G_IO_STATUS_NORMAL on success.  This function never returns G_IO_STATUS_EOF.
+	 * Throws: GException on failure.
+	 */
+	public GIOStatus readToEnd(out string strReturn)
+	{
+		// GIOStatus g_io_channel_read_to_end (GIOChannel *channel,  gchar **str_return,  gsize *length,  GError **error);
+		GError* err = null;
+		char* str = null;
+		uint len;
+		
+		auto p = g_io_channel_read_to_end(gIOChannel, &str, &len, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if ( str !is null )
+		strReturn = str[0 .. len-1];
+		
+		return p;
 	}
 	
 	/**
@@ -319,12 +385,12 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readChars(string buf, uint count, uint* bytesRead)
+	public GIOStatus readChars(string buf, uint count, out uint bytesRead)
 	{
 		// GIOStatus g_io_channel_read_chars (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, bytesRead, &err);
+		auto p = g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, &bytesRead, &err);
 		
 		if (err !is null)
 		{
@@ -342,12 +408,12 @@ public class IOChannel
 	 * Returns: a GIOStatus
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readUnichar(gunichar* thechar)
+	public GIOStatus readUnichar(out gunichar thechar)
 	{
 		// GIOStatus g_io_channel_read_unichar (GIOChannel *channel,  gunichar *thechar,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_read_unichar(gIOChannel, thechar, &err);
+		auto p = g_io_channel_read_unichar(gIOChannel, &thechar, &err);
 		
 		if (err !is null)
 		{
@@ -397,12 +463,12 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readLineString(StringG buffer, uint* terminatorPos)
+	public GIOStatus readLineString(StringG buffer, out uint terminatorPos)
 	{
 		// GIOStatus g_io_channel_read_line_string (GIOChannel *channel,  GString *buffer,  gsize *terminator_pos,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), terminatorPos, &err);
+		auto p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), &terminatorPos, &err);
 		
 		if (err !is null)
 		{
@@ -457,12 +523,12 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus writeChars(string buf, int count, uint* bytesWritten)
+	public GIOStatus writeChars(string buf, int count, out uint bytesWritten)
 	{
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, bytesWritten, &err);
+		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -739,10 +805,10 @@ public class IOChannel
 	 * length =  a location to return the length of the line terminator
 	 * Returns: The line termination string. This value is owned by GLib and must not be freed.
 	 */
-	public string getLineTerm(int* length)
+	public string getLineTerm(out int length)
 	{
 		// const gchar* g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
-		return Str.toString(g_io_channel_get_line_term(gIOChannel, length));
+		return Str.toString(g_io_channel_get_line_term(gIOChannel, &length));
 	}
 	
 	/**
@@ -876,10 +942,10 @@ public class IOChannel
 	 * bytesRead =  returns the number of bytes actually read
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError read(string buf, uint count, uint* bytesRead)
+	public GIOError read(string buf, uint count, out uint bytesRead)
 	{
 		// GIOError g_io_channel_read (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read);
-		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, bytesRead);
+		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, &bytesRead);
 	}
 	
 	/**
@@ -892,10 +958,10 @@ public class IOChannel
 	 * bytesWritten =  the number of bytes actually written
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError write(string buf, uint count, uint* bytesWritten)
+	public GIOError write(string buf, uint count, out uint bytesWritten)
 	{
 		// GIOError g_io_channel_write (GIOChannel *channel,  const gchar *buf,  gsize count,  gsize *bytes_written);
-		return g_io_channel_write(gIOChannel, Str.toStringz(buf), count, bytesWritten);
+		return g_io_channel_write(gIOChannel, Str.toStringz(buf), count, &bytesWritten);
 	}
 	
 	/**

@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ByteArray
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,9 +40,12 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_byte_array_append
+ * 	- g_byte_array_prepend
  * omit signals:
  * imports:
  * structWrap:
+ * 	- GByteArray* -> ByteArray
  * module aliases:
  * local aliases:
  * overrides:
@@ -117,6 +120,42 @@ public class ByteArray
 	}
 	
 	/**
+	 * Adds the given bytes to the end of the GByteArray.
+	 * The array will grow in size automatically if necessary.
+	 * Params:
+	 * data = the byte data to be added.
+	 * Returns:the GByteArray.
+	 */
+	public ByteArray append(byte[] data)
+	{
+		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
+		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Adds the given data to the start of the GByteArray.
+	 * The array will grow in size automatically if necessary.
+	 * Params:
+	 * data = the byte data to be added.
+	 * Returns:the GByteArray.
+	 */
+	public ByteArray prepend(byte[] data)
+	{
+		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
+		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -142,38 +181,15 @@ public class ByteArray
 	 * reservedSize = number of bytes preallocated.
 	 * Returns:the new GByteArray.
 	 */
-	public static GByteArray* sizedNew(uint reservedSize)
+	public static ByteArray sizedNew(uint reservedSize)
 	{
 		// GByteArray* g_byte_array_sized_new (guint reserved_size);
-		return g_byte_array_sized_new(reservedSize);
-	}
-	
-	/**
-	 * Adds the given bytes to the end of the GByteArray.
-	 * The array will grow in size automatically if necessary.
-	 * Params:
-	 * data = the byte data to be added.
-	 * len = the number of bytes to add.
-	 * Returns:the GByteArray.
-	 */
-	public GByteArray* append(byte* data, uint len)
-	{
-		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
-		return g_byte_array_append(gByteArray, data, len);
-	}
-	
-	/**
-	 * Adds the given data to the start of the GByteArray.
-	 * The array will grow in size automatically if necessary.
-	 * Params:
-	 * data = the byte data to be added.
-	 * len = the number of bytes to add.
-	 * Returns:the GByteArray.
-	 */
-	public GByteArray* prepend(byte* data, uint len)
-	{
-		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
-		return g_byte_array_prepend(gByteArray, data, len);
+		auto p = g_byte_array_sized_new(reservedSize);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
 	}
 	
 	/**
@@ -183,10 +199,15 @@ public class ByteArray
 	 * index = the index of the byte to remove.
 	 * Returns:the GByteArray.
 	 */
-	public GByteArray* removeIndex(uint index)
+	public ByteArray removeIndex(uint index)
 	{
 		// GByteArray* g_byte_array_remove_index (GByteArray *array,  guint index_);
-		return g_byte_array_remove_index(gByteArray, index);
+		auto p = g_byte_array_remove_index(gByteArray, index);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
 	}
 	
 	/**
@@ -198,10 +219,15 @@ public class ByteArray
 	 * index = the index of the byte to remove.
 	 * Returns:the GByteArray.
 	 */
-	public GByteArray* removeIndexFast(uint index)
+	public ByteArray removeIndexFast(uint index)
 	{
 		// GByteArray* g_byte_array_remove_index_fast (GByteArray *array,  guint index_);
-		return g_byte_array_remove_index_fast(gByteArray, index);
+		auto p = g_byte_array_remove_index_fast(gByteArray, index);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
 	}
 	
 	/**
@@ -213,10 +239,15 @@ public class ByteArray
 	 * length = the number of bytes to remove.
 	 * Returns:the GByteArray.
 	 */
-	public GByteArray* removeRange(uint index, uint length)
+	public ByteArray removeRange(uint index, uint length)
 	{
 		// GByteArray* g_byte_array_remove_range (GByteArray *array,  guint index_,  guint length);
-		return g_byte_array_remove_range(gByteArray, index, length);
+		auto p = g_byte_array_remove_range(gByteArray, index, length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
 	}
 	
 	/**
@@ -254,10 +285,15 @@ public class ByteArray
 	 * length = the new size of the GByteArray.
 	 * Returns:the GByteArray.
 	 */
-	public GByteArray* setSize(uint length)
+	public ByteArray setSize(uint length)
 	{
 		// GByteArray* g_byte_array_set_size (GByteArray *array,  guint length);
-		return g_byte_array_set_size(gByteArray, length);
+		auto p = g_byte_array_set_size(gByteArray, length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
 	}
 	
 	/**

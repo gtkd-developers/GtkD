@@ -166,10 +166,10 @@ public class Timer
 	 *  1000000), or NULL
 	 * Returns:seconds elapsed as a floating point value, including  any fractional part.
 	 */
-	public double elapsed(uint* microseconds)
+	public double elapsed(out uint microseconds)
 	{
 		// gdouble g_timer_elapsed (GTimer *timer,  gulong *microseconds);
-		return g_timer_elapsed(gTimer, microseconds);
+		return g_timer_elapsed(gTimer, &microseconds);
 	}
 	
 	/**

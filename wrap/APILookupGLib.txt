@@ -587,7 +587,6 @@ code: start
 	 *  line terminator. This data should be freed with g_free()
 	 *  when no longer needed. This is a nul-terminated string.
 	 *  If a length of zero is returned, this will be NULL instead.
-	 * length =  location to store length of the read data, or NULL
 	 * terminatorPos =  location to store position of line terminator, or NULL
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
@@ -653,6 +652,10 @@ class: ErrorG
 prefix: g_error_
 import: glib.Str
 structWrap: GError* ErrorG
+
+out: g_propagate_error dest
+inout: g_clear_error err
+
 outFile: ErrorG
 
 file:
@@ -963,6 +966,64 @@ noprefix: g_convert_with_iconv
 noprefix: g_iconv_open
 noprefix: g_iconv
 noprefix: g_iconv_close
+
+out: g_convert bytes_read
+out: g_convert bytes_written
+out: g_convert_with_fallback bytes_read
+out: g_convert_with_fallback bytes_written
+out: g_locale_to_utf8 bytes_read
+out: g_locale_to_utf8 bytes_written
+out: g_filename_to_utf8 bytes_read
+out: g_filename_to_utf8 bytes_written
+out: g_filename_from_utf8 bytes_read
+out: g_filename_from_utf8 bytes_written
+out: g_locale_from_utf8 bytes_read
+out: g_locale_from_utf8 bytes_written
+out: g_filename_from_uri hostname
+out: g_get_charset charset
+
+nocode: g_get_filename_charsets
+
+code: start
+	/**
+	 * Determines the preferred character sets used for filenames.
+	 * The first character set from the charsets is the filename encoding, the
+	 * subsequent character sets are used when trying to generate a displayable
+	 * representation of a filename, see g_filename_display_name().
+	 * On Unix, the character sets are determined by consulting the
+	 * environment variables G_FILENAME_ENCODING and
+	 * G_BROKEN_FILENAMES. On Windows, the character set
+	 * used in the GLib API is always UTF-8 and said environment variables
+	 * have no effect.
+	 * G_FILENAME_ENCODING may be set to a comma-separated list
+	 * of character set names. The special token "@locale" is taken to
+	 * mean the character set for the current
+	 * locale. If G_FILENAME_ENCODING is not set, but
+	 * G_BROKEN_FILENAMES is, the character set of the current
+	 * locale is taken as the filename encoding. If neither environment variable
+	 * is set, UTF-8 is taken as the filename encoding, but the character
+	 * set of the current locale is also put in the list of encodings.
+	 * The returned charsets belong to GLib and must not be freed.
+	 * Note that on Unix, regardless of the locale character set or
+	 * G_FILENAME_ENCODING value, the actual file names present
+	 * on a system might be in any random encoding or just gibberish.
+	 * Since 2.6
+	 * Params:
+	 * charsets =  return location for the NULL-terminated list of encoding names
+	 * Returns: TRUE if the filename encoding is UTF-8.
+	 */
+	public static int getFilenameCharsets(out string[] charsets)
+	{
+		char** set = null;
+
+		// gboolean g_get_filename_charsets (G_CONST_RETURN gchar ***charsets);
+		int i = g_get_filename_charsets(&set);
+
+		charsets = Str.toStringArray(set);
+
+		return i;
+	}
+code: end
 outFile: CharacterSet
 
 file: glib-Unicode-Manipulation.html
@@ -971,12 +1032,37 @@ prefix: g_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+
+out: g_unicode_canonical_decomposition result_len
+out: g_utf8_validate end
+out: g_utf8_to_utf16 items_read
+out: g_utf8_to_utf16 items_written
+out: g_utf8_to_ucs4 items_read
+out: g_utf8_to_ucs4 items_written
+out: g_utf8_to_ucs4_fast items_written
+out: g_utf16_to_ucs4 items_read
+out: g_utf16_to_ucs4 items_written
+out: g_utf16_to_utf8 items_read
+out: g_utf16_to_utf8 items_written
+out: g_ucs4_to_utf16 items_read
+out: g_ucs4_to_utf16 items_written
+out: g_ucs4_to_utf8 items_read
+out: g_ucs4_to_utf8 items_written
+
 outFile: Unicode
 
 file: glib-Base64-Encoding.html
 class: Base64
 prefix: g_base64_
 import: glib.Str
+
+inout: g_base64_encode_step state
+inout: g_base64_encode_step save
+inout: g_base64_encode_close state
+inout: g_base64_encode_close save
+inout: g_base64_decode_step state
+inout: g_base64_decode_step save
+
 outFile: Base64
 
 file: glib-Data-Checksums.html
@@ -1017,6 +1103,44 @@ struct: GRand
 class: RandG
 prefix: g_rand_
 prefix: g_
+
+nocode: g_rand_new_with_seed_array
+
+code: start
+/**
+	 * Creates a new random number generator initialized with seed.
+	 * Since 2.4
+	 * Params:
+	 * seed =  an array of seeds to initialize the random number generator.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (uint[] seed)
+	{
+		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
+		auto p = g_rand_new_with_seed_array(seed.ptr, seed.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed, seedLength)");
+		}
+		this(cast(GRand*) p);
+	}
+
+	/**
+	 * Initializes the random number generator by an array of
+	 * longs. Array can be of arbitrary size, though only the
+	 * first 624 values are taken. This function is useful
+	 * if you have many low entropy seeds, or if you require more then
+	 * 32bits of actual entropy for your application.
+	 * Since 2.4
+	 * Params:
+	 * seed =  array to initialize with
+	 */
+	public void setSeedArray(uint[] seed)
+	{
+		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
+		g_rand_set_seed_array(gRand, seed.ptr, seed.length);
+	}
+code: end
 structWrap: GRand* RandG
 
 alias: int randInt
@@ -1068,6 +1192,41 @@ code: start
 		// gchar* g_build_filename (const gchar *first_element,  ...);
 		return buildFilenamev(Str.toStringzArray(firstElement));
 	}
+
+	/**
+	 * Creates a path from a series of elements using separator as the
+	 * separator between elements. At the boundary between two elements,
+	 * any trailing occurrences of separator in the first element, or
+	 * leading occurrences of separator in the second element are removed
+	 * and exactly one copy of the separator is inserted.
+	 * Empty elements are ignored.
+	 * The number of leading copies of the separator on the result is
+	 * the same as the number of leading copies of the separator on
+	 * the first non-empty element.
+	 * The number of trailing copies of the separator on the result is
+	 * the same as the number of trailing copies of the separator on
+	 * the last non-empty element. (Determination of the number of
+	 * trailing copies is done without stripping leading copies, so
+	 * if the separator is ABA, ABABA
+	 * has 1 trailing copy.)
+	 * However, if there is only a single non-empty element, and there
+	 * are no characters in that element not part of the leading or
+	 * trailing separators, then the result is exactly the original value
+	 * of that element.
+	 * Other than for determination of the number of leading and trailing
+	 * copies of the separator, elements consisting only of copies
+	 * of the separator are ignored.
+	 * Params:
+	 * separator =  a string used to separator the elements of the path.
+	 * firstElement =  the first element in the path
+	 * ... =  remaining elements in path, terminated by NULL
+	 * Returns: a newly-allocated string that must be freed with g_free().
+	 */
+	public static string buildPath(string separator, string[] firstElement ... )
+	{
+		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
+		return buildPathv(separator, Str.toStringzArray(firstElement));
+	}
 code: end
 outFile: Util
 
@@ -1088,6 +1247,10 @@ import: glib.ListG
 structWrap: GList* ListG
 prefix:g_completion_
 import: glib.Str
+
+out: g_completion_complete new_prefix
+out: g_completion_complete_utf8 new_prefix
+
 outFile: StringCompletion
 
 file: glib-Timers.html
@@ -1095,6 +1258,9 @@ struct: GTimer
 class: Timer
 prefix: g_timer_
 structWrap: GTimer* Timer
+
+out: g_timer_elapsed microseconds
+
 outFile: Timer
 
 file: glib-Spawning-Processes.html
@@ -1444,6 +1610,11 @@ import: std.c.stdio
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+
+out: g_file_get_contents contents
+out: g_file_get_contents length
+out: g_file_open_tmp name_used
+
 outFile: FileUtils
 
 struct: GDir
@@ -1476,6 +1647,44 @@ prefix: g_shell_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+
+nocode: g_shell_parse_argv
+
+code: start
+	/**
+	 * Parses a command line into an argument vector, in much the same way
+	 * the shell would, but without many of the expansions the shell would
+	 * perform (variable expansion, globs, operators, filename expansion,
+	 * etc. are not supported). The results are defined to be the same as
+	 * those you would get from a UNIX98 /bin/sh, as long as the input
+	 * contains none of the unsupported shell expansions. If the input
+	 * does contain such expansions, they are passed through
+	 * literally. Possible errors are those from the G_SHELL_ERROR
+	 * domain. Free the returned vector with g_strfreev().
+	 * Params:
+	 * commandLine =  command line to parse
+	 * argcp =  return location for number of args
+	 * argvp =  return location for array of args
+	 * Returns: TRUE on success, FALSE if error set
+	 * Throws: GException on failure.
+	 */
+	public static int parseArgv(string commandLine, out int argcp, out string[] argvp)
+	{
+		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
+		GError* err = null;
+		char** arg = null;
+		
+		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &arg, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		argvp = Str.toStringArray(arg);		
+		return p;
+	}
+code: end
 outFile: ShellUtils
 
 file: glib-Commandline-option-parser.html
@@ -1491,6 +1700,54 @@ import: glib.GException
 import: glib.OptionGroup
 structWrap: GOptionGroup* OptionGroup
 import: glib.Str
+
+nocode: g_option_context_parse
+
+code: start
+	/**
+	 * Parses the command line arguments, recognizing options
+	 * which have been added to context. A side-effect of
+	 * calling this function is that g_set_prgname() will be
+	 * called.
+	 * If the parsing is successful, any parsed arguments are
+	 * removed from the array and argc and argv are updated
+	 * accordingly. A '--' option is stripped from argv
+	 * unless there are unparsed options before and after it,
+	 * or some of the options after it start with '-'. In case
+	 * of an error, argc and argv are left unmodified.
+	 * If automatic --help support is enabled
+	 * (see g_option_context_set_help_enabled()), and the
+	 * argv array contains one of the recognized help options,
+	 * this function will produce help output to stdout and
+	 * call exit (0).
+	 * Note that function depends on the
+	 * current locale for
+	 * automatic character set conversion of string and filename
+	 * arguments.
+	 * Since 2.6
+	 * Params:
+	 * argc =  a pointer to the number of command line arguments
+	 * argv =  a pointer to the array of command line arguments
+	 * Returns: TRUE if the parsing was successful,  FALSE if an error occurred
+	 * Throws: GException on failure.
+	 */
+	public int parse(out int argc, out string[] argv)
+	{
+		// gboolean g_option_context_parse (GOptionContext *context,  gint *argc,  gchar ***argv,  GError **error);
+		GError* err = null;
+		char** arg = null;
+
+		auto p = g_option_context_parse(gOptionContext, &argc, &arg, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		argv = Str.toStringArray(arg);
+		return p;
+	}
+code: end
 outFile: OptionContext
 
 struct: GOptionGroup
@@ -1520,8 +1777,15 @@ import: glib.Str
 structWrap: GRegex* Regex
 import: glib.ErrorG
 import: glib.GException
-#import: glib.MatchInfo
-#structWrap: GMatchInfo** MatchInfo*
+import: glib.MatchInfo
+structWrap: GMatchInfo* MatchInfo
+
+out: g_regex_match match_info
+out: g_regex_match_full match_info
+out: g_regex_match_all match_info
+out: g_regex_match_all_full match_info
+out: g_regex_check_replacement has_references
+
 outFile: Regex
 
 struct: GMatchInfo
@@ -1531,6 +1795,12 @@ strictPrefix: Y
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+
+out: g_match_info_fetch_pos start_pos
+out: g_match_info_fetch_pos end_pos
+out: g_match_info_fetch_named_pos start_pos
+out: g_match_info_fetch_named_pos end_pos
+
 outFile: MatchInfo
 
 file: glib-Simple-XML-Subset-Parser.html
@@ -1545,6 +1815,10 @@ import: glib.GException
 #import: glib.MarkupParser
 #structWrap: GMarkupParser* MarkupParser
 import: glib.Str
+
+out: g_markup_parse_context_get_position line_number
+out: g_markup_parse_context_get_position char_number
+
 outFile: SimpleXML
 
 file: glib-Key-value-file-parser.html
@@ -1554,6 +1828,51 @@ prefix: g_key_file_
 import: glib.ErrorG
 import: glib.GException
 import: glib.Str
+
+out: g_key_file_load_from_data_dirs full_path
+out: g_key_file_to_data length
+out: g_key_file_get_groups length
+out: g_key_file_get_keys length
+out: g_key_file_get_string_list length
+out: g_key_file_get_locale_string_list length
+out: g_key_file_get_boolean_list length
+out: g_key_file_get_integer_list length
+out: g_key_file_get_double_list length
+
+code: start
+	/**
+	 * This function looks for a key file named file in the paths
+	 * specified in search_dirs, loads the file into key_file and
+	 * returns the file's full path in full_path. If the file could not
+	 * be loaded then an error is set to either a GFileError or
+	 * GKeyFileError.
+	 * Since 2.14
+	 * Params:
+	 * file =  a relative path to a filename to open and parse
+	 * searchDirs =  NULL-terminated array of directories to search
+	 * fullPath =  return location for a string containing the full path
+	 *  of the file, or NULL
+	 * flags =  flags from GKeyFileFlags
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
+	 * Throws: GException on failure.
+	 */
+	public int loadFromDirs(string file, string[] searchDirs, out string fullPath, GKeyFileFlags flags)
+	{
+		// gboolean g_key_file_load_from_dirs (GKeyFile *key_file,  const gchar *file,  const gchar **search_dirs,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
+		char* outStr = null;
+		GError* err = null;
+		
+		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outStr, flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		fullPath = Str.toString(outStr);
+		return p;
+	}
+code: end
 outFile: KeyFile
 
 file: glib-Bookmark-file-parser.html
@@ -1563,6 +1882,35 @@ prefix: g_bookmark_file_
 import: glib.ErrorG
 import: glib.GException
 import: glib.Str
+
+out: g_bookmark_file_load_from_data_dirs full_path 
+out: g_bookmark_file_to_data length
+out: g_bookmark_file_get_uris length
+out: g_bookmark_file_get_icon href
+out: g_bookmark_file_get_icon mime_type
+out: g_bookmark_file_get_groups length
+out: g_bookmark_file_get_applications length
+out: g_bookmark_file_get_app_info exec
+out: g_bookmark_file_get_app_info count
+out: g_bookmark_file_get_app_info stamp
+
+code: start
+	/**
+	 * Sets a list of group names for the item with URI uri. Each previously
+	 * set group name list is removed.
+	 * If uri cannot be found then an item for it is created.
+	 * Since 2.12
+	 * Params:
+	 * uri =  an item's URI
+	 * groups =  an array of group names, or NULL to remove all groups
+	 * length =  number of group name values in groups
+	 */
+	public void setGroups(string uri, string[] groups, uint length)
+	{
+		// void g_bookmark_file_set_groups (GBookmarkFile *bookmark,  const gchar *uri,  const gchar **groups,  gsize length);
+		g_bookmark_file_set_groups(gBookmarkFile, Str.toStringz(uri), Str.toStringzArray(groups), length);
+	}
+code: end
 outFile: BookmarkFile
 
 file: glib-Windows-Compatibility-Functions.html
@@ -1688,9 +2036,20 @@ file: glib-Sequences.html
 struct: GSequence
 class: Sequence
 prefix: g_sequence_
+noprefix: g_sequence_iter_
 structWrap: GSequence* Sequence
-#structWrap: GSequenceIter* SequenceIter
+import: glib.SequenceIter
+structWrap: GSequenceIter* SequenceIter
 outFile: Sequence
+
+struct: GSequenceIter
+class: SequenceIter
+prefix: g_sequence_iter_
+strictPrefix: Y
+import: glib.Sequence
+structWrap: GSequence* Sequence
+structWrap: GSequenceIter* SequenceIter
+outFile: SequenceIter
 
 file: glib-Trash-Stacks.html
 struct: GTrashStack
@@ -1703,10 +2062,21 @@ file: glib-Hash-Tables.html
 struct: GHashTable
 class: HashTable
 prefix: g_hash_table_
+noprefix: g_hash_table_iter_
 structWrap: GHashTable* HashTable
+import: glib.HashTableIter
+structWrap: GHashTableIter* HashTableIter
 import: glib.ListG
 structWrap: GList* ListG
 outFile: HashTable
+
+struct: GHashTableIter
+class: HashTableIter
+prefix: g_hash_table_iter_
+strictPrefix: Y
+import: glib.HashTable
+structWrap: GHashTable* HashTable
+outFile: HashTableIter
 
 file: glib-Strings.html
 struct: GString
@@ -1742,6 +2112,48 @@ file: glib-Byte-Arrays.html
 struct: GByteArray
 class: ByteArray
 prefix: g_byte_array_
+structWrap: GByteArray* ByteArray
+
+nocode: g_byte_array_append
+nocode: g_byte_array_prepend
+
+code: start
+	/**
+	 * Adds the given bytes to the end of the GByteArray.
+	 * The array will grow in size automatically if necessary.
+	 * Params:
+	 * data = the byte data to be added.
+	 * Returns:the GByteArray.
+	 */
+	public ByteArray append(byte[] data)
+	{
+		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
+		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Adds the given data to the start of the GByteArray.
+	 * The array will grow in size automatically if necessary.
+	 * Params:
+	 * data = the byte data to be added.
+	 * Returns:the GByteArray.
+	 */
+	public ByteArray prepend(byte[] data)
+	{
+		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
+		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+code: end
 outFile: ByteArray
 
 file: glib-Balanced-Binary-Trees.html

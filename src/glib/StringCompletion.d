@@ -179,10 +179,14 @@ public class StringCompletion
 	 * This string should be freed when no longer needed.
 	 * Returns:the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
-	public ListG complete(string prefix, char** newPrefix)
+	public ListG complete(string prefix, out string newPrefix)
 	{
 		// GList* g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), newPrefix);
+		char* outnewPrefix = null;
+		
+		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), &outnewPrefix);
+		
+		newPrefix = Str.toString(outnewPrefix);
 		if(p is null)
 		{
 			return null;
@@ -206,10 +210,14 @@ public class StringCompletion
 	 *  This string should be freed when no longer needed.
 	 * Returns: the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
-	public ListG completeUtf8(string prefix, char** newPrefix)
+	public ListG completeUtf8(string prefix, out string newPrefix)
 	{
 		// GList* g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), newPrefix);
+		char* outnewPrefix = null;
+		
+		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), &outnewPrefix);
+		
+		newPrefix = Str.toString(outnewPrefix);
 		if(p is null)
 		{
 			return null;

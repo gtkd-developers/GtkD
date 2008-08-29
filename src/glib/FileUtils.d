@@ -137,18 +137,20 @@ public class FileUtils
 	 * Returns: TRUE on success, FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public static int fileGetContents(string filename, char** contents, uint* length)
+	public static int fileGetContents(string filename, out string contents, out uint length)
 	{
 		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
+		char* outcontents = null;
 		GError* err = null;
 		
-		auto p = g_file_get_contents(Str.toStringz(filename), contents, length, &err);
+		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		contents = Str.toString(outcontents);
 		return p;
 	}
 	
@@ -267,18 +269,20 @@ public class FileUtils
 	 * Returns: A file handle (as from open()) to the file opened for reading and writing. The file is opened in binary mode on platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned and error will be set.
 	 * Throws: GException on failure.
 	 */
-	public static int fileOpenTmp(string tmpl, char** nameUsed)
+	public static int fileOpenTmp(string tmpl, out string nameUsed)
 	{
 		// gint g_file_open_tmp (const gchar *tmpl,  gchar **name_used,  GError **error);
+		char* outnameUsed = null;
 		GError* err = null;
 		
-		auto p = g_file_open_tmp(Str.toStringz(tmpl), nameUsed, &err);
+		auto p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		nameUsed = Str.toString(outnameUsed);
 		return p;
 	}
 	

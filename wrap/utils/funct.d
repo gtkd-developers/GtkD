@@ -505,6 +505,7 @@ public struct Funct
 	char[] parameterToGtk(int i, ConvParms* convParms, char[][char[]] aliases)
 	{
 		char[] parmToGtk;
+
 		if ( parmsType[i] != parmsWrap[i] )
 		{
 			if ( parmsWrap[i] == "string" )
@@ -516,8 +517,11 @@ public struct Funct
 			else if ( GtkDClass.startsWith(parmsWrap[i], "out") ||
 				GtkDClass.startsWith(parmsWrap[i], "inout") )
 			{
-				if ( parmsType[i][0 .. $-1] == split(parmsWrap[i])[1] )
-					parmToGtk = "&" ~ GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				if ( parmsWrap[i] == "out string" )
+					parmToGtk = "&out" ~ id;
+				else if ( parmsType[i][0 .. $-1] == split(parmsWrap[i])[1] )
+					parmToGtk = "&" ~ id;
 				else
 					parmToGtk = "&" ~ parmsType[i].removechars("*").tolower();
 			}
@@ -600,7 +604,8 @@ public struct Funct
 				bd ~= "{";
 				bd ~= "\tthrow new GException( new ErrorG(err) );";
 				bd ~= "}";
-				bd ~= "";
+				if ( end.length == 0 )
+					bd ~= "";
 			}
 		}
 
@@ -611,32 +616,36 @@ public struct Funct
 		{
 			debug(parm) writefln("\t(%s -> %s) %s",parmsType[i], parmsWrap[i], parms[i]);
 
-			if ( i == 0 )
+			if ( i > 0 )
+				gtkCall ~= ", ";
+
+			if ( i == 0 && parmsType[0] == strctPointer )
 			{
-				if ( parmsType[0] == strctPointer )
+				
+				if ( convParms.templ.length == 0 )
 				{
-					if ( convParms.templ.length == 0 )
-					{
-						gtkCall ~= GtkDClass.toVar(convParms.strct.dup);
-					}
-					else
-					{
-						gtkCall ~= "get"~convParms.clss~"Struct()";
-					}
+					gtkCall ~= GtkDClass.toVar(convParms.strct.dup);
 				}
-				else if ( parms[0].length > 0 )
+				else
 				{
-					gtkCall ~= parameterToGtk(0, convParms, aliases);
+					gtkCall ~= "get"~convParms.clss~"Struct()";
 				}
 			}
 			else if ( parmsType[i] == "GError**" && convParms.strct != "GError")
 			{
 				bd ~= "GError* err = null;";
-				bd ~= "";
 
-				gtkCall ~= ", &err";
+				gtkCall ~= "&err";
 
 				wrapError = true;
+			}
+			else if ( parmsWrap[i] == "out string" )
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+
+				bd ~= "char* out"~ id ~" = null;";
+				gtkCall ~= "&out"~ id;
+				end ~= id ~" = Str.toString(out"~ id ~");";
 			}
 			else if ( (GtkDClass.startsWith(parmsWrap[i], "out") ||
 				GtkDClass.startsWith(parmsWrap[i], "inout")) &&
@@ -653,7 +662,7 @@ public struct Funct
 					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " = ("~id~" is null) ? null : "~id~ ".get"~ split(parmsWrap[i])[1] ~"Struct();";
 				}
 
-				gtkCall ~= ", &" ~ parmsType[i].removechars("*").tolower();
+				gtkCall ~= "&" ~ parmsType[i].removechars("*").tolower();
 				
 				end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"("~ parmsType[i].removechars("*").tolower() ~");";
 			}
@@ -661,7 +670,6 @@ public struct Funct
 			{
 				if ( parms[i].length > 0 )
 				{
-					gtkCall ~= ", ";
 					gtkCall ~= parameterToGtk(i, convParms, aliases);
 				}
 			}
@@ -669,10 +677,11 @@ public struct Funct
 
 		gtkCall ~= ")"; //gtk_function(arg1...argN)
 
-		if ( end.length > 0 )
+		if ( end.length > 0 || wrapError )
 		{
 			bd ~= "";
-			end = [""] ~ end;
+			if ( end.length > 0 )
+				end = [""] ~ end;
 		}
 
 		/* 2nd: construct the rest of the body according to the type

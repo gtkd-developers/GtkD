@@ -358,10 +358,10 @@ public class MatchInfo
 	 * endPos =  pointer to location where to store the end position
 	 * Returns: TRUE if the position was fetched, FALSE otherwise. If  the position cannot be fetched, start_pos and end_pos are left  unchanged
 	 */
-	public int fetchPos(int matchNum, int* startPos, int* endPos)
+	public int fetchPos(int matchNum, out int startPos, out int endPos)
 	{
 		// gboolean g_match_info_fetch_pos (const GMatchInfo *match_info,  gint match_num,  gint *start_pos,  gint *end_pos);
-		return g_match_info_fetch_pos(gMatchInfo, matchNum, startPos, endPos);
+		return g_match_info_fetch_pos(gMatchInfo, matchNum, &startPos, &endPos);
 	}
 	
 	/**
@@ -394,10 +394,10 @@ public class MatchInfo
 	 * endPos =  pointer to location where to store the end position
 	 * Returns: TRUE if the position was fetched, FALSE otherwise. If  the position cannot be fetched, start_pos and end_pos are left unchanged
 	 */
-	public int fetchNamedPos(string name, int* startPos, int* endPos)
+	public int fetchNamedPos(string name, out int startPos, out int endPos)
 	{
 		// gboolean g_match_info_fetch_named_pos (const GMatchInfo *match_info,  const gchar *name,  gint *start_pos,  gint *end_pos);
-		return g_match_info_fetch_named_pos(gMatchInfo, Str.toStringz(name), startPos, endPos);
+		return g_match_info_fetch_named_pos(gMatchInfo, Str.toStringz(name), &startPos, &endPos);
 	}
 	
 	/**

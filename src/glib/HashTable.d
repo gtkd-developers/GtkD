@@ -39,12 +39,15 @@
  * 	- g_hash_table_
  * omit structs:
  * omit prefixes:
+ * 	- g_hash_table_iter_
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.HashTableIter
  * 	- glib.ListG
  * structWrap:
  * 	- GHashTable* -> HashTable
+ * 	- GHashTableIter* -> HashTableIter
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
@@ -59,6 +62,7 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.HashTableIter;
 private import glib.ListG;
 
 
@@ -464,98 +468,6 @@ public class HashTable
 	{
 		// void g_hash_table_unref (GHashTable *hash_table);
 		g_hash_table_unref(gHashTable);
-	}
-	
-	/**
-	 * Initializes a key/value pair iterator and associates it with
-	 * hash_table. Modifying the hash table after calling this function
-	 * invalidates the returned iterator.
-	 * GHashTableIter iter;
-	 * gpointer key, value;
-	 * g_hash_table_iter_init (iter, hash_table);
-	 * while (g_hash_table_iter_next (iter, key, value))
-	 *  {
-		 *  /+* do something with key and value +/
-	 *  }
-	 * Since 2.16
-	 * Params:
-	 * iter =  an uninitialized GHashTableIter.
-	 * hashTable =  a GHashTable.
-	 */
-	public static void iterInit(GHashTableIter* iter, HashTable hashTable)
-	{
-		// void g_hash_table_iter_init (GHashTableIter *iter,  GHashTable *hash_table);
-		g_hash_table_iter_init(iter, (hashTable is null) ? null : hashTable.getHashTableStruct());
-	}
-	
-	/**
-	 * Advances iter and retrieves the key and/or value that are now
-	 * pointed to as a result of this advancement. If FALSE is returned,
-	 * key and value are not set, and the iterator becomes invalid.
-	 * Since 2.16
-	 * Params:
-	 * iter =  an initialized GHashTableIter.
-	 * key =  a location to store the key, or NULL.
-	 * value =  a location to store the value, or NULL.
-	 * Returns: FALSE if the end of the GHashTable has been reached.
-	 */
-	public static int iterNext(GHashTableIter* iter, void** key, void** value)
-	{
-		// gboolean g_hash_table_iter_next (GHashTableIter *iter,  gpointer *key,  gpointer *value);
-		return g_hash_table_iter_next(iter, key, value);
-	}
-	
-	/**
-	 * Returns the GHashTable associated with iter.
-	 * Since 2.16
-	 * Params:
-	 * iter =  an initialized GHashTableIter.
-	 * Returns: the GHashTable associated with iter.
-	 */
-	public static HashTable iterGetHashTable(GHashTableIter* iter)
-	{
-		// GHashTable* g_hash_table_iter_get_hash_table (GHashTableIter *iter);
-		auto p = g_hash_table_iter_get_hash_table(iter);
-		if(p is null)
-		{
-			return null;
-		}
-		return new HashTable(cast(GHashTable*) p);
-	}
-	
-	/**
-	 * Removes the key/value pair currently pointed to by the iterator
-	 * from its associated GHashTable. Can only be called after
-	 * g_hash_table_iter_next() returned TRUE, and cannot be called more
-	 * than once for the same key/value pair.
-	 * If the GHashTable was created using g_hash_table_new_full(), the
-	 * key and value are freed using the supplied destroy functions, otherwise
-	 * you have to make sure that any dynamically allocated values are freed
-	 * yourself.
-	 * Since 2.16
-	 * Params:
-	 * iter =  an initialized GHashTableIter.
-	 */
-	public static void iterRemove(GHashTableIter* iter)
-	{
-		// void g_hash_table_iter_remove (GHashTableIter *iter);
-		g_hash_table_iter_remove(iter);
-	}
-	
-	/**
-	 * Removes the key/value pair currently pointed to by the iterator
-	 * from its associated GHashTable, without calling the key and value
-	 * destroy functions. Can only be called after
-	 * g_hash_table_iter_next() returned TRUE, and cannot be called more
-	 * than once for the same key/value pair.
-	 * Since 2.16
-	 * Params:
-	 * iter =  an initialized GHashTableIter.
-	 */
-	public static void iterSteal(GHashTableIter* iter)
-	{
-		// void g_hash_table_iter_steal (GHashTableIter *iter);
-		g_hash_table_iter_steal(iter);
 	}
 	
 	/**

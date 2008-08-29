@@ -98,6 +98,41 @@ public class Util
 	}
 	
 	/**
+	 * Creates a path from a series of elements using separator as the
+	 * separator between elements. At the boundary between two elements,
+	 * any trailing occurrences of separator in the first element, or
+	 * leading occurrences of separator in the second element are removed
+	 * and exactly one copy of the separator is inserted.
+	 * Empty elements are ignored.
+	 * The number of leading copies of the separator on the result is
+	 * the same as the number of leading copies of the separator on
+	 * the first non-empty element.
+	 * The number of trailing copies of the separator on the result is
+	 * the same as the number of trailing copies of the separator on
+	 * the last non-empty element. (Determination of the number of
+	 * trailing copies is done without stripping leading copies, so
+	 * if the separator is ABA, ABABA
+	 * has 1 trailing copy.)
+	 * However, if there is only a single non-empty element, and there
+	 * are no characters in that element not part of the leading or
+	 * trailing separators, then the result is exactly the original value
+	 * of that element.
+	 * Other than for determination of the number of leading and trailing
+	 * copies of the separator, elements consisting only of copies
+	 * of the separator are ignored.
+	 * Params:
+	 * separator =  a string used to separator the elements of the path.
+	 * firstElement =  the first element in the path
+	 * ... =  remaining elements in path, terminated by NULL
+	 * Returns: a newly-allocated string that must be freed with g_free().
+	 */
+	public static string buildPath(string separator, string[] firstElement ... )
+	{
+		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
+		return buildPathv(separator, Str.toStringzArray(firstElement));
+	}
+	
+	/**
 	 */
 	
 	/**

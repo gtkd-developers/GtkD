@@ -209,10 +209,10 @@ public class SimpleXML
 	 * lineNumber =  return location for a line number, or NULL
 	 * charNumber =  return location for a char-on-line number, or NULL
 	 */
-	public void getPosition(int* lineNumber, int* charNumber)
+	public void getPosition(out int lineNumber, out int charNumber)
 	{
 		// void g_markup_parse_context_get_position (GMarkupParseContext *context,  gint *line_number,  gint *char_number);
-		g_markup_parse_context_get_position(gMarkupParseContext, lineNumber, charNumber);
+		g_markup_parse_context_get_position(gMarkupParseContext, &lineNumber, &charNumber);
 	}
 	
 	/**
