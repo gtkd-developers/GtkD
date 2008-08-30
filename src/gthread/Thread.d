@@ -385,10 +385,10 @@ public class Thread
 	 * valueLocation = location of a static initializable variable containing 0.
 	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otherwise
 	 */
-	public static int onceInitEnter(uint* valueLocation)
+	public static int onceInitEnter(out uint valueLocation)
 	{
 		// gboolean g_once_init_enter (volatile gsize *value_location);
-		return g_once_init_enter(valueLocation);
+		return g_once_init_enter(&valueLocation);
 	}
 	
 	/**
@@ -402,9 +402,9 @@ public class Thread
 	 * valueLocation = location of a static initializable variable containing 0.
 	 * initializationValue = new non-0 value for *value_location.
 	 */
-	public static void onceInitLeave(uint* valueLocation, uint initializationValue)
+	public static void onceInitLeave(out uint valueLocation, uint initializationValue)
 	{
 		// void g_once_init_leave (volatile gsize *value_location,  gsize initialization_value);
-		g_once_init_leave(valueLocation, initializationValue);
+		g_once_init_leave(&valueLocation, initializationValue);
 	}
 }

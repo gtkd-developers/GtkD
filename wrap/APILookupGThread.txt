@@ -164,5 +164,8 @@ structWrap: GThread* Thread
 #structWrap: GThreadFunctions* ThreadFunctions
 import: glib.ErrorG
 import: glib.GException
+
+out: g_once_init_enter value_location
+out: g_once_init_leave value_location
 outFile: Thread
 
