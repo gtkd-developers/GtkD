@@ -376,7 +376,7 @@ public class CharacterSet
 	public static string filenameFromUri(string uri, out string hostname)
 	{
 		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		char* outhostname = hostname.ptr;
+		char* outhostname = null;
 		GError* err = null;
 		
 		auto p = Str.toString(g_filename_from_uri(Str.toStringz(uri), &outhostname, &err));
@@ -446,7 +446,7 @@ public class CharacterSet
 	public static int getFilenameCharsets(out string[] charsets)
 	{
 		// gboolean g_get_filename_charsets (G_CONST_RETURN gchar ***charsets);
-		char** outcharsets = charsets.ptr;
+		char** outcharsets = null;
 		
 		auto p = g_get_filename_charsets(&outcharsets);
 		
@@ -578,7 +578,7 @@ public class CharacterSet
 	public static int getCharset(out string charset)
 	{
 		// gboolean g_get_charset (G_CONST_RETURN char **charset);
-		char* outcharset = charset.ptr;
+		char* outcharset = null;
 		
 		auto p = g_get_charset(&outcharset);
 		

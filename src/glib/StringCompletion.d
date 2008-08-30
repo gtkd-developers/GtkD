@@ -182,7 +182,7 @@ public class StringCompletion
 	public ListG complete(string prefix, out string newPrefix)
 	{
 		// GList* g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		char* outnewPrefix = newPrefix.ptr;
+		char* outnewPrefix = null;
 		
 		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), &outnewPrefix);
 		
@@ -213,7 +213,7 @@ public class StringCompletion
 	public ListG completeUtf8(string prefix, out string newPrefix)
 	{
 		// GList* g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		char* outnewPrefix = newPrefix.ptr;
+		char* outnewPrefix = null;
 		
 		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), &outnewPrefix);
 		

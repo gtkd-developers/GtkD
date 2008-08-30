@@ -140,7 +140,7 @@ public class FileUtils
 	public static int fileGetContents(string filename, out string contents, out uint length)
 	{
 		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
-		char* outcontents = contents.ptr;
+		char* outcontents = null;
 		GError* err = null;
 		
 		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err);
@@ -272,7 +272,7 @@ public class FileUtils
 	public static int fileOpenTmp(string tmpl, out string nameUsed)
 	{
 		// gint g_file_open_tmp (const gchar *tmpl,  gchar **name_used,  GError **error);
-		char* outnameUsed = nameUsed.ptr;
+		char* outnameUsed = null;
 		GError* err = null;
 		
 		auto p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);

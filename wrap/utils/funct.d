@@ -698,11 +698,15 @@ public struct Funct
 
 				wrapError = true;
 			}
-			else if ( parmsWrap[i] == "out string" || parmsWrap[i] == "inout string")
+			else if ( parmsWrap[i] == "out string" || parmsWrap[i] == "inout string" )
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
-				bd ~= "char* out"~ id ~" = "~ id ~".ptr;";
+				if ( parmsWrap[i] == "out string" )
+					bd ~= "char* out"~ id ~" = null;";
+				else
+					bd ~= "char* out"~ id ~" = Str.toStringz("~ id ~");";
+
 				gtkCall ~= "&out"~ id;
 				end ~= id ~" = Str.toString(out"~ id ~");";
 			}
@@ -710,7 +714,11 @@ public struct Funct
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
-				bd ~= "char** out"~ id ~" = "~ id ~".ptr;";
+				if ( parmsWrap[i] == "out string[]" )
+					bd ~= "char** out"~ id ~" = null;";
+				else
+					bd ~= "char** out"~ id ~" = Str.toStringzArray("~ id ~");";
+
 				gtkCall ~= "&out"~ id;
 				end ~= id ~" = Str.toStringArray(out"~ id ~");";
 			}
