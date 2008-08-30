@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = RandG
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,8 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- g_rand_new_with_seed_array
- * 	- g_rand_set_seed_array
  * omit signals:
  * imports:
  * structWrap:
@@ -132,40 +130,6 @@ public class RandG
 	}
 	
 	/**
-	 * Creates a new random number generator initialized with seed.
-	 * Since 2.4
-	 * Params:
-	 * seed =  an array of seeds to initialize the random number generator.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (uint[] seed)
-	{
-		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
-		auto p = g_rand_new_with_seed_array(seed.ptr, seed.length);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed, seedLength)");
-		}
-		this(cast(GRand*) p);
-	}
-	
-	/**
-	 * Initializes the random number generator by an array of
-	 * longs. Array can be of arbitrary size, though only the
-	 * first 624 values are taken. This function is useful
-	 * if you have many low entropy seeds, or if you require more then
-	 * 32bits of actual entropy for your application.
-	 * Since 2.4
-	 * Params:
-	 * seed =  array to initialize with
-	 */
-	public void setSeedArray(uint[] seed)
-	{
-		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
-		g_rand_set_seed_array(gRand, seed.ptr, seed.length);
-	}
-	
-	/**
 	 */
 	
 	/**
@@ -181,6 +145,24 @@ public class RandG
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_rand_new_with_seed(seed)");
+		}
+		this(cast(GRand*) p);
+	}
+	
+	/**
+	 * Creates a new random number generator initialized with seed.
+	 * Since 2.4
+	 * Params:
+	 * seed =  an array of seeds to initialize the random number generator.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (uint[] seed)
+	{
+		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
+		auto p = g_rand_new_with_seed_array(seed.ptr, seed.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed.ptr, seed.length)");
 		}
 		this(cast(GRand*) p);
 	}
@@ -238,6 +220,22 @@ public class RandG
 	{
 		// void g_rand_set_seed (GRand *rand_,  guint32 seed);
 		g_rand_set_seed(gRand, seed);
+	}
+	
+	/**
+	 * Initializes the random number generator by an array of
+	 * longs. Array can be of arbitrary size, though only the
+	 * first 624 values are taken. This function is useful
+	 * if you have many low entropy seeds, or if you require more then
+	 * 32bits of actual entropy for your application.
+	 * Since 2.4
+	 * Params:
+	 * seed =  array to initialize with
+	 */
+	public void setSeedArray(uint[] seed)
+	{
+		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
+		g_rand_set_seed_array(gRand, seed.ptr, seed.length);
 	}
 	
 	/**

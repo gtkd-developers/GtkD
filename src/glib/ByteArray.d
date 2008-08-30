@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ByteArray
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,8 +40,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- g_byte_array_append
- * 	- g_byte_array_prepend
  * omit signals:
  * imports:
  * structWrap:
@@ -120,42 +118,6 @@ public class ByteArray
 	}
 	
 	/**
-	 * Adds the given bytes to the end of the GByteArray.
-	 * The array will grow in size automatically if necessary.
-	 * Params:
-	 * data = the byte data to be added.
-	 * Returns:the GByteArray.
-	 */
-	public ByteArray append(byte[] data)
-	{
-		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
-		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ByteArray(cast(GByteArray*) p);
-	}
-	
-	/**
-	 * Adds the given data to the start of the GByteArray.
-	 * The array will grow in size automatically if necessary.
-	 * Params:
-	 * data = the byte data to be added.
-	 * Returns:the GByteArray.
-	 */
-	public ByteArray prepend(byte[] data)
-	{
-		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
-		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ByteArray(cast(GByteArray*) p);
-	}
-	
-	/**
 	 */
 	
 	/**
@@ -185,6 +147,42 @@ public class ByteArray
 	{
 		// GByteArray* g_byte_array_sized_new (guint reserved_size);
 		auto p = g_byte_array_sized_new(reservedSize);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Adds the given bytes to the end of the GByteArray.
+	 * The array will grow in size automatically if necessary.
+	 * Params:
+	 * data = the byte data to be added.
+	 * Returns:the GByteArray.
+	 */
+	public ByteArray append(byte[] data)
+	{
+		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
+		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Adds the given data to the start of the GByteArray.
+	 * The array will grow in size automatically if necessary.
+	 * Params:
+	 * data = the byte data to be added.
+	 * Returns:the GByteArray.
+	 */
+	public ByteArray prepend(byte[] data)
+	{
+		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
+		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
 		if(p is null)
 		{
 			return null;

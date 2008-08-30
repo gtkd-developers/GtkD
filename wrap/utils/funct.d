@@ -127,7 +127,7 @@ public struct Funct
 			GtkDClass.adjustTypeName(currParmType, currParm);
 			parmsType ~= currParmType.dup;
 
-			if ( !getOutOrRefType(currParm, currParmType,  convParms) )
+			if ( !getOutOrRefType(currParm, currParmType,  convParms) && !getArrayType(currParm, currParmType,  convParms))
 				parmsWrap ~= getWrappedType(currParmType.dup, convParms);
 
 			parms ~= currParm.dup;
@@ -140,30 +140,60 @@ public struct Funct
 
 	bool getOutOrRefType(char[] currParm, char[] currParmType, ConvParms* convParms)
 	{
-		if ( name in convParms.outParms )
+		if ( name in convParms.outParms && convParms.outParms[name].contains(currParm) )
 		{
-			foreach (char[] parm; convParms.outParms[name] )
-			{
-				if ( parm == currParm )
-				{
-					parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
-					return true;
-				}
-			}
+			parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+			return true;
 		}
-		if ( name in convParms.inoutParms )
+		if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(currParm) )
 		{
-			foreach (char[] parm; convParms.inoutParms[name] )
+			parmsWrap ~= "inout "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+			return true;
+		}
+
+		return false;
+	}
+
+	bool getArrayType(char[] currParm, char[] currParmType, ConvParms* convParms)
+	{
+		if ( name in convParms.array && currParm in convParms.array[name])
+		{
+			if ( name in convParms.outParms && convParms.outParms[name].contains(currParm) )
 			{
-				if ( parm == currParm )
-				{
-					parmsWrap ~= "inout "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
-					return true;
-				}
+				parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-2].dup, convParms) ~"[]";
+				return true;
+			}
+			else if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(currParm) )
+			{
+				parmsWrap ~= "inout "~ getWrappedType(currParmType[0 .. $-2].dup, convParms) ~"[]";
+				return true;
+			}
+			else
+			{
+				parmsWrap ~= getWrappedType(currParmType[0 .. $-1].dup, convParms) ~ "[]";
+				return true;
 			}
 		}
 
 		return false;
+	}
+
+	bool contains(char[][] src, char[] elem)
+	{
+		foreach( str; src)
+			if ( str == elem )
+				return true;
+
+		return false;
+	}
+
+	char[] contains(char[][char[]] src, char[] elem)
+	{
+		foreach( key, str; src)
+			if ( str == elem )
+				return key;
+
+		return null;
 	}
 
 	char[] getStrctVar(ConvParms* convParms)
@@ -476,8 +506,13 @@ public struct Funct
 			{
 				++i;
 				continue;
-			}			
-		
+			}
+
+			if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
+			{
+				++i;
+				continue;
+			}
 
 			if ( parmCount>0 ) dec ~= ", ";
 			if ( parmCount>=0 
@@ -525,6 +560,12 @@ public struct Funct
 				else
 					parmToGtk = "&" ~ parmsType[i].removechars("*").tolower();
 			}
+			else if ( GtkDClass.endsWith(parmsWrap[i], "[]") )
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+
+				parmToGtk = id ~".ptr";
+			}
 			else
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
@@ -536,7 +577,16 @@ public struct Funct
 		}
 		else
 		{
-			parmToGtk = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+			if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
+			{
+				char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
+
+				parmToGtk = id ~".length";
+			}
+			else
+			{
+				parmToGtk = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+			}
 		}
 		return parmToGtk;
 	}

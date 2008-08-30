@@ -446,7 +446,7 @@ public class GtkWrapper : WrapperIF
     }
 
     /**
-     * Creates an entry on a char[][char[]] associative array
+     * Creates an entry on a char[][][char[]] associative array
      * Params:
      *      aa =
      *      defReader =
@@ -464,6 +464,41 @@ public class GtkWrapper : WrapperIF
         {
             aa[vals[0]] ~= vals[1];
             debug(aa) writefln("added alias %s = %s", vals[0], vals[1]);
+        }
+        else
+        {
+            status = ERR_INVALID_ALIAS;
+            if ( errors !is null )
+            {
+                errors ~= WError.create(defReader.getLineNumber(), status, "Invalid alias");
+            }
+        }
+		return status;
+    }
+
+/**
+     * Creates an entry on a char[][][char[]] associative array
+     * Params:
+     *      aa =
+     *      defReader =
+     * Returns:
+     */
+    private static int loadAAA(inout char[][char[]][char[]] aa, DefReader defReader, inout WError*[] errors = null)
+    {
+        int status = ERR_NONE;
+        char[][] vals = std.string.split(defReader.getValue());
+        if ( vals.length == 1 )
+        {
+            vals ~= "";
+        }
+		if ( vals.length == 2 )
+		{
+			vals ~= "";
+		}
+        if ( vals.length == 3 )
+        {
+            aa[vals[0]][vals[1]] ~= vals[2];
+            debug(aa) writefln("added alias [%s][%s] = %s", vals[0], vals[1], vals[2]);
         }
         else
         {
@@ -558,7 +593,7 @@ public class GtkWrapper : WrapperIF
                       " copy import import(tango) structWrap alias moduleAlias override"
                       " noprefix nostruct nocode nosignal"
                       " code interfaceCode"
-                      " srcout out inout"
+                      " srcout out inout array"
                       ;
         if (outPack == "lib") {char[] tmp = pack.dup; pack = outPack.dup; outPack = tmp;} //undo Bind hack...oupPack now holds bind dir.
         convParms.outPack = outPack;
@@ -594,6 +629,7 @@ public class GtkWrapper : WrapperIF
                 case "override": convParms.overrides ~= defReader.getValue(); break;
 				case "out": loadAA(convParms.outParms, defReader, errors); break;
 				case "inout": loadAA(convParms.inoutParms, defReader, errors); break;
+				case "array": loadAAA(convParms.array, defReader, errors); break;
                 case "text":
                     convParms.text ~= loadTextMultiLine("text");
                     break;

@@ -1107,44 +1107,9 @@ class: RandG
 prefix: g_rand_
 prefix: g_
 
-nocode: g_rand_new_with_seed_array
-nocode: g_rand_set_seed_array
+array: g_rand_set_seed_array seed seed_length
+array: g_rand_new_with_seed_array seed seed_length
 
-code: start
-/**
-	 * Creates a new random number generator initialized with seed.
-	 * Since 2.4
-	 * Params:
-	 * seed =  an array of seeds to initialize the random number generator.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (uint[] seed)
-	{
-		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
-		auto p = g_rand_new_with_seed_array(seed.ptr, seed.length);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed, seedLength)");
-		}
-		this(cast(GRand*) p);
-	}
-
-	/**
-	 * Initializes the random number generator by an array of
-	 * longs. Array can be of arbitrary size, though only the
-	 * first 624 values are taken. This function is useful
-	 * if you have many low entropy seeds, or if you require more then
-	 * 32bits of actual entropy for your application.
-	 * Since 2.4
-	 * Params:
-	 * seed =  array to initialize with
-	 */
-	public void setSeedArray(uint[] seed)
-	{
-		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
-		g_rand_set_seed_array(gRand, seed.ptr, seed.length);
-	}
-code: end
 structWrap: GRand* RandG
 
 alias: int randInt
@@ -2122,46 +2087,9 @@ class: ByteArray
 prefix: g_byte_array_
 structWrap: GByteArray* ByteArray
 
-nocode: g_byte_array_append
-nocode: g_byte_array_prepend
+array: g_byte_array_append data len
+array: g_byte_array_prepend data len
 
-code: start
-	/**
-	 * Adds the given bytes to the end of the GByteArray.
-	 * The array will grow in size automatically if necessary.
-	 * Params:
-	 * data = the byte data to be added.
-	 * Returns:the GByteArray.
-	 */
-	public ByteArray append(byte[] data)
-	{
-		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
-		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ByteArray(cast(GByteArray*) p);
-	}
-	
-	/**
-	 * Adds the given data to the start of the GByteArray.
-	 * The array will grow in size automatically if necessary.
-	 * Params:
-	 * data = the byte data to be added.
-	 * Returns:the GByteArray.
-	 */
-	public ByteArray prepend(byte[] data)
-	{
-		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
-		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ByteArray(cast(GByteArray*) p);
-	}
-code: end
 outFile: ByteArray
 
 file: glib-Balanced-Binary-Trees.html
