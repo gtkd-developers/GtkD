@@ -984,49 +984,9 @@ out: g_locale_from_utf8 bytes_read
 out: g_locale_from_utf8 bytes_written
 out: g_filename_from_uri hostname
 out: g_get_charset charset
+out: g_get_filename_charsets charsets
+array: g_get_filename_charsets charsets
 
-nocode: g_get_filename_charsets
-
-code: start
-	/**
-	 * Determines the preferred character sets used for filenames.
-	 * The first character set from the charsets is the filename encoding, the
-	 * subsequent character sets are used when trying to generate a displayable
-	 * representation of a filename, see g_filename_display_name().
-	 * On Unix, the character sets are determined by consulting the
-	 * environment variables G_FILENAME_ENCODING and
-	 * G_BROKEN_FILENAMES. On Windows, the character set
-	 * used in the GLib API is always UTF-8 and said environment variables
-	 * have no effect.
-	 * G_FILENAME_ENCODING may be set to a comma-separated list
-	 * of character set names. The special token "@locale" is taken to
-	 * mean the character set for the current
-	 * locale. If G_FILENAME_ENCODING is not set, but
-	 * G_BROKEN_FILENAMES is, the character set of the current
-	 * locale is taken as the filename encoding. If neither environment variable
-	 * is set, UTF-8 is taken as the filename encoding, but the character
-	 * set of the current locale is also put in the list of encodings.
-	 * The returned charsets belong to GLib and must not be freed.
-	 * Note that on Unix, regardless of the locale character set or
-	 * G_FILENAME_ENCODING value, the actual file names present
-	 * on a system might be in any random encoding or just gibberish.
-	 * Since 2.6
-	 * Params:
-	 * charsets =  return location for the NULL-terminated list of encoding names
-	 * Returns: TRUE if the filename encoding is UTF-8.
-	 */
-	public static int getFilenameCharsets(out string[] charsets)
-	{
-		char** set = null;
-
-		// gboolean g_get_filename_charsets (G_CONST_RETURN gchar ***charsets);
-		int i = g_get_filename_charsets(&set);
-
-		charsets = Str.toStringArray(set);
-
-		return i;
-	}
-code: end
 outFile: CharacterSet
 
 file: glib-Unicode-Manipulation.html

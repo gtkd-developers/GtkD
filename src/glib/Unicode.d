@@ -762,7 +762,7 @@ public class Unicode
 	public static int utf8_Validate(string str, int maxLen, out string end)
 	{
 		// gboolean g_utf8_validate (const gchar *str,  gssize max_len,  const gchar **end);
-		char* outend = null;
+		char* outend = end.ptr;
 		
 		auto p = g_utf8_validate(Str.toStringz(str), maxLen, &outend);
 		

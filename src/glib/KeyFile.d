@@ -307,7 +307,7 @@ public class KeyFile
 	public int loadFromDataDirs(string file, out string fullPath, GKeyFileFlags flags)
 	{
 		// gboolean g_key_file_load_from_data_dirs (GKeyFile *key_file,  const gchar *file,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
-		char* outfullPath = null;
+		char* outfullPath = fullPath.ptr;
 		GError* err = null;
 		
 		auto p = g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), &outfullPath, flags, &err);

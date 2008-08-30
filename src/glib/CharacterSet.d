@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = CharacterSet
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,7 +44,6 @@
  * 	- g_iconv
  * 	- g_iconv_close
  * omit code:
- * 	- g_get_filename_charsets
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -163,45 +162,6 @@ private import glib.GException;
  */
 public class CharacterSet
 {
-	
-	/**
-	 * Determines the preferred character sets used for filenames.
-	 * The first character set from the charsets is the filename encoding, the
-	 * subsequent character sets are used when trying to generate a displayable
-	 * representation of a filename, see g_filename_display_name().
-	 * On Unix, the character sets are determined by consulting the
-	 * environment variables G_FILENAME_ENCODING and
-	 * G_BROKEN_FILENAMES. On Windows, the character set
-	 * used in the GLib API is always UTF-8 and said environment variables
-	 * have no effect.
-	 * G_FILENAME_ENCODING may be set to a comma-separated list
-	 * of character set names. The special token "@locale" is taken to
-	 * mean the character set for the current
-	 * locale. If G_FILENAME_ENCODING is not set, but
-	 * G_BROKEN_FILENAMES is, the character set of the current
-	 * locale is taken as the filename encoding. If neither environment variable
-	 * is set, UTF-8 is taken as the filename encoding, but the character
-	 * set of the current locale is also put in the list of encodings.
-	 * The returned charsets belong to GLib and must not be freed.
-	 * Note that on Unix, regardless of the locale character set or
-	 * G_FILENAME_ENCODING value, the actual file names present
-	 * on a system might be in any random encoding or just gibberish.
-	 * Since 2.6
-	 * Params:
-	 * charsets =  return location for the NULL-terminated list of encoding names
-	 * Returns: TRUE if the filename encoding is UTF-8.
-	 */
-	public static int getFilenameCharsets(out string[] charsets)
-	{
-		char** set = null;
-		
-		// gboolean g_get_filename_charsets (G_CONST_RETURN gchar ***charsets);
-		int i = g_get_filename_charsets(&set);
-		
-		charsets = Str.toStringArray(set);
-		
-		return i;
-	}
 	
 	/**
 	 */
@@ -416,7 +376,7 @@ public class CharacterSet
 	public static string filenameFromUri(string uri, out string hostname)
 	{
 		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		char* outhostname = null;
+		char* outhostname = hostname.ptr;
 		GError* err = null;
 		
 		auto p = Str.toString(g_filename_from_uri(Str.toStringz(uri), &outhostname, &err));
@@ -453,6 +413,44 @@ public class CharacterSet
 			throw new GException( new ErrorG(err) );
 		}
 		
+		return p;
+	}
+	
+	/**
+	 * Determines the preferred character sets used for filenames.
+	 * The first character set from the charsets is the filename encoding, the
+	 * subsequent character sets are used when trying to generate a displayable
+	 * representation of a filename, see g_filename_display_name().
+	 * On Unix, the character sets are determined by consulting the
+	 * environment variables G_FILENAME_ENCODING and
+	 * G_BROKEN_FILENAMES. On Windows, the character set
+	 * used in the GLib API is always UTF-8 and said environment variables
+	 * have no effect.
+	 * G_FILENAME_ENCODING may be set to a comma-separated list
+	 * of character set names. The special token "@locale" is taken to
+	 * mean the character set for the current
+	 * locale. If G_FILENAME_ENCODING is not set, but
+	 * G_BROKEN_FILENAMES is, the character set of the current
+	 * locale is taken as the filename encoding. If neither environment variable
+	 * is set, UTF-8 is taken as the filename encoding, but the character
+	 * set of the current locale is also put in the list of encodings.
+	 * The returned charsets belong to GLib and must not be freed.
+	 * Note that on Unix, regardless of the locale character set or
+	 * G_FILENAME_ENCODING value, the actual file names present
+	 * on a system might be in any random encoding or just gibberish.
+	 * Since 2.6
+	 * Params:
+	 * charsets =  return location for the NULL-terminated list of encoding names
+	 * Returns: TRUE if the filename encoding is UTF-8.
+	 */
+	public static int getFilenameCharsets(out string[] charsets)
+	{
+		// gboolean g_get_filename_charsets (G_CONST_RETURN gchar ***charsets);
+		char** outcharsets = charsets.ptr;
+		
+		auto p = g_get_filename_charsets(&outcharsets);
+		
+		charsets = Str.toStringArray(outcharsets);
 		return p;
 	}
 	
@@ -580,7 +578,7 @@ public class CharacterSet
 	public static int getCharset(out string charset)
 	{
 		// gboolean g_get_charset (G_CONST_RETURN char **charset);
-		char* outcharset = null;
+		char* outcharset = charset.ptr;
 		
 		auto p = g_get_charset(&outcharset);
 		

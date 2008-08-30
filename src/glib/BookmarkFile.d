@@ -273,7 +273,7 @@ public class BookmarkFile
 	public int loadFromDataDirs(string file, out string fullPath)
 	{
 		// gboolean g_bookmark_file_load_from_data_dirs (GBookmarkFile *bookmark,  const gchar *file,  gchar **full_path,  GError **error);
-		char* outfullPath = null;
+		char* outfullPath = fullPath.ptr;
 		GError* err = null;
 		
 		auto p = g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), &outfullPath, &err);
@@ -547,8 +547,8 @@ public class BookmarkFile
 	public int getIcon(string uri, out string href, out string mimeType)
 	{
 		// gboolean g_bookmark_file_get_icon (GBookmarkFile *bookmark,  const gchar *uri,  gchar **href,  gchar **mime_type,  GError **error);
-		char* outhref = null;
-		char* outmimeType = null;
+		char* outhref = href.ptr;
+		char* outmimeType = mimeType.ptr;
 		GError* err = null;
 		
 		auto p = g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), &outhref, &outmimeType, &err);
@@ -718,7 +718,7 @@ public class BookmarkFile
 	public int getAppInfo(string uri, string name, out string exec, out uint count, out uint stamp)
 	{
 		// gboolean g_bookmark_file_get_app_info (GBookmarkFile *bookmark,  const gchar *uri,  const gchar *name,  gchar **exec,  guint *count,  time_t *stamp,  GError **error);
-		char* outexec = null;
+		char* outexec = exec.ptr;
 		GError* err = null;
 		
 		auto p = g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &outexec, &count, &stamp, &err);

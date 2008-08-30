@@ -83,7 +83,12 @@ public struct Funct
 
 		GtkDClass.adjustTypeName(type, name);
 
-		typeWrap = getWrappedType(type.dup, convParms);
+		if ( type == "gchar**" || type == "char**" )
+			typeWrap = "string[]";
+		if ( name in convParms.array && "Return" in convParms.array[name] )
+			typeWrap = getWrappedType(type.dup[0 .. $-1], convParms) ~ "[]";
+		else
+			typeWrap = getWrappedType(type.dup, convParms);
 		
 		GtkDClass.skip(p, text,'(');
 		int countBrace = 0;
@@ -127,7 +132,7 @@ public struct Funct
 			GtkDClass.adjustTypeName(currParmType, currParm);
 			parmsType ~= currParmType.dup;
 
-			if ( !getOutOrRefType(currParm, currParmType,  convParms) && !getArrayType(currParm, currParmType,  convParms))
+			if ( !getArrayType(currParm, currParmType,  convParms) && !getOutOrRefType(currParm, currParmType,  convParms) )
 				parmsWrap ~= getWrappedType(currParmType.dup, convParms);
 
 			parms ~= currParm.dup;
@@ -577,10 +582,14 @@ public struct Funct
 		}
 		else
 		{
-			if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
+			if ( name in convParms.array && "Return" in convParms.array[name])
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				parmToGtk = "&"~ id;
+			}
+			else if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
 			{
 				char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
-
 				parmToGtk = id ~".length";
 			}
 			else
@@ -689,13 +698,21 @@ public struct Funct
 
 				wrapError = true;
 			}
-			else if ( parmsWrap[i] == "out string" )
+			else if ( parmsWrap[i] == "out string" || parmsWrap[i] == "inout string")
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
-				bd ~= "char* out"~ id ~" = null;";
+				bd ~= "char* out"~ id ~" = "~ id ~".ptr;";
 				gtkCall ~= "&out"~ id;
 				end ~= id ~" = Str.toString(out"~ id ~");";
+			}
+			else if ( parmsWrap[i] == "out string[]" || parmsWrap[i] == "inout string[]" )
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+
+				bd ~= "char** out"~ id ~" = "~ id ~".ptr;";
+				gtkCall ~= "&out"~ id;
+				end ~= id ~" = Str.toStringArray(out"~ id ~");";
 			}
 			else if ( (GtkDClass.startsWith(parmsWrap[i], "out") ||
 				GtkDClass.startsWith(parmsWrap[i], "inout")) &&
@@ -715,6 +732,13 @@ public struct Funct
 				gtkCall ~= "&" ~ parmsType[i].removechars("*").tolower();
 				
 				end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"("~ parmsType[i].removechars("*").tolower() ~");";
+			}
+			else if ( name in convParms.array && "Return" == convParms.array[name].contains(parms[i]) )
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+
+				bd ~= GtkDClass.tokenToGtkD(parmsType[i].chomp("*"), convParms, aliases) ~" "~ id ~";";
+				gtkCall ~= "&"~ id;
 			}
 			else
 			{
@@ -802,7 +826,8 @@ public struct Funct
 						if ( end.length > 0 )
 							bd ~= end;
 
-						bd ~= "return p;";
+						if ( !(name in convParms.array && "Return" in convParms.array[name]) )
+							bd ~= "return p;";
 					}
 
 					return bd;
@@ -830,6 +855,25 @@ public struct Funct
 
 						return bd;
 					}
+					else if(typeWrap == "string[]")
+					{
+						/* Returned strings get special care. */
+						//return Str.toString(gtk_function(arg1...argN)).dup;
+						if ( !wrapError && end.length == 0 )
+							bd ~= "return Str.toStringArray(" ~ gtkCall ~ ");";
+						else
+						{
+							bd ~= "auto p = Str.toStringArray(" ~ gtkCall ~ ");";
+							checkError();
+
+							if ( end.length > 0 )
+								bd ~= end;
+
+							bd ~= "return p;";
+						}
+
+						return bd;
+					}
 					else
 					{
 						/* All other objects are wrapped in their container. */
@@ -847,10 +891,31 @@ public struct Funct
 										  	"	return null;",
 											"}"	];
 						bd ~= check;
+
+						if ( GtkDClass.endsWith(typeWrap, "[]") )
+						{
+							char[] id = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
+
+							if (type == typeWrap[0 .. $-2])
+							{
+								bd ~= "return p[0 .. "~ id ~"];";
+							}
+							else
+							{
+								bd ~= "";
+								bd ~= typeWrap ~" arr = new "~ typeWrap[0 .. $-2] ~"["~ id ~"];";
+								bd ~= "for(int i = 0; i < "~ id ~"; i++)";
+								bd ~= "{";
+								bd ~= "\tarr[i] = new " ~ typeWrap[0 .. $-2] ~ "(cast(" ~ type.chomp("*") ~ ") p[i]);";
+								bd ~= "}";
+								bd ~= "";
+								bd ~= "return arr;";
+							}
+						}
 						/* What's with all the casting? */
 						/* A; Casting is needed because some GTK+
 						 *    functions can return void pointers. */
-						if( GtkDClass.endsWith(typeWrap, "IF") )
+						else if( GtkDClass.endsWith(typeWrap, "IF") )
 							bd ~= "return new " ~ typeWrap[0..$-2] ~ "(cast(" ~ type ~ ") p);";
 						else
 							bd ~= "return new " ~ typeWrap ~ "(cast(" ~ type ~ ") p);";
