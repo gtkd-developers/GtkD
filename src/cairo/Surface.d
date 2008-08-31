@@ -43,7 +43,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- cairo.FontOption
  * structWrap:
+ * 	- cairo_font_options_t* -> FontOption
  * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
@@ -59,6 +61,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import cairo.FontOption;
 
 
 
@@ -218,10 +221,10 @@ public class Surface
 	 * options =  a cairo_font_options_t object into which to store
 	 *  the retrieved options. All existing values are overwritten
 	 */
-	public void getFontOptions(cairo_font_options_t* options)
+	public void getFontOptions(FontOption options)
 	{
 		// void cairo_surface_get_font_options (cairo_surface_t *surface,  cairo_font_options_t *options);
-		cairo_surface_get_font_options(cairo_surface, options);
+		cairo_surface_get_font_options(cairo_surface, (options is null) ? null : options.getFontOptionStruct());
 	}
 	
 	/**
@@ -296,10 +299,10 @@ public class Surface
 	 * xOffset =  the offset in the X direction, in device units
 	 * yOffset =  the offset in the Y direction, in device units
 	 */
-	public void getDeviceOffset(double* xOffset, double* yOffset)
+	public void getDeviceOffset(out double xOffset, out double yOffset)
 	{
 		// void cairo_surface_get_device_offset (cairo_surface_t *surface,  double *x_offset,  double *y_offset);
-		cairo_surface_get_device_offset(cairo_surface, xOffset, yOffset);
+		cairo_surface_get_device_offset(cairo_surface, &xOffset, &yOffset);
 	}
 	
 	/**

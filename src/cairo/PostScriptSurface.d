@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- cairo_ps_surface_
+ * 	- cairo_ps_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -180,12 +181,16 @@ public class PostScriptSurface : Surface
 	 * Since 1.6
 	 * Params:
 	 * levels =  supported level list
-	 * numLevels =  list length
 	 */
-	public static void cairoPsGetLevels(cairo_ps_level_t** levels, int* numLevels)
+	public static void getLevels(out cairo_ps_level_t[] levels)
 	{
 		// void cairo_ps_get_levels (cairo_ps_level_t const **levels,  int *num_levels);
-		cairo_ps_get_levels(levels, numLevels);
+		cairo_ps_level_t* outlevels = null;
+		int numLevels;
+		
+		cairo_ps_get_levels(&outlevels, &numLevels);
+		
+		levels = outlevels[0 .. numLevels];
 	}
 	
 	/**
@@ -197,7 +202,7 @@ public class PostScriptSurface : Surface
 	 * level =  a level id
 	 * Returns: the string associated to given level.
 	 */
-	public static string cairoPsLevelToString(cairo_ps_level_t level)
+	public static string levelToString(cairo_ps_level_t level)
 	{
 		// const char* cairo_ps_level_to_string (cairo_ps_level_t level);
 		return Str.toString(cairo_ps_level_to_string(level));

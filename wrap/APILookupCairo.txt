@@ -103,6 +103,20 @@ import: gdk.Color
 import: gtkc.gdk
 import: gdk.Drawable
 
+array: cairo_set_dash dashes num_dashes
+out: cairo_clip_extents x1
+out: cairo_clip_extents y1
+out: cairo_clip_extents x2
+out: cairo_clip_extents y2
+out: cairo_fill_extents x1
+out: cairo_fill_extents y1
+out: cairo_fill_extents x2
+out: cairo_fill_extents y2
+out: cairo_stroke_extents x1
+out: cairo_stroke_extents y1
+out: cairo_stroke_extents x2
+out: cairo_stroke_extents y2
+
 code: start
 
 
@@ -195,12 +209,28 @@ code: end
 openFile: Context
 
 file: cairo-Paths.html
+out: cairo_get_current_point x
+out: cairo_get_current_point y
+out: cairo_path_extents x1
+out: cairo_path_extents y1
+out: cairo_path_extents x2
+out: cairo_path_extents y2
 mergeFile: Context
 
 file: cairo-Transformations.html
+inout: cairo_user_to_device x
+inout: cairo_user_to_device y
+inout: cairo_user_to_device_distance dx
+inout: cairo_user_to_device_distance dy
+inout: cairo_device_to_user x
+inout: cairo_device_to_user y
+inout: cairo_device_to_user_distance dx
+inout: cairo_device_to_user_distance dy
 mergeFile: Context
 
 file: cairo-Text.html
+array: cairo_show_glyphs glyphs num_glyphs
+array: cairo_glyph_extents glyphs num_glyphs
 closeFile: Context
 
 
@@ -213,6 +243,29 @@ structWrap: cairo_pattern_t* Pattern
 structWrap: cairo_surface_t* Surface
 import: cairo.Matrix
 import: cairo.Surface
+
+out: cairo_pattern_get_color_stop_count count
+out: cairo_pattern_get_color_stop_rgba offset
+out: cairo_pattern_get_color_stop_rgba red
+out: cairo_pattern_get_color_stop_rgba green
+out: cairo_pattern_get_color_stop_rgba blue
+out: cairo_pattern_get_color_stop_rgba alpha
+out: cairo_pattern_get_rgba red
+out: cairo_pattern_get_rgba green
+out: cairo_pattern_get_rgba blue
+out: cairo_pattern_get_rgba alpha
+out: cairo_pattern_get_surface surface
+out: cairo_pattern_get_linear_points x0
+out: cairo_pattern_get_linear_points y0
+out: cairo_pattern_get_linear_points x1
+out: cairo_pattern_get_linear_points y1
+out: cairo_pattern_get_radial_circles x0
+out: cairo_pattern_get_radial_circles y0
+out: cairo_pattern_get_radial_circles r0
+out: cairo_pattern_get_radial_circles x1
+out: cairo_pattern_get_radial_circles y1
+out: cairo_pattern_get_radial_circles r1
+
 outFile: Pattern
 
 ###########################################################
@@ -268,7 +321,13 @@ struct: cairo_surface_t
 class: Surface
 prefix: cairo_surface_
 structWrap: cairo_surface_t* Surface
+structWrap: cairo_font_options_t* FontOption
 import: glib.Str
+import: cairo.FontOption
+
+out: cairo_surface_get_device_offset x_offset
+out: cairo_surface_get_device_offset y_offset
+
 outFile: Surface
 
 file: cairo-Image-Surfaces.html
@@ -299,8 +358,13 @@ struct: cairo_surface_t
 class: PostScriptSurface
 extend: cairo_surface_t
 prefix: cairo_ps_surface_
+prefix: cairo_ps_
 structWrap: cairo_surface_t* PostScriptSurface
 import: glib.Str
+
+out: cairo_ps_get_levels levels
+array: cairo_ps_get_levels levels num_levels
+
 outFile: PostScriptSurface
 
 #file: cairo-Win32-Surfaces.html
@@ -314,6 +378,10 @@ prefix: cairo_svg_surface_
 prefix: cairo_svg_
 structWrap: cairo_surface_t* SvgSurface
 import: glib.Str
+
+out: cairo_svg_get_versions versions
+array: cairo_svg_get_versions versions num_versions
+
 outFile: SvgSurface
 
 #file: cairo-XLib-Surfaces.html
@@ -329,6 +397,12 @@ class: Matrix
 structWrap: cairo_matrix_t* Matrix
 prefix: cairo_matrix_
 import: glib.Str
+
+inout: cairo_matrix_transform_distance dx
+inout: cairo_matrix_transform_distance dy
+inout: cairo_matrix_transform_point x
+inout: cairo_matrix_transform_point y
+
 outFile: Matrix
 
 file: cairo-Error-Handling.html

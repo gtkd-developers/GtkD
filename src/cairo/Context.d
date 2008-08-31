@@ -633,13 +633,12 @@ public class Context
 	 * #CAIRO_STATUS_INVALID_DASH.
 	 * Params:
 	 * dashes =  an array specifying alternate lengths of on and off stroke portions
-	 * numDashes =  the length of the dashes array
 	 * offset =  an offset into the dash pattern at which the stroke should start
 	 */
-	public void setDash(double* dashes, int numDashes, double offset)
+	public void setDash(double[] dashes, double offset)
 	{
 		// void cairo_set_dash (cairo_t *cr,  const double *dashes,  int num_dashes,  double offset);
-		cairo_set_dash(cairo, dashes, numDashes, offset);
+		cairo_set_dash(cairo, dashes.ptr, dashes.length, offset);
 	}
 	
 	/**
@@ -935,10 +934,10 @@ public class Context
 	 * x2 =  right of the resulting extents
 	 * y2 =  bottom of the resulting extents
 	 */
-	public void clipExtents(double* x1, double* y1, double* x2, double* y2)
+	public void clipExtents(out double x1, out double y1, out double x2, out double y2)
 	{
 		// void cairo_clip_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
-		cairo_clip_extents(cairo, x1, y1, x2, y2);
+		cairo_clip_extents(cairo, &x1, &y1, &x2, &y2);
 	}
 	
 	/**
@@ -1035,10 +1034,10 @@ public class Context
 	 * x2 =  right of the resulting extents
 	 * y2 =  bottom of the resulting extents
 	 */
-	public void fillExtents(double* x1, double* y1, double* x2, double* y2)
+	public void fillExtents(out double x1, out double y1, out double x2, out double y2)
 	{
 		// void cairo_fill_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
-		cairo_fill_extents(cairo, x1, y1, x2, y2);
+		cairo_fill_extents(cairo, &x1, &y1, &x2, &y2);
 	}
 	
 	/**
@@ -1167,10 +1166,10 @@ public class Context
 	 * x2 =  right of the resulting extents
 	 * y2 =  bottom of the resulting extents
 	 */
-	public void strokeExtents(double* x1, double* y1, double* x2, double* y2)
+	public void strokeExtents(out double x1, out double y1, out double x2, out double y2)
 	{
 		// void cairo_stroke_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
-		cairo_stroke_extents(cairo, x1, y1, x2, y2);
+		cairo_stroke_extents(cairo, &x1, &y1, &x2, &y2);
 	}
 	
 	/**
@@ -1358,10 +1357,10 @@ public class Context
 	 * x =  return value for X coordinate of the current point
 	 * y =  return value for Y coordinate of the current point
 	 */
-	public void getCurrentPoint(double* x, double* y)
+	public void getCurrentPoint(out double x, out double y)
 	{
 		// void cairo_get_current_point (cairo_t *cr,  double *x,  double *y);
-		cairo_get_current_point(cairo, x, y);
+		cairo_get_current_point(cairo, &x, &y);
 	}
 	
 	/**
@@ -1672,10 +1671,10 @@ public class Context
 	 * x2 =  right of the resulting extents
 	 * y2 =  bottom of the resulting extents
 	 */
-	public void pathExtents(double* x1, double* y1, double* x2, double* y2)
+	public void pathExtents(out double x1, out double y1, out double x2, out double y2)
 	{
 		// void cairo_path_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
-		cairo_path_extents(cairo, x1, y1, x2, y2);
+		cairo_path_extents(cairo, &x1, &y1, &x2, &y2);
 	}
 	
 	/**
@@ -1781,10 +1780,10 @@ public class Context
 	 * x =  X value of coordinate (in/out parameter)
 	 * y =  Y value of coordinate (in/out parameter)
 	 */
-	public void userToDevice(double* x, double* y)
+	public void userToDevice(inout double x, inout double y)
 	{
 		// void cairo_user_to_device (cairo_t *cr,  double *x,  double *y);
-		cairo_user_to_device(cairo, x, y);
+		cairo_user_to_device(cairo, &x, &y);
 	}
 	
 	/**
@@ -1796,10 +1795,10 @@ public class Context
 	 * dx =  X component of a distance vector (in/out parameter)
 	 * dy =  Y component of a distance vector (in/out parameter)
 	 */
-	public void userToDeviceDistance(double* dx, double* dy)
+	public void userToDeviceDistance(inout double dx, inout double dy)
 	{
 		// void cairo_user_to_device_distance (cairo_t *cr,  double *dx,  double *dy);
-		cairo_user_to_device_distance(cairo, dx, dy);
+		cairo_user_to_device_distance(cairo, &dx, &dy);
 	}
 	
 	/**
@@ -1810,10 +1809,10 @@ public class Context
 	 * x =  X value of coordinate (in/out parameter)
 	 * y =  Y value of coordinate (in/out parameter)
 	 */
-	public void deviceToUser(double* x, double* y)
+	public void deviceToUser(inout double x, inout double y)
 	{
 		// void cairo_device_to_user (cairo_t *cr,  double *x,  double *y);
-		cairo_device_to_user(cairo, x, y);
+		cairo_device_to_user(cairo, &x, &y);
 	}
 	
 	/**
@@ -1825,10 +1824,10 @@ public class Context
 	 * dx =  X component of a distance vector (in/out parameter)
 	 * dy =  Y component of a distance vector (in/out parameter)
 	 */
-	public void deviceToUserDistance(double* dx, double* dy)
+	public void deviceToUserDistance(inout double dx, inout double dy)
 	{
 		// void cairo_device_to_user_distance (cairo_t *cr,  double *dx,  double *dy);
-		cairo_device_to_user_distance(cairo, dx, dy);
+		cairo_device_to_user_distance(cairo, &dx, &dy);
 	}
 	
 	/**
@@ -2041,12 +2040,11 @@ public class Context
 	 * (font_matrix), and font_options.
 	 * Params:
 	 * glyphs =  array of glyphs to show
-	 * numGlyphs =  number of glyphs to show
 	 */
-	public void showGlyphs(cairo_glyph_t* glyphs, int numGlyphs)
+	public void showGlyphs(cairo_glyph_t[] glyphs)
 	{
 		// void cairo_show_glyphs (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs);
-		cairo_show_glyphs(cairo, glyphs, numGlyphs);
+		cairo_show_glyphs(cairo, glyphs.ptr, glyphs.length);
 	}
 	
 	/**
@@ -2095,13 +2093,12 @@ public class Context
 	 * rectangle (extents.width and extents.height).
 	 * Params:
 	 * glyphs =  an array of cairo_glyph_t objects
-	 * numGlyphs =  the number of elements in glyphs
 	 * extents =  a cairo_text_extents_t object into which the results
 	 * will be stored
 	 */
-	public void glyphExtents(cairo_glyph_t* glyphs, int numGlyphs, cairo_text_extents_t* extents)
+	public void glyphExtents(cairo_glyph_t[] glyphs, cairo_text_extents_t* extents)
 	{
 		// void cairo_glyph_extents (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
-		cairo_glyph_extents(cairo, glyphs, numGlyphs, extents);
+		cairo_glyph_extents(cairo, glyphs.ptr, glyphs.length, extents);
 	}
 }

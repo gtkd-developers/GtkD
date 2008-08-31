@@ -394,11 +394,11 @@ public class ErrorG
 	public static void gPropagateError(out ErrorG dest, ErrorG src)
 	{
 		// void g_propagate_error (GError **dest,  GError *src);
-		GError* gerror = null;
+		GError* outdest = null;
 		
-		g_propagate_error(&gerror, (src is null) ? null : src.getErrorGStruct());
+		g_propagate_error(&outdest, (src is null) ? null : src.getErrorGStruct());
 		
-		dest = new ErrorG(gerror);
+		dest = new ErrorG(outdest);
 	}
 	
 	/**
@@ -411,10 +411,10 @@ public class ErrorG
 	public static void gClearError(inout ErrorG err)
 	{
 		// void g_clear_error (GError **err);
-		GError* gerror = (err is null) ? null : err.getErrorGStruct();
+		GError* outerr = (err is null) ? null : err.getErrorGStruct();
 		
-		g_clear_error(&gerror);
+		g_clear_error(&outerr);
 		
-		err = new ErrorG(gerror);
+		err = new ErrorG(outerr);
 	}
 }

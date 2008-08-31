@@ -172,12 +172,16 @@ public class SvgSurface : Surface
 	 * Since 1.2
 	 * Params:
 	 * versions =  supported version list
-	 * numVersions =  list length
 	 */
-	public static void getVersions(cairo_svg_version_t** versions, int* numVersions)
+	public static void getVersions(out cairo_svg_version_t[] versions)
 	{
 		// void cairo_svg_get_versions (cairo_svg_version_t const **versions,  int *num_versions);
-		cairo_svg_get_versions(versions, numVersions);
+		cairo_svg_version_t* outversions = null;
+		int numVersions;
+		
+		cairo_svg_get_versions(&outversions, &numVersions);
+		
+		versions = outversions[0 .. numVersions];
 	}
 	
 	/**

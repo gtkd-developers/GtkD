@@ -564,12 +564,10 @@ public struct Funct
 				GtkDClass.startsWith(parmsWrap[i], "inout") )
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-				if ( parmsWrap[i] == "out string" )
-					parmToGtk = "&out" ~ id;
-				else if ( parmsType[i][0 .. $-1] == split(parmsWrap[i])[1] )
+				if ( parmsType[i][0 .. $-1] == split(parmsWrap[i])[1] )
 					parmToGtk = "&" ~ id;
 				else
-					parmToGtk = "&" ~ parmsType[i].removechars("*").tolower();
+					parmToGtk = "&out" ~ id;
 			}
 			else if ( GtkDClass.endsWith(parmsWrap[i], "[]") )
 			{
@@ -590,8 +588,16 @@ public struct Funct
 		{
 			if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
 			{
-				char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
-				parmToGtk = id ~".length";
+				if ( name in convParms.outParms && convParms.outParms[name].contains(convParms.array[name].contains(parms[i])) )
+				{
+					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+					parmToGtk = "&"~ id;
+				}
+				else
+				{
+					char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
+					parmToGtk = id ~".length";
+				}
 			}
 			else
 			{
@@ -731,16 +737,31 @@ public struct Funct
 
 				if (GtkDClass.startsWith(parmsWrap[i], "out") )
 				{
-					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " = null;";
+					bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = null;";
 				}
 				else
 				{
-					bd ~= parmsType[i].removechars("*") ~"* "~ parmsType[i].removechars("*").tolower() ~ " = ("~id~" is null) ? null : "~id~ ".get"~ split(parmsWrap[i])[1] ~"Struct();";
+					if ( GtkDClass.endsWith(parmsWrap[i], "[]") )
+						bd ~= bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = "~ id ~".ptr;";
+					else
+						bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = ("~id~" is null) ? null : "~id~ ".get"~ split(parmsWrap[i])[1] ~"Struct();";
 				}
 
-				gtkCall ~= "&" ~ parmsType[i].removechars("*").tolower();
+				gtkCall ~= "&out" ~ id;
 				
-				end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"("~ parmsType[i].removechars("*").tolower() ~");";
+				if ( GtkDClass.endsWith(parmsWrap[i], "[]") )
+				{
+					if (GtkDClass.startsWith(parmsWrap[i], "out") )
+						bd ~= "int "~ GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases) ~";";
+					else
+						bd ~= "int "~ GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases) ~" = "~ id ~".length;";
+
+					end ~= id ~" = out"~ id ~"[0 .. " ~ GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases) ~"];";
+				}
+				else
+				{
+					end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"(out"~ id ~");";
+				}
 			}
 			else if ( name in convParms.array && "Return" == convParms.array[name].contains(parms[i]) )
 			{

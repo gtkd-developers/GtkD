@@ -175,10 +175,10 @@ public class Pattern
 	 * count =  return value for the number of color stops, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a gradientpattern.
 	 */
-	public cairo_status_t getColorStopCount(int* count)
+	public cairo_status_t getColorStopCount(out int count)
 	{
 		// cairo_status_t cairo_pattern_get_color_stop_count (cairo_pattern_t *pattern,  int *count);
-		return cairo_pattern_get_color_stop_count(cairo_pattern, count);
+		return cairo_pattern_get_color_stop_count(cairo_pattern, &count);
 	}
 	
 	/**
@@ -195,10 +195,10 @@ public class Pattern
 	 * alpha =  return value for alpha component of color, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_INVALID_INDEXif index is not valid for the given pattern. If the pattern isnot a gradient pattern, CAIRO_STATUS_PATTERN_TYPE_MISMATCH isreturned.
 	 */
-	public cairo_status_t getColorStopRgba(int index, double* offset, double* red, double* green, double* blue, double* alpha)
+	public cairo_status_t getColorStopRgba(int index, out double offset, out double red, out double green, out double blue, out double alpha)
 	{
 		// cairo_status_t cairo_pattern_get_color_stop_rgba (cairo_pattern_t *pattern,  int index,  double *offset,  double *red,  double *green,  double *blue,  double *alpha);
-		return cairo_pattern_get_color_stop_rgba(cairo_pattern, index, offset, red, green, blue, alpha);
+		return cairo_pattern_get_color_stop_rgba(cairo_pattern, index, &offset, &red, &green, &blue, &alpha);
 	}
 	
 	/**
@@ -256,10 +256,10 @@ public class Pattern
 	 * alpha =  return value for alpha component of color, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a solidcolor pattern.
 	 */
-	public cairo_status_t getRgba(double* red, double* green, double* blue, double* alpha)
+	public cairo_status_t getRgba(out double red, out double green, out double blue, out double alpha)
 	{
 		// cairo_status_t cairo_pattern_get_rgba (cairo_pattern_t *pattern,  double *red,  double *green,  double *blue,  double *alpha);
-		return cairo_pattern_get_rgba(cairo_pattern, red, green, blue, alpha);
+		return cairo_pattern_get_rgba(cairo_pattern, &red, &green, &blue, &alpha);
 	}
 	
 	/**
@@ -288,10 +288,15 @@ public class Pattern
 	 * surface =  return value for surface of pattern, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a surfacepattern.
 	 */
-	public cairo_status_t getSurface(cairo_surface_t** surface)
+	public cairo_status_t getSurface(out Surface surface)
 	{
 		// cairo_status_t cairo_pattern_get_surface (cairo_pattern_t *pattern,  cairo_surface_t **surface);
-		return cairo_pattern_get_surface(cairo_pattern, surface);
+		cairo_surface_t* outsurface = null;
+		
+		auto p = cairo_pattern_get_surface(cairo_pattern, &outsurface);
+		
+		surface = new Surface(outsurface);
+		return p;
 	}
 	
 	/**
@@ -331,10 +336,10 @@ public class Pattern
 	 * y1 =  return value for the y coordinate of the second point, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a lineargradient pattern.
 	 */
-	public cairo_status_t getLinearPoints(double* x0, double* y0, double* x1, double* y1)
+	public cairo_status_t getLinearPoints(out double x0, out double y0, out double x1, out double y1)
 	{
 		// cairo_status_t cairo_pattern_get_linear_points (cairo_pattern_t *pattern,  double *x0,  double *y0,  double *x1,  double *y1);
-		return cairo_pattern_get_linear_points(cairo_pattern, x0, y0, x1, y1);
+		return cairo_pattern_get_linear_points(cairo_pattern, &x0, &y0, &x1, &y1);
 	}
 	
 	/**
@@ -379,10 +384,10 @@ public class Pattern
 	 * r1 =  return value for the radius of the second circle, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a radialgradient pattern.
 	 */
-	public cairo_status_t getRadialCircles(double* x0, double* y0, double* r0, double* x1, double* y1, double* r1)
+	public cairo_status_t getRadialCircles(out double x0, out double y0, out double r0, out double x1, out double y1, out double r1)
 	{
 		// cairo_status_t cairo_pattern_get_radial_circles (cairo_pattern_t *pattern,  double *x0,  double *y0,  double *r0,  double *x1,  double *y1,  double *r1);
-		return cairo_pattern_get_radial_circles(cairo_pattern, x0, y0, r0, x1, y1, r1);
+		return cairo_pattern_get_radial_circles(cairo_pattern, &x0, &y0, &r0, &x1, &y1, &r1);
 	}
 	
 	/**

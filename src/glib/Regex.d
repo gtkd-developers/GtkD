@@ -344,11 +344,11 @@ public class Regex
 	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options,  GMatchInfo **match_info);
-		GMatchInfo* gmatchinfo = null;
+		GMatchInfo* outmatchInfo = null;
 		
-		auto p = g_regex_match(gRegex, Str.toStringz(string), matchOptions, &gmatchinfo);
+		auto p = g_regex_match(gRegex, Str.toStringz(string), matchOptions, &outmatchInfo);
 		
-		matchInfo = new MatchInfo(gmatchinfo);
+		matchInfo = new MatchInfo(outmatchInfo);
 		return p;
 	}
 	
@@ -408,17 +408,17 @@ public class Regex
 	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
-		GMatchInfo* gmatchinfo = null;
+		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &gmatchinfo, &err);
+		auto p = g_regex_match_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &outmatchInfo, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		matchInfo = new MatchInfo(gmatchinfo);
+		matchInfo = new MatchInfo(outmatchInfo);
 		return p;
 	}
 	
@@ -443,11 +443,11 @@ public class Regex
 	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_all (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options,  GMatchInfo **match_info);
-		GMatchInfo* gmatchinfo = null;
+		GMatchInfo* outmatchInfo = null;
 		
-		auto p = g_regex_match_all(gRegex, Str.toStringz(string), matchOptions, &gmatchinfo);
+		auto p = g_regex_match_all(gRegex, Str.toStringz(string), matchOptions, &outmatchInfo);
 		
-		matchInfo = new MatchInfo(gmatchinfo);
+		matchInfo = new MatchInfo(outmatchInfo);
 		return p;
 	}
 	
@@ -493,17 +493,17 @@ public class Regex
 	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_all_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
-		GMatchInfo* gmatchinfo = null;
+		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &gmatchinfo, &err);
+		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &outmatchInfo, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		matchInfo = new MatchInfo(gmatchinfo);
+		matchInfo = new MatchInfo(outmatchInfo);
 		return p;
 	}
 	

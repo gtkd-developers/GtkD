@@ -264,10 +264,10 @@ public class Matrix
 	 * dx =  X component of a distance vector. An in/out parameter
 	 * dy =  Y component of a distance vector. An in/out parameter
 	 */
-	public void transformDistance(double* dx, double* dy)
+	public void transformDistance(inout double dx, inout double dy)
 	{
 		// void cairo_matrix_transform_distance (const cairo_matrix_t *matrix,  double *dx,  double *dy);
-		cairo_matrix_transform_distance(cairo_matrix, dx, dy);
+		cairo_matrix_transform_distance(cairo_matrix, &dx, &dy);
 	}
 	
 	/**
@@ -276,9 +276,9 @@ public class Matrix
 	 * x =  X position. An in/out parameter
 	 * y =  Y position. An in/out parameter
 	 */
-	public void transformPoint(double* x, double* y)
+	public void transformPoint(inout double x, inout double y)
 	{
 		// void cairo_matrix_transform_point (const cairo_matrix_t *matrix,  double *x,  double *y);
-		cairo_matrix_transform_point(cairo_matrix, x, y);
+		cairo_matrix_transform_point(cairo_matrix, &x, &y);
 	}
 }
