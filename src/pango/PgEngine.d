@@ -43,7 +43,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.TypeModule
  * structWrap:
+ * 	- GTypeModule* -> TypeModule
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,6 +60,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gobject.TypeModule;
 
 
 
@@ -131,22 +134,26 @@ public class PgEngine : ObjectG
 	 * function.
 	 * Params:
 	 * engines =  location to store a pointer to an array of engines.
-	 * nEngines =  location to store the number of elements in engines.
 	 */
-	public static void list(PangoEngineInfo** engines, int* nEngines)
+	public static void list(out PangoEngineInfo[] engines)
 	{
 		// void script_engine_list (PangoEngineInfo **engines,  int *n_engines);
-		script_engine_list(engines, nEngines);
+		PangoEngineInfo* outengines = null;
+		int nEngines;
+		
+		script_engine_list(&outengines, &nEngines);
+		
+		engines = outengines[0 .. nEngines];
 	}
 	
 	/**
 	 * Function to be provided by a module to register any
 	 * GObject types in the module.
 	 */
-	public static void init(GTypeModule* modul)
+	public static void init(TypeModule modul)
 	{
 		// void script_engine_init (GTypeModule *module);
-		script_engine_init(modul);
+		script_engine_init((modul is null) ? null : modul.getTypeModuleStruct());
 	}
 	
 	/**

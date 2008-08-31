@@ -175,10 +175,10 @@ public class PgLayoutLine
 	 *  if 0, the leading of the grapheme.
 	 * xPos =  location to store the x_offset (in Pango unit)
 	 */
-	public void indexToX(int index, int trailing, int* xPos)
+	public void indexToX(int index, int trailing, out int xPos)
 	{
 		// void pango_layout_line_index_to_x (PangoLayoutLine *line,  int index_,  gboolean trailing,  int *x_pos);
-		pango_layout_line_index_to_x(pangoLayoutLine, index, trailing, xPos);
+		pango_layout_line_index_to_x(pangoLayoutLine, index, trailing, &xPos);
 	}
 	
 	/**
@@ -203,10 +203,10 @@ public class PgLayoutLine
 	 *  grapheme. 0 represents the leading edge of the grapheme.
 	 * Returns: FALSE if x_pos was outside the line, TRUE if inside
 	 */
-	public int xToIndex(int xPos, int* index, int* trailing)
+	public int xToIndex(int xPos, out int index, out int trailing)
 	{
 		// gboolean pango_layout_line_x_to_index (PangoLayoutLine *line,  int x_pos,  int *index_,  int *trailing);
-		return pango_layout_line_x_to_index(pangoLayoutLine, xPos, index, trailing);
+		return pango_layout_line_x_to_index(pangoLayoutLine, xPos, &index, &trailing);
 	}
 	
 	/**
@@ -232,11 +232,15 @@ public class PgLayoutLine
 	 *  and of width (*ranges)[2*n + 1] - (*ranges)[2*n].
 	 *  This array must be freed with g_free(). The coordinates are relative
 	 *  to the layout and are in Pango units.
-	 * nRanges =  The number of ranges stored in ranges.
 	 */
-	public void getXRanges(int startIndex, int endIndex, int** ranges, int* nRanges)
+	public void getXRanges(int startIndex, int endIndex, out int[] ranges)
 	{
 		// void pango_layout_line_get_x_ranges (PangoLayoutLine *line,  int start_index,  int end_index,  int **ranges,  int *n_ranges);
-		pango_layout_line_get_x_ranges(pangoLayoutLine, startIndex, endIndex, ranges, nRanges);
+		int* outranges = null;
+		int nRanges;
+		
+		pango_layout_line_get_x_ranges(pangoLayoutLine, startIndex, endIndex, &outranges, &nRanges);
+		
+		ranges = outranges[0 .. nRanges];
 	}
 }

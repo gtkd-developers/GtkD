@@ -189,10 +189,10 @@ public class PgTabArray
 	 * alignment =  location to store alignment, or NULL
 	 * location =  location to store tab position, or NULL
 	 */
-	public void getTab(int tabIndex, PangoTabAlign* alignment, int* location)
+	public void getTab(int tabIndex, out PangoTabAlign alignment, out int location)
 	{
 		// void pango_tab_array_get_tab (PangoTabArray *tab_array,  gint tab_index,  PangoTabAlign *alignment,  gint *location);
-		pango_tab_array_get_tab(pangoTabArray, tabIndex, alignment, location);
+		pango_tab_array_get_tab(pangoTabArray, tabIndex, &alignment, &location);
 	}
 	
 	/**
@@ -203,10 +203,16 @@ public class PgTabArray
 	 * alignments =  location to store an array of tab stop alignments, or NULL
 	 * locations =  location to store an array of tab positions, or NULL
 	 */
-	public void getTabs(PangoTabAlign** alignments, int** locations)
+	public void getTabs(out PangoTabAlign[] alignments, out int[] locations)
 	{
 		// void pango_tab_array_get_tabs (PangoTabArray *tab_array,  PangoTabAlign **alignments,  gint **locations);
-		pango_tab_array_get_tabs(pangoTabArray, alignments, locations);
+		PangoTabAlign* outalignments = null;
+		gint* outlocations = null;
+		
+		pango_tab_array_get_tabs(pangoTabArray, &outalignments, &outlocations);
+		
+		alignments = outalignments[0 .. getSize()];
+		locations = outlocations[0 .. getSize()];
 	}
 	
 	/**

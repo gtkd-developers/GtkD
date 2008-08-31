@@ -136,10 +136,16 @@ public class PgScriptIter
 	 * end =  location to store end position of the range, or NULL
 	 * script =  location to store script for range, or NULL
 	 */
-	public void getRange(char** start, char** end, PangoScript* script)
+	public void getRange(out string start, out string end, out PangoScript script)
 	{
 		// void pango_script_iter_get_range (PangoScriptIter *iter,  G_CONST_RETURN char **start,  G_CONST_RETURN char **end,  PangoScript *script);
-		pango_script_iter_get_range(pangoScriptIter, start, end, script);
+		char* outstart = null;
+		char* outend = null;
+		
+		pango_script_iter_get_range(pangoScriptIter, &outstart, &outend, &script);
+		
+		start = Str.toString(outstart);
+		end = Str.toString(outend);
 	}
 	
 	/**

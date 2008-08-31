@@ -140,12 +140,16 @@ public class PgFontFace : ObjectG
 	 * Params:
 	 * sizes =  location to store a pointer to an array of int. This array
 	 *  should be freed with g_free().
-	 * nSizes =  location to store the number of elements in sizes
 	 */
-	public void listSizes(int** sizes, int* nSizes)
+	public void listSizes(out int[] sizes)
 	{
 		// void pango_font_face_list_sizes (PangoFontFace *face,  int **sizes,  int *n_sizes);
-		pango_font_face_list_sizes(pangoFontFace, sizes, nSizes);
+		int* outsizes = null;
+		int nSizes;
+		
+		pango_font_face_list_sizes(pangoFontFace, &outsizes, &nSizes);
+		
+		sizes = outsizes[0 .. nSizes];
 	}
 	
 	/**

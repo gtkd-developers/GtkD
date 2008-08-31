@@ -47,6 +47,7 @@
  * 	- glib.StringG
  * 	- pango.PgLanguage
  * structWrap:
+ * 	- GString* -> StringG
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
@@ -123,10 +124,10 @@ public class PgMiscellaneous
 	 * str =  GString buffer into which to write the result
 	 * Returns: 0 if the stream was already at an EOF character, otherwise the number of lines read (this is useful for maintaining a line number counter which doesn't combine lines with '\')
 	 */
-	public static int readLine(FILE* stream, GString* str)
+	public static int readLine(FILE* stream, StringG str)
 	{
 		// gint pango_read_line (FILE *stream,  GString *str);
-		return pango_read_line(stream, str);
+		return pango_read_line(stream, (str is null) ? null : str.getStringGStruct());
 	}
 	
 	/**
@@ -135,10 +136,15 @@ public class PgMiscellaneous
 	 * pos =  in/out string position
 	 * Returns: FALSE if skipping the white space leavesthe position at a '\0' character.
 	 */
-	public static int skipSpace(char** pos)
+	public static int skipSpace(inout string pos)
 	{
 		// gboolean pango_skip_space (const char **pos);
-		return pango_skip_space(pos);
+		char* outpos = Str.toStringz(pos);
+		
+		auto p = pango_skip_space(&outpos);
+		
+		pos = Str.toString(outpos);
+		return p;
 	}
 	
 	/**
@@ -150,10 +156,15 @@ public class PgMiscellaneous
 	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
-	public static int scanWord(char** pos, GString* f_out)
+	public static int scanWord(inout string pos, StringG f_out)
 	{
 		// gboolean pango_scan_word (const char **pos,  GString *out);
-		return pango_scan_word(pos, f_out);
+		char* outpos = Str.toStringz(pos);
+		
+		auto p = pango_scan_word(&outpos, (f_out is null) ? null : f_out.getStringGStruct());
+		
+		pos = Str.toString(outpos);
+		return p;
 	}
 	
 	/**
@@ -166,10 +177,15 @@ public class PgMiscellaneous
 	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
-	public static int scanString(char** pos, GString* f_out)
+	public static int scanString(inout string pos, StringG f_out)
 	{
 		// gboolean pango_scan_string (const char **pos,  GString *out);
-		return pango_scan_string(pos, f_out);
+		char* outpos = Str.toStringz(pos);
+		
+		auto p = pango_scan_string(&outpos, (f_out is null) ? null : f_out.getStringGStruct());
+		
+		pos = Str.toString(outpos);
+		return p;
 	}
 	
 	/**
@@ -180,10 +196,15 @@ public class PgMiscellaneous
 	 * out =  an int into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
-	public static int scanInt(char** pos, int* f_out)
+	public static int scanInt(inout string pos, out int f_out)
 	{
 		// gboolean pango_scan_int (const char **pos,  int *out);
-		return pango_scan_int(pos, f_out);
+		char* outpos = Str.toStringz(pos);
+		
+		auto p = pango_scan_int(&outpos, &f_out);
+		
+		pos = Str.toString(outpos);
+		return p;
 	}
 	
 	/**
@@ -208,12 +229,16 @@ public class PgMiscellaneous
 	 * fontname =  an ascii string
 	 * families =  will be set to an array of font family names.
 	 *  this array is owned by pango and should not be freed.
-	 * nFamilies =  will be set to the length of the families array.
 	 */
-	public static void lookupAliases(string fontname, char*** families, int* nFamilies)
+	public static void lookupAliases(string fontname, out string[] families)
 	{
 		// void pango_lookup_aliases (const char *fontname,  char ***families,  int *n_families);
-		pango_lookup_aliases(Str.toStringz(fontname), families, nFamilies);
+		char** outfamilies = null;
+		int nFamilies;
+		
+		pango_lookup_aliases(Str.toStringz(fontname), &outfamilies, &nFamilies);
+		
+		families = Str.toStringArray(outfamilies);
 	}
 	
 	/**
@@ -233,10 +258,15 @@ public class PgMiscellaneous
 	 * possibleValues =  place to store list of possible values on failure, or NULL.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseEnum(GType type, string str, int* value, int warn, char** possibleValues)
+	public static int parseEnum(GType type, string str, out int value, int warn, out string possibleValues)
 	{
 		// gboolean pango_parse_enum (GType type,  const char *str,  int *value,  gboolean warn,  char **possible_values);
-		return pango_parse_enum(type, Str.toStringz(str), value, warn, possibleValues);
+		char* outpossibleValues = null;
+		
+		auto p = pango_parse_enum(type, Str.toStringz(str), &value, warn, &outpossibleValues);
+		
+		possibleValues = Str.toString(outpossibleValues);
+		return p;
 	}
 	
 	/**
@@ -249,10 +279,10 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseStyle(string str, PangoStyle* style, int warn)
+	public static int parseStyle(string str, out PangoStyle style, int warn)
 	{
 		// gboolean pango_parse_style (const char *str,  PangoStyle *style,  gboolean warn);
-		return pango_parse_style(Str.toStringz(str), style, warn);
+		return pango_parse_style(Str.toStringz(str), &style, warn);
 	}
 	
 	/**
@@ -265,10 +295,10 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseVariant(string str, PangoVariant* variant, int warn)
+	public static int parseVariant(string str, out PangoVariant variant, int warn)
 	{
 		// gboolean pango_parse_variant (const char *str,  PangoVariant *variant,  gboolean warn);
-		return pango_parse_variant(Str.toStringz(str), variant, warn);
+		return pango_parse_variant(Str.toStringz(str), &variant, warn);
 	}
 	
 	/**
@@ -281,10 +311,10 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseWeight(string str, PangoWeight* weight, int warn)
+	public static int parseWeight(string str, out PangoWeight weight, int warn)
 	{
 		// gboolean pango_parse_weight (const char *str,  PangoWeight *weight,  gboolean warn);
-		return pango_parse_weight(Str.toStringz(str), weight, warn);
+		return pango_parse_weight(Str.toStringz(str), &weight, warn);
 	}
 	
 	/**
@@ -299,10 +329,10 @@ public class PgMiscellaneous
 	 * warn =  if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
-	public static int parseStretch(string str, PangoStretch* stretch, int warn)
+	public static int parseStretch(string str, out PangoStretch stretch, int warn)
 	{
 		// gboolean pango_parse_stretch (const char *str,  PangoStretch *stretch,  gboolean warn);
-		return pango_parse_stretch(Str.toStringz(str), stretch, warn);
+		return pango_parse_stretch(Str.toStringz(str), &stretch, warn);
 	}
 	
 	/**
@@ -342,10 +372,10 @@ public class PgMiscellaneous
 	 * pbaseDir =  input base direction, and output resolved direction.
 	 * Returns: a newly allocated array of embedding levels, one item per character (not byte), that should be freed using g_free.
 	 */
-	public static byte* log2visGetEmbeddingLevels(string text, int length, PangoDirection* pbaseDir)
+	public static byte* log2visGetEmbeddingLevels(string text, int length, out PangoDirection pbaseDir)
 	{
 		// guint8* pango_log2vis_get_embedding_levels (const gchar *text,  int length,  PangoDirection *pbase_dir);
-		return pango_log2vis_get_embedding_levels(Str.toStringz(text), length, pbaseDir);
+		return pango_log2vis_get_embedding_levels(Str.toStringz(text), length, &pbaseDir);
 	}
 	
 	/**
@@ -430,9 +460,9 @@ public class PgMiscellaneous
 	 * thickness =  pointer to the thickness of a line, in Pango units
 	 * position =  corresponding position
 	 */
-	public static void quantizeLineGeometry(int* thickness, int* position)
+	public static void quantizeLineGeometry(inout int thickness, inout int position)
 	{
 		// void pango_quantize_line_geometry (int *thickness,  int *position);
-		pango_quantize_line_geometry(thickness, position);
+		pango_quantize_line_geometry(&thickness, &position);
 	}
 }

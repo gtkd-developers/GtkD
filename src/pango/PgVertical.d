@@ -42,7 +42,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- pango.PgMatrix
  * structWrap:
+ * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
  * overrides:
@@ -56,6 +58,7 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 
 
+private import pango.PgMatrix;
 
 
 
@@ -114,10 +117,10 @@ public class PgVertical
 	 * matrix =  a PangoMatrix
 	 * Returns: the gravity of matrix, which will never bePANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
 	 */
-	public static PangoGravity gravityGetForMatrix(PangoMatrix* matrix)
+	public static PangoGravity gravityGetForMatrix(PgMatrix matrix)
 	{
 		// PangoGravity pango_gravity_get_for_matrix (const PangoMatrix *matrix);
-		return pango_gravity_get_for_matrix(matrix);
+		return pango_gravity_get_for_matrix((matrix is null) ? null : matrix.getPgMatrixStruct());
 	}
 	
 	/**

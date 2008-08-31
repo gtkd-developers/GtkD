@@ -223,10 +223,10 @@ public class PgGlyphString
 	 *  or end (TRUE) of the character.
 	 * xPos =  location to store result
 	 */
-	public void indexToX(string text, int length, PangoAnalysis* analysis, int index, int trailing, int* xPos)
+	public void indexToX(string text, int length, PangoAnalysis* analysis, int index, int trailing, out int xPos)
 	{
 		// void pango_glyph_string_index_to_x (PangoGlyphString *glyphs,  char *text,  int length,  PangoAnalysis *analysis,  int index_,  gboolean trailing,  int *x_pos);
-		pango_glyph_string_index_to_x(pangoGlyphString, Str.toStringz(text), length, analysis, index, trailing, xPos);
+		pango_glyph_string_index_to_x(pangoGlyphString, Str.toStringz(text), length, analysis, index, trailing, &xPos);
 	}
 	
 	/**
@@ -246,10 +246,10 @@ public class PgGlyphString
 	 *  whether the user clicked on the leading or trailing
 	 *  edge of the character.
 	 */
-	public void xToIndex(string text, int length, PangoAnalysis* analysis, int xPos, int* index, int* trailing)
+	public void xToIndex(string text, int length, PangoAnalysis* analysis, int xPos, out int index, out int trailing)
 	{
 		// void pango_glyph_string_x_to_index (PangoGlyphString *glyphs,  char *text,  int length,  PangoAnalysis *analysis,  int x_pos,  int *index_,  int *trailing);
-		pango_glyph_string_x_to_index(pangoGlyphString, Str.toStringz(text), length, analysis, xPos, index, trailing);
+		pango_glyph_string_x_to_index(pangoGlyphString, Str.toStringz(text), length, analysis, xPos, &index, &trailing);
 	}
 	
 	/**

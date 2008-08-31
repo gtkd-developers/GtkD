@@ -200,12 +200,16 @@ public class PgCoverage
 	 * Convert a PangoCoverage structure into a flat binary format
 	 * Params:
 	 * bytes =  location to store result (must be freed with g_free())
-	 * nBytes =  location to store size of result
 	 */
-	public void toBytes(char** bytes, int* nBytes)
+	public void toBytes(out char[] bytes)
 	{
 		// void pango_coverage_to_bytes (PangoCoverage *coverage,  guchar **bytes,  int *n_bytes);
-		pango_coverage_to_bytes(pangoCoverage, bytes, nBytes);
+		guchar* outbytes = null;
+		int nBytes;
+		
+		pango_coverage_to_bytes(pangoCoverage, &outbytes, &nBytes);
+		
+		bytes = outbytes[0 .. nBytes];
 	}
 	
 	/**
@@ -213,13 +217,12 @@ public class PgCoverage
 	 * to a PangoCoverage
 	 * Params:
 	 * bytes =  binary data representing a PangoCoverage
-	 * nBytes =  the size of bytes in bytes
 	 * Returns: a newly allocated PangoCoverage, or NULL if the data was invalid.
 	 */
-	public static PgCoverage fromBytes(char* bytes, int nBytes)
+	public static PgCoverage fromBytes(char[] bytes)
 	{
 		// PangoCoverage* pango_coverage_from_bytes (guchar *bytes,  int n_bytes);
-		auto p = pango_coverage_from_bytes(bytes, nBytes);
+		auto p = pango_coverage_from_bytes(bytes.ptr, bytes.length);
 		if(p is null)
 		{
 			return null;

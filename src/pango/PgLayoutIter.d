@@ -337,10 +337,10 @@ public class PgLayoutIter
 	 * y0_ =  start of line
 	 * y1_ =  end of line
 	 */
-	public void getLineYrange(int* y0_, int* y1_)
+	public void getLineYrange(out int y0_, out int y1_)
 	{
 		// void pango_layout_iter_get_line_yrange (PangoLayoutIter *iter,  int *y0_,  int *y1_);
-		pango_layout_iter_get_line_yrange(pangoLayoutIter, y0_, y1_);
+		pango_layout_iter_get_line_yrange(pangoLayoutIter, &y0_, &y1_);
 	}
 	
 	/**

@@ -80,7 +80,7 @@ class PangoText : DrawingArea
 			/* Inform Pango to re-layout the text with the new transformation */
 			PgCairo.updateLayout(cr, layout);
 		
-			layout.getSize(&width, &height);
+			layout.getSize(width, height);
 			cr.moveTo( -(cast(double)width / PANGO_SCALE) / 2, - m_radius );
 			PgCairo.showLayout(cr, layout);
 

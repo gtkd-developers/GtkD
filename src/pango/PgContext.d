@@ -50,6 +50,7 @@
  * 	- pango.PgFont
  * 	- pango.PgFontMap
  * 	- pango.PgFontset
+ * 	- pango.PgFontFamily
  * 	- pango.PgFontMetrics
  * 	- pango.PgFontDescription
  * 	- pango.PgLanguage
@@ -64,6 +65,7 @@
  * 	- PangoContext* -> PgContext
  * 	- PangoFont* -> PgFont
  * 	- PangoFontDescription* -> PgFontDescription
+ * 	- PangoFontFamily* -> PgFontFamily
  * 	- PangoFontMap* -> PgFontMap
  * 	- PangoFontMetrics* -> PgFontMetrics
  * 	- PangoFontset* -> PgFontset
@@ -88,6 +90,7 @@ private import glib.ListG;
 private import pango.PgFont;
 private import pango.PgFontMap;
 private import pango.PgFontset;
+private import pango.PgFontFamily;
 private import pango.PgFontMetrics;
 private import pango.PgFontDescription;
 private import pango.PgLanguage;
@@ -556,12 +559,21 @@ public class PgContext : ObjectG
 	 * Params:
 	 * families =  location to store a pointer to an array of PangoFontFamily *.
 	 *  This array should be freed with g_free().
-	 * nFamilies =  location to store the number of elements in descs
 	 */
-	public void listFamilies(PangoFontFamily*** families, int* nFamilies)
+	public void listFamilies(out PgFontFamily[] families)
 	{
 		// void pango_context_list_families (PangoContext *context,  PangoFontFamily ***families,  int *n_families);
-		pango_context_list_families(pangoContext, families, nFamilies);
+		PangoFontFamily** outfamilies = null;
+		int nFamilies;
+		
+		pango_context_list_families(pangoContext, &outfamilies, &nFamilies);
+		
+		
+		families = new PgFontFamily[nFamilies];
+		for(int i = 0; i < nFamilies; i++)
+		{
+			families[i] = new PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
+		}
 	}
 	
 	/**
@@ -650,10 +662,10 @@ public class PgContext : ObjectG
 	 * paragraphDelimiterIndex =  return location for index of delimiter
 	 * nextParagraphStart =  return location for start of next paragraph
 	 */
-	public static void findParagraphBoundary(string text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
+	public static void findParagraphBoundary(string text, int length, out int paragraphDelimiterIndex, out int nextParagraphStart)
 	{
 		// void pango_find_paragraph_boundary (const gchar *text,  gint length,  gint *paragraph_delimiter_index,  gint *next_paragraph_start);
-		pango_find_paragraph_boundary(Str.toStringz(text), length, paragraphDelimiterIndex, nextParagraphStart);
+		pango_find_paragraph_boundary(Str.toStringz(text), length, &paragraphDelimiterIndex, &nextParagraphStart);
 	}
 	
 	/**

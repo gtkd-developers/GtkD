@@ -43,11 +43,15 @@
  * omit signals:
  * imports:
  * 	- pango.PgAttribute
+ * 	- pango.PgFontDescription
+ * 	- pango.PgLanguage
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- PangoAttrIterator* -> PgAttributeIterator
  * 	- PangoAttribute* -> PgAttribute
+ * 	- PangoFontDescription* -> PgFontDescription
+ * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,6 +66,8 @@ private import glib.ConstructionException;
 
 
 private import pango.PgAttribute;
+private import pango.PgFontDescription;
+private import pango.PgLanguage;
 private import glib.ListSG;
 
 
@@ -145,10 +151,10 @@ public class PgAttributeIterator
 	 * start =  location to store the start of the range
 	 * end =  location to store the end of the range
 	 */
-	public void range(int* start, int* end)
+	public void range(out int start, out int end)
 	{
 		// void pango_attr_iterator_range (PangoAttrIterator *iterator,  gint *start,  gint *end);
-		pango_attr_iterator_range(pangoAttrIterator, start, end);
+		pango_attr_iterator_range(pangoAttrIterator, &start, &end);
 	}
 	
 	/**
@@ -186,10 +192,16 @@ public class PgAttributeIterator
 	 *  to free this value, you must call pango_attribute_destroy() on
 	 *  each member.
 	 */
-	public void getFont(PangoFontDescription* desc, PangoLanguage** language, GSList** extraAttrs)
+	public void getFont(PgFontDescription desc, out PgLanguage language, out ListSG extraAttrs)
 	{
 		// void pango_attr_iterator_get_font (PangoAttrIterator *iterator,  PangoFontDescription *desc,  PangoLanguage **language,  GSList **extra_attrs);
-		pango_attr_iterator_get_font(pangoAttrIterator, desc, language, extraAttrs);
+		PangoLanguage* outlanguage = null;
+		GSList* outextraAttrs = null;
+		
+		pango_attr_iterator_get_font(pangoAttrIterator, (desc is null) ? null : desc.getPgFontDescriptionStruct(), &outlanguage, &outextraAttrs);
+		
+		language = new PgLanguage(outlanguage);
+		extraAttrs = new ListSG(outextraAttrs);
 	}
 	
 	/**

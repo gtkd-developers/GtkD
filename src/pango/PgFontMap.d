@@ -48,10 +48,12 @@
  * 	- pango.PgContext
  * 	- pango.PgFontDescription
  * 	- pango.PgLanguage
+ * 	- pango.PgFontFamily
  * structWrap:
  * 	- PangoContext* -> PgContext
  * 	- PangoFont* -> PgFont
  * 	- PangoFontDescription* -> PgFontDescription
+ * 	- PangoFontFamily* -> PgFontFamily
  * 	- PangoFontset* -> PgFontset
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
@@ -73,6 +75,7 @@ private import pango.PgFontset;
 private import pango.PgContext;
 private import pango.PgFontDescription;
 private import pango.PgLanguage;
+private import pango.PgFontFamily;
 
 
 
@@ -173,12 +176,21 @@ public class PgFontMap : ObjectG
 	 * Params:
 	 * families =  location to store a pointer to an array of PangoFontFamily *.
 	 *  This array should be freed with g_free().
-	 * nFamilies =  location to store the number of elements in families
 	 */
-	public void listFamilies(PangoFontFamily*** families, int* nFamilies)
+	public void listFamilies(out PgFontFamily[] families)
 	{
 		// void pango_font_map_list_families (PangoFontMap *fontmap,  PangoFontFamily ***families,  int *n_families);
-		pango_font_map_list_families(pangoFontMap, families, nFamilies);
+		PangoFontFamily** outfamilies = null;
+		int nFamilies;
+		
+		pango_font_map_list_families(pangoFontMap, &outfamilies, &nFamilies);
+		
+		
+		families = new PgFontFamily[nFamilies];
+		for(int i = 0; i < nFamilies; i++)
+		{
+			families[i] = new PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
+		}
 	}
 	
 	/**

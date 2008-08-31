@@ -50,9 +50,11 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- pango.PgAttributeList
  * 	- pango.PgLanguage
  * 	- pango.PgFontDescription
  * structWrap:
+ * 	- PangoAttrList* -> PgAttributeList
  * 	- PangoAttribute* -> PgAttribute
  * 	- PangoFontDescription* -> PgFontDescription
  * 	- PangoLanguage* -> PgLanguage
@@ -72,6 +74,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import pango.PgAttributeList;
 private import pango.PgLanguage;
 private import pango.PgFontDescription;
 
@@ -144,18 +147,22 @@ public class PgAttribute
 	 * Returns: FALSE if error is set, otherwise TRUE
 	 * Throws: GException on failure.
 	 */
-	public static int parseMarkup(string markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar)
+	public static int parseMarkup(string markupText, int length, gunichar accelMarker, out PgAttributeList attrList, out string text, gunichar* accelChar)
 	{
 		// gboolean pango_parse_markup (const char *markup_text,  int length,  gunichar accel_marker,  PangoAttrList **attr_list,  char **text,  gunichar *accel_char,  GError **error);
+		PangoAttrList* outattrList = null;
+		char* outtext = null;
 		GError* err = null;
 		
-		auto p = pango_parse_markup(Str.toStringz(markupText), length, accelMarker, attrList, text, accelChar, &err);
+		auto p = pango_parse_markup(Str.toStringz(markupText), length, accelMarker, &outattrList, &outtext, accelChar, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		attrList = new PgAttributeList(outattrList);
+		text = Str.toString(outtext);
 		return p;
 	}
 	

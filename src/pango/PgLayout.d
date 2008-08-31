@@ -691,16 +691,16 @@ public class PgLayout : ObjectG
 	 * Params:
 	 * attrs =  location to store a pointer to an array of logical attributes
 	 *  This value must be freed with g_free().
-	 * nAttrs =  location to store the number of the attributes in the
-	 *  array. (The stored value will be one more than the total number
-	 *  of characters in the layout, since there need to be attributes
-	 *  corresponding to both the position before the first character
-	 *  and the position after the last character.)
 	 */
-	public void getLogAttrs(PangoLogAttr** attrs, int* nAttrs)
+	public void getLogAttrs(out PangoLogAttr[] attrs)
 	{
 		// void pango_layout_get_log_attrs (PangoLayout *layout,  PangoLogAttr **attrs,  gint *n_attrs);
-		pango_layout_get_log_attrs(pangoLayout, attrs, nAttrs);
+		PangoLogAttr* outattrs = null;
+		int nAttrs;
+		
+		pango_layout_get_log_attrs(pangoLayout, &outattrs, &nAttrs);
+		
+		attrs = outattrs[0 .. nAttrs];
 	}
 	
 	/**
@@ -733,10 +733,10 @@ public class PgLayout : ObjectG
 	 * xPos =  location to store resulting position within line
 	 *  (PANGO_SCALE units per device unit)
 	 */
-	public void indexToLineX(int index, int trailing, int* line, int* xPos)
+	public void indexToLineX(int index, int trailing, out int line, out int xPos)
 	{
 		// void pango_layout_index_to_line_x (PangoLayout *layout,  int index_,  gboolean trailing,  int *line,  int *x_pos);
-		pango_layout_index_to_line_x(pangoLayout, index, trailing, line, xPos);
+		pango_layout_index_to_line_x(pangoLayout, index, trailing, &line, &xPos);
 	}
 	
 	/**
@@ -760,10 +760,10 @@ public class PgLayout : ObjectG
 	 *  grapheme. 0 represents the trailing edge of the grapheme.
 	 * Returns: TRUE if the coordinates were inside text, FALSE otherwise.
 	 */
-	public int xyToIndex(int x, int y, int* index, int* trailing)
+	public int xyToIndex(int x, int y, out int index, out int trailing)
 	{
 		// gboolean pango_layout_xy_to_index (PangoLayout *layout,  int x,  int y,  int *index_,  int *trailing);
-		return pango_layout_xy_to_index(pangoLayout, x, y, index, trailing);
+		return pango_layout_xy_to_index(pangoLayout, x, y, &index, &trailing);
 	}
 	
 	/**
@@ -822,10 +822,10 @@ public class PgLayout : ObjectG
 	 *  of the preceding line. new_index is always on the line
 	 *  where the cursor should be displayed.
 	 */
-	public void moveCursorVisually(int strong, int oldIndex, int oldTrailing, int direction, int* newIndex, int* newTrailing)
+	public void moveCursorVisually(int strong, int oldIndex, int oldTrailing, int direction, out int newIndex, out int newTrailing)
 	{
 		// void pango_layout_move_cursor_visually (PangoLayout *layout,  gboolean strong,  int old_index,  int old_trailing,  int direction,  int *new_index,  int *new_trailing);
-		pango_layout_move_cursor_visually(pangoLayout, strong, oldIndex, oldTrailing, direction, newIndex, newTrailing);
+		pango_layout_move_cursor_visually(pangoLayout, strong, oldIndex, oldTrailing, direction, &newIndex, &newTrailing);
 	}
 	
 	/**
@@ -875,10 +875,10 @@ public class PgLayout : ObjectG
 	 * width =  location to store the logical width, or NULL
 	 * height =  location to store the logical height, or NULL
 	 */
-	public void getSize(int* width, int* height)
+	public void getSize(out int width, out int height)
 	{
 		// void pango_layout_get_size (PangoLayout *layout,  int *width,  int *height);
-		pango_layout_get_size(pangoLayout, width, height);
+		pango_layout_get_size(pangoLayout, &width, &height);
 	}
 	
 	/**
@@ -891,10 +891,10 @@ public class PgLayout : ObjectG
 	 * width =  location to store the logical width, or NULL
 	 * height =  location to store the logical height, or NULL
 	 */
-	public void getPixelSize(int* width, int* height)
+	public void getPixelSize(out int width, out int height)
 	{
 		// void pango_layout_get_pixel_size (PangoLayout *layout,  int *width,  int *height);
-		pango_layout_get_pixel_size(pangoLayout, width, height);
+		pango_layout_get_pixel_size(pangoLayout, &width, &height);
 	}
 	
 	/**

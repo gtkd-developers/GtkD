@@ -43,7 +43,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- pango.PgFontFace
  * structWrap:
+ * 	- PangoFontFace* -> PgFontFace
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,6 +60,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import pango.PgFontFace;
 
 
 
@@ -156,11 +159,20 @@ public class PgFontFamily : ObjectG
 	 * faces =  location to store an array of pointers to PangoFontFace
 	 *  objects, or NULL. This array should be freed with g_free()
 	 *  when it is no longer needed.
-	 * nFaces =  location to store number of elements in faces.
 	 */
-	public void listFaces(PangoFontFace*** faces, int* nFaces)
+	public void listFaces(out PgFontFace[] faces)
 	{
 		// void pango_font_family_list_faces (PangoFontFamily *family,  PangoFontFace ***faces,  int *n_faces);
-		pango_font_family_list_faces(pangoFontFamily, faces, nFaces);
+		PangoFontFace** outfaces = null;
+		int nFaces;
+		
+		pango_font_family_list_faces(pangoFontFamily, &outfaces, &nFaces);
+		
+		
+		faces = new PgFontFace[nFaces];
+		for(int i = 0; i < nFaces; i++)
+		{
+			faces[i] = new PgFontFace(cast(PangoFontFace*) outfaces[i]);
+		}
 	}
 }
