@@ -730,6 +730,17 @@ structWrap: GString* StringG
 import: std.c.string
 prefix: g_
 
+array: g_strdupv str_array
+out: g_vasprintf string
+out: g_ascii_strtoll endptr
+out: g_ascii_strtoll endptr
+out: g_ascii_strtoull endptr
+out: g_ascii_strtod endptr
+out: g_strtod endptr
+array: g_strfreev str_array
+array: g_strjoinv str_array
+array: g_strv_length str_array
+
 code: start
 	const static char[10] digits    = "0123456789";			/// 0..9
 	
@@ -1207,6 +1218,18 @@ import: std.thread
 import: std.c.stdio
 import: std.string
 import: std.c.string
+
+array: g_spawn_async argv
+array: g_spawn_async envp
+array: g_spawn_sync argv
+array: g_spawn_sync envp
+out: g_spawn_sync standard_output
+out: g_spawn_sync standard_error
+out: g_spawn_sync exit_status
+out: g_spawn_command_line_sync standard_output
+out: g_spawn_command_line_sync standard_error
+out: g_spawn_command_line_sync exit_status
+
 nocode: g_spawn_async_with_pipes
 
 code: start

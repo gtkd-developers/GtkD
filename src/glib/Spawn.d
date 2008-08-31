@@ -431,12 +431,12 @@ public class Spawn
 	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
-	public static int async(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid)
+	public static int async(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid)
 	{
 		// gboolean g_spawn_async (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  GPid *child_pid,  GError **error);
 		GError* err = null;
 		
-		auto p = g_spawn_async(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, &err);
+		auto p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, childPid, &err);
 		
 		if (err !is null)
 		{
@@ -475,18 +475,22 @@ public class Spawn
 	 * Returns: TRUE on success, FALSE if an error was set.
 	 * Throws: GException on failure.
 	 */
-	public static int sync(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus)
+	public static int sync(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out string standardOutput, out string standardError, out int exitStatus)
 	{
 		// gboolean g_spawn_sync (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
+		char* outstandardOutput = null;
+		char* outstandardError = null;
 		GError* err = null;
 		
-		auto p = g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, &err);
+		auto p = g_spawn_sync(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &outstandardOutput, &outstandardError, &exitStatus, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		standardOutput = Str.toString(outstandardOutput);
+		standardError = Str.toString(outstandardError);
 		return p;
 	}
 	
@@ -548,18 +552,22 @@ public class Spawn
 	 * Returns: TRUE on success, FALSE if an error was set
 	 * Throws: GException on failure.
 	 */
-	public static int commandLineSync(string commandLine, char** standardOutput, char** standardError, int* exitStatus)
+	public static int commandLineSync(string commandLine, out string standardOutput, out string standardError, out int exitStatus)
 	{
 		// gboolean g_spawn_command_line_sync (const gchar *command_line,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
+		char* outstandardOutput = null;
+		char* outstandardError = null;
 		GError* err = null;
 		
-		auto p = g_spawn_command_line_sync(Str.toStringz(commandLine), standardOutput, standardError, exitStatus, &err);
+		auto p = g_spawn_command_line_sync(Str.toStringz(commandLine), &outstandardOutput, &outstandardError, &exitStatus, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		standardOutput = Str.toString(outstandardOutput);
+		standardError = Str.toString(outstandardError);
 		return p;
 	}
 	

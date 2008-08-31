@@ -368,10 +368,10 @@ public class Str
 	 * strArray =  NULL-terminated array of strings.
 	 * Returns: a new NULL-terminated array of strings.
 	 */
-	public static string[] strdupv(char** strArray)
+	public static string[] strdupv(string[] strArray)
 	{
 		// gchar** g_strdupv (gchar **str_array);
-		return Str.toStringArray(g_strdupv(strArray));
+		return Str.toStringArray(g_strdupv(Str.toStringzArray(strArray)));
 	}
 	
 	/**
@@ -627,10 +627,15 @@ public class Str
 	 * args =  the list of arguments to insert in the output.
 	 * Returns: the number of bytes printed.
 	 */
-	public static int vasprintf(char** string, string format, void* args)
+	public static int vasprintf(out string string, string format, void* args)
 	{
 		// gint g_vasprintf (gchar **string,  gchar const *format,  va_list args);
-		return g_vasprintf(string, Str.toStringz(format), args);
+		char* outstring = null;
+		
+		auto p = g_vasprintf(&outstring, Str.toStringz(format), args);
+		
+		string = Str.toString(outstring);
+		return p;
 	}
 	
 	/**
@@ -1129,10 +1134,15 @@ public class Str
 	 * base =  to be used for the conversion, 2..36 or 0
 	 * Returns: the gint64 value or zero on error.
 	 */
-	public static long asciiStrtoll(string nptr, char** endptr, uint base)
+	public static long asciiStrtoll(string nptr, out string endptr, uint base)
 	{
 		// gint64 g_ascii_strtoll (const gchar *nptr,  gchar **endptr,  guint base);
-		return g_ascii_strtoll(Str.toStringz(nptr), endptr, base);
+		char* outendptr = null;
+		
+		auto p = g_ascii_strtoll(Str.toStringz(nptr), &outendptr, base);
+		
+		endptr = Str.toString(outendptr);
+		return p;
 	}
 	
 	/**
@@ -1158,10 +1168,15 @@ public class Str
 	 * base =  to be used for the conversion, 2..36 or 0
 	 * Returns: the guint64 value or zero on error.
 	 */
-	public static ulong asciiStrtoull(string nptr, char** endptr, uint base)
+	public static ulong asciiStrtoull(string nptr, out string endptr, uint base)
 	{
 		// guint64 g_ascii_strtoull (const gchar *nptr,  gchar **endptr,  guint base);
-		return g_ascii_strtoull(Str.toStringz(nptr), endptr, base);
+		char* outendptr = null;
+		
+		auto p = g_ascii_strtoull(Str.toStringz(nptr), &outendptr, base);
+		
+		endptr = Str.toString(outendptr);
+		return p;
 	}
 	
 	/**
@@ -1188,10 +1203,15 @@ public class Str
 	 *  the last character used in the conversion.
 	 * Returns: the gdouble value.
 	 */
-	public static double asciiStrtod(string nptr, char** endptr)
+	public static double asciiStrtod(string nptr, out string endptr)
 	{
 		// gdouble g_ascii_strtod (const gchar *nptr,  gchar **endptr);
-		return g_ascii_strtod(Str.toStringz(nptr), endptr);
+		char* outendptr = null;
+		
+		auto p = g_ascii_strtod(Str.toStringz(nptr), &outendptr);
+		
+		endptr = Str.toString(outendptr);
+		return p;
 	}
 	
 	/**
@@ -1252,10 +1272,15 @@ public class Str
 	 *  the last character used in the conversion.
 	 * Returns: the gdouble value.
 	 */
-	public static double strtod(string nptr, char** endptr)
+	public static double strtod(string nptr, out string endptr)
 	{
 		// gdouble g_strtod (const gchar *nptr,  gchar **endptr);
-		return g_strtod(Str.toStringz(nptr), endptr);
+		char* outendptr = null;
+		
+		auto p = g_strtod(Str.toStringz(nptr), &outendptr);
+		
+		endptr = Str.toString(outendptr);
+		return p;
 	}
 	
 	/**
@@ -1421,10 +1446,10 @@ public class Str
 	 * Params:
 	 * strArray =  a NULL-terminated array of strings to free.
 	 */
-	public static void strfreev(char** strArray)
+	public static void strfreev(string[] strArray)
 	{
 		// void g_strfreev (gchar **str_array);
-		g_strfreev(strArray);
+		g_strfreev(Str.toStringzArray(strArray));
 	}
 	
 	/**
@@ -1435,10 +1460,10 @@ public class Str
 	 * strArray = a NULL-terminated array of strings to join.
 	 * Returns:a newly-allocated string containing all of the strings joinedtogether, with separator between them.
 	 */
-	public static string strjoinv(string separator, char** strArray)
+	public static string strjoinv(string separator, string[] strArray)
 	{
 		// gchar* g_strjoinv (const gchar *separator,  gchar **str_array);
-		return Str.toString(g_strjoinv(Str.toStringz(separator), strArray));
+		return Str.toString(g_strjoinv(Str.toStringz(separator), Str.toStringzArray(strArray)));
 	}
 	
 	/**
@@ -1449,10 +1474,10 @@ public class Str
 	 * strArray =  a NULL-terminated array of strings.
 	 * Returns: length of str_array.
 	 */
-	public static uint strvLength(char** strArray)
+	public static uint strvLength(string[] strArray)
 	{
 		// guint g_strv_length (gchar **str_array);
-		return g_strv_length(strArray);
+		return g_strv_length(Str.toStringzArray(strArray));
 	}
 	
 	/**

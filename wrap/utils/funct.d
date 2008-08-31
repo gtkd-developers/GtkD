@@ -554,6 +554,12 @@ public struct Funct
 							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
 							~")";
 			}
+			else if ( parmsWrap[i] == "string[]" )
+			{
+				parmToGtk = "Str.toStringzArray("
+							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
+							~")";
+			}
 			else if ( GtkDClass.startsWith(parmsWrap[i], "out") ||
 				GtkDClass.startsWith(parmsWrap[i], "inout") )
 			{
