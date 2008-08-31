@@ -79,6 +79,16 @@ class: Component
 prefix: atk_component_
 structWrap: AtkObject* ObjectAtk
 import: atk.ObjectAtk
+
+out: atk_component_get_extents x
+out: atk_component_get_extents y
+out: atk_component_get_extents width
+out: atk_component_get_extents height
+out: atk_component_get_position x
+out: atk_component_get_position y
+out: atk_component_get_size width
+out: atk_component_get_size height
+
 outFile: Component
 
 file: AtkDocument.html
@@ -93,6 +103,7 @@ struct: AtkEditableText
 class: EditableText
 prefix: atk_editable_text_
 import: glib.Str
+inout: atk_editable_text_insert_text position
 outFile: EditableText
 
 file: AtkGObjectAccessible.html
@@ -133,6 +144,12 @@ struct: AtkImage
 class: Image
 prefix: atk_image_
 import: glib.Str
+
+out: atk_image_get_image_position x
+out: atk_image_get_image_position y
+out: atk_image_get_image_size width
+out: atk_image_get_image_size height
+
 outFile: Image
 
 file: AtkNoOpObject.html
@@ -194,6 +211,7 @@ structWrap: GPtrArray* PtrArray
 import: atk.ObjectAtk
 import: glib.PtrArray
 import: glib.Str
+array: atk_relation_new targets n_targets
 outFile: Relation
 
 file: AtkRelationSet.html
@@ -228,6 +246,10 @@ class: StateSet
 prefix: atk_state_set_
 structWrap: AtkStateSet* StateSet
 import: glib.Str
+
+array: atk_state_set_add_states types n_types
+array: atk_state_set_contains_states types n_types
+
 outFile: StateSet
 
 file: AtkStreamableContent.html
@@ -246,6 +268,12 @@ prefix: atk_table_
 structWrap: AtkObject* ObjectAtk
 import: atk.ObjectAtk
 import: glib.Str
+
+out: atk_table_get_selected_columns selected
+out: atk_table_get_selected_rows selected
+array: atk_table_get_selected_columns selected Return
+array: atk_table_get_selected_rows selected Return
+
 outFile: Table
 
 file: AtkText.html
@@ -253,6 +281,22 @@ struct: AtkText
 class: Text
 prefix: atk_text_
 import: glib.Str
+
+out: atk_text_get_text_after_offset start_offset
+out: atk_text_get_text_after_offset end_offset
+out: atk_text_get_text_at_offset start_offset
+out: atk_text_get_text_at_offset end_offset
+out: atk_text_get_text_before_offset start_offset
+out: atk_text_get_text_before_offset end_offset
+out: atk_text_get_character_extents x
+out: atk_text_get_character_extents y
+out: atk_text_get_character_extents width
+out: atk_text_get_character_extents height
+out: atk_text_get_run_attributes start_offset
+out: atk_text_get_run_attributes end_offset
+out: atk_text_get_selection start_offset
+out: atk_text_get_selection end_offset
+
 outFile:Text
 
 file: AtkUtil.html

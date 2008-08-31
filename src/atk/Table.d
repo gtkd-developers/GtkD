@@ -619,10 +619,15 @@ public class Table
 	 * selected =  a gint** that is to contain the selected columns numbers
 	 * Returns: a gint representing the number of selected columns,or 0 if value does not implement this interface.
 	 */
-	public int getSelectedColumns(int** selected)
+	public int getSelectedColumns(out int[] selected)
 	{
 		// gint atk_table_get_selected_columns (AtkTable *table,  gint **selected);
-		return atk_table_get_selected_columns(atkTable, selected);
+		gint* outselected = null;
+		
+		auto p = atk_table_get_selected_columns(atkTable, &outselected);
+		
+		selected = outselected[0 .. p];
+		return p;
 	}
 	
 	/**
@@ -632,10 +637,15 @@ public class Table
 	 * selected =  a gint** that is to contain the selected row numbers
 	 * Returns: a gint representing the number of selected rows,or zero if value does not implement this interface.
 	 */
-	public int getSelectedRows(int** selected)
+	public int getSelectedRows(out int[] selected)
 	{
 		// gint atk_table_get_selected_rows (AtkTable *table,  gint **selected);
-		return atk_table_get_selected_rows(atkTable, selected);
+		gint* outselected = null;
+		
+		auto p = atk_table_get_selected_rows(atkTable, &outselected);
+		
+		selected = outselected[0 .. p];
+		return p;
 	}
 	
 	/**

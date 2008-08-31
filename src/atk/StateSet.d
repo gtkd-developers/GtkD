@@ -145,12 +145,11 @@ public class StateSet
 	 * Add the states for the specified types to the current state set.
 	 * Params:
 	 * types =  an array of AtkStateType
-	 * nTypes =  The number of elements in the array
 	 */
-	public void addStates(AtkStateType* types, int nTypes)
+	public void addStates(AtkStateType[] types)
 	{
 		// void atk_state_set_add_states (AtkStateSet *set,  AtkStateType *types,  gint n_types);
-		atk_state_set_add_states(atkStateSet, types, nTypes);
+		atk_state_set_add_states(atkStateSet, types.ptr, types.length);
 	}
 	
 	/**
@@ -179,13 +178,12 @@ public class StateSet
 	 * specified set.
 	 * Params:
 	 * types =  an array of AtkStateType
-	 * nTypes =  The number of elements in the array
 	 * Returns: TRUE if all the states for type are in set.
 	 */
-	public int containsStates(AtkStateType* types, int nTypes)
+	public int containsStates(AtkStateType[] types)
 	{
 		// gboolean atk_state_set_contains_states (AtkStateSet *set,  AtkStateType *types,  gint n_types);
-		return atk_state_set_contains_states(atkStateSet, types, nTypes);
+		return atk_state_set_contains_states(atkStateSet, types.ptr, types.length);
 	}
 	
 	/**

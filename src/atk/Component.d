@@ -185,10 +185,10 @@ public class Component
 	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
-	public void getExtents(int* x, int* y, int* width, int* height, AtkCoordType coordType)
+	public void getExtents(out int x, out int y, out int width, out int height, AtkCoordType coordType)
 	{
 		// void atk_component_get_extents (AtkComponent *component,  gint *x,  gint *y,  gint *width,  gint *height,  AtkCoordType coord_type);
-		atk_component_get_extents(atkComponent, x, y, width, height, coordType);
+		atk_component_get_extents(atkComponent, &x, &y, &width, &height, coordType);
 	}
 	
 	/**
@@ -221,10 +221,10 @@ public class Component
 	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
-	public void getPosition(int* x, int* y, AtkCoordType coordType)
+	public void getPosition(out int x, out int y, AtkCoordType coordType)
 	{
 		// void atk_component_get_position (AtkComponent *component,  gint *x,  gint *y,  AtkCoordType coord_type);
-		atk_component_get_position(atkComponent, x, y, coordType);
+		atk_component_get_position(atkComponent, &x, &y, coordType);
 	}
 	
 	/**
@@ -233,10 +233,10 @@ public class Component
 	 * width =  address of gint to put width of component
 	 * height =  address of gint to put height of component
 	 */
-	public void getSize(int* width, int* height)
+	public void getSize(out int width, out int height)
 	{
 		// void atk_component_get_size (AtkComponent *component,  gint *width,  gint *height);
-		atk_component_get_size(atkComponent, width, height);
+		atk_component_get_size(atkComponent, &width, &height);
 	}
 	
 	/**

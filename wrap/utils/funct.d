@@ -756,15 +756,30 @@ public struct Funct
 							bd ~= "int "~ lenid ~" = "~ id ~".length;";
 					}
 
+					if ( convParms.array[name][parms[i]] == "Return" )
+						lenid = "p";
+
 					end ~= id ~" = out"~ id ~"[0 .. " ~ lenid ~"];";
 				}
 				else
 				{
 					if (GtkDClass.startsWith(parmsWrap[i], "out") )
+					{
 						bd ~= parmsType[i].removechars("*") ~"** out"~ id ~ " = null;";
+					}
 					else
+					{
 						bd ~= bd ~= parmsType[i].removechars("*") ~"** out"~ id ~ " = "~ id ~".ptr;";
-				
+
+						bd ~= "";
+						bd ~= parmsType[i].removechars("*") ~ "*[] out"~ id ~" = new "~ parmsType[i].removechars("*") ~"*["~ id ~".length];";
+						bd ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
+						bd ~= "{";
+						bd ~= "\tout"~ id ~"[i] = "~ id~ "[i].get"~ split(parmsWrap[i])[1][0 .. $-2] ~"Struct();";
+						bd ~= "}";
+						bd ~= "";
+					}
+
 					gtkCall ~= "&out" ~ id;
 
 					if ( parms.contains(convParms.array[name][parms[i]]) )
@@ -774,6 +789,9 @@ public struct Funct
 						else
 							bd ~= "int "~ lenid ~" = "~ id ~".length;";
 					}
+
+					if ( convParms.array[name][parms[i]] == "Return" )
+						lenid = "p";
 
 					end ~= "";
 					end ~= id ~" = new "~ split(parmsWrap[i])[1][0 .. $-2] ~"["~ lenid ~"];";
@@ -801,6 +819,21 @@ public struct Funct
 				gtkCall ~= "&out" ~ id;
 				
 				end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"(out"~ id ~");";
+			}
+			else if ( GtkDClass.endsWith(parmsWrap[i], "[]") && parmsType[i][0 .. $-1] != parmsWrap[i][0 .. $-2] &&
+				 !GtkDClass.endsWith(parmsType[i], "[]") && parmsWrap[i] != "string[]" )
+			{
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+
+				bd ~= "";
+				bd ~= parmsType[i].removechars("*") ~ "*[] "~ id ~"Array = new "~ parmsType[i].removechars("*") ~"*["~ id ~".length];";
+				bd ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
+				bd ~= "{";
+				bd ~= "\t"~ id ~"Array[i] = "~ id~ "[i].get"~ parmsWrap[i][0 .. $-2] ~"Struct();";
+				bd ~= "}";
+				bd ~= "";
+
+				gtkCall ~= id ~"Array.ptr";
 			}
 			else if ( name in convParms.array && "Return" == convParms.array[name].contains(parms[i]) )
 			{

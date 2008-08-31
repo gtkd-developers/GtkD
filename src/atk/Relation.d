@@ -159,18 +159,24 @@ public class Relation : ObjectG
 	 * of targets. See also atk_object_add_relationship().
 	 * Params:
 	 * targets =  an array of pointers to AtkObjects
-	 * nTargets =  number of AtkObjects pointed to by targets
 	 * relationship =  an AtkRelationType with which to create the new
 	 *  AtkRelation
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (AtkObject** targets, int nTargets, AtkRelationType relationship)
+	public this (ObjectAtk[] targets, AtkRelationType relationship)
 	{
 		// AtkRelation* atk_relation_new (AtkObject **targets,  gint n_targets,  AtkRelationType relationship);
-		auto p = atk_relation_new(targets, nTargets, relationship);
+		
+		AtkObject*[] targetsArray = new AtkObject*[targets.length];
+		for ( int i = 0; i < targets.length ; i++ )
+		{
+			targetsArray[i] = targets[i].getObjectAtkStruct();
+		}
+		
+		auto p = atk_relation_new(targetsArray.ptr, targets.length, relationship);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by atk_relation_new(targets, nTargets, relationship)");
+			throw new ConstructionException("null returned by atk_relation_new(targetsArray.ptr, targets.length, relationship)");
 		}
 		this(cast(AtkRelation*) p);
 	}

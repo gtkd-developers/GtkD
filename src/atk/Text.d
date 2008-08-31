@@ -310,10 +310,10 @@ public class Text
 	 *  returned substring
 	 * Returns: the text after offset bounded by the specified boundary_type.
 	 */
-	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
+	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
 		// gchar* atk_text_get_text_after_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset));
+		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
 	}
 	
 	/**
@@ -358,10 +358,10 @@ public class Text
 	 *  returned substring
 	 * Returns: the text at offset bounded by the specified boundary_type.
 	 */
-	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
+	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
 		// gchar* atk_text_get_text_at_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset));
+		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
 	}
 	
 	/**
@@ -404,10 +404,10 @@ public class Text
 	 *  returned substring
 	 * Returns: the text before offset bounded by the specified boundary_type.
 	 */
-	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
+	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
 		// gchar* atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset));
+		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
 	}
 	
 	/**
@@ -431,10 +431,10 @@ public class Text
 	 * height =  Pointer for the height of the bounding box
 	 * coords =  specify whether coordinates are relative to the screen or widget window
 	 */
-	public void getCharacterExtents(int offset, int* x, int* y, int* width, int* height, AtkCoordType coords)
+	public void getCharacterExtents(int offset, out int x, out int y, out int width, out int height, AtkCoordType coords)
 	{
 		// void atk_text_get_character_extents (AtkText *text,  gint offset,  gint *x,  gint *y,  gint *width,  gint *height,  AtkCoordType coords);
-		atk_text_get_character_extents(atkText, offset, x, y, width, height, coords);
+		atk_text_get_character_extents(atkText, offset, &x, &y, &width, &height, coords);
 	}
 	
 	/**
@@ -451,10 +451,10 @@ public class Text
 	 * endOffset =  the address to put the end offset of the range
 	 * Returns: an AtkAttributeSet which contains the attributes explicitly setat offset. This AtkAttributeSet should be freed by a call toatk_attribute_set_free().
 	 */
-	public AtkAttributeSet* getRunAttributes(int offset, int* startOffset, int* endOffset)
+	public AtkAttributeSet* getRunAttributes(int offset, out int startOffset, out int endOffset)
 	{
 		// AtkAttributeSet* atk_text_get_run_attributes (AtkText *text,  gint offset,  gint *start_offset,  gint *end_offset);
-		return atk_text_get_run_attributes(atkText, offset, startOffset, endOffset);
+		return atk_text_get_run_attributes(atkText, offset, &startOffset, &endOffset);
 	}
 	
 	/**
@@ -566,10 +566,10 @@ public class Text
 	 * the selected region
 	 * Returns: the selected text.
 	 */
-	public string getSelection(int selectionNum, int* startOffset, int* endOffset)
+	public string getSelection(int selectionNum, out int startOffset, out int endOffset)
 	{
 		// gchar* atk_text_get_selection (AtkText *text,  gint selection_num,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset));
+		return Str.toString(atk_text_get_selection(atkText, selectionNum, &startOffset, &endOffset));
 	}
 	
 	/**
