@@ -257,10 +257,10 @@ public class Util
 	 * Since 2.8
 	 * Returns: a NULL-terminated list of strings which must be freedwith g_strfreev().Programs that want to be portable to Windows should typically usethis function and g_getenv() instead of using the environ arrayfrom the C library directly. On Windows, the strings in the environarray are in system codepage encoding, while in most of the typicaluse cases for environment variables in GLib-using programs you wantthe UTF-8 encoding that this function and g_getenv() provide.
 	 */
-	public static char** listenv()
+	public static string[] listenv()
 	{
 		// gchar** g_listenv (void);
-		return g_listenv();
+		return Str.toStringArray(g_listenv());
 	}
 	
 	/**
@@ -378,10 +378,10 @@ public class Util
 	 * Since 2.6
 	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
-	public static char** getSystemDataDirs()
+	public static string[] getSystemDataDirs()
 	{
 		// const gchar* const * g_get_system_data_dirs (void);
-		return g_get_system_data_dirs();
+		return Str.toStringArray(g_get_system_data_dirs());
 	}
 	
 	/**
@@ -393,10 +393,10 @@ public class Util
 	 * Since 2.6
 	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
-	public static char** getSystemConfigDirs()
+	public static string[] getSystemConfigDirs()
 	{
 		// const gchar* const * g_get_system_config_dirs (void);
-		return g_get_system_config_dirs();
+		return Str.toStringArray(g_get_system_config_dirs());
 	}
 	
 	/**

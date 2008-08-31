@@ -539,10 +539,10 @@ public class Regex
 	 * matchOptions =  match options
 	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 */
-	public static char** splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
+	public static string[] splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
 		// gchar** g_regex_split_simple (const gchar *pattern,  const gchar *string,  GRegexCompileFlags compile_options,  GRegexMatchFlags match_options);
-		return g_regex_split_simple(Str.toStringz(pattern), Str.toStringz(string), compileOptions, matchOptions);
+		return Str.toStringArray(g_regex_split_simple(Str.toStringz(pattern), Str.toStringz(string), compileOptions, matchOptions));
 	}
 	
 	/**
@@ -567,10 +567,10 @@ public class Regex
 	 * matchOptions =  match time option flags
 	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 */
-	public char** split(string string, GRegexMatchFlags matchOptions)
+	public string[] split(string string, GRegexMatchFlags matchOptions)
 	{
 		// gchar** g_regex_split (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options);
-		return g_regex_split(gRegex, Str.toStringz(string), matchOptions);
+		return Str.toStringArray(g_regex_split(gRegex, Str.toStringz(string), matchOptions));
 	}
 	
 	/**
@@ -603,12 +603,12 @@ public class Regex
 	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 * Throws: GException on failure.
 	 */
-	public char** splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
+	public string[] splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
 	{
 		// gchar** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_split_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, maxTokens, &err);
+		auto p = Str.toStringArray(g_regex_split_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, maxTokens, &err));
 		
 		if (err !is null)
 		{

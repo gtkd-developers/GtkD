@@ -213,10 +213,10 @@ public class PixbufFormat
 	 * Since 2.2
 	 * Returns: a NULL-terminated array of mime types which must be freed with g_strfreev() when it is no longer needed.
 	 */
-	public char** getMimeTypes()
+	public string[] getMimeTypes()
 	{
 		// gchar** gdk_pixbuf_format_get_mime_types (GdkPixbufFormat *format);
-		return gdk_pixbuf_format_get_mime_types(gdkPixbufFormat);
+		return Str.toStringArray(gdk_pixbuf_format_get_mime_types(gdkPixbufFormat));
 	}
 	
 	/**
@@ -225,10 +225,10 @@ public class PixbufFormat
 	 * Since 2.2
 	 * Returns: a NULL-terminated array of filename extensions which must befreed with g_strfreev() when it is no longer needed.
 	 */
-	public char** getExtensions()
+	public string[] getExtensions()
 	{
 		// gchar** gdk_pixbuf_format_get_extensions (GdkPixbufFormat *format);
-		return gdk_pixbuf_format_get_extensions(gdkPixbufFormat);
+		return Str.toStringArray(gdk_pixbuf_format_get_extensions(gdkPixbufFormat));
 	}
 	
 	/**

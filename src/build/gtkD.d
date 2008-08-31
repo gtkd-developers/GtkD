@@ -104,6 +104,7 @@ private import gobject.Enums;
 private import gobject.Flags;
 private import gobject.Boxed;
 private import gobject.ParamSpec;
+private import gobject.ParamSpecPool;
 private import gobject.Signals;
 private import gobject.Closure;
 private import gobject.CClosure;

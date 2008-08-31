@@ -290,10 +290,10 @@ public class RecentInfo
 	 * length =  return location for the length of the returned list, or NULL
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public char** getApplications(uint* length)
+	public string[] getApplications(uint* length)
 	{
 		// gchar** gtk_recent_info_get_applications (GtkRecentInfo *info,  gsize *length);
-		return gtk_recent_info_get_applications(gtkRecentInfo, length);
+		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, length));
 	}
 	
 	/**
@@ -317,10 +317,10 @@ public class RecentInfo
 	 * length =  return location for the number of groups returned, or NULL
 	 * Returns: a newly allocated NULL terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public char** getGroups(uint* length)
+	public string[] getGroups(uint* length)
 	{
 		// gchar** gtk_recent_info_get_groups (GtkRecentInfo *info,  gsize *length);
-		return gtk_recent_info_get_groups(gtkRecentInfo, length);
+		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, length));
 	}
 	
 	/**

@@ -307,6 +307,9 @@ extern(C)
 	GParamSpec* function(GParamSpec* pspec)g_param_spec_get_redirect_target;
 	gpointer function(GType paramType, gchar* name, gchar* nick, gchar* blurb, GParamFlags flags)g_param_spec_internal;
 	GType function(gchar* name, GParamSpecTypeInfo* pspecInfo)g_param_type_register_static;
+	
+	// gobject.ParamSpecPool
+	
 	GParamSpecPool* function(gboolean typePrefixing)g_param_spec_pool_new;
 	void function(GParamSpecPool* pool, GParamSpec* pspec, GType ownerType)g_param_spec_pool_insert;
 	void function(GParamSpecPool* pool, GParamSpec* pspec)g_param_spec_pool_remove;

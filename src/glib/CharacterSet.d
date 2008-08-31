@@ -513,10 +513,10 @@ public class CharacterSet
 	 * uriList =  an URI list
 	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev().
 	 */
-	public static char** uriListExtractUris(string uriList)
+	public static string[] uriListExtractUris(string uriList)
 	{
 		// gchar** g_uri_list_extract_uris (const gchar *uri_list);
-		return g_uri_list_extract_uris(Str.toStringz(uriList));
+		return Str.toStringArray(g_uri_list_extract_uris(Str.toStringz(uriList)));
 	}
 	
 	/**

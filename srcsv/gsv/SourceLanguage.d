@@ -169,10 +169,10 @@ public class SourceLanguage : ObjectG
 	 * array.
 	 * Returns: a newly-allocated NULL terminated array containingthe mime types or NULL if no mime types are found.The returned array must be freed with g_strfreev().
 	 */
-	public char** gtkSourceLanguageGetMimeTypes()
+	public string[] gtkSourceLanguageGetMimeTypes()
 	{
 		// gchar** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
-		return gtk_source_language_get_mime_types(gtkSourceLanguage);
+		return Str.toStringArray(gtk_source_language_get_mime_types(gtkSourceLanguage));
 	}
 	
 	/**
@@ -181,10 +181,10 @@ public class SourceLanguage : ObjectG
 	 * retrieve the "globs" metadata property and split it into an array.
 	 * Returns: a newly-allocated NULL terminated array containingthe globs or NULL if no globs are found.The returned array must be freed with g_strfreev().
 	 */
-	public char** gtkSourceLanguageGetGlobs()
+	public string[] gtkSourceLanguageGetGlobs()
 	{
 		// gchar** gtk_source_language_get_globs (GtkSourceLanguage *language);
-		return gtk_source_language_get_globs(gtkSourceLanguage);
+		return Str.toStringArray(gtk_source_language_get_globs(gtkSourceLanguage));
 	}
 	
 	/**
@@ -203,9 +203,9 @@ public class SourceLanguage : ObjectG
 	 * Returns the ids of the styles defined by this language.
 	 * Returns: a NULL terminated array containingids of the styles defined by this language or NULL if no style isdefined. The returned array must be freed with g_strfreev().
 	 */
-	public char** gtkSourceLanguageGetStyleIds()
+	public string[] gtkSourceLanguageGetStyleIds()
 	{
 		// gchar** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
-		return gtk_source_language_get_style_ids(gtkSourceLanguage);
+		return Str.toStringArray(gtk_source_language_get_style_ids(gtkSourceLanguage));
 	}
 }

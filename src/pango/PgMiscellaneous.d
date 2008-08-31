@@ -92,10 +92,10 @@ public class PgMiscellaneous
 	 * str =  a G_SEARCHPATH_SEPARATOR separated list of filenames
 	 * Returns: a list of strings to be freed with g_strfreev()
 	 */
-	public static char** splitFileList(string str)
+	public static string[] splitFileList(string str)
 	{
 		// char** pango_split_file_list (const char *str);
-		return pango_split_file_list(Str.toStringz(str));
+		return Str.toStringArray(pango_split_file_list(Str.toStringz(str)));
 	}
 	
 	/**

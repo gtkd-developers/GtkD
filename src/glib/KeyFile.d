@@ -365,10 +365,10 @@ public class KeyFile
 	 * length =  return location for the number of returned groups, or NULL
 	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 */
-	public char** getGroups(out uint length)
+	public string[] getGroups(out uint length)
 	{
 		// gchar** g_key_file_get_groups (GKeyFile *key_file,  gsize *length);
-		return g_key_file_get_groups(gKeyFile, &length);
+		return Str.toStringArray(g_key_file_get_groups(gKeyFile, &length));
 	}
 	
 	/**
@@ -384,12 +384,12 @@ public class KeyFile
 	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public char** getKeys(string groupName, out uint length)
+	public string[] getKeys(string groupName, out uint length)
 	{
 		// gchar** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err);
+		auto p = Str.toStringArray(g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err));
 		
 		if (err !is null)
 		{
@@ -625,12 +625,12 @@ public class KeyFile
 	 * Returns: a NULL-terminated string array or NULL if the specified  key cannot be found. The array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
-	public char** getStringList(string groupName, string key, out uint length)
+	public string[] getStringList(string groupName, string key, out uint length)
 	{
 		// gchar** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto p = Str.toStringArray(g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err));
 		
 		if (err !is null)
 		{
@@ -659,12 +659,12 @@ public class KeyFile
 	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
-	public char** getLocaleStringList(string groupName, string key, string locale, out uint length)
+	public string[] getLocaleStringList(string groupName, string key, string locale, out uint length)
 	{
 		// gchar** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err);
+		auto p = Str.toStringArray(g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err));
 		
 		if (err !is null)
 		{

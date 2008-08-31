@@ -161,20 +161,20 @@ public class SourceLanguageManager : ObjectG
 	 * Gets the list directories where lm looks for language files.
 	 * Returns: NULL-terminated array containg a list of language files directories.The array is owned by lm and must not be modified.
 	 */
-	public char** getSearchPath()
+	public string[] getSearchPath()
 	{
 		// const gchar* const * gtk_source_language_manager_get_search_path  (GtkSourceLanguageManager *lm);
-		return gtk_source_language_manager_get_search_path(gtkSourceLanguageManager);
+		return Str.toStringArray(gtk_source_language_manager_get_search_path(gtkSourceLanguageManager));
 	}
 	
 	/**
 	 * Returns the ids of the available languages.
 	 * Returns: a NULL-terminated array of string containing the ids of theavailable languages or NULL if no language is available. The arrayis owned by lm and must not be modified.
 	 */
-	public char** getLanguageIds()
+	public string[] getLanguageIds()
 	{
 		// const gchar* const * gtk_source_language_manager_get_language_ids  (GtkSourceLanguageManager *lm);
-		return gtk_source_language_manager_get_language_ids(gtkSourceLanguageManager);
+		return Str.toStringArray(gtk_source_language_manager_get_language_ids(gtkSourceLanguageManager));
 	}
 	
 	/**

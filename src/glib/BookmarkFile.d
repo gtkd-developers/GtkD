@@ -421,10 +421,10 @@ public class BookmarkFile
 	 * length =  return location for the number of returned URIs, or NULL
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public char** getUris(out uint length)
+	public string[] getUris(out uint length)
 	{
 		// gchar** g_bookmark_file_get_uris (GBookmarkFile *bookmark,  gsize *length);
-		return g_bookmark_file_get_uris(gBookmarkFile, &length);
+		return Str.toStringArray(g_bookmark_file_get_uris(gBookmarkFile, &length));
 	}
 	
 	/**
@@ -651,12 +651,12 @@ public class BookmarkFile
 	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public char** getGroups(string uri, out uint length)
+	public string[] getGroups(string uri, out uint length)
 	{
 		// gchar** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err);
+		auto p = Str.toStringArray(g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err));
 		
 		if (err !is null)
 		{
@@ -678,12 +678,12 @@ public class BookmarkFile
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public char** getApplications(string uri, out uint length)
+	public string[] getApplications(string uri, out uint length)
 	{
 		// gchar** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err);
+		auto p = Str.toStringArray(g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err));
 		
 		if (err !is null)
 		{

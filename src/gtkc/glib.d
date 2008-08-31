@@ -1063,6 +1063,10 @@ extern(C)
 	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData)g_sequence_search_iter;
 	gpointer function(GSequenceIter* iter)g_sequence_get;
 	void function(GSequenceIter* iter, gpointer data)g_sequence_set;
+	GSequenceIter* function(GSequenceIter* begin, GSequenceIter* end)g_sequence_range_get_midpoint;
+	
+	// glib.SequenceIter
+	
 	gboolean function(GSequenceIter* iter)g_sequence_iter_is_begin;
 	gboolean function(GSequenceIter* iter)g_sequence_iter_is_end;
 	GSequenceIter* function(GSequenceIter* iter)g_sequence_iter_next;
@@ -1071,7 +1075,6 @@ extern(C)
 	GSequenceIter* function(GSequenceIter* iter, gint delta)g_sequence_iter_move;
 	GSequence* function(GSequenceIter* iter)g_sequence_iter_get_sequence;
 	gint function(GSequenceIter* a, GSequenceIter* b)g_sequence_iter_compare;
-	GSequenceIter* function(GSequenceIter* begin, GSequenceIter* end)g_sequence_range_get_midpoint;
 	
 	// glib.TrashStack
 	
@@ -1102,17 +1105,20 @@ extern(C)
 	void function(GHashTable* hashTable)g_hash_table_destroy;
 	GHashTable* function(GHashTable* hashTable)g_hash_table_ref;
 	void function(GHashTable* hashTable)g_hash_table_unref;
-	void function(GHashTableIter* iter, GHashTable* hashTable)g_hash_table_iter_init;
-	gboolean function(GHashTableIter* iter, gpointer* key, gpointer* value)g_hash_table_iter_next;
-	GHashTable* function(GHashTableIter* iter)g_hash_table_iter_get_hash_table;
-	void function(GHashTableIter* iter)g_hash_table_iter_remove;
-	void function(GHashTableIter* iter)g_hash_table_iter_steal;
 	gboolean function(gconstpointer v1, gconstpointer v2)g_direct_equal;
 	guint function(gconstpointer v)g_direct_hash;
 	gboolean function(gconstpointer v1, gconstpointer v2)g_int_equal;
 	guint function(gconstpointer v)g_int_hash;
 	gboolean function(gconstpointer v1, gconstpointer v2)g_str_equal;
 	guint function(gconstpointer v)g_str_hash;
+	
+	// glib.HashTableIter
+	
+	void function(GHashTableIter* iter, GHashTable* hashTable)g_hash_table_iter_init;
+	gboolean function(GHashTableIter* iter, gpointer* key, gpointer* value)g_hash_table_iter_next;
+	GHashTable* function(GHashTableIter* iter)g_hash_table_iter_get_hash_table;
+	void function(GHashTableIter* iter)g_hash_table_iter_remove;
+	void function(GHashTableIter* iter)g_hash_table_iter_steal;
 	
 	// glib.StringG
 	
@@ -2160,6 +2166,7 @@ Symbol[] glibLinks =
 	{ "g_sequence_search_iter",  cast(void**)& g_sequence_search_iter},
 	{ "g_sequence_get",  cast(void**)& g_sequence_get},
 	{ "g_sequence_set",  cast(void**)& g_sequence_set},
+	{ "g_sequence_range_get_midpoint",  cast(void**)& g_sequence_range_get_midpoint},
 	{ "g_sequence_iter_is_begin",  cast(void**)& g_sequence_iter_is_begin},
 	{ "g_sequence_iter_is_end",  cast(void**)& g_sequence_iter_is_end},
 	{ "g_sequence_iter_next",  cast(void**)& g_sequence_iter_next},
@@ -2168,7 +2175,6 @@ Symbol[] glibLinks =
 	{ "g_sequence_iter_move",  cast(void**)& g_sequence_iter_move},
 	{ "g_sequence_iter_get_sequence",  cast(void**)& g_sequence_iter_get_sequence},
 	{ "g_sequence_iter_compare",  cast(void**)& g_sequence_iter_compare},
-	{ "g_sequence_range_get_midpoint",  cast(void**)& g_sequence_range_get_midpoint},
 	{ "g_trash_stack_push",  cast(void**)& g_trash_stack_push},
 	{ "g_trash_stack_pop",  cast(void**)& g_trash_stack_pop},
 	{ "g_trash_stack_peek",  cast(void**)& g_trash_stack_peek},
@@ -2193,17 +2199,17 @@ Symbol[] glibLinks =
 	{ "g_hash_table_destroy",  cast(void**)& g_hash_table_destroy},
 	{ "g_hash_table_ref",  cast(void**)& g_hash_table_ref},
 	{ "g_hash_table_unref",  cast(void**)& g_hash_table_unref},
-	{ "g_hash_table_iter_init",  cast(void**)& g_hash_table_iter_init},
-	{ "g_hash_table_iter_next",  cast(void**)& g_hash_table_iter_next},
-	{ "g_hash_table_iter_get_hash_table",  cast(void**)& g_hash_table_iter_get_hash_table},
-	{ "g_hash_table_iter_remove",  cast(void**)& g_hash_table_iter_remove},
-	{ "g_hash_table_iter_steal",  cast(void**)& g_hash_table_iter_steal},
 	{ "g_direct_equal",  cast(void**)& g_direct_equal},
 	{ "g_direct_hash",  cast(void**)& g_direct_hash},
 	{ "g_int_equal",  cast(void**)& g_int_equal},
 	{ "g_int_hash",  cast(void**)& g_int_hash},
 	{ "g_str_equal",  cast(void**)& g_str_equal},
 	{ "g_str_hash",  cast(void**)& g_str_hash},
+	{ "g_hash_table_iter_init",  cast(void**)& g_hash_table_iter_init},
+	{ "g_hash_table_iter_next",  cast(void**)& g_hash_table_iter_next},
+	{ "g_hash_table_iter_get_hash_table",  cast(void**)& g_hash_table_iter_get_hash_table},
+	{ "g_hash_table_iter_remove",  cast(void**)& g_hash_table_iter_remove},
+	{ "g_hash_table_iter_steal",  cast(void**)& g_hash_table_iter_steal},
 	{ "g_string_new",  cast(void**)& g_string_new},
 	{ "g_string_new_len",  cast(void**)& g_string_new_len},
 	{ "g_string_sized_new",  cast(void**)& g_string_sized_new},

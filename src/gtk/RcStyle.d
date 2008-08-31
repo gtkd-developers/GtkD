@@ -713,10 +713,10 @@ public class RcStyle : ObjectG
 	 * at the end of gtk_init().
 	 * Returns: A NULL-terminated array of filenames. This memoryis owned by GTK+ and must not be freed by the application.If you want to store this information, you should make a copy.
 	 */
-	public static char** getDefaultFiles()
+	public static string[] getDefaultFiles()
 	{
 		// gchar** gtk_rc_get_default_files (void);
-		return gtk_rc_get_default_files();
+		return Str.toStringArray(gtk_rc_get_default_files());
 	}
 	
 	/**

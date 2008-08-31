@@ -368,10 +368,10 @@ public class Str
 	 * strArray =  NULL-terminated array of strings.
 	 * Returns: a new NULL-terminated array of strings.
 	 */
-	public static char** strdupv(char** strArray)
+	public static string[] strdupv(char** strArray)
 	{
 		// gchar** g_strdupv (gchar **str_array);
-		return g_strdupv(strArray);
+		return Str.toStringArray(g_strdupv(strArray));
 	}
 	
 	/**
@@ -1376,10 +1376,10 @@ public class Str
 	 *  less than 1, the string is split completely.
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use  g_strfreev() to free it.
 	 */
-	public static char** strsplit(string string, string delimiter, int maxTokens)
+	public static string[] strsplit(string string, string delimiter, int maxTokens)
 	{
 		// gchar** g_strsplit (const gchar *string,  const gchar *delimiter,  gint max_tokens);
-		return g_strsplit(Str.toStringz(string), Str.toStringz(delimiter), maxTokens);
+		return Str.toStringArray(g_strsplit(Str.toStringz(string), Str.toStringz(delimiter), maxTokens));
 	}
 	
 	/**
@@ -1409,10 +1409,10 @@ public class Str
 	 *  If this is less than 1, the string is split completely
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use  g_strfreev() to free it.
 	 */
-	public static char** strsplitSet(string string, string delimiters, int maxTokens)
+	public static string[] strsplitSet(string string, string delimiters, int maxTokens)
 	{
 		// gchar** g_strsplit_set (const gchar *string,  const gchar *delimiters,  gint max_tokens);
-		return g_strsplit_set(Str.toStringz(string), Str.toStringz(delimiters), maxTokens);
+		return Str.toStringArray(g_strsplit_set(Str.toStringz(string), Str.toStringz(delimiters), maxTokens));
 	}
 	
 	/**

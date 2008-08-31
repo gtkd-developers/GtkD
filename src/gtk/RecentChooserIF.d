@@ -367,7 +367,7 @@ public interface RecentChooserIF
 	 * length =  return location for a the length of the URI list, or NULL
 	 * Returns: A newly allocated, NULL terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public char** getUris(uint* length);
+	public string[] getUris(uint* length);
 	
 	/**
 	 * Adds filter to the list of GtkRecentFilter objects held by chooser.

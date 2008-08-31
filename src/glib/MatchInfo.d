@@ -417,9 +417,9 @@ public class MatchInfo
 	 * Since 2.14
 	 * Returns: a NULL-terminated array of gchar * pointers. It must be  freed using g_strfreev(). If the previous match failed NULL is returned
 	 */
-	public char** fetchAll()
+	public string[] fetchAll()
 	{
 		// gchar** g_match_info_fetch_all (const GMatchInfo *match_info);
-		return g_match_info_fetch_all(gMatchInfo);
+		return Str.toStringArray(g_match_info_fetch_all(gMatchInfo));
 	}
 }

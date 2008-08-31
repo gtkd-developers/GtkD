@@ -135,9 +135,9 @@ public class Internationalization
 	 * Since 2.6
 	 * Returns: a NULL-terminated array of strings owned by GLib  that must not be modified or freed.
 	 */
-	public static char** getLanguageNames()
+	public static string[] getLanguageNames()
 	{
 		// const gchar* const * g_get_language_names (void);
-		return g_get_language_names();
+		return Str.toStringArray(g_get_language_names());
 	}
 }

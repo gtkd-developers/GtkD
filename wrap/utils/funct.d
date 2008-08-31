@@ -85,7 +85,7 @@ public struct Funct
 
 		if ( type == "gchar**" || type == "char**" )
 			typeWrap = "string[]";
-		if ( name in convParms.array && "Return" in convParms.array[name] )
+		else if ( name in convParms.array && "Return" in convParms.array[name] )
 			typeWrap = getWrappedType(type.dup[0 .. $-1], convParms) ~ "[]";
 		else
 			typeWrap = getWrappedType(type.dup, convParms);

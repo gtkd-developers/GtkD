@@ -255,10 +255,10 @@ public class FileSelection : Dialog
 	 * UTF-8, call g_filename_to_utf8() on each string.
 	 * Returns: a newly-allocated NULL-terminated array of strings. Useg_strfreev() to free it.
 	 */
-	public char** getSelections()
+	public string[] getSelections()
 	{
 		// gchar** gtk_file_selection_get_selections (GtkFileSelection *filesel);
-		return gtk_file_selection_get_selections(gtkFileSelection);
+		return Str.toStringArray(gtk_file_selection_get_selections(gtkFileSelection));
 	}
 	
 	/**

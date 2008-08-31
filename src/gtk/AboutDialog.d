@@ -393,10 +393,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: A NULL-terminated string array containing the authors. The array is owned by the about dialog  and must not be modified.
 	 */
-	public char** getAuthors()
+	public string[] getAuthors()
 	{
 		// const gchar* const * gtk_about_dialog_get_authors (GtkAboutDialog *about);
-		return gtk_about_dialog_get_authors(gtkAboutDialog);
+		return Str.toStringArray(gtk_about_dialog_get_authors(gtkAboutDialog));
 	}
 	
 	/**
@@ -418,10 +418,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: A NULL-terminated string array containing the artists. The array is owned by the about dialog  and must not be modified.
 	 */
-	public char** getArtists()
+	public string[] getArtists()
 	{
 		// const gchar* const * gtk_about_dialog_get_artists (GtkAboutDialog *about);
-		return gtk_about_dialog_get_artists(gtkAboutDialog);
+		return Str.toStringArray(gtk_about_dialog_get_artists(gtkAboutDialog));
 	}
 	
 	/**
@@ -443,10 +443,10 @@ public class AboutDialog : Dialog
 	 * Since 2.6
 	 * Returns: A NULL-terminated string array containing the documenters. The array is owned by the about dialog  and must not be modified.
 	 */
-	public char** getDocumenters()
+	public string[] getDocumenters()
 	{
 		// const gchar* const * gtk_about_dialog_get_documenters (GtkAboutDialog *about);
-		return gtk_about_dialog_get_documenters(gtkAboutDialog);
+		return Str.toStringArray(gtk_about_dialog_get_documenters(gtkAboutDialog));
 	}
 	
 	/**

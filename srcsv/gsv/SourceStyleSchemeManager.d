@@ -182,20 +182,20 @@ public class SourceStyleSchemeManager : ObjectG
 	 * See gtk_source_style_scheme_manager_set_search_path() for details.
 	 * Returns: a NULL-terminated array of string containing the search path.The array is owned by the manager and must not be modified.
 	 */
-	public char** getSearchPath()
+	public string[] getSearchPath()
 	{
 		// const gchar* const * gtk_source_style_scheme_manager_get_search_path  (GtkSourceStyleSchemeManager *manager);
-		return gtk_source_style_scheme_manager_get_search_path(gtkSourceStyleSchemeManager);
+		return Str.toStringArray(gtk_source_style_scheme_manager_get_search_path(gtkSourceStyleSchemeManager));
 	}
 	
 	/**
 	 * Returns the ids of the available style schemes.
 	 * Returns: a NULL-terminated array of string containing the ids of theavailable style schemes or NULL if no style scheme is available. The arrayis owned by the manager and must not be modified.
 	 */
-	public char** getSchemeIds()
+	public string[] getSchemeIds()
 	{
 		// const gchar* const * gtk_source_style_scheme_manager_get_scheme_ids  (GtkSourceStyleSchemeManager *manager);
-		return gtk_source_style_scheme_manager_get_scheme_ids(gtkSourceStyleSchemeManager);
+		return Str.toStringArray(gtk_source_style_scheme_manager_get_scheme_ids(gtkSourceStyleSchemeManager));
 	}
 	
 	/**

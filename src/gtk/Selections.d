@@ -471,10 +471,10 @@ public class Selections
 	 * selectionData =  a GtkSelectionData
 	 * Returns: if the selection data contains a list of URIs, a newly allocated NULL-terminated string array containing the URIs, otherwise NULL. If the result is  non-NULL it must be freed with g_strfreev().
 	 */
-	public static char** selectionDataGetUris(GtkSelectionData* selectionData)
+	public static string[] selectionDataGetUris(GtkSelectionData* selectionData)
 	{
 		// gchar** gtk_selection_data_get_uris (GtkSelectionData *selection_data);
-		return gtk_selection_data_get_uris(selectionData);
+		return Str.toStringArray(gtk_selection_data_get_uris(selectionData));
 	}
 	
 	/**

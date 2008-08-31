@@ -228,10 +228,10 @@ public class SourceStyleScheme : ObjectG
 	 * Since 2.0
 	 * Returns: a NULL-terminated array containing the scheme authors orNULL if no author is specified by the stylescheme.
 	 */
-	public char** getAuthors()
+	public string[] getAuthors()
 	{
 		// const gchar* const * gtk_source_style_scheme_get_authors  (GtkSourceStyleScheme *scheme);
-		return gtk_source_style_scheme_get_authors(gtkSourceStyleScheme);
+		return Str.toStringArray(gtk_source_style_scheme_get_authors(gtkSourceStyleScheme));
 	}
 	
 	/**

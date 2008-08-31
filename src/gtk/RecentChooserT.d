@@ -568,10 +568,10 @@ public template RecentChooserT(TStruct)
 	 * length =  return location for a the length of the URI list, or NULL
 	 * Returns: A newly allocated, NULL terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public char** getUris(uint* length)
+	public string[] getUris(uint* length)
 	{
 		// gchar** gtk_recent_chooser_get_uris (GtkRecentChooser *chooser,  gsize *length);
-		return gtk_recent_chooser_get_uris(getRecentChooserTStruct(), length);
+		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserTStruct(), length));
 	}
 	
 	/**
