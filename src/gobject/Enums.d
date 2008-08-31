@@ -187,9 +187,9 @@ public class Enums
 	 * type = the type identifier of the type being completed
 	 * info = the GTypeInfo struct to be filled in
 	 */
-	public static void completeTypeInfo(GType type, GTypeInfo* info, Enums _Values)
+	public static void completeTypeInfo(GType type, out GTypeInfo info, Enums _Values)
 	{
 		// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const_values);
-		g_enum_complete_type_info(type, info, (_Values is null) ? null : _Values.getEnumsStruct());
+		g_enum_complete_type_info(type, &info, (_Values is null) ? null : _Values.getEnumsStruct());
 	}
 }

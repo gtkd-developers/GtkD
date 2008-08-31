@@ -125,7 +125,7 @@ public class TreeModel : ObjectG, TreeModelIF
 	
 	public this ()
 	{
-		auto p =  super(customTreeModelgetType(), 0, null);
+		auto p =  super(customTreeModelgetType(), null);
 		gtkTreeModel = cast(GtkTreeModel*) p.getObjectGStruct();
 		
 		objectGSetDataFull("customTreeModel", cast(void*)this);

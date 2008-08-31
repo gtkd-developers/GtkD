@@ -213,159 +213,6 @@ public class ObjectG
 		return g_object_get_data(obj, Str.toStringz("GObject"));
 	}
 	
-	//debug = objectstore;
-	//
-	//debug(objectstore)
-	//{
-		//	private import std.stdio;
-	//}
-	//
-	//	/**
-	//	 * Maps Gtk structures to GtkD Objects
-	//	 */
-	//	private static ObjectStore objectStore;
-	//
-	//	/**
-	//	 * Creates the statis ObjectStore object
-	//	 */
-	//	static this()
-	//	{
-		//		objectStore = new ObjectStore();
-	//	}
-	//
-	//	/**
-	//	 * Sets our main struct and passes store it on the gobject.
-	//	 * Adds a gabage collector root to the gtk+ struct so it doesn't get collect
-	//	 * adds the object to the objectStore
-	//	 */
-	//	public this (GObject* gObject)
-	//	{
-		//		this.gObject = gObject;
-		//		if ( gObject !is  null )
-		//		{
-			//			//writefln("ObjectG.this\n");
-			//			objectStore.putObject(this, gObject);
-			//			setDestroyNotify("GObject",gObject);
-		//		}
-	//	}
-	//
-	//
-	//
-	//	/**
-	//	 * Maintains the map from Gtk structures to GtkD objects
-	//	 */
-	//	private static class ObjectStore
-	//	{
-		//		static ObjectG[void*] objectStore;
-		//
-		//		/**
-		//		 * Puts a new gtk struct to GtkD objects
-		//		 */
-		//		void putObject(ObjectG objectG, GObject* gtkStruct)
-		//		{
-			//			objectStore[gtkStruct] = objectG;
-			//			debug(objectstore)
-			//			{
-				//				writefln("ObjectStore.putObject gtkStruct = %s (total=%s)", gtkStruct, objectStore.length);
-			//			}
-		//		}
-		//
-		//		/**
-		//		 * Gets a GtkD object from a gtk struct.
-		//		 * Returns: the GtkD object or null if not found
-		//		 */
-		//		ObjectG getObject(GObject* gtkStruct)
-		//		{
-			//			ObjectG objectG = null;
-			//			synchronized ( this )
-			//			{
-				//				if ( gtkStruct in objectStore )
-				//				{
-					//					objectG = objectStore[gtkStruct];
-				//				}
-			//			}
-			//			debug(objectstore)
-			//			{
-				//				//writefln("ObjectStore.removeObject objectStore.length = %s", objectStore.length);
-				//				//writefln("ObjectStore.getObject gtkStruct = %s", gtkStruct);
-				//				if ( objectG is null )
-				//				{
-					//					writefln("ObjectStore.getObject not found");
-				//				}
-				//				else
-				//				{
-					//					writefln("ObjectStore.getObject %s (total = %s)", objectG, objectStore.length);
-				//				}
-			//			}
-			//			return objectG;
-		//		}
-		//
-		//		/**
-		//		 * Removes an entry from the gtk struct to GtkD object map
-		//		 */
-		//		void removeObject(GObject* gtkStruct)
-		//		{
-			//			debug(objectstore)
-			//			{
-				//				writefln("ObjectStore.removeObject gtkStruct = %s", gtkStruct);
-				//				ObjectG objectG = getObject(gtkStruct);
-				//				if ( objectG is null )
-				//				{
-					//					writefln("ObjectStore.removeObject not found");
-				//				}
-				//				else
-				//				{
-					//					writefln("ObjectStore.removeObject %s",
-					//					objectG);
-				//				}
-			//			}
-			//			objectStore.remove(gtkStruct);
-			//			//objectStore.rehash;
-			//			debug(objectstore)
-			//			{
-				//				writefln("ObjectStore.removeObject objectStore.length = %s", objectStore.length);
-			//			}
-		//		}
-	//	}
-	//
-	//	/**
-	//	 * Gets a GtkD object from a Gtk Structure if the GtkD object was already created for the structure
-	//	 */
-	//	public static ObjectG getStoredObject(GObject* gtkStruct)
-	//	{
-		//		return objectStore.getObject(gtkStruct);
-	//	}
-	//
-	//	/**
-	//	 * Sets a pointer on this object's has table
-	//	 * Params:
-	//	 *  key = the data identifier
-	//	 *  data = a pointer
-	//	 */
-	//	private void setDestroyNotify(string key, gpointer data)
-	//	{
-		//		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		//		//std.gc.addRoot(data);
-		//
-		//		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
-	//	}
-	//
-	//	private extern(C)
-	//	{
-		//		static void destroyNotify(gpointer data)
-		//		{
-			//			//printf("objectg.destroy entry\n");
-			//			//printf("objectg.destroy\n");
-			//			//writefln("removing gc.root to %s",data);
-			//			//std.gc.removeRoot(data);
-			//
-			//			objectStore.removeObject(cast(GObject*)data);
-			//			//objectStore.removeObject(cast(GObject*)*data);
-			//
-			//			//printf("objectg.destroy exit\n");
-		//		}
-	//	}
-	
 	/** */
 	public void setProperty(string propertyName, int value)
 	{
@@ -475,13 +322,25 @@ public class ObjectG
 	 * Returns an array of GParamSpec* for all properties of a class.
 	 * Params:
 	 * oclass = a GObjectClass
-	 * nProperties = return location for the length of the returned array
 	 * Returns:an array of GParamSpec* which should be freed after use
 	 */
-	public static GParamSpec** classListProperties(GObjectClass* oclass, uint* nProperties)
+	public static ParamSpec[] classListProperties(GObjectClass* oclass)
 	{
 		// GParamSpec** g_object_class_list_properties (GObjectClass *oclass,  guint *n_properties);
-		return g_object_class_list_properties(oclass, nProperties);
+		uint nProperties;
+		auto p = g_object_class_list_properties(oclass, &nProperties);
+		if(p is null)
+		{
+			return null;
+		}
+		
+		ParamSpec[] arr = new ParamSpec[nProperties];
+		for(int i = 0; i < nProperties; i++)
+		{
+			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+		}
+		
+		return arr;
 	}
 	
 	/**
@@ -573,13 +432,25 @@ public class ObjectG
 	 * Params:
 	 * gIface = any interface vtable for the interface, or the default
 	 *  vtable for the interface
-	 * nPropertiesP = location to store number of properties returned.
 	 * Returns:a pointer to an array of pointers to GParamSpec structures. The paramspecs are owned by GLib, but the array should be freed with g_free() when you are done with it.
 	 */
-	public static GParamSpec** interfaceListProperties(void* gIface, uint* nPropertiesP)
+	public static ParamSpec[] interfaceListProperties(void* gIface)
 	{
 		// GParamSpec** g_object_interface_list_properties (gpointer g_iface,  guint *n_properties_p);
-		return g_object_interface_list_properties(gIface, nPropertiesP);
+		uint nPropertiesP;
+		auto p = g_object_interface_list_properties(gIface, &nPropertiesP);
+		if(p is null)
+		{
+			return null;
+		}
+		
+		ParamSpec[] arr = new ParamSpec[nPropertiesP];
+		for(int i = 0; i < nPropertiesP; i++)
+		{
+			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+		}
+		
+		return arr;
 	}
 	
 	/**
@@ -588,17 +459,16 @@ public class ObjectG
 	 * which are not explicitly specified are set to their default values.
 	 * Params:
 	 * objectType = the type id of the GObject subtype to instantiate
-	 * nParameters = the length of the parameters array
 	 * parameters = an array of GParameter
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GType objectType, uint nParameters, GParameter* parameters)
+	public this (GType objectType, GParameter[] parameters)
 	{
 		// gpointer g_object_newv (GType object_type,  guint n_parameters,  GParameter *parameters);
-		auto p = g_object_newv(objectType, nParameters, parameters);
+		auto p = g_object_newv(objectType, parameters.length, parameters.ptr);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_object_newv(objectType, nParameters, parameters)");
+			throw new ConstructionException("null returned by g_object_newv(objectType, parameters.length, parameters.ptr)");
 		}
 		this(cast(GObject*) p);
 	}

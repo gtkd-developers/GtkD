@@ -145,14 +145,13 @@ public class Signals
 	 *  signal emissions into C language callback invocations.
 	 * returnType = the type of return value, or G_TYPE_NONE for a signal
 	 *  without a return value.
-	 * nParams = the length of param_types.
 	 * paramTypes = an array types, one for each parameter.
 	 * Returns:the signal id
 	 */
-	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, GType* paramTypes)
+	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, GType[] paramTypes)
 	{
 		// guint g_signal_newv (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  GClosure *class_closure,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  GType *param_types);
-		return g_signal_newv(Str.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, paramTypes);
+		return g_signal_newv(Str.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, paramTypes.length, paramTypes.ptr);
 	}
 	
 	/**
@@ -236,13 +235,18 @@ public class Signals
 	 * g_signal_query().
 	 * Params:
 	 * itype = Instance or interface type.
-	 * nIds = Location to store the number of signal ids for itype.
 	 * Returns:Newly allocated array of signal IDs.
 	 */
-	public static uint* listIds(GType itype, uint* nIds)
+	public static uint[] listIds(GType itype)
 	{
 		// guint* g_signal_list_ids (GType itype,  guint *n_ids);
-		return g_signal_list_ids(itype, nIds);
+		uint nIds;
+		auto p = g_signal_list_ids(itype, &nIds);
+		if(p is null)
+		{
+			return null;
+		}
+		return p[0 .. nIds];
 	}
 	
 	/**
@@ -660,10 +664,10 @@ public class Signals
 	 * forceDetailQuark = TRUE forces creation of a GQuark for the detail.
 	 * Returns:Whether the signal name could successfully be parsed and signal_id_p and detail_p contain valid return values.
 	 */
-	public static int parseName(string detailedSignal, GType itype, uint* signalIdP, Quark detailP, int forceDetailQuark)
+	public static int parseName(string detailedSignal, GType itype, out uint signalIdP, Quark detailP, int forceDetailQuark)
 	{
 		// gboolean g_signal_parse_name (const gchar *detailed_signal,  GType itype,  guint *signal_id_p,  GQuark *detail_p,  gboolean force_detail_quark);
-		return g_signal_parse_name(Str.toStringz(detailedSignal), itype, signalIdP, (detailP is null) ? null : detailP.getQuarkStruct(), forceDetailQuark);
+		return g_signal_parse_name(Str.toStringz(detailedSignal), itype, &signalIdP, (detailP is null) ? null : detailP.getQuarkStruct(), forceDetailQuark);
 	}
 	
 	/**

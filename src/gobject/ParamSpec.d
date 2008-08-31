@@ -39,6 +39,7 @@
  * 	- g_param_spec_
  * omit structs:
  * omit prefixes:
+ * 	- g_param_spec_pool_
  * omit code:
  * omit signals:
  * imports:
@@ -395,99 +396,5 @@ public class ParamSpec
 	{
 		// GType g_param_type_register_static (const gchar *name,  const GParamSpecTypeInfo *pspec_info);
 		return g_param_type_register_static(Str.toStringz(name), pspecInfo);
-	}
-	
-	/**
-	 * Creates a new GParamSpecPool.
-	 * If type_prefixing is TRUE, lookups in the newly created pool will
-	 * allow to specify the owner as a colon-separated prefix of the property name,
-	 * like "GtkContainer:border-width". This feature is deprecated, so you should
-	 * always set type_prefixing to FALSE.
-	 * Params:
-	 * typePrefixing = Whether the pool will support type-prefixed property names.
-	 * Returns:a newly allocated GParamSpecPool.
-	 */
-	public static GParamSpecPool* poolNew(int typePrefixing)
-	{
-		// GParamSpecPool* g_param_spec_pool_new (gboolean type_prefixing);
-		return g_param_spec_pool_new(typePrefixing);
-	}
-	
-	/**
-	 * Inserts a GParamSpec in the pool.
-	 * Params:
-	 * pool = a GParamSpecPool.
-	 * pspec = the GParamSpec to insert
-	 * ownerType = a GType identifying the owner of pspec
-	 */
-	public static void poolInsert(GParamSpecPool* pool, ParamSpec pspec, GType ownerType)
-	{
-		// void g_param_spec_pool_insert (GParamSpecPool *pool,  GParamSpec *pspec,  GType owner_type);
-		g_param_spec_pool_insert(pool, (pspec is null) ? null : pspec.getParamSpecStruct(), ownerType);
-	}
-	
-	/**
-	 * Removes a GParamSpec from the pool.
-	 * Params:
-	 * pool = a GParamSpecPool
-	 * pspec = the GParamSpec to remove
-	 */
-	public static void poolRemove(GParamSpecPool* pool, ParamSpec pspec)
-	{
-		// void g_param_spec_pool_remove (GParamSpecPool *pool,  GParamSpec *pspec);
-		g_param_spec_pool_remove(pool, (pspec is null) ? null : pspec.getParamSpecStruct());
-	}
-	
-	/**
-	 * Looks up a GParamSpec in the pool.
-	 * Params:
-	 * pool = a GParamSpecPool
-	 * paramName = the name to look for
-	 * ownerType = the owner to look for
-	 * walkAncestors = If TRUE, also try to find a GParamSpec with param_name
-	 *  owned by an ancestor of owner_type.
-	 * Returns:The found GParamSpec, or NULL if no matching GParamSpec was found.
-	 */
-	public static ParamSpec poolLookup(GParamSpecPool* pool, string paramName, GType ownerType, int walkAncestors)
-	{
-		// GParamSpec* g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
-		auto p = g_param_spec_pool_lookup(pool, Str.toStringz(paramName), ownerType, walkAncestors);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ParamSpec(cast(GParamSpec*) p);
-	}
-	
-	/**
-	 * Gets an array of all GParamSpecs owned by owner_type in the pool.
-	 * Params:
-	 * pool = a GParamSpecPool
-	 * ownerType = the owner to look for
-	 * nPspecsP = return location for the length of the returned array
-	 * Returns:a newly allocated array containing pointers to all  GParamSpecs owned by owner_type in the pool
-	 */
-	public static GParamSpec** poolList(GParamSpecPool* pool, GType ownerType, uint* nPspecsP)
-	{
-		// GParamSpec** g_param_spec_pool_list (GParamSpecPool *pool,  GType owner_type,  guint *n_pspecs_p);
-		return g_param_spec_pool_list(pool, ownerType, nPspecsP);
-	}
-	
-	/**
-	 * Gets an GList of all GParamSpecs owned by owner_type in the pool.
-	 * Params:
-	 * pool = a GParamSpecPool
-	 * ownerType = the owner to look for
-	 * Returns:a GList of all GParamSpecs owned by owner_type in  the poolGParamSpecs.
-	 */
-	public static ListG poolListOwned(GParamSpecPool* pool, GType ownerType)
-	{
-		// GList* g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
-		auto p = g_param_spec_pool_list_owned(pool, ownerType);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ListG(cast(GList*) p);
 	}
 }

@@ -582,12 +582,7 @@ public struct Funct
 		}
 		else
 		{
-			if ( name in convParms.array && "Return" in convParms.array[name])
-			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-				parmToGtk = "&"~ id;
-			}
-			else if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
+			if ( name in convParms.array && convParms.array[name].contains(parms[i]) )
 			{
 				char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
 				parmToGtk = id ~".length";
@@ -904,7 +899,7 @@ public struct Funct
 						{
 							char[] id = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
 
-							if (type == typeWrap[0 .. $-2])
+							if (type[0 .. $-1] == typeWrap[0 .. $-2])
 							{
 								bd ~= "return p[0 .. "~ id ~"];";
 							}

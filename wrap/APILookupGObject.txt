@@ -175,6 +175,7 @@ structWrap: GClosure* Closure
 import: std.gc
 import: glib.Str
 
+array: g_object_class_list_properties Return n_properties
 array: g_object_interface_list_properties Return n_properties_p
 array: g_object_newv parameters n_parameters
 nocode: g_object_set_data_full
@@ -439,6 +440,8 @@ structWrap: GQuark* Quark
 #structWrap: GSignalInvocationHint* SignalInvocationHint
 
 array: g_signal_newv param_types n_params
+array: g_signal_list_ids Return n_ids
+out: g_signal_parse_name signal_id_p
 
 code: start
 	/** */

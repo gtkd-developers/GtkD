@@ -425,13 +425,18 @@ public class Type
 	 * child types of type. The return value has to be g_free()ed after use.
 	 * Params:
 	 * type =  The parent type.
-	 * nChildren = Optional guint pointer to contain the number of child types.
 	 * Returns: Newly allocated and 0-terminated array of child types.
 	 */
-	public static GType* children(GType type, uint* nChildren)
+	public static GType[] children(GType type)
 	{
 		// GType* g_type_children (GType type,  guint *n_children);
-		return g_type_children(type, nChildren);
+		uint nChildren;
+		auto p = g_type_children(type, &nChildren);
+		if(p is null)
+		{
+			return null;
+		}
+		return p[0 .. nChildren];
 	}
 	
 	/**
@@ -440,13 +445,18 @@ public class Type
 	 * g_free()ed after use.
 	 * Params:
 	 * type =  The type to list interface types for.
-	 * nInterfaces = Optional guint pointer to contain the number of interface types.
 	 * Returns: Newly allocated and 0-terminated array of interface types.
 	 */
-	public static GType* interfaces(GType type, uint* nInterfaces)
+	public static GType[] interfaces(GType type)
 	{
 		// GType* g_type_interfaces (GType type,  guint *n_interfaces);
-		return g_type_interfaces(type, nInterfaces);
+		uint nInterfaces;
+		auto p = g_type_interfaces(type, &nInterfaces);
+		if(p is null)
+		{
+			return null;
+		}
+		return p[0 .. nInterfaces];
 	}
 	
 	/**
@@ -454,13 +464,18 @@ public class Type
 	 * Since 2.2
 	 * Params:
 	 * interfaceType = an interface type
-	 * nPrerequisites = location to return the number of prerequisites, or NULL
 	 * Returns:a newly-allocated zero-terminated array of GType containing  the prerequisites of interface_type
 	 */
-	public static GType* interfacePrerequisites(GType interfaceType, uint* nPrerequisites)
+	public static GType[] interfacePrerequisites(GType interfaceType)
 	{
 		// GType* g_type_interface_prerequisites (GType interface_type,  guint *n_prerequisites);
-		return g_type_interface_prerequisites(interfaceType, nPrerequisites);
+		uint nPrerequisites;
+		auto p = g_type_interface_prerequisites(interfaceType, &nPrerequisites);
+		if(p is null)
+		{
+			return null;
+		}
+		return p[0 .. nPrerequisites];
 	}
 	
 	/**
@@ -501,10 +516,10 @@ public class Type
 	 * query = A user provided structure that is filled in with constant values
 	 *  upon success.
 	 */
-	public static void query(GType type, GTypeQuery* query)
+	public static void query(GType type, out GTypeQuery query)
 	{
 		// void g_type_query (GType type,  GTypeQuery *query);
-		g_type_query(type, query);
+		g_type_query(type, &query);
 	}
 	
 	/**
