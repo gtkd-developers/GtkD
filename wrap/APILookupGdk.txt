@@ -78,6 +78,14 @@ import: gdk.Window
 structWrap: GdkWindow* Window
 import: gdk.Cursor
 structWrap: GdkCursor* Cursor
+
+inout: gdk_init argv
+array: gdk_init argv argc
+inout: gdk_init_check argv
+array: gdk_init_check argv argc
+inout: gdk_parse_args argv
+array: gdk_parse_args argv argc
+
 outFile: Gdk
 
 #file: multihead.html
@@ -109,6 +117,7 @@ structWrap: GdkWindow* Window
 #import: gdk.Atom
 #structWrap: GdkAtom* Atom
 
+out: gdk_display_get_pointer screen
 out: gdk_display_get_pointer x
 out: gdk_display_get_pointer y
 out: gdk_display_get_pointer mask
@@ -116,6 +125,7 @@ out: gdk_display_get_window_at_pointer win_x
 out: gdk_display_get_window_at_pointer win_y
 out: gdk_display_get_maximal_cursor_size width
 out: gdk_display_get_maximal_cursor_size height
+array: gdk_display_store_clipboard targets n_targets
 
 outFile: Display
 
@@ -159,6 +169,17 @@ import: gdk.Event
 structWrap: GdkEvent* Event
 import: gobject.Value
 structWrap: GValue* Value
+
+array: gdk_spawn_on_screen argv
+array: gdk_spawn_on_screen envp
+out: gdk_spawn_on_screen child_pid
+array: gdk_spawn_on_screen_with_pipes argv
+array: gdk_spawn_on_screen_with_pipes envp
+out: gdk_spawn_on_screen_with_pipes child_pid
+out: gdk_spawn_on_screen_with_pipes standard_input
+out: gdk_spawn_on_screen_with_pipes standard_output
+out: gdk_spawn_on_screen_with_pipes standard_error
+
 outFile: Screen
 
 file: gdk-Points-Rectangles-and-Regions.html
@@ -183,6 +204,12 @@ structWrap: GdkRectangle* Rectangle
 #structWrap: GdkRectangle** Rectangle*
 #import: gdk.Span
 #structWrap: GdkSpan* Span
+
+array: gdk_region_polygon points npoints
+out: gdk_region_get_rectangles rectangles
+array: gdk_region_get_rectangles rectangles n_rectangles
+array: gdk_region_spans_intersect_foreach spans n_spans
+
 outFile: Region
 
 file: gdk-Graphics-Contexts.html
@@ -256,11 +283,19 @@ import: pango.PgMatrix
 structWrap: PangoMatrix* PgMatrix
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutLine
+structWrap: PangoLayoutLine* PgLayoutLine
 
 override: getData
 
 out: gdk_drawable_get_size width
 out: gdk_drawable_get_size height
+array: gdk_draw_points points npoints
+array: gdk_draw_lines points npoints
+array: gdk_draw_segments segs nsegs
+array: gdk_draw_polygon points npoints
+array: gdk_draw_trapezoids trapezoids ntrapezoids
+array: gdk_draw_text_wc text text_length
  
 code: start
 	/**
@@ -320,8 +355,10 @@ structWrap: GdkColormap* Colormap
 
 out: gdk_pixmap_create_from_xpm mask
 out: gdk_pixmap_create_from_xpm_d mask
+array: gdk_pixmap_create_from_xpm_d data
 out: gdk_pixmap_colormap_create_from_xpm mask
 out: gdk_pixmap_colormap_create_from_xpm_d mask
+array: gdk_pixmap_colormap_create_from_xpm_d data
 
 outFile: Pixmap
 
@@ -357,6 +394,8 @@ struct: GdkRgbCmap
 class: RgbCmap
 strictPrefix: Y
 prefix: gdk_rgb_cmap_
+
+array: gdk_rgb_cmap_new colors n_colors
 
 code: start
 	/**
