@@ -165,14 +165,18 @@ public class Pixdata
 	 * The byte stream consists of a straightforward writeout of the
 	 * GdkPixdata fields in network byte order, plus the pixel_data
 	 * bytes the structure points to.
-	 * Params:
-	 * streamLengthP =  location to store the resulting stream length in.
 	 * Returns: A newly-allocated string containing the serializedGdkPixdata structure.
 	 */
-	public byte* serialize(uint* streamLengthP)
+	public byte[] serialize()
 	{
 		// guint8* gdk_pixdata_serialize (const GdkPixdata *pixdata,  guint *stream_length_p);
-		return gdk_pixdata_serialize(gdkPixdata, streamLengthP);
+		uint streamLengthP;
+		auto p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
+		if(p is null)
+		{
+			return null;
+		}
+		return p[0 .. streamLengthP];
 	}
 	
 	/**
@@ -184,17 +188,16 @@ public class Pixdata
 	 * for validity. This function may fail with GDK_PIXBUF_CORRUPT_IMAGE
 	 * or GDK_PIXBUF_ERROR_UNKNOWN_TYPE.
 	 * Params:
-	 * streamLength =  length of the stream used for deserialization.
 	 * stream =  stream of bytes containing a serialized GdkPixdata structure.
 	 * Returns: Upon successful deserialization TRUE is returned,FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
-	public int deserialize(uint streamLength, byte* stream)
+	public int deserialize(byte[] stream)
 	{
 		// gboolean gdk_pixdata_deserialize (GdkPixdata *pixdata,  guint stream_length,  const guint8 *stream,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixdata_deserialize(gdkPixdata, streamLength, stream, &err);
+		auto p = gdk_pixdata_deserialize(gdkPixdata, stream.length, stream.ptr, &err);
 		
 		if (err !is null)
 		{

@@ -394,16 +394,15 @@ public class PixbufLoader : ObjectG
 	 * or G_FILE_ERROR domains.
 	 * Params:
 	 * buf =  Pointer to image data.
-	 * count =  Length of the buf buffer in bytes.
 	 * Returns: TRUE if the write was successful, or FALSE if the loadercannot parse the buffer.
 	 * Throws: GException on failure.
 	 */
-	public int write(char* buf, uint count)
+	public int write(char[] buf)
 	{
 		// gboolean gdk_pixbuf_loader_write (GdkPixbufLoader *loader,  const guchar *buf,  gsize count,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf, count, &err);
+		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, buf.length, &err);
 		
 		if (err !is null)
 		{

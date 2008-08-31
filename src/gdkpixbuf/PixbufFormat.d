@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkPixbufFormat* -> PixbufFormat
  * module aliases:
  * local aliases:
  * overrides:
@@ -306,9 +307,14 @@ public class PixbufFormat
 	 * height =  Return location for the height of the image, or NULL
 	 * Returns: A GdkPixbufFormat describing the image format of the file  or NULL if the image format wasn't recognized. The return value  is owned by GdkPixbuf and should not be freed.
 	 */
-	public static GdkPixbufFormat* getFileInfo(string filename, int* width, int* height)
+	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
 	{
 		// GdkPixbufFormat* gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
-		return gdk_pixbuf_get_file_info(Str.toStringz(filename), width, height);
+		auto p = gdk_pixbuf_get_file_info(Str.toStringz(filename), &width, &height);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 }

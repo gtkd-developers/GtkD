@@ -125,6 +125,9 @@ import: glib.StringG
 structWrap: GString* StringG
 import: glib.Str
 
+array: gdk_pixdata_serialize Return stream_length_p
+array: gdk_pixdata_deserialize stream stream_length
+
 outFile: Pixdata
 
 # on gdk
@@ -145,18 +148,30 @@ file: gdk-pixbuf-animation.html
 struct: GdkPixbufAnimation
 class: PixbufAnimation
 prefix: gdk_pixbuf_animation_
+noprefix: gdk_pixbuf_animation_iter_
 noprefix: gdk_pixbuf_simple_anim_
 import: glib.ErrorG
 import: glib.GException
 structWrap: GdkPixbufAnimation* PixbufAnimation
-#import: gdkpixbuf.PixbufAnimationIter
-#structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
+import: gdkpixbuf.PixbufAnimationIter
+structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
 import: glib.TimeVal
 structWrap: GTimeVal* TimeVal
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.Str
 outFile: PixbufAnimation
+
+struct: GdkPixbufAnimationIter
+class: PixbufAnimationIter
+extend: GObject
+prefix: gdk_pixbuf_animation_iter_
+strictPrefix: Yes
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: glib.TimeVal
+structWrap: GTimeVal* TimeVal
+outFile: PixbufAnimationIter
 
 struct: GdkPixbufSimpleAnim
 class: PixbufSimpleAnimation
@@ -179,6 +194,7 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdkpixbuf.PixbufAnimation
 structWrap: GdkPixbufAnimation* PixbufAnimation
+array: gdk_pixbuf_loader_write buf count
 import: glib.Str
 
 nocode: gdk_pixbuf_loader_new_with_type
@@ -256,6 +272,7 @@ file: gdk-pixbuf-Module-Interface.html
 struct: GdkPixbufFormat
 class: PixbufFormat
 prefix: gdk_pixbuf_format_
+structWrap: GdkPixbufFormat* PixbufFormat
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
@@ -265,6 +282,8 @@ openFile: PixbufFormat
 
 file: gdk-pixbuf-file-loading.html
 prefix: gdk_pixbuf_
+out: gdk_pixbuf_get_file_info width
+out: gdk_pixbuf_get_file_info height
 strictPrefix: Y
 
 noprefix: gdk_pixbuf_new_from_file
