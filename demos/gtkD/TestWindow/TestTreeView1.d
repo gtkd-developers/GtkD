@@ -67,10 +67,10 @@ public class TestTreeView1 : VBox
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2").newline;
 		else writefln("TestTreeView1.this 2");
 
-		pixbuf = new Pixbuf(Str.toStringzArray(greenClass_xpm));
+		pixbuf = new Pixbuf(greenClass_xpm);
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.1").newline;
 		else writefln("TestTreeView1.this 2.1");
-		pixbufTest = new Pixbuf(Str.toStringzArray(book_closed_xpm));
+		pixbufTest = new Pixbuf(book_closed_xpm);
 		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.2").newline;
 		else writefln("TestTreeView1.this 2.2");
 		image = new Image(pixbufTest);
@@ -121,19 +121,19 @@ public class TestTreeView1 : VBox
 	{
 		TreeIter iterChild;
 		TreeIter iterTop = treeStore.createIter();
-		treeStore.setValue(iterTop, 0, new Pixbuf(Str.toStringzArray(package_xpm)) );
+		treeStore.setValue(iterTop, 0, new Pixbuf(package_xpm) );
 		treeStore.setValue(iterTop, 1, "Icon for packages" );
 
 		iterChild = treeStore.append(iterTop);
-		treeStore.setValue(iterChild, 0,new Pixbuf(Str.toStringzArray(greenTemplate_xpm)) );
+		treeStore.setValue(iterChild, 0,new Pixbuf(greenTemplate_xpm) );
 		treeStore.setValue(iterChild, 1, "Icon for templates" );
 
 		iterChild = treeStore.append(iterTop);
-		treeStore.setValue(iterChild, 0, new Pixbuf(Str.toStringzArray(greenInterface_xpm)) );
+		treeStore.setValue(iterChild, 0, new Pixbuf(greenInterface_xpm) );
 		treeStore.setValue(iterChild, 1, "Icon for interfaces" );
 
 		iterChild = treeStore.append(iterTop);
-		treeStore.setValue(iterChild, 0, new Pixbuf(Str.toStringzArray(greenClass_xpm)) );
+		treeStore.setValue(iterChild, 0, new Pixbuf(greenClass_xpm) );
 		treeStore.setValue(iterChild, 1, "Icon for classes" );
 
 	}

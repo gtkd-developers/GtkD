@@ -765,12 +765,12 @@ public class Screen : ObjectG
 	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
-	public int gdkSpawnOnScreen(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid)
+	public int gdkSpawnOnScreen(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out int childPid)
 	{
 		// gboolean gdk_spawn_on_screen (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, &err);
+		auto p = gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err);
 		
 		if (err !is null)
 		{
@@ -806,12 +806,12 @@ public class Screen : ObjectG
 	 * Returns: TRUE on success, FALSE if an error was set
 	 * Throws: GException on failure.
 	 */
-	public int gdkSpawnOnScreenWithPipes(string workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, int* standardInput, int* standardOutput, int* standardError)
+	public int gdkSpawnOnScreenWithPipes(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out int childPid, out int standardInput, out int standardOutput, out int standardError)
 	{
 		// gboolean gdk_spawn_on_screen_with_pipes (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  gint *standard_input,  gint *standard_output,  gint *standard_error,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, &err);
+		auto p = gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &standardInput, &standardOutput, &standardError, &err);
 		
 		if (err !is null)
 		{

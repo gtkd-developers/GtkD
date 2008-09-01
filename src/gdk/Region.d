@@ -134,15 +134,14 @@ public class Region
 	 * number of points.
 	 * Params:
 	 * points =  an array of GdkPoint structs
-	 * npoints =  the number of elements in the points array
 	 * fillRule =  specifies which pixels are included in the region when the
 	 *  polygon overlaps itself.
 	 * Returns: a new GdkRegion based on the given polygon
 	 */
-	public static Region polygon(GdkPoint* points, int npoints, GdkFillRule fillRule)
+	public static Region polygon(GdkPoint[] points, GdkFillRule fillRule)
 	{
 		// GdkRegion* gdk_region_polygon (GdkPoint *points,  gint npoints,  GdkFillRule fill_rule);
-		auto p = gdk_region_polygon(points, npoints, fillRule);
+		auto p = gdk_region_polygon(points.ptr, points.length, fillRule);
 		if(p is null)
 		{
 			return null;
@@ -207,12 +206,16 @@ public class Region
 	 * The array returned in rectangles must be freed with g_free().
 	 * Params:
 	 * rectangles =  return location for an array of rectangles
-	 * nRectangles =  length of returned array
 	 */
-	public void getRectangles(GdkRectangle** rectangles, int* nRectangles)
+	public void getRectangles(out GdkRectangle[] rectangles)
 	{
 		// void gdk_region_get_rectangles (GdkRegion *region,  GdkRectangle **rectangles,  gint *n_rectangles);
-		gdk_region_get_rectangles(gdkRegion, rectangles, nRectangles);
+		GdkRectangle* outrectangles = null;
+		int nRectangles;
+		
+		gdk_region_get_rectangles(gdkRegion, &outrectangles, &nRectangles);
+		
+		rectangles = outrectangles[0 .. nRectangles];
 	}
 	
 	/**
@@ -355,14 +358,13 @@ public class Region
 	 * Calls a function on each span in the intersection of region and spans.
 	 * Params:
 	 * spans =  an array of GdkSpans
-	 * nSpans =  the length of spans
 	 * sorted =  TRUE if spans is sorted wrt. the y coordinate
 	 * funct =  function to call on each span in the intersection
 	 * data =  data to pass to function
 	 */
-	public void spansIntersectForeach(GdkSpan* spans, int nSpans, int sorted, GdkSpanFunc funct, void* data)
+	public void spansIntersectForeach(GdkSpan[] spans, int sorted, GdkSpanFunc funct, void* data)
 	{
 		// void gdk_region_spans_intersect_foreach (GdkRegion *region,  GdkSpan *spans,  int n_spans,  gboolean sorted,  GdkSpanFunc function,  gpointer data);
-		gdk_region_spans_intersect_foreach(gdkRegion, spans, nSpans, sorted, funct, data);
+		gdk_region_spans_intersect_foreach(gdkRegion, spans.ptr, spans.length, sorted, funct, data);
 	}
 }

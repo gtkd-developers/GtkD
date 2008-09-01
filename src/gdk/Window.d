@@ -46,6 +46,7 @@
  * 	- glib.Str
  * 	- gdk.Region
  * 	- gdk.Rectangle
+ * 	- gdk.Drawable
  * 	- gdk.Bitmap
  * 	- gdk.Color
  * 	- gdk.Pixmap
@@ -56,6 +57,7 @@
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColor* -> Color
  * 	- GdkCursor* -> Cursor
+ * 	- GdkDrawable* -> Drawable
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
@@ -76,6 +78,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gdk.Region;
 private import gdk.Rectangle;
+private import gdk.Drawable;
 private import gdk.Bitmap;
 private import gdk.Color;
 private import gdk.Pixmap;
@@ -866,10 +869,10 @@ public class Window : Drawable
 	 * newWidth =  location to store resulting width
 	 * newHeight =  location to store resulting height
 	 */
-	public static void constrainSize(GdkGeometry* geometry, uint flags, int width, int height, int* newWidth, int* newHeight)
+	public static void constrainSize(GdkGeometry* geometry, uint flags, int width, int height, out int newWidth, out int newHeight)
 	{
 		// void gdk_window_constrain_size (GdkGeometry *geometry,  guint flags,  gint width,  gint height,  gint *new_width,  gint *new_height);
-		gdk_window_constrain_size(geometry, flags, width, height, newWidth, newHeight);
+		gdk_window_constrain_size(geometry, flags, width, height, &newWidth, &newHeight);
 	}
 	
 	/**
@@ -1115,10 +1118,14 @@ public class Window : Drawable
 	 *  and the underlying window system primitive coordinates for
 	 *  *real_drawable.
 	 */
-	public void getInternalPaintInfo(GdkDrawable** realDrawable, int* xOffset, int* yOffset)
+	public void getInternalPaintInfo(out Drawable realDrawable, out int xOffset, out int yOffset)
 	{
 		// void gdk_window_get_internal_paint_info (GdkWindow *window,  GdkDrawable **real_drawable,  gint *x_offset,  gint *y_offset);
-		gdk_window_get_internal_paint_info(gdkWindow, realDrawable, xOffset, yOffset);
+		GdkDrawable* outrealDrawable = null;
+		
+		gdk_window_get_internal_paint_info(gdkWindow, &outrealDrawable, &xOffset, &yOffset);
+		
+		realDrawable = new Drawable(outrealDrawable);
 	}
 	
 	/**
@@ -1559,10 +1566,10 @@ public class Window : Drawable
 	 * height =  return location for height of window
 	 * depth =  return location for bit depth of window
 	 */
-	public void getGeometry(int* x, int* y, int* width, int* height, int* depth)
+	public void getGeometry(out int x, out int y, out int width, out int height, out int depth)
 	{
 		// void gdk_window_get_geometry (GdkWindow *window,  gint *x,  gint *y,  gint *width,  gint *height,  gint *depth);
-		gdk_window_get_geometry(gdkWindow, x, y, width, height, depth);
+		gdk_window_get_geometry(gdkWindow, &x, &y, &width, &height, &depth);
 	}
 	
 	/**
@@ -1713,10 +1720,10 @@ public class Window : Drawable
 	 * x =  X coordinate of window
 	 * y =  Y coordinate of window
 	 */
-	public void getPosition(int* x, int* y)
+	public void getPosition(out int x, out int y)
 	{
 		// void gdk_window_get_position (GdkWindow *window,  gint *x,  gint *y);
-		gdk_window_get_position(gdkWindow, x, y);
+		gdk_window_get_position(gdkWindow, &x, &y);
 	}
 	
 	/**
@@ -1726,10 +1733,10 @@ public class Window : Drawable
 	 * x =  return location for X position of window frame
 	 * y =  return location for Y position of window frame
 	 */
-	public void getRootOrigin(int* x, int* y)
+	public void getRootOrigin(out int x, out int y)
 	{
 		// void gdk_window_get_root_origin (GdkWindow *window,  gint *x,  gint *y);
-		gdk_window_get_root_origin(gdkWindow, x, y);
+		gdk_window_get_root_origin(gdkWindow, &x, &y);
 	}
 	
 	/**
@@ -1756,10 +1763,10 @@ public class Window : Drawable
 	 * y =  return location for Y coordinate
 	 * Returns: not meaningful, ignore
 	 */
-	public int getOrigin(int* x, int* y)
+	public int getOrigin(out int x, out int y)
 	{
 		// gint gdk_window_get_origin (GdkWindow *window,  gint *x,  gint *y);
-		return gdk_window_get_origin(gdkWindow, x, y);
+		return gdk_window_get_origin(gdkWindow, &x, &y);
 	}
 	
 	/**
@@ -1776,10 +1783,10 @@ public class Window : Drawable
 	 * y =  return location for Y coordinate
 	 * Returns: not meaningful
 	 */
-	public int getDeskrelativeOrigin(int* x, int* y)
+	public int getDeskrelativeOrigin(out int x, out int y)
 	{
 		// gboolean gdk_window_get_deskrelative_origin (GdkWindow *window,  gint *x,  gint *y);
-		return gdk_window_get_deskrelative_origin(gdkWindow, x, y);
+		return gdk_window_get_deskrelative_origin(gdkWindow, &x, &y);
 	}
 	
 	/**
@@ -1795,10 +1802,10 @@ public class Window : Drawable
 	 *  modifier mask
 	 * Returns: the window containing the pointer (as withgdk_window_at_pointer()), or NULL if the window containing thepointer isn't known to GDK
 	 */
-	public Window getPointer(int* x, int* y, GdkModifierType* mask)
+	public Window getPointer(out int x, out int y, out GdkModifierType mask)
 	{
 		// GdkWindow* gdk_window_get_pointer (GdkWindow *window,  gint *x,  gint *y,  GdkModifierType *mask);
-		auto p = gdk_window_get_pointer(gdkWindow, x, y, mask);
+		auto p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
 		if(p is null)
 		{
 			return null;
@@ -2045,10 +2052,10 @@ public class Window : Drawable
 	 * decorations =  The window decorations will be written here
 	 * Returns: TRUE if the window has decorations set, FALSE otherwise.
 	 */
-	public int getDecorations(GdkWMDecoration* decorations)
+	public int getDecorations(out GdkWMDecoration decorations)
 	{
 		// gboolean gdk_window_get_decorations (GdkWindow *window,  GdkWMDecoration *decorations);
-		return gdk_window_get_decorations(gdkWindow, decorations);
+		return gdk_window_get_decorations(gdkWindow, &decorations);
 	}
 	
 	/**

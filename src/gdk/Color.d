@@ -283,10 +283,10 @@ public class Color
 	 * color =  the location to store the color.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
-	public static int white(Colormap colormap, Color color)
+	public static int white(Colormap colormap, out GdkColor color)
 	{
 		// gint gdk_color_white (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_white((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
+		return gdk_color_white((colormap is null) ? null : colormap.getColormapStruct(), &color);
 	}
 	
 	/**
@@ -299,10 +299,10 @@ public class Color
 	 * color =  the location to store the color.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
-	public static int black(Colormap colormap, Color color)
+	public static int black(Colormap colormap, out GdkColor color)
 	{
 		// gint gdk_color_black (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_black((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
+		return gdk_color_black((colormap is null) ? null : colormap.getColormapStruct(), &color);
 	}
 	
 	/**
@@ -322,10 +322,10 @@ public class Color
 	 * color =  the GdkColor to fill in
 	 * Returns: TRUE if the parsing succeeded.
 	 */
-	public static int parse(string spec, Color color)
+	public static int parse(string spec, out GdkColor color)
 	{
 		// gboolean gdk_color_parse (const gchar *spec,  GdkColor *color);
-		return gdk_color_parse(Str.toStringz(spec), (color is null) ? null : color.getColorStruct());
+		return gdk_color_parse(Str.toStringz(spec), &color);
 	}
 	
 	/**
@@ -338,10 +338,10 @@ public class Color
 	 *  pixel field will be filled in.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
-	public static int alloc(Colormap colormap, Color color)
+	public static int alloc(Colormap colormap, out GdkColor color)
 	{
 		// gint gdk_color_alloc (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_alloc((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
+		return gdk_color_alloc((colormap is null) ? null : colormap.getColormapStruct(), &color);
 	}
 	
 	/**

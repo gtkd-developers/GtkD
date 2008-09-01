@@ -219,6 +219,35 @@ public class Pixbuf
 		this(pb);
 	}
 	
+	/**
+	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
+	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
+	 * Since 2.4
+	 * Params:
+	 * buffer =  location to receive a pointer to the new buffer.
+	 * type =  name of file format.
+	 * optionKeys =  name of options to set, NULL-terminated
+	 * optionValues =  values for named options
+	 * Returns: whether an error was set
+	 * Throws: GException on failure.
+	 */
+	public int saveToBufferv(out char[] buffer, string type, string[] optionKeys, string[] optionValues)
+	{
+		gchar* outbuffer = null;
+		uint bufferSize;
+		GError* err = null;
+		
+		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
+		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		buffer = outbuffer[0 .. bufferSize];
+		return p;
+	}
 	
 	/**
 	 * Description
@@ -508,10 +537,14 @@ public class Pixbuf
 	 *  or NULL if the mask is not needed.
 	 * alphaThreshold =  Threshold value for opacity values.
 	 */
-	public void renderPixmapAndMask(GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)
+	public void renderPixmapAndMask(out GdkPixmap* pixmapReturn, out Bitmap maskReturn, int alphaThreshold)
 	{
 		// void gdk_pixbuf_render_pixmap_and_mask (GdkPixbuf *pixbuf,  GdkPixmap **pixmap_return,  GdkBitmap **mask_return,  int alpha_threshold);
-		gdk_pixbuf_render_pixmap_and_mask(gdkPixbuf, pixmapReturn, maskReturn, alphaThreshold);
+		GdkBitmap* outmaskReturn = null;
+		
+		gdk_pixbuf_render_pixmap_and_mask(gdkPixbuf, &pixmapReturn, &outmaskReturn, alphaThreshold);
+		
+		maskReturn = new Bitmap(outmaskReturn);
 	}
 	
 	/**
@@ -533,10 +566,14 @@ public class Pixbuf
 	 *  or NULL if the mask is not needed.
 	 * alphaThreshold =  Threshold value for opacity values.
 	 */
-	public void renderPixmapAndMaskForColormap(Colormap colormap, GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)
+	public void renderPixmapAndMaskForColormap(Colormap colormap, out GdkPixmap* pixmapReturn, out Bitmap maskReturn, int alphaThreshold)
 	{
 		// void gdk_pixbuf_render_pixmap_and_mask_for_colormap  (GdkPixbuf *pixbuf,  GdkColormap *colormap,  GdkPixmap **pixmap_return,  GdkBitmap **mask_return,  int alpha_threshold);
-		gdk_pixbuf_render_pixmap_and_mask_for_colormap(gdkPixbuf, (colormap is null) ? null : colormap.getColormapStruct(), pixmapReturn, maskReturn, alphaThreshold);
+		GdkBitmap* outmaskReturn = null;
+		
+		gdk_pixbuf_render_pixmap_and_mask_for_colormap(gdkPixbuf, (colormap is null) ? null : colormap.getColormapStruct(), &pixmapReturn, &outmaskReturn, alphaThreshold);
+		
+		maskReturn = new Bitmap(outmaskReturn);
 	}
 	
 	/**
@@ -618,13 +655,13 @@ public class Pixbuf
 	 * data =  Pointer to inline XPM data.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char** data)
+	public this (string[] data)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_xpm_data (const char **data);
-		auto p = gdk_pixbuf_new_from_xpm_data(data);
+		auto p = gdk_pixbuf_new_from_xpm_data(Str.toStringzArray(data));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_pixbuf_new_from_xpm_data(data)");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_xpm_data(Str.toStringzArray(data))");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -638,20 +675,18 @@ public class Pixbuf
 	 * which allows for conversion of GdkPixbufs into such a inline representation.
 	 * In almost all cases, you should pass the --raw flag to
 	 * Params:
-	 * dataLength =  Length in bytes of the data argument or -1 to
-	 *  disable length checks
 	 * data =  Byte data containing a serialized GdkPixdata structure
 	 * copyPixels =  Whether to copy the pixel data, or use direct pointers
 	 *  data for the resulting pixbuf
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int dataLength, byte* data, int copyPixels)
+	public this (byte[] data, int copyPixels)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_inline (gint data_length,  const guint8 *data,  gboolean copy_pixels,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, &err);
+		auto p = gdk_pixbuf_new_from_inline(data.length, data.ptr, copyPixels, &err);
 		
 		if (err !is null)
 		{
@@ -660,7 +695,7 @@ public class Pixbuf
 		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, &err)");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_inline(data.length, data.ptr, copyPixels, &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -920,12 +955,12 @@ public class Pixbuf
 	 * Returns: whether an error was set
 	 * Throws: GException on failure.
 	 */
-	public int savev(string filename, string type, char** optionKeys, char** optionValues)
+	public int savev(string filename, string type, string[] optionKeys, string[] optionValues)
 	{
 		// gboolean gdk_pixbuf_savev (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  char **option_keys,  char **option_values,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), optionKeys, optionValues, &err);
+		auto p = gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err);
 		
 		if (err !is null)
 		{
@@ -950,40 +985,12 @@ public class Pixbuf
 	 * Returns: whether an error was set
 	 * Throws: GException on failure.
 	 */
-	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, char** optionKeys, char** optionValues)
+	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, string[] optionKeys, string[] optionValues)
 	{
 		// gboolean gdk_pixbuf_save_to_callbackv (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  char **option_keys,  char **option_values,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), optionKeys, optionValues, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
-	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
-	 * Since 2.4
-	 * Params:
-	 * buffer =  location to receive a pointer to the new buffer.
-	 * bufferSize =  location to receive the size of the new buffer.
-	 * type =  name of file format.
-	 * optionKeys =  name of options to set, NULL-terminated
-	 * optionValues =  values for named options
-	 * Returns: whether an error was set
-	 * Throws: GException on failure.
-	 */
-	public int saveToBufferv(char** buffer, uint* bufferSize, string type, char** optionKeys, char** optionValues)
-	{
-		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		GError* err = null;
-		
-		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), optionKeys, optionValues, &err);
+		auto p = gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err);
 		
 		if (err !is null)
 		{

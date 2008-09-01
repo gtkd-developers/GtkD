@@ -196,16 +196,15 @@ public class RgbCmap
 	 * results, including possibly segfaults.
 	 * Params:
 	 * colors = The colors, represented as 0xRRGGBB integer values.
-	 * nColors = The number of colors in the cmap.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (uint* colors, int nColors)
+	public this (uint[] colors)
 	{
 		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
-		auto p = gdk_rgb_cmap_new(colors, nColors);
+		auto p = gdk_rgb_cmap_new(colors.ptr, colors.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_rgb_cmap_new(colors, nColors)");
+			throw new ConstructionException("null returned by gdk_rgb_cmap_new(colors.ptr, colors.length)");
 		}
 		this(cast(GdkRgbCmap*) p);
 	}

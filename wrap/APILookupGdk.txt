@@ -298,22 +298,6 @@ array: gdk_draw_trapezoids trapezoids ntrapezoids
 array: gdk_draw_text_wc text text_length
  
 code: start
-	/**
-	 * Draws an outlined or filled polygon.
-	 * Params:
-	 *  gc = a GdkGC.
-	 *  filled = TRUE if the polygon should be filled. The polygon is closed
-	 *  automatically, connecting the last point to the first point if
-	 *  necessary.
-	 *  points = an array of GdkPoint structures specifying the points making
-	 *  up the polygon.
-	 */
-	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
-	{
-		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
-		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
-	}
-
 	/** */
 	public void drawPixbuf(Pixbuf pixbuf, int destX, int destY)
 	{
@@ -460,6 +444,11 @@ structWrap: GdkColormap* Colormap
 import: gdk.ImageGdk
 structWrap: GdkImage* ImageGdk
 
+out: gdk_pixbuf_render_pixmap_and_mask pixmap_return
+out: gdk_pixbuf_render_pixmap_and_mask mask_return
+out: gdk_pixbuf_render_pixmap_and_mask_for_colormap pixmap_return
+out: gdk_pixbuf_render_pixmap_and_mask_for_colormap mask_return
+
 # this will create a new pixbuf but the wrapper will pass the existing pixbuf struct
 nocode: gdk_pixbuf_get_from_drawable
 
@@ -556,13 +545,44 @@ code: start
 					width, height);
 		this(pb); 
 	}
-	
+
+	/**
+	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
+	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
+	 * Since 2.4
+	 * Params:
+	 * buffer =  location to receive a pointer to the new buffer.
+	 * type =  name of file format.
+	 * optionKeys =  name of options to set, NULL-terminated
+	 * optionValues =  values for named options
+	 * Returns: whether an error was set
+	 * Throws: GException on failure.
+	 */
+	public int saveToBufferv(out char[] buffer, string type, string[] optionKeys, string[] optionValues)
+	{
+		gchar* outbuffer = null;
+		uint bufferSize;
+		GError* err = null;
+
+		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
+		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		buffer = outbuffer[0 .. bufferSize];
+		return p;
+	}	
 code: end
 
 openFile: Pixbuf
 
 file: ../gdk-pixbuf/gdk-pixbuf-creating.html
 struct: GdkPixbuf
+array: gdk_pixbuf_new_from_xpm_data data
+array: gdk_pixbuf_new_from_inline data data_length
 class: Pixbuf
 
 text: start
@@ -585,6 +605,13 @@ noprefix: gdk_pixbuf_get_file_info
 mergeFile:  Pixbuf
 
 file: ../gdk-pixbuf/gdk-pixbuf-file-saving.html
+array: gdk_pixbuf_savev option_keys
+array: gdk_pixbuf_savev option_values
+array: gdk_pixbuf_save_to_callbackv option_keys
+array: gdk_pixbuf_save_to_callbackv option_values
+out: gdk_pixbuf_save_to_bufferv buffer
+
+nocode: gdk_pixbuf_save_to_bufferv
 mergeFile:  Pixbuf
 
 file: ../gdk-pixbuf/gdk-pixbuf-scaling.html
@@ -607,6 +634,17 @@ import: gdk.Color
 structWrap: GdkColor* Color
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+
+array: gdk_colormap_alloc_colors colors ncolors
+array: gdk_colormap_alloc_colors success
+out: gdk_colormap_alloc_color color
+array: gdk_colormap_free_colors colors ncolors
+out: gdk_colormap_query_color result
+array: gdk_colors_store colors ncolors
+array: gdk_colors_alloc planes nplanes
+array: gdk_colors_alloc pixels npixels
+array: gdk_colors_free pixels npixels
+
 outFile: Colormap
 
 struct: GdkColor
@@ -617,6 +655,11 @@ strictPrefix: Yes
 structWrap: GdkColor* Color
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
+
+out: gdk_color_white color
+out: gdk_color_black color
+out: gdk_color_parse color
+out: gdk_color_alloc color
 
 override: toString
 
@@ -754,6 +797,9 @@ structWrap: GdkVisual* Visual
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 
+out: gdk_query_visual_types visual_types
+array: gdk_query_visual_types visual_types count
+
 nocode: gdk_query_depths
 
 code: start
@@ -792,6 +838,24 @@ import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
 #import: gdk.WChar
 #structWrap: GdkWChar* WChar
+
+out: gdk_string_extents lbearing
+out: gdk_string_extents rbearing
+out: gdk_string_extents width
+out: gdk_string_extents ascent
+out: gdk_string_extents descent
+out: gdk_text_extents lbearing
+out: gdk_text_extents rbearing
+out: gdk_text_extents width
+out: gdk_text_extents ascent
+out: gdk_text_extents descent
+array: gdk_text_extents_wc text text_length
+out: gdk_text_extents_wc lbearing
+out: gdk_text_extents_wc rbearing
+out: gdk_text_extents_wc width
+out: gdk_text_extents_wc ascent
+out: gdk_text_extents_wc descent
+array: gdk_text_width_wc text text_length
 
 code: start
 	/**
@@ -835,8 +899,8 @@ structWrap: GdkRegion* Region
 #structWrap: GdkGeometry* Geometry
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
-#import: gdk.Drawable*
-#structWrap: GdkDrawable** Drawable*
+import: gdk.Drawable
+structWrap: GdkDrawable* Drawable
 import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
 import: gdk.Color
@@ -856,6 +920,28 @@ structWrap: GList* ListG
 
 out: gdk_window_at_pointer win_x
 out: gdk_window_at_pointer win_y
+out: gdk_window_constrain_size new_width
+out: gdk_window_constrain_size new_height
+out: gdk_window_get_internal_paint_info real_drawable
+out: gdk_window_get_internal_paint_info x_offset
+out: gdk_window_get_internal_paint_info y_offset
+out: gdk_window_get_geometry x
+out: gdk_window_get_geometry y
+out: gdk_window_get_geometry width
+out: gdk_window_get_geometry height
+out: gdk_window_get_geometry depth
+out: gdk_window_get_position x
+out: gdk_window_get_position y
+out: gdk_window_get_root_origin x
+out: gdk_window_get_root_origin y
+out: gdk_window_get_origin x
+out: gdk_window_get_origin y
+out: gdk_window_get_deskrelative_origin x
+out: gdk_window_get_deskrelative_origin y
+out: gdk_window_get_pointer x
+out: gdk_window_get_pointer y
+out: gdk_window_get_pointer mask
+out: gdk_window_get_decorations decorations
 
 outFile: Window
 
@@ -875,6 +961,13 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: gobject.Value
 structWrap: GValue* Value
+
+out: gdk_event_get_state state
+out: gdk_event_get_axis value
+out: gdk_event_get_coords x_win
+out: gdk_event_get_coords y_win
+out: gdk_event_get_root_coords x_root
+out: gdk_event_get_root_coords y_root
 
 code: start
 	/** */
@@ -915,76 +1008,20 @@ structWrap: GdkDisplay* Display
 #import: gdk.KeymapKey*
 #structWrap: GdkKeymapKey** KeymapKey*
 
+out: gdk_keymap_lookup_key key
 out: gdk_keymap_translate_keyboard_state keyval
 out: gdk_keymap_translate_keyboard_state effective_group
 out: gdk_keymap_translate_keyboard_state level
 out: gdk_keymap_translate_keyboard_state consumed_modifiers
-#out: gdk_keymap_get_entries_for_keyval keys
-#out: gdk_keymap_get_entries_for_keyval n_keys
-#out: gdk_keymap_get_entries_for_keycode keys
-#out: gdk_keymap_get_entries_for_keycode n_keys
+out: gdk_keymap_get_entries_for_keyval keys
+array: gdk_keymap_get_entries_for_keyval keys n_keys
+out: gdk_keymap_get_entries_for_keycode keys
+array: gdk_keymap_get_entries_for_keycode keys n_entries
+out: gdk_keymap_get_entries_for_keycode keyvals
+array: gdk_keymap_get_entries_for_keycode keyvals n_entries
 out: gdk_keyval_convert_case lower
 out: gdk_keyval_convert_case upper
 
-code: start
-/**
-	 * Obtains a list of keycode/group/level combinations that will
-	 * generate keyval. Groups and levels are two kinds of keyboard mode;
-	 * in general, the level determines whether the top or bottom symbol
-	 * on a key is used, and the group determines whether the left or
-	 * right symbol is used. On US keyboards, the shift key changes the
-	 * keyboard level, and there are no groups. A group switch key might
-	 * convert a keyboard between Hebrew to English modes, for example.
-	 * GdkEventKey contains a group field that indicates the active
-	 * keyboard group. The level is computed from the modifier mask.
-	 * The returned array should be freed
-	 * with g_free().
-	 * Params:
-	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
-	 * keys =  return location for an array of GdkKeymapKey
-	 * Returns: TRUE if keys were found and returned
-	 */
-	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
-	{
-		GdkKeymapKey* gdkkeys = null;
-		int nKeys;
-
-		// gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
-		int i = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &gdkkeys, &nKeys);
-
-		keys = gdkkeys[0 .. nKeys];
-
-		return i;
-	}
-	
-	/**
-	 * Returns the keyvals bound to hardware_keycode.
-	 * The Nth GdkKeymapKey in keys is bound to the Nth
-	 * keyval in keyvals. Free the returned arrays with g_free().
-	 * When a keycode is pressed by the user, the keyval from
-	 * this list of entries is selected by considering the effective
-	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
-	 * Params:
-	 * hardwareKeycode =  a keycode
-	 * keys =  return location for array of GdkKeymapKey, or NULL
-	 * keyvals =  return location for array of keyvals, or NULL
-	 * Returns: TRUE if there were any entries
-	 */
-	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, uint[] keyvals)
-	{
-		GdkKeymapKey* gdkkeys = null;
-		uint* gdkkeyvals = null;
-		int  nEntries;
-
-		// gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
-		int i = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &gdkkeys, &gdkkeyvals, &nEntries);
-
-		keys = gdkkeys[0 .. nEntries];
-		keyvals = gdkkeyvals[0 .. nEntries];
-
-		return i;
-	}
-code: end
 outFile: Keymap
 
 file: gdk-Selections.html
@@ -1018,6 +1055,8 @@ out: gdk_drag_find_window dest_window
 out: gdk_drag_find_window protocol
 out: gdk_drag_find_window_for_screen dest_window
 out: gdk_drag_find_window_for_screen protocol
+out: gdk_drag_get_protocol protocol
+out: gdk_drag_get_protocol_for_display protocol
 
 outFile: DragContext
 
@@ -1048,7 +1087,14 @@ structWrap: GdkDevice* Device
 import: gdk.Window
 structWrap: GdkWindow* Window
 
+# do we need a length?
+array: gdk_device_get_state axes
 out: gdk_device_get_state mask
+array: gdk_device_free_history events n_events
+#do we need a length?
+array: gdk_device_get_axis axes
+out: gdk_device_get_axis value
+
 nocode: gdk_device_get_history
 
 code: start
@@ -1100,6 +1146,8 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 import: gdk.Window
 structWrap: GdkWindow* Window
+import: gdk.Font
+structWrap: GdkFont* Font
 #more types should added here like atom, visual, image, etc...
 #for now we just disable all the stuff with X types in them
 #only thing left is XID which is just an uint.

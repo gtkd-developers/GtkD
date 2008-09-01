@@ -233,7 +233,6 @@ public class Colormap
 	 * Params:
 	 * colors =  The color values to allocate. On return, the pixel
 	 *  values for allocated colors will be filled in.
-	 * ncolors =  The number of colors in colors.
 	 * writeable =  If TRUE, the colors are allocated writeable
 	 *  (their values can later be changed using gdk_color_change()).
 	 *  Writeable colors cannot be shared between applications.
@@ -244,10 +243,10 @@ public class Colormap
 	 *  successfully allocated or not.
 	 * Returns: The number of colors that were not successfully allocated.
 	 */
-	public int allocColors(Color colors, int ncolors, int writeable, int bestMatch, int* success)
+	public int allocColors(GdkColor[] colors, int writeable, int bestMatch, int[] success)
 	{
 		// gint gdk_colormap_alloc_colors (GdkColormap *colormap,  GdkColor *colors,  gint ncolors,  gboolean writeable,  gboolean best_match,  gboolean *success);
-		return gdk_colormap_alloc_colors(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors, writeable, bestMatch, success);
+		return gdk_colormap_alloc_colors(gdkColormap, colors.ptr, colors.length, writeable, bestMatch, success.ptr);
 	}
 	
 	/**
@@ -263,22 +262,21 @@ public class Colormap
 	 *  existing colors if the color cannot be allocated as requested.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
-	public int allocColor(Color color, int writeable, int bestMatch)
+	public int allocColor(out GdkColor color, int writeable, int bestMatch)
 	{
 		// gboolean gdk_colormap_alloc_color (GdkColormap *colormap,  GdkColor *color,  gboolean writeable,  gboolean best_match);
-		return gdk_colormap_alloc_color(gdkColormap, (color is null) ? null : color.getColorStruct(), writeable, bestMatch);
+		return gdk_colormap_alloc_color(gdkColormap, &color, writeable, bestMatch);
 	}
 	
 	/**
 	 * Frees previously allocated colors.
 	 * Params:
 	 * colors =  the colors to free.
-	 * ncolors =  the number of colors in colors.
 	 */
-	public void freeColors(Color colors, int ncolors)
+	public void freeColors(GdkColor[] colors)
 	{
 		// void gdk_colormap_free_colors (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
-		gdk_colormap_free_colors(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors);
+		gdk_colormap_free_colors(gdkColormap, colors.ptr, colors.length);
 	}
 	
 	/**
@@ -295,10 +293,10 @@ public class Colormap
 	 * pixel =  pixel value in hardware display format
 	 * result =  GdkColor with red, green, blue fields initialized
 	 */
-	public void queryColor(uint pixel, Color result)
+	public void queryColor(uint pixel, out GdkColor result)
 	{
 		// void gdk_colormap_query_color (GdkColormap *colormap,  gulong pixel,  GdkColor *result);
-		gdk_colormap_query_color(gdkColormap, pixel, (result is null) ? null : result.getColorStruct());
+		gdk_colormap_query_color(gdkColormap, pixel, &result);
 	}
 	
 	/**
@@ -340,12 +338,11 @@ public class Colormap
 	 * should not be used. See gdk_color_change().
 	 * Params:
 	 * colors =  the new color values.
-	 * ncolors =  the number of colors to change.
 	 */
-	public void colorsStore(Color colors, int ncolors)
+	public void colorsStore(GdkColor[] colors)
 	{
 		// void gdk_colors_store (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
-		gdk_colors_store(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors);
+		gdk_colors_store(gdkColormap, colors.ptr, colors.length);
 	}
 	
 	/**
@@ -359,16 +356,13 @@ public class Colormap
 	 * contiguous =  if TRUE, the colors should be allocated
 	 *  in contiguous color cells.
 	 * planes =  an array in which to store the plane masks.
-	 * nplanes =  the number of planes to allocate. (Or zero,
-	 *  to indicate that the color allocation should not be planar.)
 	 * pixels =  an array into which to store allocated pixel values.
-	 * npixels =  the number of pixels in each plane to allocate.
 	 * Returns: TRUE if the allocation was successful
 	 */
-	public int colorsAlloc(int contiguous, uint* planes, int nplanes, uint* pixels, int npixels)
+	public int colorsAlloc(int contiguous, uint[] planes, uint[] pixels)
 	{
 		// gint gdk_colors_alloc (GdkColormap *colormap,  gboolean contiguous,  gulong *planes,  gint nplanes,  gulong *pixels,  gint npixels);
-		return gdk_colors_alloc(gdkColormap, contiguous, planes, nplanes, pixels, npixels);
+		return gdk_colors_alloc(gdkColormap, contiguous, planes.ptr, planes.length, pixels.ptr, pixels.length);
 	}
 	
 	/**
@@ -378,12 +372,11 @@ public class Colormap
 	 * function is obsolete. See gdk_colormap_free_colors().
 	 * Params:
 	 * pixels =  the pixel values of the colors to free.
-	 * npixels =  the number of values in pixels.
 	 * planes =  the plane masks for all planes to free, OR'd together.
 	 */
-	public void colorsFree(uint* pixels, int npixels, uint planes)
+	public void colorsFree(uint[] pixels, uint planes)
 	{
 		// void gdk_colors_free (GdkColormap *colormap,  gulong *pixels,  gint npixels,  gulong planes);
-		gdk_colors_free(gdkColormap, pixels, npixels, planes);
+		gdk_colors_free(gdkColormap, pixels.ptr, pixels.length, planes);
 	}
 }

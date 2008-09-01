@@ -58,6 +58,7 @@
  * 	- pango.PgGlyphString
  * 	- pango.PgMatrix
  * 	- pango.PgLayout
+ * 	- pango.PgLayoutLine
  * structWrap:
  * 	- GdkColor* -> Color
  * 	- GdkColormap* -> Colormap
@@ -73,6 +74,7 @@
  * 	- PangoFont* -> PgFont
  * 	- PangoGlyphString* -> PgGlyphString
  * 	- PangoLayout* -> PgLayout
+ * 	- PangoLayoutLine* -> PgLayoutLine
  * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
@@ -103,6 +105,7 @@ private import pango.PgFont;
 private import pango.PgGlyphString;
 private import pango.PgMatrix;
 private import pango.PgLayout;
+private import pango.PgLayoutLine;
 
 
 
@@ -163,22 +166,6 @@ public class Drawable : ObjectG
 		}
 		super(cast(GObject*)gdkDrawable);
 		this.gdkDrawable = gdkDrawable;
-	}
-	
-	/**
-	 * Draws an outlined or filled polygon.
-	 * Params:
-	 *  gc = a GdkGC.
-	 *  filled = TRUE if the polygon should be filled. The polygon is closed
-	 *  automatically, connecting the last point to the first point if
-	 *  necessary.
-	 *  points = an array of GdkPoint structures specifying the points making
-	 *  up the polygon.
-	 */
-	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
-	{
-		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
-		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
 	/** */
@@ -430,12 +417,11 @@ public class Drawable : ObjectG
 	 * Params:
 	 * gc =  a GdkGC.
 	 * points =  an array of GdkPoint structures.
-	 * npoints =  the number of points to be drawn.
 	 */
-	public void drawPoints(GC gc, GdkPoint* points, int npoints)
+	public void drawPoints(GC gc, GdkPoint[] points)
 	{
 		// void gdk_draw_points (GdkDrawable *drawable,  GdkGC *gc,  GdkPoint *points,  gint npoints);
-		gdk_draw_points(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points, npoints);
+		gdk_draw_points(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, points.length);
 	}
 	
 	/**
@@ -462,12 +448,11 @@ public class Drawable : ObjectG
 	 * Params:
 	 * gc =  a GdkGC.
 	 * points =  an array of GdkPoint structures specifying the endpoints of the
-	 * npoints =  the size of the points array.
 	 */
-	public void drawLines(GC gc, GdkPoint* points, int npoints)
+	public void drawLines(GC gc, GdkPoint[] points)
 	{
 		// void gdk_draw_lines (GdkDrawable *drawable,  GdkGC *gc,  GdkPoint *points,  gint npoints);
-		gdk_draw_lines(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points, npoints);
+		gdk_draw_lines(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, points.length);
 	}
 	
 	/**
@@ -511,13 +496,11 @@ public class Drawable : ObjectG
 	 * gc =  a GdkGC.
 	 * segs =  an array of GdkSegment structures specifying the start and
 	 *  end points of the lines to be drawn.
-	 * nsegs =  the number of line segments to draw, i.e. the size of the
-	 *  segs array.
 	 */
-	public void drawSegments(GC gc, GdkSegment* segs, int nsegs)
+	public void drawSegments(GC gc, GdkSegment[] segs)
 	{
 		// void gdk_draw_segments (GdkDrawable *drawable,  GdkGC *gc,  GdkSegment *segs,  gint nsegs);
-		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs, nsegs);
+		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs.ptr, segs.length);
 	}
 	
 	/**
@@ -576,12 +559,11 @@ public class Drawable : ObjectG
 	 *  necessary.
 	 * points =  an array of GdkPoint structures specifying the points making
 	 *  up the polygon.
-	 * npoints =  the number of points.
 	 */
-	public void drawPolygon(GC gc, int filled, GdkPoint* points, int npoints)
+	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
 	{
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
-		gdk_draw_polygon(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, points, npoints);
+		gdk_draw_polygon(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
 	/**
@@ -596,10 +578,10 @@ public class Drawable : ObjectG
 	 * trapezoids =  an array of GdkTrapezoid structures
 	 * nTrapezoids =  the number of trapezoids to draw
 	 */
-	public void drawTrapezoids(GC gc, GdkTrapezoid* trapezoids, int nTrapezoids)
+	public void drawTrapezoids(GC gc, GdkTrapezoid[] trapezoids, int nTrapezoids)
 	{
 		// void gdk_draw_trapezoids (GdkDrawable *drawable,  GdkGC *gc,  GdkTrapezoid *trapezoids,  gint n_trapezoids);
-		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids, nTrapezoids);
+		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids.ptr, nTrapezoids);
 	}
 	
 	/**
@@ -660,10 +642,10 @@ public class Drawable : ObjectG
 	 * y =  the y position of baseline (in pixels)
 	 * line =  a PangoLayoutLine
 	 */
-	public void drawLayoutLine(GC gc, int x, int y, PangoLayoutLine* line)
+	public void drawLayoutLine(GC gc, int x, int y, PgLayoutLine line)
 	{
 		// void gdk_draw_layout_line (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayoutLine *line);
-		gdk_draw_layout_line(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, line);
+		gdk_draw_layout_line(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, (line is null) ? null : line.getPgLayoutLineStruct());
 	}
 	
 	/**
@@ -682,10 +664,10 @@ public class Drawable : ObjectG
 	 * foreground =  foreground override color, or NULL for none
 	 * background =  background override color, or NULL for none
 	 */
-	public void drawLayoutLineWithColors(GC gc, int x, int y, PangoLayoutLine* line, Color foreground, Color background)
+	public void drawLayoutLineWithColors(GC gc, int x, int y, PgLayoutLine line, Color foreground, Color background)
 	{
 		// void gdk_draw_layout_line_with_colors (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayoutLine *line,  const GdkColor *foreground,  const GdkColor *background);
-		gdk_draw_layout_line_with_colors(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, line, (foreground is null) ? null : foreground.getColorStruct(), (background is null) ? null : background.getColorStruct());
+		gdk_draw_layout_line_with_colors(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, (line is null) ? null : line.getPgLayoutLineStruct(), (foreground is null) ? null : foreground.getColorStruct(), (background is null) ? null : background.getColorStruct());
 	}
 	
 	/**
@@ -777,12 +759,11 @@ public class Drawable : ObjectG
 	 * x =  the x coordinate of the left edge of the text.
 	 * y =  the y coordinate of the baseline of the text.
 	 * text =  the wide characters to draw.
-	 * textLength =  the number of characters to draw.
 	 */
-	public void drawTextWc(Font font, GC gc, int x, int y, GdkWChar* text, int textLength)
+	public void drawTextWc(Font font, GC gc, int x, int y, GdkWChar[] text)
 	{
 		// void gdk_draw_text_wc (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const GdkWChar *text,  gint text_length);
-		gdk_draw_text_wc(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, text, textLength);
+		gdk_draw_text_wc(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, text.ptr, text.length);
 	}
 	
 	/**

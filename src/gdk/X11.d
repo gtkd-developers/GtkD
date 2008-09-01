@@ -90,9 +90,11 @@
  * 	- gdk.Drawable
  * 	- gdk.Display
  * 	- gdk.Window
+ * 	- gdk.Font
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkDrawable* -> Drawable
+ * 	- GdkFont* -> Font
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -111,6 +113,7 @@ private import glib.Str;
 private import gdk.Drawable;
 private import gdk.Display;
 private import gdk.Window;
+private import gdk.Font;
 
 
 
@@ -278,10 +281,10 @@ public class X11
 	 * font =  a GdkFont.
 	 * Returns: the name of the font. This string is owned by GDK and must not be modified or freed.
 	 */
-	public static string fontGetName(GdkFont* font)
+	public static string fontGetName(Font font)
 	{
 		// const char* gdk_x11_font_get_name (GdkFont *font);
-		return Str.toString(gdk_x11_font_get_name(font));
+		return Str.toString(gdk_x11_font_get_name((font is null) ? null : font.getFontStruct()));
 	}
 	
 	/**
@@ -292,10 +295,10 @@ public class X11
 	 * font =  a GdkFont.
 	 * Returns: an Xlib XFontStruct* or an XFontSet.
 	 */
-	public static void* fontGetXfont(GdkFont* font)
+	public static void* fontGetXfont(Font font)
 	{
 		// gpointer gdk_x11_font_get_xfont (GdkFont *font);
-		return gdk_x11_font_get_xfont(font);
+		return gdk_x11_font_get_xfont((font is null) ? null : font.getFontStruct());
 	}
 	
 	/**

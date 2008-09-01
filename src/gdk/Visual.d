@@ -165,12 +165,16 @@ public class Visual
 	 * The array returned by this function should not be freed.
 	 * Params:
 	 * visualTypes =  return location for the available visual types
-	 * count =  return location for the number of available visual types
 	 */
-	public static void gdkQueryVisualTypes(GdkVisualType** visualTypes, int* count)
+	public static void gdkQueryVisualTypes(out GdkVisualType[] visualTypes)
 	{
 		// void gdk_query_visual_types (GdkVisualType **visual_types,  gint *count);
-		gdk_query_visual_types(visualTypes, count);
+		GdkVisualType* outvisualTypes = null;
+		int count;
+		
+		gdk_query_visual_types(&outvisualTypes, &count);
+		
+		visualTypes = outvisualTypes[0 .. count];
 	}
 	
 	/**

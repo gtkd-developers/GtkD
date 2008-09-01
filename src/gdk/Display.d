@@ -475,10 +475,14 @@ public class Display : ObjectG
 	 * y =  location to store root window Y coordinate of pointer, or NULL.
 	 * mask =  location to store current modifier mask, or NULL
 	 */
-	public void getPointer(GdkScreen** screen, out int x, out int y, out GdkModifierType mask)
+	public void getPointer(out Screen screen, out int x, out int y, out GdkModifierType mask)
 	{
 		// void gdk_display_get_pointer (GdkDisplay *display,  GdkScreen **screen,  gint *x,  gint *y,  GdkModifierType *mask);
-		gdk_display_get_pointer(gdkDisplay, screen, &x, &y, &mask);
+		GdkScreen* outscreen = null;
+		
+		gdk_display_get_pointer(gdkDisplay, &outscreen, &x, &y, &mask);
+		
+		screen = new Screen(outscreen);
 	}
 	
 	/**
@@ -665,12 +669,11 @@ public class Display : ObjectG
 	 * time =  a timestamp
 	 * targets = 	 an array of targets that should be saved, or NULL
 	 *  if all available targets should be saved.
-	 * nTargets =  length of the targets array
 	 */
-	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom* targets, int nTargets)
+	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)
 	{
 		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  GdkAtom *targets,  gint n_targets);
-		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets, nTargets);
+		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets.ptr, targets.length);
 	}
 	
 	/**

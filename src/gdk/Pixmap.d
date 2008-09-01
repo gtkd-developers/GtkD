@@ -250,12 +250,12 @@ public class Pixmap : Drawable
 	 * data = Pointer to a string containing the XPM data.
 	 * Returns:the GdkPixmap
 	 */
-	public static Pixmap createFromXpmD(Drawable drawable, out Bitmap mask, Color transparentColor, char** data)
+	public static Pixmap createFromXpmD(Drawable drawable, out Bitmap mask, Color transparentColor, string[] data)
 	{
 		// GdkPixmap* gdk_pixmap_create_from_xpm_d (GdkDrawable *drawable,  GdkBitmap **mask,  const GdkColor *transparent_color,  gchar **data);
 		GdkBitmap* outmask = null;
 		
-		auto p = gdk_pixmap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), data);
+		auto p = gdk_pixmap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringzArray(data));
 		
 		mask = new Bitmap(outmask);
 		if(p is null)
@@ -282,12 +282,12 @@ public class Pixmap : Drawable
 	 * data = Pointer to a string containing the XPM data.
 	 * Returns:the GdkPixmap.
 	 */
-	public static Pixmap colormapCreateFromXpmD(Drawable drawable, Colormap colormap, out Bitmap mask, Color transparentColor, char** data)
+	public static Pixmap colormapCreateFromXpmD(Drawable drawable, Colormap colormap, out Bitmap mask, Color transparentColor, string[] data)
 	{
 		// GdkPixmap* gdk_pixmap_colormap_create_from_xpm_d  (GdkDrawable *drawable,  GdkColormap *colormap,  GdkBitmap **mask,  const GdkColor *transparent_color,  gchar **data);
 		GdkBitmap* outmask = null;
 		
-		auto p = gdk_pixmap_colormap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), data);
+		auto p = gdk_pixmap_colormap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringzArray(data));
 		
 		mask = new Bitmap(outmask);
 		if(p is null)

@@ -593,6 +593,11 @@ public struct Funct
 					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 					parmToGtk = "&"~ id;
 				}
+				else if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(convParms.array[name].contains(parms[i])) )
+				{
+					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+					parmToGtk = "&"~ id;
+				}
 				else
 				{
 					char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
@@ -748,7 +753,17 @@ public struct Funct
 				
 					gtkCall ~= "&out" ~ id;
 
-					if ( parms.contains(convParms.array[name][parms[i]]) )
+					bool areMultipleArrays()
+					{
+						foreach ( parm; parms[i+1 .. $] )
+						{
+							if ( parm in convParms.array[name] && convParms.array[name][parms[i]] == convParms.array[name][parm] )
+								return true;
+						}
+						return false;
+					}
+
+					if ( !areMultipleArrays && parms.contains(convParms.array[name][parms[i]]) )
 					{
 						if (GtkDClass.startsWith(parmsWrap[i], "out") )
 							bd ~= "int "~ lenid ~";";

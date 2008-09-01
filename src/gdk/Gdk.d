@@ -88,13 +88,17 @@ public class Gdk
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
 	 * Params:
-	 * argc = the number of command line arguments.
 	 * argv = the array of command line arguments.
 	 */
-	public static void init(int* argc, char*** argv)
+	public static void init(inout string[] argv)
 	{
 		// void gdk_init (gint *argc,  gchar ***argv);
-		gdk_init(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		gdk_init(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
 	}
 	
 	/**
@@ -105,14 +109,19 @@ public class Gdk
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
 	 * Params:
-	 * argc = the number of command line arguments.
 	 * argv = the array of command line arguments.
 	 * Returns:TRUE if initialization succeeded.
 	 */
-	public static int initCheck(int* argc, char*** argv)
+	public static int initCheck(inout string[] argv)
 	{
 		// gboolean gdk_init_check (gint *argc,  gchar ***argv);
-		return gdk_init_check(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		auto p = gdk_init_check(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 	
 	/**
@@ -124,13 +133,17 @@ public class Gdk
 	 * gtk_init(), gtk_init_check(), gdk_init(), or gdk_init_check().
 	 * Since 2.2
 	 * Params:
-	 * argc =  the number of command line arguments.
 	 * argv =  the array of command line arguments.
 	 */
-	public static void parseArgs(int* argc, char*** argv)
+	public static void parseArgs(inout string[] argv)
 	{
 		// void gdk_parse_args (gint *argc,  gchar ***argv);
-		gdk_parse_args(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		gdk_parse_args(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
 	}
 	
 	/**

@@ -271,10 +271,10 @@ public class Event
 	 * state =  return location for state
 	 * Returns: TRUE if there was a state field in the event
 	 */
-	public int getState(GdkModifierType* state)
+	public int getState(out GdkModifierType state)
 	{
 		// gboolean gdk_event_get_state (GdkEvent *event,  GdkModifierType *state);
-		return gdk_event_get_state(gdkEvent, state);
+		return gdk_event_get_state(gdkEvent, &state);
 	}
 	
 	/**
@@ -285,10 +285,10 @@ public class Event
 	 * value =  location to store the value found
 	 * Returns: TRUE if the specified axis was found, otherwise FALSE
 	 */
-	public int getAxis(GdkAxisUse axisUse, double* value)
+	public int getAxis(GdkAxisUse axisUse, out double value)
 	{
 		// gboolean gdk_event_get_axis (GdkEvent *event,  GdkAxisUse axis_use,  gdouble *value);
-		return gdk_event_get_axis(gdkEvent, axisUse, value);
+		return gdk_event_get_axis(gdkEvent, axisUse, &value);
 	}
 	
 	/**
@@ -298,10 +298,10 @@ public class Event
 	 * yWin =  location to put event window y coordinate
 	 * Returns: TRUE if the event delivered event window coordinates
 	 */
-	public int getCoords(double* xWin, double* yWin)
+	public int getCoords(out double xWin, out double yWin)
 	{
 		// gboolean gdk_event_get_coords (GdkEvent *event,  gdouble *x_win,  gdouble *y_win);
-		return gdk_event_get_coords(gdkEvent, xWin, yWin);
+		return gdk_event_get_coords(gdkEvent, &xWin, &yWin);
 	}
 	
 	/**
@@ -311,10 +311,10 @@ public class Event
 	 * yRoot =  location to put root window y coordinate
 	 * Returns: TRUE if the event delivered root window coordinates
 	 */
-	public int getRootCoords(double* xRoot, double* yRoot)
+	public int getRootCoords(out double xRoot, out double yRoot)
 	{
 		// gboolean gdk_event_get_root_coords (GdkEvent *event,  gdouble *x_root,  gdouble *y_root);
-		return gdk_event_get_root_coords(gdkEvent, xRoot, yRoot);
+		return gdk_event_get_root_coords(gdkEvent, &xRoot, &yRoot);
 	}
 	
 	/**

@@ -300,10 +300,10 @@ public class DragContext
 	 * protocol =  location where the supported DND protocol is returned.
 	 * Returns: the X id of the window where the drop should happen. This  may be xid or the X id of a proxy window, or None if xid doesn't support Drag and Drop.
 	 */
-	public static uint gdkDragGetProtocol(uint xid, GdkDragProtocol* protocol)
+	public static uint gdkDragGetProtocol(uint xid, out GdkDragProtocol protocol)
 	{
 		// guint32 gdk_drag_get_protocol (guint32 xid,  GdkDragProtocol *protocol);
-		return gdk_drag_get_protocol(xid, protocol);
+		return gdk_drag_get_protocol(xid, &protocol);
 	}
 	
 	/**
@@ -315,10 +315,10 @@ public class DragContext
 	 * protocol =  location where the supported DND protocol is returned.
 	 * Returns: the X id of the window where the drop should happen. This  may be xid or the X id of a proxy window, or None if xid doesn't support Drag and Drop.
 	 */
-	public static uint gdkDragGetProtocolForDisplay(Display display, uint xid, GdkDragProtocol* protocol)
+	public static uint gdkDragGetProtocolForDisplay(Display display, uint xid, out GdkDragProtocol protocol)
 	{
 		// guint32 gdk_drag_get_protocol_for_display (GdkDisplay *display,  guint32 xid,  GdkDragProtocol *protocol);
-		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, protocol);
+		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, &protocol);
 	}
 	
 	/**

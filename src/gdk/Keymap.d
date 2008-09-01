@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Keymap
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -164,64 +164,6 @@ public class Keymap : ObjectG
 	}
 	
 	/**
-	 * Obtains a list of keycode/group/level combinations that will
-	 * generate keyval. Groups and levels are two kinds of keyboard mode;
-	 * in general, the level determines whether the top or bottom symbol
-	 * on a key is used, and the group determines whether the left or
-	 * right symbol is used. On US keyboards, the shift key changes the
-	 * keyboard level, and there are no groups. A group switch key might
-	 * convert a keyboard between Hebrew to English modes, for example.
-	 * GdkEventKey contains a group field that indicates the active
-	 * keyboard group. The level is computed from the modifier mask.
-	 * The returned array should be freed
-	 * with g_free().
-	 * Params:
-	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
-	 * keys =  return location for an array of GdkKeymapKey
-	 * Returns: TRUE if keys were found and returned
-	 */
-	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
-	{
-		GdkKeymapKey* gdkkeys = null;
-		int nKeys;
-		
-		// gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
-		int i = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &gdkkeys, &nKeys);
-		
-		keys = gdkkeys[0 .. nKeys];
-		
-		return i;
-	}
-	
-	/**
-	 * Returns the keyvals bound to hardware_keycode.
-	 * The Nth GdkKeymapKey in keys is bound to the Nth
-	 * keyval in keyvals. Free the returned arrays with g_free().
-	 * When a keycode is pressed by the user, the keyval from
-	 * this list of entries is selected by considering the effective
-	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
-	 * Params:
-	 * hardwareKeycode =  a keycode
-	 * keys =  return location for array of GdkKeymapKey, or NULL
-	 * keyvals =  return location for array of keyvals, or NULL
-	 * Returns: TRUE if there were any entries
-	 */
-	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, uint[] keyvals)
-	{
-		GdkKeymapKey* gdkkeys = null;
-		uint* gdkkeyvals = null;
-		int  nEntries;
-		
-		// gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
-		int i = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &gdkkeys, &gdkkeyvals, &nEntries);
-		
-		keys = gdkkeys[0 .. nEntries];
-		keyvals = gdkkeyvals[0 .. nEntries];
-		
-		return i;
-	}
-	
-	/**
 	 */
 	int[char[]] connectedSignals;
 	
@@ -335,10 +277,10 @@ public class Keymap : ObjectG
 	 * key =  a GdkKeymapKey with keycode, group, and level initialized
 	 * Returns: a keyval, or 0 if none was mapped to the given key
 	 */
-	public uint lookupKey(GdkKeymapKey* key)
+	public uint lookupKey(out GdkKeymapKey key)
 	{
 		// guint gdk_keymap_lookup_key (GdkKeymap *keymap,  const GdkKeymapKey *key);
-		return gdk_keymap_lookup_key(gdkKeymap, key);
+		return gdk_keymap_lookup_key(gdkKeymap, &key);
 	}
 	
 	/**
@@ -401,13 +343,18 @@ public class Keymap : ObjectG
 	 * Params:
 	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
 	 * keys =  return location for an array of GdkKeymapKey
-	 * nKeys =  return location for number of elements in returned array
 	 * Returns: TRUE if keys were found and returned
 	 */
-	public int getEntriesForKeyval(uint keyval, GdkKeymapKey** keys, int* nKeys)
+	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
 	{
 		// gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
-		return gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, keys, nKeys);
+		GdkKeymapKey* outkeys = null;
+		int nKeys;
+		
+		auto p = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &outkeys, &nKeys);
+		
+		keys = outkeys[0 .. nKeys];
+		return p;
 	}
 	
 	/**
@@ -421,13 +368,20 @@ public class Keymap : ObjectG
 	 * hardwareKeycode =  a keycode
 	 * keys =  return location for array of GdkKeymapKey, or NULL
 	 * keyvals =  return location for array of keyvals, or NULL
-	 * nEntries =  length of keys and keyvals
 	 * Returns: TRUE if there were any entries
 	 */
-	public int getEntriesForKeycode(uint hardwareKeycode, GdkKeymapKey** keys, uint** keyvals, int* nEntries)
+	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, out uint[] keyvals)
 	{
 		// gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
-		return gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, keys, keyvals, nEntries);
+		GdkKeymapKey* outkeys = null;
+		guint* outkeyvals = null;
+		int nEntries;
+		
+		auto p = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &outkeys, &outkeyvals, &nEntries);
+		
+		keys = outkeys[0 .. nEntries];
+		keyvals = outkeyvals[0 .. nEntries];
+		return p;
 	}
 	
 	/**

@@ -473,10 +473,10 @@ public class Font
 	 * ascent =  the ascent of the string.
 	 * descent =  the descent of the string.
 	 */
-	public void stringExtents(string string, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
+	public void stringExtents(string string, out int lbearing, out int rbearing, out int width, out int ascent, out int descent)
 	{
 		// void gdk_string_extents (GdkFont *font,  const gchar *string,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
-		gdk_string_extents(gdkFont, Str.toStringz(string), lbearing, rbearing, width, ascent, descent);
+		gdk_string_extents(gdkFont, Str.toStringz(string), &lbearing, &rbearing, &width, &ascent, &descent);
 	}
 	
 	/**
@@ -494,10 +494,10 @@ public class Font
 	 * ascent =  the ascent of the string.
 	 * descent =  the descent of the string.
 	 */
-	public void textExtents(string text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
+	public void textExtents(string text, int textLength, out int lbearing, out int rbearing, out int width, out int ascent, out int descent)
 	{
 		// void gdk_text_extents (GdkFont *font,  const gchar *text,  gint text_length,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
-		gdk_text_extents(gdkFont, Str.toStringz(text), textLength, lbearing, rbearing, width, ascent, descent);
+		gdk_text_extents(gdkFont, Str.toStringz(text), textLength, &lbearing, &rbearing, &width, &ascent, &descent);
 	}
 	
 	/**
@@ -506,17 +506,16 @@ public class Font
 	 * Gets the metrics of a string of wide characters.
 	 * Params:
 	 * text =  the text to measure.
-	 * textLength =  the length of the text in character.
 	 * lbearing =  the left bearing of the string.
 	 * rbearing =  the right bearing of the string.
 	 * width =  the width of the string.
 	 * ascent =  the ascent of the string.
 	 * descent =  the descent of the string.
 	 */
-	public void textExtentsWc(GdkWChar* text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
+	public void textExtentsWc(GdkWChar[] text, out int lbearing, out int rbearing, out int width, out int ascent, out int descent)
 	{
 		// void gdk_text_extents_wc (GdkFont *font,  const GdkWChar *text,  gint text_length,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
-		gdk_text_extents_wc(gdkFont, text, textLength, lbearing, rbearing, width, ascent, descent);
+		gdk_text_extents_wc(gdkFont, text.ptr, text.length, &lbearing, &rbearing, &width, &ascent, &descent);
 	}
 	
 	/**
@@ -557,13 +556,12 @@ public class Font
 	 * Determines the width of a given wide-character string.
 	 * Params:
 	 * text =  the text to measure.
-	 * textLength =  the length of the text in characters.
 	 * Returns: the width of the string in pixels.
 	 */
-	public int textWidthWc(GdkWChar* text, int textLength)
+	public int textWidthWc(GdkWChar[] text)
 	{
 		// gint gdk_text_width_wc (GdkFont *font,  const GdkWChar *text,  gint text_length);
-		return gdk_text_width_wc(gdkFont, text, textLength);
+		return gdk_text_width_wc(gdkFont, text.ptr, text.length);
 	}
 	
 	/**

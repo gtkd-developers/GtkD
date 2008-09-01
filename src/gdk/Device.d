@@ -286,22 +286,21 @@ public class Device
 	 *  or NULL.
 	 * mask = location to store the modifiers, or NULL.
 	 */
-	public void getState(Window window, double* axes, out GdkModifierType mask)
+	public void getState(Window window, double[] axes, out GdkModifierType mask)
 	{
 		// void gdk_device_get_state (GdkDevice *device,  GdkWindow *window,  gdouble *axes,  GdkModifierType *mask);
-		gdk_device_get_state(gdkDevice, (window is null) ? null : window.getWindowStruct(), axes, &mask);
+		gdk_device_get_state(gdkDevice, (window is null) ? null : window.getWindowStruct(), axes.ptr, &mask);
 	}
 	
 	/**
 	 * Frees an array of GdkTimeCoord that was returned by gdk_device_get_history().
 	 * Params:
 	 * events = an array of GdkTimeCoord.
-	 * nEvents = the length of the array.
 	 */
-	public static void freeHistory(GdkTimeCoord** events, int nEvents)
+	public static void freeHistory(GdkTimeCoord*[] events)
 	{
 		// void gdk_device_free_history (GdkTimeCoord **events,  gint n_events);
-		gdk_device_free_history(events, nEvents);
+		gdk_device_free_history(events.ptr, events.length);
 	}
 	
 	/**
@@ -313,10 +312,10 @@ public class Device
 	 * value =  location to store the found value.
 	 * Returns: TRUE if the given axis use was found, otherwise FALSE
 	 */
-	public int getAxis(double* axes, GdkAxisUse use, double* value)
+	public int getAxis(double[] axes, GdkAxisUse use, out double value)
 	{
 		// gboolean gdk_device_get_axis (GdkDevice *device,  gdouble *axes,  GdkAxisUse use,  gdouble *value);
-		return gdk_device_get_axis(gdkDevice, axes, use, value);
+		return gdk_device_get_axis(gdkDevice, axes.ptr, use, &value);
 	}
 	
 	/**
