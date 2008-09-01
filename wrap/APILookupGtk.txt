@@ -137,6 +137,15 @@ import: gtkc.gtk
 import: gthread.Thread
 import: gdk.Threads
 
+inout: gtk_parse_args argv
+array: gtk_parse_args argv argc
+inout: gtk_init_check argv
+array: gtk_init_check argv argc
+inout: gtk_init_with_args argv
+array: gtk_init_with_args argv argc
+array: gtk_init_with_args entries
+out: gtk_get_current_event_state state
+
 alias: main run
 
 code: start
@@ -403,6 +412,11 @@ structWrap: GSList* ListSG
 #structWrap: GtkAccelKey* AccelKey
 #import: gdk.ModifierType
 #structWrap: GdkModifierType* ModifierType
+
+array: gtk_accel_group_query Return n_entries
+out: gtk_accelerator_parse accelerator_key
+out: gtk_accelerator_parse accelerator_mods
+
 outFile: AccelGroup
 
 file: gtk-Accelerator-Maps.html
@@ -417,6 +431,7 @@ import: glib.ScannerG
 structWrap: GScanner* ScannerG
 import: gtk.AccelMap
 structWrap: GtkAccelMap* AccelMap
+out: gtk_accel_map_lookup_entry key
 outFile: AccelMap
 
 file: gtk-Clipboards.html
@@ -441,6 +456,15 @@ structWrap: GdkPixbuf* Pixbuf
 #structWrap: GtkSelectionData* SelectionData
 #import: gdk.Atom*
 #structWrap: GdkAtom** Atom*
+
+array: gtk_clipboard_set_with_data targets n_targets
+array: gtk_clipboard_set_with_owner targets n_targets
+out: gtk_clipboard_wait_for_rich_text format
+array: gtk_clipboard_wait_for_rich_text Return length
+out: gtk_clipboard_wait_for_targets targets
+array: gtk_clipboard_wait_for_targets targets n_targets
+array: gtk_clipboard_set_can_store targets n_targets
+
 outFile: Clipboard
 
 file: gtk-Drag-and-Drop.html
@@ -470,6 +494,9 @@ structWrap: GdkBitmap* Bitmap
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 outFile: DragAndDrop
+
+array: gtk_drag_dest_set targets n_targets
+array: gtk_drag_source_set targets n_targets
 
 file: GtkIconTheme.html
 
@@ -504,6 +531,11 @@ import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
+
+out: gtk_icon_info_get_embedded_rect rectangle
+out: gtk_icon_info_get_attach_points points
+array: gtk_icon_info_get_attach_points points n_points
+
 outFile: IconInfo
 
 file: gtk-Stock-Items.html
@@ -549,12 +581,16 @@ prefix: gtk_icon_set_
 strictPrefix: Y
 import: glib.Str
 structWrap: GtkIconSet* IconSet
+import: gtk.IconSource
+structWrap: GtkIconSource* IconSource
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Style
 structWrap: GtkStyle* Style
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+out: gtk_icon_set_get_sizes sizes
+array: gtk_icon_set_get_sizes sizes n_sizes
 outFile: IconSet
 
 class: IconSize
