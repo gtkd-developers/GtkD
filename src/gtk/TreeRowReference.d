@@ -407,9 +407,9 @@ public class TreeRowReference
 	 * iter =  The iter pointing to the parent of the reordered
 	 * newOrder =  The new order of rows
 	 */
-	public static void reordered(ObjectG proxy, TreePath path, TreeIter iter, int* newOrder)
+	public static void reordered(ObjectG proxy, TreePath path, TreeIter iter, int[] newOrder)
 	{
 		// void gtk_tree_row_reference_reordered (GObject *proxy,  GtkTreePath *path,  GtkTreeIter *iter,  gint *new_order);
-		gtk_tree_row_reference_reordered((proxy is null) ? null : proxy.getObjectGStruct(), (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder);
+		gtk_tree_row_reference_reordered((proxy is null) ? null : proxy.getObjectGStruct(), (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder.ptr);
 	}
 }

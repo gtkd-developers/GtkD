@@ -186,10 +186,10 @@ public class AccelMap : ObjectG
 	 * key =  the accelerator key to be filled in (optional)
 	 * Returns: TRUE if accel_path is known, FALSE otherwise
 	 */
-	public static int lookupEntry(string accelPath, GtkAccelKey* key)
+	public static int lookupEntry(string accelPath, out GtkAccelKey key)
 	{
 		// gboolean gtk_accel_map_lookup_entry (const gchar *accel_path,  GtkAccelKey *key);
-		return gtk_accel_map_lookup_entry(Str.toStringz(accelPath), key);
+		return gtk_accel_map_lookup_entry(Str.toStringz(accelPath), &key);
 	}
 	
 	/**

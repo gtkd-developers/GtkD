@@ -149,10 +149,10 @@ public class Misc : Widget
 	 * xalign =  location to store X alignment of misc, or NULL
 	 * yalign =  location to store Y alignment of misc, or NULL
 	 */
-	public void getAlignment(float* xalign, float* yalign)
+	public void getAlignment(out float xalign, out float yalign)
 	{
 		// void gtk_misc_get_alignment (GtkMisc *misc,  gfloat *xalign,  gfloat *yalign);
-		gtk_misc_get_alignment(gtkMisc, xalign, yalign);
+		gtk_misc_get_alignment(gtkMisc, &xalign, &yalign);
 	}
 	
 	/**
@@ -162,9 +162,9 @@ public class Misc : Widget
 	 * xpad =  location to store padding in the X direction, or NULL
 	 * ypad =  location to store padding in the Y direction, or NULL
 	 */
-	public void getPadding(int* xpad, int* ypad)
+	public void getPadding(out int xpad, out int ypad)
 	{
 		// void gtk_misc_get_padding (GtkMisc *misc,  gint *xpad,  gint *ypad);
-		gtk_misc_get_padding(gtkMisc, xpad, ypad);
+		gtk_misc_get_padding(gtkMisc, &xpad, &ypad);
 	}
 }

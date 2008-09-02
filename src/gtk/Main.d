@@ -240,14 +240,19 @@ public class Main
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_init(), or gtk_init_check().
 	 * Params:
-	 * argc =  a pointer to the number of command line arguments.
 	 * argv =  a pointer to the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
-	public static int parseArgs(int* argc, char*** argv)
+	public static int parseArgs(inout string[] argv)
 	{
 		// gboolean gtk_parse_args (int *argc,  char ***argv);
-		return gtk_parse_args(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		auto p = gtk_parse_args(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 	
 	/**
@@ -285,16 +290,20 @@ public class Main
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
 	 * Params:
-	 * argc =  Address of the argc parameter of your
-	 *  main() function. Changed if any arguments were handled.
 	 * argv =  Address of the argv parameter of main().
 	 *  Any parameters understood by gtk_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
-	public static int initCheck(int* argc, char*** argv)
+	public static int initCheck(inout string[] argv)
 	{
 		// gboolean gtk_init_check (int *argc,  char ***argv);
-		return gtk_init_check(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		auto p = gtk_init_check(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 	
 	/**
@@ -305,7 +314,6 @@ public class Main
 	 * be terminated after writing out the help output.
 	 * Since 2.6
 	 * Params:
-	 * argc =  a pointer to the number of command line arguments.
 	 * argv =  a pointer to the array of command line arguments.
 	 * parameterString =  a string which is displayed in
 	 *  the first line of --help output, after
@@ -318,18 +326,21 @@ public class Main
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
-	public static int initWithArgs(int* argc, char*** argv, string parameterString, GOptionEntry* entries, string translationDomain)
+	public static int initWithArgs(inout string[] argv, string parameterString, GOptionEntry[] entries, string translationDomain)
 	{
 		// gboolean gtk_init_with_args (int *argc,  char ***argv,  char *parameter_string,  GOptionEntry *entries,  char *translation_domain,  GError **error);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
 		GError* err = null;
 		
-		auto p = gtk_init_with_args(argc, argv, Str.toStringz(parameterString), entries, Str.toStringz(translationDomain), &err);
+		auto p = gtk_init_with_args(&argc, &outargv, Str.toStringz(parameterString), entries.ptr, Str.toStringz(translationDomain), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		argv = Str.toStringArray(outargv);
 		return p;
 	}
 	
@@ -683,10 +694,10 @@ public class Main
 	 * state =  a location to store the state of the current event
 	 * Returns: TRUE if there was a current event and it had a state field
 	 */
-	public static int getCurrentEventState(GdkModifierType* state)
+	public static int getCurrentEventState(out GdkModifierType state)
 	{
 		// gboolean gtk_get_current_event_state (GdkModifierType *state);
-		return gtk_get_current_event_state(state);
+		return gtk_get_current_event_state(&state);
 	}
 	
 	/**

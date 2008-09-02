@@ -170,9 +170,9 @@ public class Ruler : Widget
 	 * maxSize =  location to store the maximum size of the ruler used when calculating
 	 *  the space to leave for the text, or NULL.
 	 */
-	public void getRange(double* lower, double* upper, double* position, double* maxSize)
+	public void getRange(out double lower, out double upper, out double position, out double maxSize)
 	{
 		// void gtk_ruler_get_range (GtkRuler *ruler,  gdouble *lower,  gdouble *upper,  gdouble *position,  gdouble *max_size);
-		gtk_ruler_get_range(gtkRuler, lower, upper, position, maxSize);
+		gtk_ruler_get_range(gtkRuler, &lower, &upper, &position, &maxSize);
 	}
 }

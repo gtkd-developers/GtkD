@@ -832,8 +832,11 @@ public struct Funct
 				}
 
 				gtkCall ~= "&out" ~ id;
-				
-				end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"(out"~ id ~");";
+
+				if( GtkDClass.endsWith(parmsWrap[i], "IF") )
+					end ~= id ~" = new "~ split(parmsWrap[i])[1][0 .. $-2] ~"(out"~ id ~");";
+				else
+					end ~= id ~" = new "~ split(parmsWrap[i])[1] ~"(out"~ id ~");";
 			}
 			else if ( GtkDClass.endsWith(parmsWrap[i], "[]") && parmsType[i][0 .. $-1] != parmsWrap[i][0 .. $-2] &&
 				 !GtkDClass.endsWith(parmsType[i], "[]") && parmsWrap[i] != "string[]" )
@@ -929,7 +932,7 @@ public struct Funct
 			else
 			{
 				/* Non-void call. */
-				if(type == typeWrap)
+				if(type == typeWrap )
 				{
 					/* We return an object of the same type as the GTK+ function. */
 					//return gtk_function(arg1...argN);
@@ -1007,7 +1010,9 @@ public struct Funct
 								  			"{",
 										  	"	return null;",
 											"}"	];
-						bd ~= check;
+
+						if ( !(GtkDClass.endsWith(typeWrap, "[]") && type.chomp("*") == typeWrap.chomp("[]")) )
+							bd ~= check;
 
 						if ( GtkDClass.endsWith(typeWrap, "[]") )
 						{

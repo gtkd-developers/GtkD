@@ -202,16 +202,15 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * modify function.
 	 * Since 2.4
 	 * Params:
-	 * nColumns =  The number of columns in the filter model.
 	 * types =  The GTypes of the columns.
 	 * func =  A GtkTreeModelFilterModifyFunc
 	 * data =  User data to pass to the modify function, or NULL.
 	 * destroy =  Destroy notifier of data, or NULL.
 	 */
-	public void setModifyFunc(int nColumns, GType* types, GtkTreeModelFilterModifyFunc func, void* data, GtkDestroyNotify destroy)
+	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GtkDestroyNotify destroy)
 	{
 		// void gtk_tree_model_filter_set_modify_func  (GtkTreeModelFilter *filter,  gint n_columns,  GType *types,  GtkTreeModelFilterModifyFunc func,  gpointer data,  GtkDestroyNotify destroy);
-		gtk_tree_model_filter_set_modify_func(gtkTreeModelFilter, nColumns, types, func, data, destroy);
+		gtk_tree_model_filter_set_modify_func(gtkTreeModelFilter, types.length, types.ptr, func, data, destroy);
 	}
 	
 	/**

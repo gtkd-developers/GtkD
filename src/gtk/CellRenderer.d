@@ -263,10 +263,10 @@ public class CellRenderer : ObjectGtk
 	 * width =  location to return width needed to render a cell, or NULL
 	 * height =  location to return height needed to render a cell, or NULL
 	 */
-	public void getSize(Widget widget, Rectangle cellArea, int* xOffset, int* yOffset, int* width, int* height)
+	public void getSize(Widget widget, Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
 		// void gtk_cell_renderer_get_size (GtkCellRenderer *cell,  GtkWidget *widget,  GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
-		gtk_cell_renderer_get_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), xOffset, yOffset, width, height);
+		gtk_cell_renderer_get_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), &xOffset, &yOffset, &width, &height);
 	}
 	
 	/**
@@ -377,10 +377,10 @@ public class CellRenderer : ObjectGtk
 	 * width =  location to fill in with the fixed width of the widget, or NULL
 	 * height =  location to fill in with the fixed height of the widget, or NULL
 	 */
-	public void getFixedSize(int* width, int* height)
+	public void getFixedSize(out int width, out int height)
 	{
 		// void gtk_cell_renderer_get_fixed_size (GtkCellRenderer *cell,  gint *width,  gint *height);
-		gtk_cell_renderer_get_fixed_size(gtkCellRenderer, width, height);
+		gtk_cell_renderer_get_fixed_size(gtkCellRenderer, &width, &height);
 	}
 	
 	/**

@@ -184,6 +184,7 @@ private import atk.ValueAtk;
 
 private import gdkpixbuf.Pixdata;
 private import gdkpixbuf.PixbufAnimation;
+private import gdkpixbuf.PixbufAnimationIter;
 private import gdkpixbuf.PixbufSimpleAnimation;
 private import gdkpixbuf.PixbufLoader;
 
@@ -237,6 +238,7 @@ private import gtk.BindingSet;
 private import gtk.StandardEnumerations;
 private import gtk.GCs;
 private import gtk.Style;
+private import gtk.TargetList;
 private import gtk.Selections;
 private import gtk.Version;
 private import gtk.Signals;

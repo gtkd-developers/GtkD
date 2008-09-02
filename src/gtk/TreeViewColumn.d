@@ -753,10 +753,10 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * width =  location to return width needed to render a cell, or NULL
 	 * height =  location to return height needed to render a cell, or NULL
 	 */
-	public void cellGetSize(Rectangle cellArea, int* xOffset, int* yOffset, int* width, int* height)
+	public void cellGetSize(Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
 		// void gtk_tree_view_column_cell_get_size (GtkTreeViewColumn *tree_column,  GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
-		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, (cellArea is null) ? null : cellArea.getRectangleStruct(), xOffset, yOffset, width, height);
+		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, (cellArea is null) ? null : cellArea.getRectangleStruct(), &xOffset, &yOffset, &width, &height);
 	}
 	
 	/**
@@ -770,10 +770,10 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * width =  return location for the width of cell, may be NULL
 	 * Returns: TRUE if cell belongs to tree_column.
 	 */
-	public int cellGetPosition(CellRenderer cellRenderer, int* startPos, int* width)
+	public int cellGetPosition(CellRenderer cellRenderer, out int startPos, out int width)
 	{
 		// gboolean gtk_tree_view_column_cell_get_position  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  gint *start_pos,  gint *width);
-		return gtk_tree_view_column_cell_get_position(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), startPos, width);
+		return gtk_tree_view_column_cell_get_position(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), &startPos, &width);
 	}
 	
 	/**

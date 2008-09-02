@@ -491,13 +491,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * entries =  an array of action descriptions
-	 * nEntries =  the number of entries
 	 * userData =  data to pass to the action callbacks
 	 */
-	public void addActions(GtkActionEntry* entries, uint nEntries, void* userData)
+	public void addActions(GtkActionEntry[] entries, void* userData)
 	{
 		// void gtk_action_group_add_actions (GtkActionGroup *action_group,  const GtkActionEntry *entries,  guint n_entries,  gpointer user_data);
-		gtk_action_group_add_actions(gtkActionGroup, entries, nEntries, userData);
+		gtk_action_group_add_actions(gtkActionGroup, entries.ptr, entries.length, userData);
 	}
 	
 	/**
@@ -506,14 +505,13 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * entries =  an array of action descriptions
-	 * nEntries =  the number of entries
 	 * userData =  data to pass to the action callbacks
 	 * destroy =  destroy notification callback for user_data
 	 */
-	public void addActionsFull(GtkActionEntry* entries, uint nEntries, void* userData, GDestroyNotify destroy)
+	public void addActionsFull(GtkActionEntry[] entries, void* userData, GDestroyNotify destroy)
 	{
 		// void gtk_action_group_add_actions_full (GtkActionGroup *action_group,  const GtkActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
-		gtk_action_group_add_actions_full(gtkActionGroup, entries, nEntries, userData, destroy);
+		gtk_action_group_add_actions_full(gtkActionGroup, entries.ptr, entries.length, userData, destroy);
 	}
 	
 	/**
@@ -525,13 +523,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * entries =  an array of toggle action descriptions
-	 * nEntries =  the number of entries
 	 * userData =  data to pass to the action callbacks
 	 */
-	public void addToggleActions(GtkToggleActionEntry* entries, uint nEntries, void* userData)
+	public void addToggleActions(GtkToggleActionEntry[] entries, void* userData)
 	{
 		// void gtk_action_group_add_toggle_actions (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data);
-		gtk_action_group_add_toggle_actions(gtkActionGroup, entries, nEntries, userData);
+		gtk_action_group_add_toggle_actions(gtkActionGroup, entries.ptr, entries.length, userData);
 	}
 	
 	/**
@@ -540,14 +537,13 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * entries =  an array of toggle action descriptions
-	 * nEntries =  the number of entries
 	 * userData =  data to pass to the action callbacks
 	 * destroy =  destroy notification callback for user_data
 	 */
-	public void addToggleActionsFull(GtkToggleActionEntry* entries, uint nEntries, void* userData, GDestroyNotify destroy)
+	public void addToggleActionsFull(GtkToggleActionEntry[] entries, void* userData, GDestroyNotify destroy)
 	{
 		// void gtk_action_group_add_toggle_actions_full  (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
-		gtk_action_group_add_toggle_actions_full(gtkActionGroup, entries, nEntries, userData, destroy);
+		gtk_action_group_add_toggle_actions_full(gtkActionGroup, entries.ptr, entries.length, userData, destroy);
 	}
 	
 	/**
@@ -559,16 +555,15 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * entries =  an array of radio action descriptions
-	 * nEntries =  the number of entries
 	 * value =  the value of the action to activate initially, or -1 if
 	 *  no action should be activated
 	 * onChange =  the callback to connect to the changed signal
 	 * userData =  data to pass to the action callbacks
 	 */
-	public void addRadioActions(GtkRadioActionEntry* entries, uint nEntries, int value, GCallback onChange, void* userData)
+	public void addRadioActions(GtkRadioActionEntry[] entries, int value, GCallback onChange, void* userData)
 	{
 		// void gtk_action_group_add_radio_actions (GtkActionGroup *action_group,  const GtkRadioActionEntry *entries,  guint n_entries,  gint value,  GCallback on_change,  gpointer user_data);
-		gtk_action_group_add_radio_actions(gtkActionGroup, entries, nEntries, value, onChange, userData);
+		gtk_action_group_add_radio_actions(gtkActionGroup, entries.ptr, entries.length, value, onChange, userData);
 	}
 	
 	/**
@@ -577,17 +572,16 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * entries =  an array of radio action descriptions
-	 * nEntries =  the number of entries
 	 * value =  the value of the action to activate initially, or -1 if
 	 *  no action should be activated
 	 * onChange =  the callback to connect to the changed signal
 	 * userData =  data to pass to the action callbacks
 	 * destroy =  destroy notification callback for user_data
 	 */
-	public void addRadioActionsFull(GtkRadioActionEntry* entries, uint nEntries, int value, GCallback onChange, void* userData, GDestroyNotify destroy)
+	public void addRadioActionsFull(GtkRadioActionEntry[] entries, int value, GCallback onChange, void* userData, GDestroyNotify destroy)
 	{
 		// void gtk_action_group_add_radio_actions_full  (GtkActionGroup *action_group,  const GtkRadioActionEntry *entries,  guint n_entries,  gint value,  GCallback on_change,  gpointer user_data,  GDestroyNotify destroy);
-		gtk_action_group_add_radio_actions_full(gtkActionGroup, entries, nEntries, value, onChange, userData, destroy);
+		gtk_action_group_add_radio_actions_full(gtkActionGroup, entries.ptr, entries.length, value, onChange, userData, destroy);
 	}
 	
 	/**

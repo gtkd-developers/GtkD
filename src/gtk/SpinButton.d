@@ -548,10 +548,10 @@ public class SpinButton : Entry
 	 * step =  location to store step increment, or NULL
 	 * page =  location to store page increment, or NULL
 	 */
-	public void getIncrements(double* step, double* page)
+	public void getIncrements(out double step, out double page)
 	{
 		// void gtk_spin_button_get_increments (GtkSpinButton *spin_button,  gdouble *step,  gdouble *page);
-		gtk_spin_button_get_increments(gtkSpinButton, step, page);
+		gtk_spin_button_get_increments(gtkSpinButton, &step, &page);
 	}
 	
 	/**
@@ -572,10 +572,10 @@ public class SpinButton : Entry
 	 * min =  location to store minimum allowed value, or NULL
 	 * max =  location to store maximum allowed value, or NULL
 	 */
-	public void getRange(double* min, double* max)
+	public void getRange(out double min, out double max)
 	{
 		// void gtk_spin_button_get_range (GtkSpinButton *spin_button,  gdouble *min,  gdouble *max);
-		gtk_spin_button_get_range(gtkSpinButton, min, max);
+		gtk_spin_button_get_range(gtkSpinButton, &min, &max);
 	}
 	
 	/**

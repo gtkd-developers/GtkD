@@ -737,14 +737,14 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 * Since 2.10
-	 * Params:
-	 * numRanges =  return location for the length of the returned array
 	 * Returns: an array of GtkPageRanges. Use g_free() to free the array when it is no longer needed.
 	 */
-	public GtkPageRange* getPageRanges(int* numRanges)
+	public GtkPageRange[] getPageRanges()
 	{
 		// GtkPageRange* gtk_print_settings_get_page_ranges (GtkPrintSettings *settings,  gint *num_ranges);
-		return gtk_print_settings_get_page_ranges(gtkPrintSettings, numRanges);
+		int numRanges;
+		auto p = gtk_print_settings_get_page_ranges(gtkPrintSettings, &numRanges);
+		return p[0 .. numRanges];
 	}
 	
 	/**
@@ -752,12 +752,11 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * pageRanges =  an array of GtkPageRanges
-	 * numRanges =  the length of page_ranges
 	 */
-	public void setPageRanges(GtkPageRange* pageRanges, int numRanges)
+	public void setPageRanges(GtkPageRange[] pageRanges)
 	{
 		// void gtk_print_settings_set_page_ranges (GtkPrintSettings *settings,  GtkPageRange *page_ranges,  gint num_ranges);
-		gtk_print_settings_set_page_ranges(gtkPrintSettings, pageRanges, numRanges);
+		gtk_print_settings_set_page_ranges(gtkPrintSettings, pageRanges.ptr, pageRanges.length);
 	}
 	
 	/**

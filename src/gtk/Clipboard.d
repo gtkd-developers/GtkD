@@ -305,17 +305,16 @@ public class Clipboard : ObjectG
 	 * Params:
 	 * targets =  array containing information about the available forms for the
 	 *  clipboard data
-	 * nTargets =  number of elements in targets
 	 * getFunc =  function to call to get the actual clipboard data
 	 * clearFunc =  when the clipboard contents are set again, this function will
 	 *  be called, and get_func will not be subsequently called.
 	 * userData =  user data to pass to get_func and clear_func.
 	 * Returns: TRUE if setting the clipboard data succeeded. If setting the clipboard data failed the provided callback functions will be ignored.
 	 */
-	public int setWithData(GtkTargetEntry* targets, uint nTargets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, void* userData)
+	public int setWithData(GtkTargetEntry[] targets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, void* userData)
 	{
 		// gboolean gtk_clipboard_set_with_data (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  guint n_targets,  GtkClipboardGetFunc get_func,  GtkClipboardClearFunc clear_func,  gpointer user_data);
-		return gtk_clipboard_set_with_data(gtkClipboard, targets, nTargets, getFunc, clearFunc, userData);
+		return gtk_clipboard_set_with_data(gtkClipboard, targets.ptr, targets.length, getFunc, clearFunc, userData);
 	}
 	
 	/**
@@ -328,7 +327,6 @@ public class Clipboard : ObjectG
 	 * Params:
 	 * targets =  array containing information about the available forms for the
 	 *  clipboard data
-	 * nTargets =  number of elements in targets
 	 * getFunc =  function to call to get the actual clipboard data
 	 * clearFunc =  when the clipboard contents are set again, this function will
 	 *  be called, and get_func will not be subsequently called.
@@ -336,10 +334,10 @@ public class Clipboard : ObjectG
 	 *  to the callbacks when called.
 	 * Returns: TRUE if setting the clipboard data succeeded. If setting the clipboard data failed the provided callback functions will be ignored.
 	 */
-	public int setWithOwner(GtkTargetEntry* targets, uint nTargets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, ObjectG owner)
+	public int setWithOwner(GtkTargetEntry[] targets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, ObjectG owner)
 	{
 		// gboolean gtk_clipboard_set_with_owner (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  guint n_targets,  GtkClipboardGetFunc get_func,  GtkClipboardClearFunc clear_func,  GObject *owner);
-		return gtk_clipboard_set_with_owner(gtkClipboard, targets, nTargets, getFunc, clearFunc, (owner is null) ? null : owner.getObjectGStruct());
+		return gtk_clipboard_set_with_owner(gtkClipboard, targets.ptr, targets.length, getFunc, clearFunc, (owner is null) ? null : owner.getObjectGStruct());
 	}
 	
 	/**
@@ -560,13 +558,14 @@ public class Clipboard : ObjectG
 	 * Params:
 	 * buffer =  a GtkTextBuffer
 	 * format =  return location for the format of the returned data
-	 * length =  return location for the length of the returned data
 	 * Returns: a newly-allocated binary block of data which must be freed with g_free(), or NULL if retrieving the selection data failed. (This could happen for various reasons, in particular if the clipboard was empty or if the contents of the clipboard could not be converted into text form.)
 	 */
-	public byte* waitForRichText(TextBuffer buffer, GdkAtom* format, uint* length)
+	public byte[] waitForRichText(TextBuffer buffer, out GdkAtom format)
 	{
 		// guint8* gtk_clipboard_wait_for_rich_text (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
-		return gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), format, length);
+		uint length;
+		auto p = gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), &format, &length);
+		return p[0 .. length];
 	}
 	
 	/**
@@ -634,13 +633,18 @@ public class Clipboard : ObjectG
 	 * Params:
 	 * targets =  location to store an array of targets. The result
 	 *  stored here must be freed with g_free().
-	 * nTargets =  location to store number of items in targets.
 	 * Returns: TRUE if any targets are present on the clipboard, otherwise FALSE.
 	 */
-	public int waitForTargets(GdkAtom** targets, int* nTargets)
+	public int waitForTargets(out GdkAtom[] targets)
 	{
 		// gboolean gtk_clipboard_wait_for_targets (GtkClipboard *clipboard,  GdkAtom **targets,  gint *n_targets);
-		return gtk_clipboard_wait_for_targets(gtkClipboard, targets, nTargets);
+		GdkAtom* outtargets = null;
+		int nTargets;
+		
+		auto p = gtk_clipboard_wait_for_targets(gtkClipboard, &outtargets, &nTargets);
+		
+		targets = outtargets[0 .. nTargets];
+		return p;
 	}
 	
 	/**
@@ -670,12 +674,11 @@ public class Clipboard : ObjectG
 	 * Params:
 	 * targets =  array containing information about which forms should be stored
 	 *  or NULL to indicate that all forms should be stored.
-	 * nTargets =  number of elements in targets
 	 */
-	public void setCanStore(GtkTargetEntry* targets, int nTargets)
+	public void setCanStore(GtkTargetEntry[] targets)
 	{
 		// void gtk_clipboard_set_can_store (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  gint n_targets);
-		gtk_clipboard_set_can_store(gtkClipboard, targets, nTargets);
+		gtk_clipboard_set_can_store(gtkClipboard, targets.ptr, targets.length);
 	}
 	
 	/**

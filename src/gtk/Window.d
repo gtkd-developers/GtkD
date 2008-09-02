@@ -1326,10 +1326,10 @@ public class Window : Bin
 	 * width =  location to store the default width, or NULL
 	 * height =  location to store the default height, or NULL
 	 */
-	public void getDefaultSize(int* width, int* height)
+	public void getDefaultSize(out int width, out int height)
 	{
 		// void gtk_window_get_default_size (GtkWindow *window,  gint *width,  gint *height);
-		gtk_window_get_default_size(gtkWindow, width, height);
+		gtk_window_get_default_size(gtkWindow, &width, &height);
 	}
 	
 	/**
@@ -1358,10 +1358,10 @@ public class Window : Bin
 	 * right =  location to store the width of the frame at the returns, or NULL
 	 * bottom =  location to store the height of the frame at the bottom, or NULL
 	 */
-	public void getFrameDimensions(int* left, int* top, int* right, int* bottom)
+	public void getFrameDimensions(out int left, out int top, out int right, out int bottom)
 	{
 		// void gtk_window_get_frame_dimensions (GtkWindow *window,  gint *left,  gint *top,  gint *right,  gint *bottom);
-		gtk_window_get_frame_dimensions(gtkWindow, left, top, right, bottom);
+		gtk_window_get_frame_dimensions(gtkWindow, &left, &top, &right, &bottom);
 	}
 	
 	/**
@@ -1478,10 +1478,10 @@ public class Window : Bin
 	 * rootX =  return location for X coordinate of gravity-determined reference p\oint
 	 * rootY =  return location for Y coordinate of gravity-determined reference p\oint
 	 */
-	public void getPosition(int* rootX, int* rootY)
+	public void getPosition(out int rootX, out int rootY)
 	{
 		// void gtk_window_get_position (GtkWindow *window,  gint *root_x,  gint *root_y);
-		gtk_window_get_position(gtkWindow, rootX, rootY);
+		gtk_window_get_position(gtkWindow, &rootX, &rootY);
 	}
 	
 	/**

@@ -332,13 +332,18 @@ public class ColorSelection : VBox
 	 * Params:
 	 * str =  a string encoding a color palette.
 	 * colors =  return location for allocated array of GdkColor.
-	 * nColors =  return location for length of array.
 	 * Returns: TRUE if a palette was successfully parsed.
 	 */
-	public static int paletteFromString(string str, GdkColor** colors, int* nColors)
+	public static int paletteFromString(string str, out GdkColor[] colors)
 	{
 		// gboolean gtk_color_selection_palette_from_string  (const gchar *str,  GdkColor **colors,  gint *n_colors);
-		return gtk_color_selection_palette_from_string(Str.toStringz(str), colors, nColors);
+		GdkColor* outcolors = null;
+		int nColors;
+		
+		auto p = gtk_color_selection_palette_from_string(Str.toStringz(str), &outcolors, &nColors);
+		
+		colors = outcolors[0 .. nColors];
+		return p;
 	}
 	
 	/**
@@ -398,10 +403,10 @@ public class ColorSelection : VBox
 	 * color =  an array of 4 doubles specifying the red, green, blue and opacity
 	 *  to set the current color to.
 	 */
-	public void setColor(double* color)
+	public void setColor(double[] color)
 	{
 		// void gtk_color_selection_set_color (GtkColorSelection *colorsel,  gdouble *color);
-		gtk_color_selection_set_color(gtkColorSelection, color);
+		gtk_color_selection_set_color(gtkColorSelection, color.ptr);
 	}
 	
 	/**
@@ -412,9 +417,9 @@ public class ColorSelection : VBox
 	 * Params:
 	 * color =  an array of 4 gdouble to fill in with the current color.
 	 */
-	public void getColor(double* color)
+	public void getColor(double[] color)
 	{
 		// void gtk_color_selection_get_color (GtkColorSelection *colorsel,  gdouble *color);
-		gtk_color_selection_get_color(gtkColorSelection, color);
+		gtk_color_selection_get_color(gtkColorSelection, color.ptr);
 	}
 }

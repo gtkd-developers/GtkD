@@ -844,10 +844,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * x =  location to store X offset of layout, or NULL
 	 * y =  location to store Y offset of layout, or NULL
 	 */
-	public void getLayoutOffsets(int* x, int* y)
+	public void getLayoutOffsets(out int x, out int y)
 	{
 		// void gtk_entry_get_layout_offsets (GtkEntry *entry,  gint *x,  gint *y);
-		gtk_entry_get_layout_offsets(gtkEntry, x, y);
+		gtk_entry_get_layout_offsets(gtkEntry, &x, &y);
 	}
 	
 	/**

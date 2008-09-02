@@ -406,10 +406,10 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * authors =  a NULL-terminated array of strings
 	 */
-	public void setAuthors(char** authors)
+	public void setAuthors(string[] authors)
 	{
 		// void gtk_about_dialog_set_authors (GtkAboutDialog *about,  const gchar **authors);
-		gtk_about_dialog_set_authors(gtkAboutDialog, authors);
+		gtk_about_dialog_set_authors(gtkAboutDialog, Str.toStringzArray(authors));
 	}
 	
 	/**
@@ -431,10 +431,10 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * artists =  a NULL-terminated array of strings
 	 */
-	public void setArtists(char** artists)
+	public void setArtists(string[] artists)
 	{
 		// void gtk_about_dialog_set_artists (GtkAboutDialog *about,  const gchar **artists);
-		gtk_about_dialog_set_artists(gtkAboutDialog, artists);
+		gtk_about_dialog_set_artists(gtkAboutDialog, Str.toStringzArray(artists));
 	}
 	
 	/**
@@ -456,10 +456,10 @@ public class AboutDialog : Dialog
 	 * Params:
 	 * documenters =  a NULL-terminated array of strings
 	 */
-	public void setDocumenters(char** documenters)
+	public void setDocumenters(string[] documenters)
 	{
 		// void gtk_about_dialog_set_documenters (GtkAboutDialog *about,  const gchar **documenters);
-		gtk_about_dialog_set_documenters(gtkAboutDialog, documenters);
+		gtk_about_dialog_set_documenters(gtkAboutDialog, Str.toStringzArray(documenters));
 	}
 	
 	/**

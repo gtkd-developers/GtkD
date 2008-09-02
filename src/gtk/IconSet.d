@@ -43,12 +43,14 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.IconSource
  * 	- gdk.Pixbuf
  * 	- gtk.Style
  * 	- gtk.Widget
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkIconSet* -> IconSet
+ * 	- GtkIconSource* -> IconSource
  * 	- GtkStyle* -> Style
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -65,6 +67,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.IconSource;
 private import gdk.Pixbuf;
 private import gtk.Style;
 private import gtk.Widget;
@@ -152,10 +155,10 @@ public class IconSet
 	 * Params:
 	 * source =  a GtkIconSource
 	 */
-	public void addSource(GtkIconSource* source)
+	public void addSource(IconSource source)
 	{
 		// void gtk_icon_set_add_source (GtkIconSet *icon_set,  const GtkIconSource *source);
-		gtk_icon_set_add_source(gtkIconSet, source);
+		gtk_icon_set_add_source(gtkIconSet, (source is null) ? null : source.getIconSourceStruct());
 	}
 	
 	/**
@@ -278,11 +281,15 @@ public class IconSet
 	 * array must be freed with g_free().
 	 * Params:
 	 * sizes =  return location for array of sizes
-	 * nSizes =  location to store number of elements in returned array
 	 */
-	public void getSizes(GtkIconSize** sizes, int* nSizes)
+	public void getSizes(out GtkIconSize[] sizes)
 	{
 		// void gtk_icon_set_get_sizes (GtkIconSet *icon_set,  GtkIconSize **sizes,  gint *n_sizes);
-		gtk_icon_set_get_sizes(gtkIconSet, sizes, nSizes);
+		GtkIconSize* outsizes = null;
+		int nSizes;
+		
+		gtk_icon_set_get_sizes(gtkIconSet, &outsizes, &nSizes);
+		
+		sizes = outsizes[0 .. nSizes];
 	}
 }

@@ -139,11 +139,10 @@ public class IMContextSimple : IMContext
 	 * data =  the table
 	 * maxSeqLen =  Maximum length of a sequence in the table
 	 *  (cannot be greater than GTK_MAX_COMPOSE_LEN)
-	 * nSeqs =  number of sequences in the table
 	 */
-	public void addTable(ushort* data, int maxSeqLen, int nSeqs)
+	public void addTable(ushort[] data, int maxSeqLen)
 	{
 		// void gtk_im_context_simple_add_table (GtkIMContextSimple *context_simple,  guint16 *data,  gint max_seq_len,  gint n_seqs);
-		gtk_im_context_simple_add_table(gtkIMContextSimple, data, maxSeqLen, nSeqs);
+		gtk_im_context_simple_add_table(gtkIMContextSimple, data.ptr, maxSeqLen, data.length);
 	}
 }

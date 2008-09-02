@@ -63,6 +63,7 @@
  * 	- gdk.Color
  * 	- gdk.Pixbuf
  * 	- gtk.Adjustment
+ * 	- gobject.ParamSpec
  * 	- gdk.Region
  * 	- gobject.Value
  * 	- gtk.Settings
@@ -84,6 +85,7 @@
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GList* -> ListG
+ * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColor* -> Color
@@ -141,6 +143,7 @@ private import gtk.RcStyle;
 private import gdk.Color;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
+private import gobject.ParamSpec;
 private import gdk.Region;
 private import gobject.Value;
 private import gtk.Settings;
@@ -244,38 +247,6 @@ public class Widget : ObjectGtk, BuildableIF
 		int height;
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
-	}
-	
-	/**
-	 * The widget's desired size.
-	 * Returns: the GtkRequisition for this widget
-	 */
-	public GtkRequisition getRequisition()
-	{
-		GtkRequisition req;
-		int* pt = cast(int*)getStruct();
-		
-		pt += 28/4;
-		req.width = *pt;
-		
-		pt++;
-		req.height = *pt;
-		
-		return req;
-	}
-	
-	/**
-	 * The widget's desired size.
-	 */
-	public void setRequisition(GtkRequisition req)
-	{
-		int* pt = cast(int*)getStruct();
-		
-		pt += 28/4;
-		 *pt = req.width;
-		
-		pt++;
-		 *pt = req.height;
 	}
 	
 	/**
@@ -645,13 +616,13 @@ public class Widget : ObjectGtk, BuildableIF
 		return consumed;
 	}
 	
-	void delegate(GParamSpec*, Widget)[] onChildNotifyListeners;
+	void delegate(ParamSpec, Widget)[] onChildNotifyListeners;
 	/**
 	 * The ::child-notify signal is emitted for each
 	 * child property that has
 	 * changed on an object. The signal's detail holds the property name.
 	 */
-	void addOnChildNotify(void delegate(GParamSpec*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChildNotify(void delegate(ParamSpec, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("child-notify" in connectedSignals) )
 		{
@@ -670,9 +641,9 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(GParamSpec*, Widget) dlg ; widget.onChildNotifyListeners )
+		foreach ( void delegate(ParamSpec, Widget) dlg ; widget.onChildNotifyListeners )
 		{
-			dlg(pspec, widget);
+			dlg(new ParamSpec(pspec), widget);
 		}
 		
 		return consumed;
@@ -2906,10 +2877,14 @@ public class Widget : ObjectGtk, BuildableIF
 	 * widget =  a GtkWidget
 	 * widgetPointer =  address of a variable that contains widget
 	 */
-	public void destroyed(GtkWidget** widgetPointer)
+	public void destroyed(inout Widget widgetPointer)
 	{
 		// void gtk_widget_destroyed (GtkWidget *widget,  GtkWidget **widget_pointer);
-		gtk_widget_destroyed(gtkWidget, widgetPointer);
+		GtkWidget* outwidgetPointer = (widgetPointer is null) ? null : widgetPointer.getWidgetStruct();
+		
+		gtk_widget_destroyed(gtkWidget, &outwidgetPointer);
+		
+		widgetPointer = new Widget(outwidgetPointer);
 	}
 	
 	/**
@@ -3106,10 +3081,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * requisition =  a GtkRequisition to be filled in
 	 */
-	public void sizeRequest(GtkRequisition* requisition)
+	public void sizeRequest(out GtkRequisition requisition)
 	{
 		// void gtk_widget_size_request (GtkWidget *widget,  GtkRequisition *requisition);
-		gtk_widget_size_request(gtkWidget, requisition);
+		gtk_widget_size_request(gtkWidget, &requisition);
 	}
 	
 	/**
@@ -3132,10 +3107,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * requisition =  a GtkRequisition to be filled in
 	 */
-	public void getChildRequisition(GtkRequisition* requisition)
+	public void getChildRequisition(out GtkRequisition requisition)
 	{
 		// void gtk_widget_get_child_requisition (GtkWidget *widget,  GtkRequisition *requisition);
-		gtk_widget_get_child_requisition(gtkWidget, requisition);
+		gtk_widget_get_child_requisition(gtkWidget, &requisition);
 	}
 	
 	/**
@@ -3683,10 +3658,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * x =  return location for the X coordinate, or NULL
 	 * y =  return location for the Y coordinate, or NULL
 	 */
-	public void getPointer(int* x, int* y)
+	public void getPointer(out int x, out int y)
 	{
 		// void gtk_widget_get_pointer (GtkWidget *widget,  gint *x,  gint *y);
-		gtk_widget_get_pointer(gtkWidget, x, y);
+		gtk_widget_get_pointer(gtkWidget, &x, &y);
 	}
 	
 	/**
@@ -4444,10 +4419,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * klass =  a GtkWidgetClass
 	 * pspec =  the GParamSpec for the property
 	 */
-	public static void classInstallStyleProperty(GtkWidgetClass* klass, GParamSpec* pspec)
+	public static void classInstallStyleProperty(GtkWidgetClass* klass, ParamSpec pspec)
 	{
 		// void gtk_widget_class_install_style_property  (GtkWidgetClass *klass,  GParamSpec *pspec);
-		gtk_widget_class_install_style_property(klass, pspec);
+		gtk_widget_class_install_style_property(klass, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**
@@ -4457,10 +4432,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * pspec =  the GParamSpec for the style property
 	 * parser =  the parser for the style property
 	 */
-	public static void classInstallStylePropertyParser(GtkWidgetClass* klass, GParamSpec* pspec, GtkRcPropertyParser parser)
+	public static void classInstallStylePropertyParser(GtkWidgetClass* klass, ParamSpec pspec, GtkRcPropertyParser parser)
 	{
 		// void gtk_widget_class_install_style_property_parser  (GtkWidgetClass *klass,  GParamSpec *pspec,  GtkRcPropertyParser parser);
-		gtk_widget_class_install_style_property_parser(klass, pspec, parser);
+		gtk_widget_class_install_style_property_parser(klass, (pspec is null) ? null : pspec.getParamSpecStruct(), parser);
 	}
 	
 	/**
@@ -4471,10 +4446,15 @@ public class Widget : ObjectGtk, BuildableIF
 	 * propertyName =  the name of the style property to find
 	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name.
 	 */
-	public static GParamSpec* classFindStyleProperty(GtkWidgetClass* klass, string propertyName)
+	public static ParamSpec classFindStyleProperty(GtkWidgetClass* klass, string propertyName)
 	{
 		// GParamSpec* gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
-		return gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
+		auto p = gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
+		if(p is null)
+		{
+			return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -4482,13 +4462,25 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.2
 	 * Params:
 	 * klass =  a GtkWidgetClass
-	 * nProperties =  location to return the number of style properties found
 	 * Returns: an newly allocated array of GParamSpec*. The array must  be freed with g_free().
 	 */
-	public static GParamSpec** classListStyleProperties(GtkWidgetClass* klass, uint* nProperties)
+	public static ParamSpec[] classListStyleProperties(GtkWidgetClass* klass)
 	{
 		// GParamSpec** gtk_widget_class_list_style_properties  (GtkWidgetClass *klass,  guint *n_properties);
-		return gtk_widget_class_list_style_properties(klass, nProperties);
+		uint nProperties;
+		auto p = gtk_widget_class_list_style_properties(klass, &nProperties);
+		if(p is null)
+		{
+			return null;
+		}
+		
+		ParamSpec[] arr = new ParamSpec[nProperties];
+		for(int i = 0; i < nProperties; i++)
+		{
+			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+		}
+		
+		return arr;
 	}
 	
 	/**

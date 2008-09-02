@@ -454,10 +454,10 @@ public class Calendar : Widget
 	 * month =  location to store the month number (between 0 and 11), or NULL
 	 * day =  location to store the day number (between 1 and 31), or NULL
 	 */
-	public void getDate(uint* year, uint* month, uint* day)
+	public void getDate(out uint year, out uint month, out uint day)
 	{
 		// void gtk_calendar_get_date (GtkCalendar *calendar,  guint *year,  guint *month,  guint *day);
-		gtk_calendar_get_date(gtkCalendar, year, month, day);
+		gtk_calendar_get_date(gtkCalendar, &year, &month, &day);
 	}
 	
 	/**

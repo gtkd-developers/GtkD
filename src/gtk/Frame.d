@@ -234,10 +234,10 @@ public class Frame : Bin
 	 * xalign =  location to store X alignment of frame's label, or NULL
 	 * yalign =  location to store X alignment of frame's label, or NULL
 	 */
-	public void getLabelAlign(float* xalign, float* yalign)
+	public void getLabelAlign(out float xalign, out float yalign)
 	{
 		// void gtk_frame_get_label_align (GtkFrame *frame,  gfloat *xalign,  gfloat *yalign);
-		gtk_frame_get_label_align(gtkFrame, xalign, yalign);
+		gtk_frame_get_label_align(gtkFrame, &xalign, &yalign);
 	}
 	
 	/**

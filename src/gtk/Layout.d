@@ -227,10 +227,10 @@ public class Layout : Container
 	 * width =  location to store the width set on layout, or NULL
 	 * height =  location to store the height set on layout, or NULL
 	 */
-	public void getSize(uint* width, uint* height)
+	public void getSize(out uint width, out uint height)
 	{
 		// void gtk_layout_get_size (GtkLayout *layout,  guint *width,  guint *height);
-		gtk_layout_get_size(gtkLayout, width, height);
+		gtk_layout_get_size(gtkLayout, &width, &height);
 	}
 	
 	/**

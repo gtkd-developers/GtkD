@@ -47,6 +47,7 @@
  * imports:
  * 	- gtk.TreePath
  * 	- gtk.TreeModelIF
+ * 	- gtk.TreeModel
  * structWrap:
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
@@ -65,6 +66,7 @@ private import glib.ConstructionException;
 
 private import gtk.TreePath;
 private import gtk.TreeModelIF;
+private import gtk.TreeModel;
 
 
 
@@ -178,9 +180,16 @@ public template TreeDragSourceT(TStruct)
 	 * path =  row in tree_model
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
-	public static int getRowDragData(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path)
+	public static int getRowDragData(GtkSelectionData* selectionData, out TreeModelIF treeModel, out TreePath path)
 	{
 		// gboolean gtk_tree_get_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel **tree_model,  GtkTreePath **path);
-		return gtk_tree_get_row_drag_data(selectionData, treeModel, path);
+		GtkTreeModel* outtreeModel = null;
+		GtkTreePath* outpath = null;
+		
+		auto p = gtk_tree_get_row_drag_data(selectionData, &outtreeModel, &outpath);
+		
+		treeModel = new TreeModel(outtreeModel);
+		path = new TreePath(outpath);
+		return p;
 	}
 }

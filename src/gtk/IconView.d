@@ -600,10 +600,17 @@ public class IconView : Container, CellLayoutIF
 	 *  at (x, y), or NULL
 	 * Returns: TRUE if an item exists at the specified position
 	 */
-	public int getItemAtPos(int x, int y, GtkTreePath** path, GtkCellRenderer** cell)
+	public int getItemAtPos(int x, int y, out TreePath path, out CellRenderer cell)
 	{
 		// gboolean gtk_icon_view_get_item_at_pos (GtkIconView *icon_view,  gint x,  gint y,  GtkTreePath **path,  GtkCellRenderer **cell);
-		return gtk_icon_view_get_item_at_pos(gtkIconView, x, y, path, cell);
+		GtkTreePath* outpath = null;
+		GtkCellRenderer* outcell = null;
+		
+		auto p = gtk_icon_view_get_item_at_pos(gtkIconView, x, y, &outpath, &outcell);
+		
+		path = new TreePath(outpath);
+		cell = new CellRenderer(outcell);
+		return p;
 	}
 	
 	/**
@@ -616,10 +623,10 @@ public class IconView : Container, CellLayoutIF
 	 * bx =  return location for bin_window X coordinate
 	 * by =  return location for bin_window Y coordinate
 	 */
-	public void convertWidgetToBinWindowCoords(int wx, int wy, int* bx, int* by)
+	public void convertWidgetToBinWindowCoords(int wx, int wy, out int bx, out int by)
 	{
 		// void gtk_icon_view_convert_widget_to_bin_window_coords  (GtkIconView *icon_view,  gint wx,  gint wy,  gint *bx,  gint *by);
-		gtk_icon_view_convert_widget_to_bin_window_coords(gtkIconView, wx, wy, bx, by);
+		gtk_icon_view_convert_widget_to_bin_window_coords(gtkIconView, wx, wy, &bx, &by);
 	}
 	
 	/**
@@ -654,10 +661,17 @@ public class IconView : Container, CellLayoutIF
 	 * cell =  Return location the current focus cell, or NULL
 	 * Returns: TRUE if the cursor is set.
 	 */
-	public int getCursor(GtkTreePath** path, GtkCellRenderer** cell)
+	public int getCursor(out TreePath path, out CellRenderer cell)
 	{
 		// gboolean gtk_icon_view_get_cursor (GtkIconView *icon_view,  GtkTreePath **path,  GtkCellRenderer **cell);
-		return gtk_icon_view_get_cursor(gtkIconView, path, cell);
+		GtkTreePath* outpath = null;
+		GtkCellRenderer* outcell = null;
+		
+		auto p = gtk_icon_view_get_cursor(gtkIconView, &outpath, &outcell);
+		
+		path = new TreePath(outpath);
+		cell = new CellRenderer(outcell);
+		return p;
 	}
 	
 	/**
@@ -997,10 +1011,17 @@ public class IconView : Container, CellLayoutIF
 	 * endPath =  Return location for end of region, or NULL
 	 * Returns: TRUE, if valid paths were placed in start_path and end_path
 	 */
-	public int getVisibleRange(GtkTreePath** startPath, GtkTreePath** endPath)
+	public int getVisibleRange(out TreePath startPath, out TreePath endPath)
 	{
 		// gboolean gtk_icon_view_get_visible_range (GtkIconView *icon_view,  GtkTreePath **start_path,  GtkTreePath **end_path);
-		return gtk_icon_view_get_visible_range(gtkIconView, startPath, endPath);
+		GtkTreePath* outstartPath = null;
+		GtkTreePath* outendPath = null;
+		
+		auto p = gtk_icon_view_get_visible_range(gtkIconView, &outstartPath, &outendPath);
+		
+		startPath = new TreePath(outstartPath);
+		endPath = new TreePath(outendPath);
+		return p;
 	}
 	
 	/**
@@ -1053,10 +1074,17 @@ public class IconView : Container, CellLayoutIF
 	 * iter =  a pointer to receive a GtkTreeIter or NULL
 	 * Returns: whether or not the given tooltip context points to a item
 	 */
-	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, TreeIter iter)
+	public int getTooltipContext(int* x, int* y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
 	{
 		// gboolean gtk_icon_view_get_tooltip_context (GtkIconView *icon_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
-		return gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, model, path, (iter is null) ? null : iter.getTreeIterStruct());
+		GtkTreeModel* outmodel = null;
+		GtkTreePath* outpath = null;
+		
+		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
+		
+		model = new TreeModel(outmodel);
+		path = new TreePath(outpath);
+		return p;
 	}
 	
 	/**
@@ -1094,14 +1122,13 @@ public class IconView : Container, CellLayoutIF
 	 * Params:
 	 * startButtonMask =  Mask of allowed buttons to start drag
 	 * targets =  the table of targets that the drag will support
-	 * nTargets =  the number of items in targets
 	 * actions =  the bitmask of possible actions for a drag from this
 	 *  widget
 	 */
-	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
+	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_icon_view_enable_model_drag_source  (GtkIconView *icon_view,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_icon_view_enable_model_drag_source(gtkIconView, startButtonMask, targets, nTargets, actions);
+		gtk_icon_view_enable_model_drag_source(gtkIconView, startButtonMask, targets.ptr, targets.length, actions);
 	}
 	
 	/**
@@ -1109,14 +1136,13 @@ public class IconView : Container, CellLayoutIF
 	 * Since 2.8
 	 * Params:
 	 * targets =  the table of targets that the drag will support
-	 * nTargets =  the number of items in targets
 	 * actions =  the bitmask of possible actions for a drag to this
 	 *  widget
 	 */
-	public void enableModelDragDest(GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
+	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_icon_view_enable_model_drag_dest  (GtkIconView *icon_view,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_icon_view_enable_model_drag_dest(gtkIconView, targets, nTargets, actions);
+		gtk_icon_view_enable_model_drag_dest(gtkIconView, targets.ptr, targets.length, actions);
 	}
 	
 	/**
@@ -1191,10 +1217,14 @@ public class IconView : Container, CellLayoutIF
 	 * path =  Return location for the path of the highlighted item, or NULL.
 	 * pos =  Return location for the drop position, or NULL
 	 */
-	public void getDragDestItem(GtkTreePath** path, GtkIconViewDropPosition* pos)
+	public void getDragDestItem(out TreePath path, out GtkIconViewDropPosition pos)
 	{
 		// void gtk_icon_view_get_drag_dest_item (GtkIconView *icon_view,  GtkTreePath **path,  GtkIconViewDropPosition *pos);
-		gtk_icon_view_get_drag_dest_item(gtkIconView, path, pos);
+		GtkTreePath* outpath = null;
+		
+		gtk_icon_view_get_drag_dest_item(gtkIconView, &outpath, &pos);
+		
+		path = new TreePath(outpath);
 	}
 	
 	/**
@@ -1207,10 +1237,15 @@ public class IconView : Container, CellLayoutIF
 	 * pos =  Return location for the drop position, or NULL
 	 * Returns: whether there is an item at the given position.
 	 */
-	public int getDestItemAtPos(int dragX, int dragY, GtkTreePath** path, GtkIconViewDropPosition* pos)
+	public int getDestItemAtPos(int dragX, int dragY, out TreePath path, out GtkIconViewDropPosition pos)
 	{
 		// gboolean gtk_icon_view_get_dest_item_at_pos (GtkIconView *icon_view,  gint drag_x,  gint drag_y,  GtkTreePath **path,  GtkIconViewDropPosition *pos);
-		return gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, path, pos);
+		GtkTreePath* outpath = null;
+		
+		auto p = gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, &outpath, &pos);
+		
+		path = new TreePath(outpath);
+		return p;
 	}
 	
 	/**

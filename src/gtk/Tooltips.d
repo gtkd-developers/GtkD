@@ -264,9 +264,14 @@ public class Tooltips : ObjectGtk
 	 *  are displayed, or NULL
 	 * Returns: TRUE if tip_window is displaying tooltips, otherwise FALSE.
 	 */
-	public static int getInfoFromTipWindow(Window tipWindow, GtkTooltips** tooltips, GtkWidget** currentWidget)
+	public static int getInfoFromTipWindow(Window tipWindow, out GtkTooltips* tooltips, out Widget currentWidget)
 	{
 		// gboolean gtk_tooltips_get_info_from_tip_window  (GtkWindow *tip_window,  GtkTooltips **tooltips,  GtkWidget **current_widget);
-		return gtk_tooltips_get_info_from_tip_window((tipWindow is null) ? null : tipWindow.getWindowStruct(), tooltips, currentWidget);
+		GtkWidget* outcurrentWidget = null;
+		
+		auto p = gtk_tooltips_get_info_from_tip_window((tipWindow is null) ? null : tipWindow.getWindowStruct(), &tooltips, &outcurrentWidget);
+		
+		currentWidget = new Widget(outcurrentWidget);
+		return p;
 	}
 }

@@ -143,10 +143,10 @@ public template TreeSortableT(TStruct)
 	 * order =  The GtkSortType to be filled in
 	 * Returns: TRUE if the sort column is not one of the special sort column ids.
 	 */
-	public int getSortColumnId(int* sortColumnId, GtkSortType* order)
+	public int getSortColumnId(out int sortColumnId, out GtkSortType order)
 	{
 		// gboolean gtk_tree_sortable_get_sort_column_id  (GtkTreeSortable *sortable,  gint *sort_column_id,  GtkSortType *order);
-		return gtk_tree_sortable_get_sort_column_id(getTreeSortableTStruct(), sortColumnId, order);
+		return gtk_tree_sortable_get_sort_column_id(getTreeSortableTStruct(), &sortColumnId, &order);
 	}
 	
 	/**

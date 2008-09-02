@@ -241,13 +241,13 @@ public class ScaleButton : Button
 	 *  you want to set the list later with gtk_scale_button_set_icons()
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkIconSize size, double min, double max, double step, char** icons)
+	public this (GtkIconSize size, double min, double max, double step, string[] icons)
 	{
 		// GtkWidget* gtk_scale_button_new (GtkIconSize size,  gdouble min,  gdouble max,  gdouble step,  const gchar **icons);
-		auto p = gtk_scale_button_new(size, min, max, step, icons);
+		auto p = gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_scale_button_new(size, min, max, step, icons)");
+			throw new ConstructionException("null returned by gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons))");
 		}
 		this(cast(GtkScaleButton*) p);
 	}
@@ -273,10 +273,10 @@ public class ScaleButton : Button
 	 * Params:
 	 * icons =  a NULL-terminated array of icon names
 	 */
-	public void setIcons(char** icons)
+	public void setIcons(string[] icons)
 	{
 		// void gtk_scale_button_set_icons (GtkScaleButton *button,  const gchar **icons);
-		gtk_scale_button_set_icons(gtkScaleButton, icons);
+		gtk_scale_button_set_icons(gtkScaleButton, Str.toStringzArray(icons));
 	}
 	
 	/**

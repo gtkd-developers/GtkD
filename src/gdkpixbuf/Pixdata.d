@@ -172,10 +172,6 @@ public class Pixdata
 		// guint8* gdk_pixdata_serialize (const GdkPixdata *pixdata,  guint *stream_length_p);
 		uint streamLengthP;
 		auto p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
-		if(p is null)
-		{
-			return null;
-		}
 		return p[0 .. streamLengthP];
 	}
 	

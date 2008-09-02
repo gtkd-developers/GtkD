@@ -725,10 +725,10 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * filenames =  A NULL-terminated list of filenames.
 	 */
-	public static void setDefaultFiles(char** filenames)
+	public static void setDefaultFiles(string[] filenames)
 	{
 		// void gtk_rc_set_default_files (gchar **filenames);
-		gtk_rc_set_default_files(filenames);
+		gtk_rc_set_default_files(Str.toStringzArray(filenames));
 	}
 	
 	/**
@@ -773,10 +773,10 @@ public class RcStyle : ObjectG
 	 * store the result.
 	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
 	 */
-	public static uint parseState(ScannerG scanner, GtkStateType* state)
+	public static uint parseState(ScannerG scanner, out GtkStateType state)
 	{
 		// guint gtk_rc_parse_state (GScanner *scanner,  GtkStateType *state);
-		return gtk_rc_parse_state((scanner is null) ? null : scanner.getScannerGStruct(), state);
+		return gtk_rc_parse_state((scanner is null) ? null : scanner.getScannerGStruct(), &state);
 	}
 	
 	/**
@@ -788,10 +788,10 @@ public class RcStyle : ObjectG
 	 * to store the result.
 	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
 	 */
-	public static uint parsePriority(ScannerG scanner, GtkPathPriorityType* priority)
+	public static uint parsePriority(ScannerG scanner, out GtkPathPriorityType priority)
 	{
 		// guint gtk_rc_parse_priority (GScanner *scanner,  GtkPathPriorityType *priority);
-		return gtk_rc_parse_priority((scanner is null) ? null : scanner.getScannerGStruct(), priority);
+		return gtk_rc_parse_priority((scanner is null) ? null : scanner.getScannerGStruct(), &priority);
 	}
 	
 	/**

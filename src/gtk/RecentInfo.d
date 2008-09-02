@@ -277,23 +277,27 @@ public class RecentInfo
 	 *  for this application
 	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. You should free the returned command line using g_free().
 	 */
-	public int getApplicationInfo(string appName, char** appExec, uint* count, uint* time)
+	public int getApplicationInfo(string appName, out string appExec, out uint count, out uint time)
 	{
 		// gboolean gtk_recent_info_get_application_info  (GtkRecentInfo *info,  const gchar *app_name,  gchar **app_exec,  guint *count,  time_t *time_);
-		return gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), appExec, count, time);
+		char* outappExec = null;
+		
+		auto p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &time);
+		
+		appExec = Str.toString(outappExec);
+		return p;
 	}
 	
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 * Since 2.10
-	 * Params:
-	 * length =  return location for the length of the returned list, or NULL
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public string[] getApplications(uint* length)
+	public string[] getApplications()
 	{
 		// gchar** gtk_recent_info_get_applications (GtkRecentInfo *info,  gsize *length);
-		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, length));
+		uint length;
+		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, &length));
 	}
 	
 	/**
@@ -313,14 +317,13 @@ public class RecentInfo
 	 * array of returned group names will be NULL terminated, so length might
 	 * optionally be NULL.
 	 * Since 2.10
-	 * Params:
-	 * length =  return location for the number of groups returned, or NULL
 	 * Returns: a newly allocated NULL terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public string[] getGroups(uint* length)
+	public string[] getGroups()
 	{
 		// gchar** gtk_recent_info_get_groups (GtkRecentInfo *info,  gsize *length);
-		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, length));
+		uint length;
+		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, &length));
 	}
 	
 	/**

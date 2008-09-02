@@ -651,10 +651,10 @@ public class Button : Bin
 	 * xalign =  return location for horizontal alignment
 	 * yalign =  return location for vertical alignment
 	 */
-	public void getAlignment(float* xalign, float* yalign)
+	public void getAlignment(out float xalign, out float yalign)
 	{
 		// void gtk_button_get_alignment (GtkButton *button,  gfloat *xalign,  gfloat *yalign);
-		gtk_button_get_alignment(gtkButton, xalign, yalign);
+		gtk_button_get_alignment(gtkButton, &xalign, &yalign);
 	}
 	
 	/**

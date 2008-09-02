@@ -712,10 +712,15 @@ public class Container : Widget
 	 *  individual widgets in the focus chain.
 	 * Returns: TRUE if the focus chain of the container has been set explicitly.
 	 */
-	public int getFocusChain(GList** focusableWidgets)
+	public int getFocusChain(out ListG focusableWidgets)
 	{
 		// gboolean gtk_container_get_focus_chain (GtkContainer *container,  GList **focusable_widgets);
-		return gtk_container_get_focus_chain(gtkContainer, focusableWidgets);
+		GList* outfocusableWidgets = null;
+		
+		auto p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets);
+		
+		focusableWidgets = new ListG(outfocusableWidgets);
+		return p;
 	}
 	
 	/**
@@ -778,12 +783,24 @@ public class Container : Widget
 	 * Returns all child properties of a container class.
 	 * Params:
 	 * cclass =  a GtkContainerClass
-	 * nProperties =  location to return the number of child properties found
 	 * Returns: a newly allocated NULL-terminated array of GParamSpec*.  The array must be freed with g_free().
 	 */
-	public static GParamSpec** classListChildProperties(GObjectClass* cclass, uint* nProperties)
+	public static ParamSpec[] classListChildProperties(GObjectClass* cclass)
 	{
 		// GParamSpec** gtk_container_class_list_child_properties  (GObjectClass *cclass,  guint *n_properties);
-		return gtk_container_class_list_child_properties(cclass, nProperties);
+		uint nProperties;
+		auto p = gtk_container_class_list_child_properties(cclass, &nProperties);
+		if(p is null)
+		{
+			return null;
+		}
+		
+		ParamSpec[] arr = new ParamSpec[nProperties];
+		for(int i = 0; i < nProperties; i++)
+		{
+			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+		}
+		
+		return arr;
 	}
 }

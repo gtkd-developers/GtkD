@@ -846,10 +846,10 @@ public class Notebook : Container
 	 * fill =  location to store the fill value (or NULL)
 	 * packType =  location to store the pack_type (or NULL)
 	 */
-	public void queryTabLabelPacking(Widget child, int* expand, int* fill, GtkPackType* packType)
+	public void queryTabLabelPacking(Widget child, out int expand, out int fill, out GtkPackType packType)
 	{
 		// void gtk_notebook_query_tab_label_packing  (GtkNotebook *notebook,  GtkWidget *child,  gboolean *expand,  gboolean *fill,  GtkPackType *pack_type);
-		gtk_notebook_query_tab_label_packing(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), expand, fill, packType);
+		gtk_notebook_query_tab_label_packing(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), &expand, &fill, &packType);
 	}
 	
 	/**

@@ -789,9 +789,9 @@ public template TreeModelT(TStruct)
 	 * path =  a GtkTreePath identifying the changed row
 	 * iter =  a valid GtkTreeIter pointing to the changed row
 	 */
-	public void rowsReordered(TreePath path, TreeIter iter, int* newOrder)
+	public void rowsReordered(TreePath path, TreeIter iter, int[] newOrder)
 	{
 		// void gtk_tree_model_rows_reordered (GtkTreeModel *tree_model,  GtkTreePath *path,  GtkTreeIter *iter,  gint *new_order);
-		gtk_tree_model_rows_reordered(getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder);
+		gtk_tree_model_rows_reordered(getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder.ptr);
 	}
 }

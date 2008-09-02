@@ -106,10 +106,9 @@ public class OtherTests : Window
 		with (new AboutDialog())
 		{
 
-			char** names = (new char*[2]).ptr;
-			int i = 0;
-			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
-			names[i++] = cast(char*)"www.gtk.org (base C library)";
+			string[] names;
+			names ~= "Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
+			names ~= "www.gtk.org (base C library)";
 			setAuthors(names);
 			setDocumenters(names);
 			setArtists(names);

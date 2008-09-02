@@ -49,11 +49,9 @@
  * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gdk.Screen
- * 	- gdk.Rectangle
  * 	- gtk.Menu
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkRectangle* -> Rectangle
  * 	- GdkScreen* -> Screen
  * 	- GtkMenu* -> Menu
  * module aliases:
@@ -74,7 +72,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gdk.Screen;
-private import gdk.Rectangle;
 private import gtk.Menu;
 
 
@@ -594,10 +591,10 @@ public class StatusIcon : ObjectG
 	 *  aligned with the menu popup position (only useful for GtkOptionMenu).
 	 * userData =  the status icon to position the menu on
 	 */
-	public static void positionMenu(Menu menu, int* x, int* y, int* pushIn, void* userData)
+	public static void positionMenu(Menu menu, out int x, out int y, out int pushIn, void* userData)
 	{
 		// void gtk_status_icon_position_menu (GtkMenu *menu,  gint *x,  gint *y,  gboolean *push_in,  gpointer user_data);
-		gtk_status_icon_position_menu((menu is null) ? null : menu.getMenuStruct(), x, y, pushIn, userData);
+		gtk_status_icon_position_menu((menu is null) ? null : menu.getMenuStruct(), &x, &y, &pushIn, userData);
 	}
 	
 	/**
@@ -623,9 +620,14 @@ public class StatusIcon : ObjectG
 	 *  at the left or right is vertical.
 	 * Returns: TRUE if the location information has  been filled in
 	 */
-	public int getGeometry(GdkScreen** screen, Rectangle area, GtkOrientation* orientation)
+	public int getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)
 	{
 		// gboolean gtk_status_icon_get_geometry (GtkStatusIcon *status_icon,  GdkScreen **screen,  GdkRectangle *area,  GtkOrientation *orientation);
-		return gtk_status_icon_get_geometry(gtkStatusIcon, screen, (area is null) ? null : area.getRectangleStruct(), orientation);
+		GdkScreen* outscreen = null;
+		
+		auto p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation);
+		
+		screen = new Screen(outscreen);
+		return p;
 	}
 }

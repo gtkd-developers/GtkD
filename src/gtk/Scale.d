@@ -264,9 +264,9 @@ public class Scale : Range
 	 * x =  location to store X offset of layout, or NULL
 	 * y =  location to store Y offset of layout, or NULL
 	 */
-	public void getLayoutOffsets(int* x, int* y)
+	public void getLayoutOffsets(out int x, out int y)
 	{
 		// void gtk_scale_get_layout_offsets (GtkScale *scale,  gint *x,  gint *y);
-		gtk_scale_get_layout_offsets(gtkScale, x, y);
+		gtk_scale_get_layout_offsets(gtkScale, &x, &y);
 	}
 }

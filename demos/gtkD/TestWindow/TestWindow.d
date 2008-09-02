@@ -319,9 +319,9 @@ class TestWindow : MainWindow
 			names ~= "Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
 			names ~= "www.gtk.org (base C library)";
 
-			setAuthors( Str.toStringzArray(names) );
-			setDocumenters( Str.toStringzArray(names) );
-			setArtists( Str.toStringzArray(names) );
+			setAuthors( names );
+			setDocumenters( names );
+			setArtists( names );
 			setLicense("License is LGPL");
 			setWebsite("http://lisdev.com");
 		}

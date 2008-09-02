@@ -496,12 +496,11 @@ public class Dialog : Window
 	 * This function is for use by language bindings.
 	 * Since 2.6
 	 * Params:
-	 * nParams =  the number of response ids in new_order
 	 * newOrder =  an array of response ids of dialog's buttons
 	 */
-	public void setAlternativeButtonOrderFromArray(int nParams, int* newOrder)
+	public void setAlternativeButtonOrderFromArray(int[] newOrder)
 	{
 		// void gtk_dialog_set_alternative_button_order_from_array  (GtkDialog *dialog,  gint n_params,  gint *new_order);
-		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, nParams, newOrder);
+		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, newOrder.length, newOrder.ptr);
 	}
 }

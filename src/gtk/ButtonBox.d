@@ -200,10 +200,10 @@ public class ButtonBox : Box
 	 * minWidth = the width of the buttons contained by widget.
 	 * minHeight = the height of the buttons contained by widget.
 	 */
-	public void getChildSize(int* minWidth, int* minHeight)
+	public void getChildSize(out int minWidth, out int minHeight)
 	{
 		// void gtk_button_box_get_child_size (GtkButtonBox *widget,  gint *min_width,  gint *min_height);
-		gtk_button_box_get_child_size(gtkButtonBox, minWidth, minHeight);
+		gtk_button_box_get_child_size(gtkButtonBox, &minWidth, &minHeight);
 	}
 	
 	/**
@@ -215,10 +215,10 @@ public class ButtonBox : Box
 	 * ipadX = the horizontal padding used by buttons in widget.
 	 * ipadY = the vertical padding used by buttons in widget.
 	 */
-	public void getChildIpadding(int* ipadX, int* ipadY)
+	public void getChildIpadding(out int ipadX, out int ipadY)
 	{
 		// void gtk_button_box_get_child_ipadding (GtkButtonBox *widget,  gint *ipad_x,  gint *ipad_y);
-		gtk_button_box_get_child_ipadding(gtkButtonBox, ipadX, ipadY);
+		gtk_button_box_get_child_ipadding(gtkButtonBox, &ipadX, &ipadY);
 	}
 	
 	/**

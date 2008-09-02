@@ -363,11 +363,9 @@ public interface RecentChooserIF
 	 * properties of chooser.
 	 * Since the returned array is NULL terminated, length may be NULL.
 	 * Since 2.10
-	 * Params:
-	 * length =  return location for a the length of the URI list, or NULL
 	 * Returns: A newly allocated, NULL terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public string[] getUris(uint* length);
+	public string[] getUris();
 	
 	/**
 	 * Adds filter to the list of GtkRecentFilter objects held by chooser.

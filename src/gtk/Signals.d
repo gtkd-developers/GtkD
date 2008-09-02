@@ -177,15 +177,14 @@ public class Signals
 	 * the class structure for this type.
 	 * returnVal = the type of the return value, or GTK_TYPE_NONE if
 	 * you don't want a return value.
-	 * nArgs = the number of parameters to the user-defined handlers.
 	 * args = an array of GtkTypes, describing the prototype to
 	 * the callbacks.
 	 * Returns:the signal id.
 	 */
-	public static uint newv(string name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, GtkType* args)
+	public static uint newv(string name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, GtkType[] args)
 	{
 		// guint gtk_signal_newv (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  GtkType *args);
-		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs, args);
+		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, args.length, args.ptr);
 	}
 	
 	/**
@@ -200,10 +199,10 @@ public class Signals
 	 * args = an array of GtkArgs, one for each parameter,
 	 * followed by one which is a pointer to the return type.
 	 */
-	public static void emitv(ObjectGtk object, uint signalId, GtkArg* args)
+	public static void emitv(ObjectGtk object, uint signalId, GtkArg[] args)
 	{
 		// void gtk_signal_emitv (GtkObject *object,  guint signal_id,  GtkArg *args);
-		gtk_signal_emitv((object is null) ? null : object.getObjectGtkStruct(), signalId, args);
+		gtk_signal_emitv((object is null) ? null : object.getObjectGtkStruct(), signalId, args.ptr);
 	}
 	
 	/**
@@ -218,10 +217,10 @@ public class Signals
 	 * args = an array of GtkArgs, one for each parameter,
 	 * followed by one which is a pointer to the return type.
 	 */
-	public static void emitvByName(ObjectGtk object, string name, GtkArg* args)
+	public static void emitvByName(ObjectGtk object, string name, GtkArg[] args)
 	{
 		// void gtk_signal_emitv_by_name (GtkObject *object,  const gchar *name,  GtkArg *args);
-		gtk_signal_emitv_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), args);
+		gtk_signal_emitv_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), args.ptr);
 	}
 	
 	/**

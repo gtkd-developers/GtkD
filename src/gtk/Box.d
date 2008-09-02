@@ -310,10 +310,10 @@ public class Box : Container
 	 * padding =  pointer to return location for "padding" child property
 	 * packType =  pointer to return location for "pack-type" child property
 	 */
-	public void queryChildPacking(Widget child, int* expand, int* fill, uint* padding, GtkPackType* packType)
+	public void queryChildPacking(Widget child, out int expand, out int fill, out uint padding, out GtkPackType packType)
 	{
 		// void gtk_box_query_child_packing (GtkBox *box,  GtkWidget *child,  gboolean *expand,  gboolean *fill,  guint *padding,  GtkPackType *pack_type);
-		gtk_box_query_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding, packType);
+		gtk_box_query_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), &expand, &fill, &padding, &packType);
 	}
 	
 	/**

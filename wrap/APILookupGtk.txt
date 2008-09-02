@@ -599,6 +599,12 @@ strictPrefix: Y
 import: glib.Str
 import: gtk.Settings
 structWrap: GtkSettings* Settings
+
+out: gtk_icon_size_lookup width
+out: gtk_icon_size_lookup height
+out: gtk_icon_size_lookup_for_settings width
+out: gtk_icon_size_lookup_for_settings height
+
 outFile: IconSize
 
 file: gtk-Resource-Files.html
@@ -622,6 +628,11 @@ structWrap: GdkColor* Color
 #import: gtk.PathPriorityType
 #structWrap: GtkPathPriorityType* PathPriorityType
 structWrap: GtkRcStyle* RcStyle
+
+array: gtk_rc_set_default_files filenames
+out: gtk_rc_parse_state state
+out: gtk_rc_parse_priority priority
+
 outFile: RcStyle
 
 file: GtkSettings.html
@@ -707,25 +718,43 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Font
 structWrap: GdkFont* Font
-#import: gdk.Point
-#structWrap: GdkPoint* Point
 import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
 #import: gtk.Border
 #structWrap: GtkBorder* Border
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+
+array: gtk_draw_polygon points npoints
+array: gtk_paint_polygon points npoints
+
 outFile: Style
 
 file: gtk-Selections.html
+struct: GtkTargetList
+class: TargetList
+prefix: gtk_target_list_
+noprefix: gtk_selection_
+import: gtk.TextBuffer
+structWrap: GtkTextBuffer* TextBuffer
+
+array: gtk_target_list_new targets ntargets
+array: gtk_target_list_add_table targets ntargets
+out: gtk_target_list_find info
+array: gtk_target_table_free targets ntargets
+array: gtk_target_table_new_from_list Return n_targets
+array: gtk_targets_include_image targets n_targets
+array: gtk_targets_include_text targets n_targets
+array: gtk_targets_include_uri targets n_targets
+array: gtk_targets_include_rich_text targets n_targets
+
+outFile: TargetList
+
 #struct: 
 class: Selections
-prefix: gtk_
+prefix: gtk_selection_
+strictPrefix: Y
 import: glib.Str
-#import: gtk.TargetList
-#structWrap: GtkTargetList* TargetList
-#import: gtk.TargetEntry
-#structWrap: GtkTargetEntry* TargetEntry
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Display
@@ -734,6 +763,15 @@ structWrap: GdkDisplay* Display
 #structWrap: GtkSelectionData* SelectionData
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
+import: gtk.TextBuffer
+structWrap: GtkTextBuffer* TextBuffer
+
+array: gtk_selection_add_targets targets ntargets
+array: gtk_selection_data_set data length
+array: gtk_selection_data_set_uris uris
+out: gtk_selection_data_get_targets targets
+array: gtk_selection_data_get_targets targets n_atoms
+
 outFile: Selections
 
 file: gtk-Feature-Test-Macros.html
@@ -755,6 +793,11 @@ import: gtk.ObjectGtk
 structWrap: GtkObject* ObjectGtk
 #import: gtk.Arg
 #structWrap: GtkArg* Arg
+
+array: gtk_signal_newv args n_args
+array: gtk_signal_emitv args
+array: gtk_signal_emitv_by_name args
+
 outFile: Signals
 
 file: gtk-Types.html
@@ -787,6 +830,8 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+
+array: gtk_dialog_set_alternative_button_order_from_array new_order n_params
 
 code: start
 	/** */
@@ -1116,6 +1161,14 @@ override: getScreen
 
 out: gtk_window_get_size width
 out: gtk_window_get_size height
+out: gtk_window_get_default_size width
+out: gtk_window_get_default_size height
+out: gtk_window_get_frame_dimensions left
+out: gtk_window_get_frame_dimensions top
+out: gtk_window_get_frame_dimensions right
+out: gtk_window_get_frame_dimensions bottom
+out: gtk_window_get_position root_x
+out: gtk_window_get_position root_y
 
 code: start
 	/**
@@ -1225,6 +1278,10 @@ structWrap: GtkWindow* Window
 override: getName
 override: setName
 
+array: gtk_about_dialog_set_authors authors
+array: gtk_about_dialog_set_artists artists
+array: gtk_about_dialog_set_documenters documenters
+
 outFile: AboutDialog
 
 file: GtkAssistant.html
@@ -1267,20 +1324,18 @@ class: Image
 prefix: gtk_image_
 prefix: gtk_
 import: glib.Str
-#import: gtk.IconSet*
-#structWrap: GtkIconSet** IconSet*
-#import: gtk.IconSize
-#structWrap: GtkIconSize* IconSize
-#import: gdk.ImageGdk*
-#structWrap: GdkImage** ImageGdk*
-#import: gdk.Bitmap*
-#structWrap: GdkBitmap** Bitmap*
+import: gtk.IconSet
+structWrap: GtkIconSet* IconSet
+import: gdk.ImageGdk
+structWrap: GdkImage* ImageGdk
+import: gdk.Bitmap
+structWrap: GdkBitmap* Bitmap
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-#import: gdk.Pixmap*
-#structWrap: GdkPixmap** Pixmap*
-#import: gdk.PixbufAnimation
-#structWrap: GdkPixbufAnimation* PixbufAnimation
+import: gdk.Pixmap
+structWrap: GdkPixmap* Pixmap
+import: gdkpixbuf.PixbufAnimation
+structWrap: GdkPixbufAnimation* PixbufAnimation
 import: gtk.IconSet
 structWrap: GtkIconSet* IconSet
 import: gdk.ImageGdk
@@ -1289,6 +1344,19 @@ import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
 import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
+
+out: gtk_image_get_icon_set icon_set
+out: gtk_image_get_icon_set size
+out: gtk_image_get_image gdk_image
+out: gtk_image_get_image mask
+out: gtk_image_get_pixmap pixmap
+out: gtk_image_get_pixmap mask
+out: gtk_image_get_stock stock_id
+out: gtk_image_get_stock size
+out: gtk_image_get_icon_name icon_name
+out: gtk_image_get_icon_name size
+out: gtk_image_get val
+out: gtk_image_get mask
 
 nocode: gtk_image_new_from_stock
 nocode: gtk_image_new_from_icon_name
@@ -1355,6 +1423,13 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+out: gtk_label_get str
+out: gtk_label_get_layout_offsets x
+out: gtk_label_get_layout_offsets y
+out: gtk_label_get_selection_bounds start
+out: gtk_label_get_selection_bounds end
+
 nocode: gtk_label_new
 nocode: gtk_label_new_with_mnemonic
 code: start
@@ -1431,10 +1506,15 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdk.Screen
 structWrap: GdkScreen* Screen
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
 import: gtk.Menu
 structWrap: GtkMenu* Menu
+
+out: gtk_status_icon_position_menu x
+out: gtk_status_icon_position_menu y
+out: gtk_status_icon_position_menu push_in
+out: gtk_status_icon_get_geometry screen
+out: gtk_status_icon_get_geometry area
+out: gtk_status_icon_get_geometry orientation
 
 nocode: gtk_status_icon_new_from_stock
 nocode: gtk_status_icon_new_from_file
@@ -1515,6 +1595,9 @@ import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
+
+out: gtk_button_get_alignment xalign
+out: gtk_button_get_alignment yalign
 
 nocode: gtk_button_new_with_mnemonic
 nocode: gtk_button_new_with_label
@@ -1864,6 +1947,10 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
+
+array: gtk_scale_button_new icons
+array: gtk_scale_button_set_icons icons
+
 outFile: ScaleButton
 
 file: GtkVolumeButton.html
@@ -1905,6 +1992,9 @@ import: gdk.Event
 import: gtk.CellEditableT
 import: gtk.CellEditableIF
 import: gobject.Signals
+
+out: gtk_entry_get_layout_offsets x
+out: gtk_entry_get_layout_offsets y
 
 code: start
 	// add the Editable capabilities
@@ -1983,6 +2073,12 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
+
+out: gtk_spin_button_get_increments step
+out: gtk_spin_button_get_increments page
+out: gtk_spin_button_get_range min
+out: gtk_spin_button_get_range max
+
 outFile: SpinButton
 
 file: GtkEditable.html
@@ -2085,6 +2181,11 @@ structWrap: GtkClipboard* Clipboard
 import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
 import: std.stdarg
+
+array: gtk_text_buffer_deserialize data length
+array: gtk_text_buffer_get_deserialize_formats Return n_formats
+array: gtk_text_buffer_get_serialize_formats Return n_formats
+array: gtk_text_buffer_serialize Return length
 
 nocode: gtk_text_buffer_set_text
 nocode: gtk_text_buffer_insert_with_tags
@@ -2422,13 +2523,14 @@ structWrap: GtkTextChildAnchor* TextChildAnchor
 import: glib.ListG
 structWrap: GList* ListG
 
-#text: start
-#gtk_text_view_get_type ()
-#
-#GType         gtk_text_view_get_type           ();
-#<hr>
-#text: end
-
+out: gtk_text_view_get_line_at_y line_top
+out: gtk_text_view_get_line_yrange y
+out: gtk_text_view_get_line_yrange height
+out: gtk_text_view_get_iter_at_position trailing
+out: gtk_text_view_buffer_to_window_coords window_x
+out: gtk_text_view_buffer_to_window_coords window_y
+out: gtk_text_view_window_to_buffer_coords buffer_x
+out: gtk_text_view_window_to_buffer_coords buffer_y
 
 code: start
 
@@ -2441,7 +2543,7 @@ code: start
 		TextIter iter = new TextIter();
 		int windowX;
 		int windowY;
-		bufferToWindowCoords(TextWindowType.TEXT, 0, y, &windowX, &windowY);
+		bufferToWindowCoords(TextWindowType.TEXT, 0, y, windowX, windowY);
 
 		gtk_text_view_get_line_at_y(gtkTextView, iter.getTextIterStruct(), y+y-windowY, null);
 		
@@ -2512,6 +2614,8 @@ prefix: gtk_tree_path_
 import: glib.Str
 structWrap: GtkTreePath* TreePath
 
+array: gtk_tree_path_get_indices Return getDepth()
+
 override: toString
 
 nocode: gtk_tree_path_new
@@ -2570,6 +2674,8 @@ import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 import: gobject.Value
 structWrap: GValue* Value
+
+array: gtk_tree_model_rows_reordered new_order
 
 interfaceCode: start
 	/**
@@ -2845,6 +2951,8 @@ structWrap: GObject* ObjectG
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 structWrap: GtkTreeRowReference* TreeRowReference
+
+array: gtk_tree_row_reference_reordered new_order
 
 nosignal: row-changed
 nosignal: row-deleted
@@ -3252,6 +3360,13 @@ import: glib.Str
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
+out: gtk_tree_view_column_cell_get_size x_offset
+out: gtk_tree_view_column_cell_get_size y_offset
+out: gtk_tree_view_column_cell_get_size width
+out: gtk_tree_view_column_cell_get_size height
+out: gtk_tree_view_column_cell_get_position start_pos
+out: gtk_tree_view_column_cell_get_position width
+
 nocode: gtk_tree_view_column_new_with_attributes
 
 code: start
@@ -3333,6 +3448,34 @@ inout: gtk_tree_view_get_path_at_pos path
 inout: gtk_tree_view_get_path_at_pos column
 out: gtk_tree_view_get_path_at_pos cell_x
 out: gtk_tree_view_get_path_at_pos cell_y
+out: gtk_tree_view_get_cursor
+out: gtk_tree_view_get_cursor focus_column
+out: gtk_tree_view_get_visible_range start_path
+out: gtk_tree_view_get_visible_range end_path
+out: gtk_tree_view_widget_to_tree_coords tx
+out: gtk_tree_view_widget_to_tree_coords ty
+out: gtk_tree_view_tree_to_widget_coords wx
+out: gtk_tree_view_tree_to_widget_coords wy
+out: gtk_tree_view_convert_bin_window_to_tree_coords tx
+out: gtk_tree_view_convert_bin_window_to_tree_coords ty
+out: gtk_tree_view_convert_bin_window_to_widget_coords wx
+out: gtk_tree_view_convert_bin_window_to_widget_coords wy
+out: gtk_tree_view_convert_tree_to_bin_window_coords bx
+out: gtk_tree_view_convert_tree_to_bin_window_coords by
+out: gtk_tree_view_convert_tree_to_widget_coords wx
+out: gtk_tree_view_convert_tree_to_widget_coords wy
+out: gtk_tree_view_convert_widget_to_bin_window_coords bx
+out: gtk_tree_view_convert_widget_to_bin_window_coords by
+out: gtk_tree_view_convert_widget_to_tree_coords tx
+out: gtk_tree_view_convert_widget_to_tree_coords ty
+array: gtk_tree_view_enable_model_drag_dest targets n_targets
+array: gtk_tree_view_enable_model_drag_source targets n_targets
+out: gtk_tree_view_get_drag_dest_row path
+out: gtk_tree_view_get_drag_dest_row pos
+out: gtk_tree_view_get_dest_row_at_pos path
+out: gtk_tree_view_get_dest_row_at_pos pos
+out: gtk_tree_view_get_tooltip_context model
+out: gtk_tree_view_get_tooltip_context path
 
 code: start
 	/**
@@ -3433,7 +3576,12 @@ structWrap: GtkTreePath* TreePath
 #import: gtk.SelectionData
 #structWrap: GtkSelectionData* SelectionData
 import: gtk.TreeModelIF
+import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModelIF
+
+out: gtk_tree_get_row_drag_data tree_model
+out: gtk_tree_get_row_drag_data path
+
 interface: TreeDragSourceIF
 outFile: TreeDragSourceT
 
@@ -3507,6 +3655,8 @@ import: gtk.CellRenderer
 #import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
+
+out: gtk_cell_view_get_size_of_row requisition
 
 nocode: gtk_cell_view_new_with_text
 nocode: gtk_cell_view_new_with_markup
@@ -3590,6 +3740,23 @@ import: glib.Str
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
+out: gtk_icon_view_get_item_at_pos path
+out: gtk_icon_view_get_item_at_pos cell
+out: gtk_icon_view_convert_widget_to_bin_window_coords bx
+out: gtk_icon_view_convert_widget_to_bin_window_coords by
+out: gtk_icon_view_get_cursor path
+out: gtk_icon_view_get_cursor cell
+out: gtk_icon_view_get_visible_range start_path
+out: gtk_icon_view_get_visible_range end_path
+out: gtk_icon_view_get_tooltip_context model
+out: gtk_icon_view_get_tooltip_context path
+array: gtk_icon_view_enable_model_drag_source targets n_targets
+array: gtk_icon_view_enable_model_drag_dest targets n_targets
+out: gtk_icon_view_get_drag_dest_item path
+out: gtk_icon_view_get_drag_dest_item pos
+out: gtk_icon_view_get_dest_item_at_pos path
+out: gtk_icon_view_get_dest_item_at_pos pos
+
 code: start
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkIconView);
@@ -3604,6 +3771,10 @@ prefix: gtk_tree_sortable_
 prefix: gtk_
 #import: gtk.SortType
 #structWrap: GtkSortType* SortType
+
+out: gtk_tree_sortable_get_sort_column_id sort_column_id
+out: gtk_tree_sortable_get_sort_column_id order
+
 interface: TreeSortableIF
 outFile: TreeSortableT
 
@@ -3636,6 +3807,7 @@ import: gobject.Signals
 # imports for TreeDragSource Interface
 #import: gtk.TreePath
 #import: gtk.TreeModelIF
+#import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
@@ -3682,8 +3854,11 @@ import: gobject.Signals
 # imports for TreeDragSource Interface
 #import: gtk.TreePath
 #import: gtk.TreeModelIF
+#import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
+
+array: gtk_tree_model_filter_set_modify_func types n_columns
 
 code: start
 	// add the TreeModel capabilities
@@ -3725,6 +3900,14 @@ structWrap: GdkEvent* Event
 import: gtk.CellEditable
 import: gtk.CellEditableIF
 structWrap: GtkCellEditable* CellEditableIF
+
+out: gtk_cell_renderer_get_size x_offset
+out: gtk_cell_renderer_get_size y_offset
+out: gtk_cell_renderer_get_size width
+out: gtk_cell_renderer_get_size height
+out: gtk_cell_renderer_get_fixed_size width
+out: gtk_cell_renderer_get_fixed_size height
+
 outFile: CellRenderer
 
 file: GtkCellEditable.html
@@ -3902,6 +4085,7 @@ import: gobject.Signals
 # imports for TreeDragSource Interface
 #import: gtk.TreePath
 #import: gtk.TreeModelIF
+#import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
@@ -3913,6 +4097,14 @@ import: gtk.TreeDragDestIF
 # imports for TreeSortable Interface
 import: gtk.TreeSortableT
 import: gtk.TreeSortableIF
+
+array: gtk_list_store_newv types n_columns
+array: gtk_list_store_set_column_types types n_columns
+array: gtk_list_store_set_valuesv values n_values
+array: gtk_list_store_set_valuesv columns n_values
+array: gtk_list_store_insert_with_valuesv values n_values
+array: gtk_list_store_insert_with_valuesv columns n_values
+array: gtk_list_store_reorder new_order
 
 nocode: gtk_list_store_set
 
@@ -3932,25 +4124,6 @@ code: start
 	// add the TreeSortable capabilities
 	mixin TreeSortableT!(GtkListStore);
 
-	/**
-	 * Non-vararg creation function. Used primarily by language bindings.
-	 * Params:
-	 *  types = an array of GType types for the columns, from first to last
-	 * Returns:
-	 *  a new GtkListStore
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GType[] types)
-	{
-		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		auto p = gtk_list_store_newv(types.length, cast(GType*)(types.ptr));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_list_store_newv");
-		}
-		this(cast(GtkListStore*)p);
-	}
-	
 	/**
 	 * Creates a top level iteractor.
 	 * I don't think lists have but the top level iteractor
@@ -4046,6 +4219,7 @@ import: gobject.Signals
 # imports for TreeDragSource Interface
 #import: gtk.TreePath
 #import: gtk.TreeModelIF
+import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
@@ -4057,6 +4231,14 @@ import: gtk.TreeDragDestIF
 # imports for TreeSortable Interface
 import: gtk.TreeSortableT
 import: gtk.TreeSortableIF
+
+array: gtk_tree_store_newv types n_columns
+array: gtk_tree_store_set_column_types types n_columns
+array: gtk_tree_store_set_valuesv columns n_values
+array: gtk_tree_store_set_valuesv values n_values
+array: gtk_tree_store_insert_with_valuesv columns n_values
+array: gtk_tree_store_insert_with_valuesv values n_values
+array: gtk_tree_store_reorder new_order
 
 nocode: gtk_tree_store_set
 
@@ -4072,27 +4254,6 @@ code: start
 
 	// add the TreeSortable capabilities
 	mixin TreeSortableT!(GtkTreeStore);
-
-	/**
-	 * Non-vararg creation function. Used primarily by language bindings.
-	 * Params:
-	 *  types = an array of GType types for the columns, from first to last
-	 * Returns:
-	 *  a new GtkListStore
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GType[] types)
-	{
-		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		auto p = gtk_tree_store_newv(types.length, cast(GType*)(types.ptr));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_store_newv");
-		}
-		this(cast(GtkTreeStore*)p);
-	}
-	
-	
 
 	/**
 	 * Creates a top level iteractor.
@@ -4400,18 +4561,6 @@ code: start
 code: end
 outFile: ComboBox
 
-#struct: GtkComboBox
-#class: ComboBoxText
-#import: atk.ObjectAtk
-#structWrap: AtkObject* ObjectAtk
-#filterIn: gtk_combo_box_new_text
-#filterIn: gtk_combo_box_append_text
-#filterIn: gtk_combo_box_insert_text
-#filterIn: gtk_combo_box_prepend_text
-#filterIn: gtk_combo_box_remove_text
-#strictPrefix: Y
-#outFile: ComboBoxText
-
 file: GtkComboBoxEntry.html
 
 struct: GtkComboBoxEntry
@@ -4465,16 +4614,6 @@ code: start
 code: end
 outFile: ComboBoxEntry
 
-
-#struct: GtkComboBoxEntry
-#class: ComboBoxEntryText
-#filterIn: gtk_combo_box_entry_new_text
-#filterIn: gtk_combo_box_append_text
-#filterIn: gtk_combo_box_insert_text
-#filterIn: gtk_combo_box_prepend_text
-#filterIn: gtk_combo_box_remove_text
-#strictPrefix: Y
-#outFile: ComboBoxEntryText
 
 file: GtkMenu.html
 struct: GtkMenu
@@ -4922,6 +5061,7 @@ import: glib.Str
 import: gtk.Widget
 import: gtk.Button
 import: gtk.ToolItem
+structWrap: GtkToolItem* ToolItem
 structWrap: GtkWidget* Widget
 
 alias: getStyle toolbarGetStyle
@@ -5259,6 +5399,13 @@ import: gtk.Builder
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
+array: gtk_action_group_add_actions entries n_entries
+array: gtk_action_group_add_actions_full entries n_entries
+array: gtk_action_group_add_toggle_actions entries n_entries
+array: gtk_action_group_add_toggle_actions_full entries n_entries
+array: gtk_action_group_add_radio_actions entries n_entries
+array: gtk_action_group_add_radio_actions_full entries n_entries
+
 code: start
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkActionGroup);
@@ -5402,6 +5549,12 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Color
 structWrap: GdkColor* Color
+
+out: gtk_color_selection_palette_from_string colors
+array: gtk_color_selection_palette_from_string colors n_colors
+array: gtk_color_selection_set_color color
+array: gtk_color_selection_get_color color
+
 outFile: ColorSelection
 
 file: GtkColorSelectionDialog.html
@@ -5710,6 +5863,11 @@ prefix: gtk_alignment_
 prefix: gtk_
 import: gtk.Widget
 
+out: gtk_alignment_get_padding padding_top
+out: gtk_alignment_get_padding padding_bottom
+out: gtk_alignment_get_padding padding_left
+out: gtk_alignment_get_padding padding_right
+
 code: start
 	/** */
 	public static Alignment center(Widget widget)
@@ -5916,6 +6074,10 @@ import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+out: gtk_layout_get_size width
+out: gtk_layout_get_size height
+
 outFile: Layout
 
 file: GtkNotebook.html
@@ -5927,6 +6089,10 @@ import: glib.Str
 import: gtk.Label
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+out: gtk_notebook_query_tab_label_packing expand
+out: gtk_notebook_query_tab_label_packing fill
+out: gtk_notebook_query_tab_label_packing pack_type
 
 code: start
 /** The GtkNotebookTab is not documented */
@@ -6095,6 +6261,9 @@ import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
+out: gtk_frame_get_label_align xalign
+out: gtk_frame_get_label_align yalign
+
 code: start
 	/**
 	 * Creates frame with label and set it's child widget
@@ -6154,8 +6323,11 @@ structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 
+out: gtk_scrolled_window_get_policy hscrollbar_policy
+out: gtk_scrolled_window_get_policy vscrollbar_policy
 
 nocode: gtk_scrolled_window_new
+
 code: start
 	/** */
 	public this()
@@ -6288,6 +6460,10 @@ import: glib.ErrorG
 import: glib.GException
 import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
+
+array: gtk_print_settings_get_page_ranges Return num_ranges
+array: gtk_print_settings_set_page_ranges page_ranges num_ranges
+
 outFile: PrintSettings
 
 file: GtkPageSetup.html
@@ -6411,6 +6587,11 @@ struct: GtkCalendar
 class: Calendar
 prefix: gtk_calendar_
 prefix: gtk_
+
+out: gtk_calendar_get_date year
+out: gtk_calendar_get_date month
+out: gtk_calendar_get_date day
+
 outFile: Calendar
 
 file: GtkDrawingArea.html
@@ -6457,6 +6638,7 @@ prefix: gtk_im_context_simple_
 prefix: gtk_
 import: gtk.IMContext
 structWrap: GtkIMContext* IMContext
+array: gtk_im_context_simple_add_table data n_seqs
 outFile: IMContextSimple
 
 file: GtkIMMulticontext.html
@@ -6548,8 +6730,12 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 prefix: gtk_box_
 prefix: gtk_
-#import: gtk.PackType
-#structWrap: GtkPackType* PackType
+
+out: gtk_box_query_child_packing expand
+out: gtk_box_query_child_packing fill
+out: gtk_box_query_child_packing padding
+out: gtk_box_query_child_packing pack_type
+
 outFile: Box
 
 file: GtkButtonBox.html
@@ -6562,6 +6748,12 @@ structWrap: GtkWidget* Widget
 import: gtk.Button
 import: gtk.HButtonBox
 import: gtk.VButtonBox
+
+out: gtk_button_box_get_child_size min_width
+out: gtk_button_box_get_child_size min_height
+out: gtk_button_box_get_child_ipadding ipad_x
+out: gtk_button_box_get_child_ipadding ipad_y
+
 code: start
 	/** */
 	static ButtonBox createActionBox(
@@ -6634,6 +6826,9 @@ structWrap: GParamSpec* ParamSpec
 #import: g.ObjectClass
 #structWrap: GObjectClass* ObjectClass
 
+out: gtk_container_get_focus_chain focusable_widgets
+array: gtk_container_class_list_child_properties Return n_properties
+
 code: start
 
 	/**
@@ -6676,6 +6871,12 @@ struct: GtkMisc
 class: Misc
 prefix: gtk_misc_
 prefix: gtk_
+
+out: gtk_misc_get_alignment xalign
+out: gtk_misc_get_alignment yalign
+out: gtk_misc_get_padding xpad
+out: gtk_misc_get_padding ypad
+
 outFile: Misc
 
 file: GtkObject.html
@@ -6733,6 +6934,10 @@ prefix: gtk_scale_
 prefix: gtk_
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+
+out: gtk_scale_get_layout_offsets x
+out: gtk_scale_get_layout_offsets y
+
 outFile: Scale
 
 file: GtkScrollbar.html
@@ -6795,8 +7000,8 @@ import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 #import: gtk.WidgetClass
 #structWrap: GtkWidgetClass* WidgetClass
-#import: g.ParamSpec
-#structWrap: GParamSpec* ParamSpec
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
 import: gdk.Region
 structWrap: GdkRegion* Region
 import: gobject.Value
@@ -6834,12 +7039,16 @@ override: unref
 override: destroy
 override: set
 
-out: gtk_widget_get_pointer width
-out: gtk_widget_get_pointer height
+inout: gtk_widget_destroyed widget_pointer
 out: gtk_widget_get_size_request width
 out: gtk_widget_get_size_request height
 out: gtk_widget_translate_coordinates dest_x
 out: gtk_widget_translate_coordinates dest_y
+out: gtk_widget_size_request requisition
+out: gtk_widget_get_child_requisition requisition
+out: gtk_widget_get_pointer x
+out: gtk_widget_get_pointer y
+array: gtk_widget_class_list_style_properties Return n_properties
 
 nocode: gtk_widget_path
 nocode: gtk_widget_class_path
@@ -6862,38 +7071,6 @@ code: start
 		int height;
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
-	}
-
-	/**
-	 * The widget's desired size.
-	 * Returns: the GtkRequisition for this widget
-	 */
-	public GtkRequisition getRequisition()
-	{
-		GtkRequisition req;
-		int* pt = cast(int*)getStruct();
-
-		pt += 28/4;
-		req.width = *pt;
-
-		pt++;
-		req.height = *pt;
-
-		return req;
-	}
-
-	/**
-	 * The widget's desired size.
-	 */
-	public void setRequisition(GtkRequisition req)
-	{
-		int* pt = cast(int*)getStruct();
-
-		pt += 28/4;
-		*pt = req.width;
-
-		pt++;
-		*pt = req.height;
 	}
 
 	/**
@@ -7136,6 +7313,14 @@ structWrap: GdkWindow* Window
 #structWrap: GdkEventKey* EventKey
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
+
+out: gtk_im_context_get_preedit_string str
+out: gtk_im_context_get_preedit_string attrs
+out: gtk_im_context_get_preedit_string cursor_pos
+out: gtk_im_context_get_surrounding text
+out: gtk_im_context_get_surrounding cursor_index
+
+
 outFile: IMContext
 
 ###########################################################
@@ -7181,6 +7366,12 @@ struct: GtkRuler
 class: Ruler
 prefix: gtk_ruler_
 prefix: gtk_
+
+out: gtk_ruler_get_range lower
+out: gtk_ruler_get_range upper
+out: gtk_ruler_get_range position
+out: gtk_ruler_get_range max_size
+
 outFile: Ruler
 
 file: GtkHRuler.html
@@ -7229,6 +7420,13 @@ import: glib.Str
 structWrap: GtkRecentInfo* RecentInfo
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
+
+out: gtk_recent_info_get_application_info app_exec
+out: gtk_recent_info_get_application_info count
+out: gtk_recent_info_get_application_info time_
+array: gtk_recent_info_get_applications Return length
+array: gtk_recent_info_get_groups Return length
+
 outFile: RecentInfo
 
 file: GtkRecentChooser.html
@@ -7248,6 +7446,7 @@ import: glib.ListG
 structWrap: GList* ListG
 import: glib.ListSG
 structWrap: GSList* ListSG
+array: gtk_recent_chooser_get_uris Return length
 interface: RecentChooserIF
 outFile: RecentChooserT
 
@@ -7556,6 +7755,10 @@ structWrap: GtkWidget* Widget
 #structWrap: GtkTooltipsData* TooltipsData
 import: gtk.Window
 structWrap: GtkWindow* Window
+
+out: gtk_tooltips_get_info_from_tip_window tooltips
+out: gtk_tooltips_get_info_from_tip_window current_widget
+
 outFile: Tooltips
 
 #file: gtkTipsQuery.html

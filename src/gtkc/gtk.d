@@ -451,7 +451,7 @@ extern(C)
 	GtkBorder* function(GtkBorder* border)gtk_border_copy;
 	void function(GtkBorder* border)gtk_border_free;
 	
-	// gtk.Selections
+	// gtk.TargetList
 	
 	GtkTargetList* function(GtkTargetEntry* targets, guint ntargets)gtk_target_list_new;
 	GtkTargetList* function(GtkTargetList* list)gtk_target_list_ref;
@@ -466,6 +466,13 @@ extern(C)
 	gboolean function(GtkTargetList* list, GdkAtom target, guint* info)gtk_target_list_find;
 	void function(GtkTargetEntry* targets, gint nTargets)gtk_target_table_free;
 	GtkTargetEntry* function(GtkTargetList* list, gint* nTargets)gtk_target_table_new_from_list;
+	gboolean function(GdkAtom* targets, gint nTargets, gboolean writable)gtk_targets_include_image;
+	gboolean function(GdkAtom* targets, gint nTargets)gtk_targets_include_text;
+	gboolean function(GdkAtom* targets, gint nTargets)gtk_targets_include_uri;
+	gboolean function(GdkAtom* targets, gint nTargets, GtkTextBuffer* buffer)gtk_targets_include_rich_text;
+	
+	// gtk.Selections
+	
 	gboolean function(GtkWidget* widget, GdkAtom selection, guint32 time)gtk_selection_owner_set;
 	gboolean function(GdkDisplay* display, GtkWidget* widget, GdkAtom selection, guint32 time)gtk_selection_owner_set_for_display;
 	void function(GtkWidget* widget, GdkAtom selection, GdkAtom target, guint info)gtk_selection_add_target;
@@ -484,10 +491,6 @@ extern(C)
 	gboolean function(GtkSelectionData* selectionData)gtk_selection_data_targets_include_text;
 	gboolean function(GtkSelectionData* selectionData)gtk_selection_data_targets_include_uri;
 	gboolean function(GtkSelectionData* selectionData, GtkTextBuffer* buffer)gtk_selection_data_targets_include_rich_text;
-	gboolean function(GdkAtom* targets, gint nTargets, gboolean writable)gtk_targets_include_image;
-	gboolean function(GdkAtom* targets, gint nTargets)gtk_targets_include_text;
-	gboolean function(GdkAtom* targets, gint nTargets)gtk_targets_include_uri;
-	gboolean function(GdkAtom* targets, gint nTargets, GtkTextBuffer* buffer)gtk_targets_include_rich_text;
 	void function(GtkWidget* widget)gtk_selection_remove_all;
 	gboolean function(GtkWidget* widget, GdkEventSelection* event)gtk_selection_clear;
 	GtkSelectionData* function(GtkSelectionData* data)gtk_selection_data_copy;
@@ -3804,6 +3807,10 @@ Symbol[] gtkLinks =
 	{ "gtk_target_list_find",  cast(void**)& gtk_target_list_find},
 	{ "gtk_target_table_free",  cast(void**)& gtk_target_table_free},
 	{ "gtk_target_table_new_from_list",  cast(void**)& gtk_target_table_new_from_list},
+	{ "gtk_targets_include_image",  cast(void**)& gtk_targets_include_image},
+	{ "gtk_targets_include_text",  cast(void**)& gtk_targets_include_text},
+	{ "gtk_targets_include_uri",  cast(void**)& gtk_targets_include_uri},
+	{ "gtk_targets_include_rich_text",  cast(void**)& gtk_targets_include_rich_text},
 	{ "gtk_selection_owner_set",  cast(void**)& gtk_selection_owner_set},
 	{ "gtk_selection_owner_set_for_display",  cast(void**)& gtk_selection_owner_set_for_display},
 	{ "gtk_selection_add_target",  cast(void**)& gtk_selection_add_target},
@@ -3822,10 +3829,6 @@ Symbol[] gtkLinks =
 	{ "gtk_selection_data_targets_include_text",  cast(void**)& gtk_selection_data_targets_include_text},
 	{ "gtk_selection_data_targets_include_uri",  cast(void**)& gtk_selection_data_targets_include_uri},
 	{ "gtk_selection_data_targets_include_rich_text",  cast(void**)& gtk_selection_data_targets_include_rich_text},
-	{ "gtk_targets_include_image",  cast(void**)& gtk_targets_include_image},
-	{ "gtk_targets_include_text",  cast(void**)& gtk_targets_include_text},
-	{ "gtk_targets_include_uri",  cast(void**)& gtk_targets_include_uri},
-	{ "gtk_targets_include_rich_text",  cast(void**)& gtk_targets_include_rich_text},
 	{ "gtk_selection_remove_all",  cast(void**)& gtk_selection_remove_all},
 	{ "gtk_selection_clear",  cast(void**)& gtk_selection_clear},
 	{ "gtk_selection_data_copy",  cast(void**)& gtk_selection_data_copy},

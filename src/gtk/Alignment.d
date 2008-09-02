@@ -250,10 +250,10 @@ public class Alignment : Bin
 	 * paddingLeft =  location to store the padding for the left of the widget, or NULL
 	 * paddingRight =  location to store the padding for the right of the widget, or NULL
 	 */
-	public void getPadding(uint* paddingTop, uint* paddingBottom, uint* paddingLeft, uint* paddingRight)
+	public void getPadding(out uint paddingTop, out uint paddingBottom, out uint paddingLeft, out uint paddingRight)
 	{
 		// void gtk_alignment_get_padding (GtkAlignment *alignment,  guint *padding_top,  guint *padding_bottom,  guint *padding_left,  guint *padding_right);
-		gtk_alignment_get_padding(gtkAlignment, paddingTop, paddingBottom, paddingLeft, paddingRight);
+		gtk_alignment_get_padding(gtkAlignment, &paddingTop, &paddingBottom, &paddingLeft, &paddingRight);
 	}
 	
 	/**

@@ -152,7 +152,7 @@ public class TextView : Container
 		TextIter iter = new TextIter();
 		int windowX;
 		int windowY;
-		bufferToWindowCoords(TextWindowType.TEXT, 0, y, &windowX, &windowY);
+		bufferToWindowCoords(TextWindowType.TEXT, 0, y, windowX, windowY);
 		
 		gtk_text_view_get_line_at_y(gtkTextView, iter.getTextIterStruct(), y+y-windowY, null);
 		
@@ -926,10 +926,10 @@ public class TextView : Container
 	 * y =  a y coordinate
 	 * lineTop =  return location for top coordinate of the line
 	 */
-	public void getLineAtY(TextIter targetIter, int y, int* lineTop)
+	public void getLineAtY(TextIter targetIter, int y, out int lineTop)
 	{
 		// void gtk_text_view_get_line_at_y (GtkTextView *text_view,  GtkTextIter *target_iter,  gint y,  gint *line_top);
-		gtk_text_view_get_line_at_y(gtkTextView, (targetIter is null) ? null : targetIter.getTextIterStruct(), y, lineTop);
+		gtk_text_view_get_line_at_y(gtkTextView, (targetIter is null) ? null : targetIter.getTextIterStruct(), y, &lineTop);
 	}
 	
 	/**
@@ -941,10 +941,10 @@ public class TextView : Container
 	 * y =  return location for a y coordinate
 	 * height =  return location for a height
 	 */
-	public void getLineYrange(TextIter iter, int* y, int* height)
+	public void getLineYrange(TextIter iter, out int y, out int height)
 	{
 		// void gtk_text_view_get_line_yrange (GtkTextView *text_view,  const GtkTextIter *iter,  gint *y,  gint *height);
-		gtk_text_view_get_line_yrange(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), y, height);
+		gtk_text_view_get_line_yrange(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &y, &height);
 	}
 	
 	/**
@@ -984,10 +984,10 @@ public class TextView : Container
 	 * x =  x position, in buffer coordinates
 	 * y =  y position, in buffer coordinates
 	 */
-	public void getIterAtPosition(TextIter iter, int* trailing, int x, int y)
+	public void getIterAtPosition(TextIter iter, out int trailing, int x, int y)
 	{
 		// void gtk_text_view_get_iter_at_position (GtkTextView *text_view,  GtkTextIter *iter,  gint *trailing,  gint x,  gint y);
-		gtk_text_view_get_iter_at_position(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), trailing, x, y);
+		gtk_text_view_get_iter_at_position(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &trailing, x, y);
 	}
 	
 	/**
@@ -1002,10 +1002,10 @@ public class TextView : Container
 	 * windowX =  window x coordinate return location
 	 * windowY =  window y coordinate return location
 	 */
-	public void bufferToWindowCoords(GtkTextWindowType win, int bufferX, int bufferY, int* windowX, int* windowY)
+	public void bufferToWindowCoords(GtkTextWindowType win, int bufferX, int bufferY, out int windowX, out int windowY)
 	{
 		// void gtk_text_view_buffer_to_window_coords  (GtkTextView *text_view,  GtkTextWindowType win,  gint buffer_x,  gint buffer_y,  gint *window_x,  gint *window_y);
-		gtk_text_view_buffer_to_window_coords(gtkTextView, win, bufferX, bufferY, windowX, windowY);
+		gtk_text_view_buffer_to_window_coords(gtkTextView, win, bufferX, bufferY, &windowX, &windowY);
 	}
 	
 	/**
@@ -1020,10 +1020,10 @@ public class TextView : Container
 	 * bufferX =  buffer x coordinate return location
 	 * bufferY =  buffer y coordinate return location
 	 */
-	public void windowToBufferCoords(GtkTextWindowType win, int windowX, int windowY, int* bufferX, int* bufferY)
+	public void windowToBufferCoords(GtkTextWindowType win, int windowX, int windowY, out int bufferX, out int bufferY)
 	{
 		// void gtk_text_view_window_to_buffer_coords  (GtkTextView *text_view,  GtkTextWindowType win,  gint window_x,  gint window_y,  gint *buffer_x,  gint *buffer_y);
-		gtk_text_view_window_to_buffer_coords(gtkTextView, win, windowX, windowY, bufferX, bufferY);
+		gtk_text_view_window_to_buffer_coords(gtkTextView, win, windowX, windowY, &bufferX, &bufferY);
 	}
 	
 	/**

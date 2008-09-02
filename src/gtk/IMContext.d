@@ -329,10 +329,14 @@ public class IMContext : ObjectG
 	 * cursorPos =  location to store position of cursor (in characters)
 	 *  within the preedit string.
 	 */
-	public void getPreeditString(char** str, PangoAttrList** attrs, int* cursorPos)
+	public void getPreeditString(out string str, out PangoAttrList* attrs, out int cursorPos)
 	{
 		// void gtk_im_context_get_preedit_string (GtkIMContext *context,  gchar **str,  PangoAttrList **attrs,  gint *cursor_pos);
-		gtk_im_context_get_preedit_string(gtkIMContext, str, attrs, cursorPos);
+		char* outstr = null;
+		
+		gtk_im_context_get_preedit_string(gtkIMContext, &outstr, &attrs, &cursorPos);
+		
+		str = Str.toString(outstr);
 	}
 	
 	/**
@@ -450,10 +454,15 @@ public class IMContext : ObjectG
 	 *  within text.
 	 * Returns: TRUE if surrounding text was provided; in this case you must free the result stored in *text.
 	 */
-	public int getSurrounding(char** text, int* cursorIndex)
+	public int getSurrounding(out string text, out int cursorIndex)
 	{
 		// gboolean gtk_im_context_get_surrounding (GtkIMContext *context,  gchar **text,  gint *cursor_index);
-		return gtk_im_context_get_surrounding(gtkIMContext, text, cursorIndex);
+		char* outtext = null;
+		
+		auto p = gtk_im_context_get_surrounding(gtkIMContext, &outtext, &cursorIndex);
+		
+		text = Str.toString(outtext);
+		return p;
 	}
 	
 	/**

@@ -296,13 +296,14 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * accelKey =  key value of the accelerator
 	 * accelMods =  modifier combination of the accelerator
-	 * nEntries =  location to return the number of entries found, or NULL
 	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed.
 	 */
-	public GtkAccelGroupEntry* query(uint accelKey, GdkModifierType accelMods, uint* nEntries)
+	public GtkAccelGroupEntry[] query(uint accelKey, GdkModifierType accelMods)
 	{
 		// GtkAccelGroupEntry* gtk_accel_group_query (GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods,  guint *n_entries);
-		return gtk_accel_group_query(gtkAccelGroup, accelKey, accelMods, nEntries);
+		uint nEntries;
+		auto p = gtk_accel_group_query(gtkAccelGroup, accelKey, accelMods, &nEntries);
+		return p[0 .. nEntries];
 	}
 	
 	/**
@@ -437,10 +438,10 @@ public class AccelGroup : ObjectG
 	 * acceleratorKey =  return location for accelerator keyval
 	 * acceleratorMods =  return location for accelerator modifier mask
 	 */
-	public static void acceleratorParse(string accelerator, uint* acceleratorKey, GdkModifierType* acceleratorMods)
+	public static void acceleratorParse(string accelerator, out uint acceleratorKey, out GdkModifierType acceleratorMods)
 	{
 		// void gtk_accelerator_parse (const gchar *accelerator,  guint *accelerator_key,  GdkModifierType *accelerator_mods);
-		gtk_accelerator_parse(Str.toStringz(accelerator), acceleratorKey, acceleratorMods);
+		gtk_accelerator_parse(Str.toStringz(accelerator), &acceleratorKey, &acceleratorMods);
 	}
 	
 	/**

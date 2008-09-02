@@ -280,25 +280,6 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	mixin TreeSortableT!(GtkListStore);
 	
 	/**
-	 * Non-vararg creation function. Used primarily by language bindings.
-	 * Params:
-	 *  types = an array of GType types for the columns, from first to last
-	 * Returns:
-	 *  a new GtkListStore
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GType[] types)
-	{
-		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		auto p = gtk_list_store_newv(types.length, cast(GType*)(types.ptr));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_list_store_newv");
-		}
-		this(cast(GtkListStore*)p);
-	}
-	
-	/**
 	 * Creates a top level iteractor.
 	 * I don't think lists have but the top level iteractor
 	 */
@@ -366,17 +347,16 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
 	 * Params:
-	 * nColumns =  number of columns in the list store
 	 * types =  an array of GType types for the columns, from first to last
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int nColumns, GType* types)
+	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		auto p = gtk_list_store_newv(nColumns, types);
+		auto p = gtk_list_store_newv(types.length, types.ptr);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_list_store_newv(nColumns, types)");
+			throw new ConstructionException("null returned by gtk_list_store_newv(types.length, types.ptr)");
 		}
 		this(cast(GtkListStore*) p);
 	}
@@ -387,13 +367,12 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * function after a row has been added, or a method on the GtkTreeModel
 	 * interface is called.
 	 * Params:
-	 * nColumns =  Number of columns for the list store
 	 * types =  An array length n of GTypes
 	 */
-	public void setColumnTypes(int nColumns, GType* types)
+	public void setColumnTypes(GType[] types)
 	{
 		// void gtk_list_store_set_column_types (GtkListStore *list_store,  gint n_columns,  GType *types);
-		gtk_list_store_set_column_types(gtkListStore, nColumns, types);
+		gtk_list_store_set_column_types(gtkListStore, types.length, types.ptr);
 	}
 	
 	/**
@@ -435,12 +414,11 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * iter =  A valid GtkTreeIter for the row being modified
 	 * columns =  an array of column numbers
 	 * values =  an array of GValues
-	 * nValues =  the length of the columns and values arrays
 	 */
-	public void setValuesv(TreeIter iter, int* columns, Value values, int nValues)
+	public void setValuesv(TreeIter iter, int[] columns, GValue[] values)
 	{
 		// void gtk_list_store_set_valuesv (GtkListStore *list_store,  GtkTreeIter *iter,  gint *columns,  GValue *values,  gint n_values);
-		gtk_list_store_set_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), columns, (values is null) ? null : values.getValueStruct(), nValues);
+		gtk_list_store_set_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, values.ptr, values.length);
 	}
 	
 	/**
@@ -514,12 +492,11 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * position =  position to insert the new row
 	 * columns =  an array of column numbers
 	 * values =  an array of GValues
-	 * nValues =  the length of the columns and values arrays
 	 */
-	public void insertWithValuesv(TreeIter iter, int position, int* columns, Value values, int nValues)
+	public void insertWithValuesv(TreeIter iter, int position, int[] columns, GValue[] values)
 	{
 		// void gtk_list_store_insert_with_valuesv (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  gint *columns,  GValue *values,  gint n_values);
-		gtk_list_store_insert_with_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position, columns, (values is null) ? null : values.getValueStruct(), nValues);
+		gtk_list_store_insert_with_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position, columns.ptr, values.ptr, values.length);
 	}
 	
 	/**
@@ -582,10 +559,10 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 *  to its old position before the re-ordering,
 	 *  i.e. new_order[newpos] = oldpos.
 	 */
-	public void reorder(int* newOrder)
+	public void reorder(int[] newOrder)
 	{
 		// void gtk_list_store_reorder (GtkListStore *store,  gint *new_order);
-		gtk_list_store_reorder(gtkListStore, newOrder);
+		gtk_list_store_reorder(gtkListStore, newOrder.ptr);
 	}
 	
 	/**

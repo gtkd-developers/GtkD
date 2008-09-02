@@ -1792,16 +1792,15 @@ public class TextBuffer : ObjectG
 	 * format =  the rich text format to use for deserializing
 	 * iter =  insertion point for the deserialized text
 	 * data =  data to deserialize
-	 * length =  length of data
 	 * Returns: TRUE on success, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
-	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, byte* data, uint length)
+	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, byte[] data)
 	{
 		// gboolean gtk_text_buffer_deserialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  GtkTextIter *iter,  const guint8 *data,  gsize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data, length, &err);
+		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, data.length, &err);
 		
 		if (err !is null)
 		{
@@ -1872,14 +1871,14 @@ public class TextBuffer : ObjectG
 	 * with buffer using gtk_text_buffer_register_deserialize_format() or
 	 * gtk_text_buffer_register_deserialize_tagset()
 	 * Since 2.10
-	 * Params:
-	 * nFormats =  return location for the number of formats
 	 * Returns: an array of GdkAtoms representing the registered formats.
 	 */
-	public GdkAtom* getDeserializeFormats(int* nFormats)
+	public GdkAtom[] getDeserializeFormats()
 	{
 		// GdkAtom* gtk_text_buffer_get_deserialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
-		return gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, nFormats);
+		int nFormats;
+		auto p = gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, &nFormats);
+		return p[0 .. nFormats];
 	}
 	
 	/**
@@ -1902,14 +1901,14 @@ public class TextBuffer : ObjectG
 	 * with buffer using gtk_text_buffer_register_serialize_format() or
 	 * gtk_text_buffer_register_serialize_tagset()
 	 * Since 2.10
-	 * Params:
-	 * nFormats =  return location for the number of formats
 	 * Returns: an array of GdkAtoms representing the registered formats.
 	 */
-	public GdkAtom* getSerializeFormats(int* nFormats)
+	public GdkAtom[] getSerializeFormats()
 	{
 		// GdkAtom* gtk_text_buffer_get_serialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
-		return gtk_text_buffer_get_serialize_formats(gtkTextBuffer, nFormats);
+		int nFormats;
+		auto p = gtk_text_buffer_get_serialize_formats(gtkTextBuffer, &nFormats);
+		return p[0 .. nFormats];
 	}
 	
 	/**
@@ -2000,13 +1999,14 @@ public class TextBuffer : ObjectG
 	 * format =  the rich text format to use for serializing
 	 * start =  start of block of text to serialize
 	 * end =  end of block of test to serialize
-	 * length =  return location for the length of the serialized data
 	 * Returns: the serialized data, encoded as format
 	 */
-	public byte* serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end, uint* length)
+	public byte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
 	{
 		// guint8* gtk_text_buffer_serialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length);
-		return gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), length);
+		uint length;
+		auto p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
+		return p[0 .. length];
 	}
 	
 	/**

@@ -564,14 +564,13 @@ public template RecentChooserT(TStruct)
 	 * properties of chooser.
 	 * Since the returned array is NULL terminated, length may be NULL.
 	 * Since 2.10
-	 * Params:
-	 * length =  return location for a the length of the URI list, or NULL
 	 * Returns: A newly allocated, NULL terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public string[] getUris(uint* length)
+	public string[] getUris()
 	{
 		// gchar** gtk_recent_chooser_get_uris (GtkRecentChooser *chooser,  gsize *length);
-		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserTStruct(), length));
+		uint length;
+		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserTStruct(), &length));
 	}
 	
 	/**

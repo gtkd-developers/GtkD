@@ -1304,10 +1304,14 @@ public class TreeView : Container
 	 * path =  A pointer to be filled with the current cursor path, or NULL
 	 * focusColumn =  A pointer to be filled with the current focus column, or NULL
 	 */
-	public void getCursor(GtkTreePath** path, GtkTreeViewColumn** focusColumn)
+	public void getCursor(GtkTreePath** path, out TreeViewColumn focusColumn)
 	{
 		// void gtk_tree_view_get_cursor (GtkTreeView *tree_view,  GtkTreePath **path,  GtkTreeViewColumn **focus_column);
-		gtk_tree_view_get_cursor(gtkTreeView, path, focusColumn);
+		GtkTreeViewColumn* outfocusColumn = null;
+		
+		gtk_tree_view_get_cursor(gtkTreeView, path, &outfocusColumn);
+		
+		focusColumn = new TreeViewColumn(outfocusColumn);
 	}
 	
 	/**
@@ -1537,10 +1541,17 @@ public class TreeView : Container
 	 * endPath =  Return location for end of region, or NULL.
 	 * Returns: TRUE, if valid paths were placed in start_path and end_path.
 	 */
-	public int getVisibleRange(GtkTreePath** startPath, GtkTreePath** endPath)
+	public int getVisibleRange(out TreePath startPath, out TreePath endPath)
 	{
 		// gboolean gtk_tree_view_get_visible_range (GtkTreeView *tree_view,  GtkTreePath **start_path,  GtkTreePath **end_path);
-		return gtk_tree_view_get_visible_range(gtkTreeView, startPath, endPath);
+		GtkTreePath* outstartPath = null;
+		GtkTreePath* outendPath = null;
+		
+		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath);
+		
+		startPath = new TreePath(outstartPath);
+		endPath = new TreePath(outendPath);
+		return p;
 	}
 	
 	/**
@@ -1574,10 +1585,10 @@ public class TreeView : Container
 	 * tx =  return location for tree X coordinate
 	 * ty =  return location for tree Y coordinate
 	 */
-	public void widgetToTreeCoords(int wx, int wy, int* tx, int* ty)
+	public void widgetToTreeCoords(int wx, int wy, out int tx, out int ty)
 	{
 		// void gtk_tree_view_widget_to_tree_coords (GtkTreeView *tree_view,  gint wx,  gint wy,  gint *tx,  gint *ty);
-		gtk_tree_view_widget_to_tree_coords(gtkTreeView, wx, wy, tx, ty);
+		gtk_tree_view_widget_to_tree_coords(gtkTreeView, wx, wy, &tx, &ty);
 	}
 	
 	/**
@@ -1594,10 +1605,10 @@ public class TreeView : Container
 	 * wx =  return location for X coordinate relative to bin_window
 	 * wy =  return location for Y coordinate relative to bin_window
 	 */
-	public void treeToWidgetCoords(int tx, int ty, int* wx, int* wy)
+	public void treeToWidgetCoords(int tx, int ty, out int wx, out int wy)
 	{
 		// void gtk_tree_view_tree_to_widget_coords (GtkTreeView *tree_view,  gint tx,  gint ty,  gint *wx,  gint *wy);
-		gtk_tree_view_tree_to_widget_coords(gtkTreeView, tx, ty, wx, wy);
+		gtk_tree_view_tree_to_widget_coords(gtkTreeView, tx, ty, &wx, &wy);
 	}
 	
 	/**
@@ -1610,10 +1621,10 @@ public class TreeView : Container
 	 * tx =  return location for tree X coordinate
 	 * ty =  return location for tree Y coordinate
 	 */
-	public void convertBinWindowToTreeCoords(int bx, int by, int* tx, int* ty)
+	public void convertBinWindowToTreeCoords(int bx, int by, out int tx, out int ty)
 	{
 		// void gtk_tree_view_convert_bin_window_to_tree_coords  (GtkTreeView *tree_view,  gint bx,  gint by,  gint *tx,  gint *ty);
-		gtk_tree_view_convert_bin_window_to_tree_coords(gtkTreeView, bx, by, tx, ty);
+		gtk_tree_view_convert_bin_window_to_tree_coords(gtkTreeView, bx, by, &tx, &ty);
 	}
 	
 	/**
@@ -1626,10 +1637,10 @@ public class TreeView : Container
 	 * wx =  return location for widget X coordinate
 	 * wy =  return location for widget Y coordinate
 	 */
-	public void convertBinWindowToWidgetCoords(int bx, int by, int* wx, int* wy)
+	public void convertBinWindowToWidgetCoords(int bx, int by, out int wx, out int wy)
 	{
 		// void gtk_tree_view_convert_bin_window_to_widget_coords  (GtkTreeView *tree_view,  gint bx,  gint by,  gint *wx,  gint *wy);
-		gtk_tree_view_convert_bin_window_to_widget_coords(gtkTreeView, bx, by, wx, wy);
+		gtk_tree_view_convert_bin_window_to_widget_coords(gtkTreeView, bx, by, &wx, &wy);
 	}
 	
 	/**
@@ -1642,10 +1653,10 @@ public class TreeView : Container
 	 * bx =  return location for X coordinate relative to bin_window
 	 * by =  return location for Y coordinate relative to bin_window
 	 */
-	public void convertTreeToBinWindowCoords(int tx, int ty, int* bx, int* by)
+	public void convertTreeToBinWindowCoords(int tx, int ty, out int bx, out int by)
 	{
 		// void gtk_tree_view_convert_tree_to_bin_window_coords  (GtkTreeView *tree_view,  gint tx,  gint ty,  gint *bx,  gint *by);
-		gtk_tree_view_convert_tree_to_bin_window_coords(gtkTreeView, tx, ty, bx, by);
+		gtk_tree_view_convert_tree_to_bin_window_coords(gtkTreeView, tx, ty, &bx, &by);
 	}
 	
 	/**
@@ -1658,10 +1669,10 @@ public class TreeView : Container
 	 * wx =  return location for widget X coordinate
 	 * wy =  return location for widget Y coordinate
 	 */
-	public void convertTreeToWidgetCoords(int tx, int ty, int* wx, int* wy)
+	public void convertTreeToWidgetCoords(int tx, int ty, out int wx, out int wy)
 	{
 		// void gtk_tree_view_convert_tree_to_widget_coords  (GtkTreeView *tree_view,  gint tx,  gint ty,  gint *wx,  gint *wy);
-		gtk_tree_view_convert_tree_to_widget_coords(gtkTreeView, tx, ty, wx, wy);
+		gtk_tree_view_convert_tree_to_widget_coords(gtkTreeView, tx, ty, &wx, &wy);
 	}
 	
 	/**
@@ -1674,10 +1685,10 @@ public class TreeView : Container
 	 * bx =  return location for bin_window X coordinate
 	 * by =  return location for bin_window Y coordinate
 	 */
-	public void convertWidgetToBinWindowCoords(int wx, int wy, int* bx, int* by)
+	public void convertWidgetToBinWindowCoords(int wx, int wy, out int bx, out int by)
 	{
 		// void gtk_tree_view_convert_widget_to_bin_window_coords  (GtkTreeView *tree_view,  gint wx,  gint wy,  gint *bx,  gint *by);
-		gtk_tree_view_convert_widget_to_bin_window_coords(gtkTreeView, wx, wy, bx, by);
+		gtk_tree_view_convert_widget_to_bin_window_coords(gtkTreeView, wx, wy, &bx, &by);
 	}
 	
 	/**
@@ -1690,24 +1701,23 @@ public class TreeView : Container
 	 * tx =  return location for tree X coordinate
 	 * ty =  return location for tree Y coordinate
 	 */
-	public void convertWidgetToTreeCoords(int wx, int wy, int* tx, int* ty)
+	public void convertWidgetToTreeCoords(int wx, int wy, out int tx, out int ty)
 	{
 		// void gtk_tree_view_convert_widget_to_tree_coords  (GtkTreeView *tree_view,  gint wx,  gint wy,  gint *tx,  gint *ty);
-		gtk_tree_view_convert_widget_to_tree_coords(gtkTreeView, wx, wy, tx, ty);
+		gtk_tree_view_convert_widget_to_tree_coords(gtkTreeView, wx, wy, &tx, &ty);
 	}
 	
 	/**
 	 * Turns tree_view into a drop destination for automatic DND.
 	 * Params:
 	 * targets =  the table of targets that the drag will support
-	 * nTargets =  the number of items in targets
 	 * actions =  the bitmask of possible actions for a drag from this
 	 *  widget
 	 */
-	public void enableModelDragDest(GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
+	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_tree_view_enable_model_drag_dest  (GtkTreeView *tree_view,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_tree_view_enable_model_drag_dest(gtkTreeView, targets, nTargets, actions);
+		gtk_tree_view_enable_model_drag_dest(gtkTreeView, targets.ptr, targets.length, actions);
 	}
 	
 	/**
@@ -1715,14 +1725,13 @@ public class TreeView : Container
 	 * Params:
 	 * startButtonMask =  Mask of allowed buttons to start drag
 	 * targets =  the table of targets that the drag will support
-	 * nTargets =  the number of items in targets
 	 * actions =  the bitmask of possible actions for a drag from this
 	 *  widget
 	 */
-	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
+	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_tree_view_enable_model_drag_source  (GtkTreeView *tree_view,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, targets, nTargets, actions);
+		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, targets.ptr, targets.length, actions);
 	}
 	
 	/**
@@ -1761,10 +1770,14 @@ public class TreeView : Container
 	 * path =  Return location for the path of the highlighted row, or NULL.
 	 * pos =  Return location for the drop position, or NULL
 	 */
-	public void getDragDestRow(GtkTreePath** path, GtkTreeViewDropPosition* pos)
+	public void getDragDestRow(out TreePath path, out GtkTreeViewDropPosition pos)
 	{
 		// void gtk_tree_view_get_drag_dest_row (GtkTreeView *tree_view,  GtkTreePath **path,  GtkTreeViewDropPosition *pos);
-		gtk_tree_view_get_drag_dest_row(gtkTreeView, path, pos);
+		GtkTreePath* outpath = null;
+		
+		gtk_tree_view_get_drag_dest_row(gtkTreeView, &outpath, &pos);
+		
+		path = new TreePath(outpath);
 	}
 	
 	/**
@@ -1777,10 +1790,15 @@ public class TreeView : Container
 	 * pos =  Return location for the drop position, or NULL
 	 * Returns: whether there is a row at the given position.
 	 */
-	public int getDestRowAtPos(int dragX, int dragY, GtkTreePath** path, GtkTreeViewDropPosition* pos)
+	public int getDestRowAtPos(int dragX, int dragY, out TreePath path, out GtkTreeViewDropPosition pos)
 	{
 		// gboolean gtk_tree_view_get_dest_row_at_pos (GtkTreeView *tree_view,  gint drag_x,  gint drag_y,  GtkTreePath **path,  GtkTreeViewDropPosition *pos);
-		return gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, path, pos);
+		GtkTreePath* outpath = null;
+		
+		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos);
+		
+		path = new TreePath(outpath);
+		return p;
 	}
 	
 	/**
@@ -2201,10 +2219,17 @@ public class TreeView : Container
 	 * iter =  a pointer to receive a GtkTreeIter or NULL
 	 * Returns: whether or not the given tooltip context points to a row.
 	 */
-	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, TreeIter iter)
+	public int getTooltipContext(int* x, int* y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
 	{
 		// gboolean gtk_tree_view_get_tooltip_context (GtkTreeView *tree_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
-		return gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, model, path, (iter is null) ? null : iter.getTreeIterStruct());
+		GtkTreeModel* outmodel = null;
+		GtkTreePath* outpath = null;
+		
+		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
+		
+		model = new TreeModel(outmodel);
+		path = new TreePath(outpath);
+		return p;
 	}
 	
 	/**

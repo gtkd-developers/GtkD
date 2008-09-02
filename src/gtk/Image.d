@@ -46,7 +46,12 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.IconSet
+ * 	- gdk.ImageGdk
+ * 	- gdk.Bitmap
  * 	- gdk.Pixbuf
+ * 	- gdk.Pixmap
+ * 	- gdkpixbuf.PixbufAnimation
  * 	- gtk.IconSet
  * 	- gdk.ImageGdk
  * 	- gdk.Bitmap
@@ -55,6 +60,7 @@
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkPixbufAnimation* -> PixbufAnimation
  * 	- GdkPixmap* -> Pixmap
  * 	- GtkIconSet* -> IconSet
  * module aliases:
@@ -71,7 +77,12 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.IconSet;
+private import gdk.ImageGdk;
+private import gdk.Bitmap;
 private import gdk.Pixbuf;
+private import gdk.Pixmap;
+private import gdkpixbuf.PixbufAnimation;
 private import gtk.IconSet;
 private import gdk.ImageGdk;
 private import gdk.Bitmap;
@@ -249,10 +260,14 @@ public class Image : Misc
 	 * iconSet =  location to store a GtkIconSet
 	 * size =  location to store a stock icon size
 	 */
-	public void getIconSet(GtkIconSet** iconSet, GtkIconSize* size)
+	public void getIconSet(out IconSet iconSet, out GtkIconSize size)
 	{
 		// void gtk_image_get_icon_set (GtkImage *image,  GtkIconSet **icon_set,  GtkIconSize *size);
-		gtk_image_get_icon_set(gtkImage, iconSet, size);
+		GtkIconSet* outiconSet = null;
+		
+		gtk_image_get_icon_set(gtkImage, &outiconSet, &size);
+		
+		iconSet = new IconSet(outiconSet);
 	}
 	
 	/**
@@ -265,10 +280,16 @@ public class Image : Misc
 	 * gdkImage =  return location for a GtkImage
 	 * mask =  return location for a GdkBitmap
 	 */
-	public void getImage(GdkImage** gdkImage, GdkBitmap** mask)
+	public void getImage(out ImageGdk gdkImage, out Bitmap mask)
 	{
 		// void gtk_image_get_image (GtkImage *image,  GdkImage **gdk_image,  GdkBitmap **mask);
-		gtk_image_get_image(gtkImage, gdkImage, mask);
+		GdkImage* outgdkImage = null;
+		GdkBitmap* outmask = null;
+		
+		gtk_image_get_image(gtkImage, &outgdkImage, &outmask);
+		
+		gdkImage = new ImageGdk(outgdkImage);
+		mask = new Bitmap(outmask);
 	}
 	
 	/**
@@ -300,10 +321,16 @@ public class Image : Misc
 	 * pixmap =  location to store the pixmap, or NULL
 	 * mask =  location to store the mask, or NULL
 	 */
-	public void getPixmap(GdkPixmap** pixmap, GdkBitmap** mask)
+	public void getPixmap(out Pixmap pixmap, out Bitmap mask)
 	{
 		// void gtk_image_get_pixmap (GtkImage *image,  GdkPixmap **pixmap,  GdkBitmap **mask);
-		gtk_image_get_pixmap(gtkImage, pixmap, mask);
+		GdkPixmap* outpixmap = null;
+		GdkBitmap* outmask = null;
+		
+		gtk_image_get_pixmap(gtkImage, &outpixmap, &outmask);
+		
+		pixmap = new Pixmap(outpixmap);
+		mask = new Bitmap(outmask);
 	}
 	
 	/**
@@ -316,10 +343,14 @@ public class Image : Misc
 	 * stockId =  place to store a stock icon name
 	 * size =  place to store a stock icon size
 	 */
-	public void getStock(char** stockId, GtkIconSize* size)
+	public void getStock(out string stockId, out GtkIconSize size)
 	{
 		// void gtk_image_get_stock (GtkImage *image,  gchar **stock_id,  GtkIconSize *size);
-		gtk_image_get_stock(gtkImage, stockId, size);
+		char* outstockId = null;
+		
+		gtk_image_get_stock(gtkImage, &outstockId, &size);
+		
+		stockId = Str.toString(outstockId);
 	}
 	
 	/**
@@ -330,10 +361,15 @@ public class Image : Misc
 	 * returned animation.
 	 * Returns: the displayed animation, or NULL if the image is empty
 	 */
-	public GdkPixbufAnimation* getAnimation()
+	public PixbufAnimation getAnimation()
 	{
 		// GdkPixbufAnimation* gtk_image_get_animation (GtkImage *image);
-		return gtk_image_get_animation(gtkImage);
+		auto p = gtk_image_get_animation(gtkImage);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**
@@ -347,10 +383,14 @@ public class Image : Misc
 	 * iconName =  place to store an icon name
 	 * size =  place to store an icon size
 	 */
-	public void getIconName(char** iconName, GtkIconSize* size)
+	public void getIconName(out string iconName, out GtkIconSize size)
 	{
 		// void gtk_image_get_icon_name (GtkImage *image,  G_CONST_RETURN gchar **icon_name,  GtkIconSize *size);
-		gtk_image_get_icon_name(gtkImage, iconName, size);
+		char* outiconName = null;
+		
+		gtk_image_get_icon_name(gtkImage, &outiconName, &size);
+		
+		iconName = Str.toString(outiconName);
 	}
 	
 	/**
@@ -501,13 +541,13 @@ public class Image : Misc
 	 * animation =  an animation
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GdkPixbufAnimation* animation)
+	public this (PixbufAnimation animation)
 	{
 		// GtkWidget* gtk_image_new_from_animation (GdkPixbufAnimation *animation);
-		auto p = gtk_image_new_from_animation(animation);
+		auto p = gtk_image_new_from_animation((animation is null) ? null : animation.getPixbufAnimationStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_image_new_from_animation(animation)");
+			throw new ConstructionException("null returned by gtk_image_new_from_animation((animation is null) ? null : animation.getPixbufAnimationStruct())");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -588,10 +628,10 @@ public class Image : Misc
 	 * Params:
 	 * animation =  the GdkPixbufAnimation
 	 */
-	public void setFromAnimation(GdkPixbufAnimation* animation)
+	public void setFromAnimation(PixbufAnimation animation)
 	{
 		// void gtk_image_set_from_animation (GtkImage *image,  GdkPixbufAnimation *animation);
-		gtk_image_set_from_animation(gtkImage, animation);
+		gtk_image_set_from_animation(gtkImage, (animation is null) ? null : animation.getPixbufAnimationStruct());
 	}
 	
 	/**
@@ -654,10 +694,16 @@ public class Image : Misc
 	 * val = return location for a GdkImage
 	 * mask = a GdkBitmap that indicates which parts of the image should be transparent.
 	 */
-	public void get(GdkImage** val, GdkBitmap** mask)
+	public void get(out ImageGdk val, out Bitmap mask)
 	{
 		// void gtk_image_get (GtkImage *image,  GdkImage **val,  GdkBitmap **mask);
-		gtk_image_get(gtkImage, val, mask);
+		GdkImage* outval = null;
+		GdkBitmap* outmask = null;
+		
+		gtk_image_get(gtkImage, &outval, &outmask);
+		
+		val = new ImageGdk(outval);
+		mask = new Bitmap(outmask);
 	}
 	
 	/**

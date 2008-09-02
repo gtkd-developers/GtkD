@@ -432,10 +432,6 @@ public class Type
 		// GType* g_type_children (GType type,  guint *n_children);
 		uint nChildren;
 		auto p = g_type_children(type, &nChildren);
-		if(p is null)
-		{
-			return null;
-		}
 		return p[0 .. nChildren];
 	}
 	
@@ -452,10 +448,6 @@ public class Type
 		// GType* g_type_interfaces (GType type,  guint *n_interfaces);
 		uint nInterfaces;
 		auto p = g_type_interfaces(type, &nInterfaces);
-		if(p is null)
-		{
-			return null;
-		}
 		return p[0 .. nInterfaces];
 	}
 	
@@ -471,10 +463,6 @@ public class Type
 		// GType* g_type_interface_prerequisites (GType interface_type,  guint *n_prerequisites);
 		uint nPrerequisites;
 		auto p = g_type_interface_prerequisites(interfaceType, &nPrerequisites);
-		if(p is null)
-		{
-			return null;
-		}
 		return p[0 .. nPrerequisites];
 	}
 	

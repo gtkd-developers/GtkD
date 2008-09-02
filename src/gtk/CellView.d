@@ -269,10 +269,10 @@ public class CellView : Widget, CellLayoutIF
 	 * requisition =  return location for the size
 	 * Returns: TRUE
 	 */
-	public int getSizeOfRow(TreePath path, GtkRequisition* requisition)
+	public int getSizeOfRow(TreePath path, out GtkRequisition requisition)
 	{
 		// gboolean gtk_cell_view_get_size_of_row (GtkCellView *cell_view,  GtkTreePath *path,  GtkRequisition *requisition);
-		return gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), requisition);
+		return gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), &requisition);
 	}
 	
 	/**

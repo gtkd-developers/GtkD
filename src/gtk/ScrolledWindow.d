@@ -469,10 +469,10 @@ public class ScrolledWindow : Bin
 	 * hscrollbarPolicy =  location to store the policy for the horizontal scrollbar, or NULL.
 	 * vscrollbarPolicy =  location to store the policy for the horizontal scrollbar, or NULL.
 	 */
-	public void getPolicy(GtkPolicyType* hscrollbarPolicy, GtkPolicyType* vscrollbarPolicy)
+	public void getPolicy(out GtkPolicyType hscrollbarPolicy, out GtkPolicyType vscrollbarPolicy)
 	{
 		// void gtk_scrolled_window_get_policy (GtkScrolledWindow *scrolled_window,  GtkPolicyType *hscrollbar_policy,  GtkPolicyType *vscrollbar_policy);
-		gtk_scrolled_window_get_policy(gtkScrolledWindow, hscrollbarPolicy, vscrollbarPolicy);
+		gtk_scrolled_window_get_policy(gtkScrolledWindow, &hscrollbarPolicy, &vscrollbarPolicy);
 	}
 	
 	/**

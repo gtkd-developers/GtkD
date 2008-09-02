@@ -87,7 +87,7 @@ class CustomList : TreeModel
 	int getIter(TreeIter iter, TreePath path)
 	{
 		CustomRecord* record;
-		int*          indices;
+		int[]         indices;
 		int           n, depth;
 
 		indices = path.getIndices();

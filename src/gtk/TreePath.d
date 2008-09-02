@@ -338,10 +338,11 @@ public class TreePath
 	 * representing a node in a tree. This value should not be freed.
 	 * Returns: The current indices, or NULL.
 	 */
-	public int* getIndices()
+	public int[] getIndices()
 	{
 		// gint* gtk_tree_path_get_indices (GtkTreePath *path);
-		return gtk_tree_path_get_indices(gtkTreePath);
+		auto p = gtk_tree_path_get_indices(gtkTreePath);
+		return p[0 .. getDepth()];
 	}
 	
 	/**

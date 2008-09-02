@@ -104,7 +104,7 @@ public interface TreeSortableIF
 	 * order =  The GtkSortType to be filled in
 	 * Returns: TRUE if the sort column is not one of the special sort column ids.
 	 */
-	public int getSortColumnId(int* sortColumnId, GtkSortType* order);
+	public int getSortColumnId(out int sortColumnId, out GtkSortType order);
 	
 	/**
 	 * Sets the current sort column to be sort_column_id. The sortable will

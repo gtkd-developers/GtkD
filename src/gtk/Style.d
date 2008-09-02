@@ -490,13 +490,12 @@ public class Style : ObjectG
 	 * stateType =  a state
 	 * shadowType =  type of shadow to draw
 	 * points =  an array of GdkPoints
-	 * npoints =  length of points
 	 * fill =  TRUE if the polygon should be filled
 	 */
-	public void drawPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, GdkPoint* points, int npoints, int fill)
+	public void drawPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, GdkPoint[] points, int fill)
 	{
 		// void gtk_draw_polygon (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkPoint *points,  gint npoints,  gboolean fill);
-		gtk_draw_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, points, npoints, fill);
+		gtk_draw_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, points.ptr, points.length, fill);
 	}
 	
 	/**
@@ -1073,13 +1072,12 @@ public class Style : ObjectG
 	 * widget =  the widget (may be NULL)
 	 * detail =  a style detail (may be NULL)
 	 * points =  an array of GdkPoints
-	 * npoints =  length of points
 	 * fill =  TRUE if the polygon should be filled
 	 */
-	public void paintPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GdkPoint* points, int npoints, int fill)
+	public void paintPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GdkPoint[] points, int fill)
 	{
 		// void gtk_paint_polygon (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GdkPoint *points,  gint npoints,  gboolean fill);
-		gtk_paint_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), points, npoints, fill);
+		gtk_paint_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), points.ptr, points.length, fill);
 	}
 	
 	/**

@@ -453,10 +453,14 @@ public class Label : Misc
 	 * Params:
 	 * str = The reference to the pointer you want to point to the text.
 	 */
-	public void get(char** str)
+	public void get(out string str)
 	{
 		// void gtk_label_get (GtkLabel *label,  gchar **str);
-		gtk_label_get(gtkLabel, str);
+		char* outstr = null;
+		
+		gtk_label_get(gtkLabel, &outstr);
+		
+		str = Str.toString(outstr);
 	}
 	
 	/**
@@ -522,10 +526,10 @@ public class Label : Misc
 	 * x =  location to store X offset of layout, or NULL
 	 * y =  location to store Y offset of layout, or NULL
 	 */
-	public void getLayoutOffsets(int* x, int* y)
+	public void getLayoutOffsets(out int x, out int y)
 	{
 		// void gtk_label_get_layout_offsets (GtkLabel *label,  gint *x,  gint *y);
-		gtk_label_get_layout_offsets(gtkLabel, x, y);
+		gtk_label_get_layout_offsets(gtkLabel, &x, &y);
 	}
 	
 	/**
@@ -759,10 +763,10 @@ public class Label : Misc
 	 * end =  return location for end of selection, as a character offset
 	 * Returns: TRUE if selection is non-empty
 	 */
-	public int getSelectionBounds(int* start, int* end)
+	public int getSelectionBounds(out int start, out int end)
 	{
 		// gboolean gtk_label_get_selection_bounds (GtkLabel *label,  gint *start,  gint *end);
-		return gtk_label_get_selection_bounds(gtkLabel, start, end);
+		return gtk_label_get_selection_bounds(gtkLabel, &start, &end);
 	}
 	
 	/**

@@ -356,10 +356,10 @@ public class IconInfo
 	 *  when this function returns TRUE.
 	 * Returns: TRUE if the icon has an embedded rectangle
 	 */
-	public int getEmbeddedRect(GdkRectangle* rectangle)
+	public int getEmbeddedRect(out GdkRectangle rectangle)
 	{
 		// gboolean gtk_icon_info_get_embedded_rect (GtkIconInfo *icon_info,  GdkRectangle *rectangle);
-		return gtk_icon_info_get_embedded_rect(gtkIconInfo, rectangle);
+		return gtk_icon_info_get_embedded_rect(gtkIconInfo, &rectangle);
 	}
 	
 	/**
@@ -370,13 +370,18 @@ public class IconInfo
 	 * Params:
 	 * points =  location to store pointer to an array of points, or NULL
 	 *  free the array of points with g_free().
-	 * nPoints =  location to store the number of points in points, or NULL
 	 * Returns: TRUE if there are any attach points for the icon.
 	 */
-	public int getAttachPoints(GdkPoint** points, int* nPoints)
+	public int getAttachPoints(out GdkPoint[] points)
 	{
 		// gboolean gtk_icon_info_get_attach_points (GtkIconInfo *icon_info,  GdkPoint **points,  gint *n_points);
-		return gtk_icon_info_get_attach_points(gtkIconInfo, points, nPoints);
+		GdkPoint* outpoints = null;
+		int nPoints;
+		
+		auto p = gtk_icon_info_get_attach_points(gtkIconInfo, &outpoints, &nPoints);
+		
+		points = outpoints[0 .. nPoints];
+		return p;
 	}
 	
 	/**

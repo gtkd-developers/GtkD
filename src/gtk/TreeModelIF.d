@@ -526,5 +526,5 @@ public interface TreeModelIF
 	 * path =  a GtkTreePath identifying the changed row
 	 * iter =  a valid GtkTreeIter pointing to the changed row
 	 */
-	public void rowsReordered(TreePath path, TreeIter iter, int* newOrder);
+	public void rowsReordered(TreePath path, TreeIter iter, int[] newOrder);
 }

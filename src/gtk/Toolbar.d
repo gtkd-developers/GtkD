@@ -49,6 +49,7 @@
  * 	- gtk.Button
  * 	- gtk.ToolItem
  * structWrap:
+ * 	- GtkToolItem* -> ToolItem
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -340,10 +341,10 @@ public class Toolbar : Container
 	 * item =  a GtkToolItem that is a child of toolbar
 	 * Returns: the position of item on the toolbar.
 	 */
-	public int getItemIndex(GtkToolItem* item)
+	public int getItemIndex(ToolItem item)
 	{
 		// gint gtk_toolbar_get_item_index (GtkToolbar *toolbar,  GtkToolItem *item);
-		return gtk_toolbar_get_item_index(gtkToolbar, item);
+		return gtk_toolbar_get_item_index(gtkToolbar, (item is null) ? null : item.getToolItemStruct());
 	}
 	
 	/**
@@ -365,10 +366,15 @@ public class Toolbar : Container
 	 * n =  A position on the toolbar
 	 * Returns: The n'th GtkToolItem on toolbar, or NULL if thereisn't an n'th item.
 	 */
-	public GtkToolItem* getNthItem(int n)
+	public ToolItem getNthItem(int n)
 	{
 		// GtkToolItem* gtk_toolbar_get_nth_item (GtkToolbar *toolbar,  gint n);
-		return gtk_toolbar_get_nth_item(gtkToolbar, n);
+		auto p = gtk_toolbar_get_nth_item(gtkToolbar, n);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -399,10 +405,10 @@ public class Toolbar : Container
 	 * toolItem =  a GtkToolItem, or NULL to turn of highlighting
 	 * index =  a position on toolbar
 	 */
-	public void setDropHighlightItem(GtkToolItem* toolItem, int index)
+	public void setDropHighlightItem(ToolItem toolItem, int index)
 	{
 		// void gtk_toolbar_set_drop_highlight_item (GtkToolbar *toolbar,  GtkToolItem *tool_item,  gint index_);
-		gtk_toolbar_set_drop_highlight_item(gtkToolbar, toolItem, index);
+		gtk_toolbar_set_drop_highlight_item(gtkToolbar, (toolItem is null) ? null : toolItem.getToolItemStruct(), index);
 	}
 	
 	/**

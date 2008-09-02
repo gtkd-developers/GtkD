@@ -2217,6 +2217,7 @@ public struct GtkTargetEntry
 
 
 /**
+ * Main Gtk struct.
  * A GtkTargetList structure is a reference counted list
  * of GtkTargetPair. It is used to represent the same
  * information as a table of GtkTargetEntry, but in

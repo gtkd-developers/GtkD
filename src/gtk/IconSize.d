@@ -109,10 +109,10 @@ public class IconSize
 	 * height =  location to store icon height
 	 * Returns: TRUE if size was a valid size
 	 */
-	public static int lookup(GtkIconSize size, int* width, int* height)
+	public static int lookup(GtkIconSize size, out int width, out int height)
 	{
 		// gboolean gtk_icon_size_lookup (GtkIconSize size,  gint *width,  gint *height);
-		return gtk_icon_size_lookup(size, width, height);
+		return gtk_icon_size_lookup(size, &width, &height);
 	}
 	
 	/**
@@ -135,10 +135,10 @@ public class IconSize
 	 * height =  location to store icon height
 	 * Returns: TRUE if size was a valid size
 	 */
-	public static int lookupForSettings(Settings settings, GtkIconSize size, int* width, int* height)
+	public static int lookupForSettings(Settings settings, GtkIconSize size, out int width, out int height)
 	{
 		// gboolean gtk_icon_size_lookup_for_settings (GtkSettings *settings,  GtkIconSize size,  gint *width,  gint *height);
-		return gtk_icon_size_lookup_for_settings((settings is null) ? null : settings.getSettingsStruct(), size, width, height);
+		return gtk_icon_size_lookup_for_settings((settings is null) ? null : settings.getSettingsStruct(), size, &width, &height);
 	}
 	
 	/**
