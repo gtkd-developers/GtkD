@@ -148,6 +148,7 @@ prefix: gtk_source_language_manager_
 import: glib.Str
 import: gsv.SourceLanguage
 structWrap: GtkSourceLanguage* SourceLanguage
+array: gtk_source_language_manager_set_search_path dirs
 outFile: SourceLanguageManager
 
 file: GtkSourcePrintCompositor.html
@@ -185,5 +186,6 @@ prefix: gtk_source_style_scheme_manager_
 import: gsv.SourceStyleScheme
 structWrap: GtkSourceStyleScheme* SourceStyleScheme
 import: glib.Str
+array: gtk_source_style_scheme_manager_set_search_path path
 outFile: SourceStyleSchemeManager
 

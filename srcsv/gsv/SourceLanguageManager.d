@@ -151,10 +151,10 @@ public class SourceLanguageManager : ObjectG
 	 * Params:
 	 * dirs =  a NULL-terminated array of strings or NULL.
 	 */
-	public void setSearchPath(char** dirs)
+	public void setSearchPath(string[] dirs)
 	{
 		// void gtk_source_language_manager_set_search_path  (GtkSourceLanguageManager *lm,  gchar **dirs);
-		gtk_source_language_manager_set_search_path(gtkSourceLanguageManager, dirs);
+		gtk_source_language_manager_set_search_path(gtkSourceLanguageManager, Str.toStringzArray(dirs));
 	}
 	
 	/**

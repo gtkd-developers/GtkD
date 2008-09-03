@@ -145,10 +145,10 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Params:
 	 * path =  a NULL-terminated array of strings or NULL.
 	 */
-	public void setSearchPath(char** path)
+	public void setSearchPath(string[] path)
 	{
 		// void gtk_source_style_scheme_manager_set_search_path  (GtkSourceStyleSchemeManager *manager,  gchar **path);
-		gtk_source_style_scheme_manager_set_search_path(gtkSourceStyleSchemeManager, path);
+		gtk_source_style_scheme_manager_set_search_path(gtkSourceStyleSchemeManager, Str.toStringzArray(path));
 	}
 	
 	/**
