@@ -82,17 +82,19 @@ public class GLtInit
 	 * the library for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gtk_gl_init_check() instead.
 	 * Params:
-	 * argc =  Address of the argc parameter of your
-	 *  main() function. Changed if any arguments
-	 *  were handled.
 	 * argv =  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gtk_gl_init() are stripped before return.
 	 */
-	public static void init(int* argc, char*** argv)
+	public static void init(inout string[] argv)
 	{
 		// void gtk_gl_init (int *argc,  char ***argv);
-		gtk_gl_init(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		gtk_gl_init(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
 	}
 	
 	/**
@@ -102,18 +104,21 @@ public class GLtInit
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
 	 * Params:
-	 * argc =  Address of the argc parameter of your
-	 *  main() function. Changed if any arguments
-	 *  were handled.
 	 * argv =  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gtk_gl_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
-	public static int initCheck(int* argc, char*** argv)
+	public static int initCheck(inout string[] argv)
 	{
 		// gboolean gtk_gl_init_check (int *argc,  char ***argv);
-		return gtk_gl_init_check(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		auto p = gtk_gl_init_check(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 	
 	/**
@@ -124,13 +129,18 @@ public class GLtInit
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_gl_init(), or gtk_gl_init_check().
 	 * Params:
-	 * argc =  the number of command line arguments.
 	 * argv =  the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartIII.GtkGLExt API ReferenceOpenGL-Capable Widget>>
 	 */
-	public static int parseArgs(int* argc, char*** argv)
+	public static int parseArgs(inout string[] argv)
 	{
 		// gboolean gtk_gl_parse_args (int *argc,  char ***argv);
-		return gtk_gl_parse_args(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc;
+		
+		auto p = gtk_gl_parse_args(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 }
