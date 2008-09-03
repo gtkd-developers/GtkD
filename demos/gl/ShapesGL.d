@@ -946,9 +946,8 @@ void main(string[] args)
 	
 	Main.init(args);
 
-	GLdInit.init(null, null);
-	
-	
+	GLdInit.init(args);
+		
 	TestGL testGL = new TestGL();
 	
 	

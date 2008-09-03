@@ -146,7 +146,7 @@ void main(string[] args)
 {
 	Main.init(args);
 
-	GLdInit.init(null, null);
+	GLdInit.init(args);
 	
 	SimpleGL simpleGL = new SimpleGL();
 	MainWindow window = new MainWindow("Simplest OpenGL Example");

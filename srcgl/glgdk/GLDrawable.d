@@ -197,10 +197,10 @@ public class GLDrawable
 	 * width =  location to store drawable's width, or NULL.
 	 * height =  location to store drawable's height, or NULL.
 	 */
-	public void getSize(int* width, int* height)
+	public void getSize(out int width, out int height)
 	{
 		// void gdk_gl_drawable_get_size (GdkGLDrawable *gldrawable,  gint *width,  gint *height);
-		gdk_gl_drawable_get_size(gdkGLDrawable, width, height);
+		gdk_gl_drawable_get_size(gdkGLDrawable, &width, &height);
 	}
 	
 	/**

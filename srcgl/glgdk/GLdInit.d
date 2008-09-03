@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -56,6 +57,7 @@ private import gtkglc.glgdk;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 
 
 
@@ -80,17 +82,19 @@ public class GLdInit
 	 * the library for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gdk_gl_init_check() instead.
 	 * Params:
-	 * argc =  Address of the argc parameter of your
-	 *  main() function. Changed if any arguments
-	 *  were handled.
 	 * argv =  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
 	 */
-	public static void init(int* argc, char*** argv)
+	public static void init(out string[] argv)
 	{
 		// void gdk_gl_init (int *argc,  char ***argv);
-		gdk_gl_init(argc, argv);
+		char** outargv = null;
+		int argc;
+		
+		gdk_gl_init(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
 	}
 	
 	/**
@@ -100,18 +104,21 @@ public class GLdInit
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
 	 * Params:
-	 * argc =  Address of the argc parameter of your
-	 *  main() function. Changed if any arguments
-	 *  were handled.
 	 * argv =  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
-	public static int initCheck(int* argc, char*** argv)
+	public static int initCheck(out string[] argv)
 	{
 		// gboolean gdk_gl_init_check (int *argc,  char ***argv);
-		return gdk_gl_init_check(argc, argv);
+		char** outargv = null;
+		int argc;
+		
+		auto p = gdk_gl_init_check(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 	
 	/**
@@ -122,13 +129,18 @@ public class GLdInit
 	 * You shouldn't call this function explicitely if you are using
 	 * gdk_gl_init(), or gdk_gl_init_check().
 	 * Params:
-	 * argc =  the number of command line arguments.
 	 * argv =  the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartII.GdkGLExt API ReferenceQuery>>
 	 */
-	public static int parseArgs(int* argc, char*** argv)
+	public static int parseArgs(out string[] argv)
 	{
 		// gboolean gdk_gl_parse_args (int *argc,  char ***argv);
-		return gdk_gl_parse_args(argc, argv);
+		char** outargv = null;
+		int argc;
+		
+		auto p = gdk_gl_parse_args(&argc, &outargv);
+		
+		argv = Str.toStringArray(outargv);
+		return p;
 	}
 }

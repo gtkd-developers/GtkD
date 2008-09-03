@@ -70,6 +70,14 @@ file: gtkglext-gdkglinit.html
 
 class: GLdInit
 prefix: gdk_gl_
+import: glib.Str
+
+out: gdk_gl_init argv
+array: gdk_gl_init argv argc
+out: gdk_gl_init_check argv
+array: gdk_gl_init_check argv argc
+out: gdk_gl_parse_args argv
+array: gdk_gl_parse_args argv argc
 outFile: GLdInit
 
 file: gtkglext-gdkglquery.html
@@ -80,6 +88,12 @@ prefix: gdk_gl_
 import: glib.Str
 import: gdk.Display
 structWrap: GdkDisplay* Display
+
+out: gdk_gl_query_version major
+out: gdk_gl_query_version minor
+out: gdk_gl_query_version_for_display major
+out: gdk_gl_query_version_for_display minor
+
 outFile: GLQuery
 
 file: gtkglext-gdkglconfig.html
@@ -95,6 +109,10 @@ import: gdk.Colormap
 structWrap: GdkColormap* Colormap
 import: gdk.Visual
 structWrap: GdkVisual* Visual
+
+array: gdk_gl_config_new attrib_list
+array: gdk_gl_config_new_for_screen attrib_list
+out: gdk_gl_config_get_attrib value
 
 code: start
 	/**
@@ -164,6 +182,10 @@ structWrap: GdkGLContext* GLContext
 import: glgdk.GLConfig
 structWrap: GdkGLConfig* GLConfig
 structWrap: GdkGLDrawable* GLDrawable
+
+out: gdk_gl_drawable_get_size width
+out: gdk_gl_drawable_get_size height
+
 outFile: GLDrawable
 
 file: gtkglext-gdkglpixmap.html
@@ -185,7 +207,7 @@ struct: GdkGLWindow
 class: GLWindow
 prefix: gdk_gl_window_
 import: glgdk.GLConfig
-structWrap: GdkGLCondif* GLConfig
+structWrap: GdkGLConfig* GLConfig
 import: gdk.Window
 structWrap: GdkWindow* Window
 structWrap: GdkGLWindow* GLWindow

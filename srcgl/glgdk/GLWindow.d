@@ -45,7 +45,7 @@
  * 	- glgdk.GLConfig
  * 	- gdk.Window
  * structWrap:
- * 	- GdkGLCondif* -> GLConfig
+ * 	- GdkGLConfig* -> GLConfig
  * 	- GdkGLWindow* -> GLWindow
  * 	- GdkWindow* -> Window
  * module aliases:
@@ -124,13 +124,13 @@ public class GLWindow : Drawable
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GdkGLConfig* glconfig, Window window, int* attribList)
+	public this (GLConfig glconfig, Window window, int* attribList)
 	{
 		// GdkGLWindow* gdk_gl_window_new (GdkGLConfig *glconfig,  GdkWindow *window,  const int *attrib_list);
-		auto p = gdk_gl_window_new(glconfig, (window is null) ? null : window.getWindowStruct(), attribList);
+		auto p = gdk_gl_window_new((glconfig is null) ? null : glconfig.getGLConfigStruct(), (window is null) ? null : window.getWindowStruct(), attribList);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_gl_window_new(glconfig, (window is null) ? null : window.getWindowStruct(), attribList)");
+			throw new ConstructionException("null returned by gdk_gl_window_new((glconfig is null) ? null : glconfig.getGLConfigStruct(), (window is null) ? null : window.getWindowStruct(), attribList)");
 		}
 		this(cast(GdkGLWindow*) p);
 	}
@@ -173,10 +173,10 @@ public class GLWindow : Drawable
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 * Returns: the GdkGLWindow used by the window if it is successful, NULL otherwise.
 	 */
-	public static GLWindow gdkWindowSetGLCapability(Window window, GdkGLConfig* glconfig, int* attribList)
+	public static GLWindow gdkWindowSetGLCapability(Window window, GLConfig glconfig, int* attribList)
 	{
 		// GdkGLWindow* gdk_window_set_gl_capability (GdkWindow *window,  GdkGLConfig *glconfig,  const int *attrib_list);
-		auto p = gdk_window_set_gl_capability((window is null) ? null : window.getWindowStruct(), glconfig, attribList);
+		auto p = gdk_window_set_gl_capability((window is null) ? null : window.getWindowStruct(), (glconfig is null) ? null : glconfig.getGLConfigStruct(), attribList);
 		if(p is null)
 		{
 			return null;

@@ -108,10 +108,10 @@ public class GLQuery
 	 * minor =  returns the minor version number of the OpenGL extension.
 	 * Returns: FALSE if it fails, TRUE otherwise.
 	 */
-	public static int versio(int* major, int* minor)
+	public static int versio(out int major, out int minor)
 	{
 		// gboolean gdk_gl_query_version (int *major,  int *minor);
-		return gdk_gl_query_version(major, minor);
+		return gdk_gl_query_version(&major, &minor);
 	}
 	
 	/**
@@ -124,10 +124,10 @@ public class GLQuery
 	 * minor =  returns the minor version number of the OpenGL extension.
 	 * Returns: FALSE if it fails, TRUE otherwise.
 	 */
-	public static int versionForDisplay(Display display, int* major, int* minor)
+	public static int versionForDisplay(Display display, out int major, out int minor)
 	{
 		// gboolean gdk_gl_query_version_for_display  (GdkDisplay *display,  int *major,  int *minor);
-		return gdk_gl_query_version_for_display((display is null) ? null : display.getDisplayStruct(), major, minor);
+		return gdk_gl_query_version_for_display((display is null) ? null : display.getDisplayStruct(), &major, &minor);
 	}
 	
 	/**

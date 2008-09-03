@@ -182,13 +182,13 @@ public class GLConfig : ObjectG
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int* attribList)
+	public this (int[] attribList)
 	{
 		// GdkGLConfig* gdk_gl_config_new (const int *attrib_list);
-		auto p = gdk_gl_config_new(attribList);
+		auto p = gdk_gl_config_new(attribList.ptr);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_gl_config_new(attribList)");
+			throw new ConstructionException("null returned by gdk_gl_config_new(attribList.ptr)");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -202,13 +202,13 @@ public class GLConfig : ObjectG
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Screen screen, int* attribList)
+	public this (Screen screen, int[] attribList)
 	{
 		// GdkGLConfig* gdk_gl_config_new_for_screen (GdkScreen *screen,  const int *attrib_list);
-		auto p = gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList);
+		auto p = gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList.ptr);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList)");
+			throw new ConstructionException("null returned by gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList.ptr)");
 		}
 		this(cast(GdkGLConfig*) p);
 	}
@@ -272,10 +272,10 @@ public class GLConfig : ObjectG
 	 * value =  returns the requested value.
 	 * Returns: TRUE if it succeeded, FALSE otherwise.
 	 */
-	public int getAttrib(int attribute, int* value)
+	public int getAttrib(int attribute, out int value)
 	{
 		// gboolean gdk_gl_config_get_attrib (GdkGLConfig *glconfig,  int attribute,  int *value);
-		return gdk_gl_config_get_attrib(gdkGLConfig, attribute, value);
+		return gdk_gl_config_get_attrib(gdkGLConfig, attribute, &value);
 	}
 	
 	/**
