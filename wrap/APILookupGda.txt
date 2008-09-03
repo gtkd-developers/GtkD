@@ -125,6 +125,10 @@ file: libgda-gda-blob.html
 struct: GdaBlob
 class: Blob
 prefix: gda_blob_
+
+out: gda_blob_read bytes_read
+out: gda_blob_write bytes_written
+
 outFile: Blob
 
 file: libgda-GdaClient.html 
@@ -136,11 +140,13 @@ structWrap: GList* ListG
 structWrap: GdaConnection* Connection
 structWrap: GdaError* ErrorGda
 structWrap: GdaParameterList* ParameterList
+structWrap: GdaTransaction* Transaction
 import: glib.Str
 import: glib.ListG
 import: gda.Connection
 import: gda.ErrorGda
 import: gda.ParameterList
+import: gda.Transaction
 nocode: gda_client_open_connection
 code: start
 	/**
@@ -259,6 +265,7 @@ structWrap: GdaDataModel* DataModel
 structWrap: GdaError* ErrorGda
 structWrap: GdaFieldAttributes* FieldAttributes
 structWrap: GdaParameterList* ParameterList
+structWrap: GdaTransaction* Transaction
 import: glib.Str
 import: glib.ListG
 import: gda.Blob
@@ -268,6 +275,7 @@ import: gda.DataModel
 import: gda.ErrorGda
 import: gda.FieldAttributes
 import: gda.ParameterList
+import: gda.Transaction
 outFile: Connection
 
 file: libgda-GdaDataModelArray.html
@@ -402,9 +410,11 @@ struct: GdaParameter
 class: Parameter
 prefix: gda_parameter_
 noprefix: gda_parameter_list_
+structWrap: GObject* ObjectG
 structWrap: GdaValue* Value
 structWrap: GdaParameter*  Parameter
 import: glib.Str
+import: gobject.ObjectG
 import: gda.Value
 outFile: Parameter
 
@@ -425,8 +435,10 @@ file: libgda-gda-quark-list.html
 struct: GdaQuarkList
 class: QuarkList
 prefix: gda_quark_list_
+structWrap: GList* ListG
 structWrap: GdaQuarkList* QuarkList
 import: glib.Str
+import: glib.ListG
 outFile: QuarkList
 
 

@@ -51,6 +51,7 @@
  * 	- gda.ErrorGda
  * 	- gda.FieldAttributes
  * 	- gda.ParameterList
+ * 	- gda.Transaction
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaBlob* -> Blob
@@ -60,6 +61,7 @@
  * 	- GdaError* -> ErrorGda
  * 	- GdaFieldAttributes* -> FieldAttributes
  * 	- GdaParameterList* -> ParameterList
+ * 	- GdaTransaction* -> Transaction
  * module aliases:
  * local aliases:
  * overrides:
@@ -82,6 +84,7 @@ private import gda.DataModel;
 private import gda.ErrorGda;
 private import gda.FieldAttributes;
 private import gda.ParameterList;
+private import gda.Transaction;
 
 
 
@@ -478,10 +481,10 @@ public class Connection : ObjectG
 	 * xaction =  a GdaTransaction object.
 	 * Returns: TRUE if the transaction was started successfully, FALSEotherwise.
 	 */
-	public int beginTransaction(GdaTransaction* xaction)
+	public int beginTransaction(Transaction xaction)
 	{
 		// gboolean gda_connection_begin_transaction (GdaConnection *cnc,  GdaTransaction *xaction);
-		return gda_connection_begin_transaction(gdaConnection, xaction);
+		return gda_connection_begin_transaction(gdaConnection, (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -491,10 +494,10 @@ public class Connection : ObjectG
 	 * xaction =  a GdaTransaction object.
 	 * Returns: TRUE if the transaction was finished successfully,FALSE otherwise.
 	 */
-	public int commitTransaction(GdaTransaction* xaction)
+	public int commitTransaction(Transaction xaction)
 	{
 		// gboolean gda_connection_commit_transaction (GdaConnection *cnc,  GdaTransaction *xaction);
-		return gda_connection_commit_transaction(gdaConnection, xaction);
+		return gda_connection_commit_transaction(gdaConnection, (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -506,10 +509,10 @@ public class Connection : ObjectG
 	 * xaction =  a GdaTransaction object.
 	 * Returns: TRUE if the operation was successful, FALSE otherwise.
 	 */
-	public int rollbackTransaction(GdaTransaction* xaction)
+	public int rollbackTransaction(Transaction xaction)
 	{
 		// gboolean gda_connection_rollback_transaction (GdaConnection *cnc,  GdaTransaction *xaction);
-		return gda_connection_rollback_transaction(gdaConnection, xaction);
+		return gda_connection_rollback_transaction(gdaConnection, (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**

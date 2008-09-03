@@ -44,8 +44,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
  * 	- gda.Value
  * structWrap:
+ * 	- GObject* -> ObjectG
  * 	- GdaParameter* -> Parameter
  * 	- GdaValue* -> Value
  * module aliases:
@@ -62,6 +64,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gobject.ObjectG;
 private import gda.Value;
 
 
@@ -178,13 +181,13 @@ public class Parameter
 	 * value =  a GObject value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, GObject* value)
+	public this (string name, ObjectG value)
 	{
 		// GdaParameter* gda_parameter_new_gobject (const gchar *name,  const GObject *value);
-		auto p = gda_parameter_new_gobject(Str.toStringz(name), value);
+		auto p = gda_parameter_new_gobject(Str.toStringz(name), (value is null) ? null : value.getObjectGStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gda_parameter_new_gobject(Str.toStringz(name), value)");
+			throw new ConstructionException("null returned by gda_parameter_new_gobject(Str.toStringz(name), (value is null) ? null : value.getObjectGStruct())");
 		}
 		this(cast(GdaParameter*) p);
 	}

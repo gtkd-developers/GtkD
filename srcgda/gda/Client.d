@@ -48,11 +48,13 @@
  * 	- gda.Connection
  * 	- gda.ErrorGda
  * 	- gda.ParameterList
+ * 	- gda.Transaction
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaConnection* -> Connection
  * 	- GdaError* -> ErrorGda
  * 	- GdaParameterList* -> ParameterList
+ * 	- GdaTransaction* -> Transaction
  * module aliases:
  * local aliases:
  * overrides:
@@ -71,6 +73,7 @@ private import glib.ListG;
 private import gda.Connection;
 private import gda.ErrorGda;
 private import gda.ParameterList;
+private import gda.Transaction;
 
 
 
@@ -302,10 +305,10 @@ public class Client : ObjectG
 	 * cnc =  a GdaConnection object.
 	 * xaction =  a GdaTransaction object.
 	 */
-	public void notifyTransactionStartedEvent(Connection cnc, GdaTransaction* xaction)
+	public void notifyTransactionStartedEvent(Connection cnc, Transaction xaction)
 	{
 		// void gda_client_notify_transaction_started_event  (GdaClient *client,  GdaConnection *cnc,  GdaTransaction *xaction);
-		gda_client_notify_transaction_started_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), xaction);
+		gda_client_notify_transaction_started_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -315,10 +318,10 @@ public class Client : ObjectG
 	 * cnc =  a GdaConnection object.
 	 * xaction =  a GdaTransaction object.
 	 */
-	public void notifyTransactionCommittedEvent(Connection cnc, GdaTransaction* xaction)
+	public void notifyTransactionCommittedEvent(Connection cnc, Transaction xaction)
 	{
 		// void gda_client_notify_transaction_committed_event  (GdaClient *client,  GdaConnection *cnc,  GdaTransaction *xaction);
-		gda_client_notify_transaction_committed_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), xaction);
+		gda_client_notify_transaction_committed_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -328,10 +331,10 @@ public class Client : ObjectG
 	 * cnc =  a GdaConnection object.
 	 * xaction =  a GdaTransaction object.
 	 */
-	public void notifyTransactionCancelledEvent(Connection cnc, GdaTransaction* xaction)
+	public void notifyTransactionCancelledEvent(Connection cnc, Transaction xaction)
 	{
 		// void gda_client_notify_transaction_cancelled_event  (GdaClient *client,  GdaConnection *cnc,  GdaTransaction *xaction);
-		gda_client_notify_transaction_cancelled_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), xaction);
+		gda_client_notify_transaction_cancelled_event(gdaClient, (cnc is null) ? null : cnc.getConnectionStruct(), (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -346,10 +349,10 @@ public class Client : ObjectG
 	 * xaction =  a GdaTransaction object.
 	 * Returns: TRUE if all transactions could be started successfully,or FALSE if one of them fails.
 	 */
-	public int beginTransaction(GdaTransaction* xaction)
+	public int beginTransaction(Transaction xaction)
 	{
 		// gboolean gda_client_begin_transaction (GdaClient *client,  GdaTransaction *xaction);
-		return gda_client_begin_transaction(gdaClient, xaction);
+		return gda_client_begin_transaction(gdaClient, (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -364,10 +367,10 @@ public class Client : ObjectG
 	 * xaction =  a GdaTransaction object.
 	 * Returns: TRUE if all transactions could be committed successfully,or FALSE if one of them fails.
 	 */
-	public int commitTransaction(GdaTransaction* xaction)
+	public int commitTransaction(Transaction xaction)
 	{
 		// gboolean gda_client_commit_transaction (GdaClient *client,  GdaTransaction *xaction);
-		return gda_client_commit_transaction(gdaClient, xaction);
+		return gda_client_commit_transaction(gdaClient, (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 	
 	/**
@@ -382,9 +385,9 @@ public class Client : ObjectG
 	 * xaction =  a GdaTransaction object.
 	 * Returns: TRUE if all transactions could be cancelled successfully,or FALSE if one of them fails.
 	 */
-	public int rollbackTransaction(GdaTransaction* xaction)
+	public int rollbackTransaction(Transaction xaction)
 	{
 		// gboolean gda_client_rollback_transaction (GdaClient *client,  GdaTransaction *xaction);
-		return gda_client_rollback_transaction(gdaClient, xaction);
+		return gda_client_rollback_transaction(gdaClient, (xaction is null) ? null : xaction.getTransactionStruct());
 	}
 }

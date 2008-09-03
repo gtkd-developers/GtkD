@@ -43,7 +43,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ListG
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GdaQuarkList* -> QuarkList
  * module aliases:
  * local aliases:
@@ -59,6 +61,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.ListG;
 
 
 

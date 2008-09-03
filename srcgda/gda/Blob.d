@@ -119,10 +119,10 @@ public class Blob
 	 * bytesRead =  on return it will point to the number of bytes actually read.
 	 * Returns: 0 if everything's ok. In case of error, -1 is returned and theprovider should have added an error to the connection.
 	 */
-	public int read(void* buf, int size, int* bytesRead)
+	public int read(void* buf, int size, out int bytesRead)
 	{
 		// gint gda_blob_read (GdaBlob *blob,  gpointer buf,  gint size,  gint *bytes_read);
-		return gda_blob_read(gdaBlob, buf, size, bytesRead);
+		return gda_blob_read(gdaBlob, buf, size, &bytesRead);
 	}
 	
 	/**
@@ -133,10 +133,10 @@ public class Blob
 	 * bytesWritten =  on return it will point to the number of bytes actually written.
 	 * Returns: 0 if everything's ok. In case of error, -1 is returned and theprovider should have added an error to the connection.
 	 */
-	public int write(void* buf, int size, int* bytesWritten)
+	public int write(void* buf, int size, out int bytesWritten)
 	{
 		// gint gda_blob_write (GdaBlob *blob,  gpointer buf,  gint size,  gint *bytes_written);
-		return gda_blob_write(gdaBlob, buf, size, bytesWritten);
+		return gda_blob_write(gdaBlob, buf, size, &bytesWritten);
 	}
 	
 	/**
