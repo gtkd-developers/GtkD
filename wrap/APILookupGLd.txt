@@ -72,11 +72,11 @@ class: GLdInit
 prefix: gdk_gl_
 import: glib.Str
 
-out: gdk_gl_init argv
+inout: gdk_gl_init argv
 array: gdk_gl_init argv argc
-out: gdk_gl_init_check argv
+inout: gdk_gl_init_check argv
 array: gdk_gl_init_check argv argc
-out: gdk_gl_parse_args argv
+inout: gdk_gl_parse_args argv
 array: gdk_gl_parse_args argv argc
 outFile: GLdInit
 

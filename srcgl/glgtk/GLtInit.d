@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -56,6 +57,7 @@ private import gtkglc.glgtk;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 
 
 

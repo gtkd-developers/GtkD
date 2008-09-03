@@ -70,6 +70,15 @@ file: gtkglext-gtkglinit.html
 #struct: GMutex
 class: GLtInit
 prefix: gtk_gl_
+import: glib.Str
+
+inout: gdk_gl_init argv
+array: gdk_gl_init argv argc
+inout: gdk_gl_init_check argv
+array: gdk_gl_init_check argv argc
+inout: gdk_gl_parse_args argv
+array: gdk_gl_parse_args argv argc
+
 outFile: GLtInit
 
 
