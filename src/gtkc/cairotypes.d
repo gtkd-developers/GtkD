@@ -29,13 +29,6 @@ public import gtkc.glibtypes;
 private alias void* HDC;
 
 struct cairo_path_data_t;
-//struct Display;	// to support XLib surfaces
-//struct Visual;	// to support XLib surfaces
-//struct Screen;	// to support XLib surfaces
-
-//private alias void* Drawable;
-//private alias void* Pixmap;
-//public alias bool cairo_bool_t;
 
 alias ubyte uchar;
 

@@ -45,7 +45,9 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Regex
  * structWrap:
+ * 	- GRegex* -> Regex
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,6 +64,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Regex;
 
 
 
@@ -158,10 +161,15 @@ public class MatchInfo
 	 * Since 2.14
 	 * Returns: GRegex object used in match_info
 	 */
-	public GRegex* getRegex()
+	public Regex getRegex()
 	{
 		// GRegex* g_match_info_get_regex (const GMatchInfo *match_info);
-		return g_match_info_get_regex(gMatchInfo);
+		auto p = g_match_info_get_regex(gMatchInfo);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Regex(cast(GRegex*) p);
 	}
 	
 	/**

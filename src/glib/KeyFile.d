@@ -685,13 +685,13 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * length =  the number of booleans returned
 	 * Returns: the values associated with the key as a list of booleans, or NULL if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
-	public int* getBooleanList(string groupName, string key, out uint length)
+	public int[] getBooleanList(string groupName, string key)
 	{
 		// gboolean* g_key_file_get_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		uint length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -701,7 +701,7 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return p[0 .. length];
 	}
 	
 	/**
@@ -715,13 +715,13 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * length =  the number of integers returned
 	 * Returns: the values associated with the key as a list of integers, or NULL if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
-	public int* getIntegerList(string groupName, string key, out uint length)
+	public int[] getIntegerList(string groupName, string key)
 	{
 		// gint* g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		uint length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -731,7 +731,7 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return p[0 .. length];
 	}
 	
 	/**
@@ -745,13 +745,13 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * length =  the number of doubles returned
 	 * Returns: the values associated with the key as a list of doubles, or NULL if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
-	public double* getDoubleList(string groupName, string key, out uint length)
+	public double[] getDoubleList(string groupName, string key)
 	{
 		// gdouble* g_key_file_get_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		uint length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -761,7 +761,7 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return p[0 .. length];
 	}
 	
 	/**

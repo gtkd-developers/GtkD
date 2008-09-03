@@ -192,7 +192,7 @@ noprefix: gda_data_source_
 noprefix: gda_provider_
 structWrap: GList* ListG
 structWrap: GdaDataModel* DataModel
-structWrap: GdaDataSourceInfo DataSourceInfo
+structWrap: GdaDataSourceInfo* DataSourceInfo
 structWrap: GdaProviderInfo* ProviderInfo
 import: glib.Str
 import: glib.ListG

@@ -481,8 +481,8 @@ import: gdk.Window
 structWrap: GdkWindow* Window
 import: gdk.DragContext
 structWrap: GdkDragContext* DragContext
-#import: gtk.TargetList
-#structWrap: GtkTargetList* TargetList
+import: gtk.TargetList
+structWrap: GtkTargetList* TargetList
 import: gdk.Event
 structWrap: GdkEvent* Event
 import: gdk.Colormap
@@ -737,6 +737,7 @@ prefix: gtk_target_list_
 noprefix: gtk_selection_
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
+structWrap: GtkTargetList* TargetList
 
 array: gtk_target_list_new targets ntargets
 array: gtk_target_list_add_table targets ntargets
@@ -1423,6 +1424,10 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+import: pango.PgAttributeList
+structWrap: PangoAttrList* PgAttributeList
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
 
 out: gtk_label_get str
 out: gtk_label_get_layout_offsets x
@@ -2180,6 +2185,8 @@ import: gtk.Clipboard
 structWrap: GtkClipboard* Clipboard
 import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
+import: gtk.TargetList
+structWrap: GtkTargetList* TargetList
 import: std.stdarg
 
 array: gtk_text_buffer_deserialize data length
@@ -6885,6 +6892,8 @@ class: ObjectGtk
 prefix: gtk_object_
 prefix: gtk_
 import: glib.Str
+import: gtk.ObjectGtk
+structWrap: GtkObject* ObjectGtk
 
 override: setData
 override: getData

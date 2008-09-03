@@ -381,26 +381,6 @@ prefix: gdk_rgb_cmap_
 
 array: gdk_rgb_cmap_new colors n_colors
 
-code: start
-	/**
-	 * Creates a new GdkRgbCmap structure. The cmap maps color indexes to
-	 * RGB colors. If n_colors is less than 256, then images containing
-	 * color values greater than or equal to n_colors will produce undefined
-	 * results, including possibly segfaults.
-	 * Params:
-	 * colors = The colors, represented as 0xRRGGBB integer values.
-	 */
-	public this (uint[] colors)
-	{
-		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
-		auto p = gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length)");
-		}
-		this(cast(GdkRgbCmap*) p);
-	}
-code: end
 outFile: RgbCmap
 
 file: gdk-Images.html
@@ -1148,6 +1128,8 @@ import: gdk.Window
 structWrap: GdkWindow* Window
 import: gdk.Font
 structWrap: GdkFont* Font
+import: gdk.Pixmap
+structWrap: GdkPixmap* Pixmap
 #more types should added here like atom, visual, image, etc...
 #for now we just disable all the stuff with X types in them
 #only thing left is XID which is just an uint.

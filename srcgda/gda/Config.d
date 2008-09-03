@@ -52,7 +52,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdaDataModel* -> DataModel
- * 	- GdaDataSourceInfo -> DataSourceInfo
+ * 	- GdaDataSourceInfo* -> DataSourceInfo
  * 	- GdaProviderInfo* -> ProviderInfo
  * module aliases:
  * local aliases:
@@ -393,10 +393,15 @@ public class Config
 	 * src =  data source information to get a copy from.
 	 * Returns: a newly allocated GdaDataSourceInfo with contains a copy of information in src.
 	 */
-	public static GdaDataSourceInfo* copyDataSourceInfo(GdaDataSourceInfo* src)
+	public static DataSourceInfo copyDataSourceInfo(DataSourceInfo src)
 	{
 		// GdaDataSourceInfo* gda_config_copy_data_source_info (GdaDataSourceInfo *src);
-		return gda_config_copy_data_source_info(src);
+		auto p = gda_config_copy_data_source_info((src is null) ? null : src.getDataSourceInfoStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataSourceInfo(cast(GdaDataSourceInfo*) p);
 	}
 	
 	/**
@@ -404,10 +409,10 @@ public class Config
 	 * Params:
 	 * info =  data source information to free.
 	 */
-	public static void freeDataSourceInfo(GdaDataSourceInfo* info)
+	public static void freeDataSourceInfo(DataSourceInfo info)
 	{
 		// void gda_config_free_data_source_info (GdaDataSourceInfo *info);
-		gda_config_free_data_source_info(info);
+		gda_config_free_data_source_info((info is null) ? null : info.getDataSourceInfoStruct());
 	}
 	
 	/**
@@ -435,10 +440,15 @@ public class Config
 	 * name =  name of the data source to search for.
 	 * Returns: a GdaDataSourceInfo structure, if found, or NULL if not found.
 	 */
-	public static GdaDataSourceInfo* findDataSource(string name)
+	public static DataSourceInfo findDataSource(string name)
 	{
 		// GdaDataSourceInfo* gda_config_find_data_source (const gchar *name);
-		return gda_config_find_data_source(Str.toStringz(name));
+		auto p = gda_config_find_data_source(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new DataSourceInfo(cast(GdaDataSourceInfo*) p);
 	}
 	
 	/**
@@ -495,10 +505,10 @@ public class Config
 	 * Params:
 	 * dsnInfo =  a GdaDataSourceInfo structure.
 	 */
-	public static void saveDataSourceInfo(GdaDataSourceInfo* dsnInfo)
+	public static void saveDataSourceInfo(DataSourceInfo dsnInfo)
 	{
 		// void gda_config_save_data_source_info (GdaDataSourceInfo *dsn_info);
-		gda_config_save_data_source_info(dsnInfo);
+		gda_config_save_data_source_info((dsnInfo is null) ? null : dsnInfo.getDataSourceInfoStruct());
 	}
 	
 	/**

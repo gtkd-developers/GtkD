@@ -441,6 +441,8 @@ noprefix: pango_layout_iter_
 noprefix: pango_layout_line_
 import: glib.Str
 structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutLine
+structWrap: PangoLayoutLine* PgLayoutLine
 import: pango.PgContext
 structWrap: PangoContext* PgContext
 import: pango.PgAttributeList
@@ -491,6 +493,8 @@ strictPrefix: Yes
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutLine
+structWrap: PangoLayoutLine* PgLayoutLine
 
 out: pango_layout_iter_get_line_yrange y0_
 out: pango_layout_iter_get_line_yrange y1_
@@ -688,6 +692,8 @@ prefix: script_engine_
 import: glib.Str
 import: gobject.TypeModule
 structWrap: GTypeModule* TypeModule
+import: pango.PgEngine
+structWrap: PangoEngine* PgEngine
 
 out: script_engine_list engines
 array: script_engine_list engines n_engines

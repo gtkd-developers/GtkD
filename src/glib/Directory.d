@@ -46,6 +46,7 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * structWrap:
+ * 	- GDir* -> Directory
  * module aliases:
  * local aliases:
  * overrides:
@@ -132,7 +133,7 @@ public class Directory
 	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
 	 * Throws: GException on failure.
 	 */
-	public static GDir* open(string path, uint flags)
+	public static Directory open(string path, uint flags)
 	{
 		// GDir* g_dir_open (const gchar *path,  guint flags,  GError **error);
 		GError* err = null;
@@ -144,7 +145,11 @@ public class Directory
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		if(p is null)
+		{
+			return null;
+		}
+		return new Directory(cast(GDir*) p);
 	}
 	
 	/**

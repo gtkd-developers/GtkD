@@ -44,7 +44,9 @@
  * imports:
  * 	- glib.Str
  * 	- gobject.ParamSpec
+ * 	- glib.ListG
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
  * module aliases:
  * local aliases:
@@ -61,6 +63,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gobject.ParamSpec;
+private import glib.ListG;
 
 
 
@@ -205,9 +208,14 @@ public class ParamSpecPool
 	 * ownerType = the owner to look for
 	 * Returns:a GList of all GParamSpecs owned by owner_type in  the poolGParamSpecs.
 	 */
-	public GList* listOwned(GType ownerType)
+	public ListG listOwned(GType ownerType)
 	{
 		// GList* g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
-		return g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
+		auto p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 }

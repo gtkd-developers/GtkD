@@ -45,6 +45,7 @@
  * imports:
  * 	- gtk.TextBuffer
  * structWrap:
+ * 	- GtkTargetList* -> TargetList
  * 	- GtkTextBuffer* -> TextBuffer
  * module aliases:
  * local aliases:
@@ -135,10 +136,15 @@ public class TargetList
 	 * Increases the reference count of a GtkTargetList by one.
 	 * Returns: the passed in GtkTargetList.
 	 */
-	public GtkTargetList* doref()
+	public TargetList doref()
 	{
 		// GtkTargetList* gtk_target_list_ref (GtkTargetList *list);
-		return gtk_target_list_ref(gtkTargetList);
+		auto p = gtk_target_list_ref(gtkTargetList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**

@@ -47,8 +47,12 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- pango.PgAttributeList
+ * 	- pango.PgLayout
  * structWrap:
  * 	- GtkWidget* -> Widget
+ * 	- PangoAttrList* -> PgAttributeList
+ * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
  * overrides:
@@ -66,6 +70,8 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
+private import pango.PgAttributeList;
+private import pango.PgLayout;
 
 
 
@@ -342,10 +348,10 @@ public class Label : Misc
 	 * Params:
 	 * attrs =  a PangoAttrList
 	 */
-	public void setAttributes(PangoAttrList* attrs)
+	public void setAttributes(PgAttributeList attrs)
 	{
 		// void gtk_label_set_attributes (GtkLabel *label,  PangoAttrList *attrs);
-		gtk_label_set_attributes(gtkLabel, attrs);
+		gtk_label_set_attributes(gtkLabel, (attrs is null) ? null : attrs.getPgAttributeListStruct());
 	}
 	
 	/**
@@ -640,10 +646,15 @@ public class Label : Misc
 	 * pango_layout_get_attribute (gtk_label_get_layout (label)).
 	 * Returns: the attribute list, or NULL if none was set.
 	 */
-	public PangoAttrList* getAttributes()
+	public PgAttributeList getAttributes()
 	{
 		// PangoAttrList* gtk_label_get_attributes (GtkLabel *label);
-		return gtk_label_get_attributes(gtkLabel);
+		auto p = gtk_label_get_attributes(gtkLabel);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -711,10 +722,15 @@ public class Label : Misc
 	 * freed by the caller.
 	 * Returns: the PangoLayout for this label
 	 */
-	public PangoLayout* getLayout()
+	public PgLayout getLayout()
 	{
 		// PangoLayout* gtk_label_get_layout (GtkLabel *label);
-		return gtk_label_get_layout(gtkLabel);
+		auto p = gtk_label_get_layout(gtkLabel);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**

@@ -44,8 +44,10 @@
  * imports:
  * 	- glib.Str
  * 	- gobject.TypeModule
+ * 	- pango.PgEngine
  * structWrap:
  * 	- GTypeModule* -> TypeModule
+ * 	- PangoEngine* -> PgEngine
  * module aliases:
  * local aliases:
  * overrides:
@@ -61,6 +63,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gobject.TypeModule;
+private import pango.PgEngine;
 
 
 
@@ -173,9 +176,14 @@ public class PgEngine : ObjectG
 	 * id =  the ID of an engine as reported by script_engine_list.
 	 * Returns: a newly created PangoEngine of the specified type, or NULL if an error occurred. (In normal operation, a module should not return NULL. A NULL return is only acceptable in the case where system misconfiguration or bugs in the driver routine are encountered.)
 	 */
-	public static PangoEngine* create(string id)
+	public static PgEngine create(string id)
 	{
 		// PangoEngine* script_engine_create (const char *id);
-		return script_engine_create(Str.toStringz(id));
+		auto p = script_engine_create(Str.toStringz(id));
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgEngine(cast(PangoEngine*) p);
 	}
 }

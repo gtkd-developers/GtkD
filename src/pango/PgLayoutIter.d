@@ -43,9 +43,11 @@
  * omit signals:
  * imports:
  * 	- pango.PgLayout
+ * 	- pango.PgLayoutLine
  * structWrap:
  * 	- PangoLayout* -> PgLayout
  * 	- PangoLayoutIter* -> PgLayoutIter
+ * 	- PangoLayoutLine* -> PgLayoutLine
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,6 +62,7 @@ private import glib.ConstructionException;
 
 
 private import pango.PgLayout;
+private import pango.PgLayoutLine;
 
 
 
@@ -249,10 +252,15 @@ public class PgLayoutIter
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * Returns: the current line.
 	 */
-	public PangoLayoutLine* getLine()
+	public PgLayoutLine getLine()
 	{
 		// PangoLayoutLine* pango_layout_iter_get_line (PangoLayoutIter *iter);
-		return pango_layout_iter_get_line(pangoLayoutIter);
+		auto p = pango_layout_iter_get_line(pangoLayoutIter);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -263,10 +271,15 @@ public class PgLayoutIter
 	 * Since 1.16
 	 * Returns: the current line, that should not be modified.
 	 */
-	public PangoLayoutLine* getLineReadonly()
+	public PgLayoutLine getLineReadonly()
 	{
 		// PangoLayoutLine* pango_layout_iter_get_line_readonly (PangoLayoutIter *iter);
-		return pango_layout_iter_get_line_readonly(pangoLayoutIter);
+		auto p = pango_layout_iter_get_line_readonly(pangoLayoutIter);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**

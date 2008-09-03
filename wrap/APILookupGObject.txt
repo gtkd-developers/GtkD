@@ -420,6 +420,8 @@ strictPrefix: Y
 import: glib.Str
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
+import: glib.ListG
+structWrap: GList* ListG
 
 array: g_param_spec_pool_list Return n_pspecs_p
 outFile: ParamSpecPool

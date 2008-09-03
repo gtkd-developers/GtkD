@@ -91,10 +91,12 @@
  * 	- gdk.Display
  * 	- gdk.Window
  * 	- gdk.Font
+ * 	- gdk.Pixmap
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkDrawable* -> Drawable
  * 	- GdkFont* -> Font
+ * 	- GdkPixmap* -> Pixmap
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -114,6 +116,7 @@ private import gdk.Drawable;
 private import gdk.Display;
 private import gdk.Window;
 private import gdk.Font;
+private import gdk.Pixmap;
 
 
 
@@ -186,10 +189,15 @@ public class X11
 	 * anid =  a native pixmap handle.
 	 * Returns: the GdkWindow wrapper for the native window, or NULL if there is none.
 	 */
-	public static GdkPixmap* gdkPixmapLookup(GdkNativeWindow anid)
+	public static Pixmap gdkPixmapLookup(GdkNativeWindow anid)
 	{
 		// GdkPixmap* gdk_pixmap_lookup (GdkNativeWindow anid);
-		return gdk_pixmap_lookup(anid);
+		auto p = gdk_pixmap_lookup(anid);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**

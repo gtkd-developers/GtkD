@@ -43,9 +43,11 @@
  * omit signals:
  * imports:
  * 	- gsv.SourceStyleScheme
+ * 	- gsv.SourceStyleSchemeManager
  * 	- glib.Str
  * structWrap:
  * 	- GtkSourceStyleScheme* -> SourceStyleScheme
+ * 	- GtkSourceStyleSchemeManager* -> SourceStyleSchemeManager
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,6 +62,7 @@ private import glib.ConstructionException;
 
 
 private import gsv.SourceStyleScheme;
+private import gsv.SourceStyleSchemeManager;
 private import glib.Str;
 
 
@@ -132,10 +135,15 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Returns the default GtkSourceStyleSchemeManager instance.
 	 * Returns: a GtkSourceStyleSchemeManager. Return value is ownedby GtkSourceView library and must not be unref'ed.
 	 */
-	public static GtkSourceStyleSchemeManager* getDefault()
+	public static SourceStyleSchemeManager getDefault()
 	{
 		// GtkSourceStyleSchemeManager* gtk_source_style_scheme_manager_get_default  (void);
-		return gtk_source_style_scheme_manager_get_default();
+		auto p = gtk_source_style_scheme_manager_get_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceStyleSchemeManager(cast(GtkSourceStyleSchemeManager*) p);
 	}
 	
 	/**

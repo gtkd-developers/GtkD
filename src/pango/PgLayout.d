@@ -46,6 +46,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- pango.PgLayoutLine
  * 	- pango.PgContext
  * 	- pango.PgAttributeList
  * 	- pango.PgFontDescription
@@ -59,6 +60,7 @@
  * 	- PangoFontDescription* -> PgFontDescription
  * 	- PangoLayout* -> PgLayout
  * 	- PangoLayoutIter* -> PgLayoutIter
+ * 	- PangoLayoutLine* -> PgLayoutLine
  * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
@@ -74,6 +76,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import pango.PgLayoutLine;
 private import pango.PgContext;
 private import pango.PgAttributeList;
 private import pango.PgFontDescription;
@@ -916,10 +919,15 @@ public class PgLayout : ObjectG
 	 *  pango_layout_get_line_count(layout) - 1, inclusive.
 	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout.
 	 */
-	public PangoLayoutLine* getLine(int line)
+	public PgLayoutLine getLine(int line)
 	{
 		// PangoLayoutLine* pango_layout_get_line (PangoLayout *layout,  int line);
-		return pango_layout_get_line(pangoLayout, line);
+		auto p = pango_layout_get_line(pangoLayout, line);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -933,10 +941,15 @@ public class PgLayout : ObjectG
 	 *  pango_layout_get_line_count(layout) - 1, inclusive.
 	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout. No changes should be made to the line.
 	 */
-	public PangoLayoutLine* getLineReadonly(int line)
+	public PgLayoutLine getLineReadonly(int line)
 	{
 		// PangoLayoutLine* pango_layout_get_line_readonly (PangoLayout *layout,  int line);
-		return pango_layout_get_line_readonly(pangoLayout, line);
+		auto p = pango_layout_get_line_readonly(pangoLayout, line);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**

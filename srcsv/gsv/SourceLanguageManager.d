@@ -44,8 +44,10 @@
  * imports:
  * 	- glib.Str
  * 	- gsv.SourceLanguage
+ * 	- gsv.SourceLanguageManager
  * structWrap:
  * 	- GtkSourceLanguage* -> SourceLanguage
+ * 	- GtkSourceLanguageManager* -> SourceLanguageManager
  * module aliases:
  * local aliases:
  * overrides:
@@ -61,6 +63,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gsv.SourceLanguage;
+private import gsv.SourceLanguageManager;
 
 
 
@@ -133,10 +136,15 @@ public class SourceLanguageManager : ObjectG
 	 * Returns the default GtkSourceLanguageManager instance.
 	 * Returns: a GtkSourceLanguageManager. Return value is ownedby GtkSourceView library and must not be unref'ed.
 	 */
-	public static GtkSourceLanguageManager* getDefault()
+	public static SourceLanguageManager getDefault()
 	{
 		// GtkSourceLanguageManager* gtk_source_language_manager_get_default  (void);
-		return gtk_source_language_manager_get_default();
+		auto p = gtk_source_language_manager_get_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceLanguageManager(cast(GtkSourceLanguageManager*) p);
 	}
 	
 	/**

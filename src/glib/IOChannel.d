@@ -169,7 +169,12 @@ public class IOChannel
 		}
 		
 		if ( str !is null )
-		strReturn = str[0 .. len-1];
+		{
+			version(D_Version2)
+			strReturn = str[0 .. len-1].idup;
+			else
+			strReturn = str[0 .. len-1];
+		}
 		
 		return p;
 	}
@@ -201,7 +206,12 @@ public class IOChannel
 		
 		
 		if ( str !is null )
-		strReturn = str[0 .. len-1];
+		{
+			version(D_Version2)
+			strReturn = str[0 .. len-1].idup;
+			else
+			strReturn = str[0 .. len-1];
+		}
 		
 		return p;
 	}

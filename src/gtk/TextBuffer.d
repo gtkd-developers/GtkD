@@ -64,12 +64,14 @@
  * 	- gtk.TextMark
  * 	- gtk.Clipboard
  * 	- gdk.Bitmap
+ * 	- gtk.TargetList
  * 	- std.stdarg
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRectangle* -> Rectangle
  * 	- GtkClipboard* -> Clipboard
+ * 	- GtkTargetList* -> TargetList
  * 	- GtkTextAttributes* -> TextAttributes
  * 	- GtkTextBuffer* -> TextBuffer
  * 	- GtkTextChildAnchor* -> TextChildAnchor
@@ -111,6 +113,7 @@ private import gtk.TextChildAnchor;
 private import gtk.TextMark;
 private import gtk.Clipboard;
 private import gdk.Bitmap;
+private import gtk.TargetList;
 
 
 version(Tango) {
@@ -1860,10 +1863,15 @@ public class TextBuffer : ObjectG
 	 * Since 2.10
 	 * Returns: the GtkTargetList
 	 */
-	public GtkTargetList* getCopyTargetList()
+	public TargetList getCopyTargetList()
 	{
 		// GtkTargetList* gtk_text_buffer_get_copy_target_list  (GtkTextBuffer *buffer);
-		return gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
+		auto p = gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**
@@ -1890,10 +1898,15 @@ public class TextBuffer : ObjectG
 	 * Since 2.10
 	 * Returns: the GtkTargetList
 	 */
-	public GtkTargetList* getPasteTargetList()
+	public TargetList getPasteTargetList()
 	{
 		// GtkTargetList* gtk_text_buffer_get_paste_target_list  (GtkTextBuffer *buffer);
-		return gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
+		auto p = gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**

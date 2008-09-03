@@ -43,6 +43,7 @@
  * omit signals:
  * imports:
  * structWrap:
+ * 	- GtkSourceStyle* -> SourceStyle
  * module aliases:
  * local aliases:
  * overrides:
@@ -113,9 +114,14 @@ public class SourceStyle : ObjectG
 	 * Since 2.0
 	 * Returns: copy of style, call g_object_unref() when you are done with it.
 	 */
-	public GtkSourceStyle* copy()
+	public SourceStyle copy()
 	{
 		// GtkSourceStyle* gtk_source_style_copy (const GtkSourceStyle *style);
-		return gtk_source_style_copy(gtkSourceStyle);
+		auto p = gtk_source_style_copy(gtkSourceStyle);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceStyle(cast(GtkSourceStyle*) p);
 	}
 }

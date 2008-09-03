@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = RgbCmap
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -165,25 +165,6 @@ public class RgbCmap
 			return;
 		}
 		this.gdkRgbCmap = gdkRgbCmap;
-	}
-	
-	/**
-	 * Creates a new GdkRgbCmap structure. The cmap maps color indexes to
-	 * RGB colors. If n_colors is less than 256, then images containing
-	 * color values greater than or equal to n_colors will produce undefined
-	 * results, including possibly segfaults.
-	 * Params:
-	 * colors = The colors, represented as 0xRRGGBB integer values.
-	 */
-	public this (uint[] colors)
-	{
-		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
-		auto p = gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length)");
-		}
-		this(cast(GdkRgbCmap*) p);
 	}
 	
 	/**

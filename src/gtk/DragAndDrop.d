@@ -47,6 +47,7 @@
  * 	- gtk.Widget
  * 	- gdk.Window
  * 	- gdk.DragContext
+ * 	- gtk.TargetList
  * 	- gdk.Event
  * 	- gdk.Colormap
  * 	- gdk.Pixmap
@@ -60,6 +61,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkWindow* -> Window
+ * 	- GtkTargetList* -> TargetList
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -78,6 +80,7 @@ private import glib.Str;
 private import gtk.Widget;
 private import gdk.Window;
 private import gdk.DragContext;
+private import gtk.TargetList;
 private import gdk.Event;
 private import gdk.Colormap;
 private import gdk.Pixmap;
@@ -200,10 +203,10 @@ public class DragAndDrop
 	 *  gtk_drag_dest_get_target_list (widget).
 	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE
 	 */
-	public static GdkAtom destFindTarget(Widget widget, DragContext context, GtkTargetList* targetList)
+	public static GdkAtom destFindTarget(Widget widget, DragContext context, TargetList targetList)
 	{
 		// GdkAtom gtk_drag_dest_find_target (GtkWidget *widget,  GdkDragContext *context,  GtkTargetList *target_list);
-		return gtk_drag_dest_find_target((widget is null) ? null : widget.getWidgetStruct(), (context is null) ? null : context.getDragContextStruct(), targetList);
+		return gtk_drag_dest_find_target((widget is null) ? null : widget.getWidgetStruct(), (context is null) ? null : context.getDragContextStruct(), (targetList is null) ? null : targetList.getTargetListStruct());
 	}
 	
 	/**
@@ -213,10 +216,15 @@ public class DragAndDrop
 	 * widget =  a GtkWidget
 	 * Returns: the GtkTargetList, or NULL if none
 	 */
-	public static GtkTargetList* destGetTargetList(Widget widget)
+	public static TargetList destGetTargetList(Widget widget)
 	{
 		// GtkTargetList* gtk_drag_dest_get_target_list (GtkWidget *widget);
-		return gtk_drag_dest_get_target_list((widget is null) ? null : widget.getWidgetStruct());
+		auto p = gtk_drag_dest_get_target_list((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**
@@ -227,10 +235,10 @@ public class DragAndDrop
 	 * widget =  a GtkWidget that's a drag destination
 	 * targetList =  list of droppable targets, or NULL for none
 	 */
-	public static void destSetTargetList(Widget widget, GtkTargetList* targetList)
+	public static void destSetTargetList(Widget widget, TargetList targetList)
 	{
 		// void gtk_drag_dest_set_target_list (GtkWidget *widget,  GtkTargetList *target_list);
-		gtk_drag_dest_set_target_list((widget is null) ? null : widget.getWidgetStruct(), targetList);
+		gtk_drag_dest_set_target_list((widget is null) ? null : widget.getWidgetStruct(), (targetList is null) ? null : targetList.getTargetListStruct());
 	}
 	
 	/**
@@ -406,10 +414,10 @@ public class DragAndDrop
 	 * event =  The event that triggered the start of the drag.
 	 * Returns: the context for this drag.
 	 */
-	public static DragContext begin(Widget widget, GtkTargetList* targets, GdkDragAction actions, int button, Event event)
+	public static DragContext begin(Widget widget, TargetList targets, GdkDragAction actions, int button, Event event)
 	{
 		// GdkDragContext* gtk_drag_begin (GtkWidget *widget,  GtkTargetList *targets,  GdkDragAction actions,  gint button,  GdkEvent *event);
-		auto p = gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), targets, actions, button, (event is null) ? null : event.getEventStruct());
+		auto p = gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct());
 		if(p is null)
 		{
 			return null;
@@ -639,10 +647,10 @@ public class DragAndDrop
 	 * widget =  a GtkWidget that's a drag source
 	 * targetList =  list of draggable targets, or NULL for none
 	 */
-	public static void sourceSetTargetList(Widget widget, GtkTargetList* targetList)
+	public static void sourceSetTargetList(Widget widget, TargetList targetList)
 	{
 		// void gtk_drag_source_set_target_list (GtkWidget *widget,  GtkTargetList *target_list);
-		gtk_drag_source_set_target_list((widget is null) ? null : widget.getWidgetStruct(), targetList);
+		gtk_drag_source_set_target_list((widget is null) ? null : widget.getWidgetStruct(), (targetList is null) ? null : targetList.getTargetListStruct());
 	}
 	
 	/**
@@ -653,10 +661,15 @@ public class DragAndDrop
 	 * widget =  a GtkWidget
 	 * Returns: the GtkTargetList, or NULL if none
 	 */
-	public static GtkTargetList* sourceGetTargetList(Widget widget)
+	public static TargetList sourceGetTargetList(Widget widget)
 	{
 		// GtkTargetList* gtk_drag_source_get_target_list (GtkWidget *widget);
-		return gtk_drag_source_get_target_list((widget is null) ? null : widget.getWidgetStruct());
+		auto p = gtk_drag_source_get_target_list((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**

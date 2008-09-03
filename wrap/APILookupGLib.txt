@@ -609,7 +609,12 @@ code: start
 		}
 
 		if ( str !is null )
-			strReturn = str[0 .. len-1];
+		{
+			version(D_Version2)
+				strReturn = str[0 .. len-1].idup;
+			else
+				strReturn = str[0 .. len-1];
+		}
 		
 		return p;
 	}
@@ -641,8 +646,13 @@ code: start
 
 	
 		if ( str !is null )
-			strReturn = str[0 .. len-1];
-		
+		{
+			version(D_Version2)
+				strReturn = str[0 .. len-1].idup;
+			else
+				strReturn = str[0 .. len-1];
+		}
+
 		return p;
 	}
 code: end
@@ -1576,6 +1586,7 @@ strictPrefix: Y
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+structWrap: GDir* Directory
 outFile: Directory
 
 struct: GMappedFile
@@ -1747,6 +1758,8 @@ strictPrefix: Y
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: glib.Regex
+structWrap: GRegex* Regex
 
 out: g_match_info_fetch_pos start_pos
 out: g_match_info_fetch_pos end_pos
@@ -1790,6 +1803,9 @@ out: g_key_file_get_locale_string_list length
 out: g_key_file_get_boolean_list length
 out: g_key_file_get_integer_list length
 out: g_key_file_get_double_list length
+array: g_key_file_get_boolean_list Return length
+array: g_key_file_get_integer_list Return length
+array: g_key_file_get_double_list Return length
 
 nocode: g_key_file_load_from_dirs
 

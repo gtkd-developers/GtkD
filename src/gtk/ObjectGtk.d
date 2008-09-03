@@ -44,7 +44,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.ObjectGtk
  * structWrap:
+ * 	- GtkObject* -> ObjectGtk
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,6 +65,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.ObjectGtk;
 
 
 
@@ -223,10 +226,15 @@ public class ObjectGtk : ObjectG
 	 * Increases the reference count of the object.
 	 * Returns:object.
 	 */
-	public GtkObject* doref()
+	public ObjectGtk doref()
 	{
 		// GtkObject* gtk_object_ref (GtkObject *object);
-		return gtk_object_ref(gtkObject);
+		auto p = gtk_object_ref(gtkObject);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ObjectGtk(cast(GtkObject*) p);
 	}
 	
 	/**
