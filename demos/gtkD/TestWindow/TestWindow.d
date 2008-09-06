@@ -77,6 +77,8 @@ private import gtk.Statusbar;
 private import gtk.Menu;
 private import gtk.HandleBox;
 private import gtk.Toolbar;
+private import gtk.SeparatorToolItem;
+private import gtk.ToolButton;
 private import gtk.RadioButton;
 private import gtk.CheckButton;
 private import gtk.ToggleButton;
@@ -196,16 +198,12 @@ class TestWindow : MainWindow
 	{
 		//Frame.defaultBorder = 7;
 
-		VBox mainBox = new VBox(false,3);
-		//Table table = new Table(1,5,false);
-		//table.attach(getMenuBar(),0,1,0,1,AttachOptions.EXPAND,AttachOptions.SHRINK,0,0);		// adding to the window
+		VBox mainBox = new VBox(false,0);
 		mainBox.packStart(getMenuBar(),false,false,0);
-		//table.attach(getToolbar(),0,1,1,2,AttachOptions.EXPAND,AttachOptions.SHRINK,0,0);
 		mainBox.packStart(getToolbar(),false,false,0);
 
 		Notebook notebook = setNotebook();
 		notebook.setBorderWidth(10);
-		//table.attach(notebook,0,1,2,3,AttachOptions.EXPAND,AttachOptions.FILL,4,4);
 		mainBox.packStart(notebook,true,true,0);
 
 		Button cancelButton = new Button(StockID.CANCEL, &anyButtonExits);
@@ -217,14 +215,9 @@ class TestWindow : MainWindow
 		bBox.packEnd(exitButton,0,0,10);
 		bBox.packEnd(cancelButton,0,0,10);
 		bBox.packEnd(quitButton,0,0,10);
-		//table.attach(bBox,0,1,3,4,AttachOptions.EXPAND,AttachOptions.SHRINK,0,0);
 		mainBox.packStart(bBox,false,false,0);
 
 		Statusbar statusbar = new Statusbar();
-
-		//table.attach(statusbar,0,1,4,5,AttachOptions.EXPAND,AttachOptions.EXPAND,0,0);
-		//add(table);
-		//mainBox.packStart(table,true,true,0);
 
 		mainBox.packStart(statusbar,false,true,0);
 		add(mainBox);
@@ -361,11 +354,11 @@ class TestWindow : MainWindow
 	{
 		HandleBox handleBox = new HandleBox();
 		Toolbar toolbar = new Toolbar();
-		toolbar.appendWidget(new Button(StockID.OPEN, true),"Toolbar button 1","Private text 1");
-		toolbar.appendWidget(new Button(StockID.CLOSE, true),"Toolbar button 2","Private text 2");
-		toolbar.appendSpace();
-		toolbar.appendWidget(new Button(StockID.SAVE, true),"Toolbar button 3","Private text 3");
-		toolbar.appendWidget(new Button(StockID.SAVE_AS, true),"Toolbar button 4","Private text 4");
+		toolbar.insert(new ToolButton(StockID.OPEN));
+		toolbar.insert(new ToolButton(StockID.CLOSE));
+		toolbar.insert(new SeparatorToolItem());
+		toolbar.insert(new ToolButton(StockID.SAVE));
+		toolbar.insert(new ToolButton(StockID.SAVE_AS));
 
 		handleBox.add(toolbar);
 
