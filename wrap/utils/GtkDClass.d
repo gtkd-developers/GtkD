@@ -1009,19 +1009,36 @@ public class GtkDClass
 	{
 		if ( !convParms.isInterface )
 		{
-			text ~= "extern(C) static void callBack"~gtkDSignal~"("
-					~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
-					~")";
+			if ( startsWith(dlg, "gboolean") )
+			{
+				text ~= "extern(C) static gboolean callBack"~gtkDSignal~"("
+						~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
+						~")";
+			}
+			else
+			{
+				text ~= "extern(C) static void callBack"~gtkDSignal~"("
+						~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
+						~")";
+			}
 			text ~= "{";
-			text ~= "	bool consumed = false;";
-			text ~= "";
 			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~gtkDSignal~"Listeners )";
 			text ~= "	{";
-			char[] dlgCall = "dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~");";
-			text ~= "		"~dlgCall;
-			text ~= "	}";
-			text ~= "	";
-			text ~= "	return consumed;";
+			if ( startsWith(dlg, "gboolean") )
+			{
+				text ~= "		if ( dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~") )";
+				text ~= "		{";
+				text ~= "			return true;";
+				text ~= "		}";
+				text ~= "	}";
+				text ~= "	";
+				text ~= "	return false;";
+			}
+			else
+			{
+				text ~= "		dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~");";
+				text ~= "	}";
+			}
 			text ~= "}";
 			text ~= "";
 		}

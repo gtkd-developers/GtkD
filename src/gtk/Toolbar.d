@@ -203,16 +203,17 @@ public class Toolbar : Container
 		}
 		onFocusHomeOrEndListeners ~= dlg;
 	}
-	extern(C) static void callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar toolbar)
+	extern(C) static gboolean callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar toolbar)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(gboolean, Toolbar) dlg ; toolbar.onFocusHomeOrEndListeners )
 		{
-			dlg(focusHome, toolbar);
+			if ( dlg(focusHome, toolbar) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(GtkOrientation, Toolbar)[] onOrientationChangedListeners;
@@ -236,14 +237,10 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, Toolbar toolbar)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkOrientation, Toolbar) dlg ; toolbar.onOrientationChangedListeners )
 		{
 			dlg(orientation, toolbar);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(gint, gint, gint, Toolbar)[] onPopupContextMenuListeners;
@@ -271,16 +268,17 @@ public class Toolbar : Container
 		}
 		onPopupContextMenuListeners ~= dlg;
 	}
-	extern(C) static void callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar toolbar)
+	extern(C) static gboolean callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar toolbar)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(gint, gint, gint, Toolbar) dlg ; toolbar.onPopupContextMenuListeners )
 		{
-			dlg(x, y, button, toolbar);
+			if ( dlg(x, y, button, toolbar) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(GtkToolbarStyle, Toolbar)[] onStyleChangedListeners;
@@ -307,14 +305,10 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, Toolbar toolbar)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkToolbarStyle, Toolbar) dlg ; toolbar.onStyleChangedListeners )
 		{
 			dlg(style, toolbar);
 		}
-		
-		return consumed;
 	}
 	
 	

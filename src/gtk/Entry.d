@@ -181,14 +181,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackActivate(GtkEntry* entryStruct, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Entry) dlg ; entry.onActivateListeners )
 		{
 			dlg(entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Entry)[] onBackspaceListeners;
@@ -211,14 +207,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackBackspace(GtkEntry* entryStruct, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Entry) dlg ; entry.onBackspaceListeners )
 		{
 			dlg(entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Entry)[] onCopyClipboardListeners;
@@ -241,14 +233,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Entry) dlg ; entry.onCopyClipboardListeners )
 		{
 			dlg(entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Entry)[] onCutClipboardListeners;
@@ -271,14 +259,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Entry) dlg ; entry.onCutClipboardListeners )
 		{
 			dlg(entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkDeleteType, gint, Entry)[] onDeleteFromCursorListeners;
@@ -301,14 +285,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType arg1, gint arg2, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkDeleteType, gint, Entry) dlg ; entry.onDeleteFromCursorListeners )
 		{
 			dlg(arg1, arg2, entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(string, Entry)[] onInsertAtCursorListeners;
@@ -331,14 +311,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, gchar* arg1, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, Entry) dlg ; entry.onInsertAtCursorListeners )
 		{
 			dlg(Str.toString(arg1), entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, Entry)[] onMoveCursorListeners;
@@ -361,14 +337,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep arg1, gint arg2, gboolean arg3, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, Entry) dlg ; entry.onMoveCursorListeners )
 		{
 			dlg(arg1, arg2, arg3, entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Entry)[] onPasteClipboardListeners;
@@ -391,14 +363,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Entry) dlg ; entry.onPasteClipboardListeners )
 		{
 			dlg(entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkMenu*, Entry)[] onPopulatePopupListeners;
@@ -421,14 +389,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkMenu* arg1, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkMenu*, Entry) dlg ; entry.onPopulatePopupListeners )
 		{
 			dlg(arg1, entry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Entry)[] onToggleOverwriteListeners;
@@ -454,14 +418,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct, Entry entry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Entry) dlg ; entry.onToggleOverwriteListeners )
 		{
 			dlg(entry);
 		}
-		
-		return consumed;
 	}
 	
 	

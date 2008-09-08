@@ -140,14 +140,10 @@ public class Range : Widget
 	}
 	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble arg1, Range range)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gdouble, Range) dlg ; range.onAdjustBoundsListeners )
 		{
 			dlg(arg1, range);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(GtkScrollType, gdouble, Range)[] onChangeValueListeners;
@@ -182,16 +178,17 @@ public class Range : Widget
 		}
 		onChangeValueListeners ~= dlg;
 	}
-	extern(C) static void callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range range)
+	extern(C) static gboolean callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range range)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GtkScrollType, gdouble, Range) dlg ; range.onChangeValueListeners )
 		{
-			dlg(scroll, value, range);
+			if ( dlg(scroll, value, range) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(GtkScrollType, Range)[] onMoveSliderListeners;
@@ -215,14 +212,10 @@ public class Range : Widget
 	}
 	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, Range range)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkScrollType, Range) dlg ; range.onMoveSliderListeners )
 		{
 			dlg(step, range);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Range)[] onValueChangedListeners;
@@ -246,14 +239,10 @@ public class Range : Widget
 	}
 	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, Range range)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Range) dlg ; range.onValueChangedListeners )
 		{
 			dlg(range);
 		}
-		
-		return consumed;
 	}
 	
 	

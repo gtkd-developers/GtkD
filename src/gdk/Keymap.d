@@ -190,14 +190,10 @@ public class Keymap : ObjectG
 	}
 	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap keymap)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Keymap) dlg ; keymap.onDirectionChangedListeners )
 		{
 			dlg(keymap);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Keymap)[] onKeysChangedListeners;
@@ -223,14 +219,10 @@ public class Keymap : ObjectG
 	}
 	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap keymap)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Keymap) dlg ; keymap.onKeysChangedListeners )
 		{
 			dlg(keymap);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -142,14 +142,10 @@ public class CellRendererAccel : CellRendererText
 	}
 	extern(C) static void callBackAccelCleared(GtkCellRendererAccel* accelStruct, gchar* pathString, CellRendererAccel cellRendererAccel)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, CellRendererAccel) dlg ; cellRendererAccel.onAccelClearedListeners )
 		{
 			dlg(Str.toString(pathString), cellRendererAccel);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(string, guint, GdkModifierType, guint, CellRendererAccel)[] onAccelEditedListeners;
@@ -174,14 +170,10 @@ public class CellRendererAccel : CellRendererText
 	}
 	extern(C) static void callBackAccelEdited(GtkCellRendererAccel* accelStruct, gchar* pathString, guint accelKey, GdkModifierType accelMods, guint hardwareKeycode, CellRendererAccel cellRendererAccel)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, guint, GdkModifierType, guint, CellRendererAccel) dlg ; cellRendererAccel.onAccelEditedListeners )
 		{
 			dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, cellRendererAccel);
 		}
-		
-		return consumed;
 	}
 	
 	

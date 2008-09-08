@@ -151,14 +151,10 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackApply(GtkAssistant* assistantStruct, Assistant assistant)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Assistant) dlg ; assistant.onApplyListeners )
 		{
 			dlg(assistant);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Assistant)[] onCancelListeners;
@@ -183,14 +179,10 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, Assistant assistant)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Assistant) dlg ; assistant.onCancelListeners )
 		{
 			dlg(assistant);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Assistant)[] onCloseListeners;
@@ -217,14 +209,10 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackClose(GtkAssistant* assistantStruct, Assistant assistant)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Assistant) dlg ; assistant.onCloseListeners )
 		{
 			dlg(assistant);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Widget, Assistant)[] onPrepareListeners;
@@ -251,14 +239,10 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, Assistant assistant)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Widget, Assistant) dlg ; assistant.onPrepareListeners )
 		{
 			dlg(new Widget(page), assistant);
 		}
-		
-		return consumed;
 	}
 	
 	

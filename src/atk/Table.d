@@ -143,14 +143,10 @@ public class Table
 	}
 	extern(C) static void callBackColumnDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onColumnDeletedListeners )
 		{
 			dlg(arg1, arg2, table);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, Table)[] onColumnInsertedListeners;
@@ -175,14 +171,10 @@ public class Table
 	}
 	extern(C) static void callBackColumnInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onColumnInsertedListeners )
 		{
 			dlg(arg1, arg2, table);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Table)[] onColumnReorderedListeners;
@@ -207,14 +199,10 @@ public class Table
 	}
 	extern(C) static void callBackColumnReordered(AtkTable* atktableStruct, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Table) dlg ; table.onColumnReorderedListeners )
 		{
 			dlg(table);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Table)[] onModelChangedListeners;
@@ -239,14 +227,10 @@ public class Table
 	}
 	extern(C) static void callBackModelChanged(AtkTable* atktableStruct, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Table) dlg ; table.onModelChangedListeners )
 		{
 			dlg(table);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, Table)[] onRowDeletedListeners;
@@ -271,14 +255,10 @@ public class Table
 	}
 	extern(C) static void callBackRowDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onRowDeletedListeners )
 		{
 			dlg(arg1, arg2, table);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, Table)[] onRowInsertedListeners;
@@ -303,14 +283,10 @@ public class Table
 	}
 	extern(C) static void callBackRowInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onRowInsertedListeners )
 		{
 			dlg(arg1, arg2, table);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Table)[] onRowReorderedListeners;
@@ -337,14 +313,10 @@ public class Table
 	}
 	extern(C) static void callBackRowReordered(AtkTable* atktableStruct, Table table)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Table) dlg ; table.onRowReorderedListeners )
 		{
 			dlg(table);
 		}
-		
-		return consumed;
 	}
 	
 	

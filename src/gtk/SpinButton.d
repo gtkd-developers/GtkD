@@ -182,14 +182,10 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType arg1, SpinButton spinButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkScrollType, SpinButton) dlg ; spinButton.onChangeValueListeners )
 		{
 			dlg(arg1, spinButton);
 		}
-		
-		return consumed;
 	}
 	
 	gint delegate(gpointer, SpinButton)[] onInputListeners;
@@ -212,14 +208,10 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackInput(GtkSpinButton* spinbuttonStruct, gpointer arg1, SpinButton spinButton)
 	{
-		bool consumed = false;
-		
 		foreach ( gint delegate(gpointer, SpinButton) dlg ; spinButton.onInputListeners )
 		{
 			dlg(arg1, spinButton);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(SpinButton)[] onOutputListeners;
@@ -240,16 +232,17 @@ public class SpinButton : Entry
 		}
 		onOutputListeners ~= dlg;
 	}
-	extern(C) static void callBackOutput(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
+	extern(C) static gboolean callBackOutput(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(SpinButton) dlg ; spinButton.onOutputListeners )
 		{
-			dlg(spinButton);
+			if ( dlg(spinButton) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(SpinButton)[] onValueChangedListeners;
@@ -272,14 +265,10 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(SpinButton) dlg ; spinButton.onValueChangedListeners )
 		{
 			dlg(spinButton);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(SpinButton)[] onWrappedListeners;
@@ -308,14 +297,10 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(SpinButton) dlg ; spinButton.onWrappedListeners )
 		{
 			dlg(spinButton);
 		}
-		
-		return consumed;
 	}
 	
 	

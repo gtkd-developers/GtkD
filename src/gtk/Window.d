@@ -182,14 +182,10 @@ public class Window : Bin
 	}
 	extern(C) static void callBackActivateDefault(GtkWindow* windowStruct, Window window)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Window) dlg ; window.onActivateDefaultListeners )
 		{
 			dlg(window);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Window)[] onActivateFocusListeners;
@@ -212,14 +208,10 @@ public class Window : Bin
 	}
 	extern(C) static void callBackActivateFocus(GtkWindow* windowStruct, Window window)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Window) dlg ; window.onActivateFocusListeners )
 		{
 			dlg(window);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(GdkEvent*, Window)[] onFrameListeners;
@@ -240,16 +232,17 @@ public class Window : Bin
 		}
 		onFrameListeners ~= dlg;
 	}
-	extern(C) static void callBackFrame(GtkWindow* windowStruct, GdkEvent* event, Window window)
+	extern(C) static gboolean callBackFrame(GtkWindow* windowStruct, GdkEvent* event, Window window)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GdkEvent*, Window) dlg ; window.onFrameListeners )
 		{
-			dlg(event, window);
+			if ( dlg(event, window) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(Window)[] onKeysChangedListeners;
@@ -272,14 +265,10 @@ public class Window : Bin
 	}
 	extern(C) static void callBackKeysChanged(GtkWindow* windowStruct, Window window)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Window) dlg ; window.onKeysChangedListeners )
 		{
 			dlg(window);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Widget, Window)[] onSetFocusListeners;
@@ -302,14 +291,10 @@ public class Window : Bin
 	}
 	extern(C) static void callBackSetFocus(GtkWindow* windowStruct, GtkWidget* widget, Window window)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Widget, Window) dlg ; window.onSetFocusListeners )
 		{
 			dlg(new Widget(widget), window);
 		}
-		
-		return consumed;
 	}
 	
 	

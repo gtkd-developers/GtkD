@@ -256,14 +256,10 @@ public class Label : Misc
 	}
 	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, Label label)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Label) dlg ; label.onCopyClipboardListeners )
 		{
 			dlg(label);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, Label)[] onMoveCursorListeners;
@@ -286,14 +282,10 @@ public class Label : Misc
 	}
 	extern(C) static void callBackMoveCursor(GtkLabel* labelStruct, GtkMovementStep arg1, gint arg2, gboolean arg3, Label label)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; label.onMoveCursorListeners )
 		{
 			dlg(arg1, arg2, arg3, label);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkMenu*, Label)[] onPopulatePopupListeners;
@@ -316,14 +308,10 @@ public class Label : Misc
 	}
 	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* arg1, Label label)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkMenu*, Label) dlg ; label.onPopulatePopupListeners )
 		{
 			dlg(arg1, label);
 		}
-		
-		return consumed;
 	}
 	
 	

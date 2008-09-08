@@ -140,14 +140,10 @@ public class TextTagTable : ObjectG
 	}
 	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* arg1, TextTagTable textTagTable)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; textTagTable.onTagAddedListeners )
 		{
 			dlg(new TextTag(arg1), textTagTable);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextTag, gboolean, TextTagTable)[] onTagChangedListeners;
@@ -170,14 +166,10 @@ public class TextTagTable : ObjectG
 	}
 	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* arg1, gboolean arg2, TextTagTable textTagTable)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; textTagTable.onTagChangedListeners )
 		{
 			dlg(new TextTag(arg1), arg2, textTagTable);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextTag, TextTagTable)[] onTagRemovedListeners;
@@ -200,14 +192,10 @@ public class TextTagTable : ObjectG
 	}
 	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* arg1, TextTagTable textTagTable)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; textTagTable.onTagRemovedListeners )
 		{
 			dlg(new TextTag(arg1), textTagTable);
 		}
-		
-		return consumed;
 	}
 	
 	

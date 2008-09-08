@@ -133,16 +133,17 @@ public class TextAttributes
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static void callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes textAttributes)
+	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes textAttributes)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
 		{
-			dlg(object, event, iter, textAttributes);
+			if ( dlg(object, event, iter, textAttributes) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	

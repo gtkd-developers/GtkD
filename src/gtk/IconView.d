@@ -168,16 +168,17 @@ public class IconView : Container, CellLayoutIF
 		}
 		onActivateCursorItemListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static gboolean callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(IconView) dlg ; iconView.onActivateCursorItemListeners )
 		{
-			dlg(iconView);
+			if ( dlg(iconView) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(TreePath, IconView)[] onItemActivatedListeners;
@@ -200,14 +201,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* arg1, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreePath, IconView) dlg ; iconView.onItemActivatedListeners )
 		{
 			dlg(new TreePath(arg1), iconView);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(GtkMovementStep, gint, IconView)[] onMoveCursorListeners;
@@ -228,16 +225,17 @@ public class IconView : Container, CellLayoutIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep arg1, gint arg2, IconView iconView)
+	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep arg1, gint arg2, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
 		{
-			dlg(arg1, arg2, iconView);
+			if ( dlg(arg1, arg2, iconView) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(IconView)[] onSelectAllListeners;
@@ -260,14 +258,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconView) dlg ; iconView.onSelectAllListeners )
 		{
 			dlg(iconView);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(IconView)[] onSelectCursorItemListeners;
@@ -290,14 +284,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconView) dlg ; iconView.onSelectCursorItemListeners )
 		{
 			dlg(iconView);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(IconView)[] onSelectionChangedListeners;
@@ -320,14 +310,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconView) dlg ; iconView.onSelectionChangedListeners )
 		{
 			dlg(iconView);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, IconView)[] onSetScrollAdjustmentsListeners;
@@ -350,14 +336,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkIconView* iconviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg ; iconView.onSetScrollAdjustmentsListeners )
 		{
 			dlg(arg1, arg2, iconView);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(IconView)[] onToggleCursorItemListeners;
@@ -380,14 +362,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconView) dlg ; iconView.onToggleCursorItemListeners )
 		{
 			dlg(iconView);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(IconView)[] onUnselectAllListeners;
@@ -410,14 +388,10 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconView) dlg ; iconView.onUnselectAllListeners )
 		{
 			dlg(iconView);
 		}
-		
-		return consumed;
 	}
 	
 	

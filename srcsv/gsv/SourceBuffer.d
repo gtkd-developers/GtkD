@@ -160,14 +160,10 @@ public class SourceBuffer : TextBuffer
 	}
 	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, SourceBuffer sourceBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; sourceBuffer.onHighlightUpdatedListeners )
 		{
 			dlg(new TextIter(arg1), new TextIter(arg2), sourceBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkTextMark*, SourceBuffer)[] onSourceMarkUpdatedListeners;
@@ -198,14 +194,10 @@ public class SourceBuffer : TextBuffer
 	}
 	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer sourceBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; sourceBuffer.onSourceMarkUpdatedListeners )
 		{
 			dlg(arg1, sourceBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	

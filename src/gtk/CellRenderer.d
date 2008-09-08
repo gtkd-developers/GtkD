@@ -181,14 +181,10 @@ public class CellRenderer : ObjectGtk
 	}
 	extern(C) static void callBackEditingCanceled(GtkCellRenderer* rendererStruct, CellRenderer cellRenderer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(CellRenderer) dlg ; cellRenderer.onEditingCanceledListeners )
 		{
 			dlg(cellRenderer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(CellEditableIF, string, CellRenderer)[] onEditingStartedListeners;
@@ -236,14 +232,10 @@ public class CellRenderer : ObjectGtk
 	}
 	extern(C) static void callBackEditingStarted(GtkCellRenderer* rendererStruct, GtkCellEditable* editable, gchar* path, CellRenderer cellRenderer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
 		{
 			dlg(new CellEditable(editable), Str.toString(path), cellRenderer);
 		}
-		
-		return consumed;
 	}
 	
 	

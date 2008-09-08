@@ -234,14 +234,10 @@ public class RadioMenuItem : CheckMenuItem
 	}
 	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, RadioMenuItem radioMenuItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(RadioMenuItem) dlg ; radioMenuItem.onGroupChangedListeners )
 		{
 			dlg(radioMenuItem);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -217,14 +217,10 @@ public class IconTheme : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconTheme iconTheme)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconTheme) dlg ; iconTheme.onChangedListeners )
 		{
 			dlg(iconTheme);
 		}
-		
-		return consumed;
 	}
 	
 	

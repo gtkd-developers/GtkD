@@ -300,14 +300,10 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	extern(C) static void callBackChanged(GtkComboBox* widgetStruct, ComboBox comboBox)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ComboBox) dlg ; comboBox.onChangedListeners )
 		{
 			dlg(comboBox);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkScrollType, ComboBox)[] onMoveActiveListeners;
@@ -334,14 +330,10 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	extern(C) static void callBackMoveActive(GtkComboBox* widgetStruct, GtkScrollType scrollType, ComboBox comboBox)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; comboBox.onMoveActiveListeners )
 		{
 			dlg(scrollType, comboBox);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(ComboBox)[] onPopdownListeners;
@@ -367,16 +359,17 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onPopdownListeners ~= dlg;
 	}
-	extern(C) static void callBackPopdown(GtkComboBox* buttonStruct, ComboBox comboBox)
+	extern(C) static gboolean callBackPopdown(GtkComboBox* buttonStruct, ComboBox comboBox)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(ComboBox) dlg ; comboBox.onPopdownListeners )
 		{
-			dlg(comboBox);
+			if ( dlg(comboBox) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(ComboBox)[] onPopupListeners;
@@ -406,14 +399,10 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	extern(C) static void callBackPopup(GtkComboBox* widgetStruct, ComboBox comboBox)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ComboBox) dlg ; comboBox.onPopupListeners )
 		{
 			dlg(comboBox);
 		}
-		
-		return consumed;
 	}
 	
 	

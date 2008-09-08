@@ -200,14 +200,10 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, GtkWidget*, ActionGroup) dlg ; actionGroup.onConnectProxyListeners )
 		{
 			dlg(new Action(action), proxy, actionGroup);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onDisconnectProxyListeners;
@@ -236,14 +232,10 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, GtkWidget*, ActionGroup) dlg ; actionGroup.onDisconnectProxyListeners )
 		{
 			dlg(new Action(action), proxy, actionGroup);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, ActionGroup)[] onPostActivateListeners;
@@ -271,14 +263,10 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackPostActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPostActivateListeners )
 		{
 			dlg(new Action(action), actionGroup);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, ActionGroup)[] onPreActivateListeners;
@@ -306,14 +294,10 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackPreActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPreActivateListeners )
 		{
 			dlg(new Action(action), actionGroup);
 		}
-		
-		return consumed;
 	}
 	
 	

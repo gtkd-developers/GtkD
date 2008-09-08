@@ -141,14 +141,10 @@ public class CellRendererToggle : CellRenderer
 	}
 	extern(C) static void callBackToggled(GtkCellRendererToggle* cellRendererStruct, gchar* path, CellRendererToggle cellRendererToggle)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, CellRendererToggle) dlg ; cellRendererToggle.onToggledListeners )
 		{
 			dlg(Str.toString(path), cellRendererToggle);
 		}
-		
-		return consumed;
 	}
 	
 	

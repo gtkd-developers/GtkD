@@ -345,14 +345,10 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackActionsChanged(GtkUIManager* mergeStruct, UIManager uIManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(UIManager) dlg ; uIManager.onActionsChangedListeners )
 		{
 			dlg(uIManager);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Widget, UIManager)[] onAddWidgetListeners;
@@ -379,14 +375,10 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackAddWidget(GtkUIManager* mergeStruct, GtkWidget* widget, UIManager uIManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Widget, UIManager) dlg ; uIManager.onAddWidgetListeners )
 		{
 			dlg(new Widget(widget), uIManager);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, Widget, UIManager)[] onConnectProxyListeners;
@@ -415,14 +407,10 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onConnectProxyListeners )
 		{
 			dlg(new Action(action), new Widget(proxy), uIManager);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, Widget, UIManager)[] onDisconnectProxyListeners;
@@ -448,14 +436,10 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onDisconnectProxyListeners )
 		{
 			dlg(new Action(action), new Widget(proxy), uIManager);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, UIManager)[] onPostActivateListeners;
@@ -483,14 +467,10 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager uIManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPostActivateListeners )
 		{
 			dlg(new Action(action), uIManager);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Action, UIManager)[] onPreActivateListeners;
@@ -520,14 +500,10 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager uIManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPreActivateListeners )
 		{
 			dlg(new Action(action), uIManager);
 		}
-		
-		return consumed;
 	}
 	
 	

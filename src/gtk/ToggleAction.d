@@ -135,14 +135,10 @@ public class ToggleAction : Action
 	}
 	extern(C) static void callBackToggled(GtkToggleAction* toggleactionStruct, ToggleAction toggleAction)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ToggleAction) dlg ; toggleAction.onToggledListeners )
 		{
 			dlg(toggleAction);
 		}
-		
-		return consumed;
 	}
 	
 	

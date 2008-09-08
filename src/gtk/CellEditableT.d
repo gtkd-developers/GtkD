@@ -120,14 +120,10 @@ public template CellEditableT(TStruct)
 	}
 	extern(C) static void callBackEditingDone(GtkCellEditable* cellEditableStruct, CellEditableIF cellEditableIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(CellEditableIF) dlg ; cellEditableIF.onEditingDoneListeners )
 		{
 			dlg(cellEditableIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(CellEditableIF)[] _onRemoveWidgetListeners;
@@ -163,14 +159,10 @@ public template CellEditableT(TStruct)
 	}
 	extern(C) static void callBackRemoveWidget(GtkCellEditable* cellEditableStruct, CellEditableIF cellEditableIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(CellEditableIF) dlg ; cellEditableIF.onRemoveWidgetListeners )
 		{
 			dlg(cellEditableIF);
 		}
-		
-		return consumed;
 	}
 	
 	

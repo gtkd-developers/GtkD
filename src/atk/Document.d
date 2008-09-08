@@ -136,14 +136,10 @@ public class Document
 	}
 	extern(C) static void callBackLoadComplete(AtkDocument* atkdocumentStruct, Document document)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Document) dlg ; document.onLoadCompleteListeners )
 		{
 			dlg(document);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Document)[] onLoadStoppedListeners;
@@ -171,14 +167,10 @@ public class Document
 	}
 	extern(C) static void callBackLoadStopped(AtkDocument* atkdocumentStruct, Document document)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Document) dlg ; document.onLoadStoppedListeners )
 		{
 			dlg(document);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Document)[] onReloadListeners;
@@ -205,14 +197,10 @@ public class Document
 	}
 	extern(C) static void callBackReload(AtkDocument* atkdocumentStruct, Document document)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Document) dlg ; document.onReloadListeners )
 		{
 			dlg(document);
 		}
-		
-		return consumed;
 	}
 	
 	

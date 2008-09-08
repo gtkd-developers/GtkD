@@ -141,14 +141,10 @@ public class Text
 	}
 	extern(C) static void callBackTextAttributesChanged(AtkText* atktextStruct, Text text)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Text) dlg ; text.onTextAttributesChangedListeners )
 		{
 			dlg(text);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, Text)[] onTextCaretMovedListeners;
@@ -173,14 +169,10 @@ public class Text
 	}
 	extern(C) static void callBackTextCaretMoved(AtkText* atktextStruct, gint arg1, Text text)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, Text) dlg ; text.onTextCaretMovedListeners )
 		{
 			dlg(arg1, text);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, Text)[] onTextChangedListeners;
@@ -207,14 +199,10 @@ public class Text
 	}
 	extern(C) static void callBackTextChanged(AtkText* atktextStruct, gint arg1, gint arg2, Text text)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, Text) dlg ; text.onTextChangedListeners )
 		{
 			dlg(arg1, arg2, text);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Text)[] onTextSelectionChangedListeners;
@@ -239,14 +227,10 @@ public class Text
 	}
 	extern(C) static void callBackTextSelectionChanged(AtkText* atktextStruct, Text text)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Text) dlg ; text.onTextSelectionChangedListeners )
 		{
 			dlg(text);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -224,14 +224,10 @@ public class TreeSelection : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkTreeSelection* treeselectionStruct, TreeSelection treeSelection)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreeSelection) dlg ; treeSelection.onChangedListeners )
 		{
 			dlg(treeSelection);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -152,16 +152,17 @@ public class TextTag : ObjectG
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static void callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag textTag)
+	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag textTag)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg ; textTag.onListeners )
 		{
-			dlg(new ObjectG(object), new Event(event), new TextIter(iter), textTag);
+			if ( dlg(new ObjectG(object), new Event(event), new TextIter(iter), textTag) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	

@@ -159,16 +159,17 @@ public class AccelGroup : ObjectG
 		}
 		onAccelActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackAccelActivate(GtkAccelGroup* accelGroupStruct, GObject* acceleratable, guint keyval, GdkModifierType modifier, AccelGroup accelGroup)
+	extern(C) static gboolean callBackAccelActivate(GtkAccelGroup* accelGroupStruct, GObject* acceleratable, guint keyval, GdkModifierType modifier, AccelGroup accelGroup)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg ; accelGroup.onAccelActivateListeners )
 		{
-			dlg(new ObjectG(acceleratable), keyval, modifier, accelGroup);
+			if ( dlg(new ObjectG(acceleratable), keyval, modifier, accelGroup) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(guint, GdkModifierType, Closure, AccelGroup)[] onAccelChangedListeners;
@@ -199,14 +200,10 @@ public class AccelGroup : ObjectG
 	}
 	extern(C) static void callBackAccelChanged(GtkAccelGroup* accelGroupStruct, guint keyval, GdkModifierType modifier, GClosure* accelClosure, AccelGroup accelGroup)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg ; accelGroup.onAccelChangedListeners )
 		{
 			dlg(keyval, modifier, new Closure(accelClosure), accelGroup);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -155,14 +155,10 @@ public class Scale : Range
 	}
 	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble arg1, Scale scale)
 	{
-		bool consumed = false;
-		
 		foreach ( string delegate(gdouble, Scale) dlg ; scale.onFormatValueListeners )
 		{
 			dlg(arg1, scale);
 		}
-		
-		return consumed;
 	}
 	
 	

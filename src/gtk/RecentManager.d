@@ -185,14 +185,10 @@ public class RecentManager : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkRecentManager* recentManagerStruct, RecentManager recentManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(RecentManager) dlg ; recentManager.onChangedListeners )
 		{
 			dlg(recentManager);
 		}
-		
-		return consumed;
 	}
 	
 	

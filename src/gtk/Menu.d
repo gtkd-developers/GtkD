@@ -232,14 +232,10 @@ public class Menu : MenuShell
 	}
 	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType arg1, Menu menu)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkScrollType, Menu) dlg ; menu.onMoveScrollListeners )
 		{
 			dlg(arg1, menu);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -187,14 +187,10 @@ public class Action : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackActivate(GtkAction* actionStruct, Action action)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Action) dlg ; action.onActivateListeners )
 		{
 			dlg(action);
 		}
-		
-		return consumed;
 	}
 	
 	

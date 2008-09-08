@@ -161,14 +161,10 @@ public class PrintJob : ObjectG
 	}
 	extern(C) static void callBackStatusChanged(GtkPrintJob* jobStruct, PrintJob printJob)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(PrintJob) dlg ; printJob.onStatusChangedListeners )
 		{
 			dlg(printJob);
 		}
-		
-		return consumed;
 	}
 	
 	

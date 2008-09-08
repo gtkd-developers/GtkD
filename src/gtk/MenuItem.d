@@ -242,14 +242,10 @@ public class MenuItem : Item
 	}
 	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem menuItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateListeners )
 		{
 			dlg(menuItem);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(MenuItem)[] onActivateItemListeners;
@@ -274,14 +270,10 @@ public class MenuItem : Item
 	}
 	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem menuItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateItemListeners )
 		{
 			dlg(menuItem);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, MenuItem)[] onToggleSizeAllocateListeners;
@@ -304,14 +296,10 @@ public class MenuItem : Item
 	}
 	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, gint arg1, MenuItem menuItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, MenuItem) dlg ; menuItem.onToggleSizeAllocateListeners )
 		{
 			dlg(arg1, menuItem);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gpointer, MenuItem)[] onToggleSizeRequestListeners;
@@ -341,14 +329,10 @@ public class MenuItem : Item
 	}
 	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, gpointer arg1, MenuItem menuItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gpointer, MenuItem) dlg ; menuItem.onToggleSizeRequestListeners )
 		{
 			dlg(arg1, menuItem);
 		}
-		
-		return consumed;
 	}
 	
 	

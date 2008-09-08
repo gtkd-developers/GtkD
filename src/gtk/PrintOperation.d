@@ -206,14 +206,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackBeginPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onBeginPrintListeners )
 		{
 			dlg(context, printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	GObject* delegate(PrintOperation)[] onCreateCustomWidgetListeners;
@@ -246,14 +242,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackCreateCustomWidget(GtkPrintOperation* operationStruct, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( GObject* delegate(PrintOperation) dlg ; printOperation.onCreateCustomWidgetListeners )
 		{
 			dlg(printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkWidget*, PrintOperation)[] onCustomWidgetApplyListeners;
@@ -282,14 +274,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* operationStruct, GtkWidget* widget, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkWidget*, PrintOperation) dlg ; printOperation.onCustomWidgetApplyListeners )
 		{
 			dlg(widget, printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkPrintOperationResult, PrintOperation)[] onDoneListeners;
@@ -321,14 +309,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackDone(GtkPrintOperation* operationStruct, GtkPrintOperationResult result, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkPrintOperationResult, PrintOperation) dlg ; printOperation.onDoneListeners )
 		{
 			dlg(result, printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkPrintContext*, gint, PrintOperation)[] onDrawPageListeners;
@@ -397,14 +381,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackDrawPage(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkPrintContext*, gint, PrintOperation) dlg ; printOperation.onDrawPageListeners )
 		{
 			dlg(context, pageNr, printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GtkPrintContext*, PrintOperation)[] onEndPrintListeners;
@@ -431,14 +411,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackEndPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onEndPrintListeners )
 		{
 			dlg(context, printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(GtkPrintContext*, PrintOperation)[] onPaginateListeners;
@@ -471,16 +447,17 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onPaginateListeners ~= dlg;
 	}
-	extern(C) static void callBackPaginate(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
+	extern(C) static gboolean callBackPaginate(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onPaginateListeners )
 		{
-			dlg(context, printOperation);
+			if ( dlg(context, printOperation) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation)[] onPreviewListeners;
@@ -515,16 +492,17 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onPreviewListeners ~= dlg;
 	}
-	extern(C) static void callBackPreview(GtkPrintOperation* operationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation printOperation)
+	extern(C) static gboolean callBackPreview(GtkPrintOperation* operationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg ; printOperation.onPreviewListeners )
 		{
-			dlg(preview, context, new Window(parent), printOperation);
+			if ( dlg(preview, context, new Window(parent), printOperation) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation)[] onRequestPageSetupListeners;
@@ -551,14 +529,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, GtkPageSetup* setup, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation) dlg ; printOperation.onRequestPageSetupListeners )
 		{
 			dlg(context, pageNr, new PageSetup(setup), printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(PrintOperation)[] onStatusChangedListeners;
@@ -588,14 +562,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackStatusChanged(GtkPrintOperation* operationStruct, PrintOperation printOperation)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(PrintOperation) dlg ; printOperation.onStatusChangedListeners )
 		{
 			dlg(printOperation);
 		}
-		
-		return consumed;
 	}
 	
 	

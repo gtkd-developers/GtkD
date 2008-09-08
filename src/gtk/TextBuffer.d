@@ -465,14 +465,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackApplyTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; textBuffer.onApplyTagListeners )
 		{
 			dlg(new TextTag(tag), new TextIter(start), new TextIter(end), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextBuffer)[] onBeginUserActionListeners;
@@ -504,14 +500,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackBeginUserAction(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onBeginUserActionListeners )
 		{
 			dlg(textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextBuffer)[] onChangedListeners;
@@ -536,14 +528,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onChangedListeners )
 		{
 			dlg(textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextIter, TextIter, TextBuffer)[] onDeleteRangeListeners;
@@ -575,14 +563,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackDeleteRange(GtkTextBuffer* textbufferStruct, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextIter, TextIter, TextBuffer) dlg ; textBuffer.onDeleteRangeListeners )
 		{
 			dlg(new TextIter(start), new TextIter(end), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextBuffer)[] onEndUserActionListeners;
@@ -615,14 +599,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackEndUserAction(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onEndUserActionListeners )
 		{
 			dlg(textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextIter, TextChildAnchor, TextBuffer)[] onInsertChildAnchorListeners;
@@ -653,14 +633,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackInsertChildAnchor(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextChildAnchor* anchor, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextIter, TextChildAnchor, TextBuffer) dlg ; textBuffer.onInsertChildAnchorListeners )
 		{
 			dlg(new TextIter(location), new TextChildAnchor(anchor), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextIter, Pixbuf, TextBuffer)[] onInsertPixbufListeners;
@@ -690,14 +666,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackInsertPixbuf(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GdkPixbuf* pixbuf, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextIter, Pixbuf, TextBuffer) dlg ; textBuffer.onInsertPixbufListeners )
 		{
 			dlg(new TextIter(location), new Pixbuf(pixbuf), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextIter, string, gint, TextBuffer)[] onInsertTextListeners;
@@ -729,14 +701,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackInsertText(GtkTextBuffer* textbufferStruct, GtkTextIter* location, gchar* text, gint len, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextIter, string, gint, TextBuffer) dlg ; textBuffer.onInsertTextListeners )
 		{
 			dlg(new TextIter(location), Str.toString(text), len, textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextMark, TextBuffer)[] onMarkDeletedListeners;
@@ -761,14 +729,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackMarkDeleted(GtkTextBuffer* textbufferStruct, GtkTextMark* mark, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextMark, TextBuffer) dlg ; textBuffer.onMarkDeletedListeners )
 		{
 			dlg(new TextMark(mark), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextIter, TextMark, TextBuffer)[] onMarkSetListeners;
@@ -796,14 +760,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackMarkSet(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextMark* mark, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextIter, TextMark, TextBuffer) dlg ; textBuffer.onMarkSetListeners )
 		{
 			dlg(new TextIter(location), new TextMark(mark), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextBuffer)[] onModifiedChangedListeners;
@@ -828,14 +788,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackModifiedChanged(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onModifiedChangedListeners )
 		{
 			dlg(textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onRemoveTagListeners;
@@ -867,14 +823,10 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackRemoveTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; textBuffer.onRemoveTagListeners )
 		{
 			dlg(new TextTag(tag), new TextIter(start), new TextIter(end), textBuffer);
 		}
-		
-		return consumed;
 	}
 	
 	

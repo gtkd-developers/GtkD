@@ -136,14 +136,10 @@ public template RecentChooserT(TStruct)
 	}
 	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooserIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(RecentChooserIF) dlg ; recentChooserIF.onItemActivatedListeners )
 		{
 			dlg(recentChooserIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(RecentChooserIF)[] _onSelectionChangedListeners;
@@ -178,14 +174,10 @@ public template RecentChooserT(TStruct)
 	}
 	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooserIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(RecentChooserIF) dlg ; recentChooserIF.onSelectionChangedListeners )
 		{
 			dlg(recentChooserIF);
 		}
-		
-		return consumed;
 	}
 	
 	

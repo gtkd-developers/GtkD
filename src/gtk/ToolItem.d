@@ -175,16 +175,17 @@ public class ToolItem : Bin
 		}
 		onCreateMenuProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem toolItem)
+	extern(C) static gboolean callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem toolItem)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(ToolItem) dlg ; toolItem.onCreateMenuProxyListeners )
 		{
-			dlg(toolItem);
+			if ( dlg(toolItem) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	gboolean delegate(Tooltips, string, string, ToolItem)[] onSetTooltipListeners;
@@ -208,16 +209,17 @@ public class ToolItem : Bin
 		}
 		onSetTooltipListeners ~= dlg;
 	}
-	extern(C) static void callBackSetTooltip(GtkToolItem* toolItemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem toolItem)
+	extern(C) static gboolean callBackSetTooltip(GtkToolItem* toolItemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem toolItem)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(Tooltips, string, string, ToolItem) dlg ; toolItem.onSetTooltipListeners )
 		{
-			dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem);
+			if ( dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(ToolItem)[] onToolbarReconfiguredListeners;
@@ -258,14 +260,10 @@ public class ToolItem : Bin
 	}
 	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolItemStruct, ToolItem toolItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ToolItem) dlg ; toolItem.onToolbarReconfiguredListeners )
 		{
 			dlg(toolItem);
 		}
-		
-		return consumed;
 	}
 	
 	

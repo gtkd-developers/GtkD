@@ -248,14 +248,10 @@ public class Container : Widget
 	}
 	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* widget, Container container)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Widget, Container) dlg ; container.onAddListeners )
 		{
 			dlg(new Widget(widget), container);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Container)[] onCheckResizeListeners;
@@ -278,14 +274,10 @@ public class Container : Widget
 	}
 	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, Container container)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Container) dlg ; container.onCheckResizeListeners )
 		{
 			dlg(container);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Widget, Container)[] onRemoveListeners;
@@ -308,14 +300,10 @@ public class Container : Widget
 	}
 	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* widget, Container container)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Widget, Container) dlg ; container.onRemoveListeners )
 		{
 			dlg(new Widget(widget), container);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Widget, Container)[] onSetFocusChildListeners;
@@ -338,14 +326,10 @@ public class Container : Widget
 	}
 	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* widget, Container container)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Widget, Container) dlg ; container.onSetFocusChildListeners )
 		{
 			dlg(new Widget(widget), container);
 		}
-		
-		return consumed;
 	}
 	
 	

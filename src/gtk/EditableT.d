@@ -139,14 +139,10 @@ public template EditableT(TStruct)
 	}
 	extern(C) static void callBackChanged(GtkEditable* editableStruct, EditableIF editableIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(EditableIF) dlg ; editableIF.onChangedListeners )
 		{
 			dlg(editableIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, EditableIF)[] _onDeleteTextListeners;
@@ -182,14 +178,10 @@ public template EditableT(TStruct)
 	}
 	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, EditableIF editableIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, EditableIF) dlg ; editableIF.onDeleteTextListeners )
 		{
 			dlg(startPos, endPos, editableIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(string, gint, gint*, EditableIF)[] _onInsertTextListeners;
@@ -223,14 +215,10 @@ public template EditableT(TStruct)
 	}
 	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gint* position, EditableIF editableIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, gint, gint*, EditableIF) dlg ; editableIF.onInsertTextListeners )
 		{
 			dlg(Str.toString(newText), newTextLength, position, editableIF);
 		}
-		
-		return consumed;
 	}
 	
 	

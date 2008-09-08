@@ -150,14 +150,10 @@ public class Plug : Window
 	}
 	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug plug)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Plug) dlg ; plug.onEmbeddedListeners )
 		{
 			dlg(plug);
 		}
-		
-		return consumed;
 	}
 	
 	

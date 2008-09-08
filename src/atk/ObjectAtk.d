@@ -161,14 +161,10 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onActiveDescendantChangedListeners )
 		{
 			dlg(arg1, objectAtk);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(guint, gpointer, ObjectAtk)[] onChildrenChangedListeners;
@@ -193,14 +189,10 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, gpointer arg2, ObjectAtk objectAtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(guint, gpointer, ObjectAtk) dlg ; objectAtk.onChildrenChangedListeners )
 		{
 			dlg(arg1, arg2, objectAtk);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gboolean, ObjectAtk)[] onFocusListeners;
@@ -224,14 +216,10 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackFocus(AtkObject* atkobjectStruct, gboolean arg1, ObjectAtk objectAtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gboolean, ObjectAtk) dlg ; objectAtk.onFocusListeners )
 		{
 			dlg(arg1, objectAtk);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gpointer, ObjectAtk)[] onPropertyChangeListeners;
@@ -257,14 +245,10 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onPropertyChangeListeners )
 		{
 			dlg(arg1, objectAtk);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(string, gboolean, ObjectAtk)[] onStateChangeListeners;
@@ -289,14 +273,10 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackStateChange(AtkObject* atkobjectStruct, gchar* arg1, gboolean arg2, ObjectAtk objectAtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
 		{
 			dlg(Str.toString(arg1), arg2, objectAtk);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(ObjectAtk)[] onVisibleDataChangedListeners;
@@ -324,14 +304,10 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackVisibleDataChanged(AtkObject* atkobjectStruct, ObjectAtk objectAtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ObjectAtk) dlg ; objectAtk.onVisibleDataChangedListeners )
 		{
 			dlg(objectAtk);
 		}
-		
-		return consumed;
 	}
 	
 	

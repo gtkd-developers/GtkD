@@ -149,14 +149,10 @@ public class Printer : ObjectG
 	}
 	extern(C) static void callBackDetailsAcquired(GtkPrinter* printerStruct, gboolean success, Printer printer)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gboolean, Printer) dlg ; printer.onDetailsAcquiredListeners )
 		{
 			dlg(success, printer);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -276,14 +276,10 @@ public class ObjectG
 	}
 	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* arg1, ObjectG objectG)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ParamSpec, ObjectG) dlg ; objectG.onNotifyListeners )
 		{
 			dlg(new ParamSpec(arg1), objectG);
 		}
-		
-		return consumed;
 	}
 	
 	

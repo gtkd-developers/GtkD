@@ -232,14 +232,10 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onAreaPreparedListeners )
 		{
 			dlg(pixbufLoader);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, gint, gint, PixbufLoader)[] onAreaUpdatedListeners;
@@ -268,14 +264,10 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* loaderStruct, gint x, gint y, gint width, gint height, PixbufLoader pixbufLoader)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, gint, gint, PixbufLoader) dlg ; pixbufLoader.onAreaUpdatedListeners )
 		{
 			dlg(x, y, width, height, pixbufLoader);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(PixbufLoader)[] onClosedListeners;
@@ -303,14 +295,10 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackClosed(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onClosedListeners )
 		{
 			dlg(pixbufLoader);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gint, gint, PixbufLoader)[] onSizePreparedListeners;
@@ -342,14 +330,10 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackSizePrepared(GdkPixbufLoader* loaderStruct, gint width, gint height, PixbufLoader pixbufLoader)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gint, gint, PixbufLoader) dlg ; pixbufLoader.onSizePreparedListeners )
 		{
 			dlg(width, height, pixbufLoader);
 		}
-		
-		return consumed;
 	}
 	
 	

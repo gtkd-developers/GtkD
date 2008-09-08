@@ -158,14 +158,10 @@ public class Display : ObjectG
 	}
 	extern(C) static void callBackClosed(GdkDisplay* displayStruct, gboolean isError, Display display)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gboolean, Display) dlg ; display.onClosedListeners )
 		{
 			dlg(isError, display);
 		}
-		
-		return consumed;
 	}
 	
 	

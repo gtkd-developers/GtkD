@@ -222,14 +222,10 @@ public class Expander : Bin
 	}
 	extern(C) static void callBackActivate(GtkExpander* expanderStruct, Expander expander)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Expander) dlg ; expander.onActivateListeners )
 		{
 			dlg(expander);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -145,14 +145,10 @@ public class DisplayManager : ObjectG
 	}
 	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displayManagerStruct, GdkDisplay* display, DisplayManager displayManager)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Display, DisplayManager) dlg ; displayManager.onDisplayOpenedListeners )
 		{
 			dlg(new Display(display), displayManager);
 		}
-		
-		return consumed;
 	}
 	
 	

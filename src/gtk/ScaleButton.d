@@ -148,14 +148,10 @@ public class ScaleButton : Button
 	}
 	extern(C) static void callBackPopdown(GtkScaleButton* buttonStruct, ScaleButton scaleButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ScaleButton) dlg ; scaleButton.onPopdownListeners )
 		{
 			dlg(scaleButton);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(ScaleButton)[] onPopupListeners;
@@ -183,14 +179,10 @@ public class ScaleButton : Button
 	}
 	extern(C) static void callBackPopup(GtkScaleButton* buttonStruct, ScaleButton scaleButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ScaleButton) dlg ; scaleButton.onPopupListeners )
 		{
 			dlg(scaleButton);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gdouble, ScaleButton)[] onValueChangedListeners;
@@ -216,14 +208,10 @@ public class ScaleButton : Button
 	}
 	extern(C) static void callBackValueChanged(GtkScaleButton* buttonStruct, gdouble value, ScaleButton scaleButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gdouble, ScaleButton) dlg ; scaleButton.onValueChangedListeners )
 		{
 			dlg(value, scaleButton);
 		}
-		
-		return consumed;
 	}
 	
 	

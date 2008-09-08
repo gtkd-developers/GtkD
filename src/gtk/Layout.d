@@ -149,14 +149,10 @@ public class Layout : Container
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkLayout* layoutStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, Layout layout)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Adjustment, Adjustment, Layout) dlg ; layout.onSetScrollAdjustmentsListeners )
 		{
 			dlg(new Adjustment(arg1), new Adjustment(arg2), layout);
 		}
-		
-		return consumed;
 	}
 	
 	

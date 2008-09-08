@@ -192,14 +192,10 @@ public class ToolButton : ToolItem
 	}
 	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, ToolButton toolButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ToolButton) dlg ; toolButton.onClickedListeners )
 		{
 			dlg(toolButton);
 		}
-		
-		return consumed;
 	}
 	
 	

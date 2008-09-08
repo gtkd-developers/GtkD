@@ -185,14 +185,10 @@ public class Socket : Container
 	}
 	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, Socket socket)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Socket) dlg ; socket.onPlugAddedListeners )
 		{
 			dlg(socket);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(Socket)[] onPlugRemovedListeners;
@@ -221,16 +217,17 @@ public class Socket : Container
 		}
 		onPlugRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackPlugRemoved(GtkSocket* socketStruct, Socket socket)
+	extern(C) static gboolean callBackPlugRemoved(GtkSocket* socketStruct, Socket socket)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(Socket) dlg ; socket.onPlugRemovedListeners )
 		{
-			dlg(socket);
+			if ( dlg(socket) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	

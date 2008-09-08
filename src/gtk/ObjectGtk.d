@@ -196,14 +196,10 @@ public class ObjectGtk : ObjectG
 	}
 	extern(C) static void callBackDestroy(GtkObject* objectStruct, ObjectGtk objectGtk)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ObjectGtk) dlg ; objectGtk.onDestroyListeners )
 		{
 			dlg(objectGtk);
 		}
-		
-		return consumed;
 	}
 	
 	

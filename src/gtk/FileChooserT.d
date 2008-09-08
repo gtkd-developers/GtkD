@@ -449,14 +449,10 @@ public template FileChooserT(TStruct)
 		}
 		extern(C) static void callBackConfirmOverwrite(GtkFileChooser* filechooserStruct, FileChooserIF fileChooserIF)
 		{
-			bool consumed = false;
-			
 			foreach ( GtkFileChooserConfirmation delegate(FileChooserIF) dlg ; fileChooserIF.onConfirmOverwriteListeners )
 			{
 				dlg(fileChooserIF);
 			}
-			
-			return consumed;
 		}
 		
 		void delegate(FileChooserIF)[] _onCurrentFolderChangedListeners;
@@ -494,14 +490,10 @@ public template FileChooserT(TStruct)
 		}
 		extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
-			bool consumed = false;
-			
 			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onCurrentFolderChangedListeners )
 			{
 				dlg(fileChooserIF);
 			}
-			
-			return consumed;
 		}
 		
 		void delegate(FileChooserIF)[] _onFileActivatedListeners;
@@ -537,14 +529,10 @@ public template FileChooserT(TStruct)
 		}
 		extern(C) static void callBackFileActivated(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
-			bool consumed = false;
-			
 			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onFileActivatedListeners )
 			{
 				dlg(fileChooserIF);
 			}
-			
-			return consumed;
 		}
 		
 		void delegate(FileChooserIF)[] _onSelectionChangedListeners;
@@ -583,14 +571,10 @@ public template FileChooserT(TStruct)
 		}
 		extern(C) static void callBackSelectionChanged(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
-			bool consumed = false;
-			
 			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onSelectionChangedListeners )
 			{
 				dlg(fileChooserIF);
 			}
-			
-			return consumed;
 		}
 		
 		void delegate(FileChooserIF)[] _onUpdatePreviewListeners;
@@ -638,14 +622,10 @@ public template FileChooserT(TStruct)
 		}
 		extern(C) static void callBackUpdatePreview(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
 		{
-			bool consumed = false;
-			
 			foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onUpdatePreviewListeners )
 			{
 				dlg(fileChooserIF);
 			}
-			
-			return consumed;
 		}
 		
 		

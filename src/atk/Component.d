@@ -135,14 +135,10 @@ public class Component
 	}
 	extern(C) static void callBackBoundsChanged(AtkComponent* atkcomponentStruct, AtkRectangle* arg1, Component component)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(AtkRectangle*, Component) dlg ; component.onBoundsChangedListeners )
 		{
 			dlg(arg1, component);
 		}
-		
-		return consumed;
 	}
 	
 	

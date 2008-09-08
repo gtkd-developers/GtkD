@@ -139,14 +139,10 @@ public class IMContext : ObjectG
 	}
 	extern(C) static void callBackCommit(GtkIMContext* imcontextStruct, gchar* arg1, IMContext iMContext)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, IMContext) dlg ; iMContext.onCommitListeners )
 		{
 			dlg(Str.toString(arg1), iMContext);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(gint, gint, IMContext)[] onDeleteSurroundingListeners;
@@ -167,16 +163,17 @@ public class IMContext : ObjectG
 		}
 		onDeleteSurroundingListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteSurrounding(GtkIMContext* imcontextStruct, gint arg1, gint arg2, IMContext iMContext)
+	extern(C) static gboolean callBackDeleteSurrounding(GtkIMContext* imcontextStruct, gint arg1, gint arg2, IMContext iMContext)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(gint, gint, IMContext) dlg ; iMContext.onDeleteSurroundingListeners )
 		{
-			dlg(arg1, arg2, iMContext);
+			if ( dlg(arg1, arg2, iMContext) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	void delegate(IMContext)[] onPreeditChangedListeners;
@@ -199,14 +196,10 @@ public class IMContext : ObjectG
 	}
 	extern(C) static void callBackPreeditChanged(GtkIMContext* imcontextStruct, IMContext iMContext)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IMContext) dlg ; iMContext.onPreeditChangedListeners )
 		{
 			dlg(iMContext);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(IMContext)[] onPreeditEndListeners;
@@ -229,14 +222,10 @@ public class IMContext : ObjectG
 	}
 	extern(C) static void callBackPreeditEnd(GtkIMContext* imcontextStruct, IMContext iMContext)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IMContext) dlg ; iMContext.onPreeditEndListeners )
 		{
 			dlg(iMContext);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(IMContext)[] onPreeditStartListeners;
@@ -259,14 +248,10 @@ public class IMContext : ObjectG
 	}
 	extern(C) static void callBackPreeditStart(GtkIMContext* imcontextStruct, IMContext iMContext)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IMContext) dlg ; iMContext.onPreeditStartListeners )
 		{
 			dlg(iMContext);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(IMContext)[] onRetrieveSurroundingListeners;
@@ -287,16 +272,17 @@ public class IMContext : ObjectG
 		}
 		onRetrieveSurroundingListeners ~= dlg;
 	}
-	extern(C) static void callBackRetrieveSurrounding(GtkIMContext* imcontextStruct, IMContext iMContext)
+	extern(C) static gboolean callBackRetrieveSurrounding(GtkIMContext* imcontextStruct, IMContext iMContext)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(IMContext) dlg ; iMContext.onRetrieveSurroundingListeners )
 		{
-			dlg(iMContext);
+			if ( dlg(iMContext) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	

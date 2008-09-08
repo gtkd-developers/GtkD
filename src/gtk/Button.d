@@ -274,14 +274,10 @@ public class Button : Bin
 	}
 	extern(C) static void callBackActivate(GtkButton* widgetStruct, Button button)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Button) dlg ; button.onActivateListeners )
 		{
 			dlg(button);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Button)[] onClickedListeners;
@@ -305,14 +301,10 @@ public class Button : Bin
 	}
 	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button button)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Button) dlg ; button.onClickedListeners )
 		{
 			dlg(button);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Button)[] onEnterListeners;
@@ -337,14 +329,10 @@ public class Button : Bin
 	}
 	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button button)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Button) dlg ; button.onEnterListeners )
 		{
 			dlg(button);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Button)[] onLeaveListeners;
@@ -369,14 +357,10 @@ public class Button : Bin
 	}
 	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button button)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Button) dlg ; button.onLeaveListeners )
 		{
 			dlg(button);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Button)[] onPressedListeners;
@@ -401,14 +385,10 @@ public class Button : Bin
 	}
 	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button button)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Button) dlg ; button.onPressedListeners )
 		{
 			dlg(button);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Button)[] onReleasedListeners;
@@ -433,14 +413,10 @@ public class Button : Bin
 	}
 	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button button)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Button) dlg ; button.onReleasedListeners )
 		{
 			dlg(button);
 		}
-		
-		return consumed;
 	}
 	
 	

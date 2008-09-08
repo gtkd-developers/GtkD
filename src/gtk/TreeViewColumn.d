@@ -196,14 +196,10 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn treeViewColumn)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreeViewColumn) dlg ; treeViewColumn.onClickedListeners )
 		{
 			dlg(treeViewColumn);
 		}
-		
-		return consumed;
 	}
 	
 	

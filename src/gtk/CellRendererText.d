@@ -145,14 +145,10 @@ public class CellRendererText : CellRenderer
 	}
 	extern(C) static void callBackEdited(GtkCellRendererText* rendererStruct, gchar* path, gchar* newText, CellRendererText cellRendererText)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(string, string, CellRendererText) dlg ; cellRendererText.onEditedListeners )
 		{
 			dlg(Str.toString(path), Str.toString(newText), cellRendererText);
 		}
-		
-		return consumed;
 	}
 	
 	

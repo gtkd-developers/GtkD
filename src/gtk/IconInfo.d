@@ -197,14 +197,10 @@ public class IconInfo
 	}
 	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconInfo iconInfo)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(IconInfo) dlg ; iconInfo.onChangedListeners )
 		{
 			dlg(iconInfo);
 		}
-		
-		return consumed;
 	}
 	
 	

@@ -147,14 +147,10 @@ public class Adjustment : ObjectGtk
 	}
 	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Adjustment) dlg ; adjustment.onChangedListeners )
 		{
 			dlg(adjustment);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Adjustment)[] onValueChangedListeners;
@@ -178,14 +174,10 @@ public class Adjustment : ObjectGtk
 	}
 	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Adjustment) dlg ; adjustment.onValueChangedListeners )
 		{
 			dlg(adjustment);
 		}
-		
-		return consumed;
 	}
 	
 	

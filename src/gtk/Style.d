@@ -171,14 +171,10 @@ public class Style : ObjectG
 	}
 	extern(C) static void callBackRealize(GtkStyle* styleStruct, Style style)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Style) dlg ; style.onRealizeListeners )
 		{
 			dlg(style);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Style)[] onUnrealizeListeners;
@@ -206,14 +202,10 @@ public class Style : ObjectG
 	}
 	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, Style style)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Style) dlg ; style.onUnrealizeListeners )
 		{
 			dlg(style);
 		}
-		
-		return consumed;
 	}
 	
 	

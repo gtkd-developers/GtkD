@@ -287,14 +287,10 @@ public template TreeModelT(TStruct)
 	}
 	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF treeModelIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; treeModelIF.onRowChangedListeners )
 		{
 			dlg(new TreePath(path), new TreeIter(iter), treeModelIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TreePath, TreeModelIF)[] _onRowDeletedListeners;
@@ -330,14 +326,10 @@ public template TreeModelT(TStruct)
 	}
 	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreeModelIF treeModelIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreePath, TreeModelIF) dlg ; treeModelIF.onRowDeletedListeners )
 		{
 			dlg(new TreePath(path), treeModelIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowHasChildToggledListeners;
@@ -366,14 +358,10 @@ public template TreeModelT(TStruct)
 	}
 	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF treeModelIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; treeModelIF.onRowHasChildToggledListeners )
 		{
 			dlg(new TreePath(path), new TreeIter(iter), treeModelIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowInsertedListeners;
@@ -404,14 +392,10 @@ public template TreeModelT(TStruct)
 	}
 	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF treeModelIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; treeModelIF.onRowInsertedListeners )
 		{
 			dlg(new TreePath(path), new TreeIter(iter), treeModelIF);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(TreePath, TreeIter, gpointer, TreeModelIF)[] _onRowsReorderedListeners;
@@ -447,14 +431,10 @@ public template TreeModelT(TStruct)
 	}
 	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreeModelIF treeModelIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg ; treeModelIF.onRowsReorderedListeners )
 		{
 			dlg(new TreePath(path), new TreeIter(iter), arg3, treeModelIF);
 		}
-		
-		return consumed;
 	}
 	
 	

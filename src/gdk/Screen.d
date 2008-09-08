@@ -177,14 +177,10 @@ public class Screen : ObjectG
 	}
 	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, Screen screen)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Screen) dlg ; screen.onCompositedChangedListeners )
 		{
 			dlg(screen);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Screen)[] onSizeChangedListeners;
@@ -210,14 +206,10 @@ public class Screen : ObjectG
 	}
 	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, Screen screen)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Screen) dlg ; screen.onSizeChangedListeners )
 		{
 			dlg(screen);
 		}
-		
-		return consumed;
 	}
 	
 	

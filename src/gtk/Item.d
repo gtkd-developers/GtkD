@@ -134,14 +134,10 @@ public class Item : Bin
 	}
 	extern(C) static void callBackDeselect(GtkItem* itemStruct, Item item)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Item) dlg ; item.onDeselectListeners )
 		{
 			dlg(item);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Item)[] onSelectListeners;
@@ -165,14 +161,10 @@ public class Item : Bin
 	}
 	extern(C) static void callBackSelect(GtkItem* itemStruct, Item item)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Item) dlg ; item.onSelectListeners )
 		{
 			dlg(item);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Item)[] onToggleListeners;
@@ -196,14 +188,10 @@ public class Item : Bin
 	}
 	extern(C) static void callBackToggle(GtkItem* itemStruct, Item item)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Item) dlg ; item.onToggleListeners )
 		{
 			dlg(item);
 		}
-		
-		return consumed;
 	}
 	
 	

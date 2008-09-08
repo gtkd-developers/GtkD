@@ -136,14 +136,10 @@ public class Selection
 	}
 	extern(C) static void callBackSelectionChanged(AtkSelection* atkselectionStruct, Selection selection)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Selection) dlg ; selection.onSelectionChangedListeners )
 		{
 			dlg(selection);
 		}
-		
-		return consumed;
 	}
 	
 	

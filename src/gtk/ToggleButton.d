@@ -206,14 +206,10 @@ public class ToggleButton : Button
 	}
 	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, ToggleButton toggleButton)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(ToggleButton) dlg ; toggleButton.onToggledListeners )
 		{
 			dlg(toggleButton);
 		}
-		
-		return consumed;
 	}
 	
 	

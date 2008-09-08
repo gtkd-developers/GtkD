@@ -221,14 +221,10 @@ public class ScrolledWindow : Bin
 	}
 	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType arg1, ScrolledWindow scrolledWindow)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkDirectionType, ScrolledWindow) dlg ; scrolledWindow.onMoveFocusOutListeners )
 		{
 			dlg(arg1, scrolledWindow);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
@@ -259,16 +255,17 @@ public class ScrolledWindow : Bin
 		}
 		onScrollChildListeners ~= dlg;
 	}
-	extern(C) static void callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType arg1, gboolean arg2, ScrolledWindow scrolledWindow)
+	extern(C) static gboolean callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType arg1, gboolean arg2, ScrolledWindow scrolledWindow)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
 		{
-			dlg(arg1, arg2, scrolledWindow);
+			if ( dlg(arg1, arg2, scrolledWindow) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	

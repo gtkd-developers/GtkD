@@ -198,14 +198,10 @@ public class InputDialog : Dialog
 	}
 	extern(C) static void callBackDisableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* deviceid, InputDialog inputDialog)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onDisableDeviceListeners )
 		{
 			dlg(deviceid, inputDialog);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(GdkDevice*, InputDialog)[] onEnableDeviceListeners;
@@ -231,14 +227,10 @@ public class InputDialog : Dialog
 	}
 	extern(C) static void callBackEnableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* deviceid, InputDialog inputDialog)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onEnableDeviceListeners )
 		{
 			dlg(deviceid, inputDialog);
 		}
-		
-		return consumed;
 	}
 	
 	

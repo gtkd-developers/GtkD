@@ -158,14 +158,10 @@ public class SourceView : TextView
 	}
 	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, SourceView sourceView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(SourceView) dlg ; sourceView.onRedoListeners )
 		{
 			dlg(sourceView);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(SourceView)[] onUndoListeners;
@@ -188,14 +184,10 @@ public class SourceView : TextView
 	}
 	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, SourceView sourceView)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(SourceView) dlg ; sourceView.onUndoListeners )
 		{
 			dlg(sourceView);
 		}
-		
-		return consumed;
 	}
 	
 	

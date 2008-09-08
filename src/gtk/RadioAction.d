@@ -143,14 +143,10 @@ public class RadioAction : ToggleAction
 	}
 	extern(C) static void callBackChanged(GtkRadioAction* actionStruct, GtkRadioAction* current, RadioAction radioAction)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(GtkRadioAction*, RadioAction) dlg ; radioAction.onChangedListeners )
 		{
 			dlg(current, radioAction);
 		}
-		
-		return consumed;
 	}
 	
 	

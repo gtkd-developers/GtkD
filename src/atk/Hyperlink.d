@@ -141,14 +141,10 @@ public class Hyperlink : ObjectG
 	}
 	extern(C) static void callBackLinkActivated(AtkHyperlink* atkhyperlinkStruct, Hyperlink hyperlink)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Hyperlink) dlg ; hyperlink.onLinkActivatedListeners )
 		{
 			dlg(hyperlink);
 		}
-		
-		return consumed;
 	}
 	
 	

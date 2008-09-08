@@ -113,14 +113,10 @@ public template TreeSortableT(TStruct)
 	}
 	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, TreeSortableIF treeSortableIF)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(TreeSortableIF) dlg ; treeSortableIF.onSortColumnChangedListeners )
 		{
 			dlg(treeSortableIF);
 		}
-		
-		return consumed;
 	}
 	
 	

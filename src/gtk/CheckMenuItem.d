@@ -176,14 +176,10 @@ public class CheckMenuItem : MenuItem
 	}
 	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem checkMenuItem)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(CheckMenuItem) dlg ; checkMenuItem.onToggledListeners )
 		{
 			dlg(checkMenuItem);
 		}
-		
-		return consumed;
 	}
 	
 	

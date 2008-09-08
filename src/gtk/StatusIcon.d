@@ -223,14 +223,10 @@ public class StatusIcon : ObjectG
 	}
 	extern(C) static void callBackActivate(GtkStatusIcon* statusIconStruct, StatusIcon statusIcon)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(StatusIcon) dlg ; statusIcon.onActivateListeners )
 		{
 			dlg(statusIcon);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(guint, guint, StatusIcon)[] onPopupMenuListeners;
@@ -259,14 +255,10 @@ public class StatusIcon : ObjectG
 	}
 	extern(C) static void callBackPopupMenu(GtkStatusIcon* statusIconStruct, guint button, guint activateTime, StatusIcon statusIcon)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(guint, guint, StatusIcon) dlg ; statusIcon.onPopupMenuListeners )
 		{
 			dlg(button, activateTime, statusIcon);
 		}
-		
-		return consumed;
 	}
 	
 	gboolean delegate(gint, StatusIcon)[] onSizeChangedListeners;
@@ -290,16 +282,17 @@ public class StatusIcon : ObjectG
 		}
 		onSizeChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSizeChanged(GtkStatusIcon* statusIconStruct, gint size, StatusIcon statusIcon)
+	extern(C) static gboolean callBackSizeChanged(GtkStatusIcon* statusIconStruct, gint size, StatusIcon statusIcon)
 	{
-		bool consumed = false;
-		
 		foreach ( gboolean delegate(gint, StatusIcon) dlg ; statusIcon.onSizeChangedListeners )
 		{
-			dlg(size, statusIcon);
+			if ( dlg(size, statusIcon) )
+			{
+				return true;
+			}
 		}
 		
-		return consumed;
+		return false;
 	}
 	
 	
