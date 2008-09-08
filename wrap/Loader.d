@@ -204,6 +204,11 @@ public class Linker
 			if ( alternateLibraryName !is null )
 			{
 				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").dup.ptr, RTLD_NOW);
+				if (alternateHandle is null)
+				{
+					// non-dev libraries tend to be called xxxx.so.0
+					alternateHandle = dlopen( (this.alternateLibraryName ~ ".0\0").dup.ptr, RTLD_NOW);
+				}
 			}
 			// clear the error buffer
 			dlerror();
