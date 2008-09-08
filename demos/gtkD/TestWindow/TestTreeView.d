@@ -112,7 +112,7 @@ class TestTreeView : ScrolledWindow
 		printf("rowActivateCallback for path %.*s\n",path.toString());
 	}
 
-	int moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
+	bool moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
 	{
 		printf("moveCursorCallBack for %X \n",treeView);
 		printf("moveCursorCallBack row = %d \n",direction);

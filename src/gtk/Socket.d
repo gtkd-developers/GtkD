@@ -191,7 +191,7 @@ public class Socket : Container
 		}
 	}
 	
-	gboolean delegate(Socket)[] onPlugRemovedListeners;
+	bool delegate(Socket)[] onPlugRemovedListeners;
 	/**
 	 * This signal is emitted when a client is removed from the socket.
 	 * The default action is to destroy the GtkSocket widget, so if you
@@ -202,7 +202,7 @@ public class Socket : Container
 	 * XEmbed
 	 * the XEmbed Protocol Specification.
 	 */
-	void addOnPlugRemoved(gboolean delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPlugRemoved(bool delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plug-removed" in connectedSignals) )
 		{
@@ -219,15 +219,15 @@ public class Socket : Container
 	}
 	extern(C) static gboolean callBackPlugRemoved(GtkSocket* socketStruct, Socket socket)
 	{
-		foreach ( gboolean delegate(Socket) dlg ; socket.onPlugRemovedListeners )
+		foreach ( bool delegate(Socket) dlg ; socket.onPlugRemovedListeners )
 		{
 			if ( dlg(socket) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

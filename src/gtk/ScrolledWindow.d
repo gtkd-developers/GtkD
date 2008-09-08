@@ -227,7 +227,7 @@ public class ScrolledWindow : Bin
 		}
 	}
 	
-	gboolean delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
+	bool delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
 	/**
 	 * See Also
 	 * GtkViewport, GtkAdjustment, GtkWidgetClass
@@ -240,7 +240,7 @@ public class ScrolledWindow : Bin
 	 * implementation, but it wasn't worth breaking the
 	 * API.)
 	 */
-	void addOnScrollChild(gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnScrollChild(bool delegate(GtkScrollType, gboolean, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-child" in connectedSignals) )
 		{
@@ -257,15 +257,15 @@ public class ScrolledWindow : Bin
 	}
 	extern(C) static gboolean callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType arg1, gboolean arg2, ScrolledWindow scrolledWindow)
 	{
-		foreach ( gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
+		foreach ( bool delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
 		{
 			if ( dlg(arg1, arg2, scrolledWindow) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

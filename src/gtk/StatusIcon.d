@@ -261,13 +261,13 @@ public class StatusIcon : ObjectG
 		}
 	}
 	
-	gboolean delegate(gint, StatusIcon)[] onSizeChangedListeners;
+	bool delegate(gint, StatusIcon)[] onSizeChangedListeners;
 	/**
 	 * Gets emitted when the size available for the image
 	 * changes, e.g. because the notification area got resized.
 	 * Since 2.10
 	 */
-	void addOnSizeChanged(gboolean delegate(gint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSizeChanged(bool delegate(gint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-changed" in connectedSignals) )
 		{
@@ -284,15 +284,15 @@ public class StatusIcon : ObjectG
 	}
 	extern(C) static gboolean callBackSizeChanged(GtkStatusIcon* statusIconStruct, gint size, StatusIcon statusIcon)
 	{
-		foreach ( gboolean delegate(gint, StatusIcon) dlg ; statusIcon.onSizeChangedListeners )
+		foreach ( bool delegate(gint, StatusIcon) dlg ; statusIcon.onSizeChangedListeners )
 		{
 			if ( dlg(size, statusIcon) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

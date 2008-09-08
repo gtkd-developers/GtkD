@@ -33,7 +33,7 @@ class ExampleWindow : MainWindow
 		showAll();
 	}
 
-	public int onButtonPress(GdkEventButton* event, Widget widget)
+	public bool onButtonPress(GdkEventButton* event, Widget widget)
 	{
 		if(event.type == GdkEventType.BUTTON_PRESS && event.button == 3)
 		{
@@ -41,7 +41,7 @@ class ExampleWindow : MainWindow
 			menu.popup(event.button, event.time);
 		}
 
-		return 1;
+		return true;
 	}
 }
 

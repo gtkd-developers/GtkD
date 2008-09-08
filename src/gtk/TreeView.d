@@ -328,10 +328,10 @@ public class TreeView : Container
 		}
 	}
 	
-	gboolean delegate(gboolean, gboolean, gboolean, TreeView)[] onExpandCollapseCursorRowListeners;
+	bool delegate(gboolean, gboolean, gboolean, TreeView)[] onExpandCollapseCursorRowListeners;
 	/**
 	 */
-	void addOnExpandCollapseCursorRow(gboolean delegate(gboolean, gboolean, gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnExpandCollapseCursorRow(bool delegate(gboolean, gboolean, gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("expand-collapse-cursor-row" in connectedSignals) )
 		{
@@ -348,21 +348,21 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, gboolean arg2, gboolean arg3, TreeView treeView)
 	{
-		foreach ( gboolean delegate(gboolean, gboolean, gboolean, TreeView) dlg ; treeView.onExpandCollapseCursorRowListeners )
+		foreach ( bool delegate(gboolean, gboolean, gboolean, TreeView) dlg ; treeView.onExpandCollapseCursorRowListeners )
 		{
 			if ( dlg(arg1, arg2, arg3, treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GtkMovementStep, gint, TreeView)[] onMoveCursorListeners;
+	bool delegate(GtkMovementStep, gint, TreeView)[] onMoveCursorListeners;
 	/**
 	 */
-	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMoveCursor(bool delegate(GtkMovementStep, gint, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -379,15 +379,15 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep arg1, gint arg2, TreeView treeView)
 	{
-		foreach ( gboolean delegate(GtkMovementStep, gint, TreeView) dlg ; treeView.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, gint, TreeView) dlg ; treeView.onMoveCursorListeners )
 		{
 			if ( dlg(arg1, arg2, treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(TreePath, TreeViewColumn, TreeView)[] onRowActivatedListeners;
@@ -477,10 +477,10 @@ public class TreeView : Container
 		}
 	}
 	
-	gboolean delegate(TreeView)[] onSelectAllListeners;
+	bool delegate(TreeView)[] onSelectAllListeners;
 	/**
 	 */
-	void addOnSelectAll(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
 		{
@@ -497,21 +497,21 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackSelectAll(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeView) dlg ; treeView.onSelectAllListeners )
+		foreach ( bool delegate(TreeView) dlg ; treeView.onSelectAllListeners )
 		{
 			if ( dlg(treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(TreeView)[] onSelectCursorParentListeners;
+	bool delegate(TreeView)[] onSelectCursorParentListeners;
 	/**
 	 */
-	void addOnSelectCursorParent(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectCursorParent(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-parent" in connectedSignals) )
 		{
@@ -528,21 +528,21 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackSelectCursorParent(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeView) dlg ; treeView.onSelectCursorParentListeners )
+		foreach ( bool delegate(TreeView) dlg ; treeView.onSelectCursorParentListeners )
 		{
 			if ( dlg(treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(gboolean, TreeView)[] onSelectCursorRowListeners;
+	bool delegate(gboolean, TreeView)[] onSelectCursorRowListeners;
 	/**
 	 */
-	void addOnSelectCursorRow(gboolean delegate(gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectCursorRow(bool delegate(gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-row" in connectedSignals) )
 		{
@@ -559,15 +559,15 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackSelectCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, TreeView treeView)
 	{
-		foreach ( gboolean delegate(gboolean, TreeView) dlg ; treeView.onSelectCursorRowListeners )
+		foreach ( bool delegate(gboolean, TreeView) dlg ; treeView.onSelectCursorRowListeners )
 		{
 			if ( dlg(arg1, treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Adjustment, Adjustment, TreeView)[] onSetScrollAdjustmentsListeners;
@@ -596,10 +596,10 @@ public class TreeView : Container
 		}
 	}
 	
-	gboolean delegate(TreeView)[] onStartInteractiveSearchListeners;
+	bool delegate(TreeView)[] onStartInteractiveSearchListeners;
 	/**
 	 */
-	void addOnStartInteractiveSearch(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnStartInteractiveSearch(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("start-interactive-search" in connectedSignals) )
 		{
@@ -616,23 +616,23 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeView) dlg ; treeView.onStartInteractiveSearchListeners )
+		foreach ( bool delegate(TreeView) dlg ; treeView.onStartInteractiveSearchListeners )
 		{
 			if ( dlg(treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(TreeIter, TreePath, TreeView)[] onTestCollapseRowListeners;
+	bool delegate(TreeIter, TreePath, TreeView)[] onTestCollapseRowListeners;
 	/**
 	 * The given row is about to be collapsed (hide its children nodes). Use this
 	 * signal if you need to control the collapsibility of individual rows.
 	 */
-	void addOnTestCollapseRow(gboolean delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnTestCollapseRow(bool delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("test-collapse-row" in connectedSignals) )
 		{
@@ -649,23 +649,23 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
+		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
 		{
 			if ( dlg(new TreeIter(iter), new TreePath(path), treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(TreeIter, TreePath, TreeView)[] onTestExpandRowListeners;
+	bool delegate(TreeIter, TreePath, TreeView)[] onTestExpandRowListeners;
 	/**
 	 * The given row is about to be expanded (show its children nodes). Use this
 	 * signal if you need to control the expandability of individual rows.
 	 */
-	void addOnTestExpandRow(gboolean delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnTestExpandRow(bool delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("test-expand-row" in connectedSignals) )
 		{
@@ -682,21 +682,21 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
+		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
 		{
 			if ( dlg(new TreeIter(iter), new TreePath(path), treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(TreeView)[] onToggleCursorRowListeners;
+	bool delegate(TreeView)[] onToggleCursorRowListeners;
 	/**
 	 */
-	void addOnToggleCursorRow(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToggleCursorRow(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-row" in connectedSignals) )
 		{
@@ -713,23 +713,23 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackToggleCursorRow(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeView) dlg ; treeView.onToggleCursorRowListeners )
+		foreach ( bool delegate(TreeView) dlg ; treeView.onToggleCursorRowListeners )
 		{
 			if ( dlg(treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(TreeView)[] onUnselectAllListeners;
+	bool delegate(TreeView)[] onUnselectAllListeners;
 	/**
 	 * See Also
 	 * GtkTreeViewColumn, GtkTreeSelection, GtkTreeDnd, GtkTreeMode, GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore, GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf, GtkCellRendererText, GtkCellRendererToggle
 	 */
-	void addOnUnselectAll(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnUnselectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unselect-all" in connectedSignals) )
 		{
@@ -746,15 +746,15 @@ public class TreeView : Container
 	}
 	extern(C) static gboolean callBackUnselectAll(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		foreach ( gboolean delegate(TreeView) dlg ; treeView.onUnselectAllListeners )
+		foreach ( bool delegate(TreeView) dlg ; treeView.onUnselectAllListeners )
 		{
 			if ( dlg(treeView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

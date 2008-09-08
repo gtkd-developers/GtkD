@@ -214,10 +214,10 @@ public class Window : Bin
 		}
 	}
 	
-	gboolean delegate(GdkEvent*, Window)[] onFrameListeners;
+	bool delegate(GdkEvent*, Window)[] onFrameListeners;
 	/**
 	 */
-	void addOnFrame(gboolean delegate(GdkEvent*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFrame(bool delegate(GdkEvent*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("frame-event" in connectedSignals) )
 		{
@@ -234,15 +234,15 @@ public class Window : Bin
 	}
 	extern(C) static gboolean callBackFrame(GtkWindow* windowStruct, GdkEvent* event, Window window)
 	{
-		foreach ( gboolean delegate(GdkEvent*, Window) dlg ; window.onFrameListeners )
+		foreach ( bool delegate(GdkEvent*, Window) dlg ; window.onFrameListeners )
 		{
 			if ( dlg(event, window) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Window)[] onKeysChangedListeners;

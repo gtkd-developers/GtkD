@@ -104,7 +104,7 @@ public class TestTreeView1 : VBox
 
 	}
 
-	int moveCursorCallback(GtkMovementStep step, int i, TreeView tree)
+	bool moveCursorCallback(GtkMovementStep step, int i, TreeView tree)
 	{
 		TreeIter iter = tree.getSelectedIter();
 		iter.setModel(tree.getModel());

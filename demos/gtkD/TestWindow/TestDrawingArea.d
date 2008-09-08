@@ -205,7 +205,7 @@ class TestDrawingArea : VBox
 		}
 
 
-		public int onButtonPress(GdkEventButton* event, Widget widget)
+		public bool onButtonPress(GdkEventButton* event, Widget widget)
 		{
 			debug(trace) version(Tango) Stdout("button DOWN").newline;
 			else writefln("button DOWN");
@@ -227,7 +227,7 @@ class TestDrawingArea : VBox
 			return false;
 		}
 
-		public int onButtonRelease(GdkEventButton* event, Widget widget)
+		public bool onButtonRelease(GdkEventButton* event, Widget widget)
 		{
 			debug(trace) version(Tango) Stdout("button UP").newline;
 			else writefln("button UP");
@@ -251,11 +251,11 @@ class TestDrawingArea : VBox
 		 * This will be called from the expose event call back.
 		 * \bug this is called on get or loose focus - review
 		 */
-		public int exposeCallback(GdkEventExpose* event, Widget widget)
+		public bool exposeCallback(GdkEventExpose* event, Widget widget)
 		{
 			//printf("testWindow.exposed ----------------------------- \n");
 			drawPoints(getDrawable());
-			return 1;
+			return true;
 		}
 		public bool noExposeCallback(Widget widget)
 		{
@@ -264,7 +264,7 @@ class TestDrawingArea : VBox
 		}
 
 
-		public int onMotionNotify(GdkEventMotion* event, Widget widget)
+		public bool onMotionNotify(GdkEventMotion* event, Widget widget)
 		{
 			//printf("testWindow.mouseMoved ----------------------------- \n");
 			if ( buttonIsDown )

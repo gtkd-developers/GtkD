@@ -163,7 +163,7 @@ public class Paned : Container
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(Paned)[] onAcceptPositionListeners;
+	bool delegate(Paned)[] onAcceptPositionListeners;
 	/**
 	 * The ::accept-position signal is a
 	 * keybinding signal
@@ -172,7 +172,7 @@ public class Paned : Container
 	 * The default binding for this signal is Return or Space.
 	 * Since 2.0
 	 */
-	void addOnAcceptPosition(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAcceptPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accept-position" in connectedSignals) )
 		{
@@ -189,18 +189,18 @@ public class Paned : Container
 	}
 	extern(C) static gboolean callBackAcceptPosition(GtkPaned* widgetStruct, Paned paned)
 	{
-		foreach ( gboolean delegate(Paned) dlg ; paned.onAcceptPositionListeners )
+		foreach ( bool delegate(Paned) dlg ; paned.onAcceptPositionListeners )
 		{
 			if ( dlg(paned) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Paned)[] onCancelPositionListeners;
+	bool delegate(Paned)[] onCancelPositionListeners;
 	/**
 	 * The ::cancel-position signal is a
 	 * keybinding signal
@@ -210,7 +210,7 @@ public class Paned : Container
 	 * The default binding for this signal is Escape.
 	 * Since 2.0
 	 */
-	void addOnCancelPosition(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCancelPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel-position" in connectedSignals) )
 		{
@@ -227,18 +227,18 @@ public class Paned : Container
 	}
 	extern(C) static gboolean callBackCancelPosition(GtkPaned* widgetStruct, Paned paned)
 	{
-		foreach ( gboolean delegate(Paned) dlg ; paned.onCancelPositionListeners )
+		foreach ( bool delegate(Paned) dlg ; paned.onCancelPositionListeners )
 		{
 			if ( dlg(paned) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(gboolean, Paned)[] onCycleChildFocusListeners;
+	bool delegate(gboolean, Paned)[] onCycleChildFocusListeners;
 	/**
 	 * The ::cycle-child-focus signal is a
 	 * keybinding signal
@@ -246,7 +246,7 @@ public class Paned : Container
 	 * The default binding is f6.
 	 * Since 2.0
 	 */
-	void addOnCycleChildFocus(gboolean delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCycleChildFocus(bool delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-child-focus" in connectedSignals) )
 		{
@@ -263,18 +263,18 @@ public class Paned : Container
 	}
 	extern(C) static gboolean callBackCycleChildFocus(GtkPaned* widgetStruct, gboolean reversed, Paned paned)
 	{
-		foreach ( gboolean delegate(gboolean, Paned) dlg ; paned.onCycleChildFocusListeners )
+		foreach ( bool delegate(gboolean, Paned) dlg ; paned.onCycleChildFocusListeners )
 		{
 			if ( dlg(reversed, paned) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(gboolean, Paned)[] onCycleHandleFocusListeners;
+	bool delegate(gboolean, Paned)[] onCycleHandleFocusListeners;
 	/**
 	 * The ::cycle-handle-focus signal is a
 	 * keybinding signal
@@ -283,7 +283,7 @@ public class Paned : Container
 	 * The default binding for this signal is f8.
 	 * Since 2.0
 	 */
-	void addOnCycleHandleFocus(gboolean delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCycleHandleFocus(bool delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-handle-focus" in connectedSignals) )
 		{
@@ -300,18 +300,18 @@ public class Paned : Container
 	}
 	extern(C) static gboolean callBackCycleHandleFocus(GtkPaned* widgetStruct, gboolean reversed, Paned paned)
 	{
-		foreach ( gboolean delegate(gboolean, Paned) dlg ; paned.onCycleHandleFocusListeners )
+		foreach ( bool delegate(gboolean, Paned) dlg ; paned.onCycleHandleFocusListeners )
 		{
 			if ( dlg(reversed, paned) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GtkScrollType, Paned)[] onMoveHandleListeners;
+	bool delegate(GtkScrollType, Paned)[] onMoveHandleListeners;
 	/**
 	 * The ::move-handle signal is a
 	 * keybinding signal
@@ -319,7 +319,7 @@ public class Paned : Container
 	 * to move it.
 	 * Since 2.0
 	 */
-	void addOnMoveHandle(gboolean delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMoveHandle(bool delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-handle" in connectedSignals) )
 		{
@@ -336,18 +336,18 @@ public class Paned : Container
 	}
 	extern(C) static gboolean callBackMoveHandle(GtkPaned* widgetStruct, GtkScrollType scrollType, Paned paned)
 	{
-		foreach ( gboolean delegate(GtkScrollType, Paned) dlg ; paned.onMoveHandleListeners )
+		foreach ( bool delegate(GtkScrollType, Paned) dlg ; paned.onMoveHandleListeners )
 		{
 			if ( dlg(scrollType, paned) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Paned)[] onToggleHandleFocusListeners;
+	bool delegate(Paned)[] onToggleHandleFocusListeners;
 	/**
 	 * The ::toggle-handle-focus is a
 	 * keybinding signal
@@ -356,7 +356,7 @@ public class Paned : Container
 	 * The default binding is Tab.
 	 * Since 2.0
 	 */
-	void addOnToggleHandleFocus(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToggleHandleFocus(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-handle-focus" in connectedSignals) )
 		{
@@ -373,15 +373,15 @@ public class Paned : Container
 	}
 	extern(C) static gboolean callBackToggleHandleFocus(GtkPaned* widgetStruct, Paned paned)
 	{
-		foreach ( gboolean delegate(Paned) dlg ; paned.onToggleHandleFocusListeners )
+		foreach ( bool delegate(Paned) dlg ; paned.onToggleHandleFocusListeners )
 		{
 			if ( dlg(paned) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

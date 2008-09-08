@@ -150,10 +150,10 @@ public class IconView : Container, CellLayoutIF
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(IconView)[] onActivateCursorItemListeners;
+	bool delegate(IconView)[] onActivateCursorItemListeners;
 	/**
 	 */
-	void addOnActivateCursorItem(gboolean delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnActivateCursorItem(bool delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-cursor-item" in connectedSignals) )
 		{
@@ -170,15 +170,15 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static gboolean callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		foreach ( gboolean delegate(IconView) dlg ; iconView.onActivateCursorItemListeners )
+		foreach ( bool delegate(IconView) dlg ; iconView.onActivateCursorItemListeners )
 		{
 			if ( dlg(iconView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(TreePath, IconView)[] onItemActivatedListeners;
@@ -207,10 +207,10 @@ public class IconView : Container, CellLayoutIF
 		}
 	}
 	
-	gboolean delegate(GtkMovementStep, gint, IconView)[] onMoveCursorListeners;
+	bool delegate(GtkMovementStep, gint, IconView)[] onMoveCursorListeners;
 	/**
 	 */
-	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMoveCursor(bool delegate(GtkMovementStep, gint, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -227,15 +227,15 @@ public class IconView : Container, CellLayoutIF
 	}
 	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep arg1, gint arg2, IconView iconView)
 	{
-		foreach ( gboolean delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
 		{
 			if ( dlg(arg1, arg2, iconView) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(IconView)[] onSelectAllListeners;

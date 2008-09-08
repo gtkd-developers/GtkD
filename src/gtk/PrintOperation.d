@@ -417,7 +417,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 	}
 	
-	gboolean delegate(GtkPrintContext*, PrintOperation)[] onPaginateListeners;
+	bool delegate(GtkPrintContext*, PrintOperation)[] onPaginateListeners;
 	/**
 	 * Emitted after the "begin-print" signal, but before
 	 * the actual rendering starts. It keeps getting emitted until it
@@ -432,7 +432,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * from there.
 	 * Since 2.10
 	 */
-	void addOnPaginate(gboolean delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPaginate(bool delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paginate" in connectedSignals) )
 		{
@@ -449,18 +449,18 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static gboolean callBackPaginate(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		foreach ( gboolean delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onPaginateListeners )
+		foreach ( bool delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onPaginateListeners )
 		{
 			if ( dlg(context, printOperation) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation)[] onPreviewListeners;
+	bool delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation)[] onPreviewListeners;
 	/**
 	 * Gets emitted when a preview is requested from the native dialog.
 	 * The default handler for this signal uses an external viewer
@@ -477,7 +477,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * (typically in response to the user clicking a close button).
 	 * Since 2.10
 	 */
-	void addOnPreview(gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPreview(bool delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preview" in connectedSignals) )
 		{
@@ -494,15 +494,15 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static gboolean callBackPreview(GtkPrintOperation* operationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation printOperation)
 	{
-		foreach ( gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg ; printOperation.onPreviewListeners )
+		foreach ( bool delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg ; printOperation.onPreviewListeners )
 		{
 			if ( dlg(preview, context, new Window(parent), printOperation) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation)[] onRequestPageSetupListeners;

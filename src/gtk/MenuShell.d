@@ -257,13 +257,13 @@ public class MenuShell : Container
 		}
 	}
 	
-	gboolean delegate(gint, MenuShell)[] onMoveSelectedListeners;
+	bool delegate(gint, MenuShell)[] onMoveSelectedListeners;
 	/**
 	 * The ::move-selected signal is emitted to move the selection to
 	 * another item.
 	 * Since 2.12
 	 */
-	void addOnMoveSelected(gboolean delegate(gint, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMoveSelected(bool delegate(gint, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-selected" in connectedSignals) )
 		{
@@ -280,15 +280,15 @@ public class MenuShell : Container
 	}
 	extern(C) static gboolean callBackMoveSelected(GtkMenuShell* menuShellStruct, gint distance, MenuShell menuShell)
 	{
-		foreach ( gboolean delegate(gint, MenuShell) dlg ; menuShell.onMoveSelectedListeners )
+		foreach ( bool delegate(gint, MenuShell) dlg ; menuShell.onMoveSelectedListeners )
 		{
 			if ( dlg(distance, menuShell) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(MenuShell)[] onSelectionDoneListeners;

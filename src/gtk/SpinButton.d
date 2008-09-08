@@ -214,10 +214,10 @@ public class SpinButton : Entry
 		}
 	}
 	
-	gboolean delegate(SpinButton)[] onOutputListeners;
+	bool delegate(SpinButton)[] onOutputListeners;
 	/**
 	 */
-	void addOnOutput(gboolean delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("output" in connectedSignals) )
 		{
@@ -234,15 +234,15 @@ public class SpinButton : Entry
 	}
 	extern(C) static gboolean callBackOutput(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		foreach ( gboolean delegate(SpinButton) dlg ; spinButton.onOutputListeners )
+		foreach ( bool delegate(SpinButton) dlg ; spinButton.onOutputListeners )
 		{
 			if ( dlg(spinButton) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(SpinButton)[] onValueChangedListeners;

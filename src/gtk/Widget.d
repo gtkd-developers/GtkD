@@ -505,7 +505,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventButton*, Widget)[] onButtonPressListeners;
+	bool delegate(GdkEventButton*, Widget)[] onButtonPressListeners;
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
@@ -513,7 +513,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * widget needs to enable the GDK_BUTTON_PRESS_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnButtonPress(gboolean delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnButtonPress(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-press-event" in connectedSignals) )
 		{
@@ -531,18 +531,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
+		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
+	bool delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
 	/**
 	 * The ::button-release-event signal will be emitted when a button
 	 * (typically from a mouse) is released.
@@ -550,7 +550,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * widget needs to enable the GDK_BUTTON_RELEASE_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnButtonRelease(gboolean delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnButtonRelease(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
@@ -568,18 +568,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
+		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(guint, Widget)[] onCanActivateAccelListeners;
+	bool delegate(guint, Widget)[] onCanActivateAccelListeners;
 	/**
 	 * Determines whether an accelerator that activates the signal
 	 * identified by signal_id can currently be activated.
@@ -587,7 +587,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * widgets to override the default GtkWidget handling
 	 * for determining whether an accelerator can be activated.
 	 */
-	void addOnCanActivateAccel(gboolean delegate(guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCanActivateAccel(bool delegate(guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("can-activate-accel" in connectedSignals) )
 		{
@@ -604,15 +604,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackCanActivateAccel(GtkWidget* widgetStruct, guint signalId, Widget widget)
 	{
-		foreach ( gboolean delegate(guint, Widget) dlg ; widget.onCanActivateAccelListeners )
+		foreach ( bool delegate(guint, Widget) dlg ; widget.onCanActivateAccelListeners )
 		{
 			if ( dlg(signalId, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(ParamSpec, Widget)[] onChildNotifyListeners;
@@ -644,13 +644,13 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventClient*, Widget)[] onClientListeners;
+	bool delegate(GdkEventClient*, Widget)[] onClientListeners;
 	/**
 	 * The ::client-event will be emitted when the widget's window
 	 * receives a message (via a ClientMessage event) from another
 	 * application.
 	 */
-	void addOnClient(gboolean delegate(GdkEventClient*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnClient(bool delegate(GdkEventClient*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("client-event" in connectedSignals) )
 		{
@@ -667,15 +667,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackClient(GtkWidget* widgetStruct, GdkEventClient* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventClient*, Widget) dlg ; widget.onClientListeners )
+		foreach ( bool delegate(GdkEventClient*, Widget) dlg ; widget.onClientListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Widget)[] onCompositedChangedListeners;
@@ -707,7 +707,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventConfigure*, Widget)[] onConfigureListeners;
+	bool delegate(GdkEventConfigure*, Widget)[] onConfigureListeners;
 	/**
 	 * The ::configure-event signal will be emitted when the size, position or
 	 * stacking of the widget's window has changed.
@@ -715,7 +715,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
 	 */
-	void addOnConfigure(gboolean delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnConfigure(bool delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("configure-event" in connectedSignals) )
 		{
@@ -732,18 +732,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventConfigure*, Widget) dlg ; widget.onConfigureListeners )
+		foreach ( bool delegate(GdkEventConfigure*, Widget) dlg ; widget.onConfigureListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Event, Widget)[] onDeleteListeners;
+	bool delegate(Event, Widget)[] onDeleteListeners;
 	/**
 	 * The ::delete-event signal is emitted if a user requests that
 	 * a toplevel window is closed. The default handler for this signal
@@ -751,7 +751,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * this signal will cause the window to be hidden instead, so that
 	 * it can later be shown again without reconstructing it.
 	 */
-	void addOnDelete(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDelete(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-event" in connectedSignals) )
 		{
@@ -768,18 +768,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onDeleteListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onDeleteListeners )
 		{
 			if ( dlg(new Event(event), widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Event, Widget)[] onDestroyListeners;
+	bool delegate(Event, Widget)[] onDestroyListeners;
 	/**
 	 * The ::destroy-event signal is emitted when a GdkWindow is destroyed.
 	 * You rarely get this signal, because most widgets disconnect themselves
@@ -789,7 +789,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
 	 */
-	void addOnDestroy(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDestroy(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy-event" in connectedSignals) )
 		{
@@ -806,15 +806,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackDestroy(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onDestroyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onDestroyListeners )
 		{
 			if ( dlg(new Event(event), widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkTextDirection, Widget)[] onDirectionChangedListeners;
@@ -1009,7 +1009,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragDropListeners;
+	bool delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragDropListeners;
 	/**
 	 * The ::drag-drop signal is emitted on the drop site when the user drops
 	 * the data onto the widget. The signal handler must determine whether
@@ -1022,7 +1022,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * triggered by calling gtk_drag_get_data() to receive the data for one
 	 * or more of the supported targets.
 	 */
-	void addOnDragDrop(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragDrop(bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-drop" in connectedSignals) )
 		{
@@ -1039,15 +1039,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
+		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
 		{
 			if ( dlg(dragContext, x, y, time, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragEndListeners;
@@ -1079,7 +1079,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkDragContext*, GtkDragResult, Widget)[] onDragFailedListeners;
+	bool delegate(GdkDragContext*, GtkDragResult, Widget)[] onDragFailedListeners;
 	/**
 	 * The ::drag-failed signal is emitted on the drag source when a drag has
 	 * failed. The signal handler may hook custom code to handle a failed DND
@@ -1088,7 +1088,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * animation), otherwise it returns FALSE.
 	 * Since 2.12
 	 */
-	void addOnDragFailed(gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragFailed(bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-failed" in connectedSignals) )
 		{
@@ -1105,15 +1105,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
+		foreach ( bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
 		{
 			if ( dlg(dragContext, result, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GdkDragContext*, guint, Widget)[] onDragLeaveListeners;
@@ -1146,7 +1146,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragMotionListeners;
+	bool delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragMotionListeners;
 	/**
 	 * The ::drag-motion signal is emitted on the drop site when the user
 	 * moves the cursor over the widget during a drag. The signal handler
@@ -1226,7 +1226,7 @@ public class Widget : ObjectGtk, BuildableIF
 		 *  }
 	 * }
 	 */
-	void addOnDragMotion(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragMotion(bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-motion" in connectedSignals) )
 		{
@@ -1243,18 +1243,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
+		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
 		{
 			if ( dlg(dragContext, x, y, time, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventCrossing*, Widget)[] onEnterNotifyListeners;
+	bool delegate(GdkEventCrossing*, Widget)[] onEnterNotifyListeners;
 	/**
 	 * The ::enter-notify-event will be emitted when the pointer enters
 	 * the widget's window.
@@ -1262,7 +1262,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_ENTER_NOTIFY_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnEnterNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnEnterNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enter-notify-event" in connectedSignals) )
 		{
@@ -1279,18 +1279,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventCrossing*, Widget) dlg ; widget.onEnterNotifyListeners )
+		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; widget.onEnterNotifyListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Event, Widget)[] onListeners;
+	bool delegate(Event, Widget)[] onListeners;
 	/**
 	 * The GTK+ main loop will emit three signals for each GDK event delivered
 	 * to a widget: one generic ::event signal, another, more specific,
@@ -1298,7 +1298,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * "key-press-event") and finally a generic
 	 * "event-after" signal.
 	 */
-	void addOn(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
 		{
@@ -1315,15 +1315,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBack(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onListeners )
 		{
 			if ( dlg(new Event(event), widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Event, Widget)[] onEventAfterListeners;
@@ -1355,7 +1355,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventExpose*, Widget)[] onExposeListeners;
+	bool delegate(GdkEventExpose*, Widget)[] onExposeListeners;
 	/**
 	 * The ::expose-event signal is emitted when an area of a previously
 	 * obscured GdkWindow is made visible and needs to be redrawn.
@@ -1364,7 +1364,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_EXPOSURE_MASK mask.
 	 */
-	void addOnExpose(gboolean delegate(GdkEventExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnExpose(bool delegate(GdkEventExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("expose-event" in connectedSignals) )
 		{
@@ -1381,22 +1381,22 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackExpose(GtkWidget* widgetStruct, GdkEventExpose* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventExpose*, Widget) dlg ; widget.onExposeListeners )
+		foreach ( bool delegate(GdkEventExpose*, Widget) dlg ; widget.onExposeListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GtkDirectionType, Widget)[] onFocusListeners;
+	bool delegate(GtkDirectionType, Widget)[] onFocusListeners;
 	/**
 	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
 	 */
-	void addOnFocus(gboolean delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocus(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus" in connectedSignals) )
 		{
@@ -1413,25 +1413,25 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackFocus(GtkWidget* widgetStruct, GtkDirectionType arg1, Widget widget)
 	{
-		foreach ( gboolean delegate(GtkDirectionType, Widget) dlg ; widget.onFocusListeners )
+		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; widget.onFocusListeners )
 		{
 			if ( dlg(arg1, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventFocus*, Widget)[] onFocusInListeners;
+	bool delegate(GdkEventFocus*, Widget)[] onFocusInListeners;
 	/**
 	 * The ::focus-in-event signal will be emitted when the keyboard focus
 	 * enters the widget's window.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_FOCUS_CHANGE_MASK mask.
 	 */
-	void addOnFocusIn(gboolean delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocusIn(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-in-event" in connectedSignals) )
 		{
@@ -1448,25 +1448,25 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusInListeners )
+		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusInListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventFocus*, Widget)[] onFocusOutListeners;
+	bool delegate(GdkEventFocus*, Widget)[] onFocusOutListeners;
 	/**
 	 * The ::focus-out-event signal will be emitted when the keyboard focus
 	 * leaves the widget's window.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_FOCUS_CHANGE_MASK mask.
 	 */
-	void addOnFocusOut(gboolean delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocusOut(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-out-event" in connectedSignals) )
 		{
@@ -1483,18 +1483,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusOutListeners )
+		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusOutListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Event, Widget)[] onGrabBrokenListeners;
+	bool delegate(Event, Widget)[] onGrabBrokenListeners;
 	/**
 	 * Emitted when a pointer or keyboard grab on a window belonging
 	 * to widget gets broken.
@@ -1503,7 +1503,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * application grabs the pointer or keyboard again.
 	 * Since 2.8
 	 */
-	void addOnGrabBroken(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnGrabBroken(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-broken-event" in connectedSignals) )
 		{
@@ -1520,15 +1520,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackGrabBroken(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onGrabBrokenListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onGrabBrokenListeners )
 		{
 			if ( dlg(new Event(event), widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Widget)[] onGrabFocusListeners;
@@ -1647,14 +1647,14 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventKey*, Widget)[] onKeyPressListeners;
+	bool delegate(GdkEventKey*, Widget)[] onKeyPressListeners;
 	/**
 	 * The ::key-press-event signal is emitted when a key is pressed.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_KEY_PRESS_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnKeyPress(gboolean delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnKeyPress(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-press-event" in connectedSignals) )
 		{
@@ -1671,25 +1671,25 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventKey*, Widget) dlg ; widget.onKeyPressListeners )
+		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; widget.onKeyPressListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventKey*, Widget)[] onKeyReleaseListeners;
+	bool delegate(GdkEventKey*, Widget)[] onKeyReleaseListeners;
 	/**
 	 * The ::key-release-event signal is emitted when a key is pressed.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_KEY_RELEASE_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnKeyRelease(gboolean delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnKeyRelease(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-release-event" in connectedSignals) )
 		{
@@ -1706,24 +1706,24 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventKey*, Widget) dlg ; widget.onKeyReleaseListeners )
+		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; widget.onKeyReleaseListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GtkDirectionType, Widget)[] onKeynavFailedListeners;
+	bool delegate(GtkDirectionType, Widget)[] onKeynavFailedListeners;
 	/**
 	 * Gets emitted if keyboard navigation fails.
 	 * See gtk_widget_keynav_failed() for details.
 	 * Since 2.12
 	 */
-	void addOnKeynavFailed(gboolean delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnKeynavFailed(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keynav-failed" in connectedSignals) )
 		{
@@ -1740,18 +1740,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
 	{
-		foreach ( gboolean delegate(GtkDirectionType, Widget) dlg ; widget.onKeynavFailedListeners )
+		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; widget.onKeynavFailedListeners )
 		{
 			if ( dlg(direction, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventCrossing*, Widget)[] onLeaveNotifyListeners;
+	bool delegate(GdkEventCrossing*, Widget)[] onLeaveNotifyListeners;
 	/**
 	 * The ::leave-notify-event will be emitted when the pointer leaves
 	 * the widget's window.
@@ -1759,7 +1759,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_LEAVE_NOTIFY_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnLeaveNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnLeaveNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("leave-notify-event" in connectedSignals) )
 		{
@@ -1776,15 +1776,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventCrossing*, Widget) dlg ; widget.onLeaveNotifyListeners )
+		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; widget.onLeaveNotifyListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Widget)[] onMapListeners;
@@ -1813,7 +1813,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(Event, Widget)[] onMapEventListeners;
+	bool delegate(Event, Widget)[] onMapEventListeners;
 	/**
 	 * The ::map-event signal will be emitted when the widget's window is
 	 * mapped. A window is mapped when it becomes visible on the screen.
@@ -1821,7 +1821,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
 	 */
-	void addOnMapEvent(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("map-event" in connectedSignals) )
 		{
@@ -1838,21 +1838,21 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackMapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onMapEventListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onMapEventListeners )
 		{
 			if ( dlg(new Event(event), widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(gboolean, Widget)[] onMnemonicActivateListeners;
+	bool delegate(gboolean, Widget)[] onMnemonicActivateListeners;
 	/**
 	 */
-	void addOnMnemonicActivate(gboolean delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMnemonicActivate(bool delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mnemonic-activate" in connectedSignals) )
 		{
@@ -1869,18 +1869,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackMnemonicActivate(GtkWidget* widgetStruct, gboolean arg1, Widget widget)
 	{
-		foreach ( gboolean delegate(gboolean, Widget) dlg ; widget.onMnemonicActivateListeners )
+		foreach ( bool delegate(gboolean, Widget) dlg ; widget.onMnemonicActivateListeners )
 		{
 			if ( dlg(arg1, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventMotion*, Widget)[] onMotionNotifyListeners;
+	bool delegate(GdkEventMotion*, Widget)[] onMotionNotifyListeners;
 	/**
 	 * The ::motion-notify-event signal is emitted when the pointer moves
 	 * over the widget's GdkWindow.
@@ -1888,7 +1888,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * needs to enable the GDK_POINTER_MOTION_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnMotionNotify(gboolean delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMotionNotify(bool delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("motion-notify-event" in connectedSignals) )
 		{
@@ -1906,15 +1906,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventMotion*, Widget) dlg ; widget.onMotionNotifyListeners )
+		foreach ( bool delegate(GdkEventMotion*, Widget) dlg ; widget.onMotionNotifyListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkDirectionType, Widget)[] onMoveFocusListeners;
@@ -1943,7 +1943,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventNoExpose*, Widget)[] onNoExposeListeners;
+	bool delegate(GdkEventNoExpose*, Widget)[] onNoExposeListeners;
 	/**
 	 * The ::no-expose-event will be emitted when the widget's window is
 	 * drawn as a copy of another GdkDrawable (with gdk_draw_drawable() or
@@ -1951,7 +1951,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * window was partially obscured GdkEventExpose events will be generated
 	 * for those areas.
 	 */
-	void addOnNoExpose(gboolean delegate(GdkEventNoExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnNoExpose(bool delegate(GdkEventNoExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("no-expose-event" in connectedSignals) )
 		{
@@ -1968,15 +1968,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackNoExpose(GtkWidget* widgetStruct, GdkEventNoExpose* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventNoExpose*, Widget) dlg ; widget.onNoExposeListeners )
+		foreach ( bool delegate(GdkEventNoExpose*, Widget) dlg ; widget.onNoExposeListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkObject*, Widget)[] onParentSetListeners;
@@ -2007,7 +2007,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(Widget)[] onPopupMenuListeners;
+	bool delegate(Widget)[] onPopupMenuListeners;
 	/**
 	 * This signal gets emitted whenever a widget should pop up a context
 	 * menu. This usually happens through the standard key binding mechanism;
@@ -2016,7 +2016,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * a menu with clipboard commands. See the section called Implement GtkWidget::popup_menu
 	 * for an example of how to use this signal.
 	 */
-	void addOnPopupMenu(gboolean delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopupMenu(bool delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-menu" in connectedSignals) )
 		{
@@ -2033,25 +2033,25 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackPopupMenu(GtkWidget* widgetStruct, Widget widget)
 	{
-		foreach ( gboolean delegate(Widget) dlg ; widget.onPopupMenuListeners )
+		foreach ( bool delegate(Widget) dlg ; widget.onPopupMenuListeners )
 		{
 			if ( dlg(widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventProperty*, Widget)[] onPropertyNotifyListeners;
+	bool delegate(GdkEventProperty*, Widget)[] onPropertyNotifyListeners;
 	/**
 	 * The ::property-notify-event signal will be emitted when a property on
 	 * the widget's window has been changed or deleted.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_PROPERTY_CHANGE_MASK mask.
 	 */
-	void addOnPropertyNotify(gboolean delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPropertyNotify(bool delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-notify-event" in connectedSignals) )
 		{
@@ -2068,24 +2068,24 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventProperty*, Widget) dlg ; widget.onPropertyNotifyListeners )
+		foreach ( bool delegate(GdkEventProperty*, Widget) dlg ; widget.onPropertyNotifyListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventProximity*, Widget)[] onProximityInListeners;
+	bool delegate(GdkEventProximity*, Widget)[] onProximityInListeners;
 	/**
 	 * To receive this signal the GdkWindow associated to the widget needs
 	 * to enable the GDK_PROXIMITY_IN_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnProximityIn(gboolean delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnProximityIn(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-in-event" in connectedSignals) )
 		{
@@ -2102,24 +2102,24 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityInListeners )
+		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityInListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventProximity*, Widget)[] onProximityOutListeners;
+	bool delegate(GdkEventProximity*, Widget)[] onProximityOutListeners;
 	/**
 	 * To receive this signal the GdkWindow associated to the widget needs
 	 * to enable the GDK_PROXIMITY_OUT_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnProximityOut(gboolean delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnProximityOut(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-out-event" in connectedSignals) )
 		{
@@ -2136,18 +2136,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityOutListeners )
+		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityOutListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
+	bool delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
 	/**
 	 * Emitted when the "gtk-tooltip-timeout" has expired with
 	 * the cursor hovering "above" widget; or emitted when widget got
@@ -2161,7 +2161,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * destined function calls.
 	 * Since 2.12
 	 */
-	void addOnQueryTooltip(gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("query-tooltip" in connectedSignals) )
 		{
@@ -2178,15 +2178,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget widget)
 	{
-		foreach ( gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; widget.onQueryTooltipListeners )
+		foreach ( bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; widget.onQueryTooltipListeners )
 		{
 			if ( dlg(x, y, keyboardMode, tooltip, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Widget)[] onRealizeListeners;
@@ -2243,7 +2243,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventScroll*, Widget)[] onScrollListeners;
+	bool delegate(GdkEventScroll*, Widget)[] onScrollListeners;
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
 	 * range is pressed. Wheel mice are usually configured to generate
@@ -2252,7 +2252,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_BUTTON_PRESS_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
 	 */
-	void addOnScroll(gboolean delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnScroll(bool delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-event" in connectedSignals) )
 		{
@@ -2269,23 +2269,23 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventScroll*, Widget) dlg ; widget.onScrollListeners )
+		foreach ( bool delegate(GdkEventScroll*, Widget) dlg ; widget.onScrollListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionClearListeners;
+	bool delegate(GdkEventSelection*, Widget)[] onSelectionClearListeners;
 	/**
 	 * The ::selection-clear-event signal will be emitted when the
 	 * the widget's window has lost ownership of a selection.
 	 */
-	void addOnSelectionClear(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionClear(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-clear-event" in connectedSignals) )
 		{
@@ -2302,15 +2302,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionClearListeners )
+		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionClearListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkSelectionData*, guint, guint, Widget)[] onSelectionGetListeners;
@@ -2339,11 +2339,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionNotifyListeners;
+	bool delegate(GdkEventSelection*, Widget)[] onSelectionNotifyListeners;
 	/**
 	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
 	 */
-	void addOnSelectionNotify(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionNotify(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-notify-event" in connectedSignals) )
 		{
@@ -2360,15 +2360,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionNotifyListeners )
+		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionNotifyListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkSelectionData*, guint, Widget)[] onSelectionReceivedListeners;
@@ -2397,13 +2397,13 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionRequestListeners;
+	bool delegate(GdkEventSelection*, Widget)[] onSelectionRequestListeners;
 	/**
 	 * The ::selection-request-event signal will be emitted when
 	 * another client requests ownership of the selection owned by
 	 * the widget's window.
 	 */
-	void addOnSelectionRequest(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionRequest(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-request-event" in connectedSignals) )
 		{
@@ -2420,15 +2420,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionRequestListeners )
+		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionRequestListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Widget)[] onShowListeners;
@@ -2457,10 +2457,10 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GtkWidgetHelpType, Widget)[] onShowHelpListeners;
+	bool delegate(GtkWidgetHelpType, Widget)[] onShowHelpListeners;
 	/**
 	 */
-	void addOnShowHelp(gboolean delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnShowHelp(bool delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show-help" in connectedSignals) )
 		{
@@ -2477,15 +2477,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType arg1, Widget widget)
 	{
-		foreach ( gboolean delegate(GtkWidgetHelpType, Widget) dlg ; widget.onShowHelpListeners )
+		foreach ( bool delegate(GtkWidgetHelpType, Widget) dlg ; widget.onShowHelpListeners )
 		{
 			if ( dlg(arg1, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkAllocation*, Widget)[] onSizeAllocateListeners;
@@ -2621,7 +2621,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(Event, Widget)[] onUnmapEventListeners;
+	bool delegate(Event, Widget)[] onUnmapEventListeners;
 	/**
 	 * The ::unmap-event signal will be emitted when the widget's window is
 	 * unmapped. A window is unmapped when it becomes invisible on the screen.
@@ -2629,7 +2629,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
 	 */
-	void addOnUnmapEvent(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnUnmapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unmap-event" in connectedSignals) )
 		{
@@ -2646,15 +2646,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackUnmapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onUnmapEventListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onUnmapEventListeners )
 		{
 			if ( dlg(new Event(event), widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(Widget)[] onUnrealizeListeners;
@@ -2683,14 +2683,14 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	gboolean delegate(GdkEventVisibility*, Widget)[] onVisibilityNotifyListeners;
+	bool delegate(GdkEventVisibility*, Widget)[] onVisibilityNotifyListeners;
 	/**
 	 * The ::visibility-notify-event will be emitted when the widget's window
 	 * is obscured or unobscured.
 	 * To receive this signal the GdkWindow associated to the widget needs
 	 * to enable the GDK_VISIBILITY_NOTIFY_MASK mask.
 	 */
-	void addOnVisibilityNotify(gboolean delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnVisibilityNotify(bool delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("visibility-notify-event" in connectedSignals) )
 		{
@@ -2707,18 +2707,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventVisibility*, Widget) dlg ; widget.onVisibilityNotifyListeners )
+		foreach ( bool delegate(GdkEventVisibility*, Widget) dlg ; widget.onVisibilityNotifyListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(GdkEventWindowState*, Widget)[] onWindowStateListeners;
+	bool delegate(GdkEventWindowState*, Widget)[] onWindowStateListeners;
 	/**
 	 * The ::window-state-event will be emitted when the state of the
 	 * toplevel window associated to the widget changes.
@@ -2726,7 +2726,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * needs to enable the GDK_STRUCTURE_MASK mask. GDK will enable
 	 * this mask automatically for all new windows.
 	 */
-	void addOnWindowState(gboolean delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnWindowState(bool delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("window-state-event" in connectedSignals) )
 		{
@@ -2743,15 +2743,15 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, Widget widget)
 	{
-		foreach ( gboolean delegate(GdkEventWindowState*, Widget) dlg ; widget.onWindowStateListeners )
+		foreach ( bool delegate(GdkEventWindowState*, Widget) dlg ; widget.onWindowStateListeners )
 		{
 			if ( dlg(event, widget) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

@@ -132,12 +132,12 @@ public class TextTag : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
+	bool delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
 	 * buffer marked with this tag.
 	 */
-	void addOn(gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
 		{
@@ -154,15 +154,15 @@ public class TextTag : ObjectG
 	}
 	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag textTag)
 	{
-		foreach ( gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg ; textTag.onListeners )
+		foreach ( bool delegate(ObjectG, Event, TextIter, TextTag) dlg ; textTag.onListeners )
 		{
 			if ( dlg(new ObjectG(object), new Event(event), new TextIter(iter), textTag) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

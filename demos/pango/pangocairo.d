@@ -37,13 +37,13 @@ class PangoText : DrawingArea
 	}
 
 	//Override default signal handler:
-	protected int exposeCallback(GdkEventExpose* event, Widget widget)
+	protected bool exposeCallback(GdkEventExpose* event, Widget widget)
 	{
 		// This is where we draw on the window
 		Drawable dr = getDrawable();
 		drawText( new Context(dr) );
 
-		return 1;
+		return true;
 	}
 
 	public void drawText (Context cr)

@@ -183,12 +183,12 @@ public class Toolbar : Container
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(gboolean, Toolbar)[] onFocusHomeOrEndListeners;
+	bool delegate(gboolean, Toolbar)[] onFocusHomeOrEndListeners;
 	/**
 	 * A keybinding signal used internally by GTK+. This signal can't
 	 * be used in application code
 	 */
-	void addOnFocusHomeOrEnd(gboolean delegate(gboolean, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocusHomeOrEnd(bool delegate(gboolean, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-home-or-end" in connectedSignals) )
 		{
@@ -205,15 +205,15 @@ public class Toolbar : Container
 	}
 	extern(C) static gboolean callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar toolbar)
 	{
-		foreach ( gboolean delegate(gboolean, Toolbar) dlg ; toolbar.onFocusHomeOrEndListeners )
+		foreach ( bool delegate(gboolean, Toolbar) dlg ; toolbar.onFocusHomeOrEndListeners )
 		{
 			if ( dlg(focusHome, toolbar) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkOrientation, Toolbar)[] onOrientationChangedListeners;
@@ -243,7 +243,7 @@ public class Toolbar : Container
 		}
 	}
 	
-	gboolean delegate(gint, gint, gint, Toolbar)[] onPopupContextMenuListeners;
+	bool delegate(gint, gint, gint, Toolbar)[] onPopupContextMenuListeners;
 	/**
 	 * Emitted when the user right-clicks the toolbar or uses the
 	 * keybinding to display a popup menu.
@@ -253,7 +253,7 @@ public class Toolbar : Container
 	 * number is given by the button parameter. If the menu was popped
 	 * up using the keybaord, button is -1.
 	 */
-	void addOnPopupContextMenu(gboolean delegate(gint, gint, gint, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopupContextMenu(bool delegate(gint, gint, gint, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-context-menu" in connectedSignals) )
 		{
@@ -270,15 +270,15 @@ public class Toolbar : Container
 	}
 	extern(C) static gboolean callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar toolbar)
 	{
-		foreach ( gboolean delegate(gint, gint, gint, Toolbar) dlg ; toolbar.onPopupContextMenuListeners )
+		foreach ( bool delegate(gint, gint, gint, Toolbar) dlg ; toolbar.onPopupContextMenuListeners )
 		{
 			if ( dlg(x, y, button, toolbar) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkToolbarStyle, Toolbar)[] onStyleChangedListeners;

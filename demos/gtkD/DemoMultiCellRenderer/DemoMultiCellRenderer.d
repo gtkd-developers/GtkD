@@ -121,10 +121,10 @@ void main(){
     tv.setModel(store);
     wnd.showAll();
 
-    wnd.addOnDelete( delegate gboolean (Event event, Widget widget) {
+    wnd.addOnDelete( delegate bool (Event event, Widget widget) {
         widget.destroy();
         Main.quit();
-        return 0;
+        return false;
     });
 
     Main.run();

@@ -141,7 +141,7 @@ public class ToolItem : Bin
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(ToolItem)[] onCreateMenuProxyListeners;
+	bool delegate(ToolItem)[] onCreateMenuProxyListeners;
 	/**
 	 * This signal is emitted when the toolbar needs information from tool_item
 	 * about whether the item should appear in the toolbar overflow menu. In
@@ -160,7 +160,7 @@ public class ToolItem : Bin
 	 * to invalidate the cache and ensure that the toolbar rebuilds its overflow
 	 * menu.
 	 */
-	void addOnCreateMenuProxy(gboolean delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCreateMenuProxy(bool delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("create-menu-proxy" in connectedSignals) )
 		{
@@ -177,24 +177,24 @@ public class ToolItem : Bin
 	}
 	extern(C) static gboolean callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem toolItem)
 	{
-		foreach ( gboolean delegate(ToolItem) dlg ; toolItem.onCreateMenuProxyListeners )
+		foreach ( bool delegate(ToolItem) dlg ; toolItem.onCreateMenuProxyListeners )
 		{
 			if ( dlg(toolItem) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(Tooltips, string, string, ToolItem)[] onSetTooltipListeners;
+	bool delegate(Tooltips, string, string, ToolItem)[] onSetTooltipListeners;
 	/**
 	 * This signal is emitted when the toolitem's tooltip changes.
 	 * Application developers can use gtk_tool_item_set_tooltip() to
 	 * set the item's tooltip.
 	 */
-	void addOnSetTooltip(gboolean delegate(Tooltips, string, string, ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSetTooltip(bool delegate(Tooltips, string, string, ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-tooltip" in connectedSignals) )
 		{
@@ -211,15 +211,15 @@ public class ToolItem : Bin
 	}
 	extern(C) static gboolean callBackSetTooltip(GtkToolItem* toolItemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem toolItem)
 	{
-		foreach ( gboolean delegate(Tooltips, string, string, ToolItem) dlg ; toolItem.onSetTooltipListeners )
+		foreach ( bool delegate(Tooltips, string, string, ToolItem) dlg ; toolItem.onSetTooltipListeners )
 		{
 			if ( dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(ToolItem)[] onToolbarReconfiguredListeners;

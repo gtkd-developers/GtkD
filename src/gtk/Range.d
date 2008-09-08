@@ -146,7 +146,7 @@ public class Range : Widget
 		}
 	}
 	
-	gboolean delegate(GtkScrollType, gdouble, Range)[] onChangeValueListeners;
+	bool delegate(GtkScrollType, gdouble, Range)[] onChangeValueListeners;
 	/**
 	 * The ::change-value signal is emitted when a scroll action is
 	 * performed on a range. It allows an application to determine the
@@ -163,7 +163,7 @@ public class Range : Widget
 	 * ::change-value handler.
 	 * Since 2.6
 	 */
-	void addOnChangeValue(gboolean delegate(GtkScrollType, gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChangeValue(bool delegate(GtkScrollType, gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-value" in connectedSignals) )
 		{
@@ -180,15 +180,15 @@ public class Range : Widget
 	}
 	extern(C) static gboolean callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range range)
 	{
-		foreach ( gboolean delegate(GtkScrollType, gdouble, Range) dlg ; range.onChangeValueListeners )
+		foreach ( bool delegate(GtkScrollType, gdouble, Range) dlg ; range.onChangeValueListeners )
 		{
 			if ( dlg(scroll, value, range) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkScrollType, Range)[] onMoveSliderListeners;

@@ -399,6 +399,12 @@ public struct Funct
 		{
 			typeWrap = typeWrap[0..typeWrap.length-13];
 		}
+
+		if ( typeWrap == "gboolean" )
+		{
+			typeWrap = "bool";
+		}
+
 		char[] decl = typeWrap ~ " delegate(";
 		
 		int pCount = 0;

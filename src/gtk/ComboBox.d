@@ -336,7 +336,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 	}
 	
-	gboolean delegate(ComboBox)[] onPopdownListeners;
+	bool delegate(ComboBox)[] onPopdownListeners;
 	/**
 	 * The ::popdown signal is a
 	 * keybinding signal
@@ -344,7 +344,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * The default bindings for this signal are Alt+Up and Escape.
 	 * Since 2.12
 	 */
-	void addOnPopdown(gboolean delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopdown(bool delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popdown" in connectedSignals) )
 		{
@@ -361,15 +361,15 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	extern(C) static gboolean callBackPopdown(GtkComboBox* buttonStruct, ComboBox comboBox)
 	{
-		foreach ( gboolean delegate(ComboBox) dlg ; comboBox.onPopdownListeners )
+		foreach ( bool delegate(ComboBox) dlg ; comboBox.onPopdownListeners )
 		{
 			if ( dlg(comboBox) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(ComboBox)[] onPopupListeners;

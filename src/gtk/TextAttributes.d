@@ -113,12 +113,12 @@ public class TextAttributes
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
+	bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
 	 * buffer marked with this tag.
 	 */
-	void addOn(gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOn(bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
 		{
@@ -135,15 +135,15 @@ public class TextAttributes
 	}
 	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes textAttributes)
 	{
-		foreach ( gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
+		foreach ( bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
 		{
 			if ( dlg(object, event, iter, textAttributes) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

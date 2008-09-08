@@ -183,7 +183,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		}
 	}
 	
-	gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
+	bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
 	/**
 	 * Gets emitted when a match from the cursor is on a match
 	 * of the list.The default behaviour is to replace the contents
@@ -191,7 +191,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * pointed to by iter.
 	 * Since 2.12
 	 */
-	void addOnCursorOnMatch(gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCursorOnMatch(bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cursor-on-match" in connectedSignals) )
 		{
@@ -208,18 +208,18 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	}
 	extern(C) static gboolean callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
 	{
-		foreach ( gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
+		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
 		{
 			if ( dlg(new TreeModel(model), iter, entryCompletion) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(string, EntryCompletion)[] onInsertPrefixListeners;
+	bool delegate(string, EntryCompletion)[] onInsertPrefixListeners;
 	/**
 	 * Gets emitted when the inline autocompletion is triggered.
 	 * The default behaviour is to make the entry display the
@@ -230,7 +230,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * next '/'.
 	 * Since 2.6
 	 */
-	void addOnInsertPrefix(gboolean delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertPrefix(bool delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-prefix" in connectedSignals) )
 		{
@@ -247,18 +247,18 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	}
 	extern(C) static gboolean callBackInsertPrefix(GtkEntryCompletion* widgetStruct, gchar* prefix, EntryCompletion entryCompletion)
 	{
-		foreach ( gboolean delegate(string, EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
+		foreach ( bool delegate(string, EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
 		{
 			if ( dlg(Str.toString(prefix), entryCompletion) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
+	bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
 	/**
 	 * Gets emitted when a match from the list is selected.
 	 * The default behaviour is to replace the contents of the
@@ -266,7 +266,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * pointed to by iter.
 	 * Since 2.4
 	 */
-	void addOnMatchSelected(gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMatchSelected(bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("match-selected" in connectedSignals) )
 		{
@@ -283,15 +283,15 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	}
 	extern(C) static gboolean callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
 	{
-		foreach ( gboolean delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
+		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
 		{
 			if ( dlg(new TreeModel(model), iter, entryCompletion) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

@@ -139,12 +139,12 @@ public class AccelGroup : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
+	bool delegate(ObjectG, guint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
 	/**
 	 * The accel-activate signal is an implementation detail of
 	 * GtkAccelGroup and not meant to be used by applications.
 	 */
-	void addOnAccelActivate(gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAccelActivate(bool delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-activate" in connectedSignals) )
 		{
@@ -161,15 +161,15 @@ public class AccelGroup : ObjectG
 	}
 	extern(C) static gboolean callBackAccelActivate(GtkAccelGroup* accelGroupStruct, GObject* acceleratable, guint keyval, GdkModifierType modifier, AccelGroup accelGroup)
 	{
-		foreach ( gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg ; accelGroup.onAccelActivateListeners )
+		foreach ( bool delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg ; accelGroup.onAccelActivateListeners )
 		{
 			if ( dlg(new ObjectG(acceleratable), keyval, modifier, accelGroup) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(guint, GdkModifierType, Closure, AccelGroup)[] onAccelChangedListeners;

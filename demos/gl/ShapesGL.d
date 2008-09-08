@@ -258,7 +258,7 @@ class ShapesGL : DrawingArea
 	}		
 
 
-	int visibilityCallback(GdkEventVisibility* e, Widget widget)
+	bool visibilityCallback(GdkEventVisibility* e, Widget widget)
 	{
 		if (animate)
 		{
@@ -282,7 +282,7 @@ class ShapesGL : DrawingArea
 		return true;
 	}
 	
-	int exposeCallback(GdkEventExpose* e, Widget widget)
+	bool exposeCallback(GdkEventExpose* e, Widget widget)
 	{
 		glDrawFrame(widget);
 		return true;
@@ -332,7 +332,7 @@ private import gdk.GC;
 
 	bool noExposeCallback(Widget widget){return false;}
 
-	int resizeGL(GdkEventConfigure* e)
+	bool resizeGL(GdkEventConfigure* e)
 	{
 		GLfloat w;
 		GLfloat h;
@@ -583,7 +583,7 @@ static float dx = 0.0;
 static float dy = 0.0;
 
 
-	int mouseButtonPressCallback(GdkEventButton*event, Widget widget)
+	bool mouseButtonPressCallback(GdkEventButton*event, Widget widget)
 	{
 		if (event.button == 1)
 		{
@@ -599,7 +599,7 @@ static float dy = 0.0;
 		return false;
 	}
 	
-	int mouseButtonReleaseCallback(GdkEventButton*event, Widget widget)
+	bool mouseButtonReleaseCallback(GdkEventButton*event, Widget widget)
 	{
 		if (event.button == 1)
 		{
@@ -621,7 +621,7 @@ static float dy = 0.0;
 		return false;
 	}
 
-	int motionNotifyCallback(GdkEventMotion* event, Widget widget)
+	bool motionNotifyCallback(GdkEventMotion* event, Widget widget)
 	{
 		float w = width;
 		float h = height;
@@ -754,8 +754,8 @@ static float dy = 0.0;
 		}
 		else //version(Phobos)
 		{
-    	printf("activateItemCallback action = %.*s \n", action);
-    }
+			printf("activateItemCallback action = %.*s \n", action);
+		}
 		
 		switch(action)
 		{

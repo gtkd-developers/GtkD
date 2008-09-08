@@ -33,7 +33,7 @@ public:
 
 protected:
 	//Override default signal handler:
-	int exposeCallback(GdkEventExpose* event, Widget widget)
+	bool exposeCallback(GdkEventExpose* event, Widget widget)
 	{
 		// This is where we draw on the window
 
@@ -137,7 +137,7 @@ protected:
 			
 		delete cr;
 
-		return 1;
+		return true;
 	}
 
 	double m_radius = 100.0;

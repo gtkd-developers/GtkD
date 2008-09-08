@@ -145,10 +145,10 @@ public class IMContext : ObjectG
 		}
 	}
 	
-	gboolean delegate(gint, gint, IMContext)[] onDeleteSurroundingListeners;
+	bool delegate(gint, gint, IMContext)[] onDeleteSurroundingListeners;
 	/**
 	 */
-	void addOnDeleteSurrounding(gboolean delegate(gint, gint, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDeleteSurrounding(bool delegate(gint, gint, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-surrounding" in connectedSignals) )
 		{
@@ -165,15 +165,15 @@ public class IMContext : ObjectG
 	}
 	extern(C) static gboolean callBackDeleteSurrounding(GtkIMContext* imcontextStruct, gint arg1, gint arg2, IMContext iMContext)
 	{
-		foreach ( gboolean delegate(gint, gint, IMContext) dlg ; iMContext.onDeleteSurroundingListeners )
+		foreach ( bool delegate(gint, gint, IMContext) dlg ; iMContext.onDeleteSurroundingListeners )
 		{
 			if ( dlg(arg1, arg2, iMContext) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(IMContext)[] onPreeditChangedListeners;
@@ -254,10 +254,10 @@ public class IMContext : ObjectG
 		}
 	}
 	
-	gboolean delegate(IMContext)[] onRetrieveSurroundingListeners;
+	bool delegate(IMContext)[] onRetrieveSurroundingListeners;
 	/**
 	 */
-	void addOnRetrieveSurrounding(gboolean delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnRetrieveSurrounding(bool delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("retrieve-surrounding" in connectedSignals) )
 		{
@@ -274,15 +274,15 @@ public class IMContext : ObjectG
 	}
 	extern(C) static gboolean callBackRetrieveSurrounding(GtkIMContext* imcontextStruct, IMContext iMContext)
 	{
-		foreach ( gboolean delegate(IMContext) dlg ; iMContext.onRetrieveSurroundingListeners )
+		foreach ( bool delegate(IMContext) dlg ; iMContext.onRetrieveSurroundingListeners )
 		{
 			if ( dlg(iMContext) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	

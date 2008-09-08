@@ -52,7 +52,7 @@ public:
 
 protected:
 	//Override default signal handler:
-	int exposeCallback(GdkEventExpose* event, Widget widget)
+	bool exposeCallback(GdkEventExpose* event, Widget widget)
 	{
 		if ( m_timeout is null )
 		{
@@ -197,7 +197,7 @@ protected:
 
 		delete cr;
 
-		return 1;
+		return true;
 	}
 
 	bool onSecondElapsed()

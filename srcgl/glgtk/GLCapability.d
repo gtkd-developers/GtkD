@@ -211,7 +211,7 @@ template GLCapability()
 		//return consumeEvent;
 	}
 	
-	int exposeFrame(GdkEventExpose* event, Widget widget)
+	bool exposeFrame(GdkEventExpose* event, Widget widget)
 	{
 		//printf("GLCapabilityT.exposeFrame exposeFrame\n" );
 		GLContext context = GLWidget.getGLContext(widget);
@@ -224,7 +224,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		int consumeEvent = typeof(this).drawGL(event);
+		bool consumeEvent = typeof(this).drawGL(event);
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -242,7 +242,7 @@ template GLCapability()
 		return consumeEvent;
 	}
 	
-	int configureFrame(GdkEventConfigure* event, Widget widget)
+	bool configureFrame(GdkEventConfigure* event, Widget widget)
 	{
 		if ( event != null )
 		{
@@ -264,7 +264,7 @@ template GLCapability()
 		
 		//writefln("configureFrame 2");
 		/*** do user actions ***/
-		int consumeEvent = typeof(this).resizeGL(event);
+		bool consumeEvent = typeof(this).resizeGL(event);
 		//printf("here\n");
 		//writefln("configureFrame 3");
 		
@@ -354,7 +354,7 @@ template GLCapability()
 		//return consumeEvent;
 	}
 	
-	int visibilityFrame(GdkEventVisibility* event, Widget widget)
+	bool visibilityFrame(GdkEventVisibility* event, Widget widget)
 	{
 		//printf("GLCapabilityT.visibilityFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);

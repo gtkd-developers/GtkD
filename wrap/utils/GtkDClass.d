@@ -1009,7 +1009,7 @@ public class GtkDClass
 	{
 		if ( !convParms.isInterface )
 		{
-			if ( startsWith(dlg, "gboolean") )
+			if ( startsWith(dlg, "bool") )
 			{
 				text ~= "extern(C) static gboolean callBack"~gtkDSignal~"("
 						~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
@@ -1024,15 +1024,15 @@ public class GtkDClass
 			text ~= "{";
 			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~gtkDSignal~"Listeners )";
 			text ~= "	{";
-			if ( startsWith(dlg, "gboolean") )
+			if ( startsWith(dlg, "bool") )
 			{
 				text ~= "		if ( dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~") )";
 				text ~= "		{";
-				text ~= "			return true;";
+				text ~= "			return 1;";
 				text ~= "		}";
 				text ~= "	}";
 				text ~= "	";
-				text ~= "	return false;";
+				text ~= "	return 0;";
 			}
 			else
 			{

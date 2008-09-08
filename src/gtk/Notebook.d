@@ -169,10 +169,10 @@ public class Notebook : Container
 	 */
 	int[char[]] connectedSignals;
 	
-	gboolean delegate(gint, Notebook)[] onChangeCurrentPageListeners;
+	bool delegate(gint, Notebook)[] onChangeCurrentPageListeners;
 	/**
 	 */
-	void addOnChangeCurrentPage(gboolean delegate(gint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChangeCurrentPage(bool delegate(gint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-current-page" in connectedSignals) )
 		{
@@ -189,15 +189,15 @@ public class Notebook : Container
 	}
 	extern(C) static gboolean callBackChangeCurrentPage(GtkNotebook* notebookStruct, gint arg1, Notebook notebook)
 	{
-		foreach ( gboolean delegate(gint, Notebook) dlg ; notebook.onChangeCurrentPageListeners )
+		foreach ( bool delegate(gint, Notebook) dlg ; notebook.onChangeCurrentPageListeners )
 		{
 			if ( dlg(arg1, notebook) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	GtkNotebook* delegate(Widget, gint, gint, Notebook)[] onCreateWindowListeners;
@@ -236,10 +236,10 @@ public class Notebook : Container
 		}
 	}
 	
-	gboolean delegate(GtkNotebookTab, Notebook)[] onFocusTabListeners;
+	bool delegate(GtkNotebookTab, Notebook)[] onFocusTabListeners;
 	/**
 	 */
-	void addOnFocusTab(gboolean delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocusTab(bool delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-tab" in connectedSignals) )
 		{
@@ -256,15 +256,15 @@ public class Notebook : Container
 	}
 	extern(C) static gboolean callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab arg1, Notebook notebook)
 	{
-		foreach ( gboolean delegate(GtkNotebookTab, Notebook) dlg ; notebook.onFocusTabListeners )
+		foreach ( bool delegate(GtkNotebookTab, Notebook) dlg ; notebook.onFocusTabListeners )
 		{
 			if ( dlg(arg1, notebook) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkDirectionType, Notebook)[] onMoveFocusOutListeners;
@@ -380,10 +380,10 @@ public class Notebook : Container
 		}
 	}
 	
-	gboolean delegate(GtkDirectionType, gboolean, Notebook)[] onReorderTabListeners;
+	bool delegate(GtkDirectionType, gboolean, Notebook)[] onReorderTabListeners;
 	/**
 	 */
-	void addOnReorderTab(gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnReorderTab(bool delegate(GtkDirectionType, gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("reorder-tab" in connectedSignals) )
 		{
@@ -400,21 +400,21 @@ public class Notebook : Container
 	}
 	extern(C) static gboolean callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType arg1, gboolean arg2, Notebook notebook)
 	{
-		foreach ( gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg ; notebook.onReorderTabListeners )
+		foreach ( bool delegate(GtkDirectionType, gboolean, Notebook) dlg ; notebook.onReorderTabListeners )
 		{
 			if ( dlg(arg1, arg2, notebook) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
-	gboolean delegate(gboolean, Notebook)[] onSelectPageListeners;
+	bool delegate(gboolean, Notebook)[] onSelectPageListeners;
 	/**
 	 */
-	void addOnSelectPage(gboolean delegate(gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectPage(bool delegate(gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-page" in connectedSignals) )
 		{
@@ -431,15 +431,15 @@ public class Notebook : Container
 	}
 	extern(C) static gboolean callBackSelectPage(GtkNotebook* notebookStruct, gboolean arg1, Notebook notebook)
 	{
-		foreach ( gboolean delegate(gboolean, Notebook) dlg ; notebook.onSelectPageListeners )
+		foreach ( bool delegate(gboolean, Notebook) dlg ; notebook.onSelectPageListeners )
 		{
 			if ( dlg(arg1, notebook) )
 			{
-				return true;
+				return 1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 	void delegate(GtkNotebookPage*, guint, Notebook)[] onSwitchPageListeners;

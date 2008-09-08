@@ -1228,7 +1228,7 @@ public class MainWindow : Window
 	 * Executed when the user tries to close the window
 	 * Returns: true to refuse to close the window
 	 */
-	protected int windowDelete(Event event, Widget widget)
+	protected bool windowDelete(Event event, Widget widget)
 	{
 		--countTotalMainWindows;
 		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);

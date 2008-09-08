@@ -20,13 +20,13 @@ void main (string[] args)
 	);
 
 	window.addOnExpose(
-		delegate int (GdkEventExpose * whatever_II, in Widget widget)
+		delegate bool (GdkEventExpose * whatever_II, in Widget widget)
 		{
 			Drawable da = widget.getDrawable();
 			da.drawRectangle(	gcFgColor(da, 0, 255, 255), true,
 								0, 0, window.getHeight(), window.getWidth()
 			);
-			return 1;
+			return true;
 		}
 	);
 

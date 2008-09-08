@@ -125,12 +125,12 @@ public class OtherTests : Window
 			dlg.destroy();
 	}
 
-	gboolean onDeleteEvent(Event event, Widget widget)
+	bool onDeleteEvent(Event event, Widget widget)
 	{
 		destroy();
 		writefln("Exit by request from HelloWorld");
 		Main.exit(0);
-		return 0;
+		return false;
 	}
 
 	string toString()
