@@ -16,6 +16,7 @@ for param in "$@"; do
         gda) sed -i -re '/^#\[gda\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
         sv) sed -i -re '/^#\[sourceView\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
         gl) sed -i -re '/^#\[gl\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
+        gst) sed -i -re '/^#\[gstreamer\]/ { s/#//; :a; n; s/#//; t a; }' "${DEMOSCONF}";;
     esac
 done
 

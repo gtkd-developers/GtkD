@@ -1,23 +1,6 @@
 /*
- * This file is part of gtkD.
- *
- * gtkD is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * gtkD is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with gtkD; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- * gstreamerD helloworld.
- * by Jonas Kivi
+ * gstreamer_helloworld is placed in the
+ * public domain.
  */
 
 module gstreamer_helloworld;
@@ -27,7 +10,7 @@ module gstreamer_helloworld;
 //import std.stdio;
 
 //Tango imports
-import tango.io.Stdout;
+import tango.util.log.Trace;//Thread safe console output.
 import Util = tango.text.Util;
 import Integer = tango.text.convert.Integer;
 import tango.util.collection.LinkSeq;
@@ -62,16 +45,16 @@ public:
 
 	bool busCall( Message msg )
 	{
-		debug(gstreamer) Stdout("GstHello.busCall(msg) START.").newline;
-		debug(gstreamer) scope(exit) Stdout("GstHello.busCall(msg) END.").newline;
+		debug(gstreamer) Trace.formatln("GstHello.busCall(msg) START.");
+		debug(gstreamer) scope(exit) Trace.formatln("GstHello.busCall(msg) END.");
 
 		switch( msg.type )
 		{
 			case GstMessageType.UNKNOWN:
-				Stdout("Unknown message type.").newline;
+				Trace.formatln("Unknown message type.");
 			break;
 			case GstMessageType.EOS:
-				Stdout("End-of-stream.").newline;
+				Trace.formatln("End-of-stream.");
 				Main.quit();
 			break;
 
@@ -81,7 +64,7 @@ public:
 				GError *err;
 				msg.parseError(&err, &dbug);
 				//g_free (dbug);
-				Stdout("Error: ")( Stringz.fromUtf8z(err.message) )(" dbug: ")( Stringz.fromUtf8z(dbug) ).newline;
+				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.message), Stringz.fromStringz(dbug) );
 				//g_error_free (err);
 				Main.quit();
 			break;
@@ -108,13 +91,13 @@ public:
 
 		if( pipeline is null || source is null || parser is null || decoder is null || conv is null || sink is null )
 		{
-			Stdout("One or more element could not be created").newline;
-			if( pipeline is null ) Stdout(" : no pipeline.").newline;
-			if( source is null ) Stdout(" : no source.").newline;
-			if( parser is null ) Stdout(" : no parser.").newline;
-			if( decoder is null ) Stdout(" : no decoder.").newline;
-			if( conv is null ) Stdout(" : no conv.").newline;
-			if( sink is null ) Stdout(" : no sink.").newline;
+			Trace.formatln("One or more element could not be created");
+			if( pipeline is null ) Trace.formatln(" : no pipeline.");
+			if( source is null ) Trace.formatln(" : no source.");
+			if( parser is null ) Trace.formatln(" : no parser.");
+			if( decoder is null ) Trace.formatln(" : no decoder.");
+			if( conv is null ) Trace.formatln(" : no conv.");
+			if( sink is null ) Trace.formatln(" : no sink.");
 
 			throw new Exception("One or more gstreamerD elements could not be created.");
 		}
@@ -149,9 +132,9 @@ public:
 		parser.addOnPadAdded(&newPad);
 
 		// Now set to playing and iterate.
-		Stdout("Setting to PLAYING.").newline;
+		Trace.formatln("Setting to PLAYING.");
 		pipeline.setState( GstState.PLAYING );
-		Stdout("Running.").newline;
+		Trace.formatln("Running.");
 	}
 
 	~this()
@@ -161,16 +144,16 @@ public:
 
 	void newPad( Pad pad, Element element )
 	{
-		Stdout("newPad callback called. START.").newline;
+		Trace.formatln("newPad callback called. START.");
 		Pad sinkpad;
 
 		// We can now link this pad with the audio decoder
-		Stdout("Dynamic pad created, linking parser/decoder").newline;
+		Trace.formatln("Dynamic pad created, linking parser/decoder");
 
 		sinkpad = decoder.getPad("sink");
-		Stdout("doing a gst_pad_link.").newline;
+		Trace.formatln("doing a gst_pad_link.");
 		pad.link( sinkpad );
-		Stdout("Done. That was ok.").newline;
+		Trace.formatln("Done. That was ok.");
 
 	}
 
@@ -183,11 +166,11 @@ protected:
 
 int main(char[][] args)
 {
-	Stdout("gstreamerD Hello World!").newline;
+	Trace.formatln("gstreamerD Hello World!");
 
 	uint major, minor, micro, nano;
 
-	Stdout("Trying to init...").newline;
+	Trace.formatln("Trying to init...");
 
 	//Main.init(args);
 	GStreamer.init(args);
@@ -195,15 +178,15 @@ int main(char[][] args)
 	// check input arguments
 	if (args.length != 2)
 	{
-		Stdout("Usage: %s <Ogg/Vorbis filename>\n")( args[0]).newline;
+		Trace.formatln("Usage: {} <Ogg/Vorbis filename>", args[0]);
 		return -1;
 	}
 
-	Stdout("Checking version of GStreamer...").newline;
+	Trace.formatln("Checking version of GStreamer...");
 	GStreamer.versio(&major, &minor, &micro, &nano);
-	Stdout("This program is linked against GStreamer ")( major)( ".")( minor)( ".")( micro ).newline;
+	Trace.formatln("This program is linked against GStreamer {}.{}.{}", major, minor, micro );
 
-	Stdout( "The file is: ")( args[1] ).newline;
+	Trace.formatln( "The file is: {}", args[1] );
 	GstHello gstHello = new GstHello( args[1] );
 
 	//We must use the gtkD mainloop to run gstreamerD apps.
