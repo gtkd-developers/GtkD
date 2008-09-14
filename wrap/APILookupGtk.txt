@@ -41,14 +41,6 @@ public import gtkc.gdktypes;
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
-struct GtkObjectClass
-{
-	GObjectClass parentClass;
-	void function(GtkObject*, GtkArg*, uint) setArg;
-	void function(GtkObject*, GtkArg *, uint) getArg;
-	void function(GtkObject*) destroy;
-}
-
 addTypedefs: end
 
 addAliases: start
@@ -59,28 +51,139 @@ addEnums: end
 
 addStructs: start
 
-	struct GtkTextIter {
-		/* GtkTextIter is an opaque datatype; ignore all these fields.
-		* Initialize the iter with gtk_text_buffer_get_iter_*
-		* functions
-		*/
-		/*< private >*/
-		gpointer dummy1;
-		gpointer dummy2;
-		gint dummy3;
-		gint dummy4;
-		gint dummy5;
-		gint dummy6;
-		gint dummy7;
-		gint dummy8;
-		gpointer dummy9;
-		gpointer dummy10;
-		gint dummy11;
-		gint dummy12;
-		/* padding */
-		gint dummy13;
-		gpointer dummy14;
-	}
+struct GtkObjectClass
+{
+	GObjectClass parentClass;
+	void function(GtkObject*, GtkArg*, uint) setArg;
+	void function(GtkObject*, GtkArg *, uint) getArg;
+	void function(GtkObject*) destroy;
+}
+
+public struct GtkWidgetClass
+{
+	/* The object class structure needs to be the first
+	 * element inn the widget class structure inn order for
+	 * the class mechanism to work correctly. This allows a
+	 * GtkWidgetClass pointer to be cast to a GtkObjectClass
+	 * pointer.
+	 */
+	GtkObjectClass parentClass;
+	/**/
+	uint activateSignal;
+	uint setScrollAdjustmentsSignal;
+	/**/
+	/* seldomly overidden */
+	extern(C) void  function(GtkWidget *widget,uint nPspecs,GParamSpec **pspecs) dispatchChildPropertiesChanged;
+	/* basics */
+	extern(C) void  function(GtkWidget *widget)  show;
+	extern(C) void  function(GtkWidget *widget)  showAll;
+	extern(C) void  function(GtkWidget *widget)  hide;
+	extern(C) void  function(GtkWidget *widget)  hideAll;
+	extern(C) void  function(GtkWidget *widget)  map;
+	extern(C) void  function(GtkWidget *widget)  unmap;
+	extern(C) void  function(GtkWidget *widget)  realize;
+	extern(C) void  function(GtkWidget *widget)  unrealize;
+	extern(C) void  function(GtkWidget *widget,GtkRequisition *requisition)  sizeRequest;
+	extern(C) void  function(GtkWidget *widget,GtkAllocation *allocation)  sizeAllocate;
+	extern(C) void  function(GtkWidget *widget,GtkStateType previousState)  stateChanged;
+	extern(C) void  function(GtkWidget *widget,GtkWidget *previousParent)  parentSet;
+	extern(C) void  function(GtkWidget *widget,GtkWidget *previousToplevel)  hierarchyChanged;
+	extern(C) void  function(GtkWidget *widget,GtkStyle *previousStyle)  styleSet;
+	extern(C) void  function(GtkWidget *widget,GtkTextDirection previousDirection)  directionChanged;
+	extern(C) void  function(GtkWidget *widget,int wasGrabbed)  grabNotify;
+	extern(C) void  function(GtkWidget *widget,GParamSpec *pspec)  childNotify;
+	/* Mnemonics */
+	extern(C) int  function(GtkWidget *widget,int groupCycling)  mnemonicActivate;
+	/* explicit focus */
+	extern(C) void  function(GtkWidget *widget)  grabFocus;
+	extern(C) int  function(GtkWidget *widget,GtkDirectionType direction)  focus;
+	/* events */
+	extern(C) int  function(GtkWidget *widget,GdkEvent *event)  event;
+	extern(C) int  function(GtkWidget *widget,GdkEventButton *event)  buttonPressEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventButton *event)  buttonReleaseEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventScroll *event)  scrollEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventMotion *event)  motionNotifyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  deleteEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  destroyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventExpose *event)  exposeEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventKey *event)  keyPressEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventKey *event)  keyReleaseEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventCrossing *event)  enterNotifyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventCrossing *event)  leaveNotifyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventConfigure *event)  configureEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventFocus *event)  focusInEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventFocus *event)  focusOutEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  mapEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  unmapEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventProperty *event)  propertyNotifyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionClearEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionRequestEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionNotifyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventProximity *event)  proximityInEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventProximity *event)  proximityOutEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventVisibility *event)  visibilityNotifyEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventClient *event)  clientEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  noExposeEvent;
+	extern(C) int  function(GtkWidget *widget,GdkEventWindowState *event)  windowStateEvent;
+	/* selection */
+	extern(C) void  function(GtkWidget *widget,GtkSelectionData *selectionData,uint info,uint time)  selectionGet;
+	extern(C) void  function(GtkWidget *widget,GtkSelectionData *selectionData,uint time)  selectionReceived;
+	/* Source side drag signals */
+	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragBegin;
+	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragEnd;
+	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,GtkSelectionData *selectionData,uint info,uint time)  dragDataGet;
+	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragDataDelete;
+	/* Target side drag signals */
+	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,uint time)  dragLeave;
+	extern(C) int  function(GtkWidget *widget,GdkDragContext *context,int x,int y,uint time)  dragMotion;
+	extern(C) int  function(GtkWidget *widget,GdkDragContext *context,int x,int y,uint time)  dragDrop;
+	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,int x,int y,GtkSelectionData *selectionData,uint info,uint time)  dragDataReceived;
+	/* Signals used only for keybindings */
+	extern(C) int  function(GtkWidget *widget)  popupMenu;
+	/* If a widget has multiple tooltips/whatsthis, it should show the
+	 * one for the current focus location, or if that doesn't make
+	 * sense, should cycle through them showing each tip alongside
+	 * whatever piece of the widget it applies to.
+	*/
+	extern(C) int  function(GtkWidget *widget,GtkWidgetHelpType helpType)  showHelp;
+	/* accessibility support
+	*/
+	extern(C) AtkObject*  function(GtkWidget *widget) getAccessible;
+	extern(C) void  function(GtkWidget *widget,GdkScreen *previousScreen) screenChanged;
+	extern(C) int  function(GtkWidget *widget,uint signalId) canActivateAccel;
+	/* Sent when a grab is broken. */
+	extern(C) int  function(GtkWidget *widget,GdkEventGrabBroken *event) grabBrokenEvent;
+	extern(C) void  function(GtkWidget *widget)  compositedChanged;
+	extern(C) int  function(GtkWidget *widget,int x,int y,int keyboardTooltip,GtkTooltip *tooltip)  queryTooltip;
+	/* Padding for future expansion */
+	extern(C) void  function() _GtkReserved5;
+	extern(C) void  function() _GtkReserved6;
+	extern(C) void  function() _GtkReserved7;
+}
+
+struct GtkTextIter
+{
+	/* GtkTextIter is an opaque datatype; ignore all these fields.
+	* Initialize the iter with gtk_text_buffer_get_iter_*
+	* functions
+	*/
+	/*< private >*/
+	gpointer dummy1;
+	gpointer dummy2;
+	gint dummy3;
+	gint dummy4;
+	gint dummy5;
+	gint dummy6;
+	gint dummy7;
+	gint dummy8;
+	gpointer dummy9;
+	gpointer dummy10;
+	gint dummy11;
+	gint dummy12;
+	/* padding */
+	gint dummy13;
+	gpointer dummy14;
+}
 
 addStructs: end
 
@@ -3007,14 +3110,7 @@ import: gtkc.paths
 code: start
 struct CustomTreeModelClass
 {
-	// Padding, not perssent in the GtkD structs.
-	GType g_type; 
-	GSList* construct_properties;
-
 	GObjectClass parentClass;
-
-	// padding
-	gpointer dummy[7];
 }
 
 //We need this function for the interface implementation.
@@ -3101,7 +3197,7 @@ public class TreeModel : ObjectG, TreeModelIF
 					cast(GClassInitFunc) &customTreeModelClassInit,/* class init function */
 					null,                                          /* class finalize */
 					null,                                          /* class_data */
-					CustomTreeModelClass.sizeof + 1,               /* instance size */
+					CustomTreeModelClass.sizeof + 5,               /* instance size */
 					0,                                             /* n_preallocs */
 					cast(GInstanceInitFunc) &customTreeModelInit   /* instance init */
 				};
@@ -6965,6 +7061,7 @@ outFile: Separator
 
 file: GtkWidget.html
 struct: GtkWidget
+nostruct: GtkWidgetClass
 class: Widget
 implements: BuildableIF
 import: glib.Str
@@ -7034,6 +7131,7 @@ import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
 import: gdk.Drawable
 import: gtk.Tooltips
+import: gobject.Type
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -7065,6 +7163,11 @@ nocode: gtk_widget_class_path
 code: start
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkWidget);
+
+	public static GtkWidgetClass* widgetGetClass(Widget wg)
+	{
+		return Type.instanceGetClass!(GtkWidgetClass)(wg);
+	}
 
 	/** */
 	public int getWidth()
@@ -7254,7 +7357,7 @@ code: start
 		tt.setTip(this, tipText, tipPrivate);
 	}
 
-/**
+	/**
 	 * Obtains the full path to widget. The path is simply the name of a
 	 * widget and all its parents in the container hierarchy, separated by
 	 * periods. The name of a widget comes from
@@ -7303,6 +7406,11 @@ code: start
 
 		path = Str.toString(p);
 		pathReversed = Str.toString(pr);
+	}
+
+	public bool onButtonPressEvent(GdkEventButton* event)
+	{
+		return widgetGetClass(this).buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	//get the addOnDestroy from ObjectGtk

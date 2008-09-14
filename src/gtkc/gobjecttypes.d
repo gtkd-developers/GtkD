@@ -208,7 +208,23 @@ public enum GConnectFlags
 alias GConnectFlags ConnectFlags;
 
 
-//We need a corectly warped struct for gtk.TreeModel.
+/**
+ * An opaque structure used as the base of all type instances.
+ */
+struct GTypeInstance
+{
+	/*< private >*/
+	GTypeClass* gClass;
+}
+
+/**
+ * An opaque structure used as the base of all classes.
+ */
+struct GTypeClass
+{
+	/*< private >*/
+	GType gType;
+}
 
 /**
  * An opaque structure used as the base of all interface types.
@@ -217,6 +233,35 @@ public struct GTypeInterface
 {
 	GType gType;         /* iface type */
 	GType gInstanceType;
+}
+
+/**
+ * The class structure for the GObject type.
+ * Example4.Implementing singletons using a constructor
+ * static MySingleton *the_singleton = NULL;
+ * static GObject*
+ * my_singleton_constructor (GType type,
+ */
+public struct GObjectClass
+{
+	GTypeClass gTypeClass;
+	/*< private >*/
+	GSList* constructProperties;
+	/* seldomly overidden */
+	extern(C) GObject*  function(GType type,uint nConstructProperties,GObjectConstructParam *constructProperties) constructor;
+	/* overridable methods */
+	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) setProperty;
+	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) getProperty;
+	extern(C) void  function(GObject *object) dispose;
+	extern(C) void  function(GObject *object) finalize;
+	/* seldomly overidden */
+	extern(C) void  function(GObject *object,uint nPspecs,GParamSpec **pspecs) dispatchPropertiesChanged;
+	/* signals */
+	extern(C) void  function(GObject *object,GParamSpec *pspec) notify;
+	/* called when done constructing */
+	extern(C) void  function(GObject *object) constructed;
+	/* padding */
+	gpointer dummy[7];
 }
 
 struct GValue
@@ -239,19 +284,7 @@ struct GValue
 	}
 	Data data1;
 	Data data2;
-};
-
-/**
- * An opaque structure used as the base of all type instances.
- */
-public struct GTypeInstance{}
-
-
-/**
- * An opaque structure used as the base of all classes.
- */
-public struct GTypeClass{}
-
+}
 
 /**
  * This structure is used to provide the type system with the information
@@ -416,32 +449,6 @@ public struct GTypeModuleClass
  * to the GObject implementation and should never be accessed directly.
  */
 public struct GObject{}
-
-
-/**
- * The class structure for the GObject type.
- * Example4.Implementing singletons using a constructor
- * static MySingleton *the_singleton = NULL;
- * static GObject*
- * my_singleton_constructor (GType type,
- */
-public struct GObjectClass
-{
-	GTypeClass gTypeClass;
-	/+* seldomly overidden +/
-	extern(C) GObject*  function(GType type,uint nConstructProperties,GObjectConstructParam *constructProperties) constructor;
-	/+* overridable methods +/
-	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) setProperty;
-	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) getProperty;
-	extern(C) void  function(GObject *object) dispose;
-	extern(C) void  function(GObject *object) finalize;
-	/+* seldomly overidden +/
-	extern(C) void  function(GObject *object,uint nPspecs,GParamSpec **pspecs) dispatchPropertiesChanged;
-	/+* signals +/
-	extern(C) void  function(GObject *object,GParamSpec *pspec) notify;
-	/+* called when done constructing +/
-	extern(C) void  function(GObject *object) constructed;
-}
 
 
 /**

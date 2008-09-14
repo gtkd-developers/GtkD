@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Type
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -38,12 +38,15 @@
  * prefixes:
  * 	- g_type_
  * omit structs:
+ * 	- GTypeClass
+ * 	- GTypeInstance
  * 	- GTypeInterface
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
  * 	- gobject.TypePlugin
  * structWrap:
  * 	- GTypePlugin* -> TypePlugin
@@ -61,6 +64,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gobject.ObjectG;
 private import gobject.TypePlugin;
 
 
@@ -99,6 +103,11 @@ private import gobject.TypePlugin;
  */
 public class Type
 {
+	
+	public static T* instanceGetClass(T)(ObjectG obj)
+	{
+		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
+	}
 	
 	/**
 	 */

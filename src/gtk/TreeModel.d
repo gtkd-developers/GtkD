@@ -85,14 +85,7 @@ private import gtkc.paths;
 
 struct CustomTreeModelClass
 {
-	// Padding, not perssent in the GtkD structs.
-	GType g_type;
-	GSList* construct_properties;
-	
 	GObjectClass parentClass;
-	
-	// padding
-	gpointer dummy[7];
 }
 
 //We need this function for the interface implementation.
@@ -179,7 +172,7 @@ public class TreeModel : ObjectG, TreeModelIF
 					cast(GClassInitFunc) &customTreeModelClassInit,/* class init function */
 					null,                                          /* class finalize */
 					null,                                          /* class_data */
-					CustomTreeModelClass.sizeof + 1,               /* instance size */
+					CustomTreeModelClass.sizeof + 5,               /* instance size */
 					0,                                             /* n_preallocs */
 					cast(GInstanceInitFunc) &customTreeModelInit   /* instance init */
 				};

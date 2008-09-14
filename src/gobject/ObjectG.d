@@ -38,6 +38,7 @@
  * prefixes:
  * 	- g_object_
  * omit structs:
+ * 	- GObjectClass
  * omit prefixes:
  * omit code:
  * 	- g_object_set_data_full

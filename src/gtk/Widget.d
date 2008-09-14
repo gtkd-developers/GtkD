@@ -40,6 +40,7 @@
  * 	- gtk_widget_
  * 	- gtk_
  * omit structs:
+ * 	- GtkWidgetClass
  * omit prefixes:
  * 	- gtk_widget_ref
  * omit code:
@@ -77,6 +78,7 @@
  * 	- pango.PgFontDescription
  * 	- gdk.Drawable
  * 	- gtk.Tooltips
+ * 	- gobject.Type
  * 	- gobject.ObjectG
  * 	- gobject.Value
  * 	- gtk.Builder
@@ -157,6 +159,7 @@ private import pango.PgContext;
 private import pango.PgFontDescription;
 private import gdk.Drawable;
 private import gtk.Tooltips;
+private import gobject.Type;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gtk.Builder;
@@ -232,6 +235,11 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkWidget);
+	
+	public static GtkWidgetClass* widgetGetClass(Widget wg)
+	{
+		return Type.instanceGetClass!(GtkWidgetClass)(wg);
+	}
 	
 	/** */
 	public int getWidth()
@@ -470,6 +478,11 @@ public class Widget : ObjectGtk, BuildableIF
 		
 		path = Str.toString(p);
 		pathReversed = Str.toString(pr);
+	}
+	
+	public bool onButtonPressEvent(GdkEventButton* event)
+	{
+		return widgetGetClass(this).buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	//get the addOnDestroy from ObjectGtk
