@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ToggleAction
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -109,6 +109,24 @@ public class ToggleAction : Action
 		}
 		super(cast(GtkAction*)gtkToggleAction);
 		this.gtkToggleAction = gtkToggleAction;
+	}
+	
+	/**
+	 * Creates a new GtkToggleAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for the action, or NULL
+	 * stockId =  The stock icon to display in widgets representing the
+	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
 	}
 	
 	/**

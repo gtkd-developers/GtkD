@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = RadioAction
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -113,6 +113,26 @@ public class RadioAction : ToggleAction
 		}
 		super(cast(GtkToggleAction*)gtkRadioAction);
 		this.gtkRadioAction = gtkRadioAction;
+	}
+	
+	/**
+	 * Creates a new GtkRadioAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for this action, or NULL
+	 * stockId =  The stock icon to display in widgets representing this
+	 *  action, or NULL
+	 * value =  The value which gtk_radio_action_get_current_value() should
+	 *  return if this action is selected.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId, int value)
+	{
+		this(name, label, tooltip, StockDesc[stockId], value);
 	}
 	
 	/**

@@ -160,6 +160,26 @@ public class Action : ObjectG, BuildableIF
 	mixin BuildableT!(GtkAction);
 	
 	/**
+	 * Creates a new GtkAction object. To add the action to a
+	 * GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * See the section called UI Definitions for information on allowed action
+	 * names.
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockId =  the stock icon to display in widgets representing the
+	 *  action.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
+	}
+	
+	/**
 	 */
 	int[char[]] connectedSignals;
 	

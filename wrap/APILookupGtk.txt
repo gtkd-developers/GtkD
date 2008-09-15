@@ -5543,6 +5543,26 @@ import: gtk.BuildableT
 code: start
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkAction);
+
+	/**
+	 * Creates a new GtkAction object. To add the action to a
+	 * GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * See the section called UI Definitions for information on allowed action
+	 * names.
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockId =  the stock icon to display in widgets representing the
+	 *  action.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
+	}
 code: end
 outFile: Action
 
@@ -5552,6 +5572,26 @@ class: ToggleAction
 prefix: gtk_toggle_action_
 prefix: gtk_
 import: glib.Str
+
+code: start
+/**
+	 * Creates a new GtkToggleAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for the action, or NULL
+	 * stockId =  The stock icon to display in widgets representing the
+	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
+	}
+code: end
 outFile: ToggleAction
 
 file: GtkRadioAction.html
@@ -5562,6 +5602,28 @@ prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
+
+code: start
+	/**
+	 * Creates a new GtkRadioAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for this action, or NULL
+	 * stockId =  The stock icon to display in widgets representing this
+	 *  action, or NULL
+	 * value =  The value which gtk_radio_action_get_current_value() should
+	 *  return if this action is selected.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId, int value)
+	{
+		this(name, label, tooltip, StockDesc[stockId], value);
+	}
+code: end
 outFile: RadioAction
 
 file: GtkRecentAction.html
