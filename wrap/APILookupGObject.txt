@@ -159,7 +159,7 @@ array: g_type_interfaces Return n_interfaces
 array: g_type_interface_prerequisites Return n_prerequisites
 
 code: start
-public static T* instanceGetClass(T)(ObjectG obj)
+public static T* getInstanceClass(T)(ObjectG obj)
 {
 	return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
 }

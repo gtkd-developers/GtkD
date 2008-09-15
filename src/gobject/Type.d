@@ -104,7 +104,7 @@ private import gobject.TypePlugin;
 public class Type
 {
 	
-	public static T* instanceGetClass(T)(ObjectG obj)
+	public static T* getInstanceClass(T)(ObjectG obj)
 	{
 		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
 	}

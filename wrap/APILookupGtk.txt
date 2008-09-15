@@ -7156,17 +7156,20 @@ out: gtk_widget_get_child_requisition requisition
 out: gtk_widget_get_pointer x
 out: gtk_widget_get_pointer y
 array: gtk_widget_class_list_style_properties Return n_properties
-
-nocode: gtk_widget_path
-nocode: gtk_widget_class_path
+out: gtk_widget_path path_length
+out: gtk_widget_path path
+out: gtk_widget_path path_reversed
+out: gtk_widget_class_path path_length
+out: gtk_widget_class_path path
+out: gtk_widget_class_path path_reversed
 
 code: start
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkWidget);
 
-	public static GtkWidgetClass* widgetGetClass(Widget wg)
+	public GtkWidgetClass* getWidgetClass()
 	{
-		return Type.instanceGetClass!(GtkWidgetClass)(wg);
+		return Type.getInstanceClass!(GtkWidgetClass)(this);
 	}
 
 	/** */
@@ -7297,9 +7300,7 @@ code: start
 	 */
 	void setCursor(Cursor cursor)
 	{
-		int* pt =cast(int*)getStruct();
-		pt += 52/4;
-		gdk_window_set_cursor(cast(GdkWindow*)(*pt), cursor.getCursorStruct());
+		getWindow().setCursor(cursor);
 	}
 	
 	/**
@@ -7309,9 +7310,7 @@ code: start
 	 */
 	public void resetCursor()
 	{
-		int* pt =cast(int*)getStruct();
-		pt += 52/4;
-		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
+		getWindow().setCursor(null);
 	}
 
 	version(Tango)static import tango.text.convert.Integer;
@@ -7357,60 +7356,160 @@ code: start
 		tt.setTip(this, tipText, tipPrivate);
 	}
 
-	/**
-	 * Obtains the full path to widget. The path is simply the name of a
-	 * widget and all its parents in the container hierarchy, separated by
-	 * periods. The name of a widget comes from
-	 * gtk_widget_get_name(). Paths are used to apply styles to a widget
-	 * in gtkrc configuration files. Widget names are the type of the
-	 * widget by default (e.g. "GtkButton") or can be set to an
-	 * application-specific value with gtk_widget_set_name(). By setting
-	 * the name of a widget, you allow users or theme authors to apply
-	 * styles to that specific widget in their gtkrc
-	 * file. path_reversed_p fills in the path in reverse order,
-	 * i.e. starting with widget's name instead of starting with the name
-	 * of widget's outermost ancestor.
-	 * Params:
-	 * pathLength =  location to store length of the path, or NULL
-	 * path =  location to store allocated path string, or NULL
-	 * pathReversed =  location to store allocated reverse path string, or NULL
-	 */
-	public void path(out uint pathLength, out string path, out string pathReversed)
+	/** */
+	public bool onEvent(GdkEvent* event)
 	{
-		char* p = null;
-		char* pr = null;
-
-		// void gtk_widget_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
-		gtk_widget_path(gtkWidget, &pathLength, &p, &pr);
-
-		path = Str.toString(p);
-		pathReversed = Str.toString(pr);
-	}
-	
-	/**
-	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
-	 * never uses a custom name set with gtk_widget_set_name().
-	 * Params:
-	 * pathLength =  location to store the length of the class path, or NULL
-	 * path =  location to store the class path as an allocated string, or NULL
-	 * pathReversed =  location to store the reverse class path as an allocated
-	 *  string, or NULL
-	 */
-	public void classPath(out uint pathLength, out string path, out string pathReversed)
-	{
-		char* p = null;
-		char* pr = null;
-
-		// void gtk_widget_class_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
-		gtk_widget_class_path(gtkWidget, &pathLength, &p, &pr);
-
-		path = Str.toString(p);
-		pathReversed = Str.toString(pr);
+		return getWidgetClass().event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
+	/** */
 	public bool onButtonPressEvent(GdkEventButton* event)
 	{
-		return widgetGetClass(this).buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onButtonReleaseEvent(GdkEventButton* event)
+	{
+		return getWidgetClass().buttonReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onScrollEvent(GdkEventScroll* event)
+	{
+		return getWidgetClass().scrollEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onMotionNotifyEvent(GdkEventMotion* event)
+	{
+		return getWidgetClass().motionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onDeleteEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().deleteEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onExposeEvent(GdkEventExpose* event)
+	{
+		return getWidgetClass().exposeEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onKeyPressEvent(GdkEventKey* event)
+	{
+		return getWidgetClass().keyPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onKeyReleaseEvent(GdkEventKey* event)
+	{
+		return getWidgetClass().keyReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onEnterNotifyEvent(GdkEventCrossing* event)
+	{
+		return getWidgetClass().enterNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onLeaveNotifyEvent(GdkEventCrossing* event)
+	{
+		return getWidgetClass().leaveNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onConfigureEvent(GdkEventConfigure* event)
+	{
+		return getWidgetClass().configureEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onFocusInEvent(GdkEventFocus* event)
+	{
+		return getWidgetClass().focusInEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onFocusOutEvent(GdkEventFocus* event)
+	{
+		return getWidgetClass().focusOutEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onMapEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().mapEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onUnmapEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().unmapEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onPropertyNotifyEvent(GdkEventProperty* event)
+	{
+		return getWidgetClass().propertyNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onSelectionClearEvent(GdkEventSelection* event)
+	{
+		return getWidgetClass().selectionClearEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onSelectionRequestEvent(GdkEventSelection* event)
+	{
+		return getWidgetClass().selectionRequestEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onSelectionNotifyEvent(GdkEventSelection* event)
+	{
+		return getWidgetClass().selectionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onProximityInEvent(GdkEventProximity* event)
+	{
+		return getWidgetClass().proximityInEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onProximityOutEvent(GdkEventProximity* event)
+	{
+		return getWidgetClass().proximityOutEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onVisibilityNotifyEvent(GdkEventVisibility* event)
+	{
+		return getWidgetClass().visibilityNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onClientEvent(GdkEventClient* event)
+	{
+		return getWidgetClass().clientEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onNoExposeEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().noExposeEvent(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onWindowStateEvent(GdkEventWindowState* event)
+	{
+		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	//get the addOnDestroy from ObjectGtk
