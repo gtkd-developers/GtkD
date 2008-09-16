@@ -153,7 +153,7 @@ private import gobject.ObjectG;
  * would mess up path lookup) and must be usable as XML attributes when
  * enclosed in doublequotes, thus they must not '"' characters or references
  * to the quot; entity.
- * Example27.A UI definition
+ * Example 29. A UI definition
  * <ui>
  *  <menubar>
  *  <menu name="FileMenu" action="FileMenuAction">
@@ -251,10 +251,10 @@ private import gobject.ObjectG;
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
  * "constructor" attribute. See the example below.
- * Example28.An embedded GtkUIManager UI definition
+ * Example 30. An embedded GtkUIManager UI definition
  * <object class="GtkUIManager" id="uiman">
  *  <child>
- *  <object class="GtkActionGroup">
+ *  <object class="GtkActionGroup" id="actiongroup">
  *  <child>
  *  <object class="GtkAction" id="file">
  *  <property name="label">_File</property>
@@ -645,7 +645,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * types =  specifies the types of toplevel widgets to include. Allowed
 	 *  types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
 	 *  GTK_UI_MANAGER_POPUP.
-	 * Returns: a newly-allocated of all toplevel widgets of the requested types.
+	 * Returns: a newly-allocated GSList of all toplevel widgets of therequested types. Free the returned list with g_slist_free().
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{

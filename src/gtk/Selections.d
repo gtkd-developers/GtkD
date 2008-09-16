@@ -43,6 +43,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gdk.Display
  * 	- gtk.Widget
  * 	- gdk.Display
  * 	- gdk.Pixbuf
@@ -66,6 +67,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gdk.Display;
 private import gtk.Widget;
 private import gdk.Display;
 private import gdk.Pixbuf;
@@ -171,7 +173,7 @@ public class Selections
 	
 	/**
 	 * Requests the contents of a selection. When received,
-	 * a "selection_received" signal will be generated.
+	 * a "selection-received" signal will be generated.
 	 * Params:
 	 * widget =  The widget which acts as requestor
 	 * selection =  Which selection to get
@@ -354,7 +356,7 @@ public class Selections
 	 * Since 2.10
 	 * Params:
 	 * selectionData =  a GtkSelectionData object
-	 * Returns: TRUE if selection_data holds a list of targets, and a suitable target for text is included, otherwise FALSE.
+	 * Returns: TRUE if selection_data holds a list of targets, and a suitable target for URI lists is included, otherwise FALSE.
 	 */
 	public static int dataTargetsIncludeUri(GtkSelectionData* selectionData)
 	{
@@ -376,6 +378,89 @@ public class Selections
 	{
 		// gboolean gtk_selection_data_targets_include_rich_text  (GtkSelectionData *selection_data,  GtkTextBuffer *buffer);
 		return gtk_selection_data_targets_include_rich_text(selectionData, (buffer is null) ? null : buffer.getTextBufferStruct());
+	}
+	
+	/**
+	 * Retrieves the raw data of the selection.
+	 * Since 2.14
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the raw data of the selection.
+	 */
+	public static char* dataGetData(GtkSelectionData* selectionData)
+	{
+		// const guchar* gtk_selection_data_get_data (GtkSelectionData *selection_data);
+		return gtk_selection_data_get_data(selectionData);
+	}
+	
+	/**
+	 * Retrieves the length of the raw data of the selection.
+	 * Since 2.14
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the length of the data of the selection.
+	 */
+	public static int dataGetLength(GtkSelectionData* selectionData)
+	{
+		// gint gtk_selection_data_get_length (GtkSelectionData *selection_data);
+		return gtk_selection_data_get_length(selectionData);
+	}
+	
+	/**
+	 * Retrieves the data type of the selection.
+	 * Since 2.14
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the data type of the selection.
+	 */
+	public static GdkAtom dataGetDataType(GtkSelectionData* selectionData)
+	{
+		// GdkAtom gtk_selection_data_get_data_type (GtkSelectionData *selection_data);
+		return gtk_selection_data_get_data_type(selectionData);
+	}
+	
+	/**
+	 * Retrieves the display of the selection.
+	 * Since 2.14
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the display of the selection.
+	 */
+	public static Display dataGetDisplay(GtkSelectionData* selectionData)
+	{
+		// GdkDisplay* gtk_selection_data_get_display (GtkSelectionData *selection_data);
+		auto p = gtk_selection_data_get_display(selectionData);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
+	}
+	
+	/**
+	 * Retrieves the format of the selection.
+	 * Since 2.14
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the format of the selection.
+	 */
+	public static int dataGetFormat(GtkSelectionData* selectionData)
+	{
+		// gint gtk_selection_data_get_format (GtkSelectionData *selection_data);
+		return gtk_selection_data_get_format(selectionData);
+	}
+	
+	/**
+	 * Retrieves the target of the selection.
+	 * Since 2.14
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the target of the selection.
+	 */
+	public static GdkAtom dataGetTarget(GtkSelectionData* selectionData)
+	{
+		// GdkAtom gtk_selection_data_get_target (GtkSelectionData *selection_data);
+		return gtk_selection_data_get_target(selectionData);
 	}
 	
 	/**

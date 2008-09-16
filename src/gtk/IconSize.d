@@ -84,6 +84,42 @@ private import gtk.Settings;
  * will display the icon, or the convenience function
  * gtk_widget_render_icon(). These functions take the theme into account when
  * looking up the icon to use for a given stock ID.
+ * GtkIconFactory as GtkBuildable
+ * GtkIconFactory supports a custom <sources> element, which
+ * can contain multiple <source> elements.
+ * The following attributes are allowed:
+ * stock-id
+ * The stock id of the source, a string.
+ * This attribute is mandatory
+ * filename
+ * The filename of the source, a string.
+ * This attribute is optional
+ * icon-name
+ * The icon name for the source, a string.
+ * This attribute is optional.
+ * size
+ * Size of the icon, a GtkIconSize enum value.
+ * This attribute is optional.
+ * direction
+ * Direction of the source, a GtkTextDirection enum value.
+ * This attribute is optional.
+ * state
+ * State of the source, a GtkStateType enum value.
+ * This attribute is optional.
+ * Example 4. A GtkIconFactory UI definition fragment.
+ * <object class="GtkIconFactory" id="iconfactory1">
+ *  <sources>
+ *  <source stock-id="apple-red" filename="apple-red.png"/>
+ *  </sources>
+ * </object>
+ * <object class="GtkWindow" id="window1">
+ *  <child>
+ *  <object class="GtkButton" id="apple_button">
+ *  <property name="label">apple-red</property>
+ *  <property name="use-stock">True</property>
+ *  </object>
+ *  </child>
+ * </object>
  */
 public class IconSize
 {
@@ -161,7 +197,6 @@ public class IconSize
 	 * So calling gtk_icon_size_from_name() with alias as argument
 	 * will return target.
 	 * Params:
-	 * alia =  an alias for target
 	 * target =  an existing icon size
 	 */
 	public static void registerAlias(string alia, GtkIconSize target)

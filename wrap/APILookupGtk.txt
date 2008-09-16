@@ -33,6 +33,7 @@ addTypedefs: start
 public import gtkc.cairotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
+public import gtkc.giotypes;
 public import gtkc.pangotypes;
 public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
@@ -47,6 +48,20 @@ addAliases: start
 addAliases: end
 
 addEnums: start
+
+enum GtkNumberUpLayout
+{
+	LEFT_TO_RIGHT_TOP_TO_BOTTOM,
+	LEFT_TO_RIGHT_BOTTOM_TO_TOP,
+	RIGHT_TO_LEFT_TOP_TO_BOTTOM,
+	RIGHT_TO_LEFT_BOTTOM_TO_TOP,
+	TOP_TO_BOTTOM_LEFT_TO_RIGHT,
+	TOP_TO_BOTTOM_RIGHT_TO_LEFT,
+	BOTTOM_TO_TOP_LEFT_TO_RIGHT,
+	BOTTOM_TO_TOP_RIGHT_TO_LEFT
+} 
+alias GtkNumberUpLayout NumberUpLayout;
+
 addEnums: end
 
 addStructs: start
@@ -802,6 +817,7 @@ struct: GtkStyle
 class: Style
 prefix: gtk_style_
 prefix: gtk_
+noprefix: gtk_border_
 import: glib.Str
 import: gtk.Style
 structWrap: GtkStyle* Style
@@ -823,8 +839,6 @@ import: gdk.Font
 structWrap: GdkFont* Font
 import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
-#import: gtk.Border
-#structWrap: GtkBorder* Border
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
@@ -832,6 +846,12 @@ array: gtk_draw_polygon points npoints
 array: gtk_paint_polygon points npoints
 
 outFile: Style
+
+struct: GtkBorder
+class: Border
+prefix: gtk_border_
+strictPrefix: Y
+outFile: Border
 
 file: gtk-Selections.html
 struct: GtkTargetList
@@ -859,6 +879,8 @@ class: Selections
 prefix: gtk_selection_
 strictPrefix: Y
 import: glib.Str
+import: gdk.Display
+structWrap: GdkDisplay* Display
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Display
@@ -934,8 +956,14 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+import: gtk.HButtonBox
+import: gtk.VBox
 
 array: gtk_dialog_set_alternative_button_order_from_array new_order n_params
+
+# Make these return the correct class.
+nocode: gtk_dialog_get_action_area
+nocode: gtk_dialog_get_content_area
 
 code: start
 	/** */
@@ -961,7 +989,40 @@ code: start
 			addButton(stockIDs[i], responses[i]);
 		}
 	}
+
+	//Return the corect class instead of Widget
+	/**
+	 * Returns the action area of dialog.
+	 * Since 2.14
+	 * Returns: the action area.
+	 */
+	public HButtonBox getActionArea()
+	{
+		// GtkWidget* gtk_dialog_get_action_area (GtkDialog *dialog);
+		auto p = gtk_dialog_get_action_area(gtkDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new HButtonBox(cast(GtkHButtonBox*) p);
+	}
 	
+	//Return the corect class instead of Widget
+	/**
+	 * Returns the content area of dialog.
+	 * Since 2.14
+	 * Returns: the content area GtkVBox.
+	 */
+	public VBox getContentArea()
+	{
+		// GtkWidget* gtk_dialog_get_content_area (GtkDialog *dialog);
+		auto p = gtk_dialog_get_content_area(gtkDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VBox(cast(GtkVBox*) p);
+	}
 code: end
 outFile: Dialog
 
@@ -1247,7 +1308,6 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 #import: gdk.Geometry
 #structWrap: GdkGeometry* Geometry
-import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.WindowGroup
 structWrap: GtkWindowGroup* WindowGroup
@@ -1259,7 +1319,6 @@ structWrap: GList* ListG
 #structWrap: GdkEventKey* EventKey
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: gtk.Window
 
 override: getScreen
 
@@ -1364,6 +1423,8 @@ struct: GtkWindowGroup
 class: WindowGroup
 prefix: gtk_window_group_
 prefix: gtk_
+import: glib.ListG
+structWrap: GList* ListG
 import: gtk.Window
 structWrap: GtkWindow* Window
 outFile: WindowGroup
@@ -2769,7 +2830,6 @@ code: start
 code: end
 outFile: TreePath
 
-
 struct: GtkTreeModel
 class: TreeModelT
 template: TStruct
@@ -4080,8 +4140,11 @@ ctorStruct: GtkCellRenderer
 class: CellRendererCombo
 prefix: gtk_cell_renderer_combo_
 prefix: gtk_
+import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
+import: gtk.TreeIter
+structWrap: GtkTreeIter* TreeIter
 outFile: CellRendererCombo
 
 file: GtkCellRendererPixbuf.html
@@ -5953,6 +6016,10 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import:  pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
 outFile: FontSelection
 
 file: GtkFontSelectionDialog.html
@@ -6235,6 +6302,8 @@ struct: GtkLayout
 class: Layout
 prefix: gtk_layout_
 prefix: gtk_
+import: gdk.Window
+structWrap: GdkWindow* Window
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 import: gtk.Widget
@@ -7204,6 +7273,10 @@ import: gtk.Builder
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
+# New in 2.14, keep using the manually added ones for backwards compatibility.
+nocode: gtk_widget_get_window
+nocode: gtk_widget_get_allocation
+
 override: unref
 override: destroy
 override: set
@@ -7275,31 +7348,12 @@ code: start
 	}
 
 	/**
-	 * The widget's allocated size.
-	 */
-	public void setAllocation(GtkAllocation allo)
-	{
-		int* pt = cast(int*)getStruct();
-
-		pt += 36/4;
-		*pt = allo.x;
-
-		pt++;
-		*pt = allo.y;
-
-		pt++;
-		*pt = allo.width;
-
-		pt++;
-		*pt = allo.height;
-	}
-	
-	/**
 	 * Gets the drawable for this widget
 	 * Returns:
 	 * 		The drawable for this widget
+	 * Deprecated: use getWindow().
 	 */
-	Drawable getDrawable()
+	deprecated Drawable getDrawable()
 	{
 		
 //		ubyte *p = cast(ubyte*)getStruct();
@@ -7921,6 +7975,10 @@ import: glib.ListSG
 structWrap: GSList* ListSG
 import: glib.ErrorG
 import: glib.GException
+
+array: gtk_builder_add_objects_from_file object_ids
+array: gtk_builder_add_objects_from_string object_ids
+
 outFile: Builder
 
 ###########################################################

@@ -173,7 +173,8 @@ public class LinkButton : Button
 	}
 	
 	/**
-	 * Sets uri as the URI where the GtkLinkButton points.
+	 * Sets uri as the URI where the GtkLinkButton points. As a side-effect
+	 * this unsets the 'visited' state of the button.
 	 * Since 2.10
 	 * Params:
 	 * uri =  a valid URI
@@ -199,5 +200,32 @@ public class LinkButton : Button
 	{
 		// GtkLinkButtonUriFunc gtk_link_button_set_uri_hook (GtkLinkButtonUriFunc func,  gpointer data,  GDestroyNotify destroy);
 		return gtk_link_button_set_uri_hook(func, data, destroy);
+	}
+	
+	/**
+	 * Retrieves the 'visited' state of the URI where the GtkLinkButton
+	 * points. The button becomes visited when it is clicked. If the URI
+	 * is changed on the button, the 'visited' state is unset again.
+	 * The state may also be changed using gtk_link_button_set_visited().
+	 * Since 2.14
+	 * Returns: TRUE if the link has been visited, FALSE otherwise
+	 */
+	public int getVisited()
+	{
+		// gboolean gtk_link_button_get_visited (GtkLinkButton *link_button);
+		return gtk_link_button_get_visited(gtkLinkButton);
+	}
+	
+	/**
+	 * Sets the 'visited' state of the URI where the GtkLinkButton
+	 * points. See gtk_link_button_get_visited() for more details.
+	 * Since 2.14
+	 * Params:
+	 * visited =  the new 'visited' state
+	 */
+	public void setVisited(int visited)
+	{
+		// void gtk_link_button_set_visited (GtkLinkButton *link_button,  gboolean visited);
+		gtk_link_button_set_visited(gtkLinkButton, visited);
 	}
 }

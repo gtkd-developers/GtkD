@@ -40,6 +40,7 @@
  * 	- gtk_
  * omit structs:
  * omit prefixes:
+ * 	- gtk_border_
  * omit code:
  * omit signals:
  * imports:
@@ -225,7 +226,8 @@ public class Style : ObjectG
 	}
 	
 	/**
-	 * Returns:
+	 * Creates a copy of the passed in GtkStyle object.
+	 * Returns: a copy of style
 	 */
 	public Style copy()
 	{
@@ -274,8 +276,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_style_ref is deprecated and should not be used in newly-written code.
-	 * Deprecated equivalent of g_object_ref().
+	 * gtk_style_ref has been deprecated since version 2.0 and should not be used in newly-written code. use g_object_ref() instead.
 	 * Returns: style.
 	 */
 	public Style doref()
@@ -291,8 +292,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_style_unref is deprecated and should not be used in newly-written code.
-	 * Deprecated equivalent of g_object_unref().
+	 * gtk_style_unref has been deprecated since version 2.0 and should not be used in newly-written code. use g_object_unref() instead.
 	 */
 	public void unref()
 	{
@@ -318,7 +318,7 @@ public class Style : ObjectG
 	 */
 	public void applyDefaultBackground(Window window, int setBg, GtkStateType stateType, Rectangle area, int x, int y, int width, int height)
 	{
-		// void gtk_style_apply_default_background (GtkStyle *style,  GdkWindow *window,  gboolean set_bg,  GtkStateType state_type,  GdkRectangle *area,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_style_apply_default_background (GtkStyle *style,  GdkWindow *window,  gboolean set_bg,  GtkStateType state_type,  const GdkRectangle *area,  gint x,  gint y,  gint width,  gint height);
 		gtk_style_apply_default_background(gtkStyle, (window is null) ? null : window.getWindowStruct(), setBg, stateType, (area is null) ? null : area.getRectangleStruct(), x, y, width, height);
 	}
 	
@@ -419,7 +419,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_hline is deprecated and should not be used in newly-written code. Use gtk_paint_hline() instead.
+	 * gtk_draw_hline has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_hline() instead.
 	 * Draws a horizontal line from (x1, y) to (x2, y) in window
 	 * using the given style and state.
 	 * Params:
@@ -437,7 +437,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_vline is deprecated and should not be used in newly-written code. Use gtk_paint_vline() instead.
+	 * gtk_draw_vline has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_vline() instead.
 	 * Draws a vertical line from (x, y1_) to (x, y2_) in window
 	 * using the given style and state.
 	 * Params:
@@ -455,7 +455,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_shadow is deprecated and should not be used in newly-written code. Use gtk_paint_shadow() instead.
+	 * gtk_draw_shadow has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_shadow() instead.
 	 * Draws a shadow around the given rectangle in window
 	 * using the given style and state and shadow type.
 	 * Params:
@@ -475,7 +475,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_polygon is deprecated and should not be used in newly-written code. Use gtk_paint_polygon() instead.
+	 * gtk_draw_polygon has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_polygon() instead.
 	 * Draws a polygon on window with the given parameters.
 	 * Params:
 	 * window =  a GdkWindow
@@ -492,7 +492,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_arrow is deprecated and should not be used in newly-written code. Use gtk_paint_arrow() instead.
+	 * gtk_draw_arrow has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_arrow() instead.
 	 * Draws an arrow in the given rectangle on window using the given
 	 * parameters. arrow_type determines the direction of the arrow.
 	 * Params:
@@ -514,7 +514,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_diamond is deprecated and should not be used in newly-written code. Use gtk_paint_diamond() instead.
+	 * gtk_draw_diamond has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_diamond() instead.
 	 * Draws a diamond in the given rectangle on window using the given
 	 * parameters.
 	 * Params:
@@ -534,7 +534,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_string is deprecated and should not be used in newly-written code. Use gtk_paint_layout() instead.
+	 * gtk_draw_string has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_layout() instead.
 	 * Draws a text string on window with the given parameters.
 	 * Params:
 	 * window =  a GdkWindow
@@ -551,7 +551,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_box is deprecated and should not be used in newly-written code. Use gtk_paint_box() instead.
+	 * gtk_draw_box has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_box() instead.
 	 * Draws a box on window with the given parameters.
 	 * Params:
 	 * window =  a GdkWindow
@@ -570,7 +570,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_box_gap is deprecated and should not be used in newly-written code. Use gtk_paint_box_gap() instead.
+	 * gtk_draw_box_gap has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_box_gap() instead.
 	 * Draws a box in window using the given style and state and shadow type,
 	 * leaving a gap in one side.
 	 * Params:
@@ -593,7 +593,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_check is deprecated and should not be used in newly-written code. Use gtk_paint_check() instead.
+	 * gtk_draw_check has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_check() instead.
 	 * Draws a check button indicator in the given rectangle on window with
 	 * the given parameters.
 	 * Params:
@@ -613,7 +613,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_extension is deprecated and should not be used in newly-written code. Use gtk_paint_extension() instead.
+	 * gtk_draw_extension has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_extension() instead.
 	 * Draws an extension, i.e. a notebook tab.
 	 * Params:
 	 * window =  a GdkWindow
@@ -633,7 +633,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_flat_box is deprecated and should not be used in newly-written code. Use gtk_paint_flat_box() instead.
+	 * gtk_draw_flat_box has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_flat_box() instead.
 	 * Draws a flat box on window with the given parameters.
 	 * Params:
 	 * window =  a GdkWindow
@@ -652,7 +652,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_focus is deprecated and should not be used in newly-written code. Use gtk_paint_focus() instead.
+	 * gtk_draw_focus has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_focus() instead.
 	 * Draws a focus indicator around the given rectangle on window using the
 	 * given style.
 	 * Params:
@@ -670,7 +670,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_handle is deprecated and should not be used in newly-written code. Use gtk_paint_handle() instead.
+	 * gtk_draw_handle has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_handle() instead.
 	 * Draws a handle as used in GtkHandleBox and GtkPaned.
 	 * Params:
 	 * window =  a GdkWindow
@@ -690,7 +690,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_option is deprecated and should not be used in newly-written code. Use gtk_paint_option() instead.
+	 * gtk_draw_option has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_option() instead.
 	 * Draws a radio button indicator in the given rectangle on window with
 	 * the given parameters.
 	 * Params:
@@ -710,7 +710,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_shadow_gap is deprecated and should not be used in newly-written code. Use gtk_paint_shadow_gap() instead.
+	 * gtk_draw_shadow_gap has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_shadow_gap() instead.
 	 * Draws a shadow around the given rectangle in window
 	 * using the given style and state and shadow type, leaving a
 	 * gap in one side.
@@ -745,7 +745,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_tab is deprecated and should not be used in newly-written code. Use gtk_paint_tab() instead.
+	 * gtk_draw_tab has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_tab() instead.
 	 * Draws an option menu tab (i.e. the up and down pointing arrows)
 	 * in the given rectangle on window using the given parameters.
 	 * Params:
@@ -765,7 +765,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_expander is deprecated and should not be used in newly-written code. Use gtk_paint_expander() instead.
+	 * gtk_draw_expander has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_expander() instead.
 	 * Draws an expander as used in GtkTreeView.
 	 * Params:
 	 * window =  a GdkWindow
@@ -793,7 +793,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_draw_resize_grip is deprecated and should not be used in newly-written code. Use gtk_paint_resize_grip() instead.
+	 * gtk_draw_resize_grip has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_resize_grip() instead.
 	 * Draws a resize grip in the given rectangle on window using the given
 	 * parameters.
 	 * Params:
@@ -831,7 +831,7 @@ public class Style : ObjectG
 	 */
 	public void paintArrow(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height)
 	{
-		// void gtk_paint_arrow (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GtkArrowType arrow_type,  gboolean fill,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_arrow (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GtkArrowType arrow_type,  gboolean fill,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_arrow(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), arrowType, fill, x, y, width, height);
 	}
 	
@@ -852,7 +852,7 @@ public class Style : ObjectG
 	 */
 	public void paintBox(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_box (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_box (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_box(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -877,7 +877,7 @@ public class Style : ObjectG
 	 */
 	public void paintBoxGap(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
 	{
-		// void gtk_paint_box_gap (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
+		// void gtk_paint_box_gap (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
 		gtk_paint_box_gap(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
 	}
 	
@@ -899,7 +899,7 @@ public class Style : ObjectG
 	 */
 	public void paintCheck(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_check (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_check (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_check(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -921,7 +921,7 @@ public class Style : ObjectG
 	 */
 	public void paintDiamond(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_diamond (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_diamond (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_diamond(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -943,7 +943,7 @@ public class Style : ObjectG
 	 */
 	public void paintExtension(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide)
 	{
-		// void gtk_paint_extension (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side);
+		// void gtk_paint_extension (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side);
 		gtk_paint_extension(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide);
 	}
 	
@@ -964,7 +964,7 @@ public class Style : ObjectG
 	 */
 	public void paintFlatBox(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_flat_box (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_flat_box (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_flat_box(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -985,7 +985,7 @@ public class Style : ObjectG
 	 */
 	public void paintFocus(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_focus (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_focus (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_focus(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -1007,7 +1007,7 @@ public class Style : ObjectG
 	 */
 	public void paintHandle(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
-		// void gtk_paint_handle (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
+		// void gtk_paint_handle (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
 		gtk_paint_handle(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
 	}
 	
@@ -1027,7 +1027,7 @@ public class Style : ObjectG
 	 */
 	public void paintHline(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x1, int x2, int y)
 	{
-		// void gtk_paint_hline (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x1,  gint x2,  gint y);
+		// void gtk_paint_hline (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x1,  gint x2,  gint y);
 		gtk_paint_hline(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x1, x2, y);
 	}
 	
@@ -1049,7 +1049,7 @@ public class Style : ObjectG
 	 */
 	public void paintOption(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_option (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_option (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_option(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -1064,12 +1064,13 @@ public class Style : ObjectG
 	 * widget =  the widget (may be NULL)
 	 * detail =  a style detail (may be NULL)
 	 * points =  an array of GdkPoints
+	 * nPoints =  length of points
 	 * fill =  TRUE if the polygon should be filled
 	 */
-	public void paintPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GdkPoint[] points, int fill)
+	public void paintPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, GdkPoint[] points, int nPoints, int fill)
 	{
-		// void gtk_paint_polygon (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GdkPoint *points,  gint npoints,  gboolean fill);
-		gtk_paint_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), points.ptr, points.length, fill);
+		// void gtk_paint_polygon (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  const GdkPoint *points,  gint n_points,  gboolean fill);
+		gtk_paint_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), points.ptr, nPoints, fill);
 	}
 	
 	/**
@@ -1090,7 +1091,7 @@ public class Style : ObjectG
 	 */
 	public void paintShadow(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_shadow (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_shadow (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_shadow(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -1116,7 +1117,7 @@ public class Style : ObjectG
 	 */
 	public void paintShadowGap(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
 	{
-		// void gtk_paint_shadow_gap (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
+		// void gtk_paint_shadow_gap (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
 		gtk_paint_shadow_gap(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
 	}
 	
@@ -1139,13 +1140,13 @@ public class Style : ObjectG
 	 */
 	public void paintSlider(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
-		// void gtk_paint_slider (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
+		// void gtk_paint_slider (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
 		gtk_paint_slider(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
 	}
 	
 	/**
 	 * Warning
-	 * gtk_paint_string is deprecated and should not be used in newly-written code. Use gtk_paint_layout() instead.
+	 * gtk_paint_string has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_paint_layout() instead.
 	 * Draws a text string on window with the given parameters.
 	 * Params:
 	 * window =  a GdkWindow
@@ -1160,7 +1161,7 @@ public class Style : ObjectG
 	 */
 	public void paintString(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x, int y, string string)
 	{
-		// void gtk_paint_string (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  const gchar *string);
+		// void gtk_paint_string (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  const gchar *string);
 		gtk_paint_string(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, Str.toStringz(string));
 	}
 	
@@ -1182,7 +1183,7 @@ public class Style : ObjectG
 	 */
 	public void paintTab(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, string detail, int x, int y, int width, int height)
 	{
-		// void gtk_paint_tab (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_tab (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_tab(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
@@ -1202,7 +1203,7 @@ public class Style : ObjectG
 	 */
 	public void paintVline(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int y1_, int y2_, int x)
 	{
-		// void gtk_paint_vline (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint y1_,  gint y2_,  gint x);
+		// void gtk_paint_vline (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint y1_,  gint y2_,  gint x);
 		gtk_paint_vline(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), y1_, y2_, x);
 	}
 	
@@ -1231,7 +1232,7 @@ public class Style : ObjectG
 	 */
 	public void paintExpander(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, int x, int y, GtkExpanderStyle expanderStyle)
 	{
-		// void gtk_paint_expander (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  GtkExpanderStyle expander_style);
+		// void gtk_paint_expander (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  GtkExpanderStyle expander_style);
 		gtk_paint_expander(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, expanderStyle);
 	}
 	
@@ -1252,7 +1253,7 @@ public class Style : ObjectG
 	 */
 	public void paintLayout(Window window, GtkStateType stateType, int useText, Rectangle area, Widget widget, string detail, int x, int y, PgLayout layout)
 	{
-		// void gtk_paint_layout (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  gboolean use_text,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  PangoLayout *layout);
+		// void gtk_paint_layout (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  gboolean use_text,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  PangoLayout *layout);
 		gtk_paint_layout(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, useText, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, (layout is null) ? null : layout.getPgLayoutStruct());
 	}
 	
@@ -1274,7 +1275,7 @@ public class Style : ObjectG
 	 */
 	public void paintResizeGrip(Window window, GtkStateType stateType, Rectangle area, Widget widget, string detail, GdkWindowEdge edge, int x, int y, int width, int height)
 	{
-		// void gtk_paint_resize_grip (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GdkWindowEdge edge,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_paint_resize_grip (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  const GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  GdkWindowEdge edge,  gint x,  gint y,  gint width,  gint height);
 		gtk_paint_resize_grip(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), edge, x, y, width, height);
 	}
 	
@@ -1296,30 +1297,7 @@ public class Style : ObjectG
 	 */
 	public static void drawInsertionCursor(Widget widget, Drawable drawable, Rectangle area, Rectangle location, int isPrimary, GtkTextDirection direction, int drawArrow)
 	{
-		// void gtk_draw_insertion_cursor (GtkWidget *widget,  GdkDrawable *drawable,  GdkRectangle *area,  GdkRectangle *location,  gboolean is_primary,  GtkTextDirection direction,  gboolean draw_arrow);
+		// void gtk_draw_insertion_cursor (GtkWidget *widget,  GdkDrawable *drawable,  const GdkRectangle *area,  const GdkRectangle *location,  gboolean is_primary,  GtkTextDirection direction,  gboolean draw_arrow);
 		gtk_draw_insertion_cursor((widget is null) ? null : widget.getWidgetStruct(), (drawable is null) ? null : drawable.getDrawableStruct(), (area is null) ? null : area.getRectangleStruct(), (location is null) ? null : location.getRectangleStruct(), isPrimary, direction, drawArrow);
-	}
-	
-	/**
-	 * Copies a GtkBorder structure.
-	 * Params:
-	 * border =  a GtkBorder.
-	 * Returns: a copy of border_.
-	 */
-	public static GtkBorder* borderCopy(GtkBorder* border)
-	{
-		// GtkBorder* gtk_border_copy (const GtkBorder *border_);
-		return gtk_border_copy(border);
-	}
-	
-	/**
-	 * Frees a GtkBorder structure.
-	 * Params:
-	 * border =  a GtkBorder.
-	 */
-	public static void borderFree(GtkBorder* border)
-	{
-		// void gtk_border_free (GtkBorder *border_);
-		gtk_border_free(border);
 	}
 }

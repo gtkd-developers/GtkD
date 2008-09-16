@@ -357,7 +357,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Warning
-	 * gtk_color_selection_set_change_palette_hook is deprecated and should not be used in newly-written code. This function is deprecated in favor of
+	 * gtk_color_selection_set_change_palette_hook has been deprecated since version 2.4 and should not be used in newly-written code. This function is deprecated in favor of
 	 * gtk_color_selection_set_change_palette_with_screen_hook(), and does
 	 * not work in multihead environments.
 	 * Installs a global function to be called whenever the user tries to
@@ -392,7 +392,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Warning
-	 * gtk_color_selection_set_color is deprecated and should not be used in newly-written code. Use gtk_color_selection_set_current_color() instead.
+	 * gtk_color_selection_set_color has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_color_selection_set_current_color() instead.
 	 * Sets the current color to be color. The first time this is called, it will
 	 * also set the original color to be color too.
 	 * Params:

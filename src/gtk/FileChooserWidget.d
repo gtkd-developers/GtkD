@@ -160,6 +160,8 @@ public class FileChooserWidget : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_chooser_widget_new_with_backend is deprecated and should not be used in newly-written code. 2.14
 	 * Creates a new GtkFileChooserWidget with a specified backend. This is
 	 * especially useful if you use gtk_file_chooser_set_local_only() to allow
 	 * non-local files. This is a file chooser widget that can be embedded in

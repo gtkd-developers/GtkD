@@ -111,7 +111,7 @@ private import gobject.ObjectG;
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
- * Example29.A GtkDialog UI definition fragment.
+ * Example 31. A GtkDialog UI definition fragment.
  * <object class="GtkActionGroup" id="actiongroup">
  *  <child>
  *  <object class="GtkAction" id="About">
@@ -172,7 +172,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onConnectProxyListeners;
 	/**
-	 * The connect_proxy signal is emitted after connecting a proxy to
+	 * The ::connect-proxy signal is emitted after connecting a proxy to
 	 * an action in the group. Note that the proxy may have been connected
 	 * to a different action before.
 	 * This is intended for simple customizations for which a custom action
@@ -208,7 +208,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onDisconnectProxyListeners;
 	/**
-	 * The disconnect_proxy signal is emitted after disconnecting a proxy
+	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
 	 * from an action in the group.
 	 * GtkUIManager proxies the signal and provides global notification
 	 * just before any action is connected to a proxy, which is probably more
@@ -240,7 +240,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, ActionGroup)[] onPostActivateListeners;
 	/**
-	 * The post_activate signal is emitted just after the action in the
+	 * The ::post-activate signal is emitted just after the action in the
 	 * action_group is activated
 	 * This is intended for GtkUIManager to proxy the signal and provide global
 	 * notification just after any action is activated.
@@ -271,7 +271,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, ActionGroup)[] onPreActivateListeners;
 	/**
-	 * The pre_activate signal is emitted just before the action in the
+	 * The ::pre-activate signal is emitted just before the action in the
 	 * action_group is activated
 	 * This is intended for GtkUIManager to proxy the signal and provide global
 	 * notification just before any action is activated.
@@ -577,24 +577,24 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 * func =  a GtkTranslateFunc
 	 * data =  data to be passed to func and notify
-	 * notify =  a GtkDestroyNotify function to be called when action_group is
+	 * notify =  a GDestroyNotify function to be called when action_group is
 	 *  destroyed and when the translation function is changed again
 	 */
-	public void setTranslateFunc(GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
+	public void setTranslateFunc(GtkTranslateFunc func, void* data, GDestroyNotify notify)
 	{
-		// void gtk_action_group_set_translate_func (GtkActionGroup *action_group,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
+		// void gtk_action_group_set_translate_func (GtkActionGroup *action_group,  GtkTranslateFunc func,  gpointer data,  GDestroyNotify notify);
 		gtk_action_group_set_translate_func(gtkActionGroup, func, data, notify);
 	}
 	
 	/**
-	 * Sets the translation domain and uses dgettext() for translating the
+	 * Sets the translation domain and uses g_dgettext() for translating the
 	 * label and tooltip of GtkActionEntrys added by
 	 * gtk_action_group_add_actions().
 	 * If you're not using gettext() for localization, see
 	 * gtk_action_group_set_translate_func().
 	 * Since 2.4
 	 * Params:
-	 * domain =  the translation domain to use for dgettext() calls
+	 * domain =  the translation domain to use for g_dgettext() calls
 	 */
 	public void setTranslationDomain(string domain)
 	{

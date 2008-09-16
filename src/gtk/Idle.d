@@ -83,7 +83,7 @@ private import glib.ConstructionException;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example1.Typical main function for a GTK+ application
+ * Example 1. Typical main function for a GTK+ application
  * int
  * main (int argc, char **argv)
  * {
@@ -216,7 +216,6 @@ public class Idle
 	 * higher priority are to be processed. The default priority is
 	 * GTK_PRIORITY_DEFAULT, which is rather low.
 	 * Params:
-	 * funct = The function to call.
 	 * data = The information to pass to the function.
 	 * Returns:a unique handle for this registration.
 	 */
@@ -236,7 +235,6 @@ public class Idle
 	 * priority = The priority which should not be above G_PRIORITY_HIGH_IDLE.
 	 * Note that you will interfere with GTK+ if you use a priority above
 	 * GTK_PRIORITY_RESIZE.
-	 * funct = The function to call.
 	 * data = Data to pass to that function.
 	 * Returns:A unique id for the event source.
 	 */
@@ -256,15 +254,14 @@ public class Idle
 	 * priority = The priority which should not be above G_PRIORITY_HIGH_IDLE.
 	 * Note that you will interfere with GTK+ if you use a priority above
 	 * GTK_PRIORITY_RESIZE.
-	 * funct = The function to call.
 	 * marshal = The marshaller to use instead of the function (if non-NULL).
 	 * data = Data to pass to that function.
 	 * destroy = Function to call when the timeout is destroyed or NULL.
 	 * Returns:A unique id for the event source.
 	 */
-	public static uint addFull(int priority, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
+	public static uint addFull(int priority, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
 	{
-		// guint gtk_idle_add_full (gint priority,  GtkFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GtkDestroyNotify destroy);
+		// guint gtk_idle_add_full (gint priority,  GtkFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GDestroyNotify destroy);
 		return gtk_idle_add_full(priority, funct, marshal, data, destroy);
 	}
 	

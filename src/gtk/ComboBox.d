@@ -720,9 +720,9 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * data =  user data to pass to func, or NULL
 	 * destroy =  destroy notifier for data, or NULL
 	 */
-	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GtkDestroyNotify destroy)
+	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_combo_box_set_row_separator_func  (GtkComboBox *combo_box,  GtkTreeViewRowSeparatorFunc func,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_combo_box_set_row_separator_func  (GtkComboBox *combo_box,  GtkTreeViewRowSeparatorFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_combo_box_set_row_separator_func(gtkComboBox, func, data, destroy);
 	}
 	
@@ -799,5 +799,31 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// gboolean gtk_combo_box_get_focus_on_click (GtkComboBox *combo);
 		return gtk_combo_box_get_focus_on_click(gtkComboBox);
+	}
+	
+	/**
+	 * Sets whether the dropdown button of the combo box should be
+	 * always sensitive (GTK_SENSITIVITY_ON), never sensitive (GTK_SENSITIVITY_OFF)
+	 * or only if there is at least one item to display (GTK_SENSITIVITY_AUTO).
+	 * Since 2.14
+	 * Params:
+	 * sensitivity =  specify the sensitivity of the dropdown button
+	 */
+	public void setButtonSensitivity(GtkSensitivityType sensitivity)
+	{
+		// void gtk_combo_box_set_button_sensitivity  (GtkComboBox *combo_box,  GtkSensitivityType sensitivity);
+		gtk_combo_box_set_button_sensitivity(gtkComboBox, sensitivity);
+	}
+	
+	/**
+	 * Returns whether the combo box sets the dropdown button
+	 * sensitive or not when there are no items in the model.
+	 * Since 2.14
+	 * Returns: GTK_SENSITIVITY_ON if the dropdown button is sensitive when the model is empty, GTK_SENSITIVITY_OFF if the button is always insensitive or GTK_SENSITIVITY_AUTO if it is only sensitive as long as the model has one item to be selected.
+	 */
+	public GtkSensitivityType getButtonSensitivity()
+	{
+		// GtkSensitivityType gtk_combo_box_get_button_sensitivity  (GtkComboBox *combo_box);
+		return gtk_combo_box_get_button_sensitivity(gtkComboBox);
 	}
 }

@@ -2,7 +2,7 @@ Building gtkD with DSSS mini-HOWTO:
 -----------------------------------
 
 1) Get the latest stable version of DSSS and install it on your system.
-(Last tested with DSSS-0.77).
+(Last tested with DSSS-0.78).
 
 2) [OPTIONAL]. Update the dsss.conf file in the root of the project to
 suit your needs. Otherwise pay attention to the 'defaulttargets' key.

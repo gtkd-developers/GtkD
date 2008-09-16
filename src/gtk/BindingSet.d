@@ -195,6 +195,8 @@ public class BindingSet
 	 * gtk_binding_entry_clear is deprecated and should not be used in newly-written code.
 	 * Use of this function is deprecated.
 	 * Params:
+	 * keyval =  key value of binding to clear
+	 * modifiers =  key modifier of binding to clear
 	 */
 	public void bindingEntryClear(uint keyval, GdkModifierType modifiers)
 	{
@@ -317,10 +319,10 @@ public class BindingSet
 	}
 	
 	/**
-	 * Since 2.12
-	 * Install a binding on @binding_set which causes key lookups
+	 * Install a binding on binding_set which causes key lookups
 	 * to be aborted, to prevent bindings from lower priority sets
 	 * to be activated.
+	 * Since 2.12
 	 * Params:
 	 * keyval =  key value of binding to skip
 	 * modifiers =  key modifier of binding to skip

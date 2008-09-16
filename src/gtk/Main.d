@@ -113,7 +113,7 @@ private import gdk.Threads;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example1.Typical main function for a GTK+ application
+ * Example 1. Typical main function for a GTK+ application
  * int
  * main (int argc, char **argv)
  * {
@@ -380,7 +380,7 @@ public class Main
 	/**
 	 * Checks if any events are pending. This can be used to update the GUI
 	 * and invoke timeouts etc. while doing some time intensive computation.
-	 * Example2.Updating the GUI during a long computation.
+	 * Example 2. Updating the GUI during a long computation.
 	 * 	/+* computation going on +/
 	 * ...
 	 *  while (gtk_events_pending ())
@@ -471,6 +471,8 @@ public class Main
 	 * Makes widget the current grabbed widget. This means that interaction with
 	 * other widgets in the same application is blocked and mouse as well as
 	 * keyboard events are delivered to this widget.
+	 * If widget is not sensitive, it is not set as the current grabbed
+	 * widget and this function does nothing.
 	 * Params:
 	 * widget = The widget that grabs keyboard and pointer events.
 	 */
@@ -498,6 +500,7 @@ public class Main
 	/**
 	 * Removes the grab from the given widget. You have to pair calls to gtk_grab_add()
 	 * and gtk_grab_remove().
+	 * If widget does not have the grab, this function does nothing.
 	 * Params:
 	 * widget = The widget which gives up the grab.
 	 */
@@ -510,7 +513,6 @@ public class Main
 	/**
 	 * Registers a function to be called when the mainloop is started.
 	 * Params:
-	 * funct = Function to invoke when gtk_main() is called next.
 	 * data = Data to pass to that function.
 	 */
 	public static void initAdd(GtkFunction funct, void* data)
@@ -538,8 +540,6 @@ public class Main
 	 * mainLevel = Level at which termination the function shall be called. You
 	 *  can pass 0 here to have the function run at the termination of the current
 	 *  mainloop.
-	 * funct = The function to call. This should return 0 to be removed from the
-	 *  list of quit handlers. Otherwise the function might be called again.
 	 * data = Pointer to pass when calling function.
 	 * Returns:A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
@@ -561,17 +561,15 @@ public class Main
 	 * mainLevel = Level at which termination the function shall be called. You
 	 *  can pass 0 here to have the function run at the termination of the current
 	 *  mainloop.
-	 * funct = The function to call. This should return 0 to be removed from the
-	 *  list of quit handlers. Otherwise the function might be called again.
 	 * marshal = The marshaller to be used. If this is non-NULL, function is
 	 *  ignored.
 	 * data = Pointer to pass when calling function.
 	 * destroy = Function to call to destruct data. Gets data as argument.
 	 * Returns:A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
-	public static uint quitAddFull(uint mainLevel, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
+	public static uint quitAddFull(uint mainLevel, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
 	{
-		// guint gtk_quit_add_full (guint main_level,  GtkFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GtkDestroyNotify destroy);
+		// guint gtk_quit_add_full (guint main_level,  GtkFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GDestroyNotify destroy);
 		return gtk_quit_add_full(mainLevel, funct, marshal, data, destroy);
 	}
 	
@@ -605,16 +603,15 @@ public class Main
 	 * Params:
 	 * source = a file descriptor.
 	 * condition = the condition.
-	 * funct = The function to call.
 	 * marshal = The marshaller to use instead of the function (if non-NULL).
 	 * data = callback data passed to function.
 	 * destroy = callback function to call with data when the input
 	 *  handler is removed, or NULL.
 	 * Returns:A unique id for the event source; to be used with gtk_input_remove().
 	 */
-	public static uint inputAddFull(int source, GdkInputCondition condition, GdkInputFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
+	public static uint inputAddFull(int source, GdkInputCondition condition, GdkInputFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
 	{
-		// guint gtk_input_add_full (gint source,  GdkInputCondition condition,  GdkInputFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GtkDestroyNotify destroy);
+		// guint gtk_input_add_full (gint source,  GdkInputCondition condition,  GdkInputFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GDestroyNotify destroy);
 		return gtk_input_add_full(source, condition, funct, marshal, data, destroy);
 	}
 	

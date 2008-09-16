@@ -481,9 +481,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 * Warning
-	 * gtk_entry_append_text is deprecated and should not be used in newly-written code. gtk_entry_append_text() is deprecated and should not
-	 *  be used in newly-written code. Use gtk_editable_insert_text()
-	 *  instead.
+	 * gtk_entry_append_text has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_insert_text() instead.
 	 * Appends the given text to the contents of the widget.
 	 * Params:
 	 * text =  the text to append
@@ -496,9 +494,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 * Warning
-	 * gtk_entry_prepend_text is deprecated and should not be used in newly-written code. gtk_entry_prepend_text() is deprecated and should not
-	 *  be used in newly-written code. Use gtk_editable_insert_text()
-	 *  instead.
+	 * gtk_entry_prepend_text has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_insert_text() instead.
 	 * Prepends the given text to the contents of the widget.
 	 * Params:
 	 * text =  the text to prepend
@@ -511,7 +507,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 * Warning
-	 * gtk_entry_set_position is deprecated and should not be used in newly-written code. Use gtk_editable_set_position() instead.
+	 * gtk_entry_set_position has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_set_position() instead.
 	 * Sets the cursor position in an entry to the given value.
 	 * Params:
 	 * position =  the position of the cursor. The cursor is displayed
@@ -539,8 +535,20 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Retrieves the current length of the text in
+	 * entry.
+	 * Since 2.14
+	 * Returns: the current number of characters in GtkEntry, or 0 if there are none.
+	 */
+	public ushort getTextLength()
+	{
+		// guint16 gtk_entry_get_text_length (GtkEntry *entry);
+		return gtk_entry_get_text_length(gtkEntry);
+	}
+	
+	/**
 	 * Warning
-	 * gtk_entry_select_region is deprecated and should not be used in newly-written code. Use gtk_editable_select_region() instead.
+	 * gtk_entry_select_region has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_select_region() instead.
 	 * Selects a region of text. The characters that are selected are
 	 * those characters at positions from start_pos up to, but not
 	 * including end_pos. If end_pos is negative, then the the characters
@@ -592,7 +600,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 * Warning
-	 * gtk_entry_set_editable is deprecated and should not be used in newly-written code. Use gtk_editable_set_editable() instead.
+	 * gtk_entry_set_editable has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_set_editable() instead.
 	 * Determines if the user can edit the text in the editable
 	 * widget or not.
 	 * Params:
@@ -758,6 +766,29 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// gfloat gtk_entry_get_alignment (GtkEntry *entry);
 		return gtk_entry_get_alignment(gtkEntry);
+	}
+	
+	/**
+	 * Sets whether the text is overwritten when typing in the GtkEntry.
+	 * Since 2.14
+	 * Params:
+	 * overwrite =  new value
+	 */
+	public void setOverwriteMode(int overwrite)
+	{
+		// void gtk_entry_set_overwrite_mode (GtkEntry *entry,  gboolean overwrite);
+		gtk_entry_set_overwrite_mode(gtkEntry, overwrite);
+	}
+	
+	/**
+	 * Gets the value set by gtk_entry_set_overwrite_mode().
+	 * Since 2.14
+	 * Returns: whether the text is overwritten when typing.
+	 */
+	public int getOverwriteMode()
+	{
+		// gboolean gtk_entry_get_overwrite_mode (GtkEntry *entry);
+		return gtk_entry_get_overwrite_mode(gtkEntry);
 	}
 	
 	/**

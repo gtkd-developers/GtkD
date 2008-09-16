@@ -215,18 +215,18 @@ public class StockItem
 	 * Sets a function to be used for translating the label of
 	 * a stock item.
 	 * If no function is registered for a translation domain,
-	 * dgettext() is used.
+	 * g_dgettext() is used.
 	 * Since 2.8
 	 * Params:
 	 * domain =  the translation domain for which func shall be used
 	 * func =  a GtkTranslateFunc
 	 * data =  data to pass to func
-	 * notify =  a GtkDestroyNotify that is called when data is
+	 * notify =  a GDestroyNotify that is called when data is
 	 *  no longer needed
 	 */
-	public static void setTranslateFunc(string domain, GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
+	public static void setTranslateFunc(string domain, GtkTranslateFunc func, void* data, GDestroyNotify notify)
 	{
-		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
+		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GDestroyNotify notify);
 		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);
 	}
 }

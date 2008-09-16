@@ -309,4 +309,75 @@ public class ScaleButton : Button
 		// gdouble gtk_scale_button_get_value (GtkScaleButton *button);
 		return gtk_scale_button_get_value(gtkScaleButton);
 	}
+	
+	/**
+	 * Retrieves the popup of the GtkScaleButton.
+	 * Since 2.14
+	 * Returns: the popup of the GtkScaleButton
+	 */
+	public Widget getPopup()
+	{
+		// GtkWidget* gtk_scale_button_get_popup (GtkScaleButton *button);
+		auto p = gtk_scale_button_get_popup(gtkScaleButton);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Retrieves the plus button of the GtkScaleButton.
+	 * Since 2.14
+	 * Returns: the plus button of the GtkScaleButton.
+	 */
+	public Widget getPlusButton()
+	{
+		// GtkWidget* gtk_scale_button_get_plus_button (GtkScaleButton *button);
+		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Retrieves the minus button of the GtkScaleButton.
+	 * Since 2.14
+	 * Returns: the minus button of the GtkScaleButton.
+	 */
+	public Widget getMinusButton()
+	{
+		// GtkWidget* gtk_scale_button_get_minus_button (GtkScaleButton *button);
+		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Sets the orientation of the GtkScaleButton's popup window.
+	 * Since 2.14
+	 * Params:
+	 * orientation =  the new orientation
+	 */
+	public void setOrientation(GtkOrientation orientation)
+	{
+		// void gtk_scale_button_set_orientation (GtkScaleButton *button,  GtkOrientation orientation);
+		gtk_scale_button_set_orientation(gtkScaleButton, orientation);
+	}
+	
+	/**
+	 * Gets the orientation of the GtkScaleButton's popup window.
+	 * Since 2.14
+	 * Returns: the GtkScaleButton's orientation.
+	 */
+	public GtkOrientation getOrientation()
+	{
+		// GtkOrientation gtk_scale_button_get_orientation (GtkScaleButton *button);
+		return gtk_scale_button_get_orientation(gtkScaleButton);
+	}
 }

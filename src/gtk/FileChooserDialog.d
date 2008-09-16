@@ -96,7 +96,7 @@ private import gtk.Dialog;
  *  Note that GtkFileChooserDialog does not have any methods of its
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
- * Example35.Typical usage
+ * Example 37. Typical usage
  * 	In the simplest of cases, you can the following code to use
  * 	GtkFileChooserDialog to select a file for opening:
  * GtkWidget *dialog;
@@ -163,7 +163,7 @@ private import gtk.Dialog;
  * GTK_RESPONSE_APPLY
  *  This is because GtkFileChooserDialog must intercept responses
  *  and switch to folders if appropriate, rather than letting the
- *  dialog terminate  the implementation uses these known
+ *  dialog terminate — the implementation uses these known
  *  response codes to know which responses can be blocked if
  *  appropriate.
  * Note

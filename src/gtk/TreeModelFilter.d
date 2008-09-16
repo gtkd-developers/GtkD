@@ -180,15 +180,32 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * it depends on some global parameters), you must call
 	 * gtk_tree_model_filter_refilter() to keep the visibility information of
 	 * the model uptodate.
+	 * Note that func is called whenever a row is inserted, when it may still be
+	 * empty. The visible function should therefore take special care of empty
+	 * rows, like in the example below.
+	 * static gboolean
+	 * visible_func (GtkTreeModel *model,
+	 *  GtkTreeIter *iter,
+	 *  gpointer data)
+	 * {
+		 *  /+* Visible if row is non-empty and first column is "HI" +/
+		 *  gchar *str;
+		 *  gboolean visible = FALSE;
+		 *  gtk_tree_model_get (model, iter, 0, str, -1);
+		 *  if (str  strcmp (str, "HI") == 0)
+		 *  visible = TRUE;
+		 *  g_free (str);
+		 *  return visible;
+	 * }
 	 * Since 2.4
 	 * Params:
 	 * func =  A GtkTreeModelFilterVisibleFunc, the visible function.
 	 * data =  User data to pass to the visible function, or NULL.
 	 * destroy =  Destroy notifier of data, or NULL.
 	 */
-	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GtkDestroyNotify destroy)
+	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_tree_model_filter_set_visible_func  (GtkTreeModelFilter *filter,  GtkTreeModelFilterVisibleFunc func,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_tree_model_filter_set_visible_func  (GtkTreeModelFilter *filter,  GtkTreeModelFilterVisibleFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_tree_model_filter_set_visible_func(gtkTreeModelFilter, func, data, destroy);
 	}
 	
@@ -207,9 +224,9 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * data =  User data to pass to the modify function, or NULL.
 	 * destroy =  Destroy notifier of data, or NULL.
 	 */
-	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GtkDestroyNotify destroy)
+	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_tree_model_filter_set_modify_func  (GtkTreeModelFilter *filter,  gint n_columns,  GType *types,  GtkTreeModelFilterModifyFunc func,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_tree_model_filter_set_modify_func  (GtkTreeModelFilter *filter,  gint n_columns,  GType *types,  GtkTreeModelFilterModifyFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_tree_model_filter_set_modify_func(gtkTreeModelFilter, types.length, types.ptr, func, data, destroy);
 	}
 	

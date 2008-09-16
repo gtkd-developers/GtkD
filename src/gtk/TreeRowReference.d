@@ -99,7 +99,7 @@ private import gtk.TreeIter;
  * observing changes. The implementation of each individual model decides
  * how and if changes are made.
  * In order to make life simpler for programmers who do not need to write
- * their own specialized model, two generic models are provided  the
+ * their own specialized model, two generic models are provided — the
  * GtkTreeStore and the GtkListStore. To use these, the developer simply
  * pushes data into these models as necessary. These models provide the
  * data structure as well as all appropriate tree interfaces. As a result,
@@ -116,8 +116,8 @@ private import gtk.TreeIter;
  * The GtkTreePath struct can be converted into either an array of
  * unsigned integers or a string. The string form is a list of numbers
  * separated by a colon. Each number refers to the offset at that level.
- * Thus, the path 0 refers to the root node and the path
- * 2:4 refers to the fifth child of the third node.
+ * Thus, the path “0” refers to the root node and the path
+ * “2:4” refers to the fifth child of the third node.
  * By contrast, a GtkTreeIter is a reference to a specific node on a
  * specific model. It is a generic struct with an integer and three
  * generic pointers. These are filled in by the model in a model-specific
@@ -147,9 +147,9 @@ private import gtk.TreeIter;
  * GTK_TREE_MODEL_ITERS_PERSIST flag was added to indicate this behavior.
  * To help show some common operation of a model, some examples are
  * provided. The first example shows three ways of getting the iter at the
- * location 3:2:5. While the first method shown is easier,
+ * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example15.Acquiring a GtkTreeIter
+ * Example 17. Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -174,7 +174,7 @@ private import gtk.TreeIter;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example16.Reading data from a GtkTreeModel
+ * Example 18. Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,

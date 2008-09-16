@@ -500,6 +500,26 @@ public class Clipboard : ObjectG
 	}
 	
 	/**
+	 * Requests the contents of the clipboard as URIs. When the URIs are
+	 * later received callback will be called.
+	 * The uris parameter to callback will contain the resulting array of
+	 * URIs if the request succeeded, or NULL if it failed. This could happen
+	 * for various reasons, in particular if the clipboard was empty or if the
+	 * contents of the clipboard could not be converted into URI form.
+	 * Since 2.14
+	 * Params:
+	 * callback =  a function to call when the URIs are received,
+	 *  or the retrieval fails. (It will always be called
+	 *  one way or the other.)
+	 * userData =  user data to pass to callback.
+	 */
+	public void requestUris(GtkClipboardURIReceivedFunc callback, void* userData)
+	{
+		// void gtk_clipboard_request_uris (GtkClipboard *clipboard,  GtkClipboardURIReceivedFunc callback,  gpointer user_data);
+		gtk_clipboard_request_uris(gtkClipboard, callback, userData);
+	}
+	
+	/**
 	 * Requests the contents of the clipboard using the given target.
 	 * This function waits for the data to be received using the main
 	 * loop, so events, timeouts, etc, may be dispatched during the wait.
@@ -565,6 +585,19 @@ public class Clipboard : ObjectG
 	}
 	
 	/**
+	 * Requests the contents of the clipboard as URIs. This function waits
+	 * for the data to be received using the main loop, so events,
+	 * timeouts, etc, may be dispatched during the wait.
+	 * Since 2.14
+	 * Returns: a newly-allocated NULL-terminated array of strings which must be freed with g_strfreev(), or NULL if retrieving the selection data failed. (This  could happen for various reasons, in particular  if the clipboard was empty or if the contents of  the clipboard could not be converted into URI form.)
+	 */
+	public string[] waitForUris()
+	{
+		// gchar** gtk_clipboard_wait_for_uris (GtkClipboard *clipboard);
+		return Str.toStringArray(gtk_clipboard_wait_for_uris(gtkClipboard));
+	}
+	
+	/**
 	 * Test to see if there is text available to be pasted
 	 * This is done by requesting the TARGETS atom and checking
 	 * if it contains any of the supported text targets. This function
@@ -617,6 +650,24 @@ public class Clipboard : ObjectG
 	{
 		// gboolean gtk_clipboard_wait_is_rich_text_available  (GtkClipboard *clipboard,  GtkTextBuffer *buffer);
 		return gtk_clipboard_wait_is_rich_text_available(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct());
+	}
+	
+	/**
+	 * Test to see if there is a list of URIs available to be pasted
+	 * This is done by requesting the TARGETS atom and checking
+	 * if it contains the URI targets. This function
+	 * waits for the data to be received using the main loop, so events,
+	 * timeouts, etc, may be dispatched during the wait.
+	 * This function is a little faster than calling
+	 * gtk_clipboard_wait_for_uris() since it doesn't need to retrieve
+	 * the actual URI data.
+	 * Since 2.14
+	 * Returns: TRUE is there is an URI list available, FALSE otherwise.
+	 */
+	public int waitIsUrisAvailable()
+	{
+		// gboolean gtk_clipboard_wait_is_uris_available  (GtkClipboard *clipboard);
+		return gtk_clipboard_wait_is_uris_available(gtkClipboard);
 	}
 	
 	/**

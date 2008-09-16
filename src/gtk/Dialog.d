@@ -41,12 +41,16 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_dialog_get_action_area
+ * 	- gtk_dialog_get_content_area
  * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Window
  * 	- gtk.Widget
  * 	- gdk.Screen
+ * 	- gtk.HButtonBox
+ * 	- gtk.VBox
  * structWrap:
  * 	- GdkScreen* -> Screen
  * 	- GtkWidget* -> Widget
@@ -70,6 +74,8 @@ private import glib.Str;
 private import gtk.Window;
 private import gtk.Widget;
 private import gdk.Screen;
+private import gtk.HButtonBox;
+private import gtk.VBox;
 
 
 
@@ -91,9 +97,8 @@ private import gtk.Window;
  * allows you to set the dialog title, some convenient flags, and add simple
  * buttons.
  * If 'dialog' is a newly created dialog, the two primary areas of the window
- * can be accessed as GTK_DIALOG(dialog)->vbox and
- * GTK_DIALOG(dialog)->action_area,
- * as can be seen from the example, below.
+ * can be accessed through gtk_dialog_get_content_area() and
+ * gtk_dialog_get_action_area(), as can be seen from the example, below.
  * A 'modal' dialog (that is, one which freezes the rest of the application from
  * user input), can be created by calling gtk_window_set_modal() on the dialog. Use
  * the GTK_WINDOW() macro to cast the widget returned from gtk_dialog_new() into a
@@ -114,10 +119,10 @@ private import gtk.Window;
  * For the simple dialog in the following example, in reality you'd probably use
  * GtkMessageDialog to save yourself some effort. But you'd need to create the
  * dialog contents manually if you had more than a simple message in the dialog.
- * Example4.Simple GtkDialog usage.
+ * Example 5. Simple GtkDialog usage.
  * /+* Function to open a dialog box displaying the message provided. +/
  * void quick_message (gchar *message) {
-	 *  GtkWidget *dialog, *label;
+	 *  GtkWidget *dialog, *label, *content_area;
 	 *  /+* Create the widgets +/
 	 *  dialog = gtk_dialog_new_with_buttons ("Message",
 	 *  main_application_window,
@@ -125,6 +130,7 @@ private import gtk.Window;
 	 *  GTK_STOCK_OK,
 	 *  GTK_RESPONSE_NONE,
 	 *  NULL);
+	 *  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	 *  label = gtk_label_new (message);
 	 *  /+* Ensure that the dialog box is destroyed when the user responds. +/
 	 *  g_signal_connect_swapped (dialog,
@@ -132,8 +138,7 @@ private import gtk.Window;
 	 *  G_CALLBACK (gtk_widget_destroy),
 	 *  dialog);
 	 *  /+* Add the label, and show everything we've added to the dialog. +/
-	 *  gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox),
-	 *  label);
+	 *  gtk_container_add (GTK_CONTAINER (content_area), label);
 	 *  gtk_widget_show_all (dialog);
  * }
  * GtkDialog as GtkBuildable
@@ -144,7 +149,7 @@ private import gtk.Window;
  * can contain multiple <action-widget> elements. The "response"
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
- * Example5.A GtkDialog UI definition fragment.
+ * Example 6. A GtkDialog UI definition fragment.
  * <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">"
  *  <object class="GtkVBox">
@@ -230,6 +235,39 @@ public class Dialog : Window
 		}
 	}
 	
+	//Return the corect class instead of Widget
+	/**
+	 * Returns the action area of dialog.
+	 * Since 2.14
+	 * Returns: the action area.
+	 */
+	public HButtonBox getActionArea()
+	{
+		// GtkWidget* gtk_dialog_get_action_area (GtkDialog *dialog);
+		auto p = gtk_dialog_get_action_area(gtkDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new HButtonBox(cast(GtkHButtonBox*) p);
+	}
+	
+	//Return the corect class instead of Widget
+	/**
+	 * Returns the content area of dialog.
+	 * Since 2.14
+	 * Returns: the content area GtkVBox.
+	 */
+	public VBox getContentArea()
+	{
+		// GtkWidget* gtk_dialog_get_content_area (GtkDialog *dialog);
+		auto p = gtk_dialog_get_content_area(gtkDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VBox(cast(GtkVBox*) p);
+	}
 	
 	/**
 	 */
@@ -237,6 +275,11 @@ public class Dialog : Window
 	
 	void delegate(Dialog)[] onCloseListeners;
 	/**
+	 * The ::close signal is a
+	 * keybinding signal
+	 * which getrs emitted when the user uses a keybinding to close
+	 * the dialog.
+	 * The default binding for this signal is the Escape key.
 	 */
 	void addOnClose(void delegate(Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -253,7 +296,7 @@ public class Dialog : Window
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkDialog* dialogStruct, Dialog dialog)
+	extern(C) static void callBackClose(GtkDialog* arg0Struct, Dialog dialog)
 	{
 		foreach ( void delegate(Dialog) dlg ; dialog.onCloseListeners )
 		{
@@ -263,10 +306,10 @@ public class Dialog : Window
 	
 	void delegate(gint, Dialog)[] onResponseListeners;
 	/**
-	 * Emitted when an action widget is clicked, the dialog receives a delete event, or
-	 * the application programmer calls gtk_dialog_response(). On a delete event, the
-	 * response ID is GTK_RESPONSE_NONE. Otherwise, it depends on which action widget
-	 * was clicked.
+	 * Emitted when an action widget is clicked, the dialog receives a
+	 * delete event, or the application programmer calls gtk_dialog_response().
+	 * On a delete event, the response ID is GTK_RESPONSE_DELETE_EVENT.
+	 * Otherwise, it depends on which action widget was clicked.
 	 * See Also
 	 * GtkVBox
 	 * Pack widgets vertically.
@@ -291,11 +334,11 @@ public class Dialog : Window
 		}
 		onResponseListeners ~= dlg;
 	}
-	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint arg1, Dialog dialog)
+	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint responseId, Dialog dialog)
 	{
 		foreach ( void delegate(gint, Dialog) dlg ; dialog.onResponseListeners )
 		{
-			dlg(arg1, dialog);
+			dlg(responseId, dialog);
 		}
 	}
 	

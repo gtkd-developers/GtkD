@@ -100,7 +100,7 @@ private import gtk.Container;
  * The application can set the position of the slider
  * as if it were set by the user, by calling
  * gtk_paned_set_position().
- * Example46.Creating a paned widget with minimum sizes.
+ * Example 48. Creating a paned widget with minimum sizes.
  * GtkWidget *hpaned = gtk_hpaned_new ();
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);

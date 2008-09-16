@@ -45,8 +45,12 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
+ * 	- pango.PgFontFace
+ * 	- pango.PgFontFamily
  * structWrap:
  * 	- GdkFont* -> Font
+ * 	- PangoFontFace* -> PgFontFace
+ * 	- PangoFontFamily* -> PgFontFamily
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,6 +66,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gdk.Font;
+private import pango.PgFontFace;
+private import pango.PgFontFamily;
 
 
 
@@ -139,9 +145,9 @@ public class FontSelection : VBox
 	
 	/**
 	 * Warning
-	 * gtk_font_selection_get_font is deprecated and should not be used in newly-written code.
+	 * gtk_font_selection_get_font has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_font_selection_get_font_name() instead.
 	 * Gets the currently-selected font.
-	 * Returns:the currently-selected font, or NULL if no font is selected.
+	 * Returns: A GdkFont.
 	 */
 	public Font getFont()
 	{
@@ -185,8 +191,10 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * The text returned is the preview text used to show how the selected
+	 * font looks.
 	 * Gets the text displayed in the preview area.
-	 * Returns:the text displayed in the preview area. This string is owned by the widget and should not be modified or freed.
+	 * Returns: pointer to the preview text string. This stringpoints to internally allocated storage in the widget and must notbe freed, modified or stored.
 	 */
 	public string getPreviewText()
 	{
@@ -195,13 +203,116 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * The text is used to show how the selected font looks.
 	 * Sets the text displayed in the preview area.
 	 * Params:
-	 * text = the text to display in the preview area.
+	 * text =  a pointer to a string
 	 */
 	public void setPreviewText(string text)
 	{
 		// void gtk_font_selection_set_preview_text (GtkFontSelection *fontsel,  const gchar *text);
 		gtk_font_selection_set_preview_text(gtkFontSelection, Str.toStringz(text));
+	}
+	
+	/**
+	 * Gets the PangoFontFace representing the selected font group
+	 * details (i.e. family, slant, weight, width, etc).
+	 * Since 2.14
+	 * Returns: A PangoFontFace representing the selected font group details
+	 */
+	public PgFontFace getFace()
+	{
+		// PangoFontFace* gtk_font_selection_get_face (GtkFontSelection *fontsel);
+		auto p = gtk_font_selection_get_face(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgFontFace(cast(PangoFontFace*) p);
+	}
+	
+	/**
+	 * This returns the GtkTreeView which lists all styles available for
+	 * the selected font. For example, 'Regular', 'Bold', etc.
+	 * Since 2.14
+	 * Returns: A GtkWidget.
+	 */
+	public GtkWidget* getFaceList()
+	{
+		// GtkWidget* gtk_font_selection_get_face_list (GtkFontSelection *fontsel);
+		return gtk_font_selection_get_face_list(gtkFontSelection);
+	}
+	
+	/**
+	 * Gets the PangoFontFamily representing the selected font family.
+	 * Since 2.14
+	 * Returns: A PangoFontFamily representing the selected fontfamily. Font families are a collection of font faces.
+	 */
+	public PgFontFamily getFamily()
+	{
+		// PangoFontFamily* gtk_font_selection_get_family (GtkFontSelection *fontsel);
+		auto p = gtk_font_selection_get_family(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgFontFamily(cast(PangoFontFamily*) p);
+	}
+	
+	/**
+	 * The selected font size.
+	 * Since 2.14
+	 * Returns: A gint representing the font size selected, or -1if not.
+	 */
+	public int getSize()
+	{
+		// gint gtk_font_selection_get_size (GtkFontSelection *fontsel);
+		return gtk_font_selection_get_size(gtkFontSelection);
+	}
+	
+	/**
+	 * This returns the GtkTreeView that lists font families, for
+	 * example, 'Sans', 'Serif', etc.
+	 * Since 2.14
+	 * Returns: A GtkWidget.
+	 */
+	public GtkWidget* getFamilyList()
+	{
+		// GtkWidget* gtk_font_selection_get_family_list (GtkFontSelection *fontsel);
+		return gtk_font_selection_get_family_list(gtkFontSelection);
+	}
+	
+	/**
+	 * This returns the GtkEntry used to display the font as a preview.
+	 * Since 2.14
+	 * Returns: A GtkWidget.
+	 */
+	public GtkWidget* getPreviewEntry()
+	{
+		// GtkWidget* gtk_font_selection_get_preview_entry  (GtkFontSelection *fontsel);
+		return gtk_font_selection_get_preview_entry(gtkFontSelection);
+	}
+	
+	/**
+	 * This returns the GtkEntry used to allow the user to edit the font
+	 * number manually instead of selecting it from the list of font sizes.
+	 * Since 2.14
+	 * Returns: A GtkWidget.
+	 */
+	public GtkWidget* getSizeEntry()
+	{
+		// GtkWidget* gtk_font_selection_get_size_entry (GtkFontSelection *fontsel);
+		return gtk_font_selection_get_size_entry(gtkFontSelection);
+	}
+	
+	/**
+	 * This returns the GtkTreeeView used to list font sizes.
+	 * Since 2.14
+	 * Returns: A GtkWidget.
+	 */
+	public GtkWidget* getSizeList()
+	{
+		// GtkWidget* gtk_font_selection_get_size_list (GtkFontSelection *fontsel);
+		return gtk_font_selection_get_size_list(gtkFontSelection);
 	}
 }

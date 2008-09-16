@@ -82,6 +82,24 @@ private import gtk.Misc;
  * The GtkLabel widget displays a small amount of text. As the name
  * implies, most labels are used to label another widget such as a
  * GtkButton, a GtkMenuItem, or a GtkOptionMenu.
+ * GtkLabel as GtkBuildable
+ * The GtkLabel implementation of the GtkBuildable interface supports a
+ * custom <attributes> element, which supports any number of <attribute>
+ * elements. the <attribute> element has attributes named name, value,
+ * start and end and allows you to specify PangoAttribute values for this label.
+ * Example 11. A UI definition fragment specifying Pango attributes
+ * <object class="GtkLabel">
+ *  <attributes>
+ *  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+ *  <attribute name="background" value="red" start="5" end="10"/>"
+ *  </attributes>
+ * </object>
+ * The start and end attributes specify the range of characters to which the
+ * Pango attribute applies. If start and end are not specified, the attribute is
+ * applied to the whole text. Note that specifying ranges does not make much
+ * sense with translatable attributes. Use markup embedded in the translatable
+ * content instead.
+ * <hr>
  * Mnemonics
  * Labels may contain mnemonics. Mnemonics are
  * underlined characters in the label, used for keyboard navigation.
@@ -136,7 +154,7 @@ private import gtk.Misc;
  * Labels can be made selectable with gtk_label_set_selectable().
  * Selectable labels allow the user to copy the label contents to
  * the clipboard. Only labels that contain useful-to-copy information
- *  such as error messages  should be made selectable.
+ * — such as error messages — should be made selectable.
  * <hr>
  * Text layout
  * A label can contain any number of paragraphs, but will have

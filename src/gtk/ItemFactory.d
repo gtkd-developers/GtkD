@@ -121,7 +121,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_new has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_new has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates a new GtkItemFactory.
 	 * Beware that the returned object does not have a floating reference.
 	 * Params:
@@ -146,7 +146,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_construct has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_construct has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Initializes an item factory.
 	 * Params:
 	 * containerType =  the kind of menu to create; can be
@@ -189,7 +189,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_from_widget is deprecated and should not be used in newly-written code. 2.4
+	 * gtk_item_factory_from_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the item factory from which a widget was created.
 	 * Params:
 	 * widget =  a widget
@@ -208,7 +208,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_path_from_widget has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_path_from_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * If widget has been created by an item factory, returns the full path
 	 * to it. (The full path of a widget is the concatenation of the factory
 	 * path specified in gtk_item_factory_new() with the path specified in the
@@ -225,7 +225,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_item has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_get_item has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the menu item which corresponds to path.
 	 * If the widget corresponding to path is a menu item which opens a
 	 * submenu, then the item is returned. If you are interested in the submenu,
@@ -247,7 +247,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_widget has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_get_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the widget which corresponds to path.
 	 * If the widget corresponding to path is a menu item which opens a
 	 * submenu, then the submenu is returned. If you are interested in the menu
@@ -269,7 +269,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_widget_by_action has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_get_widget_by_action has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the widget which was constructed from the GtkItemFactoryEntry
 	 * with the given action.
 	 * If there are multiple items with the same action, the result is
@@ -292,7 +292,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_item_by_action has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_get_item_by_action has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the menu item which was constructed from the first
 	 * GtkItemFactoryEntry with the given action.
 	 * Params:
@@ -313,7 +313,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_create_item has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_create_item has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates an item for entry.
 	 * Params:
 	 * entry =  the GtkItemFactoryEntry to create an item for
@@ -329,7 +329,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_create_items has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_create_items has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates the menu items from the entries.
 	 * Params:
 	 * nEntries =  the length of entries
@@ -345,7 +345,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_create_items_ac has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_create_items_ac has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates the menu items from the entries.
 	 * Params:
 	 * nEntries =  the length of entries
@@ -362,7 +362,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_delete_item has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_delete_item has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Deletes the menu item which was created for path by the given
 	 * item factory.
 	 * Params:
@@ -376,7 +376,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_delete_entry has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_delete_entry has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Deletes the menu item which was created from entry by the given
 	 * item factory.
 	 * Params:
@@ -390,7 +390,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_delete_entries has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_delete_entries has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Deletes the menu items which were created from the entries by the given
 	 * item factory.
 	 * Params:
@@ -405,7 +405,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_popup has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Pops up the menu constructed from the item factory at (x, y).
 	 * The mouse_button parameter should be the mouse button pressed to initiate
 	 * the menu popup. If the menu popup was initiated by something other than
@@ -430,7 +430,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup_with_data has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_popup_with_data has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Pops up the menu constructed from the item factory at (x, y). Callbacks
 	 * can access the popup_data while the menu is posted via
 	 * gtk_item_factory_popup_data() and gtk_item_factory_popup_data_from_widget().
@@ -445,22 +445,22 @@ public class ItemFactory : ObjectGtk
 	 * as the button and activation_time parameters for gtk_menu_popup().
 	 * Params:
 	 * popupData =  data available for callbacks while the menu is posted
-	 * destroy =  a GtkDestroyNotify function to be called on popup_data when
+	 * destroy =  a GDestroyNotify function to be called on popup_data when
 	 *  the menu is unposted
 	 * x =  the x position
 	 * y =  the y position
 	 * mouseButton =  the mouse button which was pressed to initiate the popup
 	 * time =  the time at which the activation event occurred
 	 */
-	public void popupWithData(void* popupData, GtkDestroyNotify destroy, uint x, uint y, uint mouseButton, uint time)
+	public void popupWithData(void* popupData, GDestroyNotify destroy, uint x, uint y, uint mouseButton, uint time)
 	{
-		// void gtk_item_factory_popup_with_data (GtkItemFactory *ifactory,  gpointer popup_data,  GtkDestroyNotify destroy,  guint x,  guint y,  guint mouse_button,  guint32 time_);
+		// void gtk_item_factory_popup_with_data (GtkItemFactory *ifactory,  gpointer popup_data,  GDestroyNotify destroy,  guint x,  guint y,  guint mouse_button,  guint32 time_);
 		gtk_item_factory_popup_with_data(gtkItemFactory, popupData, destroy, x, y, mouseButton, time);
 	}
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup_data has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_popup_data has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the popup_data which was passed to
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
@@ -474,7 +474,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup_data_from_widget has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_popup_data_from_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the popup_data which was passed to
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
@@ -490,7 +490,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_from_path has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_from_path has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Finds an item factory which has been constructed using the
 	 * "<name>" prefix of path as the path argument
 	 * for gtk_item_factory_new().
@@ -512,7 +512,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factories_path_delete has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factories_path_delete has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Deletes all widgets constructed from the specified path.
 	 * Params:
 	 * ifactoryPath =  a factory path to prepend to path. May be NULL if path
@@ -527,18 +527,18 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_set_translate_func has been deprecated since version 2.4 and should not be used in newly-written code.
+	 * gtk_item_factory_set_translate_func has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Sets a function to be used for translating the path elements before they
 	 * are displayed.
 	 * Params:
 	 * func =  the GtkTranslateFunc function to be used to translate path elements
 	 * data =  data to pass to func and notify
-	 * notify =  a GtkDestroyNotify function to be called when ifactory is
+	 * notify =  a GDestroyNotify function to be called when ifactory is
 	 *  destroyed and when the translation function is changed again
 	 */
-	public void setTranslateFunc(GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
+	public void setTranslateFunc(GtkTranslateFunc func, void* data, GDestroyNotify notify)
 	{
-		// void gtk_item_factory_set_translate_func (GtkItemFactory *ifactory,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
+		// void gtk_item_factory_set_translate_func (GtkItemFactory *ifactory,  GtkTranslateFunc func,  gpointer data,  GDestroyNotify notify);
 		gtk_item_factory_set_translate_func(gtkItemFactory, func, data, notify);
 	}
 }

@@ -102,7 +102,7 @@ private import gtk.Dialog;
  * GtkPrintUnixDialog as GtkBuildable
  * The GtkPrintUnixDialog implementation of the GtkBuildable interface exposes its
  * notebook internal children with the name "notebook".
- * Example42.A GtkPrintUnixDialog UI definition fragment.
+ * Example 44. A GtkPrintUnixDialog UI definition fragment.
  * <object class="GtkPrintUnixDialog" id="dialog1">
  *  <child internal-child="notebook">
  *  <object class="GtkNotebook" id="notebook">

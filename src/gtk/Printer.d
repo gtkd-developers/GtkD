@@ -267,6 +267,30 @@ public class Printer : ObjectG
 	}
 	
 	/**
+	 * Returns whether the printer is currently paused.
+	 * A paused printer still accepts jobs, but it is not
+	 * printing them.
+	 * Since 2.14
+	 * Returns: TRUE if printer is paused
+	 */
+	public int isPaused()
+	{
+		// gboolean gtk_printer_is_paused (GtkPrinter *printer);
+		return gtk_printer_is_paused(gtkPrinter);
+	}
+	
+	/**
+	 * Returns whether the printer is accepting jobs
+	 * Since 2.14
+	 * Returns: TRUE if printer is accepting jobs
+	 */
+	public int isAcceptingJobs()
+	{
+		// gboolean gtk_printer_is_accepting_jobs (GtkPrinter *printer);
+		return gtk_printer_is_accepting_jobs(gtkPrinter);
+	}
+	
+	/**
 	 * Returns whether the printer is virtual (i.e. does not
 	 * represent actual printer hardware, but something like
 	 * a CUPS class).
@@ -383,6 +407,17 @@ public class Printer : ObjectG
 	{
 		// GtkPrintCapabilities gtk_printer_get_capabilities (GtkPrinter *printer);
 		return gtk_printer_get_capabilities(gtkPrinter);
+	}
+	
+	/**
+	 * Returns default page size of printer.
+	 * Since 2.13
+	 * Returns: a newly allocated GtkPageSetup with default page size of the printer.
+	 */
+	public GtkPageSetup* getDefaultPageSize()
+	{
+		// GtkPageSetup* gtk_printer_get_default_page_size (GtkPrinter *printer);
+		return gtk_printer_get_default_page_size(gtkPrinter);
 	}
 	
 	/**

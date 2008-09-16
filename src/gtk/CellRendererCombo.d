@@ -43,9 +43,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gtk.CellRenderer
+ * 	- gtk.TreeIter
  * structWrap:
  * 	- GtkCellRenderer* -> CellRenderer
+ * 	- GtkTreeIter* -> TreeIter
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,8 +61,12 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
+private import glib.Str;
 private import gtk.CellRenderer;
+private import gtk.TreeIter;
 
 
 
@@ -122,6 +129,45 @@ public class CellRendererCombo : CellRendererText
 	
 	/**
 	 */
+	int[char[]] connectedSignals;
+	
+	void delegate(string, TreeIter, CellRendererCombo)[] onChangedListeners;
+	/**
+	 * This signal is emitted each time after the user selected an item in
+	 * the combo box, either by using the mouse or the arrow keys. Contrary
+	 * to GtkComboBox, GtkCellRendererCombo::changed is not emitted for
+	 * changes made to a selected item in the entry. The argument new_iter
+	 * corresponds to the newly selected item in the combo box and it is relative
+	 * to the GtkTreeModel set via the model property on GtkCellRendererCombo.
+	 * Note that as soon as you change the model displayed in the tree view,
+	 * the tree view will immediately cease the editing operating. This
+	 * means that you most probably want to refrain from changing the model
+	 * until the combo cell renderer emits the edited or editing_canceled signal.
+	 * Since 2.14
+	 */
+	void addOnChanged(void delegate(string, TreeIter, CellRendererCombo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["changed"] = 1;
+		}
+		onChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackChanged(GtkCellRendererCombo* comboStruct, gchar* pathString, GtkTreeIter* newIter, CellRendererCombo cellRendererCombo)
+	{
+		foreach ( void delegate(string, TreeIter, CellRendererCombo) dlg ; cellRendererCombo.onChangedListeners )
+		{
+			dlg(Str.toString(pathString), new TreeIter(newIter), cellRendererCombo);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new GtkCellRendererCombo.

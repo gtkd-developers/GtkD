@@ -43,8 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ListG
  * 	- gtk.Window
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -59,6 +61,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import glib.ListG;
 private import gtk.Window;
 
 
@@ -147,5 +150,21 @@ public class WindowGroup : ObjectG
 	{
 		// void gtk_window_group_remove_window (GtkWindowGroup *window_group,  GtkWindow *window);
 		gtk_window_group_remove_window(gtkWindowGroup, (window is null) ? null : window.getWindowStruct());
+	}
+	
+	/**
+	 * Returns a list of the GtkWindows that belong to window_group.
+	 * Since 2.14
+	 * Returns: A newly-allocated list of windows inside the group.
+	 */
+	public ListG listWindows()
+	{
+		// GList* gtk_window_group_list_windows (GtkWindowGroup *window_group);
+		auto p = gtk_window_group_list_windows(gtkWindowGroup);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 }

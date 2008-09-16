@@ -134,4 +134,15 @@ public class ColorSelectionDialog : Dialog
 		}
 		this(cast(GtkColorSelectionDialog*) p);
 	}
+	
+	/**
+	 * Retrieves the GtkColorSelection widget embedded in the dialog.
+	 * Since 2.14
+	 * Returns: the embedded GtkColorSelection
+	 */
+	public GtkWidget* getColorSelection()
+	{
+		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
+		return gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+	}
 }

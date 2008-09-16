@@ -438,7 +438,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onApplyTagListeners;
 	/**
-	 * The apply_tag signal is emitted to apply a tag to a
+	 * The ::apply-tag signal is emitted to apply a tag to a
 	 * range of text in a GtkTextBuffer.
 	 * Applying actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must not
@@ -473,7 +473,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextBuffer)[] onBeginUserActionListeners;
 	/**
-	 * The begin_user_action signal is emitted at the beginning of a single
+	 * The ::begin-user-action signal is emitted at the beginning of a single
 	 * user-visible operation on a GtkTextBuffer.
 	 * See also:
 	 * gtk_text_buffer_begin_user_action(),
@@ -508,7 +508,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextBuffer)[] onChangedListeners;
 	/**
-	 * The changed signal is emitted when the content of a GtkTextBuffer
+	 * The ::changed signal is emitted when the content of a GtkTextBuffer
 	 * has changed.
 	 */
 	void addOnChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -536,7 +536,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextIter, TextIter, TextBuffer)[] onDeleteRangeListeners;
 	/**
-	 * The delete_range signal is emitted to delete a range
+	 * The ::delete-range signal is emitted to delete a range
 	 * from a GtkTextBuffer.
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the start and end iters (or has to revalidate them).
@@ -571,7 +571,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextBuffer)[] onEndUserActionListeners;
 	/**
-	 * The end_user_action signal is emitted at the end of a single
+	 * The ::end-user-action signal is emitted at the end of a single
 	 * user-visible operation GtkTextBuffer.
 	 * See also:
 	 * gtk_text_buffer_end_user_action(),
@@ -607,7 +607,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextIter, TextChildAnchor, TextBuffer)[] onInsertChildAnchorListeners;
 	/**
-	 * The insert_child_anchor signal is emitted to insert a
+	 * The ::insert-child-anchor signal is emitted to insert a
 	 * GtkTextChildAnchor in a GtkTextBuffer.
 	 * Insertion actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must
@@ -641,7 +641,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextIter, Pixbuf, TextBuffer)[] onInsertPixbufListeners;
 	/**
-	 * The insert_pixbuf signal is emitted to insert a GdkPixbuf
+	 * The ::insert-pixbuf signal is emitted to insert a GdkPixbuf
 	 * in a GtkTextBuffer. Insertion actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the location iter (or has to revalidate it).
@@ -674,7 +674,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextIter, string, gint, TextBuffer)[] onInsertTextListeners;
 	/**
-	 * The insert_text signal is emitted to insert text in a GtkTextBuffer.
+	 * The ::insert-text signal is emitted to insert text in a GtkTextBuffer.
 	 * Insertion actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the location iter (or has to revalidate it).
@@ -709,7 +709,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextMark, TextBuffer)[] onMarkDeletedListeners;
 	/**
-	 * The mark_deleted signal is emitted as notification
+	 * The ::mark-deleted signal is emitted as notification
 	 * after a GtkTextMark is deleted.
 	 */
 	void addOnMarkDeleted(void delegate(TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -737,7 +737,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextIter, TextMark, TextBuffer)[] onMarkSetListeners;
 	/**
-	 * The mark_set signal is emitted as notification
+	 * The ::mark-set signal is emitted as notification
 	 * after a GtkTextMark is set.
 	 * See also:
 	 * gtk_text_buffer_create_mark(),
@@ -768,7 +768,7 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextBuffer)[] onModifiedChangedListeners;
 	/**
-	 * The modified_changed signal is emitted when the modified bit of a
+	 * The ::modified-changed signal is emitted when the modified bit of a
 	 * GtkTextBuffer flips.
 	 */
 	void addOnModifiedChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -796,8 +796,8 @@ public class TextBuffer : ObjectG
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onRemoveTagListeners;
 	/**
-	 * The remove_tag signal is emitted to remove all occurrences of tag from a
-	 * range of text in a GtkTextBuffer.
+	 * The ::remove-tag signal is emitted to remove all occurrences of tag from
+	 * a range of text in a GtkTextBuffer.
 	 * Removal actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the start and end iters (or has to revalidate them).
@@ -889,7 +889,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Inserts len bytes of text at position iter. If len is -1,
 	 * text must be nul-terminated and will be inserted in its
-	 * entirety. Emits the "insert_text" signal; insertion actually occurs
+	 * entirety. Emits the "insert-text" signal; insertion actually occurs
 	 * in the default handler for the signal. iter is invalidated when
 	 * insertion occurs (because the buffer contents change), but the
 	 * default signal handler revalidates it to point to the end of the
@@ -998,7 +998,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Deletes text between start and end. The order of start and end
 	 * is not actually relevant; gtk_text_buffer_delete() will reorder
-	 * them. This function actually emits the "delete_range" signal, and
+	 * them. This function actually emits the "delete-range" signal, and
 	 * the default handler of that signal deletes the text. Because the
 	 * buffer is modified, all outstanding iterators become invalid after
 	 * calling this function; however, the start and end will be
@@ -1173,7 +1173,7 @@ public class TextBuffer : ObjectG
 	 * reference to the returned GtkTextMark, so you can ignore the
 	 * return value if you like. Marks are owned by the buffer and go
 	 * away when the buffer does.
-	 * Emits the "mark_set" signal as notification of the mark's initial
+	 * Emits the "mark-set" signal as notification of the mark's initial
 	 * placement.
 	 * Params:
 	 * markName =  name for mark, or NULL
@@ -1193,7 +1193,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Moves mark to the new location where. Emits the "mark_set" signal
+	 * Moves mark to the new location where. Emits the "mark-set" signal
 	 * as notification of the move.
 	 * Params:
 	 * mark =  a GtkTextMark
@@ -1222,7 +1222,7 @@ public class TextBuffer : ObjectG
 	 * Adds the mark at position where. The mark must not be added to
 	 * another buffer, and if its name is not NULL then there must not
 	 * be another mark in the buffer with the same name.
-	 * Emits the "mark_set" signal as notification of the mark's initial
+	 * Emits the "mark-set" signal as notification of the mark's initial
 	 * placement.
 	 * Since 2.12
 	 * Params:
@@ -1243,7 +1243,7 @@ public class TextBuffer : ObjectG
 	 * invalid, until it gets added to a buffer again with
 	 * gtk_text_buffer_add_mark(). Use gtk_text_mark_get_deleted() to
 	 * find out if a mark has been removed from its buffer.
-	 * The "mark_deleted" signal will be emitted as notification after
+	 * The "mark-deleted" signal will be emitted as notification after
 	 * the mark is deleted.
 	 * Params:
 	 * mark =  a GtkTextMark in buffer
@@ -1374,7 +1374,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Emits the "apply_tag" signal on buffer. The default
+	 * Emits the "apply-tag" signal on buffer. The default
 	 * handler for the signal applies tag to the given range.
 	 * start and end do not have to be in order.
 	 * Params:
@@ -1389,7 +1389,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Emits the "remove_tag" signal. The default handler for the signal
+	 * Emits the "remove-tag" signal. The default handler for the signal
 	 * removes all occurrences of tag from the given range. start and
 	 * end don't have to be in order.
 	 * Params:
@@ -1590,7 +1590,7 @@ public class TextBuffer : ObjectG
 	 * last time it was saved. Whenever the buffer is saved to disk, call
 	 * gtk_text_buffer_set_modified (buffer, FALSE). When the buffer is modified,
 	 * it will automatically toggled on the modified bit again. When the modified
-	 * bit flips, the buffer emits a "modified_changed" signal.
+	 * bit flips, the buffer emits a "modified-changed" signal.
 	 * Params:
 	 * setting =  modification flag setting
 	 */
@@ -1684,7 +1684,7 @@ public class TextBuffer : ObjectG
 	 * an undo stack. GtkTextBuffer maintains a count of calls to
 	 * gtk_text_buffer_begin_user_action() that have not been closed with
 	 * a call to gtk_text_buffer_end_user_action(), and emits the
-	 * "begin_user_action" and "end_user_action" signals only for the
+	 * "begin-user-action" and "end-user-action" signals only for the
 	 * outermost pair of calls. This allows you to build user actions
 	 * from other user actions.
 	 * The "interactive" buffer mutation functions, such as
@@ -1882,7 +1882,6 @@ public class TextBuffer : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * mimeType =  the format's mime-type
-	 * funct =  the deserialize function to register
 	 * userData =  function's user_data
 	 * userDataDestroy =  a function to call when user_data is no longer needed
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
@@ -1914,7 +1913,6 @@ public class TextBuffer : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * mimeType =  the format's mime-type
-	 * funct =  the serialize function to register
 	 * userData =  function's user_data
 	 * userDataDestroy =  a function to call when user_data is no longer needed
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.

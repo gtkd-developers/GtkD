@@ -310,7 +310,6 @@ public class Button : Bin
 	void delegate(Button)[] onEnterListeners;
 	/**
 	 * Emitted when the pointer enters the button.
-	 * Deprecated: Use the "enter-notify-event" signal.
 	 */
 	void addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -338,7 +337,6 @@ public class Button : Bin
 	void delegate(Button)[] onLeaveListeners;
 	/**
 	 * Emitted when the pointer leaves the button.
-	 * Deprecated: Use the "leave-notify-event" signal.
 	 */
 	void addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -366,7 +364,6 @@ public class Button : Bin
 	void delegate(Button)[] onPressedListeners;
 	/**
 	 * Emitted when the button is pressed.
-	 * Deprecated: Use the "button-press-event" signal.
 	 */
 	void addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -394,7 +391,6 @@ public class Button : Bin
 	void delegate(Button)[] onReleasedListeners;
 	/**
 	 * Emitted when the button is released.
-	 * Deprecated: Use the "button-release-event" signal.
 	 */
 	void addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

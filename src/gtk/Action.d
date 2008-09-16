@@ -218,7 +218,7 @@ public class Action : ObjectG, BuildableIF
 	 * Creates a new GtkAction object. To add the action to a
 	 * GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
-	 * See the section called UI Definitions for information on allowed action
+	 * See the section called “UI Definitions” for information on allowed action
 	 * names.
 	 * Since 2.4
 	 * Params:
@@ -529,6 +529,9 @@ public class Action : ObjectG, BuildableIF
 	 * Sets the accel path for this action. All proxy widgets associated
 	 * with the action will have this accel path, so that their
 	 * accelerators are consistent.
+	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
 	 * Since 2.4
 	 * Params:
 	 * accelPath =  the accelerator path

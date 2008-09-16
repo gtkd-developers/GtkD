@@ -383,7 +383,7 @@ public class IMContext : ObjectG
 	 */
 	public void setCursorLocation(Rectangle area)
 	{
-		// void gtk_im_context_set_cursor_location (GtkIMContext *context,  GdkRectangle *area);
+		// void gtk_im_context_set_cursor_location (GtkIMContext *context,  const GdkRectangle *area);
 		gtk_im_context_set_cursor_location(gtkIMContext, (area is null) ? null : area.getRectangleStruct());
 	}
 	

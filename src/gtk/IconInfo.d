@@ -231,6 +231,25 @@ public class IconInfo
 	}
 	
 	/**
+	 * Creates a GtkIconInfo for a GtkPixbuf.
+	 * Since 2.14
+	 * Params:
+	 * iconTheme =  a GtkIconTheme
+	 * pixbuf =  the pixbuf to wrap in a GtkIconInfo
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkIconTheme* iconTheme, Pixbuf pixbuf)
+	{
+		// GtkIconInfo* gtk_icon_info_new_for_pixbuf (GtkIconTheme *icon_theme,  GdkPixbuf *pixbuf);
+		auto p = gtk_icon_info_new_for_pixbuf(iconTheme, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_icon_info_new_for_pixbuf(iconTheme, (pixbuf is null) ? null : pixbuf.getPixbufStruct())");
+		}
+		this(cast(GtkIconInfo*) p);
+	}
+	
+	/**
 	 * Gets the base size for the icon. The base size
 	 * is a size for the icon that was specified by
 	 * the icon theme creator. This may be different
@@ -290,7 +309,10 @@ public class IconInfo
 	 * that differ slightly from their nominal sizes, and in addition GTK+
 	 * will avoid scaling icons that it considers sufficiently close to the
 	 * requested size or for which the source image would have to be scaled
-	 * up too far. (This maintains sharpness.)
+	 * up too far. (This maintains sharpness.). This behaviour can be changed
+	 * by passing the GTK_ICON_LOOKUP_FORCE_SIZE flag when obtaining
+	 * the GtkIconInfo. If this flag has been specified, the pixbuf
+	 * returned by this function will be scaled to the exact size.
 	 * Since 2.4
 	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon.
 	 * Throws: GException on failure.

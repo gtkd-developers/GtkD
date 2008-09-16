@@ -82,7 +82,8 @@ private import gtk.Bin;
  * widget to the tool item.
  * For toolbar items that contain buttons, see the GtkToolButton,
  * GtkToggleToolButton and GtkRadioToolButton classes.
- * See the GtkToolbar class for a description of the toolbar widget.
+ * See the GtkToolbar class for a description of the toolbar widget, and
+ * GtkToolShell for a description of the tool shell interface.
  */
 public class ToolItem : Bin
 {
@@ -227,10 +228,10 @@ public class ToolItem : Bin
 	 * This signal is emitted when some property of the toolbar that the
 	 * item is a child of changes. For custom subclasses of GtkToolItem,
 	 * the default handler of this signal use the functions
-	 * gtk_toolbar_get_orientation()
-	 * gtk_toolbar_get_style()
-	 * gtk_toolbar_get_icon_size()
-	 * gtk_toolbar_get_relief_style()
+	 * gtk_tool_shell_get_orientation()
+	 * gtk_tool_shell_get_style()
+	 * gtk_tool_shell_get_icon_size()
+	 * gtk_tool_shell_get_relief_style()
 	 * to find out what the toolbar should look like and change
 	 * themselves accordingly.
 	 * See Also
@@ -611,5 +612,17 @@ public class ToolItem : Bin
 	{
 		// void gtk_tool_item_rebuild_menu (GtkToolItem *tool_item);
 		gtk_tool_item_rebuild_menu(gtkToolItem);
+	}
+	
+	/**
+	 * Emits the signal "toolbar_reconfigured" on tool_item.
+	 * GtkToolbar and other GtkToolShell implementations use this function
+	 * to notify children, when some aspect of their configuration changes.
+	 * Since 2.14
+	 */
+	public void toolbarReconfigured()
+	{
+		// void gtk_tool_item_toolbar_reconfigured (GtkToolItem *tool_item);
+		gtk_tool_item_toolbar_reconfigured(gtkToolItem);
 	}
 }

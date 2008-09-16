@@ -181,7 +181,7 @@ public class Fixed : Container
 	
 	/**
 	 * Gets whether the GtkFixed has its own GdkWindow.
-	 * See gdk_fixed_set_has_window().
+	 * See gtk_fixed_set_has_window().
 	 * Returns: TRUE if fixed has its own window.
 	 */
 	public int getHasWindow()

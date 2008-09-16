@@ -257,7 +257,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public void getSize(Widget widget, Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
-		// void gtk_cell_renderer_get_size (GtkCellRenderer *cell,  GtkWidget *widget,  GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
+		// void gtk_cell_renderer_get_size (GtkCellRenderer *cell,  GtkWidget *widget,  const GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
 		gtk_cell_renderer_get_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), &xOffset, &yOffset, &width, &height);
 	}
 	
@@ -281,7 +281,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public void render(Window window, Widget widget, Rectangle backgroundArea, Rectangle cellArea, Rectangle exposeArea, GtkCellRendererState flags)
 	{
-		// void gtk_cell_renderer_render (GtkCellRenderer *cell,  GdkWindow *window,  GtkWidget *widget,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GdkRectangle *expose_area,  GtkCellRendererState flags);
+		// void gtk_cell_renderer_render (GtkCellRenderer *cell,  GdkWindow *window,  GtkWidget *widget,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  const GdkRectangle *expose_area,  GtkCellRendererState flags);
 		gtk_cell_renderer_render(gtkCellRenderer, (window is null) ? null : window.getWindowStruct(), (widget is null) ? null : widget.getWidgetStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), (exposeArea is null) ? null : exposeArea.getRectangleStruct(), flags);
 	}
 	
@@ -302,7 +302,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public int activate(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
-		// gboolean gtk_cell_renderer_activate (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
+		// gboolean gtk_cell_renderer_activate (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
 		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
 	}
 	
@@ -321,7 +321,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public CellEditableIF startEditing(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
-		// GtkCellEditable* gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
+		// GtkCellEditable* gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
 		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
 		if(p is null)
 		{

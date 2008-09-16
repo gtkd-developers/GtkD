@@ -139,18 +139,29 @@ public class DragAndDrop
 	 */
 	
 	/**
-	 * Sets a widget as a potential drop destination.
+	 * Sets a widget as a potential drop destination, and adds default behaviors.
+	 * The default behaviors listed in flags have an effect similar
+	 * to installing default handlers for the widget's drag-and-drop signals
+	 * ("drag-motion", "drag-drop", ...). They all exist
+	 * for convenience. When passing GTK_DEST_DEFAULT_ALL for instance it is
+	 * sufficient to connect to the widget's "drag-data-received"
+	 * signal to get primitive, but consistent drag-and-drop support.
+	 * Things become more complicated when you try to preview the dragged data,
+	 * as described in the documentation for "drag-motion". The default
+	 * behaviors described by flags make some assumptions, that can conflict
+	 * with your own signal handlers. For instance GTK_DEST_DEFAULT_DROP causes
+	 * invokations of gdk_drag_status() in the context of "drag-motion",
+	 * and invokations of gtk_drag_finish() in "drag-data-received".
+	 * Especially the later is dramatic, when your own "drag-motion"
+	 * handler calls gtk_drag_get_data() to inspect the dragged data.
 	 * Params:
-	 * widget = a GtkWidget
-	 * flags = the flags that specify what actions GTK+ should take
-	 *  on behalf of a widget for drops onto that widget. The targets
-	 *  and actions fields only are used if GTK_DEST_DEFAULT_MOTION
-	 *  or GTK_DEST_DEFAULT_DROP are given.
-	 * targets = a pointer to an array of GtkTargetEntrys indicating
-	 *  the drop types that this widget will accept.
-	 * nTargets = the number of entries in targets.
-	 * actions = a bitmask of possible actions for a drop onto this
-	 *  widget.
+	 * widget =  a GtkWidget
+	 * flags =  which types of default drag behavior to use
+	 * targets =  a pointer to an array of GtkTargetEntrys indicating
+	 * the drop types that this widget will accept. Later you can access the list
+	 * with gtk_drag_dest_get_target_list() and gtk_drag_dest_find_target().
+	 * nTargets =  the number of entries in targets.
+	 * actions =  a bitmask of possible actions for a drop onto this widget.
 	 */
 	public static void destSet(Widget widget, GtkDestDefaults flags, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
 	{
@@ -428,7 +439,7 @@ public class DragAndDrop
 	/**
 	 * Changes the icon for a widget to a given widget. GTK+
 	 * will not destroy the icon, so if you don't want
-	 * it to persist, you should connect to the "drag_end"
+	 * it to persist, you should connect to the "drag-end"
 	 * signal and destroy it yourself.
 	 * Params:
 	 * widget =  a toplevel window to use as an icon.

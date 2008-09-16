@@ -256,9 +256,9 @@ public class ObjectGtk : ObjectG
 	 * notify = callback to invoke before the object is freed.
 	 * data = extra data to pass to notify.
 	 */
-	public void weakref(GtkDestroyNotify notify, void* data)
+	public void weakref(GDestroyNotify notify, void* data)
 	{
-		// void gtk_object_weakref (GtkObject *object,  GtkDestroyNotify notify,  gpointer data);
+		// void gtk_object_weakref (GtkObject *object,  GDestroyNotify notify,  gpointer data);
 		gtk_object_weakref(gtkObject, notify, data);
 	}
 	
@@ -270,9 +270,9 @@ public class ObjectGtk : ObjectG
 	 * notify = callback to search for.
 	 * data = data to search for.
 	 */
-	public void weakunref(GtkDestroyNotify notify, void* data)
+	public void weakunref(GDestroyNotify notify, void* data)
 	{
-		// void gtk_object_weakunref (GtkObject *object,  GtkDestroyNotify notify,  gpointer data);
+		// void gtk_object_weakunref (GtkObject *object,  GDestroyNotify notify,  gpointer data);
 		gtk_object_weakunref(gtkObject, notify, data);
 	}
 	
@@ -318,9 +318,9 @@ public class ObjectGtk : ObjectG
 	 * data = data to associate with that key.
 	 * destroy = function to call when the association is destroyed.
 	 */
-	public void setDataFull(string key, void* data, GtkDestroyNotify destroy)
+	public void setDataFull(string key, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_object_set_data_full (GtkObject *object,  const gchar *key,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_object_set_data_full (GtkObject *object,  const gchar *key,  gpointer data,  GDestroyNotify destroy);
 		gtk_object_set_data_full(gtkObject, Str.toStringz(key), data, destroy);
 	}
 	
@@ -448,9 +448,9 @@ public class ObjectGtk : ObjectG
 	 * data = data to associate with that key.
 	 * destroy = function to call when the association is destroyed.
 	 */
-	public void setDataByIdFull(GQuark dataId, void* data, GtkDestroyNotify destroy)
+	public void setDataByIdFull(GQuark dataId, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_object_set_data_by_id_full (GtkObject *object,  GQuark data_id,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_object_set_data_by_id_full (GtkObject *object,  GQuark data_id,  gpointer data,  GDestroyNotify destroy);
 		gtk_object_set_data_by_id_full(gtkObject, dataId, data, destroy);
 	}
 	

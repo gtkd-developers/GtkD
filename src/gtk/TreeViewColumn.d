@@ -301,9 +301,9 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * funcData =  The user data for func.
 	 * destroy =  The destroy notification for func_data
 	 */
-	public void setCellDataFunc(CellRenderer cellRenderer, GtkTreeCellDataFunc func, void* funcData, GtkDestroyNotify destroy)
+	public void setCellDataFunc(CellRenderer cellRenderer, GtkTreeCellDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
-		// void gtk_tree_view_column_set_cell_data_func  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  GtkTreeCellDataFunc func,  gpointer func_data,  GtkDestroyNotify destroy);
+		// void gtk_tree_view_column_set_cell_data_func  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  GtkTreeCellDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
 		gtk_tree_view_column_set_cell_data_func(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), func, funcData, destroy);
 	}
 	
@@ -751,7 +751,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public void cellGetSize(Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
-		// void gtk_tree_view_column_cell_get_size (GtkTreeViewColumn *tree_column,  GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
+		// void gtk_tree_view_column_cell_get_size (GtkTreeViewColumn *tree_column,  const GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
 		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, (cellArea is null) ? null : cellArea.getRectangleStruct(), &xOffset, &yOffset, &width, &height);
 	}
 	

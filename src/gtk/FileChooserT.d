@@ -143,7 +143,7 @@ private import gtk.FileFilter;
  * 	gtk_file_chooser_set_preview_widget_active() with a boolean
  * 	flag that indicates whether your callback could successfully
  * 	generate a preview.
- * Example30.Sample Usage
+ * Example 32. Sample Usage
  * {
 	 *  GtkImage *preview;
 	 *  ...
@@ -177,7 +177,7 @@ private import gtk.FileFilter;
  * 	file in read-only mode. You can use
  * 	gtk_file_chooser_set_extra_widget() to insert additional
  * 	widgets in a file chooser.
- * Example31.Sample Usage
+ * Example 33. Sample Usage
  * {
 	 *  GtkWidget *toggle;
 	 *  ...
@@ -198,7 +198,7 @@ private import gtk.FileFilter;
  * 	widget has several key
  * 	bindings and their associated signals. This section
  * 	describes the available key binding signals.
- * Example32.GtkFileChooser key binding example
+ * Example 34. GtkFileChooser key binding example
  * 	 The default keys that activate the key-binding signals in
  * 	 GtkFileChooserDefaultClass are as
  * 	 follows:
@@ -259,11 +259,11 @@ private import gtk.FileFilter;
  * 	 immediately type a path name. On Unix systems, this is bound to
  * 	 ~ (tilde) with a path string
  * 	 of "~" itself for access to home directories.
- * chooser:
+ * chooser :
  * 		the object which received the signal.
- * path:
+ * path :
  * 		default contents for the text entry for the file name
- * user_data:
+ * user_data :
  * 		user data set when the signal handler was connected.
  * Tip
  * 	 You can create your own bindings for the
@@ -288,9 +288,9 @@ private import gtk.FileFilter;
  * 	 is bound to Backspace and
  * 	 Alt+Up
  * 	 (the Up key in the numeric keypad also works).
- * chooser:
+ * chooser :
  * 		the object which received the signal.
- * user_data:
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::down-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -304,9 +304,9 @@ private import gtk.FileFilter;
  * 	 default this is bound to
  * 	 Alt+Down
  * 	 (the Down key in the numeric keypad also works).
- * chooser:
+ * chooser :
  * 		the object which received the signal.
- * user_data:
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::home-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -315,9 +315,9 @@ private import gtk.FileFilter;
  * 	 folder in the file list. By default this is bound to
  * 	 Alt+Home
  * 	 (the Home key in the numeric keypad also works).
- * chooser:
+ * chooser :
  * 		the object which received the signal.
- * user_data:
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::desktop-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -325,9 +325,9 @@ private import gtk.FileFilter;
  * 	 This is used to make the file chooser show the user's Desktop
  * 	 folder in the file list. By default this is bound to
  * 	 Alt+D.
- * chooser:
+ * chooser :
  * 		the object which received the signal.
- * user_data:
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::quick-bookmark" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -347,11 +347,11 @@ private import gtk.FileFilter;
  * 	 successively;
  * 	 Alt+0 is
  * 	 defined to switch to the bookmark at index 10.
- * chooser:
+ * chooser :
  * 		the object which received the signal.
- * bookmark_indes:
+ * bookmark_indes :
  * 		index of the bookmark to switch to; the indices start at 0.
- * user_data:
+ * user_data :
  * 		user data set when the signal handler was connected.
  */
 public template FileChooserT(TStruct)
@@ -402,7 +402,7 @@ public template FileChooserT(TStruct)
 	 *  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
 	 *  illustrates this.
 	 *
-	 * Example33.Custom confirmation
+	 * Example 35. Custom confirmation
 	 * static GtkFileChooserConfirmation
 	 * confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
 	 * {
@@ -595,7 +595,7 @@ public template FileChooserT(TStruct)
 		 * Your widget may not be able to preview all kinds of files; your callback
 		 * must call gtk_file_chooser_set_preview_widget_active() to inform the file
 		 * chooser about whether the preview was generated successfully or not.
-		 * Please see the example code in the section called Adding a Preview Widget.
+		 * Please see the example code in the section called “Adding a Preview Widget”.
 		 * See also: gtk_file_chooser_set_preview_widget(),
 		 * gtk_file_chooser_set_preview_widget_active(),
 		 * gtk_file_chooser_set_use_preview_label(),
@@ -816,11 +816,12 @@ public template FileChooserT(TStruct)
 		 * gtk_file_chooser_select_filename().
 		 * Note that the file must exist, or nothing will be done except
 		 * for the directory change.
-		 * If you are implementing a File/Save As... dialog, you
-		 * should use this function if you already have a file name to which the user may save; for example,
-		 * when the user opens an existing file and then does File/Save As...
-		 * on it. If you don't have a file name already  for example, if the user just created
-		 * a new file and is saving it for the first time, do not call this function. Instead, use
+		 * If you are implementing a File/Save As... dialog,
+		 * you should use this function if you already have a file name to which the
+		 * user may save; for example, when the user opens an existing file and then
+		 * does File/Save As... on it. If you don't have
+		 * a file name already — for example, if the user just created a new
+		 * file and is saving it for the first time, do not call this function.
 		 * Since 2.4
 		 * Params:
 		 * filename =  the filename to set as current
@@ -958,13 +959,14 @@ public template FileChooserT(TStruct)
 		 * of chooser will be changed to the folder containing uri. This is equivalent
 		 * to a sequence of gtk_file_chooser_unselect_all() followed by
 		 * gtk_file_chooser_select_uri().
-		 * Note that the URI must exist, or nothing will be done except
-		 * for the directory change.
-		 * If you are implementing a File/Save As... dialog, you
-		 * should use this function if you already have a file name to which the user may save; for example,
-		 * when the user opens an existing file and then does File/Save As...
-		 * on it. If you don't have a file name already  for example, if the user just created
-		 * a new file and is saving it for the first time, do not call this function. Instead, use
+		 * Note that the URI must exist, or nothing will be done except for the
+		 * directory change.
+		 * If you are implementing a File/Save As... dialog,
+		 * you should use this function if you already have a file name to which the
+		 * user may save; for example, when the user opens an existing file and then
+		 * does File/Save As... on it. If you don't have
+		 * a file name already — for example, if the user just created a new
+		 * file and is saving it for the first time, do not call this function.
 		 * Since 2.4
 		 * Params:
 		 * uri =  the URI to set as current
@@ -1414,5 +1416,160 @@ public template FileChooserT(TStruct)
 				return null;
 			}
 			return new ListSG(cast(GSList*) p);
+		}
+		
+		/**
+		 * Gets the current folder of chooser as GFile.
+		 * See gtk_file_chooser_get_current_folder_uri().
+		 * Since 2.14
+		 * Returns: the GFile for the current folder.
+		 */
+		public GFile* getCurrentFolderFile()
+		{
+			// GFile* gtk_file_chooser_get_current_folder_file  (GtkFileChooser *chooser);
+			return gtk_file_chooser_get_current_folder_file(getFileChooserTStruct());
+		}
+		
+		/**
+		 * Gets the GFile for the currently selected file in
+		 * the file selector. If multiple files are selected,
+		 * one of the files will be returned at random.
+		 * If the file chooser is in folder mode, this function returns the selected
+		 * folder.
+		 * Since 2.14
+		 * Returns: a selected GFile
+		 */
+		public GFile* getFile()
+		{
+			// GFile* gtk_file_chooser_get_file (GtkFileChooser *chooser);
+			return gtk_file_chooser_get_file(getFileChooserTStruct());
+		}
+		
+		/**
+		 * Lists all the selected files and subfolders in the current folder of chooser
+		 * as GFile. An internal function, see gtk_file_chooser_get_uris().
+		 * Since 2.14
+		 * Returns: a GSList containing a GFile for each selected file and subfolder in the current folder. Free the returned list with g_slist_free(), and the files with g_object_unref().
+		 */
+		public ListSG getFiles()
+		{
+			// GSList* gtk_file_chooser_get_files (GtkFileChooser *chooser);
+			auto p = gtk_file_chooser_get_files(getFileChooserTStruct());
+			if(p is null)
+			{
+				return null;
+			}
+			return new ListSG(cast(GSList*) p);
+		}
+		
+		/**
+		 * Gets the GFile that should be previewed in a custom preview
+		 * Internal function, see gtk_file_chooser_get_preview_uri().
+		 * Since 2.14
+		 * Returns: the GFile for the file to preview, or NULL if no file is selected. Free with g_object_unref().
+		 */
+		public GFile* getPreviewFile()
+		{
+			// GFile* gtk_file_chooser_get_preview_file (GtkFileChooser *chooser);
+			return gtk_file_chooser_get_preview_file(getFileChooserTStruct());
+		}
+		
+		/**
+		 * Selects the file referred to by file. An internal function. See
+		 * _gtk_file_chooser_select_uri().
+		 * Since 2.14
+		 * Params:
+		 * file =  the file to select
+		 * Returns: TRUE if both the folder could be changed and the path wasselected successfully, FALSE otherwise.
+		 * Throws: GException on failure.
+		 */
+		public int selectFile(GFile* file)
+		{
+			// gboolean gtk_file_chooser_select_file (GtkFileChooser *chooser,  GFile *file,  GError **error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_select_file(getFileChooserTStruct(), file, &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
+		}
+		
+		/**
+		 * Sets the current folder for chooser from a GFile.
+		 * Internal function, see gtk_file_chooser_set_current_folder_uri().
+		 * Since 2.14
+		 * Params:
+		 * file =  the GFile for the new folder
+		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
+		 * Throws: GException on failure.
+		 */
+		public int setCurrentFolderFile(GFile* file)
+		{
+			// gboolean gtk_file_chooser_set_current_folder_file  (GtkFileChooser *chooser,  GFile *file,  GError **error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_set_current_folder_file(getFileChooserTStruct(), file, &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
+		}
+		
+		/**
+		 * Sets file as the current filename for the file chooser, by changing
+		 * to the file's parent folder and actually selecting the file in list. If
+		 * the chooser is in GTK_FILE_CHOOSER_ACTION_SAVE mode, the file's base name
+		 * will also appear in the dialog's file name entry.
+		 * If the file name isn't in the current folder of chooser, then the current
+		 * folder of chooser will be changed to the folder containing filename. This
+		 * is equivalent to a sequence of gtk_file_chooser_unselect_all() followed by
+		 * gtk_file_chooser_select_filename().
+		 * Note that the file must exist, or nothing will be done except
+		 * for the directory change.
+		 * If you are implementing a File/Save As... dialog,
+		 * you should use this function if you already have a file name to which the
+		 * user may save; for example, when the user opens an existing file and then
+		 * does File/Save As... on it. If you don't have
+		 * a file name already — for example, if the user just created a new
+		 * file and is saving it for the first time, do not call this function.
+		 * Since 2.14
+		 * Params:
+		 * file =  the GFile to set as current
+		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
+		 * Throws: GException on failure.
+		 */
+		public int setFile(GFile* file)
+		{
+			// gboolean gtk_file_chooser_set_file (GtkFileChooser *chooser,  GFile *file,  GError **error);
+			GError* err = null;
+			
+			auto p = gtk_file_chooser_set_file(getFileChooserTStruct(), file, &err);
+			
+			if (err !is null)
+			{
+				throw new GException( new ErrorG(err) );
+			}
+			
+			return p;
+		}
+		
+		/**
+		 * Unselects the file referred to by file. If the file is not in the current
+		 * directory, does not exist, or is otherwise not currently selected, does nothing.
+		 * Since 2.14
+		 * Params:
+		 * file =  a GFile
+		 */
+		public void unselectFile(GFile* file)
+		{
+			// void gtk_file_chooser_unselect_file (GtkFileChooser *chooser,  GFile *file);
+			gtk_file_chooser_unselect_file(getFileChooserTStruct(), file);
 		}
 }

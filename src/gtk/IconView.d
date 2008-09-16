@@ -1062,7 +1062,6 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * column: an integer, which is a valid column number for icon_view's model
 	 * If you only plan to have simple (text-only) tooltips on full items, you
 	 * can use this function to have GtkIconView handle these automatically
 	 * for you. column should be set to the column in icon_view's model
@@ -1071,6 +1070,7 @@ public class IconView : Container, CellLayoutIF
 	 * icon_view will connect a "query-tooltip" signal handler.
 	 * Since 2.12
 	 * Params:
+	 * column =  an integer, which is a valid column number for icon_view's model
 	 */
 	public void setTooltipColumn(int column)
 	{

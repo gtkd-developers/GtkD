@@ -102,7 +102,7 @@ private import gobject.ObjectG;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example39.The high-level printing API
+ * Example 41. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -218,8 +218,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * widget in a handler for this signal it will be added to a custom
 	 * tab in the print dialog. You typically return a container widget
 	 * with multiple widgets in it.
-	 * The print dialog owns the returned widget, and its lifetime
-	 * isn't controlled by the app. However, the widget is guaranteed
+	 * The print dialog owns the returned widget, and its lifetime is not
+	 * controlled by the application. However, the widget is guaranteed
 	 * to stay around until the "custom-widget-apply"
 	 * signal is emitted on the operation. Then you can read out any
 	 * information you need from the widgets.
@@ -283,9 +283,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	void delegate(GtkPrintOperationResult, PrintOperation)[] onDoneListeners;
 	/**
 	 * Emitted when the print operation run has finished doing
-	 * everything required for printing. result gives you information
-	 * about what happened during the run. If result is
-	 * GTK_PRINT_OPERATION_RESULT_ERROR then you can call
+	 * everything required for printing.
+	 * result gives you information about what happened during the run.
+	 * If result is GTK_PRINT_OPERATION_RESULT_ERROR then you can call
 	 * gtk_print_operation_get_error() for more information.
 	 * If you enabled print status tracking then
 	 * gtk_print_operation_is_finished() may still return FALSE
@@ -420,9 +420,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	bool delegate(GtkPrintContext*, PrintOperation)[] onPaginateListeners;
 	/**
 	 * Emitted after the "begin-print" signal, but before
-	 * the actual rendering starts. It keeps getting emitted until it
-	 * returns FALSE.
-	 * The ::paginate signal is intended to be used for paginating the document
+	 * the actual rendering starts. It keeps getting emitted until a connected
+	 * signal handler returns TRUE.
+	 * The ::paginate signal is intended to be used for paginating a document
 	 * in small chunks, to avoid blocking the user interface for a long
 	 * time. The signal handler should update the number of pages using
 	 * gtk_print_operation_set_n_pages(), and return TRUE if the document
@@ -542,8 +542,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Use gtk_print_operation_get_status() to find out the current
 	 * status.
 	 * Since 2.10
-	 * See Also
-	 * GtkPrintContext, GtkPrintUnixDialog
 	 */
 	void addOnStatusChanged(void delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -565,6 +563,60 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		foreach ( void delegate(PrintOperation) dlg ; printOperation.onStatusChangedListeners )
 		{
 			dlg(printOperation);
+		}
+	}
+	
+	void delegate(GtkPrintContext*, PageSetup, PrintOperation)[] onGotPageSizeListeners;
+	/**
+	 */
+	void addOnGotPageSize(void delegate(GtkPrintContext*, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("got-page-size" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"got-page-size",
+			cast(GCallback)&callBackGotPageSize,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["got-page-size"] = 1;
+		}
+		onGotPageSizeListeners ~= dlg;
+	}
+	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* arg1, GtkPageSetup* arg2, PrintOperation printOperation)
+	{
+		foreach ( void delegate(GtkPrintContext*, PageSetup, PrintOperation) dlg ; printOperation.onGotPageSizeListeners )
+		{
+			dlg(arg1, new PageSetup(arg2), printOperation);
+		}
+	}
+	
+	void delegate(GtkPrintContext*, PrintOperation)[] onReadyListeners;
+	/**
+	 * See Also
+	 * GtkPrintContext, GtkPrintUnixDialog
+	 */
+	void addOnReady(void delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("ready" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"ready",
+			cast(GCallback)&callBackReady,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["ready"] = 1;
+		}
+		onReadyListeners ~= dlg;
+	}
+	extern(C) static void callBackReady(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* arg1, PrintOperation printOperation)
+	{
+		foreach ( void delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onReadyListeners )
+		{
+			dlg(arg1, printOperation);
 		}
 	}
 	
@@ -835,11 +887,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * "status-changed" signal on op to obtain some
 	 * information about the progress of the print operation.
 	 * Furthermore, it may use a recursive mainloop to show the print dialog.
-	 * If you call gtk_print_operation_set_allow_async() or set the allow-async
-	 * property the operation will run asyncronously if this is supported on the
-	 * platform. The "done" signal will be emitted with the
-	 * operation results when the operation is done (i.e. when the dialog is
-	 * canceled, or when the print succeeds or fails).
+	 * If you call gtk_print_operation_set_allow_async() or set the
+	 * "allow-async" property the operation will run
+	 * asynchronously if this is supported on the platform. The
+	 * "done" signal will be emitted with the result of the
+	 * operation when the it is done (i.e. when the dialog is canceled, or when
+	 * the print succeeds or fails).
 	 * if (settings != NULL)
 	 *  gtk_print_operation_set_print_settings (print, settings);
 	 * if (page_setup != NULL)
@@ -848,7 +901,10 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *  G_CALLBACK (begin_print), data);
 	 * g_signal_connect (print, "draw-page",
 	 *  G_CALLBACK (draw_page), data);
-	 * res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, parent, error);
+	 * res = gtk_print_operation_run (print,
+	 *  GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
+	 *  parent,
+	 *  error);
 	 * if (res == GTK_PRINT_OPERATION_RESULT_ERROR)
 	 *  {
 		 *  error_dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
@@ -874,7 +930,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 * action =  the action to start
 	 * parent =  Transient parent of the dialog, or NULL
-	 * Returns: the result of the print operation. A return value of  GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain  the used print settings with gtk_print_operation_get_print_settings()  and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the ::done signal when done.
+	 * Returns: the result of the print operation. A return value of  GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain  the used print settings with gtk_print_operation_get_print_settings()  and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the "done" signal when  done.
 	 * Throws: GException on failure.
 	 */
 	public GtkPrintOperationResult run(GtkPrintOperationAction action, Window parent)

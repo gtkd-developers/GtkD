@@ -281,4 +281,15 @@ public class HandleBox : Bin
 		// GtkPositionType gtk_handle_box_get_snap_edge (GtkHandleBox *handle_box);
 		return gtk_handle_box_get_snap_edge(gtkHandleBox);
 	}
+	
+	/**
+	 * Whether the handlebox's child is currently detached.
+	 * Since 2.14
+	 * Returns: TRUE if the child is currently detached, otherwise FALSE
+	 */
+	public int getChildDetached()
+	{
+		// gboolean gtk_handle_box_get_child_detached (GtkHandleBox *handle_box);
+		return gtk_handle_box_get_child_detached(gtkHandleBox);
+	}
 }

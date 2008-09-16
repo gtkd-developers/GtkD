@@ -738,7 +738,7 @@ public class RcStyle : ObjectG
 	 * order to support symbolic colors.
 	 * Params:
 	 * scanner =  a GScanner
-	 * color =  a pointer to a GtkColor structure in which to store the result
+	 * color =  a pointer to a GdkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */
 	public static uint parseColor(ScannerG scanner, Color color)
@@ -755,7 +755,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * scanner =  a GScanner
 	 * style =  a GtkRcStyle, or NULL
-	 * color =  a pointer to a GtkColor structure in which to store the result
+	 * color =  a pointer to a GdkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */
 	public static uint parseColorFull(ScannerG scanner, RcStyle style, Color color)

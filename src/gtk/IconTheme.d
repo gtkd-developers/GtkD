@@ -448,6 +448,29 @@ public class IconTheme : ObjectG
 	}
 	
 	/**
+	 * Looks up an icon and returns a structure containing
+	 * information such as the filename of the icon.
+	 * The icon can then be rendered into a pixbuf using
+	 * gtk_icon_info_load_icon().
+	 * Since 2.14
+	 * Params:
+	 * icon =  the GIcon to look up
+	 * size =  desired icon size
+	 * flags =  flags modifying the behavior of the icon lookup
+	 * Returns: a GtkIconInfo structure containing  information about the icon, or NULL if the icon  wasn't found. Free with gtk_icon_info_free()
+	 */
+	public IconInfo lookupByGicon(GIcon* icon, int size, GtkIconLookupFlags flags)
+	{
+		// GtkIconInfo* gtk_icon_theme_lookup_by_gicon (GtkIconTheme *icon_theme,  GIcon *icon,  gint size,  GtkIconLookupFlags flags);
+		auto p = gtk_icon_theme_lookup_by_gicon(gtkIconTheme, icon, size, flags);
+		if(p is null)
+		{
+			return null;
+		}
+		return new IconInfo(cast(GtkIconInfo*) p);
+	}
+	
+	/**
 	 * Looks up an icon in an icon theme, scales it to the given size
 	 * and renders it into a pixbuf. This is a convenience function;
 	 * if more details about the icon are needed, use

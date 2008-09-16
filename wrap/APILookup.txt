@@ -133,6 +133,7 @@ srcdir: src
 package: glib glib
 package: gthread gthread
 package: gobject gobject
+package: gio gio
 package: cairo cairo
 package: pango pango
 package: atk atk
@@ -199,16 +200,13 @@ wrap: gtkc
 srcout: ../src
 copy: paths.d
 copy: Loader.d
-#wrap: gtkglc
-#srcout: srcgl
-#copy: paths.d
-#copy: Loader.d
 
 srcdir: src
 bindDir: gtkc
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
+lookup: APILookupGio.txt
 lookup: APILookupCairo.txt
 lookup: APILookupPango.txt
 lookup: APILookupAtk.txt

@@ -131,15 +131,15 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements in UI definitions.
- * Example17.A UI definition fragment with GtkTreeView
- * <object class="GtkTreeView">
+ * Example 19. A UI definition fragment with GtkTreeView
+ * <object class="GtkTreeView" id="treeview">
  *  <property name="model">liststore1</property>
  *  <child>
- *  <object class="GtkTreeViewColumn">
+ *  <object class="GtkTreeViewColumn" id="test-column">
  *  <property name="title">Test</property>
  *  <child>
- *  <object class="GtkCellRendererText"/>
- *  <attributes>"
+ *  <object class="GtkCellRendererText" id="test-renderer"/>
+ *  <attributes>
  *  <attribute name="text">1</attribute>
  *  </attributes>
  *  </child>
@@ -1184,9 +1184,9 @@ public class TreeView : Container
 	 * userData =  User data to be passed to func, or NULL
 	 * destroy =  Destroy notifier for user_data, or NULL
 	 */
-	public void setColumnDragFunction(GtkTreeViewColumnDropFunc func, void* userData, GtkDestroyNotify destroy)
+	public void setColumnDragFunction(GtkTreeViewColumnDropFunc func, void* userData, GDestroyNotify destroy)
 	{
-		// void gtk_tree_view_set_column_drag_function  (GtkTreeView *tree_view,  GtkTreeViewColumnDropFunc func,  gpointer user_data,  GtkDestroyNotify destroy);
+		// void gtk_tree_view_set_column_drag_function  (GtkTreeView *tree_view,  GtkTreeViewColumnDropFunc func,  gpointer user_data,  GDestroyNotify destroy);
 		gtk_tree_view_set_column_drag_function(gtkTreeView, func, userData, destroy);
 	}
 	
@@ -1393,12 +1393,15 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * This function is a convenience function to allow you to reorder models that
-	 * support the GtkDragSourceIface and the GtkDragDestIface. Both
-	 * GtkTreeStore and GtkListStore support these. If reorderable is TRUE, then
-	 * the user can reorder the model by dragging and dropping rows. The
-	 * developer can listen to these changes by connecting to the model's
-	 * row_inserted and row_deleted signals.
+	 * This function is a convenience function to allow you to reorder
+	 * models that support the GtkDragSourceIface and the
+	 * GtkDragDestIface. Both GtkTreeStore and GtkListStore support
+	 * these. If reorderable is TRUE, then the user can reorder the
+	 * model by dragging and dropping rows. The developer can listen to
+	 * these changes by connecting to the model's row_inserted and
+	 * row_deleted signals. The reordering is implemented by setting up
+	 * the tree view as a drag source and destination. Therefore, drag and
+	 * drop can not be used in a reorderable view for any other purpose.
 	 * This function does not give you any degree of control over the order -- any
 	 * reordering is allowed. If more control is needed, you should probably
 	 * handle drag and drop manually.
@@ -1694,7 +1697,8 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Turns tree_view into a drop destination for automatic DND.
+	 * Turns tree_view into a drop destination for automatic DND. Calling
+	 * this method sets reorderable to FALSE.
 	 * Params:
 	 * targets =  the table of targets that the drag will support
 	 * actions =  the bitmask of possible actions for a drag from this
@@ -1707,7 +1711,8 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Turns tree_view into a drag source for automatic DND.
+	 * Turns tree_view into a drag source for automatic DND. Calling this
+	 * method sets reorderable to FALSE.
 	 * Params:
 	 * startButtonMask =  Mask of allowed buttons to start drag
 	 * targets =  the table of targets that the drag will support
@@ -1721,7 +1726,9 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Undoes the effect of gtk_tree_view_enable_model_drag_source().
+	 * Undoes the effect of
+	 * gtk_tree_view_enable_model_drag_source(). Calling this method sets
+	 * reorderable to FALSE.
 	 */
 	public void unsetRowsDragSource()
 	{
@@ -1730,7 +1737,9 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Undoes the effect of gtk_tree_view_enable_model_drag_dest().
+	 * Undoes the effect of
+	 * gtk_tree_view_enable_model_drag_dest(). Calling this method sets
+	 * reorderable to FALSE.
 	 */
 	public void unsetRowsDragDest()
 	{
@@ -1842,11 +1851,12 @@ public class TreeView : Container
 	
 	/**
 	 * Sets column as the column where the interactive search code should
-	 * search in.
-	 * If the sort column is set, users can use the "start-interactive-search"
+	 * search in for the current model.
+	 * If the search column is set, users can use the "start-interactive-search"
 	 * key binding to bring up search popup. The enable-search property controls
 	 * whether simply typing text will also start an interactive search.
-	 * Note that column refers to a column of the model.
+	 * Note that column refers to a column of the current model. The search
+	 * column is reset to -1 when the model is changed.
 	 * Params:
 	 * column =  the column of the model to search in, or -1 to disable searching
 	 */
@@ -1875,9 +1885,9 @@ public class TreeView : Container
 	 * searchUserData =  user data to pass to search_equal_func, or NULL
 	 * searchDestroy =  Destroy notifier for search_user_data, or NULL
 	 */
-	public void setSearchEqualFunc(GtkTreeViewSearchEqualFunc searchEqualFunc, void* searchUserData, GtkDestroyNotify searchDestroy)
+	public void setSearchEqualFunc(GtkTreeViewSearchEqualFunc searchEqualFunc, void* searchUserData, GDestroyNotify searchDestroy)
 	{
-		// void gtk_tree_view_set_search_equal_func (GtkTreeView *tree_view,  GtkTreeViewSearchEqualFunc search_equal_func,  gpointer search_user_data,  GtkDestroyNotify search_destroy);
+		// void gtk_tree_view_set_search_equal_func (GtkTreeView *tree_view,  GtkTreeViewSearchEqualFunc search_equal_func,  gpointer search_user_data,  GDestroyNotify search_destroy);
 		gtk_tree_view_set_search_equal_func(gtkTreeView, searchEqualFunc, searchUserData, searchDestroy);
 	}
 	
@@ -2028,9 +2038,9 @@ public class TreeView : Container
 	 * data =  User data to be passed to func, or NULL
 	 * destroy =  Destroy notifier for data, or NULL
 	 */
-	public void setDestroyCountFunc(GtkTreeDestroyCountFunc func, void* data, GtkDestroyNotify destroy)
+	public void setDestroyCountFunc(GtkTreeDestroyCountFunc func, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_tree_view_set_destroy_count_func  (GtkTreeView *tree_view,  GtkTreeDestroyCountFunc func,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_tree_view_set_destroy_count_func  (GtkTreeView *tree_view,  GtkTreeDestroyCountFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_tree_view_set_destroy_count_func(gtkTreeView, func, data, destroy);
 	}
 	
@@ -2055,9 +2065,9 @@ public class TreeView : Container
 	 * data =  user data to pass to func, or NULL
 	 * destroy =  destroy notifier for data, or NULL
 	 */
-	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GtkDestroyNotify destroy)
+	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_tree_view_set_row_separator_func  (GtkTreeView *tree_view,  GtkTreeViewRowSeparatorFunc func,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_tree_view_set_row_separator_func  (GtkTreeView *tree_view,  GtkTreeViewRowSeparatorFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_tree_view_set_row_separator_func(gtkTreeView, func, data, destroy);
 	}
 	
@@ -2237,6 +2247,8 @@ public class TreeView : Container
 	 * containing the tooltip texts, or -1 to disable this feature.
 	 * When enabled, "has-tooltip" will be set to TRUE and
 	 * tree_view will connect a "query-tooltip" signal handler.
+	 * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
+	 * so , <, etc have to be escaped in the text.
 	 * Since 2.12
 	 * Params:
 	 * column =  an integer, which is a valid column number for tree_view's model

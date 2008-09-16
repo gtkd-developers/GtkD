@@ -368,6 +368,17 @@ public class MenuItem : Item
 	}
 	
 	/**
+	 * Gets whether the menu item appears justified at the right
+	 * side of the menu bar.
+	 * Returns: TRUE if the menu item will appear at the far right if added to a menu bar.
+	 */
+	public int getRightJustified()
+	{
+		// gboolean gtk_menu_item_get_right_justified (GtkMenuItem *menu_item);
+		return gtk_menu_item_get_right_justified(gtkMenuItem);
+	}
+	
+	/**
 	 * Sets or replaces the menu item's submenu, or removes it when a NULL
 	 * submenu is passed.
 	 * Params:
@@ -377,6 +388,22 @@ public class MenuItem : Item
 	{
 		// void gtk_menu_item_set_submenu (GtkMenuItem *menu_item,  GtkWidget *submenu);
 		gtk_menu_item_set_submenu(gtkMenuItem, (submenu is null) ? null : submenu.getWidgetStruct());
+	}
+	
+	/**
+	 * Gets the submenu underneath this menu item, if any. See
+	 * gtk_menu_item_set_submenu().
+	 * Returns: submenu for this menu item, or NULL if none.
+	 */
+	public Widget getSubmenu()
+	{
+		// GtkWidget* gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
+		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -392,6 +419,9 @@ public class MenuItem : Item
 	 * the menu item.
 	 * Note that you do need to set an accelerator on the parent menu with
 	 * gtk_menu_set_accel_group() for this to work.
+	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
 	 * Params:
 	 * accelPath =  accelerator path, corresponding to this menu item's
 	 *  functionality, or NULL to unset the current path.
@@ -400,6 +430,18 @@ public class MenuItem : Item
 	{
 		// void gtk_menu_item_set_accel_path (GtkMenuItem *menu_item,  const gchar *accel_path);
 		gtk_menu_item_set_accel_path(gtkMenuItem, Str.toStringz(accelPath));
+	}
+	
+	/**
+	 * Retrieve the accelerator path that was previously set on menu_item.
+	 * See gtk_menu_item_set_accel_path() for details.
+	 * Since 2.14
+	 * Returns: the accelerator path corresponding to this menu item's functionality, or NULL if not set
+	 */
+	public string getAccelPath()
+	{
+		// const gchar* gtk_menu_item_get_accel_path (GtkMenuItem *menu_item);
+		return Str.toString(gtk_menu_item_get_accel_path(gtkMenuItem));
 	}
 	
 	/**
@@ -464,32 +506,5 @@ public class MenuItem : Item
 	{
 		// void gtk_menu_item_toggle_size_allocate (GtkMenuItem *menu_item,  gint allocation);
 		gtk_menu_item_toggle_size_allocate(gtkMenuItem, allocation);
-	}
-	
-	/**
-	 * Gets whether the menu item appears justified at the right
-	 * side of the menu bar.
-	 * Returns: TRUE if the menu item will appear at the far right if added to a menu bar.
-	 */
-	public int getRightJustified()
-	{
-		// gboolean gtk_menu_item_get_right_justified (GtkMenuItem *menu_item);
-		return gtk_menu_item_get_right_justified(gtkMenuItem);
-	}
-	
-	/**
-	 * Gets the submenu underneath this menu item, if any. See
-	 * gtk_menu_item_set_submenu().
-	 * Returns: submenu for this menu item, or NULL if none.
-	 */
-	public Widget getSubmenu()
-	{
-		// GtkWidget* gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
-		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
 	}
 }

@@ -78,10 +78,10 @@ private import gtk.Container;
  * There are many configuration options for GtkNotebook. Among other
  * things, you can choose on which edge the tabs appear
  * (see gtk_notebook_set_tab_pos()), whether, if there are too many
- * tabs to fit the noteobook should be made bigger or scrolling
+ * tabs to fit the notebook should be made bigger or scrolling
  * arrows added (see gtk_notebook_set_scrollable), and whether there
  * will be a popup menu allowing the users to switch pages.
- * (see gtk_notebook_enable_popup(), gtk_noteobook_disable_popup())
+ * (see gtk_notebook_popup_enable(), gtk_notebook_popup_disable())
  * GtkNotebook as GtkBuildable
  * The GtkNoteboopk implementation of the GtkBuildable interface
  * supports placing children into tabs by specifying "tab" as the
@@ -89,7 +89,7 @@ private import gtk.Container;
  * of the tab must be created before the tab can be filled.
  * A tab child can be specified without specifying a <child>
  * type attribute.
- * Example36.A UI definition fragment with GtkNotebook
+ * Example 38. A UI definition fragment with GtkNotebook
  * <object class="GtkNotebook">
  *  <child>
  *  <object class="GtkLabel" id="notebook-content">

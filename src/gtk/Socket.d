@@ -78,7 +78,7 @@ private import gtk.Container;
  * gtk_socket_get_id(). Before using this function,
  * the socket must have been realized, and for hence,
  * have been added to its parent.
- * Example48.Obtaining the window ID of a socket.
+ * Example 51. Obtaining the window ID of a socket.
  * GtkWidget *socket = gtk_socket_new ();
  * gtk_widget_show (socket);
  * gtk_container_add (GTK_CONTAINER (parent), socket);
@@ -290,11 +290,29 @@ public class Socket : Container
 	 * instance with gtk_plug_new().
 	 * The GtkSocket must have already be added into a toplevel window
 	 * before you can make this call.
-	 * Returns: the window ID for the socketSignal DetailsThe "plug-added" signalvoid user_function (GtkSocket *socket_, gpointer user_data) : Run LastThis signal is emitted when a client is successfullyadded to the socket.
+	 * Returns: the window ID for the socket
 	 */
 	public GdkNativeWindow getId()
 	{
 		// GdkNativeWindow gtk_socket_get_id (GtkSocket *socket_);
 		return gtk_socket_get_id(gtkSocket);
+	}
+	
+	/**
+	 * Retrieves the window of the plug. Use this to check if the plug has
+	 * been created inside of the socket.
+	 * Since 2.14
+	 * Signal Details
+	 * The "plug-added" signal
+	 * void user_function (GtkSocket *socket_,
+	 *  gpointer user_data) : Run Last
+	 * This signal is emitted when a client is successfully
+	 * added to the socket.
+	 * Returns: the window of the plug if available, or NULL
+	 */
+	public GdkWindow* getPlugWindow()
+	{
+		// GdkWindow* gtk_socket_get_plug_window (GtkSocket *socket_);
+		return gtk_socket_get_plug_window(gtkSocket);
 	}
 }

@@ -93,11 +93,11 @@ private import gtk.MenuShell;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
- * Example24.Connecting the popup signal handler.
+ * Example 26. Connecting the popup signal handler.
  *  /+* connect our handler which will popup the menu +/
  *  g_signal_connect_swapped (window, "button_press_event",
  * 	G_CALLBACK (my_popup_handler), menu);
- * Example25.Signal handler which displays a popup menu.
+ * Example 27. Signal handler which displays a popup menu.
  * static gint
  * my_popup_handler (GtkWidget *widget, GdkEvent *event)
  * {
@@ -382,6 +382,17 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Retrieves the accelerator path set on the menu.
+	 * Since 2.14
+	 * Returns: the accelerator path set on the menu.
+	 */
+	public string getAccelPath()
+	{
+		// const gchar* gtk_menu_get_accel_path (GtkMenu *menu);
+		return Str.toString(gtk_menu_get_accel_path(gtkMenu));
+	}
+	
+	/**
 	 * Sets the title string for the menu. The title is displayed when the menu
 	 * is shown as a tearoff menu. If title is NULL, the menu will see if it is
 	 * attached to a parent menu item, and if so it will try to use the same text as
@@ -396,6 +407,46 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Returns the title of the menu. See gtk_menu_set_title().
+	 * Returns: the title of the menu, or NULL if the menu has notitle set on it. This string is owned by the widget and shouldnot be modified or freed.
+	 */
+	public string getTitle()
+	{
+		// const gchar* gtk_menu_get_title (GtkMenu *menu);
+		return Str.toString(gtk_menu_get_title(gtkMenu));
+	}
+	
+	/**
+	 * Informs GTK+ on which monitor a menu should be popped up.
+	 * See gdk_screen_get_monitor_geometry().
+	 * This function should be called from a GtkMenuPositionFunc if the
+	 * menu should not appear on the same monitor as the pointer. This
+	 * information can't be reliably inferred from the coordinates returned
+	 * by a GtkMenuPositionFunc, since, for very long menus, these coordinates
+	 * may extend beyond the monitor boundaries or even the screen boundaries.
+	 * Since 2.4
+	 * Params:
+	 * monitorNum =  the number of the monitor on which the menu should
+	 *  be popped up
+	 */
+	public void setMonitor(int monitorNum)
+	{
+		// void gtk_menu_set_monitor (GtkMenu *menu,  gint monitor_num);
+		gtk_menu_set_monitor(gtkMenu, monitorNum);
+	}
+	
+	/**
+	 * Retrieves the number of the monitor on which to show the menu.
+	 * Since 2.14
+	 * Returns: the number of the monitor on which the menu should be popped up or -1, if no monitor has been set
+	 */
+	public int getMonitor()
+	{
+		// gint gtk_menu_get_monitor (GtkMenu *menu);
+		return gtk_menu_get_monitor(gtkMenu);
+	}
+	
+	/**
 	 * Returns whether the menu is torn off. See
 	 * gtk_menu_set_tearoff_state().
 	 * Returns: TRUE if the menu is currently torn off.
@@ -404,16 +455,6 @@ public class Menu : MenuShell
 	{
 		// gboolean gtk_menu_get_tearoff_state (GtkMenu *menu);
 		return gtk_menu_get_tearoff_state(gtkMenu);
-	}
-	
-	/**
-	 * Returns the title of the menu. See gtk_menu_set_title().
-	 * Returns: the title of the menu, or NULL if the menu has notitle set on it. This string is owned by the widget and shouldnot be modified or freed.
-	 */
-	public string getTitle()
-	{
-		// const gchar* gtk_menu_get_title (GtkMenu *menu);
-		return Str.toString(gtk_menu_get_title(gtkMenu));
 	}
 	
 	/**
@@ -534,24 +575,5 @@ public class Menu : MenuShell
 			return null;
 		}
 		return new ListG(cast(GList*) p);
-	}
-	
-	/**
-	 * Informs GTK+ on which monitor a menu should be popped up.
-	 * See gdk_screen_get_monitor_geometry().
-	 * This function should be called from a GtkMenuPositionFunc if the
-	 * menu should not appear on the same monitor as the pointer. This
-	 * information can't be reliably inferred from the coordinates returned
-	 * by a GtkMenuPositionFunc, since, for very long menus, these coordinates
-	 * may extend beyond the monitor boundaries or even the screen boundaries.
-	 * Since 2.4
-	 * Params:
-	 * monitorNum =  the number of the monitor on which the menu should
-	 *  be popped up
-	 */
-	public void setMonitor(int monitorNum)
-	{
-		// void gtk_menu_set_monitor (GtkMenu *menu,  gint monitor_num);
-		gtk_menu_set_monitor(gtkMenu, monitorNum);
 	}
 }

@@ -201,13 +201,28 @@ public class Tooltip : ObjectG
 	 * by size. If stock_id is NULL, the image will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * stockId =  a stock icon name, or NULL
+	 * stockId =  a stock id, or NULL
 	 * size =  a stock icon size
 	 */
 	public void setIconFromStock(string stockId, GtkIconSize size)
 	{
 		// void gtk_tooltip_set_icon_from_stock (GtkTooltip *tooltip,  const gchar *stock_id,  GtkIconSize size);
 		gtk_tooltip_set_icon_from_stock(gtkTooltip, Str.toStringz(stockId), size);
+	}
+	
+	/**
+	 * Sets the icon of the tooltip (which is in front of the text) to be
+	 * the icon indicated by icon_name with the size indicated
+	 * by size. If icon_name is NULL, the image will be hidden.
+	 * Since 2.14
+	 * Params:
+	 * iconName =  an icon name, or NULL
+	 * size =  a stock icon size
+	 */
+	public void setIconFromIconName(string iconName, GtkIconSize size)
+	{
+		// void gtk_tooltip_set_icon_from_icon_name (GtkTooltip *tooltip,  const gchar *icon_name,  GtkIconSize size);
+		gtk_tooltip_set_icon_from_icon_name(gtkTooltip, Str.toStringz(iconName), size);
 	}
 	
 	/**
@@ -254,7 +269,7 @@ public class Tooltip : ObjectG
 	 */
 	public void setTipArea(Rectangle rect)
 	{
-		// void gtk_tooltip_set_tip_area (GtkTooltip *tooltip,  GdkRectangle *rect);
+		// void gtk_tooltip_set_tip_area (GtkTooltip *tooltip,  const GdkRectangle *rect);
 		gtk_tooltip_set_tip_area(gtkTooltip, (rect is null) ? null : rect.getRectangleStruct());
 	}
 }

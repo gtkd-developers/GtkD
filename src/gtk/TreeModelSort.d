@@ -108,7 +108,7 @@ private import gobject.ObjectG;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
- * Example18.Using a GtkTreeModelSort
+ * Example 20. Using a GtkTreeModelSort
  * {
 	 *  GtkTreeView *tree_view1;
 	 *  GtkTreeView *tree_view2;
@@ -134,7 +134,7 @@ private import gobject.ObjectG;
  * "changed" signal. In this callback, we get a string from COLUMN_1 of
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
- * Example19.Accessing the child model of in a selection changed callback
+ * Example 21. Accessing the child model of in a selection changed callback
  * void
  * selection_changed (GtkTreeSelection *selection, gpointer data)
  * {
@@ -278,15 +278,17 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	
 	/**
 	 * Sets sort_iter to point to the row in tree_model_sort that corresponds to
-	 * the row pointed at by child_iter.
+	 * the row pointed at by child_iter. If sort_iter was not set, FALSE
+	 * is returned. Note: a boolean is only returned since 2.14.
 	 * Params:
 	 * sortIter =  An uninitialized GtkTreeIter.
 	 * childIter =  A valid GtkTreeIter pointing to a row on the child model
+	 * Returns: TRUE, if sort_iter was set, i.e. if sort_iter is avalid iterator pointer to a visible row in the child model.
 	 */
-	public void convertChildIterToIter(TreeIter sortIter, TreeIter childIter)
+	public int convertChildIterToIter(TreeIter sortIter, TreeIter childIter)
 	{
-		// void gtk_tree_model_sort_convert_child_iter_to_iter  (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *sort_iter,  GtkTreeIter *child_iter);
-		gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, (sortIter is null) ? null : sortIter.getTreeIterStruct(), (childIter is null) ? null : childIter.getTreeIterStruct());
+		// gboolean gtk_tree_model_sort_convert_child_iter_to_iter  (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *sort_iter,  GtkTreeIter *child_iter);
+		return gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, (sortIter is null) ? null : sortIter.getTreeIterStruct(), (childIter is null) ? null : childIter.getTreeIterStruct());
 	}
 	
 	/**

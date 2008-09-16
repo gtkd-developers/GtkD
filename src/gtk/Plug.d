@@ -234,4 +234,26 @@ public class Plug : Window
 		// GdkNativeWindow gtk_plug_get_id (GtkPlug *plug);
 		return gtk_plug_get_id(gtkPlug);
 	}
+	
+	/**
+	 * Determines whether the plug is embedded in a socket.
+	 * Since 2.14
+	 * Returns: TRUE if the plug is embedded in a socket
+	 */
+	public int getEmbedded()
+	{
+		// gboolean gtk_plug_get_embedded (GtkPlug *plug);
+		return gtk_plug_get_embedded(gtkPlug);
+	}
+	
+	/**
+	 * Retrieves the socket the plug is embedded in.
+	 * Since 2.14
+	 * Returns: the window of the socket, or NULL
+	 */
+	public GdkWindow* getSocketWindow()
+	{
+		// GdkWindow* gtk_plug_get_socket_window (GtkPlug *plug);
+		return gtk_plug_get_socket_window(gtkPlug);
+	}
 }

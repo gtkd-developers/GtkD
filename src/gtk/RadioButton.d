@@ -96,7 +96,7 @@ private import gtk.CheckButton;
  * To remove a GtkRadioButton from one group and make it part of a new one, use gtk_radio_button_set_group().
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
- * Example10.How to create a group of two radio buttons.
+ * Example 12. How to create a group of two radio buttons.
  * void create_radio_buttons (void) {
 	 *  GtkWidget *window, *radio1, *radio2, *box, *entry;
 	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -297,8 +297,8 @@ public class RadioButton : CheckButton
 	}
 	
 	/**
-	 * Creates a new GtkRadioButton, adding it to the same group as group. As
-	 * with gtk_radio_button_new(), a widget should be packed into the radio button.
+	 * Creates a new GtkRadioButton, adding it to the same group as radio_group_member.
+	 * As with gtk_radio_button_new(), a widget should be packed into the radio button.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()

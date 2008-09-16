@@ -44,6 +44,8 @@
  * omit prefixes:
  * 	- gtk_widget_ref
  * omit code:
+ * 	- gtk_widget_get_window
+ * 	- gtk_widget_get_allocation
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -186,9 +188,28 @@ private import gtk.ObjectGtk;
  * The GtkWidget implementation of the GtkBuildable interface supports a
  * custom <accelerator> element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
- * Example47.A UI definition fragment specifying an accelerator
+ * Example 49. A UI definition fragment specifying an accelerator
  * <object class="GtkButton">
  *  <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
+ * </object>
+ * In addition to accelerators, GtkWidget also support a
+ * custom <accessible> element, which supports actions and relations.
+ * Properties on the accessible implementation of an object can be set by accessing the
+ * internal child "accessible" of a GtkWidget.
+ * Example 50. A UI definition fragment specifying an accessible
+ * <object class="GtkButton" id="label1"/>
+ *  <property name="label">I am a Label for a Button</property>
+ * </object>
+ * <object class="GtkButton" id="button1">
+ *  <accessibility>
+ *  <action action_name="click" description="Click the button."/>
+ *  <relation target="label1" type="labelled-by"/>
+ *  </accessibility>
+ *  <child internal-child="accessible">
+ *  <object class="AtkObject" id="a11y-button1">
+ *  <property name="AtkObject::name">Clickable Button</property>
+ *  </object>
+ *  </child>
  * </object>
  */
 public class Widget : ObjectGtk, BuildableIF
@@ -280,31 +301,12 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * The widget's allocated size.
-	 */
-	public void setAllocation(GtkAllocation allo)
-	{
-		int* pt = cast(int*)getStruct();
-		
-		pt += 36/4;
-		 *pt = allo.x;
-		
-		pt++;
-		 *pt = allo.y;
-		
-		pt++;
-		 *pt = allo.width;
-		
-		pt++;
-		 *pt = allo.height;
-	}
-	
-	/**
 	 * Gets the drawable for this widget
 	 * Returns:
 	 * 		The drawable for this widget
+	 * Deprecated: use getWindow().
 	 */
-	Drawable getDrawable()
+	deprecated Drawable getDrawable()
 	{
 		
 		//		ubyte *p = cast(ubyte*)getStruct();
@@ -850,6 +852,41 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
+	bool delegate(Event, Widget)[] onDamageListeners;
+	/**
+	 * Emitted when a redirected window belonging to widget gets drawn into.
+	 * The region/area members of the event shows what area of the redirected
+	 * drawable was drawn into.
+	 * Since 2.14
+	 */
+	void addOnDamage(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("damage-event" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"damage-event",
+			cast(GCallback)&callBackDamage,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["damage-event"] = 1;
+		}
+		onDamageListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackDamage(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	{
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onDamageListeners )
+		{
+			if ( dlg(new Event(event), widget) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
 	bool delegate(Event, Widget)[] onDeleteListeners;
 	/**
 	 * The ::delete-event signal is emitted if a user requests that
@@ -1255,26 +1292,28 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	bool delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragMotionListeners;
 	/**
-	 * The ::drag-motion signal is emitted on the drop site when the user
+	 * The drag-motion signal is emitted on the drop site when the user
 	 * moves the cursor over the widget during a drag. The signal handler
 	 * must determine whether the cursor position is in a drop zone or not.
 	 * If it is not in a drop zone, it returns FALSE and no further processing
 	 * is necessary. Otherwise, the handler returns TRUE. In this case, the
 	 * handler is responsible for providing the necessary information for
-	 * displaying feedback to the user, by calling gdk_drag_status(). If the
-	 * decision whether the drop will be accepted or rejected can't be made
-	 * based solely on the cursor position and the type of the data, the handler
-	 * may inspect the dragged data by calling gtk_drag_get_data() and defer the
-	 * gdk_drag_status() call to the "drag-data-received" handler.
-	 * Note that there is no drag-enter signal. The drag receiver has to keep
-	 * track of whether he has received any drag-motion signals since the last
-	 * "drag-leave" and if not, treat the drag-motion signal as an
-	 * "enter" signal. Upon an "enter", the handler will typically highlight
+	 * displaying feedback to the user, by calling gdk_drag_status().
+	 * If the decision whether the drop will be accepted or rejected can't be
+	 * made based solely on the cursor position and the type of the data, the
+	 * handler may inspect the dragged data by calling gtk_drag_get_data() and
+	 * defer the gdk_drag_status() call to the "drag-data-received"
+	 * handler. Note that you cannot not pass GTK_DEST_DEFAULT_DROP,
+	 * GTK_DEST_DEFAULT_MOTION or GTK_DEST_DEFAULT_ALL to gtk_drag_dest_set()
+	 * when using the drag-motion signal that way.
+	 * Also note that there is no drag-enter signal. The drag receiver has to
+	 * keep track of whether he has received any drag-motion signals since the
+	 * last "drag-leave" and if not, treat the drag-motion signal as
+	 * an "enter" signal. Upon an "enter", the handler will typically highlight
 	 * the drop site with gtk_drag_highlight().
-	 *
 	 * static void
 	 * drag_motion (GtkWidget *widget,
-	 *  	 GdkDragContext *context,
+	 *  GdkDragContext *context,
 	 *  gint x,
 	 *  gint y,
 	 *  guint time)
@@ -1318,7 +1357,7 @@ public class Widget : ObjectGtk, BuildableIF
 			 *
 			 *  /+* We are getting this data due to a request in drag_motion,
 			 *  * rather than due to a request in drag_drop, so we are just
-			 *  * supposed to call gdk_drag_status(), not actually paste in
+			 *  * supposed to call gdk_drag_status (), not actually paste in
 			 *  * the data.
 			 *  +/
 			 *  str = gtk_selection_data_get_text (selection_data);
@@ -2120,7 +2159,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * menu. This usually happens through the standard key binding mechanism;
 	 * by pressing a certain key while a widget is focused, the user can cause
 	 * the widget to pop up a menu. For example, the GtkEntry widget creates
-	 * a menu with clipboard commands. See the section called Implement GtkWidget::popup_menu
+	 * a menu with clipboard commands. See the section called “Implement GtkWidget::popup_menu”
 	 * for an example of how to use this signal.
 	 */
 	void addOnPopupMenu(bool delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -3021,7 +3060,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * isn't very useful otherwise. Many times when you think you might
 	 * need it, a better approach is to connect to a signal that will be
 	 * called after the widget is realized automatically, such as
-	 * GtkWidget::expose-event. Or simply g_signal_connect_after() to the
+	 * GtkWidget::expose-event. Or simply g_signal_connect() to the
 	 * GtkWidget::realize signal.
 	 */
 	public void realize()
@@ -3091,7 +3130,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public void draw(Rectangle area)
 	{
-		// void gtk_widget_draw (GtkWidget *widget,  GdkRectangle *area);
+		// void gtk_widget_draw (GtkWidget *widget,  const GdkRectangle *area);
 		gtk_widget_draw(gtkWidget, (area is null) ? null : area.getRectangleStruct());
 	}
 	
@@ -3207,6 +3246,9 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Even when you you aren't using GtkUIManager, if you only want to
 	 * set up accelerators on menu items gtk_menu_item_set_accel_path()
 	 * provides a somewhat more convenient interface.
+	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
 	 * Params:
 	 * accelPath =  path used to look up the accelerator
 	 * accelGroup =  a GtkAccelGroup.
@@ -3312,7 +3354,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public int intersect(Rectangle area, Rectangle intersection)
 	{
-		// gboolean gtk_widget_intersect (GtkWidget *widget,  GdkRectangle *area,  GdkRectangle *intersection);
+		// gboolean gtk_widget_intersect (GtkWidget *widget,  const GdkRectangle *area,  GdkRectangle *intersection);
 		return gtk_widget_intersect(gtkWidget, (area is null) ? null : area.getRectangleStruct(), (intersection is null) ? null : intersection.getRectangleStruct());
 	}
 	
@@ -3479,7 +3521,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Warning
-	 * gtk_widget_set_usize is deprecated and should not be used in newly-written code. Use gtk_widget_set_size_request() instead.
+	 * gtk_widget_set_usize has been deprecated since version 2.2 and should not be used in newly-written code. Use gtk_widget_set_size_request() instead.
 	 * Sets the minimum size of a widget; that is, the widget's size
 	 * request will be width by height. You can use this function to
 	 * force a widget to be either larger or smaller than it is. The
@@ -3580,7 +3622,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
 	 *  if (GTK_WIDGET_TOPLEVEL (toplevel))
 	 *  {
-		 *  [ Perform action on toplevel. ]
+		 *  /+* Perform action on toplevel. +/
 	 *  }
 	 * Returns: the topmost ancestor of widget, or widget itself  if there's no ancestor.
 	 */
@@ -4017,7 +4059,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Obtains the composite name of a widget.
-	 * Returns: the composite name of widget, or NULL if widget is not a composite child. The string should not be freed when it is no  longer needed.
+	 * Returns: the composite name of widget, or NULL if widget is not a composite child. The string should be freed when it is no  longer needed.
 	 */
 	public string getCompositeName()
 	{
@@ -4312,7 +4354,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Warning
-	 * gtk_widget_queue_clear is deprecated and should not be used in newly-written code. Use gtk_widget_queue_draw() instead.
+	 * gtk_widget_queue_clear has been deprecated since version 2.2 and should not be used in newly-written code. Use gtk_widget_queue_draw() instead.
 	 * This function does the same as gtk_widget_queue_draw().
 	 */
 	public void queueClear()
@@ -4323,7 +4365,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Warning
-	 * gtk_widget_queue_clear_area is deprecated and should not be used in newly-written code. Use gtk_widget_queue_draw_area() instead.
+	 * gtk_widget_queue_clear_area has been deprecated since version 2.2 and should not be used in newly-written code. Use gtk_widget_queue_draw_area() instead.
 	 * This function is no longer different from
 	 * gtk_widget_queue_draw_area(), though it once was. Now it just calls
 	 * gtk_widget_queue_draw_area(). Originally
@@ -4576,7 +4618,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Region regionIntersect(Region region)
 	{
-		// GdkRegion* gtk_widget_region_intersect (GtkWidget *widget,  GdkRegion *region);
+		// GdkRegion* gtk_widget_region_intersect (GtkWidget *widget,  const GdkRegion *region);
 		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
 		if(p is null)
 		{
@@ -5228,25 +5270,59 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Copies a GtkRequisition.
-	 * Params:
-	 * requisition =  a GtkRequisition
-	 * Returns: a copy of requisition
-	 */
-	public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
-	{
-		// GtkRequisition* gtk_requisition_copy (const GtkRequisition *requisition);
-		return gtk_requisition_copy(requisition);
-	}
-	
-	/**
-	 * Frees a GtkRequisition.
-	 * Params:
-	 * requisition =  a GtkRequisition
-	 */
-	public static void requisitionFree(GtkRequisition* requisition)
-	{
-		// void gtk_requisition_free (GtkRequisition *requisition);
-		gtk_requisition_free(requisition);
-	}
+	 * Create a GdkPixmap of the contents of the widget and its children.
+	 * Works even if the widget is obscured. The depth and visual of the
+	 * resulting pixmap is dependent on the widget being snapshot and likely
+	 * differs from those of a target widget displaying the pixmap.
+	 * The function gdk_pixbuf_get_from_drawable() can be used to convert
+	 * the pixmap to a visual independant representation.
+	 * The snapshot area used by this function is the widget's allocation plus
+	 * any extra space occupied by additional windows belonging to this widget
+	 * (such as the arrows of a spin button).
+	 * Thus, the resulting snapshot pixmap is possibly larger than the allocation.
+	 * If clip_rect is non-NULL, the resulting pixmap is shrunken to
+	 * match the specified clip_rect. The (x,y) coordinates of clip_rect are
+	 * interpreted widget relative. If width or height of clip_rect are 0 or
+	 * negative, the width or height of the resulting pixmap will be shrunken
+	 * by the respective amount.
+	 * For instance a clip_rect { +5, +5, -10, -10 } will
+	 * chop off 5 pixels at each side of the snapshot pixmap.
+	 * If non-NULL, clip_rect will contain the exact widget-relative snapshot
+ * coordinates upon return. A clip_rect of { -1, -1, 0, 0 }
+ * can be used to preserve the auto-grown snapshot area and use clip_rect
+ * as a pure output parameter.
+ * The returned pixmap can be NULL, if the resulting clip_area was empty.
+ * Since 2.14
+ * Params:
+ * clipRect =  a GdkRectangle or NULL
+ * Returns: GdkPixmap snapshot of the widget
+ */
+public GdkPixmap* getSnapshot(Rectangle clipRect)
+{
+	// GdkPixmap* gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
+	return gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
+}
+
+/**
+ * Copies a GtkRequisition.
+ * Params:
+ * requisition =  a GtkRequisition
+ * Returns: a copy of requisition
+ */
+public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
+{
+	// GtkRequisition* gtk_requisition_copy (const GtkRequisition *requisition);
+	return gtk_requisition_copy(requisition);
+}
+
+/**
+ * Frees a GtkRequisition.
+ * Params:
+ * requisition =  a GtkRequisition
+ */
+public static void requisitionFree(GtkRequisition* requisition)
+{
+	// void gtk_requisition_free (GtkRequisition *requisition);
+	gtk_requisition_free(requisition);
+}
 }

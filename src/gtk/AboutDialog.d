@@ -88,6 +88,13 @@ private import gtk.Dialog;
  * <user@host>, URLs are
  * recognized by looking for http://url, with
  * url extending to the next space, tab or line break.
+ * When setting the website and email hooks for the GtkAboutDialog widget,
+ * you should remember that the order is important: you should set the hook
+ * functions before setting the website and email URL properties, like this:
+ * gtk_about_dialog_set_url_hook (GTK_ABOUT_DIALOG (dialog), launch_url, NULL, NULL);
+ * gtk_about_dialog_set_website (GTK_ABOUT_DIALOG (dialog), app_url);
+ * Otherwise the GtkAboutDialog widget will not display the website and the
+ * email addresses as clickable.
  * To make constructing a GtkAboutDialog as convenient as possible, you can
  * use the function gtk_show_about_dialog() which constructs and shows a dialog
  * and keeps it around so that it can be shown again.
@@ -166,10 +173,9 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Warning
-	 * gtk_about_dialog_get_name is deprecated and should not be used in newly-written code.
+	 * gtk_about_dialog_get_name has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_about_dialog_get_program_name() instead.
 	 * Returns the program name displayed in the about dialog.
 	 * Since 2.6
-	 * @Deprecated: 2.12: Use gtk_about_dialog_get_program_name() instead.
 	 * Returns: The program name. The string is owned by the about dialog and must not be modified.
 	 */
 	public override string getName()
@@ -180,11 +186,10 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Warning
-	 * gtk_about_dialog_set_name is deprecated and should not be used in newly-written code.
+	 * gtk_about_dialog_set_name has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_about_dialog_set_program_name() instead.
 	 * Sets the name to display in the about dialog.
 	 * If this is not set, it defaults to g_get_application_name().
 	 * Since 2.6
-	 * @Deprecated: 2.12: Use gtk_about_dialog_set_program_name() instead.
 	 * Params:
 	 * name =  the program name
 	 */
@@ -232,8 +237,6 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets the version string to display in the about dialog.
 	 * Since 2.6
-	 * Params:
-	 * versio =  the version string
 	 */
 	public void setVersion(string versio)
 	{
@@ -353,6 +356,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Sets the URL to use for the website link.
+	 * Note that that the hook functions need to be set up
+	 * before calling this function.
 	 * Since 2.6
 	 * Params:
 	 * website =  a URL string starting with "http://"

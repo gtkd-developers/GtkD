@@ -171,9 +171,9 @@ public template TreeSortableT(TStruct)
 	 * userData =  User data to pass to sort_func, or NULL
 	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
-	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy)
+	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy)
 	{
-		// void gtk_tree_sortable_set_sort_func (GtkTreeSortable *sortable,  gint sort_column_id,  GtkTreeIterCompareFunc sort_func,  gpointer user_data,  GtkDestroyNotify destroy);
+		// void gtk_tree_sortable_set_sort_func (GtkTreeSortable *sortable,  gint sort_column_id,  GtkTreeIterCompareFunc sort_func,  gpointer user_data,  GDestroyNotify destroy);
 		gtk_tree_sortable_set_sort_func(getTreeSortableTStruct(), sortColumnId, sortFunc, userData, destroy);
 	}
 	
@@ -191,9 +191,9 @@ public template TreeSortableT(TStruct)
 	 * userData =  User data to pass to sort_func, or NULL
 	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
-	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy)
+	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy)
 	{
-		// void gtk_tree_sortable_set_default_sort_func  (GtkTreeSortable *sortable,  GtkTreeIterCompareFunc sort_func,  gpointer user_data,  GtkDestroyNotify destroy);
+		// void gtk_tree_sortable_set_default_sort_func  (GtkTreeSortable *sortable,  GtkTreeIterCompareFunc sort_func,  gpointer user_data,  GDestroyNotify destroy);
 		gtk_tree_sortable_set_default_sort_func(getTreeSortableTStruct(), sortFunc, userData, destroy);
 	}
 	

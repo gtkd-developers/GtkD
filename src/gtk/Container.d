@@ -158,7 +158,7 @@ private import gtk.Widget;
  * supports a <packing> element for children, which can
  * contain multiple <property> elements that specify
  * child properties for the child.
- * Example45.Child properties in UI definitions
+ * Example 47. Child properties in UI definitions
  * <object class="GtkVBox">
  *  <child>
  *  <object class="GtkLabel"/>
@@ -423,9 +423,9 @@ public class Container : Widget
 	 * gtk_container_foreach_full is deprecated and should not be used in newly-written code. Use gtk_container_foreach() instead.
 	 * Params:
 	 */
-	public void foreachFull(GtkCallback callback, GtkCallbackMarshal marshal, void* callbackData, GtkDestroyNotify notify)
+	public void foreachFull(GtkCallback callback, GtkCallbackMarshal marshal, void* callbackData, GDestroyNotify notify)
 	{
-		// void gtk_container_foreach_full (GtkContainer *container,  GtkCallback callback,  GtkCallbackMarshal marshal,  gpointer callback_data,  GtkDestroyNotify notify);
+		// void gtk_container_foreach_full (GtkContainer *container,  GtkCallback callback,  GtkCallbackMarshal marshal,  gpointer callback_data,  GDestroyNotify notify);
 		gtk_container_foreach_full(gtkContainer, callback, marshal, callbackData, notify);
 	}
 	
@@ -459,7 +459,28 @@ public class Container : Widget
 	}
 	
 	/**
+	 * Returns the current focus child widget inside container.
+	 * Since 2.14
+	 * Returns: The child widget which has the focus inside container, or NULL if none is set.
+	 */
+	public Widget getFocusChild()
+	{
+		// GtkWidget* gtk_container_get_focus_child (GtkContainer *container);
+		auto p = gtk_container_get_focus_child(gtkContainer);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Sets, or unsets if child is NULL, the focused child of container.
+	 * This function emits the GtkContainer::set_focus_child signal of
+	 * container. Implementations of GtkContainer can override the
+	 * default behaviour by overriding the class closure of this signal.
 	 * Params:
+	 * child =  a GtkWidget, or NULL
 	 */
 	public void setFocusChild(Widget child)
 	{
@@ -589,8 +610,8 @@ public class Container : Widget
 	 * Params:
 	 * child =  a widget which is a child of container
 	 * firstPropertyName =  the name of the first property to get
-	 * varArgs =  a NULL-terminated list of property names and GValue*,
-	 *  starting with first_prop_name.
+	 * varArgs =  return location for the first property, followed
+	 *  optionally by more name/return location pairs, followed by NULL
 	 */
 	public void childGetValist(Widget child, string firstPropertyName, void* varArgs)
 	{

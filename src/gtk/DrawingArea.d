@@ -84,7 +84,7 @@ private import gtk.Widget;
  * Note that GDK automatically clears the exposed area
  * to the background color before sending the expose event, and
  * that drawing is implicitly clipped to the exposed area.
- * Example43.Simple GtkDrawingArea usage.
+ * Example 45. Simple GtkDrawingArea usage.
  * gboolean
  * expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
  * {

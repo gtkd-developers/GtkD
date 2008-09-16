@@ -250,6 +250,9 @@ public class AccelGroup : ObjectG
 	 * accel_mods from gtk_accel_groups_activate() match the key and modifiers
 	 * for the path.
 	 * The signature used for the closure is that of GtkAccelGroupActivate.
+	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
 	 * Params:
 	 * accelPath =  path used for determining key and modifiers.
 	 * closure =  closure to be executed upon accelerator activation
@@ -304,8 +307,16 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
+	 * Finds the first accelerator in accel_group
+	 * that matches accel_key and accel_mods, and
+	 * activates it.
 	 * Params:
-	 * Returns:
+	 * accelQuark =  the quark for the accelerator name
+	 * acceleratable =  the GObject, usually a GtkWindow, on which
+	 *  to activate the accelerator.
+	 * accelKey =  accelerator keyval from a key event
+	 * accelMods =  keyboard state mask from a key event
+	 * Returns: TRUE if the accelerator was handled, FALSE otherwise
 	 */
 	public int activate(GQuark accelQuark, ObjectG acceleratable, uint accelKey, GdkModifierType accelMods)
 	{
@@ -338,6 +349,18 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
+	 * Locks are added and removed using gtk_accel_group_lock() and
+	 * gtk_accel_group_unlock().
+	 * Since 2.14
+	 * Returns: TRUE if there are 1 or more locks on the accel_group,FALSE otherwise.
+	 */
+	public int getIsLocked()
+	{
+		// gboolean gtk_accel_group_get_is_locked (GtkAccelGroup *accel_group);
+		return gtk_accel_group_get_is_locked(gtkAccelGroup);
+	}
+	
+	/**
 	 * Finds the GtkAccelGroup to which closure is connected;
 	 * see gtk_accel_group_connect().
 	 * Params:
@@ -356,11 +379,21 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
+	 * Gets a GdkModifierType representing the mask for this
+	 * accel_group. For example, GDK_CONTROL_MASK, GDK_SHIFT_MASK, etc.
+	 * Since 2.14
+	 * Returns: the modifier mask for this accel group.
+	 */
+	public GdkModifierType getModifierMask()
+	{
+		// GdkModifierType gtk_accel_group_get_modifier_mask (GtkAccelGroup *accel_group);
+		return gtk_accel_group_get_modifier_mask(gtkAccelGroup);
+	}
+	
+	/**
 	 * Finds the first accelerator in any GtkAccelGroup attached
 	 * to object that matches accel_key and accel_mods, and
 	 * activates that accelerator.
-	 * If an accelerator was activated and handled this keypress, TRUE
-	 * is returned.
 	 * Params:
 	 * object =  the GObject, usually a GtkWindow, on which
 	 *  to activate the accelerator.
@@ -496,7 +529,7 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 * Gets the value set by gtk_accelerator_set_default_mod_mask().
-	 * Returns: the default accelerator modifier maskSignal DetailsThe "accel-activate" signalgboolean user_function (GtkAccelGroup *accel_group, GObject *acceleratable, guint keyval, GdkModifierType modifier, gpointer user_data) : Has DetailsThe accel-activate signal is an implementation detail ofGtkAccelGroup and not meant to be used by applications.Returns: TRUE if the accelerator was activated
+	 * Returns: the default accelerator modifier mask
 	 */
 	public static uint acceleratorGetDefaultModMask()
 	{

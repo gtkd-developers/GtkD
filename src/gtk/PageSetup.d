@@ -91,7 +91,7 @@ private import gobject.ObjectG;
  * To obtain a GtkPageSetup use gtk_page_setup_new()
  * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
  * the page setup dialog and receive the resulting page setup.
- * Example41.A page setup dialog
+ * Example 43. A page setup dialog
  * static GtkPrintSettings *settings = NULL;
  * static GtkPageSetup *page_setup = NULL;
  * static void
@@ -475,6 +475,56 @@ public class PageSetup : ObjectG
 			throw new ConstructionException("null returned by gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err)");
 		}
 		this(cast(GtkPageSetup*) p);
+	}
+	
+	/**
+	 * Reads the page setup from the file file_name.
+	 * See gtk_page_setup_to_file().
+	 * Since 2.14
+	 * Params:
+	 * fileName =  the filename to read the page setup from
+	 * Returns: TRUE on success
+	 * Throws: GException on failure.
+	 */
+	public int loadFile(string fileName)
+	{
+		// gboolean gtk_page_setup_load_file (GtkPageSetup *setup,  const char *file_name,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_page_setup_load_file(gtkPageSetup, Str.toStringz(fileName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Reads the page setup from the group group_name in the key file
+	 * key_file.
+	 * Since 2.14
+	 * Params:
+	 * keyFile =  the GKeyFile to retrieve the page_setup from
+	 * groupName =  the name of the group in the key_file to read, or NULL
+	 *  to use the default name "Page Setup"
+	 * Returns: TRUE on success
+	 * Throws: GException on failure.
+	 */
+	public int loadKeyFile(KeyFile keyFile, string groupName)
+	{
+		// gboolean gtk_page_setup_load_key_file (GtkPageSetup *setup,  GKeyFile *key_file,  const gchar *group_name,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_page_setup_load_key_file(gtkPageSetup, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

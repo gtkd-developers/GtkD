@@ -195,6 +195,9 @@ public class AccelMap : ObjectG
 	 * conflicts. A change will only occur if all conflicts could be resolved (which
 	 * might not be the case if conflicting accelerators are locked). Successful
 	 * changes are indicated by a TRUE return value.
+	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
 	 * Params:
 	 * accelPath =  a valid accelerator path
 	 * accelKey =  the new accelerator key

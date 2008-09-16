@@ -130,11 +130,16 @@ public class Types
 	}
 	
 	/**
+	 * Warning
+	 * gtk_type_class has been deprecated since version 2.14 and should not be used in newly-written code. Use g_type_class_peek() or g_type_class_ref() instead.
+	 * Returns a pointer pointing to the class of type or NULL if there
+	 * was any trouble identifying type. Initializes the class if
+	 * necessary.
 	 * Returns a pointer pointing to the class of type or NULL if there was
 	 * any trouble identifying type. Initializes the class if necessary.
 	 * Params:
-	 * type = a GtkType.
-	 * Returns:pointer to the class.
+	 * type =  a GtkType.
+	 * Returns: pointer to the class.
 	 */
 	public static void* clss(GtkType type)
 	{

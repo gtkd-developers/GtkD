@@ -666,6 +666,29 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
+	 * Gets the value of GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT.
+	 * Since 2.14
+	 * Returns: layout of page in number-up mode
+	 */
+	public GtkNumberUpLayout getNumberUpLayout()
+	{
+		// GtkNumberUpLayout gtk_print_settings_get_number_up_layout  (GtkPrintSettings *settings);
+		return gtk_print_settings_get_number_up_layout(gtkPrintSettings);
+	}
+	
+	/**
+	 * Sets the value of GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT.
+	 * Since 2.14
+	 * Params:
+	 * numberUpLayout =  a GtkNumberUpLayout value
+	 */
+	public void setNumberUpLayout(GtkNumberUpLayout numberUpLayout)
+	{
+		// void gtk_print_settings_set_number_up_layout  (GtkPrintSettings *settings,  GtkNumberUpLayout number_up_layout);
+		gtk_print_settings_set_number_up_layout(gtkPrintSettings, numberUpLayout);
+	}
+	
+	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_RESOLUTION.
 	 * Since 2.10
 	 * Returns: the resolution in dpi
@@ -900,7 +923,7 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
-	 * Reads the print settings from filename. Returns a new GtkPrintSettings
+	 * Reads the print settings from file_name. Returns a new GtkPrintSettings
 	 * object with the restored settings, or NULL if an error occurred.
 	 * See gtk_print_settings_to_file().
 	 * Since 2.12
@@ -956,6 +979,54 @@ public class PrintSettings : ObjectG
 			throw new ConstructionException("null returned by gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err)");
 		}
 		this(cast(GtkPrintSettings*) p);
+	}
+	
+	/**
+	 * Reads the print settings from file_name.
+	 * See gtk_print_settings_to_file().
+	 * Since 2.14
+	 * Params:
+	 * fileName =  the filename to read the settings from
+	 * Returns: TRUE on success
+	 * Throws: GException on failure.
+	 */
+	public int loadFile(string fileName)
+	{
+		// gboolean gtk_print_settings_load_file (GtkPrintSettings *settings,  const gchar *file_name,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_print_settings_load_file(gtkPrintSettings, Str.toStringz(fileName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Reads the print settings from the group group_name in key_file.
+	 * Since 2.14
+	 * Params:
+	 * keyFile =  the GKeyFile to retrieve the settings from
+	 * groupName =  the name of the group to use
+	 * Returns: TRUE on success
+	 * Throws: GException on failure.
+	 */
+	public int loadKeyFile(KeyFile keyFile, string groupName)
+	{
+		// gboolean gtk_print_settings_load_key_file (GtkPrintSettings *settings,  GKeyFile *key_file,  const gchar *group_name,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_print_settings_load_key_file(gtkPrintSettings, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

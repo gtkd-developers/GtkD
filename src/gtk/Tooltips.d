@@ -72,6 +72,8 @@ private import gtk.ObjectGtk;
 
 /**
  * Description
+ * GtkTooltips has been deprecated in GTK+ 2.12, in favor of the new
+ * GtkTooltip API.
  * Tooltips are the messages that appear next to a widget when the mouse pointer is held over it for a short amount of time. They are especially helpful for adding more verbose descriptions of things such as buttons in a toolbar.
  * An individual tooltip belongs to a group of tooltips. A group is created with a call to gtk_tooltips_new(). Every tooltip in the group can then be turned off with a call to gtk_tooltips_disable() and enabled with gtk_tooltips_enable().
  * The length of time the user must keep the mouse over a widget before the tip is shown, can be altered with gtk_tooltips_set_delay(). This is set on a 'per group of tooltips' basis.
@@ -84,7 +86,7 @@ private import gtk.ObjectGtk;
  * widget inside a GtkEventBox and add a tooltip to that instead.
  * The default appearance of all tooltips in a program is determined by the current GTK+ theme that the user has selected.
  * Information about the tooltip (if any) associated with an arbitrary widget can be retrieved using gtk_tooltips_data_get().
- * Example54.Adding tooltips to buttons.
+ * Example 57. Adding tooltips to buttons.
  *  GtkWidget *load_button, *save_button, *hbox;
  *  GtkTooltips *button_bar_tips;
  *  button_bar_tips = gtk_tooltips_new ();

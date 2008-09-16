@@ -69,8 +69,8 @@ private import gtk.Container;
  * Description
  * GtkBox is an abstract widget which encapsulates functionality for a
  * particular kind of container, one that organizes a variable number of
- * widgets into a rectangular area. GtkBox currently has two derived
- * classes, GtkHBox and GtkVBox.
+ * widgets into a rectangular area. GtkBox has a number of derived
+ * classes, e.g. GtkHBox and GtkVBox.
  * The rectangular area of a GtkBox is organized into either a single row
  * or a single column of child widgets depending upon whether the box is
  * of type GtkHBox or GtkVBox, respectively. Thus, all children of a
@@ -201,6 +201,8 @@ public class Box : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_box_pack_start_defaults has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_box_pack_start()
 	 * Adds widget to box, packed with reference to the start of box.
 	 * The child is packed after any other child packed with reference
 	 * to the start of box.
@@ -217,6 +219,8 @@ public class Box : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_box_pack_end_defaults has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_box_pack_end()
 	 * Adds widget to box, packed with reference to the end of box.
 	 * The child is packed after any other child packed with reference
 	 * to the start of box.

@@ -1,0 +1,1144 @@
+#
+# This file is part of gtkD.
+# 
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping GObject
+#####
+###
+#
+
+
+addTypedefs: start
+
+public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+# must start with wrap
+wrap: gio
+
+###########################################################
+### File Operations #######################################
+###########################################################
+
+file: GFile.html
+struct: GFile
+class: File
+extend: GObject
+prefix: g_file_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AppInfo
+import: gio.AppInfoIF
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.FileAttributeInfoList
+import: gio.FileEnumerator
+import: gio.FileInfo
+import: gio.FileInputStream
+import: gio.FileMonitor
+import: gio.FileOutputStream
+import: gio.Mount
+import: gio.MountIF
+import: gio.MountOperation
+structWrap: GAppInfo* AppInfoIF
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GFile* File
+structWrap: GFileAttributeInfoList* FileAttributeInfoList
+structWrap: GFileEnumerator* FileEnumerator
+structWrap: GFileInfo* FileInfo
+structWrap: GFileInputStream* FileInputStream
+structWrap: GFileMonitor* FileMonitor
+structWrap: GFileOutputStream* FileOutputStream
+structWrap: GMount* MountIF
+structWrap: GMountOperation* MountOperation
+
+out: g_file_set_attributes_finish info
+out: g_file_load_contents contents
+out: g_file_load_contents length
+out: g_file_load_contents etag_out
+out: g_file_load_contents_finish contents
+out: g_file_load_contents_finish length
+out: g_file_load_contents_finish etag_out
+out: g_file_load_partial_contents_finish contents
+out: g_file_load_partial_contents_finish  length
+out: g_file_load_partial_contents_finish etag_out
+out: g_file_replace_contents new_etag
+out: g_file_replace_contents_finish new_etag
+
+# g_file_new_for_commandline_arg also accepts paths ans uris
+nocode: g_file_new_for_path
+nocode: g_file_new_for_uri
+
+outFile: File
+
+
+file: gio-GFileAttribute.html
+struct: GFileAttributeInfoList
+class: FileAttributeInfoList
+prefix:  g_file_attribute_info_list_
+import: glib.Str
+structWrap: GFileAttributeInfoList* FileAttributeInfoList
+outFile: FileAttributeInfoList
+
+file: GFileInfo.html
+struct: GFileInfo
+class: FileInfo
+prefix: g_file_info_
+noprefix: g_file_attribute_matcher_
+import: glib.Str
+import: glib.TimeVal
+import: gobject.ObjectG
+import: gio.Icon
+import: gio.IconIF
+import: gio.FileAttributeMatcher
+structWrap: GTimeVal* TimeVal
+structWrap: GObject* ObjectG
+structWrap: GIcon* IconIF
+structWrap: GFileAttributeMatcher* FileAttributeMatcher
+structWrap: GFileInfo* FileInfo
+
+out: g_file_info_get_attribute_data type
+out: g_file_info_get_attribute_data value_pp
+out: g_file_info_get_attribute_data status
+
+outFile: FileInfo
+
+
+struct: GFileAttributeMatcher
+class: FileAttributeMatcher
+prefix: g_file_attribute_matcher_
+strictPrefix: Y
+import: glib.Str
+structWrap: GFileAttributeMatcher* FileAttributeMatcher
+outFile: FileAttributeMatcher
+
+file: GFileEnumerator.html
+struct: GFileEnumerator
+class: FileEnumerator
+prefix: g_file_enumerator_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.File
+structWrap: GList* ListG
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GFile* File
+outFile: FileEnumerator
+
+file: GMountOperation.html
+struct: GMountOperation
+class: MountOperation
+prefix: g_mount_operation_
+import: glib.Str
+outFile: MountOperation
+
+file: gio-GIOError.html
+class: ErrorGIO
+prefix: g_io_error_
+outFile: ErrorGIO
+
+###########################################################
+### File System Monitoring ################################
+###########################################################
+
+file: GFileMonitor.html
+struct: GFileMonitor
+class: FileMonitor
+prefix: g_file_monitor_
+import: gio.File
+structWrap: GFile* File
+outFile: FileMonitor
+
+###########################################################
+### Asynchronous I/O ######################################
+###########################################################
+
+file: GCancellable.html
+struct: GCancellable
+class: Cancellable
+prefix: g_cancellable_
+import: glib.ErrorG
+import: glib.GException
+structWrap: GCancellable* Cancellable
+outFile: Cancellable
+
+file: GAsyncResult.html
+struct: GAsyncResult
+class: AsyncResultT
+template: TStruct
+prefix: g_async_result_
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+interface: AsyncResultIF
+outFile: AsyncResultT
+
+file: gio-GIOScheduler.html
+struct: GIOSchedulerJob
+class: IOSchedulerJob
+prefix: g_io_scheduler_job_
+prefix: g_io_scheduler_
+import: gio.Cancellable
+structWrap: GCancellable* Cancellable
+outFile: IOSchedulerJob
+
+file: GSimpleAsyncResult.html
+struct: GSimpleAsyncResult
+class: SimpleAsyncResult
+prefix: g_simple_async_result_
+implements: AsyncResultIF
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.ObjectG
+import: gio.Cancellable
+structWrap: GError* ErrorG
+structWrap: GObject* ObjectG
+structWrap: GCancellable* Cancellable
+
+#imports for AsyncResult Interface.
+import: gobject.ObjectG
+import: gio.AsyncResultIF
+import: gio.AsyncResultT
+
+code: start
+	// add the AsyncResult capabilities
+	mixin AsyncResultT!(GSimpleAsyncResult);
+code: end
+outFile: SimpleAsyncResult
+
+###########################################################
+### Streaming I/O #########################################
+###########################################################
+
+file: GSeekable.html
+struct: GSeekable
+class: SeekableT
+template: TStruct
+prefix: g_seekable_
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+structWrap: GCancellable* Cancellable
+interface: SeekableIF
+outFile: SeekableT
+
+file: GInputStream.html
+struct: GInputStream
+class: InputStream
+prefix: g_input_stream_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+out: g_input_stream_read_all bytes_read
+outFile: InputStream
+
+file: GOutputStream.html
+struct: GOutputStream
+class: OutputStream
+prefix: g_output_stream_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.InputStream
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GInputStream* InputStream
+out: g_output_stream_write_all bytes_read
+outFile: OutputStream
+
+file: GFileInputStream.html
+struct: GFileInputStream
+class: FileInputStream
+implements: SeekableIF
+prefix: g_file_input_stream_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.FileInfo
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GFileInfo* FileInfo
+
+#imports for Seekable Interface.
+#import: glib.ErrorG
+#import: glib.GException
+#import: gio.Cancellable
+import: gio.SeekableT
+import: gio.SeekableIF
+
+code: start
+	// add the Seekable capabilities
+	mixin SeekableT!(GFileInputStream);
+code: end
+outFile: FileInputStream
+
+file: GFileOutputStream.html
+struct: GFileOutputStream
+class: FileOutputStream
+implements: SeekableIF
+prefix: g_file_output_stream_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.FileInfo
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GFileInfo* FileInfo
+
+#imports for Seekable Interface.
+#import: glib.ErrorG
+#import: glib.GException
+#import: gio.Cancellable
+import: gio.SeekableT
+import: gio.SeekableIF
+
+code: start
+	// add the Seekable capabilities
+	mixin SeekableT!(GFileOutputStream);
+code: end
+outFile: FileOutputStream
+
+file: GFilterInputStream.html
+struct: GFilterInputStream
+class: FilterInputStream
+prefix: g_filter_input_stream_
+import: gio.InputStream
+structWrap: GInputStream* InputStream
+outFile: FilterInputStream
+
+file: GFilterOutputStream.html
+struct: GFilterOutputStream
+class: FilterOutputStream
+prefix: g_filter_output_stream_
+import: gio.OutputStream
+structWrap: GOutputStream* OutputStream
+outFile: FilterOutputStream
+
+file: GMemoryInputStream.html
+struct: GMemoryInputStream
+ctorStruct: GInputStream
+class: MemoryInputStream
+implements: SeekableIF
+prefix: g_memory_input_stream_
+
+#imports for Seekable Interface.
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+import: gio.SeekableT
+import: gio.SeekableIF
+
+code: start
+	// add the Seekable capabilities
+	mixin SeekableT!(GMemoryInputStream);
+code: end
+outFile: MemoryInputStream
+
+file: GMemoryOutputStream.html
+struct: GMemoryOutputStream
+ctorStruct: GOutputStream
+class: MemoryOutputStream
+implements: SeekableIF
+prefix: g_memory_output_stream_
+
+#imports for Seekable Interface.
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+import: gio.SeekableT
+import: gio.SeekableIF
+
+code: start
+	// add the Seekable capabilities
+	mixin SeekableT!(GMemoryOutputStream);
+code: end
+outFile: MemoryOutputStream
+
+file: GBufferedInputStream.html
+struct: GBufferedInputStream
+ctorStruct: GInputStream
+class: BufferedInputStream
+prefix: g_buffered_input_stream_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.InputStream
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GInputStream* InputStream
+out: g_buffered_input_stream_peek_buffer count
+outFile: BufferedInputStream
+
+file: GBufferedOutputStream.html
+struct: GBufferedOutputStream
+ctorStruct: GOutputStream
+class: BufferedOutputStream
+prefix: g_buffered_output_stream_
+import: gio.OutputStream
+structWrap: GOutputStream* OutputStream
+outFile: BufferedOutputStream
+
+file: GDataInputStream.html
+struct: GDataInputStream
+class: DataInputStream
+prefix: g_data_input_stream_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+import: gio.InputStream
+structWrap: GCancellable* Cancellable
+structWrap: GInputStream* InputStream
+out: g_data_input_stream_read_line length
+out: g_data_input_stream_read_until length
+
+nocode: g_data_input_stream_read_byte
+outFile: DataInputStream
+
+file: GDataOutputStream.html
+struct: GDataOutputStream
+class: DataOutputStream
+prefix: g_data_output_stream_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+import: gio.OutputStream
+structWrap: GCancellable* Cancellable
+structWrap: GOutputStream* OutputStream
+outFile: DataOutputStream
+
+file: GUnixInputStream.html
+struct: GUnixInputStream
+ctorStruct: GInputStream
+class: UnixInputStream
+prefix: g_unix_input_stream_
+outFile: UnixInputStream
+
+file: GUnixOutputStream.html
+struct: GUnixOutputStream
+ctorStruct: GOutputStream
+class: UnixOutputStream
+prefix: g_unix_output_stream_
+outFile: UnixOutputStream
+
+###########################################################
+### File types and applications ###########################
+###########################################################
+
+file: gio-GContentType.html
+class: ContentType
+prefix: g_content_type_
+import: glib.Str
+import: glib.ListG
+import: gio.File
+import: gio.Icon
+import: gio.IconIF
+structWrap: GList* ListG
+structWrap: GFile* File
+structWrap: GIcon* IconIF
+array: g_content_type_guess data data_size
+out: g_content_type_guess result_uncertain
+outFile: ContentType
+
+file: GAppInfo.html
+struct: GAppInfo
+class: AppInfoT
+template: TStruct
+prefix: g_app_info_
+noprefix: g_app_launch_context_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gio.AppInfoIF
+import: gio.AppLaunchContext
+import: gio.Icon
+import: gio.IconIF
+structWrap: GList* ListG
+structWrap: GAppInfo* AppInfoIF
+structWrap: GAppLaunchContext* AppLaunchContext
+structWrap: GIcon* IconIF
+interface: AppInfoIF
+outFile: AppInfoT
+
+file:
+class: AppInfo
+extend: ObjectG
+implements: AppInfoIF
+import: gobject.ObjectG
+
+# imports for AppInfo Interface
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gio.AppLaunchContext
+import: gio.Icon
+import: gio.IconIF
+import: gio.AppInfoT
+import: gio.AppInfoIF
+
+code: start
+	// Minimal implementation.
+	mixin AppInfoT!(GAppInfo);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gAppInfo;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GAppInfo* gAppInfo)
+	{
+		if(gAppInfo is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gAppInfo);
+		this.gAppInfo = gAppInfo;
+	}
+code: end
+outFile: AppInfo
+
+struct: GAppLaunchContext
+class: AppLaunchContext
+prefix: g_app_launch_context_
+strictPrefix: Y
+import: glib.Str
+import: glib.ListG
+import: gio.AppInfoIF
+structWrap: GList* ListG
+structWrap: GAppInfo* AppInfoIF
+outFile: AppLaunchContext
+
+file: gio-Desktop-file-based-GAppInfo.html
+struct: GDesktopAppInfo
+class: DesktopAppInfo
+implements: AppInfoIF
+prefix: g_desktop_app_info_
+import: glib.KeyFile
+import: gio.AppInfo
+import: gio.AppInfoIF
+structWrap: GKeyFile* KeyFile
+structWrap: GAppInfo* AppInfoIF
+
+#imports for AppInfo Interface.
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gio.AppLaunchContext
+import: gio.Icon
+import: gio.IconIF
+import: gio.AppInfoT
+import: gio.AppInfoIF
+
+nocode: g_desktop_app_info_new_from_filename
+
+code: start
+	// add the AppInfo capabilities
+	mixin AppInfoT!(GDesktopAppInfo);
+
+	public static DesktopAppInfo createFromFilename(string filename)
+	{
+		return new DesktopAppInfo(g_desktop_app_info_new_from_filename(Str.toStringz(filename)));
+	}
+code: end
+outFile: DesktopAppInfo
+
+###########################################################
+### Volumes and Drives ####################################
+###########################################################
+
+file: GVolumeMonitor.html
+struct: GVolumeMonitor
+class: VolumeMonitor
+prefix: g_volume_monitor_
+import: glib.Str
+import: glib.ListG
+import: gio.Mount
+import: gio.MountIF
+import: gio.Volume
+import: gio.VolumeIF
+structWrap: GList* ListG
+structWrap: GMount* MountIF
+structWrap: GVolume* VolumeIF
+structWrap: GVolumeMonitor*
+
+nocode: g_volume_monitor_get
+
+code: start
+	/**
+	 * Gets the volume monitor used by gio.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		// GVolumeMonitor* g_volume_monitor_get (void);
+		auto p = g_volume_monitor_get();
+		if(p is null)
+		{
+			throw new ConstructionException("g_volume_monitor_get()");
+		}
+		this(cast(GVolumeMonitor*) p);
+	}
+code: end
+outFile: VolumeMonitor
+
+file: GVolume.html
+struct: GVolume
+class: VolumeT
+template: TStruct
+prefix: g_volume_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.Signals
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Drive
+import: gio.DriveIF
+import: gio.File
+import: gio.Icon
+import: gio.IconIF
+import: gio.Mount
+import: gio.MountIF
+import: gio.MountOperation
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GDrive* DriveIF
+structWrap: GFile* File
+structWrap: GIcon* IconIF
+structWrap: GMount* MountIF
+structWrap: GMountOperation* MountOperation
+interface: VolumeIF
+outFile: VolumeT
+
+file:
+class: Volume
+extend: ObjectG
+implements: VolumeIF
+import: gobject.ObjectG
+
+# imports for Volume Interface
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.Signals
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Drive
+import: gio.DriveIF
+import: gio.File
+import: gio.Icon
+import: gio.IconIF
+import: gio.Mount
+import: gio.MountIF
+import: gio.MountOperation
+import: gio.VolumeT
+import: gio.VolumeIF
+
+code: start
+	// Minimal implementation.
+	mixin VolumeT!(GVolume);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gVolume;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GVolume* gVolume)
+	{
+		if(gVolume is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gVolume);
+		this.gVolume = gVolume;
+	}
+code: end
+outFile: Volume
+
+file: GMount.html
+struct: GMount
+class: MountT
+template: TStruct
+prefix: g_mount_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.Signals
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Drive
+import: gio.DriveIF
+import: gio.File
+import: gio.Icon
+import: gio.IconIF
+import: gio.MountOperation
+import: gio.Volume
+import: gio.VolumeIF
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GDrive* DriveIF
+structWrap: GFile* File
+structWrap: GIcon* IconIF
+structWrap: GMountOperation* MountOperation
+structWrap: GVolume* VolumeIF
+interface: MountIF
+outFile: MountT
+
+file:
+class: Mount
+extend: ObjectG
+implements: MountIF
+import: gobject.ObjectG
+
+# imports for Mount Interface
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.Signals
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Drive
+import: gio.DriveIF
+import: gio.File
+import: gio.Icon
+import: gio.IconIF
+import: gio.MountOperation
+import: gio.Volume
+import: gio.VolumeIF
+import: gio.MountT
+import: gio.MountIF
+
+code: start
+	// Minimal implementation.
+	mixin MountT!(GMount);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gMount;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GMount* gMount)
+	{
+		if(gMount is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gMount);
+		this.gMount = gMount;
+	}
+code: end
+outFile: Mount
+
+file: GDrive.html
+struct: GDrive
+class: DriveT
+template: TStruct
+prefix: g_drive_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gobject.Signals
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Icon
+import: gio.IconIF
+structWrap: GList* ListG
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GIcon* IconIF
+interface: DriveIF
+outFile: DriveT
+
+file:
+class: Drive
+extend: ObjectG
+implements: DriveIF
+import: gobject.ObjectG
+
+# imports for Drive Interface
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gobject.Signals
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Icon
+import: gio.IconIF
+import: gio.DriveT
+import: gio.DriveIF
+
+code: start
+	// Minimal implementation.
+	mixin DriveT!(GDrive);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gDrive;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GDrive* gDrive)
+	{
+		if(gDrive is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gDrive);
+		this.gDrive = gDrive;
+	}
+code: end
+outFile: Drive
+
+file: gio-Unix-Mounts.html
+struct: GUnixMountEntry
+class: UnixMountEntry
+prefix: g_unix_mount_
+prefix: g_unix_
+noprefix: g_unix_mount_point_
+noprefix: g_unix_mount_monitor_
+import: glib.Str
+import: glib.ListG
+import: gio.Icon
+import: gio.IconIF
+structWrap: GList* ListG
+structWrap: GIcon* IconIF
+structWrap: GUnixMountEntry* UnixMountEntry
+
+inout: g_unix_mounts_get time_read
+inout: g_unix_mount_at time_read
+nosignal: mountpoints-changed
+nosignal: mounts-changed
+
+outFile: UnixMountEntry
+
+struct: GUnixMountPoint
+class: UnixMountPoint
+prefix: g_unix_mount_point_
+strictPrefix: Y
+import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+structWrap: GIcon* IconIF
+structWrap: GUnixMountPoint* UnixMountPoint
+
+inout: g_unix_mount_points_get time_read
+nosignal: mountpoints-changed
+nosignal: mounts-changed
+
+outFile: UnixMountPoint
+
+struct: GUnixMountMonitor
+class: UnixMountMonitor
+prefix: g_unix_mount_monitor_
+strictPrefix: Y
+outFile: UnixMountMonitor
+
+###########################################################
+### Icons #################################################
+###########################################################
+
+file: GIcon.html
+struct: GIcon
+class: IconT
+template: TStruct
+prefix: g_icon_
+interface: IconIF
+outFile: IconT
+
+file:
+class: Icon
+extend: ObjectG
+implements: IconIF
+import: gobject.ObjectG
+
+#imports for Icon Interface.
+import: gio.IconT
+import: gio.IconIF
+
+code: start
+	// Minimal implementation.
+	mixin IconT!(GIcon);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gIcon;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GIcon* gIcon)
+	{
+		if(gIcon is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gIcon);
+		this.gIcon = gIcon;
+	}
+code: end
+outFile: Icon
+
+file: GFileIcon.html
+struct: GFileIcon
+ctorStruct: GIcon
+class: FileIcon
+implements: IconIF
+implements: LoadableIconIF
+prefix: g_file_icon_
+
+#imports for Icon Interface.
+import: gio.IconT
+import: gio.IconIF
+
+#imports for LoadableIcon Interface.
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.InputStream
+import: gio.LoadableIconT
+import: gio.LoadableIconIF
+
+code: start
+	// add the Icon capabilities
+	mixin IconT!(GFileIcon);
+
+	// add the LoadableIcon capabilities
+	mixin LoadableIconT!(GFileIcon);
+code: end
+outFile: FileIcon
+
+file: GLoadableIcon.html
+struct: GLoadableIcon
+class: LoadableIconT
+template: TStruct
+prefix: g_loadable_icon_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.InputStream
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GInputStream* InputStream
+
+out: g_loadable_icon_load type
+out: g_loadable_icon_load_finish type
+
+interface: LoadableIconIF
+outFile: LoadableIconT
+
+file: GThemedIcon.html
+struct: GThemedIcon
+ctorStruct: GIcon
+class: ThemedIcon
+implements: IconIF
+prefix: g_themed_icon_
+import: glib.Str
+
+#imports for Icon Interface.
+import: gio.IconT
+import: gio.IconIF
+
+array: g_themed_icon_new_from_names iconnames
+nocode: g_themed_icon_new
+
+code: start
+	// add the Icon capabilities
+	mixin IconT!(GThemedIcon);
+code: end
+outFile: ThemedIcon
+
+file: GEmblemedIcon.html
+struct: GEmblemedIcon
+ctorStruct: GIcon
+class: EmblemedIcon
+implements: IconIF
+prefix: g_emblemed_icon_
+import: glib.ListG
+import: gio.Emblem
+import: gio.Icon
+import: gio.IconIF
+structWrap: GList* ListG
+structWrap: GEmblem* Emblem
+structWrap: GIcon* IconIF
+
+#imports for Icon Interface.
+import: gio.IconT
+#import: gio.IconIF
+
+array: g_themed_icon_new_from_names iconnames
+
+code: start
+	// add the Icon capabilities
+	mixin IconT!(GEmblemedIcon);
+code: end
+outFile: EmblemedIcon
+
+file: GEmblem.html
+struct: GEmblem
+class: Emblem
+implements: IconIF
+prefix: g_emblem_
+import: gio.Icon
+import: gio.IconIF
+structWrap: GIcon* IconIF
+
+#imports for Icon Interface.
+import: gio.IconT
+#import: gio.IconIF
+
+array: g_themed_icon_new_from_names iconnames
+
+code: start
+	// add the Icon capabilities
+	mixin IconT!(GEmblem);
+code: end
+outFile: Emblem
+
+###########################################################
+### Utilities #############################################
+###########################################################
+
+file: GFilenameCompleter.html
+struct: GFilenameCompleter
+class: FilenameCompleter
+prefix: g_filename_completer_
+import: glib.Str
+outFile: FilenameCompleter
+
+###########################################################
+### Extending GIO #########################################
+###########################################################
+
+file: GVfs.html
+struct: GVfs
+class: Vfs
+prefix: g_vfs_
+import: glib.Str
+import: gio.File
+structWrap: GFile* File
+structWrap: GVfs* Vfs
+outFile: Vfs
+
+file: GIOModule.html
+struct: GIOModule
+class: IOModule
+prefix: g_io_module_
+prefix: g_io_
+import: glib.Str
+import: glib.ListG
+structWrap: GList* ListG
+outFile: IOModule
+
+file: gio-Extension-Points.html
+struct: GIOExtension
+class: IOExtension
+prefix: g_io_extension_
+noprefix: g_io_extension_point_
+import: glib.Str
+structWrap: GIOExtension* IOExtension
+outFile: IOExtension
+
+struct: GIOExtensionPoint
+class: IOExtensionPoint
+prefix: g_io_extension_point_
+strictPrefix: Y
+import: glib.Str
+import: glib.ListG
+import: gio.IOExtension
+structWrap: GList* ListG
+structWrap: GIOExtension* IOExtension
+structWrap: GIOExtensionPoint* IOExtensionPoint
+outFile: IOExtensionPoint

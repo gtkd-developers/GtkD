@@ -48,12 +48,10 @@
  * 	- glib.GException
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
- * 	- gtk.Window
  * 	- gtk.WindowGroup
  * 	- gdk.Screen
  * 	- glib.ListG
  * 	- gdk.Pixbuf
- * 	- gtk.Window
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
@@ -83,12 +81,10 @@ private import glib.ErrorG;
 private import glib.GException;
 private import gtk.AccelGroup;
 private import gtk.Widget;
-private import gtk.Window;
 private import gtk.WindowGroup;
 private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Pixbuf;
-private import gtk.Window;
 
 
 
@@ -767,6 +763,23 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Returns the default widget for window. See gtk_window_set_default()
+	 * for more details.
+	 * Since 2.14
+	 * Returns: the default widget, or NULL if there is none.
+	 */
+	public Widget getDefaultWidget()
+	{
+		// GtkWidget* gtk_window_get_default_widget (GtkWindow *window);
+		auto p = gtk_window_get_default_widget(gtkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
 	 * The default widget is the widget that's activated when the user
 	 * presses Enter in a dialog (for example). This function sets or
 	 * unsets the default widget for a GtkWindow about. When setting
@@ -830,7 +843,7 @@ public class Window : Bin
 	 * It's permitted to call this function before showing a window,
 	 * in which case the window will be iconified before it ever appears
 	 * onscreen.
-	 * You can track iconification via the "window_state_event" signal
+	 * You can track iconification via the "window-state-event" signal
 	 * on GtkWidget.
 	 */
 	public void iconify()
@@ -844,7 +857,7 @@ public class Window : Bin
 	 * that you shouldn't assume the window is definitely deiconified
 	 * afterward, because other entities (e.g. the user or window manager) could iconify it
 	 * again before your code which assumes deiconification gets to run.
-	 * You can track iconification via the "window_state_event" signal
+	 * You can track iconification via the "window-state-event" signal
 	 * on GtkWidget.
 	 */
 	public void deiconify()
@@ -861,7 +874,7 @@ public class Window : Bin
 	 * windows. But normally the window will end up stuck. Just don't
 	 * write code that crashes if not.
 	 * It's permitted to call this function before showing a window.
-	 * You can track stickiness via the "window_state_event" signal
+	 * You can track stickiness via the "window-state-event" signal
 	 * on GtkWidget.
 	 */
 	public void stick()
@@ -877,7 +890,7 @@ public class Window : Bin
 	 * (e.g. the user or window
 	 * manager) could stick it again. But normally the window will
 	 * end up stuck. Just don't write code that crashes if not.
-	 * You can track stickiness via the "window_state_event" signal
+	 * You can track stickiness via the "window-state-event" signal
 	 * on GtkWidget.
 	 */
 	public void unstick()
@@ -896,7 +909,7 @@ public class Window : Bin
 	 * It's permitted to call this function before showing a window,
 	 * in which case the window will be maximized when it appears onscreen
 	 * initially.
-	 * You can track maximization via the "window_state_event" signal
+	 * You can track maximization via the "window-state-event" signal
 	 * on GtkWidget.
 	 */
 	public void maximize()
@@ -912,7 +925,7 @@ public class Window : Bin
 	 * manager) could maximize it again, and not all window
 	 * managers honor requests to unmaximize. But normally the window will
 	 * end up unmaximized. Just don't write code that crashes if not.
-	 * You can track maximization via the "window_state_event" signal
+	 * You can track maximization via the "window-state-event" signal
 	 * on GtkWidget.
 	 */
 	public void unmaximize()
@@ -928,7 +941,7 @@ public class Window : Bin
 	 * again, and not all window managers honor requests to fullscreen
 	 * windows. But normally the window will end up fullscreen. Just
 	 * don't write code that crashes if not.
-	 * You can track the fullscreen state via the "window_state_event" signal
+	 * You can track the fullscreen state via the "window-state-event" signal
 	 * on GtkWidget.
 	 * Since 2.2
 	 */
@@ -945,7 +958,7 @@ public class Window : Bin
 	 * again, and not all window managers honor requests to unfullscreen
 	 * windows. But normally the window will end up restored to its normal
 	 * state. Just don't write code that crashes if not.
-	 * You can track the fullscreen state via the "window_state_event" signal
+	 * You can track the fullscreen state via the "window-state-event" signal
 	 * on GtkWidget.
 	 * Since 2.2
 	 */
@@ -965,7 +978,7 @@ public class Window : Bin
 	 * It's permitted to call this function before showing a window,
 	 * in which case the window will be kept above when it appears onscreen
 	 * initially.
-	 * You can track the above state via the "window_state_event" signal
+	 * You can track the above state via the "window-state-event" signal
 	 * on GtkWidget.
 	 * Note that, according to the Extended Window
 	 * Manager Hints specification, the above state is mainly meant
@@ -991,7 +1004,7 @@ public class Window : Bin
 	 * It's permitted to call this function before showing a window,
 	 * in which case the window will be kept below when it appears onscreen
 	 * initially.
-	 * You can track the below state via the "window_state_event" signal
+	 * You can track the below state via the "window-state-event" signal
 	 * on GtkWidget.
 	 * Note that, according to the Extended Window
 	 * Manager Hints specification, the above state is mainly meant
@@ -1460,8 +1473,8 @@ public class Window : Bin
 	 * "GnomeClient" object in the GNOME libraries for example) and allow
 	 * the window manager to save your window sizes and positions.
 	 * Params:
-	 * rootX =  return location for X coordinate of gravity-determined reference p\oint
-	 * rootY =  return location for Y coordinate of gravity-determined reference p\oint
+	 * rootX =  return location for X coordinate of gravity-determined reference point
+	 * rootY =  return location for Y coordinate of gravity-determined reference point
 	 */
 	public void getPosition(out int rootX, out int rootY)
 	{
@@ -1497,7 +1510,7 @@ public class Window : Bin
 	 * because the size of the window may change between the time that you
 	 * get the size and the time that you perform some action assuming
 	 * that size is the current size. To avoid race conditions, connect to
-	 * "configure_event" on the window and adjust your size-dependent
+	 * "configure-event" on the window and adjust your size-dependent
 	 * state to match the size delivered in the GdkEventConfigure.
 	 * Note 2: The returned size does not include the
 	 * size of the window manager decorations (aka the window frame or

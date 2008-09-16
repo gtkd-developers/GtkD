@@ -81,7 +81,7 @@ private import gtk.CheckMenuItem;
  * remove itself and its list item when it is destroyed.
  * The correct way to create a group of radio menu items is approximatively
  * this:
- * Example26.How to create a group of radio menu items.
+ * Example 28. How to create a group of radio menu items.
  * GSList *group = NULL;
  * GtkWidget *item;
  * gint i;

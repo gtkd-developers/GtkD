@@ -91,7 +91,7 @@ public  import gtkc.gdktypes;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example39.The high-level printing API
+ * Example 41. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -137,6 +137,70 @@ public template PrintOperationPreviewT(TStruct)
 	
 	/**
 	 */
+	int[char[]] connectedSignals;
+	
+	void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF)[] _onGotPageSizeListeners;
+	void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF)[] onGotPageSizeListeners()
+	{
+		return  _onGotPageSizeListeners;
+	}
+	/**
+	 */
+	void addOnGotPageSize(void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("got-page-size" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"got-page-size",
+			cast(GCallback)&callBackGotPageSize,
+			cast(void*)cast(PrintOperationPreviewIF)this,
+			null,
+			connectFlags);
+			connectedSignals["got-page-size"] = 1;
+		}
+		_onGotPageSizeListeners ~= dlg;
+	}
+	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* arg1, GtkPageSetup* arg2, PrintOperationPreviewIF printOperationPreviewIF)
+	{
+		foreach ( void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onGotPageSizeListeners )
+		{
+			dlg(arg1, arg2, printOperationPreviewIF);
+		}
+	}
+	
+	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] _onReadyListeners;
+	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] onReadyListeners()
+	{
+		return  _onReadyListeners;
+	}
+	/**
+	 * See Also
+	 * GtkPrintContext, GtkPrintUnixDialog
+	 */
+	void addOnReady(void delegate(GtkPrintContext*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("ready" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"ready",
+			cast(GCallback)&callBackReady,
+			cast(void*)cast(PrintOperationPreviewIF)this,
+			null,
+			connectFlags);
+			connectedSignals["ready"] = 1;
+		}
+		_onReadyListeners ~= dlg;
+	}
+	extern(C) static void callBackReady(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* arg1, PrintOperationPreviewIF printOperationPreviewIF)
+	{
+		foreach ( void delegate(GtkPrintContext*, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onReadyListeners )
+		{
+			dlg(arg1, printOperationPreviewIF);
+		}
+	}
+	
 	
 	/**
 	 * Ends a preview.

@@ -43,9 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gdk.Window
  * 	- gtk.Adjustment
  * 	- gtk.Widget
  * structWrap:
+ * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -63,6 +65,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gdk.Window;
 private import gtk.Adjustment;
 private import gtk.Widget;
 
@@ -311,5 +314,21 @@ public class Layout : Container
 	{
 		// void gtk_layout_set_vadjustment (GtkLayout *layout,  GtkAdjustment *adjustment);
 		gtk_layout_set_vadjustment(gtkLayout, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+	}
+	
+	/**
+	 * Retrieve the bin window of the layout used for drawing operations.
+	 * Since 2.14
+	 * Returns: a GdkWindow
+	 */
+	public Window getBinWindow()
+	{
+		// GdkWindow* gtk_layout_get_bin_window (GtkLayout *layout);
+		auto p = gtk_layout_get_bin_window(gtkLayout);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 }

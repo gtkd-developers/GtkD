@@ -93,7 +93,7 @@ private import glib.ListG;
  * multiple <attribute> elements. Each <attribute> element has
  * a name attribute which specifies a property of the cell renderer; the
  * content of the element is the attribute value.
- * Example20.A UI definition fragment specifying attributes
+ * Example 22. A UI definition fragment specifying attributes
  * <object class="GtkCellView">
  *  <child>
  *  <object class="GtkCellRendererText"/>

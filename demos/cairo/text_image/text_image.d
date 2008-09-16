@@ -37,7 +37,7 @@ protected:
 	{
 		// This is where we draw on the window
 
-		Drawable dr = getDrawable();
+		Drawable dr = getWindow();
 
 		int width;
 		int height;

@@ -432,6 +432,9 @@ public class Toolbar : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toolbar_set_tooltips has been deprecated since version 2.14 and should not be used in newly-written code. The toolkit-wide "gtk-enable-tooltips" property
+	 * is now used instead.
 	 * Sets if the tooltips of a toolbar should be active or not.
 	 * Params:
 	 * enable =  set to FALSE to disable the tooltips, or TRUE to enable them.
@@ -497,6 +500,9 @@ public class Toolbar : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toolbar_get_tooltips has been deprecated since version 2.14 and should not be used in newly-written code. The toolkit-wide "gtk-enable-tooltips" property
+	 * is now used instead.
 	 * Retrieves whether tooltips are enabled. See
 	 * gtk_toolbar_set_tooltips().
 	 * Returns: TRUE if tooltips are enabled

@@ -103,7 +103,7 @@ private import gtk.Dialog;
  * those for GtkDialog.
  * Note that GtkRecentChooserDialog does not have any methods of its own.
  * Instead, you should use the functions that work on a GtkRecentChooser.
- * Example49.Typical usage
+ * Example 52. Typical usage
  *  In the simplest of cases, you can use the following code to use
  *  a GtkRecentChooserDialog to select a recently used file:
  * GtkWidget *dialog;

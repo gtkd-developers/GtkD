@@ -204,6 +204,8 @@ public class StatusIcon : ObjectG
 	/**
 	 * Gets emitted when the user activates the status icon.
 	 * If and how status icons can activated is platform-dependent.
+	 * Unlike most G_SIGNAL_ACTION signals, this signal is meant to
+	 * be used by applications and should be wrapped by language bindings.
 	 * Since 2.10
 	 */
 	void addOnActivate(void delegate(StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -234,8 +236,10 @@ public class StatusIcon : ObjectG
 	 * Gets emitted when the user brings up the context menu
 	 * of the status icon. Whether status icons can have context
 	 * menus and how these are activated is platform-dependent.
-	 * The button and activate_timeout parameters should be
+	 * The button and activate_time parameters should be
 	 * passed as the last to arguments to gtk_menu_popup().
+	 * Unlike most G_SIGNAL_ACTION signals, this signal is meant to
+	 * be used by applications and should be wrapped by language bindings.
 	 * Since 2.10
 	 */
 	void addOnPopupMenu(void delegate(guint, guint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -333,6 +337,25 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Creates a status icon displaying a GIcon. If the icon is a
+	 * themed icon, it will be updated when the theme changes.
+	 * Since 2.14
+	 * Params:
+	 * icon =  a GIcon
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GIcon* icon)
+	{
+		// GtkStatusIcon* gtk_status_icon_new_from_gicon (GIcon *icon);
+		auto p = gtk_status_icon_new_from_gicon(icon);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_gicon(icon)");
+		}
+		this(cast(GtkStatusIcon*) p);
+	}
+	
+	/**
 	 * Makes status_icon display pixbuf.
 	 * See gtk_status_icon_new_from_pixbuf() for details.
 	 * Since 2.10
@@ -383,6 +406,19 @@ public class StatusIcon : ObjectG
 	{
 		// void gtk_status_icon_set_from_icon_name (GtkStatusIcon *status_icon,  const gchar *icon_name);
 		gtk_status_icon_set_from_icon_name(gtkStatusIcon, Str.toStringz(iconName));
+	}
+	
+	/**
+	 * Makes status_icon display the GIcon.
+	 * See gtk_status_icon_new_from_gicon() for details.
+	 * Since 2.14
+	 * Params:
+	 * icon =  a GIcon
+	 */
+	public void setFromGicon(GIcon* icon)
+	{
+		// void gtk_status_icon_set_from_gicon (GtkStatusIcon *status_icon,  GIcon *icon);
+		gtk_status_icon_set_from_gicon(gtkStatusIcon, icon);
 	}
 	
 	/**
@@ -446,6 +482,22 @@ public class StatusIcon : ObjectG
 	{
 		// const gchar* gtk_status_icon_get_icon_name (GtkStatusIcon *status_icon);
 		return Str.toString(gtk_status_icon_get_icon_name(gtkStatusIcon));
+	}
+	
+	/**
+	 * Retrieves the GIcon being displayed by the GtkStatusIcon.
+	 * The storage type of the status icon must be GTK_IMAGE_EMPTY or
+	 * GTK_IMAGE_GICON (see gtk_status_icon_get_storage_type()).
+	 * The caller of this function does not own a reference to the
+	 * returned GIcon.
+	 * If this function fails, icon is left unchanged;
+	 * Since 2.14
+	 * Returns: the displayed icon, or NULL if the image is empty
+	 */
+	public GIcon* getGicon()
+	{
+		// GIcon* gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
+		return gtk_status_icon_get_gicon(gtkStatusIcon);
 	}
 	
 	/**
@@ -622,5 +674,24 @@ public class StatusIcon : ObjectG
 		
 		screen = new Screen(outscreen);
 		return p;
+	}
+	
+	/**
+	 * This function is only useful on the X11/freedesktop.org platform.
+	 * It returns a window ID for the widget in the underlying
+	 * status icon implementation. This is useful for the Galago
+	 * notification service, which can send a window ID in the protocol
+	 * in order for the server to position notification windows
+	 * pointing to a status icon reliably.
+	 * This function is not intended for other use cases which are
+	 * more likely to be met by one of the non-X11 specific methods, such
+	 * as gtk_status_icon_position_menu().
+	 * Since 2.14
+	 * Returns: An 32 bit unsigned integer identifier for the underlying X11 Window
+	 */
+	public uint getX11_WindowId()
+	{
+		// guint32 gtk_status_icon_get_x11_window_id (GtkStatusIcon *status_icon);
+		return gtk_status_icon_get_x11_window_id(gtkStatusIcon);
 	}
 }

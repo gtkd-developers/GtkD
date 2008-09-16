@@ -128,7 +128,7 @@ public interface TreeSortableIF
 	 * userData =  User data to pass to sort_func, or NULL
 	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
-	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy);
+	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy);
 	
 	/**
 	 * Sets the default comparison function used when sorting to be sort_func.
@@ -144,7 +144,7 @@ public interface TreeSortableIF
 	 * userData =  User data to pass to sort_func, or NULL
 	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
-	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy);
+	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy);
 	
 	/**
 	 * Returns TRUE if the model has a default sort function. This is used

@@ -116,7 +116,7 @@ private import gtk.Misc;
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
- * Example9.Handling button press events on a
+ * Example 10. Handling button press events on a
  * GtkImage.
  *  static gboolean
  *  button_press_callback (GtkWidget *event_box,
@@ -394,6 +394,23 @@ public class Image : Misc
 	}
 	
 	/**
+	 * Gets the GIcon and size being displayed by the GtkImage.
+	 * The storage type of the image must be GTK_IMAGE_EMPTY or
+	 * GTK_IMAGE_GICON (see gtk_image_get_storage_type()).
+	 * The caller of this function does not own a reference to the
+	 * returned GIcon.
+	 * Since 2.14
+	 * Params:
+	 * gicon =  place to store a GIcon
+	 * size =  place to store an icon size
+	 */
+	public void getGicon(GIcon** gicon, GtkIconSize* size)
+	{
+		// void gtk_image_get_gicon (GtkImage *image,  GIcon **gicon,  GtkIconSize *size);
+		gtk_image_get_gicon(gtkImage, gicon, size);
+	}
+	
+	/**
 	 * Gets the type of representation being used by the GtkImage
 	 * to store image data. If the GtkImage has no image data,
 	 * the return value will be GTK_IMAGE_EMPTY.
@@ -553,6 +570,28 @@ public class Image : Misc
 	}
 	
 	/**
+	 * Creates a GtkImage displaying an icon from the current icon theme.
+	 * If the icon name isn't known, a "broken image" icon will be
+	 * displayed instead. If the current icon theme is changed, the icon
+	 * will be updated appropriately.
+	 * Since 2.14
+	 * Params:
+	 * icon =  an icon
+	 * size =  a stock icon size
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GIcon* icon, GtkIconSize size)
+	{
+		// GtkWidget* gtk_image_new_from_gicon (GIcon *icon,  GtkIconSize size);
+		auto p = gtk_image_new_from_gicon(icon, size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_gicon(icon, size)");
+		}
+		this(cast(GtkImage*) p);
+	}
+	
+	/**
 	 * See gtk_image_new_from_file() for details.
 	 * Params:
 	 * filename =  a filename or NULL
@@ -645,6 +684,19 @@ public class Image : Misc
 	{
 		// void gtk_image_set_from_icon_name (GtkImage *image,  const gchar *icon_name,  GtkIconSize size);
 		gtk_image_set_from_icon_name(gtkImage, Str.toStringz(iconName), size);
+	}
+	
+	/**
+	 * See gtk_image_new_from_gicon() for details.
+	 * Since 2.14
+	 * Params:
+	 * icon =  an icon
+	 * size =  an icon size
+	 */
+	public void setFromGicon(GIcon* icon, GtkIconSize size)
+	{
+		// void gtk_image_set_from_gicon (GtkImage *image,  GIcon *icon,  GtkIconSize size);
+		gtk_image_set_from_gicon(gtkImage, icon, size);
 	}
 	
 	/**

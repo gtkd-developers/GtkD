@@ -78,16 +78,16 @@ private import gtk.ToolItem;
  * gtk_tool_button_new_with_stock() to create a GtkToolButton
  * containing a stock item.
  * The label of a GtkToolButton is determined by the properties
- * "label_widget", "label", and "stock_id". If "label_widget" is
+ * "label-widget", "label", and "stock-id". If "label-widget" is
  * non-NULL, then that widget is used as the label. Otherwise, if
  * "label" is non-NULL, that string is used as the label. Otherwise, if
- * "stock_id" is non-NULL, the label is determined by the stock
+ * "stock-id" is non-NULL, the label is determined by the stock
  * item. Otherwise, the button does not have a label.
  * The icon of a GtkToolButton is determined by the properties
- * "icon_widget" and "stock_id". If "icon_widget" is non-NULL, then
- * that widget is used as the icon. Otherwise, if "stock_id" is
+ * "icon-widget" and "stock-id". If "icon-widget" is non-NULL, then
+ * that widget is used as the icon. Otherwise, if "stock-id" is
  * non-NULL, the icon is determined by the stock item. Otherwise,
- * the button does not have a label.
+ * the button does not have a icon.
  */
 public class ToolButton : ToolItem
 {

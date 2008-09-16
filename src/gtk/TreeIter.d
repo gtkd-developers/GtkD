@@ -95,7 +95,7 @@ private import gobject.Value;
  * observing changes. The implementation of each individual model decides
  * how and if changes are made.
  * In order to make life simpler for programmers who do not need to write
- * their own specialized model, two generic models are provided  the
+ * their own specialized model, two generic models are provided — the
  * GtkTreeStore and the GtkListStore. To use these, the developer simply
  * pushes data into these models as necessary. These models provide the
  * data structure as well as all appropriate tree interfaces. As a result,
@@ -112,8 +112,8 @@ private import gobject.Value;
  * The GtkTreePath struct can be converted into either an array of
  * unsigned integers or a string. The string form is a list of numbers
  * separated by a colon. Each number refers to the offset at that level.
- * Thus, the path 0 refers to the root node and the path
- * 2:4 refers to the fifth child of the third node.
+ * Thus, the path “0” refers to the root node and the path
+ * “2:4” refers to the fifth child of the third node.
  * By contrast, a GtkTreeIter is a reference to a specific node on a
  * specific model. It is a generic struct with an integer and three
  * generic pointers. These are filled in by the model in a model-specific
@@ -143,9 +143,9 @@ private import gobject.Value;
  * GTK_TREE_MODEL_ITERS_PERSIST flag was added to indicate this behavior.
  * To help show some common operation of a model, some examples are
  * provided. The first example shows three ways of getting the iter at the
- * location 3:2:5. While the first method shown is easier,
+ * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example15.Acquiring a GtkTreeIter
+ * Example 17. Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -170,7 +170,7 @@ private import gobject.Value;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example16.Reading data from a GtkTreeModel
+ * Example 18. Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -410,10 +410,11 @@ public class TreeIter
 	 */
 	
 	/**
-	 * Creates a dynamically allocated tree iterator as a copy of iter. This
-	 * function is not intended for use in applications, because you can just copy
-	 * the structs by value (GtkTreeIter new_iter = iter;). You
-	 * must free this iter with gtk_tree_iter_free().
+	 * Creates a dynamically allocated tree iterator as a copy of iter.
+	 * This function is not intended for use in applications, because you
+	 * can just copy the structs by value
+	 * (GtkTreeIter new_iter = iter;).
+	 * You must free this iter with gtk_tree_iter_free().
 	 * Returns: a newly-allocated copy of iter.
 	 */
 	public TreeIter copy()
@@ -428,8 +429,8 @@ public class TreeIter
 	}
 	
 	/**
-	 * Frees an iterator that has been allocated on the heap. This function is
-	 * mainly used for language bindings.
+	 * Frees an iterator that has been allocated by gtk_tree_iter_copy().
+	 * This function is mainly used for language bindings.
 	 */
 	public void free()
 	{

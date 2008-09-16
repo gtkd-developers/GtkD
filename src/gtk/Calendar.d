@@ -407,19 +407,6 @@ public class Calendar : Widget
 	}
 	
 	/**
-	 * Warning
-	 * gtk_calendar_display_options is deprecated and should not be used in newly-written code.
-	 * Sets display options (whether to display the heading and the month headings).
-	 * Params:
-	 * flags =  the display options to set.
-	 */
-	public void displayOptions(GtkCalendarDisplayOptions flags)
-	{
-		// void gtk_calendar_display_options (GtkCalendar *calendar,  GtkCalendarDisplayOptions flags);
-		gtk_calendar_display_options(gtkCalendar, flags);
-	}
-	
-	/**
 	 * Obtains the selected date from a GtkCalendar.
 	 * Params:
 	 * year =  location to store the year number, or NULL
@@ -430,6 +417,91 @@ public class Calendar : Widget
 	{
 		// void gtk_calendar_get_date (GtkCalendar *calendar,  guint *year,  guint *month,  guint *day);
 		gtk_calendar_get_date(gtkCalendar, &year, &month, &day);
+	}
+	
+	/**
+	 * Installs a function which provides Pango markup with detail information
+	 * for each day. Examples for such details are holidays or appointments. That
+	 * information is shown below each day when "show-details" is set.
+	 * A tooltip containing with full detail information is provided, if the entire
+	 * text should not fit into the details area, or if "show-details"
+	 * is not set.
+	 * The size of the details area can be restricted by setting the
+	 * "detail-width-chars" and "detail-height-rows"
+	 * properties.
+	 * Since 2.14
+	 * Params:
+	 * func =  a function providing details for each day.
+	 * data =  data to pass to func invokations.
+	 * destroy =  a function for releasing data.
+	 */
+	public void setDetailFunc(GtkCalendarDetailFunc func, void* data, GDestroyNotify destroy)
+	{
+		// void gtk_calendar_set_detail_func (GtkCalendar *calendar,  GtkCalendarDetailFunc func,  gpointer data,  GDestroyNotify destroy);
+		gtk_calendar_set_detail_func(gtkCalendar, func, data, destroy);
+	}
+	
+	/**
+	 * Queries the width of detail cells, in characters.
+	 * See "detail-width-chars".
+	 * Since 2.14
+	 * Returns: The width of detail cells, in characters.
+	 */
+	public int getDetailWidthChars()
+	{
+		// gint gtk_calendar_get_detail_width_chars (GtkCalendar *calendar);
+		return gtk_calendar_get_detail_width_chars(gtkCalendar);
+	}
+	
+	/**
+	 * Updates the width of detail cells.
+	 * See "detail-width-chars".
+	 * Since 2.14
+	 * Params:
+	 * chars =  detail width in characters.
+	 */
+	public void setDetailWidthChars(int chars)
+	{
+		// void gtk_calendar_set_detail_width_chars (GtkCalendar *calendar,  gint chars);
+		gtk_calendar_set_detail_width_chars(gtkCalendar, chars);
+	}
+	
+	/**
+	 * Queries the height of detail cells, in rows.
+	 * See "detail-width-chars".
+	 * Since 2.14
+	 * Returns: The height of detail cells, in rows.
+	 */
+	public int getDetailHeightRows()
+	{
+		// gint gtk_calendar_get_detail_height_rows (GtkCalendar *calendar);
+		return gtk_calendar_get_detail_height_rows(gtkCalendar);
+	}
+	
+	/**
+	 * Updates the height of detail cells.
+	 * See "detail-height-rows".
+	 * Since 2.14
+	 * Params:
+	 * rows =  detail height in rows.
+	 */
+	public void setDetailHeightRows(int rows)
+	{
+		// void gtk_calendar_set_detail_height_rows (GtkCalendar *calendar,  gint rows);
+		gtk_calendar_set_detail_height_rows(gtkCalendar, rows);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_calendar_display_options is deprecated and should not be used in newly-written code.
+	 * Sets display options (whether to display the heading and the month headings).
+	 * Params:
+	 * flags =  the display options to set.
+	 */
+	public void displayOptions(GtkCalendarDisplayOptions flags)
+	{
+		// void gtk_calendar_display_options (GtkCalendar *calendar,  GtkCalendarDisplayOptions flags);
+		gtk_calendar_display_options(gtkCalendar, flags);
 	}
 	
 	/**

@@ -114,16 +114,19 @@ private import gobject.ObjectG;
  * Do not confuse GtkBuilder UI Definitions with
  * GtkUIManager UI Definitions,
  * which are more limited in scope.
- * <!ELEMENT interface object* >
+ * <!ELEMENT interface (requires|object)* >
  * <!ELEMENT object (property|signal|child|ANY)* >
  * <!ELEMENT property PCDATA >
  * <!ELEMENT signal EMPTY >
+ * <!ELEMENT requires EMPTY >
  * <!ELEMENT child (object|ANY*) >
  * <!ATTLIST interface domain 	 #IMPLIED >
  * <!ATTLIST object id 	 #REQUIRED
  *  class 	 #REQUIRED
  *  type-func 	 #IMPLIED
  *  constructor 	 #IMPLIED >
+ * <!ATTLIST requires lib 	 #REQUIRED
+ *  version 	 #REQUIRED >
  * <!ATTLIST property name 	 #REQUIRED
  *  translatable 	 #IMPLIED
  *  comments #IMPLIED
@@ -148,6 +151,11 @@ private import gobject.ObjectG;
  * inside a container, but also e.g. actions in an action group,
  * or columns in a tree model). A <child> element contains
  * an <object> element which describes the child object.
+ * The target toolkit version(s) are described by <requires>
+ * elements, the "lib" attribute specifies the widget library in
+ * question (currently the only supported value is "gtk+") and the "version"
+ * attribute specifies the target version in the form "<major>.<minor>".
+ * The builder will error out if the version requirements are not met.
  * Typically, the specific kind of object represented by an
  * <object> element is specified by the "class" attribute.
  * If the type has not been loaded yet, GTK+ tries to find the
@@ -184,7 +192,7 @@ private import gobject.ObjectG;
  * "GTK_VISIBLE|GTK_REALIZED") and colors (in a format understood by
  * gdk_color_parse()). Objects can be referred to by their name.
  * Pixbufs can be specified as a filename of an image file to load.
- * In general, GtkBuilder allows forward references to objects
+ * In general, GtkBuilder allows forward references to objects —
  * an object doesn't have to constructed before it can be referred to.
  * The exception to this rule is that an object has to be constructed
  * before it can be used as the value of a construct-only property.
@@ -210,7 +218,7 @@ private import gobject.ObjectG;
  * in a UI definition by specifying the "type" attribute on a <child>
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
- * Example50.A GtkBuilder UI Definition
+ * Example 53. A GtkBuilder UI Definition
  * <interface>
  *  <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">
@@ -241,6 +249,7 @@ private import gobject.ObjectG;
  * These XML fragments are explained in the documentation of the
  * respective objects, see
  * GtkWidget,
+ * GtkLabel,
  * GtkContainer,
  * GtkDialog,
  * GtkCellLayout,
@@ -366,6 +375,67 @@ public class Builder : ObjectG
 	}
 	
 	/**
+	 * Parses a file containing a GtkBuilder
+	 * UI definition building only the requested objects and merges
+	 * them with the current contents of builder.
+	 * Note
+	 * If you are adding an object that depends on an object that is not
+	 * its child (for instance a GtkTreeView that depends on its
+	 * GtkTreeModel), you have to explicitely list all of them in object_ids.
+	 * Since 2.14
+	 * Params:
+	 * filename =  the name of the file to parse
+	 * objectIds =  nul-terminated array of objects to build
+	 * Returns: A positive value on success, 0 if an error occurred
+	 * Throws: GException on failure.
+	 */
+	public uint addObjectsFromFile(string filename, string[] objectIds)
+	{
+		// guint gtk_builder_add_objects_from_file (GtkBuilder *builder,  const gchar *filename,  gchar **object_ids,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_builder_add_objects_from_file(gtkBuilder, Str.toStringz(filename), Str.toStringzArray(objectIds), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Parses a string containing a GtkBuilder
+	 * UI definition building only the requested objects and merges
+	 * them with the current contents of builder.
+	 * Note
+	 * If you are adding an object that depends on an object that is not
+	 * its child (for instance a GtkTreeView that depends on its
+	 * GtkTreeModel), you have to explicitely list all of them in object_ids.
+	 * Since 2.14
+	 * Params:
+	 * buffer =  the string to parse
+	 * length =  the length of buffer (may be -1 if buffer is nul-terminated)
+	 * objectIds =  nul-terminated array of objects to build
+	 * Returns: A positive value on success, 0 if an error occurred
+	 * Throws: GException on failure.
+	 */
+	public uint addObjectsFromString(string buffer, uint length, string[] objectIds)
+	{
+		// guint gtk_builder_add_objects_from_string (GtkBuilder *builder,  const gchar *buffer,  gsize length,  gchar **object_ids,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_builder_add_objects_from_string(gtkBuilder, Str.toStringz(buffer), length, Str.toStringzArray(objectIds), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Gets the object named name. Note that this function does not
 	 * increment the reference count of the returned object.
 	 * Since 2.12
@@ -410,6 +480,11 @@ public class Builder : ObjectG
 	 * symbols in the application and connects the signals.
 	 * Note that this function will not work correctly if GModule is not
 	 * supported on the platform.
+	 * When compiling applications for Windows, you must declare signal callbacks
+	 * with G_MODULE_EXPORT, or they will not be put in the symbol table.
+	 * On Linux and Unices, this is not necessary; applications should instead
+	 * be compiled with the -Wl,--export-dynamic CFLAGS, and linked against
+	 * gmodule-export-2.0.
 	 * Since 2.12
 	 * Params:
 	 * userData =  a pointer to a structure sent in as user data to all signals

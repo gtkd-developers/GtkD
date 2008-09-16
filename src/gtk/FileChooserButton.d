@@ -92,7 +92,7 @@ private import gtk.HBox;
  * The user can then use that dialog to change the file associated with
  * that button. This widget does not support setting the "select-multiple"
  * property to TRUE.
- * Example34.Create a button to let the user select a file in /etc
+ * Example 36. Create a button to let the user select a file in /etc
  * {
 	 *  GtkWidget *button;
 	 *  button = gtk_file_chooser_button_new (_("Select a file"),
@@ -157,6 +157,10 @@ public class FileChooserButton : HBox, FileChooserIF
 	
 	void delegate(FileChooserButton)[] onFileSetListeners;
 	/**
+	 * The ::file-set signal is emitted when the user selects a file.
+	 * Note that this signal is only emitted when the user
+	 * changes the file.
+	 * Since 2.12
 	 * See Also
 	 * GtkFileChooserDialog
 	 */
@@ -175,7 +179,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		}
 		onFileSetListeners ~= dlg;
 	}
-	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, FileChooserButton fileChooserButton)
+	extern(C) static void callBackFileSet(GtkFileChooserButton* widgetStruct, FileChooserButton fileChooserButton)
 	{
 		foreach ( void delegate(FileChooserButton) dlg ; fileChooserButton.onFileSetListeners )
 		{
@@ -204,6 +208,8 @@ public class FileChooserButton : HBox, FileChooserIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_chooser_button_new_with_backend is deprecated and should not be used in newly-written code. 2.14
 	 * Creates a new file-selecting button widget using backend.
 	 * Since 2.6
 	 * Params:

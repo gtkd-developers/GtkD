@@ -265,10 +265,21 @@ public class TreeSelection : ObjectG
 	 * data =  The selection function's data.
 	 * destroy =  The destroy function for user data. May be NULL.
 	 */
-	public void setSelectFunction(GtkTreeSelectionFunc func, void* data, GtkDestroyNotify destroy)
+	public void setSelectFunction(GtkTreeSelectionFunc func, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_tree_selection_set_select_function  (GtkTreeSelection *selection,  GtkTreeSelectionFunc func,  gpointer data,  GtkDestroyNotify destroy);
+		// void gtk_tree_selection_set_select_function  (GtkTreeSelection *selection,  GtkTreeSelectionFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_tree_selection_set_select_function(gtkTreeSelection, func, data, destroy);
+	}
+	
+	/**
+	 * Returns the current selection function.
+	 * Since 2.14
+	 * Returns: The function.
+	 */
+	public GtkTreeSelectionFunc getSelectFunction()
+	{
+		// GtkTreeSelectionFunc gtk_tree_selection_get_select_function  (GtkTreeSelection *selection);
+		return gtk_tree_selection_get_select_function(gtkTreeSelection);
 	}
 	
 	/**

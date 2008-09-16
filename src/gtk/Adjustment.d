@@ -268,4 +268,164 @@ public class Adjustment : ObjectGtk
 		// void gtk_adjustment_value_changed (GtkAdjustment *adjustment);
 		gtk_adjustment_value_changed(gtkAdjustment);
 	}
+	
+	/**
+	 * Sets all properties of the adjustment at once.
+	 * Use this function to avoid multiple emissions of the "changed"
+	 * signal. See gtk_adjustment_set_lower() for an alternative way
+	 * of compressing multiple emissions of "changed" into one.
+	 * Since 2.14
+	 * Params:
+	 * value =  the new value
+	 * lower =  the new minimum value
+	 * upper =  the new maximum value
+	 * stepIncrement =  the new step increment
+	 * pageIncrement =  the new page increment
+	 * pageSize =  the new page size
+	 */
+	public void configure(double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
+	{
+		// void gtk_adjustment_configure (GtkAdjustment *adjustment,  gdouble value,  gdouble lower,  gdouble upper,  gdouble step_increment,  gdouble page_increment,  gdouble page_size);
+		gtk_adjustment_configure(gtkAdjustment, value, lower, upper, stepIncrement, pageIncrement, pageSize);
+	}
+	
+	/**
+	 * Retrieves the minimum value of the adjustment.
+	 * Since 2.14
+	 * Returns: The current minimum value of the adjustment.
+	 */
+	public double getLower()
+	{
+		// gdouble gtk_adjustment_get_lower (GtkAdjustment *adjustment);
+		return gtk_adjustment_get_lower(gtkAdjustment);
+	}
+	
+	/**
+	 * Retrieves the page increment of the adjustment.
+	 * Since 2.14
+	 * Returns: The current page increment of the adjustment.
+	 */
+	public double getPageIncrement()
+	{
+		// gdouble gtk_adjustment_get_page_increment (GtkAdjustment *adjustment);
+		return gtk_adjustment_get_page_increment(gtkAdjustment);
+	}
+	
+	/**
+	 * Retrieves the page size of the adjustment.
+	 * Since 2.14
+	 * Returns: The current page size of the adjustment.
+	 */
+	public double getPageSize()
+	{
+		// gdouble gtk_adjustment_get_page_size (GtkAdjustment *adjustment);
+		return gtk_adjustment_get_page_size(gtkAdjustment);
+	}
+	
+	/**
+	 * Retrieves the step increment of the adjustment.
+	 * Since 2.14
+	 * Returns: The current step increment of the adjustment.
+	 */
+	public double getStepIncrement()
+	{
+		// gdouble gtk_adjustment_get_step_increment (GtkAdjustment *adjustment);
+		return gtk_adjustment_get_step_increment(gtkAdjustment);
+	}
+	
+	/**
+	 * Retrieves the maximum value of the adjustment.
+	 * Since 2.14
+	 * Returns: The current maximum value of the adjustment.
+	 */
+	public double getUpper()
+	{
+		// gdouble gtk_adjustment_get_upper (GtkAdjustment *adjustment);
+		return gtk_adjustment_get_upper(gtkAdjustment);
+	}
+	
+	/**
+	 * Sets the minimum value of the adjustment.
+	 * When setting multiple adjustment properties via their individual
+	 * setters, multiple "changed" signals will be emitted. However, since
+	 * the emission of the "changed" signal is tied to the emission of the
+	 * "GObject::notify" signals of the changed properties, it's possible
+	 * to compress the "changed" signals into one by calling
+	 * g_object_freeze_notify() and g_object_thaw_notify() around the
+	 * calls to the individual setters.
+	 * Alternatively, using a single g_object_set() for all the properties
+	 * to change, or using gtk_adjustment_configure() has the same effect
+	 * of compressing "changed" emissions.
+	 * Since 2.14
+	 * Params:
+	 * lower =  the new minimum value
+	 */
+	public void setLower(double lower)
+	{
+		// void gtk_adjustment_set_lower (GtkAdjustment *adjustment,  gdouble lower);
+		gtk_adjustment_set_lower(gtkAdjustment, lower);
+	}
+	
+	/**
+	 * Sets the page increment of the adjustment.
+	 * See gtk_adjustment_set_lower() about how to compress multiple
+	 * emissions of the "changed" signal when setting multiple adjustment
+	 * properties.
+	 * Since 2.14
+	 * Params:
+	 * pageIncrement =  the new page increment
+	 */
+	public void setPageIncrement(double pageIncrement)
+	{
+		// void gtk_adjustment_set_page_increment (GtkAdjustment *adjustment,  gdouble page_increment);
+		gtk_adjustment_set_page_increment(gtkAdjustment, pageIncrement);
+	}
+	
+	/**
+	 * Sets the page size of the adjustment.
+	 * See gtk_adjustment_set_lower() about how to compress multiple
+	 * emissions of the "changed" signal when setting multiple adjustment
+	 * properties.
+	 * Since 2.14
+	 * Params:
+	 * pageSize =  the new page size
+	 */
+	public void setPageSize(double pageSize)
+	{
+		// void gtk_adjustment_set_page_size (GtkAdjustment *adjustment,  gdouble page_size);
+		gtk_adjustment_set_page_size(gtkAdjustment, pageSize);
+	}
+	
+	/**
+	 * Sets the step increment of the adjustment.
+	 * See gtk_adjustment_set_lower() about how to compress multiple
+	 * emissions of the "changed" signal when setting multiple adjustment
+	 * properties.
+	 * Since 2.14
+	 * Params:
+	 * stepIncrement =  the new step increment
+	 */
+	public void setStepIncrement(double stepIncrement)
+	{
+		// void gtk_adjustment_set_step_increment (GtkAdjustment *adjustment,  gdouble step_increment);
+		gtk_adjustment_set_step_increment(gtkAdjustment, stepIncrement);
+	}
+	
+	/**
+	 * Sets the maximum value of the adjustment.
+	 * Note that values will be restricted by
+	 * upper - page-size if the page-size
+	 * property is nonzero.
+	 * See gtk_adjustment_set_lower() about how to compress multiple
+	 * emissions of the "changed" signal when setting multiple adjustment
+	 * properties.
+	 * Since 2.14
+	 * Params:
+	 * upper =  the new maximum value
+	 */
+	public void setUpper(double upper)
+	{
+		// void gtk_adjustment_set_upper (GtkAdjustment *adjustment,  gdouble upper);
+		gtk_adjustment_set_upper(gtkAdjustment, upper);
+	}
 }

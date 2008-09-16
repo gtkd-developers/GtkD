@@ -125,9 +125,12 @@ public class FontSelectionDialog : Dialog
 	 */
 	
 	/**
+	 * The title is used to set the title of the GtkFontSelectionDialog
+	 * returned. This GtkDialog is specifically catered with widgets for
+	 * selecting a font from those installed.
 	 * Creates a new GtkFontSelectionDialog.
 	 * Params:
-	 * title = the title of the dialog box.
+	 * title =  a pointer to a string
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title)
@@ -143,9 +146,9 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Warning
-	 * gtk_font_selection_dialog_get_font is deprecated and should not be used in newly-written code.
+	 * gtk_font_selection_dialog_get_font has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_font_selection_dialog_get_font_name() instead.
 	 * Gets the currently-selected font.
-	 * Returns:the currently-selected font, or NULL if no font is selected.
+	 * Returns: the GdkFont from the GtkFontSelection for thecurrently selected font in the dialog.
 	 */
 	public Font getFont()
 	{
@@ -174,10 +177,11 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Sets the currently selected font.
 	 * Sets the currently-selected font.
 	 * Params:
-	 * fontname = a fontname.
-	 * Returns:TRUE if the font was found.
+	 * fontname =  a pointer to a string
+	 * Returns: TRUE if the font selected in fsd is now thefontname specified. FALSE otherwise.
 	 */
 	public int setFontName(string fontname)
 	{
@@ -186,8 +190,10 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * The text returned is the preview text used to show how the selected
+	 * font looks.
 	 * Gets the text displayed in the preview area.
-	 * Returns:the text displayed in the preview area. This string is owned by the widget and should not be modified or freed.
+	 * Returns: pointer to the preview text string. This stringpoints to internally allocated storage in the widget and must notbe freed, modified or stored.
 	 */
 	public string getPreviewText()
 	{
@@ -196,13 +202,47 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * The text is used to show how the selected font looks.
 	 * Sets the text displayed in the preview area.
 	 * Params:
-	 * text = the text to display in the preview area.
+	 * text =  a pointer to a string
 	 */
 	public void setPreviewText(string text)
 	{
 		// void gtk_font_selection_dialog_set_preview_text  (GtkFontSelectionDialog *fsd,  const gchar *text);
 		gtk_font_selection_dialog_set_preview_text(gtkFontSelectionDialog, Str.toStringz(text));
+	}
+	
+	/**
+	 * Gets the 'Apply' button.
+	 * Since 2.14
+	 * Returns: the GtkWidget used in the dialog for the 'Apply' button.
+	 */
+	public GtkWidget* getApplyButton()
+	{
+		// GtkWidget* gtk_font_selection_dialog_get_apply_button  (GtkFontSelectionDialog *fsd);
+		return gtk_font_selection_dialog_get_apply_button(gtkFontSelectionDialog);
+	}
+	
+	/**
+	 * Gets the 'Cancel' button.
+	 * Since 2.14
+	 * Returns: the GtkWidget used in the dialog for the 'Cancel' button.
+	 */
+	public GtkWidget* getCancelButton()
+	{
+		// GtkWidget* gtk_font_selection_dialog_get_cancel_button  (GtkFontSelectionDialog *fsd);
+		return gtk_font_selection_dialog_get_cancel_button(gtkFontSelectionDialog);
+	}
+	
+	/**
+	 * Gets the 'OK' button.
+	 * Since 2.14
+	 * Returns: the GtkWidget used in the dialog for the 'OK' button.
+	 */
+	public GtkWidget* getOkButton()
+	{
+		// GtkWidget* gtk_font_selection_dialog_get_ok_button  (GtkFontSelectionDialog *fsd);
+		return gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
 	}
 }

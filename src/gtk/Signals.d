@@ -261,9 +261,9 @@ public class Signals
 	 * and GTK_RUN_LAST).
 	 * Returns:the connection id.
 	 */
-	public static uint connectFull(ObjectGtk object, string name, GtkSignalFunc func, GtkCallbackMarshal unsupported, void* data, GtkDestroyNotify destroyFunc, int objectSignal, int after)
+	public static uint connectFull(ObjectGtk object, string name, GtkSignalFunc func, GtkCallbackMarshal unsupported, void* data, GDestroyNotify destroyFunc, int objectSignal, int after)
 	{
-		// gulong gtk_signal_connect_full (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkCallbackMarshal unsupported,  gpointer data,  GtkDestroyNotify destroy_func,  gint object_signal,  gint after);
+		// gulong gtk_signal_connect_full (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkCallbackMarshal unsupported,  gpointer data,  GDestroyNotify destroy_func,  gint object_signal,  gint after);
 		return gtk_signal_connect_full((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, unsupported, data, destroyFunc, objectSignal, after);
 	}
 	

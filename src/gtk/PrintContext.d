@@ -86,7 +86,7 @@ private import gobject.ObjectG;
  * of the cairo surface.
  * GtkPrintContext objects gets passed to the ::begin-print, ::end-print,
  * ::request-page-setup and ::draw-page signals on the GtkPrintOperation.
- * Example40.Using GtkPrintContext in a ::draw-page callback
+ * Example 42. Using GtkPrintContext in a ::draw-page callback
  * static void
  * draw_page (GtkPrintOperation *operation,
  * 	 GtkPrintContext *context,

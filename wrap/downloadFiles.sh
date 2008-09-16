@@ -9,6 +9,9 @@ ln -s glib-html-2.16.1 glib
 #GOBJECT
 curl http://library.gnome.org/devel/gobject/gobject-html-2.16.1.tar.gz | tar xvfz -
 ln -s gobject-html-2.16.1 gobject
+#GIO
+curl http://library.gnome.org/devel/gio/gio-html-2.18.0.tar.gz | tar xvfz -
+ln -s gio-html-2.18.0 gio
 #ATK
 curl http://library.gnome.org/devel/atk/atk-html-1.22.0.tar.gz | tar xvfz -
 ln -s atk-html-1.22.0 atk
@@ -22,8 +25,8 @@ ln -s gdk-pixbuf-html-2.12.3 gdk-pixbuf
 curl http://library.gnome.org/devel/gdk/gdk-html-2.12.3.tar.gz | tar xvfz -
 ln -s gdk-html-2.12.3 gdk
 #GTK
-curl http://library.gnome.org/devel/gtk/gtk-html-2.12.3.tar.gz | tar xvfz -
-ln -s gtk-html-2.12.3 gtk
+curl http://library.gnome.org/devel/gtk/gtk-html-2.14.1.tar.gz | tar xvfz -
+ln -s gtk-html-2.14.1 gtk
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.6.4.tar.gz | tar xvfz -
 ln -s cairo-1.6.4/doc/public/html cairo

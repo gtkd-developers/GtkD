@@ -90,7 +90,7 @@ public  import gtkc.gdktypes;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example39.The high-level printing API
+ * Example 41. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -133,6 +133,17 @@ public interface PrintOperationPreviewIF
 	
 	/**
 	 */
+	
+	void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF)[] onGotPageSizeListeners();
+	/**
+	 */
+	void addOnGotPageSize(void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] onReadyListeners();
+	/**
+	 * See Also
+	 * GtkPrintContext, GtkPrintUnixDialog
+	 */
+	void addOnReady(void delegate(GtkPrintContext*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Ends a preview.
