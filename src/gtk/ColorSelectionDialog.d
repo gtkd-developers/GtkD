@@ -44,7 +44,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Widget
  * structWrap:
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -59,6 +61,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.Widget;
 
 
 
@@ -140,9 +143,14 @@ public class ColorSelectionDialog : Dialog
 	 * Since 2.14
 	 * Returns: the embedded GtkColorSelection
 	 */
-	public GtkWidget* getColorSelection()
+	public Widget getColorSelection()
 	{
 		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
-		return gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 }

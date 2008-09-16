@@ -43,10 +43,13 @@
  * 	- gtk_print_operation_preview_
  * omit code:
  * omit signals:
+ * 	- got-page-size
+ * 	- ready
  * imports:
  * 	- glib.Str
  * 	- gtk.Window
  * 	- gtk.PageSetup
+ * 	- gtk.PrintContext
  * 	- gtk.PrintSettings
  * 	- gtk.PrintOperationPreviewT
  * 	- gtk.PrintOperationPreviewIF
@@ -54,6 +57,7 @@
  * 	- glib.GException
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
+ * 	- GtkPrintContext* -> PrintContext
  * 	- GtkPrintSettings* -> PrintSettings
  * 	- GtkWindow* -> Window
  * module aliases:
@@ -74,6 +78,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Window;
 private import gtk.PageSetup;
+private import gtk.PrintContext;
 private import gtk.PrintSettings;
 private import gtk.PrintOperationPreviewT;
 private import gtk.PrintOperationPreviewIF;
@@ -180,7 +185,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(GtkPrintContext*, PrintOperation)[] onBeginPrintListeners;
+	void delegate(PrintContext, PrintOperation)[] onBeginPrintListeners;
 	/**
 	 * Emitted after the user has finished changing print settings
 	 * in the dialog, before the actual rendering starts.
@@ -189,7 +194,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * set the number of pages with gtk_print_operation_set_n_pages().
 	 * Since 2.10
 	 */
-	void addOnBeginPrint(void delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnBeginPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("begin-print" in connectedSignals) )
 		{
@@ -206,9 +211,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackBeginPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		foreach ( void delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onBeginPrintListeners )
+		foreach ( void delegate(PrintContext, PrintOperation) dlg ; printOperation.onBeginPrintListeners )
 		{
-			dlg(context, printOperation);
+			dlg(new PrintContext(context), printOperation);
 		}
 	}
 	
@@ -315,7 +320,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 	}
 	
-	void delegate(GtkPrintContext*, gint, PrintOperation)[] onDrawPageListeners;
+	void delegate(PrintContext, gint, PrintOperation)[] onDrawPageListeners;
 	/**
 	 * Emitted for every page that is printed. The signal handler
 	 * must render the page_nr's page onto the cairo context obtained
@@ -364,7 +369,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * needs.
 	 * Since 2.10
 	 */
-	void addOnDrawPage(void delegate(GtkPrintContext*, gint, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDrawPage(void delegate(PrintContext, gint, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("draw-page" in connectedSignals) )
 		{
@@ -381,20 +386,20 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackDrawPage(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, PrintOperation printOperation)
 	{
-		foreach ( void delegate(GtkPrintContext*, gint, PrintOperation) dlg ; printOperation.onDrawPageListeners )
+		foreach ( void delegate(PrintContext, gint, PrintOperation) dlg ; printOperation.onDrawPageListeners )
 		{
-			dlg(context, pageNr, printOperation);
+			dlg(new PrintContext(context), pageNr, printOperation);
 		}
 	}
 	
-	void delegate(GtkPrintContext*, PrintOperation)[] onEndPrintListeners;
+	void delegate(PrintContext, PrintOperation)[] onEndPrintListeners;
 	/**
 	 * Emitted after all pages have been rendered.
 	 * A handler for this signal can clean up any resources that have
 	 * been allocated in the "begin-print" handler.
 	 * Since 2.10
 	 */
-	void addOnEndPrint(void delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnEndPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("end-print" in connectedSignals) )
 		{
@@ -411,13 +416,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackEndPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		foreach ( void delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onEndPrintListeners )
+		foreach ( void delegate(PrintContext, PrintOperation) dlg ; printOperation.onEndPrintListeners )
 		{
-			dlg(context, printOperation);
+			dlg(new PrintContext(context), printOperation);
 		}
 	}
 	
-	bool delegate(GtkPrintContext*, PrintOperation)[] onPaginateListeners;
+	bool delegate(PrintContext, PrintOperation)[] onPaginateListeners;
 	/**
 	 * Emitted after the "begin-print" signal, but before
 	 * the actual rendering starts. It keeps getting emitted until a connected
@@ -432,7 +437,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * from there.
 	 * Since 2.10
 	 */
-	void addOnPaginate(bool delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPaginate(bool delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paginate" in connectedSignals) )
 		{
@@ -449,9 +454,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static gboolean callBackPaginate(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
 	{
-		foreach ( bool delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onPaginateListeners )
+		foreach ( bool delegate(PrintContext, PrintOperation) dlg ; printOperation.onPaginateListeners )
 		{
-			if ( dlg(context, printOperation) )
+			if ( dlg(new PrintContext(context), printOperation) )
 			{
 				return 1;
 			}
@@ -460,7 +465,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		return 0;
 	}
 	
-	bool delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation)[] onPreviewListeners;
+	bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation)[] onPreviewListeners;
 	/**
 	 * Gets emitted when a preview is requested from the native dialog.
 	 * The default handler for this signal uses an external viewer
@@ -477,7 +482,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * (typically in response to the user clicking a close button).
 	 * Since 2.10
 	 */
-	void addOnPreview(bool delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPreview(bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preview" in connectedSignals) )
 		{
@@ -494,9 +499,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static gboolean callBackPreview(GtkPrintOperation* operationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation printOperation)
 	{
-		foreach ( bool delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg ; printOperation.onPreviewListeners )
+		foreach ( bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation) dlg ; printOperation.onPreviewListeners )
 		{
-			if ( dlg(preview, context, new Window(parent), printOperation) )
+			if ( dlg(preview, new PrintContext(context), new Window(parent), printOperation) )
 			{
 				return 1;
 			}
@@ -505,14 +510,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		return 0;
 	}
 	
-	void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation)[] onRequestPageSetupListeners;
+	void delegate(PrintContext, gint, PageSetup, PrintOperation)[] onRequestPageSetupListeners;
 	/**
 	 * Emitted once for every page that is printed, to give
 	 * the application a chance to modify the page setup. Any changes
 	 * done to setup will be in force only for printing this page.
 	 * Since 2.10
 	 */
-	void addOnRequestPageSetup(void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnRequestPageSetup(void delegate(PrintContext, gint, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("request-page-setup" in connectedSignals) )
 		{
@@ -529,9 +534,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, GtkPageSetup* setup, PrintOperation printOperation)
 	{
-		foreach ( void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation) dlg ; printOperation.onRequestPageSetupListeners )
+		foreach ( void delegate(PrintContext, gint, PageSetup, PrintOperation) dlg ; printOperation.onRequestPageSetupListeners )
 		{
-			dlg(context, pageNr, new PageSetup(setup), printOperation);
+			dlg(new PrintContext(context), pageNr, new PageSetup(setup), printOperation);
 		}
 	}
 	
@@ -563,60 +568,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		foreach ( void delegate(PrintOperation) dlg ; printOperation.onStatusChangedListeners )
 		{
 			dlg(printOperation);
-		}
-	}
-	
-	void delegate(GtkPrintContext*, PageSetup, PrintOperation)[] onGotPageSizeListeners;
-	/**
-	 */
-	void addOnGotPageSize(void delegate(GtkPrintContext*, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("got-page-size" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"got-page-size",
-			cast(GCallback)&callBackGotPageSize,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["got-page-size"] = 1;
-		}
-		onGotPageSizeListeners ~= dlg;
-	}
-	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* arg1, GtkPageSetup* arg2, PrintOperation printOperation)
-	{
-		foreach ( void delegate(GtkPrintContext*, PageSetup, PrintOperation) dlg ; printOperation.onGotPageSizeListeners )
-		{
-			dlg(arg1, new PageSetup(arg2), printOperation);
-		}
-	}
-	
-	void delegate(GtkPrintContext*, PrintOperation)[] onReadyListeners;
-	/**
-	 * See Also
-	 * GtkPrintContext, GtkPrintUnixDialog
-	 */
-	void addOnReady(void delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("ready" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"ready",
-			cast(GCallback)&callBackReady,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["ready"] = 1;
-		}
-		onReadyListeners ~= dlg;
-	}
-	extern(C) static void callBackReady(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* arg1, PrintOperation printOperation)
-	{
-		foreach ( void delegate(GtkPrintContext*, PrintOperation) dlg ; printOperation.onReadyListeners )
-		{
-			dlg(arg1, printOperation);
 		}
 	}
 	

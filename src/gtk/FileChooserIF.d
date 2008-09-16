@@ -46,11 +46,13 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.File
  * 	- gtk.Window
  * 	- glib.ListSG
  * 	- gtk.Widget
  * 	- gtk.FileFilter
  * structWrap:
+ * 	- GFile* -> File
  * 	- GSList* -> ListSG
  * 	- GtkFileFilter* -> FileFilter
  * 	- GtkWidget* -> Widget
@@ -75,6 +77,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.File;
 private import gtk.Window;
 private import glib.ListSG;
 private import gtk.Widget;
@@ -1021,7 +1024,7 @@ public interface FileChooserIF
 		 * Since 2.14
 		 * Returns: the GFile for the current folder.
 		 */
-		public GFile* getCurrentFolderFile();
+		public File getCurrentFolderFile();
 		
 		/**
 		 * Gets the GFile for the currently selected file in
@@ -1032,7 +1035,7 @@ public interface FileChooserIF
 		 * Since 2.14
 		 * Returns: a selected GFile
 		 */
-		public GFile* getFile();
+		public File getFile();
 		
 		/**
 		 * Lists all the selected files and subfolders in the current folder of chooser
@@ -1048,7 +1051,7 @@ public interface FileChooserIF
 		 * Since 2.14
 		 * Returns: the GFile for the file to preview, or NULL if no file is selected. Free with g_object_unref().
 		 */
-		public GFile* getPreviewFile();
+		public File getPreviewFile();
 		
 		/**
 		 * Selects the file referred to by file. An internal function. See
@@ -1059,7 +1062,7 @@ public interface FileChooserIF
 		 * Returns: TRUE if both the folder could be changed and the path wasselected successfully, FALSE otherwise.
 		 * Throws: GException on failure.
 		 */
-		public int selectFile(GFile* file);
+		public int selectFile(File file);
 		
 		/**
 		 * Sets the current folder for chooser from a GFile.
@@ -1070,7 +1073,7 @@ public interface FileChooserIF
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 * Throws: GException on failure.
 		 */
-		public int setCurrentFolderFile(GFile* file);
+		public int setCurrentFolderFile(File file);
 		
 		/**
 		 * Sets file as the current filename for the file chooser, by changing
@@ -1095,7 +1098,7 @@ public interface FileChooserIF
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 * Throws: GException on failure.
 		 */
-		public int setFile(GFile* file);
+		public int setFile(File file);
 		
 		/**
 		 * Unselects the file referred to by file. If the file is not in the current
@@ -1104,5 +1107,5 @@ public interface FileChooserIF
 		 * Params:
 		 * file =  a GFile
 		 */
-		public void unselectFile(GFile* file);
+		public void unselectFile(File file);
 }

@@ -45,7 +45,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.IconTheme
+ * 	- gio.IconIF
  * 	- gdk.Screen
  * 	- gtk.IconInfo
  * 	- gdk.Pixbuf
@@ -53,6 +53,7 @@
  * 	- glib.GException
  * 	- glib.ListG
  * structWrap:
+ * 	- GIcon* -> IconIF
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkScreen* -> Screen
@@ -74,7 +75,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.IconTheme;
+private import gio.IconIF;
 private import gdk.Screen;
 private import gtk.IconInfo;
 private import gdk.Pixbuf;
@@ -459,10 +460,10 @@ public class IconTheme : ObjectG
 	 * flags =  flags modifying the behavior of the icon lookup
 	 * Returns: a GtkIconInfo structure containing  information about the icon, or NULL if the icon  wasn't found. Free with gtk_icon_info_free()
 	 */
-	public IconInfo lookupByGicon(GIcon* icon, int size, GtkIconLookupFlags flags)
+	public IconInfo lookupByGicon(IconIF icon, int size, GtkIconLookupFlags flags)
 	{
 		// GtkIconInfo* gtk_icon_theme_lookup_by_gicon (GtkIconTheme *icon_theme,  GIcon *icon,  gint size,  GtkIconLookupFlags flags);
-		auto p = gtk_icon_theme_lookup_by_gicon(gtkIconTheme, icon, size, flags);
+		auto p = gtk_icon_theme_lookup_by_gicon(gtkIconTheme, (icon is null) ? null : icon.getIconTStruct(), size, flags);
 		if(p is null)
 		{
 			return null;

@@ -47,6 +47,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Adjustment
+ * 	- gtk.Border
  * 	- gtk.EntryCompletion
  * 	- pango.PgLayout
  * 	- gtk.EditableT
@@ -57,6 +58,7 @@
  * 	- gobject.Signals
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
+ * 	- GtkBorder* -> Border
  * 	- GtkEntryCompletion* -> EntryCompletion
  * 	- PangoLayout* -> PgLayout
  * module aliases:
@@ -76,6 +78,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Adjustment;
+private import gtk.Border;
 private import gtk.EntryCompletion;
 private import pango.PgLayout;
 private import gtk.EditableT;
@@ -654,10 +657,15 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.10
 	 * Returns: the entry's GtkBorder, or NULL if none was set.
 	 */
-	public GtkBorder* getInnerBorder()
+	public Border getInnerBorder()
 	{
 		// const GtkBorder* gtk_entry_get_inner_border (GtkEntry *entry);
-		return gtk_entry_get_inner_border(gtkEntry);
+		auto p = gtk_entry_get_inner_border(gtkEntry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Border(cast(GtkBorder*) p);
 	}
 	
 	/**
@@ -710,10 +718,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Params:
 	 * border =  a GtkBorder, or NULL
 	 */
-	public void setInnerBorder(GtkBorder* border)
+	public void setInnerBorder(Border border)
 	{
 		// void gtk_entry_set_inner_border (GtkEntry *entry,  const GtkBorder *border);
-		gtk_entry_set_inner_border(gtkEntry, border);
+		gtk_entry_set_inner_border(gtkEntry, (border is null) ? null : border.getBorderStruct());
 	}
 	
 	/**

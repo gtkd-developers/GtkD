@@ -47,11 +47,13 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.File
  * 	- gtk.Window
  * 	- glib.ListSG
  * 	- gtk.Widget
  * 	- gtk.FileFilter
  * structWrap:
+ * 	- GFile* -> File
  * 	- GSList* -> ListSG
  * 	- GtkFileFilter* -> FileFilter
  * 	- GtkWidget* -> Widget
@@ -76,6 +78,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.File;
 private import gtk.Window;
 private import glib.ListSG;
 private import gtk.Widget;
@@ -1424,10 +1427,15 @@ public template FileChooserT(TStruct)
 		 * Since 2.14
 		 * Returns: the GFile for the current folder.
 		 */
-		public GFile* getCurrentFolderFile()
+		public File getCurrentFolderFile()
 		{
 			// GFile* gtk_file_chooser_get_current_folder_file  (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_current_folder_file(getFileChooserTStruct());
+			auto p = gtk_file_chooser_get_current_folder_file(getFileChooserTStruct());
+			if(p is null)
+			{
+				return null;
+			}
+			return new File(cast(GFile*) p);
 		}
 		
 		/**
@@ -1439,10 +1447,15 @@ public template FileChooserT(TStruct)
 		 * Since 2.14
 		 * Returns: a selected GFile
 		 */
-		public GFile* getFile()
+		public File getFile()
 		{
 			// GFile* gtk_file_chooser_get_file (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_file(getFileChooserTStruct());
+			auto p = gtk_file_chooser_get_file(getFileChooserTStruct());
+			if(p is null)
+			{
+				return null;
+			}
+			return new File(cast(GFile*) p);
 		}
 		
 		/**
@@ -1468,10 +1481,15 @@ public template FileChooserT(TStruct)
 		 * Since 2.14
 		 * Returns: the GFile for the file to preview, or NULL if no file is selected. Free with g_object_unref().
 		 */
-		public GFile* getPreviewFile()
+		public File getPreviewFile()
 		{
 			// GFile* gtk_file_chooser_get_preview_file (GtkFileChooser *chooser);
-			return gtk_file_chooser_get_preview_file(getFileChooserTStruct());
+			auto p = gtk_file_chooser_get_preview_file(getFileChooserTStruct());
+			if(p is null)
+			{
+				return null;
+			}
+			return new File(cast(GFile*) p);
 		}
 		
 		/**
@@ -1483,12 +1501,12 @@ public template FileChooserT(TStruct)
 		 * Returns: TRUE if both the folder could be changed and the path wasselected successfully, FALSE otherwise.
 		 * Throws: GException on failure.
 		 */
-		public int selectFile(GFile* file)
+		public int selectFile(File file)
 		{
 			// gboolean gtk_file_chooser_select_file (GtkFileChooser *chooser,  GFile *file,  GError **error);
 			GError* err = null;
 			
-			auto p = gtk_file_chooser_select_file(getFileChooserTStruct(), file, &err);
+			auto p = gtk_file_chooser_select_file(getFileChooserTStruct(), (file is null) ? null : file.getFileStruct(), &err);
 			
 			if (err !is null)
 			{
@@ -1507,12 +1525,12 @@ public template FileChooserT(TStruct)
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 * Throws: GException on failure.
 		 */
-		public int setCurrentFolderFile(GFile* file)
+		public int setCurrentFolderFile(File file)
 		{
 			// gboolean gtk_file_chooser_set_current_folder_file  (GtkFileChooser *chooser,  GFile *file,  GError **error);
 			GError* err = null;
 			
-			auto p = gtk_file_chooser_set_current_folder_file(getFileChooserTStruct(), file, &err);
+			auto p = gtk_file_chooser_set_current_folder_file(getFileChooserTStruct(), (file is null) ? null : file.getFileStruct(), &err);
 			
 			if (err !is null)
 			{
@@ -1545,12 +1563,12 @@ public template FileChooserT(TStruct)
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 * Throws: GException on failure.
 		 */
-		public int setFile(GFile* file)
+		public int setFile(File file)
 		{
 			// gboolean gtk_file_chooser_set_file (GtkFileChooser *chooser,  GFile *file,  GError **error);
 			GError* err = null;
 			
-			auto p = gtk_file_chooser_set_file(getFileChooserTStruct(), file, &err);
+			auto p = gtk_file_chooser_set_file(getFileChooserTStruct(), (file is null) ? null : file.getFileStruct(), &err);
 			
 			if (err !is null)
 			{
@@ -1567,9 +1585,9 @@ public template FileChooserT(TStruct)
 		 * Params:
 		 * file =  a GFile
 		 */
-		public void unselectFile(GFile* file)
+		public void unselectFile(File file)
 		{
 			// void gtk_file_chooser_unselect_file (GtkFileChooser *chooser,  GFile *file);
-			gtk_file_chooser_unselect_file(getFileChooserTStruct(), file);
+			gtk_file_chooser_unselect_file(getFileChooserTStruct(), (file is null) ? null : file.getFileStruct());
 		}
 }

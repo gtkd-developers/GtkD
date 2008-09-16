@@ -46,6 +46,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gio.Icon
+ * 	- gio.IconIF
  * 	- gtk.IconSet
  * 	- gdk.ImageGdk
  * 	- gdk.Bitmap
@@ -57,6 +59,7 @@
  * 	- gdk.Bitmap
  * 	- gdk.Pixmap
  * structWrap:
+ * 	- GIcon* -> IconIF
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
@@ -77,6 +80,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gio.Icon;
+private import gio.IconIF;
 private import gtk.IconSet;
 private import gdk.ImageGdk;
 private import gdk.Bitmap;
@@ -404,10 +409,14 @@ public class Image : Misc
 	 * gicon =  place to store a GIcon
 	 * size =  place to store an icon size
 	 */
-	public void getGicon(GIcon** gicon, GtkIconSize* size)
+	public void getGicon(out IconIF gicon, out GtkIconSize size)
 	{
 		// void gtk_image_get_gicon (GtkImage *image,  GIcon **gicon,  GtkIconSize *size);
-		gtk_image_get_gicon(gtkImage, gicon, size);
+		GIcon* outgicon = null;
+		
+		gtk_image_get_gicon(gtkImage, &outgicon, &size);
+		
+		gicon = new Icon(outgicon);
 	}
 	
 	/**
@@ -580,13 +589,13 @@ public class Image : Misc
 	 * size =  a stock icon size
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GIcon* icon, GtkIconSize size)
+	public this (IconIF icon, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_gicon (GIcon *icon,  GtkIconSize size);
-		auto p = gtk_image_new_from_gicon(icon, size);
+		auto p = gtk_image_new_from_gicon((icon is null) ? null : icon.getIconTStruct(), size);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_image_new_from_gicon(icon, size)");
+			throw new ConstructionException("null returned by gtk_image_new_from_gicon((icon is null) ? null : icon.getIconTStruct(), size)");
 		}
 		this(cast(GtkImage*) p);
 	}
@@ -693,10 +702,10 @@ public class Image : Misc
 	 * icon =  an icon
 	 * size =  an icon size
 	 */
-	public void setFromGicon(GIcon* icon, GtkIconSize size)
+	public void setFromGicon(IconIF icon, GtkIconSize size)
 	{
 		// void gtk_image_set_from_gicon (GtkImage *image,  GIcon *icon,  GtkIconSize size);
-		gtk_image_set_from_gicon(gtkImage, icon, size);
+		gtk_image_set_from_gicon(gtkImage, (icon is null) ? null : icon.getIconTStruct(), size);
 	}
 	
 	/**

@@ -624,7 +624,8 @@ prefix: gtk_icon_theme_
 noprefix: gtk_icon_info_
 prefix: gtk_
 import: glib.Str
-import: gtk.IconTheme
+import: gio.IconIF
+structWrap: GIcon* IconIF
 structWrap: GtkIconTheme* IconTheme
 import: gdk.Screen
 structWrap: GdkScreen* Screen
@@ -647,6 +648,8 @@ import: glib.ErrorG
 import: glib.GException
 import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
+import: gtk.IconTheme
+structWrap: GtkIconTheme* IconTheme
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 
@@ -850,6 +853,7 @@ outFile: Style
 struct: GtkBorder
 class: Border
 prefix: gtk_border_
+structWrap: GtkBorder* Border
 strictPrefix: Y
 outFile: Border
 
@@ -1489,6 +1493,9 @@ class: Image
 prefix: gtk_image_
 prefix: gtk_
 import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+structWrap: GIcon* IconIF
 import: gtk.IconSet
 structWrap: GtkIconSet* IconSet
 import: gdk.ImageGdk
@@ -1520,6 +1527,8 @@ out: gtk_image_get_stock stock_id
 out: gtk_image_get_stock size
 out: gtk_image_get_icon_name icon_name
 out: gtk_image_get_icon_name size
+out: gtk_image_get_gicon gicon
+out: gtk_image_get_gicon size
 out: gtk_image_get val
 out: gtk_image_get mask
 
@@ -1671,6 +1680,9 @@ class: StatusIcon
 prefix: gtk_status_icon_
 prefix: gtk_
 import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+structWrap: GIcon* IconIF
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdk.Screen
@@ -2146,6 +2158,8 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
+import: gtk.Border
+structWrap: GtkBorder* Border
 import: gtk.EntryCompletion
 structWrap: GtkEntryCompletion* EntryCompletion
 import: pango.PgLayout
@@ -3611,7 +3625,7 @@ inout: gtk_tree_view_get_path_at_pos path
 inout: gtk_tree_view_get_path_at_pos column
 out: gtk_tree_view_get_path_at_pos cell_x
 out: gtk_tree_view_get_path_at_pos cell_y
-out: gtk_tree_view_get_cursor
+out: gtk_tree_view_get_cursor path
 out: gtk_tree_view_get_cursor focus_column
 out: gtk_tree_view_get_visible_range start_path
 out: gtk_tree_view_get_visible_range end_path
@@ -5549,6 +5563,8 @@ import: gtk.Action
 structWrap: GtkAction* Action
 import: glib.ListG
 structWrap: GList* ListG
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 #import: gtk.ActionEntry
 #structWrap: GtkActionEntry* ActionEntry
 #import: gtk.ToggleActionEntry
@@ -5791,6 +5807,8 @@ class: ColorSelectionDialog
 prefix: gtk_color_selection_dialog_
 prefix: gtk_
 import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 outFile: ColorSelectionDialog
 
 file: GtkFileChooser.html
@@ -5802,6 +5820,8 @@ prefix: gtk_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: gio.File
+structWrap: GFile* File
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: glib.ListSG
@@ -5832,6 +5852,7 @@ structWrap: GtkWidget* Widget
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListSG
+import: gio.File
 #import: gtk.Widget
 import: gtk.Window
 import: gtk.FileFilter
@@ -5858,6 +5879,7 @@ import: gtk.Window
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListSG
+import: gio.File
 import: gtk.Widget
 #import: gtk.Window
 import: gtk.FileFilter
@@ -5979,6 +6001,7 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListSG
+import: gio.File
 import: gtk.Widget
 import: gtk.Window
 import: gtk.FileFilter
@@ -6016,6 +6039,8 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 import: pango.PgFontFace
 structWrap: PangoFontFace* PgFontFace
 import:  pango.PgFontFamily
@@ -6030,6 +6055,8 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 outFile: FontSelectionDialog
 
 file: GtkInputDialog.html
@@ -6625,13 +6652,16 @@ struct: GtkPrintOperation
 class: PrintOperation
 implements: PrintOperationPreviewIF
 prefix: gtk_print_operation_
-#prefix: gtk_
 noprefix: gtk_print_operation_preview_
+nosignal: got-page-size 
+nosignal: ready
 import: glib.Str
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.PageSetup
 structWrap: GtkPageSetup* PageSetup
+import: gtk.PrintContext
+structWrap: GtkPrintContext* PrintContext
 import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
 import: gtk.PrintOperationPreviewT
@@ -6737,6 +6767,8 @@ prefix: gtk_printer_
 prefix: gtk_
 import: glib.Str
 structWrap: GtkPrinter* Printer
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
 import: glib.ListG
 structWrap: GList* ListG
 outFile: Printer
@@ -7227,6 +7259,8 @@ import: gtk.Style
 structWrap: GtkStyle* Style
 import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
+import: gdk.Pixmap
+structWrap: GdkPixmap* Pixmap
 import: gtk.RcStyle
 structWrap: GtkRcStyle* RcStyle
 import: gdk.Color
@@ -7673,6 +7707,8 @@ struct: GtkSocket
 class: Socket
 prefix: gtk_socket_
 prefix: gtk_
+import: gdk.Window
+structWrap: GdkWindow* Window
 outFile: Socket
 
 ###########################################################

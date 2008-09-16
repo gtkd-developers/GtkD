@@ -47,6 +47,7 @@
  * 	- glib.Str
  * 	- gtk.Action
  * 	- glib.ListG
+ * 	- gtk.Widget
  * 	- gobject.ObjectG
  * 	- gobject.Value
  * 	- gtk.Builder
@@ -55,6 +56,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkAction* -> Action
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -73,6 +75,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Action;
 private import glib.ListG;
+private import gtk.Widget;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gtk.Builder;
@@ -170,7 +173,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(Action, GtkWidget*, ActionGroup)[] onConnectProxyListeners;
+	void delegate(Action, Widget, ActionGroup)[] onConnectProxyListeners;
 	/**
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
 	 * an action in the group. Note that the proxy may have been connected
@@ -183,7 +186,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * convenient to use.
 	 * Since 2.4
 	 */
-	void addOnConnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnConnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("connect-proxy" in connectedSignals) )
 		{
@@ -200,13 +203,13 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
 	{
-		foreach ( void delegate(Action, GtkWidget*, ActionGroup) dlg ; actionGroup.onConnectProxyListeners )
+		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; actionGroup.onConnectProxyListeners )
 		{
-			dlg(new Action(action), proxy, actionGroup);
+			dlg(new Action(action), new Widget(proxy), actionGroup);
 		}
 	}
 	
-	void delegate(Action, GtkWidget*, ActionGroup)[] onDisconnectProxyListeners;
+	void delegate(Action, Widget, ActionGroup)[] onDisconnectProxyListeners;
 	/**
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
 	 * from an action in the group.
@@ -215,7 +218,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * convenient to use.
 	 * Since 2.4
 	 */
-	void addOnDisconnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDisconnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("disconnect-proxy" in connectedSignals) )
 		{
@@ -232,9 +235,9 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
 	{
-		foreach ( void delegate(Action, GtkWidget*, ActionGroup) dlg ; actionGroup.onDisconnectProxyListeners )
+		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; actionGroup.onDisconnectProxyListeners )
 		{
-			dlg(new Action(action), proxy, actionGroup);
+			dlg(new Action(action), new Widget(proxy), actionGroup);
 		}
 	}
 	

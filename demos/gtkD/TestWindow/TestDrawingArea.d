@@ -214,7 +214,7 @@ class TestDrawingArea : VBox
 				debug(trace) version(Tango) Stdout("Button 1 down").newline;
 				else writefln("Button 1 down");
 				buttonIsDown = true;
-				Drawable d = getDrawable();
+				Drawable d = getWindow();
 				GC gc = new GC(d);
 				gc.setForeground(new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0));
 				gc.setFunction(gcFunction);
@@ -254,7 +254,7 @@ class TestDrawingArea : VBox
 		public bool exposeCallback(GdkEventExpose* event, Widget widget)
 		{
 			//printf("testWindow.exposed ----------------------------- \n");
-			drawPoints(getDrawable());
+			drawPoints(getWindow());
 			return true;
 		}
 		public bool noExposeCallback(Widget widget)
@@ -269,7 +269,7 @@ class TestDrawingArea : VBox
 			//printf("testWindow.mouseMoved ----------------------------- \n");
 			if ( buttonIsDown )
 			{
-				Drawable d = getDrawable();
+				Drawable d = getWindow();
 				GC gc = new GC(d);
 				gc.setForeground(paintColor);
 				gc.setFunction(gcFunction);
@@ -298,8 +298,8 @@ class TestDrawingArea : VBox
 
 			debug(trace) version(Tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
 			else writefln("backSpinChanged - entry %s", ++backSpinCount);
-			drawPoints(getDrawable());
-			GC gc = new GC(getDrawable());
+			drawPoints(getWindow());
+			GC gc = new GC(getWindow());
 			debug(trace) version(Tango) Stdout("backSpinChanged - exit").newline;
 			else writefln("backSpinChanged - exit");
 		}

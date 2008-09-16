@@ -148,7 +148,7 @@ class TestIdle : VBox
 		public void onRealize(Widget widget)
 		{
 			//printf("TestTimeout.realizeCallback\n");
-			drawable = getDrawable();
+			drawable = getWindow();
 			gc = new GC(drawable);
 			gc.setFunction(GdkFunction.INVERT);
 			return false;

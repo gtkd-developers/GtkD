@@ -45,10 +45,12 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
+ * 	- gtk.Widget
  * 	- pango.PgFontFace
  * 	- pango.PgFontFamily
  * structWrap:
  * 	- GdkFont* -> Font
+ * 	- GtkWidget* -> Widget
  * 	- PangoFontFace* -> PgFontFace
  * 	- PangoFontFamily* -> PgFontFamily
  * module aliases:
@@ -66,6 +68,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gdk.Font;
+private import gtk.Widget;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;
 
@@ -237,10 +240,15 @@ public class FontSelection : VBox
 	 * Since 2.14
 	 * Returns: A GtkWidget.
 	 */
-	public GtkWidget* getFaceList()
+	public Widget getFaceList()
 	{
 		// GtkWidget* gtk_font_selection_get_face_list (GtkFontSelection *fontsel);
-		return gtk_font_selection_get_face_list(gtkFontSelection);
+		auto p = gtk_font_selection_get_face_list(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -276,10 +284,15 @@ public class FontSelection : VBox
 	 * Since 2.14
 	 * Returns: A GtkWidget.
 	 */
-	public GtkWidget* getFamilyList()
+	public Widget getFamilyList()
 	{
 		// GtkWidget* gtk_font_selection_get_family_list (GtkFontSelection *fontsel);
-		return gtk_font_selection_get_family_list(gtkFontSelection);
+		auto p = gtk_font_selection_get_family_list(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -287,10 +300,15 @@ public class FontSelection : VBox
 	 * Since 2.14
 	 * Returns: A GtkWidget.
 	 */
-	public GtkWidget* getPreviewEntry()
+	public Widget getPreviewEntry()
 	{
 		// GtkWidget* gtk_font_selection_get_preview_entry  (GtkFontSelection *fontsel);
-		return gtk_font_selection_get_preview_entry(gtkFontSelection);
+		auto p = gtk_font_selection_get_preview_entry(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -299,10 +317,15 @@ public class FontSelection : VBox
 	 * Since 2.14
 	 * Returns: A GtkWidget.
 	 */
-	public GtkWidget* getSizeEntry()
+	public Widget getSizeEntry()
 	{
 		// GtkWidget* gtk_font_selection_get_size_entry (GtkFontSelection *fontsel);
-		return gtk_font_selection_get_size_entry(gtkFontSelection);
+		auto p = gtk_font_selection_get_size_entry(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -310,9 +333,14 @@ public class FontSelection : VBox
 	 * Since 2.14
 	 * Returns: A GtkWidget.
 	 */
-	public GtkWidget* getSizeList()
+	public Widget getSizeList()
 	{
 		// GtkWidget* gtk_font_selection_get_size_list (GtkFontSelection *fontsel);
-		return gtk_font_selection_get_size_list(gtkFontSelection);
+		auto p = gtk_font_selection_get_size_list(gtkFontSelection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 }

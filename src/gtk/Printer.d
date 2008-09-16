@@ -44,9 +44,11 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.PageSetup
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrinter* -> Printer
  * module aliases:
  * local aliases:
@@ -64,6 +66,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.PageSetup;
 private import glib.ListG;
 
 
@@ -414,10 +417,15 @@ public class Printer : ObjectG
 	 * Since 2.13
 	 * Returns: a newly allocated GtkPageSetup with default page size of the printer.
 	 */
-	public GtkPageSetup* getDefaultPageSize()
+	public PageSetup getDefaultPageSize()
 	{
 		// GtkPageSetup* gtk_printer_get_default_page_size (GtkPrinter *printer);
-		return gtk_printer_get_default_page_size(gtkPrinter);
+		auto p = gtk_printer_get_default_page_size(gtkPrinter);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PageSetup(cast(GtkPageSetup*) p);
 	}
 	
 	/**

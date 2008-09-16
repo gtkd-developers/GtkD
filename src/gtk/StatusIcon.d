@@ -47,10 +47,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gio.Icon
+ * 	- gio.IconIF
  * 	- gdk.Pixbuf
  * 	- gdk.Screen
  * 	- gtk.Menu
  * structWrap:
+ * 	- GIcon* -> IconIF
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkScreen* -> Screen
  * 	- GtkMenu* -> Menu
@@ -70,6 +73,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gio.Icon;
+private import gio.IconIF;
 private import gdk.Pixbuf;
 private import gdk.Screen;
 private import gtk.Menu;
@@ -344,13 +349,13 @@ public class StatusIcon : ObjectG
 	 * icon =  a GIcon
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GIcon* icon)
+	public this (IconIF icon)
 	{
 		// GtkStatusIcon* gtk_status_icon_new_from_gicon (GIcon *icon);
-		auto p = gtk_status_icon_new_from_gicon(icon);
+		auto p = gtk_status_icon_new_from_gicon((icon is null) ? null : icon.getIconTStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_status_icon_new_from_gicon(icon)");
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_gicon((icon is null) ? null : icon.getIconTStruct())");
 		}
 		this(cast(GtkStatusIcon*) p);
 	}
@@ -415,10 +420,10 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 * icon =  a GIcon
 	 */
-	public void setFromGicon(GIcon* icon)
+	public void setFromGicon(IconIF icon)
 	{
 		// void gtk_status_icon_set_from_gicon (GtkStatusIcon *status_icon,  GIcon *icon);
-		gtk_status_icon_set_from_gicon(gtkStatusIcon, icon);
+		gtk_status_icon_set_from_gicon(gtkStatusIcon, (icon is null) ? null : icon.getIconTStruct());
 	}
 	
 	/**
@@ -494,10 +499,15 @@ public class StatusIcon : ObjectG
 	 * Since 2.14
 	 * Returns: the displayed icon, or NULL if the image is empty
 	 */
-	public GIcon* getGicon()
+	public IconIF getGicon()
 	{
 		// GIcon* gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
-		return gtk_status_icon_get_gicon(gtkStatusIcon);
+		auto p = gtk_status_icon_get_gicon(gtkStatusIcon);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
 	}
 	
 	/**

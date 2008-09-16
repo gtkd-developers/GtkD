@@ -45,8 +45,10 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
+ * 	- gtk.Widget
  * structWrap:
  * 	- GdkFont* -> Font
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,6 +64,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gdk.Font;
+private import gtk.Widget;
 
 
 
@@ -218,10 +221,15 @@ public class FontSelectionDialog : Dialog
 	 * Since 2.14
 	 * Returns: the GtkWidget used in the dialog for the 'Apply' button.
 	 */
-	public GtkWidget* getApplyButton()
+	public Widget getApplyButton()
 	{
 		// GtkWidget* gtk_font_selection_dialog_get_apply_button  (GtkFontSelectionDialog *fsd);
-		return gtk_font_selection_dialog_get_apply_button(gtkFontSelectionDialog);
+		auto p = gtk_font_selection_dialog_get_apply_button(gtkFontSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -229,10 +237,15 @@ public class FontSelectionDialog : Dialog
 	 * Since 2.14
 	 * Returns: the GtkWidget used in the dialog for the 'Cancel' button.
 	 */
-	public GtkWidget* getCancelButton()
+	public Widget getCancelButton()
 	{
 		// GtkWidget* gtk_font_selection_dialog_get_cancel_button  (GtkFontSelectionDialog *fsd);
-		return gtk_font_selection_dialog_get_cancel_button(gtkFontSelectionDialog);
+		auto p = gtk_font_selection_dialog_get_cancel_button(gtkFontSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -240,9 +253,14 @@ public class FontSelectionDialog : Dialog
 	 * Since 2.14
 	 * Returns: the GtkWidget used in the dialog for the 'OK' button.
 	 */
-	public GtkWidget* getOkButton()
+	public Widget getOkButton()
 	{
 		// GtkWidget* gtk_font_selection_dialog_get_ok_button  (GtkFontSelectionDialog *fsd);
-		return gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
+		auto p = gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 }

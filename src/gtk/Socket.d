@@ -43,7 +43,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gdk.Window
  * structWrap:
+ * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
@@ -59,6 +61,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gdk.Window;
 
 
 
@@ -310,9 +313,14 @@ public class Socket : Container
 	 * added to the socket.
 	 * Returns: the window of the plug if available, or NULL
 	 */
-	public GdkWindow* getPlugWindow()
+	public Window getPlugWindow()
 	{
 		// GdkWindow* gtk_socket_get_plug_window (GtkSocket *socket_);
-		return gtk_socket_get_plug_window(gtkSocket);
+		auto p = gtk_socket_get_plug_window(gtkSocket);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 }

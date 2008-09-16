@@ -1290,13 +1290,15 @@ public class TreeView : Container
 	 * path =  A pointer to be filled with the current cursor path, or NULL
 	 * focusColumn =  A pointer to be filled with the current focus column, or NULL
 	 */
-	public void getCursor(GtkTreePath** path, out TreeViewColumn focusColumn)
+	public void getCursor(out TreePath path, out TreeViewColumn focusColumn)
 	{
 		// void gtk_tree_view_get_cursor (GtkTreeView *tree_view,  GtkTreePath **path,  GtkTreeViewColumn **focus_column);
+		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outfocusColumn = null;
 		
-		gtk_tree_view_get_cursor(gtkTreeView, path, &outfocusColumn);
+		gtk_tree_view_get_cursor(gtkTreeView, &outpath, &outfocusColumn);
 		
+		path = new TreePath(outpath);
 		focusColumn = new TreeViewColumn(outfocusColumn);
 	}
 	

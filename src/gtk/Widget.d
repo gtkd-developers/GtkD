@@ -60,6 +60,7 @@
  * 	- gdk.Visual
  * 	- gtk.Style
  * 	- gdk.Bitmap
+ * 	- gdk.Pixmap
  * 	- gtk.RcStyle
  * 	- gdk.Color
  * 	- gdk.Pixbuf
@@ -95,6 +96,7 @@
  * 	- GdkDisplay* -> Display
  * 	- GdkEvent* -> Event
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
  * 	- GdkScreen* -> Screen
@@ -141,6 +143,7 @@ private import gdk.Colormap;
 private import gdk.Visual;
 private import gtk.Style;
 private import gdk.Bitmap;
+private import gdk.Pixmap;
 private import gtk.RcStyle;
 private import gdk.Color;
 private import gdk.Pixbuf;
@@ -5297,10 +5300,15 @@ public class Widget : ObjectGtk, BuildableIF
  * clipRect =  a GdkRectangle or NULL
  * Returns: GdkPixmap snapshot of the widget
  */
-public GdkPixmap* getSnapshot(Rectangle clipRect)
+public Pixmap getSnapshot(Rectangle clipRect)
 {
 	// GdkPixmap* gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
-	return gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
+	auto p = gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
+	if(p is null)
+	{
+		return null;
+	}
+	return new Pixmap(cast(GdkPixmap*) p);
 }
 
 /**

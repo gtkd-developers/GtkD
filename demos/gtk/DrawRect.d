@@ -22,7 +22,7 @@ void main (string[] args)
 	window.addOnExpose(
 		delegate bool (GdkEventExpose * whatever_II, in Widget widget)
 		{
-			Drawable da = widget.getDrawable();
+			Drawable da = widget.getWindow();
 			da.drawRectangle(	gcFgColor(da, 0, 255, 255), true,
 								0, 0, window.getHeight(), window.getWidth()
 			);

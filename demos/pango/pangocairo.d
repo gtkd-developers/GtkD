@@ -40,8 +40,7 @@ class PangoText : DrawingArea
 	protected bool exposeCallback(GdkEventExpose* event, Widget widget)
 	{
 		// This is where we draw on the window
-		Drawable dr = getDrawable();
-		drawText( new Context(dr) );
+		drawText( new Context( getWindow() ));
 
 		return true;
 	}

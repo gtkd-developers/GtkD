@@ -46,10 +46,12 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- gtk.IconInfo
+ * 	- gtk.IconTheme
  * 	- gdk.Pixbuf
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkIconInfo* -> IconInfo
+ * 	- GtkIconTheme* -> IconTheme
  * module aliases:
  * local aliases:
  * overrides:
@@ -69,6 +71,7 @@ private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import gtk.IconInfo;
+private import gtk.IconTheme;
 private import gdk.Pixbuf;
 
 
@@ -238,13 +241,13 @@ public class IconInfo
 	 * pixbuf =  the pixbuf to wrap in a GtkIconInfo
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkIconTheme* iconTheme, Pixbuf pixbuf)
+	public this (IconTheme iconTheme, Pixbuf pixbuf)
 	{
 		// GtkIconInfo* gtk_icon_info_new_for_pixbuf (GtkIconTheme *icon_theme,  GdkPixbuf *pixbuf);
-		auto p = gtk_icon_info_new_for_pixbuf(iconTheme, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		auto p = gtk_icon_info_new_for_pixbuf((iconTheme is null) ? null : iconTheme.getIconThemeStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_icon_info_new_for_pixbuf(iconTheme, (pixbuf is null) ? null : pixbuf.getPixbufStruct())");
+			throw new ConstructionException("null returned by gtk_icon_info_new_for_pixbuf((iconTheme is null) ? null : iconTheme.getIconThemeStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct())");
 		}
 		this(cast(GtkIconInfo*) p);
 	}

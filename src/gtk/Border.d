@@ -43,6 +43,7 @@
  * omit signals:
  * imports:
  * structWrap:
+ * 	- GtkBorder* -> Border
  * module aliases:
  * local aliases:
  * overrides:
@@ -184,10 +185,15 @@ public class Border
 	 * Copies a GtkBorder structure.
 	 * Returns: a copy of border_.
 	 */
-	public GtkBorder* copy()
+	public Border copy()
 	{
 		// GtkBorder* gtk_border_copy (const GtkBorder *border_);
-		return gtk_border_copy(gtkBorder);
+		auto p = gtk_border_copy(gtkBorder);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Border(cast(GtkBorder*) p);
 	}
 	
 	/**
