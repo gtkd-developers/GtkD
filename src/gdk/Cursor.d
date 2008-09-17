@@ -151,7 +151,7 @@ public class Cursor
 	 * must have a depth of 1 (i.e. each pixel has only 2 values - on or off).
 	 * The standard cursor size is 16 by 16 pixels. You can create a bitmap
 	 * from inline data as in the below example.
-	 * Example6.Creating a custom cursor
+	 * Example 6. Creating a custom cursor
 	 * /+* This data is in X bitmap format, and can be created with the 'bitmap'
 	 *  utility. +/
 	 * #define cursor1_width 16

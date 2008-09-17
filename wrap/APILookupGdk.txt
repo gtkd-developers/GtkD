@@ -30,6 +30,7 @@ addTypedefs: start
 
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
+public import gtkc.giotypes;
 public import gtkc.pangotypes;
 public import gtkc.gdkpixbuftypes;
 
@@ -205,7 +206,7 @@ structWrap: GdkRectangle* Rectangle
 #import: gdk.Span
 #structWrap: GdkSpan* Span
 
-array: gdk_region_polygon points npoints
+array: gdk_region_polygon points n_points
 out: gdk_region_get_rectangles rectangles
 array: gdk_region_get_rectangles rectangles n_rectangles
 array: gdk_region_spans_intersect_foreach spans n_spans
@@ -290,11 +291,11 @@ override: getData
 
 out: gdk_drawable_get_size width
 out: gdk_drawable_get_size height
-array: gdk_draw_points points npoints
-array: gdk_draw_lines points npoints
-array: gdk_draw_segments segs nsegs
-array: gdk_draw_polygon points npoints
-array: gdk_draw_trapezoids trapezoids ntrapezoids
+array: gdk_draw_points points n_points
+array: gdk_draw_lines points n_points
+array: gdk_draw_segments segs n_segs
+array: gdk_draw_polygon points n_points
+array: gdk_draw_trapezoids trapezoids n_trapezoids
 array: gdk_draw_text_wc text text_length
  
 code: start
@@ -615,10 +616,10 @@ structWrap: GdkColor* Color
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 
-array: gdk_colormap_alloc_colors colors ncolors
+array: gdk_colormap_alloc_colors colors n_colors
 array: gdk_colormap_alloc_colors success
 out: gdk_colormap_alloc_color color
-array: gdk_colormap_free_colors colors ncolors
+array: gdk_colormap_free_colors colors n_colors
 out: gdk_colormap_query_color result
 array: gdk_colors_store colors ncolors
 array: gdk_colors_alloc planes nplanes
@@ -1180,6 +1181,25 @@ noprefix: gdk_x11_get_xatom_name
 noprefix: gdk_x11_get_xatom_name_for_display
 outFile: X11
 
+file: gdk-Application-launching.html
+struct: GdkAppLaunchContext
+class: AppLaunchContext
+prefix: gdk_app_launch_context_
+import: glib.Str
+import: gdk.Display
+structWrap: GdkDisplay* Display
+import: gdk.Screen
+structWrap: GdkScreen* Screen
+import: gio.IconIF
+structWrap: GIcon* IconIF
+outFile: AppLaunchContext
+
+file: gdk-Testing.html
+class: Testing
+prefix: gdk_test_
+import: gdk.Window
+structWrap: GdkWindow* Window
+outFile: Testing
 
 ############## cairo interaction ###############
 

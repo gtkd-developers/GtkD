@@ -240,9 +240,9 @@ public class Selection
 	 *  was rejected.
 	 * time = timestamp.
 	 */
-	public static void sendNotify(uint requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
+	public static void sendNotify(GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
 	{
-		// void gdk_selection_send_notify (guint32 requestor,  GdkAtom selection,  GdkAtom target,  GdkAtom property,  guint32 time_);
+		// void gdk_selection_send_notify (GdkNativeWindow requestor,  GdkAtom selection,  GdkAtom target,  GdkAtom property,  guint32 time_);
 		gdk_selection_send_notify(requestor, selection, target, property, time);
 	}
 	
@@ -258,9 +258,9 @@ public class Selection
 	 *  or GDK_NONE to indicate that the request was rejected.
 	 * time =  timestamp.
 	 */
-	public static void sendNotifyForDisplay(Display display, uint requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
+	public static void sendNotifyForDisplay(Display display, GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
 	{
-		// void gdk_selection_send_notify_for_display  (GdkDisplay *display,  guint32 requestor,  GdkAtom selection,  GdkAtom target,  GdkAtom property,  guint32 time_);
+		// void gdk_selection_send_notify_for_display  (GdkDisplay *display,  GdkNativeWindow requestor,  GdkAtom selection,  GdkAtom target,  GdkAtom property,  guint32 time_);
 		gdk_selection_send_notify_for_display((display is null) ? null : display.getDisplayStruct(), requestor, selection, target, property, time);
 	}
 }

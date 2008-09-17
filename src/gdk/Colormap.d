@@ -245,7 +245,7 @@ public class Colormap
 	 */
 	public int allocColors(GdkColor[] colors, int writeable, int bestMatch, int[] success)
 	{
-		// gint gdk_colormap_alloc_colors (GdkColormap *colormap,  GdkColor *colors,  gint ncolors,  gboolean writeable,  gboolean best_match,  gboolean *success);
+		// gint gdk_colormap_alloc_colors (GdkColormap *colormap,  GdkColor *colors,  gint n_colors,  gboolean writeable,  gboolean best_match,  gboolean *success);
 		return gdk_colormap_alloc_colors(gdkColormap, colors.ptr, colors.length, writeable, bestMatch, success.ptr);
 	}
 	
@@ -275,7 +275,7 @@ public class Colormap
 	 */
 	public void freeColors(GdkColor[] colors)
 	{
-		// void gdk_colormap_free_colors (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
+		// void gdk_colormap_free_colors (GdkColormap *colormap,  const GdkColor *colors,  gint n_colors);
 		gdk_colormap_free_colors(gdkColormap, colors.ptr, colors.length);
 	}
 	

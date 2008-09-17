@@ -343,8 +343,6 @@ public class GC : ObjectG
 	 * Determines how the current pixel values and the
 	 * pixel values being drawn are combined to produce
 	 * the final pixel values.
-	 * Params:
-	 * funct =  the GdkFunction to use
 	 */
 	public void setFunction(GdkFunction funct)
 	{
@@ -440,7 +438,7 @@ public class GC : ObjectG
 	 */
 	public void setClipRectangle(Rectangle rectangle)
 	{
-		// void gdk_gc_set_clip_rectangle (GdkGC *gc,  GdkRectangle *rectangle);
+		// void gdk_gc_set_clip_rectangle (GdkGC *gc,  const GdkRectangle *rectangle);
 		gdk_gc_set_clip_rectangle(gdkGC, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
@@ -453,7 +451,7 @@ public class GC : ObjectG
 	 */
 	public void setClipRegion(Region region)
 	{
-		// void gdk_gc_set_clip_region (GdkGC *gc,  GdkRegion *region);
+		// void gdk_gc_set_clip_region (GdkGC *gc,  const GdkRegion *region);
 		gdk_gc_set_clip_region(gdkGC, (region is null) ? null : region.getRegionStruct());
 	}
 	

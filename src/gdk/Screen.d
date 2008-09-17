@@ -156,7 +156,7 @@ public class Screen : ObjectG
 	
 	void delegate(Screen)[] onCompositedChangedListeners;
 	/**
-	 * The ::composited_changed signal is emitted when the composited
+	 * The ::composited-changed signal is emitted when the composited
 	 * status of the screen changes
 	 * Since 2.10
 	 */
@@ -183,9 +183,40 @@ public class Screen : ObjectG
 		}
 	}
 	
+	void delegate(Screen)[] onMonitorsChangedListeners;
+	/**
+	 * The ::monitors-changed signal is emitted when the number, size
+	 * or position of the monitors attached to the screen change.
+	 * Only for X for now. Future implementations for Win32 and
+	 * OS X may be a possibility.
+	 * Since 2.14
+	 */
+	void addOnMonitorsChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("monitors-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"monitors-changed",
+			cast(GCallback)&callBackMonitorsChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["monitors-changed"] = 1;
+		}
+		onMonitorsChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, Screen screen)
+	{
+		foreach ( void delegate(Screen) dlg ; screen.onMonitorsChangedListeners )
+		{
+			dlg(screen);
+		}
+	}
+	
 	void delegate(Screen)[] onSizeChangedListeners;
 	/**
-	 * The ::size_changed signal is emitted when the pixel width or
+	 * The ::size-changed signal is emitted when the pixel width or
 	 * height of a screen changes.
 	 * Since 2.2
 	 */
@@ -587,6 +618,47 @@ public class Screen : ObjectG
 	{
 		// gint gdk_screen_get_monitor_at_window (GdkScreen *screen,  GdkWindow *window);
 		return gdk_screen_get_monitor_at_window(gdkScreen, (window is null) ? null : window.getWindowStruct());
+	}
+	
+	/**
+	 * Gets the height in millimeters of the specified monitor.
+	 * Since 2.14
+	 * Params:
+	 * monitorNum =  number of the monitor
+	 * Returns: the height of the monitor, or -1 if not available
+	 */
+	public int getMonitorHeightMm(int monitorNum)
+	{
+		// gint gdk_screen_get_monitor_height_mm (GdkScreen *screen,  gint monitor_num);
+		return gdk_screen_get_monitor_height_mm(gdkScreen, monitorNum);
+	}
+	
+	/**
+	 * Gets the width in millimeters of the specified monitor, if available.
+	 * Since 2.14
+	 * Params:
+	 * monitorNum =  number of the monitor
+	 * Returns:the width of the monitor, or -1 if not available
+	 */
+	public int getMonitorWidthMm(int monitorNum)
+	{
+		// gint gdk_screen_get_monitor_width_mm (GdkScreen *screen,  gint monitor_num);
+		return gdk_screen_get_monitor_width_mm(gdkScreen, monitorNum);
+	}
+	
+	/**
+	 * Returns the output name of the specified monitor.
+	 * Usually something like VGA, DVI, or TV, not the actual
+	 * product name of the display device.
+	 * Since 2.14
+	 * Params:
+	 * monitorNum =  number of the monitor
+	 * Returns: a newly-allocated string containing the name of the monitor, or NULL if the name cannot be determined
+	 */
+	public string getMonitorPlugName(int monitorNum)
+	{
+		// gchar* gdk_screen_get_monitor_plug_name (GdkScreen *screen,  gint monitor_num);
+		return Str.toString(gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum));
 	}
 	
 	/**

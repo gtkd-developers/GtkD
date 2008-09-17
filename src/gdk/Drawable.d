@@ -420,7 +420,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawPoints(GC gc, GdkPoint[] points)
 	{
-		// void gdk_draw_points (GdkDrawable *drawable,  GdkGC *gc,  GdkPoint *points,  gint npoints);
+		// void gdk_draw_points (GdkDrawable *drawable,  GdkGC *gc,  const GdkPoint *points,  gint n_points);
 		gdk_draw_points(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, points.length);
 	}
 	
@@ -451,7 +451,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawLines(GC gc, GdkPoint[] points)
 	{
-		// void gdk_draw_lines (GdkDrawable *drawable,  GdkGC *gc,  GdkPoint *points,  gint npoints);
+		// void gdk_draw_lines (GdkDrawable *drawable,  GdkGC *gc,  const GdkPoint *points,  gint n_points);
 		gdk_draw_lines(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, points.length);
 	}
 	
@@ -486,7 +486,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawPixbuf(GC gc, Pixbuf pixbuf, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
 	{
-		// void gdk_draw_pixbuf (GdkDrawable *drawable,  GdkGC *gc,  GdkPixbuf *pixbuf,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height,  GdkRgbDither dither,  gint x_dither,  gint y_dither);
+		// void gdk_draw_pixbuf (GdkDrawable *drawable,  GdkGC *gc,  const GdkPixbuf *pixbuf,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height,  GdkRgbDither dither,  gint x_dither,  gint y_dither);
 		gdk_draw_pixbuf(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), srcX, srcY, destX, destY, width, height, dither, xDither, yDither);
 	}
 	
@@ -499,7 +499,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawSegments(GC gc, GdkSegment[] segs)
 	{
-		// void gdk_draw_segments (GdkDrawable *drawable,  GdkGC *gc,  GdkSegment *segs,  gint nsegs);
+		// void gdk_draw_segments (GdkDrawable *drawable,  GdkGC *gc,  const GdkSegment *segs,  gint n_segs);
 		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs.ptr, segs.length);
 	}
 	
@@ -562,7 +562,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
 	{
-		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
+		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  const GdkPoint *points,  gint n_points);
 		gdk_draw_polygon(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
@@ -576,12 +576,11 @@ public class Drawable : ObjectG
 	 * Params:
 	 * gc =  a GdkGC
 	 * trapezoids =  an array of GdkTrapezoid structures
-	 * nTrapezoids =  the number of trapezoids to draw
 	 */
-	public void drawTrapezoids(GC gc, GdkTrapezoid[] trapezoids, int nTrapezoids)
+	public void drawTrapezoids(GC gc, GdkTrapezoid[] trapezoids)
 	{
-		// void gdk_draw_trapezoids (GdkDrawable *drawable,  GdkGC *gc,  GdkTrapezoid *trapezoids,  gint n_trapezoids);
-		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids.ptr, nTrapezoids);
+		// void gdk_draw_trapezoids (GdkDrawable *drawable,  GdkGC *gc,  const GdkTrapezoid *trapezoids,  gint n_trapezoids);
+		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids.ptr, trapezoids.length);
 	}
 	
 	/**
@@ -626,7 +625,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawGlyphsTransformed(GC gc, PgMatrix matrix, PgFont font, int x, int y, PgGlyphString glyphs)
 	{
-		// void gdk_draw_glyphs_transformed (GdkDrawable *drawable,  GdkGC *gc,  PangoMatrix *matrix,  PangoFont *font,  gint x,  gint y,  PangoGlyphString *glyphs);
+		// void gdk_draw_glyphs_transformed (GdkDrawable *drawable,  GdkGC *gc,  const PangoMatrix *matrix,  PangoFont *font,  gint x,  gint y,  PangoGlyphString *glyphs);
 		gdk_draw_glyphs_transformed(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (matrix is null) ? null : matrix.getPgMatrixStruct(), (font is null) ? null : font.getPgFontStruct(), x, y, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
 	}
 	

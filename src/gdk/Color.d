@@ -306,17 +306,18 @@ public class Color
 	}
 	
 	/**
-	 * Parses a textual specification of a color and fill in
-	 * the red,
-	 * green, and
-	 * blue fields of a
-	 * GdkColor structure. The color is not
-	 * allocated, you must call gdk_colormap_alloc_color() yourself.
-	 * The text string can be in any of the forms accepted
-	 * by XParseColor; these include
-	 * name for a color from rgb.txt, such as
-	 * DarkSlateGray, or a hex specification
-	 * such as #3050b2 or #35b.
+	 * Parses a textual specification of a color and fill in the
+	 * red, green,
+	 * and blue fields of a GdkColor
+	 * structure. The color is not allocated, you
+	 * must call gdk_colormap_alloc_color() yourself. The string can
+	 * either one of a large set of standard names. (Taken from the X11
+	 * rgb.txt file), or it can be a hex value in the
+	 * form '#rgb' '#rrggbb' '#rrrgggbbb' or
+	 * '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex digits of the
+	 * red, green, and blue components of the color, respectively. (White
+	 * in the four forms is '#fff' '#ffffff' '#fffffffff' and
+	 * '#ffffffffffff')
 	 * Params:
 	 * spec =  the string specifying the color.
 	 * color =  the GdkColor to fill in

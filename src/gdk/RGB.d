@@ -107,7 +107,7 @@ private import gdk.Visual;
  * accelerated using mediaLib, which provides hardware acceleration on Intel,
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
- * Example4.A simple example program using GdkRGB
+ * Example 4. A simple example program using GdkRGB
  * #include <gtk/gtk.h>
  * #define IMAGE_WIDTH	256
  * #define IMAGE_HEIGHT	256
@@ -200,7 +200,7 @@ public class RGB
 	 */
 	public static void drawRgbImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* rgbBuf, int rowstride)
 	{
-		// void gdk_draw_rgb_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *rgb_buf,  gint rowstride);
+		// void gdk_draw_rgb_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  const guchar *rgb_buf,  gint rowstride);
 		gdk_draw_rgb_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, rgbBuf, rowstride);
 	}
 	
@@ -230,7 +230,7 @@ public class RGB
 	 */
 	public static void drawRgbImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* rgbBuf, int rowstride, int xdith, int ydith)
 	{
-		// void gdk_draw_rgb_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *rgb_buf,  gint rowstride,  gint xdith,  gint ydith);
+		// void gdk_draw_rgb_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  const guchar *rgb_buf,  gint rowstride,  gint xdith,  gint ydith);
 		gdk_draw_rgb_image_dithalign((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, rgbBuf, rowstride, xdith, ydith);
 	}
 	
@@ -252,7 +252,7 @@ public class RGB
 	 */
 	public static void drawIndexedImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, RgbCmap cmap)
 	{
-		// void gdk_draw_indexed_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride,  GdkRgbCmap *cmap);
+		// void gdk_draw_indexed_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  const guchar *buf,  gint rowstride,  GdkRgbCmap *cmap);
 		gdk_draw_indexed_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, (cmap is null) ? null : cmap.getRgbCmapStruct());
 	}
 	
@@ -272,7 +272,7 @@ public class RGB
 	 */
 	public static void drawGrayImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride)
 	{
-		// void gdk_draw_gray_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride);
+		// void gdk_draw_gray_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  const guchar *buf,  gint rowstride);
 		gdk_draw_gray_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride);
 	}
 	
@@ -298,7 +298,7 @@ public class RGB
 	 */
 	public static void drawRgb32_Image(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride)
 	{
-		// void gdk_draw_rgb_32_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride);
+		// void gdk_draw_rgb_32_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  const guchar *buf,  gint rowstride);
 		gdk_draw_rgb_32_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride);
 	}
 	
@@ -320,7 +320,7 @@ public class RGB
 	 */
 	public static void drawRgb32_ImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, int xdith, int ydith)
 	{
-		// void gdk_draw_rgb_32_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride,  gint xdith,  gint ydith);
+		// void gdk_draw_rgb_32_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  const guchar *buf,  gint rowstride,  gint xdith,  gint ydith);
 		gdk_draw_rgb_32_image_dithalign((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, xdith, ydith);
 	}
 	

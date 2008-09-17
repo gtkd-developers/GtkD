@@ -215,6 +215,22 @@ public class X11
 	}
 	
 	/**
+	 * Gets the XID of the specified output/monitor.
+	 * If the X server does not support version 1.2 of the RANDR
+	 * extension, 0 is returned.
+	 * Since 2.14
+	 * Params:
+	 * screen =  a GdkScreen
+	 * monitorNum =  number of the monitor
+	 * Returns: the XID of the monitor
+	 */
+	public static uint screenGetMonitorOutput(GdkScreen* screen, int monitorNum)
+	{
+		// XID gdk_x11_screen_get_monitor_output (GdkScreen *screen,  gint monitor_num);
+		return gdk_x11_screen_get_monitor_output(screen, monitorNum);
+	}
+	
+	/**
 	 * The application can use this call to update the _NET_WM_USER_TIME
 	 * property on a toplevel window. This property stores an Xserver
 	 * time which represents the time of the last user input event

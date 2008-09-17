@@ -140,7 +140,7 @@ public class Region
 	 */
 	public static Region polygon(GdkPoint[] points, GdkFillRule fillRule)
 	{
-		// GdkRegion* gdk_region_polygon (GdkPoint *points,  gint npoints,  GdkFillRule fill_rule);
+		// GdkRegion* gdk_region_polygon (const GdkPoint *points,  gint n_points,  GdkFillRule fill_rule);
 		auto p = gdk_region_polygon(points.ptr, points.length, fillRule);
 		if(p is null)
 		{
@@ -155,7 +155,7 @@ public class Region
 	 */
 	public Region copy()
 	{
-		// GdkRegion* gdk_region_copy (GdkRegion *region);
+		// GdkRegion* gdk_region_copy (const GdkRegion *region);
 		auto p = gdk_region_copy(gdkRegion);
 		if(p is null)
 		{
@@ -172,7 +172,7 @@ public class Region
 	 */
 	public static Region rectangle(Rectangle rectangle)
 	{
-		// GdkRegion* gdk_region_rectangle (GdkRectangle *rectangle);
+		// GdkRegion* gdk_region_rectangle (const GdkRectangle *rectangle);
 		auto p = gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct());
 		if(p is null)
 		{
@@ -197,7 +197,7 @@ public class Region
 	 */
 	public void getClipbox(Rectangle rectangle)
 	{
-		// void gdk_region_get_clipbox (GdkRegion *region,  GdkRectangle *rectangle);
+		// void gdk_region_get_clipbox (const GdkRegion *region,  GdkRectangle *rectangle);
 		gdk_region_get_clipbox(gdkRegion, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
@@ -209,7 +209,7 @@ public class Region
 	 */
 	public void getRectangles(out GdkRectangle[] rectangles)
 	{
-		// void gdk_region_get_rectangles (GdkRegion *region,  GdkRectangle **rectangles,  gint *n_rectangles);
+		// void gdk_region_get_rectangles (const GdkRegion *region,  GdkRectangle **rectangles,  gint *n_rectangles);
 		GdkRectangle* outrectangles = null;
 		int nRectangles;
 		
@@ -224,7 +224,7 @@ public class Region
 	 */
 	public int empty()
 	{
-		// gboolean gdk_region_empty (GdkRegion *region);
+		// gboolean gdk_region_empty (const GdkRegion *region);
 		return gdk_region_empty(gdkRegion);
 	}
 	
@@ -236,7 +236,7 @@ public class Region
 	 */
 	public int equal(Region region2)
 	{
-		// gboolean gdk_region_equal (GdkRegion *region1,  GdkRegion *region2);
+		// gboolean gdk_region_equal (const GdkRegion *region1,  const GdkRegion *region2);
 		return gdk_region_equal(gdkRegion, (region2 is null) ? null : region2.getRegionStruct());
 	}
 	
@@ -249,7 +249,7 @@ public class Region
 	 */
 	public int pointIn(int x, int y)
 	{
-		// gboolean gdk_region_point_in (GdkRegion *region,  int x,  int y);
+		// gboolean gdk_region_point_in (const GdkRegion *region,  int x,  int y);
 		return gdk_region_point_in(gdkRegion, x, y);
 	}
 	
@@ -261,7 +261,7 @@ public class Region
 	 */
 	public GdkOverlapType rectIn(Rectangle rectangle)
 	{
-		// GdkOverlapType gdk_region_rect_in (GdkRegion *region,  GdkRectangle *rectangle);
+		// GdkOverlapType gdk_region_rect_in (const GdkRegion *region,  const GdkRectangle *rectangle);
 		return gdk_region_rect_in(gdkRegion, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
@@ -299,7 +299,7 @@ public class Region
 	 */
 	public void unionWithRect(Rectangle rect)
 	{
-		// void gdk_region_union_with_rect (GdkRegion *region,  GdkRectangle *rect);
+		// void gdk_region_union_with_rect (GdkRegion *region,  const GdkRectangle *rect);
 		gdk_region_union_with_rect(gdkRegion, (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
@@ -312,7 +312,7 @@ public class Region
 	 */
 	public void intersect(Region source2)
 	{
-		// void gdk_region_intersect (GdkRegion *source1,  GdkRegion *source2);
+		// void gdk_region_intersect (GdkRegion *source1,  const GdkRegion *source2);
 		gdk_region_intersect(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
@@ -325,7 +325,7 @@ public class Region
 	 */
 	public void unio(Region source2)
 	{
-		// void gdk_region_union (GdkRegion *source1,  GdkRegion *source2);
+		// void gdk_region_union (GdkRegion *source1,  const GdkRegion *source2);
 		gdk_region_union(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
@@ -337,7 +337,7 @@ public class Region
 	 */
 	public void subtract(Region source2)
 	{
-		// void gdk_region_subtract (GdkRegion *source1,  GdkRegion *source2);
+		// void gdk_region_subtract (GdkRegion *source1,  const GdkRegion *source2);
 		gdk_region_subtract(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
@@ -350,7 +350,7 @@ public class Region
 	 */
 	public void xor(Region source2)
 	{
-		// void gdk_region_xor (GdkRegion *source1,  GdkRegion *source2);
+		// void gdk_region_xor (GdkRegion *source1,  const GdkRegion *source2);
 		gdk_region_xor(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
@@ -359,12 +359,11 @@ public class Region
 	 * Params:
 	 * spans =  an array of GdkSpans
 	 * sorted =  TRUE if spans is sorted wrt. the y coordinate
-	 * funct =  function to call on each span in the intersection
 	 * data =  data to pass to function
 	 */
 	public void spansIntersectForeach(GdkSpan[] spans, int sorted, GdkSpanFunc funct, void* data)
 	{
-		// void gdk_region_spans_intersect_foreach (GdkRegion *region,  GdkSpan *spans,  int n_spans,  gboolean sorted,  GdkSpanFunc function,  gpointer data);
+		// void gdk_region_spans_intersect_foreach (GdkRegion *region,  const GdkSpan *spans,  int n_spans,  gboolean sorted,  GdkSpanFunc function,  gpointer data);
 		gdk_region_spans_intersect_foreach(gdkRegion, spans.ptr, spans.length, sorted, funct, data);
 	}
 }

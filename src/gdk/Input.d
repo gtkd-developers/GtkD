@@ -82,15 +82,14 @@ public class Input
 	 * Params:
 	 * source = a file descriptor.
 	 * condition = the condition.
-	 * funct = the callback function.
 	 * data = callback data passed to function.
 	 * destroy = callback function to call with data when the input
 	 *  handler is removed.
 	 * Returns:a tag that can later be used as an argument to gdk_input_remove().
 	 */
-	public static int addFull(int source, GdkInputCondition condition, GdkInputFunction funct, void* data, GdkDestroyNotify destroy)
+	public static int addFull(int source, GdkInputCondition condition, GdkInputFunction funct, void* data, GDestroyNotify destroy)
 	{
-		// gint gdk_input_add_full (gint source,  GdkInputCondition condition,  GdkInputFunction function,  gpointer data,  GdkDestroyNotify destroy);
+		// gint gdk_input_add_full (gint source,  GdkInputCondition condition,  GdkInputFunction function,  gpointer data,  GDestroyNotify destroy);
 		return gdk_input_add_full(source, condition, funct, data, destroy);
 	}
 	
@@ -102,7 +101,6 @@ public class Input
 	 * Params:
 	 * source = a file descriptor.
 	 * condition = the condition.
-	 * funct = the callback function.
 	 * data = callback data passed to function.
 	 * Returns:a tag that can later be used as an argument to gdk_input_remove().
 	 */

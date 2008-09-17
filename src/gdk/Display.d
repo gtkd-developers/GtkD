@@ -185,6 +185,8 @@ public class Display : ObjectG
 	
 	/**
 	 * Gets the default GdkDisplay. This is a convenience
+	 * function for
+	 * gdk_display_manager_get_default_display (gdk_display_manager_get()).
 	 * Since 2.2
 	 * Returns: a GdkDisplay, or NULL if there is no default display.
 	 */
@@ -407,7 +409,7 @@ public class Display : ObjectG
 	 */
 	public void putEvent(Event event)
 	{
-		// void gdk_display_put_event (GdkDisplay *display,  GdkEvent *event);
+		// void gdk_display_put_event (GdkDisplay *display,  const GdkEvent *event);
 		gdk_display_put_event(gdkDisplay, (event is null) ? null : event.getEventStruct());
 	}
 	
@@ -668,7 +670,7 @@ public class Display : ObjectG
 	 */
 	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)
 	{
-		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  GdkAtom *targets,  gint n_targets);
+		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  const GdkAtom *targets,  gint n_targets);
 		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets.ptr, targets.length);
 	}
 	

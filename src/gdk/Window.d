@@ -96,7 +96,7 @@ private import gdk.Drawable;
  * GTK+ level. A GtkWindow is a toplevel window, the thing a user might think of
  * as a "window" with a titlebar and so on; a GtkWindow may contain many GdkWindow.
  * For example, each GtkButton has a GdkWindow associated with it.
- * Example7.Composited windows
+ * Example 7. Composited windows
  * #include <gtk/gtk.h>
  * /+* The expose event handler for the event box.
  *  *
@@ -129,7 +129,7 @@ private import gdk.Drawable;
  *  *
  *  * In this case we do not want app-paintable to be set on the widget
  *  * since we want it to draw its own (red) background. Because of this,
- *  * however, we must ensure that we use g_signal_register_after so that
+ *  * however, we must ensure that we use g_signal_connect_after so that
  *  * this handler is called after the red has been drawn. If it was
  *  * called before then GTK would just blindly paint over our work.
  *  *
@@ -207,10 +207,10 @@ private import gdk.Drawable;
 	 *  +/
 	 *  g_signal_connect_after (window, "expose-event",
 	 *  G_CALLBACK (window_expose_event), NULL);
-	 *  gtk_main (<!-- -->);
+	 *  gtk_main ();
 	 *  return 0;
  * }
- * In the example Example7, Composited windows, a button is
+ * In the example Example 7, “Composited windows”, a button is
  * placed inside of an event box inside of a window. The event box is
  * set as composited and therefore is no longer automatically drawn to
  * the screen.
@@ -608,7 +608,7 @@ public class Window : Drawable
 	 * and an expose event is emitted on the parent of the composited
 	 * window. It is the responsibility of the parent's expose handler
 	 * to manually merge the off-screen content onto the screen in
-	 * whatever way it sees fit. See Example7, Composited windows
+	 * whatever way it sees fit. See Example 7, “Composited windows”
 	 * for an example.
 	 * It only makes sense for child windows to be composited; see
 	 * gdk_window_set_opacity() if you need translucent toplevel
@@ -711,7 +711,7 @@ public class Window : Drawable
 	 */
 	public void moveRegion(Region region, int dx, int dy)
 	{
-		// void gdk_window_move_region (GdkWindow *window,  GdkRegion *region,  gint dx,  gint dy);
+		// void gdk_window_move_region (GdkWindow *window,  const GdkRegion *region,  gint dx,  gint dy);
 		gdk_window_move_region(gdkWindow, (region is null) ? null : region.getRegionStruct(), dx, dy);
 	}
 	
@@ -896,7 +896,7 @@ public class Window : Drawable
 	 */
 	public void beginPaintRect(Rectangle rectangle)
 	{
-		// void gdk_window_begin_paint_rect (GdkWindow *window,  GdkRectangle *rectangle);
+		// void gdk_window_begin_paint_rect (GdkWindow *window,  const GdkRectangle *rectangle);
 		gdk_window_begin_paint_rect(gdkWindow, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
@@ -941,7 +941,7 @@ public class Window : Drawable
 	 */
 	public void beginPaintRegion(Region region)
 	{
-		// void gdk_window_begin_paint_region (GdkWindow *window,  GdkRegion *region);
+		// void gdk_window_begin_paint_region (GdkWindow *window,  const GdkRegion *region);
 		gdk_window_begin_paint_region(gdkWindow, (region is null) ? null : region.getRegionStruct());
 	}
 	
@@ -971,7 +971,7 @@ public class Window : Drawable
 	 */
 	public void invalidateRect(Rectangle rect, int invalidateChildren)
 	{
-		// void gdk_window_invalidate_rect (GdkWindow *window,  GdkRectangle *rect,  gboolean invalidate_children);
+		// void gdk_window_invalidate_rect (GdkWindow *window,  const GdkRectangle *rect,  gboolean invalidate_children);
 		gdk_window_invalidate_rect(gdkWindow, (rect is null) ? null : rect.getRectangleStruct(), invalidateChildren);
 	}
 	
@@ -997,7 +997,7 @@ public class Window : Drawable
 	 */
 	public void invalidateRegion(Region region, int invalidateChildren)
 	{
-		// void gdk_window_invalidate_region (GdkWindow *window,  GdkRegion *region,  gboolean invalidate_children);
+		// void gdk_window_invalidate_region (GdkWindow *window,  const GdkRegion *region,  gboolean invalidate_children);
 		gdk_window_invalidate_region(gdkWindow, (region is null) ? null : region.getRegionStruct(), invalidateChildren);
 	}
 	
@@ -1238,7 +1238,6 @@ public class Window : Drawable
 	 * See gdk_display_add_client_message_filter() if you are interested
 	 * in X ClientMessage events.
 	 * Params:
-	 * funct =  filter callback
 	 * data =  data to pass to filter callback
 	 */
 	public void addFilter(GdkFilterFunc funct, void* data)
@@ -1250,7 +1249,6 @@ public class Window : Drawable
 	/**
 	 * Remove a filter previously added with gdk_window_add_filter().
 	 * Params:
-	 * funct =  previously-added filter function
 	 * data =  user data for previously-added filter function
 	 */
 	public void removeFilter(GdkFilterFunc funct, void* data)
@@ -1271,7 +1269,6 @@ public class Window : Drawable
 	 * very old X servers, and occasionally the implementation will be
 	 * buggy. On servers without the shape extension, this function
 	 * will do nothing.
-	 * On the Win32 platform the functionality is always present.
 	 * This function works on both toplevel and child windows.
 	 * Params:
 	 * mask =  shape mask
@@ -1296,7 +1293,6 @@ public class Window : Drawable
 	 * very old X servers, and occasionally the implementation will be
 	 * buggy. On servers without the shape extension, this function
 	 * will do nothing.
-	 * On the Win32 platform, this functionality is always present.
 	 * This function works on both toplevel and child windows.
 	 * Params:
 	 * shapeRegion =  region of window to be non-transparent
@@ -1305,7 +1301,7 @@ public class Window : Drawable
 	 */
 	public void shapeCombineRegion(Region shapeRegion, int offsetX, int offsetY)
 	{
-		// void gdk_window_shape_combine_region (GdkWindow *window,  GdkRegion *shape_region,  gint offset_x,  gint offset_y);
+		// void gdk_window_shape_combine_region (GdkWindow *window,  const GdkRegion *shape_region,  gint offset_x,  gint offset_y);
 		gdk_window_shape_combine_region(gdkWindow, (shapeRegion is null) ? null : shapeRegion.getRegionStruct(), offsetX, offsetY);
 	}
 	
@@ -1384,7 +1380,7 @@ public class Window : Drawable
 	 */
 	public void inputShapeCombineRegion(Region shapeRegion, int offsetX, int offsetY)
 	{
-		// void gdk_window_input_shape_combine_region  (GdkWindow *window,  GdkRegion *shape_region,  gint offset_x,  gint offset_y);
+		// void gdk_window_input_shape_combine_region  (GdkWindow *window,  const GdkRegion *shape_region,  gint offset_x,  gint offset_y);
 		gdk_window_input_shape_combine_region(gdkWindow, (shapeRegion is null) ? null : shapeRegion.getRegionStruct(), offsetX, offsetY);
 	}
 	
@@ -1488,12 +1484,13 @@ public class Window : Drawable
 	}
 	
 	/**
-	 * Sets the background pixmap of window. May also be used to set a background of
-	 * "None" on window, by setting a background pixmap of NULL.
-	 * A background pixmap will be tiled, positioning the first tile at the origin of
-	 * window, or if parent_relative is TRUE, the tiling will be done based on the
-	 * origin of the parent window (useful to align tiles in a parent with tiles
-	 * in a child).
+	 * Sets the background pixmap of window. May also be used to set a
+	 * background of "None" on window, by setting a background pixmap
+	 * of NULL.
+	 * A background pixmap will be tiled, positioning the first tile at
+	 * the origin of window, or if parent_relative is TRUE, the tiling
+	 * will be done based on the origin of the parent window (useful to
+	 * align tiles in a parent with tiles in a child).
 	 * A background pixmap of NULL means that the window will have no
 	 * background. A window with no background will never have its
 	 * background filled by the windowing system, instead the window will
@@ -1504,7 +1501,8 @@ public class Window : Drawable
 	 * gdk_window_clear().
 	 * Params:
 	 * pixmap =  a GdkPixmap, or NULL
-	 * parentRelative =  whether the tiling origin is at the origin of window's parent
+	 * parentRelative =  whether the tiling origin is at the origin of
+	 *  window's parent
 	 */
 	public void setBackPixmap(Pixmap pixmap, int parentRelative)
 	{
@@ -1597,7 +1595,7 @@ public class Window : Drawable
 	 */
 	public void setGeometryHints(GdkGeometry* geometry, GdkWindowHints geomMask)
 	{
-		// void gdk_window_set_geometry_hints (GdkWindow *window,  GdkGeometry *geometry,  GdkWindowHints geom_mask);
+		// void gdk_window_set_geometry_hints (GdkWindow *window,  const GdkGeometry *geometry,  GdkWindowHints geom_mask);
 		gdk_window_set_geometry_hints(gdkWindow, geometry, geomMask);
 	}
 	
@@ -2133,5 +2131,42 @@ public class Window : Drawable
 	{
 		// GdkPointerHooks* gdk_set_pointer_hooks (const GdkPointerHooks *new_hooks);
 		return gdk_set_pointer_hooks(newHooks);
+	}
+	
+	/**
+	 * Redirects drawing into window so that drawing to the
+	 * window in the rectangle specified by src_x, src_y,
+	 * width and height is also drawn into drawable at
+	 * dest_x, dest_y.
+	 * Only drawing between gdk_window_begin_paint_region() or
+	 * gdk_window_begin_paint_rect() and gdk_window_end_paint() is
+	 * redirected.
+	 * Redirection is active until gdk_window_remove_redirection()
+	 * is called.
+	 * Since 2.14
+	 * Params:
+	 * drawable =  a GdkDrawable
+	 * srcX =  x position in window
+	 * srcY =  y position in window
+	 * destX =  x position in drawable
+	 * destY =  y position in drawable
+	 * width =  width of redirection
+	 * height =  height of redirection
+	 */
+	public void redirectToDrawable(Drawable drawable, int srcX, int srcY, int destX, int destY, int width, int height)
+	{
+		// void gdk_window_redirect_to_drawable (GdkWindow *window,  GdkDrawable *drawable,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
+		gdk_window_redirect_to_drawable(gdkWindow, (drawable is null) ? null : drawable.getDrawableStruct(), srcX, srcY, destX, destY, width, height);
+	}
+	
+	/**
+	 * Removes any active redirection started by
+	 * gdk_window_redirect_to_drawable().
+	 * Since 2.14
+	 */
+	public void removeRedirection()
+	{
+		// void gdk_window_remove_redirection (GdkWindow *window);
+		gdk_window_remove_redirection(gdkWindow);
 	}
 }

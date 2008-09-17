@@ -88,7 +88,7 @@ private import glib.ConstructionException;
  * accelerated using mediaLib, which provides hardware acceleration on Intel,
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
- * Example4.A simple example program using GdkRGB
+ * Example 4. A simple example program using GdkRGB
  * #include <gtk/gtk.h>
  * #define IMAGE_WIDTH	256
  * #define IMAGE_HEIGHT	256

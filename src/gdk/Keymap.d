@@ -169,7 +169,7 @@ public class Keymap : ObjectG
 	
 	void delegate(Keymap)[] onDirectionChangedListeners;
 	/**
-	 * The ::direction_changed signal gets emitted when the direction of
+	 * The ::direction-changed signal gets emitted when the direction of
 	 * the keymap changes.
 	 * Since 2.0
 	 */
@@ -198,7 +198,7 @@ public class Keymap : ObjectG
 	
 	void delegate(Keymap)[] onKeysChangedListeners;
 	/**
-	 * The ::keys_changed signal is emitted when the mapping represented by
+	 * The ::keys-changed signal is emitted when the mapping represented by
 	 * keymap changes.
 	 * Since 2.2
 	 */
@@ -377,8 +377,9 @@ public class Keymap : ObjectG
 	}
 	
 	/**
+	 * Returns the direction of effective layout of the keymap.
 	 * Returns the direction of the keymap.
-	 * Returns:the direction of effective layout of the keymap.Returns: if it can determine the direction. PANGO_DIRECTION_NEUTRAL  otherwise.
+	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL  if it can determine the direction. PANGO_DIRECTION_NEUTRAL  otherwise.
 	 */
 	public PangoDirection getDirection()
 	{
@@ -504,7 +505,7 @@ public class Keymap : ObjectG
 	 * Since 2.0
 	 * Params:
 	 * wc =  a ISO10646 encoded character
-	 * Returns: the corresponding GDK key symbol, if one exists. or, if there is no corresponding symbol,  wc | 0x01000000Signal DetailsThe "direction-changed" signalvoid user_function (GdkKeymap *keymap, gpointer user_data) : Run LastThe ::direction_changed signal gets emitted when the direction ofthe keymap changes.
+	 * Returns: the corresponding GDK key symbol, if one exists. or, if there is no corresponding symbol,  wc | 0x01000000Signal DetailsThe "direction-changed" signalvoid user_function (GdkKeymap *keymap, gpointer user_data) : Run LastThe ::direction-changed signal gets emitted when the direction ofthe keymap changes.
 	 */
 	public static uint gdkUnicodeToKeyval(uint wc)
 	{

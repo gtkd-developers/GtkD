@@ -296,13 +296,13 @@ public class DragContext
 	/**
 	 * Finds out the DND protocol supported by a window.
 	 * Params:
-	 * xid =  the X id of the destination window.
+	 * xid =  the windowing system id of the destination window.
 	 * protocol =  location where the supported DND protocol is returned.
-	 * Returns: the X id of the window where the drop should happen. This  may be xid or the X id of a proxy window, or None if xid doesn't support Drag and Drop.
+	 * Returns: the windowing system specific id for the window where the drop should happen. This may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
 	 */
-	public static uint gdkDragGetProtocol(uint xid, out GdkDragProtocol protocol)
+	public static GdkNativeWindow gdkDragGetProtocol(GdkNativeWindow xid, out GdkDragProtocol protocol)
 	{
-		// guint32 gdk_drag_get_protocol (guint32 xid,  GdkDragProtocol *protocol);
+		// GdkNativeWindow gdk_drag_get_protocol (GdkNativeWindow xid,  GdkDragProtocol *protocol);
 		return gdk_drag_get_protocol(xid, &protocol);
 	}
 	
@@ -311,13 +311,13 @@ public class DragContext
 	 * Since 2.2
 	 * Params:
 	 * display =  the GdkDisplay where the destination window resides
-	 * xid =  the X id of the destination window.
+	 * xid =  the windowing system id of the destination window.
 	 * protocol =  location where the supported DND protocol is returned.
-	 * Returns: the X id of the window where the drop should happen. This  may be xid or the X id of a proxy window, or None if xid doesn't support Drag and Drop.
+	 * Returns: the windowing system id of the window where the drop should happen. This  may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
 	 */
-	public static uint gdkDragGetProtocolForDisplay(Display display, uint xid, out GdkDragProtocol protocol)
+	public static GdkNativeWindow gdkDragGetProtocolForDisplay(Display display, GdkNativeWindow xid, out GdkDragProtocol protocol)
 	{
-		// guint32 gdk_drag_get_protocol_for_display (GdkDisplay *display,  guint32 xid,  GdkDragProtocol *protocol);
+		// GdkNativeWindow gdk_drag_get_protocol_for_display (GdkDisplay *display,  GdkNativeWindow xid,  GdkDragProtocol *protocol);
 		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, &protocol);
 	}
 	

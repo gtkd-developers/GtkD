@@ -502,7 +502,7 @@ public class Gdk
 	 * This function allows X errors to be trapped instead of the normal behavior
 	 * of exiting the application. It should only be used if it is not possible to
 	 * avoid the X error in any other way.
-	 * Example1.Trapping an X error
+	 * Example 1. Trapping an X error
 	 *  gdk_error_trap_push ();
 	 *  /+* ... Call the X function which may cause an error here ... +/
 	 *  /+* Flush the X queue to catch errors now. +/

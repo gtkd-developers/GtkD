@@ -201,7 +201,7 @@ public class Event
 	 */
 	public void put()
 	{
-		// void gdk_event_put (GdkEvent *event);
+		// void gdk_event_put (const GdkEvent *event);
 		gdk_event_put(gdkEvent);
 	}
 	
@@ -230,7 +230,7 @@ public class Event
 	 */
 	public Event copy()
 	{
-		// GdkEvent* gdk_event_copy (GdkEvent *event);
+		// GdkEvent* gdk_event_copy (const GdkEvent *event);
 		auto p = gdk_event_copy(gdkEvent);
 		if(p is null)
 		{
@@ -258,7 +258,7 @@ public class Event
 	 */
 	public uint getTime()
 	{
-		// guint32 gdk_event_get_time (GdkEvent *event);
+		// guint32 gdk_event_get_time (const GdkEvent *event);
 		return gdk_event_get_time(gdkEvent);
 	}
 	
@@ -273,7 +273,7 @@ public class Event
 	 */
 	public int getState(out GdkModifierType state)
 	{
-		// gboolean gdk_event_get_state (GdkEvent *event,  GdkModifierType *state);
+		// gboolean gdk_event_get_state (const GdkEvent *event,  GdkModifierType *state);
 		return gdk_event_get_state(gdkEvent, &state);
 	}
 	
@@ -287,7 +287,7 @@ public class Event
 	 */
 	public int getAxis(GdkAxisUse axisUse, out double value)
 	{
-		// gboolean gdk_event_get_axis (GdkEvent *event,  GdkAxisUse axis_use,  gdouble *value);
+		// gboolean gdk_event_get_axis (const GdkEvent *event,  GdkAxisUse axis_use,  gdouble *value);
 		return gdk_event_get_axis(gdkEvent, axisUse, &value);
 	}
 	
@@ -300,7 +300,7 @@ public class Event
 	 */
 	public int getCoords(out double xWin, out double yWin)
 	{
-		// gboolean gdk_event_get_coords (GdkEvent *event,  gdouble *x_win,  gdouble *y_win);
+		// gboolean gdk_event_get_coords (const GdkEvent *event,  gdouble *x_win,  gdouble *y_win);
 		return gdk_event_get_coords(gdkEvent, &xWin, &yWin);
 	}
 	
@@ -313,7 +313,7 @@ public class Event
 	 */
 	public int getRootCoords(out double xRoot, out double yRoot)
 	{
-		// gboolean gdk_event_get_root_coords (GdkEvent *event,  gdouble *x_root,  gdouble *y_root);
+		// gboolean gdk_event_get_root_coords (const GdkEvent *event,  gdouble *x_root,  gdouble *y_root);
 		return gdk_event_get_root_coords(gdkEvent, &xRoot, &yRoot);
 	}
 	
@@ -329,7 +329,7 @@ public class Event
 	 */
 	public static void requestMotions(GdkEventMotion* event)
 	{
-		// void gdk_event_request_motions (GdkEventMotion *event);
+		// void gdk_event_request_motions (const GdkEventMotion *event);
 		gdk_event_request_motions(event);
 	}
 	
@@ -467,7 +467,7 @@ public class Event
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gdk_event_get_screen (GdkEvent *event);
+		// GdkScreen* gdk_event_get_screen (const GdkEvent *event);
 		auto p = gdk_event_get_screen(gdkEvent);
 		if(p is null)
 		{
@@ -482,7 +482,7 @@ public class Event
 	 * Params:
 	 * name =  the name of the setting.
 	 * value =  location to store the value of the setting.
-	 * Returns:: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
+	 * Returns: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
 	 */
 	public static int gdkSettingGet(string name, Value value)
 	{
