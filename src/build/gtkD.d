@@ -279,6 +279,8 @@ private import gdk.Threads;
 private import gdk.Input;
 private import gdk.Device;
 private import gdk.X11;
+private import gdk.AppLaunchContext;
+private import gdk.Testing;
 private import gdk.GdkCairo;
 
 private import gtk.Main;

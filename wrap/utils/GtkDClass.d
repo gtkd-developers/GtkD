@@ -1790,6 +1790,17 @@ public class GtkDClass
 
 		for ( int i; i < structDef.length; i++ )
 		{
+			// Remove GSEAL macro
+			if ( std.string.find(structDef[i], "GSEAL (") > -1 )
+			{
+				char[] remove(char[] src, char[] rem)
+				{
+					return src[0 .. src.find(rem)] ~ src[src.find(rem) + rem.length .. $];
+				}
+
+				structDef[i] = structDef[i].remove("GSEAL (").remove(")");
+			}
+
 			char[] elem = stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 
 			if ( startsWith(elem, "*") && std.string.find(elem, "+/") < elem.length - 2)
@@ -1798,13 +1809,7 @@ public class GtkDClass
 			if ( std.string.find(elem, "unsigned long") == 0)
 				elem = "ulong"~ elem[13..$];  //TODO: posibly use fixtype
 
-			if ( std.string.find(structDef[i], "GSEAL") > -1 )
-			//GSEALED fields should be private
-			//TODO: wrap fields anyway for backwurds compatebility?
-			{
-				collectedStructs ~= "//"~ elem;
-			}
-			else if ( std.string.find(structDef[i], ":") >= 0 && (std.string.find(structDef[i], ":") <  std.string.find(structDef[i], "/+*") ||  std.string.find(structDef[i], "/+*") == -1) )
+			if ( std.string.find(structDef[i], ":") >= 0 && (std.string.find(structDef[i], ":") <  std.string.find(structDef[i], "/+*") ||  std.string.find(structDef[i], "/+*") == -1) )
 			//Bit fields.
 			{
 				if ( !bitField )

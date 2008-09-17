@@ -2450,8 +2450,8 @@ public struct GtkMountOperation{}
  */
 public struct GtkDialog
 {
-	//GtkWidget *GSEAL (vbox);
-	//GtkWidget *GSEAL (actionArea);
+	GtkWidget *vbox;
+	GtkWidget *actionArea;
 }
 
 
@@ -3122,18 +3122,18 @@ public struct GtkTearoffMenuItem{}
  */
 public struct GtkToolbar
 {
-	//int GSEAL (numChildren);
-	//GList *GSEAL (children);
-	//GtkOrientation GSEAL (orientation);
-	//GtkToolbarStyle GSEAL (style);
-	//GtkIconSize GSEAL (iconSize);
+	int numChildren;
+	GList *children;
+	GtkOrientation orientation;
+	GtkToolbarStyle style;
+	GtkIconSize iconSize;
 	version(GTK_DISABLE_DEPRECATED)
 	{
-		//GtkTooltips *GSEAL (tooltips);
+		GtkTooltips *tooltips;
 	}
 	else
 	{
-		//void* GSEAL (_Tooltips);
+		void* _Tooltips;
 	}
 }
 
@@ -3408,9 +3408,9 @@ public struct GtkFontSelection{}
  */
 public struct GtkFontSelectionDialog
 {
-	//GtkWidget *GSEAL (okButton);
-	//GtkWidget *GSEAL (applyButton);
-	//GtkWidget *GSEAL (cancelButton);
+	GtkWidget *okButton;
+	GtkWidget *applyButton;
+	GtkWidget *cancelButton;
 }
 
 
@@ -3510,7 +3510,7 @@ public struct GtkVPaned{}
  */
 public struct GtkLayout
 {
-	//GdkWindow *GSEAL (binWindow);
+	GdkWindow *binWindow;
 }
 
 
@@ -3631,8 +3631,8 @@ public struct GtkVScrollbar{}
  */
 public struct GtkScrolledWindow
 {
-	//GtkWidget *GSEAL (hscrollbar);
-	//GtkWidget *GSEAL (vscrollbar);
+	GtkWidget *hscrollbar;
+	GtkWidget *vscrollbar;
 }
 
 
@@ -3849,9 +3849,10 @@ public struct GtkBin{}
  */
 public struct GtkBox
 {
-	//GList *GSEAL (children);
-	//short GSEAL (spacing);
-	//uint GSEAL (homogeneous) : 1;
+	GList *children;
+	short spacing;
+	uint bitfield0;
+	//uint homogeneous : 1;
 }
 
 
@@ -3993,21 +3994,21 @@ public struct GtkWidget
 	 * along with graphics contexts used to draw with and
 	 * the font to use for text.
 	+/
-	//GtkStyle *GSEAL (style);
+	GtkStyle *style;
 	/+* The widget's desired size.
 	+/
-	//GtkRequisition GSEAL (requisition);
+	GtkRequisition requisition;
 	/+* The widget's allocated size.
 	+/
-	//GtkAllocation GSEAL (allocation);
+	GtkAllocation allocation;
 	/+* The widget's window or its parent window if it does
 	 * not have a window. (Which will be indicated by the
 	 * GTK_NO_WINDOW flag being set).
 	+/
-	//GdkWindow *GSEAL (window);
+	GdkWindow *window;
 	/+* The widget's parent.
 	+/
-	//GtkWidget *GSEAL (parent);
+	GtkWidget *parent;
 }
 
 
@@ -4050,13 +4051,13 @@ public struct GtkAllocation
 
 public struct GtkSelectionData
 {
-	//GdkAtom GSEAL (selection);
-	//GdkAtom GSEAL (target);
-	//GdkAtom GSEAL (type);
-	//int GSEAL (format);
-	//char *GSEAL (data);
-	//int GSEAL (length);
-	//GdkDisplay *GSEAL (display);
+	GdkAtom selection;
+	GdkAtom target;
+	GdkAtom type;
+	int format;
+	char *data;
+	int length;
+	GdkDisplay *display;
 }
 
 
