@@ -944,6 +944,56 @@ import: glib.Str
 #structWrap: GtkFlagValue* FlagValue
 outFile: Types
 
+file: gtk-Testing.html
+class: Testing
+prefix: gtk_test_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.SpinButton
+structWrap: GtkSpinButton* SpinButton
+
+code: start
+	/**
+	 * This function is used to initialize a GTK+ test program.
+	 * It will in turn call g_test_init() and gtk_init() to
+	 * properly initialize the testing framework and graphical toolkit.
+	 * It'll also set the program's locale to "C" and prevent loading of
+	 * rc files and Gtk+ modules. This is done to make tets program environments as deterministic as possible.
+	 * Like gtk_init() and g_test_init(), any known arguments will be processed and stripped from argc and argv.
+	 * Params:
+	 *  argvp = Address of the argv parameter of main(). Any parameters understood by g_test_init() or gtk_init() are stripped before return. 
+	 */
+	public static void testInit(inout string[] argv)
+	{
+		// gboolean gtk_parse_args (int *argc,  char ***argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc = argv.length;
+		
+		gtk_test_init(&argc, &outargv, null);
+		
+		argv = Str.toStringArray(outargv);
+	}
+code: end
+outFile: Testing
+
+file: gtk-Filesystem-utilities.html
+struct: GtkMountOperation
+ctorStruct: GMountOperation
+class: MountOperation
+extend: GioMountOperation
+prefix: gtk_mount_operation_
+prefix: gtk_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gtk.Window
+structWrap: GtkWindow* Window
+import: gdk.Screen
+structWrap: GdkScreen* Screen
+import: gio.MountOperation : GioMountOperation = MountOperation
+outFile: MountOperation
+
 ###########################################################
 ### Windows ###############################################
 ###########################################################

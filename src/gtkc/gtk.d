@@ -541,6 +541,35 @@ extern(C)
 	GtkEnumValue* function(GtkType enumType, gchar* valueName)gtk_type_enum_find_value;
 	GtkFlagValue* function(GtkType flagsType, gchar* valueName)gtk_type_flags_find_value;
 	
+	// gtk.Testing
+	
+	GtkWidget* function(gchar* windowTitle, gchar* dialogText)gtk_test_create_simple_window;
+	GtkWidget* function(GType widgetType, gchar* firstPropertyName, ... )gtk_test_create_widget;
+	GtkWidget* function(gchar* windowTitle, gchar* dialogText, ... )gtk_test_display_button_window;
+	GtkWidget* function(GtkWidget* widget, gchar* labelPattern)gtk_test_find_label;
+	GtkWidget* function(GtkWidget* baseWidget, GType widgetType)gtk_test_find_sibling;
+	GtkWidget* function(GtkWidget* widget, gchar* labelPattern, GType widgetType)gtk_test_find_widget;
+	void function(int* argcp, char*** argvp, ... )gtk_test_init;
+	GType* function(guint* nTypes)gtk_test_list_all_types;
+	void function()gtk_test_register_all_types;
+	double function(GtkWidget* widget)gtk_test_slider_get_value;
+	void function(GtkWidget* widget, double percentage)gtk_test_slider_set_perc;
+	gboolean function(GtkSpinButton* spinner, guint button, gboolean upwards)gtk_test_spin_button_click;
+	gchar* function(GtkWidget* widget)gtk_test_text_get;
+	void function(GtkWidget* widget, gchar* string)gtk_test_text_set;
+	gboolean function(GtkWidget* widget, guint button, GdkModifierType modifiers)gtk_test_widget_click;
+	gboolean function(GtkWidget* widget, guint keyval, GdkModifierType modifiers)gtk_test_widget_send_key;
+	
+	// gtk.MountOperation
+	
+	GMountOperation* function(GtkWindow* parent)gtk_mount_operation_new;
+	gboolean function(GtkMountOperation* op)gtk_mount_operation_is_showing;
+	void function(GtkMountOperation* op, GtkWindow* parent)gtk_mount_operation_set_parent;
+	GtkWindow* function(GtkMountOperation* op)gtk_mount_operation_get_parent;
+	void function(GtkMountOperation* op, GdkScreen* screen)gtk_mount_operation_set_screen;
+	GdkScreen* function(GtkMountOperation* op)gtk_mount_operation_get_screen;
+	gboolean function(GdkScreen* screen, gchar* uri, guint32 timestamp, GError** error)gtk_show_uri;
+	
 	// gtk.Dialog
 	
 	GtkWidget* function()gtk_dialog_new;
@@ -3968,6 +3997,29 @@ Symbol[] gtkLinks =
 	{ "gtk_type_flags_get_values",  cast(void**)& gtk_type_flags_get_values},
 	{ "gtk_type_enum_find_value",  cast(void**)& gtk_type_enum_find_value},
 	{ "gtk_type_flags_find_value",  cast(void**)& gtk_type_flags_find_value},
+	{ "gtk_test_create_simple_window",  cast(void**)& gtk_test_create_simple_window},
+	{ "gtk_test_create_widget",  cast(void**)& gtk_test_create_widget},
+	{ "gtk_test_display_button_window",  cast(void**)& gtk_test_display_button_window},
+	{ "gtk_test_find_label",  cast(void**)& gtk_test_find_label},
+	{ "gtk_test_find_sibling",  cast(void**)& gtk_test_find_sibling},
+	{ "gtk_test_find_widget",  cast(void**)& gtk_test_find_widget},
+	{ "gtk_test_init",  cast(void**)& gtk_test_init},
+	{ "gtk_test_list_all_types",  cast(void**)& gtk_test_list_all_types},
+	{ "gtk_test_register_all_types",  cast(void**)& gtk_test_register_all_types},
+	{ "gtk_test_slider_get_value",  cast(void**)& gtk_test_slider_get_value},
+	{ "gtk_test_slider_set_perc",  cast(void**)& gtk_test_slider_set_perc},
+	{ "gtk_test_spin_button_click",  cast(void**)& gtk_test_spin_button_click},
+	{ "gtk_test_text_get",  cast(void**)& gtk_test_text_get},
+	{ "gtk_test_text_set",  cast(void**)& gtk_test_text_set},
+	{ "gtk_test_widget_click",  cast(void**)& gtk_test_widget_click},
+	{ "gtk_test_widget_send_key",  cast(void**)& gtk_test_widget_send_key},
+	{ "gtk_mount_operation_new",  cast(void**)& gtk_mount_operation_new},
+	{ "gtk_mount_operation_is_showing",  cast(void**)& gtk_mount_operation_is_showing},
+	{ "gtk_mount_operation_set_parent",  cast(void**)& gtk_mount_operation_set_parent},
+	{ "gtk_mount_operation_get_parent",  cast(void**)& gtk_mount_operation_get_parent},
+	{ "gtk_mount_operation_set_screen",  cast(void**)& gtk_mount_operation_set_screen},
+	{ "gtk_mount_operation_get_screen",  cast(void**)& gtk_mount_operation_get_screen},
+	{ "gtk_show_uri",  cast(void**)& gtk_show_uri},
 	{ "gtk_dialog_new",  cast(void**)& gtk_dialog_new},
 	{ "gtk_dialog_new_with_buttons",  cast(void**)& gtk_dialog_new_with_buttons},
 	{ "gtk_dialog_run",  cast(void**)& gtk_dialog_run},

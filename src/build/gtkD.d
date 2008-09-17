@@ -307,6 +307,8 @@ private import gtk.Selections;
 private import gtk.Version;
 private import gtk.Signals;
 private import gtk.Types;
+private import gtk.Testing;
+private import gtk.MountOperation;
 private import gtk.Dialog;
 private import gtk.Invisible;
 private import gtk.MessageDialog;

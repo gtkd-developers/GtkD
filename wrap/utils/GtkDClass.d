@@ -560,7 +560,10 @@ public class GtkDClass
 				}
 				else
 				{
-					text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
+					if ( gtkDParentName == "GioMountOperation" )
+						text ~= "public "~gtkStruct~"* getGtk"~convParms.clss~"Struct()"~iFaceChar;
+					else
+						text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
 					if ( !convParms.isInterface )
 					{
 						text ~= "{";
@@ -813,6 +816,7 @@ public class GtkDClass
 	{
 		char[] conv;
 		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
+		else if ( startsWith(gName, "Gio") )	prefix = "";
 		else if ( startsWith(gName, "Gdk") )	prefix = "Gdk";
 		else if ( startsWith(gName, "Gst") )	prefix = "Gst";
 		else if ( startsWith(gName, "Gda") )	prefix = "Gda";
@@ -837,6 +841,7 @@ public class GtkDClass
 		if( prefix == "gst") prefix = "gstreamer";
 		if( prefix == "g")   prefix = "gobject";
 		if( prefix == "pg" ) prefix = "pango";
+		if ( startsWith(gName, "Gio") ) parentName = "G"~ gName[3 .. $];
 
 		return conv;
 	}

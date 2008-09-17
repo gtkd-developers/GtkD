@@ -2432,6 +2432,16 @@ public struct GtkTypeInfo
 
 /**
  * Main Gtk struct.
+ * GtkMountOperation is an implementation of GMountOperation that
+ * can be used with GIO functions for mounting volumes such as
+ * g_file_mount_enclosing_volume() or g_file_mount_mountable().
+ * When necessary, GtkMountOperation shows dialogs to ask for passwords.
+ */
+public struct GtkMountOperation{}
+
+
+/**
+ * Main Gtk struct.
  * vbox is a GtkVBox - the main part of the
  * dialog box.
  * action_area is a GtkHButtonBox packed below the
