@@ -396,10 +396,14 @@ public class ErrorG
 	 * code =  error code
 	 * message =  error message
 	 */
-	public static void gSetErrorLiteral(GError** err, GQuark domain, int code, string message)
+	public static void gSetErrorLiteral(out ErrorG err, GQuark domain, int code, string message)
 	{
 		// void g_set_error_literal (GError **err,  GQuark domain,  gint code,  const gchar *message);
-		g_set_error_literal(err, domain, code, Str.toStringz(message));
+		GError* outerr = null;
+		
+		g_set_error_literal(&outerr, domain, code, Str.toStringz(message));
+		
+		err = new ErrorG(outerr);
 	}
 	
 	/**
@@ -408,7 +412,6 @@ public class ErrorG
 	 * Params:
 	 * dest =  error return location
 	 * src =  error to move into the return location
-	 * Throws: GException on failure.
 	 */
 	public static void gPropagateError(out ErrorG dest, ErrorG src)
 	{
@@ -425,7 +428,6 @@ public class ErrorG
 	 * calls g_error_free() on *err and sets *err to NULL.
 	 * Params:
 	 * err =  a GError return location
-	 * Throws: GException on failure.
 	 */
 	public static void gClearError(inout ErrorG err)
 	{

@@ -669,6 +669,7 @@ structWrap: GError* ErrorG
 
 out: g_propagate_error dest
 inout: g_clear_error err
+out: g_set_error_literal err
 
 outFile: ErrorG
 
