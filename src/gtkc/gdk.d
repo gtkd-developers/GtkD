@@ -360,12 +360,15 @@ extern(C)
 	GdkPixbuf* function(char* filename, GError** error)gdk_pixbuf_new_from_file;
 	GdkPixbuf* function(char* filename, int width, int height, GError** error)gdk_pixbuf_new_from_file_at_size;
 	GdkPixbuf* function(char* filename, int width, int height, gboolean preserveAspectRatio, GError** error)gdk_pixbuf_new_from_file_at_scale;
+	GdkPixbuf* function(GInputStream* stream, GCancellable* cancellable, GError** error)gdk_pixbuf_new_from_stream;
+	GdkPixbuf* function(GInputStream* stream, gint width, gint height, gboolean preserveAspectRatio, GCancellable* cancellable, GError** error)gdk_pixbuf_new_from_stream_at_scale;
 	gboolean function(GdkPixbuf* pixbuf, char* filename, char* type, char** optionKeys, char** optionValues, GError** error)gdk_pixbuf_savev;
 	gboolean function(GdkPixbuf* pixbuf, char* filename, char* type, GError** error, ... )gdk_pixbuf_save;
 	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, gpointer userData, char* type, GError** error, ... )gdk_pixbuf_save_to_callback;
 	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, gpointer userData, char* type, char** optionKeys, char** optionValues, GError** error)gdk_pixbuf_save_to_callbackv;
 	gboolean function(GdkPixbuf* pixbuf, gchar** buffer, gsize* bufferSize, char* type, GError** error, ... )gdk_pixbuf_save_to_buffer;
 	gboolean function(GdkPixbuf* pixbuf, gchar** buffer, gsize* bufferSize, char* type, char** optionKeys, char** optionValues, GError** error)gdk_pixbuf_save_to_bufferv;
+	gboolean function(GdkPixbuf* pixbuf, GOutputStream* stream, char* type, GCancellable* cancellable, GError** error, ... )gdk_pixbuf_save_to_stream;
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType)gdk_pixbuf_scale_simple;
 	void function(GdkPixbuf* src, GdkPixbuf* dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType)gdk_pixbuf_scale;
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, guint32 color1, guint32 color2)gdk_pixbuf_composite_color_simple;
@@ -997,12 +1000,15 @@ Symbol[] gdkLinks =
 	{ "gdk_pixbuf_new_from_file",  cast(void**)& gdk_pixbuf_new_from_file},
 	{ "gdk_pixbuf_new_from_file_at_size",  cast(void**)& gdk_pixbuf_new_from_file_at_size},
 	{ "gdk_pixbuf_new_from_file_at_scale",  cast(void**)& gdk_pixbuf_new_from_file_at_scale},
+	{ "gdk_pixbuf_new_from_stream",  cast(void**)& gdk_pixbuf_new_from_stream},
+	{ "gdk_pixbuf_new_from_stream_at_scale",  cast(void**)& gdk_pixbuf_new_from_stream_at_scale},
 	{ "gdk_pixbuf_savev",  cast(void**)& gdk_pixbuf_savev},
 	{ "gdk_pixbuf_save",  cast(void**)& gdk_pixbuf_save},
 	{ "gdk_pixbuf_save_to_callback",  cast(void**)& gdk_pixbuf_save_to_callback},
 	{ "gdk_pixbuf_save_to_callbackv",  cast(void**)& gdk_pixbuf_save_to_callbackv},
 	{ "gdk_pixbuf_save_to_buffer",  cast(void**)& gdk_pixbuf_save_to_buffer},
 	{ "gdk_pixbuf_save_to_bufferv",  cast(void**)& gdk_pixbuf_save_to_bufferv},
+	{ "gdk_pixbuf_save_to_stream",  cast(void**)& gdk_pixbuf_save_to_stream},
 	{ "gdk_pixbuf_scale_simple",  cast(void**)& gdk_pixbuf_scale_simple},
 	{ "gdk_pixbuf_scale",  cast(void**)& gdk_pixbuf_scale},
 	{ "gdk_pixbuf_composite_color_simple",  cast(void**)& gdk_pixbuf_composite_color_simple},

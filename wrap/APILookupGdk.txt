@@ -424,6 +424,10 @@ import: gdk.Colormap
 structWrap: GdkColormap* Colormap
 import: gdk.ImageGdk
 structWrap: GdkImage* ImageGdk
+import: gio.Cancellable
+structWrap: GCancellable* Cancellable
+import: gio.InputStream
+structWrap: GInputStream* InputStream
 
 out: gdk_pixbuf_render_pixmap_and_mask pixmap_return
 out: gdk_pixbuf_render_pixmap_and_mask mask_return

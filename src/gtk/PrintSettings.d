@@ -958,7 +958,8 @@ public class PrintSettings : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * keyFile =  the GKeyFile to retrieve the settings from
-	 * groupName =  the name of the group to use
+	 * groupName =  the name of the group to use, or NULL to use
+	 *  the default "Print Settings"
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -1010,7 +1011,8 @@ public class PrintSettings : ObjectG
 	 * Since 2.14
 	 * Params:
 	 * keyFile =  the GKeyFile to retrieve the settings from
-	 * groupName =  the name of the group to use
+	 * groupName =  the name of the group to use, or NULL to use the default
+	 *  "Print Settings"
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

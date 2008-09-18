@@ -209,9 +209,6 @@ code: start
 	 * the user manually forces a specific type.
 	 * Params:
 	 *  type = name of the image format or mime to be loaded with the image
-	 *  error = return location for an allocated GError, or NULL to ignore errors
-	 * Returns:
-	 *  A newly-created pixbuf loader.
 	 */
 	public this (string type, bool isMimeType=false)
 	{
@@ -289,9 +286,7 @@ strictPrefix: Y
 noprefix: gdk_pixbuf_new_from_file
 noprefix: gdk_pixbuf_new_from_file_at_size
 noprefix: gdk_pixbuf_new_from_file_at_scale
-
-nocode: gdk_pixbuf_new_from_file 
-nocode: gdk_pixbuf_new_from_file_at_size
-nocode: gdk_pixbuf_new_from_file_at_scale
+noprefix: gdk_pixbuf_new_from_stream
+noprefix: gdk_pixbuf_new_from_stream_at_scale
 closeFile:  PixbufFormat
 

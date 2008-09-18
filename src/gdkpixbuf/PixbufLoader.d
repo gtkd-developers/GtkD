@@ -170,9 +170,6 @@ public class PixbufLoader : ObjectG
 	 * the user manually forces a specific type.
 	 * Params:
 	 *  type = name of the image format or mime to be loaded with the image
-	 *  error = return location for an allocated GError, or NULL to ignore errors
-	 * Returns:
-	 *  A newly-created pixbuf loader.
 	 */
 	public this (string type, bool isMimeType=false)
 	{
@@ -400,9 +397,9 @@ public class PixbufLoader : ObjectG
 	 * Causes the image to be scaled while it is loaded. The desired
 	 * image size can be determined relative to the original size of
 	 * the image by calling gdk_pixbuf_loader_set_size() from a
-	 * signal handler for the ::size_prepared signal.
+	 * signal handler for the ::size-prepared signal.
 	 * Attempts to set the desired image size are ignored after the
-	 * emission of the ::size_prepared signal.
+	 * emission of the ::size-prepared signal.
 	 * Since 2.2
 	 * Params:
 	 * width =  The desired width of the image being loaded.
@@ -417,7 +414,7 @@ public class PixbufLoader : ObjectG
 	/**
 	 * Queries the GdkPixbuf that a pixbuf loader is currently creating.
 	 * In general it only makes sense to call this function after the
-	 * "area_prepared" signal has been emitted by the loader; this means
+	 * "area-prepared" signal has been emitted by the loader; this means
 	 * that enough data has been read to know the size of the image that
 	 * will be allocated. If the loader has not received enough data via
 	 * gdk_pixbuf_loader_write(), then this function returns NULL. The
@@ -441,9 +438,9 @@ public class PixbufLoader : ObjectG
 	
 	/**
 	 * Queries the GdkPixbufAnimation that a pixbuf loader is currently creating.
-	 * In general it only makes sense to call this function after the "area_prepared"
+	 * In general it only makes sense to call this function after the "area-prepared"
 	 * signal has been emitted by the loader. If the loader doesn't have enough
-	 * bytes yet (hasn't emitted the "area_prepared" signal) this function will
+	 * bytes yet (hasn't emitted the "area-prepared" signal) this function will
 	 * return NULL.
 	 * Returns: The GdkPixbufAnimation that the loader is loading, or NULL if not enough data has been read to determine the information.
 	 */

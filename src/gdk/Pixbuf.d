@@ -54,7 +54,11 @@
  * 	- gdk.GC
  * 	- gdk.Colormap
  * 	- gdk.ImageGdk
+ * 	- gio.Cancellable
+ * 	- gio.InputStream
  * structWrap:
+ * 	- GCancellable* -> Cancellable
+ * 	- GInputStream* -> InputStream
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColormap* -> Colormap
  * 	- GdkDrawable* -> Drawable
@@ -84,6 +88,8 @@ private import gdk.Bitmap;
 private import gdk.GC;
 private import gdk.Colormap;
 private import gdk.ImageGdk;
+private import gio.Cancellable;
+private import gio.InputStream;
 
 
 
@@ -285,7 +291,7 @@ public class Pixbuf
 	 *  padding at the end of a row. The "rowstride" value of a pixbuf,
 	 *  as returned by gdk_pixbuf_get_rowstride(), indicates the number
 	 *  of bytes between rows.
-	 * Example1.put_pixel() example
+	 * Example 1. put_pixel() example
 	 * 	The following code illustrates a simple put_pixel()
 	 * 	function for RGB pixbufs with 8 bits per channel with an alpha
 	 * 	channel. It is not included in the gdk-pixbuf library for
@@ -405,7 +411,7 @@ public class Pixbuf
 	 *  image doesn't have an alpha channel, calling
 	 *  gdk_pixbuf_composite_color() function has exactly the same effect
 	 *  as calling gdk_pixbuf_scale().
-	 * Example2.Handling an expose event.
+	 * Example 2. Handling an expose event.
 	 * gboolean
 	 * expose_cb (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 	 * {
@@ -783,7 +789,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
-	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called Image Datafor information about how the pixel data is stored inmemory.
+	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data”for information about how the pixel data is stored inmemory.
 	 */
 	public char* getPixels()
 	{
@@ -871,11 +877,15 @@ public class Pixbuf
 	}
 	
 	/**
-	 * Creates a new pixbuf by loading an image from a file. The file format is
-	 * detected automatically. If NULL is returned, then error will be set.
-	 * Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
+	 * Creates a new pixbuf by loading an image from a file.
+	 * The file format is detected automatically. If NULL is returned, then
+	 * error will be set. Possible errors are in the GDK_PIXBUF_ERROR and
+	 * G_FILE_ERROR domains.
 	 * The image will be scaled to fit in the requested size, preserving
-	 * the image's aspect ratio.
+	 * the image's aspect ratio. Note that the returned pixbuf may be smaller
+	 * than width x height, if the aspect ratio requires it. To load
+	 * and image at the requested size, regardless of aspect ratio, use
+	 * gdk_pixbuf_new_from_file_at_scale().
 	 * Since 2.4
 	 * Params:
 	 * filename =  Name of file to load, in the GLib file name encoding
@@ -939,6 +949,83 @@ public class Pixbuf
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err)");
+		}
+		this(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Creates a new pixbuf by loading an image from an input stream.
+	 * The file format is detected automatically. If NULL is returned, then
+	 * error will be set. The cancellable can be used to abort the operation
+	 * from another thread. If the operation was cancelled, the error
+	 * GIO_ERROR_CANCELLED will be returned. Other possible errors are in
+	 * the GDK_PIXBUF_ERROR and G_IO_ERROR domains.
+	 * The stream is not closed.
+	 * Since 2.14
+	 * Params:
+	 * stream =  a GInputStream to load the pixbuf from
+	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (InputStream stream, Cancellable cancellable)
+	{
+		// GdkPixbuf* gdk_pixbuf_new_from_stream (GInputStream *stream,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err)");
+		}
+		this(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Creates a new pixbuf by loading an image from an input stream.
+	 * The file format is detected automatically. If NULL is returned, then
+	 * error will be set. The cancellable can be used to abort the operation
+	 * from another thread. If the operation was cancelled, the error
+	 * GIO_ERROR_CANCELLED will be returned. Other possible errors are in
+	 * the GDK_PIXBUF_ERROR and G_IO_ERROR domains.
+	 * The image will be scaled to fit in the requested size, optionally
+	 * preserving the image's aspect ratio. When preserving the aspect ratio,
+	 * a width of -1 will cause the image to be scaled to the exact given
+	 * height, and a height of -1 will cause the image to be scaled to the
+	 * exact given width. When not preserving aspect ratio, a width or
+	 * height of -1 means to not scale the image at all in that dimension.
+	 * The stream is not closed.
+	 * Since 2.14
+	 * Params:
+	 * stream =  a GInputStream to load the pixbuf from
+	 * width =  The width the image should have or -1 to not constrain the width
+	 * height =  The height the image should have or -1 to not constrain the height
+	 * preserveAspectRatio =  TRUE to preserve the image's aspect ratio
+	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (InputStream stream, int width, int height, int preserveAspectRatio, Cancellable cancellable)
+	{
+		// GdkPixbuf* gdk_pixbuf_new_from_stream_at_scale (GInputStream *stream,  gint width,  gint height,  gboolean preserve_aspect_ratio,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_stream_at_scale((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_stream_at_scale((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}
@@ -1093,7 +1180,7 @@ public class Pixbuf
 	 * When the destination rectangle contains parts not in the source
 	 * image, the data at the edges of the source image is replicated
 	 * to infinity.
-	 * Figure1.Compositing of pixbufs
+	 * Figure 1. Compositing of pixbufs
 	 * Params:
 	 * dest =  the GdkPixbuf into which to render the results
 	 * destX =  the left coordinate for region to render

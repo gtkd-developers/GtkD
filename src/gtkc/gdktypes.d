@@ -3188,9 +3188,9 @@ public typedef extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
  *  created from it; in this case you will need to pass in a function
  *  of GdkPixbufDestroyNotify so that the pixel data can be freed
  *  when the pixbuf is finalized.
- * pixels:
+ * pixels :
  * The pixel array of the pixbuf that is being finalized.
- * data:
+ * data :
  * User closure data.
  * See Also
  *  GdkPixbuf, gdk_pixbuf_new_from_data().
@@ -3205,15 +3205,15 @@ public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * successful it should return TRUE. If an error occurs it should set
  * error and return FALSE, in which case gdk_pixbuf_save_to_callback()
  * will fail with the same error.
- * buf:
+ * buf :
  * bytes to be written.
- * count:
+ * count :
  * number of bytes in buf.
- * error:
+ * error :
  * A location to return an error.
- * data:
+ * data :
  * user data passed to gdk_pixbuf_save_to_callback().
- * Returns:
+ * Returns :
  * TRUE if successful, FALSE (with error set) if failed.
  * Since 2.4
  */

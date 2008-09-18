@@ -169,7 +169,7 @@ public interface EditableIF
 	public int getSelectionBounds(out int start, out int end);
 	
 	/**
-	 * Appends new_text_length characters of text to the contents of the widget,
+	 * Appends new_text_length characters of new_text to the contents of the widget,
 	 * at position position. Note that this position is in characters, not in bytes.
 	 * Inserts text at a given position.
 	 * Params:
