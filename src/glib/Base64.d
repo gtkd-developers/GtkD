@@ -97,10 +97,10 @@ public class Base64
 	 * the same line. This avoids problems with long lines in the email system.
 	 * Since 2.12
 	 * Params:
-	 * inn =  the binary data to encode
+	 * in =  the binary data to encode
 	 * len =  the length of in
 	 * breakLines =  whether to break long lines
-	 * f_out =  pointer to destination buffer
+	 * out =  pointer to destination buffer
 	 * state =  Saved state between steps, initialize to 0
 	 * save =  Saved state between steps, initialize to 0
 	 * Returns: The number of bytes of output that was written
@@ -116,7 +116,7 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * breakLines =  whether to break long lines
-	 * f_out =  pointer to destination buffer
+	 * out =  pointer to destination buffer
 	 * state =  Saved state from g_base64_encode_step()
 	 * save =  Saved state from g_base64_encode_step()
 	 * Returns: The number of bytes of output that was written
@@ -151,9 +151,9 @@ public class Base64
 	 * at least: len * 3 / 4 bytes.
 	 * Since 2.12
 	 * Params:
-	 * inn =  binary input data
+	 * in =  binary input data
 	 * len =  max length of in data to decode
-	 * f_out =  output buffer
+	 * out =  output buffer
 	 * state =  Saved state between steps, initialize to 0
 	 * save =  Saved state between steps, initialize to 0
 	 * Returns: The number of bytes of output that was written

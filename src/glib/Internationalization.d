@@ -84,27 +84,62 @@ public class Internationalization
 	 */
 	
 	/**
-	 * An auxiliary function for gettext() support (see Q_()).
-	 * Since 2.4
+	 * This function is a wrapper of dgettext() which does not translate
+	 * the message if the default domain as set with textdomain() has no
+	 * translations for the current locale.
+	 * The advantage of using this function over dgettext() proper is that
+	 * libraries using this function (like GTK+) will not use translations
+	 * if the application using the library does not have translations for
+	 * the current locale. This results in a consistent English-only
+	 * interface instead of one having partial translations. For this
+	 * feature to work, the call to textdomain() and setlocale() should
+	 * precede any g_dgettext() invocations. For GTK+, it means calling
+	 * textdomain() before gtk_init or its variants.
+	 * This function disables translations if and only if upon its first
+	 * Since 2.18
 	 * Params:
-	 * msgid =  a string
-	 * msgval =  another string
-	 * Returns: msgval, unless msgval is identical to msgid and contains a '|' character, in which case a pointer to the substring of msgid after the first '|' character is returned.
+	 * domain =  the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * msgid =  message to translate
+	 * Returns: The translated string
 	 */
-	public static string stripContext(string msgid, string msgval)
+	public static string dgettext(string domain, string msgid)
 	{
-		// const gchar* g_strip_context (const gchar *msgid,  const gchar *msgval);
-		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval)));
+		// const gchar* g_dgettext (const gchar *domain,  const gchar *msgid);
+		return Str.toString(g_dgettext(Str.toStringz(domain), Str.toStringz(msgid)));
 	}
 	
 	/**
-	 * This function is a variant of dgettext() which supports
+	 * This function is a wrapper of dngettext() which does not translate
+	 * the message if the default domain as set with textdomain() has no
+	 * translations for the current locale.
+	 * See g_dgettext() for details of how this differs from dngettext()
+	 * proper.
+	 * Since 2.18
+	 * Params:
+	 * domain =  the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * msgid =  message to translate
+	 * msgidPlural =  plural form of the message
+	 * n =  the quantity for which translation is needed
+	 * Returns: The translated string
+	 */
+	public static string dngettext(string domain, string msgid, string msgidPlural, uint n)
+	{
+		// const gchar* g_dngettext (const gchar *domain,  const gchar *msgid,  const gchar *msgid_plural,  gulong n);
+		return Str.toString(g_dngettext(Str.toStringz(domain), Str.toStringz(msgid), Str.toStringz(msgidPlural), n));
+	}
+	
+	/**
+	 * This function is a variant of g_dgettext() which supports
 	 * a disambiguating message context. GNU gettext uses the
 	 * '\004' character to separate the message context and
 	 * message id in msgctxtid.
 	 * If 0 is passed as msgidoffset, this function will fall back to
 	 * trying to use the deprecated convention of using "|" as a separation
 	 * character.
+	 * This uses g_dgettext() internally. See that functions for differences
+	 * with dgettext() proper.
 	 * Applications should normally not use this function directly,
 	 * but use the C_() macro for translations with context.
 	 * Since 2.16
@@ -120,6 +155,43 @@ public class Internationalization
 	{
 		// const gchar* g_dpgettext (const gchar *domain,  const gchar *msgctxtid,  gsize msgidoffset);
 		return Str.toString(g_dpgettext(Str.toStringz(domain), Str.toStringz(msgctxtid), msgidoffset));
+	}
+	
+	/**
+	 * This function is a variant of g_dgettext() which supports
+	 * a disambiguating message context. GNU gettext uses the
+	 * '\004' character to separate the message context and
+	 * message id in msgctxtid.
+	 * This uses g_dgettext() internally. See that functions for differences
+	 * with dgettext() proper.
+	 * This function differs from C_() in that it is not a macro and
+	 * thus you may use non-string-literals as context and msgid arguments.
+	 * Since 2.18
+	 * Params:
+	 * domain =  the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * context =  the message context
+	 * msgid =  the message
+	 * Returns: The translated string
+	 */
+	public static string dpgettext2(string domain, string context, string msgid)
+	{
+		// const gchar* g_dpgettext2 (const gchar *domain,  const gchar *context,  const gchar *msgid);
+		return Str.toString(g_dpgettext2(Str.toStringz(domain), Str.toStringz(context), Str.toStringz(msgid)));
+	}
+	
+	/**
+	 * An auxiliary function for gettext() support (see Q_()).
+	 * Since 2.4
+	 * Params:
+	 * msgid =  a string
+	 * msgval =  another string
+	 * Returns: msgval, unless msgval is identical to msgid and contains a '|' character, in which case a pointer to the substring of msgid after the first '|' character is returned.
+	 */
+	public static string stripContext(string msgid, string msgval)
+	{
+		// const gchar* g_strip_context (const gchar *msgid,  const gchar *msgval);
+		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval)));
 	}
 	
 	/**

@@ -52,6 +52,7 @@ public alias dchar unichar;
 public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
+public alias int GPid;
 
 version(Tango)
 {
@@ -63,15 +64,6 @@ version(Tango)
 
 const uint G_MAXUINT = 4294967295;
 
-
-/**
- * typedef int GPid;
- * A type which is used to hold a process identification.
- * On Unix, processes are identified by a process id (an
- * integer), while Windows uses process handles (which are
- * pointers).
- */
-public alias int GPid;
 
 /**
  * typedef guint32 gunichar;
@@ -451,6 +443,78 @@ alias GUnicodeType UnicodeType;
  * Applications should be ready to handle unknown values.
  * They may be regarded as G_UNICODE_BREAK_UNKNOWN.
  * See http://www.unicode.org/unicode/reports/tr14/.
+ * G_UNICODE_BREAK_MANDATORY
+ * Mandatory Break (BK)
+ * G_UNICODE_BREAK_CARRIAGE_RETURN
+ * Carriage Return (CR)
+ * G_UNICODE_BREAK_LINE_FEED
+ * Line Feed (LF)
+ * G_UNICODE_BREAK_COMBINING_MARK
+ * Attached Characters and Combining Marks (CM)
+ * G_UNICODE_BREAK_SURROGATE
+ * Surrogates (SG)
+ * G_UNICODE_BREAK_ZERO_WIDTH_SPACE
+ * Zero Width Space (ZW)
+ * G_UNICODE_BREAK_INSEPARABLE
+ * Inseparable (IN)
+ * G_UNICODE_BREAK_NON_BREAKING_GLUE
+ * Non-breaking ("Glue") (GL)
+ * G_UNICODE_BREAK_CONTINGENT
+ * Contingent Break Opportunity (CB)
+ * G_UNICODE_BREAK_SPACE
+ * Space (SP)
+ * G_UNICODE_BREAK_AFTER
+ * Break Opportunity After (BA)
+ * G_UNICODE_BREAK_BEFORE
+ * Break Opportunity Before (BB)
+ * G_UNICODE_BREAK_BEFORE_AND_AFTER
+ * Break Opportunity Before and After (B2)
+ * G_UNICODE_BREAK_HYPHEN
+ * Hyphen (HY)
+ * G_UNICODE_BREAK_NON_STARTER
+ * Nonstarter (NS)
+ * G_UNICODE_BREAK_OPEN_PUNCTUATION
+ * Opening Punctuation (OP)
+ * G_UNICODE_BREAK_CLOSE_PUNCTUATION
+ * Closing Punctuation (CL)
+ * G_UNICODE_BREAK_QUOTATION
+ * Ambiguous Quotation (QU)
+ * G_UNICODE_BREAK_EXCLAMATION
+ * Exclamation/Interrogation (EX)
+ * G_UNICODE_BREAK_IDEOGRAPHIC
+ * Ideographic (ID)
+ * G_UNICODE_BREAK_NUMERIC
+ * Numeric (NU)
+ * G_UNICODE_BREAK_INFIX_SEPARATOR
+ * Infix Separator (Numeric) (IS)
+ * G_UNICODE_BREAK_SYMBOL
+ * Symbols Allowing Break After (SY)
+ * G_UNICODE_BREAK_ALPHABETIC
+ * Ordinary Alphabetic and Symbol Characters (AL)
+ * G_UNICODE_BREAK_PREFIX
+ * Prefix (Numeric) (PR)
+ * G_UNICODE_BREAK_POSTFIX
+ * Postfix (Numeric) (PO)
+ * G_UNICODE_BREAK_COMPLEX_CONTEXT
+ * Complex Content Dependent (South East Asian) (SA)
+ * G_UNICODE_BREAK_AMBIGUOUS
+ * Ambiguous (Alphabetic or Ideographic) (AI)
+ * G_UNICODE_BREAK_UNKNOWN
+ * Unknown (XX)
+ * G_UNICODE_BREAK_NEXT_LINE
+ * Next Line (NL)
+ * G_UNICODE_BREAK_WORD_JOINER
+ * Word Joiner (WJ)
+ * G_UNICODE_BREAK_HANGUL_L_JAMO
+ * Hangul L Jamo (JL)
+ * G_UNICODE_BREAK_HANGUL_V_JAMO
+ * Hangul V Jamo (JV)
+ * G_UNICODE_BREAK_HANGUL_T_JAMO
+ * Hangul T Jamo (JT)
+ * G_UNICODE_BREAK_HANGUL_LV_SYLLABLE
+ * Hangul LV Syllable (H2)
+ * G_UNICODE_BREAK_HANGUL_LVT_SYLLABLE
+ * Hangul LVT Syllable (H3)
  */
 public enum GUnicodeBreakType
 {
@@ -578,7 +642,19 @@ public enum GUnicodeScript
 	CUNEIFORM, /+* Xsux +/
 	PHOENICIAN, /+* Phnx +/
 	PHAGS_PA, /+* Phag +/
-	NKO /+* Nkoo +/
+	NKO, /+* Nkoo +/
+	/+* Unicode-5.1 additions +/
+	KAYAH_LI, /+* Kali +/
+	LEPCHA, /+* Lepc +/
+	REJANG, /+* Rjng +/
+	SUNDANESE, /+* Sund +/
+	SAURASHTRA, /+* Saur +/
+	CHAM, /+* Cham +/
+	OL_CHIKI, /+* Olck +/
+	VAI, /+* Vaii +/
+	CARIAN, /+* Cari +/
+	LYCIAN, /+* Lyci +/
+	LYDIAN /+* Lydi +/
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -1296,7 +1372,7 @@ alias GRegexCompileFlags RegexCompileFlags;
  * into the string for occurrences of "a" or "b".
  * G_REGEX_MATCH_PARTIAL
  * Turns on the partial matching feature, for more
- * documentation on partial matching see g_regex_is_partial_match().
+ * documentation on partial matching see g_match_info_is_partial_match().
  * G_REGEX_MATCH_NEWLINE_CR
  * Overrides the newline definition set when creating
  * a new GRegex, setting the '\r' character as line terminator.
@@ -1568,7 +1644,7 @@ public struct GSource{}
  * poll() call blocks.
  * In the check function, it tests the results of the poll()
  * call to see if the required condition has been met, and returns TRUE if so.
- * prepare()
+ * prepare ()
  * Called before all the file descriptors are polled.
  * If the source can determine that it is ready here (without waiting for the
  * results of the poll() call) it should return TRUE.
@@ -1576,12 +1652,12 @@ public struct GSource{}
  * (in milliseconds) which should be passed to the poll() call.
  * The actual timeout used will be -1 if all sources returned -1, or it will
  * be the minimum of all the timeout_ values returned which were >= 0.
- * check()
+ * check ()
  * Called after all the file descriptors are polled.
  * The source should return TRUE if it is ready to be dispatched.
  * Note that some time may have passed since the previous prepare function was
  * called, so the source should be checked again here.
- * dispatch()
+ * dispatch ()
  * Called to dispatch the event source, after it has returned TRUE in
  * either its prepare or its check function. The dispatch function is
  * passed in a callback function and data. The callback function may be
@@ -1589,10 +1665,10 @@ public struct GSource{}
  * g_source_set_callback(). The dispatch function should call the
  * callback function with user_data and whatever additional parameters are
  * needed for this type of event source.
- * finalize()
+ * finalize ()
  * Called when the source is finalized.
- * GSourceFuncclosure_callback;
- * GSourceDummyMarshalclosure_marshal;
+ * GSourceFunc closure_callback;
+ * GSourceDummyMarshal closure_marshal;
  */
 public struct GSourceFuncs
 {
@@ -1609,11 +1685,11 @@ public struct GSourceFuncs
 /**
  * The GSourceCallbackFuncs struct contains
  * functions for managing callback objects.
- * ref()
+ * ref ()
  * Called when a reference is added to the callback object.
- * unref()
+ * unref ()
  * Called when a reference to the callback object is dropped.
- * get()
+ * get ()
  * Called to extract the callback function and data from the callback object.
  */
 public struct GSourceCallbackFuncs
@@ -1629,11 +1705,11 @@ public struct GSourceCallbackFuncs
  * The GThreadPool struct represents a thread pool. It has three public
  * read-only members, but the underlying struct is bigger, so you must not
  * copy this struct.
- * GFuncfunc;
+ * GFunc func;
  * the function to execute in the threads of this pool
- * gpointeruser_data;
+ * gpointer user_data;
  * the user data for the threads of this pool
- * gbooleanexclusive;
+ * gboolean exclusive;
  * are all threads exclusive to this pool
  */
 public struct GThreadPool
@@ -1666,17 +1742,17 @@ public struct GModule{}
  * A set of functions used to perform memory allocation. The same GMemVTable must
  * be used for all allocations in the same program; a call to g_mem_set_vtable(),
  * if it exists, should be prior to any use of GLib.
- * malloc()
+ * malloc ()
  * function to use for allocating memory.
- * realloc()
+ * realloc ()
  * function to use for reallocating memory.
- * free()
+ * free ()
  * function to use to free memory.
- * calloc()
+ * calloc ()
  * function to use for allocating zero-filled memory.
- * try_malloc()
+ * try_malloc ()
  * function to use for allocating memory without a default error handler.
- * try_realloc()
+ * try_realloc ()
  * function to use for reallocating memory without a default error handler.
  */
 public struct GMemVTable
@@ -1720,11 +1796,11 @@ public struct GIOFuncs
  * Main Gtk struct.
  * The GError structure contains
  * information about an error that has occurred.
- * GQuarkdomain;
+ * GQuark domain;
  * error domain, e.g. G_FILE_ERROR.
- * gintcode;
+ * gint code;
  * error code, e.g. G_FILE_ERROR_NOENT.
- * gchar*message;
+ * gchar *message;
  * human-readable informative error message.
  */
 public struct GError
@@ -1745,6 +1821,10 @@ public struct GIConv{}
 
 /**
  * Main Gtk struct.
+ * An opaque structure representing a checksumming operation.
+ * To create a new GChecksum, use g_checksum_new(). To free
+ * a GChecksum, use g_checksum_free().
+ * Since 2.16
  */
 public struct GChecksum{}
 
@@ -1754,9 +1834,9 @@ public struct GChecksum{}
  * Represents a precise time, with seconds and microseconds.
  * Similar to the struct timeval returned by
  * the gettimeofday() UNIX call.
- * glongtv_sec;
+ * glong tv_sec;
  * seconds
- * glongtv_usec;
+ * glong tv_usec;
  * microseconds
  */
 public struct GTimeVal
@@ -1776,13 +1856,13 @@ public struct GTimeVal
  * but sane. An invalid date doesn't represent a day, it's "empty." A
  * date becomes valid after you set it to a Julian day or you set a day,
  * month, and year.
- * guintjulian_days:32;
+ * guint julian_days : 32;
  * the Julian representation of the date
- * guintjulian:1;
+ * guint julian : 1;
  * this bit is set if julian_days is valid
- * guintdmy:1;
+ * guint dmy : 1;
  * this is set if day, month and year are valid
- * guintday:6;
+ * guint day : 6;
  * the day of the day-month-year representation of the date, as
  */
 public struct GDate
@@ -1815,9 +1895,9 @@ public struct GRand{}
 /**
  * Associates a string with a bit flag.
  * Used in g_parse_debug_string().
- * gchar*key;
+ * gchar *key;
  * the string
- * guintvalue;
+ * guint value;
  * the flag
  */
 public struct GDebugKey
@@ -1840,13 +1920,13 @@ public struct GDebugKey
  * If you want to use your own message handler you can set the
  * msg_handler field. The type of the message
  * handler function is declared by GScannerMsgFunc.
- * gpointeruser_data;
- * guintmax_parse_errors;
- * guintparse_errors;
- * constgchar*input_name;
- * GData*qdata;
- * GScannerConfig*config;
- * GTokenTypetoken;
+ * gpointer user_data;
+ * guint max_parse_errors;
+ * guint parse_errors;
+ * const gchar *input_name;
+ * GData *qdata;
+ * GScannerConfig *config;
+ * GTokenType token;
  */
 public struct GScanner
 {
@@ -1990,9 +2070,9 @@ public struct GScannerConfig
 /**
  * Main Gtk struct.
  * The data structure used for automatic completion.
- * GList*items;
+ * GList *items;
  * list of target items (strings or data structures).
- * GCompletionFuncfunc;
+ * GCompletionFunc func;
  * function which is called to get the string associated with a target
  */
 public struct GCompletion
@@ -2039,7 +2119,7 @@ public struct GOptionContext{}
  * A GOptionEntry defines a single option.
  * To have an effect, they must be added to a GOptionGroup with
  * g_option_context_add_main_entries() or g_option_group_add_entries().
- * constgchar*long_name;
+ * const gchar *long_name;
  * The long name of an option can be used to specify it
  */
 public struct GOptionEntry
@@ -2108,7 +2188,7 @@ public struct GMarkupParseContext{}
  * and G_MARKUP_ERROR_INVALID_CONTENT errors are intended to be set
  * from these callbacks. If you set an error from a callback,
  * g_markup_parse_context_parse() will report that error back to its caller.
- * start_element()
+ * start_element ()
  * Callback to invoke when the opening tag of an element
  */
 public struct GMarkupParser
@@ -2162,7 +2242,7 @@ public struct GMemChunk{}
 /**
  * Main Gtk struct.
  * The GList struct is used for each element in a doubly-linked list.
- * gpointerdata;
+ * gpointer data;
  * holds the element's data, which can be a pointer to any kind of data,
  */
 public struct GList
@@ -2176,7 +2256,7 @@ public struct GList
 /**
  * Main Gtk struct.
  * The GSList struct is used for each element in the singly-linked list.
- * gpointerdata;
+ * gpointer data;
  * holds the element's data, which can be a pointer to any kind of data,
  */
 public struct GSList
@@ -2189,11 +2269,11 @@ public struct GSList
 /**
  * Main Gtk struct.
  * Contains the public fields of a Queue.
- * GList*head;
+ * GList *head;
  * a pointer to the first element of the queue.
- * GList*tail;
+ * GList *tail;
  * a pointer to the last element of the queue.
- * guintlength;
+ * guint length;
  * the number of elements in the queue.
  */
 public struct GQueue
@@ -2223,7 +2303,7 @@ public struct GSequenceIter{}
  * Main Gtk struct.
  * Each piece of memory that is pushed onto the stack
  * is cast to a GTrashStack*.
- * GTrashStack*next;
+ * GTrashStack *next;
  * pointer to the previous element of the stack,
  * gets stored in the first sizeof (gpointer)
  * bytes of the element.
@@ -2243,13 +2323,19 @@ public struct GTrashStack
 public struct GHashTable{}
 
 
+/**
+ * A GHashTableIter structure represents an iterator that can be
+ * used to iterate over the elements of a GHashTable. GHashTableIter
+ * structures are typically allocated on the stack and then initialized
+ * with g_hash_table_iter_init().
+ */
 public struct GHashTableIter{}
 
 
 /**
  * Main Gtk struct.
  * The GString struct contains the public fields of a GString.
- * gchar*str;
+ * gchar *str;
  * points to the character data. It may move as text is added.
  */
 public struct GString
@@ -2271,10 +2357,10 @@ public struct GStringChunk{}
 /**
  * Main Gtk struct.
  * Contains the public fields of an Array.
- * gchar*data;
+ * gchar *data;
  * a pointer to the element data. The data may be moved as elements are
  * added to the GArray.
- * guintlen;
+ * guint len;
  * the number of elements in the GArray.
  */
 public struct GArray
@@ -2287,9 +2373,9 @@ public struct GArray
 /**
  * Main Gtk struct.
  * Contains the public fields of a pointer array.
- * gpointer*pdata;
+ * gpointer *pdata;
  * points to the array of pointers, which may be moved when the array grows.
- * guintlen;
+ * guint len;
  * number of pointers in the array.
  */
 public struct GPtrArray
@@ -2302,10 +2388,10 @@ public struct GPtrArray
 /**
  * Main Gtk struct.
  * The GByteArray struct allows access to the public fields of a GByteArray.
- * guint8*data;
+ * guint8 *data;
  * a pointer to the element data. The data may be moved as elements are
  * added to the GByteArray.
- * guintlen;
+ * guint len;
  * the number of elements in the GByteArray.
  */
 public struct GByteArray
@@ -2329,9 +2415,9 @@ public struct GTree{}
  * The GNode struct represents one node in a
  * N-ary Tree.
  * fields
- * gpointerdata;
+ * gpointer data;
  * contains the actual data of the node.
- * GNode*next;
+ * GNode *next;
  * points to the node's next sibling (a sibling is another
  */
 public struct GNode
@@ -2367,7 +2453,7 @@ public struct GRelation{}
  * GRelation by g_relation_select().
  * It only contains one public member - the number of records that matched.
  * To access the matched records, you must use g_tuples_index().
- * guintlen;
+ * guint len;
  * the number of records that matched.
  */
 public struct GTuples
@@ -2398,14 +2484,14 @@ public struct GAllocator{}
  * Checks the version of the GLib library.
  * Returns TRUE if the version of the GLib header files is the same
  * as or newer than the passed-in version.
- * Example1.Checking the version of the GLib library
+ * Example 1. Checking the version of the GLib library
  *  if (!GLIB_CHECK_VERSION (1, 2, 0))
  *  g_error ("GLib version 1.2.0 or above is needed");
- * major:
+ * major :
  * the major version number.
- * minor:
+ * minor :
  * the minor version number.
- * micro:
+ * micro :
  * the micro version number.
  */
 // TODO
@@ -2415,10 +2501,10 @@ public struct GAllocator{}
  * Warning
  * g_main_new has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_new() instead.
  * Creates a new GMainLoop for the default main loop.
- * is_running:
+ * is_running :
  * set to TRUE to indicate that the loop is running. This is not
  * very important since calling g_main_run() will set this to TRUE anyway.
- * Returns:
+ * Returns :
  * a new GMainLoop.
  */
 // TODO
@@ -2428,7 +2514,7 @@ public struct GAllocator{}
  * Warning
  * g_main_destroy has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_unref() instead.
  * Frees the memory allocated for the GMainLoop.
- * loop:
+ * loop :
  * a GMainLoop.
  */
 // TODO
@@ -2438,7 +2524,7 @@ public struct GAllocator{}
  * Warning
  * g_main_run has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_run() instead.
  * Runs a main loop until it stops running.
- * loop:
+ * loop :
  * a GMainLoop.
  */
 // TODO
@@ -2449,7 +2535,7 @@ public struct GAllocator{}
  * g_main_quit has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_quit() instead.
  * Stops the GMainLoop. If g_main_run() was called to run the GMainLoop,
  * it will now return.
- * loop:
+ * loop :
  * a GMainLoop.
  */
 // TODO
@@ -2459,9 +2545,9 @@ public struct GAllocator{}
  * Warning
  * g_main_is_running has been deprecated since version 2.2 and should not be used in newly-written code. USe g_main_loop_is_running() instead.
  * Checks if the main loop is running.
- * loop:
+ * loop :
  * a GMainLoop.
- * Returns:
+ * Returns :
  * TRUE if the main loop is running.
  */
 // TODO
@@ -2471,12 +2557,12 @@ public struct GAllocator{}
  * Warning
  * g_main_iteration has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_context_iteration() instead.
  * Runs a single iteration for the default GMainContext.
- * may_block:
+ * may_block :
  * set to TRUE if it should block (i.e. wait) until an event source
  * becomes ready. It will return after an event source has been processed.
  * If set to FALSE it will return immediately if no event source is ready to be
  * processed.
- * Returns:
+ * Returns :
  * TRUE if more events are pending.
  */
 // TODO
@@ -2487,7 +2573,7 @@ public struct GAllocator{}
  * g_main_pending has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_context_pending() instead.
  * Checks if any events are pending for the default GMainContext
  * (i.e. ready to be processed).
- * Returns:
+ * Returns :
  * TRUE if any events are pending.
  */
 // TODO
@@ -2498,7 +2584,7 @@ public struct GAllocator{}
  * g_main_set_poll_func has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_context_set_poll_func() instead.
  * Sets the function to use for the handle polling of file descriptors
  * for the default main context.
- * func:
+ * func :
  * the function to call to poll all file descriptors.
  */
 // TODO
@@ -2511,11 +2597,11 @@ public struct GAllocator{}
  * Since the returned pointer is already casted to the right type,
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
- * struct_type:
+ * struct_type :
  * the type of the elements to allocate
- * n_structs:
+ * n_structs :
  * the number of elements to allocate
- * Returns:
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type
  */
 // TODO
@@ -2528,11 +2614,11 @@ public struct GAllocator{}
  * Since the returned pointer is already casted to the right type,
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
- * struct_type:
+ * struct_type :
  * the type of the elements to allocate.
- * n_structs:
+ * n_structs :
  * the number of elements to allocate.
- * Returns:
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type.
  */
 // TODO
@@ -2542,13 +2628,13 @@ public struct GAllocator{}
  * Reallocates the memory pointed to by mem, so that it now has space for
  * n_structs elements of type struct_type. It returns the new address of
  * the memory, which may have been moved.
- * struct_type:
+ * struct_type :
  * the type of the elements to allocate
- * mem:
+ * mem :
  * the currently allocated memory
- * n_structs:
+ * n_structs :
  * the number of elements to allocate
- * Returns:
+ * Returns :
  * a pointer to the new allocated memory, cast to a pointer to struct_type
  */
 // TODO
@@ -2559,11 +2645,11 @@ public struct GAllocator{}
  * NULL on failure. Contrast with g_new(), which aborts the program on failure.
  * The returned pointer is cast to a pointer to the given type.
  * If n_structs is 0 it returns NULL.
- * struct_type:
+ * struct_type :
  * the type of the elements to allocate
- * n_structs:
+ * n_structs :
  * the number of elements to allocate
- * Returns:
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
@@ -2576,11 +2662,11 @@ public struct GAllocator{}
  * the program on failure.
  * The returned pointer is cast to a pointer to the given type.
  * The function returns NULL when n_structs is 0.
- * struct_type:
+ * struct_type :
  * the type of the elements to allocate
- * n_structs:
+ * n_structs :
  * the number of elements to allocate
- * Returns:
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
@@ -2592,13 +2678,13 @@ public struct GAllocator{}
  * space for n_structs elements of type struct_type, and returns NULL on
  * failure. Contrast with g_renew(), which aborts the program on failure.
  * It returns the new address of the memory, which may have been moved.
- * struct_type:
+ * struct_type :
  * the type of the elements to allocate
- * mem:
+ * mem :
  * the currently allocated memory
- * n_structs:
+ * n_structs :
  * the number of elements to allocate
- * Returns:
+ * Returns :
  * a pointer to the new allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
@@ -2625,9 +2711,9 @@ public struct GAllocator{}
  *  Stack space allocated with alloca() in the same scope as a variable sized array
  *  will be freed together with the variable sized array upon exit of that scope, and
  *  not upon exit of the enclosing function scope.
- * size:
+ * size :
  *  number of bytes to allocate.
- * Returns:
+ * Returns :
  * space for size bytes, allocated on the stack
  */
 // TODO
@@ -2635,39 +2721,22 @@ public struct GAllocator{}
 
 /*
  * Wraps g_alloca() in a more typesafe manner.
- * struct_type:
+ * struct_type :
  * Type of memory chunks to be allocated
- * n_structs:
+ * n_structs :
  *  Number of chunks to be allocated
- * Returns:
+ * Returns :
  *  Pointer to stack space for n_structs chunks of type struct_type
  */
 // TODO
 // #define g_newa(struct_type, n_structs)
 
 /*
- * Copies a block of memory len bytes long, from src to dest.
- * The source and destination areas may overlap.
- * In order to use this function, you must include
- * string.h yourself, because this macro will
- * typically simply resolve to memmove() and GLib does not include
- * string.h for you.
- * dest:
- *  the destination address to copy the bytes to.
- * src:
- *  the source address to copy the bytes from.
- * len:
- *  the number of bytes to copy.
- */
-// TODO
-// #define g_memmove(dest,src,len)
-
-/*
  * Returns from the current function if the expression is not true.
  * If the expression evaluates to FALSE, a critical message is logged and
  * the function returns. This can only be used in functions which do not return
  * a value.
- * expr:
+ * expr :
  * the expression to check.
  */
 // TODO
@@ -2678,9 +2747,9 @@ public struct GAllocator{}
  * is not true.
  * If the expression evaluates to FALSE, a critical message is logged and
  * val is returned.
- * expr:
+ * expr :
  * the expression to check.
- * val:
+ * val :
  * the value to return from the current function if the expression is not
  * true.
  */
@@ -2696,19 +2765,24 @@ public struct GAllocator{}
 
 /*
  * Logs a critical message and returns val.
- * val:
+ * val :
  * the value to return from the current function.
  */
 // TODO
 // #define g_return_val_if_reached(val)
 
 /*
- * expr:
+ * Logs a warning if the expression is not true.
+ * expr :
+ * the expression to check
+ * Since 2.16
  */
 // TODO
 // #define g_warn_if_fail(expr)
 
 /*
+ * Logs a critical warning.
+ * Since 2.16
  */
 // TODO
 // #define g_warn_if_reached()
@@ -2723,7 +2797,7 @@ public struct GAllocator{}
 
 /*
  * A convenience function/macro to log a normal message.
- * ...:
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -2733,7 +2807,7 @@ public struct GAllocator{}
  * A convenience function/macro to log a warning message.
  * You can make warnings fatal at runtime by setting the G_DEBUG environment
  * variable (see Running GLib Applications).
- * ...:
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -2748,7 +2822,7 @@ public struct GAllocator{}
  * You can also make critical warnings fatal at runtime by setting
  * the G_DEBUG environment variable (see
  * Running GLib Applications).
- * ...:
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -2761,7 +2835,7 @@ public struct GAllocator{}
  * This function will result in a core dump; don't use it for errors you
  * expect. Using this function indicates a bug in your program, i.e. an
  * assertion failure.
- * ...:
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -2769,7 +2843,7 @@ public struct GAllocator{}
 
 /*
  * A convenience function/macro to log a debug message.
- * ...:
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  * Since 2.6
  */
@@ -2779,7 +2853,7 @@ public struct GAllocator{}
 /*
  * Removes leading and trailing whitespace from a string. See g_strchomp() and
  * g_strchug().
- * string:
+ * string :
  * a string to remove the leading and trailing whitespace from.
  */
 // TODO
@@ -2792,7 +2866,7 @@ public struct GAllocator{}
  * character. The macro returns the start of the next UTF-8 character.
  * Before using this macro, use g_utf8_validate() to validate strings
  * that may contain invalid UTF-8.
- * p:
+ * p :
  * Pointer to the start of a valid UTF-8 character.
  */
 // TODO
@@ -2816,10 +2890,10 @@ public struct GAllocator{}
  * If you are using GNU gettext >= 0.15, you can also use
  * --keyword=Q_:1g to let xgettext split the context
  * string off into a msgctxt line in the po file.
- * String:
+ * String :
  * the string to be translated, with a '|'-separated prefix which
  *  must not be translated
- * Returns:
+ * Returns :
  * the translated message
  * Since 2.4
  */
@@ -2837,11 +2911,11 @@ public struct GAllocator{}
  * If you are using the C_() macro, you need to make sure that you
  * pass --keyword=C_:1c,2 to xgettext when extracting
  * messages. Note that this only works with GNU gettext >= 0.15.
- * Context:
+ * Context :
  * a message context, must be a string literal
- * String:
+ * String :
  * a message id, must be a string literal
- * Returns:
+ * Returns :
  * the translated message
  * Since 2.16
  */
@@ -2865,7 +2939,7 @@ public struct GAllocator{}
 	 *  fputs (string);
 	 *  ...
  *  }
- * String:
+ * String :
  * the string to be translated
  * Since 2.4
  */
@@ -2873,11 +2947,42 @@ public struct GAllocator{}
 // #define N_(String)
 
 /*
+ * Only marks a string for translation, with context.
+ * This is useful in situations where the translated strings can't
+ * be directly used, e.g. in string array initializers.
+ * To get the translated string, you should call g_dpgettext2() at runtime.
+ *  {
+	 *  static const char *messages[] = {
+		 *  NC_("some context", "some very meaningful message"),
+		 *  NC_("some context", "and another one")
+	 *  };
+	 *  const char *string;
+	 *  ...
+	 *  string
+	 *  = index > 1 ? g_dpgettext2 (NULL, "some context", "a default message") : g_dpgettext2 (NULL, "some context", messages[index]);
+	 *  fputs (string);
+	 *  ...
+ *  }
+ * Note
+ * If you are using the NC_() macro, you need to make sure that you
+ * pass --keyword=NC_:1c,2 to xgettext when extracting
+ * messages. Note that this only works with GNU gettext >= 0.15.
+ * Intltool has support for the NC_() macro since version 0.40.1.
+ * Context :
+ * a message context, must be a string literal
+ * String :
+ * a message id, must be a string literal
+ * Since 2.18
+ */
+// TODO
+// #define NC_(Context, String)
+
+/*
  * Returns a random gboolean from rand_. This corresponds to a unbiased
  * coin toss.
- * rand_:
+ * rand_ :
  * a GRand.
- * Returns:
+ * Returns :
  * a random gboolean.
  */
 // TODO
@@ -2885,7 +2990,7 @@ public struct GAllocator{}
 
 /*
  * Returns a random gboolean. This corresponds to a unbiased coin toss.
- * Returns:
+ * Returns :
  * a random gboolean.
  */
 // TODO
@@ -2895,11 +3000,11 @@ public struct GAllocator{}
  * Warning
  * g_scanner_add_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_add_symbol() instead.
  * Adds a symbol to the default scope.
- * scanner:
+ * scanner :
  * a GScanner.
- * symbol:
+ * symbol :
  * the symbol to add.
- * value:
+ * value :
  * the value of the symbol.
  */
 // TODO
@@ -2909,9 +3014,9 @@ public struct GAllocator{}
  * Warning
  * g_scanner_remove_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_remove_symbol() instead.
  * Removes a symbol from the default scope.
- * scanner:
+ * scanner :
  * a GScanner.
- * symbol:
+ * symbol :
  * the symbol to remove.
  */
 // TODO
@@ -2921,11 +3026,11 @@ public struct GAllocator{}
  * Warning
  * g_scanner_foreach_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_foreach_symbol() instead.
  * Calls a function for each symbol in the default scope.
- * scanner:
+ * scanner :
  * a GScanner.
- * func:
+ * func :
  * the function to call with each symbol.
- * data:
+ * data :
  * data to pass to the function.
  */
 // TODO
@@ -2935,7 +3040,7 @@ public struct GAllocator{}
  * Warning
  * g_scanner_freeze_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
  * There is no reason to use this macro, since it does nothing.
- * scanner:
+ * scanner :
  * a GScanner.
  */
 // TODO
@@ -2945,19 +3050,21 @@ public struct GAllocator{}
  * Warning
  * g_scanner_thaw_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
  * There is no reason to use this macro, since it does nothing.
- * scanner:
+ * scanner :
  * a GScanner.
  */
 // TODO
 // #define g_scanner_thaw_symbol_table(scanner)
 
 /*
+ * Warning
+ * G_WIN32_DLLMAIN_FOR_DLL_NAME is deprecated and should not be used in newly-written code.
  * On Windows, this macro defines a DllMain() function that stores the actual
  * DLL name that the code being compiled will be included in.
  * On non-Windows platforms, expands to nothing.
- * static:
+ * static :
  * empty or "static".
- * dll_name:
+ * dll_name :
  * the name of the (pointer to the) char array where the DLL name
  *  will be stored. If this is used, you must also include
  *  windows.h. If you need a more complex DLL entry
@@ -2995,9 +3102,9 @@ public struct GAllocator{}
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
- * type:
+ * type :
  * the type to allocate, typically a structure name
- * Returns:
+ * Returns :
  * a pointer to the allocated block, cast to a pointer to type.
  * Since 2.10
  */
@@ -3012,9 +3119,9 @@ public struct GAllocator{}
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
- * type:
+ * type :
  * the type to allocate, typically a structure name
- * Returns:
+ * Returns :
  * a pointer to the allocated block, cast to a pointer to type.
  * Since 2.10
  */
@@ -3029,11 +3136,11 @@ public struct GAllocator{}
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
- * type:
+ * type :
  * the type to duplicate, typically a structure name
- * mem:
+ * mem :
  * the memory to copy into the allocated block
- * Returns:
+ * Returns :
  * a pointer to the allocated block, cast to a pointer to type.
  * Since 2.14
  */
@@ -3047,9 +3154,9 @@ public struct GAllocator{}
  * Note that the exact release behaviour can be changed with the
  * G_DEBUG=gc-friendly environment variable,
  * also see G_SLICE for related debugging options.
- * type:
+ * type :
  * the type of the block to free, typically a structure name
- * mem:
+ * mem :
  * a pointer to the block to free
  * Since 2.10
  */
@@ -3065,13 +3172,18 @@ public struct GAllocator{}
  * Note that the exact release behaviour can be changed with the
  * G_DEBUG=gc-friendly environment variable,
  * also see G_SLICE for related debugging options.
- * type:
+ * type :
  *  the type of the mem_chain blocks
- * mem_chain:
+ * mem_chain :
  *  a pointer to the first block of the chain
- * next:
+ * next :
  *  the field name of the next pointer in type
  * Since 2.10
+ * [6]
+ * [Bonwick94] Jeff Bonwick, The slab allocator: An object-caching kernel
+ * memory allocator. USENIX 1994, and
+ * [Bonwick01] Bonwick and Jonathan Adams, Magazines and vmem: Extending the
+ * slab allocator to many cpu's and arbitrary resources. USENIX 2001
  */
 // TODO
 // #define g_slice_free_chain(type, mem_chain, next)
@@ -3085,17 +3197,17 @@ public struct GAllocator{}
  * name. The atom size is determined using sizeof(), and the
  * area size is calculated by multiplying the pre_alloc parameter with
  * the atom size.
- * type:
+ * type :
  * the type of the atoms, typically a structure name.
- * pre_alloc:
+ * pre_alloc :
  * the number of atoms to store in each block of memory.
- * alloc_type:
+ * alloc_type :
  * the type of the GMemChunk.
  * G_ALLOC_AND_FREE is used if the atoms will be freed individually.
  * G_ALLOC_ONLY should be used if atoms will never be freed individually.
  * G_ALLOC_ONLY is quicker, since it does not need to track free atoms,
  * but it obviously wastes memory if you no longer need many of the atoms.
- * Returns:
+ * Returns :
  * the new GMemChunk.
  */
 // TODO
@@ -3107,11 +3219,11 @@ public struct GAllocator{}
  * A convenience macro to allocate an atom of memory from a GMemChunk.
  * It calls g_mem_chunk_alloc() and casts the returned atom to a pointer to
  * the given type, avoiding a type cast in the source code.
- * type:
+ * type :
  * the type of the GMemChunk atoms, typically a structure name.
- * chunk:
+ * chunk :
  * a GMemChunk.
- * Returns:
+ * Returns :
  * a pointer to the allocated atom, cast to a pointer to type.
  */
 // TODO
@@ -3123,11 +3235,11 @@ public struct GAllocator{}
  * A convenience macro to allocate an atom of memory from a GMemChunk.
  * It calls g_mem_chunk_alloc0() and casts the returned atom to a pointer to
  * the given type, avoiding a type cast in the source code.
- * type:
+ * type :
  * the type of the GMemChunk atoms, typically a structure name.
- * chunk:
+ * chunk :
  * a GMemChunk.
- * Returns:
+ * Returns :
  * a pointer to the allocated atom, cast to a pointer to type.
  */
 // TODO
@@ -3140,9 +3252,9 @@ public struct GAllocator{}
  * It simply switches the arguments and calls g_mem_chunk_free()
  * It is included simply to complement the other convenience macros, g_chunk_new()
  * and g_chunk_new0().
- * mem:
+ * mem :
  * a pointer to the atom to be freed.
- * mem_chunk:
+ * mem_chunk :
  * a GMemChunk.
  */
 // TODO
@@ -3150,9 +3262,9 @@ public struct GAllocator{}
 
 /*
  * A convenience macro to gets the previous element in a GList.
- * list:
+ * list :
  * an element in a GList.
- * Returns:
+ * Returns :
  * the previous element, or NULL if there are no previous elements.
  */
 // TODO
@@ -3160,9 +3272,9 @@ public struct GAllocator{}
 
 /*
  * A convenience macro to gets the next element in a GList.
- * list:
+ * list :
  * an element in a GList.
- * Returns:
+ * Returns :
  * the next element, or NULL if there are no more elements.
  */
 // TODO
@@ -3170,9 +3282,9 @@ public struct GAllocator{}
 
 /*
  * A convenience macro to gets the next element in a GSList.
- * slist:
+ * slist :
  * an element in a GSList.
- * Returns:
+ * Returns :
  * the next element, or NULL if there are no more elements.
  */
 // TODO
@@ -3183,7 +3295,7 @@ public struct GAllocator{}
  * g_hash_table_freeze is deprecated and should not be used in newly-written code.
  * This function is deprecated and will be removed in the next major
  *  release of GLib. It does nothing.
- * hash_table:
+ * hash_table :
  * a GHashTable
  */
 // TODO
@@ -3194,7 +3306,7 @@ public struct GAllocator{}
  * g_hash_table_thaw is deprecated and should not be used in newly-written code.
  * This function is deprecated and will be removed in the next major
  *  release of GLib. It does nothing.
- * hash_table:
+ * hash_table :
  * a GHashTable
  */
 // TODO
@@ -3207,11 +3319,11 @@ public struct GAllocator{}
  * g_array_append_val() is a macro which uses a reference to the value
  * parameter v. This means that you cannot use it with literal values
  * such as "27". You must use variables.
- * a:
+ * a :
  * a GArray.
- * v:
+ * v :
  * the value to append to the GArray.
- * Returns:
+ * Returns :
  * the GArray.
  */
 // TODO
@@ -3226,11 +3338,11 @@ public struct GAllocator{}
  * g_array_prepend_val() is a macro which uses a reference to the value
  * parameter v. This means that you cannot use it with literal values
  * such as "27". You must use variables.
- * a:
+ * a :
  * a GArray.
- * v:
+ * v :
  * the value to prepend to the GArray.
- * Returns:
+ * Returns :
  * the GArray.
  */
 // TODO
@@ -3242,13 +3354,13 @@ public struct GAllocator{}
  * g_array_insert_val() is a macro which uses a reference to the value
  * parameter v. This means that you cannot use it with literal values
  * such as "27". You must use variables.
- * a:
+ * a :
  * a GArray.
- * i:
+ * i :
  * the index to place the element at.
- * v:
+ * v :
  * the value to insert into the array.
- * Returns:
+ * Returns :
  * the GArray.
  */
 // TODO
@@ -3257,18 +3369,18 @@ public struct GAllocator{}
 /*
  * Returns the element of a GArray at the given index.
  * The return value is cast to the given type.
- * Example20.Getting a pointer to an element in a GArray
+ * Example 20. Getting a pointer to an element in a GArray
  *  EDayViewEvent *event;
- *  /+* This gets a pointer to the 3rd element in the array of EDayViewEvent
+ *  /+* This gets a pointer to the 4th element in the array of EDayViewEvent
  *  structs. +/
  *  event = g_array_index (events, EDayViewEvent, 3);
- * a:
+ * a :
  * a GArray.
- * t:
+ * t :
  * the type of the elements.
- * i:
+ * i :
  * the index of the element to return.
- * Returns:
+ * Returns :
  * the element of the GArray at the index given by i.
  */
 // TODO
@@ -3276,11 +3388,11 @@ public struct GAllocator{}
 
 /*
  * Returns the pointer at the given index of the pointer array.
- * array:
+ * array :
  * a GPtrArray.
- * index_:
+ * index_ :
  * the index of the pointer to return.
- * Returns:
+ * Returns :
  * the pointer at the given index.
  */
 // TODO
@@ -3288,11 +3400,11 @@ public struct GAllocator{}
 
 /*
  * Inserts a GNode as the last child of the given parent.
- * parent:
+ * parent :
  *  the GNode to place the new GNode under
- * node:
+ * node :
  *  the GNode to insert
- * Returns:
+ * Returns :
  *  the inserted GNode
  */
 // TODO
@@ -3300,14 +3412,14 @@ public struct GAllocator{}
 
 /*
  * Inserts a new GNode at the given position.
- * parent:
+ * parent :
  *  the GNode to place the new GNode under
- * position:
+ * position :
  *  the position to place the new GNode at. If position is -1,
  *  the new GNode is inserted as the last child of parent
- * data:
+ * data :
  *  the data for the new GNode
- * Returns:
+ * Returns :
  *  the new GNode
  */
 // TODO
@@ -3315,13 +3427,13 @@ public struct GAllocator{}
 
 /*
  * Inserts a new GNode before the given sibling.
- * parent:
+ * parent :
  *  the GNode to place the new GNode under
- * sibling:
+ * sibling :
  *  the sibling GNode to place the new GNode before
- * data:
+ * data :
  *  the data for the new GNode
- * Returns:
+ * Returns :
  *  the new GNode
  */
 // TODO
@@ -3329,11 +3441,11 @@ public struct GAllocator{}
 
 /*
  * Inserts a new GNode as the last child of the given parent.
- * parent:
+ * parent :
  *  the GNode to place the new GNode under
- * data:
+ * data :
  *  the data for the new GNode
- * Returns:
+ * Returns :
  *  the new GNode
  */
 // TODO
@@ -3341,11 +3453,11 @@ public struct GAllocator{}
 
 /*
  * Inserts a new GNode as the first child of the given parent.
- * parent:
+ * parent :
  *  the GNode to place the new GNode under
- * data:
+ * data :
  *  the data for the new GNode
- * Returns:
+ * Returns :
  *  the new GNode
  */
 // TODO
@@ -3353,9 +3465,9 @@ public struct GAllocator{}
 
 /*
  * Gets the first child of a GNode.
- * node:
+ * node :
  *  a GNode
- * Returns:
+ * Returns :
  *  the first child of node, or NULL if node is NULL
  *  or has no children
  */
@@ -3364,9 +3476,9 @@ public struct GAllocator{}
 
 /*
  * Gets the next sibling of a GNode.
- * node:
+ * node :
  *  a GNode
- * Returns:
+ * Returns :
  *  the next sibling of node, or NULL if node is NULL
  */
 // TODO
@@ -3374,9 +3486,9 @@ public struct GAllocator{}
 
 /*
  * Gets the previous sibling of a GNode.
- * node:
+ * node :
  *  a GNode
- * Returns:
+ * Returns :
  *  the previous sibling of node, or NULL if node is NULL
  */
 // TODO
@@ -3384,9 +3496,9 @@ public struct GAllocator{}
 
 /*
  * Returns TRUE if a GNode is a leaf node.
- * node:
+ * node :
  *  a GNode
- * Returns:
+ * Returns :
  *  TRUE if the GNode is a leaf node
  *  (i.e. it has no children)
  */
@@ -3395,9 +3507,9 @@ public struct GAllocator{}
 
 /*
  * Returns TRUE if a GNode is the root of a tree.
- * node:
+ * node :
  *  a GNode
- * Returns:
+ * Returns :
  *  TRUE if the GNode is the root of a tree
  *  (i.e. it has no parent or siblings)
  */
@@ -3408,11 +3520,11 @@ public struct GAllocator{}
  * Sets the data corresponding to the given GQuark id.
  * Any previous data with the same key is removed, and its
  * destroy function is called.
- * dl:
+ * dl :
  * a datalist.
- * q:
+ * q :
  * the GQuark to identify the data element.
- * d:
+ * d :
  * the data element, or NULL to remove any previous element
  * corresponding to q.
  */
@@ -3421,9 +3533,9 @@ public struct GAllocator{}
 
 /*
  * Removes an element, using its GQuark identifier.
- * dl:
+ * dl :
  * a datalist.
- * q:
+ * q :
  * the GQuark identifying the data element.
  */
 // TODO
@@ -3431,11 +3543,11 @@ public struct GAllocator{}
 
 /*
  * Sets the data element corresponding to the given string identifier.
- * dl:
+ * dl :
  * a datalist.
- * k:
+ * k :
  * the string to identify the data element.
- * d:
+ * d :
  * the data element, or NULL to remove any previous element
  * corresponding to k.
  */
@@ -3445,14 +3557,14 @@ public struct GAllocator{}
 /*
  * Sets the data element corresponding to the given string identifier, and the
  * function to be called when the data element is removed.
- * dl:
+ * dl :
  * a datalist.
- * k:
+ * k :
  * the string to identify the data element.
- * d:
+ * d :
  * the data element, or NULL to remove any previous element corresponding to
  * k.
- * f:
+ * f :
  * the function to call when the data element is removed. This
  * function will be called with the data element and can be used to free any
  * memory allocated for it. If d is NULL, then f must also be NULL.
@@ -3464,11 +3576,11 @@ public struct GAllocator{}
  * Gets a data element, using its string identifer.
  * This is slower than g_datalist_id_get_data() because the string is first
  * converted to a GQuark.
- * dl:
+ * dl :
  * a datalist.
- * k:
+ * k :
  * the string identifying a data element.
- * Returns:
+ * Returns :
  * the data element, or NULL if it is not found.
  */
 // TODO
@@ -3477,9 +3589,9 @@ public struct GAllocator{}
 /*
  * Removes an element using its string identifier.
  * The data element's destroy function is called if it has been set.
- * dl:
+ * dl :
  * a datalist.
- * k:
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -3487,9 +3599,9 @@ public struct GAllocator{}
 
 /*
  * Removes an element, without calling its destroy notifier.
- * dl:
+ * dl :
  * a datalist.
- * k:
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -3499,11 +3611,11 @@ public struct GAllocator{}
  * Sets the data element associated with the given GQuark id.
  * Any previous data with the same key is removed, and its destroy function
  * is called.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the GQuark id to identify the data element.
- * d:
+ * d :
  * the data element.
  */
 // TODO
@@ -3512,9 +3624,9 @@ public struct GAllocator{}
 /*
  * Removes a data element from a dataset.
  * The data element's destroy function is called if it has been set.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the GQuark id identifying the data element.
  */
 // TODO
@@ -3522,11 +3634,11 @@ public struct GAllocator{}
 
 /*
  * Sets the data corresponding to the given string identifier.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the string to identify the data element.
- * d:
+ * d :
  * the data element.
  */
 // TODO
@@ -3535,13 +3647,13 @@ public struct GAllocator{}
 /*
  * Sets the data corresponding to the given string identifier, and the function
  * to call when the data element is destroyed.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the string to identify the data element.
- * d:
+ * d :
  * the data element.
- * f:
+ * f :
  * the function to call when the data element is removed. This
  * function will be called with the data element and can be used to free any
  * memory allocated for it.
@@ -3551,11 +3663,11 @@ public struct GAllocator{}
 
 /*
  * Gets the data element corresponding to a string.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the string identifying the data element.
- * Returns:
+ * Returns :
  * the data element corresponding to the string, or NULL if it is not
  * found.
  */
@@ -3565,9 +3677,9 @@ public struct GAllocator{}
 /*
  * Removes a data element corresponding to a string.
  * Its destroy function is called if it has been set.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -3575,9 +3687,9 @@ public struct GAllocator{}
 
 /*
  * Removes an element, without calling its destroy notifier.
- * l:
+ * l :
  * the location identifying the dataset.
- * k:
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -3587,14 +3699,14 @@ public struct GAllocator{}
  * Specifies the type of function passed to g_main_context_set_poll_func().
  * The semantics of the function should match those of the
  * poll() system call.
- * ufds:
+ * ufds :
  * an array of GPollFD elements.
- * nfsd:
+ * nfsd :
  * the number of elements in ufds.
- * timeout_:
+ * timeout_ :
  * the maximum time to wait for an event of the file descriptors.
  *  A negative value indicates an infinite timeout.
- * Returns:
+ * Returns :
  * the number of GPollFD elements which have events or errors reported,
  * or -1 if an error occurred.
  */
@@ -3603,12 +3715,12 @@ public typedef extern(C) int  function (GPollFD*, uint, int) GPollFunc;
 
 /*
  * The type of functions to be called when a child exists.
- * pid:
+ * pid :
  * the process id of the child process
- * status:
+ * status :
  * Status information about the child process,
  *  see waitpid(2) for more information about this field
- * data:
+ * data :
  * user data passed to g_child_watch_add()
  */
 // void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer data);
@@ -3624,10 +3736,10 @@ public typedef extern(C) void  function () GSourceDummyMarshal;
 /*
  * Specifies the type of function passed to g_timeout_add(), g_timeout_add_full(),
  * g_idle_add(), and g_idle_add_full().
- * data:
+ * data :
  * data passed to the function, set when the source was created with one
  * of the above functions.
- * Returns:
+ * Returns :
  * it should return FALSE if the source should be removed.
  */
 // gboolean (*GSourceFunc) (gpointer data);
@@ -3639,9 +3751,9 @@ public typedef extern(C) int  function (void*) GSourceFunc;
  * automatically when the module is loaded. It is passed the GModule structure
  * and should return NULL on success or a string describing the initialization
  * error.
- * module:
+ * module :
  * the GModule corresponding to the module which has just been loaded.
- * Returns:
+ * Returns :
  * NULL on success, or a string describing the initialization error.
  */
 // const gchar* (*GModuleCheckInit) (GModule *module);
@@ -3652,7 +3764,7 @@ public typedef extern(C) char*  function (GModule*) GModuleCheckInit;
  * If a module contains a function named g_module_unload() it is called
  * automatically when the module is unloaded.
  * It is passed the GModule structure.
- * module:
+ * module :
  * the GModule about to be unloaded.
  */
 // void (*GModuleUnload) (GModule *module);
@@ -3662,13 +3774,13 @@ public typedef extern(C) void  function (GModule*) GModuleUnload;
  * Specifies the type of function passed to g_io_add_watch() or
  * g_io_add_watch_full(), which is called when the requested
  * condition on a GIOChannel is satisfied.
- * source:
+ * source :
  * the GIOChannel event source
- * condition:
+ * condition :
  * the condition which has been satisfied
- * data:
+ * data :
  * user data set in g_io_add_watch() or g_io_add_watch_full()
- * Returns:
+ * Returns :
  * the function should return FALSE if the event source
  *  should be removed
  */
@@ -3678,7 +3790,7 @@ public typedef extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFun
 /*
  * Specifies the type of the print handler functions.
  * These are called with the complete formatted string to output.
- * string:
+ * string :
  * the message to be output.
  */
 // void (*GPrintFunc) (const gchar *string);
@@ -3686,14 +3798,14 @@ public typedef extern(C) void  function (char[]) GPrintFunc;
 
 /*
  * Specifies the prototype of log handler functions.
- * log_domain:
+ * log_domain :
  * the log domain of the message.
- * log_level:
+ * log_level :
  * the log level of the message (including the fatal and recursion
  * flags).
- * message:
+ * message :
  * the message to process.
- * user_data:
+ * user_data :
  * user data, set in g_log_set_handler().
  */
 // void (*GLogFunc) (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer user_data);
@@ -3709,7 +3821,7 @@ public typedef extern(C) void  function () GVoidFunc;
 /*
  * Declares a type of function which takes an arbitrary data pointer argument
  * and has no return value. It is not currently used in GLib or GTK+.
- * data:
+ * data :
  * a data pointer.
  */
 // void (*GFreeFunc) (gpointer data);
@@ -3717,11 +3829,11 @@ public typedef extern(C) void  function (void*) GFreeFunc;
 
 /*
  * Specifies the type of the message handler function.
- * scanner:
+ * scanner :
  * a GScanner.
- * message:
+ * message :
  * the message.
- * error:
+ * error :
  * TRUE if the message signals an error, FALSE if it
  *  signals a warning.
  */
@@ -3732,9 +3844,9 @@ public typedef extern(C) void  function (GScanner*, char[], int) GScannerMsgFunc
  * Specifies the type of the function passed to g_completion_new().
  * It should return the string corresponding to the given target item.
  * This is used when you use data structures as GCompletion items.
- * Param1:
+ * Param1 :
  * the completion item.
- * Returns:
+ * Returns :
  * the string corresponding to the item.
  */
 // gchar* (*GCompletionFunc) (gpointer );
@@ -3743,13 +3855,13 @@ public typedef extern(C) char*  function (void*) GCompletionFunc;
 /*
  * Specifies the type of the function passed to g_completion_set_compare().
  * This is used when you use strings as GCompletion items.
- * s1:
+ * s1 :
  * string to compare with s2.
- * s2:
+ * s2 :
  * string to compare with s1.
- * n:
+ * n :
  * maximal number of bytes to compare.
- * Returns:
+ * Returns :
  * an integer less than, equal to, or greater than zero if the
  * first n bytes of s1 is found, respectively, to be less than, to match,
  * or to be greater than the first n bytes of s2.
@@ -3766,13 +3878,15 @@ public typedef extern(C) int  function (char[], char[], uint) GCompletionStrncmp
  * Note that POSIX allows only async-signal-safe functions (see signal(7))
  * to be called in the child between fork() and exec(), which drastically
  * limits the usefulness of child setup functions.
- * Also note that modifying the environment from
+ * Also note that modifying the environment from the child setup function
+ * may not have the intended effect, since it will get overridden by
+ * a non-NULL env argument to the g_spawn... functions.
  * On Windows the function is called in the parent. Its usefulness on
  * Windows is thus questionable. In many cases executing the child setup
  * function in the parent can have ill effects, and you should be very
  * careful when porting software to Windows that uses child setup
  * functions.
- * user_data:
+ * user_data :
  * user data to pass to the function.
  */
 // void (*GSpawnChildSetupFunc) (gpointer user_data);
@@ -3781,19 +3895,19 @@ public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
 /*
  * The type of function to be passed as callback for G_OPTION_ARG_CALLBACK
  * options.
- * option_name:
+ * option_name :
  * The name of the option being parsed. This will be either a
  *  single dash followed by a single letter (for a short name) or two dashes
  *  followed by a long option name.
- * value:
+ * value :
  * The value to be parsed.
- * data:
+ * data :
  * User data added to the GOptionGroup containing the option when it
  *  was created with g_option_group_new()
- * error:
+ * error :
  * A return location for errors. The error code G_OPTION_ERROR_FAILED
  *  is intended to be used for errors in GOptionArgFunc callbacks.
- * Returns:
+ * Returns :
  * TRUE if the option was successfully parsed, FALSE if an error
  *  occurred, in which case error should be set with g_set_error()
  */
@@ -3803,12 +3917,12 @@ public typedef extern(C) int  function (char[], char[], void*, GError**) GOption
 /*
  * The type of functions which are used to translate user-visible
  * strings, for --help output.
- * str:
+ * str :
  * the untranslated string
- * data:
+ * data :
  * user data specified when installing the function, e.g.
  *  in g_option_group_set_translate_func()
- * Returns:
+ * Returns :
  * a translation of the string for the current locale.
  *  The returned string is owned by GLib and must not be freed.
  */
@@ -3817,16 +3931,16 @@ public typedef extern(C) char*  function (char[], void*) GTranslateFunc;
 
 /*
  * The type of function that can be called before and after parsing.
- * context:
+ * context :
  * The active GOptionContext
- * group:
+ * group :
  * The group to which the function belongs
- * data:
+ * data :
  * User data added to the GOptionGroup containing the option when it
  *  was created with g_option_group_new()
- * error:
+ * error :
  * A return location for error details
- * Returns:
+ * Returns :
  * TRUE if the function completed successfully, FALSE if an error
  *  occurred, in which case error should be set with g_set_error()
  */
@@ -3835,14 +3949,14 @@ public typedef extern(C) int  function (GOptionContext*, GOptionGroup*, void*, G
 
 /*
  * The type of function to be used as callback when a parse error occurs.
- * context:
+ * context :
  * The active GOptionContext
- * group:
+ * group :
  * The group to which the function belongs
- * data:
+ * data :
  * User data added to the GOptionGroup containing the option when it
  *  was created with g_option_group_new()
- * error:
+ * error :
  * The GError containing details about the parse error
  */
 // void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
@@ -3853,15 +3967,15 @@ public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, 
  * It is called for each occurance of the pattern in the string passed
  * to g_regex_replace_eval(), and it should append the replacement to
  * result.
- * match_info:
+ * match_info :
  * the GMatchInfo generated by the match.
  * Use g_match_info_get_regex() and g_match_info_get_string() if you
  * need the GRegex or the matched string.
- * result:
+ * result :
  * a GString containing the new string
- * user_data:
+ * user_data :
  * user data passed to g_regex_replace_eval()
- * Returns:
+ * Returns :
  * FALSE to continue the replacement process, TRUE to stop it
  * Since 2.14
  */
@@ -3873,11 +3987,11 @@ public typedef extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEval
  * values. The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
  * integer if the first value comes after the second.
- * a:
+ * a :
  * a value.
- * b:
+ * b :
  * a value to compare with.
- * Returns:
+ * Returns :
  * negative value if a < b; zero if a = b; positive value
  * if a > b.
  */
@@ -3889,13 +4003,13 @@ public typedef extern(C) int  function (void*, void*) GCompareFunc;
  * values. The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
  * integer if the first value comes after the second.
- * a:
+ * a :
  * a value.
- * b:
+ * b :
  * a value to compare with.
- * user_data:
+ * user_data :
  * user data to pass to comparison function.
- * Returns:
+ * Returns :
  * negative value if a < b; zero if a = b; positive value
  * if a > b.
  */
@@ -3905,9 +4019,9 @@ public typedef extern(C) int  function (void*, void*, void*) GCompareDataFunc;
 /*
  * Specifies the type of functions passed to g_list_foreach() and
  * g_slist_foreach().
- * data:
+ * data :
  * the element's data.
- * user_data:
+ * user_data :
  * user data passed to g_list_foreach() or g_slist_foreach().
  */
 // void (*GFunc) (gpointer data,  gpointer user_data);
@@ -3918,13 +4032,13 @@ public typedef extern(C) void  function (void*, void*) GFunc;
  * iterators. It must return zero if the iterators compare equal, a
  * negative value if a comes before b, and a positive value if b comes
  * before a.
- * a:
+ * a :
  * a GSequenceIter
- * b:
+ * b :
  * a GSequenceIter
- * data:
+ * data :
  * user data
- * Returns:
+ * Returns :
  * zero if the iterators are equal, a negative value if a
  * comes before b, and a positive value if b comes before a.
  */
@@ -3943,9 +4057,9 @@ public typedef extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) G
  * to find the 'bucket' to place each key into.
  * The function should also be very fast, since it is called for each key
  * lookup.
- * key:
+ * key :
  * a key.
- * Returns:
+ * Returns :
  * the hash value corresponding to the key.
  */
 // guint (*GHashFunc) (gconstpointer key);
@@ -3955,11 +4069,11 @@ public typedef extern(C) uint  function (void*) GHashFunc;
  * Specifies the type of a function used to test two values for
  * equality. The function should return TRUE if both values are equal and
  * FALSE otherwise.
- * a:
+ * a :
  * a value.
- * b:
+ * b :
  * a value to compare with.
- * Returns:
+ * Returns :
  * TRUE if a = b; FALSE otherwise.
  */
 // gboolean (*GEqualFunc) (gconstpointer a,  gconstpointer b);
@@ -3969,11 +4083,11 @@ public typedef extern(C) int  function (void*, void*) GEqualFunc;
  * Specifies the type of the function passed to g_hash_table_foreach().
  * It is called with each key/value pair, together with the user_data parameter
  * which is passed to g_hash_table_foreach().
- * key:
+ * key :
  * a key.
- * value:
+ * value :
  * the value corresponding to the key.
- * user_data:
+ * user_data :
  * user data passed to g_hash_table_foreach().
  */
 // void (*GHFunc) (gpointer key,  gpointer value,  gpointer user_data);
@@ -3985,13 +4099,13 @@ public typedef extern(C) void  function (void*, void*, void*) GHFunc;
  * passed to g_hash_table_foreach_remove().
  * It should return TRUE if the key/value pair should be removed from the
  * GHashTable.
- * key:
+ * key :
  * a key.
- * value:
+ * value :
  * the value associated with the key.
- * user_data:
+ * user_data :
  * user data passed to g_hash_table_remove().
- * Returns:
+ * Returns :
  * TRUE if the key/value pair should be removed from the GHashTable.
  */
 // gboolean (*GHRFunc) (gpointer key,  gpointer value,  gpointer user_data);
@@ -4002,13 +4116,13 @@ public typedef extern(C) int  function (void*, void*, void*) GHRFunc;
  * It is passed the key and value of each node, together with
  * the user_data parameter passed to g_tree_traverse().
  * If the function returns TRUE, the traversal is stopped.
- * key:
+ * key :
  * a key of a GTree node.
- * value:
+ * value :
  * the value corresponding to the key.
- * data:
+ * data :
  * user data passed to g_tree_traverse().
- * Returns:
+ * Returns :
  * TRUE to stop the traversal.
  */
 // gboolean (*GTraverseFunc) (gpointer key,  gpointer value,  gpointer data);
@@ -4017,11 +4131,11 @@ public typedef extern(C) int  function (void*, void*, void*) GTraverseFunc;
 /*
  * A function of this signature is used to copy the node data
  * when doing a deep-copy of a tree.
- * src:
+ * src :
  *  A pointer to the data which should be copied
- * data:
+ * data :
  *  Additional data
- * Returns:
+ * Returns :
  *  A pointer to the copy
  * Since 2.4
  */
@@ -4033,11 +4147,11 @@ public typedef extern(C) void*  function (void*, void*) GCopyFunc;
  * The function is called with each of the nodes visited, together with the
  * user data passed to g_node_traverse().
  * If the function returns TRUE, then the traversal is stopped.
- * node:
+ * node :
  * a GNode.
- * data:
+ * data :
  * user data passed to g_node_traverse().
- * Returns:
+ * Returns :
  * TRUE to stop the traversal.
  */
 // gboolean (*GNodeTraverseFunc) (GNode *node,  gpointer data);
@@ -4047,9 +4161,9 @@ public typedef extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
  * Specifies the type of function passed to g_node_children_foreach().
  * The function is called with each child node, together with the user data
  * passed to g_node_children_foreach().
- * node:
+ * node :
  * a GNode.
- * data:
+ * data :
  * user data passed to g_node_children_foreach().
  */
 // void (*GNodeForeachFunc) (GNode *node,  gpointer data);
@@ -4059,7 +4173,7 @@ public typedef extern(C) void  function (GNode*, void*) GNodeForeachFunc;
  * Specifies the type of function which is called when a data element is
  * destroyed. It is passed the pointer to the data element and should free
  * any memory and resources allocated for it.
- * data:
+ * data :
  * the data element.
  */
 // void (*GDestroyNotify) (gpointer data);
@@ -4069,11 +4183,11 @@ public typedef extern(C) void  function (void*) GDestroyNotify;
  * Specifies the type of function passed to g_dataset_foreach().
  * It is called with each GQuark id and associated data element,
  * together with the user_data parameter supplied to g_dataset_foreach().
- * key_id:
+ * key_id :
  * the GQuark id to identifying the data element.
- * data:
+ * data :
  * the data element.
- * user_data:
+ * user_data :
  * user data passed to g_dataset_foreach().
  */
 // void (*GDataForeachFunc) (GQuark key_id,  gpointer data,  gpointer user_data);
@@ -4084,7 +4198,7 @@ public typedef extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
  * passed to g_cache_new().
  * The functions are passed a pointer to the GCache key or GCache value and
  * should free any memory and other resources associated with it.
- * value:
+ * value :
  * the GCache value to destroy.
  */
 // void (*GCacheDestroyFunc) (gpointer value);
@@ -4094,9 +4208,9 @@ public typedef extern(C) void  function (void*) GCacheDestroyFunc;
  * Specifies the type of the key_dup_func function passed to g_cache_new().
  * The function is passed a key (not a value as the prototype implies) and
  * should return a duplicate of the key.
- * value:
+ * value :
  * the GCache key to destroy (not a GCache value as it seems).
- * Returns:
+ * Returns :
  * a copy of the GCache key.
  */
 // gpointer (*GCacheDupFunc) (gpointer value);
@@ -4106,9 +4220,9 @@ public typedef extern(C) void*  function (void*) GCacheDupFunc;
  * Specifies the type of the value_new_func function passed to g_cache_new().
  * It is passed a GCache key and should create the value corresponding to the
  * key.
- * key:
+ * key :
  * a GCache key.
- * Returns:
+ * Returns :
  * a new GCache value corresponding to the key.
  */
 // gpointer (*GCacheNewFunc) (gpointer key);

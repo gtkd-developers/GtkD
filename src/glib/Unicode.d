@@ -79,7 +79,7 @@ private import glib.GException;
  * on the Unicode Character Data tables, which are available from
  * www.unicode.org.
  * GLib 2.8 supports Unicode 4.0, GLib 2.10 supports Unicode 4.1,
- * GLib 2.12 supports Unicode 5.0.
+ * GLib 2.12 supports Unicode 5.0, GLib 2.16.3 supports Unicode 5.1.
  */
 public class Unicode
 {
@@ -619,9 +619,8 @@ public class Unicode
 	 * it starts with an appropriate byte.
 	 * Params:
 	 * p =  a pointer to a position within a UTF-8 encoded string
-	 * end =  a pointer to the end of the string, or NULL to indicate
-	 *  that the string is nul-terminated, in which case
-	 *  the returned value will be
+	 * end =  a pointer to the byte following the end of the string,
+	 * or NULL to indicate that the string is nul-terminated.
 	 * Returns: a pointer to the found character or NULL
 	 */
 	public static string utf8_FindNextChar(string p, string end)
@@ -729,8 +728,8 @@ public class Unicode
 	 * Since 2.2
 	 * Params:
 	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length of str to use. If len < 0, then
-	 *  the string is nul-terminated.
+	 * len =  the maximum length of str to use, in bytes. If len < 0,
+	 *  then the string is nul-terminated.
 	 * Returns: a newly-allocated string which is the reverse of str.
 	 */
 	public static string utf8_Strreverse(string str, int len)
@@ -842,8 +841,6 @@ public class Unicode
 	 * (in this case DIGIT THREE). Formatting information
 	 * may be lost but for most text operations such
 	 * characters should be considered the same.
-	 * For example, g_utf8_collate() normalizes
-	 * with G_NORMALIZE_ALL as its first step.
 	 * G_NORMALIZE_DEFAULT_COMPOSE and G_NORMALIZE_ALL_COMPOSE
 	 * are like G_NORMALIZE_DEFAULT and G_NORMALIZE_ALL,
 	 * but returned a result with composed forms rather
@@ -963,8 +960,8 @@ public class Unicode
 	 * string after the converted text.
 	 * Params:
 	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length of str to use. If len < 0, then
-	 *  the string is nul-terminated.
+	 * len =  the maximum length of str to use, in bytes. If len < 0,
+	 *  then the string is nul-terminated.
 	 * itemsRead =  location to store number of bytes read, or NULL.
 	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 *  returned in case str contains a trailing partial
@@ -998,8 +995,8 @@ public class Unicode
 	 * but does no error checking on the input.
 	 * Params:
 	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length of str to use. If len < 0, then
-	 *  the string is nul-terminated.
+	 * len =  the maximum length of str to use, in bytes. If len < 0,
+	 *  then the string is nul-terminated.
 	 * itemsWritten =  location to store the number of characters in the
 	 *  result, or NULL.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free().
@@ -1012,11 +1009,11 @@ public class Unicode
 	
 	/**
 	 * Convert a string from UTF-16 to UCS-4. The result will be
-	 * terminated with a 0 character.
+	 * nul-terminated.
 	 * Params:
 	 * str =  a UTF-16 encoded string
 	 * len =  the maximum length (number of gunichar2) of str to use.
-	 *  If len < 0, then the string is terminated with a 0 character.
+	 *  If len < 0, then the string is nul-terminated.
 	 * itemsRead =  location to store number of words read, or NULL.
 	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 *  returned in case str contains a trailing partial
@@ -1053,7 +1050,7 @@ public class Unicode
 	 * Params:
 	 * str =  a UTF-16 encoded string
 	 * len =  the maximum length (number of gunichar2) of str to use.
-	 *  If len < 0, then the string is terminated with a 0 character.
+	 *  If len < 0, then the string is nul-terminated.
 	 * itemsRead =  location to store number of words read, or NULL.
 	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 *  returned in case str contains a trailing partial
@@ -1086,7 +1083,7 @@ public class Unicode
 	 * Params:
 	 * str =  a UCS-4 encoded string
 	 * len =  the maximum length (number of characters) of str to use.
-	 *  If len < 0, then the string is terminated with a 0 character.
+	 *  If len < 0, then the string is nul-terminated.
 	 * itemsRead =  location to store number of bytes read, or NULL.
 	 *  If an error occurs then the index of the invalid input
 	 *  is stored here.
@@ -1117,7 +1114,7 @@ public class Unicode
 	 * Params:
 	 * str =  a UCS-4 encoded string
 	 * len =  the maximum length (number of characters) of str to use.
-	 *  If len < 0, then the string is terminated with a 0 character.
+	 *  If len < 0, then the string is nul-terminated.
 	 * itemsRead =  location to store number of characters read, or NULL.
 	 * itemsWritten =  location to store number of bytes written or NULL.
 	 *  The value here stored does not include the trailing 0

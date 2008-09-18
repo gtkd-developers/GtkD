@@ -85,7 +85,7 @@ private import glib.ConstructionException;
  * to use the new g_slice API instead of g_malloc() and
  * friends, as long as objects are not resized during their lifetime and the
  * object size used at allocation time is still available when freeing.
- * Example15.Using the slice allocator
+ * Example 15. Using the slice allocator
  *  gchar *mem[10000];
  *  gint i;
  *  /+* Allocate 10000 blocks. +/
@@ -101,7 +101,7 @@ private import glib.ConstructionException;
  *  {
 	 *  g_slice_free1 (50, mem[i]);
  *  }
- * Example16.Using the slice allocator with data structures
+ * Example 16. Using the slice allocator with data structures
  *  GRealArray *array;
  *  /+* Allocate one block, using the g_slice_new() macro. +/
  *  array = g_slice_new (GRealArray);

@@ -238,7 +238,7 @@ extern(C)
 	gint function(GIOChannel* channel)g_io_channel_unix_get_fd;
 	GIOChannel* function(gint fd)g_io_channel_win32_new_fd;
 	GIOChannel* function(gint socket)g_io_channel_win32_new_socket;
-	GIOChannel* function(guint hwnd)g_io_channel_win32_new_messages;
+	GIOChannel* function(gsize hwnd)g_io_channel_win32_new_messages;
 	void function(GIOChannel* channel)g_io_channel_init;
 	GIOChannel* function(gchar* filename, gchar* mode, GError** error)g_io_channel_new_file;
 	GIOStatus function(GIOChannel* channel, gchar* buf, gsize count, gsize* bytesRead, GError** error)g_io_channel_read_chars;
@@ -283,6 +283,7 @@ extern(C)
 	GError* function(GError* error)g_error_copy;
 	gboolean function(GError* error, GQuark domain, gint code)g_error_matches;
 	void function(GError** err, GQuark domain, gint code, gchar* format, ... )g_set_error;
+	void function(GError** err, GQuark domain, gint code, gchar* message)g_set_error_literal;
 	void function(GError** dest, GError* src)g_propagate_error;
 	void function(GError** err)g_clear_error;
 	void function(GError** err, gchar* format, ... )g_prefix_error;
@@ -300,7 +301,6 @@ extern(C)
 	GPrintFunc function(GPrintFunc func)g_set_print_handler;
 	void function(gchar* format, ... )g_printerr;
 	GPrintFunc function(GPrintFunc func)g_set_printerr_handler;
-	void function(char* domain, char* file, int line, char* func, char* warnexpr)g_warn_message;
 	void function(gchar* prgName)g_on_error_query;
 	void function(gchar* prgName)g_on_error_stack_trace;
 	
@@ -327,6 +327,7 @@ extern(C)
 	gchar* function(gchar* haystack, gssize haystackLen, gchar* needle)g_strrstr_len;
 	gboolean function(gchar* str, gchar* prefix)g_str_has_prefix;
 	gboolean function(gchar* str, gchar* suffix)g_str_has_suffix;
+	int function(char* str1, char* str2)g_strcmp0;
 	gsize function(gchar* dest, gchar* src, gsize destSize)g_strlcpy;
 	gsize function(gchar* dest, gchar* src, gsize destSize)g_strlcat;
 	gchar* function(gchar* format, ... )g_strdup_printf;
@@ -480,6 +481,7 @@ extern(C)
 	GChecksum* function(GChecksumType checksumType)g_checksum_new;
 	GChecksum* function(GChecksum* checksum)g_checksum_copy;
 	void function(GChecksum* checksum)g_checksum_free;
+	void function(GChecksum* checksum)g_checksum_reset;
 	void function(GChecksum* checksum, guchar* data, gssize length)g_checksum_update;
 	gchar* function(GChecksum* checksum)g_checksum_get_string;
 	void function(GChecksum* checksum, guint8* buffer, gsize* digestLen)g_checksum_get_digest;
@@ -488,8 +490,11 @@ extern(C)
 	
 	// glib.Internationalization
 	
-	gchar* function(gchar* msgid, gchar* msgval)g_strip_context;
+	gchar* function(gchar* domain, gchar* msgid)g_dgettext;
+	gchar* function(gchar* domain, gchar* msgid, gchar* msgidPlural, gulong n)g_dngettext;
 	gchar* function(gchar* domain, gchar* msgctxtid, gsize msgidoffset)g_dpgettext;
+	gchar* function(gchar* domain, gchar* context, gchar* msgid)g_dpgettext2;
+	gchar* function(gchar* msgid, gchar* msgval)g_strip_context;
 	gchar** function()g_get_language_names;
 	
 	// glib.TimeVal
@@ -690,6 +695,7 @@ extern(C)
 	int function(gchar* filename, int mode)g_access;
 	int function(gchar* filename, int mode)g_creat;
 	int function(gchar* path)g_chdir;
+	int function(gchar* filename, void* utb)g_utime;
 	
 	// glib.Directory
 	
@@ -807,8 +813,11 @@ extern(C)
 	void function(GMarkupParseContext* context, gint* lineNumber, gint* charNumber)g_markup_parse_context_get_position;
 	gchar* function(GMarkupParseContext* context)g_markup_parse_context_get_element;
 	GSList* function(GMarkupParseContext* context)g_markup_parse_context_get_element_stack;
+	gpointer function(GMarkupParseContext* context)g_markup_parse_context_get_user_data;
 	GMarkupParseContext* function(GMarkupParser* parser, GMarkupParseFlags flags, gpointer userData, GDestroyNotify userDataDnotify)g_markup_parse_context_new;
 	gboolean function(GMarkupParseContext* context, gchar* text, gssize textLen, GError** error)g_markup_parse_context_parse;
+	void function(GMarkupParseContext* context, GMarkupParser* parser, gpointer userData)g_markup_parse_context_push;
+	gpointer function(GMarkupParseContext* context)g_markup_parse_context_pop;
 	gboolean function(gchar* elementName, gchar** attributeNames, gchar** attributeValues, GError** error, GMarkupCollectType firstType, gchar* firstAttr, ... )g_markup_collect_attributes;
 	
 	// glib.KeyFile
@@ -1500,6 +1509,7 @@ Symbol[] glibLinks =
 	{ "g_error_copy",  cast(void**)& g_error_copy},
 	{ "g_error_matches",  cast(void**)& g_error_matches},
 	{ "g_set_error",  cast(void**)& g_set_error},
+	{ "g_set_error_literal",  cast(void**)& g_set_error_literal},
 	{ "g_propagate_error",  cast(void**)& g_propagate_error},
 	{ "g_clear_error",  cast(void**)& g_clear_error},
 	{ "g_prefix_error",  cast(void**)& g_prefix_error},
@@ -1508,7 +1518,6 @@ Symbol[] glibLinks =
 	{ "g_set_print_handler",  cast(void**)& g_set_print_handler},
 	{ "g_printerr",  cast(void**)& g_printerr},
 	{ "g_set_printerr_handler",  cast(void**)& g_set_printerr_handler},
-	{ "g_warn_message",  cast(void**)& g_warn_message},
 	{ "g_on_error_query",  cast(void**)& g_on_error_query},
 	{ "g_on_error_stack_trace",  cast(void**)& g_on_error_stack_trace},
 	{ "g_log",  cast(void**)& g_log},
@@ -1529,6 +1538,7 @@ Symbol[] glibLinks =
 	{ "g_strrstr_len",  cast(void**)& g_strrstr_len},
 	{ "g_str_has_prefix",  cast(void**)& g_str_has_prefix},
 	{ "g_str_has_suffix",  cast(void**)& g_str_has_suffix},
+	{ "g_strcmp0",  cast(void**)& g_strcmp0},
 	{ "g_strlcpy",  cast(void**)& g_strlcpy},
 	{ "g_strlcat",  cast(void**)& g_strlcat},
 	{ "g_strdup_printf",  cast(void**)& g_strdup_printf},
@@ -1670,13 +1680,17 @@ Symbol[] glibLinks =
 	{ "g_checksum_new",  cast(void**)& g_checksum_new},
 	{ "g_checksum_copy",  cast(void**)& g_checksum_copy},
 	{ "g_checksum_free",  cast(void**)& g_checksum_free},
+	{ "g_checksum_reset",  cast(void**)& g_checksum_reset},
 	{ "g_checksum_update",  cast(void**)& g_checksum_update},
 	{ "g_checksum_get_string",  cast(void**)& g_checksum_get_string},
 	{ "g_checksum_get_digest",  cast(void**)& g_checksum_get_digest},
 	{ "g_compute_checksum_for_data",  cast(void**)& g_compute_checksum_for_data},
 	{ "g_compute_checksum_for_string",  cast(void**)& g_compute_checksum_for_string},
-	{ "g_strip_context",  cast(void**)& g_strip_context},
+	{ "g_dgettext",  cast(void**)& g_dgettext},
+	{ "g_dngettext",  cast(void**)& g_dngettext},
 	{ "g_dpgettext",  cast(void**)& g_dpgettext},
+	{ "g_dpgettext2",  cast(void**)& g_dpgettext2},
+	{ "g_strip_context",  cast(void**)& g_strip_context},
 	{ "g_get_language_names",  cast(void**)& g_get_language_names},
 	{ "g_get_current_time",  cast(void**)& g_get_current_time},
 	{ "g_usleep",  cast(void**)& g_usleep},
@@ -1850,6 +1864,7 @@ Symbol[] glibLinks =
 	{ "g_access",  cast(void**)& g_access},
 	{ "g_creat",  cast(void**)& g_creat},
 	{ "g_chdir",  cast(void**)& g_chdir},
+	{ "g_utime",  cast(void**)& g_utime},
 	{ "g_dir_open",  cast(void**)& g_dir_open},
 	{ "g_dir_read_name",  cast(void**)& g_dir_read_name},
 	{ "g_dir_rewind",  cast(void**)& g_dir_rewind},
@@ -1937,8 +1952,11 @@ Symbol[] glibLinks =
 	{ "g_markup_parse_context_get_position",  cast(void**)& g_markup_parse_context_get_position},
 	{ "g_markup_parse_context_get_element",  cast(void**)& g_markup_parse_context_get_element},
 	{ "g_markup_parse_context_get_element_stack",  cast(void**)& g_markup_parse_context_get_element_stack},
+	{ "g_markup_parse_context_get_user_data",  cast(void**)& g_markup_parse_context_get_user_data},
 	{ "g_markup_parse_context_new",  cast(void**)& g_markup_parse_context_new},
 	{ "g_markup_parse_context_parse",  cast(void**)& g_markup_parse_context_parse},
+	{ "g_markup_parse_context_push",  cast(void**)& g_markup_parse_context_push},
+	{ "g_markup_parse_context_pop",  cast(void**)& g_markup_parse_context_pop},
 	{ "g_markup_collect_attributes",  cast(void**)& g_markup_collect_attributes},
 	{ "g_key_file_new",  cast(void**)& g_key_file_new},
 	{ "g_key_file_free",  cast(void**)& g_key_file_free},

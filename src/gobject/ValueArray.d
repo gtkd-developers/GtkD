@@ -66,9 +66,10 @@ private import gobject.Value;
 
 /**
  * Description
- * The prime purpose of a GValueArray is for it to be used as an object property
- * that holds an array of values. A GValueArray wraps an array of GValue elements
- * in order for it to be used as a boxed type through G_TYPE_VALUE_ARRAY.
+ * The prime purpose of a GValueArray is for it to be used as an
+ * object property that holds an array of values. A GValueArray wraps
+ * an array of GValue elements in order for it to be used as a boxed
+ * type through G_TYPE_VALUE_ARRAY.
  */
 public class ValueArray
 {
@@ -127,7 +128,7 @@ public class ValueArray
 	 * for n_prealloced elements. New arrays always contain 0 elements,
 	 * regardless of the value of n_prealloced.
 	 * Params:
-	 * nPrealloced = number of values to preallocate space for
+	 * nPrealloced =  number of values to preallocate space for
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint nPrealloced)
@@ -240,7 +241,7 @@ public class ValueArray
 	 * the semantics of GCompareFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.
 	 * Params:
-	 * compareFunc = function to compare elements
+	 * compareFunc =  function to compare elements
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray sort(GCompareFunc compareFunc)

@@ -84,31 +84,29 @@ version(Tango) {
 
 /**
  * Description
- * GObject is the fundamental type providing the common attributes and methods
- * for all object types in GTK+, Pango and other libraries based on GObject.
- * The GObject class provides methods for object construction and destruction,
- * property access methods, and signal support.
- * Signals are described in detail in Signals(3).
+ * GObject is the fundamental type providing the common attributes and
+ * methods for all object types in GTK+, Pango and other libraries
+ * based on GObject. The GObject class provides methods for object
+ * construction and destruction, property access methods, and signal
+ * support. Signals are described in detail in Signals(3).
  * GInitiallyUnowned is derived from GObject. The only difference between
  * the two is that the initial reference of a GInitiallyUnowned is flagged
  * as a floating reference.
  * This means that it is not specifically claimed to be "owned" by
  * any code portion. The main motivation for providing floating references is
  * C convenience. In particular, it allows code to be written as:
- * Example1.
- *  container = create_container();
- *  container_add_child (container, create_child());
+ * container = create_container();
+ * container_add_child (container, create_child());
  * If container_add_child() will g_object_ref_sink() the
  * passed in child, no reference of the newly created child is leaked.
  * Without floating references, container_add_child()
  * can only g_object_ref() the new child, so to implement this code without
  * reference leaks, it would have to be written as:
- * Example2.
- *  Child *child;
- *  container = create_container();
- *  child = create_child();
- *  container_add_child (container, child);
- *  g_object_unref (child);
+ * Child *child;
+ * container = create_container();
+ * child = create_child();
+ * container_add_child (container, child);
+ * g_object_unref (child);
  * The floating reference can be converted into
  * an ordinary reference by calling g_object_ref_sink().
  * For already sunken objects (objects that don't have a floating reference
@@ -121,16 +119,15 @@ version(Tango) {
  * Some object implementations may need to save an objects floating state
  * across certain code portions (an example is GtkMenu), to achive this, the
  * following sequence can be used:
- * Example3.
- *  /+* save floating state +/
- *  gboolean was_floating = g_object_is_floating (object);
- *  g_object_ref_sink (object);
- *  /+* protected code portion +/
- *  ...;
- *  /+* restore floating state +/
- *  if (was_floating)
+ * // save floating state
+ * gboolean was_floating = g_object_is_floating (object);
+ * g_object_ref_sink (object);
+ * // protected code portion
+ * ...;
+ * // restore floating state
+ * if (was_floating)
  *  g_object_force_floating (object);
- *  g_obejct_unref (object); /+* release previously acquired reference +/
+ * g_obejct_unref (object); // release previously acquired reference
  */
 public class ObjectG
 {
@@ -245,10 +242,11 @@ public class ObjectG
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
 	/**
-	 * The notify signal is emitted on an object when one of its properties
-	 * has been changed. Note that getting this signal doesn't guarantee that the
-	 * value of the property has actually changed, it may also be emitted when
-	 * the setter for the property is called to reinstate the previous value.
+	 * The notify signal is emitted on an object when one of its
+	 * properties has been changed. Note that getting this signal
+	 * doesn't guarantee that the value of the property has actually
+	 * changed, it may also be emitted when the setter for the property
+	 * is called to reinstate the previous value.
 	 * This signal is typically used to obtain change notification for a
 	 * single property, by specifying the property name as a detail in the
 	 * g_signal_connect (text_view->buffer, "notify::paste-target-list",
@@ -275,11 +273,11 @@ public class ObjectG
 		}
 		onNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* arg1, ObjectG objectG)
+	extern(C) static void callBackNotify(GObject* pspecStruct, GParamSpec* gobject, ObjectG objectG)
 	{
 		foreach ( void delegate(ParamSpec, ObjectG) dlg ; objectG.onNotifyListeners )
 		{
-			dlg(new ParamSpec(arg1), objectG);
+			dlg(new ParamSpec(gobject), objectG);
 		}
 	}
 	
@@ -287,9 +285,9 @@ public class ObjectG
 	/**
 	 * Installs a new property. This is usually done in the class initializer.
 	 * Params:
-	 * oclass = a GObjectClass
-	 * propertyId = the id for the new property
-	 * pspec = the GParamSpec for the new property
+	 * oclass =  a GObjectClass
+	 * propertyId =  the id for the new property
+	 * pspec =  the GParamSpec for the new property
 	 */
 	public static void classInstallProperty(GObjectClass* oclass, uint propertyId, ParamSpec pspec)
 	{
@@ -300,9 +298,9 @@ public class ObjectG
 	/**
 	 * Looks up the GParamSpec for a property of a class.
 	 * Params:
-	 * oclass = a GObjectClass
-	 * propertyName = the name of the property to look up
-	 * Returns:the GParamSpec for the property, or NULL if the class doesn't havea property of that name
+	 * oclass =  a GObjectClass
+	 * propertyName =  the name of the property to look up
+	 * Returns: the GParamSpec for the property, or NULL if the class doesn't have a property of that name
 	 */
 	public static ParamSpec classFindProperty(GObjectClass* oclass, string propertyName)
 	{
@@ -316,10 +314,10 @@ public class ObjectG
 	}
 	
 	/**
-	 * Returns an array of GParamSpec* for all properties of a class.
+	 * Get an array of GParamSpec* for all properties of a class.
 	 * Params:
-	 * oclass = a GObjectClass
-	 * Returns:an array of GParamSpec* which should be freed after use
+	 * oclass =  a GObjectClass
+	 * Returns: an array of GParamSpec* which should be freed after use
 	 */
 	public static ParamSpec[] classListProperties(GObjectClass* oclass)
 	{
@@ -359,9 +357,9 @@ public class ObjectG
 	 * g_param_spec_get_redirect_target().
 	 * Since 2.4
 	 * Params:
-	 * oclass = a GObjectClass
-	 * propertyId = the new property ID
-	 * name = the name of a property registered in a parent class or
+	 * oclass =  a GObjectClass
+	 * propertyId =  the new property ID
+	 * name =  the name of a property registered in a parent class or
 	 *  in an interface of this class.
 	 */
 	public static void classOverrideProperty(GObjectClass* oclass, uint propertyId, string name)
@@ -386,9 +384,9 @@ public class ObjectG
 	 * been called for any object types implementing this interface.
 	 * Since 2.4
 	 * Params:
-	 * gIface = any interface vtable for the interface, or the default
+	 * gIface =  any interface vtable for the interface, or the default
 	 *  vtable for the interface.
-	 * pspec = the GParamSpec for the new property
+	 * pspec =  the GParamSpec for the new property
 	 */
 	public static void interfaceInstallProperty(void* gIface, ParamSpec pspec)
 	{
@@ -404,10 +402,10 @@ public class ObjectG
 	 * g_type_default_interface_peek().
 	 * Since 2.4
 	 * Params:
-	 * gIface = any interface vtable for the interface, or the default
+	 * gIface =  any interface vtable for the interface, or the default
 	 *  vtable for the interface
-	 * propertyName = name of a property to lookup.
-	 * Returns:the GParamSpec for the property of the interface with the name property_name, or NULL if no such property exists.
+	 * propertyName =  name of a property to lookup.
+	 * Returns: the GParamSpec for the property of the interface with the name property_name, or NULL if no such property exists.
 	 */
 	public static ParamSpec interfaceFindProperty(void* gIface, string propertyName)
 	{
@@ -427,9 +425,9 @@ public class ObjectG
 	 * already been loaded, g_type_default_interface_peek().
 	 * Since 2.4
 	 * Params:
-	 * gIface = any interface vtable for the interface, or the default
+	 * gIface =  any interface vtable for the interface, or the default
 	 *  vtable for the interface
-	 * Returns:a pointer to an array of pointers to GParamSpec structures. The paramspecs are owned by GLib, but the array should be freed with g_free() when you are done with it.
+	 * Returns: a pointer to an array of pointers to GParamSpec structures. The paramspecs are owned by GLib, but the array should be freed with g_free() when you are done with it.
 	 */
 	public static ParamSpec[] interfaceListProperties(void* gIface)
 	{
@@ -455,8 +453,8 @@ public class ObjectG
 	 * Construction parameters (see G_PARAM_CONSTRUCT, G_PARAM_CONSTRUCT_ONLY)
 	 * which are not explicitly specified are set to their default values.
 	 * Params:
-	 * objectType = the type id of the GObject subtype to instantiate
-	 * parameters = an array of GParameter
+	 * objectType =  the type id of the GObject subtype to instantiate
+	 * parameters =  an array of GParameter
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType objectType, GParameter[] parameters)
@@ -473,8 +471,8 @@ public class ObjectG
 	/**
 	 * Increases the reference count of object.
 	 * Params:
-	 * object = a GObject
-	 * Returns:the same object
+	 * object =  a GObject
+	 * Returns: the same object
 	 */
 	public static void* doref(void* object)
 	{
@@ -483,11 +481,10 @@ public class ObjectG
 	}
 	
 	/**
-	 * Decreases the reference count of object.
-	 * When its reference count drops to 0, the object is finalized
-	 * (i.e. its memory is freed).
+	 * Decreases the reference count of object. When its reference count
+	 * drops to 0, the object is finalized (i.e. its memory is freed).
 	 * Params:
-	 * object = a GObject
+	 * object =  a GObject
 	 */
 	public static void unref(void* object)
 	{
@@ -500,14 +497,14 @@ public class ObjectG
 	 * floating reference, if object
 	 * has a floating reference.
 	 * In other words, if the object is floating, then this call "assumes
-	 * ownership" of the floating reference, converting it to a normal reference
-	 * by clearing the floating flag while leaving the reference count unchanged.
-	 * If the object is not floating, then this call adds a new normal reference
-	 * increasing the reference count by one.
+	 * ownership" of the floating reference, converting it to a normal
+	 * reference by clearing the floating flag while leaving the reference
+	 * count unchanged. If the object is not floating, then this call
+	 * adds a new normal reference increasing the reference count by one.
 	 * Since 2.10
 	 * Params:
-	 * object = a GObject
-	 * Returns:object
+	 * object =  a GObject
+	 * Returns: object
 	 */
 	public static void* refSink(void* object)
 	{
@@ -520,8 +517,8 @@ public class ObjectG
 	 * reference.
 	 * Since 2.10
 	 * Params:
-	 * object = a GObject
-	 * Returns:TRUE if object has a floating reference
+	 * object =  a GObject
+	 * Returns: TRUE if object has a floating reference
 	 */
 	public static int isFloating(void* object)
 	{
@@ -544,14 +541,14 @@ public class ObjectG
 	}
 	
 	/**
-	 * Adds a weak reference callback to an object. Weak references are used for
-	 * notification when an object is finalized. They are called "weak references"
-	 * because they allow you to safely hold a pointer to an object without calling
-	 * g_object_ref() (g_object_ref() adds a strong reference, that is, forces the
-	 * object to stay alive).
+	 * Adds a weak reference callback to an object. Weak references are
+	 * used for notification when an object is finalized. They are called
+	 * "weak references" because they allow you to safely hold a pointer
+	 * to an object without calling g_object_ref() (g_object_ref() adds a
+	 * strong reference, that is, forces the object to stay alive).
 	 * Params:
-	 * notify = callback to invoke before the object is freed
-	 * data = extra data to pass to notify
+	 * notify =  callback to invoke before the object is freed
+	 * data =  extra data to pass to notify
 	 */
 	public void weakRef(GWeakNotify notify, void* data)
 	{
@@ -562,8 +559,8 @@ public class ObjectG
 	/**
 	 * Removes a weak reference callback to an object.
 	 * Params:
-	 * notify = callback to search for
-	 * data = data to search for
+	 * notify =  callback to search for
+	 * data =  data to search for
 	 */
 	public void weakUnref(GWeakNotify notify, void* data)
 	{
@@ -573,11 +570,11 @@ public class ObjectG
 	
 	/**
 	 * Adds a weak reference from weak_pointer to object to indicate that
-	 * the pointer located at weak_pointer_location is only valid during the
-	 * lifetime of object. When the object is finalized, weak_pointer will
-	 * be set to NULL.
+	 * the pointer located at weak_pointer_location is only valid during
+	 * the lifetime of object. When the object is finalized,
+	 * weak_pointer will be set to NULL.
 	 * Params:
-	 * weakPointerLocation = The memory address of a pointer.
+	 * weakPointerLocation =  The memory address of a pointer.
 	 */
 	public void addWeakPointer(void** weakPointerLocation)
 	{
@@ -590,7 +587,7 @@ public class ObjectG
 	 * using g_object_add_weak_pointer(). The weak_pointer_location has
 	 * to match the one used with g_object_add_weak_pointer().
 	 * Params:
-	 * weakPointerLocation = The memory address of a pointer.
+	 * weakPointerLocation =  The memory address of a pointer.
 	 */
 	public void removeWeakPointer(void** weakPointerLocation)
 	{
@@ -625,10 +622,10 @@ public class ObjectG
 	 * is important state in the proxy object.
 	 * Since 2.8
 	 * Params:
-	 * notify = a function to call when this reference is the
+	 * notify =  a function to call when this reference is the
 	 *  last reference to the object, or is no longer
 	 *  the last reference.
-	 * data = data to pass to notify
+	 * data =  data to pass to notify
 	 */
 	public void addToggleRef(GToggleNotify notify, void* data)
 	{
@@ -641,10 +638,10 @@ public class ObjectG
 	 * reference count of the object is decreased by one.
 	 * Since 2.8
 	 * Params:
-	 * notify = a function to call when this reference is the
+	 * notify =  a function to call when this reference is the
 	 *  last reference to the object, or is no longer
 	 *  the last reference.
-	 * data = data to pass to notify
+	 * data =  data to pass to notify
 	 */
 	public void removeToggleRef(GToggleNotify notify, void* data)
 	{
@@ -655,7 +652,7 @@ public class ObjectG
 	/**
 	 * Emits a "notify" signal for the property property_name on object.
 	 * Params:
-	 * propertyName = the name of a property installed on the class of object.
+	 * propertyName =  the name of a property installed on the class of object.
 	 */
 	public void notify(string propertyName)
 	{
@@ -664,8 +661,10 @@ public class ObjectG
 	}
 	
 	/**
-	 * Stops emission of "notify" signals on object. The signals are
-	 * queued until g_object_thaw_notify() is called on object.
+	 * Increases the freeze count on object. If the freeze count is
+	 * non-zero, the emission of "notify" signals on object is
+	 * stopped. The signals are queued until the freeze count is decreased
+	 * to zero.
 	 * This is necessary for accessors that modify multiple properties to prevent
 	 * premature notification while the object is still being modified.
 	 */
@@ -676,8 +675,10 @@ public class ObjectG
 	}
 	
 	/**
-	 * Reverts the effect of a previous call to g_object_freeze_notify().
-	 * This causes all queued "notify" signals on object to be emitted.
+	 * Reverts the effect of a previous call to
+	 * g_object_freeze_notify(). The freeze count is decreased on object
+	 * and when it reaches zero, all queued "notify" signals are emitted.
+	 * It is an error to call this function when the freeze count is zero.
 	 */
 	public void thawNotify()
 	{
@@ -688,8 +689,8 @@ public class ObjectG
 	/**
 	 * Gets a named field from the objects table of associations (see g_object_set_data()).
 	 * Params:
-	 * key = name of the key for that association
-	 * Returns:the data if found, or NULL if no such data exists.
+	 * key =  name of the key for that association
+	 * Returns: the data if found, or NULL if no such data exists.
 	 */
 	public void* getData(string key)
 	{
@@ -703,8 +704,8 @@ public class ObjectG
 	 * If the object already had an association with that name,
 	 * the old association will be destroyed.
 	 * Params:
-	 * key = name of the key
-	 * data = data to associate with that key
+	 * key =  name of the key
+	 * data =  data to associate with that key
 	 */
 	public void setData(string key, void* data)
 	{
@@ -716,8 +717,8 @@ public class ObjectG
 	 * Remove a specified datum from the object's data associations,
 	 * without invoking the association's destroy handler.
 	 * Params:
-	 * key = name of the key
-	 * Returns:the data if found, or NULL if no such data exists.
+	 * key =  name of the key
+	 * Returns: the data if found, or NULL if no such data exists.
 	 */
 	public void* stealData(string key)
 	{
@@ -730,7 +731,7 @@ public class ObjectG
 	 * g_object_set_qdata().
 	 * Params:
 	 * quark =  A GQuark, naming the user data pointer
-	 * Returns:The user data pointer set, or NULL
+	 * Returns: The user data pointer set, or NULL
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -766,7 +767,8 @@ public class ObjectG
 	 * Params:
 	 * quark =  A GQuark, naming the user data pointer
 	 * data =  An opaque user data pointer
-	 * destroy = Function to invoke with data as argument, when data needs to be freed
+	 * destroy =  Function to invoke with data as argument, when data
+	 *  needs to be freed
 	 */
 	public void setQdataFull(GQuark quark, void* data, GDestroyNotify destroy)
 	{
@@ -782,7 +784,7 @@ public class ObjectG
 	 * Usually, calling this function is only required to update
 	 * Params:
 	 * quark =  A GQuark, naming the user data pointer
-	 * Returns:The user data pointer set, or NULL
+	 * Returns: The user data pointer set, or NULL
 	 */
 	public void* stealQdata(GQuark quark)
 	{
@@ -793,8 +795,8 @@ public class ObjectG
 	/**
 	 * Sets a property on an object.
 	 * Params:
-	 * propertyName = the name of the property to set
-	 * value = the value
+	 * propertyName =  the name of the property to set
+	 * value =  the value
 	 */
 	public void setProperty(string propertyName, Value value)
 	{
@@ -809,8 +811,8 @@ public class ObjectG
 	 * Note that g_object_get_property() is really intended for language
 	 * bindings, g_object_get() is much more convenient for C programming.
 	 * Params:
-	 * propertyName = the name of the property to get
-	 * value = return location for the property value
+	 * propertyName =  the name of the property to get
+	 * value =  return location for the property value
 	 */
 	public void getProperty(string propertyName, Value value)
 	{
@@ -823,9 +825,9 @@ public class ObjectG
 	 * Construction parameters (see G_PARAM_CONSTRUCT, G_PARAM_CONSTRUCT_ONLY)
 	 * which are not explicitly specified are set to their default values.
 	 * Params:
-	 * objectType = the type id of the GObject subtype to instantiate
-	 * firstPropertyName = the name of the first property
-	 * varArgs = the value of the first property, followed optionally by more
+	 * objectType =  the type id of the GObject subtype to instantiate
+	 * firstPropertyName =  the name of the first property
+	 * varArgs =  the value of the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -843,8 +845,8 @@ public class ObjectG
 	/**
 	 * Sets properties on an object.
 	 * Params:
-	 * firstPropertyName = name of the first property to set
-	 * varArgs = value for the first property, followed optionally by more
+	 * firstPropertyName =  name of the first property to set
+	 * varArgs =  value for the first property, followed optionally by more
 	 *  name/value pairs, followed by NULL
 	 */
 	public void setValist(string firstPropertyName, void* varArgs)
@@ -855,13 +857,13 @@ public class ObjectG
 	
 	/**
 	 * Gets properties of an object.
-	 * In general, a copy is made of the property contents and the caller is
-	 * responsible for freeing the memory in the appropriate manner for the type,
-	 * for instance by calling g_free() or g_object_unref().
+	 * In general, a copy is made of the property contents and the caller
+	 * is responsible for freeing the memory in the appropriate manner for
+	 * the type, for instance by calling g_free() or g_object_unref().
 	 * See g_object_get().
 	 * Params:
-	 * firstPropertyName = name of the first property to get
-	 * varArgs = return location for the first property, followed optionally by more
+	 * firstPropertyName =  name of the first property to get
+	 * varArgs =  return location for the first property, followed optionally by more
 	 *  name/return location pairs, followed by NULL
 	 */
 	public void getValist(string firstPropertyName, void* varArgs)
@@ -871,17 +873,17 @@ public class ObjectG
 	}
 	
 	/**
-	 * This function essentially limits the life time of the closure
-	 * to the life time of the object. That is, when the object is finalized,
-	 * the closure is invalidated by calling g_closure_invalidate() on it,
-	 * in order to prevent invocations of the closure with a finalized
-	 * (nonexisting) object. Also, g_object_ref() and g_object_unref() are added
-	 * as marshal guards to the closure, to ensure that an extra reference
-	 * count is held on object during invocation of the closure.
-	 * Usually, this function will be called on closures that use this object
-	 * as closure data.
+	 * This function essentially limits the life time of the closure to
+	 * the life time of the object. That is, when the object is finalized,
+	 * the closure is invalidated by calling g_closure_invalidate() on
+	 * it, in order to prevent invocations of the closure with a finalized
+	 * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+	 * added as marshal guards to the closure, to ensure that an extra
+	 * reference count is held on object during invocation of the
+	 * closure. Usually, this function will be called on closures that
+	 * use this object as closure data.
 	 * Params:
-	 * closure = GClosure to watch
+	 * closure =  GClosure to watch
 	 */
 	public void watchClosure(Closure closure)
 	{
@@ -892,7 +894,6 @@ public class ObjectG
 	/**
 	 * Releases all references to other objects. This can be used to break
 	 * reference cycles.
-	 * Note
 	 * This functions should only be called from object system implementations.
 	 */
 	public void runDispose()

@@ -65,9 +65,9 @@ private import glib.Str;
 /**
  * Description
  * Functions for manipulating Universal Resource Identifiers (URIs) as
- * defined by RFC 3986. It is highly recommended that you have read and
- * understand RFC 3986 for understanding this API. A copy of RFC 3986
- * can be found at http://www.ietf.org/rfc/rfc3986.txt.
+ * defined by
+ * RFC 3986. It is highly recommended that you have read and
+ * understand RFC 3986 for understanding this API.
  */
 public class URI
 {

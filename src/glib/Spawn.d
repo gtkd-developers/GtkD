@@ -415,11 +415,17 @@ public class Spawn
 	/**
 	 * See g_spawn_async_with_pipes() for a full description; this function
 	 * simply calls the g_spawn_async_with_pipes() without any pipes.
+	 * You should call g_spawn_close_pid() on the returned child process
+	 * reference when you don't need it any more.
 	 * Note
 	 * If you are writing a GTK+ application, and the program you
 	 * are spawning is a graphical application, too, then you may
 	 * want to use gdk_spawn_on_screen() instead to ensure that
 	 * the spawned program opens its windows on the right screen.
+	 * Note
+	 *  Note that the returned child_pid on Windows is a
+	 * handle to the child process and not its identifier. Process handles
+	 * and process identifiers are different concepts on Windows.
 	 * Params:
 	 * workingDirectory =  child's current working directory, or NULL to inherit parent's
 	 * argv =  child's argument vector
@@ -427,7 +433,7 @@ public class Spawn
 	 * flags =  flags from GSpawnFlags
 	 * childSetup =  function to run in the child just before exec()
 	 * userData =  user data for child_setup
-	 * childPid =  return location for child process ID, or NULL
+	 * childPid =  return location for child process reference, or NULL
 	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
@@ -572,12 +578,12 @@ public class Spawn
 	}
 	
 	/**
-	 * On some platforms, notably WIN32, the GPid type represents a resource
+	 * On some platforms, notably Windows, the GPid type represents a resource
 	 * which must be closed to prevent resource leaking. g_spawn_close_pid()
 	 * is provided for this purpose. It should be used on all platforms, even
 	 * though it doesn't do anything under UNIX.
 	 * Params:
-	 * pid =  The process identifier to close
+	 * pid =  The process reference to close
 	 */
 	public static void closePid(GPid pid)
 	{

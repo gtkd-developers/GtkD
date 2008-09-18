@@ -338,6 +338,9 @@ public class Util
 	/**
 	 * Returns the full path of a special directory using its logical id.
 	 * On Unix this is done using the XDG special user directories.
+	 * For compatibility with existing practise, G_USER_DIRECTORY_DESKTOP
+	 * falls back to $HOME/Desktop when XDG special
+	 * user directories have not been set up.
 	 * Depending on the platform, the user might be able to change the path
 	 * of the special directory without requiring the session to restart; GLib
 	 * will not reflect any change once the special directories are loaded.
@@ -434,7 +437,7 @@ public class Util
 	 * Not even readable
 	 * Since applications are in general not written
 	 * to deal with these situations it was considered better to make
-	 * g_get_homedir() not pay attention to HOME and to
+	 * g_get_home_dir() not pay attention to HOME and to
 	 * return the real home directory for the user. If applications
 	 * Returns: the current user's home directory
 	 */

@@ -108,10 +108,13 @@ public class WindowsUtils
 	}
 	
 	/**
+	 * Warning
+	 * g_win32_get_package_installation_directory is deprecated and should not be used in newly-written code.
 	 * Try to determine the installation directory for a software package.
-	 * This function will be deprecated in the future. Use
+	 * This function is deprecated. Use
 	 * g_win32_get_package_installation_directory_of_module() instead.
-	 * The use of package is deprecated. You should always pass NULL.
+	 * The use of package is deprecated. You should always pass NULL. A
+	 * warning is printed if non-NULL is passed as package.
 	 * The original intended use of package was for a short identifier of
 	 * the package, typically the same identifier as used for
 	 * GETTEXT_PACKAGE in software configured using GNU
@@ -127,7 +130,7 @@ public class WindowsUtils
 	 * GLib itself, is desirable for various reasons.
 	 * For this reason it is recommeded to always pass NULL as
 	 * package to this function, to avoid the temptation to use the
-	 * Registry. In version 2.18 of GLib the package parameter
+	 * Registry. In version 2.20 of GLib the package parameter
 	 * will be ignored and this function won't look in the Registry at all.
 	 * If package is NULL, or the above value isn't found in the
 	 * Registry, but dll_name is non-NULL, it should name a DLL loaded
@@ -142,9 +145,8 @@ public class WindowsUtils
 	 * the main executable of the process was loaded is used instead in
 	 * the same way as above.
 	 * Params:
-	 * p =  You should pass NULL for this.
 	 * dllName =  The name of a DLL that a package provides in UTF-8, or NULL.
-	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding,i.e. UTF-8. The return value should be freed with g_free() when notneeded any longer. If the function fails NULL is returned.
+	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding,i.e. UTF-8. The return value should be freed with g_free() when notneeded any longer. If the function fails NULL is returned.Deprecated:2.18: Pass the HMODULE of a DLL or EXE tog_win32_get_package_installation_directory_of_module() instead.
 	 */
 	public static string getPackageInstallationDirectory(string p, string dllName)
 	{
@@ -185,8 +187,11 @@ public class WindowsUtils
 	}
 	
 	/**
-	 * This function will be deprecated in the future. Use
-	 * g_win32_get_package_installation_directory_of_module() instead.
+	 * Warning
+	 * g_win32_get_package_installation_subdirectory is deprecated and should not be used in newly-written code.
+	 * This function is deprecated. Use
+	 * g_win32_get_package_installation_directory_of_module() and
+	 * g_build_filename() instead.
 	 * Returns a newly-allocated string containing the path of the
 	 * subdirectory subdir in the return value from calling
 	 * g_win32_get_package_installation_directory() with the package and
@@ -195,10 +200,9 @@ public class WindowsUtils
 	 * particular, note that it is deprecated to pass anything except NULL
 	 * as package.
 	 * Params:
-	 * p =  You should pass NULL for this.
 	 * dllName =  The name of a DLL that a package provides, in UTF-8, or NULL.
 	 * subdir =  A subdirectory of the package installation directory, also in UTF-8
-	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8. The return value should befreed with g_free() when no longer needed. If something goes wrong,NULL is returned.
+	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8. The return value should befreed with g_free() when no longer needed. If something goes wrong,NULL is returned.Deprecated:2.18: Pass the HMODULE of a DLL or EXE tog_win32_get_package_installation_directory_of_module() instead, andthen construct a subdirectory pathname with g_build_filename().
 	 */
 	public static string getPackageInstallationSubdirectory(string p, string dllName, string subdir)
 	{

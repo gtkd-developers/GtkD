@@ -86,7 +86,7 @@ private import glib.Str;
  * If your module introduces static data to common subsystems in the running
  * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
- * Example11.Calling a function defined in a GModule
+ * Example 10. Calling a function defined in a GModule
  * /+* the function signature for 'say_hello' +/
  * typedef void (* SayHelloFunc) (const char *message);
  * gboolean

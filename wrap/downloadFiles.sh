@@ -3,12 +3,17 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://library.gnome.org/devel/glib/glib-html-2.16.1.tar.gz | tar xvfz -
-ln -s glib-html-2.16.1 gthread
-ln -s glib-html-2.16.1 glib
+curl http://library.gnome.org/devel/glib/glib-html-2.18.1.tar.gz | tar xvfz -
+ln -s glib-html-2.18.1 gthread
+ln -s glib-html-2.18.1 glib
+#Missing in 2.18.1
+cd glib
+rm glib-Dynamic-Loading-of-Modules.html
+wget http://library.gnome.org/devel/glib/2.16/glib-Dynamic-Loading-of-Modules.html
+cd ..
 #GOBJECT
-curl http://library.gnome.org/devel/gobject/gobject-html-2.16.1.tar.gz | tar xvfz -
-ln -s gobject-html-2.16.1 gobject
+curl http://library.gnome.org/devel/gobject/gobject-html-2.18.1.tar.gz | tar xvfz -
+ln -s gobject-html-2.18.1 gobject
 #GIO
 curl http://library.gnome.org/devel/gio/gio-html-2.18.0.tar.gz | tar xvfz -
 ln -s gio-html-2.18.0 gio
@@ -16,8 +21,8 @@ ln -s gio-html-2.18.0 gio
 curl http://library.gnome.org/devel/atk/atk-html-1.22.0.tar.gz | tar xvfz -
 ln -s atk-html-1.22.0 atk
 #PANGO
-curl http://library.gnome.org/devel/pango/pango-html-1.20.0.tar.gz | tar xvfz -
-ln -s pango-html-1.20.0 pango
+curl http://library.gnome.org/devel/pango/pango-html-1.20.5.tar.gz | tar xvfz -
+ln -s pango-html-1.20.5 pango
 #GDK-PIXBUF
 curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.14.2.tar.gz | tar xvfz -
 ln -s gdk-pixbuf-html-2.14.2 gdk-pixbuf

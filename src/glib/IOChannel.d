@@ -329,7 +329,7 @@ public class IOChannel
 	 */
 	public static IOChannel win32_NewMessages(uint hwnd)
 	{
-		// GIOChannel* g_io_channel_win32_new_messages (guint hwnd);
+		// GIOChannel* g_io_channel_win32_new_messages (gsize hwnd);
 		auto p = g_io_channel_win32_new_messages(hwnd);
 		if(p is null)
 		{

@@ -323,6 +323,8 @@ public class KeyFile
 	
 	/**
 	 * This function outputs key_file as a string.
+	 * Note that this function never reports an error,
+	 * so it is safe to pass NULL as error.
 	 * Since 2.6
 	 * Params:
 	 * length =  return location for the length of the

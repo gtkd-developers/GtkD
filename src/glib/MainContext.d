@@ -132,8 +132,8 @@ private import gthread.Mutex;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure1, States of a Main Context.
- * Figure1.States of a Main Context
+ *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
+ * Figure 1. States of a Main Context
  */
 public class MainContext
 {

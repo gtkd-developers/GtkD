@@ -140,6 +140,12 @@ public class SimpleXML
 	 * Note that this function doesn't protect whitespace and line endings
 	 * from being processed according to the XML rules for normalization
 	 * of line endings and attribute values.
+	 * Note also that if given a string containing them, this function
+	 * will produce character references in the range of x1; ..
+	 * x1f; for all control sequences except for tabstop, newline
+	 * and carriage return. The character references in this range are
+	 * not valid XML 1.0, but they are valid XML 1.1 and will be accepted
+	 * by the GMarkup parser.
 	 * Params:
 	 * text =  some valid UTF-8 text
 	 * length =  length of text in bytes, or -1 if the text is nul-terminated
@@ -192,7 +198,8 @@ public class SimpleXML
 	
 	/**
 	 * Frees a GMarkupParseContext. Can't be called from inside
-	 * one of the GMarkupParser functions.
+	 * one of the GMarkupParser functions. Can't be called while
+	 * a subparser is pushed.
 	 */
 	public void free()
 	{
@@ -254,6 +261,19 @@ public class SimpleXML
 	}
 	
 	/**
+	 * Returns the user_data associated with context. This will either
+	 * be the user_data that was provided to g_markup_parse_context_new()
+	 * or to the most recent call of g_markup_parse_context_push().
+	 * Since 2.18
+	 * Returns: the provided user_data. The returned data belongs to the markup context and will be freed when g_markup_context_free() is called.
+	 */
+	public void* getUserData()
+	{
+		// gpointer g_markup_parse_context_get_user_data  (GMarkupParseContext *context);
+		return g_markup_parse_context_get_user_data(gMarkupParseContext);
+	}
+	
+	/**
 	 * Creates a new parse context. A parse context is used to parse
 	 * marked-up documents. You can feed any number of documents into
 	 * a context, as long as no errors occur; once an error occurs,
@@ -305,5 +325,94 @@ public class SimpleXML
 		}
 		
 		return p;
+	}
+	
+	/**
+	 * Temporarily redirects markup data to a sub-parser.
+	 * This function may only be called from the start_element handler of
+	 * a GMarkupParser. It must be matched with a corresponding call to
+	 * g_markup_parse_context_pop() in the matching end_element handler
+	 * (except in the case that the parser aborts due to an error).
+	 * All tags, text and other data between the matching tags is
+	 * redirected to the subparser given by parser. user_data is used
+	 * as the user_data for that parser. user_data is also passed to the
+	 * error callback in the event that an error occurs. This includes
+	 * errors that occur in subparsers of the subparser.
+	 * The end tag matching the start tag for which this call was made is
+	 * handled by the previous parser (which is given its own user_data)
+	 * which is why g_markup_parse_context_pop() is provided to allow "one
+	 * last access" to the user_data provided to this function. In the
+	 * case of error, the user_data provided here is passed directly to
+	 * the error callback of the subparser and g_markup_parse_context()
+	 * should not be called. In either case, if user_data was allocated
+	 * then it ought to be freed from both of these locations.
+	 * This function is not intended to be directly called by users
+	 * interested in invoking subparsers. Instead, it is intended to be
+	 * used by the subparsers themselves to implement a higher-level
+	 * interface.
+	 * As an example, see the following implementation of a simple
+	 * parser that counts the number of tags encountered.
+	 * typedef struct
+	 * {
+		 *  gint tag_count;
+	 * } CounterData;
+	 * static void
+	 * counter_start_element (GMarkupParseContext *context,
+	 *  const gchar *element_name,
+	 *  const gchar **attribute_names,
+	 *  const gchar **attribute_values,
+	 *  gpointer user_data,
+	 *  GError **error)
+	 * {
+		 *  CounterData *data = user_data;
+		 *  data->tag_count++;
+	 * }
+	 * static void
+	 * counter_error (GMarkupParseContext *context,
+	 *  GError *error,
+	 *  gpointer user_data)
+	 * {
+		 *  CounterData *data = user_data;
+		 *  g_slice_free (CounterData, data);
+	 * }
+	 * static GMarkupParser counter_subparser =
+	 * {
+		 *  counter_start_element,
+		 *  NULL,
+		 *  NULL,
+		 *  NULL,
+		 *  counter_error
+	 * };
+	 * In order to allow this parser to be easily used as a subparser, the
+	 * Since 2.18
+	 * Params:
+	 * parser =  a GMarkupParser
+	 * userData =  user data to pass to GMarkupParser functions
+	 */
+	public void push(GMarkupParser* parser, void* userData)
+	{
+		// void g_markup_parse_context_push (GMarkupParseContext *context,  GMarkupParser *parser,  gpointer user_data);
+		g_markup_parse_context_push(gMarkupParseContext, parser, userData);
+	}
+	
+	/**
+	 * Completes the process of a temporary sub-parser redirection.
+	 * This function exists to collect the user_data allocated by a
+	 * matching call to g_markup_parse_context_push(). It must be called
+	 * in the end_element handler corresponding to the start_element
+	 * handler during which g_markup_parse_context_push() was called. You
+	 * must not call this function from the error callback -- the
+	 * user_data is provided directly to the callback in that case.
+	 * This function is not intended to be directly called by users
+	 * interested in invoking subparsers. Instead, it is intended to be
+	 * used by the subparsers themselves to implement a higher-level
+	 * interface.
+	 * Since 2.18
+	 * Returns: the user_data passed to g_markup_parse_context_push().
+	 */
+	public void* pop()
+	{
+		// gpointer g_markup_parse_context_pop (GMarkupParseContext *context);
+		return g_markup_parse_context_pop(gMarkupParseContext);
 	}
 }

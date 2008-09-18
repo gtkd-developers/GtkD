@@ -125,8 +125,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure1, States of a Main Context.
- * Figure1.States of a Main Context
+ *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
+ * Figure 1. States of a Main Context
  */
 public class Child
 {
@@ -152,8 +152,8 @@ public class Child
 	 * still work fine.
 	 * Since 2.4
 	 * Params:
-	 * pid =  process id of a child process to watch. On Windows, a HANDLE
-	 * for the process to watch (which actually doesn't have to be a child).
+	 * pid =  process to watch. On POSIX the pid of a child process. On
+	 * Windows a handle for a process (which doesn't have to be a child).
 	 * Returns: the newly-created child watch source
 	 */
 	public static Source watchSourceNew(GPid pid)
@@ -180,8 +180,8 @@ public class Child
 	 * GLib supports only a single callback per process id.
 	 * Since 2.4
 	 * Params:
-	 * pid =  process id of a child process to watch
-	 * funct =  function to call
+	 * pid =  process id to watch. On POSIX the pid of a child process. On
+	 * Windows a handle for a process (which doesn't have to be a child).
 	 * data =  data to pass to function
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
@@ -206,8 +206,8 @@ public class Child
 	 * Params:
 	 * priority =  the priority of the idle source. Typically this will be in the
 	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * pid =  process id of a child process to watch
-	 * funct =  function to call
+	 * pid =  process to watch. On POSIX the pid of a child process. On
+	 * Windows a handle for a process (which doesn't have to be a child).
 	 * data =  data to pass to function
 	 * notify =  function to call when the idle is removed, or NULL
 	 * Returns: the ID (greater than 0) of the event source.

@@ -384,6 +384,25 @@ public class ErrorG
 	}
 	
 	/**
+	 * Does nothing if err is NULL; if err is non-NULL, then *err must
+	 * be NULL. A new GError is created and assigned to *err.
+	 * Unlike g_set_error(), message is not a printf()-style format string.
+	 * Use this function if message contains text you don't have control over,
+	 * that could include printf() escape sequences.
+	 * Since 2.18
+	 * Params:
+	 * err =  a return location for a GError, or NULL
+	 * domain =  error domain
+	 * code =  error code
+	 * message =  error message
+	 */
+	public static void gSetErrorLiteral(GError** err, GQuark domain, int code, string message)
+	{
+		// void g_set_error_literal (GError **err,  GQuark domain,  gint code,  const gchar *message);
+		g_set_error_literal(err, domain, code, Str.toStringz(message));
+	}
+	
+	/**
 	 * If dest is NULL, free src; otherwise, moves src into *dest.
 	 * The error variable dest points to must be NULL.
 	 * Params:

@@ -79,14 +79,14 @@ private import glib.GException;
  * 	require conversion: from the character set in which they were
  * 	created, to the character set in which the application
  * 	operates. Consider the Spanish file name
- * 	"Presentacin.sxi". If the
+ * 	"Presentación.sxi". If the
  * 	application which created it uses ISO-8859-1 for its encoding,
  * 	then the actual file name on disk would look like this:
- * Character: P r e s e n t a c i  n . s x i
+ * Character: P r e s e n t a c i ó n . s x i
  * Hex code: 50 72 65 73 65 6e 74 61 63 69 f3 6e 2e 73 78 69
  * 	However, if the application use UTF-8, the actual file name on
  * 	disk would look like this:
- * Character: P r e s e n t a c i  n . s x i
+ * Character: P r e s e n t a c i ó n . s x i
  * Hex code: 50 72 65 73 65 6e 74 61 63 69 c3 b3 6e 2e 73 78 69
  * 	Glib uses UTF-8 for its strings, and GUI toolkits like GTK+
  * 	that use Glib do the same thing. If you get a file name from
@@ -119,10 +119,10 @@ private import glib.GException;
  * 	to perform the necessary conversions. These functions convert
  * 	file names from the encoding specified in
  * 	G_FILENAME_ENCODING to UTF-8 and vice-versa.
- * 	Figure2, Conversion between File Name Encodings illustrates how
+ * 	Figure 2, “Conversion between File Name Encodings” illustrates how
  * 	these functions are used to convert between UTF-8 and the
  * 	encoding for file names in the file system.
- * Figure2.Conversion between File Name Encodings
+ * Figure 2. Conversion between File Name Encodings
  * Checklist for Application Writers
  * 	 This section is a practical summary of the detailed
  * 	 description above. You can use this as a checklist of
@@ -134,7 +134,7 @@ private import glib.GException;
  * 	 you do not need to do any conversion to pass that
  * 	 file name to functions like open(2),
  * 	 rename(2), or
- * 	 fopen(3)  those are "raw"
+ * 	 fopen(3) — those are "raw"
  * 	 file names which the file system understands.
  * 	 If you need to display a file name, convert it to UTF-8
  * 	 first by using g_filename_to_utf8().
@@ -573,7 +573,7 @@ public class CharacterSet
 	 * freed.
 	 * Params:
 	 * charset =  return location for character set name
-	 * Returns: TRUE if the returned charset is UTF-8
+	 * Returns: TRUE if the returned charset is UTF-8[1]  Note that some encodings may allow nul bytes to  occur inside strings. In that case, using -1 for  the len parameter is unsafe.[2] Despite the fact that byes_read can return information about partial characters, the g_convert_... functionsare not generally suitable for streaming. If the underlying converter being used maintains internal state, then this won't be preserved across successive calls to g_convert(), g_convert_with_iconv() or g_convert_with_fallback(). (An example of this is the GNU C converter for CP1255 which does not emit a base character until it knows that the next character is not a mark that could combine with the base character.)
 	 */
 	public static int getCharset(out string charset)
 	{

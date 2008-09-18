@@ -125,8 +125,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure1, States of a Main Context.
- * Figure1.States of a Main Context
+ *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
+ * Figure 1. States of a Main Context
  */
 public class Timeout
 {
@@ -361,7 +361,6 @@ public class Timeout
 	 * Params:
 	 * interval =  the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
-	 * funct =  function to call
 	 * data =  data to pass to function
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
@@ -388,7 +387,6 @@ public class Timeout
 	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
 	 * interval =  the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
-	 * funct =  function to call
 	 * data =  data to pass to function
 	 * notify =  function to call when the timeout is removed, or NULL
 	 * Returns: the ID (greater than 0) of the event source.
@@ -409,7 +407,6 @@ public class Timeout
 	 * Since 2.14
 	 * Params:
 	 * interval =  the time between calls to the function, in seconds
-	 * funct =  function to call
 	 * data =  data to pass to function
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
@@ -446,7 +443,6 @@ public class Timeout
 	 * priority =  the priority of the timeout source. Typically this will be in
 	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
 	 * interval =  the time between calls to the function, in seconds
-	 * funct =  function to call
 	 * data =  data to pass to function
 	 * notify =  function to call when the timeout is removed, or NULL
 	 * Returns: the ID (greater than 0) of the event source.

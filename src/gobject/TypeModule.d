@@ -143,7 +143,7 @@ public class TypeModule : ObjectG
 	/**
 	 * Increases the use count of a GTypeModule by one. If the
 	 * use count was zero before, the plugin will be loaded.
-	 * Returns:FALSE if the plugin needed to be loaded and loading the plugin failed.
+	 * Returns: FALSE if the plugin needed to be loaded and loading the plugin failed.
 	 */
 	public int use()
 	{
@@ -167,7 +167,7 @@ public class TypeModule : ObjectG
 	/**
 	 * Sets the name for a GTypeModule
 	 * Params:
-	 * name = a human-readable name to use in error messages.
+	 * name =  a human-readable name to use in error messages.
 	 */
 	public void setName(string name)
 	{
@@ -190,7 +190,7 @@ public class TypeModule : ObjectG
 	 * typeName =  name for the type
 	 * typeInfo =  type information structure
 	 * flags =  flags field providing details about the type
-	 * Returns:the new or existing type ID
+	 * Returns: the new or existing type ID
 	 */
 	public GType registerType(GType parentType, string typeName, GTypeInfo* typeInfo, GTypeFlags flags)
 	{
@@ -199,15 +199,15 @@ public class TypeModule : ObjectG
 	}
 	
 	/**
-	 * Registers an additional interface for a type, whose interface
-	 * lives in the given type plugin. If the interface was already registered
+	 * Registers an additional interface for a type, whose interface lives
+	 * in the given type plugin. If the interface was already registered
 	 * for the type in this plugin, nothing will be done.
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
 	 * Params:
-	 * instanceType = type to which to add the interface.
-	 * interfaceType = interface type to add
-	 * interfaceInfo = type information structure
+	 * instanceType =  type to which to add the interface.
+	 * interfaceType =  interface type to add
+	 * interfaceInfo =  type information structure
 	 */
 	public void addInterface(GType instanceType, GType interfaceType, GInterfaceInfo* interfaceInfo)
 	{
@@ -225,7 +225,7 @@ public class TypeModule : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * name =  name for the type
-	 * Returns:the new or existing type ID
+	 * Returns: the new or existing type ID
 	 */
 	public GType registerEnum(string name, Enums _StaticValues)
 	{
@@ -243,7 +243,7 @@ public class TypeModule : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * name =  name for the type
-	 * Returns:the new or existing type ID
+	 * Returns: the new or existing type ID
 	 */
 	public GType registerFlags(string name, Flags _StaticValues)
 	{

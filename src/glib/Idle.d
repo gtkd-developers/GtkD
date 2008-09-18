@@ -125,8 +125,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure1, States of a Main Context.
- * Figure1.States of a Main Context
+ *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
+ * Figure 1. States of a Main Context
  */
 public class Idle
 {
@@ -278,7 +278,6 @@ public class Idle
 	 * returns FALSE it is automatically removed from the list of event
 	 * sources and will not be called again.
 	 * Params:
-	 * funct =  function to call
 	 * data =  data to pass to function.
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
@@ -295,7 +294,6 @@ public class Idle
 	 * Params:
 	 * priority =  the priority of the idle source. Typically this will be in the
 	 *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * funct =  function to call
 	 * data =  data to pass to function
 	 * notify =  function to call when the idle is removed, or NULL
 	 * Returns: the ID (greater than 0) of the event source.

@@ -92,7 +92,7 @@ private import glib.MatchInfo;
  * Note that, unless you set the G_REGEX_RAW flag, all the strings passed
  * to these functions must be encoded in UTF-8. The lengths and the positions
  * inside the strings are in bytes and not in characters, so, for instance,
- * "\xc3\xa0" (i.e. "") is two bytes long but it is treated as a single
+ * "\xc3\xa0" (i.e. "à") is two bytes long but it is treated as a single
  * character. If you set G_REGEX_RAW the strings can be non-valid UTF-8
  * strings and a byte is treated as a character, so "\xc3\xa0" is two bytes
  * and two characters long.
@@ -321,6 +321,7 @@ public class Regex
 		 *  /+* Print all uppercase-only words. +/
 		 *  GRegex *regex;
 		 *  GMatchInfo *match_info;
+		 *
 		 *  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
 		 *  g_regex_match (regex, string, 0, match_info);
 		 *  while (g_match_info_matches (match_info))
@@ -377,6 +378,7 @@ public class Regex
 		 *  GRegex *regex;
 		 *  GMatchInfo *match_info;
 		 *  GError *error = NULL;
+		 *
 		 *  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
 		 *  g_regex_match_full (regex, string, -1, 0, 0, match_info, error);
 		 *  while (g_match_info_matches (match_info))

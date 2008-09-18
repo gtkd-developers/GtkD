@@ -184,6 +184,16 @@ public class Checksum
 	}
 	
 	/**
+	 * Resets the state of the checksum back to it's initial state.
+	 * Since 2.18
+	 */
+	public void reset()
+	{
+		// void g_checksum_reset (GChecksum *checksum);
+		g_checksum_reset(gChecksum);
+	}
+	
+	/**
 	 * Feeds data into an existing GChecksum. The checksum must still be
 	 * open, that is g_checksum_get_string() or g_checksum_get_digest() must
 	 * not have been called on checksum.

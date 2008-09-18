@@ -347,6 +347,9 @@ extern(C)
 	void function(gpointer instanc, gchar* detailedSignal)g_signal_stop_emission_by_name;
 	void function(guint signalId, GType instanceType, GClosure* classClosure)g_signal_override_class_closure;
 	void function(GValue* instanceAndParams, GValue* returnValue)g_signal_chain_from_overridden;
+	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, GCallback classHandler, GSignalAccumulator accumulator, gpointer accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, ... )g_signal_new_class_handler;
+	void function(gchar* signalName, GType instanceType, GCallback classHandler)g_signal_override_class_handler;
+	void function(gpointer instanc, ... )g_signal_chain_from_overridden_handler;
 	gulong function(guint signalId, GQuark detail, GSignalEmissionHook hookFunc, gpointer hookData, GDestroyNotify dataDestroy)g_signal_add_emission_hook;
 	void function(guint signalId, gulong hookId)g_signal_remove_emission_hook;
 	gboolean function(gchar* detailedSignal, GType itype, guint* signalIdP, GQuark* detailP, gboolean forceDetailQuark)g_signal_parse_name;
@@ -669,6 +672,9 @@ Symbol[] gobjectLinks =
 	{ "g_signal_stop_emission_by_name",  cast(void**)& g_signal_stop_emission_by_name},
 	{ "g_signal_override_class_closure",  cast(void**)& g_signal_override_class_closure},
 	{ "g_signal_chain_from_overridden",  cast(void**)& g_signal_chain_from_overridden},
+	{ "g_signal_new_class_handler",  cast(void**)& g_signal_new_class_handler},
+	{ "g_signal_override_class_handler",  cast(void**)& g_signal_override_class_handler},
+	{ "g_signal_chain_from_overridden_handler",  cast(void**)& g_signal_chain_from_overridden_handler},
 	{ "g_signal_add_emission_hook",  cast(void**)& g_signal_add_emission_hook},
 	{ "g_signal_remove_emission_hook",  cast(void**)& g_signal_remove_emission_hook},
 	{ "g_signal_parse_name",  cast(void**)& g_signal_parse_name},

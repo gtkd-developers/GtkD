@@ -80,7 +80,7 @@ public class Boxed
 	/**
 	 * Provide a copy of a boxed structure src_boxed which is of type boxed_type.
 	 * Params:
-	 * boxedType = The type of src_boxed.
+	 * boxedType =  The type of src_boxed.
 	 * srcBoxed =  The boxed structure to be copied.
 	 * Returns: The newly created copy of the boxed structure.
 	 */
@@ -93,7 +93,7 @@ public class Boxed
 	/**
 	 * Free the boxed structure boxed which is of type boxed_type.
 	 * Params:
-	 * boxedType = The type of boxed.
+	 * boxedType =  The type of boxed.
 	 * boxed =  The boxed structure to be freed.
 	 */
 	public static void boxedFree(GType boxedType, void* boxed)
@@ -107,10 +107,10 @@ public class Boxed
 	 * boxed type with name name. Boxed type handling functions have to be
 	 * provided to copy and free opaque boxed structures of this type.
 	 * Params:
-	 * name = Name of the new boxed type.
-	 * boxedCopy = Boxed structure copy function.
-	 * boxedFree = Boxed structure free function.
-	 * Returns:New G_TYPE_BOXED derived type id for name.
+	 * name =  Name of the new boxed type.
+	 * boxedCopy =  Boxed structure copy function.
+	 * boxedFree =  Boxed structure free function.
+	 * Returns: New G_TYPE_BOXED derived type id for name.
 	 */
 	public static GType boxedTypeRegisterStatic(string name, GBoxedCopyFunc boxedCopy, GBoxedFreeFunc boxedFree)
 	{
@@ -122,8 +122,8 @@ public class Boxed
 	 * Creates a new G_TYPE_POINTER derived type id for a new
 	 * pointer type with name name.
 	 * Params:
-	 * name = the name of the new pointer type.
-	 * Returns:a new G_TYPE_POINTER derived type id for name.
+	 * name =  the name of the new pointer type.
+	 * Returns: a new G_TYPE_POINTER derived type id for name.
 	 */
 	public static GType pointerTypeRegisterStatic(string name)
 	{

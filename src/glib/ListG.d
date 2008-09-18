@@ -273,10 +273,9 @@ public class ListG
 	 * Removes an element from a GList.
 	 * If two elements contain the same data, only the first is removed.
 	 * If none of the elements contain the data, the GList is unchanged.
-	 * Return: the new start of the GList
 	 * Params:
 	 * data =  the data of the element to remove
-	 * Returns:
+	 * Returns: the new start of the GList
 	 */
 	public ListG remove(void* data)
 	{
@@ -531,7 +530,7 @@ public class ListG
 	
 	/**
 	 * Gets the first element in a GList.
-	 * Returns: the last element in the GList,  or NULL if the GList has no elements
+	 * Returns: the first element in the GList,  or NULL if the GList has no elements
 	 */
 	public ListG first()
 	{

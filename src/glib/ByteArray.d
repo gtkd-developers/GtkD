@@ -70,7 +70,7 @@ private import glib.ConstructionException;
  * g_byte_array_prepend().
  * To set the size of a GByteArray, use g_byte_array_set_size().
  * To free a GByteArray, use g_byte_array_free().
- * Example22.Using a GByteArray
+ * Example 22. Using a GByteArray
  *  GByteArray *gbarray;
  *  gint i;
  *  gbarray = g_byte_array_new ();

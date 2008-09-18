@@ -76,7 +76,7 @@ private import glib.Str;
  * To access an element of an array, use g_array_index().
  * To set the size of an array, use g_array_set_size().
  * To free an array, use g_array_free().
- * Example19.Using a GArray to store gint values
+ * Example 19. Using a GArray to store gint values
  *  GArray *garray;
  *  gint i;
  *  /+* We create a new array to store gint values.

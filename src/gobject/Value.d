@@ -84,6 +84,51 @@ private import gdk.Pixbuf;
  * by the GTypeValueTable associated with the type ID stored in the GValue.
  * Other GValue operations (such as converting values between types) are
  * provided by this interface.
+ * The code in the example program below demonstrates GValue's
+ * features.
+ * #include <glib-object.h>
+ * static void
+ * int2string (const GValue *src_value,
+ *  GValue *dest_value)
+ * {
+	 *  if (g_value_get_int (src_value) == 42)
+	 *  g_value_set_static_string (dest_value, "An important number");
+	 *  else
+	 *  g_value_set_static_string (dest_value, "What's that?");
+ * }
+ * int
+ * main (int argc,
+ *  char *argv[])
+ * {
+	 *  /+* GValues must start zero-filled +/
+ *  GValue a = {0};
+ *  GValue b = {0};
+ *  const gchar *message;
+ *  g_type_init ();
+ *  /+* The GValue starts empty +/
+ *  g_assert (!G_VALUE_HOLDS_STRING (a));
+ *  /+* Put a string in it +/
+ *  g_value_init (a, G_TYPE_STRING);
+ *  g_assert (G_VALUE_HOLDS_STRING (a));
+ *  g_value_set_static_string (a, "Hello, world!");
+ *  g_printf ("%s\n", g_value_get_string (a));
+ *  /+* Reset it to its pristine state +/
+ *  g_value_unset (a);
+ *  /+* It can then be reused for another type +/
+ *  g_value_init (a, G_TYPE_INT);
+ *  g_value_set_int (a, 42);
+ *  /+* Attempt to transform it into a GValue of type STRING +/
+ *  g_value_init (b, G_TYPE_STRING);
+ *  /+* An INT is transformable to a STRING +/
+ *  g_assert (g_value_type_transformable (G_TYPE_INT, G_TYPE_STRING));
+ *  g_value_transform (a, b);
+ *  g_printf ("%s\n", g_value_get_string (b));
+ *  /+* Attempt to transform it again using a custom transform function +/
+ *  g_value_register_transform_func (G_TYPE_INT, G_TYPE_STRING, int2string);
+ *  g_value_transform (a, b);
+ *  g_printf ("%s\n", g_value_get_string (b));
+ *  return 0;
+ * }
  */
 public class Value
 {
@@ -183,11 +228,12 @@ public class Value
 	
 	/**
 	 * Description
-	 * GValue provides an abstract container structure which can be copied,
-	 * transformed and compared while holding a value of any (derived) type, which
-	 * is registered as a GType with a GTypeValueTable in its GTypeInfo structure.
-	 * Parameter specifications for most value types can be created as
-	 * GParamSpec derived instances, to implement e.g. GObject properties which
+	 * GValue provides an abstract container structure which can be
+	 * copied, transformed and compared while holding a value of any
+	 * (derived) type, which is registered as a GType with a
+	 * GTypeValueTable in its GTypeInfo structure. Parameter
+	 * specifications for most value types can be created as GParamSpec
+	 * derived instances, to implement e.g. GObject properties which
 	 * operate on GValue containers.
 	 * Parameter names need to start with a letter (a-z or A-Z). Subsequent
 	 * characters can be letters, numbers or a '-'.
@@ -197,7 +243,7 @@ public class Value
 	/**
 	 * Copies the value of src_value into dest_value.
 	 * Params:
-	 * destValue = An initialized GValue structure of the same type as src_value.
+	 * destValue =  An initialized GValue structure of the same type as src_value.
 	 */
 	public void copy(Value destValue)
 	{
@@ -220,8 +266,6 @@ public class Value
 	/**
 	 * Sets value from an instantiatable type via the
 	 * value_table's collect_value() function.
-	 * Params:
-	 * instanc = the instance
 	 */
 	public void setInstance(void* instanc)
 	{
@@ -232,7 +276,7 @@ public class Value
 	/**
 	 * Determines if value will fit inside the size of a pointer value.
 	 * This is an internal function introduced mainly for C marshallers.
-	 * Returns:TRUE if value will fit inside a pointer value.
+	 * Returns: TRUE if value will fit inside a pointer value.
 	 */
 	public int fitsPointer()
 	{
@@ -244,7 +288,7 @@ public class Value
 	 * Return the value contents as pointer. This function asserts that
 	 * g_value_fits_pointer() returned TRUE for the passed in value.
 	 * This is an internal function introduced mainly for C marshallers.
-	 * Returns:TRUE if value will fit inside a pointer value.
+	 * Returns: TRUE if value will fit inside a pointer value.
 	 */
 	public void* peekPointer()
 	{
@@ -256,9 +300,9 @@ public class Value
 	 * Returns whether a GValue of type src_type can be copied into
 	 * a GValue of type dest_type.
 	 * Params:
-	 * srcType = source type to be copied.
-	 * destType = destination type for copying.
-	 * Returns:TRUE if g_value_copy() is possible with src_type and dest_type.
+	 * srcType =  source type to be copied.
+	 * destType =  destination type for copying.
+	 * Returns: TRUE if g_value_copy() is possible with src_type and dest_type.
 	 */
 	public static int typeCompatible(GType srcType, GType destType)
 	{
@@ -270,9 +314,9 @@ public class Value
 	 * Check whether g_value_transform() is able to transform values
 	 * of type src_type into values of type dest_type.
 	 * Params:
-	 * srcType = Source type.
-	 * destType = Target type.
-	 * Returns:TRUE if the transformation is possible, FALSE otherwise.
+	 * srcType =  Source type.
+	 * destType =  Target type.
+	 * Returns: TRUE if the transformation is possible, FALSE otherwise.
 	 */
 	public static int typeTransformable(GType srcType, GType destType)
 	{
@@ -289,8 +333,8 @@ public class Value
 	 * results and shouldn't be relied upon for production code (such
 	 * as rcfile value or object property serialization).
 	 * Params:
-	 * destValue = Target value.
-	 * Returns:Whether a transformation rule was found and could be applied. Upon failing transformations, dest_value is left untouched.
+	 * destValue =  Target value.
+	 * Returns: Whether a transformation rule was found and could be applied. Upon failing transformations, dest_value is left untouched.
 	 */
 	public int transform(Value destValue)
 	{
@@ -304,8 +348,8 @@ public class Value
 	 * will be replaced.
 	 * Params:
 	 * srcType =  Source type.
-	 * destType = Target type.
-	 * transformFunc = a function which transforms values of type src_type
+	 * destType =  Target type.
+	 * transformFunc =  a function which transforms values of type src_type
 	 *  into value of type dest_type
 	 */
 	public static void registerTransformFunc(GType srcType, GType destType, GValueTransform transformFunc)
@@ -315,11 +359,11 @@ public class Value
 	}
 	
 	/**
-	 * Return a newly allocated string, which describes the contents of a GValue.
-	 * The main purpose of this function is to describe GValue contents for
-	 * debugging output, the way in which the contents are described may change
-	 * between different GLib versions.
-	 * Returns:Newly allocated string.
+	 * Return a newly allocated string, which describes the contents of a
+	 * GValue. The main purpose of this function is to describe GValue
+	 * contents for debugging output, the way in which the contents are
+	 * described may change between different GLib versions.
+	 * Returns: Newly allocated string.
 	 */
 	public string gStrdupValueContents()
 	{
@@ -335,9 +379,9 @@ public class Value
 	 * name =  canonical name of the property specified
 	 * nick =  nick name for the property specified
 	 * blurb =  description of the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecBoolean(string name, string nick, string blurb, int defaultValue, GParamFlags flags)
 	{
@@ -353,7 +397,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_BOOLEAN GValue to v_boolean.
 	 * Params:
-	 * vBoolean = boolean value to be set
+	 * vBoolean =  boolean value to be set
 	 */
 	public void setBoolean(int vBoolean)
 	{
@@ -363,7 +407,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_BOOLEAN GValue.
-	 * Returns:boolean contents of value
+	 * Returns: boolean contents of value
 	 */
 	public int getBoolean()
 	{
@@ -379,9 +423,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecChar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
@@ -397,7 +441,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_CHAR GValue to v_char.
 	 * Params:
-	 * vChar = character value to be set
+	 * vChar =  character value to be set
 	 */
 	public void setChar(char vChar)
 	{
@@ -407,7 +451,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_CHAR GValue.
-	 * Returns:character contents of value
+	 * Returns: character contents of value
 	 */
 	public char getChar()
 	{
@@ -423,9 +467,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecUchar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
@@ -441,7 +485,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_UCHAR GValue to v_uchar.
 	 * Params:
-	 * vUchar = unsigned character value to be set
+	 * vUchar =  unsigned character value to be set
 	 */
 	public void setUchar(char vUchar)
 	{
@@ -451,7 +495,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_UCHAR GValue.
-	 * Returns:unsigned character contents of value
+	 * Returns: unsigned character contents of value
 	 */
 	public char getUchar()
 	{
@@ -468,9 +512,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecInt(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
@@ -486,7 +530,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_INT GValue to v_int.
 	 * Params:
-	 * vInt = integer value to be set
+	 * vInt =  integer value to be set
 	 */
 	public void setInt(int vInt)
 	{
@@ -496,7 +540,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_INT GValue.
-	 * Returns:integer contents of value
+	 * Returns: integer contents of value
 	 */
 	public int getInt()
 	{
@@ -513,7 +557,7 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
@@ -531,7 +575,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_UINT GValue to v_uint.
 	 * Params:
-	 * vUint = unsigned integer value to be set
+	 * vUint =  unsigned integer value to be set
 	 */
 	public void setUint(uint vUint)
 	{
@@ -541,7 +585,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_UINT GValue.
-	 * Returns:unsigned integer contents of value
+	 * Returns: unsigned integer contents of value
 	 */
 	public uint getUint()
 	{
@@ -558,9 +602,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecLong(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
@@ -576,7 +620,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_LONG GValue to v_long.
 	 * Params:
-	 * vLong = long integer value to be set
+	 * vLong =  long integer value to be set
 	 */
 	public void setLong(int vLong)
 	{
@@ -586,7 +630,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_LONG GValue.
-	 * Returns:long integer contents of value
+	 * Returns: long integer contents of value
 	 */
 	public int getLong()
 	{
@@ -595,7 +639,8 @@ public class Value
 	}
 	
 	/**
-	 * Creates a new GParamSpecULong instance specifying a G_TYPE_ULONG property.
+	 * Creates a new GParamSpecULong instance specifying a G_TYPE_ULONG
+	 * property.
 	 * See g_param_spec_internal() for details on property names.
 	 * Params:
 	 * name =  canonical name of the property specified
@@ -603,7 +648,7 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
@@ -621,7 +666,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_ULONG GValue to v_ulong.
 	 * Params:
-	 * vUlong = unsigned long integer value to be set
+	 * vUlong =  unsigned long integer value to be set
 	 */
 	public void setUlong(uint vUlong)
 	{
@@ -631,7 +676,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_ULONG GValue.
-	 * Returns:unsigned long integer contents of value
+	 * Returns: unsigned long integer contents of value
 	 */
 	public uint getUlong()
 	{
@@ -648,9 +693,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecInt64(string name, string nick, string blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
@@ -666,7 +711,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_INT64 GValue to v_int64.
 	 * Params:
-	 * vInt64 = 64bit integer value to be set
+	 * vInt64 =  64bit integer value to be set
 	 */
 	public void setInt64(long vInt64)
 	{
@@ -676,7 +721,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_INT64 GValue.
-	 * Returns:64bit integer contents of value
+	 * Returns: 64bit integer contents of value
 	 */
 	public long getInt64()
 	{
@@ -694,9 +739,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecUint64(string name, string nick, string blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
@@ -712,7 +757,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_UINT64 GValue to v_uint64.
 	 * Params:
-	 * vUint64 = unsigned 64bit integer value to be set
+	 * vUint64 =  unsigned 64bit integer value to be set
 	 */
 	public void setUint64(ulong vUint64)
 	{
@@ -722,7 +767,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_UINT64 GValue.
-	 * Returns:unsigned 64bit integer contents of value
+	 * Returns: unsigned 64bit integer contents of value
 	 */
 	public ulong getUint64()
 	{
@@ -739,9 +784,9 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecFloat(string name, string nick, string blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
@@ -757,7 +802,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_FLOAT GValue to v_float.
 	 * Params:
-	 * vFloat = float value to be set
+	 * vFloat =  float value to be set
 	 */
 	public void setFloat(float vFloat)
 	{
@@ -767,7 +812,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_FLOAT GValue.
-	 * Returns:float contents of value
+	 * Returns: float contents of value
 	 */
 	public float getFloat()
 	{
@@ -785,7 +830,7 @@ public class Value
 	 * blurb =  description of the property specified
 	 * minimum =  minimum value for the property specified
 	 * maximum =  maximum value for the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
@@ -803,7 +848,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_DOUBLE GValue to v_double.
 	 * Params:
-	 * vDouble = double value to be set
+	 * vDouble =  double value to be set
 	 */
 	public void setDouble(double vDouble)
 	{
@@ -813,7 +858,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_DOUBLE GValue.
-	 * Returns:double contents of value
+	 * Returns: double contents of value
 	 */
 	public double getDouble()
 	{
@@ -830,7 +875,7 @@ public class Value
 	 * nick =  nick name for the property specified
 	 * blurb =  description of the property specified
 	 * enumType =  a GType derived from G_TYPE_ENUM
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
@@ -848,7 +893,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_ENUM GValue to v_enum.
 	 * Params:
-	 * vEnum = enum value to be set
+	 * vEnum =  enum value to be set
 	 */
 	public void setEnum(int vEnum)
 	{
@@ -858,7 +903,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_ENUM GValue.
-	 * Returns:enum contents of value
+	 * Returns: enum contents of value
 	 */
 	public int getEnum()
 	{
@@ -867,7 +912,7 @@ public class Value
 	}
 	
 	/**
-	 * Creates a new GParamSpecEnum instance specifying a G_TYPE_FLAGS
+	 * Creates a new GParamSpecFlags instance specifying a G_TYPE_FLAGS
 	 * property.
 	 * See g_param_spec_internal() for details on property names.
 	 * Params:
@@ -875,7 +920,7 @@ public class Value
 	 * nick =  nick name for the property specified
 	 * blurb =  description of the property specified
 	 * flagsType =  a GType derived from G_TYPE_FLAGS
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
@@ -893,7 +938,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_FLAGS GValue to v_flags.
 	 * Params:
-	 * vFlags = flags value to be set
+	 * vFlags =  flags value to be set
 	 */
 	public void setFlags(uint vFlags)
 	{
@@ -903,7 +948,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_FLAGS GValue.
-	 * Returns:flags contents of value
+	 * Returns: flags contents of value
 	 */
 	public uint getFlags()
 	{
@@ -918,7 +963,7 @@ public class Value
 	 * name =  canonical name of the property specified
 	 * nick =  nick name for the property specified
 	 * blurb =  description of the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
@@ -936,7 +981,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_STRING GValue to v_string.
 	 * Params:
-	 * vString = string to be set
+	 * vString =  caller-owned string to be duplicated for the GValue
 	 */
 	public void setString(string vString)
 	{
@@ -949,7 +994,7 @@ public class Value
 	 * The string is assumed to be static, and is thus not duplicated
 	 * when setting the GValue.
 	 * Params:
-	 * vString = static string to be set
+	 * vString =  static string to be set
 	 */
 	public void setStaticString(string vString)
 	{
@@ -961,7 +1006,7 @@ public class Value
 	 * Sets the contents of a G_TYPE_STRING GValue to v_string.
 	 * Since 2.4
 	 * Params:
-	 * vString = duplicated unowned string to be set
+	 * vString =  string to take ownership of
 	 */
 	public void takeString(string vString)
 	{
@@ -974,7 +1019,7 @@ public class Value
 	 * g_value_set_string_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_string() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * vString = duplicated unowned string to be set
+	 * vString =  duplicated unowned string to be set
 	 */
 	public void setStringTakeOwnership(string vString)
 	{
@@ -984,7 +1029,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_STRING GValue.
-	 * Returns:string content of value
+	 * Returns: string content of value
 	 */
 	public string getString()
 	{
@@ -994,7 +1039,7 @@ public class Value
 	
 	/**
 	 * Get a copy the contents of a G_TYPE_STRING GValue.
-	 * Returns:a newly allocated copy of the string content of value
+	 * Returns: a newly allocated copy of the string content of value
 	 */
 	public string dupString()
 	{
@@ -1028,7 +1073,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_PARAM GValue to param.
 	 * Params:
-	 * param = the GParamSpec to be set
+	 * param =  the GParamSpec to be set
 	 */
 	public void setParam(ParamSpec param)
 	{
@@ -1037,12 +1082,12 @@ public class Value
 	}
 	
 	/**
-	 * Sets the contents of a G_TYPE_PARAM GValue to param and
-	 * takes over the ownership of the callers reference to param;
-	 * the caller doesn't have to unref it any more.
+	 * Sets the contents of a G_TYPE_PARAM GValue to param and takes
+	 * over the ownership of the callers reference to param; the caller
+	 * doesn't have to unref it any more.
 	 * Since 2.4
 	 * Params:
-	 * param = the GParamSpec to be set
+	 * param =  the GParamSpec to be set
 	 */
 	public void takeParam(ParamSpec param)
 	{
@@ -1055,7 +1100,7 @@ public class Value
 	 * g_value_set_param_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_param() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * param = the GParamSpec to be set
+	 * param =  the GParamSpec to be set
 	 */
 	public void setParamTakeOwnership(ParamSpec param)
 	{
@@ -1065,7 +1110,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_PARAM GValue.
-	 * Returns:GParamSpec content of value
+	 * Returns: GParamSpec content of value
 	 */
 	public ParamSpec getParam()
 	{
@@ -1079,8 +1124,9 @@ public class Value
 	}
 	
 	/**
-	 * Get the contents of a G_TYPE_PARAM GValue, increasing its reference count.
-	 * Returns:GParamSpec content of value, should be unreferenced when no longer needed.
+	 * Get the contents of a G_TYPE_PARAM GValue, increasing its
+	 * reference count.
+	 * Returns: GParamSpec content of value, should be unreferenced when no longer needed.
 	 */
 	public ParamSpec dupParam()
 	{
@@ -1103,7 +1149,7 @@ public class Value
 	 * blurb =  description of the property specified
 	 * boxedType =  G_TYPE_BOXED derived type of this property
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecBoxed(string name, string nick, string blurb, GType boxedType, GParamFlags flags)
 	{
@@ -1119,7 +1165,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_BOXED derived GValue to v_boxed.
 	 * Params:
-	 * vBoxed = boxed value to be set
+	 * vBoxed =  boxed value to be set
 	 */
 	public void setBoxed(void* vBoxed)
 	{
@@ -1132,7 +1178,7 @@ public class Value
 	 * The boxed value is assumed to be static, and is thus not duplicated
 	 * when setting the GValue.
 	 * Params:
-	 * vBoxed = static boxed value to be set
+	 * vBoxed =  static boxed value to be set
 	 */
 	public void setStaticBoxed(void* vBoxed)
 	{
@@ -1141,12 +1187,12 @@ public class Value
 	}
 	
 	/**
-	 * Sets the contents of a G_TYPE_BOXED derived GValue to v_boxed and
-	 * takes over the ownership of the callers reference to v_boxed;
+	 * Sets the contents of a G_TYPE_BOXED derived GValue to v_boxed
+	 * and takes over the ownership of the callers reference to v_boxed;
 	 * the caller doesn't have to unref it any more.
 	 * Since 2.4
 	 * Params:
-	 * vBoxed = duplicated unowned boxed value to be set
+	 * vBoxed =  duplicated unowned boxed value to be set
 	 */
 	public void takeBoxed(void* vBoxed)
 	{
@@ -1159,7 +1205,7 @@ public class Value
 	 * g_value_set_boxed_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_boxed() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * vBoxed = duplicated unowned boxed value to be set
+	 * vBoxed =  duplicated unowned boxed value to be set
 	 */
 	public void setBoxedTakeOwnership(void* vBoxed)
 	{
@@ -1169,7 +1215,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_BOXED derived GValue.
-	 * Returns:boxed contents of value
+	 * Returns: boxed contents of value
 	 */
 	public void* getBoxed()
 	{
@@ -1178,10 +1224,11 @@ public class Value
 	}
 	
 	/**
-	 * Get the contents of a G_TYPE_BOXED derived GValue.
-	 * Upon getting, the boxed value is duplicated and needs to be
-	 * later freed with g_boxed_free(), e.g. like: g_boxed_free (G_VALUE_TYPE (value), return_value);
-	 * Returns:boxed contents of value
+	 * Get the contents of a G_TYPE_BOXED derived GValue. Upon getting,
+	 * the boxed value is duplicated and needs to be later freed with
+	 * g_boxed_free(), e.g. like: g_boxed_free (G_VALUE_TYPE (value),
+	 * return_value);
+	 * Returns: boxed contents of value
 	 */
 	public void* dupBoxed()
 	{
@@ -1197,7 +1244,7 @@ public class Value
 	 * nick =  nick name for the property specified
 	 * blurb =  description of the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecPointer(string name, string nick, string blurb, GParamFlags flags)
 	{
@@ -1213,7 +1260,7 @@ public class Value
 	/**
 	 * Set the contents of a pointer GValue to v_pointer.
 	 * Params:
-	 * vPointer = pointer value to be set
+	 * vPointer =  pointer value to be set
 	 */
 	public void setPointer(void* vPointer)
 	{
@@ -1223,7 +1270,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a pointer GValue.
-	 * Returns:pointer contents of value
+	 * Returns: pointer contents of value
 	 */
 	public void* getPointer()
 	{
@@ -1241,7 +1288,7 @@ public class Value
 	 * blurb =  description of the property specified
 	 * objectType =  G_TYPE_OBJECT derived type of this property
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
@@ -1257,16 +1304,15 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_OBJECT derived GValue to v_object.
 	 * g_value_set_object() increases the reference count of v_object
-	 * (the GValue holds a reference to v_object).
-	 * If you do not wish to increase the reference count of the object
-	 * (i.e. you wish to pass your current reference to the GValue because you no
-	 * longer need it),
-	 * use g_value_take_object() instead.
+	 * (the GValue holds a reference to v_object). If you do not wish
+	 * to increase the reference count of the object (i.e. you wish to
+	 * pass your current reference to the GValue because you no longer
+	 * need it), use g_value_take_object() instead.
 	 * It is important that your GValue holds a reference to v_object (either its
 	 * own, or one it has taken) to ensure that the object won't be destroyed while
 	 * the GValue still exists).
 	 * Params:
-	 * vObject = object value to be set
+	 * vObject =  object value to be set
 	 */
 	public void setObject(void* vObject)
 	{
@@ -1283,7 +1329,7 @@ public class Value
 	 * g_value_set_object() instead.
 	 * Since 2.4
 	 * Params:
-	 * vObject = object value to be set
+	 * vObject =  object value to be set
 	 */
 	public void takeObject(void* vObject)
 	{
@@ -1296,7 +1342,7 @@ public class Value
 	 * g_value_set_object_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_object() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * vObject = object value to be set
+	 * vObject =  object value to be set
 	 */
 	public void setObjectTakeOwnership(void* vObject)
 	{
@@ -1306,7 +1352,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_OBJECT derived GValue.
-	 * Returns:object contents of value
+	 * Returns: object contents of value
 	 */
 	public void* getObject()
 	{
@@ -1315,8 +1361,9 @@ public class Value
 	}
 	
 	/**
-	 * Get the contents of a G_TYPE_OBJECT derived GValue, increasing its reference count.
-	 * Returns:object content of value, should be unreferenced when no longer needed.
+	 * Get the contents of a G_TYPE_OBJECT derived GValue, increasing
+	 * its reference count.
+	 * Returns: object content of value, should be unreferenced when no longer needed.
 	 */
 	public void* dupObject()
 	{
@@ -1333,9 +1380,9 @@ public class Value
 	 * name =  canonical name of the property specified
 	 * nick =  nick name for the property specified
 	 * blurb =  description of the property specified
-	 * defaultValue = default value for the property specified
+	 * defaultValue =  default value for the property specified
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecUnichar(string name, string nick, string blurb, gunichar defaultValue, GParamFlags flags)
 	{
@@ -1350,9 +1397,9 @@ public class Value
 	
 	/**
 	 * Creates a new GParamSpecValueArray instance specifying a
-	 * G_TYPE_VALUE_ARRAY property. G_TYPE_VALUE_ARRAY is a G_TYPE_BOXED
-	 * type, as such, GValue structures for this property can be accessed
-	 * with g_value_set_boxed() and g_value_get_boxed().
+	 * G_TYPE_VALUE_ARRAY property. G_TYPE_VALUE_ARRAY is a
+	 * G_TYPE_BOXED type, as such, GValue structures for this property
+	 * can be accessed with g_value_set_boxed() and g_value_get_boxed().
 	 * See g_param_spec_internal() for details on property names.
 	 * Params:
 	 * name =  canonical name of the property specified
@@ -1361,7 +1408,7 @@ public class Value
 	 * elementSpec =  a GParamSpec describing the elements contained in
 	 *  arrays of this property, may be NULL
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecValueArray(string name, string nick, string blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
@@ -1380,9 +1427,9 @@ public class Value
 	 * useful unless you are implementing a new base type similar to GObject.
 	 * Since 2.4
 	 * Params:
-	 * name = the name of the property.
-	 * overridden = The property that is being overridden
-	 * Returns:the newly created GParamSpec
+	 * name =  the name of the property.
+	 * overridden =  The property that is being overridden
+	 * Returns: the newly created GParamSpec
 	 */
 	public static ParamSpec gParamSpecOverride(string name, ParamSpec overridden)
 	{
@@ -1407,7 +1454,7 @@ public class Value
 	 * isAType =  a GType whose subtypes are allowed as values
 	 *  of the property (use G_TYPE_NONE for any type)
 	 * flags =  flags for the property specified
-	 * Returns:a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecGtype(string name, string nick, string blurb, GType isAType, GParamFlags flags)
 	{
@@ -1423,7 +1470,7 @@ public class Value
 	/**
 	 * Get the contents of a G_TYPE_GTYPE GValue.
 	 * Since 2.12
-	 * Returns:the GType stored in value
+	 * Returns: the GType stored in value
 	 */
 	public GType getGtype()
 	{
@@ -1435,7 +1482,7 @@ public class Value
 	 * Set the contents of a G_TYPE_GTYPE GValue to v_gtype.
 	 * Since 2.12
 	 * Params:
-	 * vGtype = GType to be set
+	 * vGtype =  GType to be set
 	 */
 	public void setGtype(GType vGtype)
 	{

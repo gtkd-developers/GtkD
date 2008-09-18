@@ -93,7 +93,7 @@ private import glib.Str;
  * To reset the memory chunk, freeing all of the atoms, use g_mem_chunk_reset().
  * To destroy a memory chunk, use g_mem_chunk_destroy().
  * To help debug memory chunks, use g_mem_chunk_info() and g_mem_chunk_print().
- * Example17.Using a GMemChunk
+ * Example 17. Using a GMemChunk
  *  GMemChunk *mem_chunk;
  *  gchar *mem[10000];
  *  gint i;
@@ -117,7 +117,7 @@ private import glib.Str;
  *  }
  *  /+* We are finished with the GMemChunk, so we destroy it. +/
  *  g_mem_chunk_destroy (mem_chunk);
- * Example18.Using a GMemChunk with data structures
+ * Example 18. Using a GMemChunk with data structures
  *  GMemChunk *array_mem_chunk;
  *  GRealArray *array;
  *  /+* Create a GMemChunk to hold GRealArray structures, using the

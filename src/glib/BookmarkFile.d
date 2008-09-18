@@ -793,8 +793,9 @@ public class BookmarkFile
 	
 	/**
 	 * Sets the icon for the bookmark for uri. If href is NULL, unsets
-	 * the currently set icon.
-	 * If no bookmark for uri is found it is created.
+	 * the currently set icon. href can either be a full URL for the icon
+	 * file or the icon name following the Icon Naming specification.
+	 * If no bookmark for uri is found one is created.
 	 * Since 2.12
 	 * Params:
 	 * uri =  a valid URI

@@ -116,11 +116,11 @@ public class ParamSpecPool
 	/**
 	 * Creates a new GParamSpecPool.
 	 * If type_prefixing is TRUE, lookups in the newly created pool will
-	 * allow to specify the owner as a colon-separated prefix of the property name,
-	 * like "GtkContainer:border-width". This feature is deprecated, so you should
-	 * always set type_prefixing to FALSE.
+	 * allow to specify the owner as a colon-separated prefix of the
+	 * property name, like "GtkContainer:border-width". This feature is
+	 * deprecated, so you should always set type_prefixing to FALSE.
 	 * Params:
-	 * typePrefixing = Whether the pool will support type-prefixed property names.
+	 * typePrefixing =  Whether the pool will support type-prefixed property names.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int typePrefixing)
@@ -137,8 +137,8 @@ public class ParamSpecPool
 	/**
 	 * Inserts a GParamSpec in the pool.
 	 * Params:
-	 * pspec = the GParamSpec to insert
-	 * ownerType = a GType identifying the owner of pspec
+	 * pspec =  the GParamSpec to insert
+	 * ownerType =  a GType identifying the owner of pspec
 	 */
 	public void insert(ParamSpec pspec, GType ownerType)
 	{
@@ -149,7 +149,7 @@ public class ParamSpecPool
 	/**
 	 * Removes a GParamSpec from the pool.
 	 * Params:
-	 * pspec = the GParamSpec to remove
+	 * pspec =  the GParamSpec to remove
 	 */
 	public void remove(ParamSpec pspec)
 	{
@@ -160,11 +160,11 @@ public class ParamSpecPool
 	/**
 	 * Looks up a GParamSpec in the pool.
 	 * Params:
-	 * paramName = the name to look for
-	 * ownerType = the owner to look for
-	 * walkAncestors = If TRUE, also try to find a GParamSpec with param_name
+	 * paramName =  the name to look for
+	 * ownerType =  the owner to look for
+	 * walkAncestors =  If TRUE, also try to find a GParamSpec with param_name
 	 *  owned by an ancestor of owner_type.
-	 * Returns:The found GParamSpec, or NULL if no matching GParamSpec was found.
+	 * Returns: The found GParamSpec, or NULL if no matching GParamSpec was found.
 	 */
 	public ParamSpec lookup(string paramName, GType ownerType, int walkAncestors)
 	{
@@ -178,10 +178,11 @@ public class ParamSpecPool
 	}
 	
 	/**
-	 * Gets an array of all GParamSpecs owned by owner_type in the pool.
+	 * Gets an array of all GParamSpecs owned by owner_type in
+	 * the pool.
 	 * Params:
-	 * ownerType = the owner to look for
-	 * Returns:a newly allocated array containing pointers to all  GParamSpecs owned by owner_type in the pool
+	 * ownerType =  the owner to look for
+	 * Returns: a newly allocated array containing pointers to all GParamSpecs owned by owner_type in the pool
 	 */
 	public ParamSpec[] list(GType ownerType)
 	{
@@ -203,10 +204,11 @@ public class ParamSpecPool
 	}
 	
 	/**
-	 * Gets an GList of all GParamSpecs owned by owner_type in the pool.
+	 * Gets an GList of all GParamSpecs owned by owner_type in
+	 * the pool.
 	 * Params:
-	 * ownerType = the owner to look for
-	 * Returns:a GList of all GParamSpecs owned by owner_type in  the poolGParamSpecs.
+	 * ownerType =  the owner to look for
+	 * Returns: a GList of all GParamSpecs owned by owner_type in the poolGParamSpecs.
 	 */
 	public ListG listOwned(GType ownerType)
 	{

@@ -100,14 +100,14 @@ public class MessageLog
 	 * Note that since the G_LOG_LEVEL_ERROR log level is always fatal, if
 	 * you want to set a handler for this log level you must combine it with
 	 * G_LOG_FLAG_FATAL.
-	 * Example12.Adding a log handler for all warning messages in the default
+	 * Example 12. Adding a log handler for all warning messages in the default
 	 * (application) domain
 	 *  g_log_set_handler (NULL, G_LOG_LEVEL_WARNING | G_LOG_FLAG_FATAL
 	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * Example13.Adding a log handler for all critical messages from GTK+
+	 * Example 13. Adding a log handler for all critical messages from GTK+
 	 *  g_log_set_handler ("Gtk", G_LOG_LEVEL_CRITICAL | G_LOG_FLAG_FATAL
 	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * Example14.Adding a log handler for all messages from
+	 * Example 14. Adding a log handler for all messages from
 	 * GLib
 	 *  g_log_set_handler ("GLib", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
 	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);

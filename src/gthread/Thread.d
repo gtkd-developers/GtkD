@@ -94,7 +94,22 @@ private import glib.GException;
  * (GPrivate, GStaticPrivate). Last but definitely not least there are
  * primitives to portably create and manage threads (GThread).
  * You must call g_thread_init() before executing any other GLib
- * functions in a threaded GLib program. After that, GLib is completely
+ * functions (except g_mem_set_vtable()) in a GLib program if
+ * g_thread_init() will be called at all. This is a requirement even if
+ * no threads are in fact ever created by the process. It is enough that
+ * g_thread_init() is called. If other GLib functions have been called
+ * before that, the behaviour of the program is undefined. An exception
+ * is g_mem_set_vtable() which may be called before g_thread_init().
+ * Failing this requirement can lead to hangs or crashes, apparently more
+ * easily on Windows than on Linux, for example.
+ * Please note that if you call functions in some GLib-using library, in
+ * particular those above the GTK+ stack, that library might well call
+ * g_thread_init() itself, or call some other library that calls
+ * g_thread_init(). Thus, if you use some GLib-based library that is
+ * above the GTK+ stack, it is safest to call g_thread_init() in your
+ * application's main() before calling any GLib functions or functions in
+ * GLib-using libraries.
+ * After calling g_thread_init(), GLib is completely
  * thread safe (all global data is automatically locked), but individual
  * data structure instances are not automatically locked for performance
  * reasons. So, for example you must coordinate accesses to the same
@@ -153,6 +168,10 @@ public class Thread
 	 * g_thread_init() must not be called directly or indirectly as a
 	 * callback from GLib. Also no mutexes may be currently locked while
 	 * calling g_thread_init().
+	 * Note
+	 * g_thread_init() changes the way in which GTimer measures elapsed time.
+	 * As a consequence, timers that are running while g_thread_init() is called
+	 * may report unreliable times.
 	 * g_thread_init() might only be called once. On the second call
 	 * it will abort with an error. If you want to make sure that the thread
 	 * Params:

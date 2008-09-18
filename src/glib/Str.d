@@ -410,7 +410,9 @@ public class Str
 	 * to haystack_len.
 	 * Params:
 	 * haystack =  a string.
-	 * haystackLen =  the maximum length of haystack.
+	 * haystackLen =  the maximum length of haystack. Note that -1 is
+	 * a valid length, if haystack is nul-terminated, meaning it will
+	 * search through the whole string.
 	 * needle =  the string to search for.
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
@@ -476,6 +478,20 @@ public class Str
 	{
 		// gboolean g_str_has_suffix (const gchar *str,  const gchar *suffix);
 		return g_str_has_suffix(Str.toStringz(str), Str.toStringz(suffix));
+	}
+	
+	/**
+	 * Compares str1 and str2 like strcmp(). Handles NULL strings gracefully.
+	 * Since 2.16
+	 * Params:
+	 * str1 =  a C string or NULL
+	 * str2 =  another C string or NULL
+	 * Returns: -1, 0 or 1, if str1 is <, == or > than str2.
+	 */
+	public static int strcmp0(string str1, string str2)
+	{
+		// int g_strcmp0 (const char *str1,  const char *str2);
+		return g_strcmp0(Str.toStringz(str1), Str.toStringz(str2));
 	}
 	
 	/**
@@ -1182,9 +1198,10 @@ public class Str
 	/**
 	 * Converts a string to a gdouble value.
 	 * This function behaves like the standard strtod() function
-	 * does in the C locale. It does this without actually
-	 * changing the current locale, since that would not be
-	 * thread-safe.
+	 * does in the C locale. It does this without actually changing
+	 * the current locale, since that would not be thread-safe.
+	 * A limitation of the implementation is that this function
+	 * will still accept localized versions of infinities and NANs.
 	 * This function is typically used when reading configuration
 	 * files or other non-user input that should be locale independent.
 	 * To handle input from the user you should normally use the

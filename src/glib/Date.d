@@ -288,6 +288,7 @@ public class Date
 	 * Warning
 	 * g_date_set_time is deprecated and should not be used in newly-written code.
 	 * Sets the value of a date from a GTime value.
+	 * The time to date conversion is done using the user's current timezone.
 	 * Deprecated:2.10: Use g_date_set_time_t() instead.
 	 * Params:
 	 * time =  GTime value to set.
@@ -299,7 +300,9 @@ public class Date
 	}
 	
 	/**
-	 * Sets the value of a date from a time_t value.
+	 * Sets the value of a date to the date corresponding to a time
+	 * specified as a time_t. The time to date conversion is done using
+	 * the user's current timezone.
 	 * Since 2.10
 	 * Params:
 	 * timet =  time_t value to set
@@ -778,7 +781,7 @@ public class Date
 	 * values are the only valid weekdays.
 	 * Params:
 	 * weekday = weekday
-	 * Returns:TRUE if the weekday is valid
+	 * Returns:TRUE if the weekday is valid[4] For the purposes of this function, leap year is every year divisible by4 unless that year is divisible by 100. If it is divisible by 100 it would be a leap year only if that year is also divisible by 400.
 	 */
 	public static int validWeekday(GDateWeekday weekday)
 	{

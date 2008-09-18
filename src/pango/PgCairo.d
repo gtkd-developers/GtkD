@@ -112,7 +112,7 @@ private import pango.PgLayoutLine;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
- * Example 1. Using Pango with Cairo
+ * Example1.Using Pango with Cairo
  * #include <math.h>
  * #include <pango/pangocairo.h>
  * static void
@@ -182,7 +182,7 @@ private import pango.PgLayoutLine;
 	 *  }
 	 *  return 0;
  * }
- * Figure 2. Output of Example 1, “Using Pango with Cairo”
+ * Figure2.Output of Example1, Using Pango with Cairo
  */
 public class PgCairo
 {

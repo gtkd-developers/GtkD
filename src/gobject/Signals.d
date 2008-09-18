@@ -73,15 +73,15 @@ private import glib.Quark;
 
 /**
  * Description
- * The basic concept of the signal system is that of the emission
- * of a signal.
- * Signals are introduced per-type and are identified through strings.
- * Signals introduced for a parent type are available in derived types as well,
- * so basically they are a per-type facility that is inherited.
- * A signal emission mainly involves invocation of a certain set of callbacks in
- * precisely defined manner. There are two main categories of such callbacks,
- * per-object
- * 	[12]
+ * The basic concept of the signal system is that of the
+ * emission of a signal. Signals are introduced
+ * per-type and are identified through strings. Signals introduced
+ * for a parent type are available in derived types as well, so
+ * basically they are a per-type facility that is inherited. A signal
+ * emission mainly involves invocation of a certain set of callbacks
+ * in precisely defined manner. There are two main categories of such
+ * callbacks, per-object
+ * [12]
  * ones and user provided ones.
  * The per-object callbacks are most often referred to as "object method
  * handler" or "default (signal) handler", while user provided callbacks are
@@ -132,21 +132,21 @@ public class Signals
 	 * Creates a new signal. (This is usually done in the class initializer.)
 	 * See g_signal_new() for details on allowed signal names.
 	 * Params:
-	 * signalName = the name for the signal
-	 * itype = the type this signal pertains to. It will also pertain to
+	 * signalName =  the name for the signal
+	 * itype =  the type this signal pertains to. It will also pertain to
 	 *  types which are derived from this type.
-	 * signalFlags = a combination of GSignalFlags specifying detail of when
+	 * signalFlags =  a combination of GSignalFlags specifying detail of when
 	 *  the default handler is to be invoked. You should at least specify
 	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
-	 * classClosure = The closure to invoke on signal emission; may be NULL.
-	 * accumulator = the accumulator for this signal; may be NULL.
-	 * accuData = user data for the accumulator.
-	 * cMarshaller = the function to translate arrays of parameter values to
+	 * classClosure =  The closure to invoke on signal emission; may be NULL.
+	 * accumulator =  the accumulator for this signal; may be NULL.
+	 * accuData =  user data for the accumulator.
+	 * cMarshaller =  the function to translate arrays of parameter values to
 	 *  signal emissions into C language callback invocations.
-	 * returnType = the type of return value, or G_TYPE_NONE for a signal
+	 * returnType =  the type of return value, or G_TYPE_NONE for a signal
 	 *  without a return value.
-	 * paramTypes = an array types, one for each parameter.
-	 * Returns:the signal id
+	 * paramTypes =  an array types, one for each parameter.
+	 * Returns: the signal id
 	 */
 	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, GType[] paramTypes)
 	{
@@ -158,22 +158,22 @@ public class Signals
 	 * Creates a new signal. (This is usually done in the class initializer.)
 	 * See g_signal_new() for details on allowed signal names.
 	 * Params:
-	 * signalName = the name for the signal
-	 * itype = the type this signal pertains to. It will also pertain to
+	 * signalName =  the name for the signal
+	 * itype =  the type this signal pertains to. It will also pertain to
 	 *  types which are derived from this type.
-	 * signalFlags = a combination of GSignalFlags specifying detail of when
+	 * signalFlags =  a combination of GSignalFlags specifying detail of when
 	 *  the default handler is to be invoked. You should at least specify
 	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
-	 * classClosure = The closure to invoke on signal emission; may be NULL.
-	 * accumulator = the accumulator for this signal; may be NULL.
-	 * accuData = user data for the accumulator.
-	 * cMarshaller = the function to translate arrays of parameter values to
+	 * classClosure =  The closure to invoke on signal emission; may be NULL.
+	 * accumulator =  the accumulator for this signal; may be NULL.
+	 * accuData =  user data for the accumulator.
+	 * cMarshaller =  the function to translate arrays of parameter values to
 	 *  signal emissions into C language callback invocations.
-	 * returnType = the type of return value, or G_TYPE_NONE for a signal
+	 * returnType =  the type of return value, or G_TYPE_NONE for a signal
 	 *  without a return value.
-	 * nParams = the number of parameter types in args.
-	 * args = va_list of GType, one for each parameter.
-	 * Returns:the signal id
+	 * nParams =  the number of parameter types in args.
+	 * args =  va_list of GType, one for each parameter.
+	 * Returns: the signal id
 	 */
 	public static uint newValist(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, void* args)
 	{
@@ -189,8 +189,8 @@ public class Signals
 	 * is 0. All members filled into the GSignalQuery structure should
 	 * be considered constant and have to be left untouched.
 	 * Params:
-	 * signalId = The signal id of the signal to query information for.
-	 * query = A user provided structure that is filled in with constant
+	 * signalId =  The signal id of the signal to query information for.
+	 * query =  A user provided structure that is filled in with constant
 	 *  values upon success.
 	 */
 	public static void query(uint signalId, GSignalQuery* query)
@@ -206,9 +206,9 @@ public class Signals
 	 * Also tries the ancestors of the given type.
 	 * See g_signal_new() for details on allowed signal names.
 	 * Params:
-	 * name = the signal's name.
-	 * itype = the type that the signal operates on.
-	 * Returns:the signal's identifying number, or 0 if no signal was found.
+	 * name =  the signal's name.
+	 * itype =  the type that the signal operates on.
+	 * Returns: the signal's identifying number, or 0 if no signal was found.
 	 */
 	public static uint lookup(string name, GType itype)
 	{
@@ -220,8 +220,8 @@ public class Signals
 	 * Given the signal's identifier, finds its name.
 	 * Two different signals may have the same name, if they have differing types.
 	 * Params:
-	 * signalId = the signal's identifying number.
-	 * Returns:the signal name, or NULL if the signal number was invalid.
+	 * signalId =  the signal's identifying number.
+	 * Returns: the signal name, or NULL if the signal number was invalid.
 	 */
 	public static string name(uint signalId)
 	{
@@ -234,8 +234,8 @@ public class Signals
 	 * created. Further information about the signals can be acquired through
 	 * g_signal_query().
 	 * Params:
-	 * itype = Instance or interface type.
-	 * Returns:Newly allocated array of signal IDs.
+	 * itype =  Instance or interface type.
+	 * Returns: Newly allocated array of signal IDs.
 	 */
 	public static uint[] listIds(GType itype)
 	{
@@ -250,13 +250,13 @@ public class Signals
 	 * Note that g_signal_emitv() doesn't change return_value if no handlers are
 	 * connected, in contrast to g_signal_emit() and g_signal_emit_valist().
 	 * Params:
-	 * instanceAndParams = argument list for the signal emission. The first
+	 * instanceAndParams =  argument list for the signal emission. The first
 	 *  element in the array is a GValue for the instance the signal is
 	 *  being emitted on. The rest are any arguments to be passed to the
 	 *  signal.
-	 * signalId = the signal id
-	 * detail = the detail
-	 * returnValue = Location to store the return value of the signal emission.
+	 * signalId =  the signal id
+	 * detail =  the detail
+	 * returnValue =  Location to store the return value of the signal emission.
 	 */
 	public static void emitv(Value instanceAndParams, uint signalId, GQuark detail, Value returnValue)
 	{
@@ -269,10 +269,9 @@ public class Signals
 	 * Note that g_signal_emit_valist() resets the return value to the default
 	 * if no handlers are connected, in contrast to g_signal_emitv().
 	 * Params:
-	 * instanc = the instance the signal is being emitted on.
-	 * signalId = the signal id
-	 * detail = the detail
-	 * varArgs = a list of parameters to be passed to the signal, followed by a
+	 * signalId =  the signal id
+	 * detail =  the detail
+	 * varArgs =  a list of parameters to be passed to the signal, followed by a
 	 *  location for the return value. If the return type of the signal
 	 *  is G_TYPE_NONE, the return value location can be omitted.
 	 */
@@ -283,28 +282,27 @@ public class Signals
 	}
 	
 	/**
-	 *  This is similar to g_signal_connect_data(), but uses a closure which
-	 *  ensures that the gobject stays alive during the call to c_handler
-	 *  by temporarily adding a reference count to gobject.
-	 *  Note that there is a bug in GObject that makes this function
-	 *  much less useful than it might seem otherwise. Once gobject is
-	 *  disposed, the callback will no longer be called, but, the signal
-	 *  handler is not currently disconnected. If the
-	 *  instance is itself being freed at the same time than this doesn't
-	 *  matter, since the signal will automatically be removed, but
-	 *  if instance persists, then the signal handler will leak. You
-	 *  should not remove the signal yourself because in a future versions of
-	 *  GObject, the handler will automatically
-	 *  be disconnected.
-	 *  It's possible to work around this problem in a way that will
-	 *  continue to work with future versions of GObject by checking
+	 * This is similar to g_signal_connect_data(), but uses a closure which
+	 * ensures that the gobject stays alive during the call to c_handler
+	 * by temporarily adding a reference count to gobject.
+	 * Note that there is a bug in GObject that makes this function
+	 * much less useful than it might seem otherwise. Once gobject is
+	 * disposed, the callback will no longer be called, but, the signal
+	 * handler is not currently disconnected. If the
+	 * instance is itself being freed at the same time than this doesn't
+	 * matter, since the signal will automatically be removed, but
+	 * if instance persists, then the signal handler will leak. You
+	 * should not remove the signal yourself because in a future versions of
+	 * GObject, the handler will automatically
+	 * be disconnected.
+	 * It's possible to work around this problem in a way that will
+	 * continue to work with future versions of GObject by checking
 	 * Params:
-	 * instanc = the instance to connect to.
-	 * detailedSignal = a string of the form "signal-name::detail".
-	 * cHandler = the GCallback to connect.
-	 * gobject = the object to pass as data to c_handler.
-	 * connectFlags = a combination of GConnnectFlags.
-	 * Returns:the handler id.
+	 * detailedSignal =  a string of the form "signal-name::detail".
+	 * cHandler =  the GCallback to connect.
+	 * gobject =  the object to pass as data to c_handler.
+	 * connectFlags =  a combination of GConnnectFlags.
+	 * Returns: the handler id.
 	 */
 	public static uint connectObject(void* instanc, string detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
 	{
@@ -316,16 +314,15 @@ public class Signals
 	 * Connects a GCallback function to a signal for a particular object. Similar
 	 * to g_signal_connect(), but allows to provide a GClosureNotify for the data
 	 * which will be called when the signal handler is disconnected and no longer
-	 * used. Specify connect_flags if you need ..._after() pr
+	 * used. Specify connect_flags if you need ..._after() or
 	 * ..._swapped() variants of this function.
 	 * Params:
-	 * instanc = the instance to connect to.
-	 * detailedSignal = a string of the form "signal-name::detail".
-	 * cHandler = the GCallback to connect.
-	 * data = data to pass to c_handler calls.
-	 * destroyData = a GClosureNotify for data.
-	 * connectFlags = a combination of GConnectFlags.
-	 * Returns:the handler id
+	 * detailedSignal =  a string of the form "signal-name::detail".
+	 * cHandler =  the GCallback to connect.
+	 * data =  data to pass to c_handler calls.
+	 * destroyData =  a GClosureNotify for data.
+	 * connectFlags =  a combination of GConnectFlags.
+	 * Returns: the handler id
 	 */
 	public static uint connectData(void* instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
@@ -336,12 +333,11 @@ public class Signals
 	/**
 	 * Connects a closure to a signal for a particular object.
 	 * Params:
-	 * instanc = the instance to connect to.
-	 * detailedSignal = a string of the form "signal-name::detail".
-	 * closure = the closure to connect.
-	 * after = whether the handler should be called before or after the
+	 * detailedSignal =  a string of the form "signal-name::detail".
+	 * closure =  the closure to connect.
+	 * after =  whether the handler should be called before or after the
 	 *  default handler of the signal.
-	 * Returns:the handler id
+	 * Returns: the handler id
 	 */
 	public static uint connectClosure(void* instanc, string detailedSignal, Closure closure, int after)
 	{
@@ -352,13 +348,12 @@ public class Signals
 	/**
 	 * Connects a closure to a signal for a particular object.
 	 * Params:
-	 * instanc = the instance to connect to.
-	 * signalId = the id of the signal.
-	 * detail = the detail.
-	 * closure = the closure to connect.
-	 * after = whether the handler should be called before or after the
+	 * signalId =  the id of the signal.
+	 * detail =  the detail.
+	 * closure =  the closure to connect.
+	 * after =  whether the handler should be called before or after the
 	 *  default handler of the signal.
-	 * Returns:the handler id
+	 * Returns: the handler id
 	 */
 	public static uint connectClosureById(void* instanc, uint signalId, GQuark detail, Closure closure, int after)
 	{
@@ -367,16 +362,15 @@ public class Signals
 	}
 	
 	/**
-	 * Blocks a handler of an instance so it will not be called during
-	 * any signal emissions unless it is unblocked again. Thus "blocking"
-	 * a signal handler means to temporarily deactive it, a signal handler
+	 * Blocks a handler of an instance so it will not be called during any
+	 * signal emissions unless it is unblocked again. Thus "blocking" a
+	 * signal handler means to temporarily deactive it, a signal handler
 	 * has to be unblocked exactly the same amount of times it has been
 	 * blocked before to become active again.
 	 * The handler_id has to be a valid signal handler id, connected to a
 	 * signal of instance.
 	 * Params:
-	 * instanc = The instance to block the signal handler of.
-	 * handlerId = Handler id of the handler to be blocked.
+	 * handlerId =  Handler id of the handler to be blocked.
 	 */
 	public static void handlerBlock(void* instanc, uint handlerId)
 	{
@@ -385,21 +379,20 @@ public class Signals
 	}
 	
 	/**
-	 * Undoes the effect of a previous g_signal_handler_block() call.
-	 * A blocked handler is skipped during signal emissions and will not be
+	 * Undoes the effect of a previous g_signal_handler_block() call. A
+	 * blocked handler is skipped during signal emissions and will not be
 	 * invoked, unblocking it (for exactly the amount of times it has been
 	 * blocked before) reverts its "blocked" state, so the handler will be
-	 * recognized by the signal system and is called upon future or currently
-	 * ongoing signal emissions (since the order in which handlers are
-	 * called during signal emissions is deterministic, whether the
-	 * unblocked handler in question is called as part of a currently
-	 * ongoing emission depends on how far that emission has proceeded
-	 * yet).
+	 * recognized by the signal system and is called upon future or
+	 * currently ongoing signal emissions (since the order in which
+	 * handlers are called during signal emissions is deterministic,
+	 * whether the unblocked handler in question is called as part of a
+	 * currently ongoing emission depends on how far that emission has
+	 * proceeded yet).
 	 * The handler_id has to be a valid id of a signal handler that is
 	 * connected to a signal of instance and is currently blocked.
 	 * Params:
-	 * instanc = The instance to unblock the signal handler of.
-	 * handlerId = Handler id of the handler to be unblocked.
+	 * handlerId =  Handler id of the handler to be unblocked.
 	 */
 	public static void handlerUnblock(void* instanc, uint handlerId)
 	{
@@ -414,8 +407,7 @@ public class Signals
 	 * The handler_id has to be a valid signal handler id, connected to a
 	 * signal of instance.
 	 * Params:
-	 * instanc = The instance to remove the signal handler from.
-	 * handlerId = Handler id of the handler to be disconnected.
+	 * handlerId =  Handler id of the handler to be disconnected.
 	 */
 	public static void handlerDisconnect(void* instanc, uint handlerId)
 	{
@@ -430,15 +422,14 @@ public class Signals
 	 * The match mask has to be non-0 for successful matches.
 	 * If no handler was found, 0 is returned.
 	 * Params:
-	 * instanc = The instance owning the signal handler to be found.
-	 * mask = Mask indicating which of signal_id, detail, closure, func
+	 * mask =  Mask indicating which of signal_id, detail, closure, func
 	 *  and/or data the handler has to match.
-	 * signalId = Signal the handler has to be connected to.
-	 * detail = Signal detail the handler has to be connected to.
-	 * closure = The closure the handler will invoke.
-	 * func = The C closure callback of the handler (useless for non-C closures).
-	 * data = The closure data of the handler's closure.
-	 * Returns:A valid non-0 signal handler id for a successful match.
+	 * signalId =  Signal the handler has to be connected to.
+	 * detail =  Signal detail the handler has to be connected to.
+	 * closure =  The closure the handler will invoke.
+	 * func =  The C closure callback of the handler (useless for non-C closures).
+	 * data =  The closure data of the handler's closure.
+	 * Returns: A valid non-0 signal handler id for a successful match.
 	 */
 	public static uint handlerFind(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -455,15 +446,14 @@ public class Signals
 	 * If no handlers were found, 0 is returned, the number of blocked handlers
 	 * otherwise.
 	 * Params:
-	 * instanc = The instance to block handlers from.
-	 * mask = Mask indicating which of signal_id, detail, closure, func
+	 * mask =  Mask indicating which of signal_id, detail, closure, func
 	 *  and/or data the handlers have to match.
-	 * signalId = Signal the handlers have to be connected to.
-	 * detail = Signal detail the handlers have to be connected to.
-	 * closure = The closure the handlers will invoke.
-	 * func = The C closure callback of the handlers (useless for non-C closures).
-	 * data = The closure data of the handlers' closures.
-	 * Returns:The amount of handlers that got blocked.
+	 * signalId =  Signal the handlers have to be connected to.
+	 * detail =  Signal detail the handlers have to be connected to.
+	 * closure =  The closure the handlers will invoke.
+	 * func =  The C closure callback of the handlers (useless for non-C closures).
+	 * data =  The closure data of the handlers' closures.
+	 * Returns: The number of handlers that matched.
 	 */
 	public static uint handlersBlockMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -481,15 +471,14 @@ public class Signals
 	 * otherwise. The match criteria should not apply to any handlers that are
 	 * not currently blocked.
 	 * Params:
-	 * instanc = The instance to unblock handlers from.
-	 * mask = Mask indicating which of signal_id, detail, closure, func
+	 * mask =  Mask indicating which of signal_id, detail, closure, func
 	 *  and/or data the handlers have to match.
-	 * signalId = Signal the handlers have to be connected to.
-	 * detail = Signal detail the handlers have to be connected to.
-	 * closure = The closure the handlers will invoke.
-	 * func = The C closure callback of the handlers (useless for non-C closures).
-	 * data = The closure data of the handlers' closures.
-	 * Returns:The amount of handlers that got unblocked.
+	 * signalId =  Signal the handlers have to be connected to.
+	 * detail =  Signal detail the handlers have to be connected to.
+	 * closure =  The closure the handlers will invoke.
+	 * func =  The C closure callback of the handlers (useless for non-C closures).
+	 * data =  The closure data of the handlers' closures.
+	 * Returns: The number of handlers that matched.
 	 */
 	public static uint handlersUnblockMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -498,23 +487,23 @@ public class Signals
 	}
 	
 	/**
-	 * Disconnects all handlers on an instance that match a certain selection
-	 * criteria. The criteria mask is passed as an OR-ed combination of
-	 * GSignalMatchType flags, and the criteria values are passed as arguments.
-	 * Passing at least one of the G_SIGNAL_MATCH_CLOSURE, G_SIGNAL_MATCH_FUNC
-	 * or G_SIGNAL_MATCH_DATA match flags is required for successful matches.
-	 * If no handlers were found, 0 is returned, the number of disconnected
-	 * handlers otherwise.
+	 * Disconnects all handlers on an instance that match a certain
+	 * selection criteria. The criteria mask is passed as an OR-ed
+	 * combination of GSignalMatchType flags, and the criteria values are
+	 * passed as arguments. Passing at least one of the
+	 * G_SIGNAL_MATCH_CLOSURE, G_SIGNAL_MATCH_FUNC or
+	 * G_SIGNAL_MATCH_DATA match flags is required for successful
+	 * matches. If no handlers were found, 0 is returned, the number of
+	 * disconnected handlers otherwise.
 	 * Params:
-	 * instanc = The instance to remove handlers from.
-	 * mask = Mask indicating which of signal_id, detail, closure, func
+	 * mask =  Mask indicating which of signal_id, detail, closure, func
 	 *  and/or data the handlers have to match.
-	 * signalId = Signal the handlers have to be connected to.
-	 * detail = Signal detail the handlers have to be connected to.
-	 * closure = The closure the handlers will invoke.
-	 * func = The C closure callback of the handlers (useless for non-C closures).
-	 * data = The closure data of the handlers' closures.
-	 * Returns:The amount of handlers that got disconnected.
+	 * signalId =  Signal the handlers have to be connected to.
+	 * detail =  Signal detail the handlers have to be connected to.
+	 * closure =  The closure the handlers will invoke.
+	 * func =  The C closure callback of the handlers (useless for non-C closures).
+	 * data =  The closure data of the handlers' closures.
+	 * Returns: The number of handlers that matched.
 	 */
 	public static uint handlersDisconnectMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -525,9 +514,8 @@ public class Signals
 	/**
 	 * Returns whether handler_id is the id of a handler connected to instance.
 	 * Params:
-	 * instanc = The instance where a signal handler is sought.
-	 * handlerId = the handler id.
-	 * Returns:whether handler_id identifies a handler connected to instance.
+	 * handlerId =  the handler id.
+	 * Returns: whether handler_id identifies a handler connected to instance.
 	 */
 	public static int handlerIsConnected(void* instanc, uint handlerId)
 	{
@@ -539,15 +527,14 @@ public class Signals
 	 * Returns whether there are any handlers connected to instance for the
 	 * given signal id and detail.
 	 * One example of when you might use this is when the arguments to the
-	 * signal are difficult to compute. A class implementor may opt to not emit
-	 * the signal if no one is attached anyway, thus saving the cost of building
-	 * the arguments.
+	 * signal are difficult to compute. A class implementor may opt to not
+	 * emit the signal if no one is attached anyway, thus saving the cost
+	 * of building the arguments.
 	 * Params:
-	 * instanc = the object whose signal handlers are sought.
-	 * signalId = the signal id.
-	 * detail = the detail.
-	 * mayBeBlocked = whether blocked handlers should count as match.
-	 * Returns:TRUE if a handler is connected to the signal,  FALSE otherwise.
+	 * signalId =  the signal id.
+	 * detail =  the detail.
+	 * mayBeBlocked =  whether blocked handlers should count as match.
+	 * Returns: TRUE if a handler is connected to the signal, FALSE otherwise.
 	 */
 	public static int hasHandlerPending(void* instanc, uint signalId, GQuark detail, int mayBeBlocked)
 	{
@@ -562,9 +549,8 @@ public class Signals
 	 * flag).
 	 * Prints a warning if used on a signal which isn't being emitted.
 	 * Params:
-	 * instanc = the object whose signal handlers you wish to stop.
-	 * signalId = the signal identifier, as returned by g_signal_lookup().
-	 * detail = the detail which the signal was emitted with.
+	 * signalId =  the signal identifier, as returned by g_signal_lookup().
+	 * detail =  the detail which the signal was emitted with.
 	 */
 	public static void stopEmission(void* instanc, uint signalId, GQuark detail)
 	{
@@ -577,8 +563,7 @@ public class Signals
 	 * This is just like g_signal_stop_emission() except it will look up the
 	 * signal id for you.
 	 * Params:
-	 * instanc = the object whose signal handlers you wish to stop.
-	 * detailedSignal = a string of the form "signal-name::detail".
+	 * detailedSignal =  a string of the form "signal-name::detail".
 	 */
 	public static void stopEmissionByName(void* instanc, string detailedSignal)
 	{
@@ -590,11 +575,14 @@ public class Signals
 	 * Overrides the class closure (i.e. the default handler) for the given signal
 	 * for emissions on instances of instance_type. instance_type must be derived
 	 * from the type to which the signal belongs.
+	 * See g_signal_chain_from_overridden() and
+	 * g_signal_chain_from_overridden_handler() for how to chain up to the
+	 * parent class closure from inside the overridden one.
 	 * Params:
-	 * signalId = the signal id
-	 * instanceType = the instance type on which to override the class closure
+	 * signalId =  the signal id
+	 * instanceType =  the instance type on which to override the class closure
 	 *  for the signal.
-	 * classClosure = the closure.
+	 * classClosure =  the closure.
 	 */
 	public static void overrideClassClosure(uint signalId, GType instanceType, Closure classClosure)
 	{
@@ -605,12 +593,13 @@ public class Signals
 	/**
 	 * Calls the original class closure of a signal. This function should only
 	 * be called from an overridden class closure; see
-	 * g_signal_override_class_closure().
+	 * g_signal_override_class_closure() and
+	 * g_signal_override_class_handler().
 	 * Params:
 	 * instanceAndParams =  the argument list of the signal emission. The first
 	 *  element in the array is a GValue for the instance the signal is being
 	 *  emitted on. The rest are any arguments to be passed to the signal.
-	 * returnValue = Location for the return value.
+	 * returnValue =  Location for the return value.
 	 */
 	public static void chainFromOverridden(Value instanceAndParams, Value returnValue)
 	{
@@ -619,16 +608,37 @@ public class Signals
 	}
 	
 	/**
+	 * Overrides the class closure (i.e. the default handler) for the
+	 * given signal for emissions on instances of instance_type with
+	 * callabck class_handler. instance_type must be derived from the
+	 * type to which the signal belongs.
+	 * See g_signal_chain_from_overridden() and
+	 * g_signal_chain_from_overridden_handler() for how to chain up to the
+	 * parent class closure from inside the overridden one.
+	 * Since 2.18
+	 * Params:
+	 * signalName =  the name for the signal
+	 * instanceType =  the instance type on which to override the class handler
+	 *  for the signal.
+	 * classHandler =  the handler.
+	 */
+	public static void overrideClassHandler(string signalName, GType instanceType, GCallback classHandler)
+	{
+		// void g_signal_override_class_handler (const gchar *signal_name,  GType instance_type,  GCallback class_handler);
+		g_signal_override_class_handler(Str.toStringz(signalName), instanceType, classHandler);
+	}
+	
+	/**
 	 * Adds an emission hook for a signal, which will get called for any emission
 	 * of that signal, independent of the instance. This is possible only
 	 * for signals which don't have G_SIGNAL_NO_HOOKS flag set.
 	 * Params:
-	 * signalId = the signal identifier, as returned by g_signal_lookup().
-	 * detail = the detail on which to call the hook.
-	 * hookFunc = a GSignalEmissionHook function.
-	 * hookData = user data for hook_func.
-	 * dataDestroy = a GDestroyNotify for hook_data.
-	 * Returns:the hook id, for later use with g_signal_remove_emission_hook().
+	 * signalId =  the signal identifier, as returned by g_signal_lookup().
+	 * detail =  the detail on which to call the hook.
+	 * hookFunc =  a GSignalEmissionHook function.
+	 * hookData =  user data for hook_func.
+	 * dataDestroy =  a GDestroyNotify for hook_data.
+	 * Returns: the hook id, for later use with g_signal_remove_emission_hook().
 	 */
 	public static uint addEmissionHook(uint signalId, GQuark detail, GSignalEmissionHook hookFunc, void* hookData, GDestroyNotify dataDestroy)
 	{
@@ -639,9 +649,9 @@ public class Signals
 	/**
 	 * Deletes an emission hook.
 	 * Params:
-	 * signalId = the id of the signal
-	 * hookId = the id of the emission hook, as returned by
-	 * g_signal_add_emission_hook()
+	 * signalId =  the id of the signal
+	 * hookId =  the id of the emission hook, as returned by
+	 *  g_signal_add_emission_hook()
 	 */
 	public static void removeEmissionHook(uint signalId, uint hookId)
 	{
@@ -653,12 +663,12 @@ public class Signals
 	 * Internal function to parse a signal name into its signal_id
 	 * and detail quark.
 	 * Params:
-	 * detailedSignal = a string of the form "signal-name::detail".
-	 * itype = The interface/instance type that introduced "signal-name".
-	 * signalIdP = Location to store the signal id.
-	 * detailP = Location to store the detail quark.
-	 * forceDetailQuark = TRUE forces creation of a GQuark for the detail.
-	 * Returns:Whether the signal name could successfully be parsed and signal_id_p and detail_p contain valid return values.
+	 * detailedSignal =  a string of the form "signal-name::detail".
+	 * itype =  The interface/instance type that introduced "signal-name".
+	 * signalIdP =  Location to store the signal id.
+	 * detailP =  Location to store the detail quark.
+	 * forceDetailQuark =  TRUE forces creation of a GQuark for the detail.
+	 * Returns: Whether the signal name could successfully be parsed and signal_id_p and detail_p contain valid return values.
 	 */
 	public static int parseName(string detailedSignal, GType itype, out uint signalIdP, Quark detailP, int forceDetailQuark)
 	{
@@ -668,9 +678,7 @@ public class Signals
 	
 	/**
 	 * Returns the invocation hint of the innermost signal emission of instance.
-	 * Params:
-	 * instanc = the instance to query
-	 * Returns:the invocation hint of the innermost signal emission.
+	 * Returns: the invocation hint of the innermost signal emission.
 	 */
 	public static GSignalInvocationHint* getInvocationHint(void* instanc)
 	{
@@ -683,10 +691,10 @@ public class Signals
 	 * struct_offset in the class structure of the interface or classed type
 	 * identified by itype.
 	 * Params:
-	 * itype = the GType identifier of an interface or classed type
-	 * structOffset = the offset of the member function of itype's class
+	 * itype =  the GType identifier of an interface or classed type
+	 * structOffset =  the offset of the member function of itype's class
 	 *  structure which is to be invoked by the new closure
-	 * Returns:a new GCClosure
+	 * Returns: a new GCClosure
 	 */
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{
@@ -708,12 +716,15 @@ public class Signals
 	 * indicates that the callback handled the signal,
 	 * and no further handling is needed.
 	 * Since 2.4
+	 * [12] Although signals can deal with any kind of instantiatable
+	 * type, i'm referring to those types as "object types" in the following,
+	 * simply because that is the context most users will encounter signals in.
 	 * Params:
-	 * ihint = standard GSignalAccumulator parameter
-	 * returnAccu = standard GSignalAccumulator parameter
-	 * handlerReturn = standard GSignalAccumulator parameter
-	 * dummy = standard GSignalAccumulator parameter
-	 * Returns:standard GSignalAccumulator result
+	 * ihint =  standard GSignalAccumulator parameter
+	 * returnAccu =  standard GSignalAccumulator parameter
+	 * handlerReturn =  standard GSignalAccumulator parameter
+	 * dummy =  standard GSignalAccumulator parameter
+	 * Returns: standard GSignalAccumulator result
 	 */
 	public static int accumulatorTrueHandled(GSignalInvocationHint* ihint, Value returnAccu, Value handlerReturn, void* dummy)
 	{

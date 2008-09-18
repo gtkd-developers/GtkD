@@ -153,7 +153,7 @@ public class PgMiscellaneous
 	 * Leading white space is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * out =  a GString into which to write the result
+	 * f_out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanWord(inout string pos, StringG f_out)
@@ -174,7 +174,7 @@ public class PgMiscellaneous
 	 * a literal quote. Leading white space outside of quotes is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * out =  a GString into which to write the result
+	 * f_out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanString(inout string pos, StringG f_out)
@@ -193,7 +193,7 @@ public class PgMiscellaneous
 	 * Leading white space is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * out =  an int into which to write the result
+	 * f_out =  an int into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanInt(inout string pos, out int f_out)

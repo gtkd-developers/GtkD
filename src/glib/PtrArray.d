@@ -77,7 +77,7 @@ private import glib.ConstructionException;
  * To access an element of a pointer array, use g_ptr_array_index().
  * To set the size of a pointer array, use g_ptr_array_set_size().
  * To free a pointer array, use g_ptr_array_free().
- * Example21.Using a GPtrArray
+ * Example 21. Using a GPtrArray
  *  GPtrArray *gparray;
  *  gchar *string1 = "one", *string2 = "two", *string3 = "three";
  *  gparray = g_ptr_array_new ();

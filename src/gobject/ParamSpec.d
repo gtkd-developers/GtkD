@@ -117,7 +117,7 @@ public class ParamSpec
 	
 	/**
 	 * Increments the reference count of pspec.
-	 * Returns:the GParamSpec that was passed into this function
+	 * Returns: the GParamSpec that was passed into this function
 	 */
 	public ParamSpec doref()
 	{
@@ -140,13 +140,13 @@ public class ParamSpec
 	}
 	
 	/**
-	 * The initial reference count of a newly created GParamSpec is 1, even
-	 * though no one has explicitly called g_param_spec_ref() on it yet. So the
-	 * initial reference count is flagged as "floating", until someone calls
-	 * g_param_spec_ref (pspec); g_param_spec_sink (pspec);
-	 * in sequence on it, taking over the initial reference count (thus
-	 * ending up with a pspec that has a reference count of 1 still, but is
-	 * not flagged "floating" anymore).
+	 * The initial reference count of a newly created GParamSpec is 1,
+	 * even though no one has explicitly called g_param_spec_ref() on it
+	 * yet. So the initial reference count is flagged as "floating", until
+	 * someone calls g_param_spec_ref (pspec); g_param_spec_sink
+	 * (pspec); in sequence on it, taking over the initial
+	 * reference count (thus ending up with a pspec that has a reference
+	 * count of 1 still, but is not flagged "floating" anymore).
 	 */
 	public void sink()
 	{
@@ -157,7 +157,7 @@ public class ParamSpec
 	/**
 	 * Convenience function to ref and sink a GParamSpec.
 	 * Since 2.10
-	 * Returns:the GParamSpec that was passed into this function
+	 * Returns: the GParamSpec that was passed into this function
 	 */
 	public ParamSpec refSink()
 	{
@@ -173,7 +173,7 @@ public class ParamSpec
 	/**
 	 * Sets value to its default value as specified in pspec.
 	 * Params:
-	 * value = a GValue of correct type for pspec
+	 * value =  a GValue of correct type for pspec
 	 */
 	public void gParamValueSetDefault(Value value)
 	{
@@ -185,7 +185,7 @@ public class ParamSpec
 	 * Checks whether value contains the default value as specified in pspec.
 	 * Params:
 	 * value =  a GValue of correct type for pspec
-	 * Returns:whether value contains the canonical default for this pspec
+	 * Returns: whether value contains the canonical default for this pspec
 	 */
 	public int gParamValueDefaults(Value value)
 	{
@@ -202,7 +202,7 @@ public class ParamSpec
 	 * range -42 .. +42.
 	 * Params:
 	 * value =  a GValue of correct type for pspec
-	 * Returns:whether modifying value was necessary to ensure validity
+	 * Returns: whether modifying value was necessary to ensure validity
 	 */
 	public int gParamValueValidate(Value value)
 	{
@@ -211,16 +211,17 @@ public class ParamSpec
 	}
 	
 	/**
-	 * Transforms src_value into dest_value if possible, and then validates
-	 * dest_value, in order for it to conform to pspec.
-	 * If strict_validation is TRUE this function will only succeed if
-	 * the transformed dest_value complied to pspec without modifications.
+	 * Transforms src_value into dest_value if possible, and then
+	 * validates dest_value, in order for it to conform to pspec. If
+	 * strict_validation is TRUE this function will only succeed if the
+	 * transformed dest_value complied to pspec without modifications.
 	 * See also g_value_type_transformable(), g_value_transform() and
 	 * g_param_value_validate().
 	 * Params:
 	 * srcValue =  souce GValue
 	 * destValue =  destination GValue of correct type for pspec
-	 * strictValidation = TRUE requires dest_value to conform to pspec without modifications
+	 * strictValidation =  TRUE requires dest_value to conform to pspec
+	 * without modifications
 	 * Returns: TRUE if transformation and validation were successful, FALSE otherwise and dest_value is left untouched.
 	 */
 	public int gParamValueConvert(Value srcValue, Value destValue, int strictValidation)
@@ -236,7 +237,7 @@ public class ParamSpec
 	 * Params:
 	 * value1 =  a GValue of correct type for pspec
 	 * value2 =  a GValue of correct type for pspec
-	 * Returns:-1, 0 or +1, for a less than, equal to or greater than result
+	 * Returns: -1, 0 or +1, for a less than, equal to or greater than result
 	 */
 	public int gParamValuesCmp(Value value1, Value value2)
 	{
@@ -245,8 +246,8 @@ public class ParamSpec
 	}
 	
 	/**
-	 * Returns the name of a GParamSpec.
-	 * Returns:the name of pspec.
+	 * Get the name of a GParamSpec.
+	 * Returns: the name of pspec.
 	 */
 	public string getName()
 	{
@@ -255,8 +256,8 @@ public class ParamSpec
 	}
 	
 	/**
-	 * Returns the nickname of a GParamSpec.
-	 * Returns:the nickname of pspec.
+	 * Get the nickname of a GParamSpec.
+	 * Returns: the nickname of pspec.
 	 */
 	public string getNick()
 	{
@@ -265,8 +266,8 @@ public class ParamSpec
 	}
 	
 	/**
-	 * Returns the short description of a GParamSpec.
-	 * Returns:the short description of pspec.
+	 * Get the short description of a GParamSpec.
+	 * Returns: the short description of pspec.
 	 */
 	public string getBlurb()
 	{
@@ -277,8 +278,8 @@ public class ParamSpec
 	/**
 	 * Gets back user data pointers stored via g_param_spec_set_qdata().
 	 * Params:
-	 * quark = a GQuark, naming the user data pointer
-	 * Returns:the user data pointer set, or NULL
+	 * quark =  a GQuark, naming the user data pointer
+	 * Returns: the user data pointer set, or NULL
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -287,15 +288,15 @@ public class ParamSpec
 	}
 	
 	/**
-	 * Sets an opaque, named pointer on a GParamSpec. The name is specified
-	 * through a GQuark (retrieved e.g. via g_quark_from_static_string()), and
-	 * the pointer can be gotten back from the pspec with g_param_spec_get_qdata().
-	 * Setting a previously set user data pointer, overrides (frees)
-	 * the old pointer set, using NULL as pointer essentially
-	 * removes the data stored.
+	 * Sets an opaque, named pointer on a GParamSpec. The name is
+	 * specified through a GQuark (retrieved e.g. via
+	 * g_quark_from_static_string()), and the pointer can be gotten back
+	 * from the pspec with g_param_spec_get_qdata(). Setting a
+	 * previously set user data pointer, overrides (frees) the old pointer
+	 * set, using NULL as pointer essentially removes the data stored.
 	 * Params:
-	 * quark = a GQuark, naming the user data pointer
-	 * data = an opaque user data pointer
+	 * quark =  a GQuark, naming the user data pointer
+	 * data =  an opaque user data pointer
 	 */
 	public void setQdata(GQuark quark, void* data)
 	{
@@ -312,7 +313,7 @@ public class ParamSpec
 	 * Params:
 	 * quark =  a GQuark, naming the user data pointer
 	 * data =  an opaque user data pointer
-	 * destroy = function to invoke with data as argument, when data needs to
+	 * destroy =  function to invoke with data as argument, when data needs to
 	 *  be freed
 	 */
 	public void setQdataFull(GQuark quark, void* data, GDestroyNotify destroy)
@@ -322,14 +323,13 @@ public class ParamSpec
 	}
 	
 	/**
-	 * Gets back user data pointers stored via g_param_spec_set_qdata() and
-	 * removes the data from pspec without invoking it's destroy() function
-	 * (if any was set).
-	 * Usually, calling this function is only required to update
-	 * user data pointers with a destroy notifier.
+	 * Gets back user data pointers stored via g_param_spec_set_qdata()
+	 * and removes the data from pspec without invoking it's destroy()
+	 * function (if any was set). Usually, calling this function is only
+	 * required to update user data pointers with a destroy notifier.
 	 * Params:
-	 * quark = a GQuark, naming the user data pointer
-	 * Returns:the user data pointer set, or NULL
+	 * quark =  a GQuark, naming the user data pointer
+	 * Returns: the user data pointer set, or NULL
 	 */
 	public void* stealQdata(GQuark quark)
 	{
@@ -346,7 +346,7 @@ public class ParamSpec
 	 * of type GParamSpecOverride. See g_object_class_override_property()
 	 * for an example of the use of this capability.
 	 * Since 2.4
-	 * Returns:paramspec to which requests on this paramspec should be redirected, or NULL if none.
+	 * Returns: paramspec to which requests on this paramspec should be redirected, or NULL if none.
 	 */
 	public ParamSpec getRedirectTarget()
 	{
@@ -365,16 +365,22 @@ public class ParamSpec
 	 * digits, separated by either the '-' or '_' character. The first
 	 * character of a property name must be a letter. Names which violate these
 	 * rules lead to undefined behaviour.
-	 * When creating and looking up a GParamSpec, either separator can be used,
-	 * but they cannot be mixed. Using '-' is considerably more efficient and in
-	 * fact required when using property names as detail strings for signals.
+	 * When creating and looking up a GParamSpec, either separator can be
+	 * used, but they cannot be mixed. Using '-' is considerably more
+	 * efficient and in fact required when using property names as detail
+	 * strings for signals.
+	 * Beyond the name, GParamSpecs have two more descriptive
+	 * strings associated with them, the nick, which should be suitable
+	 * for use as a label for the property in a property editor, and the
+	 * blurb, which should be a somewhat longer description, suitable for
+	 * e.g. a tooltip. The nick and blurb should ideally be localized.
 	 * Params:
-	 * paramType = the GType for the property; must be derived from G_TYPE_PARAM
-	 * name = the canonical name of the property
-	 * nick = the nickname of the property
-	 * blurb = a short description of the property
-	 * flags = a combination of GParamFlags
-	 * Returns:a newly allocated GParamSpec instance
+	 * paramType =  the GType for the property; must be derived from G_TYPE_PARAM
+	 * name =  the canonical name of the property
+	 * nick =  the nickname of the property
+	 * blurb =  a short description of the property
+	 * flags =  a combination of GParamFlags
+	 * Returns: a newly allocated GParamSpec instance
 	 */
 	public static void* internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
@@ -384,13 +390,13 @@ public class ParamSpec
 	
 	/**
 	 * Registers name as the name of a new static type derived from
-	 * G_TYPE_PARAM. The type system uses the information contained in the
-	 * GParamSpecTypeInfo structure pointed to by info to manage the GParamSpec
-	 * type and its instances.
+	 * G_TYPE_PARAM. The type system uses the information contained in
+	 * the GParamSpecTypeInfo structure pointed to by info to manage the
+	 * GParamSpec type and its instances.
 	 * Params:
-	 * name = 0-terminated string used as the name of the new GParamSpec type.
-	 * pspecInfo = The GParamSpecTypeInfo for this GParamSpec type.
-	 * Returns:The new type identifier.
+	 * name =  0-terminated string used as the name of the new GParamSpec type.
+	 * pspecInfo =  The GParamSpecTypeInfo for this GParamSpec type.
+	 * Returns: The new type identifier.
 	 */
 	public static GType gParamTypeRegisterStatic(string name, GParamSpecTypeInfo* pspecInfo)
 	{

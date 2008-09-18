@@ -66,6 +66,11 @@ private import glib.ConstructionException;
  * GTimer records a start time, and counts microseconds elapsed since that time.
  * This is done somewhat differently on different platforms, and can be tricky to
  * get exactly right, so GTimer provides a portable/convenient interface.
+ * Note
+ * GTimer uses a higher-quality clock when thread support is available.
+ * Therefore, calling g_thread_init() while timers are running may lead to
+ * unreliable results. It is best to call g_thread_init() before starting
+ * any timers, if you are using threads at all.
  */
 public class Timer
 {
