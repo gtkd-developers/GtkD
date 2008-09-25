@@ -167,15 +167,32 @@ public class PgAttribute
 	}
 	
 	/**
-	 * Allocate a new attribute type ID.
+	 * Allocate a new attribute type ID. The attribute type name can be accessed
+	 * later by using pango_attr_type_get_name().
 	 * Params:
-	 * name =  an identifier for the type (currently unused.)
+	 * name =  an identifier for the type
 	 * Returns: the new type ID.
 	 */
 	public static PangoAttrType typeRegister(string name)
 	{
 		// PangoAttrType pango_attr_type_register (const gchar *name);
 		return pango_attr_type_register(Str.toStringz(name));
+	}
+	
+	/**
+	 * Fetches the attribute type name passed in when registering the type using
+	 * pango_attr_type_register().
+	 * The returned value is an interned string (see g_intern_string() for what
+	 * that means) that should not be modified or freed.
+	 * Since 1.22
+	 * Params:
+	 * type =  an attribute type ID to fetch the name for
+	 * Returns: the type ID name (which may be NULL), or NULL if type isa built-in Pango attribute type or invalid.
+	 */
+	public static string typeGetName(PangoAttrType type)
+	{
+		// const char* pango_attr_type_get_name (PangoAttrType type);
+		return Str.toString(pango_attr_type_get_name(type));
 	}
 	
 	/**

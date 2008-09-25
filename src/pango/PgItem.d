@@ -62,11 +62,6 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
- * The Pango rendering pipeline takes a string of
- * Unicode characters and converts it into glyphs.
- * The functions described in this section accomplish
- * various steps of this process.
  */
 public class PgItem
 {
@@ -102,70 +97,4 @@ public class PgItem
 	
 	/**
 	 */
-	
-	/**
-	 * Free a PangoItem and all associated memory.
-	 */
-	public void free()
-	{
-		// void pango_item_free (PangoItem *item);
-		pango_item_free(pangoItem);
-	}
-	
-	/**
-	 * Copy an existing PangoItem structure.
-	 * Returns: the newly allocated PangoItem, which should be freed with pango_item_free(), or NULL if item was NULL.
-	 */
-	public PgItem copy()
-	{
-		// PangoItem* pango_item_copy (PangoItem *item);
-		auto p = pango_item_copy(pangoItem);
-		if(p is null)
-		{
-			return null;
-		}
-		return new PgItem(cast(PangoItem*) p);
-	}
-	
-	/**
-	 * Creates a new PangoItem structure initialized to default values.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// PangoItem* pango_item_new (void);
-		auto p = pango_item_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by pango_item_new()");
-		}
-		this(cast(PangoItem*) p);
-	}
-	
-	/**
-	 * Modifies orig to cover only the text after split_index, and
-	 * returns a new item that covers the text before split_index that
-	 * used to be in orig. You can think of split_index as the length of
-	 * the returned item. split_index may not be 0, and it may not be
-	 * greater than or equal to the length of orig (that is, there must
-	 * be at least one byte assigned to each item, you can't create a
-	 * zero-length item). split_offset is the length of the first item in
-	 * chars, and must be provided because the text used to generate the
-	 * item isn't available, so pango_item_split() can't count the char
-	 * length of the split items itself.
-	 * Params:
-	 * splitIndex =  byte index of position to split item, relative to the start of the item
-	 * splitOffset =  number of chars between start of orig and split_index
-	 * Returns: new item representing text before split_index, which should be freed with pango_item_free().
-	 */
-	public PgItem split(int splitIndex, int splitOffset)
-	{
-		// PangoItem* pango_item_split (PangoItem *orig,  int split_index,  int split_offset);
-		auto p = pango_item_split(pangoItem, splitIndex, splitOffset);
-		if(p is null)
-		{
-			return null;
-		}
-		return new PgItem(cast(PangoItem*) p);
-	}
 }

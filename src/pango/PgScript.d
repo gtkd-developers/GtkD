@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = pango-Scripts.html
+ * inFile  = pango-Scripts-and-Languages.html
  * outPack = pango
  * outFile = PgScript
  * strct   = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * 	- pango_script_iter_
+ * 	- pango_language_
  * omit code:
  * omit signals:
  * imports:
@@ -112,27 +113,5 @@ public class PgScript
 			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
-	}
-	
-	/**
-	 * Determines if script is one of the scripts used to
-	 * write language. The returned value is conservative;
-	 * if nothing is known about the language tag language,
-	 * TRUE will be returned, since, as far as Pango knows,
-	 * script might be used to write language.
-	 * This routine is used in Pango's itemization process when
-	 * determining if a supplied language tag is relevant to
-	 * a particular section of text. It probably is not useful for
-	 * applications in most circumstances.
-	 * Since 1.4
-	 * Params:
-	 * language =  a PangoLanguage, or NULL
-	 * script =  a PangoScript
-	 * Returns: TRUE if script is one of the scripts usedto write language or if nothing is known about language(including the case that language is NULL),FALSE otherwise.
-	 */
-	public static int languageIncludesScript(PgLanguage language, PangoScript script)
-	{
-		// gboolean pango_language_includes_script (PangoLanguage *language,  PangoScript script);
-		return pango_language_includes_script((language is null) ? null : language.getPgLanguageStruct(), script);
 	}
 }

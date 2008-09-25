@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- pango.PgColor
  * 	- pango.PgFont
  * 	- pango.PgGlyphItem
@@ -70,6 +71,7 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import pango.PgColor;
 private import pango.PgFont;
 private import pango.PgGlyphItem;
@@ -180,6 +182,29 @@ public class PgRenderer : ObjectG
 	{
 		// void pango_renderer_draw_glyphs (PangoRenderer *renderer,  PangoFont *font,  PangoGlyphString *glyphs,  int x,  int y);
 		pango_renderer_draw_glyphs(pangoRenderer, (font is null) ? null : font.getPgFontStruct(), (glyphs is null) ? null : glyphs.getPgGlyphStringStruct(), x, y);
+	}
+	
+	/**
+	 * Draws the glyphs in glyph_item with the specified PangoRenderer,
+	 * embedding the text associated with the glyphs in the output if the
+	 * output format supports it (PDF for example).
+	 * Note that text is the start of the text for layout, which is then
+	 * indexed by glyph_item->item->offset.
+	 * The default implementation of this method simply falls back to
+	 * pango_renderer_draw_glyphs().
+	 * Since 1.22
+	 * Params:
+	 * text =  the UTF-8 text that glyph_item refers to
+	 * glyphItem =  a PangoGlyphItem
+	 * x =  X position of left edge of baseline, in user space coordinates
+	 *  in Pango units.
+	 * y =  Y position of left edge of baseline, in user space coordinates
+	 *  in Pango units.
+	 */
+	public void drawGlyphItem(string text, PgGlyphItem glyphItem, int x, int y)
+	{
+		// void pango_renderer_draw_glyph_item (PangoRenderer *renderer,  const char *text,  PangoGlyphItem *glyph_item,  int x,  int y);
+		pango_renderer_draw_glyph_item(pangoRenderer, Str.toStringz(text), (glyphItem is null) ? null : glyphItem.getPgGlyphItemStruct(), x, y);
 	}
 	
 	/**

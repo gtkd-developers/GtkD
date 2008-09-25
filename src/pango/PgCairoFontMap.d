@@ -96,7 +96,7 @@ private import pango.PgFontMap;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
- * Example1.Using Pango with Cairo
+ * Example 1. Using Pango with Cairo
  * #include <math.h>
  * #include <pango/pangocairo.h>
  * static void
@@ -166,7 +166,7 @@ private import pango.PgFontMap;
 	 *  }
 	 *  return 0;
  * }
- * Figure2.Output of Example1, Using Pango with Cairo
+ * Figure 2. Output of Example 1, “Using Pango with Cairo”
  */
 public class PgCairoFontMap : PgFontMap
 {
@@ -217,6 +217,10 @@ public class PgCairoFontMap : PgFontMap
 	 * on the particular font backend Cairo was compiled to use;
 	 * You generally should only use the PangoFontMap and
 	 * PangoCairoFontMap interfaces on the returned object.
+	 * The default Cairo fontmap can be changed by using
+	 * pango_cairo_font_map_set_default(). This can be used to
+	 * change the Cairo font backend that the default fontmap
+	 * uses for example.
 	 * Since 1.10
 	 * Returns: the default Cairo fontmap for Pango. This object is owned by Pango and must not be freed.
 	 */
@@ -229,6 +233,22 @@ public class PgCairoFontMap : PgFontMap
 			return null;
 		}
 		return new PgFontMap(cast(PangoFontMap*) p);
+	}
+	
+	/**
+	 * Sets a default PangoCairoFontMap to use with Cairo.
+	 * This can be used to change the Cairo font backend that the
+	 * default fontmap uses for example. The old default font map
+	 * is unreffed and the new font map referenced.
+	 * A value of NULL for fontmap will cause the current default
+	 * font map to be released and a new default font
+	 * map to be created on demand, using pango_cairo_font_map_new().
+	 * Since 1.22
+	 */
+	public void setDefault()
+	{
+		// void pango_cairo_font_map_set_default (PangoCairoFontMap *fontmap);
+		pango_cairo_font_map_set_default(pangoCairoFontMap);
 	}
 	
 	/**
@@ -316,6 +336,8 @@ public class PgCairoFontMap : PgFontMap
 	}
 	
 	/**
+	 * Warning
+	 * pango_cairo_font_map_create_context has been deprecated since version 1.22 and should not be used in newly-written code. Use pango_font_map_create_context() instead.
 	 * Create a PangoContext for the given fontmap.
 	 * Since 1.10
 	 * Returns: the newly created context; free with g_object_unref().

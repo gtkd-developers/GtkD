@@ -134,6 +134,28 @@ public class PgFontMap : ObjectG
 	 */
 	
 	/**
+	 * Creates a PangoContext connected to fontmap. This is equivalent
+	 * to pango_context_new() followed by pango_context_set_font_map().
+	 * If you are using Pango as part of a higher-level system,
+	 * that system may have it's own way of create a PangoContext.
+	 * For instance, the GTK+ toolkit has, among others,
+	 * gdk_pango_context_get_for_screen(), and
+	 * gtk_widget_get_pango_context(). Use those instead.
+	 * Since 1.22
+	 * Returns: the newly allocated PangoContext, which should be freed with g_object_unref().
+	 */
+	public PgContext createContext()
+	{
+		// PangoContext* pango_font_map_create_context (PangoFontMap *fontmap);
+		auto p = pango_font_map_create_context(pangoFontMap);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgContext(cast(PangoContext*) p);
+	}
+	
+	/**
 	 * Load the font in the fontmap that is the closest match for desc.
 	 * Params:
 	 * context =  the PangoContext the font will be used with

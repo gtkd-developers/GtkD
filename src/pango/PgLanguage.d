@@ -65,11 +65,9 @@ private import glib.Str;
 
 /**
  * Description
- * Attributed text is used in a number of places in Pango. It
- * is used as the input to the itemization process and also when
- * creating a PangoLayout. The data types and functions in
- * this section are used to represent and manipulate sets
- * of attributes applied to a portion of text.
+ * The functions in this section are used to identify the writing
+ * system, or script of individual characters
+ * and of ranges within a larger text string.
  */
 public class PgLanguage
 {
@@ -117,8 +115,8 @@ public class PgLanguage
 	 * Use pango_language_get_default() if you want to get the PangoLanguage for
 	 * the current locale of the process.
 	 * Params:
-	 * language =  a string representing a language tag
-	 * Returns: an opaque pointer to a PangoLanguage structure. this will be valid forever after.
+	 * language =  a string representing a language tag, or NULL
+	 * Returns: an opaque pointer to a PangoLanguage structure, or NULL if language was NULL. The returned pointer will be valid forever after, and should not be freed.
 	 */
 	public static PgLanguage fromString(string language)
 	{
@@ -129,6 +127,16 @@ public class PgLanguage
 			return null;
 		}
 		return new PgLanguage(cast(PangoLanguage*) p);
+	}
+	
+	/**
+	 * Gets the RFC-3066 format string representing the given language tag.
+	 * Returns: a string representing the language tag. This is owned by Pango and should not be freed.
+	 */
+	public string toString()
+	{
+		// const char* pango_language_to_string (PangoLanguage *language);
+		return Str.toString(pango_language_to_string(pangoLanguage));
 	}
 	
 	/**
@@ -148,5 +156,112 @@ public class PgLanguage
 	{
 		// gboolean pango_language_matches (PangoLanguage *language,  const char *range_list);
 		return pango_language_matches(pangoLanguage, Str.toStringz(rangeList));
+	}
+	
+	/**
+	 * Determines if script is one of the scripts used to
+	 * write language. The returned value is conservative;
+	 * if nothing is known about the language tag language,
+	 * TRUE will be returned, since, as far as Pango knows,
+	 * script might be used to write language.
+	 * This routine is used in Pango's itemization process when
+	 * determining if a supplied language tag is relevant to
+	 * a particular section of text. It probably is not useful for
+	 * applications in most circumstances.
+	 * This function uses pango_language_get_scripts() internally.
+	 * Since 1.4
+	 * Params:
+	 * script =  a PangoScript
+	 * Returns: TRUE if script is one of the scripts usedto write language or if nothing is known about language(including the case that language is NULL),FALSE otherwise.
+	 */
+	public int includesScript(PangoScript script)
+	{
+		// gboolean pango_language_includes_script (PangoLanguage *language,  PangoScript script);
+		return pango_language_includes_script(pangoLanguage, script);
+	}
+	
+	/**
+	 * Determines the scripts used to to write language.
+	 * If nothing is known about the language tag language,
+	 * or if language is NULL, then NULL is returned.
+	 * The list of scripts returned starts with the script that the
+	 * language uses most and continues to the one it uses least.
+	 * The value num_script points at will be set to the number
+	 * of scripts in the returned array (or zero if NULL is returned).
+	 * Most languages use only one script for writing, but there are
+	 * some that use two (Latin and Cyrillic for example), and a few
+	 * use three (Japanese for example). Applications should not make
+	 * any assumptions on the maximum number of scripts returned
+	 * though, except that it is positive if the return value is not
+	 * NULL, and it is a small number.
+	 * The pango_language_includes_script() function uses this function
+	 * internally.
+	 * Since 1.22
+	 * Params:
+	 * numScripts =  location to return number of scripts, or NULL
+	 * Returns: An array of PangoScript values, with thenumber of entries in the array stored in num_scripts, orNULL if Pango does not have any information about thisparticular language tag (also the case if language is NULL).The returned array is owned by Pango and should not be modifiedor freed.
+	 */
+	public PangoScript* getScripts(int* numScripts)
+	{
+		// const PangoScript* pango_language_get_scripts (PangoLanguage *language,  int *num_scripts);
+		return pango_language_get_scripts(pangoLanguage, numScripts);
+	}
+	
+	/**
+	 * Returns the PangoLanguage for the current locale of the process.
+	 * Note that this can change over the life of an application.
+	 * On Unix systems, this is the return value is derived from
+	 * setlocale(LC_CTYPE, NULL), and the user can
+	 * affect this through the environment variables LC_ALL, LC_CTYPE or
+	 * LANG (checked in that order). The locale string typically is in
+	 * the form lang_COUNTRY, where lang is an ISO-639 language code, and
+	 * COUNTRY is an ISO-3166 country code. For instance, sv_FI for
+	 * Swedish as written in Finland or pt_BR for Portuguese as written in
+	 * Brazil.
+	 * On Windows, the C library does not use any such environment
+	 * variables, and setting them won't affect the behavior of functions
+	 * like ctime(). The user sets the locale through the Regional Options
+	 * in the Control Panel. The C library (in the setlocale() function)
+	 * does not use country and language codes, but country and language
+	 * names spelled out in English.
+	 * However, this function does check the above environment
+	 * variables, and does return a Unix-style locale string based on
+	 * either said environment variables or the thread's current locale.
+	 * Your application should call setlocale(LC_ALL, "");
+	 * for the user settings to take effect. Gtk+ does this in its initialization
+	 * functions automatically (by calling gtk_set_locale()).
+	 * See man setlocale for more details.
+	 * Since 1.16
+	 * Returns: the default language as a PangoLanguage, must not be freed.
+	 */
+	public static PgLanguage getDefault()
+	{
+		// PangoLanguage* pango_language_get_default (void);
+		auto p = pango_language_get_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgLanguage(cast(PangoLanguage*) p);
+	}
+	
+	/**
+	 * Get a string that is representative of the characters needed to
+	 * render a particular language.
+	 * The sample text may be a pangram, but is not necessarily. It is chosen to
+	 * be demonstrative of normal text in the language, as well as exposing font
+	 * feature requirements unique to the language. It is suitable for use
+	 * as sample text in a font selection dialog.
+	 * If language is NULL, the default language as found by
+	 * pango_language_get_default() is used.
+	 * If Pango does not have a sample string for language, the classic
+	 * "The quick brown fox..." is returned. This can be detected by
+	 * comparing the returned pointer value to that returned for (non-existent)
+	 * Returns: the sample string. This value is owned by Pango and should not be freed.
+	 */
+	public string getSampleString()
+	{
+		// const char* pango_language_get_sample_string (PangoLanguage *language);
+		return Str.toString(pango_language_get_sample_string(pangoLanguage));
 	}
 }

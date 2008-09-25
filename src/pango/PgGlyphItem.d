@@ -39,6 +39,7 @@
  * 	- pango_glyph_item_
  * omit structs:
  * omit prefixes:
+ * 	- pango_glyph_item_iter_
  * omit code:
  * omit signals:
  * imports:
@@ -110,6 +111,32 @@ public class PgGlyphItem
 	
 	/**
 	 */
+	
+	/**
+	 * Make a deep copy of an existing PangoGlyphItem structure.
+	 * Since 1.20
+	 * Returns: the newly allocated PangoGlyphItem, which should be freed with pango_glyph_item_free(), or NULL if orig was NULL.
+	 */
+	public PgGlyphItem copy()
+	{
+		// PangoGlyphItem* pango_glyph_item_copy (PangoGlyphItem *orig);
+		auto p = pango_glyph_item_copy(pangoGlyphItem);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgGlyphItem(cast(PangoGlyphItem*) p);
+	}
+	
+	/**
+	 * Frees a PangoGlyphItem and resources to which it points.
+	 * Since 1.6
+	 */
+	public void free()
+	{
+		// void pango_glyph_item_free (PangoGlyphItem *glyph_item);
+		pango_glyph_item_free(pangoGlyphItem);
+	}
 	
 	/**
 	 * Modifies orig to cover only the text after split_index, and
@@ -189,31 +216,5 @@ public class PgGlyphItem
 	{
 		// void pango_glyph_item_letter_space (PangoGlyphItem *glyph_item,  const char *text,  PangoLogAttr *log_attrs,  int letter_spacing);
 		pango_glyph_item_letter_space(pangoGlyphItem, Str.toStringz(text), logAttrs, letterSpacing);
-	}
-	
-	/**
-	 * Make a deep copy an existing PangoGlyphItem structure.
-	 * Since 1.20
-	 * Returns: the newly allocated PangoGlyphItem, which should be freed with pango_glyph_item_free(), or NULL if orig was NULL.
-	 */
-	public PgGlyphItem copy()
-	{
-		// PangoGlyphItem* pango_glyph_item_copy (PangoGlyphItem *orig);
-		auto p = pango_glyph_item_copy(pangoGlyphItem);
-		if(p is null)
-		{
-			return null;
-		}
-		return new PgGlyphItem(cast(PangoGlyphItem*) p);
-	}
-	
-	/**
-	 * Frees a PangoGlyphItem and memory to which it points.
-	 * Since 1.6
-	 */
-	public void free()
-	{
-		// void pango_glyph_item_free (PangoGlyphItem *glyph_item);
-		pango_glyph_item_free(pangoGlyphItem);
 	}
 }

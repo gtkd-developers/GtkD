@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- cairo.Context
  * 	- cairo.ScaledFont
  * 	- cairo.FontOption
@@ -75,6 +76,7 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import cairo.Context;
 private import cairo.ScaledFont;
 private import cairo.FontOption;
@@ -115,7 +117,7 @@ private import pango.PgLayoutLine;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
- * Example1.Using Pango with Cairo
+ * Example 1. Using Pango with Cairo
  * #include <math.h>
  * #include <pango/pangocairo.h>
  * static void
@@ -185,7 +187,7 @@ private import pango.PgLayoutLine;
 	 *  }
 	 *  return 0;
  * }
- * Figure2.Output of Example1, Using Pango with Cairo
+ * Figure 2. Output of Example 1, “Using Pango with Cairo”
  */
 public class PgCairo
 {
@@ -220,7 +222,7 @@ public class PgCairo
 	 * units high. (10 * 96. / 72. = 13.3).
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 * dpi =  the resolution in "dots per inch". (Physical inches aren't actually
 	 *  involved; the terminology is conventional.) A 0 or negative value
 	 *  means to use the resolution from the font map.
@@ -235,7 +237,7 @@ public class PgCairo
 	 * Gets the resolution for the context. See pango_cairo_context_set_resolution()
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 * Returns: the resolution in "dots per inch". A negative value will be returned if no resolution has previously been set.
 	 */
 	public static double contextGetResolution(PgContext context)
@@ -250,7 +252,7 @@ public class PgCairo
 	 * derives from the target surface.
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 * options =  a cairo_font_options_t, or NULL to unset any previously set
 	 *  options. A copy is made.
 	 */
@@ -266,7 +268,7 @@ public class PgCairo
 	 * that are derived from the target surface by pango_cairo_update_context()
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 * Returns: the font options previously set on the context, or NULL if no options have been set. This value is owned by the context and must not be modified or freed.
 	 */
 	public static FontOption contextGetFontOptions(PgContext context)
@@ -286,7 +288,7 @@ public class PgCairo
 	 * details.
 	 * Since 1.18
 	 * Params:
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 * func =  Callback function for rendering attributes of type
 	 * PANGO_ATTR_SHAPE, or NULL to disable shape rendering.
 	 * data =  User data that will be passed to func.
@@ -308,7 +310,7 @@ public class PgCairo
 	 * pango_cairo_context_set_shape_renderer(), if any.
 	 * Since 1.18
 	 * Params:
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 * data =  Pointer to gpointer to return user data
 	 * Returns: the shape rendering callback previously set on the context, or NULL if no shape rendering callback have been set.
 	 */
@@ -316,6 +318,30 @@ public class PgCairo
 	{
 		// PangoCairoShapeRendererFunc pango_cairo_context_get_shape_renderer  (PangoContext *context,  gpointer *data);
 		return pango_cairo_context_get_shape_renderer((context is null) ? null : context.getPgContextStruct(), data);
+	}
+	
+	/**
+	 * Creates a context object set up to match the current transformation
+	 * and target surface of the Cairo context. This context can then be
+	 * used to create a layout using pango_layout_new().
+	 * This function is a convenience function that creates a context using
+	 * the default font map, then updates it to cr. If you just need to
+	 * create a layout for use with cr and do not need to access PangoContext
+	 * directly, you can use pango_cairo_create_layout() instead.
+	 * Since 1.22
+	 * Params:
+	 * cr =  a Cairo context
+	 * Returns: the newly created PangoContext. Free with g_object_unref().
+	 */
+	public static PgContext createContext(Context cr)
+	{
+		// PangoContext* pango_cairo_create_context (cairo_t *cr);
+		auto p = pango_cairo_create_context((cr is null) ? null : cr.getContextStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -327,7 +353,7 @@ public class PgCairo
 	 * Since 1.10
 	 * Params:
 	 * cr =  a Cairo context
-	 * context =  a PangoContext, from pango_cairo_font_map_create_context()
+	 * context =  a PangoContext, from a pangocairo font map
 	 */
 	public static void updateContext(Context cr, PgContext context)
 	{
@@ -391,6 +417,27 @@ public class PgCairo
 	{
 		// void pango_cairo_show_glyph_string (cairo_t *cr,  PangoFont *font,  PangoGlyphString *glyphs);
 		pango_cairo_show_glyph_string((cr is null) ? null : cr.getContextStruct(), (font is null) ? null : font.getPgFontStruct(), (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
+	}
+	
+	/**
+	 * Draws the glyphs in glyph_item in the specified cairo context,
+	 * embedding the text associated with the glyphs in the output if the
+	 * output format supports it (PDF for example), otherwise it acts
+	 * similar to pango_cairo_show_glyph_string().
+	 * The origin of the glyphs (the left edge of the baseline) will
+	 * be drawn at the current point of the cairo context.
+	 * Note that text is the start of the text for layout, which is then
+	 * indexed by glyph_item->item->offset.
+	 * Since 1.22
+	 * Params:
+	 * cr =  a Cairo context
+	 * text =  the UTF-8 text that glyph_item refers to
+	 * glyphItem =  a PangoGlyphItem
+	 */
+	public static void showGlyphItem(Context cr, string text, PgGlyphItem glyphItem)
+	{
+		// void pango_cairo_show_glyph_item (cairo_t *cr,  const char *text,  PangoGlyphItem *glyph_item);
+		pango_cairo_show_glyph_item((cr is null) ? null : cr.getContextStruct(), Str.toStringz(text), (glyphItem is null) ? null : glyphItem.getPgGlyphItemStruct());
 	}
 	
 	/**

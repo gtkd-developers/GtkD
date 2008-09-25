@@ -259,6 +259,13 @@ public class PgFont : ObjectG
 	
 	/**
 	 * Gets the font map for which the font was created.
+	 * Note that the font maintains a weak reference
+	 * to the font map, so if all references to font map are dropped, the font
+	 * map will be finalized even if there are fonts created with the font
+	 * map that are still alive. In that case this function will return NULL.
+	 * It is the responsibility of the user to ensure that the font map is kept
+	 * alive. In most uses this is not an issue as a PangoContext holds
+	 * a reference to the font map.
 	 * Since 1.10
 	 * Returns: the PangoFontMap for the font, or NULL if font is NULL.
 	 */

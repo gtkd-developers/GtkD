@@ -90,21 +90,18 @@ extern(C)
 	PangoFontset* function(PangoContext* context, PangoFontDescription* desc, PangoLanguage* language)pango_context_load_fontset;
 	PangoFontMetrics* function(PangoContext* context, PangoFontDescription* desc, PangoLanguage* language)pango_context_get_metrics;
 	void function(PangoContext* context, PangoFontFamily*** families, int* nFamilies)pango_context_list_families;
-	gboolean function(gunichar ch, gunichar* mirroredCh)pango_get_mirror_char;
-	PangoDirection function(gunichar ch)pango_unichar_direction;
-	PangoDirection function(gchar* text, gint length)pango_find_base_dir;
 	void function(gchar* text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)pango_break;
 	void function(char* text, int length, int level, PangoLanguage* language, PangoLogAttr* logAttrs, int attrsLen)pango_get_log_attrs;
 	void function(gchar* text, gint length, gint* paragraphDelimiterIndex, gint* nextParagraphStart)pango_find_paragraph_boundary;
 	void function(gchar* text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)pango_default_break;
 	void function(gchar* text, gint length, PangoAnalysis* analysis, PangoGlyphString* glyphs)pango_shape;
+	PangoDirection function(gunichar ch)pango_unichar_direction;
+	PangoDirection function(gchar* text, gint length)pango_find_base_dir;
+	gboolean function(gunichar ch, gunichar* mirroredCh)pango_get_mirror_char;
+	PangoBidiType function(gunichar ch)pango_bidi_type_for_unichar;
 	
 	// pango.PgItem
 	
-	void function(PangoItem* item)pango_item_free;
-	PangoItem* function(PangoItem* item)pango_item_copy;
-	PangoItem* function()pango_item_new;
-	PangoItem* function(PangoItem* orig, int splitIndex, int splitOffset)pango_item_split;
 	
 	// pango.PgMatrix
 	
@@ -138,14 +135,20 @@ extern(C)
 	
 	// pango.PgGlyphItem
 	
+	PangoGlyphItem* function(PangoGlyphItem* orig)pango_glyph_item_copy;
+	void function(PangoGlyphItem* glyphItem)pango_glyph_item_free;
 	PangoGlyphItem* function(PangoGlyphItem* orig, char* text, int splitIndex)pango_glyph_item_split;
 	GSList* function(PangoGlyphItem* glyphItem, char* text, PangoAttrList* list)pango_glyph_item_apply_attrs;
 	void function(PangoGlyphItem* glyphItem, char* text, PangoLogAttr* logAttrs, int letterSpacing)pango_glyph_item_letter_space;
-	PangoGlyphItem* function(PangoGlyphItem* orig)pango_glyph_item_copy;
-	void function(PangoGlyphItem* glyphItem)pango_glyph_item_free;
 	
 	// pango.PgGlyphItemIter
 	
+	PangoGlyphItemIter* function(PangoGlyphItemIter* orig)pango_glyph_item_iter_copy;
+	void function(PangoGlyphItemIter* iter)pango_glyph_item_iter_free;
+	gboolean function(PangoGlyphItemIter* iter, PangoGlyphItem* glyphItem, char* text)pango_glyph_item_iter_init_start;
+	gboolean function(PangoGlyphItemIter* iter, PangoGlyphItem* glyphItem, char* text)pango_glyph_item_iter_init_end;
+	gboolean function(PangoGlyphItemIter* iter)pango_glyph_item_iter_next_cluster;
+	gboolean function(PangoGlyphItemIter* iter)pango_glyph_item_iter_prev_cluster;
 	
 	// pango.PgFont
 	
@@ -219,6 +222,7 @@ extern(C)
 	
 	// pango.PgFontMap
 	
+	PangoContext* function(PangoFontMap* fontmap)pango_font_map_create_context;
 	PangoFont* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc)pango_font_map_load_font;
 	PangoFontset* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language)pango_font_map_load_fontset;
 	void function(PangoFontMap* fontmap, PangoFontFamily*** families, int* nFamilies)pango_font_map_list_families;
@@ -240,6 +244,7 @@ extern(C)
 	
 	gboolean function(char* markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error)pango_parse_markup;
 	PangoAttrType function(gchar* name)pango_attr_type_register;
+	char* function(PangoAttrType type)pango_attr_type_get_name;
 	void function(PangoAttribute* attr, PangoAttrClass* klass)pango_attribute_init;
 	PangoAttribute* function(PangoAttribute* attr)pango_attribute_copy;
 	gboolean function(PangoAttribute* attr1, PangoAttribute* attr2)pango_attribute_equal;
@@ -274,11 +279,6 @@ extern(C)
 	PangoColor* function(PangoColor* src)pango_color_copy;
 	void function(PangoColor* color)pango_color_free;
 	gchar* function(PangoColor* color)pango_color_to_string;
-	
-	// pango.PgLanguage
-	
-	PangoLanguage* function(char* language)pango_language_from_string;
-	gboolean function(PangoLanguage* language, char* rangeList)pango_language_matches;
 	
 	// pango.PgAttributeList
 	
@@ -365,6 +365,7 @@ extern(C)
 	void function(PangoLayout* layout, PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_layout_get_pixel_extents;
 	void function(PangoLayout* layout, int* width, int* height)pango_layout_get_size;
 	void function(PangoLayout* layout, int* width, int* height)pango_layout_get_pixel_size;
+	int function(PangoLayout* layout)pango_layout_get_baseline;
 	int function(PangoLayout* layout)pango_layout_get_line_count;
 	PangoLayoutLine* function(PangoLayout* layout, int line)pango_layout_get_line;
 	PangoLayoutLine* function(PangoLayout* layout, int line)pango_layout_get_line_readonly;
@@ -409,7 +410,6 @@ extern(C)
 	
 	PangoScript function(gunichar ch)pango_script_for_unichar;
 	PangoLanguage* function(PangoScript script)pango_script_get_sample_language;
-	gboolean function(PangoLanguage* language, PangoScript script)pango_language_includes_script;
 	
 	// pango.PgScriptIter
 	
@@ -417,6 +417,16 @@ extern(C)
 	void function(PangoScriptIter* iter, char** start, char** end, PangoScript* script)pango_script_iter_get_range;
 	gboolean function(PangoScriptIter* iter)pango_script_iter_next;
 	void function(PangoScriptIter* iter)pango_script_iter_free;
+	
+	// pango.PgLanguage
+	
+	PangoLanguage* function(char* language)pango_language_from_string;
+	char* function(PangoLanguage* language)pango_language_to_string;
+	gboolean function(PangoLanguage* language, char* rangeList)pango_language_matches;
+	gboolean function(PangoLanguage* language, PangoScript script)pango_language_includes_script;
+	PangoScript* function(PangoLanguage* language, int* numScripts)pango_language_get_scripts;
+	PangoLanguage* function()pango_language_get_default;
+	char* function(PangoLanguage* language)pango_language_get_sample_string;
 	
 	// pango.PgVertical
 	
@@ -427,6 +437,7 @@ extern(C)
 	// pango.PgCairoFontMap
 	
 	PangoFontMap* function()pango_cairo_font_map_get_default;
+	void function(PangoCairoFontMap* fontmap)pango_cairo_font_map_set_default;
 	PangoFontMap* function()pango_cairo_font_map_new;
 	PangoFontMap* function(cairo_font_type_t fonttype)pango_cairo_font_map_new_for_font_type;
 	cairo_font_type_t function(PangoCairoFontMap* fontmap)pango_cairo_font_map_get_font_type;
@@ -443,10 +454,12 @@ extern(C)
 	cairo_font_options_t* function(PangoContext* context)pango_cairo_context_get_font_options;
 	void function(PangoContext* context, PangoCairoShapeRendererFunc func, gpointer data, GDestroyNotify dnotify)pango_cairo_context_set_shape_renderer;
 	PangoCairoShapeRendererFunc function(PangoContext* context, gpointer* data)pango_cairo_context_get_shape_renderer;
+	PangoContext* function(cairo_t* cr)pango_cairo_create_context;
 	void function(cairo_t* cr, PangoContext* context)pango_cairo_update_context;
 	PangoLayout* function(cairo_t* cr)pango_cairo_create_layout;
 	void function(cairo_t* cr, PangoLayout* layout)pango_cairo_update_layout;
 	void function(cairo_t* cr, PangoFont* font, PangoGlyphString* glyphs)pango_cairo_show_glyph_string;
+	void function(cairo_t* cr, char* text, PangoGlyphItem* glyphItem)pango_cairo_show_glyph_item;
 	void function(cairo_t* cr, PangoLayoutLine* line)pango_cairo_show_layout_line;
 	void function(cairo_t* cr, PangoLayout* layout)pango_cairo_show_layout;
 	void function(cairo_t* cr, double x, double y, double width, double height)pango_cairo_show_error_underline;
@@ -460,6 +473,7 @@ extern(C)
 	void function(PangoRenderer* renderer, PangoLayout* layout, int x, int y)pango_renderer_draw_layout;
 	void function(PangoRenderer* renderer, PangoLayoutLine* line, int x, int y)pango_renderer_draw_layout_line;
 	void function(PangoRenderer* renderer, PangoFont* font, PangoGlyphString* glyphs, int x, int y)pango_renderer_draw_glyphs;
+	void function(PangoRenderer* renderer, char* text, PangoGlyphItem* glyphItem, int x, int y)pango_renderer_draw_glyph_item;
 	void function(PangoRenderer* renderer, PangoRenderPart part, int x, int y, int width, int height)pango_renderer_draw_rectangle;
 	void function(PangoRenderer* renderer, int x, int y, int width, int height)pango_renderer_draw_error_underline;
 	void function(PangoRenderer* renderer, PangoRenderPart part, double y1_, double x11, double x21, double y2, double x12, double x22)pango_renderer_draw_trapezoid;
@@ -518,8 +532,6 @@ extern(C)
 	char* function()pango_get_sysconf_subdirectory;
 	char* function()pango_get_lib_subdirectory;
 	guint8* function(gchar* text, int length, PangoDirection* pbaseDir)pango_log2vis_get_embedding_levels;
-	PangoLanguage* function()pango_language_get_default;
-	char* function(PangoLanguage* language)pango_language_get_sample_string;
 	gboolean function(gunichar ch)pango_is_zero_width;
 	void function(int* thickness, int* position)pango_quantize_line_geometry;
 	
@@ -558,18 +570,15 @@ Symbol[] pangoLinks =
 	{ "pango_context_load_fontset",  cast(void**)& pango_context_load_fontset},
 	{ "pango_context_get_metrics",  cast(void**)& pango_context_get_metrics},
 	{ "pango_context_list_families",  cast(void**)& pango_context_list_families},
-	{ "pango_get_mirror_char",  cast(void**)& pango_get_mirror_char},
-	{ "pango_unichar_direction",  cast(void**)& pango_unichar_direction},
-	{ "pango_find_base_dir",  cast(void**)& pango_find_base_dir},
 	{ "pango_break",  cast(void**)& pango_break},
 	{ "pango_get_log_attrs",  cast(void**)& pango_get_log_attrs},
 	{ "pango_find_paragraph_boundary",  cast(void**)& pango_find_paragraph_boundary},
 	{ "pango_default_break",  cast(void**)& pango_default_break},
 	{ "pango_shape",  cast(void**)& pango_shape},
-	{ "pango_item_free",  cast(void**)& pango_item_free},
-	{ "pango_item_copy",  cast(void**)& pango_item_copy},
-	{ "pango_item_new",  cast(void**)& pango_item_new},
-	{ "pango_item_split",  cast(void**)& pango_item_split},
+	{ "pango_unichar_direction",  cast(void**)& pango_unichar_direction},
+	{ "pango_find_base_dir",  cast(void**)& pango_find_base_dir},
+	{ "pango_get_mirror_char",  cast(void**)& pango_get_mirror_char},
+	{ "pango_bidi_type_for_unichar",  cast(void**)& pango_bidi_type_for_unichar},
 	{ "pango_units_to_double",  cast(void**)& pango_units_to_double},
 	{ "pango_units_from_double",  cast(void**)& pango_units_from_double},
 	{ "pango_extents_to_pixels",  cast(void**)& pango_extents_to_pixels},
@@ -594,11 +603,17 @@ Symbol[] pangoLinks =
 	{ "pango_glyph_string_index_to_x",  cast(void**)& pango_glyph_string_index_to_x},
 	{ "pango_glyph_string_x_to_index",  cast(void**)& pango_glyph_string_x_to_index},
 	{ "pango_glyph_string_get_logical_widths",  cast(void**)& pango_glyph_string_get_logical_widths},
+	{ "pango_glyph_item_copy",  cast(void**)& pango_glyph_item_copy},
+	{ "pango_glyph_item_free",  cast(void**)& pango_glyph_item_free},
 	{ "pango_glyph_item_split",  cast(void**)& pango_glyph_item_split},
 	{ "pango_glyph_item_apply_attrs",  cast(void**)& pango_glyph_item_apply_attrs},
 	{ "pango_glyph_item_letter_space",  cast(void**)& pango_glyph_item_letter_space},
-	{ "pango_glyph_item_copy",  cast(void**)& pango_glyph_item_copy},
-	{ "pango_glyph_item_free",  cast(void**)& pango_glyph_item_free},
+	{ "pango_glyph_item_iter_copy",  cast(void**)& pango_glyph_item_iter_copy},
+	{ "pango_glyph_item_iter_free",  cast(void**)& pango_glyph_item_iter_free},
+	{ "pango_glyph_item_iter_init_start",  cast(void**)& pango_glyph_item_iter_init_start},
+	{ "pango_glyph_item_iter_init_end",  cast(void**)& pango_glyph_item_iter_init_end},
+	{ "pango_glyph_item_iter_next_cluster",  cast(void**)& pango_glyph_item_iter_next_cluster},
+	{ "pango_glyph_item_iter_prev_cluster",  cast(void**)& pango_glyph_item_iter_prev_cluster},
 	{ "pango_font_find_shaper",  cast(void**)& pango_font_find_shaper},
 	{ "pango_font_describe",  cast(void**)& pango_font_describe},
 	{ "pango_font_describe_with_absolute_size",  cast(void**)& pango_font_describe_with_absolute_size},
@@ -654,6 +669,7 @@ Symbol[] pangoLinks =
 	{ "pango_font_face_list_sizes",  cast(void**)& pango_font_face_list_sizes},
 	{ "pango_font_face_describe",  cast(void**)& pango_font_face_describe},
 	{ "pango_font_face_is_synthesized",  cast(void**)& pango_font_face_is_synthesized},
+	{ "pango_font_map_create_context",  cast(void**)& pango_font_map_create_context},
 	{ "pango_font_map_load_font",  cast(void**)& pango_font_map_load_font},
 	{ "pango_font_map_load_fontset",  cast(void**)& pango_font_map_load_fontset},
 	{ "pango_font_map_list_families",  cast(void**)& pango_font_map_list_families},
@@ -666,6 +682,7 @@ Symbol[] pangoLinks =
 	{ "pango_fontset_simple_size",  cast(void**)& pango_fontset_simple_size},
 	{ "pango_parse_markup",  cast(void**)& pango_parse_markup},
 	{ "pango_attr_type_register",  cast(void**)& pango_attr_type_register},
+	{ "pango_attr_type_get_name",  cast(void**)& pango_attr_type_get_name},
 	{ "pango_attribute_init",  cast(void**)& pango_attribute_init},
 	{ "pango_attribute_copy",  cast(void**)& pango_attribute_copy},
 	{ "pango_attribute_equal",  cast(void**)& pango_attribute_equal},
@@ -697,8 +714,6 @@ Symbol[] pangoLinks =
 	{ "pango_color_copy",  cast(void**)& pango_color_copy},
 	{ "pango_color_free",  cast(void**)& pango_color_free},
 	{ "pango_color_to_string",  cast(void**)& pango_color_to_string},
-	{ "pango_language_from_string",  cast(void**)& pango_language_from_string},
-	{ "pango_language_matches",  cast(void**)& pango_language_matches},
 	{ "pango_attr_list_new",  cast(void**)& pango_attr_list_new},
 	{ "pango_attr_list_ref",  cast(void**)& pango_attr_list_ref},
 	{ "pango_attr_list_unref",  cast(void**)& pango_attr_list_unref},
@@ -773,6 +788,7 @@ Symbol[] pangoLinks =
 	{ "pango_layout_get_pixel_extents",  cast(void**)& pango_layout_get_pixel_extents},
 	{ "pango_layout_get_size",  cast(void**)& pango_layout_get_size},
 	{ "pango_layout_get_pixel_size",  cast(void**)& pango_layout_get_pixel_size},
+	{ "pango_layout_get_baseline",  cast(void**)& pango_layout_get_baseline},
 	{ "pango_layout_get_line_count",  cast(void**)& pango_layout_get_line_count},
 	{ "pango_layout_get_line",  cast(void**)& pango_layout_get_line},
 	{ "pango_layout_get_line_readonly",  cast(void**)& pango_layout_get_line_readonly},
@@ -808,15 +824,22 @@ Symbol[] pangoLinks =
 	{ "pango_layout_line_get_x_ranges",  cast(void**)& pango_layout_line_get_x_ranges},
 	{ "pango_script_for_unichar",  cast(void**)& pango_script_for_unichar},
 	{ "pango_script_get_sample_language",  cast(void**)& pango_script_get_sample_language},
-	{ "pango_language_includes_script",  cast(void**)& pango_language_includes_script},
 	{ "pango_script_iter_new",  cast(void**)& pango_script_iter_new},
 	{ "pango_script_iter_get_range",  cast(void**)& pango_script_iter_get_range},
 	{ "pango_script_iter_next",  cast(void**)& pango_script_iter_next},
 	{ "pango_script_iter_free",  cast(void**)& pango_script_iter_free},
+	{ "pango_language_from_string",  cast(void**)& pango_language_from_string},
+	{ "pango_language_to_string",  cast(void**)& pango_language_to_string},
+	{ "pango_language_matches",  cast(void**)& pango_language_matches},
+	{ "pango_language_includes_script",  cast(void**)& pango_language_includes_script},
+	{ "pango_language_get_scripts",  cast(void**)& pango_language_get_scripts},
+	{ "pango_language_get_default",  cast(void**)& pango_language_get_default},
+	{ "pango_language_get_sample_string",  cast(void**)& pango_language_get_sample_string},
 	{ "pango_gravity_get_for_matrix",  cast(void**)& pango_gravity_get_for_matrix},
 	{ "pango_gravity_get_for_script",  cast(void**)& pango_gravity_get_for_script},
 	{ "pango_gravity_to_rotation",  cast(void**)& pango_gravity_to_rotation},
 	{ "pango_cairo_font_map_get_default",  cast(void**)& pango_cairo_font_map_get_default},
+	{ "pango_cairo_font_map_set_default",  cast(void**)& pango_cairo_font_map_set_default},
 	{ "pango_cairo_font_map_new",  cast(void**)& pango_cairo_font_map_new},
 	{ "pango_cairo_font_map_new_for_font_type",  cast(void**)& pango_cairo_font_map_new_for_font_type},
 	{ "pango_cairo_font_map_get_font_type",  cast(void**)& pango_cairo_font_map_get_font_type},
@@ -830,10 +853,12 @@ Symbol[] pangoLinks =
 	{ "pango_cairo_context_get_font_options",  cast(void**)& pango_cairo_context_get_font_options},
 	{ "pango_cairo_context_set_shape_renderer",  cast(void**)& pango_cairo_context_set_shape_renderer},
 	{ "pango_cairo_context_get_shape_renderer",  cast(void**)& pango_cairo_context_get_shape_renderer},
+	{ "pango_cairo_create_context",  cast(void**)& pango_cairo_create_context},
 	{ "pango_cairo_update_context",  cast(void**)& pango_cairo_update_context},
 	{ "pango_cairo_create_layout",  cast(void**)& pango_cairo_create_layout},
 	{ "pango_cairo_update_layout",  cast(void**)& pango_cairo_update_layout},
 	{ "pango_cairo_show_glyph_string",  cast(void**)& pango_cairo_show_glyph_string},
+	{ "pango_cairo_show_glyph_item",  cast(void**)& pango_cairo_show_glyph_item},
 	{ "pango_cairo_show_layout_line",  cast(void**)& pango_cairo_show_layout_line},
 	{ "pango_cairo_show_layout",  cast(void**)& pango_cairo_show_layout},
 	{ "pango_cairo_show_error_underline",  cast(void**)& pango_cairo_show_error_underline},
@@ -844,6 +869,7 @@ Symbol[] pangoLinks =
 	{ "pango_renderer_draw_layout",  cast(void**)& pango_renderer_draw_layout},
 	{ "pango_renderer_draw_layout_line",  cast(void**)& pango_renderer_draw_layout_line},
 	{ "pango_renderer_draw_glyphs",  cast(void**)& pango_renderer_draw_glyphs},
+	{ "pango_renderer_draw_glyph_item",  cast(void**)& pango_renderer_draw_glyph_item},
 	{ "pango_renderer_draw_rectangle",  cast(void**)& pango_renderer_draw_rectangle},
 	{ "pango_renderer_draw_error_underline",  cast(void**)& pango_renderer_draw_error_underline},
 	{ "pango_renderer_draw_trapezoid",  cast(void**)& pango_renderer_draw_trapezoid},
@@ -887,8 +913,6 @@ Symbol[] pangoLinks =
 	{ "pango_get_sysconf_subdirectory",  cast(void**)& pango_get_sysconf_subdirectory},
 	{ "pango_get_lib_subdirectory",  cast(void**)& pango_get_lib_subdirectory},
 	{ "pango_log2vis_get_embedding_levels",  cast(void**)& pango_log2vis_get_embedding_levels},
-	{ "pango_language_get_default",  cast(void**)& pango_language_get_default},
-	{ "pango_language_get_sample_string",  cast(void**)& pango_language_get_sample_string},
 	{ "pango_is_zero_width",  cast(void**)& pango_is_zero_width},
 	{ "pango_quantize_line_geometry",  cast(void**)& pango_quantize_line_geometry},
 	{ "pango_version",  cast(void**)& pango_version},

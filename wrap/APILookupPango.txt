@@ -33,17 +33,11 @@ public import gtkc.cairotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
-//public import std.c.windows.windows;
-
 ///* The pango Basic Types */
 public alias void FcPattern;
 public alias void FcCharSet;
-//public alias void LOGFONT;
-//struct Display;
-//struct FT_Bitmap;
+
 struct FT_Face;
-//struct XftDraw;
-//struct XftColor;
 
 addTypedefs: end
 
@@ -144,8 +138,10 @@ code: start
 		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
 	}
 code: end
-outFile: PgContext
+openFile: PgContext
 
+file: pango-Bidirectional-Text.html
+closeFile: PgContext
 
 struct: PangoItem
 class: PgItem
@@ -191,6 +187,7 @@ outFile: PgGlyphString
 struct: PangoGlyphItem
 class: PgGlyphItem
 prefix: pango_glyph_item_
+noprefix: pango_glyph_item_iter_
 strictPrefix: Yes
 import: glib.Str
 structWrap: PangoGlyphItem* PgGlyphItem
@@ -384,14 +381,6 @@ structWrap: PangoColor* PgColor
 override: toString
 outFile: PgColor
 
-struct: PangoLanguage
-class: PgLanguage
-prefix: pango_language_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoLanguage* PgLanguage
-outFile: PgLanguage
-
 struct: PangoAttrList
 class: PgAttributeList
 prefix: pango_attr_list_
@@ -526,12 +515,13 @@ array: pango_layout_line_get_x_ranges ranges n_ranges
 
 outFile: PgLayoutLine
 
-file: pango-Scripts.html
+file: pango-Scripts-and-Languages.html
 
 class: PgScript
 prefix: pango_
 prefix: pango_script_
 noprefix: pango_script_iter_
+noprefix: pango_language_
 import: pango.PgLanguage
 structWrap: PangoLanguage* PgLanguage
 outFile: PgScript
@@ -548,6 +538,14 @@ out: pango_script_iter_get_range end
 out: pango_script_iter_get_range script
 
 outFile: PgScriptIter
+
+struct: PangoLanguage
+class: PgLanguage
+prefix: pango_language_
+strictPrefix: Yes
+import: glib.Str
+structWrap: PangoLanguage* PgLanguage
+outFile: PgLanguage
 
 file: pango-Vertical-Text.html
 class: PgVertical
@@ -600,6 +598,7 @@ outFile: PgCairoFontMap
 class: PgCairo
 prefix: pango_cairo_
 noprefix: pango_cairo_font_map_
+import: glib.Str
 import: cairo.Context
 import: cairo.ScaledFont
 import: cairo.FontOption
@@ -639,6 +638,7 @@ file: PangoRenderer.html
 struct: PangoRenderer
 class: PgRenderer
 prefix: pango_renderer_
+import: glib.Str
 import: pango.PgColor
 structWrap: PangoColor* PgColor
 import: pango.PgFont

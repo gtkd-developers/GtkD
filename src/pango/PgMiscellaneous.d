@@ -153,7 +153,7 @@ public class PgMiscellaneous
 	 * Leading white space is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * f_out =  a GString into which to write the result
+	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanWord(inout string pos, StringG f_out)
@@ -174,7 +174,7 @@ public class PgMiscellaneous
 	 * a literal quote. Leading white space outside of quotes is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * f_out =  a GString into which to write the result
+	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanString(inout string pos, StringG f_out)
@@ -193,7 +193,7 @@ public class PgMiscellaneous
 	 * Leading white space is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * f_out =  an int into which to write the result
+	 * out =  an int into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanInt(inout string pos, out int f_out)
@@ -337,9 +337,9 @@ public class PgMiscellaneous
 	
 	/**
 	 * On Unix, returns the name of the "pango" subdirectory of SYSCONFDIR
-	 * (which is set at compile time). On Win32, returns a subdirectory of
-	 * the Pango installation directory (which is deduced at run time from
-	 * the DLL's location, or stored in the Registry).
+	 * (which is set at compile time). On Windows, returns the etc\pango
+	 * subdirectory of the Pango installation directory (which is deduced
+	 * at run time from the DLL's location).
 	 * Returns: the Pango sysconf directory. The returned string shouldnot be freed.
 	 */
 	public static string getSysconfSubdirectory()
@@ -350,10 +350,9 @@ public class PgMiscellaneous
 	
 	/**
 	 * On Unix, returns the name of the "pango" subdirectory of LIBDIR
-	 * (which is set at compile time). On Win32, returns the Pango
-	 * installation directory (which is deduced at run time from the DLL's
-	 * location, or stored in the Registry). The returned string should
-	 * not be freed.
+	 * (which is set at compile time). On Windows, returns the lib\pango
+	 * subdirectory of the Pango installation directory (which is deduced
+	 * at run time from the DLL's location).
 	 * Returns: the Pango lib directory. The returned string shouldnot be freed.
 	 */
 	public static string getLibSubdirectory()
@@ -376,58 +375,6 @@ public class PgMiscellaneous
 	{
 		// guint8* pango_log2vis_get_embedding_levels (const gchar *text,  int length,  PangoDirection *pbase_dir);
 		return pango_log2vis_get_embedding_levels(Str.toStringz(text), length, &pbaseDir);
-	}
-	
-	/**
-	 * Returns the PangoLanguage for the current locale of the process.
-	 * Note that this can change over the life of an application.
-	 * On Unix systems, this is the return value is derived from
-	 * setlocale(LC_CTYPE, NULL), and the user can
-	 * affect this through the environment variables LC_ALL, LC_CTYPE or
-	 * LANG (checked in that order). The locale string typically is in
-	 * the form lang_COUNTRY, where lang is an ISO-639 language code, and
-	 * COUNTRY is an ISO-3166 country code. For instance, sv_FI for
-	 * Swedish as written in Finland or pt_BR for Portuguese as written in
-	 * Brazil.
-	 * On Windows, the C library does not use any such environment
-	 * variables, and setting them won't affect the behavior of functions
-	 * like ctime(). The user sets the locale through the Regional Options
-	 * in the Control Panel. The C library (in the setlocale() function)
-	 * does not use country and language codes, but country and language
-	 * names spelled out in English.
-	 * However, this function does check the above environment
-	 * variables, and does return a Unix-style locale string based on
-	 * either said environment variables or the thread's current locale.
-	 * Your application should call setlocale(LC_ALL, "");
-	 * for the user settings to take effect. Gtk+ does this in its initialization
-	 * functions automatically (by calling gtk_set_locale()).
-	 * See man setlocale for more details.
-	 * Since 1.16
-	 * Returns: the default language as a PangoLanguage, must not be freed.
-	 */
-	public static PgLanguage languageGetDefault()
-	{
-		// PangoLanguage* pango_language_get_default (void);
-		auto p = pango_language_get_default();
-		if(p is null)
-		{
-			return null;
-		}
-		return new PgLanguage(cast(PangoLanguage*) p);
-	}
-	
-	/**
-	 * Get a string that is representative of the characters needed to
-	 * render a particular language. This function is a bad hack for
-	 * internal use by renderers and Pango.
-	 * Params:
-	 * language =  a PangoLanguage
-	 * Returns: the sample string. This value is owned by Pango and must not be freed.
-	 */
-	public static string languageGetSampleString(PgLanguage language)
-	{
-		// const char* pango_language_get_sample_string (PangoLanguage *language);
-		return Str.toString(pango_language_get_sample_string((language is null) ? null : language.getPgLanguageStruct()));
 	}
 	
 	/**

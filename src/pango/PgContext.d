@@ -168,6 +168,15 @@ public class PgContext : ObjectG
 	}
 	
 	/**
+	 * Description
+	 * Pango supports bidirectional text (like Arabic and Hebrew) automatically.
+	 * Some applications however, need some help to correctly handle bidirectional
+	 * text.
+	 * The PangoDirection type can be used with pango_context_set_base_dir() to
+	 * instruct Pango about direction of text, though in most cases Pango detects
+	 * that correctly and automatically. The rest of the facilities in this section
+	 * are used internally by Pango already, and are provided to help applications
+	 * that need more direct control over bidirectional setting of text.
 	 */
 	
 	/**
@@ -248,17 +257,16 @@ public class PgContext : ObjectG
 	}
 	
 	/**
-	 * Creates a new PangoContext initialized to default value.
-	 * This function is only useful when implementing a new backend
-	 * for Pango, something applications won't do. You should use
-	 * the context creation function for the backend you are using,
-	 * for example, pango_cairo_font_map_create_context(), pango_xft_get_context(),
-	 * pango_win32_get_context() or, pango_ft2_font_map_create_context().
+	 * Creates a new PangoContext initialized to default values.
+	 * This function is not particularly useful as it should always
+	 * be followed by a pango_context_set_font_map() call, and the
+	 * function pango_font_map_create_context() does these two steps
+	 * together and hence users are recommended to use that.
 	 * If you are using Pango as part of a higher-level system,
-	 * that system may have it's own ways of create a PangoContext.
+	 * that system may have it's own way of create a PangoContext.
 	 * For instance, the GTK+ toolkit has, among others,
 	 * gdk_pango_context_get_for_screen(), and
-	 * gtk_widget_get_pango_context().
+	 * gtk_widget_get_pango_context(). Use those instead.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
@@ -577,54 +585,6 @@ public class PgContext : ObjectG
 	}
 	
 	/**
-	 * Warning
-	 * pango_get_mirror_char is deprecated and should not be used in newly-written code.
-	 * If ch has the Unicode mirrored property and there is another Unicode
-	 * character that typically has a glyph that is the mirror image of ch's
-	 * glyph, puts that character in the address pointed to by mirrored_ch.
-	 * Use g_unichar_get_mirror_char() instead; the docs for that function
-	 * provide full details.
-	 * Params:
-	 * ch =  a Unicode character
-	 * mirroredCh =  location to store the mirrored character
-	 * Returns: TRUE if ch has a mirrored character and mirrored_ch isfilled in, FALSE otherwise
-	 */
-	public static int getMirrorChar(gunichar ch, gunichar* mirroredCh)
-	{
-		// gboolean pango_get_mirror_char (gunichar ch,  gunichar *mirrored_ch);
-		return pango_get_mirror_char(ch, mirroredCh);
-	}
-	
-	/**
-	 * Determines the direction of a character; either
-	 * PANGO_DIRECTION_LTR, PANGO_DIRECTION_RTL, or
-	 * PANGO_DIRECTION_NEUTRAL.
-	 * Params:
-	 * ch =  a Unicode character
-	 * Returns: the direction of the character, as used in theUnicode bidirectional algorithm.
-	 */
-	public static PangoDirection unicharDirection(gunichar ch)
-	{
-		// PangoDirection pango_unichar_direction (gunichar ch);
-		return pango_unichar_direction(ch);
-	}
-	
-	/**
-	 * Searches a string the first character that has a strong
-	 * direction, according to the Unicode bidirectional algorithm.
-	 * Since 1.4
-	 * Params:
-	 * text =  the text to process
-	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
-	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
-	 */
-	public static PangoDirection findBaseDir(string text, int length)
-	{
-		// PangoDirection pango_find_base_dir (const gchar *text,  gint length);
-		return pango_find_base_dir(Str.toStringz(text), length);
-	}
-	
-	/**
 	 * Computes a PangoLogAttr for each character in text. The log_attrs
 	 * array must have one PangoLogAttr for each position in text; if
 	 * text contains N characters, it has N+1 positions, including the
@@ -704,5 +664,73 @@ public class PgContext : ObjectG
 	{
 		// void pango_shape (const gchar *text,  gint length,  const PangoAnalysis *analysis,  PangoGlyphString *glyphs);
 		pango_shape(Str.toStringz(text), length, analysis, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
+	}
+	
+	/**
+	 * Determines the inherent direction of a character; either
+	 * PANGO_DIRECTION_LTR, PANGO_DIRECTION_RTL, or
+	 * PANGO_DIRECTION_NEUTRAL.
+	 * This function is useful to categorize characters into left-to-right
+	 * letters, right-to-left letters, and everything else. If full
+	 * Unicode bidirectional type of a character is needed,
+	 * pango_bidi_type_for_gunichar() can be used instead.
+	 * Params:
+	 * ch =  a Unicode character
+	 * Returns: the direction of the character.
+	 */
+	public static PangoDirection unicharDirection(gunichar ch)
+	{
+		// PangoDirection pango_unichar_direction (gunichar ch);
+		return pango_unichar_direction(ch);
+	}
+	
+	/**
+	 * Searches a string the first character that has a strong
+	 * direction, according to the Unicode bidirectional algorithm.
+	 * Since 1.4
+	 * Params:
+	 * text =  the text to process
+	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
+	 */
+	public static PangoDirection findBaseDir(string text, int length)
+	{
+		// PangoDirection pango_find_base_dir (const gchar *text,  gint length);
+		return pango_find_base_dir(Str.toStringz(text), length);
+	}
+	
+	/**
+	 * Warning
+	 * pango_get_mirror_char is deprecated and should not be used in newly-written code.
+	 * If ch has the Unicode mirrored property and there is another Unicode
+	 * character that typically has a glyph that is the mirror image of ch's
+	 * glyph, puts that character in the address pointed to by mirrored_ch.
+	 * Use g_unichar_get_mirror_char() instead; the docs for that function
+	 * provide full details.
+	 * Params:
+	 * ch =  a Unicode character
+	 * mirroredCh =  location to store the mirrored character
+	 * Returns: TRUE if ch has a mirrored character and mirrored_ch isfilled in, FALSE otherwise
+	 */
+	public static int getMirrorChar(gunichar ch, gunichar* mirroredCh)
+	{
+		// gboolean pango_get_mirror_char (gunichar ch,  gunichar *mirrored_ch);
+		return pango_get_mirror_char(ch, mirroredCh);
+	}
+	
+	/**
+	 * Determines the normative bidirectional character type of a
+	 * character, as specified in the Unicode Character Database.
+	 * A simplified version of this function is available as
+	 * pango_unichar_get_direction().
+	 * Since 1.22
+	 * Params:
+	 * ch =  a Unicode character
+	 * Returns: the bidirectional character type, as used in theUnicode bidirectional algorithm.
+	 */
+	public static PangoBidiType bidiTypeForUnichar(gunichar ch)
+	{
+		// PangoBidiType pango_bidi_type_for_unichar (gunichar ch);
+		return pango_bidi_type_for_unichar(ch);
 	}
 }

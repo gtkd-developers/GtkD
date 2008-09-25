@@ -621,7 +621,7 @@ public class PgLayout : ObjectG
 	 * tabs are reinstated. tabs is copied into the layout; you must
 	 * free your copy of tabs yourself.
 	 * Params:
-	 * tabs =  a PangoTabArray
+	 * tabs =  a PangoTabArray, or NULL
 	 */
 	public void setTabs(PgTabArray tabs)
 	{
@@ -898,6 +898,17 @@ public class PgLayout : ObjectG
 	{
 		// void pango_layout_get_pixel_size (PangoLayout *layout,  int *width,  int *height);
 		pango_layout_get_pixel_size(pangoLayout, &width, &height);
+	}
+	
+	/**
+	 * Gets the Y position of baseline of the first line in layout.
+	 * Since 1.22
+	 * Returns: baseline of first line, from top of layout.
+	 */
+	public int getBaseline()
+	{
+		// int pango_layout_get_baseline (PangoLayout *layout);
+		return pango_layout_get_baseline(pangoLayout);
 	}
 	
 	/**
