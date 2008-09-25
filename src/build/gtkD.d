@@ -191,6 +191,7 @@ private import pango.PgItem;
 private import pango.PgMatrix;
 private import pango.PgGlyphString;
 private import pango.PgGlyphItem;
+private import pango.PgGlyphItemIter;
 private import pango.PgFont;
 private import pango.PgFontDescription;
 private import pango.PgFontMetrics;

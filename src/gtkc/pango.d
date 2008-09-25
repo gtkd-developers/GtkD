@@ -144,6 +144,9 @@ extern(C)
 	PangoGlyphItem* function(PangoGlyphItem* orig)pango_glyph_item_copy;
 	void function(PangoGlyphItem* glyphItem)pango_glyph_item_free;
 	
+	// pango.PgGlyphItemIter
+	
+	
 	// pango.PgFont
 	
 	PangoEngineShape* function(PangoFont* font, PangoLanguage* language, guint32 ch)pango_font_find_shaper;

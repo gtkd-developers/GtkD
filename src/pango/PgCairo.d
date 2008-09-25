@@ -48,12 +48,14 @@
  * 	- cairo.FontOption
  * 	- pango.PgContext
  * 	- pango.PgFont
+ * 	- pango.PgGlyphItem
  * 	- pango.PgGlyphString
  * 	- pango.PgLayout
  * 	- pango.PgLayoutLine
  * structWrap:
  * 	- PangoContext* -> PgContext
  * 	- PangoFont* -> PgFont
+ * 	- PangoGlyphItem* -> PgGlyphItem
  * 	- PangoGlyphString* -> PgGlyphString
  * 	- PangoLayout* -> PgLayout
  * 	- PangoLayoutLine* -> PgLayoutLine
@@ -78,6 +80,7 @@ private import cairo.ScaledFont;
 private import cairo.FontOption;
 private import pango.PgContext;
 private import pango.PgFont;
+private import pango.PgGlyphItem;
 private import pango.PgGlyphString;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;

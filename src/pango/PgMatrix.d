@@ -42,6 +42,7 @@
  * omit prefixes:
  * 	- pango_glyph_string_
  * 	- pango_glyph_item_
+ * 	- pango_glyph_item_iter_
  * omit code:
  * omit signals:
  * imports:

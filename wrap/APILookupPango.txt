@@ -163,6 +163,7 @@ prefix: pango_
 prefix: pango_matrix_
 noprefix: pango_glyph_string_
 noprefix: pango_glyph_item_
+noprefix: pango_glyph_item_iter_
 structWrap: PangoMatrix* PgMatrix
 
 inout: pango_matrix_transform_point x
@@ -198,6 +199,16 @@ structWrap: PangoAttrList* PgAttributeList
 import: glib.ListSG
 structWrap: GSList* ListSG
 outFile: PgGlyphItem
+
+struct: PangoGlyphItemIter
+class: PgGlyphItemIter
+prefix: pango_glyph_item_iter_
+strictPrefix: Yes
+import: glib.Str
+structWrap: PangoGlyphItemIter* PgGlyphItemIter
+import: pango.PgGlyphItem
+structWrap: PangoGlyphItem* PgGlyphItem
+outFile: PgGlyphItemIter
 
 file: pango-Fonts.html
 
@@ -594,6 +605,7 @@ import: cairo.ScaledFont
 import: cairo.FontOption
 import: pango.PgContext
 import: pango.PgFont
+import: pango.PgGlyphItem
 import: pango.PgGlyphString
 import: pango.PgLayout
 import: pango.PgLayoutLine
@@ -602,6 +614,7 @@ structWrap: cairo_scaled_font_t* ScaledFont
 structWrap: cairo_font_options_t* FontOption
 structWrap: PangoContext* PgContext
 structWrap: PangoFont* PgFont
+structWrap: PangoGlyphItem* PgGlyphItem
 structWrap: PangoGlyphString* PgGlyphString
 structWrap: PangoLayout* PgLayout
 structWrap: PangoLayoutLine* PgLayoutLine
@@ -630,6 +643,8 @@ import: pango.PgColor
 structWrap: PangoColor* PgColor
 import: pango.PgFont
 structWrap: PangoFont* PgFont
+import: pango.PgGlyphItem
+structWrap: PangoGlyphItem* PgGlyphItem
 import: pango.PgGlyphString
 structWrap: PangoGlyphString* PgGlyphString
 import: pango.PgLayout
