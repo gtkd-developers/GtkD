@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-PDF-Surfaces.html
+ * inFile  = cairo-pdf-surface.html
  * outPack = cairo
  * outFile = PdfSurface
  * strct   = cairo_surface_t

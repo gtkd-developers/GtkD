@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-Error-Handling.html
+ * inFile  = cairo-error-status.html
  * outPack = cairo
  * outFile = Status
  * strct   = 

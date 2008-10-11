@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-cairo-matrix-t.html
+ * inFile  = cairo-matrix.html
  * outPack = cairo
  * outFile = Matrix
  * strct   = cairo_matrix_t

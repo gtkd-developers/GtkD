@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-cairo-font-face-t.html
+ * inFile  = cairo-font-face.html
  * outPack = cairo
  * outFile = FontFace
  * strct   = cairo_font_face_t

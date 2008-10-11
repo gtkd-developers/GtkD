@@ -177,6 +177,7 @@ private import cairo.Pattern;
 private import cairo.FontFace;
 private import cairo.ScaledFont;
 private import cairo.FontOption;
+private import cairo.UserFontFace;
 private import cairo.Surface;
 private import cairo.PdfSurface;
 private import cairo.PostScriptSurface;

@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-Types.html
+ * inFile  = cairo-types.html
  * outPack = cairo
  * outFile = Types
  * strct   = 

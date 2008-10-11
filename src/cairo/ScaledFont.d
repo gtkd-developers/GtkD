@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-Scaled-Fonts.html
+ * inFile  = cairo-scaled-font.html
  * outPack = cairo
  * outFile = ScaledFont
  * strct   = cairo_scaled_font_t
@@ -209,7 +209,7 @@ public class ScaledFont
 	 * affect the x_advance and y_advance values.
 	 * Since 1.2
 	 * Params:
-	 * utf8 =  a string of text, encoded in UTF-8
+	 * utf8 =  a NUL-terminated string of text, encoded in UTF-8
 	 * extents =  a cairo_text_extents_t which to store the retrieved extents.
 	 */
 	public void textExtents(string utf8, cairo_text_extents_t* extents)
@@ -237,6 +237,57 @@ public class ScaledFont
 	{
 		// void cairo_scaled_font_glyph_extents (cairo_scaled_font_t *scaled_font,  const cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
 		cairo_scaled_font_glyph_extents(cairo_scaled_font, glyphs, numGlyphs, extents);
+	}
+	
+	/**
+	 * Converts UTF-8 text to an array of glyphs, optionally with cluster
+	 * mapping, that can be used to render later using scaled_font.
+	 * If glyphs initially points to a non-NULL value, that array is used
+	 * as a glyph buffer, and num_glyphs should point to the number of glyph
+	 * entries available there. If the provided glyph array is too short for
+	 * the conversion, a new glyph array is allocated using cairo_glyph_allocate()
+	 * and placed in glyphs. Upon return, num_glyphs always contains the
+	 * number of generated glyphs. If the value glyphs points at has changed
+	 * after the call, the user is responsible for freeing the allocated glyph
+	 * array using cairo_glyph_free().
+	 * If clusters is not NULL, num_clusters and cluster_flags should not be NULL,
+	 * and cluster mapping will be computed.
+	 * The semantics of how cluster array allocation works is similar to the glyph
+	 * array. That is,
+	 * if clusters initially points to a non-NULL value, that array is used
+	 * as a cluster buffer, and num_clusters should point to the number of cluster
+	 * entries available there. If the provided cluster array is too short for
+	 * the conversion, a new cluster array is allocated using cairo_text_cluster_allocate()
+	 * and placed in clusters. Upon return, num_clusters always contains the
+	 * number of generated clusters. If the value clusters points at has changed
+	 * after the call, the user is responsible for freeing the allocated cluster
+	 * array using cairo_text_cluster_free().
+	 * In the simplest case, glyphs and clusters can point to NULL initially
+	 * Since 1.8
+	 * Params:
+	 * x =  X position to place first glyph
+	 * y =  Y position to place first glyph
+	 * utf8 =  a string of text encoded in UTF-8
+	 * utf8_Len =  length of utf8 in bytes, or -1 if it is NUL-terminated
+	 * glyphs =  pointer to array of glyphs to fill
+	 * clusters =  pointer to array of cluster mapping information to fill, or NULL
+	 * clusterFlags =  pointer to location to store cluster flags corresponding to the
+	 *  output clusters, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS upon success, or an error statusif the input values are wrong or if conversion failed. If the inputvalues are correct but the conversion failed, the error status is alsoset on scaled_font.
+	 */
+	public cairo_status_t textToGlyphs(double x, double y, string utf8, int utf8_Len, out cairo_glyph_t[] glyphs, out cairo_text_cluster_t[] clusters, out cairo_text_cluster_flags_t clusterFlags)
+	{
+		// cairo_status_t cairo_scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,  double x,  double y,  const char *utf8,  int utf8_len,  cairo_glyph_t **glyphs,  int *num_glyphs,  cairo_text_cluster_t **clusters,  int *num_clusters,  cairo_text_cluster_flags_t *cluster_flags);
+		cairo_glyph_t* outglyphs = null;
+		int numGlyphs;
+		cairo_text_cluster_t* outclusters = null;
+		int numClusters;
+		
+		auto p = cairo_scaled_font_text_to_glyphs(cairo_scaled_font, x, y, Str.toStringz(utf8), utf8_Len, &outglyphs, &numGlyphs, &outclusters, &numClusters, &clusterFlags);
+		
+		glyphs = outglyphs[0 .. numGlyphs];
+		clusters = outclusters[0 .. numClusters];
+		return p;
 	}
 	
 	/**
@@ -291,6 +342,21 @@ public class ScaledFont
 	{
 		// void cairo_scaled_font_get_ctm (cairo_scaled_font_t *scaled_font,  cairo_matrix_t *ctm);
 		cairo_scaled_font_get_ctm(cairo_scaled_font, (ctm is null) ? null : ctm.getMatrixStruct());
+	}
+	
+	/**
+	 * Stores the scale matrix of scaled_font into matrix.
+	 * The scale matrix is product of the font matrix and the ctm
+	 * associated with the scaled font, and hence is the matrix mapping from
+	 * font space to device space.
+	 * Since 1.8
+	 * Params:
+	 * scaleMatrix =  return value for the matrix
+	 */
+	public void getScaleMatrix(Matrix scaleMatrix)
+	{
+		// void cairo_scaled_font_get_scale_matrix (cairo_scaled_font_t *scaled_font,  cairo_matrix_t *scale_matrix);
+		cairo_scaled_font_get_scale_matrix(cairo_scaled_font, (scaleMatrix is null) ? null : scaleMatrix.getMatrixStruct());
 	}
 	
 	/**

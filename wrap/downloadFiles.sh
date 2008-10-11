@@ -2,6 +2,11 @@
 mkdir gtkdocs
 cd gtkdocs
 
+#CAIRO
+curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
+ln -s cairo-html-1.8.0 cairo
+exit
+
 #GLIB
 curl http://library.gnome.org/devel/glib/glib-html-2.18.1.tar.gz | tar xvfz -
 ln -s glib-html-2.18.1 gthread
@@ -33,8 +38,8 @@ ln -s gdk-html-2.14.2 gdk
 curl http://library.gnome.org/devel/gtk/gtk-html-2.14.2.tar.gz | tar xvfz -
 ln -s gtk-html-2.14.2 gtk
 #CAIRO
-curl http://cairographics.org/releases/cairo-1.6.4.tar.gz | tar xvfz -
-ln -s cairo-1.6.4/doc/public/html cairo
+curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
+ln -s cairo-html-1.8.0 cairo
 #GTKGLEXT
 #wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
 #tar xvfj gtkglext-1.2.0.tar.bz2

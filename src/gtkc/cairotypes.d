@@ -174,6 +174,16 @@ public enum cairo_font_weight_t
 alias cairo_font_weight_t CairoFontWeight;
 
 /**
+ * Specifies properties of a text cluster mapping.
+ * CAIRO_TEXT_CLUSTER_FLAG_BACKWARD
+ */
+public enum cairo_text_cluster_flags_t
+{
+	BACKWARD = 0x00000001
+}
+alias cairo_text_cluster_flags_t CairoTextClusterFlags;
+
+/**
  * cairo_extend_t is used to describe how pattern color/alpha will be
  * determined for areas "outside" the pattern's natural area, (for
  * example, outside the surface bounds or outside the gradient
@@ -243,7 +253,7 @@ alias cairo_pattern_type_t CairoPatternType;
  * backends" within cairo.
  * The type of a font face is determined by the function used to
  * create it, which will generally be of the form
- * cairo_type_font_face_create. The font face type can be queried
+ * cairo_type_font_face_create(). The font face type can be queried
  * with cairo_font_face_get_type()
  * The various cairo_font_face_t functions can be used with a font face
  * of any type.
@@ -254,7 +264,7 @@ alias cairo_pattern_type_t CairoPatternType;
  * fonts of any type, but some font backends also provide
  * type-specific functions that must only be called with a scaled font
  * of the appropriate type. These functions have names that begin with
- * cairo_type_scaled_font such as cairo_ft_scaled_font_lock_face().
+ * cairo_type_scaled_font() such as cairo_ft_scaled_font_lock_face().
  * The behavior of calling a type-specific function with a scaled font
  * of the wrong type is undefined.
  * New entries may be added in future versions.
@@ -265,7 +275,8 @@ public enum cairo_font_type_t
 	TOY,
 	FT,
 	WIN32,
-	QUARTZ
+	QUARTZ,
+	USER
 }
 alias cairo_font_type_t CairoFontType;
 
@@ -454,7 +465,14 @@ public enum cairo_status_t
 	INVALID_INDEX,
 	CLIP_NOT_REPRESENTABLE,
 	TEMP_FILE_ERROR,
-	INVALID_STRIDE
+	INVALID_STRIDE,
+	FONT_TYPE_MISMATCH,
+	USER_FONT_IMMUTABLE,
+	USER_FONT_ERROR,
+	NEGATIVE_COUNT,
+	INVALID_CLUSTERS,
+	INVALID_SLANT,
+	INVALID_WEIGHT
 	/+* after adding a new error: update LAST_STATUS inn cairoint.h +/
 }
 alias cairo_status_t CairoStatus;
@@ -475,7 +493,7 @@ public struct cairo_t{}
 
 /**
  * A data structure for holding a rectangle.
- * doublex;
+ * double x;
  */
 public struct cairo_rectangle_t
 {
@@ -486,7 +504,7 @@ public struct cairo_rectangle_t
 /**
  * A data structure for holding a dynamically allocated
  * array of rectangles.
- * cairo_status_tstatus;
+ * cairo_status_t status;
  */
 public struct cairo_rectangle_list_t
 {
@@ -507,7 +525,7 @@ public struct cairo_rectangle_list_t
  * array. This number is larger than the number of independent path
  * portions (defined in cairo_path_data_type_t), since the data
  * includes both headers and coordinates for each portion.
- * cairo_status_tstatus;
+ * cairo_status_t status;
  */
 public struct cairo_path_t
 {
@@ -531,13 +549,33 @@ public struct cairo_path_t
  * Note that the offsets given by x and y are not cumulative. When
  * drawing or measuring text, each glyph is individually positioned
  * with respect to the overall origin
- * doublex;
+ * unsigned long index;
  */
 public struct cairo_glyph_t
 {
 	ulong index;
 	double x;
 	double y;
+}
+
+
+/**
+ * The cairo_text_cluster_t structure holds information about a single
+ * text cluster. A text cluster is a minimal
+ * mapping of some glyphs corresponding to some UTF-8 text.
+ * For a cluster to be valid, both num_bytes and num_glyphs should
+ * be non-negative, and at least one should be non-zero.
+ * Note that clusters with zero glyphs are not as well supported as
+ * normal clusters. For example, PDF rendering applications typically
+ * ignore those clusters when PDF text is being selected.
+ * See cairo_show_text_glyphs() for how clusters are used in advanced
+ * text operations.
+ * int num_bytes;
+ */
+public struct cairo_text_cluster_t
+{
+	int numBytes;
+	int numGlyphs;
 }
 
 
@@ -602,7 +640,7 @@ public struct cairo_scaled_font_t{}
  * not be doubled. They will change slightly due to hinting (so you
  * can't assume that metrics are independent of the transformation
  * matrix), but otherwise will remain unchanged.
- * doubleascent;
+ * double ascent;
  */
 public struct cairo_font_extents_t
 {
@@ -624,7 +662,7 @@ public struct cairo_font_extents_t
  * doubled. They will change slightly due to hinting (so you can't
  * assume that metrics are independent of the transformation matrix),
  * but otherwise will remain unchanged.
- * doublex_bearing;
+ * double x_bearing;
  */
 public struct cairo_text_extents_t
 {
@@ -693,7 +731,7 @@ public struct cairo_matrix_t
  * and there is no need to initialize the object; only the unique
  * address of a cairo_data_key_t object is used. Typically, you
  * would just use the address of a static cairo_data_key_t object.
- * intunused;
+ * int unused;
  */
 public struct cairo_user_data_key_t
 {
@@ -706,15 +744,214 @@ public struct cairo_user_data_key_t
  * returned by CAIRO_VERSION and cairo_version() are encoded using this macro.
  * Two encoded version numbers can be compared as integers. The encoding ensures
  * that later versions compare greater than earlier versions.
- * major:
+ * major :
  * the major component of the version number
- * minor:
+ * minor :
  * the minor component of the version number
- * micro:
+ * micro :
  * the micro component of the version number
+ * Returns :
+ * the encoded version.
  */
 // TODO
 // #define CAIRO_VERSION_ENCODE(major, minor, micro)
+
+/*
+ * This macro encodes the given cairo version into an string. The numbers
+ * returned by CAIRO_VERSION_STRING and cairo_version_string() are encoded using this macro.
+ * The parameters to this macro must expand to numerical literals.
+ * major :
+ * the major component of the version number
+ * minor :
+ * the minor component of the version number
+ * micro :
+ * the micro component of the version number
+ * Returns :
+ * a string literal containing the version.
+ * Since 1.8
+ */
+// TODO
+// #define CAIRO_VERSION_STRINGIZE(major, minor, micro)
+
+/*
+ * cairo_user_scaled_font_init_func_t is the type of function which is
+ * called when a scaled-font needs to be created for a user font-face.
+ * The cairo context cr is not used by the caller, but is prepared in font
+ * space, similar to what the cairo contexts passed to the render_glyph
+ * method will look like. The callback can use this context for extents
+ * computation for example. After the callback is called, cr is checked
+ * for any error status.
+ * The extents argument is where the user font sets the font extents for
+ * scaled_font. It is in font space, which means that for most cases its
+ * ascent and descent members should add to 1.0. extents is preset to
+ * hold a value of 1.0 for ascent, height, and max_x_advance, and 0.0 for
+ * descent and max_y_advance members.
+ * The callback is optional. If not set, default font extents as described
+ * in the previous paragraph will be used.
+ * Note that scaled_font is not fully initialized at this
+ * point and trying to use it for text operations in the callback will result
+ * in deadlock.
+ * scaled_font :
+ *  the scaled-font being created
+ * cr :
+ *  a cairo context, in font space
+ * extents :
+ *  font extents to fill in, in font space
+ * Returns :
+ *  CAIRO_STATUS_SUCCESS upon success, or
+ * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+ * Since 1.8
+ */
+// cairo_status_t (*cairo_user_scaled_font_init_func_t)  (cairo_scaled_font_t *scaled_font,  cairo_t *cr,  cairo_font_extents_t *extents);
+public typedef extern(C) cairo_status_t  function (cairo_scaled_font_t*, cairo_t*, cairo_font_extents_t*) cairo_user_scaled_font_init_func_t;
+
+/*
+ * cairo_user_scaled_font_render_glyph_func_t is the type of function which
+ * is called when a user scaled-font needs to render a glyph.
+ * The callback is mandatory, and expected to draw the glyph with code glyph to
+ * the cairo context cr. cr is prepared such that the glyph drawing is done in
+ * font space. That is, the matrix set on cr is the scale matrix of scaled_font,
+ * The extents argument is where the user font sets the font extents for
+ * scaled_font. However, if user prefers to draw in user space, they can
+ * achieve that by changing the matrix on cr. All cairo rendering operations
+ * to cr are permitted, however, the result is undefined if any source other
+ * than the default source on cr is used. That means, glyph bitmaps should
+ * be rendered using cairo_mask() instead of cairo_paint().
+ * Other non-default settings on cr include a font size of 1.0 (given that
+ * it is set up to be in font space), and font options corresponding to
+ * scaled_font.
+ * The extents argument is preset to have x_bearing,
+ * width, and y_advance of zero,
+ * y_bearing set to -font_extents.ascent,
+ * height to font_extents.ascent+font_extents.descent,
+ * and x_advance to font_extents.max_x_advance.
+ * The only field user needs to set in majority of cases is
+ * x_advance.
+ * If the width field is zero upon the callback returning
+ * (which is its preset value), the glyph extents are automatically computed
+ * based on the drawings done to cr. This is in most cases exactly what the
+ * desired behavior is. However, if for any reason the callback sets the
+ * extents, it must be ink extents, and include the extents of all drawing
+ * done to cr in the callback.
+ * scaled_font :
+ *  user scaled-font
+ * glyph :
+ *  glyph code to render
+ * cr :
+ *  cairo context to draw to, in font space
+ * extents :
+ *  glyph extents to fill in, in font space
+ * Returns :
+ *  CAIRO_STATUS_SUCCESS upon success, or
+ * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+ * Since 1.8
+ */
+// cairo_status_t (*cairo_user_scaled_font_render_glyph_func_t)  (cairo_scaled_font_t *scaled_font,  unsigned long glyph,  cairo_t *cr,  cairo_text_extents_t *extents);
+public typedef extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, cairo_t*, cairo_text_extents_t*) cairo_user_scaled_font_render_glyph_func_t;
+
+/*
+ * cairo_user_scaled_font_text_to_glyphs_func_t is the type of function which
+ * is called to convert input text to an array of glyphs. This is used by the
+ * cairo_show_text() operation.
+ * Using this callback the user-font has full control on glyphs and their
+ * positions. That means, it allows for features like ligatures and kerning,
+ * as well as complex shaping required for scripts like
+ * Arabic and Indic.
+ * The num_glyphs argument is preset to -1. The callback should allocate an
+ * array for the resulting glyphs (using malloc()), and populate the glyph indices and
+ * positions (in font space) assuming that the text is to be shown at the
+ * origin. Cairo will free the glyph array when done with it, no matter what
+ * the return value of the callback is.
+ * If glyphs initially points to a non-NULL value, that array can be used
+ * as a glyph buffer, and num_glyphs points to the number of glyph
+ * entries available there. If the provided glyph array is too short for
+ * the conversion (or for convenience), a new glyph array may be allocated
+ * using cairo_glyph_allocate() and placed in glyphs. Upon return,
+ * num_glyphs should contain the number of generated glyphs.
+ * If the value glyphs points at has changed after the call, cairo will
+ * free the allocated glyph array using cairo_glyph_free().
+ * If clusters is not NULL, num_clusters and cluster_flags are also non-NULL,
+ * and cluster mapping should be computed.
+ * The semantics of how cluster array allocation works is similar to the glyph
+ * array. That is,
+ * if clusters initially points to a non-NULL value, that array may be used
+ * as a cluster buffer, and num_clusters points to the number of cluster
+ * entries available there. If the provided cluster array is too short for
+ * the conversion (or for convenience), a new cluster array may be allocated
+ * using cairo_text_cluster_allocate() and placed in clusters. Upon return,
+ * num_clusters should contain the number of generated clusters.
+ * If the value clusters points at has changed after the call, cairo will
+ * free the allocated cluster array using cairo_text_cluster_free().
+ * The callback is optional. If not set, or if num_glyphs is negative upon
+ * the callback returning, the unicode_to_glyph callback
+ * is tried. See cairo_user_scaled_font_unicode_to_glyph_func_t.
+ * Note: While cairo does not impose any limitation on glyph indices,
+ * some applications may assume that a glyph index fits in a 16-bit
+ * unsigned integer. As such, it is advised that user-fonts keep their
+ * glyphs in the 0 to 65535 range. Furthermore, some applications may
+ * assume that glyph 0 is a special glyph-not-found glyph. User-fonts
+ * are advised to use glyph 0 for such purposes and do not use that
+ * glyph value for other purposes.
+ * scaled_font :
+ *  the scaled-font being created
+ * utf8 :
+ *  a string of text encoded in UTF-8
+ * utf8_len :
+ *  length of utf8 in bytes
+ * glyphs :
+ *  pointer to array of glyphs to fill, in font space
+ * num_glyphs :
+ *  pointer to number of glyphs
+ * clusters :
+ *  pointer to array of cluster mapping information to fill, or NULL
+ * num_clusters :
+ *  pointer to number of clusters
+ * cluster_flags :
+ *  pointer to location to store cluster flags corresponding to the
+ *  output clusters
+ * Returns :
+ *  CAIRO_STATUS_SUCCESS upon success, or
+ * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+ * Since 1.8
+ */
+// cairo_status_t (*cairo_user_scaled_font_text_to_glyphs_func_t)  (cairo_scaled_font_t *scaled_font,  const char *utf8,  int utf8_len,  cairo_glyph_t **glyphs,  int *num_glyphs,  cairo_text_cluster_t **clusters,  int *num_clusters,  cairo_text_cluster_flags_t *cluster_flags);
+public typedef extern(C) cairo_status_t  function (cairo_scaled_font_t*, char*, int, cairo_glyph_t**, int*, cairo_text_cluster_t**, int*, cairo_text_cluster_flags_t*) cairo_user_scaled_font_text_to_glyphs_func_t;
+
+/*
+ * cairo_user_scaled_font_unicode_to_glyph_func_t is the type of function which
+ * is called to convert an input Unicode character to a single glyph.
+ * This is used by the cairo_show_text() operation.
+ * This callback is used to provide the same functionality as the
+ * text_to_glyphs callback does (see cairo_user_scaled_font_text_to_glyphs_func_t)
+ * but has much less control on the output,
+ * in exchange for increased ease of use. The inherent assumption to using
+ * this callback is that each character maps to one glyph, and that the
+ * mapping is context independent. It also assumes that glyphs are positioned
+ * according to their advance width. These mean no ligatures, kerning, or
+ * complex scripts can be implemented using this callback.
+ * The callback is optional, and only used if text_to_glyphs callback is not
+ * set or fails to return glyphs. If this callback is not set, an identity
+ * mapping from Unicode code-points to glyph indices is assumed.
+ * Note: While cairo does not impose any limitation on glyph indices,
+ * some applications may assume that a glyph index fits in a 16-bit
+ * unsigned integer. As such, it is advised that user-fonts keep their
+ * glyphs in the 0 to 65535 range. Furthermore, some applications may
+ * assume that glyph 0 is a special glyph-not-found glyph. User-fonts
+ * are advised to use glyph 0 for such purposes and do not use that
+ * glyph value for other purposes.
+ * scaled_font :
+ *  the scaled-font being created
+ * unicode :
+ *  input unicode character code-point
+ * glyph_index :
+ *  output glyph index
+ * Returns :
+ *  CAIRO_STATUS_SUCCESS upon success, or
+ * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+ * Since 1.8
+ */
+// cairo_status_t (*cairo_user_scaled_font_unicode_to_glyph_func_t)  (cairo_scaled_font_t *scaled_font,  unsigned long unicode,  unsigned long *glyph_index);
+public typedef extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, ulong*) cairo_user_scaled_font_unicode_to_glyph_func_t;
 
 /*
  * cairo_read_func_t is the type of function which is called when a
@@ -724,13 +961,13 @@ public struct cairo_user_data_key_t
  * length of the data in bytes. The read function should return
  * CAIRO_STATUS_SUCCESS if all the data was successfully read,
  * CAIRO_STATUS_READ_ERROR otherwise.
- * closure:
+ * closure :
  *  the input closure
- * data:
+ * data :
  *  the buffer into which to read the data
- * length:
+ * length :
  *  the amount of data to read
- * Returns:
+ * Returns :
  *  the status code of the read operation
  */
 // cairo_status_t (*cairo_read_func_t) (void *closure,  unsigned char *data,  unsigned int length);
@@ -744,13 +981,13 @@ public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_re
  * data in bytes. The write function should return
  * CAIRO_STATUS_SUCCESS if all the data was successfully written,
  * CAIRO_STATUS_WRITE_ERROR otherwise.
- * closure:
+ * closure :
  *  the output closure
- * data:
+ * data :
  *  the buffer containing the data to write
- * length:
+ * length :
  *  the amount of data to write
- * Returns:
+ * Returns :
  *  the status code of the write operation
  */
 // cairo_status_t (*cairo_write_func_t) (void *closure,  unsigned char *data,  unsigned int length);
@@ -760,7 +997,7 @@ public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_wr
  * cairo_destroy_func_t the type of function which is called when a
  * data element is destroyed. It is passed the pointer to the data
  * element and should free any memory and resources allocated for it.
- * data:
+ * data :
  *  The data element being destroyed.
  */
 // void (*cairo_destroy_func_t) (void *data);

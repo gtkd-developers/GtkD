@@ -2787,6 +2787,10 @@ public class GtkDClass
 		{
 			converted = gToken.dup;
 		}
+		else if ( endsWith(gToken, "_t**") && startsWith(gToken,"cairo_") )
+		{
+			converted = gToken.dup;
+		}
 		else if ( startsWith(gToken,"f_") && (endsWith(gToken,"_out") || endsWith(gToken,"_in") || endsWith(gToken,"_inout") ) )
 		{
 			converted = gToken.dup;

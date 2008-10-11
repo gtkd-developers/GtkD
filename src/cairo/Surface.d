@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-cairo-surface-t.html
+ * inFile  = cairo-surface.html
  * outPack = cairo
  * outFile = Surface
  * strct   = cairo_surface_t
@@ -182,8 +182,9 @@ public class Surface
 	 * external resources. For example, for the Xlib backend it means
 	 * that cairo will no longer access the drawable, which can be freed.
 	 * After calling cairo_surface_finish() the only valid operations on a
-	 * surface are getting and setting user data and referencing and
-	 * destroying it. Further drawing to the surface will not affect the
+	 * surface are getting and setting user, referencing and
+	 * destroying, and flushing and finishing it.
+	 * Further drawing to the surface will not affect the
 	 * surface but will instead trigger a CAIRO_STATUS_SURFACE_FINISHED
 	 * error.
 	 * When the last call to cairo_surface_destroy() decreases the
@@ -337,6 +338,21 @@ public class Surface
 	}
 	
 	/**
+	 * This function returns the previous fallback resolution set by
+	 * cairo_surface_set_fallback_resolution(), or default fallback
+	 * resolution if never set.
+	 * Since 1.8
+	 * Params:
+	 * xPixelsPerInch =  horizontal pixels per inch
+	 * yPixelsPerInch =  vertical pixels per inch
+	 */
+	public void getFallbackResolution(out double xPixelsPerInch, out double yPixelsPerInch)
+	{
+		// void cairo_surface_get_fallback_resolution  (cairo_surface_t *surface,  double *x_pixels_per_inch,  double *y_pixels_per_inch);
+		cairo_surface_get_fallback_resolution(cairo_surface, &xPixelsPerInch, &yPixelsPerInch);
+	}
+	
+	/**
 	 * This function returns the type of the backend used to create
 	 * a surface. See cairo_surface_type_t for available types.
 	 * Since 1.2
@@ -399,6 +415,8 @@ public class Surface
 	 * but doesn't clear it, so that the contents of the current page will
 	 * be retained for the next page. Use cairo_surface_show_page() if you
 	 * want to get an empty page after the emission.
+	 * There is a convenience function for this that takes a cairo_t,
+	 * namely cairo_copy_page().
 	 * Since 1.6
 	 */
 	public void copyPage()
@@ -410,11 +428,35 @@ public class Surface
 	/**
 	 * Emits and clears the current page for backends that support multiple
 	 * pages. Use cairo_surface_copy_page() if you don't want to clear the page.
+	 * There is a convenience function for this that takes a cairo_t,
+	 * namely cairo_show_page().
 	 * Since 1.6
 	 */
 	public void showPage()
 	{
 		// void cairo_surface_show_page (cairo_surface_t *surface);
 		cairo_surface_show_page(cairo_surface);
+	}
+	
+	/**
+	 * Returns whether the surface supports
+	 * sophisticated cairo_show_text_glyphs() operations. That is,
+	 * whether it actually uses the provided text and cluster data
+	 * to a cairo_show_text_glyphs() call.
+	 * Note: Even if this function returns FALSE, a
+	 * cairo_show_text_glyphs() operation targeted at surface will
+	 * still succeed. It just will
+	 * act like a cairo_show_glyphs() operation. Users can use this
+	 * function to avoid computing UTF-8 text and cluster mapping if the
+	 * target surface does not use it.
+	 * There is a convenience function for this that takes a cairo_t,
+	 * namely cairo_has_show_text_glyphs().
+	 * Since 1.8
+	 * Returns: TRUE if surface supports cairo_show_text_glyphs(), FALSE otherwise
+	 */
+	public cairo_bool_t hasShowTextGlyphs()
+	{
+		// cairo_bool_t cairo_surface_has_show_text_glyphs (cairo_surface_t *surface);
+		return cairo_surface_has_show_text_glyphs(cairo_surface);
 	}
 }

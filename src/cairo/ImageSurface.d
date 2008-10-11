@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-Image-Surfaces.html
+ * inFile  = cairo-image-surface.html
  * outPack = cairo
  * outFile = ImageSurface
  * strct   = cairo_surface_t

@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-Font-Options.html
+ * inFile  = cairo-font-options.html
  * outPack = cairo
  * outFile = FontOption
  * strct   = cairo_font_options_t

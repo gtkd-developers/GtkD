@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-Patterns.html
+ * inFile  = cairo-pattern.html
  * outPack = cairo
  * outFile = Pattern
  * strct   = cairo_pattern_t

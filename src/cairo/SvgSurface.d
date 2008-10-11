@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-SVG-Surfaces.html
+ * inFile  = cairo-svg-surface.html
  * outPack = cairo
  * outFile = SvgSurface
  * strct   = cairo_surface_t
@@ -158,7 +158,7 @@ public class SvgSurface : Surface
 	 * surface.
 	 * Since 1.2
 	 * Params:
-	 * versio =  SVG version
+	 * version =  SVG version
 	 */
 	public void restrictToVersion(cairo_svg_version_t versio)
 	{
@@ -190,7 +190,7 @@ public class SvgSurface : Surface
 	 * for a way to get the list of valid version ids.
 	 * Since 1.2
 	 * Params:
-	 * versio =  a version id
+	 * version =  a version id
 	 * Returns: the string associated to given version.
 	 */
 	public static string versionToString(cairo_svg_version_t versio)

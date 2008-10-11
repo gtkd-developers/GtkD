@@ -70,7 +70,7 @@ wrap: cairo
 ### Cairo Drawing #########################################
 ###########################################################
 
-file: cairo-cairo-t.html
+file: cairo-context.html
 struct: cairo_t
 class: Context
 prefix: cairo_
@@ -196,12 +196,52 @@ code: start
 		gdk_cairo_region(getContextStruct(), region.getRegionStruct());
 	}
 
+	/**
+	 * Allocates an array of cairo_glyph_t's.
+	 * This function is only useful in implementations of
+	 * cairo_user_scaled_font_text_to_glyphs_func_t where the user
+	 * needs to allocate an array of glyphs that cairo will free.
+	 * For all other uses, user can use their own allocation method
+	 * for glyphs.
+	 * This function returns NULL if num_glyphs is not positive,
+	 * or if out of memory. That means, the NULL return value
+	 * signals out-of-memory only if num_glyphs was positive.
+	 * Since 1.8
+	 * Params:
+	 * numGlyphs =  number of glyphs to allocate
+	 * Returns: the newly allocated array of glyphs that should be freed using cairo_glyph_free()
+	 */
+	public static cairo_glyph_t[] glyphAllocate(int numGlyphs)
+	{
+		// cairo_glyph_t* cairo_glyph_allocate (int num_glyphs);
+		return cairo_glyph_allocate(numGlyphs)[0 .. numGlyphs];
+	}
 
+	/**
+	 * Allocates an array of cairo_text_cluster_t's.
+	 * This function is only useful in implementations of
+	 * cairo_user_scaled_font_text_to_glyphs_func_t where the user
+	 * needs to allocate an array of text clusters that cairo will free.
+	 * For all other uses, user can use their own allocation method
+	 * for text clusters.
+	 * This function returns NULL if num_clusters is not positive,
+	 * or if out of memory. That means, the NULL return value
+	 * signals out-of-memory only if num_clusters was positive.
+	 * Since 1.8
+	 * Params:
+	 * numClusters =  number of text_clusters to allocate
+	 * Returns: the newly allocated array of text clusters that should be freed using cairo_text_cluster_free()
+	 */
+	public static cairo_text_cluster_t[] textClusterAllocate(int numClusters)
+	{
+		// cairo_text_cluster_t* cairo_text_cluster_allocate (int num_clusters);
+		return cairo_text_cluster_allocate(numClusters)[0 .. numClusters];
+	}
 code: end
 
 openFile: Context
 
-file: cairo-Paths.html
+file: cairo-paths.html
 out: cairo_get_current_point x
 out: cairo_get_current_point y
 out: cairo_path_extents x1
@@ -210,7 +250,7 @@ out: cairo_path_extents x2
 out: cairo_path_extents y2
 mergeFile: Context
 
-file: cairo-Transformations.html
+file: cairo-transformations.html
 inout: cairo_user_to_device x
 inout: cairo_user_to_device y
 inout: cairo_user_to_device_distance dx
@@ -221,13 +261,20 @@ inout: cairo_device_to_user_distance dx
 inout: cairo_device_to_user_distance dy
 mergeFile: Context
 
-file: cairo-Text.html
+file: cairo-text.html
 array: cairo_show_glyphs glyphs num_glyphs
 array: cairo_glyph_extents glyphs num_glyphs
+array: cairo_show_text_glyphs glyphs num_glyphs
+array: cairo_show_text_glyphs clusters num_clusters
+array: cairo_glyph_free glyphs
+array: cairo_text_cluster_free clusters
+
+nocode: cairo_glyph_allocate
+nocode: cairo_text_cluster_allocate
 closeFile: Context
 
 
-file: cairo-Patterns.html
+file: cairo-pattern.html
 struct: cairo_pattern_t
 class: Pattern
 prefix: cairo_pattern_
@@ -265,14 +312,14 @@ outFile: Pattern
 ### Cairo Fonts ###########################################
 ###########################################################
 
-file: cairo-cairo-font-face-t.html
+file: cairo-font-face.html
 struct: cairo_font_face_t
 class: FontFace
 prefix: cairo_font_face_
 structWrap: cairo_font_face_t* FontFace
 outFile: FontFace
 
-file: cairo-Scaled-Fonts.html
+file: cairo-scaled-font.html
 struct: cairo_scaled_font_t
 class: ScaledFont
 prefix: cairo_scaled_font_
@@ -284,32 +331,46 @@ import: cairo.FontFace
 import: cairo.FontOption
 import: cairo.Matrix
 import: glib.Str
+
+out: cairo_scaled_font_text_to_glyphs glyphs
+array: cairo_scaled_font_text_to_glyphs glyphs num_glyphs
+out: cairo_scaled_font_text_to_glyphs clusters
+array: cairo_scaled_font_text_to_glyphs clusters num_clusters
+out: cairo_scaled_font_text_to_glyphs cluster_flags
+
 outFile: ScaledFont
 
-file: cairo-Font-Options.html
+file: cairo-font-options.html
 struct: cairo_font_options_t
 class: FontOption
 prefix: cairo_font_options_
 structWrap: cairo_font_options_t* FontOption
 outFile: FontOption
 
-#file: cairo-FreeType-Fonts.html
+#file: cairo-ft-font.html
 #struct: 
 #class: 
 #prefix: 
 #outFile: 
 
-#file: cairo-Win32-Fonts.html
+#file: cairo-win32-font.html
 #struct: 
 #class: 
 #prefix: 
 #outFile: 
+
+file: cairo-user-font.html
+struct: cairo_font_face_t
+class: UserFontFace
+prefix: cairo_user_font_face_
+structWrap: cairo_font_face_t* UserFontFace
+outFile: UserFontFace
 
 ###########################################################
 ### Cairo Surfaces ########################################
 ###########################################################
 
-file: cairo-cairo-surface-t.html
+file: cairo-surface.html
 struct: cairo_surface_t
 class: Surface
 prefix: cairo_surface_
@@ -320,10 +381,12 @@ import: cairo.FontOption
 
 out: cairo_surface_get_device_offset x_offset
 out: cairo_surface_get_device_offset y_offset
+out: cairo_surface_get_fallback_resolution x_pixels_per_inch
+out: cairo_surface_get_fallback_resolution y_pixels_per_inch
 
 outFile: Surface
 
-file: cairo-Image-Surfaces.html
+file: cairo-image-surface.html
 struct: cairo_surface_t
 class: ImageSurface
 extend: cairo_surface_t
@@ -334,10 +397,10 @@ structWrap: cairo_surface_t* ImageSurface
 import: glib.Str
 openFile: ImageSurface
 
-file: cairo-PNG-Support.html
+file: cairo-png-functions.html
 closeFile: ImageSurface
 
-file: cairo-PDF-Surfaces.html
+file: cairo-pdf-surface.html
 struct: cairo_surface_t
 class: PdfSurface
 extend: cairo_surface_t
@@ -346,7 +409,7 @@ structWrap: cairo_surface_t* PdfSurface
 import: glib.Str
 outFile: PdfSurface
 
-file: cairo-PostScript-Surfaces.html
+file: cairo-ps-surface.html
 struct: cairo_surface_t
 class: PostScriptSurface
 extend: cairo_surface_t
@@ -360,10 +423,10 @@ array: cairo_ps_get_levels levels num_levels
 
 outFile: PostScriptSurface
 
-#file: cairo-Win32-Surfaces.html
+#file: cairo-win32-surface.html
 #mergeFile: Surface
 
-file: cairo-SVG-Surfaces.html
+file: cairo-svg-surface.html
 struct: cairo_surface_t
 class: SvgSurface
 extend: cairo_surface_t
@@ -384,7 +447,7 @@ outFile: SvgSurface
 ### Cairo Utilities #######################################
 ###########################################################
 
-file: cairo-cairo-matrix-t.html
+file: cairo-matrix.html
 struct: cairo_matrix_t
 class: Matrix
 structWrap: cairo_matrix_t* Matrix
@@ -398,7 +461,7 @@ inout: cairo_matrix_transform_point y
 
 outFile: Matrix
 
-file: cairo-Error-Handling.html
+file: cairo-error-status.html
 #struct: cairo_status_t
 class: Status
 prefix: cairo_status_t
@@ -407,14 +470,14 @@ import: glib.Str
 outFile: Status
 
 
-file: cairo-Version-Information.html
+file: cairo-version-info.html
 #struct: 
 class: Version
 #prefix: 
 import: glib.Str
 outFile: Version
 
-file: cairo-Types.html
+file: cairo-types.html
 #struct: 
 #class: 
 #prefix: 

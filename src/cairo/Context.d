@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-cairo-t.html
+ * inFile  = cairo-context.html
  * outPack = cairo
  * outFile = Context
  * strct   = cairo_t
@@ -221,6 +221,47 @@ public class Context
 		gdk_cairo_region(getContextStruct(), region.getRegionStruct());
 	}
 	
+	/**
+	 * Allocates an array of cairo_glyph_t's.
+	 * This function is only useful in implementations of
+	 * cairo_user_scaled_font_text_to_glyphs_func_t where the user
+	 * needs to allocate an array of glyphs that cairo will free.
+	 * For all other uses, user can use their own allocation method
+	 * for glyphs.
+	 * This function returns NULL if num_glyphs is not positive,
+	 * or if out of memory. That means, the NULL return value
+	 * signals out-of-memory only if num_glyphs was positive.
+	 * Since 1.8
+	 * Params:
+	 * numGlyphs =  number of glyphs to allocate
+	 * Returns: the newly allocated array of glyphs that should be freed using cairo_glyph_free()
+	 */
+	public static cairo_glyph_t[] glyphAllocate(int numGlyphs)
+	{
+		// cairo_glyph_t* cairo_glyph_allocate (int num_glyphs);
+		return cairo_glyph_allocate(numGlyphs)[0 .. numGlyphs];
+	}
+	
+	/**
+	 * Allocates an array of cairo_text_cluster_t's.
+	 * This function is only useful in implementations of
+	 * cairo_user_scaled_font_text_to_glyphs_func_t where the user
+	 * needs to allocate an array of text clusters that cairo will free.
+	 * For all other uses, user can use their own allocation method
+	 * for text clusters.
+	 * This function returns NULL if num_clusters is not positive,
+	 * or if out of memory. That means, the NULL return value
+	 * signals out-of-memory only if num_clusters was positive.
+	 * Since 1.8
+	 * Params:
+	 * numClusters =  number of text_clusters to allocate
+	 * Returns: the newly allocated array of text clusters that should be freed using cairo_text_cluster_free()
+	 */
+	public static cairo_text_cluster_t[] textClusterAllocate(int numClusters)
+	{
+		// cairo_text_cluster_t* cairo_text_cluster_allocate (int num_clusters);
+		return cairo_text_cluster_allocate(numClusters)[0 .. numClusters];
+	}
 	
 	/**
 	 * Description
@@ -263,7 +304,7 @@ public class Context
 	 * default values and with target as a target surface. The target
 	 * surface should be constructed with a backend-specific function such
 	 * as cairo_image_surface_create() (or any other
-	 * cairo_backend_surface_create variant).
+	 * cairo_backend_surface_create() variant).
 	 * This function references target, so you can immediately
 	 * call cairo_surface_destroy() on it if you don't need to
 	 * maintain a separate reference to it.
@@ -491,7 +532,7 @@ public class Context
 	 * 1. If the values passed in are outside that range, they will be
 	 * clamped.
 	 * The default source pattern is opaque black, (that is, it is
-	 * equivalent to cairo_set_source_rgb (cr, 0.0, 0.0, 0.0)).
+	 * equivalent to cairo_set_source_rgb(cr, 0.0, 0.0, 0.0)).
 	 * Params:
 	 * red =  red component of color
 	 * green =  green component of color
@@ -511,7 +552,7 @@ public class Context
 	 * range 0 to 1. If the values passed in are outside that range, they
 	 * will be clamped.
 	 * The default source pattern is opaque black, (that is, it is
-	 * equivalent to cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0)).
+	 * equivalent to cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 1.0)).
 	 * Params:
 	 * red =  red component of color
 	 * green =  green component of color
@@ -533,7 +574,7 @@ public class Context
 	 * that further modifications of the current transformation matrix
 	 * will not affect the source pattern. See cairo_pattern_set_matrix().
 	 * The default source pattern is a solid pattern that is opaque black,
-	 * (that is, it is equivalent to cairo_set_source_rgb (cr, 0.0, 0.0,
+	 * (that is, it is equivalent to cairo_set_source_rgb(cr, 0.0, 0.0,
 	 * 0.0)).
 	 * Params:
 	 * source =  a cairo_pattern_t to be used as the source for
@@ -1114,7 +1155,7 @@ public class Context
 	/**
 	 * A drawing operator that strokes the current path according to the
 	 * current line width, line join, line cap, and dash settings. After
-	 * cairo_stroke, the current path will be cleared from the cairo
+	 * cairo_stroke(), the current path will be cleared from the cairo
 	 * context. See cairo_set_line_width(), cairo_set_line_join(),
 	 * cairo_set_line_cap(), cairo_set_dash(), and
 	 * cairo_stroke_preserve().
@@ -1476,13 +1517,13 @@ public class Context
 	}
 	
 	/**
-	 * Adds a cubic Bzier spline to the path from the current point to
+	 * Adds a cubic Bézier spline to the path from the current point to
 	 * position (x3, y3) in user-space coordinates, using (x1, y1) and
 	 * (x2, y2) as the control points. After this call the current point
 	 * will be (x3, y3).
 	 * If there is no current point before the call to cairo_curve_to()
 	 * this function will behave as if preceded by a call to
-	 * cairo_move_to (cr, x1, y1).
+	 * cairo_move_to(cr, x1, y1).
 	 * Params:
 	 * x1 =  the X coordinate of the first control point
 	 * y1 =  the Y coordinate of the first control point
@@ -1502,7 +1543,7 @@ public class Context
 	 * in user-space coordinates. After this call the current point
 	 * will be (x, y).
 	 * If there is no current point before the call to cairo_line_to()
-	 * this function will behave as cairo_move_to (cr, x, y).
+	 * this function will behave as cairo_move_to(cr, x, y).
 	 * Params:
 	 * x =  the X coordinate of the end of the new line
 	 * y =  the Y coordinate of the end of the new line
@@ -1572,7 +1613,7 @@ public class Context
 	 * serious text-using applications. See cairo_glyph_path() for the
 	 * "real" text path API in cairo.
 	 * Params:
-	 * utf8 =  a string of text encoded in UTF-8
+	 * utf8 =  a NUL-terminated string of text encoded in UTF-8, or NULL
 	 */
 	public void textPath(string utf8)
 	{
@@ -1582,15 +1623,14 @@ public class Context
 	
 	/**
 	 * Relative-coordinate version of cairo_curve_to(). All offsets are
-	 * relative to the current point. Adds a cubic Bzier spline to the
+	 * relative to the current point. Adds a cubic Bézier spline to the
 	 * path from the current point to a point offset from the current
 	 * point by (dx3, dy3), using points offset by (dx1, dy1) and
 	 * (dx2, dy2) as the control points. After this call the current
 	 * point will be offset by (dx3, dy3).
-	 * Given a current point of (x, y), cairo_rel_curve_to (cr, dx1,
+	 * Given a current point of (x, y), cairo_rel_curve_to(cr, dx1,
 	 * dy1, dx2, dy2, dx3, dy3) is logically equivalent to
-	 * cairo_curve_to (cr, x + dx1, y + dy1, x + dx2, y + dy2, x +
-	 * dx3, y + dy3).
+	 * cairo_curve_to(cr, x+dx1, y+dy1, x+dx2, y+dy2, x+dx3, y+dy3).
 	 * It is an error to call this function with no current point. Doing
 	 * so will cause cr to shutdown with a status of
 	 * CAIRO_STATUS_NO_CURRENT_POINT.
@@ -1614,7 +1654,7 @@ public class Context
 	 * current point by (dx, dy) in user space. After this call the
 	 * current point will be offset by (dx, dy).
 	 * Given a current point of (x, y), cairo_rel_line_to(cr, dx, dy)
-	 * is logically equivalent to cairo_line_to (cr, x + dx, y + dy).
+	 * is logically equivalent to cairo_line_to(cr, x + dx, y + dy).
 	 * It is an error to call this function with no current point. Doing
 	 * so will cause cr to shutdown with a status of
 	 * CAIRO_STATUS_NO_CURRENT_POINT.
@@ -1632,7 +1672,7 @@ public class Context
 	 * Begin a new sub-path. After this call the current point will offset
 	 * by (x, y).
 	 * Given a current point of (x, y), cairo_rel_move_to(cr, dx, dy)
-	 * is logically equivalent to cairo_move_to (cr, x + dx, y + dy).
+	 * is logically equivalent to cairo_move_to(cr, x + dx, y + dy).
 	 * It is an error to call this function with no current point. Doing
 	 * so will cause cr to shutdown with a status of
 	 * CAIRO_STATUS_NO_CURRENT_POINT.
@@ -1838,7 +1878,7 @@ public class Context
 	 * Selects a family and style of font from a simplified description as
 	 * a family name, slant and weight. Cairo provides no operation to
 	 * list available family names on the system (this is a "toy",
-	 * remember"), but the standard CSS2 generic family names, ("serif",
+	 * remember), but the standard CSS2 generic family names, ("serif",
 	 * "sans-serif", "cursive", "fantasy", "monospace"), are likely to
 	 * work as expected.
 	 * For "real" font selection, see the font-backend-specific
@@ -1856,8 +1896,11 @@ public class Context
 	 * pango), in conjunction with cairo.
 	 * If text is drawn without a call to cairo_select_font_face(), (nor
 	 * cairo_set_font_face() nor cairo_set_scaled_font()), the default
-	 * family is "sans", slant is CAIRO_FONT_SLANT_NORMAL, and weight is
+	 * family is platform-specific, but is essentially "sans-serif".
+	 * Default slant is CAIRO_FONT_SLANT_NORMAL, and default weight is
 	 * CAIRO_FONT_WEIGHT_NORMAL.
+	 * This function is equivalent to a call to cairo_toy_font_face_create()
+	 * followed by cairo_set_font_face().
 	 * Params:
 	 * family =  a font family name, encoded in UTF-8
 	 * slant =  the slant for the font
@@ -1961,7 +2004,7 @@ public class Context
 	
 	/**
 	 * Gets the current font face for a cairo_t.
-	 * Returns: the current font face. This object is owned bycairo. To keep a reference to it, you must callcairo_font_face_reference.This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_font_face_t object will be returned on whichcairo_font_face_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_font_face() with a nil font will trigger an error thatwill shutdown the cairo_t object).
+	 * Returns: the current font face. This object is owned bycairo. To keep a reference to it, you must callcairo_font_face_reference().This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_font_face_t object will be returned on whichcairo_font_face_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_font_face() with a nil font will trigger an error thatwill shutdown the cairo_t object).
 	 */
 	public FontFace getFontFace()
 	{
@@ -2026,7 +2069,7 @@ public class Context
 	 * serious text-using applications. See cairo_show_glyphs() for the
 	 * "real" text display API in cairo.
 	 * Params:
-	 * utf8 =  a string of text encoded in UTF-8
+	 * utf8 =  a NUL-terminated string of text encoded in UTF-8, or NULL
 	 */
 	public void showText(string utf8)
 	{
@@ -2036,8 +2079,8 @@ public class Context
 	
 	/**
 	 * A drawing operator that generates the shape from an array of glyphs,
-	 * rendered according to the current font_face, font_size
-	 * (font_matrix), and font_options.
+	 * rendered according to the current font face, font size
+	 * (font matrix), and font options.
 	 * Params:
 	 * glyphs =  array of glyphs to show
 	 */
@@ -2045,6 +2088,38 @@ public class Context
 	{
 		// void cairo_show_glyphs (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs);
 		cairo_show_glyphs(cairo, glyphs.ptr, glyphs.length);
+	}
+	
+	/**
+	 * This operation has rendering effects similar to cairo_show_glyphs()
+	 * but, if the target surface supports it, uses the provided text and
+	 * cluster mapping to embed the text for the glyphs shown in the output.
+	 * The cairo_has_show_text_glyphs() function can be used to query that.
+	 * If the target does not support it, this function acts like
+	 * cairo_show_glyphs().
+	 * The mapping between utf8 and glyphs is provided by an array of
+	 * clusters. Each cluster covers a number of
+	 * text bytes and glyphs, and neighboring clusters cover neighboring
+	 * areas of utf8 and glyphs. The clusters should collectively cover utf8
+	 * and glyphs in entirety.
+	 * The first cluster always covers bytes from the beginning of utf8.
+	 * If cluster_flags do not have the CAIRO_TEXT_CLUSTER_FLAG_BACKWARD
+	 * set, the first cluster also covers the beginning
+	 * of glyphs, otherwise it covers the end of the glyphs array and
+	 * following clusters move backward.
+	 * See cairo_text_cluster_t for constraints on valid clusters.
+	 * Since 1.8
+	 * Params:
+	 * utf8 =  a string of text encoded in UTF-8
+	 * utf8_Len =  length of utf8 in bytes, or -1 if it is NUL-terminated
+	 * glyphs =  array of glyphs to show
+	 * clusters =  array of cluster mapping information
+	 * clusterFlags =  cluster mapping flags
+	 */
+	public void showTextGlyphs(string utf8, int utf8_Len, cairo_glyph_t[] glyphs, cairo_text_cluster_t[] clusters, cairo_text_cluster_flags_t clusterFlags)
+	{
+		// void cairo_show_text_glyphs (cairo_t *cr,  const char *utf8,  int utf8_len,  const cairo_glyph_t *glyphs,  int num_glyphs,  const cairo_text_cluster_t *clusters,  int num_clusters,  cairo_text_cluster_flags_t cluster_flags);
+		cairo_show_text_glyphs(cairo, Str.toStringz(utf8), utf8_Len, glyphs.ptr, glyphs.length, clusters.ptr, clusters.length, clusterFlags);
 	}
 	
 	/**
@@ -2072,7 +2147,7 @@ public class Context
 	 * likely to not affect the size of the rectangle, though they will
 	 * affect the x_advance and y_advance values.
 	 * Params:
-	 * utf8 =  a string of text, encoded in UTF-8
+	 * utf8 =  a NUL-terminated string of text encoded in UTF-8, or NULL
 	 * extents =  a cairo_text_extents_t object into which the results
 	 * will be stored
 	 */
@@ -2088,7 +2163,7 @@ public class Context
 	 * glyphs, (as they would be drawn by cairo_show_glyphs()).
 	 * Additionally, the x_advance and y_advance values indicate the
 	 * amount by which the current point would be advanced by
-	 * cairo_show_glyphs.
+	 * cairo_show_glyphs().
 	 * Note that whitespace glyphs do not contribute to the size of the
 	 * rectangle (extents.width and extents.height).
 	 * Params:
@@ -2100,5 +2175,105 @@ public class Context
 	{
 		// void cairo_glyph_extents (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
 		cairo_glyph_extents(cairo, glyphs.ptr, glyphs.length, extents);
+	}
+	
+	/**
+	 * Creates a font face from a triplet of family, slant, and weight.
+	 * These font faces are used in implementation of the the cairo_t "toy"
+	 * font API.
+	 * If family is the zero-length string "", the platform-specific default
+	 * family is assumed. The default family then can be queried using
+	 * cairo_toy_font_face_get_family().
+	 * The cairo_select_font_face() function uses this to create font faces.
+	 * See that function for limitations of toy font faces.
+	 * Since 1.8
+	 * Params:
+	 * family =  a font family name, encoded in UTF-8
+	 * slant =  the slant for the font
+	 * weight =  the weight for the font
+	 * Returns: a newly created cairo_font_face_t. Free with cairo_font_face_destroy() when you are done using it.
+	 */
+	public static FontFace toyFontFaceCreate(string family, cairo_font_slant_t slant, cairo_font_weight_t weight)
+	{
+		// cairo_font_face_t* cairo_toy_font_face_create (const char *family,  cairo_font_slant_t slant,  cairo_font_weight_t weight);
+		auto p = cairo_toy_font_face_create(Str.toStringz(family), slant, weight);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FontFace(cast(cairo_font_face_t*) p);
+	}
+	
+	/**
+	 * Gets the familly name of a toy font.
+	 * Since 1.8
+	 * Params:
+	 * fontFace =  A toy font face
+	 * Returns: The family name. This string is owned by the font faceand remains valid as long as the font face is alive (referenced).
+	 */
+	public static string toyFontFaceGetFamily(FontFace fontFace)
+	{
+		// const char* cairo_toy_font_face_get_family (cairo_font_face_t *font_face);
+		return Str.toString(cairo_toy_font_face_get_family((fontFace is null) ? null : fontFace.getFontFaceStruct()));
+	}
+	
+	/**
+	 * Gets the slant a toy font.
+	 * Since 1.8
+	 * Params:
+	 * fontFace =  A toy font face
+	 * Returns: The slant value
+	 */
+	public static cairo_font_slant_t toyFontFaceGetSlant(FontFace fontFace)
+	{
+		// cairo_font_slant_t cairo_toy_font_face_get_slant (cairo_font_face_t *font_face);
+		return cairo_toy_font_face_get_slant((fontFace is null) ? null : fontFace.getFontFaceStruct());
+	}
+	
+	/**
+	 * Gets the weight a toy font.
+	 * Since 1.8
+	 * Params:
+	 * fontFace =  A toy font face
+	 * Returns: The weight value
+	 */
+	public static cairo_font_weight_t toyFontFaceGetWeight(FontFace fontFace)
+	{
+		// cairo_font_weight_t cairo_toy_font_face_get_weight (cairo_font_face_t *font_face);
+		return cairo_toy_font_face_get_weight((fontFace is null) ? null : fontFace.getFontFaceStruct());
+	}
+	
+	/**
+	 * Frees an array of cairo_glyph_t's allocated using cairo_glyph_allocate().
+	 * This function is only useful to free glyph array returned
+	 * by cairo_scaled_font_text_to_glyphs() where cairo returns
+	 * an array of glyphs that the user will free.
+	 * For all other uses, user can use their own allocation method
+	 * for glyphs.
+	 * Since 1.8
+	 * Params:
+	 * glyphs =  array of glyphs to free, or NULL
+	 */
+	public static void glyphFree(cairo_glyph_t[] glyphs)
+	{
+		// void cairo_glyph_free (cairo_glyph_t *glyphs);
+		cairo_glyph_free(glyphs.ptr);
+	}
+	
+	/**
+	 * Frees an array of cairo_text_cluster's allocated using cairo_text_cluster_allocate().
+	 * This function is only useful to free text cluster array returned
+	 * by cairo_scaled_font_text_to_glyphs() where cairo returns
+	 * an array of text clusters that the user will free.
+	 * For all other uses, user can use their own allocation method
+	 * for text clusters.
+	 * Since 1.8
+	 * Params:
+	 * clusters =  array of text clusters to free, or NULL
+	 */
+	public static void textClusterFree(cairo_text_cluster_t[] clusters)
+	{
+		// void cairo_text_cluster_free (cairo_text_cluster_t *clusters);
+		cairo_text_cluster_free(clusters.ptr);
 	}
 }

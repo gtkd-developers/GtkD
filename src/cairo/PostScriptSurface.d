@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-PostScript-Surfaces.html
+ * inFile  = cairo-ps-surface.html
  * outPack = cairo
  * outFile = PostScriptSurface
  * strct   = cairo_surface_t
