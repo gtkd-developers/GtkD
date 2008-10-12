@@ -200,7 +200,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public string getId()
 	{
-		// const gchar* gtk_source_style_scheme_get_id (GtkSourceStyleScheme *scheme);
+		// const gchar * gtk_source_style_scheme_get_id (GtkSourceStyleScheme *scheme);
 		return Str.toString(gtk_source_style_scheme_get_id(gtkSourceStyleScheme));
 	}
 	
@@ -210,7 +210,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_source_style_scheme_get_name (GtkSourceStyleScheme *scheme);
+		// const gchar * gtk_source_style_scheme_get_name (GtkSourceStyleScheme *scheme);
 		return Str.toString(gtk_source_style_scheme_get_name(gtkSourceStyleScheme));
 	}
 	
@@ -220,7 +220,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public string getDescription()
 	{
-		// const gchar* gtk_source_style_scheme_get_description  (GtkSourceStyleScheme *scheme);
+		// const gchar * gtk_source_style_scheme_get_description  (GtkSourceStyleScheme *scheme);
 		return Str.toString(gtk_source_style_scheme_get_description(gtkSourceStyleScheme));
 	}
 	
@@ -230,7 +230,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public string[] getAuthors()
 	{
-		// const gchar* const * gtk_source_style_scheme_get_authors  (GtkSourceStyleScheme *scheme);
+		// const gchar * const * gtk_source_style_scheme_get_authors  (GtkSourceStyleScheme *scheme);
 		return Str.toStringArray(gtk_source_style_scheme_get_authors(gtkSourceStyleScheme));
 	}
 	
@@ -240,7 +240,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public string getFilename()
 	{
-		// const gchar* gtk_source_style_scheme_get_filename  (GtkSourceStyleScheme *scheme);
+		// const gchar * gtk_source_style_scheme_get_filename  (GtkSourceStyleScheme *scheme);
 		return Str.toString(gtk_source_style_scheme_get_filename(gtkSourceStyleScheme));
 	}
 	
@@ -252,7 +252,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public SourceStyle getStyle(string styleId)
 	{
-		// GtkSourceStyle* gtk_source_style_scheme_get_style (GtkSourceStyleScheme *scheme,  const gchar *style_id);
+		// GtkSourceStyle** gtk_source_style_scheme_get_style (GtkSourceStyleScheme *scheme,  const gchar *style_id);
 		auto p = gtk_source_style_scheme_get_style(gtkSourceStyleScheme, Str.toStringz(styleId));
 		if(p is null)
 		{

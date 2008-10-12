@@ -72,6 +72,8 @@ class: SourceView
 prefix: gtk_source_view_
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
+import: gdk.Color
+structWrap: GdkColor* Color
 import: gsv.SourceBuffer
 structWrap: GtkSourceBuffer* SourceBuffer
 import: gtkc.gtk

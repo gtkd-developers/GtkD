@@ -65,6 +65,10 @@ private import gobject.ObjectG;
 
 /**
  * Description
+ * GtkSourceLanguage encapsulates syntax and highlighting styles for a
+ * particular language. Use GtkSourceLanguageManager to obtain a
+ * GtkSourceLanguage instance, and gtk_source_buffer_set_language()
+ * to apply it to a GtkSourceBuffer.
  */
 public class SourceLanguage : ObjectG
 {
@@ -115,7 +119,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string gtkSourceLanguageGetId()
 	{
-		// const gchar* gtk_source_language_get_id (GtkSourceLanguage *language);
+		// const gchar * gtk_source_language_get_id (GtkSourceLanguage *language);
 		return Str.toString(gtk_source_language_get_id(gtkSourceLanguage));
 	}
 	
@@ -125,7 +129,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string gtkSourceLanguageGetName()
 	{
-		// const gchar* gtk_source_language_get_name (GtkSourceLanguage *language);
+		// const gchar * gtk_source_language_get_name (GtkSourceLanguage *language);
 		return Str.toString(gtk_source_language_get_name(gtkSourceLanguage));
 	}
 	
@@ -137,7 +141,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string gtkSourceLanguageGetSection()
 	{
-		// const gchar* gtk_source_language_get_section (GtkSourceLanguage *language);
+		// const gchar * gtk_source_language_get_section (GtkSourceLanguage *language);
 		return Str.toString(gtk_source_language_get_section(gtkSourceLanguage));
 	}
 	
@@ -158,7 +162,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string gtkSourceLanguageGetMetadata(string name)
 	{
-		// const gchar* gtk_source_language_get_metadata (GtkSourceLanguage *language,  const gchar *name);
+		// const gchar * gtk_source_language_get_metadata (GtkSourceLanguage *language,  const gchar *name);
 		return Str.toString(gtk_source_language_get_metadata(gtkSourceLanguage, Str.toStringz(name)));
 	}
 	
@@ -171,7 +175,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] gtkSourceLanguageGetMimeTypes()
 	{
-		// gchar** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
+		// gchar*** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_mime_types(gtkSourceLanguage));
 	}
 	
@@ -183,7 +187,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] gtkSourceLanguageGetGlobs()
 	{
-		// gchar** gtk_source_language_get_globs (GtkSourceLanguage *language);
+		// gchar*** gtk_source_language_get_globs (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_globs(gtkSourceLanguage));
 	}
 	
@@ -195,7 +199,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string gtkSourceLanguageGetStyleName(string styleId)
 	{
-		// const char* gtk_source_language_get_style_name (GtkSourceLanguage *language,  const char *style_id);
+		// const char * gtk_source_language_get_style_name (GtkSourceLanguage *language,  const char *style_id);
 		return Str.toString(gtk_source_language_get_style_name(gtkSourceLanguage, Str.toStringz(styleId)));
 	}
 	
@@ -205,7 +209,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] gtkSourceLanguageGetStyleIds()
 	{
-		// gchar** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
+		// gchar*** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_style_ids(gtkSourceLanguage));
 	}
 }

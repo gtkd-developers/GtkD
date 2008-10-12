@@ -43,10 +43,12 @@
  * omit signals:
  * imports:
  * 	- gdk.Pixbuf
+ * 	- gdk.Color
  * 	- gsv.SourceBuffer
  * 	- gtkc.gtk
  * 	- glib.Str
  * structWrap:
+ * 	- GdkColor* -> Color
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkSourceBuffer* -> SourceBuffer
  * module aliases:
@@ -65,6 +67,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gdk.Pixbuf;
+private import gdk.Color;
 private import gsv.SourceBuffer;
 private import gtkc.gtk;
 private import glib.Str;
@@ -199,7 +202,7 @@ public class SourceView : TextView
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_source_view_new (void);
+		// GtkWidget** gtk_source_view_new (void);
 		auto p = gtk_source_view_new();
 		if(p is null)
 		{
@@ -217,7 +220,7 @@ public class SourceView : TextView
 	 */
 	public this (SourceBuffer buffer)
 	{
-		// GtkWidget* gtk_source_view_new_with_buffer (GtkSourceBuffer *buffer);
+		// GtkWidget** gtk_source_view_new_with_buffer (GtkSourceBuffer *buffer);
 		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
@@ -344,38 +347,6 @@ public class SourceView : TextView
 	}
 	
 	/**
-	 * Associates a given pixbuf with a given mark category.
-	 * If pixbuf is NULL, the pixbuf is unset.
-	 * Since 2.2
-	 * Params:
-	 * category =  a mark category.
-	 * pixbuf =  a GdkPixbuf or NULL.
-	 */
-	public void setMarkCategoryPixbuf(string category, Pixbuf pixbuf)
-	{
-		// void gtk_source_view_set_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
-		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-	
-	/**
-	 * Gets the pixbuf which is associated with the given mark category.
-	 * Since 2.2
-	 * Params:
-	 * category =  a mark category.
-	 * Returns: the associated GdkPixbuf, or NULL if not found.
-	 */
-	public Pixbuf getMarkCategoryPixbuf(string category)
-	{
-		// GdkPixbuf* gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
-		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
-		if(p is null)
-		{
-			return null;
-		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
-	}
-	
-	/**
 	 * Set the priority for the given mark category. When there are
 	 * multiple marks on the same line, marks of categories with
 	 * higher priorities will be drawn on top.
@@ -401,6 +372,66 @@ public class SourceView : TextView
 	{
 		// gint gtk_source_view_get_mark_category_priority  (GtkSourceView *view,  const gchar *category);
 		return gtk_source_view_get_mark_category_priority(gtkSourceView, Str.toStringz(category));
+	}
+	
+	/**
+	 * Associates a given pixbuf with a given mark category.
+	 * If pixbuf is NULL, the pixbuf is unset.
+	 * Since 2.2
+	 * Params:
+	 * category =  a mark category.
+	 * pixbuf =  a GdkPixbuf or NULL.
+	 */
+	public void setMarkCategoryPixbuf(string category, Pixbuf pixbuf)
+	{
+		// void gtk_source_view_set_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
+		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+	}
+	
+	/**
+	 * Gets the pixbuf which is associated with the given mark category.
+	 * Since 2.2
+	 * Params:
+	 * category =  a mark category.
+	 * Returns: the associated GdkPixbuf, or NULL if not found.
+	 */
+	public Pixbuf getMarkCategoryPixbuf(string category)
+	{
+		// GdkPixbuf** gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
+		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Gets the background color associated with given category.
+	 * Since 2.4
+	 * Params:
+	 * category =  a mark category.
+	 * dest =  destination GdkColor structure to fill in.
+	 * Returns: TRUE if background color for category was setand dest is set to a valid color, or FALSE otherwise.
+	 */
+	public int getMarkCategoryBackground(string category, Color dest)
+	{
+		// gboolean gtk_source_view_get_mark_category_background  (GtkSourceView *view,  const gchar *category,  GdkColor *dest);
+		return gtk_source_view_get_mark_category_background(gtkSourceView, Str.toStringz(category), (dest is null) ? null : dest.getColorStruct());
+	}
+	
+	/**
+	 * Sets given background color for mark category.
+	 * If color is NULL, the background color is unset.
+	 * Since 2.4
+	 * Params:
+	 * category =  a mark category.
+	 * color =  background color or NULL to unset it.
+	 */
+	public void setMarkCategoryBackground(string category, Color color)
+	{
+		// void gtk_source_view_set_mark_category_background  (GtkSourceView *view,  const gchar *category,  const GdkColor *color);
+		gtk_source_view_set_mark_category_background(gtkSourceView, Str.toStringz(category), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -529,5 +560,29 @@ public class SourceView : TextView
 	{
 		// guint gtk_source_view_get_tab_width (GtkSourceView *view);
 		return gtk_source_view_get_tab_width(gtkSourceView);
+	}
+	
+	/**
+	 * Set if and how the spaces should be visualized. Specifying flags as 0 will
+	 * disable display of spaces.
+	 * Params:
+	 * flags =  GtkSourceDrawSpacesFlags specifing how white spaces should
+	 * be displayed
+	 */
+	public void setDrawSpaces(GtkSourceDrawSpacesFlags flags)
+	{
+		// void gtk_source_view_set_draw_spaces (GtkSourceView *view,  GtkSourceDrawSpacesFlags flags);
+		gtk_source_view_set_draw_spaces(gtkSourceView, flags);
+	}
+	
+	/**
+	 * Returns the GtkSourceDrawSpacesFlags specifying if and how spaces
+	 * should be displayed for this view.
+	 * Returns: the GtkSourceDrawSpacesFlags, 0 if no spaces should be drawn.
+	 */
+	public GtkSourceDrawSpacesFlags getDrawSpaces()
+	{
+		// GtkSourceDrawSpacesFlags gtk_source_view_get_draw_spaces  (GtkSourceView *view);
+		return gtk_source_view_get_draw_spaces(gtkSourceView);
 	}
 }

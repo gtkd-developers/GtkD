@@ -37,6 +37,21 @@ public enum GtkSourceSmartHomeEndType
 }
 alias GtkSourceSmartHomeEndType SourceSmartHomeEndType;
 
+/**
+ * GtkSourceDrawSpacesFlags determine what kind of spaces whould be drawn.
+ * GTK_SOURCE_DRAW_SPACES_SPACE
+ */
+public enum GtkSourceDrawSpacesFlags
+{
+	SPACE = 1 << 0,
+	TAB = 1 << 1,
+	NEWLINE = 1 << 2,
+	ALL = (SPACE |
+	TAB |
+	NEWLINE)
+}
+alias GtkSourceDrawSpacesFlags SourceDrawSpacesFlags;
+
 public enum GtkSourceSearchFlags
 {
 	VISIBLE_ONLY = 1 << 0,

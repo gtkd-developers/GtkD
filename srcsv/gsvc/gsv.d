@@ -78,10 +78,12 @@ extern(C)
 	gboolean function(GtkSourceView* view)gtk_source_view_get_insert_spaces_instead_of_tabs;
 	void function(GtkSourceView* view, GtkSourceSmartHomeEndType smartHe)gtk_source_view_set_smart_home_end;
 	GtkSourceSmartHomeEndType function(GtkSourceView* view)gtk_source_view_get_smart_home_end;
-	void function(GtkSourceView* view, gchar* category, GdkPixbuf* pixbuf)gtk_source_view_set_mark_category_pixbuf;
-	GdkPixbuf* function(GtkSourceView* view, gchar* category)gtk_source_view_get_mark_category_pixbuf;
 	void function(GtkSourceView* view, gchar* category, gint priority)gtk_source_view_set_mark_category_priority;
 	gint function(GtkSourceView* view, gchar* category)gtk_source_view_get_mark_category_priority;
+	void function(GtkSourceView* view, gchar* category, GdkPixbuf* pixbuf)gtk_source_view_set_mark_category_pixbuf;
+	GdkPixbuf* function(GtkSourceView* view, gchar* category)gtk_source_view_get_mark_category_pixbuf;
+	gboolean function(GtkSourceView* view, gchar* category, GdkColor* dest)gtk_source_view_get_mark_category_background;
+	void function(GtkSourceView* view, gchar* category, GdkColor* color)gtk_source_view_set_mark_category_background;
 	void function(GtkSourceView* view, gboolean show)gtk_source_view_set_highlight_current_line;
 	gboolean function(GtkSourceView* view)gtk_source_view_get_highlight_current_line;
 	void function(GtkSourceView* view, gboolean show)gtk_source_view_set_show_line_marks;
@@ -94,6 +96,8 @@ extern(C)
 	guint function(GtkSourceView* view)gtk_source_view_get_right_margin_position;
 	void function(GtkSourceView* view, guint width)gtk_source_view_set_tab_width;
 	guint function(GtkSourceView* view)gtk_source_view_get_tab_width;
+	void function(GtkSourceView* view, GtkSourceDrawSpacesFlags flags)gtk_source_view_set_draw_spaces;
+	GtkSourceDrawSpacesFlags function(GtkSourceView* view)gtk_source_view_get_draw_spaces;
 	
 	// gsv.SourceBuffer
 	
@@ -155,6 +159,7 @@ extern(C)
 	gchar** function(GtkSourceLanguageManager* lm)gtk_source_language_manager_get_search_path;
 	gchar** function(GtkSourceLanguageManager* lm)gtk_source_language_manager_get_language_ids;
 	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* id)gtk_source_language_manager_get_language;
+	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* filename, gchar* contentType)gtk_source_language_manager_guess_language;
 	
 	// gsv.SourcePrintCompositor
 	
@@ -239,10 +244,12 @@ Symbol[] gsvLinks =
 	{ "gtk_source_view_get_insert_spaces_instead_of_tabs",  cast(void**)& gtk_source_view_get_insert_spaces_instead_of_tabs},
 	{ "gtk_source_view_set_smart_home_end",  cast(void**)& gtk_source_view_set_smart_home_end},
 	{ "gtk_source_view_get_smart_home_end",  cast(void**)& gtk_source_view_get_smart_home_end},
-	{ "gtk_source_view_set_mark_category_pixbuf",  cast(void**)& gtk_source_view_set_mark_category_pixbuf},
-	{ "gtk_source_view_get_mark_category_pixbuf",  cast(void**)& gtk_source_view_get_mark_category_pixbuf},
 	{ "gtk_source_view_set_mark_category_priority",  cast(void**)& gtk_source_view_set_mark_category_priority},
 	{ "gtk_source_view_get_mark_category_priority",  cast(void**)& gtk_source_view_get_mark_category_priority},
+	{ "gtk_source_view_set_mark_category_pixbuf",  cast(void**)& gtk_source_view_set_mark_category_pixbuf},
+	{ "gtk_source_view_get_mark_category_pixbuf",  cast(void**)& gtk_source_view_get_mark_category_pixbuf},
+	{ "gtk_source_view_get_mark_category_background",  cast(void**)& gtk_source_view_get_mark_category_background},
+	{ "gtk_source_view_set_mark_category_background",  cast(void**)& gtk_source_view_set_mark_category_background},
 	{ "gtk_source_view_set_highlight_current_line",  cast(void**)& gtk_source_view_set_highlight_current_line},
 	{ "gtk_source_view_get_highlight_current_line",  cast(void**)& gtk_source_view_get_highlight_current_line},
 	{ "gtk_source_view_set_show_line_marks",  cast(void**)& gtk_source_view_set_show_line_marks},
@@ -255,6 +262,8 @@ Symbol[] gsvLinks =
 	{ "gtk_source_view_get_right_margin_position",  cast(void**)& gtk_source_view_get_right_margin_position},
 	{ "gtk_source_view_set_tab_width",  cast(void**)& gtk_source_view_set_tab_width},
 	{ "gtk_source_view_get_tab_width",  cast(void**)& gtk_source_view_get_tab_width},
+	{ "gtk_source_view_set_draw_spaces",  cast(void**)& gtk_source_view_set_draw_spaces},
+	{ "gtk_source_view_get_draw_spaces",  cast(void**)& gtk_source_view_get_draw_spaces},
 	{ "gtk_source_buffer_new",  cast(void**)& gtk_source_buffer_new},
 	{ "gtk_source_buffer_new_with_language",  cast(void**)& gtk_source_buffer_new_with_language},
 	{ "gtk_source_buffer_set_highlight_syntax",  cast(void**)& gtk_source_buffer_set_highlight_syntax},
@@ -301,6 +310,7 @@ Symbol[] gsvLinks =
 	{ "gtk_source_language_manager_get_search_path",  cast(void**)& gtk_source_language_manager_get_search_path},
 	{ "gtk_source_language_manager_get_language_ids",  cast(void**)& gtk_source_language_manager_get_language_ids},
 	{ "gtk_source_language_manager_get_language",  cast(void**)& gtk_source_language_manager_get_language},
+	{ "gtk_source_language_manager_guess_language",  cast(void**)& gtk_source_language_manager_guess_language},
 	{ "gtk_source_print_compositor_new",  cast(void**)& gtk_source_print_compositor_new},
 	{ "gtk_source_print_compositor_new_from_view",  cast(void**)& gtk_source_print_compositor_new_from_view},
 	{ "gtk_source_print_compositor_get_buffer",  cast(void**)& gtk_source_print_compositor_get_buffer},

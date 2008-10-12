@@ -2,6 +2,10 @@
 mkdir gtkdocs
 cd gtkdocs
 
+curl http://library.gnome.org/devel/gtksourceview-2.0/gtksourceview-2.0-html-2.4.0.tar.gz | tar xvfz -
+ln -s gtksourceview-2.0-html-2.4.0 sourceview
+exit
+
 #CAIRO
 curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
 ln -s cairo-html-1.8.0 cairo
@@ -57,8 +61,8 @@ curl http://library.gnome.org/devel/libglade/libglade-html-2.6.2.tar.gz | tar xv
 ln -s libglade-html-2.6.2 glade
 
 #gtkSourceView
-curl http://library.gnome.org/devel/gtksourceview-2.0/gtksourceview-2.0-html-2.2.0.tar.gz | tar xvfz -
-ln -s gtksourceview-2.0-html-2.2.0 sourceview
+curl http://library.gnome.org/devel/gtksourceview-2.0/gtksourceview-2.0-html-2.4.0.tar.gz | tar xvfz -
+ln -s gtksourceview-2.0-html-2.4.0 sourceview
 
 #gstreamer
 curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.12.tar.gz | tar xvfz -

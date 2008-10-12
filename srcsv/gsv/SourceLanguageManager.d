@@ -71,6 +71,12 @@ private import gobject.ObjectG;
 
 /**
  * Description
+ * GtkSourceLanguageManager is an object which processes language description
+ * files and creates and stores GtkSourceLanguage objects, and provides API to
+ * access them.
+ * Use gtk_source_language_manager_get_default() to retrieve the default
+ * instance of GtkSourceLanguageManager, and gtk_source_language_manager_guess_language()
+ * to get a GtkSourceLanguage for given file name and content type.
  */
 public class SourceLanguageManager : ObjectG
 {
@@ -123,7 +129,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public this ()
 	{
-		// GtkSourceLanguageManager* gtk_source_language_manager_new  (void);
+		// GtkSourceLanguageManager** gtk_source_language_manager_new  (void);
 		auto p = gtk_source_language_manager_new();
 		if(p is null)
 		{
@@ -138,7 +144,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public static SourceLanguageManager getDefault()
 	{
-		// GtkSourceLanguageManager* gtk_source_language_manager_get_default  (void);
+		// GtkSourceLanguageManager** gtk_source_language_manager_get_default  (void);
 		auto p = gtk_source_language_manager_get_default();
 		if(p is null)
 		{
@@ -171,7 +177,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public string[] getSearchPath()
 	{
-		// const gchar* const * gtk_source_language_manager_get_search_path  (GtkSourceLanguageManager *lm);
+		// const gchar * const * gtk_source_language_manager_get_search_path  (GtkSourceLanguageManager *lm);
 		return Str.toStringArray(gtk_source_language_manager_get_search_path(gtkSourceLanguageManager));
 	}
 	
@@ -181,7 +187,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public string[] getLanguageIds()
 	{
-		// const gchar* const * gtk_source_language_manager_get_language_ids  (GtkSourceLanguageManager *lm);
+		// const gchar * const * gtk_source_language_manager_get_language_ids  (GtkSourceLanguageManager *lm);
 		return Str.toStringArray(gtk_source_language_manager_get_language_ids(gtkSourceLanguageManager));
 	}
 	
@@ -194,8 +200,28 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public SourceLanguage getLanguage(string id)
 	{
-		// GtkSourceLanguage* gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
+		// GtkSourceLanguage** gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
 		auto p = gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceLanguage(cast(GtkSourceLanguage*) p);
+	}
+	
+	/**
+	 * Picks a GtkSourceLanguage for given file name and content type,
+	 * according to the information in lang files. Either filename or
+	 * Since 2.4
+	 * Params:
+	 * filename =  a filename in Glib filename encoding, or NULL.
+	 * contentType =  a content type (as in GIO API), or NULL.
+	 * Returns: a GtkSourceLanguage, or NULL if there is no suitable languagefor given filename and/or content_type. Return value is owned by lmand should not be freed.
+	 */
+	public SourceLanguage guessLanguage(string filename, string contentType)
+	{
+		// GtkSourceLanguage** gtk_source_language_manager_guess_language  (GtkSourceLanguageManager *lm,  const gchar *filename,  const gchar *content_type);
+		auto p = gtk_source_language_manager_guess_language(gtkSourceLanguageManager, Str.toStringz(filename), Str.toStringz(contentType));
 		if(p is null)
 		{
 			return null;

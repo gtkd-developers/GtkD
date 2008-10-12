@@ -1527,7 +1527,7 @@ public class GtkDClass
 			{
 				debug(enums)writefln("\tenum line %s", lines[pos]);
 
-				char[] value = std.string.strip(lines[pos++].dup);
+				char[] value = lines[pos++].dup.strip().chomp("\\");
 				debug(enums)writefln("\traw       %s", value);
 				value = enumToGtkD(enumName, value, convParms, wrapper);
 				debug(enums)writefln("\tprocessed %s", value);

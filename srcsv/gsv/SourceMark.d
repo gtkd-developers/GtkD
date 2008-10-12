@@ -139,7 +139,7 @@ public class SourceMark : TextMark
 	 */
 	public this (string name, string category)
 	{
-		// GtkSourceMark* gtk_source_mark_new (const gchar *name,  const gchar *category);
+		// GtkSourceMark** gtk_source_mark_new (const gchar *name,  const gchar *category);
 		auto p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
 		if(p is null)
 		{
@@ -155,7 +155,7 @@ public class SourceMark : TextMark
 	 */
 	public string getCategory()
 	{
-		// const gchar* gtk_source_mark_get_category (GtkSourceMark *mark);
+		// const gchar * gtk_source_mark_get_category (GtkSourceMark *mark);
 		return Str.toString(gtk_source_mark_get_category(gtkSourceMark));
 	}
 	
@@ -170,7 +170,7 @@ public class SourceMark : TextMark
 	 */
 	public SourceMark next(string category)
 	{
-		// GtkSourceMark* gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
+		// GtkSourceMark** gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
 		auto p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
 		if(p is null)
 		{
@@ -190,7 +190,7 @@ public class SourceMark : TextMark
 	 */
 	public SourceMark prev(string category)
 	{
-		// GtkSourceMark* gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
+		// GtkSourceMark** gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
 		auto p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
 		if(p is null)
 		{
