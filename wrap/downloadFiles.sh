@@ -2,15 +2,6 @@
 mkdir gtkdocs
 cd gtkdocs
 
-curl http://library.gnome.org/devel/gtksourceview-2.0/gtksourceview-2.0-html-2.4.0.tar.gz | tar xvfz -
-ln -s gtksourceview-2.0-html-2.4.0 sourceview
-exit
-
-#CAIRO
-curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
-ln -s cairo-html-1.8.0 cairo
-exit
-
 #GLIB
 curl http://library.gnome.org/devel/glib/glib-html-2.18.1.tar.gz | tar xvfz -
 ln -s glib-html-2.18.1 gthread
@@ -27,8 +18,8 @@ ln -s gobject-html-2.18.1 gobject
 curl http://library.gnome.org/devel/gio/gio-html-2.18.0.tar.gz | tar xvfz -
 ln -s gio-html-2.18.0 gio
 #ATK
-curl http://library.gnome.org/devel/atk/atk-html-1.22.0.tar.gz | tar xvfz -
-ln -s atk-html-1.22.0 atk
+curl http://library.gnome.org/devel/atk/atk-html-1.24.0.tar.gz | tar xvfz -
+ln -s atk-html-1.24.0 atk
 #PANGO
 curl http://library.gnome.org/devel/pango/pango-html-1.22.0.tar.gz | tar xvfz -
 ln -s pango-html-1.22.0 pango
