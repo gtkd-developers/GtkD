@@ -255,7 +255,11 @@ public template TreeModelT(TStruct)
 	{
 		// gboolean gtk_tree_model_get_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreePath *path);
 		iter.setModel(this);
-		return gtk_tree_model_get_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), (path is null) ? null : path.getTreePathStruct());
+		return gtk_tree_model_get_iter(
+					getTreeModelTStruct(), 
+					(iter is null) ? null : iter.getTreeIterStruct(), 
+					(path is null) ? null : path.getTreePathStruct()
+				);
 	}
 	
 	/**
