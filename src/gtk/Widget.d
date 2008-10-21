@@ -288,7 +288,15 @@ public class Widget : ObjectGtk, BuildableIF
 		GtkAllocation allo;
 		int* pt = cast(int*)getStruct();
 		
-		pt += 36/4;
+		version (X86_64)
+		{
+			pt += 64/4; 
+		}
+		else
+		{ 
+			pt += 36/4;
+		} 
+
 		allo.x = *pt;
 		
 		pt++;
