@@ -110,11 +110,8 @@ class CustomList : TreeModel
 			throw new Exception("record.pos != TreePath.getIndices()[0]");
 
 		/* We simply store a pointer to our custom record in the iter */
-		auto it = iter.getTreeIterStruct();
-		it.stamp     = stamp;
-		it.userData  = record;
-		it.userData2 = null;   /* unused */
-		it.userData3 = null;   /* unused */
+		iter.stamp     = stamp;
+		iter.userData  = record;
 
 		return true;
 	}
@@ -129,10 +126,10 @@ class CustomList : TreeModel
 		TreePath path;
 		CustomRecord* record;
 	  
-		if ( iter is null || iter.getTreeIterStruct().userData is null)
+		if ( iter is null || iter.userData is null)
 			return null;
 
-		record = cast(CustomRecord*) iter.getTreeIterStruct().userData;
+		record = cast(CustomRecord*) iter.userData;
 
 		path = new TreePath();
 		path.appendIndex(record.pos);
@@ -155,7 +152,7 @@ class CustomList : TreeModel
 
 		value.init(columnTypes[column]);
 
-		record = cast(CustomRecord*) iter.getTreeIterStruct().userData;
+		record = cast(CustomRecord*) iter.userData;
 
 		if ( record is null || record.pos >= numRows )
 			return;
@@ -185,10 +182,10 @@ class CustomList : TreeModel
 	{
 		CustomRecord* record, nextrecord;
 	  
-		if ( iter is null || iter.getTreeIterStruct().userData is null )
+		if ( iter is null || iter.userData is null )
 			return false;
 
-		record = cast(CustomRecord*) iter.getTreeIterStruct().userData;
+		record = cast(CustomRecord*) iter.userData;
 
 		/* Is this the last record in the list? */
 		if ( (record.pos + 1) >= numRows)
@@ -199,9 +196,8 @@ class CustomList : TreeModel
 		if ( nextrecord is null || nextrecord.pos != record.pos + 1 )
 			throw new Exception("Invalid next record");
 
-		auto it = iter.getTreeIterStruct();
-		it.stamp     = stamp;
-		it.userData  = nextrecord;
+		iter.stamp     = stamp;
+		iter.userData  = nextrecord;
 
 		return true;
 	}
@@ -227,9 +223,8 @@ class CustomList : TreeModel
 			return false;
 
 		/* Set iter to first item in list */
-		auto it = iter.getTreeIterStruct();
-		it.stamp     = stamp;
-		it.userData  = rows[0];
+		iter.stamp     = stamp;
+		iter.userData  = rows[0];
 
 		return true;
 	}
@@ -289,9 +284,8 @@ class CustomList : TreeModel
 		if ( record == null || record.pos != n )
 			throw new Exception("Invalid record");
 
-		auto it = iter.getTreeIterStruct();
-		it.stamp     = stamp;
-		it.userData  = record;
+		iter.stamp     = stamp;
+		iter.userData  = record;
 
 		return true;
 	}

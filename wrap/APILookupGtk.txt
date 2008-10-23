@@ -3046,7 +3046,6 @@ code: start
 		this(new GtkTreeIter);
 	}
 
-	
 	/**
 	 * Get Value
 	 * Params:
@@ -3168,6 +3167,26 @@ code: start
 		}
 		
 		return grandParent;
+	}
+
+	public int stamp()
+	{
+		return gtkTreeIter.stamp;
+	}
+
+	public void stamp(int stamp)
+	{
+		gtkTreeIter.stamp = stamp;
+	}
+
+	public void* userData()
+	{
+		return gtkTreeIter.userData;
+	}
+
+	public void userData(void* data)
+	{
+		gtkTreeIter.userData = data;
 	}
 code: end
 outFile: TreeIter

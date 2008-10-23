@@ -282,7 +282,6 @@ public class TreeIter
 		this(new GtkTreeIter);
 	}
 	
-	
 	/**
 	 * Get Value
 	 * Params:
@@ -404,6 +403,26 @@ public class TreeIter
 		}
 		
 		return grandParent;
+	}
+	
+	public int stamp()
+	{
+		return gtkTreeIter.stamp;
+	}
+	
+	public void stamp(int stamp)
+	{
+		gtkTreeIter.stamp = stamp;
+	}
+	
+	public void* userData()
+	{
+		return gtkTreeIter.userData;
+	}
+	
+	public void userData(void* data)
+	{
+		gtkTreeIter.userData = data;
 	}
 	
 	/**
