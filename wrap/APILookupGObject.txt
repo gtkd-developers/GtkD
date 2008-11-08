@@ -100,21 +100,40 @@ public struct GObjectClass
 
 struct GValue
 {
-	align(4)
+	version(Windows)
 	{
 		GType		g_type;
 		union Data
 		{
-			gint	v_int;
-			guint	v_uint;
-			glong	v_long;
-			gulong	v_ulong;
-			gint64      v_int64;
-			guint64     v_uint64;
-			gfloat	v_float;
-			gdouble	v_double;
-			gpointer	v_pointer;
+			gint     v_int;
+			guint    v_uint;
+			glong    v_long;
+			gulong   v_ulong;
+			gint64   v_int64;
+			guint64  v_uint64;
+			gfloat   v_float;
+			gdouble  v_double;
+			gpointer v_pointer;
 		};
+	}
+	else
+	{
+		align(4)
+		{
+			GType		g_type;
+			union Data
+			{
+				gint     v_int;
+				guint    v_uint;
+				glong    v_long;
+				gulong   v_ulong;
+				gint64   v_int64;
+				guint64  v_uint64;
+				gfloat   v_float;
+				gdouble  v_double;
+				gpointer v_pointer;
+			};
+		}
 	}
 	Data data1;
 	Data data2;
