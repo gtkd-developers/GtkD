@@ -117,9 +117,9 @@ version(Windows)
 	}
 
 	//Based on tango.sys.Environment.Environment.get
-	static char[] GetEnvironmentVariable(char[] variable)
+	static string GetEnvironmentVariable(string variable)
 	{
-		char[] var = variable ~ "\0";
+		char[] var = variable ~ "\0".dup;
 		uint size = GetEnvironmentVariableA(var.ptr, cast(char*)null, 0);
 	
 		if (size == 0) return "";
