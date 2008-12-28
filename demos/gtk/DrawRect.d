@@ -13,14 +13,14 @@ void main (string[] args)
 	MainWindow window = new MainWindow("Gtkd draw rect example");
 	
 	window.addOnHide(
-		delegate void (in Widget whatever)
+		delegate void (Widget whatever)
 		{
 			Main.exit(0);
 		}
 	);
 
 	window.addOnExpose(
-		delegate bool (GdkEventExpose * whatever_II, in Widget widget)
+		delegate bool (GdkEventExpose * whatever_II, Widget widget)
 		{
 			Drawable da = widget.getWindow();
 			da.drawRectangle(	gcFgColor(da, 0, 255, 255), true,
@@ -34,7 +34,7 @@ void main (string[] args)
 	Main.run();
 }
 
-GC gcFgColor (in Drawable da, int r, int g, int b)
+GC gcFgColor (Drawable da, int r, int g, int b)
 {
 	if (r<0) r=0;	if (r>255) r=255;
 	if (g<0) r=0;	if (g>255) g=255;
