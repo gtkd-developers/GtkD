@@ -129,7 +129,7 @@ version(Windows)
 
 		if (size == 0) return "";
 
-		return buf[0 .. size];
+		return cast(string)buf[0 .. size];
 	}
 
 	string libPath()
