@@ -58,9 +58,18 @@ version (linux)
 	alias dlsym getSymbol;
 }
 
-version (Darwin)
+version (darwin)
 {
-	private void* getSymbol(void* handle,char* name) {}
+	extern(C)
+	{
+
+		void* dlopen(char*, int);
+		char* dlerror();
+		void* dlsym(void*,char*);
+		int   dlclose(void*);
+	}
+//	// getSymbol - cross-platform access point
+	alias dlsym getSymbol;
 }
 
 
@@ -213,8 +222,15 @@ public class Linker
 			// clear the error buffer
 			dlerror();
 		}
-		version(Darwin)
+		version(darwin)
 		{
+			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
+			if ( alternateLibraryName !is null )
+			{
+				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
+			}
+			// clear the error buffer
+			dlerror();
 		}
 		else
 		{}
@@ -242,7 +258,7 @@ public class Linker
 		{
 			// Linux version
 		}
-		version(Darwin)
+		version(darwin)
 		{
 		}
 		else
@@ -255,8 +271,8 @@ public class Linker
 	 */
 	static void defaultFail( string libraryName, string symbolName, string message=null )
 	{
-		//writefln("failed to load (%s): %s",libraryName , message );
-
+		//writefln("failed to load (%s): %s", libraryName, message );
+		
 		if ( !(libraryName in loadFailures) )
 		{
 			string[] cc;

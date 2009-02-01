@@ -102,6 +102,85 @@ const string[LIBRARY.max+1] importLibs =
 	];
 }
 
+version(darwin)
+{
+
+//This version is for the native quartz port of GTK+
+//which can be found from http://www.gtk-osx.org/
+//The libraries in the /opt/ directory are not part of
+//that package and need to be installed separately.
+
+const char[] FRAMEWORKS_DIR = "/Library/Frameworks/";
+const char[] INTERFACE = "quartz";
+const char[] DIRECTORY = "/opt/gtk/lib/";
+
+//On OS X we can just specify the framework. But we could also
+//specify the individual libraries like this:
+//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Libraries/libcairo.2.dylib",
+//but we'll do it like this instead:
+//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Cairo",
+
+const string[LIBRARY.max+1] importLibs =
+[
+	LIBRARY.ATK:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Cairo",
+	LIBRARY.GDK:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GDKPIXBUF:	FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GLIB:		FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GMODULE:		FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GOBJECT:		FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GIO:        FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GTHREAD:		FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GTK:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.PANGO:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.PANGOCAIRO: FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GLGDK:		DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GLGTK:		DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GL:			"/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLU:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLEXT:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GDA:		DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GLADE:		DIRECTORY~"libglade-2.0.dylib",
+	LIBRARY.GSV:		DIRECTORY~"libgtksourceview-1.0.dylib",
+	LIBRARY.GSTREAMER:	DIRECTORY~"libgstreamer-0.10.dylib",
+	LIBRARY.GSTINTERFACES:	DIRECTORY~"libgstinterfaces-0.10.dylib"
+ ];
+
+/*
+//This version is for the non-native OS X, X11 port
+//of GTK+.
+
+const char[] DIRECTORY = "/opt/gtk/lib/";
+const char[] INTERFACE = "quartz";
+
+const char[][LIBRARY.max+1] importLibs =
+	[
+	LIBRARY.ATK:		DIRECTORY~"libatk-1.0.dylib",
+	LIBRARY.CAIRO:  	DIRECTORY~"libcairo.dylib",
+	LIBRARY.GDK:		DIRECTORY~"libgdk-"~INTERFACE~"-2.0.dylib",
+	LIBRARY.GDKPIXBUF:	DIRECTORY~"libgdk_pixbuf-2.0.dylib",
+	LIBRARY.GLIB:		DIRECTORY~"libglib-2.0.dylib",
+	LIBRARY.GMODULE:		DIRECTORY~"libgmodule-2.0.dylib",
+	LIBRARY.GOBJECT:		DIRECTORY~"libgobject-2.0.dylib",
+	LIBRARY.GIO:        DIRECTORY~"libgio-2.0.dylib",
+	LIBRARY.GTHREAD:		DIRECTORY~"libgthread-2.0.dylib",
+	LIBRARY.GTK:		DIRECTORY~"libgtk-"~INTERFACE~"-2.0.dylib",
+	LIBRARY.PANGO:		DIRECTORY~"libpango-1.0.dylib",
+	LIBRARY.PANGOCAIRO:		DIRECTORY~"libpangocairo-1.0.dylib",
+	LIBRARY.GLGDK:		DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GLGTK:		DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GL:			"/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLU:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLEXT:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GDA:		DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GLADE:		DIRECTORY~"libglade-2.0.dylib",
+	LIBRARY.GSV:		DIRECTORY~"libgtksourceview-1.0.dylib",
+	LIBRARY.GSTREAMER:	DIRECTORY~"libgstreamer-0.10.dylib",
+	LIBRARY.GSTINTERFACES:	DIRECTORY~"libgstinterfaces-0.10.dylib"
+	];
+*/
+}
+
 version(Windows)
 {
 	//version(Phobos)
@@ -186,3 +265,15 @@ version(linux)
 		return "";
 	}
 }
+
+// empty for darwin because default lib path is included
+
+version(darwin)
+{
+	string libPath()
+	{
+		return "";
+	}
+}
+
+
