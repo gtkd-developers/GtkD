@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = FileUtils
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,6 +42,8 @@
  * 	- g_dir_
  * 	- g_mapped_file_
  * omit code:
+ * 	- g_fopen
+ * 	- g_freopen
  * omit signals:
  * imports:
  * 	- std.c.stdio
@@ -98,6 +100,48 @@ version(Tango) {
  */
 public class FileUtils
 {
+	
+	/**
+	 * A wrapper for the stdio fopen() function. The fopen() function
+	 * opens a file and associates a new stream with it.
+	 * Because file descriptors are specific to the C library on Windows,
+	 * and a file descriptor is partof the FILE struct, the
+	 * FILE pointer returned by this function makes sense
+	 * only to functions in the same C library. Thus if the GLib-using
+	 * code uses a different C library than GLib does, the
+	 * FILE pointer returned by this function cannot be
+	 * passed to C library functions like fprintf() or fread().
+	 * See your C library manual for more details about fopen().
+	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  a string describing the mode in which the file should be
+	 *  opened
+	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred
+	 */
+	public static FILE* fopen(string filename, string mode)
+	{
+		// FILE* g_fopen (const gchar *filename,  const gchar *mode);
+		return cast(FILE*)g_fopen(Str.toStringz(filename), Str.toStringz(mode));
+	}
+	
+	/**
+	 * A wrapper for the POSIX freopen() function. The freopen() function
+	 * opens a file and associates it with an existing stream.
+	 * See your C library manual for more details about freopen().
+	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  a string describing the mode in which the file should be
+	 *  opened
+	 * stream =  an existing stream which will be reused, or NULL
+	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred.
+	 */
+	public static FILE* freopen(string filename, string mode, FILE* stream)
+	{
+		// FILE* g_freopen (const gchar *filename,  const gchar *mode,  FILE *stream);
+		return cast(FILE*)g_freopen(Str.toStringz(filename), Str.toStringz(mode), stream);
+	}
 	
 	/**
 	 */
@@ -489,48 +533,6 @@ public class FileUtils
 	{
 		// int g_rmdir (const gchar *filename);
 		return g_rmdir(Str.toStringz(filename));
-	}
-	
-	/**
-	 * A wrapper for the stdio fopen() function. The fopen() function
-	 * opens a file and associates a new stream with it.
-	 * Because file descriptors are specific to the C library on Windows,
-	 * and a file descriptor is partof the FILE struct, the
-	 * FILE pointer returned by this function makes sense
-	 * only to functions in the same C library. Thus if the GLib-using
-	 * code uses a different C library than GLib does, the
-	 * FILE pointer returned by this function cannot be
-	 * passed to C library functions like fprintf() or fread().
-	 * See your C library manual for more details about fopen().
-	 * Since 2.6
-	 * Params:
-	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode =  a string describing the mode in which the file should be
-	 *  opened
-	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred
-	 */
-	public static FILE* fopen(string filename, string mode)
-	{
-		// FILE* g_fopen (const gchar *filename,  const gchar *mode);
-		return g_fopen(Str.toStringz(filename), Str.toStringz(mode));
-	}
-	
-	/**
-	 * A wrapper for the POSIX freopen() function. The freopen() function
-	 * opens a file and associates it with an existing stream.
-	 * See your C library manual for more details about freopen().
-	 * Since 2.6
-	 * Params:
-	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode =  a string describing the mode in which the file should be
-	 *  opened
-	 * stream =  an existing stream which will be reused, or NULL
-	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred.
-	 */
-	public static FILE* freopen(string filename, string mode, FILE* stream)
-	{
-		// FILE* g_freopen (const gchar *filename,  const gchar *mode,  FILE *stream);
-		return g_freopen(Str.toStringz(filename), Str.toStringz(mode), stream);
 	}
 	
 	/**

@@ -26,7 +26,7 @@ module gtkc.atktypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public alias void* AtkFocusHandler;
-public struct AtkStateSet;
+public alias void* AtkStateSet;
 public struct AtkRectangle;
 
 
@@ -49,6 +49,7 @@ public alias GSList AtkAttributeSet;
  */
 public enum AtkHyperlinkStateFlags
 {
+	GDC_BUG_WORKAROUND,
 	IS_INLINE = 1 << 0
 }
 /**
@@ -60,6 +61,7 @@ public enum AtkHyperlinkStateFlags
  */
 public enum AtkRole
 {
+	GDC_BUG_WORKAROUND,
 	INVALID = 0,
 	ACCEL_LABEL,
 	ALERT,
@@ -174,6 +176,7 @@ public enum AtkLayer
  */
 public enum AtkRelationType
 {
+	GDC_BUG_WORKAROUND,
 	NULL = 0,
 	CONTROLLED_BY,
 	CONTROLLER_FOR,
@@ -270,6 +273,7 @@ public enum AtkTextClipType
  */
 public enum AtkTextAttribute
 {
+	GDC_BUG_WORKAROUND,
 	INVALID = 0,
 	LEFT_MARGIN,
 	RIGHT_MARGIN,
@@ -422,7 +426,7 @@ public struct AtkImplementor{}
  * and the property change handler will be called for the object which
  * received the focus with the new_value containing the AtkState value
  * corresponding to focused.
- * const gchar *property_name;
+ * constgchar*property_name;
  */
 public struct AtkPropertyValues
 {
@@ -490,7 +494,7 @@ public struct AtkText{}
 
 /**
  * A structure used to describe a text range.
- * AtkTextRectangle bounds;
+ * AtkTextRectanglebounds;
  */
 public struct AtkTextRange
 {
@@ -503,7 +507,7 @@ public struct AtkTextRange
 
 /**
  * A structure used to store a rectangle used by AtkText.
- * gint x;
+ * gintx;
  */
 public struct AtkTextRectangle
 {
@@ -516,7 +520,7 @@ public struct AtkTextRectangle
 
 /**
  * A string name/value pair representing a text attribute.
- * gchar *name;
+ * gchar*name;
  */
 public struct AtkAttribute
 {
@@ -533,7 +537,7 @@ public struct AtkUtil{}
 
 /**
  * Encapsulates information about a key event.
- * gint type;
+ * ginttype;
  */
 public struct AtkKeyEventStruct
 {
@@ -557,9 +561,9 @@ public struct AtkValue{}
 /*
  * An AtkFunction is a function definition used for padding which has been added
  * to class and interface structures to allow for expansion in the future.
- * data :
+ * data:
  * a gpointer to parameter data.
- * Returns :
+ * Returns:
  * Nothing useful, this is only a dummy prototype.
  */
 // gboolean (*AtkFunction) (gpointer data);
@@ -568,9 +572,9 @@ public typedef extern(C) int  function (void*) AtkFunction;
 /*
  * An AtkPropertyChangeHandler is a function which is executed when an AtkObject's property changes value. It is specified in a call to
  * atk_object_connect_property_change_handler().
- * Param1 :
+ * Param1:
  *  an AtkObject
- * Param2 :
+ * Param2:
  *  an AtkPropertyValues
  */
 // void (*AtkPropertyChangeHandler) (AtkObject *,  AtkPropertyValues *);
@@ -583,7 +587,7 @@ public typedef extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkProp
  * supported are events of type "focus:". Most clients of ATK will prefer to
  * attach signal handlers for the various ATK signals instead.
  * see: atk_add_focus_tracker.
- * obj :
+ * obj:
  *  An AtkObject instance for whom the callback will be called when
  * the specified event (e.g. 'focus:') takes place.
  */
@@ -603,12 +607,12 @@ public typedef extern(C) void  function () AtkEventListenerInit;
  * An AtkKeySnoopFunc is a type of callback which is called whenever a key event occurs,
  * if registered via atk_add_key_event_listener. It allows for pre-emptive
  * interception of key events via the return code as described below.
- * event :
+ * event:
  *  an AtkKeyEventStruct containing information about the key event for which
  * notification is being given.
- * func_data :
+ * func_data:
  *  a block of data which will be passed to the event listener, on notification.
- * Returns :
+ * Returns:
  *  TRUE (nonzero) if the event emission should be stopped and the event
  * discarded without being passed to the normal GUI recipient; FALSE (zero) if the
  * event dispatch to the client application should proceed as normal.

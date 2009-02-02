@@ -1632,8 +1632,8 @@ public class GtkDClass
 		else
 		{
 			collectedEnums ~= "public enum "~enumName;
-
 			collectedEnums ~= "{";
+
 			foreach ( char[] value ; values )
 			{
 				debug(enums)writefln("\t\t%s", value);

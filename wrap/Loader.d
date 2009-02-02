@@ -1,137 +1,125 @@
 /*
- * MODULE: loader.d
- *
- * Dynamic Library Loader for DUI
- *
- * Added 2004-12-11 -- John Reimer
- * Updated 2005-02-21: class and symbol names change; versioning modification.
- * Updated 2005-05-04: repairs to support linux
- *
- * Design/implementation of loader module inspired by Kris Bell's ICU.d dynamic
- * loader -- mango.icu
- *
- * Thanks Kris! see www.dsource.org/projects/mango for more details.
- *
+ * This file is part of gtkD.
+ * 
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ * 
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 module gtkc.Loader;
 
-//debug = loadLib;
-//debug = loadSymbol;
-
-private import gtkc.paths;
 version(Tango)
 {
-    private import tango.stdc.stdio;
-    private import tango.io.Stdout;
-	private import gtkc.glibtypes; //For alias char[] string
+	import tango.io.Stdout;
+	import tango.stdc.stringz;
+
+	import gtkc.glibtypes;
+//	private alias char[] string;
 }
 else
 {
-    private import std.stdio;
+	import std.stdio;
+	import std.string;
 }
 
-alias void* HANDLE;
+import gtkc.paths;
 
-version (Windows)
+public struct Linker
 {
-	extern(Windows)
+	private static void*[LIBRARY]    loadedLibraries;
+	private static string[][LIBRARY] loadFailures;
+
+	/*
+	 * Links the provided symbol
+	 * Params:
+	 *     funct     = The function we are linking
+	 *     symbol    = The name of the symbol to link
+	 *     libraries = One or more libraries to search for the symbol
+	 */
+	public static void link(T)(inout T funct, string symbol, LIBRARY[] libraries ...)
 	{
-		HANDLE LoadLibraryA( char* );
-		void* GetProcAddress( void*, char* );
-	}
-	// getSymbol - cross-platform access point
-	alias GetProcAddress getSymbol;
-}
-
-version (linux)
-{
-	extern(C)
-	{
-
-		void* dlopen(char*, int);
-		char* dlerror();
-		void* dlsym(void*,char*);
-		int   dlclose(void*);
-	}
-//	// getSymbol - cross-platform access point
-	alias dlsym getSymbol;
-}
-
-version (darwin)
-{
-	extern(C)
-	{
-
-		void* dlopen(char*, int);
-		char* dlerror();
-		void* dlsym(void*,char*);
-		int   dlclose(void*);
-	}
-//	// getSymbol - cross-platform access point
-	alias dlsym getSymbol;
-}
-
-
-/*
- *  ProcLink is used to record the library, function, and function name
- *  that will be loaded by dynamic loader.
- */
-
-public struct Symbol
-{
-	string  name;		// Name of the exported procedure in dynamic library
-	void**	pointer;	// Address of the procedure pointer variable
-}
-
-/*
- * Linker : simple class to handle the loading
- * of the library and exported functions
- */
-
-//alias void function( string ) failureFN;
-
-public class Linker
-{
-
-	enum
-	{
-		RTLD_LAZY = 0x00001,		// Lazy function call binding
-		RTLD_NOW  = 0x00002,		// Immediate function call binding
-		RTLD_NOLOAD = 0x00004,    // No object load
-		RTLD_DEEPBIND = 0x00008,  //
-		RTLD_GLOBAL = 0x00100    // Make object available to whole program
+		funct = cast(T)getSymbol(symbol, libraries);
 	}
 
-	static string[][string] loadFailures;
-	static string[]         loadedLibs;
+	/*
+	 * Gets a simbol from one of the provided libraries
+	 * Params:
+	 *     symbol    = The name of the symbol to link
+	 *     libraries = One or more libraries to search for the symbol
+	 */
+	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
+	{
+		void* handle;
+
+		foreach ( library; libraries )
+		{
+			if( !(library in loadedLibraries) )
+				loadLibrary(library);
+
+			handle = pGetSymbol(loadedLibraries[library], symbol);
+
+			if ( handle !is null )
+				break;
+		}
+
+		if ( handle is null )
+		{
+			foreach ( library; libraries )
+				loadFailures[library] ~= symbol;
+		}
+
+		return handle;
+	}
+
+	/*
+	 * Loads a library
+	 */
+	public static void loadLibrary(LIBRARY library)
+	{
+		void* handle = pLoadLibrary(libPath ~ importLibs[library]);
+
+		if ( handle is null )
+			throw new Exception("Library load failed: " ~ importLibs[library]);
+
+		loadedLibraries[library] = handle;
+	}
+
+	/*
+	 * Unload a library
+	 */
+	public static void unloadLibrary(LIBRARY library)
+	{
+		pUnloadLibrary(loadedLibraries[library]);
+
+		loadedLibraries.remove(library);
+	}
 
 	/**
-	 * Gets all the failed loads for a specific library.
-	 * This is filled in only if the default onFailure method is used durin load
-	 * returns: An array of the names hat failed to load for a specific library
-	 *          or null if none was found
+	 * Checks if any symbol failed to load
+	 * Returns: true if ALL symbols are loaded
 	 */
-	public static string[] getLoadFailures(string libName)
+	public static bool isPerfectLoad()
 	{
-		if ( libName in loadFailures )
-		{
-			return loadFailures[libName];
-		}
-		else
-		{
-			return null;
-		}
+		return loadFailures.keys.length == 0;
 	}
 
 	/**
 	 * Gets all libraries loaded.
-	 * This is filled in only if the default onFailure method is used durin load
-	 * returns: An array of the library names
+	 * returns: An array with the loaded libraries
 	 */
-	public static string[] getLoadLibraries()
+	public static LIBRARY[] getLoadLibraries()
 	{
-		return cast(string[])loadFailures.keys;
+		return loadedLibraries.keys;
 	}
 
 	/**
@@ -139,180 +127,134 @@ public class Linker
 	 */
 	public static void dumpLoadLibraries()
 	{
-		foreach(lib; loadedLibs)
+		foreach ( lib; getLoadLibraries() )
 		{
-			version(Tango) Stdout.formatln("Loaded lib = {}", lib);
-			else writefln("Loaded lib = %s", lib);
+			version(Tango)
+				Stdout.formatln("Loaded lib = {}", importLibs[lib]);
+			else
+				writefln("Loaded lib = %s", importLibs[lib]);
 		}
 	}
 
 	/**
-	 * Checks if any symbol failed to load
-	 * Returns: true is ALL symbols loaded
+	 * Gets all the failed loads for a specific library.
+	 * returns: An array of the names hat failed to load for a specific library
+	 *          or null if none was found
 	 */
-	public static bool isPerfectLoad()
+	public static string[] getLoadFailures(LIBRARY library)
 	{
-		return loadFailures.keys.length == 0;
+		if ( library in loadFailures )
+			return loadFailures[library];
+		else
+			return null;
 	}
 
+	/**
+	 * Print all symbols that failed to load
+	 */
 	public static void dumpFailedLoads()
 	{
-		foreach ( string lib ; loadedLibs )
+		foreach ( library; loadedLibraries.keys )
 		{
-			foreach ( string symbol ; Linker.getLoadFailures(lib) )
+			foreach ( symbol; getLoadFailures(library) )
 			{
-				version(Tango) Stdout.formatln("failed ({}) {}", lib, symbol);
-				else writefln("failed (%s) %s", lib, symbol);
+				version(Tango)
+					Stdout.formatln("failed ({}) {}", importLibs[library], symbol);
+				else
+					writefln("failed (%s) %s", importLibs[library], symbol);
 			}
 		}
 	}
 
-	private HANDLE  handle;
-	private HANDLE alternateHandle;
-
-	private string  libraryName;
-	private string  alternateLibraryName;
-
-	// private bool continueOnFail = false;
-
-	alias void function( string libraryName, string symbolName, string message=null) failureFN;
-
-	private failureFN onLoadFailure;
-
-	// -----------------------------------------------------
-
-	this( string libraryName, string alternateLibraryName=null )
+	static ~this()
 	{
-		this(libraryName, alternateLibraryName, &(Linker.defaultFail));
+		foreach ( library; loadedLibraries.keys )
+			unloadLibrary(library);
 	}
+}
 
-	// ---------------------------------------
+// Platform specific implementation below.
 
-	this (string libraryName, string alternateLibraryName, failureFN fn )
+version(linux)
+{
+    version = Unix;
+}
+version(darwin)
+{
+    version = Unix;
+}
+
+version(Unix)
+{
+	extern(C)
 	{
-		this.libraryName = libraryName;
-		this.alternateLibraryName = alternateLibraryName;
-		onLoadFailure = fn;
-
-		version(Windows)
-		{
-			handle = LoadLibraryA( (this.libraryName ~ "\0").dup.ptr );
-			if ( alternateLibraryName !is null )
-			{
-				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").dup.ptr );
-			}
-		}
-		version(linux)
-		{
-			handle = dlopen( (this.libraryName ~ "\0").dup.ptr, RTLD_NOW);
-			if (handle is null)
-			{
-				// non-dev libraries tend to be called xxxx.so.0
-				handle = dlopen( (this.libraryName ~ ".0\0").dup.ptr, RTLD_NOW);
-			}
-			if ( alternateLibraryName !is null )
-			{
-				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").dup.ptr, RTLD_NOW);
-				if (alternateHandle is null)
-				{
-					// non-dev libraries tend to be called xxxx.so.0
-					alternateHandle = dlopen( (this.alternateLibraryName ~ ".0\0").dup.ptr, RTLD_NOW);
-				}
-			}
-			// clear the error buffer
-			dlerror();
-		}
-		version(darwin)
-		{
-			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
-			if ( alternateLibraryName !is null )
-			{
-				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
-			}
-			// clear the error buffer
-			dlerror();
-		}
-		else
-		{}
-
-		if (handle is null)
-		{
-			throw new Exception("Library load failed: " ~ libraryName);
-		}
-		else
-		{
-			loadedLibs ~= libraryName;
-		}
-
+		void* dlopen(char*, int);
+		char* dlerror();
+		void* dlsym(void*,char*);
+		int   dlclose(void*);
 	}
 
-	// ----------------------------------------
-
-	~this()
+	enum RTLD
 	{
-		version(Windows)
-		{
-			// FreeLibrary(handle);
-		}
-		version(linux)
-		{
-			// Linux version
-		}
-		version(darwin)
-		{
-		}
-		else
-		{}
+		LAZY     = 0x00001,  // Lazy function call binding
+		NOW      = 0x00002,  // Immediate function call binding
+		NOLOAD   = 0x00004,  // No object load
+		DEEPBIND = 0x00008,  //
+		GLOBAL   = 0x00100   // Make object available to whole program
 	}
 
-	/**
-	 * Default on load fail.
-	 * Logs the symbols that failed to load
-	 */
-	static void defaultFail( string libraryName, string symbolName, string message=null )
+	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
-		//writefln("failed to load (%s): %s", libraryName, message );
-		
-		if ( !(libraryName in loadFailures) )
+		void* handle = dlopen(cast(char*)toStringz(libraryName), flag);
+
+		if ( handle is null )
 		{
-			string[] cc;
-			loadFailures[libraryName] = cc;
+			// non-dev libraries tend to be called xxxx.so.0
+			handle = dlopen(cast(char*)toStringz(libraryName ~".0"), flag);
 		}
 
-		loadFailures[libraryName] ~= symbolName;
+		// clear the error buffer
+		dlerror();
 
-		//throw new Exception("Function failed to load from library: " ~ libraryName);
+		return handle;
 	}
 
-	/**
-	 * Loads all the symbols for this library
-	 * symbols: All the symbol names to be loaded
-	 */
-	void link( inout Symbol[] symbols )
+	private void* pGetSymbol(void* libraryHandle, string symbol)
 	{
-		foreach( Symbol link; symbols )
-		{
-			*link.pointer = getSymbol(handle, (link.name~"\0").dup.ptr);
-			version(Tango)debug(loadSymbol) Stdout.formatln("Loaded... {} {}", libraryName, link.name);
-			else debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
-			if (*link.pointer is null)
-			{
-				// if gthread try on glib
-				if ( alternateHandle !is null )
-				{
-					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").dup.ptr);
-					debug
-					{
-						version(Tango) Stdout.formatln("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name);
-						else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
-					}
-				}
-				if (*link.pointer is null)
-				{
-					onLoadFailure( libraryName, link.name );
-				}
-			}
-		}
+		void* symbolHandle = dlsym(libraryHandle, cast(char*)toStringz(symbol));
+
+		// clear the error buffer
+		dlerror();
+
+		return symbolHandle;
 	}
 
+	private alias dlclose pUnloadLibrary;
+
+    version(build) 
+    {
+        pragma(link, "dl"); // tell dsss to link libdl
+    }
+}
+
+version(Windows)
+{
+	extern(Windows)
+	{
+		void* LoadLibraryA(char*);
+		void* GetProcAddress(void*, char*);
+		void FreeLibrary(void*);
+	}
+
+	private void* pLoadLibrary(string libraryName)
+	{
+		return LoadLibraryA(cast(char*)toStringz(libraryName));
+	}
+
+	private void* pGetSymbol(void* handle, string symbol)
+	{
+		return GetProcAddress(handle, cast(char*)toStringz(symbol));
+	}
+
+	private alias FreeLibrary pUnloadLibrary;
 }

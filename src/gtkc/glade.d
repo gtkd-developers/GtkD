@@ -20,16 +20,11 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-// Adapted from John Reimer's DUI loader modules
-
 
 module gtkc.glade;
 
 version(Tango)
-{
 	private import tango.stdc.stdio;
-	debug private import tango.io.Stdout;
-}
 else
 	private import std.stdio;
 
@@ -37,73 +32,66 @@ private import gtkc.gladetypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-private Linker glade_Linker;
-
 static this()
 {
- glade_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLADE] );
- glade_Linker.link(gladeLinks);
+	// glade.Glade
 
- debug
- {
- 	version(Tango) Stdout("* Finished static this(): glade").newline;
- 	else writefln("* Finished static this(): glade");
- }
+	Linker.link(glade_xml_new, "glade_xml_new", LIBRARY.GLADE);
+	Linker.link(glade_xml_new_from_buffer, "glade_xml_new_from_buffer", LIBRARY.GLADE);
+	Linker.link(glade_xml_construct, "glade_xml_construct", LIBRARY.GLADE);
+	Linker.link(glade_xml_signal_connect, "glade_xml_signal_connect", LIBRARY.GLADE);
+	Linker.link(glade_xml_signal_connect_data, "glade_xml_signal_connect_data", LIBRARY.GLADE);
+	Linker.link(glade_xml_signal_autoconnect, "glade_xml_signal_autoconnect", LIBRARY.GLADE);
+	Linker.link(glade_xml_get_widget, "glade_xml_get_widget", LIBRARY.GLADE);
+	Linker.link(glade_xml_get_widget_prefix, "glade_xml_get_widget_prefix", LIBRARY.GLADE);
+	Linker.link(glade_get_widget_name, "glade_get_widget_name", LIBRARY.GLADE);
+	Linker.link(glade_get_widget_tree, "glade_get_widget_tree", LIBRARY.GLADE);
+	Linker.link(glade_xml_signal_connect_full, "glade_xml_signal_connect_full", LIBRARY.GLADE);
+	Linker.link(glade_xml_signal_autoconnect_full, "glade_xml_signal_autoconnect_full", LIBRARY.GLADE);
+	Linker.link(glade_set_custom_handler, "glade_set_custom_handler", LIBRARY.GLADE);
+	Linker.link(glade_init, "glade_init", LIBRARY.GLADE);
+	Linker.link(glade_require, "glade_require", LIBRARY.GLADE);
+	Linker.link(glade_provide, "glade_provide", LIBRARY.GLADE);
 }
 
-static ~this()
+extern(C)
 {
- delete glade_Linker;
-
- debug
- {
- 	version(Tango) Stdout("* Finished static ~this(): glade").newline;
- 	else writefln("* Finished static ~this(): glade");
- }
-}
-
-extern(C) 
-{	
+	
 	// glade.Glade
 	
-	GladeXML* function(char* fname, char* root, char* domain)glade_xml_new;
-	GladeXML* function(char* buffer, int size, char* root, char* domain)glade_xml_new_from_buffer;
-	gboolean function(GladeXML* self, char* fname, char* root, char* domain)glade_xml_construct;
-	void function(GladeXML* self, char* handlername, GCallback func)glade_xml_signal_connect;
-	void function(GladeXML* self, char* handlername, GCallback func, gpointer userData)glade_xml_signal_connect_data;
-	void function(GladeXML* self)glade_xml_signal_autoconnect;
-	GtkWidget* function(GladeXML* self, char* name)glade_xml_get_widget;
-	GList* function(GladeXML* self, char* name)glade_xml_get_widget_prefix;
-	char* function(GtkWidget* widget)glade_get_widget_name;
-	GladeXML* function(GtkWidget* widget)glade_get_widget_tree;
-	void function(GladeXML* self, gchar* handlerName, GladeXMLConnectFunc func, gpointer userData)glade_xml_signal_connect_full;
-	void function(GladeXML* self, GladeXMLConnectFunc func, gpointer userData)glade_xml_signal_autoconnect_full;
-	void function(GladeXMLCustomWidgetHandler handler, gpointer userData)glade_set_custom_handler;
-	void function()glade_init;
-	void function(gchar* library)glade_require;
-	void function(gchar* library)glade_provide;
-
-
+	typedef GladeXML* function(char* fname, char* root, char* domain) c_glade_xml_new;
+	typedef GladeXML* function(char* buffer, int size, char* root, char* domain) c_glade_xml_new_from_buffer;
+	typedef gboolean function(GladeXML* self, char* fname, char* root, char* domain) c_glade_xml_construct;
+	typedef void function(GladeXML* self, char* handlername, GCallback func) c_glade_xml_signal_connect;
+	typedef void function(GladeXML* self, char* handlername, GCallback func, gpointer userData) c_glade_xml_signal_connect_data;
+	typedef void function(GladeXML* self) c_glade_xml_signal_autoconnect;
+	typedef GtkWidget* function(GladeXML* self, char* name) c_glade_xml_get_widget;
+	typedef GList* function(GladeXML* self, char* name) c_glade_xml_get_widget_prefix;
+	typedef char* function(GtkWidget* widget) c_glade_get_widget_name;
+	typedef GladeXML* function(GtkWidget* widget) c_glade_get_widget_tree;
+	typedef void function(GladeXML* self, gchar* handlerName, GladeXMLConnectFunc func, gpointer userData) c_glade_xml_signal_connect_full;
+	typedef void function(GladeXML* self, GladeXMLConnectFunc func, gpointer userData) c_glade_xml_signal_autoconnect_full;
+	typedef void function(GladeXMLCustomWidgetHandler handler, gpointer userData) c_glade_set_custom_handler;
+	typedef void function() c_glade_init;
+	typedef void function(gchar* library) c_glade_require;
+	typedef void function(gchar* library) c_glade_provide;
 }
 
-Symbol[] gladeLinks = 
-[
+// glade.Glade
 
-	{ "glade_xml_new",  cast(void**)& glade_xml_new},
-	{ "glade_xml_new_from_buffer",  cast(void**)& glade_xml_new_from_buffer},
-	{ "glade_xml_construct",  cast(void**)& glade_xml_construct},
-	{ "glade_xml_signal_connect",  cast(void**)& glade_xml_signal_connect},
-	{ "glade_xml_signal_connect_data",  cast(void**)& glade_xml_signal_connect_data},
-	{ "glade_xml_signal_autoconnect",  cast(void**)& glade_xml_signal_autoconnect},
-	{ "glade_xml_get_widget",  cast(void**)& glade_xml_get_widget},
-	{ "glade_xml_get_widget_prefix",  cast(void**)& glade_xml_get_widget_prefix},
-	{ "glade_get_widget_name",  cast(void**)& glade_get_widget_name},
-	{ "glade_get_widget_tree",  cast(void**)& glade_get_widget_tree},
-	{ "glade_xml_signal_connect_full",  cast(void**)& glade_xml_signal_connect_full},
-	{ "glade_xml_signal_autoconnect_full",  cast(void**)& glade_xml_signal_autoconnect_full},
-	{ "glade_set_custom_handler",  cast(void**)& glade_set_custom_handler},
-	{ "glade_init",  cast(void**)& glade_init},
-	{ "glade_require",  cast(void**)& glade_require},
-	{ "glade_provide",  cast(void**)& glade_provide},
-
-];
+c_glade_xml_new  glade_xml_new;
+c_glade_xml_new_from_buffer  glade_xml_new_from_buffer;
+c_glade_xml_construct  glade_xml_construct;
+c_glade_xml_signal_connect  glade_xml_signal_connect;
+c_glade_xml_signal_connect_data  glade_xml_signal_connect_data;
+c_glade_xml_signal_autoconnect  glade_xml_signal_autoconnect;
+c_glade_xml_get_widget  glade_xml_get_widget;
+c_glade_xml_get_widget_prefix  glade_xml_get_widget_prefix;
+c_glade_get_widget_name  glade_get_widget_name;
+c_glade_get_widget_tree  glade_get_widget_tree;
+c_glade_xml_signal_connect_full  glade_xml_signal_connect_full;
+c_glade_xml_signal_autoconnect_full  glade_xml_signal_autoconnect_full;
+c_glade_set_custom_handler  glade_set_custom_handler;
+c_glade_init  glade_init;
+c_glade_require  glade_require;
+c_glade_provide  glade_provide;

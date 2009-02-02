@@ -31,7 +31,7 @@ addTypedefs: start
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public alias void* AtkFocusHandler;
-public struct AtkStateSet;
+public alias void* AtkStateSet;
 public struct AtkRectangle;
 
 addTypedefs: end

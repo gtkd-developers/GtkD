@@ -20,16 +20,11 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-// Adapted from John Reimer's DUI loader modules
-
 
 module gtkglc.glgtk;
 
 version(Tango)
-{
 	private import tango.stdc.stdio;
-	debug private import tango.io.Stdout;
-}
 else
 	private import std.stdio;
 
@@ -37,68 +32,72 @@ private import gtkglc.glgtktypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-private Linker glgtk_Linker;
-
 static this()
 {
- glgtk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLGTK] );
- glgtk_Linker.link(glgtkLinks);
+	// glgtk.GLtInit
 
- debug
- {
- 	version(Tango) Stdout("* Finished static this(): glgtk").newline;
- 	else writefln("* Finished static this(): glgtk");
- }
+	Linker.link(gtk_gl_init, "gtk_gl_init", LIBRARY.GLGTK);
+	Linker.link(gtk_gl_init_check, "gtk_gl_init_check", LIBRARY.GLGTK);
+	Linker.link(gtk_gl_parse_args, "gtk_gl_parse_args", LIBRARY.GLGTK);
+
+	// glgtk.GLWidget
+
+	Linker.link(gtk_widget_set_gl_capability, "gtk_widget_set_gl_capability", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_is_gl_capable, "gtk_widget_is_gl_capable", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_get_gl_config, "gtk_widget_get_gl_config", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_create_gl_context, "gtk_widget_create_gl_context", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_get_gl_context, "gtk_widget_get_gl_context", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_get_gl_window, "gtk_widget_get_gl_window", LIBRARY.GLGTK);
+
+	// glgtk.GLtVersion
+
+
+	// glgtk.
+
 }
 
-static ~this()
+extern(C)
 {
- delete glgtk_Linker;
-
- debug
- {
- 	version(Tango) Stdout("* Finished static ~this(): glgtk").newline;
- 	else writefln("* Finished static ~this(): glgtk");
- }
-}
-
-extern(C) 
-{	
+	
 	// glgtk.GLtInit
 	
-	void function(int* argc, char*** argv)gtk_gl_init;
-	gboolean function(int* argc, char*** argv)gtk_gl_init_check;
-	gboolean function(int* argc, char*** argv)gtk_gl_parse_args;
+	typedef void function(int* argc, char*** argv) c_gtk_gl_init;
+	typedef gboolean function(int* argc, char*** argv) c_gtk_gl_init_check;
+	typedef gboolean function(int* argc, char*** argv) c_gtk_gl_parse_args;
 	
 	// glgtk.GLWidget
 	
-	gboolean function(GtkWidget* widget, GdkGLConfig* glconfig, GdkGLContext* shareList, gboolean direct, int renderType)gtk_widget_set_gl_capability;
-	gboolean function(GtkWidget* widget)gtk_widget_is_gl_capable;
-	GdkGLConfig* function(GtkWidget* widget)gtk_widget_get_gl_config;
-	GdkGLContext* function(GtkWidget* widget, GdkGLContext* shareList, gboolean direct, int renderType)gtk_widget_create_gl_context;
-	GdkGLContext* function(GtkWidget* widget)gtk_widget_get_gl_context;
-	GdkGLWindow* function(GtkWidget* widget)gtk_widget_get_gl_window;
+	typedef gboolean function(GtkWidget* widget, GdkGLConfig* glconfig, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_set_gl_capability;
+	typedef gboolean function(GtkWidget* widget) c_gtk_widget_is_gl_capable;
+	typedef GdkGLConfig* function(GtkWidget* widget) c_gtk_widget_get_gl_config;
+	typedef GdkGLContext* function(GtkWidget* widget, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_create_gl_context;
+	typedef GdkGLContext* function(GtkWidget* widget) c_gtk_widget_get_gl_context;
+	typedef GdkGLWindow* function(GtkWidget* widget) c_gtk_widget_get_gl_window;
 	
 	// glgtk.GLtVersion
 	
 	
 	// glgtk.
 	
-
-
 }
 
-Symbol[] glgtkLinks = 
-[
+// glgtk.GLtInit
 
-	{ "gtk_gl_init",  cast(void**)& gtk_gl_init},
-	{ "gtk_gl_init_check",  cast(void**)& gtk_gl_init_check},
-	{ "gtk_gl_parse_args",  cast(void**)& gtk_gl_parse_args},
-	{ "gtk_widget_set_gl_capability",  cast(void**)& gtk_widget_set_gl_capability},
-	{ "gtk_widget_is_gl_capable",  cast(void**)& gtk_widget_is_gl_capable},
-	{ "gtk_widget_get_gl_config",  cast(void**)& gtk_widget_get_gl_config},
-	{ "gtk_widget_create_gl_context",  cast(void**)& gtk_widget_create_gl_context},
-	{ "gtk_widget_get_gl_context",  cast(void**)& gtk_widget_get_gl_context},
-	{ "gtk_widget_get_gl_window",  cast(void**)& gtk_widget_get_gl_window},
+c_gtk_gl_init  gtk_gl_init;
+c_gtk_gl_init_check  gtk_gl_init_check;
+c_gtk_gl_parse_args  gtk_gl_parse_args;
 
-];
+// glgtk.GLWidget
+
+c_gtk_widget_set_gl_capability  gtk_widget_set_gl_capability;
+c_gtk_widget_is_gl_capable  gtk_widget_is_gl_capable;
+c_gtk_widget_get_gl_config  gtk_widget_get_gl_config;
+c_gtk_widget_create_gl_context  gtk_widget_create_gl_context;
+c_gtk_widget_get_gl_context  gtk_widget_get_gl_context;
+c_gtk_widget_get_gl_window  gtk_widget_get_gl_window;
+
+// glgtk.GLtVersion
+
+
+// glgtk.
+

@@ -122,8 +122,7 @@ class TestImage : VBox
 			string fileName = imageFiles[i];
 			if ( fileName[0] != '/' )
 			{
-				version(linux) fileName = fileName;
-				version(Windows) fileName = fileName;
+				fileName = fileName;
 			}
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);

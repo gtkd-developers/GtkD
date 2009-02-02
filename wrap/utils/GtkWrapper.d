@@ -83,15 +83,10 @@ private import utils.convparms;
  */
 public class GtkWrapper : WrapperIF
 {
-
-	//Moved up... for dsss:
-    //private import utils.DefReader;
-    //private import utils.GtkDClass;
-    //private import utils.convparms;
-
     private import std.file;
     private import std.path;
     private import std.stdio;
+	private import std.string;
 
     private char[] buildText;   /// to build the build.d
     private char[] buildTextLibs;   /// to build the build.d libs
@@ -868,139 +863,139 @@ public class GtkWrapper : WrapperIF
         return currIncludeComments;
     }
 
-    void buildLoaderTable(char[] loaderTableName, char[][] declarations)
-    {
-        char[] externalText = license;
+	void buildLoaderTable(char[] loaderTableName, char[][] declarations)
+	{
+		char[] externalText = license;
 
-        externalText ~= "// Adapted from John Reimer's DUI loader modules\n\n";
-        externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";"
-                        "\n"
-                        "\nversion(Tango)"
-                        "\n{"
-                        "\n	private import tango.stdc.stdio;"
-                        "\n	debug private import tango.io.Stdout;"
-                        "\n}"
-                        "\nelse"
-                        "\n	private import std.stdio;"
-                        "\n"
-                        "\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
-        if ( loaderTableName == "glib" )
-        {
-            externalText ~= "\nprivate import "~bindingsDir~".gthreadtypes;";
-        }
-        if ( loaderTableName == "gdk" || loaderTableName == "pango" )
-        {
-            externalText ~= "\nprivate import "~bindingsDir~".cairotypes;";
-        }
+		externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";\n"
+		                "\nversion(Tango)"
+		                "\n	private import tango.stdc.stdio;"
+		                "\nelse"
+		                "\n	private import std.stdio;\n"
+		                "\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
 
-        if ( loaderTableName != "gl"
-             && loaderTableName != "glu"
-             && loaderTableName != "glx"
-            )
-        {
-            externalText ~=
-                           "\nprivate import gtkc.Loader;"
-                           "\nprivate import gtkc.paths;"
-                           "\n"
-                           "\nprivate Linker "~loaderTableName~"_Linker;"
-                           "\n"
-                           "\nstatic this()"
-                           "\n{";
-            if ( loaderTableName == "gdk" )
-            {
-                externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
-                         ~std.string.toupper(loaderTableName.dup)~"], libPath ~ importLibs[LIBRARY.GDKPIXBUF] );";
-            }
-            else if ( loaderTableName == "pango" )
-            {
-                externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
-                         ~std.string.toupper(loaderTableName.dup)~"], libPath ~ importLibs[LIBRARY.PANGOCAIRO] );";
-            }
-			else
-            {
-                externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
-                         ~std.string.toupper(loaderTableName.dup)~"] );";
-            }
+		if ( loaderTableName == "glib" )
+		{
+			externalText ~= "\nprivate import "~bindingsDir~".gthreadtypes;";
+		}
+		if ( loaderTableName == "gdk" || loaderTableName == "pango" )
+		{
+			externalText ~= "\nprivate import "~bindingsDir~".cairotypes;";
+		}
 
-            externalText ~= "\n "~loaderTableName~"_Linker.link("~loaderTableName~"Links);"
-                        "\n"
-                        "\n debug"
-                        "\n {"
-                        "\n \tversion(Tango) Stdout(\"* Finished static this(): "~loaderTableName~"\").newline;"
-                        "\n \telse writefln(\"* Finished static this(): "~loaderTableName~"\");"
-                        "\n }"
-                        "\n}"
-                        "\n"
-                        "\nstatic ~this()"
-                        "\n{"
-                        "\n delete "~loaderTableName~"_Linker;"
-                        "\n"
-                        "\n debug"
-                        "\n {"
-                        "\n \tversion(Tango) Stdout(\"* Finished static ~this(): "~loaderTableName~"\").newline;"
-                        "\n \telse writefln(\"* Finished static ~this(): "~loaderTableName~"\");"
-                        "\n }"
-                        "\n}"
-                        "\n";
-            }
-        externalText ~= "\nextern(C) "
-                        "\n{";
+		if ( loaderTableName != "gl" &&
+		     loaderTableName != "glu" &&
+		     loaderTableName != "glx"
+		    )
+		{
+			externalText ~= "\nprivate import gtkc.Loader;"
+			                "\nprivate import gtkc.paths;\n"
+			                "\nstatic this()"
+			                "\n{";
 
-        foreach(char[] declaration ; declarations)
-        {
-            char[] dec = std.string.strip(declaration);
-            externalText ~= '\t';
-            if ( dec.length > 0 && dec[0]=='#' )
-            {
-                externalText ~= "// ";
-            }
-            externalText ~= dec;
-            if ( dec.length > 0
-                && !GtkDClass.startsWith(dec, "//")
-                && dec[0]!='#'
-                )
-            {
-                externalText ~= ';';
-            }
-            externalText ~= '\n';
-        }
-        externalText ~= "\n\n}";
+			char[] library = "LIBRARY."~ loaderTableName.toupper();
 
-        externalText ~= "\n\nSymbol[] "~loaderTableName~"Links = \n[\n\n";
+			//Returns an array of libraries to try and link with.
+			char[] getLibrary(char[] funct)
+			{
+				if ( GtkDClass.startsWith(funct, "gdk") )
+					return library ~ ", LIBRARY.GDKPIXBUF";
+				else if	( GtkDClass.startsWith(funct, "pango_cairo") )
+					return library ~ ", LIBRARY.PANGOCAIRO";
+				else if	( GtkDClass.startsWith(funct, "g_module") )
+					return library ~ ", LIBRARY.GMODULE";
+				else
+					return library;
+			}
 
-        int pos;
-        foreach(char[] declaration ; declarations)
-        {
-            char[] dec = std.string.strip(declaration);
-            pos = std.string.rfind(dec,')');
-            if ( pos > 0 )
-            {
-                externalText ~= '\t';
-                if ( dec[0]=='#' )
-                {
-                    externalText ~= "// ";
-                }
-                else
-                {
-                    char[] functName = std.string.strip(dec[pos+1..dec.length]);
-                    if ( functName.length > 0 )
-                    {
-                        externalText ~= "{ \"" ~ functName ~ "\",  cast(void**)& "~functName ~  "},";
-                    }
-                }
-                externalText ~= '\n';
-            }
+			//Generate the static this, where the linking takes place
+			foreach ( char[] declaration; declarations )
+			{
+				char[] dec = std.string.strip(declaration);
+				int pos = std.string.rfind(dec,')');
 
-        }
+				if ( GtkDClass.startsWith(dec, "//") )
+					externalText ~= "\n\t"~ dec ~"\n\n";
 
-        externalText ~= "\n];";
+				if ( pos > 0 )
+				{
+					externalText ~= '\t';
 
-        char[] pathname
-		=joinRootDirFile(std.path.join(outputRoot,srcDir),bindingsDir,loaderTableName~".d");
+					if ( dec[0]=='#' )
+					{
+						externalText ~= "// ";
+					}
+					else
+					{
+						char[] functName = std.string.strip(dec[pos+1..$]);
+						if ( functName.length > 0 )
+						{
+							externalText ~= "Linker.link("~ functName ~", \""~ functName ~"\", "~ getLibrary(functName) ~");";
+						}
+					}
+					externalText ~= '\n';
+				}
+			}
 
-        std.file.write(pathname,externalText);
-    }
+			externalText ~= "}\n\n"
+			                "extern(C)\n"
+			                "{\n";
 
+			//Generate the typedefs for the functions.
+			foreach(char[] declaration ; declarations)
+			{
+				char[] dec = std.string.strip(declaration);
+
+				if ( loaderTableName == "glib" )
+					dec = dec.replace("FILE*", "void*"); //Phobos workaround.
+
+				int pos = std.string.rfind(dec,')') + 1;
+				externalText ~= '\t';
+
+				if ( dec.length > 0 && dec[0]=='#' )
+					externalText ~= "// ";
+
+				if ( dec.length > 0 && !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
+					externalText ~= "typedef "~ dec[0..pos] ~" c_"~ dec[pos..$] ~';';
+				else
+					externalText ~= dec;
+
+				externalText ~= '\n';
+			}
+
+			externalText ~= "}\n";
+
+			//Generate the variables to hold the function pointers.
+			foreach ( char[] declaration; declarations )
+			{
+				char[] dec = std.string.strip(declaration);
+				int pos = std.string.rfind(dec,')');
+
+				if ( GtkDClass.startsWith(dec, "//") )
+					externalText ~= '\n'~ dec ~"\n\n";
+
+				if ( pos > 0 )
+				{
+					if ( dec[0]=='#' )
+					{
+						externalText ~= "// ";
+					}
+					else
+					{
+						char[] functName = std.string.strip(dec[pos+1..$]);
+						if ( functName.length > 0 )
+						{
+							externalText ~= "c_"~ functName ~"  "~ functName ~";";
+						}
+					}
+					externalText ~= '\n';
+				}
+			}
+		}
+
+		char[] pathname = joinRootDirFile(std.path.join(outputRoot,srcDir),bindingsDir,loaderTableName~".d");
+		std.file.write(pathname,externalText);
+	}
 
     void buildTypedefs(char[] outPack)
     {

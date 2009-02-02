@@ -20,16 +20,11 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-// Adapted from John Reimer's DUI loader modules
-
 
 module gtkc.gio;
 
 version(Tango)
-{
 	private import tango.stdc.stdio;
-	debug private import tango.io.Stdout;
-}
 else
 	private import std.stdio;
 
@@ -37,482 +32,1137 @@ private import gtkc.giotypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-private Linker gio_Linker;
-
 static this()
 {
- gio_Linker = new Linker(libPath ~ importLibs[LIBRARY.GIO] );
- gio_Linker.link(gioLinks);
+	// gio.File
 
- debug
- {
- 	version(Tango) Stdout("* Finished static this(): gio").newline;
- 	else writefln("* Finished static this(): gio");
- }
+	Linker.link(g_file_new_for_path, "g_file_new_for_path", LIBRARY.GIO);
+	Linker.link(g_file_new_for_uri, "g_file_new_for_uri", LIBRARY.GIO);
+	Linker.link(g_file_new_for_commandline_arg, "g_file_new_for_commandline_arg", LIBRARY.GIO);
+	Linker.link(g_file_parse_name, "g_file_parse_name", LIBRARY.GIO);
+	Linker.link(g_file_dup, "g_file_dup", LIBRARY.GIO);
+	Linker.link(g_file_hash, "g_file_hash", LIBRARY.GIO);
+	Linker.link(g_file_equal, "g_file_equal", LIBRARY.GIO);
+	Linker.link(g_file_get_basename, "g_file_get_basename", LIBRARY.GIO);
+	Linker.link(g_file_get_path, "g_file_get_path", LIBRARY.GIO);
+	Linker.link(g_file_get_uri, "g_file_get_uri", LIBRARY.GIO);
+	Linker.link(g_file_get_parse_name, "g_file_get_parse_name", LIBRARY.GIO);
+	Linker.link(g_file_get_parent, "g_file_get_parent", LIBRARY.GIO);
+	Linker.link(g_file_get_child, "g_file_get_child", LIBRARY.GIO);
+	Linker.link(g_file_get_child_for_display_name, "g_file_get_child_for_display_name", LIBRARY.GIO);
+	Linker.link(g_file_has_prefix, "g_file_has_prefix", LIBRARY.GIO);
+	Linker.link(g_file_get_relative_path, "g_file_get_relative_path", LIBRARY.GIO);
+	Linker.link(g_file_resolve_relative_path, "g_file_resolve_relative_path", LIBRARY.GIO);
+	Linker.link(g_file_is_native, "g_file_is_native", LIBRARY.GIO);
+	Linker.link(g_file_has_uri_scheme, "g_file_has_uri_scheme", LIBRARY.GIO);
+	Linker.link(g_file_get_uri_scheme, "g_file_get_uri_scheme", LIBRARY.GIO);
+	Linker.link(g_file_read, "g_file_read", LIBRARY.GIO);
+	Linker.link(g_file_read_async, "g_file_read_async", LIBRARY.GIO);
+	Linker.link(g_file_read_finish, "g_file_read_finish", LIBRARY.GIO);
+	Linker.link(g_file_append_to, "g_file_append_to", LIBRARY.GIO);
+	Linker.link(g_file_create, "g_file_create", LIBRARY.GIO);
+	Linker.link(g_file_replace, "g_file_replace", LIBRARY.GIO);
+	Linker.link(g_file_append_to_async, "g_file_append_to_async", LIBRARY.GIO);
+	Linker.link(g_file_append_to_finish, "g_file_append_to_finish", LIBRARY.GIO);
+	Linker.link(g_file_create_async, "g_file_create_async", LIBRARY.GIO);
+	Linker.link(g_file_create_finish, "g_file_create_finish", LIBRARY.GIO);
+	Linker.link(g_file_replace_async, "g_file_replace_async", LIBRARY.GIO);
+	Linker.link(g_file_replace_finish, "g_file_replace_finish", LIBRARY.GIO);
+	Linker.link(g_file_query_info, "g_file_query_info", LIBRARY.GIO);
+	Linker.link(g_file_query_info_async, "g_file_query_info_async", LIBRARY.GIO);
+	Linker.link(g_file_query_info_finish, "g_file_query_info_finish", LIBRARY.GIO);
+	Linker.link(g_file_query_exists, "g_file_query_exists", LIBRARY.GIO);
+	Linker.link(g_file_query_file_type, "g_file_query_file_type", LIBRARY.GIO);
+	Linker.link(g_file_query_filesystem_info, "g_file_query_filesystem_info", LIBRARY.GIO);
+	Linker.link(g_file_query_filesystem_info_async, "g_file_query_filesystem_info_async", LIBRARY.GIO);
+	Linker.link(g_file_query_filesystem_info_finish, "g_file_query_filesystem_info_finish", LIBRARY.GIO);
+	Linker.link(g_file_query_default_handler, "g_file_query_default_handler", LIBRARY.GIO);
+	Linker.link(g_file_find_enclosing_mount, "g_file_find_enclosing_mount", LIBRARY.GIO);
+	Linker.link(g_file_find_enclosing_mount_async, "g_file_find_enclosing_mount_async", LIBRARY.GIO);
+	Linker.link(g_file_find_enclosing_mount_finish, "g_file_find_enclosing_mount_finish", LIBRARY.GIO);
+	Linker.link(g_file_enumerate_children, "g_file_enumerate_children", LIBRARY.GIO);
+	Linker.link(g_file_enumerate_children_async, "g_file_enumerate_children_async", LIBRARY.GIO);
+	Linker.link(g_file_enumerate_children_finish, "g_file_enumerate_children_finish", LIBRARY.GIO);
+	Linker.link(g_file_set_display_name, "g_file_set_display_name", LIBRARY.GIO);
+	Linker.link(g_file_set_display_name_async, "g_file_set_display_name_async", LIBRARY.GIO);
+	Linker.link(g_file_set_display_name_finish, "g_file_set_display_name_finish", LIBRARY.GIO);
+	Linker.link(g_file_delete, "g_file_delete", LIBRARY.GIO);
+	Linker.link(g_file_trash, "g_file_trash", LIBRARY.GIO);
+	Linker.link(g_file_copy, "g_file_copy", LIBRARY.GIO);
+	Linker.link(g_file_copy_async, "g_file_copy_async", LIBRARY.GIO);
+	Linker.link(g_file_copy_finish, "g_file_copy_finish", LIBRARY.GIO);
+	Linker.link(g_file_move, "g_file_move", LIBRARY.GIO);
+	Linker.link(g_file_make_directory, "g_file_make_directory", LIBRARY.GIO);
+	Linker.link(g_file_make_directory_with_parents, "g_file_make_directory_with_parents", LIBRARY.GIO);
+	Linker.link(g_file_make_symbolic_link, "g_file_make_symbolic_link", LIBRARY.GIO);
+	Linker.link(g_file_query_settable_attributes, "g_file_query_settable_attributes", LIBRARY.GIO);
+	Linker.link(g_file_query_writable_namespaces, "g_file_query_writable_namespaces", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute, "g_file_set_attribute", LIBRARY.GIO);
+	Linker.link(g_file_set_attributes_from_info, "g_file_set_attributes_from_info", LIBRARY.GIO);
+	Linker.link(g_file_set_attributes_async, "g_file_set_attributes_async", LIBRARY.GIO);
+	Linker.link(g_file_set_attributes_finish, "g_file_set_attributes_finish", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute_string, "g_file_set_attribute_string", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute_byte_string, "g_file_set_attribute_byte_string", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute_uint32, "g_file_set_attribute_uint32", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute_int32, "g_file_set_attribute_int32", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute_uint64, "g_file_set_attribute_uint64", LIBRARY.GIO);
+	Linker.link(g_file_set_attribute_int64, "g_file_set_attribute_int64", LIBRARY.GIO);
+	Linker.link(g_file_mount_mountable, "g_file_mount_mountable", LIBRARY.GIO);
+	Linker.link(g_file_mount_mountable_finish, "g_file_mount_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_unmount_mountable, "g_file_unmount_mountable", LIBRARY.GIO);
+	Linker.link(g_file_unmount_mountable_finish, "g_file_unmount_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_eject_mountable, "g_file_eject_mountable", LIBRARY.GIO);
+	Linker.link(g_file_eject_mountable_finish, "g_file_eject_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_mount_enclosing_volume, "g_file_mount_enclosing_volume", LIBRARY.GIO);
+	Linker.link(g_file_mount_enclosing_volume_finish, "g_file_mount_enclosing_volume_finish", LIBRARY.GIO);
+	Linker.link(g_file_monitor_directory, "g_file_monitor_directory", LIBRARY.GIO);
+	Linker.link(g_file_monitor_file, "g_file_monitor_file", LIBRARY.GIO);
+	Linker.link(g_file_monitor, "g_file_monitor", LIBRARY.GIO);
+	Linker.link(g_file_load_contents, "g_file_load_contents", LIBRARY.GIO);
+	Linker.link(g_file_load_contents_async, "g_file_load_contents_async", LIBRARY.GIO);
+	Linker.link(g_file_load_contents_finish, "g_file_load_contents_finish", LIBRARY.GIO);
+	Linker.link(g_file_load_partial_contents_async, "g_file_load_partial_contents_async", LIBRARY.GIO);
+	Linker.link(g_file_load_partial_contents_finish, "g_file_load_partial_contents_finish", LIBRARY.GIO);
+	Linker.link(g_file_replace_contents, "g_file_replace_contents", LIBRARY.GIO);
+	Linker.link(g_file_replace_contents_async, "g_file_replace_contents_async", LIBRARY.GIO);
+	Linker.link(g_file_replace_contents_finish, "g_file_replace_contents_finish", LIBRARY.GIO);
+	Linker.link(g_file_copy_attributes, "g_file_copy_attributes", LIBRARY.GIO);
+
+	// gio.FileAttributeInfoList
+
+	Linker.link(g_file_attribute_info_list_new, "g_file_attribute_info_list_new", LIBRARY.GIO);
+	Linker.link(g_file_attribute_info_list_ref, "g_file_attribute_info_list_ref", LIBRARY.GIO);
+	Linker.link(g_file_attribute_info_list_unref, "g_file_attribute_info_list_unref", LIBRARY.GIO);
+	Linker.link(g_file_attribute_info_list_dup, "g_file_attribute_info_list_dup", LIBRARY.GIO);
+	Linker.link(g_file_attribute_info_list_lookup, "g_file_attribute_info_list_lookup", LIBRARY.GIO);
+	Linker.link(g_file_attribute_info_list_add, "g_file_attribute_info_list_add", LIBRARY.GIO);
+
+	// gio.FileInfo
+
+	Linker.link(g_file_info_new, "g_file_info_new", LIBRARY.GIO);
+	Linker.link(g_file_info_dup, "g_file_info_dup", LIBRARY.GIO);
+	Linker.link(g_file_info_copy_into, "g_file_info_copy_into", LIBRARY.GIO);
+	Linker.link(g_file_info_has_attribute, "g_file_info_has_attribute", LIBRARY.GIO);
+	Linker.link(g_file_info_list_attributes, "g_file_info_list_attributes", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_type, "g_file_info_get_attribute_type", LIBRARY.GIO);
+	Linker.link(g_file_info_remove_attribute, "g_file_info_remove_attribute", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_as_string, "g_file_info_get_attribute_as_string", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_data, "g_file_info_get_attribute_data", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_status, "g_file_info_get_attribute_status", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_string, "g_file_info_get_attribute_string", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_byte_string, "g_file_info_get_attribute_byte_string", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_boolean, "g_file_info_get_attribute_boolean", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_uint32, "g_file_info_get_attribute_uint32", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_int32, "g_file_info_get_attribute_int32", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_uint64, "g_file_info_get_attribute_uint64", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_int64, "g_file_info_get_attribute_int64", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_object, "g_file_info_get_attribute_object", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute, "g_file_info_set_attribute", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_string, "g_file_info_set_attribute_string", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_byte_string, "g_file_info_set_attribute_byte_string", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_boolean, "g_file_info_set_attribute_boolean", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_uint32, "g_file_info_set_attribute_uint32", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_int32, "g_file_info_set_attribute_int32", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_uint64, "g_file_info_set_attribute_uint64", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_int64, "g_file_info_set_attribute_int64", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_object, "g_file_info_set_attribute_object", LIBRARY.GIO);
+	Linker.link(g_file_info_clear_status, "g_file_info_clear_status", LIBRARY.GIO);
+	Linker.link(g_file_info_get_file_type, "g_file_info_get_file_type", LIBRARY.GIO);
+	Linker.link(g_file_info_get_is_hidden, "g_file_info_get_is_hidden", LIBRARY.GIO);
+	Linker.link(g_file_info_get_is_backup, "g_file_info_get_is_backup", LIBRARY.GIO);
+	Linker.link(g_file_info_get_is_symlink, "g_file_info_get_is_symlink", LIBRARY.GIO);
+	Linker.link(g_file_info_get_name, "g_file_info_get_name", LIBRARY.GIO);
+	Linker.link(g_file_info_get_display_name, "g_file_info_get_display_name", LIBRARY.GIO);
+	Linker.link(g_file_info_get_edit_name, "g_file_info_get_edit_name", LIBRARY.GIO);
+	Linker.link(g_file_info_get_icon, "g_file_info_get_icon", LIBRARY.GIO);
+	Linker.link(g_file_info_get_content_type, "g_file_info_get_content_type", LIBRARY.GIO);
+	Linker.link(g_file_info_get_size, "g_file_info_get_size", LIBRARY.GIO);
+	Linker.link(g_file_info_get_modification_time, "g_file_info_get_modification_time", LIBRARY.GIO);
+	Linker.link(g_file_info_get_symlink_target, "g_file_info_get_symlink_target", LIBRARY.GIO);
+	Linker.link(g_file_info_get_etag, "g_file_info_get_etag", LIBRARY.GIO);
+	Linker.link(g_file_info_get_sort_order, "g_file_info_get_sort_order", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_mask, "g_file_info_set_attribute_mask", LIBRARY.GIO);
+	Linker.link(g_file_info_unset_attribute_mask, "g_file_info_unset_attribute_mask", LIBRARY.GIO);
+	Linker.link(g_file_info_set_file_type, "g_file_info_set_file_type", LIBRARY.GIO);
+	Linker.link(g_file_info_set_is_hidden, "g_file_info_set_is_hidden", LIBRARY.GIO);
+	Linker.link(g_file_info_set_is_symlink, "g_file_info_set_is_symlink", LIBRARY.GIO);
+	Linker.link(g_file_info_set_name, "g_file_info_set_name", LIBRARY.GIO);
+	Linker.link(g_file_info_set_display_name, "g_file_info_set_display_name", LIBRARY.GIO);
+	Linker.link(g_file_info_set_edit_name, "g_file_info_set_edit_name", LIBRARY.GIO);
+	Linker.link(g_file_info_set_icon, "g_file_info_set_icon", LIBRARY.GIO);
+	Linker.link(g_file_info_set_content_type, "g_file_info_set_content_type", LIBRARY.GIO);
+	Linker.link(g_file_info_set_size, "g_file_info_set_size", LIBRARY.GIO);
+	Linker.link(g_file_info_set_modification_time, "g_file_info_set_modification_time", LIBRARY.GIO);
+	Linker.link(g_file_info_set_symlink_target, "g_file_info_set_symlink_target", LIBRARY.GIO);
+	Linker.link(g_file_info_set_sort_order, "g_file_info_set_sort_order", LIBRARY.GIO);
+
+	// gio.FileAttributeMatcher
+
+	Linker.link(g_file_attribute_matcher_new, "g_file_attribute_matcher_new", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_ref, "g_file_attribute_matcher_ref", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_unref, "g_file_attribute_matcher_unref", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_matches, "g_file_attribute_matcher_matches", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_matches_only, "g_file_attribute_matcher_matches_only", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_enumerate_namespace, "g_file_attribute_matcher_enumerate_namespace", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_enumerate_next, "g_file_attribute_matcher_enumerate_next", LIBRARY.GIO);
+
+	// gio.FileEnumerator
+
+	Linker.link(g_file_enumerator_next_file, "g_file_enumerator_next_file", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_close, "g_file_enumerator_close", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_next_files_async, "g_file_enumerator_next_files_async", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_next_files_finish, "g_file_enumerator_next_files_finish", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_close_async, "g_file_enumerator_close_async", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_close_finish, "g_file_enumerator_close_finish", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_is_closed, "g_file_enumerator_is_closed", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_has_pending, "g_file_enumerator_has_pending", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_set_pending, "g_file_enumerator_set_pending", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_get_container, "g_file_enumerator_get_container", LIBRARY.GIO);
+
+	// gio.MountOperation
+
+	Linker.link(g_mount_operation_new, "g_mount_operation_new", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_username, "g_mount_operation_get_username", LIBRARY.GIO);
+	Linker.link(g_mount_operation_set_username, "g_mount_operation_set_username", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_password, "g_mount_operation_get_password", LIBRARY.GIO);
+	Linker.link(g_mount_operation_set_password, "g_mount_operation_set_password", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_anonymous, "g_mount_operation_get_anonymous", LIBRARY.GIO);
+	Linker.link(g_mount_operation_set_anonymous, "g_mount_operation_set_anonymous", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_domain, "g_mount_operation_get_domain", LIBRARY.GIO);
+	Linker.link(g_mount_operation_set_domain, "g_mount_operation_set_domain", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_password_save, "g_mount_operation_get_password_save", LIBRARY.GIO);
+	Linker.link(g_mount_operation_set_password_save, "g_mount_operation_set_password_save", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_choice, "g_mount_operation_get_choice", LIBRARY.GIO);
+	Linker.link(g_mount_operation_set_choice, "g_mount_operation_set_choice", LIBRARY.GIO);
+	Linker.link(g_mount_operation_reply, "g_mount_operation_reply", LIBRARY.GIO);
+
+	// gio.ErrorGIO
+
+	Linker.link(g_io_error_from_errno, "g_io_error_from_errno", LIBRARY.GIO);
+
+	// gio.FileMonitor
+
+	Linker.link(g_file_monitor_cancel, "g_file_monitor_cancel", LIBRARY.GIO);
+	Linker.link(g_file_monitor_is_cancelled, "g_file_monitor_is_cancelled", LIBRARY.GIO);
+	Linker.link(g_file_monitor_set_rate_limit, "g_file_monitor_set_rate_limit", LIBRARY.GIO);
+	Linker.link(g_file_monitor_emit_event, "g_file_monitor_emit_event", LIBRARY.GIO);
+
+	// gio.Cancellable
+
+	Linker.link(g_cancellable_new, "g_cancellable_new", LIBRARY.GIO);
+	Linker.link(g_cancellable_is_cancelled, "g_cancellable_is_cancelled", LIBRARY.GIO);
+	Linker.link(g_cancellable_set_error_if_cancelled, "g_cancellable_set_error_if_cancelled", LIBRARY.GIO);
+	Linker.link(g_cancellable_get_fd, "g_cancellable_get_fd", LIBRARY.GIO);
+	Linker.link(g_cancellable_get_current, "g_cancellable_get_current", LIBRARY.GIO);
+	Linker.link(g_cancellable_pop_current, "g_cancellable_pop_current", LIBRARY.GIO);
+	Linker.link(g_cancellable_push_current, "g_cancellable_push_current", LIBRARY.GIO);
+	Linker.link(g_cancellable_reset, "g_cancellable_reset", LIBRARY.GIO);
+	Linker.link(g_cancellable_cancel, "g_cancellable_cancel", LIBRARY.GIO);
+
+	// gio.AsyncResultT
+
+
+	// gio.AsyncResultT
+
+	Linker.link(g_async_result_get_user_data, "g_async_result_get_user_data", LIBRARY.GIO);
+	Linker.link(g_async_result_get_source_object, "g_async_result_get_source_object", LIBRARY.GIO);
+
+	// gio.IOSchedulerJob
+
+	Linker.link(g_io_scheduler_push_job, "g_io_scheduler_push_job", LIBRARY.GIO);
+	Linker.link(g_io_scheduler_cancel_all_jobs, "g_io_scheduler_cancel_all_jobs", LIBRARY.GIO);
+	Linker.link(g_io_scheduler_job_send_to_mainloop, "g_io_scheduler_job_send_to_mainloop", LIBRARY.GIO);
+	Linker.link(g_io_scheduler_job_send_to_mainloop_async, "g_io_scheduler_job_send_to_mainloop_async", LIBRARY.GIO);
+
+	// gio.SimpleAsyncResult
+
+	Linker.link(g_simple_async_result_new, "g_simple_async_result_new", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_new_error, "g_simple_async_result_new_error", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_new_from_error, "g_simple_async_result_new_from_error", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_op_res_gpointer, "g_simple_async_result_set_op_res_gpointer", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_get_op_res_gpointer, "g_simple_async_result_get_op_res_gpointer", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_op_res_gssize, "g_simple_async_result_set_op_res_gssize", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_get_op_res_gssize, "g_simple_async_result_get_op_res_gssize", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_op_res_gboolean, "g_simple_async_result_set_op_res_gboolean", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_get_op_res_gboolean, "g_simple_async_result_get_op_res_gboolean", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_get_source_tag, "g_simple_async_result_get_source_tag", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_handle_cancellation, "g_simple_async_result_set_handle_cancellation", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_complete, "g_simple_async_result_complete", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_complete_in_idle, "g_simple_async_result_complete_in_idle", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_run_in_thread, "g_simple_async_result_run_in_thread", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_from_error, "g_simple_async_result_set_from_error", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_propagate_error, "g_simple_async_result_propagate_error", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_error, "g_simple_async_result_set_error", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_error_va, "g_simple_async_result_set_error_va", LIBRARY.GIO);
+	Linker.link(g_simple_async_report_error_in_idle, "g_simple_async_report_error_in_idle", LIBRARY.GIO);
+	Linker.link(g_simple_async_report_gerror_in_idle, "g_simple_async_report_gerror_in_idle", LIBRARY.GIO);
+
+	// gio.SeekableT
+
+
+	// gio.SeekableT
+
+	Linker.link(g_seekable_tell, "g_seekable_tell", LIBRARY.GIO);
+	Linker.link(g_seekable_can_seek, "g_seekable_can_seek", LIBRARY.GIO);
+	Linker.link(g_seekable_seek, "g_seekable_seek", LIBRARY.GIO);
+	Linker.link(g_seekable_can_truncate, "g_seekable_can_truncate", LIBRARY.GIO);
+	Linker.link(g_seekable_truncate, "g_seekable_truncate", LIBRARY.GIO);
+
+	// gio.InputStream
+
+	Linker.link(g_input_stream_read, "g_input_stream_read", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_all, "g_input_stream_read_all", LIBRARY.GIO);
+	Linker.link(g_input_stream_skip, "g_input_stream_skip", LIBRARY.GIO);
+	Linker.link(g_input_stream_close, "g_input_stream_close", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_async, "g_input_stream_read_async", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_finish, "g_input_stream_read_finish", LIBRARY.GIO);
+	Linker.link(g_input_stream_skip_async, "g_input_stream_skip_async", LIBRARY.GIO);
+	Linker.link(g_input_stream_skip_finish, "g_input_stream_skip_finish", LIBRARY.GIO);
+	Linker.link(g_input_stream_close_async, "g_input_stream_close_async", LIBRARY.GIO);
+	Linker.link(g_input_stream_close_finish, "g_input_stream_close_finish", LIBRARY.GIO);
+	Linker.link(g_input_stream_is_closed, "g_input_stream_is_closed", LIBRARY.GIO);
+	Linker.link(g_input_stream_has_pending, "g_input_stream_has_pending", LIBRARY.GIO);
+	Linker.link(g_input_stream_set_pending, "g_input_stream_set_pending", LIBRARY.GIO);
+	Linker.link(g_input_stream_clear_pending, "g_input_stream_clear_pending", LIBRARY.GIO);
+
+	// gio.OutputStream
+
+	Linker.link(g_output_stream_write, "g_output_stream_write", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_all, "g_output_stream_write_all", LIBRARY.GIO);
+	Linker.link(g_output_stream_splice, "g_output_stream_splice", LIBRARY.GIO);
+	Linker.link(g_output_stream_flush, "g_output_stream_flush", LIBRARY.GIO);
+	Linker.link(g_output_stream_close, "g_output_stream_close", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_async, "g_output_stream_write_async", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_finish, "g_output_stream_write_finish", LIBRARY.GIO);
+	Linker.link(g_output_stream_splice_async, "g_output_stream_splice_async", LIBRARY.GIO);
+	Linker.link(g_output_stream_splice_finish, "g_output_stream_splice_finish", LIBRARY.GIO);
+	Linker.link(g_output_stream_flush_async, "g_output_stream_flush_async", LIBRARY.GIO);
+	Linker.link(g_output_stream_flush_finish, "g_output_stream_flush_finish", LIBRARY.GIO);
+	Linker.link(g_output_stream_close_async, "g_output_stream_close_async", LIBRARY.GIO);
+	Linker.link(g_output_stream_close_finish, "g_output_stream_close_finish", LIBRARY.GIO);
+	Linker.link(g_output_stream_is_closed, "g_output_stream_is_closed", LIBRARY.GIO);
+	Linker.link(g_output_stream_has_pending, "g_output_stream_has_pending", LIBRARY.GIO);
+	Linker.link(g_output_stream_set_pending, "g_output_stream_set_pending", LIBRARY.GIO);
+	Linker.link(g_output_stream_clear_pending, "g_output_stream_clear_pending", LIBRARY.GIO);
+
+	// gio.FileInputStream
+
+	Linker.link(g_file_input_stream_query_info, "g_file_input_stream_query_info", LIBRARY.GIO);
+	Linker.link(g_file_input_stream_query_info_async, "g_file_input_stream_query_info_async", LIBRARY.GIO);
+	Linker.link(g_file_input_stream_query_info_finish, "g_file_input_stream_query_info_finish", LIBRARY.GIO);
+
+	// gio.FileOutputStream
+
+	Linker.link(g_file_output_stream_query_info, "g_file_output_stream_query_info", LIBRARY.GIO);
+	Linker.link(g_file_output_stream_query_info_async, "g_file_output_stream_query_info_async", LIBRARY.GIO);
+	Linker.link(g_file_output_stream_query_info_finish, "g_file_output_stream_query_info_finish", LIBRARY.GIO);
+	Linker.link(g_file_output_stream_get_etag, "g_file_output_stream_get_etag", LIBRARY.GIO);
+
+	// gio.FilterInputStream
+
+	Linker.link(g_filter_input_stream_get_base_stream, "g_filter_input_stream_get_base_stream", LIBRARY.GIO);
+
+	// gio.FilterOutputStream
+
+	Linker.link(g_filter_output_stream_get_base_stream, "g_filter_output_stream_get_base_stream", LIBRARY.GIO);
+
+	// gio.MemoryInputStream
+
+	Linker.link(g_memory_input_stream_new, "g_memory_input_stream_new", LIBRARY.GIO);
+	Linker.link(g_memory_input_stream_new_from_data, "g_memory_input_stream_new_from_data", LIBRARY.GIO);
+	Linker.link(g_memory_input_stream_add_data, "g_memory_input_stream_add_data", LIBRARY.GIO);
+
+	// gio.MemoryOutputStream
+
+	Linker.link(g_memory_output_stream_new, "g_memory_output_stream_new", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_get_data, "g_memory_output_stream_get_data", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_get_size, "g_memory_output_stream_get_size", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_get_data_size, "g_memory_output_stream_get_data_size", LIBRARY.GIO);
+
+	// gio.BufferedInputStream
+
+	Linker.link(g_buffered_input_stream_new, "g_buffered_input_stream_new", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_new_sized, "g_buffered_input_stream_new_sized", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_get_buffer_size, "g_buffered_input_stream_get_buffer_size", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_set_buffer_size, "g_buffered_input_stream_set_buffer_size", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_get_available, "g_buffered_input_stream_get_available", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_peek_buffer, "g_buffered_input_stream_peek_buffer", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_peek, "g_buffered_input_stream_peek", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_fill, "g_buffered_input_stream_fill", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_fill_async, "g_buffered_input_stream_fill_async", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_fill_finish, "g_buffered_input_stream_fill_finish", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_read_byte, "g_buffered_input_stream_read_byte", LIBRARY.GIO);
+
+	// gio.BufferedOutputStream
+
+	Linker.link(g_buffered_output_stream_new, "g_buffered_output_stream_new", LIBRARY.GIO);
+	Linker.link(g_buffered_output_stream_new_sized, "g_buffered_output_stream_new_sized", LIBRARY.GIO);
+	Linker.link(g_buffered_output_stream_get_buffer_size, "g_buffered_output_stream_get_buffer_size", LIBRARY.GIO);
+	Linker.link(g_buffered_output_stream_set_buffer_size, "g_buffered_output_stream_set_buffer_size", LIBRARY.GIO);
+	Linker.link(g_buffered_output_stream_get_auto_grow, "g_buffered_output_stream_get_auto_grow", LIBRARY.GIO);
+	Linker.link(g_buffered_output_stream_set_auto_grow, "g_buffered_output_stream_set_auto_grow", LIBRARY.GIO);
+
+	// gio.DataInputStream
+
+	Linker.link(g_data_input_stream_new, "g_data_input_stream_new", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_set_byte_order, "g_data_input_stream_set_byte_order", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_get_byte_order, "g_data_input_stream_get_byte_order", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_set_newline_type, "g_data_input_stream_set_newline_type", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_get_newline_type, "g_data_input_stream_get_newline_type", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_byte, "g_data_input_stream_read_byte", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_int16, "g_data_input_stream_read_int16", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_uint16, "g_data_input_stream_read_uint16", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_int32, "g_data_input_stream_read_int32", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_uint32, "g_data_input_stream_read_uint32", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_int64, "g_data_input_stream_read_int64", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_uint64, "g_data_input_stream_read_uint64", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_line, "g_data_input_stream_read_line", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_until, "g_data_input_stream_read_until", LIBRARY.GIO);
+
+	// gio.DataOutputStream
+
+	Linker.link(g_data_output_stream_new, "g_data_output_stream_new", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_set_byte_order, "g_data_output_stream_set_byte_order", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_get_byte_order, "g_data_output_stream_get_byte_order", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_byte, "g_data_output_stream_put_byte", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_int16, "g_data_output_stream_put_int16", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_uint16, "g_data_output_stream_put_uint16", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_int32, "g_data_output_stream_put_int32", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_uint32, "g_data_output_stream_put_uint32", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_int64, "g_data_output_stream_put_int64", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_uint64, "g_data_output_stream_put_uint64", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_put_string, "g_data_output_stream_put_string", LIBRARY.GIO);
+
+	// gio.UnixInputStream
+
+	Linker.link(g_unix_input_stream_new, "g_unix_input_stream_new", LIBRARY.GIO);
+
+	// gio.UnixOutputStream
+
+	Linker.link(g_unix_output_stream_new, "g_unix_output_stream_new", LIBRARY.GIO);
+
+	// gio.ContentType
+
+	Linker.link(g_content_type_equals, "g_content_type_equals", LIBRARY.GIO);
+	Linker.link(g_content_type_is_a, "g_content_type_is_a", LIBRARY.GIO);
+	Linker.link(g_content_type_is_unknown, "g_content_type_is_unknown", LIBRARY.GIO);
+	Linker.link(g_content_type_get_description, "g_content_type_get_description", LIBRARY.GIO);
+	Linker.link(g_content_type_get_mime_type, "g_content_type_get_mime_type", LIBRARY.GIO);
+	Linker.link(g_content_type_get_icon, "g_content_type_get_icon", LIBRARY.GIO);
+	Linker.link(g_content_type_can_be_executable, "g_content_type_can_be_executable", LIBRARY.GIO);
+	Linker.link(g_content_type_from_mime_type, "g_content_type_from_mime_type", LIBRARY.GIO);
+	Linker.link(g_content_type_guess, "g_content_type_guess", LIBRARY.GIO);
+	Linker.link(g_content_type_guess_for_tree, "g_content_type_guess_for_tree", LIBRARY.GIO);
+	Linker.link(g_content_types_get_registered, "g_content_types_get_registered", LIBRARY.GIO);
+
+	// gio.AppInfoT
+
+
+	// gio.AppInfoT
+
+	Linker.link(g_app_info_create_from_commandline, "g_app_info_create_from_commandline", LIBRARY.GIO);
+	Linker.link(g_app_info_dup, "g_app_info_dup", LIBRARY.GIO);
+	Linker.link(g_app_info_equal, "g_app_info_equal", LIBRARY.GIO);
+	Linker.link(g_app_info_get_id, "g_app_info_get_id", LIBRARY.GIO);
+	Linker.link(g_app_info_get_name, "g_app_info_get_name", LIBRARY.GIO);
+	Linker.link(g_app_info_get_description, "g_app_info_get_description", LIBRARY.GIO);
+	Linker.link(g_app_info_get_executable, "g_app_info_get_executable", LIBRARY.GIO);
+	Linker.link(g_app_info_get_icon, "g_app_info_get_icon", LIBRARY.GIO);
+	Linker.link(g_app_info_launch, "g_app_info_launch", LIBRARY.GIO);
+	Linker.link(g_app_info_supports_files, "g_app_info_supports_files", LIBRARY.GIO);
+	Linker.link(g_app_info_supports_uris, "g_app_info_supports_uris", LIBRARY.GIO);
+	Linker.link(g_app_info_launch_uris, "g_app_info_launch_uris", LIBRARY.GIO);
+	Linker.link(g_app_info_should_show, "g_app_info_should_show", LIBRARY.GIO);
+	Linker.link(g_app_info_set_as_default_for_type, "g_app_info_set_as_default_for_type", LIBRARY.GIO);
+	Linker.link(g_app_info_set_as_default_for_extension, "g_app_info_set_as_default_for_extension", LIBRARY.GIO);
+	Linker.link(g_app_info_add_supports_type, "g_app_info_add_supports_type", LIBRARY.GIO);
+	Linker.link(g_app_info_can_remove_supports_type, "g_app_info_can_remove_supports_type", LIBRARY.GIO);
+	Linker.link(g_app_info_remove_supports_type, "g_app_info_remove_supports_type", LIBRARY.GIO);
+	Linker.link(g_app_info_get_all, "g_app_info_get_all", LIBRARY.GIO);
+	Linker.link(g_app_info_get_all_for_type, "g_app_info_get_all_for_type", LIBRARY.GIO);
+	Linker.link(g_app_info_get_default_for_type, "g_app_info_get_default_for_type", LIBRARY.GIO);
+	Linker.link(g_app_info_get_default_for_uri_scheme, "g_app_info_get_default_for_uri_scheme", LIBRARY.GIO);
+	Linker.link(g_app_info_launch_default_for_uri, "g_app_info_launch_default_for_uri", LIBRARY.GIO);
+
+	// gio.AppInfo
+
+
+	// gio.AppLaunchContext
+
+
+	// gio.DesktopAppInfo
+
+	Linker.link(g_desktop_app_info_new_from_filename, "g_desktop_app_info_new_from_filename", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_new_from_keyfile, "g_desktop_app_info_new_from_keyfile", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_new, "g_desktop_app_info_new", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_is_hidden, "g_desktop_app_info_get_is_hidden", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_set_desktop_env, "g_desktop_app_info_set_desktop_env", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_lookup_get_default_for_uri_scheme, "g_desktop_app_info_lookup_get_default_for_uri_scheme", LIBRARY.GIO);
+
+	// gio.VolumeMonitor
+
+	Linker.link(g_volume_monitor_get, "g_volume_monitor_get", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_get_connected_drives, "g_volume_monitor_get_connected_drives", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_get_volumes, "g_volume_monitor_get_volumes", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_get_mounts, "g_volume_monitor_get_mounts", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_adopt_orphan_mount, "g_volume_monitor_adopt_orphan_mount", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_get_mount_for_uuid, "g_volume_monitor_get_mount_for_uuid", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_get_volume_for_uuid, "g_volume_monitor_get_volume_for_uuid", LIBRARY.GIO);
+
+	// gio.VolumeT
+
+
+	// gio.VolumeT
+
+	Linker.link(g_volume_get_name, "g_volume_get_name", LIBRARY.GIO);
+	Linker.link(g_volume_get_uuid, "g_volume_get_uuid", LIBRARY.GIO);
+	Linker.link(g_volume_get_icon, "g_volume_get_icon", LIBRARY.GIO);
+	Linker.link(g_volume_get_drive, "g_volume_get_drive", LIBRARY.GIO);
+	Linker.link(g_volume_get_mount, "g_volume_get_mount", LIBRARY.GIO);
+	Linker.link(g_volume_can_mount, "g_volume_can_mount", LIBRARY.GIO);
+	Linker.link(g_volume_should_automount, "g_volume_should_automount", LIBRARY.GIO);
+	Linker.link(g_volume_get_activation_root, "g_volume_get_activation_root", LIBRARY.GIO);
+	Linker.link(g_volume_mount, "g_volume_mount", LIBRARY.GIO);
+	Linker.link(g_volume_mount_finish, "g_volume_mount_finish", LIBRARY.GIO);
+	Linker.link(g_volume_can_eject, "g_volume_can_eject", LIBRARY.GIO);
+	Linker.link(g_volume_eject, "g_volume_eject", LIBRARY.GIO);
+	Linker.link(g_volume_eject_finish, "g_volume_eject_finish", LIBRARY.GIO);
+	Linker.link(g_volume_enumerate_identifiers, "g_volume_enumerate_identifiers", LIBRARY.GIO);
+	Linker.link(g_volume_get_identifier, "g_volume_get_identifier", LIBRARY.GIO);
+
+	// gio.Volume
+
+
+	// gio.MountT
+
+
+	// gio.MountT
+
+	Linker.link(g_mount_get_name, "g_mount_get_name", LIBRARY.GIO);
+	Linker.link(g_mount_get_uuid, "g_mount_get_uuid", LIBRARY.GIO);
+	Linker.link(g_mount_get_icon, "g_mount_get_icon", LIBRARY.GIO);
+	Linker.link(g_mount_get_drive, "g_mount_get_drive", LIBRARY.GIO);
+	Linker.link(g_mount_get_root, "g_mount_get_root", LIBRARY.GIO);
+	Linker.link(g_mount_get_volume, "g_mount_get_volume", LIBRARY.GIO);
+	Linker.link(g_mount_can_unmount, "g_mount_can_unmount", LIBRARY.GIO);
+	Linker.link(g_mount_unmount, "g_mount_unmount", LIBRARY.GIO);
+	Linker.link(g_mount_unmount_finish, "g_mount_unmount_finish", LIBRARY.GIO);
+	Linker.link(g_mount_remount, "g_mount_remount", LIBRARY.GIO);
+	Linker.link(g_mount_remount_finish, "g_mount_remount_finish", LIBRARY.GIO);
+	Linker.link(g_mount_can_eject, "g_mount_can_eject", LIBRARY.GIO);
+	Linker.link(g_mount_eject, "g_mount_eject", LIBRARY.GIO);
+	Linker.link(g_mount_eject_finish, "g_mount_eject_finish", LIBRARY.GIO);
+	Linker.link(g_mount_guess_content_type, "g_mount_guess_content_type", LIBRARY.GIO);
+	Linker.link(g_mount_guess_content_type_finish, "g_mount_guess_content_type_finish", LIBRARY.GIO);
+	Linker.link(g_mount_guess_content_type_sync, "g_mount_guess_content_type_sync", LIBRARY.GIO);
+
+	// gio.Mount
+
+
+	// gio.DriveT
+
+
+	// gio.DriveT
+
+	Linker.link(g_drive_get_name, "g_drive_get_name", LIBRARY.GIO);
+	Linker.link(g_drive_get_icon, "g_drive_get_icon", LIBRARY.GIO);
+	Linker.link(g_drive_has_volumes, "g_drive_has_volumes", LIBRARY.GIO);
+	Linker.link(g_drive_get_volumes, "g_drive_get_volumes", LIBRARY.GIO);
+	Linker.link(g_drive_can_eject, "g_drive_can_eject", LIBRARY.GIO);
+	Linker.link(g_drive_can_poll_for_media, "g_drive_can_poll_for_media", LIBRARY.GIO);
+	Linker.link(g_drive_poll_for_media, "g_drive_poll_for_media", LIBRARY.GIO);
+	Linker.link(g_drive_poll_for_media_finish, "g_drive_poll_for_media_finish", LIBRARY.GIO);
+	Linker.link(g_drive_has_media, "g_drive_has_media", LIBRARY.GIO);
+	Linker.link(g_drive_is_media_check_automatic, "g_drive_is_media_check_automatic", LIBRARY.GIO);
+	Linker.link(g_drive_is_media_removable, "g_drive_is_media_removable", LIBRARY.GIO);
+	Linker.link(g_drive_eject, "g_drive_eject", LIBRARY.GIO);
+	Linker.link(g_drive_eject_finish, "g_drive_eject_finish", LIBRARY.GIO);
+	Linker.link(g_drive_enumerate_identifiers, "g_drive_enumerate_identifiers", LIBRARY.GIO);
+	Linker.link(g_drive_get_identifier, "g_drive_get_identifier", LIBRARY.GIO);
+
+	// gio.Drive
+
+
+	// gio.UnixMountEntry
+
+	Linker.link(g_unix_mount_free, "g_unix_mount_free", LIBRARY.GIO);
+	Linker.link(g_unix_mount_compare, "g_unix_mount_compare", LIBRARY.GIO);
+	Linker.link(g_unix_mount_get_mount_path, "g_unix_mount_get_mount_path", LIBRARY.GIO);
+	Linker.link(g_unix_mount_get_device_path, "g_unix_mount_get_device_path", LIBRARY.GIO);
+	Linker.link(g_unix_mount_get_fs_type, "g_unix_mount_get_fs_type", LIBRARY.GIO);
+	Linker.link(g_unix_mount_is_readonly, "g_unix_mount_is_readonly", LIBRARY.GIO);
+	Linker.link(g_unix_mount_is_system_internal, "g_unix_mount_is_system_internal", LIBRARY.GIO);
+	Linker.link(g_unix_mount_guess_icon, "g_unix_mount_guess_icon", LIBRARY.GIO);
+	Linker.link(g_unix_mount_guess_name, "g_unix_mount_guess_name", LIBRARY.GIO);
+	Linker.link(g_unix_mount_guess_can_eject, "g_unix_mount_guess_can_eject", LIBRARY.GIO);
+	Linker.link(g_unix_mount_guess_should_display, "g_unix_mount_guess_should_display", LIBRARY.GIO);
+	Linker.link(g_unix_mount_points_get, "g_unix_mount_points_get", LIBRARY.GIO);
+	Linker.link(g_unix_mounts_get, "g_unix_mounts_get", LIBRARY.GIO);
+	Linker.link(g_unix_mount_at, "g_unix_mount_at", LIBRARY.GIO);
+	Linker.link(g_unix_mounts_changed_since, "g_unix_mounts_changed_since", LIBRARY.GIO);
+	Linker.link(g_unix_mount_points_changed_since, "g_unix_mount_points_changed_since", LIBRARY.GIO);
+	Linker.link(g_unix_is_mount_path_system_internal, "g_unix_is_mount_path_system_internal", LIBRARY.GIO);
+
+	// gio.UnixMountPoint
+
+	Linker.link(g_unix_mount_point_free, "g_unix_mount_point_free", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_compare, "g_unix_mount_point_compare", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_get_mount_path, "g_unix_mount_point_get_mount_path", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_get_device_path, "g_unix_mount_point_get_device_path", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_get_fs_type, "g_unix_mount_point_get_fs_type", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_is_readonly, "g_unix_mount_point_is_readonly", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_is_user_mountable, "g_unix_mount_point_is_user_mountable", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_is_loopback, "g_unix_mount_point_is_loopback", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_guess_icon, "g_unix_mount_point_guess_icon", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_guess_name, "g_unix_mount_point_guess_name", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_guess_can_eject, "g_unix_mount_point_guess_can_eject", LIBRARY.GIO);
+
+	// gio.UnixMountMonitor
+
+	Linker.link(g_unix_mount_monitor_new, "g_unix_mount_monitor_new", LIBRARY.GIO);
+	Linker.link(g_unix_mount_monitor_set_rate_limit, "g_unix_mount_monitor_set_rate_limit", LIBRARY.GIO);
+
+	// gio.IconT
+
+
+	// gio.IconT
+
+	Linker.link(g_icon_hash, "g_icon_hash", LIBRARY.GIO);
+	Linker.link(g_icon_equal, "g_icon_equal", LIBRARY.GIO);
+
+	// gio.Icon
+
+
+	// gio.FileIcon
+
+	Linker.link(g_file_icon_new, "g_file_icon_new", LIBRARY.GIO);
+	Linker.link(g_file_icon_get_file, "g_file_icon_get_file", LIBRARY.GIO);
+
+	// gio.LoadableIconT
+
+
+	// gio.LoadableIconT
+
+	Linker.link(g_loadable_icon_load, "g_loadable_icon_load", LIBRARY.GIO);
+	Linker.link(g_loadable_icon_load_async, "g_loadable_icon_load_async", LIBRARY.GIO);
+	Linker.link(g_loadable_icon_load_finish, "g_loadable_icon_load_finish", LIBRARY.GIO);
+
+	// gio.ThemedIcon
+
+	Linker.link(g_themed_icon_new, "g_themed_icon_new", LIBRARY.GIO);
+	Linker.link(g_themed_icon_new_from_names, "g_themed_icon_new_from_names", LIBRARY.GIO);
+	Linker.link(g_themed_icon_new_with_default_fallbacks, "g_themed_icon_new_with_default_fallbacks", LIBRARY.GIO);
+	Linker.link(g_themed_icon_prepend_name, "g_themed_icon_prepend_name", LIBRARY.GIO);
+	Linker.link(g_themed_icon_append_name, "g_themed_icon_append_name", LIBRARY.GIO);
+
+	// gio.EmblemedIcon
+
+	Linker.link(g_emblemed_icon_new, "g_emblemed_icon_new", LIBRARY.GIO);
+	Linker.link(g_emblemed_icon_get_icon, "g_emblemed_icon_get_icon", LIBRARY.GIO);
+	Linker.link(g_emblemed_icon_get_emblems, "g_emblemed_icon_get_emblems", LIBRARY.GIO);
+	Linker.link(g_emblemed_icon_add_emblem, "g_emblemed_icon_add_emblem", LIBRARY.GIO);
+
+	// gio.Emblem
+
+	Linker.link(g_emblem_new, "g_emblem_new", LIBRARY.GIO);
+	Linker.link(g_emblem_new_with_origin, "g_emblem_new_with_origin", LIBRARY.GIO);
+	Linker.link(g_emblem_get_icon, "g_emblem_get_icon", LIBRARY.GIO);
+	Linker.link(g_emblem_get_origin, "g_emblem_get_origin", LIBRARY.GIO);
+
+	// gio.FilenameCompleter
+
+	Linker.link(g_filename_completer_new, "g_filename_completer_new", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_completion_suffix, "g_filename_completer_get_completion_suffix", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_completions, "g_filename_completer_get_completions", LIBRARY.GIO);
+	Linker.link(g_filename_completer_set_dirs_only, "g_filename_completer_set_dirs_only", LIBRARY.GIO);
+
+	// gio.Vfs
+
+	Linker.link(g_vfs_get_file_for_path, "g_vfs_get_file_for_path", LIBRARY.GIO);
+	Linker.link(g_vfs_get_file_for_uri, "g_vfs_get_file_for_uri", LIBRARY.GIO);
+	Linker.link(g_vfs_parse_name, "g_vfs_parse_name", LIBRARY.GIO);
+	Linker.link(g_vfs_get_default, "g_vfs_get_default", LIBRARY.GIO);
+	Linker.link(g_vfs_get_local, "g_vfs_get_local", LIBRARY.GIO);
+	Linker.link(g_vfs_is_active, "g_vfs_is_active", LIBRARY.GIO);
+	Linker.link(g_vfs_get_supported_uri_schemes, "g_vfs_get_supported_uri_schemes", LIBRARY.GIO);
+
+	// gio.IOModule
+
+	Linker.link(g_io_module_new, "g_io_module_new", LIBRARY.GIO);
+	Linker.link(g_io_modules_load_all_in_directory, "g_io_modules_load_all_in_directory", LIBRARY.GIO);
+	Linker.link(g_io_module_load, "g_io_module_load", LIBRARY.GIO);
+	Linker.link(g_io_module_unload, "g_io_module_unload", LIBRARY.GIO);
+
+	// gio.IOExtension
+
+	Linker.link(g_io_extension_get_name, "g_io_extension_get_name", LIBRARY.GIO);
+	Linker.link(g_io_extension_get_priority, "g_io_extension_get_priority", LIBRARY.GIO);
+	Linker.link(g_io_extension_get_type, "g_io_extension_get_type", LIBRARY.GIO);
+	Linker.link(g_io_extension_ref_class, "g_io_extension_ref_class", LIBRARY.GIO);
+
+	// gio.IOExtensionPoint
+
+	Linker.link(g_io_extension_point_get_extension_by_name, "g_io_extension_point_get_extension_by_name", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_get_extensions, "g_io_extension_point_get_extensions", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_get_required_type, "g_io_extension_point_get_required_type", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_implement, "g_io_extension_point_implement", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_lookup, "g_io_extension_point_lookup", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_register, "g_io_extension_point_register", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_set_required_type, "g_io_extension_point_set_required_type", LIBRARY.GIO);
 }
 
-static ~this()
+extern(C)
 {
- delete gio_Linker;
-
- debug
- {
- 	version(Tango) Stdout("* Finished static ~this(): gio").newline;
- 	else writefln("* Finished static ~this(): gio");
- }
-}
-
-extern(C) 
-{	
+	
 	// gio.File
 	
-	GFile* function(char* path)g_file_new_for_path;
-	GFile* function(char* uri)g_file_new_for_uri;
-	GFile* function(char* arg)g_file_new_for_commandline_arg;
-	GFile* function(char* parseName)g_file_parse_name;
-	GFile* function(GFile* file)g_file_dup;
-	guint function(gconstpointer file)g_file_hash;
-	gboolean function(GFile* file1, GFile* file2)g_file_equal;
-	char* function(GFile* file)g_file_get_basename;
-	char* function(GFile* file)g_file_get_path;
-	char* function(GFile* file)g_file_get_uri;
-	char* function(GFile* file)g_file_get_parse_name;
-	GFile* function(GFile* file)g_file_get_parent;
-	GFile* function(GFile* file, char* name)g_file_get_child;
-	GFile* function(GFile* file, char* displayName, GError** error)g_file_get_child_for_display_name;
-	gboolean function(GFile* file, GFile* prefix)g_file_has_prefix;
-	char* function(GFile* parent, GFile* descendant)g_file_get_relative_path;
-	GFile* function(GFile* file, char* relativePath)g_file_resolve_relative_path;
-	gboolean function(GFile* file)g_file_is_native;
-	gboolean function(GFile* file, char* uriScheme)g_file_has_uri_scheme;
-	char* function(GFile* file)g_file_get_uri_scheme;
-	GFileInputStream* function(GFile* file, GCancellable* cancellable, GError** error)g_file_read;
-	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_read_async;
-	GFileInputStream* function(GFile* file, GAsyncResult* res, GError** error)g_file_read_finish;
-	GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error)g_file_append_to;
-	GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error)g_file_create;
-	GFileOutputStream* function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error)g_file_replace;
-	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_append_to_async;
-	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error)g_file_append_to_finish;
-	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_create_async;
-	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error)g_file_create_finish;
-	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_replace_async;
-	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error)g_file_replace_finish;
-	GFileInfo* function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_query_info;
-	void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_query_info_async;
-	GFileInfo* function(GFile* file, GAsyncResult* res, GError** error)g_file_query_info_finish;
-	gboolean function(GFile* file, GCancellable* cancellable)g_file_query_exists;
-	GFileType function(GFile* file, GFileQueryInfoFlags flags, GCancellable* cancellable)g_file_query_file_type;
-	GFileInfo* function(GFile* file, char* attributes, GCancellable* cancellable, GError** error)g_file_query_filesystem_info;
-	void function(GFile* file, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_query_filesystem_info_async;
-	GFileInfo* function(GFile* file, GAsyncResult* res, GError** error)g_file_query_filesystem_info_finish;
-	GAppInfo* function(GFile* file, GCancellable* cancellable, GError** error)g_file_query_default_handler;
-	GMount* function(GFile* file, GCancellable* cancellable, GError** error)g_file_find_enclosing_mount;
-	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_find_enclosing_mount_async;
-	GMount* function(GFile* file, GAsyncResult* res, GError** error)g_file_find_enclosing_mount_finish;
-	GFileEnumerator* function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_enumerate_children;
-	void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_enumerate_children_async;
-	GFileEnumerator* function(GFile* file, GAsyncResult* res, GError** error)g_file_enumerate_children_finish;
-	GFile* function(GFile* file, char* displayName, GCancellable* cancellable, GError** error)g_file_set_display_name;
-	void function(GFile* file, char* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_set_display_name_async;
-	GFile* function(GFile* file, GAsyncResult* res, GError** error)g_file_set_display_name_finish;
-	gboolean function(GFile* file, GCancellable* cancellable, GError** error)g_file_delete;
-	gboolean function(GFile* file, GCancellable* cancellable, GError** error)g_file_trash;
-	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GError** error)g_file_copy;
-	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GAsyncReadyCallback callback, gpointer userData)g_file_copy_async;
-	gboolean function(GFile* file, GAsyncResult* res, GError** error)g_file_copy_finish;
-	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GError** error)g_file_move;
-	gboolean function(GFile* file, GCancellable* cancellable, GError** error)g_file_make_directory;
-	gboolean function(GFile* file, GCancellable* cancellable, GError** error)g_file_make_directory_with_parents;
-	gboolean function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** error)g_file_make_symbolic_link;
-	GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error)g_file_query_settable_attributes;
-	GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error)g_file_query_writable_namespaces;
-	gboolean function(GFile* file, char* attribute, GFileAttributeType type, gpointer valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute;
-	gboolean function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attributes_from_info;
-	void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_set_attributes_async;
-	gboolean function(GFile* file, GAsyncResult* result, GFileInfo** info, GError** error)g_file_set_attributes_finish;
-	gboolean function(GFile* file, char* attribute, char* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute_string;
-	gboolean function(GFile* file, char* attribute, char* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute_byte_string;
-	gboolean function(GFile* file, char* attribute, guint32 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute_uint32;
-	gboolean function(GFile* file, char* attribute, gint32 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute_int32;
-	gboolean function(GFile* file, char* attribute, guint64 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute_uint64;
-	gboolean function(GFile* file, char* attribute, gint64 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)g_file_set_attribute_int64;
-	void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_mount_mountable;
-	GFile* function(GFile* file, GAsyncResult* result, GError** error)g_file_mount_mountable_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_unmount_mountable;
-	gboolean function(GFile* file, GAsyncResult* result, GError** error)g_file_unmount_mountable_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_eject_mountable;
-	gboolean function(GFile* file, GAsyncResult* result, GError** error)g_file_eject_mountable_finish;
-	void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_mount_enclosing_volume;
-	gboolean function(GFile* location, GAsyncResult* result, GError** error)g_file_mount_enclosing_volume_finish;
-	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error)g_file_monitor_directory;
-	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error)g_file_monitor_file;
-	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error)g_file_monitor;
-	gboolean function(GFile* file, GCancellable* cancellable, char** contents, gsize* length, char** etagOut, GError** error)g_file_load_contents;
-	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_load_contents_async;
-	gboolean function(GFile* file, GAsyncResult* res, char** contents, gsize* length, char** etagOut, GError** error)g_file_load_contents_finish;
-	void function(GFile* file, GCancellable* cancellable, GFileReadMoreCallback readMoreCallback, GAsyncReadyCallback callback, gpointer userData)g_file_load_partial_contents_async;
-	gboolean function(GFile* file, GAsyncResult* res, char** contents, gsize* length, char** etagOut, GError** error)g_file_load_partial_contents_finish;
-	gboolean function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, char** newEtag, GCancellable* cancellable, GError** error)g_file_replace_contents;
-	void function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_replace_contents_async;
-	gboolean function(GFile* file, GAsyncResult* res, char** newEtag, GError** error)g_file_replace_contents_finish;
-	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GError** error)g_file_copy_attributes;
+	typedef GFile* function(char* path) c_g_file_new_for_path;
+	typedef GFile* function(char* uri) c_g_file_new_for_uri;
+	typedef GFile* function(char* arg) c_g_file_new_for_commandline_arg;
+	typedef GFile* function(char* parseName) c_g_file_parse_name;
+	typedef GFile* function(GFile* file) c_g_file_dup;
+	typedef guint function(gconstpointer file) c_g_file_hash;
+	typedef gboolean function(GFile* file1, GFile* file2) c_g_file_equal;
+	typedef char* function(GFile* file) c_g_file_get_basename;
+	typedef char* function(GFile* file) c_g_file_get_path;
+	typedef char* function(GFile* file) c_g_file_get_uri;
+	typedef char* function(GFile* file) c_g_file_get_parse_name;
+	typedef GFile* function(GFile* file) c_g_file_get_parent;
+	typedef GFile* function(GFile* file, char* name) c_g_file_get_child;
+	typedef GFile* function(GFile* file, char* displayName, GError** error) c_g_file_get_child_for_display_name;
+	typedef gboolean function(GFile* file, GFile* prefix) c_g_file_has_prefix;
+	typedef char* function(GFile* parent, GFile* descendant) c_g_file_get_relative_path;
+	typedef GFile* function(GFile* file, char* relativePath) c_g_file_resolve_relative_path;
+	typedef gboolean function(GFile* file) c_g_file_is_native;
+	typedef gboolean function(GFile* file, char* uriScheme) c_g_file_has_uri_scheme;
+	typedef char* function(GFile* file) c_g_file_get_uri_scheme;
+	typedef GFileInputStream* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_read;
+	typedef void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_read_async;
+	typedef GFileInputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_read_finish;
+	typedef GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_append_to;
+	typedef GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_create;
+	typedef GFileOutputStream* function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_replace;
+	typedef void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_append_to_async;
+	typedef GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_append_to_finish;
+	typedef void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_create_async;
+	typedef GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_create_finish;
+	typedef void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_async;
+	typedef GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_replace_finish;
+	typedef GFileInfo* function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_query_info;
+	typedef void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_query_info_async;
+	typedef GFileInfo* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_query_info_finish;
+	typedef gboolean function(GFile* file, GCancellable* cancellable) c_g_file_query_exists;
+	typedef GFileType function(GFile* file, GFileQueryInfoFlags flags, GCancellable* cancellable) c_g_file_query_file_type;
+	typedef GFileInfo* function(GFile* file, char* attributes, GCancellable* cancellable, GError** error) c_g_file_query_filesystem_info;
+	typedef void function(GFile* file, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_query_filesystem_info_async;
+	typedef GFileInfo* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_query_filesystem_info_finish;
+	typedef GAppInfo* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_default_handler;
+	typedef GMount* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_find_enclosing_mount;
+	typedef void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_find_enclosing_mount_async;
+	typedef GMount* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_find_enclosing_mount_finish;
+	typedef GFileEnumerator* function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_enumerate_children;
+	typedef void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerate_children_async;
+	typedef GFileEnumerator* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_enumerate_children_finish;
+	typedef GFile* function(GFile* file, char* displayName, GCancellable* cancellable, GError** error) c_g_file_set_display_name;
+	typedef void function(GFile* file, char* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_set_display_name_async;
+	typedef GFile* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_set_display_name_finish;
+	typedef gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_delete;
+	typedef gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_trash;
+	typedef gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GError** error) c_g_file_copy;
+	typedef void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GAsyncReadyCallback callback, gpointer userData) c_g_file_copy_async;
+	typedef gboolean function(GFile* file, GAsyncResult* res, GError** error) c_g_file_copy_finish;
+	typedef gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GError** error) c_g_file_move;
+	typedef gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_make_directory;
+	typedef gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_make_directory_with_parents;
+	typedef gboolean function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** error) c_g_file_make_symbolic_link;
+	typedef GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_settable_attributes;
+	typedef GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_writable_namespaces;
+	typedef gboolean function(GFile* file, char* attribute, GFileAttributeType type, gpointer valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute;
+	typedef gboolean function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attributes_from_info;
+	typedef void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_set_attributes_async;
+	typedef gboolean function(GFile* file, GAsyncResult* result, GFileInfo** info, GError** error) c_g_file_set_attributes_finish;
+	typedef gboolean function(GFile* file, char* attribute, char* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_string;
+	typedef gboolean function(GFile* file, char* attribute, char* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_byte_string;
+	typedef gboolean function(GFile* file, char* attribute, guint32 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_uint32;
+	typedef gboolean function(GFile* file, char* attribute, gint32 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_int32;
+	typedef gboolean function(GFile* file, char* attribute, guint64 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_uint64;
+	typedef gboolean function(GFile* file, char* attribute, gint64 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_int64;
+	typedef void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_mount_mountable;
+	typedef GFile* function(GFile* file, GAsyncResult* result, GError** error) c_g_file_mount_mountable_finish;
+	typedef void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_unmount_mountable;
+	typedef gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_unmount_mountable_finish;
+	typedef void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_eject_mountable;
+	typedef gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_eject_mountable_finish;
+	typedef void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_mount_enclosing_volume;
+	typedef gboolean function(GFile* location, GAsyncResult* result, GError** error) c_g_file_mount_enclosing_volume_finish;
+	typedef GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor_directory;
+	typedef GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor_file;
+	typedef GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor;
+	typedef gboolean function(GFile* file, GCancellable* cancellable, char** contents, gsize* length, char** etagOut, GError** error) c_g_file_load_contents;
+	typedef void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_load_contents_async;
+	typedef gboolean function(GFile* file, GAsyncResult* res, char** contents, gsize* length, char** etagOut, GError** error) c_g_file_load_contents_finish;
+	typedef void function(GFile* file, GCancellable* cancellable, GFileReadMoreCallback readMoreCallback, GAsyncReadyCallback callback, gpointer userData) c_g_file_load_partial_contents_async;
+	typedef gboolean function(GFile* file, GAsyncResult* res, char** contents, gsize* length, char** etagOut, GError** error) c_g_file_load_partial_contents_finish;
+	typedef gboolean function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, char** newEtag, GCancellable* cancellable, GError** error) c_g_file_replace_contents;
+	typedef void function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_contents_async;
+	typedef gboolean function(GFile* file, GAsyncResult* res, char** newEtag, GError** error) c_g_file_replace_contents_finish;
+	typedef gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GError** error) c_g_file_copy_attributes;
 	
 	// gio.FileAttributeInfoList
 	
-	GFileAttributeInfoList* function()g_file_attribute_info_list_new;
-	GFileAttributeInfoList* function(GFileAttributeInfoList* list)g_file_attribute_info_list_ref;
-	void function(GFileAttributeInfoList* list)g_file_attribute_info_list_unref;
-	GFileAttributeInfoList* function(GFileAttributeInfoList* list)g_file_attribute_info_list_dup;
-	GFileAttributeInfo* function(GFileAttributeInfoList* list, char* name)g_file_attribute_info_list_lookup;
-	void function(GFileAttributeInfoList* list, char* name, GFileAttributeType type, GFileAttributeInfoFlags flags)g_file_attribute_info_list_add;
+	typedef GFileAttributeInfoList* function() c_g_file_attribute_info_list_new;
+	typedef GFileAttributeInfoList* function(GFileAttributeInfoList* list) c_g_file_attribute_info_list_ref;
+	typedef void function(GFileAttributeInfoList* list) c_g_file_attribute_info_list_unref;
+	typedef GFileAttributeInfoList* function(GFileAttributeInfoList* list) c_g_file_attribute_info_list_dup;
+	typedef GFileAttributeInfo* function(GFileAttributeInfoList* list, char* name) c_g_file_attribute_info_list_lookup;
+	typedef void function(GFileAttributeInfoList* list, char* name, GFileAttributeType type, GFileAttributeInfoFlags flags) c_g_file_attribute_info_list_add;
 	
 	// gio.FileInfo
 	
-	GFileInfo* function()g_file_info_new;
-	GFileInfo* function(GFileInfo* other)g_file_info_dup;
-	void function(GFileInfo* srcInfo, GFileInfo* destInfo)g_file_info_copy_into;
-	gboolean function(GFileInfo* info, char* attribute)g_file_info_has_attribute;
-	char** function(GFileInfo* info, char* nameSpace)g_file_info_list_attributes;
-	GFileAttributeType function(GFileInfo* info, char* attribute)g_file_info_get_attribute_type;
-	void function(GFileInfo* info, char* attribute)g_file_info_remove_attribute;
-	char* function(GFileInfo* info, char* attribute)g_file_info_get_attribute_as_string;
-	gboolean function(GFileInfo* info, char* attribute, GFileAttributeType* type, gpointer* valuePp, GFileAttributeStatus* status)g_file_info_get_attribute_data;
-	GFileAttributeStatus function(GFileInfo* info, char* attribute)g_file_info_get_attribute_status;
-	char* function(GFileInfo* info, char* attribute)g_file_info_get_attribute_string;
-	char* function(GFileInfo* info, char* attribute)g_file_info_get_attribute_byte_string;
-	gboolean function(GFileInfo* info, char* attribute)g_file_info_get_attribute_boolean;
-	guint32 function(GFileInfo* info, char* attribute)g_file_info_get_attribute_uint32;
-	gint32 function(GFileInfo* info, char* attribute)g_file_info_get_attribute_int32;
-	guint64 function(GFileInfo* info, char* attribute)g_file_info_get_attribute_uint64;
-	gint64 function(GFileInfo* info, char* attribute)g_file_info_get_attribute_int64;
-	GObject* function(GFileInfo* info, char* attribute)g_file_info_get_attribute_object;
-	void function(GFileInfo* info, char* attribute, GFileAttributeType type, gpointer valueP)g_file_info_set_attribute;
-	void function(GFileInfo* info, char* attribute, char* attrValue)g_file_info_set_attribute_string;
-	void function(GFileInfo* info, char* attribute, char* attrValue)g_file_info_set_attribute_byte_string;
-	void function(GFileInfo* info, char* attribute, gboolean attrValue)g_file_info_set_attribute_boolean;
-	void function(GFileInfo* info, char* attribute, guint32 attrValue)g_file_info_set_attribute_uint32;
-	void function(GFileInfo* info, char* attribute, gint32 attrValue)g_file_info_set_attribute_int32;
-	void function(GFileInfo* info, char* attribute, guint64 attrValue)g_file_info_set_attribute_uint64;
-	void function(GFileInfo* info, char* attribute, gint64 attrValue)g_file_info_set_attribute_int64;
-	void function(GFileInfo* info, char* attribute, GObject* attrValue)g_file_info_set_attribute_object;
-	void function(GFileInfo* info)g_file_info_clear_status;
-	GFileType function(GFileInfo* info)g_file_info_get_file_type;
-	gboolean function(GFileInfo* info)g_file_info_get_is_hidden;
-	gboolean function(GFileInfo* info)g_file_info_get_is_backup;
-	gboolean function(GFileInfo* info)g_file_info_get_is_symlink;
-	char* function(GFileInfo* info)g_file_info_get_name;
-	char* function(GFileInfo* info)g_file_info_get_display_name;
-	char* function(GFileInfo* info)g_file_info_get_edit_name;
-	GIcon* function(GFileInfo* info)g_file_info_get_icon;
-	char* function(GFileInfo* info)g_file_info_get_content_type;
-	goffset function(GFileInfo* info)g_file_info_get_size;
-	void function(GFileInfo* info, GTimeVal* result)g_file_info_get_modification_time;
-	char* function(GFileInfo* info)g_file_info_get_symlink_target;
-	char* function(GFileInfo* info)g_file_info_get_etag;
-	gint32 function(GFileInfo* info)g_file_info_get_sort_order;
-	void function(GFileInfo* info, GFileAttributeMatcher* mask)g_file_info_set_attribute_mask;
-	void function(GFileInfo* info)g_file_info_unset_attribute_mask;
-	void function(GFileInfo* info, GFileType type)g_file_info_set_file_type;
-	void function(GFileInfo* info, gboolean isHidden)g_file_info_set_is_hidden;
-	void function(GFileInfo* info, gboolean isSymlink)g_file_info_set_is_symlink;
-	void function(GFileInfo* info, char* name)g_file_info_set_name;
-	void function(GFileInfo* info, char* displayName)g_file_info_set_display_name;
-	void function(GFileInfo* info, char* editName)g_file_info_set_edit_name;
-	void function(GFileInfo* info, GIcon* icon)g_file_info_set_icon;
-	void function(GFileInfo* info, char* contentType)g_file_info_set_content_type;
-	void function(GFileInfo* info, goffset size)g_file_info_set_size;
-	void function(GFileInfo* info, GTimeVal* mtime)g_file_info_set_modification_time;
-	void function(GFileInfo* info, char* symlinkTarget)g_file_info_set_symlink_target;
-	void function(GFileInfo* info, gint32 sortOrder)g_file_info_set_sort_order;
+	typedef GFileInfo* function() c_g_file_info_new;
+	typedef GFileInfo* function(GFileInfo* other) c_g_file_info_dup;
+	typedef void function(GFileInfo* srcInfo, GFileInfo* destInfo) c_g_file_info_copy_into;
+	typedef gboolean function(GFileInfo* info, char* attribute) c_g_file_info_has_attribute;
+	typedef char** function(GFileInfo* info, char* nameSpace) c_g_file_info_list_attributes;
+	typedef GFileAttributeType function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_type;
+	typedef void function(GFileInfo* info, char* attribute) c_g_file_info_remove_attribute;
+	typedef char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_as_string;
+	typedef gboolean function(GFileInfo* info, char* attribute, GFileAttributeType* type, gpointer* valuePp, GFileAttributeStatus* status) c_g_file_info_get_attribute_data;
+	typedef GFileAttributeStatus function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_status;
+	typedef char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_string;
+	typedef char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_byte_string;
+	typedef gboolean function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_boolean;
+	typedef guint32 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_uint32;
+	typedef gint32 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_int32;
+	typedef guint64 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_uint64;
+	typedef gint64 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_int64;
+	typedef GObject* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_object;
+	typedef void function(GFileInfo* info, char* attribute, GFileAttributeType type, gpointer valueP) c_g_file_info_set_attribute;
+	typedef void function(GFileInfo* info, char* attribute, char* attrValue) c_g_file_info_set_attribute_string;
+	typedef void function(GFileInfo* info, char* attribute, char* attrValue) c_g_file_info_set_attribute_byte_string;
+	typedef void function(GFileInfo* info, char* attribute, gboolean attrValue) c_g_file_info_set_attribute_boolean;
+	typedef void function(GFileInfo* info, char* attribute, guint32 attrValue) c_g_file_info_set_attribute_uint32;
+	typedef void function(GFileInfo* info, char* attribute, gint32 attrValue) c_g_file_info_set_attribute_int32;
+	typedef void function(GFileInfo* info, char* attribute, guint64 attrValue) c_g_file_info_set_attribute_uint64;
+	typedef void function(GFileInfo* info, char* attribute, gint64 attrValue) c_g_file_info_set_attribute_int64;
+	typedef void function(GFileInfo* info, char* attribute, GObject* attrValue) c_g_file_info_set_attribute_object;
+	typedef void function(GFileInfo* info) c_g_file_info_clear_status;
+	typedef GFileType function(GFileInfo* info) c_g_file_info_get_file_type;
+	typedef gboolean function(GFileInfo* info) c_g_file_info_get_is_hidden;
+	typedef gboolean function(GFileInfo* info) c_g_file_info_get_is_backup;
+	typedef gboolean function(GFileInfo* info) c_g_file_info_get_is_symlink;
+	typedef char* function(GFileInfo* info) c_g_file_info_get_name;
+	typedef char* function(GFileInfo* info) c_g_file_info_get_display_name;
+	typedef char* function(GFileInfo* info) c_g_file_info_get_edit_name;
+	typedef GIcon* function(GFileInfo* info) c_g_file_info_get_icon;
+	typedef char* function(GFileInfo* info) c_g_file_info_get_content_type;
+	typedef goffset function(GFileInfo* info) c_g_file_info_get_size;
+	typedef void function(GFileInfo* info, GTimeVal* result) c_g_file_info_get_modification_time;
+	typedef char* function(GFileInfo* info) c_g_file_info_get_symlink_target;
+	typedef char* function(GFileInfo* info) c_g_file_info_get_etag;
+	typedef gint32 function(GFileInfo* info) c_g_file_info_get_sort_order;
+	typedef void function(GFileInfo* info, GFileAttributeMatcher* mask) c_g_file_info_set_attribute_mask;
+	typedef void function(GFileInfo* info) c_g_file_info_unset_attribute_mask;
+	typedef void function(GFileInfo* info, GFileType type) c_g_file_info_set_file_type;
+	typedef void function(GFileInfo* info, gboolean isHidden) c_g_file_info_set_is_hidden;
+	typedef void function(GFileInfo* info, gboolean isSymlink) c_g_file_info_set_is_symlink;
+	typedef void function(GFileInfo* info, char* name) c_g_file_info_set_name;
+	typedef void function(GFileInfo* info, char* displayName) c_g_file_info_set_display_name;
+	typedef void function(GFileInfo* info, char* editName) c_g_file_info_set_edit_name;
+	typedef void function(GFileInfo* info, GIcon* icon) c_g_file_info_set_icon;
+	typedef void function(GFileInfo* info, char* contentType) c_g_file_info_set_content_type;
+	typedef void function(GFileInfo* info, goffset size) c_g_file_info_set_size;
+	typedef void function(GFileInfo* info, GTimeVal* mtime) c_g_file_info_set_modification_time;
+	typedef void function(GFileInfo* info, char* symlinkTarget) c_g_file_info_set_symlink_target;
+	typedef void function(GFileInfo* info, gint32 sortOrder) c_g_file_info_set_sort_order;
 	
 	// gio.FileAttributeMatcher
 	
-	GFileAttributeMatcher* function(char* attributes)g_file_attribute_matcher_new;
-	GFileAttributeMatcher* function(GFileAttributeMatcher* matcher)g_file_attribute_matcher_ref;
-	void function(GFileAttributeMatcher* matcher)g_file_attribute_matcher_unref;
-	gboolean function(GFileAttributeMatcher* matcher, char* attribute)g_file_attribute_matcher_matches;
-	gboolean function(GFileAttributeMatcher* matcher, char* attribute)g_file_attribute_matcher_matches_only;
-	gboolean function(GFileAttributeMatcher* matcher, char* ns)g_file_attribute_matcher_enumerate_namespace;
-	char* function(GFileAttributeMatcher* matcher)g_file_attribute_matcher_enumerate_next;
+	typedef GFileAttributeMatcher* function(char* attributes) c_g_file_attribute_matcher_new;
+	typedef GFileAttributeMatcher* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_ref;
+	typedef void function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_unref;
+	typedef gboolean function(GFileAttributeMatcher* matcher, char* attribute) c_g_file_attribute_matcher_matches;
+	typedef gboolean function(GFileAttributeMatcher* matcher, char* attribute) c_g_file_attribute_matcher_matches_only;
+	typedef gboolean function(GFileAttributeMatcher* matcher, char* ns) c_g_file_attribute_matcher_enumerate_namespace;
+	typedef char* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_enumerate_next;
 	
 	// gio.FileEnumerator
 	
-	GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error)g_file_enumerator_next_file;
-	gboolean function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error)g_file_enumerator_close;
-	void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_enumerator_next_files_async;
-	GList* function(GFileEnumerator* enumerator, GAsyncResult* result, GError** error)g_file_enumerator_next_files_finish;
-	void function(GFileEnumerator* enumerator, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_enumerator_close_async;
-	gboolean function(GFileEnumerator* enumerator, GAsyncResult* result, GError** error)g_file_enumerator_close_finish;
-	gboolean function(GFileEnumerator* enumerator)g_file_enumerator_is_closed;
-	gboolean function(GFileEnumerator* enumerator)g_file_enumerator_has_pending;
-	void function(GFileEnumerator* enumerator, gboolean pending)g_file_enumerator_set_pending;
-	GFile* function(GFileEnumerator* enumerator)g_file_enumerator_get_container;
+	typedef GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_file_enumerator_next_file;
+	typedef gboolean function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_file_enumerator_close;
+	typedef void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerator_next_files_async;
+	typedef GList* function(GFileEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_file_enumerator_next_files_finish;
+	typedef void function(GFileEnumerator* enumerator, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerator_close_async;
+	typedef gboolean function(GFileEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_file_enumerator_close_finish;
+	typedef gboolean function(GFileEnumerator* enumerator) c_g_file_enumerator_is_closed;
+	typedef gboolean function(GFileEnumerator* enumerator) c_g_file_enumerator_has_pending;
+	typedef void function(GFileEnumerator* enumerator, gboolean pending) c_g_file_enumerator_set_pending;
+	typedef GFile* function(GFileEnumerator* enumerator) c_g_file_enumerator_get_container;
 	
 	// gio.MountOperation
 	
-	GMountOperation* function()g_mount_operation_new;
-	char* function(GMountOperation* op)g_mount_operation_get_username;
-	void function(GMountOperation* op, char* username)g_mount_operation_set_username;
-	char* function(GMountOperation* op)g_mount_operation_get_password;
-	void function(GMountOperation* op, char* password)g_mount_operation_set_password;
-	gboolean function(GMountOperation* op)g_mount_operation_get_anonymous;
-	void function(GMountOperation* op, gboolean anonymous)g_mount_operation_set_anonymous;
-	char* function(GMountOperation* op)g_mount_operation_get_domain;
-	void function(GMountOperation* op, char* domain)g_mount_operation_set_domain;
-	GPasswordSave function(GMountOperation* op)g_mount_operation_get_password_save;
-	void function(GMountOperation* op, GPasswordSave save)g_mount_operation_set_password_save;
-	int function(GMountOperation* op)g_mount_operation_get_choice;
-	void function(GMountOperation* op, int choice)g_mount_operation_set_choice;
-	void function(GMountOperation* op, GMountOperationResult result)g_mount_operation_reply;
+	typedef GMountOperation* function() c_g_mount_operation_new;
+	typedef char* function(GMountOperation* op) c_g_mount_operation_get_username;
+	typedef void function(GMountOperation* op, char* username) c_g_mount_operation_set_username;
+	typedef char* function(GMountOperation* op) c_g_mount_operation_get_password;
+	typedef void function(GMountOperation* op, char* password) c_g_mount_operation_set_password;
+	typedef gboolean function(GMountOperation* op) c_g_mount_operation_get_anonymous;
+	typedef void function(GMountOperation* op, gboolean anonymous) c_g_mount_operation_set_anonymous;
+	typedef char* function(GMountOperation* op) c_g_mount_operation_get_domain;
+	typedef void function(GMountOperation* op, char* domain) c_g_mount_operation_set_domain;
+	typedef GPasswordSave function(GMountOperation* op) c_g_mount_operation_get_password_save;
+	typedef void function(GMountOperation* op, GPasswordSave save) c_g_mount_operation_set_password_save;
+	typedef int function(GMountOperation* op) c_g_mount_operation_get_choice;
+	typedef void function(GMountOperation* op, int choice) c_g_mount_operation_set_choice;
+	typedef void function(GMountOperation* op, GMountOperationResult result) c_g_mount_operation_reply;
 	
 	// gio.ErrorGIO
 	
-	GIOErrorEnum function(gint errNo)g_io_error_from_errno;
+	typedef GIOErrorEnum function(gint errNo) c_g_io_error_from_errno;
 	
 	// gio.FileMonitor
 	
-	gboolean function(GFileMonitor* monitor)g_file_monitor_cancel;
-	gboolean function(GFileMonitor* monitor)g_file_monitor_is_cancelled;
-	void function(GFileMonitor* monitor, int limitMsecs)g_file_monitor_set_rate_limit;
-	void function(GFileMonitor* monitor, GFile* child, GFile* otherFile, GFileMonitorEvent eventType)g_file_monitor_emit_event;
+	typedef gboolean function(GFileMonitor* monitor) c_g_file_monitor_cancel;
+	typedef gboolean function(GFileMonitor* monitor) c_g_file_monitor_is_cancelled;
+	typedef void function(GFileMonitor* monitor, int limitMsecs) c_g_file_monitor_set_rate_limit;
+	typedef void function(GFileMonitor* monitor, GFile* child, GFile* otherFile, GFileMonitorEvent eventType) c_g_file_monitor_emit_event;
 	
 	// gio.Cancellable
 	
-	GCancellable* function()g_cancellable_new;
-	gboolean function(GCancellable* cancellable)g_cancellable_is_cancelled;
-	gboolean function(GCancellable* cancellable, GError** error)g_cancellable_set_error_if_cancelled;
-	int function(GCancellable* cancellable)g_cancellable_get_fd;
-	GCancellable* function()g_cancellable_get_current;
-	void function(GCancellable* cancellable)g_cancellable_pop_current;
-	void function(GCancellable* cancellable)g_cancellable_push_current;
-	void function(GCancellable* cancellable)g_cancellable_reset;
-	void function(GCancellable* cancellable)g_cancellable_cancel;
+	typedef GCancellable* function() c_g_cancellable_new;
+	typedef gboolean function(GCancellable* cancellable) c_g_cancellable_is_cancelled;
+	typedef gboolean function(GCancellable* cancellable, GError** error) c_g_cancellable_set_error_if_cancelled;
+	typedef int function(GCancellable* cancellable) c_g_cancellable_get_fd;
+	typedef GCancellable* function() c_g_cancellable_get_current;
+	typedef void function(GCancellable* cancellable) c_g_cancellable_pop_current;
+	typedef void function(GCancellable* cancellable) c_g_cancellable_push_current;
+	typedef void function(GCancellable* cancellable) c_g_cancellable_reset;
+	typedef void function(GCancellable* cancellable) c_g_cancellable_cancel;
 	
 	// gio.AsyncResultT
 	
 	
 	// gio.AsyncResultT
 	
-	gpointer function(GAsyncResult* res)g_async_result_get_user_data;
-	GObject* function(GAsyncResult* res)g_async_result_get_source_object;
+	typedef gpointer function(GAsyncResult* res) c_g_async_result_get_user_data;
+	typedef GObject* function(GAsyncResult* res) c_g_async_result_get_source_object;
 	
 	// gio.IOSchedulerJob
 	
-	void function(GIOSchedulerJobFunc jobFunc, gpointer userData, GDestroyNotify notify, gint ioPriority, GCancellable* cancellable)g_io_scheduler_push_job;
-	void function()g_io_scheduler_cancel_all_jobs;
-	gboolean function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify)g_io_scheduler_job_send_to_mainloop;
-	void function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify)g_io_scheduler_job_send_to_mainloop_async;
+	typedef void function(GIOSchedulerJobFunc jobFunc, gpointer userData, GDestroyNotify notify, gint ioPriority, GCancellable* cancellable) c_g_io_scheduler_push_job;
+	typedef void function() c_g_io_scheduler_cancel_all_jobs;
+	typedef gboolean function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop;
+	typedef void function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop_async;
 	
 	// gio.SimpleAsyncResult
 	
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, gpointer sourceTag)g_simple_async_result_new;
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... )g_simple_async_result_new_error;
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GError* error)g_simple_async_result_new_from_error;
-	void function(GSimpleAsyncResult* simple, gpointer opRes, GDestroyNotify destroyOpRes)g_simple_async_result_set_op_res_gpointer;
-	gpointer function(GSimpleAsyncResult* simple)g_simple_async_result_get_op_res_gpointer;
-	void function(GSimpleAsyncResult* simple, gssize opRes)g_simple_async_result_set_op_res_gssize;
-	gssize function(GSimpleAsyncResult* simple)g_simple_async_result_get_op_res_gssize;
-	void function(GSimpleAsyncResult* simple, gboolean opRes)g_simple_async_result_set_op_res_gboolean;
-	gboolean function(GSimpleAsyncResult* simple)g_simple_async_result_get_op_res_gboolean;
-	gpointer function(GSimpleAsyncResult* simple)g_simple_async_result_get_source_tag;
-	void function(GSimpleAsyncResult* simple, gboolean handleCancellation)g_simple_async_result_set_handle_cancellation;
-	void function(GSimpleAsyncResult* simple)g_simple_async_result_complete;
-	void function(GSimpleAsyncResult* simple)g_simple_async_result_complete_in_idle;
-	void function(GSimpleAsyncResult* simple, GSimpleAsyncThreadFunc func, int ioPriority, GCancellable* cancellable)g_simple_async_result_run_in_thread;
-	void function(GSimpleAsyncResult* simple, GError* error)g_simple_async_result_set_from_error;
-	gboolean function(GSimpleAsyncResult* simple, GError** dest)g_simple_async_result_propagate_error;
-	void function(GSimpleAsyncResult* simple, GQuark domain, gint code, char* format, ... )g_simple_async_result_set_error;
-	void function(GSimpleAsyncResult* simple, GQuark domain, gint code, char* format, va_list args)g_simple_async_result_set_error_va;
-	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... )g_simple_async_report_error_in_idle;
-	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error)g_simple_async_report_gerror_in_idle;
+	typedef GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, gpointer sourceTag) c_g_simple_async_result_new;
+	typedef GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_new_error;
+	typedef GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_result_new_from_error;
+	typedef void function(GSimpleAsyncResult* simple, gpointer opRes, GDestroyNotify destroyOpRes) c_g_simple_async_result_set_op_res_gpointer;
+	typedef gpointer function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gpointer;
+	typedef void function(GSimpleAsyncResult* simple, gssize opRes) c_g_simple_async_result_set_op_res_gssize;
+	typedef gssize function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gssize;
+	typedef void function(GSimpleAsyncResult* simple, gboolean opRes) c_g_simple_async_result_set_op_res_gboolean;
+	typedef gboolean function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gboolean;
+	typedef gpointer function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_source_tag;
+	typedef void function(GSimpleAsyncResult* simple, gboolean handleCancellation) c_g_simple_async_result_set_handle_cancellation;
+	typedef void function(GSimpleAsyncResult* simple) c_g_simple_async_result_complete;
+	typedef void function(GSimpleAsyncResult* simple) c_g_simple_async_result_complete_in_idle;
+	typedef void function(GSimpleAsyncResult* simple, GSimpleAsyncThreadFunc func, int ioPriority, GCancellable* cancellable) c_g_simple_async_result_run_in_thread;
+	typedef void function(GSimpleAsyncResult* simple, GError* error) c_g_simple_async_result_set_from_error;
+	typedef gboolean function(GSimpleAsyncResult* simple, GError** dest) c_g_simple_async_result_propagate_error;
+	typedef void function(GSimpleAsyncResult* simple, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_set_error;
+	typedef void function(GSimpleAsyncResult* simple, GQuark domain, gint code, char* format, va_list args) c_g_simple_async_result_set_error_va;
+	typedef void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_report_error_in_idle;
+	typedef void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_report_gerror_in_idle;
 	
 	// gio.SeekableT
 	
 	
 	// gio.SeekableT
 	
-	goffset function(GSeekable* seekable)g_seekable_tell;
-	gboolean function(GSeekable* seekable)g_seekable_can_seek;
-	gboolean function(GSeekable* seekable, goffset offset, GSeekType type, GCancellable* cancellable, GError** error)g_seekable_seek;
-	gboolean function(GSeekable* seekable)g_seekable_can_truncate;
-	gboolean function(GSeekable* seekable, goffset offset, GCancellable* cancellable, GError** error)g_seekable_truncate;
+	typedef goffset function(GSeekable* seekable) c_g_seekable_tell;
+	typedef gboolean function(GSeekable* seekable) c_g_seekable_can_seek;
+	typedef gboolean function(GSeekable* seekable, goffset offset, GSeekType type, GCancellable* cancellable, GError** error) c_g_seekable_seek;
+	typedef gboolean function(GSeekable* seekable) c_g_seekable_can_truncate;
+	typedef gboolean function(GSeekable* seekable, goffset offset, GCancellable* cancellable, GError** error) c_g_seekable_truncate;
 	
 	// gio.InputStream
 	
-	gssize function(GInputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error)g_input_stream_read;
-	gboolean function(GInputStream* stream, void* buffer, gsize count, gsize* bytesRead, GCancellable* cancellable, GError** error)g_input_stream_read_all;
-	gssize function(GInputStream* stream, gsize count, GCancellable* cancellable, GError** error)g_input_stream_skip;
-	gboolean function(GInputStream* stream, GCancellable* cancellable, GError** error)g_input_stream_close;
-	void function(GInputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_input_stream_read_async;
-	gssize function(GInputStream* stream, GAsyncResult* result, GError** error)g_input_stream_read_finish;
-	void function(GInputStream* stream, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_input_stream_skip_async;
-	gssize function(GInputStream* stream, GAsyncResult* result, GError** error)g_input_stream_skip_finish;
-	void function(GInputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_input_stream_close_async;
-	gboolean function(GInputStream* stream, GAsyncResult* result, GError** error)g_input_stream_close_finish;
-	gboolean function(GInputStream* stream)g_input_stream_is_closed;
-	gboolean function(GInputStream* stream)g_input_stream_has_pending;
-	gboolean function(GInputStream* stream, GError** error)g_input_stream_set_pending;
-	void function(GInputStream* stream)g_input_stream_clear_pending;
+	typedef gssize function(GInputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error) c_g_input_stream_read;
+	typedef gboolean function(GInputStream* stream, void* buffer, gsize count, gsize* bytesRead, GCancellable* cancellable, GError** error) c_g_input_stream_read_all;
+	typedef gssize function(GInputStream* stream, gsize count, GCancellable* cancellable, GError** error) c_g_input_stream_skip;
+	typedef gboolean function(GInputStream* stream, GCancellable* cancellable, GError** error) c_g_input_stream_close;
+	typedef void function(GInputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_input_stream_read_async;
+	typedef gssize function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_read_finish;
+	typedef void function(GInputStream* stream, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_input_stream_skip_async;
+	typedef gssize function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_skip_finish;
+	typedef void function(GInputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_input_stream_close_async;
+	typedef gboolean function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_close_finish;
+	typedef gboolean function(GInputStream* stream) c_g_input_stream_is_closed;
+	typedef gboolean function(GInputStream* stream) c_g_input_stream_has_pending;
+	typedef gboolean function(GInputStream* stream, GError** error) c_g_input_stream_set_pending;
+	typedef void function(GInputStream* stream) c_g_input_stream_clear_pending;
 	
 	// gio.OutputStream
 	
-	gssize function(GOutputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error)g_output_stream_write;
-	gboolean function(GOutputStream* stream, void* buffer, gsize count, gsize* bytesWritten, GCancellable* cancellable, GError** error)g_output_stream_write_all;
-	gssize function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, GCancellable* cancellable, GError** error)g_output_stream_splice;
-	gboolean function(GOutputStream* stream, GCancellable* cancellable, GError** error)g_output_stream_flush;
-	gboolean function(GOutputStream* stream, GCancellable* cancellable, GError** error)g_output_stream_close;
-	void function(GOutputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_output_stream_write_async;
-	gssize function(GOutputStream* stream, GAsyncResult* result, GError** error)g_output_stream_write_finish;
-	void function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_output_stream_splice_async;
-	gssize function(GOutputStream* stream, GAsyncResult* result, GError** error)g_output_stream_splice_finish;
-	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_output_stream_flush_async;
-	gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error)g_output_stream_flush_finish;
-	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_output_stream_close_async;
-	gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error)g_output_stream_close_finish;
-	gboolean function(GOutputStream* stream)g_output_stream_is_closed;
-	gboolean function(GOutputStream* stream)g_output_stream_has_pending;
-	gboolean function(GOutputStream* stream, GError** error)g_output_stream_set_pending;
-	void function(GOutputStream* stream)g_output_stream_clear_pending;
+	typedef gssize function(GOutputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error) c_g_output_stream_write;
+	typedef gboolean function(GOutputStream* stream, void* buffer, gsize count, gsize* bytesWritten, GCancellable* cancellable, GError** error) c_g_output_stream_write_all;
+	typedef gssize function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, GCancellable* cancellable, GError** error) c_g_output_stream_splice;
+	typedef gboolean function(GOutputStream* stream, GCancellable* cancellable, GError** error) c_g_output_stream_flush;
+	typedef gboolean function(GOutputStream* stream, GCancellable* cancellable, GError** error) c_g_output_stream_close;
+	typedef void function(GOutputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_write_async;
+	typedef gssize function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_write_finish;
+	typedef void function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_splice_async;
+	typedef gssize function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_splice_finish;
+	typedef void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_flush_async;
+	typedef gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_flush_finish;
+	typedef void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_close_async;
+	typedef gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_close_finish;
+	typedef gboolean function(GOutputStream* stream) c_g_output_stream_is_closed;
+	typedef gboolean function(GOutputStream* stream) c_g_output_stream_has_pending;
+	typedef gboolean function(GOutputStream* stream, GError** error) c_g_output_stream_set_pending;
+	typedef void function(GOutputStream* stream) c_g_output_stream_clear_pending;
 	
 	// gio.FileInputStream
 	
-	GFileInfo* function(GFileInputStream* stream, char* attributes, GCancellable* cancellable, GError** error)g_file_input_stream_query_info;
-	void function(GFileInputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_input_stream_query_info_async;
-	GFileInfo* function(GFileInputStream* stream, GAsyncResult* result, GError** error)g_file_input_stream_query_info_finish;
+	typedef GFileInfo* function(GFileInputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_input_stream_query_info;
+	typedef void function(GFileInputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_input_stream_query_info_async;
+	typedef GFileInfo* function(GFileInputStream* stream, GAsyncResult* result, GError** error) c_g_file_input_stream_query_info_finish;
 	
 	// gio.FileOutputStream
 	
-	GFileInfo* function(GFileOutputStream* stream, char* attributes, GCancellable* cancellable, GError** error)g_file_output_stream_query_info;
-	void function(GFileOutputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_file_output_stream_query_info_async;
-	GFileInfo* function(GFileOutputStream* stream, GAsyncResult* result, GError** error)g_file_output_stream_query_info_finish;
-	char* function(GFileOutputStream* stream)g_file_output_stream_get_etag;
+	typedef GFileInfo* function(GFileOutputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_output_stream_query_info;
+	typedef void function(GFileOutputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_output_stream_query_info_async;
+	typedef GFileInfo* function(GFileOutputStream* stream, GAsyncResult* result, GError** error) c_g_file_output_stream_query_info_finish;
+	typedef char* function(GFileOutputStream* stream) c_g_file_output_stream_get_etag;
 	
 	// gio.FilterInputStream
 	
-	GInputStream* function(GFilterInputStream* stream)g_filter_input_stream_get_base_stream;
+	typedef GInputStream* function(GFilterInputStream* stream) c_g_filter_input_stream_get_base_stream;
 	
 	// gio.FilterOutputStream
 	
-	GOutputStream* function(GFilterOutputStream* stream)g_filter_output_stream_get_base_stream;
+	typedef GOutputStream* function(GFilterOutputStream* stream) c_g_filter_output_stream_get_base_stream;
 	
 	// gio.MemoryInputStream
 	
-	GInputStream* function()g_memory_input_stream_new;
-	GInputStream* function(void* data, gssize len, GDestroyNotify destroy)g_memory_input_stream_new_from_data;
-	void function(GMemoryInputStream* stream, void* data, gssize len, GDestroyNotify destroy)g_memory_input_stream_add_data;
+	typedef GInputStream* function() c_g_memory_input_stream_new;
+	typedef GInputStream* function(void* data, gssize len, GDestroyNotify destroy) c_g_memory_input_stream_new_from_data;
+	typedef void function(GMemoryInputStream* stream, void* data, gssize len, GDestroyNotify destroy) c_g_memory_input_stream_add_data;
 	
 	// gio.MemoryOutputStream
 	
-	GOutputStream* function(gpointer data, gsize len, GReallocFunc reallocFn, GDestroyNotify destroy)g_memory_output_stream_new;
-	gpointer function(GMemoryOutputStream* ostream)g_memory_output_stream_get_data;
-	gsize function(GMemoryOutputStream* ostream)g_memory_output_stream_get_size;
-	gsize function(GMemoryOutputStream* ostream)g_memory_output_stream_get_data_size;
+	typedef GOutputStream* function(gpointer data, gsize len, GReallocFunc reallocFn, GDestroyNotify destroy) c_g_memory_output_stream_new;
+	typedef gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data;
+	typedef gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_size;
+	typedef gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data_size;
 	
 	// gio.BufferedInputStream
 	
-	GInputStream* function(GInputStream* baseStream)g_buffered_input_stream_new;
-	GInputStream* function(GInputStream* baseStream, gsize size)g_buffered_input_stream_new_sized;
-	gsize function(GBufferedInputStream* stream)g_buffered_input_stream_get_buffer_size;
-	void function(GBufferedInputStream* stream, gsize size)g_buffered_input_stream_set_buffer_size;
-	gsize function(GBufferedInputStream* stream)g_buffered_input_stream_get_available;
-	void* function(GBufferedInputStream* stream, gsize* count)g_buffered_input_stream_peek_buffer;
-	gsize function(GBufferedInputStream* stream, void* buffer, gsize offset, gsize count)g_buffered_input_stream_peek;
-	gssize function(GBufferedInputStream* stream, gssize count, GCancellable* cancellable, GError** error)g_buffered_input_stream_fill;
-	void function(GBufferedInputStream* stream, gssize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_buffered_input_stream_fill_async;
-	gssize function(GBufferedInputStream* stream, GAsyncResult* result, GError** error)g_buffered_input_stream_fill_finish;
-	int function(GBufferedInputStream* stream, GCancellable* cancellable, GError** error)g_buffered_input_stream_read_byte;
+	typedef GInputStream* function(GInputStream* baseStream) c_g_buffered_input_stream_new;
+	typedef GInputStream* function(GInputStream* baseStream, gsize size) c_g_buffered_input_stream_new_sized;
+	typedef gsize function(GBufferedInputStream* stream) c_g_buffered_input_stream_get_buffer_size;
+	typedef void function(GBufferedInputStream* stream, gsize size) c_g_buffered_input_stream_set_buffer_size;
+	typedef gsize function(GBufferedInputStream* stream) c_g_buffered_input_stream_get_available;
+	typedef void* function(GBufferedInputStream* stream, gsize* count) c_g_buffered_input_stream_peek_buffer;
+	typedef gsize function(GBufferedInputStream* stream, void* buffer, gsize offset, gsize count) c_g_buffered_input_stream_peek;
+	typedef gssize function(GBufferedInputStream* stream, gssize count, GCancellable* cancellable, GError** error) c_g_buffered_input_stream_fill;
+	typedef void function(GBufferedInputStream* stream, gssize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_buffered_input_stream_fill_async;
+	typedef gssize function(GBufferedInputStream* stream, GAsyncResult* result, GError** error) c_g_buffered_input_stream_fill_finish;
+	typedef int function(GBufferedInputStream* stream, GCancellable* cancellable, GError** error) c_g_buffered_input_stream_read_byte;
 	
 	// gio.BufferedOutputStream
 	
-	GOutputStream* function(GOutputStream* baseStream)g_buffered_output_stream_new;
-	GOutputStream* function(GOutputStream* baseStream, gsize size)g_buffered_output_stream_new_sized;
-	gsize function(GBufferedOutputStream* stream)g_buffered_output_stream_get_buffer_size;
-	void function(GBufferedOutputStream* stream, gsize size)g_buffered_output_stream_set_buffer_size;
-	gboolean function(GBufferedOutputStream* stream)g_buffered_output_stream_get_auto_grow;
-	void function(GBufferedOutputStream* stream, gboolean autoGrow)g_buffered_output_stream_set_auto_grow;
+	typedef GOutputStream* function(GOutputStream* baseStream) c_g_buffered_output_stream_new;
+	typedef GOutputStream* function(GOutputStream* baseStream, gsize size) c_g_buffered_output_stream_new_sized;
+	typedef gsize function(GBufferedOutputStream* stream) c_g_buffered_output_stream_get_buffer_size;
+	typedef void function(GBufferedOutputStream* stream, gsize size) c_g_buffered_output_stream_set_buffer_size;
+	typedef gboolean function(GBufferedOutputStream* stream) c_g_buffered_output_stream_get_auto_grow;
+	typedef void function(GBufferedOutputStream* stream, gboolean autoGrow) c_g_buffered_output_stream_set_auto_grow;
 	
 	// gio.DataInputStream
 	
-	GDataInputStream* function(GInputStream* baseStream)g_data_input_stream_new;
-	void function(GDataInputStream* stream, GDataStreamByteOrder order)g_data_input_stream_set_byte_order;
-	GDataStreamByteOrder function(GDataInputStream* stream)g_data_input_stream_get_byte_order;
-	void function(GDataInputStream* stream, GDataStreamNewlineType type)g_data_input_stream_set_newline_type;
-	GDataStreamNewlineType function(GDataInputStream* stream)g_data_input_stream_get_newline_type;
-	guchar function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_byte;
-	gint16 function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_int16;
-	guint16 function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_uint16;
-	gint32 function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_int32;
-	guint32 function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_uint32;
-	gint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_int64;
-	guint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error)g_data_input_stream_read_uint64;
-	char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error)g_data_input_stream_read_line;
-	char* function(GDataInputStream* stream, gchar* stopChars, gsize* length, GCancellable* cancellable, GError** error)g_data_input_stream_read_until;
+	typedef GDataInputStream* function(GInputStream* baseStream) c_g_data_input_stream_new;
+	typedef void function(GDataInputStream* stream, GDataStreamByteOrder order) c_g_data_input_stream_set_byte_order;
+	typedef GDataStreamByteOrder function(GDataInputStream* stream) c_g_data_input_stream_get_byte_order;
+	typedef void function(GDataInputStream* stream, GDataStreamNewlineType type) c_g_data_input_stream_set_newline_type;
+	typedef GDataStreamNewlineType function(GDataInputStream* stream) c_g_data_input_stream_get_newline_type;
+	typedef guchar function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_byte;
+	typedef gint16 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_int16;
+	typedef guint16 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_uint16;
+	typedef gint32 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_int32;
+	typedef guint32 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_uint32;
+	typedef gint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_int64;
+	typedef guint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_uint64;
+	typedef char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_line;
+	typedef char* function(GDataInputStream* stream, gchar* stopChars, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_until;
 	
 	// gio.DataOutputStream
 	
-	GDataOutputStream* function(GOutputStream* baseStream)g_data_output_stream_new;
-	void function(GDataOutputStream* stream, GDataStreamByteOrder order)g_data_output_stream_set_byte_order;
-	GDataStreamByteOrder function(GDataOutputStream* stream)g_data_output_stream_get_byte_order;
-	gboolean function(GDataOutputStream* stream, guchar data, GCancellable* cancellable, GError** error)g_data_output_stream_put_byte;
-	gboolean function(GDataOutputStream* stream, gint16 data, GCancellable* cancellable, GError** error)g_data_output_stream_put_int16;
-	gboolean function(GDataOutputStream* stream, guint16 data, GCancellable* cancellable, GError** error)g_data_output_stream_put_uint16;
-	gboolean function(GDataOutputStream* stream, gint32 data, GCancellable* cancellable, GError** error)g_data_output_stream_put_int32;
-	gboolean function(GDataOutputStream* stream, guint32 data, GCancellable* cancellable, GError** error)g_data_output_stream_put_uint32;
-	gboolean function(GDataOutputStream* stream, gint64 data, GCancellable* cancellable, GError** error)g_data_output_stream_put_int64;
-	gboolean function(GDataOutputStream* stream, guint64 data, GCancellable* cancellable, GError** error)g_data_output_stream_put_uint64;
-	gboolean function(GDataOutputStream* stream, char* str, GCancellable* cancellable, GError** error)g_data_output_stream_put_string;
+	typedef GDataOutputStream* function(GOutputStream* baseStream) c_g_data_output_stream_new;
+	typedef void function(GDataOutputStream* stream, GDataStreamByteOrder order) c_g_data_output_stream_set_byte_order;
+	typedef GDataStreamByteOrder function(GDataOutputStream* stream) c_g_data_output_stream_get_byte_order;
+	typedef gboolean function(GDataOutputStream* stream, guchar data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_byte;
+	typedef gboolean function(GDataOutputStream* stream, gint16 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_int16;
+	typedef gboolean function(GDataOutputStream* stream, guint16 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_uint16;
+	typedef gboolean function(GDataOutputStream* stream, gint32 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_int32;
+	typedef gboolean function(GDataOutputStream* stream, guint32 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_uint32;
+	typedef gboolean function(GDataOutputStream* stream, gint64 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_int64;
+	typedef gboolean function(GDataOutputStream* stream, guint64 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_uint64;
+	typedef gboolean function(GDataOutputStream* stream, char* str, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_string;
 	
 	// gio.UnixInputStream
 	
-	GInputStream* function(int fd, gboolean closeFdAtClose)g_unix_input_stream_new;
+	typedef GInputStream* function(int fd, gboolean closeFdAtClose) c_g_unix_input_stream_new;
 	
 	// gio.UnixOutputStream
 	
-	GOutputStream* function(int fd, gboolean closeFdAtClose)g_unix_output_stream_new;
+	typedef GOutputStream* function(int fd, gboolean closeFdAtClose) c_g_unix_output_stream_new;
 	
 	// gio.ContentType
 	
-	gboolean function(char* type1, char* type2)g_content_type_equals;
-	gboolean function(char* type, char* supertype)g_content_type_is_a;
-	gboolean function(char* type)g_content_type_is_unknown;
-	char* function(char* type)g_content_type_get_description;
-	char* function(char* type)g_content_type_get_mime_type;
-	GIcon* function(char* type)g_content_type_get_icon;
-	gboolean function(char* type)g_content_type_can_be_executable;
-	char* function(char* mimeType)g_content_type_from_mime_type;
-	char* function(char* filename, guchar* data, gsize dataSize, gboolean* resultUncertain)g_content_type_guess;
-	char** function(GFile* root)g_content_type_guess_for_tree;
-	GList* function()g_content_types_get_registered;
+	typedef gboolean function(char* type1, char* type2) c_g_content_type_equals;
+	typedef gboolean function(char* type, char* supertype) c_g_content_type_is_a;
+	typedef gboolean function(char* type) c_g_content_type_is_unknown;
+	typedef char* function(char* type) c_g_content_type_get_description;
+	typedef char* function(char* type) c_g_content_type_get_mime_type;
+	typedef GIcon* function(char* type) c_g_content_type_get_icon;
+	typedef gboolean function(char* type) c_g_content_type_can_be_executable;
+	typedef char* function(char* mimeType) c_g_content_type_from_mime_type;
+	typedef char* function(char* filename, guchar* data, gsize dataSize, gboolean* resultUncertain) c_g_content_type_guess;
+	typedef char** function(GFile* root) c_g_content_type_guess_for_tree;
+	typedef GList* function() c_g_content_types_get_registered;
 	
 	// gio.AppInfoT
 	
 	
 	// gio.AppInfoT
 	
-	GAppInfo* function(char* commandline, char* applicationName, GAppInfoCreateFlags flags, GError** error)g_app_info_create_from_commandline;
-	GAppInfo* function(GAppInfo* appinfo)g_app_info_dup;
-	gboolean function(GAppInfo* appinfo1, GAppInfo* appinfo2)g_app_info_equal;
-	char* function(GAppInfo* appinfo)g_app_info_get_id;
-	char* function(GAppInfo* appinfo)g_app_info_get_name;
-	char* function(GAppInfo* appinfo)g_app_info_get_description;
-	char* function(GAppInfo* appinfo)g_app_info_get_executable;
-	GIcon* function(GAppInfo* appinfo)g_app_info_get_icon;
-	gboolean function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** error)g_app_info_launch;
-	gboolean function(GAppInfo* appinfo)g_app_info_supports_files;
-	gboolean function(GAppInfo* appinfo)g_app_info_supports_uris;
-	gboolean function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** error)g_app_info_launch_uris;
-	gboolean function(GAppInfo* appinfo)g_app_info_should_show;
-	gboolean function(GAppInfo* appinfo, char* contentType, GError** error)g_app_info_set_as_default_for_type;
-	gboolean function(GAppInfo* appinfo, char* extension, GError** error)g_app_info_set_as_default_for_extension;
-	gboolean function(GAppInfo* appinfo, char* contentType, GError** error)g_app_info_add_supports_type;
-	gboolean function(GAppInfo* appinfo)g_app_info_can_remove_supports_type;
-	gboolean function(GAppInfo* appinfo, char* contentType, GError** error)g_app_info_remove_supports_type;
-	GList* function()g_app_info_get_all;
-	GList* function(char* contentType)g_app_info_get_all_for_type;
-	GAppInfo* function(char* contentType, gboolean mustSupportUris)g_app_info_get_default_for_type;
-	GAppInfo* function(char* uriScheme)g_app_info_get_default_for_uri_scheme;
-	gboolean function(char* uri, GAppLaunchContext* launchContext, GError** error)g_app_info_launch_default_for_uri;
+	typedef GAppInfo* function(char* commandline, char* applicationName, GAppInfoCreateFlags flags, GError** error) c_g_app_info_create_from_commandline;
+	typedef GAppInfo* function(GAppInfo* appinfo) c_g_app_info_dup;
+	typedef gboolean function(GAppInfo* appinfo1, GAppInfo* appinfo2) c_g_app_info_equal;
+	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_id;
+	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_name;
+	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_description;
+	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_executable;
+	typedef GIcon* function(GAppInfo* appinfo) c_g_app_info_get_icon;
+	typedef gboolean function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** error) c_g_app_info_launch;
+	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_supports_files;
+	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_supports_uris;
+	typedef gboolean function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** error) c_g_app_info_launch_uris;
+	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_should_show;
+	typedef gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_set_as_default_for_type;
+	typedef gboolean function(GAppInfo* appinfo, char* extension, GError** error) c_g_app_info_set_as_default_for_extension;
+	typedef gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_add_supports_type;
+	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_can_remove_supports_type;
+	typedef gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_remove_supports_type;
+	typedef GList* function() c_g_app_info_get_all;
+	typedef GList* function(char* contentType) c_g_app_info_get_all_for_type;
+	typedef GAppInfo* function(char* contentType, gboolean mustSupportUris) c_g_app_info_get_default_for_type;
+	typedef GAppInfo* function(char* uriScheme) c_g_app_info_get_default_for_uri_scheme;
+	typedef gboolean function(char* uri, GAppLaunchContext* launchContext, GError** error) c_g_app_info_launch_default_for_uri;
 	
 	// gio.AppInfo
 	
@@ -522,43 +1172,43 @@ extern(C)
 	
 	// gio.DesktopAppInfo
 	
-	GDesktopAppInfo* function(char* filename)g_desktop_app_info_new_from_filename;
-	GDesktopAppInfo* function(GKeyFile* keyFile)g_desktop_app_info_new_from_keyfile;
-	GDesktopAppInfo* function(char* desktopId)g_desktop_app_info_new;
-	gboolean function(GDesktopAppInfo* info)g_desktop_app_info_get_is_hidden;
-	void function(char* desktopEnv)g_desktop_app_info_set_desktop_env;
-	GAppInfo* function(GDesktopAppInfoLookup* lookup, char* uriScheme)g_desktop_app_info_lookup_get_default_for_uri_scheme;
+	typedef GDesktopAppInfo* function(char* filename) c_g_desktop_app_info_new_from_filename;
+	typedef GDesktopAppInfo* function(GKeyFile* keyFile) c_g_desktop_app_info_new_from_keyfile;
+	typedef GDesktopAppInfo* function(char* desktopId) c_g_desktop_app_info_new;
+	typedef gboolean function(GDesktopAppInfo* info) c_g_desktop_app_info_get_is_hidden;
+	typedef void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
+	typedef GAppInfo* function(GDesktopAppInfoLookup* lookup, char* uriScheme) c_g_desktop_app_info_lookup_get_default_for_uri_scheme;
 	
 	// gio.VolumeMonitor
 	
-	GVolumeMonitor* function()g_volume_monitor_get;
-	GList* function(GVolumeMonitor* volumeMonitor)g_volume_monitor_get_connected_drives;
-	GList* function(GVolumeMonitor* volumeMonitor)g_volume_monitor_get_volumes;
-	GList* function(GVolumeMonitor* volumeMonitor)g_volume_monitor_get_mounts;
-	GVolume* function(GMount* mount)g_volume_monitor_adopt_orphan_mount;
-	GMount* function(GVolumeMonitor* volumeMonitor, char* uuid)g_volume_monitor_get_mount_for_uuid;
-	GVolume* function(GVolumeMonitor* volumeMonitor, char* uuid)g_volume_monitor_get_volume_for_uuid;
+	typedef GVolumeMonitor* function() c_g_volume_monitor_get;
+	typedef GList* function(GVolumeMonitor* volumeMonitor) c_g_volume_monitor_get_connected_drives;
+	typedef GList* function(GVolumeMonitor* volumeMonitor) c_g_volume_monitor_get_volumes;
+	typedef GList* function(GVolumeMonitor* volumeMonitor) c_g_volume_monitor_get_mounts;
+	typedef GVolume* function(GMount* mount) c_g_volume_monitor_adopt_orphan_mount;
+	typedef GMount* function(GVolumeMonitor* volumeMonitor, char* uuid) c_g_volume_monitor_get_mount_for_uuid;
+	typedef GVolume* function(GVolumeMonitor* volumeMonitor, char* uuid) c_g_volume_monitor_get_volume_for_uuid;
 	
 	// gio.VolumeT
 	
 	
 	// gio.VolumeT
 	
-	char* function(GVolume* volume)g_volume_get_name;
-	char* function(GVolume* volume)g_volume_get_uuid;
-	GIcon* function(GVolume* volume)g_volume_get_icon;
-	GDrive* function(GVolume* volume)g_volume_get_drive;
-	GMount* function(GVolume* volume)g_volume_get_mount;
-	gboolean function(GVolume* volume)g_volume_can_mount;
-	gboolean function(GVolume* volume)g_volume_should_automount;
-	GFile* function(GVolume* volume)g_volume_get_activation_root;
-	void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_volume_mount;
-	gboolean function(GVolume* volume, GAsyncResult* result, GError** error)g_volume_mount_finish;
-	gboolean function(GVolume* volume)g_volume_can_eject;
-	void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_volume_eject;
-	gboolean function(GVolume* volume, GAsyncResult* result, GError** error)g_volume_eject_finish;
-	char** function(GVolume* volume)g_volume_enumerate_identifiers;
-	char* function(GVolume* volume, char* kind)g_volume_get_identifier;
+	typedef char* function(GVolume* volume) c_g_volume_get_name;
+	typedef char* function(GVolume* volume) c_g_volume_get_uuid;
+	typedef GIcon* function(GVolume* volume) c_g_volume_get_icon;
+	typedef GDrive* function(GVolume* volume) c_g_volume_get_drive;
+	typedef GMount* function(GVolume* volume) c_g_volume_get_mount;
+	typedef gboolean function(GVolume* volume) c_g_volume_can_mount;
+	typedef gboolean function(GVolume* volume) c_g_volume_should_automount;
+	typedef GFile* function(GVolume* volume) c_g_volume_get_activation_root;
+	typedef void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_mount;
+	typedef gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_mount_finish;
+	typedef gboolean function(GVolume* volume) c_g_volume_can_eject;
+	typedef void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_eject;
+	typedef gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_finish;
+	typedef char** function(GVolume* volume) c_g_volume_enumerate_identifiers;
+	typedef char* function(GVolume* volume, char* kind) c_g_volume_get_identifier;
 	
 	// gio.Volume
 	
@@ -568,23 +1218,23 @@ extern(C)
 	
 	// gio.MountT
 	
-	char* function(GMount* mount)g_mount_get_name;
-	char* function(GMount* mount)g_mount_get_uuid;
-	GIcon* function(GMount* mount)g_mount_get_icon;
-	GDrive* function(GMount* mount)g_mount_get_drive;
-	GFile* function(GMount* mount)g_mount_get_root;
-	GVolume* function(GMount* mount)g_mount_get_volume;
-	gboolean function(GMount* mount)g_mount_can_unmount;
-	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_mount_unmount;
-	gboolean function(GMount* mount, GAsyncResult* result, GError** error)g_mount_unmount_finish;
-	void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_mount_remount;
-	gboolean function(GMount* mount, GAsyncResult* result, GError** error)g_mount_remount_finish;
-	gboolean function(GMount* mount)g_mount_can_eject;
-	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_mount_eject;
-	gboolean function(GMount* mount, GAsyncResult* result, GError** error)g_mount_eject_finish;
-	void function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_mount_guess_content_type;
-	gchar** function(GMount* mount, GAsyncResult* result, GError** error)g_mount_guess_content_type_finish;
-	gchar** function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GError** error)g_mount_guess_content_type_sync;
+	typedef char* function(GMount* mount) c_g_mount_get_name;
+	typedef char* function(GMount* mount) c_g_mount_get_uuid;
+	typedef GIcon* function(GMount* mount) c_g_mount_get_icon;
+	typedef GDrive* function(GMount* mount) c_g_mount_get_drive;
+	typedef GFile* function(GMount* mount) c_g_mount_get_root;
+	typedef GVolume* function(GMount* mount) c_g_mount_get_volume;
+	typedef gboolean function(GMount* mount) c_g_mount_can_unmount;
+	typedef void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_unmount;
+	typedef gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_unmount_finish;
+	typedef void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_remount;
+	typedef gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_remount_finish;
+	typedef gboolean function(GMount* mount) c_g_mount_can_eject;
+	typedef void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_eject;
+	typedef gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_eject_finish;
+	typedef void function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_guess_content_type;
+	typedef gchar** function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_guess_content_type_finish;
+	typedef gchar** function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GError** error) c_g_mount_guess_content_type_sync;
 	
 	// gio.Mount
 	
@@ -594,647 +1244,825 @@ extern(C)
 	
 	// gio.DriveT
 	
-	char* function(GDrive* drive)g_drive_get_name;
-	GIcon* function(GDrive* drive)g_drive_get_icon;
-	gboolean function(GDrive* drive)g_drive_has_volumes;
-	GList* function(GDrive* drive)g_drive_get_volumes;
-	gboolean function(GDrive* drive)g_drive_can_eject;
-	gboolean function(GDrive* drive)g_drive_can_poll_for_media;
-	void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_drive_poll_for_media;
-	gboolean function(GDrive* drive, GAsyncResult* result, GError** error)g_drive_poll_for_media_finish;
-	gboolean function(GDrive* drive)g_drive_has_media;
-	gboolean function(GDrive* drive)g_drive_is_media_check_automatic;
-	gboolean function(GDrive* drive)g_drive_is_media_removable;
-	void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_drive_eject;
-	gboolean function(GDrive* drive, GAsyncResult* result, GError** error)g_drive_eject_finish;
-	char** function(GDrive* drive)g_drive_enumerate_identifiers;
-	char* function(GDrive* drive, char* kind)g_drive_get_identifier;
+	typedef char* function(GDrive* drive) c_g_drive_get_name;
+	typedef GIcon* function(GDrive* drive) c_g_drive_get_icon;
+	typedef gboolean function(GDrive* drive) c_g_drive_has_volumes;
+	typedef GList* function(GDrive* drive) c_g_drive_get_volumes;
+	typedef gboolean function(GDrive* drive) c_g_drive_can_eject;
+	typedef gboolean function(GDrive* drive) c_g_drive_can_poll_for_media;
+	typedef void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_poll_for_media;
+	typedef gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_poll_for_media_finish;
+	typedef gboolean function(GDrive* drive) c_g_drive_has_media;
+	typedef gboolean function(GDrive* drive) c_g_drive_is_media_check_automatic;
+	typedef gboolean function(GDrive* drive) c_g_drive_is_media_removable;
+	typedef void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_eject;
+	typedef gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_eject_finish;
+	typedef char** function(GDrive* drive) c_g_drive_enumerate_identifiers;
+	typedef char* function(GDrive* drive, char* kind) c_g_drive_get_identifier;
 	
 	// gio.Drive
 	
 	
 	// gio.UnixMountEntry
 	
-	void function(GUnixMountEntry* mountEntry)g_unix_mount_free;
-	gint function(GUnixMountEntry* mount1, GUnixMountEntry* mount2)g_unix_mount_compare;
-	char* function(GUnixMountEntry* mountEntry)g_unix_mount_get_mount_path;
-	char* function(GUnixMountEntry* mountEntry)g_unix_mount_get_device_path;
-	char* function(GUnixMountEntry* mountEntry)g_unix_mount_get_fs_type;
-	gboolean function(GUnixMountEntry* mountEntry)g_unix_mount_is_readonly;
-	gboolean function(GUnixMountEntry* mountEntry)g_unix_mount_is_system_internal;
-	GIcon* function(GUnixMountEntry* mountEntry)g_unix_mount_guess_icon;
-	char* function(GUnixMountEntry* mountEntry)g_unix_mount_guess_name;
-	gboolean function(GUnixMountEntry* mountEntry)g_unix_mount_guess_can_eject;
-	gboolean function(GUnixMountEntry* mountEntry)g_unix_mount_guess_should_display;
-	GList* function(guint64* timeRead)g_unix_mount_points_get;
-	GList* function(guint64* timeRead)g_unix_mounts_get;
-	GUnixMountEntry* function(char* mountPath, guint64* timeRead)g_unix_mount_at;
-	gboolean function(guint64 time)g_unix_mounts_changed_since;
-	gboolean function(guint64 time)g_unix_mount_points_changed_since;
-	gboolean function(char* mountPath)g_unix_is_mount_path_system_internal;
+	typedef void function(GUnixMountEntry* mountEntry) c_g_unix_mount_free;
+	typedef gint function(GUnixMountEntry* mount1, GUnixMountEntry* mount2) c_g_unix_mount_compare;
+	typedef char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_mount_path;
+	typedef char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_device_path;
+	typedef char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_fs_type;
+	typedef gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_is_readonly;
+	typedef gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_is_system_internal;
+	typedef GIcon* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_icon;
+	typedef char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_name;
+	typedef gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_can_eject;
+	typedef gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_should_display;
+	typedef GList* function(guint64* timeRead) c_g_unix_mount_points_get;
+	typedef GList* function(guint64* timeRead) c_g_unix_mounts_get;
+	typedef GUnixMountEntry* function(char* mountPath, guint64* timeRead) c_g_unix_mount_at;
+	typedef gboolean function(guint64 time) c_g_unix_mounts_changed_since;
+	typedef gboolean function(guint64 time) c_g_unix_mount_points_changed_since;
+	typedef gboolean function(char* mountPath) c_g_unix_is_mount_path_system_internal;
 	
 	// gio.UnixMountPoint
 	
-	void function(GUnixMountPoint* mountPoint)g_unix_mount_point_free;
-	gint function(GUnixMountPoint* mount1, GUnixMountPoint* mount2)g_unix_mount_point_compare;
-	char* function(GUnixMountPoint* mountPoint)g_unix_mount_point_get_mount_path;
-	char* function(GUnixMountPoint* mountPoint)g_unix_mount_point_get_device_path;
-	char* function(GUnixMountPoint* mountPoint)g_unix_mount_point_get_fs_type;
-	gboolean function(GUnixMountPoint* mountPoint)g_unix_mount_point_is_readonly;
-	gboolean function(GUnixMountPoint* mountPoint)g_unix_mount_point_is_user_mountable;
-	gboolean function(GUnixMountPoint* mountPoint)g_unix_mount_point_is_loopback;
-	GIcon* function(GUnixMountPoint* mountPoint)g_unix_mount_point_guess_icon;
-	char* function(GUnixMountPoint* mountPoint)g_unix_mount_point_guess_name;
-	gboolean function(GUnixMountPoint* mountPoint)g_unix_mount_point_guess_can_eject;
+	typedef void function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_free;
+	typedef gint function(GUnixMountPoint* mount1, GUnixMountPoint* mount2) c_g_unix_mount_point_compare;
+	typedef char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_mount_path;
+	typedef char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_device_path;
+	typedef char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_fs_type;
+	typedef gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_readonly;
+	typedef gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_user_mountable;
+	typedef gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_loopback;
+	typedef GIcon* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_icon;
+	typedef char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_name;
+	typedef gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_can_eject;
 	
 	// gio.UnixMountMonitor
 	
-	GUnixMountMonitor* function()g_unix_mount_monitor_new;
-	void function(GUnixMountMonitor* mountMonitor, int limitMsec)g_unix_mount_monitor_set_rate_limit;
+	typedef GUnixMountMonitor* function() c_g_unix_mount_monitor_new;
+	typedef void function(GUnixMountMonitor* mountMonitor, int limitMsec) c_g_unix_mount_monitor_set_rate_limit;
 	
 	// gio.IconT
 	
 	
 	// gio.IconT
 	
-	guint function(gconstpointer icon)g_icon_hash;
-	gboolean function(GIcon* icon1, GIcon* icon2)g_icon_equal;
+	typedef guint function(gconstpointer icon) c_g_icon_hash;
+	typedef gboolean function(GIcon* icon1, GIcon* icon2) c_g_icon_equal;
 	
 	// gio.Icon
 	
 	
 	// gio.FileIcon
 	
-	GIcon* function(GFile* file)g_file_icon_new;
-	GFile* function(GFileIcon* icon)g_file_icon_get_file;
+	typedef GIcon* function(GFile* file) c_g_file_icon_new;
+	typedef GFile* function(GFileIcon* icon) c_g_file_icon_get_file;
 	
 	// gio.LoadableIconT
 	
 	
 	// gio.LoadableIconT
 	
-	GInputStream* function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** error)g_loadable_icon_load;
-	void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)g_loadable_icon_load_async;
-	GInputStream* function(GLoadableIcon* icon, GAsyncResult* res, char** type, GError** error)g_loadable_icon_load_finish;
+	typedef GInputStream* function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** error) c_g_loadable_icon_load;
+	typedef void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_loadable_icon_load_async;
+	typedef GInputStream* function(GLoadableIcon* icon, GAsyncResult* res, char** type, GError** error) c_g_loadable_icon_load_finish;
 	
 	// gio.ThemedIcon
 	
-	GIcon* function(char* iconname)g_themed_icon_new;
-	GIcon* function(char** iconnames, int len)g_themed_icon_new_from_names;
-	GIcon* function(char* iconname)g_themed_icon_new_with_default_fallbacks;
-	void function(GThemedIcon* icon, char* iconname)g_themed_icon_prepend_name;
-	void function(GThemedIcon* icon, char* iconname)g_themed_icon_append_name;
+	typedef GIcon* function(char* iconname) c_g_themed_icon_new;
+	typedef GIcon* function(char** iconnames, int len) c_g_themed_icon_new_from_names;
+	typedef GIcon* function(char* iconname) c_g_themed_icon_new_with_default_fallbacks;
+	typedef void function(GThemedIcon* icon, char* iconname) c_g_themed_icon_prepend_name;
+	typedef void function(GThemedIcon* icon, char* iconname) c_g_themed_icon_append_name;
 	
 	// gio.EmblemedIcon
 	
-	GIcon* function(GIcon* icon, GEmblem* emblem)g_emblemed_icon_new;
-	GIcon* function(GEmblemedIcon* emblemed)g_emblemed_icon_get_icon;
-	GList* function(GEmblemedIcon* emblemed)g_emblemed_icon_get_emblems;
-	void function(GEmblemedIcon* emblemed, GEmblem* emblem)g_emblemed_icon_add_emblem;
+	typedef GIcon* function(GIcon* icon, GEmblem* emblem) c_g_emblemed_icon_new;
+	typedef GIcon* function(GEmblemedIcon* emblemed) c_g_emblemed_icon_get_icon;
+	typedef GList* function(GEmblemedIcon* emblemed) c_g_emblemed_icon_get_emblems;
+	typedef void function(GEmblemedIcon* emblemed, GEmblem* emblem) c_g_emblemed_icon_add_emblem;
 	
 	// gio.Emblem
 	
-	GEmblem* function(GIcon* icon)g_emblem_new;
-	GEmblem* function(GIcon* icon, GEmblemOrigin origin)g_emblem_new_with_origin;
-	GIcon* function(GEmblem* emblem)g_emblem_get_icon;
-	GEmblemOrigin function(GEmblem* emblem)g_emblem_get_origin;
+	typedef GEmblem* function(GIcon* icon) c_g_emblem_new;
+	typedef GEmblem* function(GIcon* icon, GEmblemOrigin origin) c_g_emblem_new_with_origin;
+	typedef GIcon* function(GEmblem* emblem) c_g_emblem_get_icon;
+	typedef GEmblemOrigin function(GEmblem* emblem) c_g_emblem_get_origin;
 	
 	// gio.FilenameCompleter
 	
-	GFilenameCompleter* function()g_filename_completer_new;
-	char* function(GFilenameCompleter* completer, char* initialText)g_filename_completer_get_completion_suffix;
-	char** function(GFilenameCompleter* completer, char* initialText)g_filename_completer_get_completions;
-	void function(GFilenameCompleter* completer, gboolean dirsOnly)g_filename_completer_set_dirs_only;
+	typedef GFilenameCompleter* function() c_g_filename_completer_new;
+	typedef char* function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completion_suffix;
+	typedef char** function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completions;
+	typedef void function(GFilenameCompleter* completer, gboolean dirsOnly) c_g_filename_completer_set_dirs_only;
 	
 	// gio.Vfs
 	
-	GFile* function(GVfs* vfs, char* path)g_vfs_get_file_for_path;
-	GFile* function(GVfs* vfs, char* uri)g_vfs_get_file_for_uri;
-	GFile* function(GVfs* vfs, char* parseName)g_vfs_parse_name;
-	GVfs* function()g_vfs_get_default;
-	GVfs* function()g_vfs_get_local;
-	gboolean function(GVfs* vfs)g_vfs_is_active;
-	gchar** function(GVfs* vfs)g_vfs_get_supported_uri_schemes;
+	typedef GFile* function(GVfs* vfs, char* path) c_g_vfs_get_file_for_path;
+	typedef GFile* function(GVfs* vfs, char* uri) c_g_vfs_get_file_for_uri;
+	typedef GFile* function(GVfs* vfs, char* parseName) c_g_vfs_parse_name;
+	typedef GVfs* function() c_g_vfs_get_default;
+	typedef GVfs* function() c_g_vfs_get_local;
+	typedef gboolean function(GVfs* vfs) c_g_vfs_is_active;
+	typedef gchar** function(GVfs* vfs) c_g_vfs_get_supported_uri_schemes;
 	
 	// gio.IOModule
 	
-	GIOModule* function(gchar* filename)g_io_module_new;
-	GList* function(gchar* dirname)g_io_modules_load_all_in_directory;
-	void function(GIOModule* modul)g_io_module_load;
-	void function(GIOModule* modul)g_io_module_unload;
+	typedef GIOModule* function(gchar* filename) c_g_io_module_new;
+	typedef GList* function(gchar* dirname) c_g_io_modules_load_all_in_directory;
+	typedef void function(GIOModule* modul) c_g_io_module_load;
+	typedef void function(GIOModule* modul) c_g_io_module_unload;
 	
 	// gio.IOExtension
 	
-	char* function(GIOExtension* extension)g_io_extension_get_name;
-	gint function(GIOExtension* extension)g_io_extension_get_priority;
-	GType function(GIOExtension* extension)g_io_extension_get_type;
-	GTypeClass* function(GIOExtension* extension)g_io_extension_ref_class;
+	typedef char* function(GIOExtension* extension) c_g_io_extension_get_name;
+	typedef gint function(GIOExtension* extension) c_g_io_extension_get_priority;
+	typedef GType function(GIOExtension* extension) c_g_io_extension_get_type;
+	typedef GTypeClass* function(GIOExtension* extension) c_g_io_extension_ref_class;
 	
 	// gio.IOExtensionPoint
 	
-	GIOExtension* function(GIOExtensionPoint* extensionPoint, char* name)g_io_extension_point_get_extension_by_name;
-	GList* function(GIOExtensionPoint* extensionPoint)g_io_extension_point_get_extensions;
-	GType function(GIOExtensionPoint* extensionPoint)g_io_extension_point_get_required_type;
-	GIOExtension* function(char* extensionPointName, GType type, char* extensionName, gint priority)g_io_extension_point_implement;
-	GIOExtensionPoint* function(char* name)g_io_extension_point_lookup;
-	GIOExtensionPoint* function(char* name)g_io_extension_point_register;
-	void function(GIOExtensionPoint* extensionPoint, GType type)g_io_extension_point_set_required_type;
-
-
+	typedef GIOExtension* function(GIOExtensionPoint* extensionPoint, char* name) c_g_io_extension_point_get_extension_by_name;
+	typedef GList* function(GIOExtensionPoint* extensionPoint) c_g_io_extension_point_get_extensions;
+	typedef GType function(GIOExtensionPoint* extensionPoint) c_g_io_extension_point_get_required_type;
+	typedef GIOExtension* function(char* extensionPointName, GType type, char* extensionName, gint priority) c_g_io_extension_point_implement;
+	typedef GIOExtensionPoint* function(char* name) c_g_io_extension_point_lookup;
+	typedef GIOExtensionPoint* function(char* name) c_g_io_extension_point_register;
+	typedef void function(GIOExtensionPoint* extensionPoint, GType type) c_g_io_extension_point_set_required_type;
 }
 
-Symbol[] gioLinks = 
-[
+// gio.File
 
-	{ "g_file_new_for_path",  cast(void**)& g_file_new_for_path},
-	{ "g_file_new_for_uri",  cast(void**)& g_file_new_for_uri},
-	{ "g_file_new_for_commandline_arg",  cast(void**)& g_file_new_for_commandline_arg},
-	{ "g_file_parse_name",  cast(void**)& g_file_parse_name},
-	{ "g_file_dup",  cast(void**)& g_file_dup},
-	{ "g_file_hash",  cast(void**)& g_file_hash},
-	{ "g_file_equal",  cast(void**)& g_file_equal},
-	{ "g_file_get_basename",  cast(void**)& g_file_get_basename},
-	{ "g_file_get_path",  cast(void**)& g_file_get_path},
-	{ "g_file_get_uri",  cast(void**)& g_file_get_uri},
-	{ "g_file_get_parse_name",  cast(void**)& g_file_get_parse_name},
-	{ "g_file_get_parent",  cast(void**)& g_file_get_parent},
-	{ "g_file_get_child",  cast(void**)& g_file_get_child},
-	{ "g_file_get_child_for_display_name",  cast(void**)& g_file_get_child_for_display_name},
-	{ "g_file_has_prefix",  cast(void**)& g_file_has_prefix},
-	{ "g_file_get_relative_path",  cast(void**)& g_file_get_relative_path},
-	{ "g_file_resolve_relative_path",  cast(void**)& g_file_resolve_relative_path},
-	{ "g_file_is_native",  cast(void**)& g_file_is_native},
-	{ "g_file_has_uri_scheme",  cast(void**)& g_file_has_uri_scheme},
-	{ "g_file_get_uri_scheme",  cast(void**)& g_file_get_uri_scheme},
-	{ "g_file_read",  cast(void**)& g_file_read},
-	{ "g_file_read_async",  cast(void**)& g_file_read_async},
-	{ "g_file_read_finish",  cast(void**)& g_file_read_finish},
-	{ "g_file_append_to",  cast(void**)& g_file_append_to},
-	{ "g_file_create",  cast(void**)& g_file_create},
-	{ "g_file_replace",  cast(void**)& g_file_replace},
-	{ "g_file_append_to_async",  cast(void**)& g_file_append_to_async},
-	{ "g_file_append_to_finish",  cast(void**)& g_file_append_to_finish},
-	{ "g_file_create_async",  cast(void**)& g_file_create_async},
-	{ "g_file_create_finish",  cast(void**)& g_file_create_finish},
-	{ "g_file_replace_async",  cast(void**)& g_file_replace_async},
-	{ "g_file_replace_finish",  cast(void**)& g_file_replace_finish},
-	{ "g_file_query_info",  cast(void**)& g_file_query_info},
-	{ "g_file_query_info_async",  cast(void**)& g_file_query_info_async},
-	{ "g_file_query_info_finish",  cast(void**)& g_file_query_info_finish},
-	{ "g_file_query_exists",  cast(void**)& g_file_query_exists},
-	{ "g_file_query_file_type",  cast(void**)& g_file_query_file_type},
-	{ "g_file_query_filesystem_info",  cast(void**)& g_file_query_filesystem_info},
-	{ "g_file_query_filesystem_info_async",  cast(void**)& g_file_query_filesystem_info_async},
-	{ "g_file_query_filesystem_info_finish",  cast(void**)& g_file_query_filesystem_info_finish},
-	{ "g_file_query_default_handler",  cast(void**)& g_file_query_default_handler},
-	{ "g_file_find_enclosing_mount",  cast(void**)& g_file_find_enclosing_mount},
-	{ "g_file_find_enclosing_mount_async",  cast(void**)& g_file_find_enclosing_mount_async},
-	{ "g_file_find_enclosing_mount_finish",  cast(void**)& g_file_find_enclosing_mount_finish},
-	{ "g_file_enumerate_children",  cast(void**)& g_file_enumerate_children},
-	{ "g_file_enumerate_children_async",  cast(void**)& g_file_enumerate_children_async},
-	{ "g_file_enumerate_children_finish",  cast(void**)& g_file_enumerate_children_finish},
-	{ "g_file_set_display_name",  cast(void**)& g_file_set_display_name},
-	{ "g_file_set_display_name_async",  cast(void**)& g_file_set_display_name_async},
-	{ "g_file_set_display_name_finish",  cast(void**)& g_file_set_display_name_finish},
-	{ "g_file_delete",  cast(void**)& g_file_delete},
-	{ "g_file_trash",  cast(void**)& g_file_trash},
-	{ "g_file_copy",  cast(void**)& g_file_copy},
-	{ "g_file_copy_async",  cast(void**)& g_file_copy_async},
-	{ "g_file_copy_finish",  cast(void**)& g_file_copy_finish},
-	{ "g_file_move",  cast(void**)& g_file_move},
-	{ "g_file_make_directory",  cast(void**)& g_file_make_directory},
-	{ "g_file_make_directory_with_parents",  cast(void**)& g_file_make_directory_with_parents},
-	{ "g_file_make_symbolic_link",  cast(void**)& g_file_make_symbolic_link},
-	{ "g_file_query_settable_attributes",  cast(void**)& g_file_query_settable_attributes},
-	{ "g_file_query_writable_namespaces",  cast(void**)& g_file_query_writable_namespaces},
-	{ "g_file_set_attribute",  cast(void**)& g_file_set_attribute},
-	{ "g_file_set_attributes_from_info",  cast(void**)& g_file_set_attributes_from_info},
-	{ "g_file_set_attributes_async",  cast(void**)& g_file_set_attributes_async},
-	{ "g_file_set_attributes_finish",  cast(void**)& g_file_set_attributes_finish},
-	{ "g_file_set_attribute_string",  cast(void**)& g_file_set_attribute_string},
-	{ "g_file_set_attribute_byte_string",  cast(void**)& g_file_set_attribute_byte_string},
-	{ "g_file_set_attribute_uint32",  cast(void**)& g_file_set_attribute_uint32},
-	{ "g_file_set_attribute_int32",  cast(void**)& g_file_set_attribute_int32},
-	{ "g_file_set_attribute_uint64",  cast(void**)& g_file_set_attribute_uint64},
-	{ "g_file_set_attribute_int64",  cast(void**)& g_file_set_attribute_int64},
-	{ "g_file_mount_mountable",  cast(void**)& g_file_mount_mountable},
-	{ "g_file_mount_mountable_finish",  cast(void**)& g_file_mount_mountable_finish},
-	{ "g_file_unmount_mountable",  cast(void**)& g_file_unmount_mountable},
-	{ "g_file_unmount_mountable_finish",  cast(void**)& g_file_unmount_mountable_finish},
-	{ "g_file_eject_mountable",  cast(void**)& g_file_eject_mountable},
-	{ "g_file_eject_mountable_finish",  cast(void**)& g_file_eject_mountable_finish},
-	{ "g_file_mount_enclosing_volume",  cast(void**)& g_file_mount_enclosing_volume},
-	{ "g_file_mount_enclosing_volume_finish",  cast(void**)& g_file_mount_enclosing_volume_finish},
-	{ "g_file_monitor_directory",  cast(void**)& g_file_monitor_directory},
-	{ "g_file_monitor_file",  cast(void**)& g_file_monitor_file},
-	{ "g_file_monitor",  cast(void**)& g_file_monitor},
-	{ "g_file_load_contents",  cast(void**)& g_file_load_contents},
-	{ "g_file_load_contents_async",  cast(void**)& g_file_load_contents_async},
-	{ "g_file_load_contents_finish",  cast(void**)& g_file_load_contents_finish},
-	{ "g_file_load_partial_contents_async",  cast(void**)& g_file_load_partial_contents_async},
-	{ "g_file_load_partial_contents_finish",  cast(void**)& g_file_load_partial_contents_finish},
-	{ "g_file_replace_contents",  cast(void**)& g_file_replace_contents},
-	{ "g_file_replace_contents_async",  cast(void**)& g_file_replace_contents_async},
-	{ "g_file_replace_contents_finish",  cast(void**)& g_file_replace_contents_finish},
-	{ "g_file_copy_attributes",  cast(void**)& g_file_copy_attributes},
-	{ "g_file_attribute_info_list_new",  cast(void**)& g_file_attribute_info_list_new},
-	{ "g_file_attribute_info_list_ref",  cast(void**)& g_file_attribute_info_list_ref},
-	{ "g_file_attribute_info_list_unref",  cast(void**)& g_file_attribute_info_list_unref},
-	{ "g_file_attribute_info_list_dup",  cast(void**)& g_file_attribute_info_list_dup},
-	{ "g_file_attribute_info_list_lookup",  cast(void**)& g_file_attribute_info_list_lookup},
-	{ "g_file_attribute_info_list_add",  cast(void**)& g_file_attribute_info_list_add},
-	{ "g_file_info_new",  cast(void**)& g_file_info_new},
-	{ "g_file_info_dup",  cast(void**)& g_file_info_dup},
-	{ "g_file_info_copy_into",  cast(void**)& g_file_info_copy_into},
-	{ "g_file_info_has_attribute",  cast(void**)& g_file_info_has_attribute},
-	{ "g_file_info_list_attributes",  cast(void**)& g_file_info_list_attributes},
-	{ "g_file_info_get_attribute_type",  cast(void**)& g_file_info_get_attribute_type},
-	{ "g_file_info_remove_attribute",  cast(void**)& g_file_info_remove_attribute},
-	{ "g_file_info_get_attribute_as_string",  cast(void**)& g_file_info_get_attribute_as_string},
-	{ "g_file_info_get_attribute_data",  cast(void**)& g_file_info_get_attribute_data},
-	{ "g_file_info_get_attribute_status",  cast(void**)& g_file_info_get_attribute_status},
-	{ "g_file_info_get_attribute_string",  cast(void**)& g_file_info_get_attribute_string},
-	{ "g_file_info_get_attribute_byte_string",  cast(void**)& g_file_info_get_attribute_byte_string},
-	{ "g_file_info_get_attribute_boolean",  cast(void**)& g_file_info_get_attribute_boolean},
-	{ "g_file_info_get_attribute_uint32",  cast(void**)& g_file_info_get_attribute_uint32},
-	{ "g_file_info_get_attribute_int32",  cast(void**)& g_file_info_get_attribute_int32},
-	{ "g_file_info_get_attribute_uint64",  cast(void**)& g_file_info_get_attribute_uint64},
-	{ "g_file_info_get_attribute_int64",  cast(void**)& g_file_info_get_attribute_int64},
-	{ "g_file_info_get_attribute_object",  cast(void**)& g_file_info_get_attribute_object},
-	{ "g_file_info_set_attribute",  cast(void**)& g_file_info_set_attribute},
-	{ "g_file_info_set_attribute_string",  cast(void**)& g_file_info_set_attribute_string},
-	{ "g_file_info_set_attribute_byte_string",  cast(void**)& g_file_info_set_attribute_byte_string},
-	{ "g_file_info_set_attribute_boolean",  cast(void**)& g_file_info_set_attribute_boolean},
-	{ "g_file_info_set_attribute_uint32",  cast(void**)& g_file_info_set_attribute_uint32},
-	{ "g_file_info_set_attribute_int32",  cast(void**)& g_file_info_set_attribute_int32},
-	{ "g_file_info_set_attribute_uint64",  cast(void**)& g_file_info_set_attribute_uint64},
-	{ "g_file_info_set_attribute_int64",  cast(void**)& g_file_info_set_attribute_int64},
-	{ "g_file_info_set_attribute_object",  cast(void**)& g_file_info_set_attribute_object},
-	{ "g_file_info_clear_status",  cast(void**)& g_file_info_clear_status},
-	{ "g_file_info_get_file_type",  cast(void**)& g_file_info_get_file_type},
-	{ "g_file_info_get_is_hidden",  cast(void**)& g_file_info_get_is_hidden},
-	{ "g_file_info_get_is_backup",  cast(void**)& g_file_info_get_is_backup},
-	{ "g_file_info_get_is_symlink",  cast(void**)& g_file_info_get_is_symlink},
-	{ "g_file_info_get_name",  cast(void**)& g_file_info_get_name},
-	{ "g_file_info_get_display_name",  cast(void**)& g_file_info_get_display_name},
-	{ "g_file_info_get_edit_name",  cast(void**)& g_file_info_get_edit_name},
-	{ "g_file_info_get_icon",  cast(void**)& g_file_info_get_icon},
-	{ "g_file_info_get_content_type",  cast(void**)& g_file_info_get_content_type},
-	{ "g_file_info_get_size",  cast(void**)& g_file_info_get_size},
-	{ "g_file_info_get_modification_time",  cast(void**)& g_file_info_get_modification_time},
-	{ "g_file_info_get_symlink_target",  cast(void**)& g_file_info_get_symlink_target},
-	{ "g_file_info_get_etag",  cast(void**)& g_file_info_get_etag},
-	{ "g_file_info_get_sort_order",  cast(void**)& g_file_info_get_sort_order},
-	{ "g_file_info_set_attribute_mask",  cast(void**)& g_file_info_set_attribute_mask},
-	{ "g_file_info_unset_attribute_mask",  cast(void**)& g_file_info_unset_attribute_mask},
-	{ "g_file_info_set_file_type",  cast(void**)& g_file_info_set_file_type},
-	{ "g_file_info_set_is_hidden",  cast(void**)& g_file_info_set_is_hidden},
-	{ "g_file_info_set_is_symlink",  cast(void**)& g_file_info_set_is_symlink},
-	{ "g_file_info_set_name",  cast(void**)& g_file_info_set_name},
-	{ "g_file_info_set_display_name",  cast(void**)& g_file_info_set_display_name},
-	{ "g_file_info_set_edit_name",  cast(void**)& g_file_info_set_edit_name},
-	{ "g_file_info_set_icon",  cast(void**)& g_file_info_set_icon},
-	{ "g_file_info_set_content_type",  cast(void**)& g_file_info_set_content_type},
-	{ "g_file_info_set_size",  cast(void**)& g_file_info_set_size},
-	{ "g_file_info_set_modification_time",  cast(void**)& g_file_info_set_modification_time},
-	{ "g_file_info_set_symlink_target",  cast(void**)& g_file_info_set_symlink_target},
-	{ "g_file_info_set_sort_order",  cast(void**)& g_file_info_set_sort_order},
-	{ "g_file_attribute_matcher_new",  cast(void**)& g_file_attribute_matcher_new},
-	{ "g_file_attribute_matcher_ref",  cast(void**)& g_file_attribute_matcher_ref},
-	{ "g_file_attribute_matcher_unref",  cast(void**)& g_file_attribute_matcher_unref},
-	{ "g_file_attribute_matcher_matches",  cast(void**)& g_file_attribute_matcher_matches},
-	{ "g_file_attribute_matcher_matches_only",  cast(void**)& g_file_attribute_matcher_matches_only},
-	{ "g_file_attribute_matcher_enumerate_namespace",  cast(void**)& g_file_attribute_matcher_enumerate_namespace},
-	{ "g_file_attribute_matcher_enumerate_next",  cast(void**)& g_file_attribute_matcher_enumerate_next},
-	{ "g_file_enumerator_next_file",  cast(void**)& g_file_enumerator_next_file},
-	{ "g_file_enumerator_close",  cast(void**)& g_file_enumerator_close},
-	{ "g_file_enumerator_next_files_async",  cast(void**)& g_file_enumerator_next_files_async},
-	{ "g_file_enumerator_next_files_finish",  cast(void**)& g_file_enumerator_next_files_finish},
-	{ "g_file_enumerator_close_async",  cast(void**)& g_file_enumerator_close_async},
-	{ "g_file_enumerator_close_finish",  cast(void**)& g_file_enumerator_close_finish},
-	{ "g_file_enumerator_is_closed",  cast(void**)& g_file_enumerator_is_closed},
-	{ "g_file_enumerator_has_pending",  cast(void**)& g_file_enumerator_has_pending},
-	{ "g_file_enumerator_set_pending",  cast(void**)& g_file_enumerator_set_pending},
-	{ "g_file_enumerator_get_container",  cast(void**)& g_file_enumerator_get_container},
-	{ "g_mount_operation_new",  cast(void**)& g_mount_operation_new},
-	{ "g_mount_operation_get_username",  cast(void**)& g_mount_operation_get_username},
-	{ "g_mount_operation_set_username",  cast(void**)& g_mount_operation_set_username},
-	{ "g_mount_operation_get_password",  cast(void**)& g_mount_operation_get_password},
-	{ "g_mount_operation_set_password",  cast(void**)& g_mount_operation_set_password},
-	{ "g_mount_operation_get_anonymous",  cast(void**)& g_mount_operation_get_anonymous},
-	{ "g_mount_operation_set_anonymous",  cast(void**)& g_mount_operation_set_anonymous},
-	{ "g_mount_operation_get_domain",  cast(void**)& g_mount_operation_get_domain},
-	{ "g_mount_operation_set_domain",  cast(void**)& g_mount_operation_set_domain},
-	{ "g_mount_operation_get_password_save",  cast(void**)& g_mount_operation_get_password_save},
-	{ "g_mount_operation_set_password_save",  cast(void**)& g_mount_operation_set_password_save},
-	{ "g_mount_operation_get_choice",  cast(void**)& g_mount_operation_get_choice},
-	{ "g_mount_operation_set_choice",  cast(void**)& g_mount_operation_set_choice},
-	{ "g_mount_operation_reply",  cast(void**)& g_mount_operation_reply},
-	{ "g_io_error_from_errno",  cast(void**)& g_io_error_from_errno},
-	{ "g_file_monitor_cancel",  cast(void**)& g_file_monitor_cancel},
-	{ "g_file_monitor_is_cancelled",  cast(void**)& g_file_monitor_is_cancelled},
-	{ "g_file_monitor_set_rate_limit",  cast(void**)& g_file_monitor_set_rate_limit},
-	{ "g_file_monitor_emit_event",  cast(void**)& g_file_monitor_emit_event},
-	{ "g_cancellable_new",  cast(void**)& g_cancellable_new},
-	{ "g_cancellable_is_cancelled",  cast(void**)& g_cancellable_is_cancelled},
-	{ "g_cancellable_set_error_if_cancelled",  cast(void**)& g_cancellable_set_error_if_cancelled},
-	{ "g_cancellable_get_fd",  cast(void**)& g_cancellable_get_fd},
-	{ "g_cancellable_get_current",  cast(void**)& g_cancellable_get_current},
-	{ "g_cancellable_pop_current",  cast(void**)& g_cancellable_pop_current},
-	{ "g_cancellable_push_current",  cast(void**)& g_cancellable_push_current},
-	{ "g_cancellable_reset",  cast(void**)& g_cancellable_reset},
-	{ "g_cancellable_cancel",  cast(void**)& g_cancellable_cancel},
-	{ "g_async_result_get_user_data",  cast(void**)& g_async_result_get_user_data},
-	{ "g_async_result_get_source_object",  cast(void**)& g_async_result_get_source_object},
-	{ "g_io_scheduler_push_job",  cast(void**)& g_io_scheduler_push_job},
-	{ "g_io_scheduler_cancel_all_jobs",  cast(void**)& g_io_scheduler_cancel_all_jobs},
-	{ "g_io_scheduler_job_send_to_mainloop",  cast(void**)& g_io_scheduler_job_send_to_mainloop},
-	{ "g_io_scheduler_job_send_to_mainloop_async",  cast(void**)& g_io_scheduler_job_send_to_mainloop_async},
-	{ "g_simple_async_result_new",  cast(void**)& g_simple_async_result_new},
-	{ "g_simple_async_result_new_error",  cast(void**)& g_simple_async_result_new_error},
-	{ "g_simple_async_result_new_from_error",  cast(void**)& g_simple_async_result_new_from_error},
-	{ "g_simple_async_result_set_op_res_gpointer",  cast(void**)& g_simple_async_result_set_op_res_gpointer},
-	{ "g_simple_async_result_get_op_res_gpointer",  cast(void**)& g_simple_async_result_get_op_res_gpointer},
-	{ "g_simple_async_result_set_op_res_gssize",  cast(void**)& g_simple_async_result_set_op_res_gssize},
-	{ "g_simple_async_result_get_op_res_gssize",  cast(void**)& g_simple_async_result_get_op_res_gssize},
-	{ "g_simple_async_result_set_op_res_gboolean",  cast(void**)& g_simple_async_result_set_op_res_gboolean},
-	{ "g_simple_async_result_get_op_res_gboolean",  cast(void**)& g_simple_async_result_get_op_res_gboolean},
-	{ "g_simple_async_result_get_source_tag",  cast(void**)& g_simple_async_result_get_source_tag},
-	{ "g_simple_async_result_set_handle_cancellation",  cast(void**)& g_simple_async_result_set_handle_cancellation},
-	{ "g_simple_async_result_complete",  cast(void**)& g_simple_async_result_complete},
-	{ "g_simple_async_result_complete_in_idle",  cast(void**)& g_simple_async_result_complete_in_idle},
-	{ "g_simple_async_result_run_in_thread",  cast(void**)& g_simple_async_result_run_in_thread},
-	{ "g_simple_async_result_set_from_error",  cast(void**)& g_simple_async_result_set_from_error},
-	{ "g_simple_async_result_propagate_error",  cast(void**)& g_simple_async_result_propagate_error},
-	{ "g_simple_async_result_set_error",  cast(void**)& g_simple_async_result_set_error},
-	{ "g_simple_async_result_set_error_va",  cast(void**)& g_simple_async_result_set_error_va},
-	{ "g_simple_async_report_error_in_idle",  cast(void**)& g_simple_async_report_error_in_idle},
-	{ "g_simple_async_report_gerror_in_idle",  cast(void**)& g_simple_async_report_gerror_in_idle},
-	{ "g_seekable_tell",  cast(void**)& g_seekable_tell},
-	{ "g_seekable_can_seek",  cast(void**)& g_seekable_can_seek},
-	{ "g_seekable_seek",  cast(void**)& g_seekable_seek},
-	{ "g_seekable_can_truncate",  cast(void**)& g_seekable_can_truncate},
-	{ "g_seekable_truncate",  cast(void**)& g_seekable_truncate},
-	{ "g_input_stream_read",  cast(void**)& g_input_stream_read},
-	{ "g_input_stream_read_all",  cast(void**)& g_input_stream_read_all},
-	{ "g_input_stream_skip",  cast(void**)& g_input_stream_skip},
-	{ "g_input_stream_close",  cast(void**)& g_input_stream_close},
-	{ "g_input_stream_read_async",  cast(void**)& g_input_stream_read_async},
-	{ "g_input_stream_read_finish",  cast(void**)& g_input_stream_read_finish},
-	{ "g_input_stream_skip_async",  cast(void**)& g_input_stream_skip_async},
-	{ "g_input_stream_skip_finish",  cast(void**)& g_input_stream_skip_finish},
-	{ "g_input_stream_close_async",  cast(void**)& g_input_stream_close_async},
-	{ "g_input_stream_close_finish",  cast(void**)& g_input_stream_close_finish},
-	{ "g_input_stream_is_closed",  cast(void**)& g_input_stream_is_closed},
-	{ "g_input_stream_has_pending",  cast(void**)& g_input_stream_has_pending},
-	{ "g_input_stream_set_pending",  cast(void**)& g_input_stream_set_pending},
-	{ "g_input_stream_clear_pending",  cast(void**)& g_input_stream_clear_pending},
-	{ "g_output_stream_write",  cast(void**)& g_output_stream_write},
-	{ "g_output_stream_write_all",  cast(void**)& g_output_stream_write_all},
-	{ "g_output_stream_splice",  cast(void**)& g_output_stream_splice},
-	{ "g_output_stream_flush",  cast(void**)& g_output_stream_flush},
-	{ "g_output_stream_close",  cast(void**)& g_output_stream_close},
-	{ "g_output_stream_write_async",  cast(void**)& g_output_stream_write_async},
-	{ "g_output_stream_write_finish",  cast(void**)& g_output_stream_write_finish},
-	{ "g_output_stream_splice_async",  cast(void**)& g_output_stream_splice_async},
-	{ "g_output_stream_splice_finish",  cast(void**)& g_output_stream_splice_finish},
-	{ "g_output_stream_flush_async",  cast(void**)& g_output_stream_flush_async},
-	{ "g_output_stream_flush_finish",  cast(void**)& g_output_stream_flush_finish},
-	{ "g_output_stream_close_async",  cast(void**)& g_output_stream_close_async},
-	{ "g_output_stream_close_finish",  cast(void**)& g_output_stream_close_finish},
-	{ "g_output_stream_is_closed",  cast(void**)& g_output_stream_is_closed},
-	{ "g_output_stream_has_pending",  cast(void**)& g_output_stream_has_pending},
-	{ "g_output_stream_set_pending",  cast(void**)& g_output_stream_set_pending},
-	{ "g_output_stream_clear_pending",  cast(void**)& g_output_stream_clear_pending},
-	{ "g_file_input_stream_query_info",  cast(void**)& g_file_input_stream_query_info},
-	{ "g_file_input_stream_query_info_async",  cast(void**)& g_file_input_stream_query_info_async},
-	{ "g_file_input_stream_query_info_finish",  cast(void**)& g_file_input_stream_query_info_finish},
-	{ "g_file_output_stream_query_info",  cast(void**)& g_file_output_stream_query_info},
-	{ "g_file_output_stream_query_info_async",  cast(void**)& g_file_output_stream_query_info_async},
-	{ "g_file_output_stream_query_info_finish",  cast(void**)& g_file_output_stream_query_info_finish},
-	{ "g_file_output_stream_get_etag",  cast(void**)& g_file_output_stream_get_etag},
-	{ "g_filter_input_stream_get_base_stream",  cast(void**)& g_filter_input_stream_get_base_stream},
-	{ "g_filter_output_stream_get_base_stream",  cast(void**)& g_filter_output_stream_get_base_stream},
-	{ "g_memory_input_stream_new",  cast(void**)& g_memory_input_stream_new},
-	{ "g_memory_input_stream_new_from_data",  cast(void**)& g_memory_input_stream_new_from_data},
-	{ "g_memory_input_stream_add_data",  cast(void**)& g_memory_input_stream_add_data},
-	{ "g_memory_output_stream_new",  cast(void**)& g_memory_output_stream_new},
-	{ "g_memory_output_stream_get_data",  cast(void**)& g_memory_output_stream_get_data},
-	{ "g_memory_output_stream_get_size",  cast(void**)& g_memory_output_stream_get_size},
-	{ "g_memory_output_stream_get_data_size",  cast(void**)& g_memory_output_stream_get_data_size},
-	{ "g_buffered_input_stream_new",  cast(void**)& g_buffered_input_stream_new},
-	{ "g_buffered_input_stream_new_sized",  cast(void**)& g_buffered_input_stream_new_sized},
-	{ "g_buffered_input_stream_get_buffer_size",  cast(void**)& g_buffered_input_stream_get_buffer_size},
-	{ "g_buffered_input_stream_set_buffer_size",  cast(void**)& g_buffered_input_stream_set_buffer_size},
-	{ "g_buffered_input_stream_get_available",  cast(void**)& g_buffered_input_stream_get_available},
-	{ "g_buffered_input_stream_peek_buffer",  cast(void**)& g_buffered_input_stream_peek_buffer},
-	{ "g_buffered_input_stream_peek",  cast(void**)& g_buffered_input_stream_peek},
-	{ "g_buffered_input_stream_fill",  cast(void**)& g_buffered_input_stream_fill},
-	{ "g_buffered_input_stream_fill_async",  cast(void**)& g_buffered_input_stream_fill_async},
-	{ "g_buffered_input_stream_fill_finish",  cast(void**)& g_buffered_input_stream_fill_finish},
-	{ "g_buffered_input_stream_read_byte",  cast(void**)& g_buffered_input_stream_read_byte},
-	{ "g_buffered_output_stream_new",  cast(void**)& g_buffered_output_stream_new},
-	{ "g_buffered_output_stream_new_sized",  cast(void**)& g_buffered_output_stream_new_sized},
-	{ "g_buffered_output_stream_get_buffer_size",  cast(void**)& g_buffered_output_stream_get_buffer_size},
-	{ "g_buffered_output_stream_set_buffer_size",  cast(void**)& g_buffered_output_stream_set_buffer_size},
-	{ "g_buffered_output_stream_get_auto_grow",  cast(void**)& g_buffered_output_stream_get_auto_grow},
-	{ "g_buffered_output_stream_set_auto_grow",  cast(void**)& g_buffered_output_stream_set_auto_grow},
-	{ "g_data_input_stream_new",  cast(void**)& g_data_input_stream_new},
-	{ "g_data_input_stream_set_byte_order",  cast(void**)& g_data_input_stream_set_byte_order},
-	{ "g_data_input_stream_get_byte_order",  cast(void**)& g_data_input_stream_get_byte_order},
-	{ "g_data_input_stream_set_newline_type",  cast(void**)& g_data_input_stream_set_newline_type},
-	{ "g_data_input_stream_get_newline_type",  cast(void**)& g_data_input_stream_get_newline_type},
-	{ "g_data_input_stream_read_byte",  cast(void**)& g_data_input_stream_read_byte},
-	{ "g_data_input_stream_read_int16",  cast(void**)& g_data_input_stream_read_int16},
-	{ "g_data_input_stream_read_uint16",  cast(void**)& g_data_input_stream_read_uint16},
-	{ "g_data_input_stream_read_int32",  cast(void**)& g_data_input_stream_read_int32},
-	{ "g_data_input_stream_read_uint32",  cast(void**)& g_data_input_stream_read_uint32},
-	{ "g_data_input_stream_read_int64",  cast(void**)& g_data_input_stream_read_int64},
-	{ "g_data_input_stream_read_uint64",  cast(void**)& g_data_input_stream_read_uint64},
-	{ "g_data_input_stream_read_line",  cast(void**)& g_data_input_stream_read_line},
-	{ "g_data_input_stream_read_until",  cast(void**)& g_data_input_stream_read_until},
-	{ "g_data_output_stream_new",  cast(void**)& g_data_output_stream_new},
-	{ "g_data_output_stream_set_byte_order",  cast(void**)& g_data_output_stream_set_byte_order},
-	{ "g_data_output_stream_get_byte_order",  cast(void**)& g_data_output_stream_get_byte_order},
-	{ "g_data_output_stream_put_byte",  cast(void**)& g_data_output_stream_put_byte},
-	{ "g_data_output_stream_put_int16",  cast(void**)& g_data_output_stream_put_int16},
-	{ "g_data_output_stream_put_uint16",  cast(void**)& g_data_output_stream_put_uint16},
-	{ "g_data_output_stream_put_int32",  cast(void**)& g_data_output_stream_put_int32},
-	{ "g_data_output_stream_put_uint32",  cast(void**)& g_data_output_stream_put_uint32},
-	{ "g_data_output_stream_put_int64",  cast(void**)& g_data_output_stream_put_int64},
-	{ "g_data_output_stream_put_uint64",  cast(void**)& g_data_output_stream_put_uint64},
-	{ "g_data_output_stream_put_string",  cast(void**)& g_data_output_stream_put_string},
-	{ "g_unix_input_stream_new",  cast(void**)& g_unix_input_stream_new},
-	{ "g_unix_output_stream_new",  cast(void**)& g_unix_output_stream_new},
-	{ "g_content_type_equals",  cast(void**)& g_content_type_equals},
-	{ "g_content_type_is_a",  cast(void**)& g_content_type_is_a},
-	{ "g_content_type_is_unknown",  cast(void**)& g_content_type_is_unknown},
-	{ "g_content_type_get_description",  cast(void**)& g_content_type_get_description},
-	{ "g_content_type_get_mime_type",  cast(void**)& g_content_type_get_mime_type},
-	{ "g_content_type_get_icon",  cast(void**)& g_content_type_get_icon},
-	{ "g_content_type_can_be_executable",  cast(void**)& g_content_type_can_be_executable},
-	{ "g_content_type_from_mime_type",  cast(void**)& g_content_type_from_mime_type},
-	{ "g_content_type_guess",  cast(void**)& g_content_type_guess},
-	{ "g_content_type_guess_for_tree",  cast(void**)& g_content_type_guess_for_tree},
-	{ "g_content_types_get_registered",  cast(void**)& g_content_types_get_registered},
-	{ "g_app_info_create_from_commandline",  cast(void**)& g_app_info_create_from_commandline},
-	{ "g_app_info_dup",  cast(void**)& g_app_info_dup},
-	{ "g_app_info_equal",  cast(void**)& g_app_info_equal},
-	{ "g_app_info_get_id",  cast(void**)& g_app_info_get_id},
-	{ "g_app_info_get_name",  cast(void**)& g_app_info_get_name},
-	{ "g_app_info_get_description",  cast(void**)& g_app_info_get_description},
-	{ "g_app_info_get_executable",  cast(void**)& g_app_info_get_executable},
-	{ "g_app_info_get_icon",  cast(void**)& g_app_info_get_icon},
-	{ "g_app_info_launch",  cast(void**)& g_app_info_launch},
-	{ "g_app_info_supports_files",  cast(void**)& g_app_info_supports_files},
-	{ "g_app_info_supports_uris",  cast(void**)& g_app_info_supports_uris},
-	{ "g_app_info_launch_uris",  cast(void**)& g_app_info_launch_uris},
-	{ "g_app_info_should_show",  cast(void**)& g_app_info_should_show},
-	{ "g_app_info_set_as_default_for_type",  cast(void**)& g_app_info_set_as_default_for_type},
-	{ "g_app_info_set_as_default_for_extension",  cast(void**)& g_app_info_set_as_default_for_extension},
-	{ "g_app_info_add_supports_type",  cast(void**)& g_app_info_add_supports_type},
-	{ "g_app_info_can_remove_supports_type",  cast(void**)& g_app_info_can_remove_supports_type},
-	{ "g_app_info_remove_supports_type",  cast(void**)& g_app_info_remove_supports_type},
-	{ "g_app_info_get_all",  cast(void**)& g_app_info_get_all},
-	{ "g_app_info_get_all_for_type",  cast(void**)& g_app_info_get_all_for_type},
-	{ "g_app_info_get_default_for_type",  cast(void**)& g_app_info_get_default_for_type},
-	{ "g_app_info_get_default_for_uri_scheme",  cast(void**)& g_app_info_get_default_for_uri_scheme},
-	{ "g_app_info_launch_default_for_uri",  cast(void**)& g_app_info_launch_default_for_uri},
-	{ "g_desktop_app_info_new_from_filename",  cast(void**)& g_desktop_app_info_new_from_filename},
-	{ "g_desktop_app_info_new_from_keyfile",  cast(void**)& g_desktop_app_info_new_from_keyfile},
-	{ "g_desktop_app_info_new",  cast(void**)& g_desktop_app_info_new},
-	{ "g_desktop_app_info_get_is_hidden",  cast(void**)& g_desktop_app_info_get_is_hidden},
-	{ "g_desktop_app_info_set_desktop_env",  cast(void**)& g_desktop_app_info_set_desktop_env},
-	{ "g_desktop_app_info_lookup_get_default_for_uri_scheme",  cast(void**)& g_desktop_app_info_lookup_get_default_for_uri_scheme},
-	{ "g_volume_monitor_get",  cast(void**)& g_volume_monitor_get},
-	{ "g_volume_monitor_get_connected_drives",  cast(void**)& g_volume_monitor_get_connected_drives},
-	{ "g_volume_monitor_get_volumes",  cast(void**)& g_volume_monitor_get_volumes},
-	{ "g_volume_monitor_get_mounts",  cast(void**)& g_volume_monitor_get_mounts},
-	{ "g_volume_monitor_adopt_orphan_mount",  cast(void**)& g_volume_monitor_adopt_orphan_mount},
-	{ "g_volume_monitor_get_mount_for_uuid",  cast(void**)& g_volume_monitor_get_mount_for_uuid},
-	{ "g_volume_monitor_get_volume_for_uuid",  cast(void**)& g_volume_monitor_get_volume_for_uuid},
-	{ "g_volume_get_name",  cast(void**)& g_volume_get_name},
-	{ "g_volume_get_uuid",  cast(void**)& g_volume_get_uuid},
-	{ "g_volume_get_icon",  cast(void**)& g_volume_get_icon},
-	{ "g_volume_get_drive",  cast(void**)& g_volume_get_drive},
-	{ "g_volume_get_mount",  cast(void**)& g_volume_get_mount},
-	{ "g_volume_can_mount",  cast(void**)& g_volume_can_mount},
-	{ "g_volume_should_automount",  cast(void**)& g_volume_should_automount},
-	{ "g_volume_get_activation_root",  cast(void**)& g_volume_get_activation_root},
-	{ "g_volume_mount",  cast(void**)& g_volume_mount},
-	{ "g_volume_mount_finish",  cast(void**)& g_volume_mount_finish},
-	{ "g_volume_can_eject",  cast(void**)& g_volume_can_eject},
-	{ "g_volume_eject",  cast(void**)& g_volume_eject},
-	{ "g_volume_eject_finish",  cast(void**)& g_volume_eject_finish},
-	{ "g_volume_enumerate_identifiers",  cast(void**)& g_volume_enumerate_identifiers},
-	{ "g_volume_get_identifier",  cast(void**)& g_volume_get_identifier},
-	{ "g_mount_get_name",  cast(void**)& g_mount_get_name},
-	{ "g_mount_get_uuid",  cast(void**)& g_mount_get_uuid},
-	{ "g_mount_get_icon",  cast(void**)& g_mount_get_icon},
-	{ "g_mount_get_drive",  cast(void**)& g_mount_get_drive},
-	{ "g_mount_get_root",  cast(void**)& g_mount_get_root},
-	{ "g_mount_get_volume",  cast(void**)& g_mount_get_volume},
-	{ "g_mount_can_unmount",  cast(void**)& g_mount_can_unmount},
-	{ "g_mount_unmount",  cast(void**)& g_mount_unmount},
-	{ "g_mount_unmount_finish",  cast(void**)& g_mount_unmount_finish},
-	{ "g_mount_remount",  cast(void**)& g_mount_remount},
-	{ "g_mount_remount_finish",  cast(void**)& g_mount_remount_finish},
-	{ "g_mount_can_eject",  cast(void**)& g_mount_can_eject},
-	{ "g_mount_eject",  cast(void**)& g_mount_eject},
-	{ "g_mount_eject_finish",  cast(void**)& g_mount_eject_finish},
-	{ "g_mount_guess_content_type",  cast(void**)& g_mount_guess_content_type},
-	{ "g_mount_guess_content_type_finish",  cast(void**)& g_mount_guess_content_type_finish},
-	{ "g_mount_guess_content_type_sync",  cast(void**)& g_mount_guess_content_type_sync},
-	{ "g_drive_get_name",  cast(void**)& g_drive_get_name},
-	{ "g_drive_get_icon",  cast(void**)& g_drive_get_icon},
-	{ "g_drive_has_volumes",  cast(void**)& g_drive_has_volumes},
-	{ "g_drive_get_volumes",  cast(void**)& g_drive_get_volumes},
-	{ "g_drive_can_eject",  cast(void**)& g_drive_can_eject},
-	{ "g_drive_can_poll_for_media",  cast(void**)& g_drive_can_poll_for_media},
-	{ "g_drive_poll_for_media",  cast(void**)& g_drive_poll_for_media},
-	{ "g_drive_poll_for_media_finish",  cast(void**)& g_drive_poll_for_media_finish},
-	{ "g_drive_has_media",  cast(void**)& g_drive_has_media},
-	{ "g_drive_is_media_check_automatic",  cast(void**)& g_drive_is_media_check_automatic},
-	{ "g_drive_is_media_removable",  cast(void**)& g_drive_is_media_removable},
-	{ "g_drive_eject",  cast(void**)& g_drive_eject},
-	{ "g_drive_eject_finish",  cast(void**)& g_drive_eject_finish},
-	{ "g_drive_enumerate_identifiers",  cast(void**)& g_drive_enumerate_identifiers},
-	{ "g_drive_get_identifier",  cast(void**)& g_drive_get_identifier},
-	{ "g_unix_mount_free",  cast(void**)& g_unix_mount_free},
-	{ "g_unix_mount_compare",  cast(void**)& g_unix_mount_compare},
-	{ "g_unix_mount_get_mount_path",  cast(void**)& g_unix_mount_get_mount_path},
-	{ "g_unix_mount_get_device_path",  cast(void**)& g_unix_mount_get_device_path},
-	{ "g_unix_mount_get_fs_type",  cast(void**)& g_unix_mount_get_fs_type},
-	{ "g_unix_mount_is_readonly",  cast(void**)& g_unix_mount_is_readonly},
-	{ "g_unix_mount_is_system_internal",  cast(void**)& g_unix_mount_is_system_internal},
-	{ "g_unix_mount_guess_icon",  cast(void**)& g_unix_mount_guess_icon},
-	{ "g_unix_mount_guess_name",  cast(void**)& g_unix_mount_guess_name},
-	{ "g_unix_mount_guess_can_eject",  cast(void**)& g_unix_mount_guess_can_eject},
-	{ "g_unix_mount_guess_should_display",  cast(void**)& g_unix_mount_guess_should_display},
-	{ "g_unix_mount_points_get",  cast(void**)& g_unix_mount_points_get},
-	{ "g_unix_mounts_get",  cast(void**)& g_unix_mounts_get},
-	{ "g_unix_mount_at",  cast(void**)& g_unix_mount_at},
-	{ "g_unix_mounts_changed_since",  cast(void**)& g_unix_mounts_changed_since},
-	{ "g_unix_mount_points_changed_since",  cast(void**)& g_unix_mount_points_changed_since},
-	{ "g_unix_is_mount_path_system_internal",  cast(void**)& g_unix_is_mount_path_system_internal},
-	{ "g_unix_mount_point_free",  cast(void**)& g_unix_mount_point_free},
-	{ "g_unix_mount_point_compare",  cast(void**)& g_unix_mount_point_compare},
-	{ "g_unix_mount_point_get_mount_path",  cast(void**)& g_unix_mount_point_get_mount_path},
-	{ "g_unix_mount_point_get_device_path",  cast(void**)& g_unix_mount_point_get_device_path},
-	{ "g_unix_mount_point_get_fs_type",  cast(void**)& g_unix_mount_point_get_fs_type},
-	{ "g_unix_mount_point_is_readonly",  cast(void**)& g_unix_mount_point_is_readonly},
-	{ "g_unix_mount_point_is_user_mountable",  cast(void**)& g_unix_mount_point_is_user_mountable},
-	{ "g_unix_mount_point_is_loopback",  cast(void**)& g_unix_mount_point_is_loopback},
-	{ "g_unix_mount_point_guess_icon",  cast(void**)& g_unix_mount_point_guess_icon},
-	{ "g_unix_mount_point_guess_name",  cast(void**)& g_unix_mount_point_guess_name},
-	{ "g_unix_mount_point_guess_can_eject",  cast(void**)& g_unix_mount_point_guess_can_eject},
-	{ "g_unix_mount_monitor_new",  cast(void**)& g_unix_mount_monitor_new},
-	{ "g_unix_mount_monitor_set_rate_limit",  cast(void**)& g_unix_mount_monitor_set_rate_limit},
-	{ "g_icon_hash",  cast(void**)& g_icon_hash},
-	{ "g_icon_equal",  cast(void**)& g_icon_equal},
-	{ "g_file_icon_new",  cast(void**)& g_file_icon_new},
-	{ "g_file_icon_get_file",  cast(void**)& g_file_icon_get_file},
-	{ "g_loadable_icon_load",  cast(void**)& g_loadable_icon_load},
-	{ "g_loadable_icon_load_async",  cast(void**)& g_loadable_icon_load_async},
-	{ "g_loadable_icon_load_finish",  cast(void**)& g_loadable_icon_load_finish},
-	{ "g_themed_icon_new",  cast(void**)& g_themed_icon_new},
-	{ "g_themed_icon_new_from_names",  cast(void**)& g_themed_icon_new_from_names},
-	{ "g_themed_icon_new_with_default_fallbacks",  cast(void**)& g_themed_icon_new_with_default_fallbacks},
-	{ "g_themed_icon_prepend_name",  cast(void**)& g_themed_icon_prepend_name},
-	{ "g_themed_icon_append_name",  cast(void**)& g_themed_icon_append_name},
-	{ "g_emblemed_icon_new",  cast(void**)& g_emblemed_icon_new},
-	{ "g_emblemed_icon_get_icon",  cast(void**)& g_emblemed_icon_get_icon},
-	{ "g_emblemed_icon_get_emblems",  cast(void**)& g_emblemed_icon_get_emblems},
-	{ "g_emblemed_icon_add_emblem",  cast(void**)& g_emblemed_icon_add_emblem},
-	{ "g_emblem_new",  cast(void**)& g_emblem_new},
-	{ "g_emblem_new_with_origin",  cast(void**)& g_emblem_new_with_origin},
-	{ "g_emblem_get_icon",  cast(void**)& g_emblem_get_icon},
-	{ "g_emblem_get_origin",  cast(void**)& g_emblem_get_origin},
-	{ "g_filename_completer_new",  cast(void**)& g_filename_completer_new},
-	{ "g_filename_completer_get_completion_suffix",  cast(void**)& g_filename_completer_get_completion_suffix},
-	{ "g_filename_completer_get_completions",  cast(void**)& g_filename_completer_get_completions},
-	{ "g_filename_completer_set_dirs_only",  cast(void**)& g_filename_completer_set_dirs_only},
-	{ "g_vfs_get_file_for_path",  cast(void**)& g_vfs_get_file_for_path},
-	{ "g_vfs_get_file_for_uri",  cast(void**)& g_vfs_get_file_for_uri},
-	{ "g_vfs_parse_name",  cast(void**)& g_vfs_parse_name},
-	{ "g_vfs_get_default",  cast(void**)& g_vfs_get_default},
-	{ "g_vfs_get_local",  cast(void**)& g_vfs_get_local},
-	{ "g_vfs_is_active",  cast(void**)& g_vfs_is_active},
-	{ "g_vfs_get_supported_uri_schemes",  cast(void**)& g_vfs_get_supported_uri_schemes},
-	{ "g_io_module_new",  cast(void**)& g_io_module_new},
-	{ "g_io_modules_load_all_in_directory",  cast(void**)& g_io_modules_load_all_in_directory},
-	{ "g_io_module_load",  cast(void**)& g_io_module_load},
-	{ "g_io_module_unload",  cast(void**)& g_io_module_unload},
-	{ "g_io_extension_get_name",  cast(void**)& g_io_extension_get_name},
-	{ "g_io_extension_get_priority",  cast(void**)& g_io_extension_get_priority},
-	{ "g_io_extension_get_type",  cast(void**)& g_io_extension_get_type},
-	{ "g_io_extension_ref_class",  cast(void**)& g_io_extension_ref_class},
-	{ "g_io_extension_point_get_extension_by_name",  cast(void**)& g_io_extension_point_get_extension_by_name},
-	{ "g_io_extension_point_get_extensions",  cast(void**)& g_io_extension_point_get_extensions},
-	{ "g_io_extension_point_get_required_type",  cast(void**)& g_io_extension_point_get_required_type},
-	{ "g_io_extension_point_implement",  cast(void**)& g_io_extension_point_implement},
-	{ "g_io_extension_point_lookup",  cast(void**)& g_io_extension_point_lookup},
-	{ "g_io_extension_point_register",  cast(void**)& g_io_extension_point_register},
-	{ "g_io_extension_point_set_required_type",  cast(void**)& g_io_extension_point_set_required_type},
+c_g_file_new_for_path  g_file_new_for_path;
+c_g_file_new_for_uri  g_file_new_for_uri;
+c_g_file_new_for_commandline_arg  g_file_new_for_commandline_arg;
+c_g_file_parse_name  g_file_parse_name;
+c_g_file_dup  g_file_dup;
+c_g_file_hash  g_file_hash;
+c_g_file_equal  g_file_equal;
+c_g_file_get_basename  g_file_get_basename;
+c_g_file_get_path  g_file_get_path;
+c_g_file_get_uri  g_file_get_uri;
+c_g_file_get_parse_name  g_file_get_parse_name;
+c_g_file_get_parent  g_file_get_parent;
+c_g_file_get_child  g_file_get_child;
+c_g_file_get_child_for_display_name  g_file_get_child_for_display_name;
+c_g_file_has_prefix  g_file_has_prefix;
+c_g_file_get_relative_path  g_file_get_relative_path;
+c_g_file_resolve_relative_path  g_file_resolve_relative_path;
+c_g_file_is_native  g_file_is_native;
+c_g_file_has_uri_scheme  g_file_has_uri_scheme;
+c_g_file_get_uri_scheme  g_file_get_uri_scheme;
+c_g_file_read  g_file_read;
+c_g_file_read_async  g_file_read_async;
+c_g_file_read_finish  g_file_read_finish;
+c_g_file_append_to  g_file_append_to;
+c_g_file_create  g_file_create;
+c_g_file_replace  g_file_replace;
+c_g_file_append_to_async  g_file_append_to_async;
+c_g_file_append_to_finish  g_file_append_to_finish;
+c_g_file_create_async  g_file_create_async;
+c_g_file_create_finish  g_file_create_finish;
+c_g_file_replace_async  g_file_replace_async;
+c_g_file_replace_finish  g_file_replace_finish;
+c_g_file_query_info  g_file_query_info;
+c_g_file_query_info_async  g_file_query_info_async;
+c_g_file_query_info_finish  g_file_query_info_finish;
+c_g_file_query_exists  g_file_query_exists;
+c_g_file_query_file_type  g_file_query_file_type;
+c_g_file_query_filesystem_info  g_file_query_filesystem_info;
+c_g_file_query_filesystem_info_async  g_file_query_filesystem_info_async;
+c_g_file_query_filesystem_info_finish  g_file_query_filesystem_info_finish;
+c_g_file_query_default_handler  g_file_query_default_handler;
+c_g_file_find_enclosing_mount  g_file_find_enclosing_mount;
+c_g_file_find_enclosing_mount_async  g_file_find_enclosing_mount_async;
+c_g_file_find_enclosing_mount_finish  g_file_find_enclosing_mount_finish;
+c_g_file_enumerate_children  g_file_enumerate_children;
+c_g_file_enumerate_children_async  g_file_enumerate_children_async;
+c_g_file_enumerate_children_finish  g_file_enumerate_children_finish;
+c_g_file_set_display_name  g_file_set_display_name;
+c_g_file_set_display_name_async  g_file_set_display_name_async;
+c_g_file_set_display_name_finish  g_file_set_display_name_finish;
+c_g_file_delete  g_file_delete;
+c_g_file_trash  g_file_trash;
+c_g_file_copy  g_file_copy;
+c_g_file_copy_async  g_file_copy_async;
+c_g_file_copy_finish  g_file_copy_finish;
+c_g_file_move  g_file_move;
+c_g_file_make_directory  g_file_make_directory;
+c_g_file_make_directory_with_parents  g_file_make_directory_with_parents;
+c_g_file_make_symbolic_link  g_file_make_symbolic_link;
+c_g_file_query_settable_attributes  g_file_query_settable_attributes;
+c_g_file_query_writable_namespaces  g_file_query_writable_namespaces;
+c_g_file_set_attribute  g_file_set_attribute;
+c_g_file_set_attributes_from_info  g_file_set_attributes_from_info;
+c_g_file_set_attributes_async  g_file_set_attributes_async;
+c_g_file_set_attributes_finish  g_file_set_attributes_finish;
+c_g_file_set_attribute_string  g_file_set_attribute_string;
+c_g_file_set_attribute_byte_string  g_file_set_attribute_byte_string;
+c_g_file_set_attribute_uint32  g_file_set_attribute_uint32;
+c_g_file_set_attribute_int32  g_file_set_attribute_int32;
+c_g_file_set_attribute_uint64  g_file_set_attribute_uint64;
+c_g_file_set_attribute_int64  g_file_set_attribute_int64;
+c_g_file_mount_mountable  g_file_mount_mountable;
+c_g_file_mount_mountable_finish  g_file_mount_mountable_finish;
+c_g_file_unmount_mountable  g_file_unmount_mountable;
+c_g_file_unmount_mountable_finish  g_file_unmount_mountable_finish;
+c_g_file_eject_mountable  g_file_eject_mountable;
+c_g_file_eject_mountable_finish  g_file_eject_mountable_finish;
+c_g_file_mount_enclosing_volume  g_file_mount_enclosing_volume;
+c_g_file_mount_enclosing_volume_finish  g_file_mount_enclosing_volume_finish;
+c_g_file_monitor_directory  g_file_monitor_directory;
+c_g_file_monitor_file  g_file_monitor_file;
+c_g_file_monitor  g_file_monitor;
+c_g_file_load_contents  g_file_load_contents;
+c_g_file_load_contents_async  g_file_load_contents_async;
+c_g_file_load_contents_finish  g_file_load_contents_finish;
+c_g_file_load_partial_contents_async  g_file_load_partial_contents_async;
+c_g_file_load_partial_contents_finish  g_file_load_partial_contents_finish;
+c_g_file_replace_contents  g_file_replace_contents;
+c_g_file_replace_contents_async  g_file_replace_contents_async;
+c_g_file_replace_contents_finish  g_file_replace_contents_finish;
+c_g_file_copy_attributes  g_file_copy_attributes;
 
-];
+// gio.FileAttributeInfoList
+
+c_g_file_attribute_info_list_new  g_file_attribute_info_list_new;
+c_g_file_attribute_info_list_ref  g_file_attribute_info_list_ref;
+c_g_file_attribute_info_list_unref  g_file_attribute_info_list_unref;
+c_g_file_attribute_info_list_dup  g_file_attribute_info_list_dup;
+c_g_file_attribute_info_list_lookup  g_file_attribute_info_list_lookup;
+c_g_file_attribute_info_list_add  g_file_attribute_info_list_add;
+
+// gio.FileInfo
+
+c_g_file_info_new  g_file_info_new;
+c_g_file_info_dup  g_file_info_dup;
+c_g_file_info_copy_into  g_file_info_copy_into;
+c_g_file_info_has_attribute  g_file_info_has_attribute;
+c_g_file_info_list_attributes  g_file_info_list_attributes;
+c_g_file_info_get_attribute_type  g_file_info_get_attribute_type;
+c_g_file_info_remove_attribute  g_file_info_remove_attribute;
+c_g_file_info_get_attribute_as_string  g_file_info_get_attribute_as_string;
+c_g_file_info_get_attribute_data  g_file_info_get_attribute_data;
+c_g_file_info_get_attribute_status  g_file_info_get_attribute_status;
+c_g_file_info_get_attribute_string  g_file_info_get_attribute_string;
+c_g_file_info_get_attribute_byte_string  g_file_info_get_attribute_byte_string;
+c_g_file_info_get_attribute_boolean  g_file_info_get_attribute_boolean;
+c_g_file_info_get_attribute_uint32  g_file_info_get_attribute_uint32;
+c_g_file_info_get_attribute_int32  g_file_info_get_attribute_int32;
+c_g_file_info_get_attribute_uint64  g_file_info_get_attribute_uint64;
+c_g_file_info_get_attribute_int64  g_file_info_get_attribute_int64;
+c_g_file_info_get_attribute_object  g_file_info_get_attribute_object;
+c_g_file_info_set_attribute  g_file_info_set_attribute;
+c_g_file_info_set_attribute_string  g_file_info_set_attribute_string;
+c_g_file_info_set_attribute_byte_string  g_file_info_set_attribute_byte_string;
+c_g_file_info_set_attribute_boolean  g_file_info_set_attribute_boolean;
+c_g_file_info_set_attribute_uint32  g_file_info_set_attribute_uint32;
+c_g_file_info_set_attribute_int32  g_file_info_set_attribute_int32;
+c_g_file_info_set_attribute_uint64  g_file_info_set_attribute_uint64;
+c_g_file_info_set_attribute_int64  g_file_info_set_attribute_int64;
+c_g_file_info_set_attribute_object  g_file_info_set_attribute_object;
+c_g_file_info_clear_status  g_file_info_clear_status;
+c_g_file_info_get_file_type  g_file_info_get_file_type;
+c_g_file_info_get_is_hidden  g_file_info_get_is_hidden;
+c_g_file_info_get_is_backup  g_file_info_get_is_backup;
+c_g_file_info_get_is_symlink  g_file_info_get_is_symlink;
+c_g_file_info_get_name  g_file_info_get_name;
+c_g_file_info_get_display_name  g_file_info_get_display_name;
+c_g_file_info_get_edit_name  g_file_info_get_edit_name;
+c_g_file_info_get_icon  g_file_info_get_icon;
+c_g_file_info_get_content_type  g_file_info_get_content_type;
+c_g_file_info_get_size  g_file_info_get_size;
+c_g_file_info_get_modification_time  g_file_info_get_modification_time;
+c_g_file_info_get_symlink_target  g_file_info_get_symlink_target;
+c_g_file_info_get_etag  g_file_info_get_etag;
+c_g_file_info_get_sort_order  g_file_info_get_sort_order;
+c_g_file_info_set_attribute_mask  g_file_info_set_attribute_mask;
+c_g_file_info_unset_attribute_mask  g_file_info_unset_attribute_mask;
+c_g_file_info_set_file_type  g_file_info_set_file_type;
+c_g_file_info_set_is_hidden  g_file_info_set_is_hidden;
+c_g_file_info_set_is_symlink  g_file_info_set_is_symlink;
+c_g_file_info_set_name  g_file_info_set_name;
+c_g_file_info_set_display_name  g_file_info_set_display_name;
+c_g_file_info_set_edit_name  g_file_info_set_edit_name;
+c_g_file_info_set_icon  g_file_info_set_icon;
+c_g_file_info_set_content_type  g_file_info_set_content_type;
+c_g_file_info_set_size  g_file_info_set_size;
+c_g_file_info_set_modification_time  g_file_info_set_modification_time;
+c_g_file_info_set_symlink_target  g_file_info_set_symlink_target;
+c_g_file_info_set_sort_order  g_file_info_set_sort_order;
+
+// gio.FileAttributeMatcher
+
+c_g_file_attribute_matcher_new  g_file_attribute_matcher_new;
+c_g_file_attribute_matcher_ref  g_file_attribute_matcher_ref;
+c_g_file_attribute_matcher_unref  g_file_attribute_matcher_unref;
+c_g_file_attribute_matcher_matches  g_file_attribute_matcher_matches;
+c_g_file_attribute_matcher_matches_only  g_file_attribute_matcher_matches_only;
+c_g_file_attribute_matcher_enumerate_namespace  g_file_attribute_matcher_enumerate_namespace;
+c_g_file_attribute_matcher_enumerate_next  g_file_attribute_matcher_enumerate_next;
+
+// gio.FileEnumerator
+
+c_g_file_enumerator_next_file  g_file_enumerator_next_file;
+c_g_file_enumerator_close  g_file_enumerator_close;
+c_g_file_enumerator_next_files_async  g_file_enumerator_next_files_async;
+c_g_file_enumerator_next_files_finish  g_file_enumerator_next_files_finish;
+c_g_file_enumerator_close_async  g_file_enumerator_close_async;
+c_g_file_enumerator_close_finish  g_file_enumerator_close_finish;
+c_g_file_enumerator_is_closed  g_file_enumerator_is_closed;
+c_g_file_enumerator_has_pending  g_file_enumerator_has_pending;
+c_g_file_enumerator_set_pending  g_file_enumerator_set_pending;
+c_g_file_enumerator_get_container  g_file_enumerator_get_container;
+
+// gio.MountOperation
+
+c_g_mount_operation_new  g_mount_operation_new;
+c_g_mount_operation_get_username  g_mount_operation_get_username;
+c_g_mount_operation_set_username  g_mount_operation_set_username;
+c_g_mount_operation_get_password  g_mount_operation_get_password;
+c_g_mount_operation_set_password  g_mount_operation_set_password;
+c_g_mount_operation_get_anonymous  g_mount_operation_get_anonymous;
+c_g_mount_operation_set_anonymous  g_mount_operation_set_anonymous;
+c_g_mount_operation_get_domain  g_mount_operation_get_domain;
+c_g_mount_operation_set_domain  g_mount_operation_set_domain;
+c_g_mount_operation_get_password_save  g_mount_operation_get_password_save;
+c_g_mount_operation_set_password_save  g_mount_operation_set_password_save;
+c_g_mount_operation_get_choice  g_mount_operation_get_choice;
+c_g_mount_operation_set_choice  g_mount_operation_set_choice;
+c_g_mount_operation_reply  g_mount_operation_reply;
+
+// gio.ErrorGIO
+
+c_g_io_error_from_errno  g_io_error_from_errno;
+
+// gio.FileMonitor
+
+c_g_file_monitor_cancel  g_file_monitor_cancel;
+c_g_file_monitor_is_cancelled  g_file_monitor_is_cancelled;
+c_g_file_monitor_set_rate_limit  g_file_monitor_set_rate_limit;
+c_g_file_monitor_emit_event  g_file_monitor_emit_event;
+
+// gio.Cancellable
+
+c_g_cancellable_new  g_cancellable_new;
+c_g_cancellable_is_cancelled  g_cancellable_is_cancelled;
+c_g_cancellable_set_error_if_cancelled  g_cancellable_set_error_if_cancelled;
+c_g_cancellable_get_fd  g_cancellable_get_fd;
+c_g_cancellable_get_current  g_cancellable_get_current;
+c_g_cancellable_pop_current  g_cancellable_pop_current;
+c_g_cancellable_push_current  g_cancellable_push_current;
+c_g_cancellable_reset  g_cancellable_reset;
+c_g_cancellable_cancel  g_cancellable_cancel;
+
+// gio.AsyncResultT
+
+
+// gio.AsyncResultT
+
+c_g_async_result_get_user_data  g_async_result_get_user_data;
+c_g_async_result_get_source_object  g_async_result_get_source_object;
+
+// gio.IOSchedulerJob
+
+c_g_io_scheduler_push_job  g_io_scheduler_push_job;
+c_g_io_scheduler_cancel_all_jobs  g_io_scheduler_cancel_all_jobs;
+c_g_io_scheduler_job_send_to_mainloop  g_io_scheduler_job_send_to_mainloop;
+c_g_io_scheduler_job_send_to_mainloop_async  g_io_scheduler_job_send_to_mainloop_async;
+
+// gio.SimpleAsyncResult
+
+c_g_simple_async_result_new  g_simple_async_result_new;
+c_g_simple_async_result_new_error  g_simple_async_result_new_error;
+c_g_simple_async_result_new_from_error  g_simple_async_result_new_from_error;
+c_g_simple_async_result_set_op_res_gpointer  g_simple_async_result_set_op_res_gpointer;
+c_g_simple_async_result_get_op_res_gpointer  g_simple_async_result_get_op_res_gpointer;
+c_g_simple_async_result_set_op_res_gssize  g_simple_async_result_set_op_res_gssize;
+c_g_simple_async_result_get_op_res_gssize  g_simple_async_result_get_op_res_gssize;
+c_g_simple_async_result_set_op_res_gboolean  g_simple_async_result_set_op_res_gboolean;
+c_g_simple_async_result_get_op_res_gboolean  g_simple_async_result_get_op_res_gboolean;
+c_g_simple_async_result_get_source_tag  g_simple_async_result_get_source_tag;
+c_g_simple_async_result_set_handle_cancellation  g_simple_async_result_set_handle_cancellation;
+c_g_simple_async_result_complete  g_simple_async_result_complete;
+c_g_simple_async_result_complete_in_idle  g_simple_async_result_complete_in_idle;
+c_g_simple_async_result_run_in_thread  g_simple_async_result_run_in_thread;
+c_g_simple_async_result_set_from_error  g_simple_async_result_set_from_error;
+c_g_simple_async_result_propagate_error  g_simple_async_result_propagate_error;
+c_g_simple_async_result_set_error  g_simple_async_result_set_error;
+c_g_simple_async_result_set_error_va  g_simple_async_result_set_error_va;
+c_g_simple_async_report_error_in_idle  g_simple_async_report_error_in_idle;
+c_g_simple_async_report_gerror_in_idle  g_simple_async_report_gerror_in_idle;
+
+// gio.SeekableT
+
+
+// gio.SeekableT
+
+c_g_seekable_tell  g_seekable_tell;
+c_g_seekable_can_seek  g_seekable_can_seek;
+c_g_seekable_seek  g_seekable_seek;
+c_g_seekable_can_truncate  g_seekable_can_truncate;
+c_g_seekable_truncate  g_seekable_truncate;
+
+// gio.InputStream
+
+c_g_input_stream_read  g_input_stream_read;
+c_g_input_stream_read_all  g_input_stream_read_all;
+c_g_input_stream_skip  g_input_stream_skip;
+c_g_input_stream_close  g_input_stream_close;
+c_g_input_stream_read_async  g_input_stream_read_async;
+c_g_input_stream_read_finish  g_input_stream_read_finish;
+c_g_input_stream_skip_async  g_input_stream_skip_async;
+c_g_input_stream_skip_finish  g_input_stream_skip_finish;
+c_g_input_stream_close_async  g_input_stream_close_async;
+c_g_input_stream_close_finish  g_input_stream_close_finish;
+c_g_input_stream_is_closed  g_input_stream_is_closed;
+c_g_input_stream_has_pending  g_input_stream_has_pending;
+c_g_input_stream_set_pending  g_input_stream_set_pending;
+c_g_input_stream_clear_pending  g_input_stream_clear_pending;
+
+// gio.OutputStream
+
+c_g_output_stream_write  g_output_stream_write;
+c_g_output_stream_write_all  g_output_stream_write_all;
+c_g_output_stream_splice  g_output_stream_splice;
+c_g_output_stream_flush  g_output_stream_flush;
+c_g_output_stream_close  g_output_stream_close;
+c_g_output_stream_write_async  g_output_stream_write_async;
+c_g_output_stream_write_finish  g_output_stream_write_finish;
+c_g_output_stream_splice_async  g_output_stream_splice_async;
+c_g_output_stream_splice_finish  g_output_stream_splice_finish;
+c_g_output_stream_flush_async  g_output_stream_flush_async;
+c_g_output_stream_flush_finish  g_output_stream_flush_finish;
+c_g_output_stream_close_async  g_output_stream_close_async;
+c_g_output_stream_close_finish  g_output_stream_close_finish;
+c_g_output_stream_is_closed  g_output_stream_is_closed;
+c_g_output_stream_has_pending  g_output_stream_has_pending;
+c_g_output_stream_set_pending  g_output_stream_set_pending;
+c_g_output_stream_clear_pending  g_output_stream_clear_pending;
+
+// gio.FileInputStream
+
+c_g_file_input_stream_query_info  g_file_input_stream_query_info;
+c_g_file_input_stream_query_info_async  g_file_input_stream_query_info_async;
+c_g_file_input_stream_query_info_finish  g_file_input_stream_query_info_finish;
+
+// gio.FileOutputStream
+
+c_g_file_output_stream_query_info  g_file_output_stream_query_info;
+c_g_file_output_stream_query_info_async  g_file_output_stream_query_info_async;
+c_g_file_output_stream_query_info_finish  g_file_output_stream_query_info_finish;
+c_g_file_output_stream_get_etag  g_file_output_stream_get_etag;
+
+// gio.FilterInputStream
+
+c_g_filter_input_stream_get_base_stream  g_filter_input_stream_get_base_stream;
+
+// gio.FilterOutputStream
+
+c_g_filter_output_stream_get_base_stream  g_filter_output_stream_get_base_stream;
+
+// gio.MemoryInputStream
+
+c_g_memory_input_stream_new  g_memory_input_stream_new;
+c_g_memory_input_stream_new_from_data  g_memory_input_stream_new_from_data;
+c_g_memory_input_stream_add_data  g_memory_input_stream_add_data;
+
+// gio.MemoryOutputStream
+
+c_g_memory_output_stream_new  g_memory_output_stream_new;
+c_g_memory_output_stream_get_data  g_memory_output_stream_get_data;
+c_g_memory_output_stream_get_size  g_memory_output_stream_get_size;
+c_g_memory_output_stream_get_data_size  g_memory_output_stream_get_data_size;
+
+// gio.BufferedInputStream
+
+c_g_buffered_input_stream_new  g_buffered_input_stream_new;
+c_g_buffered_input_stream_new_sized  g_buffered_input_stream_new_sized;
+c_g_buffered_input_stream_get_buffer_size  g_buffered_input_stream_get_buffer_size;
+c_g_buffered_input_stream_set_buffer_size  g_buffered_input_stream_set_buffer_size;
+c_g_buffered_input_stream_get_available  g_buffered_input_stream_get_available;
+c_g_buffered_input_stream_peek_buffer  g_buffered_input_stream_peek_buffer;
+c_g_buffered_input_stream_peek  g_buffered_input_stream_peek;
+c_g_buffered_input_stream_fill  g_buffered_input_stream_fill;
+c_g_buffered_input_stream_fill_async  g_buffered_input_stream_fill_async;
+c_g_buffered_input_stream_fill_finish  g_buffered_input_stream_fill_finish;
+c_g_buffered_input_stream_read_byte  g_buffered_input_stream_read_byte;
+
+// gio.BufferedOutputStream
+
+c_g_buffered_output_stream_new  g_buffered_output_stream_new;
+c_g_buffered_output_stream_new_sized  g_buffered_output_stream_new_sized;
+c_g_buffered_output_stream_get_buffer_size  g_buffered_output_stream_get_buffer_size;
+c_g_buffered_output_stream_set_buffer_size  g_buffered_output_stream_set_buffer_size;
+c_g_buffered_output_stream_get_auto_grow  g_buffered_output_stream_get_auto_grow;
+c_g_buffered_output_stream_set_auto_grow  g_buffered_output_stream_set_auto_grow;
+
+// gio.DataInputStream
+
+c_g_data_input_stream_new  g_data_input_stream_new;
+c_g_data_input_stream_set_byte_order  g_data_input_stream_set_byte_order;
+c_g_data_input_stream_get_byte_order  g_data_input_stream_get_byte_order;
+c_g_data_input_stream_set_newline_type  g_data_input_stream_set_newline_type;
+c_g_data_input_stream_get_newline_type  g_data_input_stream_get_newline_type;
+c_g_data_input_stream_read_byte  g_data_input_stream_read_byte;
+c_g_data_input_stream_read_int16  g_data_input_stream_read_int16;
+c_g_data_input_stream_read_uint16  g_data_input_stream_read_uint16;
+c_g_data_input_stream_read_int32  g_data_input_stream_read_int32;
+c_g_data_input_stream_read_uint32  g_data_input_stream_read_uint32;
+c_g_data_input_stream_read_int64  g_data_input_stream_read_int64;
+c_g_data_input_stream_read_uint64  g_data_input_stream_read_uint64;
+c_g_data_input_stream_read_line  g_data_input_stream_read_line;
+c_g_data_input_stream_read_until  g_data_input_stream_read_until;
+
+// gio.DataOutputStream
+
+c_g_data_output_stream_new  g_data_output_stream_new;
+c_g_data_output_stream_set_byte_order  g_data_output_stream_set_byte_order;
+c_g_data_output_stream_get_byte_order  g_data_output_stream_get_byte_order;
+c_g_data_output_stream_put_byte  g_data_output_stream_put_byte;
+c_g_data_output_stream_put_int16  g_data_output_stream_put_int16;
+c_g_data_output_stream_put_uint16  g_data_output_stream_put_uint16;
+c_g_data_output_stream_put_int32  g_data_output_stream_put_int32;
+c_g_data_output_stream_put_uint32  g_data_output_stream_put_uint32;
+c_g_data_output_stream_put_int64  g_data_output_stream_put_int64;
+c_g_data_output_stream_put_uint64  g_data_output_stream_put_uint64;
+c_g_data_output_stream_put_string  g_data_output_stream_put_string;
+
+// gio.UnixInputStream
+
+c_g_unix_input_stream_new  g_unix_input_stream_new;
+
+// gio.UnixOutputStream
+
+c_g_unix_output_stream_new  g_unix_output_stream_new;
+
+// gio.ContentType
+
+c_g_content_type_equals  g_content_type_equals;
+c_g_content_type_is_a  g_content_type_is_a;
+c_g_content_type_is_unknown  g_content_type_is_unknown;
+c_g_content_type_get_description  g_content_type_get_description;
+c_g_content_type_get_mime_type  g_content_type_get_mime_type;
+c_g_content_type_get_icon  g_content_type_get_icon;
+c_g_content_type_can_be_executable  g_content_type_can_be_executable;
+c_g_content_type_from_mime_type  g_content_type_from_mime_type;
+c_g_content_type_guess  g_content_type_guess;
+c_g_content_type_guess_for_tree  g_content_type_guess_for_tree;
+c_g_content_types_get_registered  g_content_types_get_registered;
+
+// gio.AppInfoT
+
+
+// gio.AppInfoT
+
+c_g_app_info_create_from_commandline  g_app_info_create_from_commandline;
+c_g_app_info_dup  g_app_info_dup;
+c_g_app_info_equal  g_app_info_equal;
+c_g_app_info_get_id  g_app_info_get_id;
+c_g_app_info_get_name  g_app_info_get_name;
+c_g_app_info_get_description  g_app_info_get_description;
+c_g_app_info_get_executable  g_app_info_get_executable;
+c_g_app_info_get_icon  g_app_info_get_icon;
+c_g_app_info_launch  g_app_info_launch;
+c_g_app_info_supports_files  g_app_info_supports_files;
+c_g_app_info_supports_uris  g_app_info_supports_uris;
+c_g_app_info_launch_uris  g_app_info_launch_uris;
+c_g_app_info_should_show  g_app_info_should_show;
+c_g_app_info_set_as_default_for_type  g_app_info_set_as_default_for_type;
+c_g_app_info_set_as_default_for_extension  g_app_info_set_as_default_for_extension;
+c_g_app_info_add_supports_type  g_app_info_add_supports_type;
+c_g_app_info_can_remove_supports_type  g_app_info_can_remove_supports_type;
+c_g_app_info_remove_supports_type  g_app_info_remove_supports_type;
+c_g_app_info_get_all  g_app_info_get_all;
+c_g_app_info_get_all_for_type  g_app_info_get_all_for_type;
+c_g_app_info_get_default_for_type  g_app_info_get_default_for_type;
+c_g_app_info_get_default_for_uri_scheme  g_app_info_get_default_for_uri_scheme;
+c_g_app_info_launch_default_for_uri  g_app_info_launch_default_for_uri;
+
+// gio.AppInfo
+
+
+// gio.AppLaunchContext
+
+
+// gio.DesktopAppInfo
+
+c_g_desktop_app_info_new_from_filename  g_desktop_app_info_new_from_filename;
+c_g_desktop_app_info_new_from_keyfile  g_desktop_app_info_new_from_keyfile;
+c_g_desktop_app_info_new  g_desktop_app_info_new;
+c_g_desktop_app_info_get_is_hidden  g_desktop_app_info_get_is_hidden;
+c_g_desktop_app_info_set_desktop_env  g_desktop_app_info_set_desktop_env;
+c_g_desktop_app_info_lookup_get_default_for_uri_scheme  g_desktop_app_info_lookup_get_default_for_uri_scheme;
+
+// gio.VolumeMonitor
+
+c_g_volume_monitor_get  g_volume_monitor_get;
+c_g_volume_monitor_get_connected_drives  g_volume_monitor_get_connected_drives;
+c_g_volume_monitor_get_volumes  g_volume_monitor_get_volumes;
+c_g_volume_monitor_get_mounts  g_volume_monitor_get_mounts;
+c_g_volume_monitor_adopt_orphan_mount  g_volume_monitor_adopt_orphan_mount;
+c_g_volume_monitor_get_mount_for_uuid  g_volume_monitor_get_mount_for_uuid;
+c_g_volume_monitor_get_volume_for_uuid  g_volume_monitor_get_volume_for_uuid;
+
+// gio.VolumeT
+
+
+// gio.VolumeT
+
+c_g_volume_get_name  g_volume_get_name;
+c_g_volume_get_uuid  g_volume_get_uuid;
+c_g_volume_get_icon  g_volume_get_icon;
+c_g_volume_get_drive  g_volume_get_drive;
+c_g_volume_get_mount  g_volume_get_mount;
+c_g_volume_can_mount  g_volume_can_mount;
+c_g_volume_should_automount  g_volume_should_automount;
+c_g_volume_get_activation_root  g_volume_get_activation_root;
+c_g_volume_mount  g_volume_mount;
+c_g_volume_mount_finish  g_volume_mount_finish;
+c_g_volume_can_eject  g_volume_can_eject;
+c_g_volume_eject  g_volume_eject;
+c_g_volume_eject_finish  g_volume_eject_finish;
+c_g_volume_enumerate_identifiers  g_volume_enumerate_identifiers;
+c_g_volume_get_identifier  g_volume_get_identifier;
+
+// gio.Volume
+
+
+// gio.MountT
+
+
+// gio.MountT
+
+c_g_mount_get_name  g_mount_get_name;
+c_g_mount_get_uuid  g_mount_get_uuid;
+c_g_mount_get_icon  g_mount_get_icon;
+c_g_mount_get_drive  g_mount_get_drive;
+c_g_mount_get_root  g_mount_get_root;
+c_g_mount_get_volume  g_mount_get_volume;
+c_g_mount_can_unmount  g_mount_can_unmount;
+c_g_mount_unmount  g_mount_unmount;
+c_g_mount_unmount_finish  g_mount_unmount_finish;
+c_g_mount_remount  g_mount_remount;
+c_g_mount_remount_finish  g_mount_remount_finish;
+c_g_mount_can_eject  g_mount_can_eject;
+c_g_mount_eject  g_mount_eject;
+c_g_mount_eject_finish  g_mount_eject_finish;
+c_g_mount_guess_content_type  g_mount_guess_content_type;
+c_g_mount_guess_content_type_finish  g_mount_guess_content_type_finish;
+c_g_mount_guess_content_type_sync  g_mount_guess_content_type_sync;
+
+// gio.Mount
+
+
+// gio.DriveT
+
+
+// gio.DriveT
+
+c_g_drive_get_name  g_drive_get_name;
+c_g_drive_get_icon  g_drive_get_icon;
+c_g_drive_has_volumes  g_drive_has_volumes;
+c_g_drive_get_volumes  g_drive_get_volumes;
+c_g_drive_can_eject  g_drive_can_eject;
+c_g_drive_can_poll_for_media  g_drive_can_poll_for_media;
+c_g_drive_poll_for_media  g_drive_poll_for_media;
+c_g_drive_poll_for_media_finish  g_drive_poll_for_media_finish;
+c_g_drive_has_media  g_drive_has_media;
+c_g_drive_is_media_check_automatic  g_drive_is_media_check_automatic;
+c_g_drive_is_media_removable  g_drive_is_media_removable;
+c_g_drive_eject  g_drive_eject;
+c_g_drive_eject_finish  g_drive_eject_finish;
+c_g_drive_enumerate_identifiers  g_drive_enumerate_identifiers;
+c_g_drive_get_identifier  g_drive_get_identifier;
+
+// gio.Drive
+
+
+// gio.UnixMountEntry
+
+c_g_unix_mount_free  g_unix_mount_free;
+c_g_unix_mount_compare  g_unix_mount_compare;
+c_g_unix_mount_get_mount_path  g_unix_mount_get_mount_path;
+c_g_unix_mount_get_device_path  g_unix_mount_get_device_path;
+c_g_unix_mount_get_fs_type  g_unix_mount_get_fs_type;
+c_g_unix_mount_is_readonly  g_unix_mount_is_readonly;
+c_g_unix_mount_is_system_internal  g_unix_mount_is_system_internal;
+c_g_unix_mount_guess_icon  g_unix_mount_guess_icon;
+c_g_unix_mount_guess_name  g_unix_mount_guess_name;
+c_g_unix_mount_guess_can_eject  g_unix_mount_guess_can_eject;
+c_g_unix_mount_guess_should_display  g_unix_mount_guess_should_display;
+c_g_unix_mount_points_get  g_unix_mount_points_get;
+c_g_unix_mounts_get  g_unix_mounts_get;
+c_g_unix_mount_at  g_unix_mount_at;
+c_g_unix_mounts_changed_since  g_unix_mounts_changed_since;
+c_g_unix_mount_points_changed_since  g_unix_mount_points_changed_since;
+c_g_unix_is_mount_path_system_internal  g_unix_is_mount_path_system_internal;
+
+// gio.UnixMountPoint
+
+c_g_unix_mount_point_free  g_unix_mount_point_free;
+c_g_unix_mount_point_compare  g_unix_mount_point_compare;
+c_g_unix_mount_point_get_mount_path  g_unix_mount_point_get_mount_path;
+c_g_unix_mount_point_get_device_path  g_unix_mount_point_get_device_path;
+c_g_unix_mount_point_get_fs_type  g_unix_mount_point_get_fs_type;
+c_g_unix_mount_point_is_readonly  g_unix_mount_point_is_readonly;
+c_g_unix_mount_point_is_user_mountable  g_unix_mount_point_is_user_mountable;
+c_g_unix_mount_point_is_loopback  g_unix_mount_point_is_loopback;
+c_g_unix_mount_point_guess_icon  g_unix_mount_point_guess_icon;
+c_g_unix_mount_point_guess_name  g_unix_mount_point_guess_name;
+c_g_unix_mount_point_guess_can_eject  g_unix_mount_point_guess_can_eject;
+
+// gio.UnixMountMonitor
+
+c_g_unix_mount_monitor_new  g_unix_mount_monitor_new;
+c_g_unix_mount_monitor_set_rate_limit  g_unix_mount_monitor_set_rate_limit;
+
+// gio.IconT
+
+
+// gio.IconT
+
+c_g_icon_hash  g_icon_hash;
+c_g_icon_equal  g_icon_equal;
+
+// gio.Icon
+
+
+// gio.FileIcon
+
+c_g_file_icon_new  g_file_icon_new;
+c_g_file_icon_get_file  g_file_icon_get_file;
+
+// gio.LoadableIconT
+
+
+// gio.LoadableIconT
+
+c_g_loadable_icon_load  g_loadable_icon_load;
+c_g_loadable_icon_load_async  g_loadable_icon_load_async;
+c_g_loadable_icon_load_finish  g_loadable_icon_load_finish;
+
+// gio.ThemedIcon
+
+c_g_themed_icon_new  g_themed_icon_new;
+c_g_themed_icon_new_from_names  g_themed_icon_new_from_names;
+c_g_themed_icon_new_with_default_fallbacks  g_themed_icon_new_with_default_fallbacks;
+c_g_themed_icon_prepend_name  g_themed_icon_prepend_name;
+c_g_themed_icon_append_name  g_themed_icon_append_name;
+
+// gio.EmblemedIcon
+
+c_g_emblemed_icon_new  g_emblemed_icon_new;
+c_g_emblemed_icon_get_icon  g_emblemed_icon_get_icon;
+c_g_emblemed_icon_get_emblems  g_emblemed_icon_get_emblems;
+c_g_emblemed_icon_add_emblem  g_emblemed_icon_add_emblem;
+
+// gio.Emblem
+
+c_g_emblem_new  g_emblem_new;
+c_g_emblem_new_with_origin  g_emblem_new_with_origin;
+c_g_emblem_get_icon  g_emblem_get_icon;
+c_g_emblem_get_origin  g_emblem_get_origin;
+
+// gio.FilenameCompleter
+
+c_g_filename_completer_new  g_filename_completer_new;
+c_g_filename_completer_get_completion_suffix  g_filename_completer_get_completion_suffix;
+c_g_filename_completer_get_completions  g_filename_completer_get_completions;
+c_g_filename_completer_set_dirs_only  g_filename_completer_set_dirs_only;
+
+// gio.Vfs
+
+c_g_vfs_get_file_for_path  g_vfs_get_file_for_path;
+c_g_vfs_get_file_for_uri  g_vfs_get_file_for_uri;
+c_g_vfs_parse_name  g_vfs_parse_name;
+c_g_vfs_get_default  g_vfs_get_default;
+c_g_vfs_get_local  g_vfs_get_local;
+c_g_vfs_is_active  g_vfs_is_active;
+c_g_vfs_get_supported_uri_schemes  g_vfs_get_supported_uri_schemes;
+
+// gio.IOModule
+
+c_g_io_module_new  g_io_module_new;
+c_g_io_modules_load_all_in_directory  g_io_modules_load_all_in_directory;
+c_g_io_module_load  g_io_module_load;
+c_g_io_module_unload  g_io_module_unload;
+
+// gio.IOExtension
+
+c_g_io_extension_get_name  g_io_extension_get_name;
+c_g_io_extension_get_priority  g_io_extension_get_priority;
+c_g_io_extension_get_type  g_io_extension_get_type;
+c_g_io_extension_ref_class  g_io_extension_ref_class;
+
+// gio.IOExtensionPoint
+
+c_g_io_extension_point_get_extension_by_name  g_io_extension_point_get_extension_by_name;
+c_g_io_extension_point_get_extensions  g_io_extension_point_get_extensions;
+c_g_io_extension_point_get_required_type  g_io_extension_point_get_required_type;
+c_g_io_extension_point_implement  g_io_extension_point_implement;
+c_g_io_extension_point_lookup  g_io_extension_point_lookup;
+c_g_io_extension_point_register  g_io_extension_point_register;
+c_g_io_extension_point_set_required_type  g_io_extension_point_set_required_type;

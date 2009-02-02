@@ -89,9 +89,8 @@ struct CustomTreeModelClass
 }
 
 //We need this function for the interface implementation.
-extern(C) GType function()gtk_tree_model_get_type;
-
-private Symbol[] links = [{ "gtk_tree_model_get_type",  cast(void**)&gtk_tree_model_get_type}];
+extern(C) typedef GType function()c_gtk_tree_model_get_type;
+c_gtk_tree_model_get_type gtk_tree_model_get_type;
 
 /**
  */
@@ -101,10 +100,7 @@ public class TreeModel : ObjectG, TreeModelIF
 	
 	static this()
 	{
-		Linker linker;
-		
-		linker = new Linker(libPath ~ importLibs[LIBRARY.GTK] );
-		linker.link(links);
+		Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
 	}
 	
 	// Minimal implementation.

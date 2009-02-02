@@ -290,13 +290,13 @@ public class Widget : ObjectGtk, BuildableIF
 		
 		version (X86_64)
 		{
-			pt += 64/4; 
+			pt += 64/4;
 		}
 		else
-		{ 
+		{
 			pt += 36/4;
-		} 
-
+		}
+		
 		allo.x = *pt;
 		
 		pt++;
@@ -348,16 +348,16 @@ public class Widget : ObjectGtk, BuildableIF
 		//
 		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
 		int* pt =cast(int*)getStruct();
-
+		
 		version (X86_64)
 		{
-			pt += 80/4; 
+			pt += 80/4;
 		}
 		else
-		{ 
-			pt += 52/4; 
-		} 
-
+		{
+			pt += 52/4;
+		}
+		
 		return new Window(cast(GdkWindow*)(*pt));
 	}
 	

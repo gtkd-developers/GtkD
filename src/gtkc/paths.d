@@ -11,7 +11,8 @@
 
 module gtkc.paths;
 
-version(Tango) private import gtkc.glibtypes; //For alias char[] string
+//version(Tango) private alias char[] string;
+version(Tango) import gtkc.glibtypes;
 
 /*
  * Define the Libraries that gtkD will be using.
@@ -49,27 +50,27 @@ version (Windows)
 {
 const string[LIBRARY.max+1] importLibs =
 	[
-	LIBRARY.ATK:		"libatk-1.0-0.dll",
-	LIBRARY.CAIRO:  	"libcairo-2.dll",
-	LIBRARY.GDK: 		"libgdk-win32-2.0-0.dll",
-	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0-0.dll",
-	LIBRARY.GLIB: 		"libglib-2.0-0.dll",
-	LIBRARY.GMODULE: 	"libgmodule-2.0-0.dll",
-	LIBRARY.GOBJECT:	"libgobject-2.0-0.dll",
-	LIBRARY.GIO:        "libgio-2.0-0.dll",
-	LIBRARY.GTHREAD:	"libgthread-2.0-0.dll",
-	LIBRARY.GTK:		"libgtk-win32-2.0-0.dll",
-	LIBRARY.PANGO:		"libpango-1.0-0.dll",
-	LIBRARY.PANGOCAIRO: "libpangocairo-1.0-0.dll",
-	LIBRARY.GLGDK:		"libgdkglext-win32-1.0-0.dll",
-	LIBRARY.GLGTK:		"libgtkglext-win32-1.0-0.dll",
-	LIBRARY.GL:			"opengl32.dll",
-	LIBRARY.GLU:		"glu32.dll",
-	LIBRARY.GDA:		"libgda-2.dll",
-	LIBRARY.GLADE:		"libglade-2.0-0.dll",
-	LIBRARY.GSV:		"libgtksourceview-2.0-0.dll",
-	LIBRARY.GSTREAMER:	"libgstreamer-0.10.dll",
-	LIBRARY.GSTINTERFACES:	"libgstinterfaces-0.10.dll"
+	LIBRARY.ATK:           "libatk-1.0-0.dll",
+	LIBRARY.CAIRO:         "libcairo-2.dll",
+	LIBRARY.GDK:           "libgdk-win32-2.0-0.dll",
+	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0-0.dll",
+	LIBRARY.GLIB:          "libglib-2.0-0.dll",
+	LIBRARY.GMODULE:       "libgmodule-2.0-0.dll",
+	LIBRARY.GOBJECT:       "libgobject-2.0-0.dll",
+	LIBRARY.GIO:           "libgio-2.0-0.dll",
+	LIBRARY.GTHREAD:       "libgthread-2.0-0.dll",
+	LIBRARY.GTK:           "libgtk-win32-2.0-0.dll",
+	LIBRARY.PANGO:         "libpango-1.0-0.dll",
+	LIBRARY.PANGOCAIRO:    "libpangocairo-1.0-0.dll",
+	LIBRARY.GLGDK:         "libgdkglext-win32-1.0-0.dll",
+	LIBRARY.GLGTK:         "libgtkglext-win32-1.0-0.dll",
+	LIBRARY.GL:            "opengl32.dll",
+	LIBRARY.GLU:           "glu32.dll",
+	LIBRARY.GDA:           "libgda-2.dll",
+	LIBRARY.GLADE:         "libglade-2.0-0.dll",
+	LIBRARY.GSV:           "libgtksourceview-2.0-0.dll",
+	LIBRARY.GSTREAMER:     "libgstreamer-0.10.dll",
+	LIBRARY.GSTINTERFACES: "libgstinterfaces-0.10.dll"
 	];
 }
 
@@ -77,34 +78,33 @@ version(linux)
 {
 const string[LIBRARY.max+1] importLibs =
 	[
-	LIBRARY.ATK:		"libatk-1.0.so",
-	LIBRARY.CAIRO:  	"libcairo.so.2",
-	LIBRARY.GDK:		"libgdk-x11-2.0.so",
-	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0.so",
-	LIBRARY.GLIB:		"libglib-2.0.so",
-	LIBRARY.GMODULE:    "libgmodule-2.0.so",
-	LIBRARY.GOBJECT:    "libgobject-2.0.so",
-	LIBRARY.GIO:        "libgio-2.0.so",
-	LIBRARY.GTHREAD:    "libgthread-2.0.so",
-	LIBRARY.GTK:		"libgtk-x11-2.0.so",
-	LIBRARY.PANGO:		"libpango-1.0.so",
-	LIBRARY.PANGOCAIRO: "libpangocairo-1.0.so",
-	LIBRARY.GLGDK:		"libgdkglext-x11-1.0.so",
-	LIBRARY.GLGTK:		"libgtkglext-x11-1.0.so",
-	LIBRARY.GL:			"libGL.so",
-	LIBRARY.GLU:		"libGLU.so",
-	LIBRARY.GLEXT:		"libGL.so",
-	LIBRARY.GDA:		"libgda-2.so.3",
-	LIBRARY.GLADE:		"libglade-2.0.so",
-	LIBRARY.GSV:		"libgtksourceview-2.0.so",
-	LIBRARY.GSTREAMER:	"libgstreamer-0.10.so",
-	LIBRARY.GSTINTERFACES:	"libgstinterfaces-0.10.so"
+	LIBRARY.ATK:           "libatk-1.0.so",
+	LIBRARY.CAIRO:         "libcairo.so.2",
+	LIBRARY.GDK:           "libgdk-x11-2.0.so",
+	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0.so",
+	LIBRARY.GLIB:          "libglib-2.0.so",
+	LIBRARY.GMODULE:       "libgmodule-2.0.so",
+	LIBRARY.GOBJECT:       "libgobject-2.0.so",
+	LIBRARY.GIO:           "libgio-2.0.so",
+	LIBRARY.GTHREAD:       "libgthread-2.0.so",
+	LIBRARY.GTK:           "libgtk-x11-2.0.so",
+	LIBRARY.PANGO:         "libpango-1.0.so",
+	LIBRARY.PANGOCAIRO:    "libpangocairo-1.0.so",
+	LIBRARY.GLGDK:         "libgdkglext-x11-1.0.so",
+	LIBRARY.GLGTK:         "libgtkglext-x11-1.0.so",
+	LIBRARY.GL:            "libGL.so",
+	LIBRARY.GLU:           "libGLU.so",
+	LIBRARY.GLEXT:         "libGL.so",
+	LIBRARY.GDA:           "libgda-2.so.3",
+	LIBRARY.GLADE:         "libglade-2.0.so",
+	LIBRARY.GSV:           "libgtksourceview-2.0.so",
+	LIBRARY.GSTREAMER:     "libgstreamer-0.10.so",
+	LIBRARY.GSTINTERFACES: "libgstinterfaces-0.10.so"
 	];
 }
 
 version(darwin)
 {
-
 //This version is for the native quartz port of GTK+
 //which can be found from http://www.gtk-osx.org/
 //The libraries in the /opt/ directory are not part of
@@ -122,61 +122,58 @@ const char[] DIRECTORY = "/opt/gtk/lib/";
 
 const string[LIBRARY.max+1] importLibs =
 [
-	LIBRARY.ATK:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Cairo",
-	LIBRARY.GDK:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.GDKPIXBUF:	FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.GLIB:		FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GMODULE:		FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GOBJECT:		FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GIO:        FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GTHREAD:		FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GTK:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.PANGO:		FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.PANGOCAIRO: FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.GLGDK:		DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
-	LIBRARY.GLGTK:		DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
-	LIBRARY.GL:			"/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GLU:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GLEXT:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GDA:		DIRECTORY~"libgda-2.dylib",
-	LIBRARY.GLADE:		DIRECTORY~"libglade-2.0.dylib",
-	LIBRARY.GSV:		DIRECTORY~"libgtksourceview-1.0.dylib",
-	LIBRARY.GSTREAMER:	DIRECTORY~"libgstreamer-0.10.dylib",
-	LIBRARY.GSTINTERFACES:	DIRECTORY~"libgstinterfaces-0.10.dylib"
+	LIBRARY.ATK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.CAIRO:         FRAMEWORKS_DIR~"Cairo.framework/Cairo",
+	LIBRARY.GDK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GDKPIXBUF:     FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GLIB:          FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GMODULE:       FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GOBJECT:       FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GIO:           FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GTHREAD:       FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GTK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.PANGO:         FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.PANGOCAIRO:    FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLU:           "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLEXT:         "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GLADE:         DIRECTORY~"libglade-2.0.dylib",
+	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-1.0.dylib",
+	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
+	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
  ];
 
 /*
 //This version is for the non-native OS X, X11 port
 //of GTK+.
-
 const char[] DIRECTORY = "/opt/gtk/lib/";
 const char[] INTERFACE = "quartz";
 
 const char[][LIBRARY.max+1] importLibs =
 	[
-	LIBRARY.ATK:		DIRECTORY~"libatk-1.0.dylib",
-	LIBRARY.CAIRO:  	DIRECTORY~"libcairo.dylib",
-	LIBRARY.GDK:		DIRECTORY~"libgdk-"~INTERFACE~"-2.0.dylib",
-	LIBRARY.GDKPIXBUF:	DIRECTORY~"libgdk_pixbuf-2.0.dylib",
-	LIBRARY.GLIB:		DIRECTORY~"libglib-2.0.dylib",
-	LIBRARY.GMODULE:		DIRECTORY~"libgmodule-2.0.dylib",
-	LIBRARY.GOBJECT:		DIRECTORY~"libgobject-2.0.dylib",
-	LIBRARY.GIO:        DIRECTORY~"libgio-2.0.dylib",
-	LIBRARY.GTHREAD:		DIRECTORY~"libgthread-2.0.dylib",
-	LIBRARY.GTK:		DIRECTORY~"libgtk-"~INTERFACE~"-2.0.dylib",
-	LIBRARY.PANGO:		DIRECTORY~"libpango-1.0.dylib",
-	LIBRARY.PANGOCAIRO:		DIRECTORY~"libpangocairo-1.0.dylib",
-	LIBRARY.GLGDK:		DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
-	LIBRARY.GLGTK:		DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
-	LIBRARY.GL:			"/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GLU:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GLEXT:		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GDA:		DIRECTORY~"libgda-2.dylib",
-	LIBRARY.GLADE:		DIRECTORY~"libglade-2.0.dylib",
-	LIBRARY.GSV:		DIRECTORY~"libgtksourceview-1.0.dylib",
-	LIBRARY.GSTREAMER:	DIRECTORY~"libgstreamer-0.10.dylib",
-	LIBRARY.GSTINTERFACES:	DIRECTORY~"libgstinterfaces-0.10.dylib"
+	LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
+	LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
+	LIBRARY.GDK:           DIRECTORY~"libgdk-"~INTERFACE~"-2.0.dylib",
+	LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
+	LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
+	LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
+	LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
+	LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
+	LIBRARY.GTK:           DIRECTORY~"libgtk-"~INTERFACE~"-2.0.dylib",
+	LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
+	LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
+	LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLU:           "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLEXT:         "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GLADE:         DIRECTORY~"libglade-2.0.dylib",
+	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-1.0.dylib",
+	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
+	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
 	];
 */
 }
@@ -256,24 +253,21 @@ version(Windows)
 	}
 }
 
-// empty for linux because default path is known by ld
+// empty for Linux, Unix and Mac because default path is known by ld
 
 version(linux)
 {
-	string libPath()
-	{
-		return "";
-	}
+    version = Unix;
+}
+version(darwin)
+{
+    version = Unix;
 }
 
-// empty for darwin because default lib path is included
-
-version(darwin)
+version(Unix)
 {
 	string libPath()
 	{
 		return "";
 	}
 }
-
-
