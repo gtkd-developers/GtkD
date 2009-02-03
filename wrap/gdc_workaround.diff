@@ -1,0 +1,844 @@
+diff -ru gtkD/src/gtkc/Loader.d gtkD/src/gtkc/Loader.d
+--- gtkD/src/gtkc/Loader.d	2009-02-01 19:02:07.000000000 +0100
++++ gtkD/src/gtkc/Loader.d	2009-02-01 22:38:18.000000000 +0100
+@@ -178,6 +178,7 @@
+ 
+ 	enum RTLD
+ 	{
++		GDC_BUG_WORKAROUND,
+ 		LAZY     = 0x00001,  // Lazy function call binding
+ 		NOW      = 0x00002,  // Immediate function call binding
+ 		NOLOAD   = 0x00004,  // No object load
+diff -ru gtkD/src/gtkc/atktypes.d gtkD/src/gtkc/atktypes.d
+--- gtkD/src/gtkc/atktypes.d	2009-02-01 19:02:09.000000000 +0100
++++ gtkD/src/gtkc/atktypes.d	2009-02-01 22:38:18.000000000 +0100
+@@ -49,6 +49,7 @@
+  */
+ public enum AtkHyperlinkStateFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	IS_INLINE = 1 << 0
+ }
+ /**
+@@ -60,6 +61,7 @@
+  */
+ public enum AtkRole
+ {
++	GDC_BUG_WORKAROUND,
+ 	INVALID = 0,
+ 	ACCEL_LABEL,
+ 	ALERT,
+@@ -174,6 +176,7 @@
+  */
+ public enum AtkRelationType
+ {
++	GDC_BUG_WORKAROUND,
+ 	NULL = 0,
+ 	CONTROLLED_BY,
+ 	CONTROLLER_FOR,
+@@ -270,6 +273,7 @@
+  */
+ public enum AtkTextAttribute
+ {
++	GDC_BUG_WORKAROUND,
+ 	INVALID = 0,
+ 	LEFT_MARGIN,
+ 	RIGHT_MARGIN,
+diff -ru gtkD/src/gtkc/cairotypes.d gtkD/src/gtkc/cairotypes.d
+--- gtkD/src/gtkc/cairotypes.d	2009-02-01 19:02:08.000000000 +0100
++++ gtkD/src/gtkc/cairotypes.d	2009-02-01 22:38:18.000000000 +0100
+@@ -179,6 +179,7 @@
+  */
+ public enum cairo_text_cluster_flags_t
+ {
++	GDC_BUG_WORKAROUND,
+ 	BACKWARD = 0x00000001
+ }
+ alias cairo_text_cluster_flags_t CairoTextClusterFlags;
+@@ -343,6 +344,7 @@
+  */
+ public enum cairo_content_t
+ {
++	GDC_BUG_WORKAROUND,
+ 	COLOR = 0x1000,
+ 	ALPHA = 0x2000,
+ 	COLOR_ALPHA = 0x3000
+@@ -441,6 +443,7 @@
+  */
+ public enum cairo_status_t
+ {
++	GDC_BUG_WORKAROUND,
+ 	SUCCESS = 0,
+ 	NO_MEMORY,
+ 	INVALID_RESTORE,
+diff -ru gtkD/src/gtkc/gdkpixbuftypes.d gtkD/src/gtkc/gdkpixbuftypes.d
+--- gtkD/src/gtkc/gdkpixbuftypes.d	2009-02-01 19:02:09.000000000 +0100
++++ gtkD/src/gtkc/gdkpixbuftypes.d	2009-02-01 22:54:59.000000000 +0100
+@@ -41,6 +41,7 @@
+  */
+ public enum GdkPixdataType
+ {
++	GDC_BUG_WORKAROUND,
+ 	/+* colorspace + alpha +/
+ 	GDK_PIXDATA_COLOR_TYPE_RGB = 0x01,
+ 	GDK_PIXDATA_COLOR_TYPE_RGBA = 0x02,
+@@ -66,6 +67,7 @@
+  */
+ public enum GdkPixdataDumpType
+ {
++	GDC_BUG_WORKAROUND,
+ 	/+* type of source to save +/
+ 	GDK_PIXDATA_DUMP_PIXDATA_STREAM = 0,
+ 	GDK_PIXDATA_DUMP_PIXDATA_STRUCT = 1,
+@@ -87,6 +89,7 @@
+  */
+ public enum GdkPixbufFormatFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	WRITABLE = 1 << 0,
+ 	SCALABLE = 1 << 1,
+ 	THREADSAFE = 1 << 2
+diff -ru gtkD/src/gtkc/gdktypes.d gtkD/src/gtkc/gdktypes.d
+--- gtkD/src/gtkc/gdktypes.d	2009-02-01 19:02:09.000000000 +0100
++++ gtkD/src/gtkc/gdktypes.d	2009-02-01 22:38:19.000000000 +0100
+@@ -116,6 +116,7 @@
+  */
+ public enum GdkGrabStatus
+ {
++	GDC_BUG_WORKAROUND,
+ 	SUCCESS = 0,
+ 	ALREADY_GRABBED = 1,
+ 	INVALID_TIME = 2,
+@@ -200,6 +201,7 @@
+  */
+ public enum GdkGCValuesMask
+ {
++	GDC_BUG_WORKAROUND,
+ 	FOREGROUND = 1 << 0,
+ 	BACKGROUND = 1 << 1,
+ 	FONT = 1 << 2,
+@@ -310,6 +312,7 @@
+  */
+ public enum GdkSubwindowMode
+ {
++	GDC_BUG_WORKAROUND,
+ 	CLIP_BY_CHILDREN = 0,
+ 	INCLUDE_INFERIORS = 1
+ }
+@@ -482,6 +485,7 @@
+  */
+ public enum GdkPixbufRotation
+ {
++	GDC_BUG_WORKAROUND,
+ 	ROTATE_NONE = 0,
+ 	ROTATE_COUNTERCLOCKWISE = 90,
+ 	ROTATE_UPSIDEDOWN = 180,
+@@ -626,6 +630,7 @@
+  */
+ public enum GdkCursorType
+ {
++	GDC_BUG_WORKAROUND,
+ 	X_CURSOR = 0,
+ 	ARROW = 2,
+ 	BASED_ARROW_DOWN = 4,
+@@ -780,6 +785,7 @@
+  */
+ public enum GdkWindowHints
+ {
++	GDC_BUG_WORKAROUND,
+ 	HINT_POS = 1 << 0,
+ 	HINT_MIN_SIZE = 1 << 1,
+ 	HINT_MAX_SIZE = 1 << 2,
+@@ -821,6 +827,7 @@
+  */
+ public enum GdkGravity
+ {
++	GDC_BUG_WORKAROUND,
+ 	NORTH_WEST = 1,
+ 	NORTH,
+ 	NORTH_EAST,
+@@ -928,6 +935,7 @@
+  */
+ public enum GdkWindowAttributesType
+ {
++	GDC_BUG_WORKAROUND,
+ 	WA_TITLE = 1 << 1,
+ 	WA_X = 1 << 2,
+ 	WA_Y = 1 << 3,
+@@ -972,6 +980,7 @@
+  */
+ public enum GdkModifierType
+ {
++	GDC_BUG_WORKAROUND,
+ 	SHIFT_MASK = 1 << 0,
+ 	LOCK_MASK = 1 << 1,
+ 	CONTROL_MASK = 1 << 2,
+@@ -1017,6 +1026,7 @@
+  */
+ public enum GdkWMDecoration
+ {
++	GDC_BUG_WORKAROUND,
+ 	DECOR_ALL = 1 << 0,
+ 	DECOR_BORDER = 1 << 1,
+ 	DECOR_RESIZEH = 1 << 2,
+@@ -1047,6 +1057,7 @@
+  */
+ public enum GdkWMFunction
+ {
++	GDC_BUG_WORKAROUND,
+ 	FUNC_ALL = 1 << 0,
+ 	FUNC_RESIZE = 1 << 1,
+ 	FUNC_MOVE = 1 << 2,
+@@ -1149,6 +1160,7 @@
+  */
+ public enum GdkEventType
+ {
++	GDC_BUG_WORKAROUND,
+ 	NOTHING = -1,
+ 	DELETE = 0,
+ 	DESTROY = 1,
+@@ -1246,6 +1258,7 @@
+  */
+ public enum GdkEventMask
+ {
++	GDC_BUG_WORKAROUND,
+ 	EXPOSURE_MASK = 1 << 1,
+ 	POINTER_MOTION_MASK = 1 << 2,
+ 	POINTER_MOTION_HINT_MASK = 1 << 3,
+@@ -1343,6 +1356,7 @@
+  */
+ public enum GdkNotifyType
+ {
++	GDC_BUG_WORKAROUND,
+ 	ANCESTOR = 0,
+ 	VIRTUAL = 1,
+ 	INFERIOR = 2,
+@@ -1385,6 +1399,7 @@
+  */
+ public enum GdkWindowState
+ {
++	GDC_BUG_WORKAROUND,
+ 	WITHDRAWN = 1 << 0,
+ 	ICONIFIED = 1 << 1,
+ 	MAXIMIZED = 1 << 2,
+@@ -1464,6 +1479,7 @@
+  */
+ public enum GdkDragAction
+ {
++	GDC_BUG_WORKAROUND,
+ 	ACTION_DEFAULT = 1 << 0,
+ 	ACTION_COPY = 1 << 1,
+ 	ACTION_MOVE = 1 << 2,
+@@ -1491,6 +1507,7 @@
+  */
+ public enum GdkInputCondition
+ {
++	GDC_BUG_WORKAROUND,
+ 	READ = 1 << 0,
+ 	WRITE = 1 << 1,
+ 	EXCEPTION = 1 << 2
+diff -ru gtkD/src/gtkc/giotypes.d gtkD/src/gtkc/giotypes.d
+--- gtkD/src/gtkc/giotypes.d	2009-02-01 19:02:08.000000000 +0100
++++ gtkD/src/gtkc/giotypes.d	2009-02-01 22:38:19.000000000 +0100
+@@ -32,6 +32,7 @@
+  */
+ public enum GFileQueryInfoFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	NOFOLLOW_SYMLINKS = (1 << 0) /+*< nick=nofollow-symlinks >+/
+ }
+@@ -43,6 +44,7 @@
+  */
+ public enum GFileCreateFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	PRIVATE = (1 << 0)
+ }
+@@ -54,6 +56,7 @@
+  */
+ public enum GFileCopyFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0, /+*< nick=none >+/
+ 	OVERWRITE = (1 << 0),
+ 	BACKUP = (1 << 1),
+@@ -69,6 +72,7 @@
+  */
+ public enum GFileMonitorFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	WATCH_MOUNTS = (1 << 0)
+ }
+@@ -82,6 +86,7 @@
+  */
+ public enum GFilesystemPreviewType
+ {
++	GDC_BUG_WORKAROUND,
+ 	TYPE_IF_ALWAYS = 0,
+ 	TYPE_IF_LOCAL,
+ 	TYPE_NEVER
+@@ -94,6 +99,7 @@
+  */
+ public enum GFileAttributeType
+ {
++	GDC_BUG_WORKAROUND,
+ 	TYPE_INVALID = 0,
+ 	TYPE_STRING,
+ 	TYPE_BYTE_STRING, /+* zero terminated string of non-zero bytes +/
+@@ -112,6 +118,7 @@
+  */
+ public enum GFileAttributeInfoFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	COPY_WITH_FILE = (1 << 0),
+ 	COPY_WHEN_MOVED = (1 << 1)
+@@ -124,6 +131,7 @@
+  */
+ public enum GFileAttributeStatus
+ {
++	GDC_BUG_WORKAROUND,
+ 	UNSET = 0,
+ 	SET,
+ 	ERROR_SETTING
+@@ -136,6 +144,7 @@
+  */
+ public enum GFileType
+ {
++	GDC_BUG_WORKAROUND,
+ 	TYPE_UNKNOWN = 0,
+ 	TYPE_REGULAR,
+ 	TYPE_DIRECTORY,
+@@ -154,6 +163,7 @@
+  */
+ public enum GAskPasswordFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NEED_PASSWORD = (1 << 0),
+ 	NEED_USERNAME = (1 << 1),
+ 	NEED_DOMAIN = (1 << 2),
+@@ -251,6 +261,7 @@
+  */
+ public enum GOutputStreamSpliceFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	CLOSE_SOURCE = (1 << 0),
+ 	CLOSE_TARGET = (1 << 1)
+@@ -289,6 +300,7 @@
+  */
+ public enum GAppInfoCreateFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0, /+*< nick=none >+/
+ 	NEEDS_TERMINAL = (1 << 0), /+*< nick=needs-terminal >+/
+ 	SUPPORTS_URIS = (1 << 1) /+*< nick=supports-uris >+/
+@@ -301,6 +313,7 @@
+  */
+ public enum GMountMountFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0
+ }
+ alias GMountMountFlags MountMountFlags;
+@@ -311,6 +324,7 @@
+  */
+ public enum GMountUnmountFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	FORCE = (1 << 0)
+ }
+diff -ru gtkD/src/gtkc/glibtypes.d gtkD/src/gtkc/glibtypes.d
+--- gtkD/src/gtkc/glibtypes.d	2009-02-01 19:02:08.000000000 +0100
++++ gtkD/src/gtkc/glibtypes.d	2009-02-01 22:47:11.000000000 +0100
+@@ -120,6 +120,7 @@
+ 
+ enum GPriority
+ {
++	GDC_BUG_WORKAROUND,
+ 	HIGH = -100,
+ 	DEFAULT = 0,
+ 	HIGH_IDLE = 100,
+@@ -135,6 +136,7 @@
+  */
+ public enum GModuleFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	BIND_LAZY = 1 << 0,
+ 	BIND_LOCAL = 1 << 1,
+ 	BIND_MASK = 0x03
+@@ -232,6 +234,7 @@
+  */
+ public enum GIOCondition
+ {
++	GDC_BUG_WORKAROUND,
+ 	IN =1,
+ 	OUT =4,
+ 	PRI =2,
+@@ -250,6 +253,7 @@
+  */
+ public enum GIOFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	APPEND = 1 << 0,
+ 	NONBLOCK = 1 << 1,
+ 	IS_READABLE = 1 << 2, /+* Read only flag +/
+@@ -295,6 +299,7 @@
+  */
+ public enum GLogLevelFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	/+* log flags +/
+ 	G_LOG_FLAG_RECURSION = 1 << 0,
+ 	G_LOG_FLAG_FATAL = 1 << 1,
+@@ -572,6 +577,7 @@
+  */
+ public enum GUnicodeScript
+ {
++	GDC_BUG_WORKAROUND,
+ 	INVALID_CODE = -1,
+ 	COMMON = 0, /+* Zyyy +/
+ 	INHERITED, /+* Qaai +/
+@@ -706,6 +712,7 @@
+  */
+ public enum GDateDMY
+ {
++	GDC_BUG_WORKAROUND,
+ 	DAY = 0,
+ 	MONTH = 1,
+ 	YEAR = 2
+@@ -744,6 +751,7 @@
+  */
+ public enum GDateMonth
+ {
++	GDC_BUG_WORKAROUND,
+ 	BAD_MONTH = 0,
+ 	JANUARY = 1,
+ 	FEBRUARY = 2,
+@@ -782,6 +790,7 @@
+  */
+ public enum GDateWeekday
+ {
++	GDC_BUG_WORKAROUND,
+ 	BAD_WEEKDAY = 0,
+ 	MONDAY = 1,
+ 	TUESDAY = 2,
+@@ -829,6 +838,7 @@
+  */
+ public enum GTokenType
+ {
++	GDC_BUG_WORKAROUND,
+ 	EOF = 0,
+ 	LEFT_PAREN = '(',
+ 	RIGHT_PAREN = ')',
+@@ -966,6 +976,7 @@
+  */
+ public enum GSpawnFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	LEAVE_DESCRIPTORS_OPEN = 1 << 0,
+ 	DO_NOT_REAP_CHILD = 1 << 1,
+ 	/+* look for argv[0] inn the path i.e. use execvp() +/
+@@ -1030,6 +1041,7 @@
+  */
+ public enum GFileTest
+ {
++	GDC_BUG_WORKAROUND,
+ 	IS_REGULAR = 1 << 0,
+ 	IS_SYMLINK = 1 << 1,
+ 	IS_DIR = 1 << 2,
+@@ -1106,6 +1118,7 @@
+  */
+ public enum GOptionFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	HIDDEN = 1 << 0,
+ 	IN_MAIN = 1 << 1,
+ 	REVERSE = 1 << 2,
+@@ -1325,6 +1338,7 @@
+  */
+ public enum GRegexCompileFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	CASELESS = 1 << 0,
+ 	MULTILINE = 1 << 1,
+ 	DOTALL = 1 << 2,
+@@ -1389,6 +1403,7 @@
+  */
+ public enum GRegexMatchFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	ANCHORED = 1 << 4,
+ 	NOTBOL = 1 << 7,
+ 	NOTEOL = 1 << 8,
+@@ -1442,6 +1457,7 @@
+  */
+ public enum GMarkupParseFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	DO_NOT_USE_THIS_UNSUPPORTED_FLAG = 1 << 0,
+ 	TREAT_CDATA_AS_TEXT = 1 << 1,
+ 	PREFIX_ERROR_POSITION = 1 << 2
+@@ -1503,6 +1519,7 @@
+  */
+ public enum GKeyFileFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	KEEP_COMMENTS = 1 << 0,
+ 	KEEP_TRANSLATIONS = 1 << 1
+@@ -1566,6 +1583,7 @@
+  */
+ public enum GTraverseFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	LEAVES = 1 << 0,
+ 	NON_LEAVES = 1 << 1,
+ 	ALL = LEAVES | NON_LEAVES,
+diff -ru gtkD/src/gtkc/gobjecttypes.d gtkD/src/gtkc/gobjecttypes.d
+--- gtkD/src/gtkc/gobjecttypes.d	2009-02-01 19:02:08.000000000 +0100
++++ gtkD/src/gtkc/gobjecttypes.d	2009-02-01 22:38:19.000000000 +0100
+@@ -32,6 +32,7 @@
+ // G_TYPE_*
+ enum GType
+ {
++	GDC_BUG_WORKAROUND,
+ 	INVALID = 0<<2,
+ 	NONE = 1<<2,
+ 	INTERFACE = 2<<2,
+@@ -89,6 +90,7 @@
+  */
+ public enum GTypeDebugFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	OBJECTS = 1 << 0,
+ 	SIGNALS = 1 << 1,
+@@ -101,6 +103,7 @@
+  */
+ public enum GTypeFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	ABSTRACT = (1 << 4),
+ 	VALUE_ABSTRACT = (1 << 5)
+ }
+@@ -112,6 +115,7 @@
+  */
+ public enum GTypeFundamentalFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	FLAG_CLASSED = (1 << 0),
+ 	FLAG_INSTANTIATABLE = (1 << 1),
+ 	FLAG_DERIVABLE = (1 << 2),
+@@ -126,6 +130,7 @@
+  */
+ public enum GParamFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	READABLE = 1 << 0,
+ 	WRITABLE = 1 << 1,
+ 	CONSTRUCT = 1 << 2,
+@@ -146,6 +151,7 @@
+  */
+ public enum GSignalFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	RUN_FIRST = 1 << 0,
+ 	RUN_LAST = 1 << 1,
+ 	RUN_CLEANUP = 1 << 2,
+@@ -164,6 +170,7 @@
+  */
+ public enum GSignalMatchType
+ {
++	GDC_BUG_WORKAROUND,
+ 	ID = 1 << 0,
+ 	DETAIL = 1 << 1,
+ 	CLOSURE = 1 << 2,
+@@ -180,6 +187,7 @@
+  */
+ public enum GConnectFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	AFTER = 1 << 0,
+ 	SWAPPED = 1 << 1
+ }
+diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
+--- gtkD/src/gtkc/gtktypes.d	2009-02-01 19:02:10.000000000 +0100
++++ gtkD/src/gtkc/gtktypes.d	2009-02-01 22:38:19.000000000 +0100
+@@ -135,6 +135,7 @@
+  */
+ public enum GtkDestDefaults
+ {
++	GDC_BUG_WORKAROUND,
+ 	MOTION = 1 << 0, /+* respond to "dragMotion" +/
+ 	HIGHLIGHT = 1 << 1, /+* auto-highlight +/
+ 	DROP = 1 << 2, /+* respond to "dragDrop" +/
+@@ -149,6 +150,7 @@
+  */
+ public enum GtkTargetFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	SAME_APP = 1 << 0, /+*< nick=same-app >+/
+ 	SAME_WIDGET = 1 << 1, /+*< nick=same-widget >+/
+ 	OTHER_APP = 1 << 2, /+*< nick=other-app >+/
+@@ -162,6 +164,7 @@
+  */
+ public enum GtkIconLookupFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	NO_SVG = 1 << 0,
+ 	FORCE_SVG = 1 << 1,
+ 	USE_BUILTIN = 1 << 2,
+@@ -208,6 +211,7 @@
+  */
+ public enum GtkRcFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	FG = 1 << 0,
+ 	BG = 1 << 1,
+ 	TEXT = 1 << 2,
+@@ -223,6 +227,7 @@
+  */
+ public enum GtkRcTokenType
+ {
++	GDC_BUG_WORKAROUND,
+ 	INVALID = TokenType.LAST,
+ 	INCLUDE,
+ 	NORMAL,
+@@ -268,6 +273,7 @@
+ 
+ public enum GtkAccelFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	VISIBLE = 1 << 0, /+* display inn GtkAccelLabel? +/
+ 	LOCKED = 1 << 1, /+* is it removable? +/
+ 	MASK = 0x07
+@@ -332,6 +338,7 @@
+  */
+ public enum GtkAttachOptions
+ {
++	GDC_BUG_WORKAROUND,
+ 	EXPAND = 1 << 0,
+ 	SHRINK = 1 << 1,
+ 	FILL = 1 << 2
+@@ -557,6 +564,7 @@
+ 
+ public enum GtkPathPriorityType
+ {
++	GDC_BUG_WORKAROUND,
+ 	LOWEST = 0,
+ 	GTK = 4,
+ 	APPLICATION = 8,
+@@ -986,6 +994,7 @@
+  */
+ public enum GtkSignalRunType
+ {
++	GDC_BUG_WORKAROUND,
+ 	RUN_FIRST = SignalFlags.RUN_FIRST,
+ 	RUN_LAST = SignalFlags.RUN_LAST,
+ 	RUN_BOTH = (RUN_FIRST | RUN_LAST),
+@@ -1002,6 +1011,7 @@
+  */
+ public enum GtkDialogFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	MODAL = 1 << 0, /+* call windowSetModal (win, TRUE) +/
+ 	DESTROY_WITH_PARENT = 1 << 1, /+* call windowSetDestroyWithParent () +/
+ 	NO_SEPARATOR = 1 << 2 /+* no separator bar above buttons +/
+@@ -1020,6 +1030,7 @@
+ 	/+* GTK returns this if a response widget has no responseId,
+ 	 * or if the dialog gets programmatically hidden or destroyed.
+ 	+/
++	GDC_BUG_WORKAROUND,
+ 	GTK_RESPONSE_NONE = -1,
+ 	/+* GTK won't return these unless you pass them inn
+ 	 * as the response for an action widget. They are
+@@ -1231,6 +1242,7 @@
+ 
+ public enum GtkTextSearchFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	VISIBLE_ONLY = 1 << 0,
+ 	TEXT_ONLY = 1 << 1
+ 	/+* Possible future plans: SEARCH_CASE_INSENSITIVE, SEARCH_REGEXP +/
+@@ -1239,6 +1251,7 @@
+ 
+ public enum GtkTextBufferTargetInfo
+ {
++	GDC_BUG_WORKAROUND,
+ 	BUFFER_CONTENTS = - 1,
+ 	RICH_TEXT = - 2,
+ 	TEXT = - 3
+@@ -1286,6 +1299,7 @@
+  */
+ public enum GtkTreeModelFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	ITERS_PERSIST = 1 << 0,
+ 	LIST_ONLY = 1 << 1
+ }
+@@ -1385,6 +1399,7 @@
+  */
+ public enum GtkCellRendererState
+ {
++	GDC_BUG_WORKAROUND,
+ 	SELECTED = 1 << 0,
+ 	PRELIT = 1 << 1,
+ 	INSENSITIVE = 1 << 2,
+@@ -1489,6 +1504,7 @@
+  */
+ public enum GtkUIManagerItemType
+ {
++	GDC_BUG_WORKAROUND,
+ 	AUTO = 0,
+ 	MENUBAR = 1 << 0,
+ 	MENU = 1 << 1,
+@@ -1545,6 +1561,7 @@
+  */
+ public enum GtkFileFilterFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	FILENAME = 1 << 0,
+ 	URI = 1 << 1,
+ 	DISPLAY_NAME = 1 << 2,
+@@ -1688,6 +1705,7 @@
+  */
+ public enum GtkPrintCapabilities
+ {
++	GDC_BUG_WORKAROUND,
+ 	CAPABILITY_PAGE_SET = 1 << 0,
+ 	CAPABILITY_COPIES = 1 << 1,
+ 	CAPABILITY_COLLATE = 1 << 2,
+@@ -1707,6 +1725,7 @@
+  */
+ public enum GtkCalendarDisplayOptions
+ {
++	GDC_BUG_WORKAROUND,
+ 	SHOW_HEADING = 1 << 0,
+ 	SHOW_DAY_NAMES = 1 << 1,
+ 	NO_MONTH_CHANGE = 1 << 2,
+@@ -1759,6 +1778,7 @@
+  */
+ public enum GtkObjectFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	IN_DESTRUCTION = 1 << 0, /+* Used internally during dispose +/
+ 	FLOATING = 1 << 1,
+ 	RESERVED_1 = 1 << 2,
+@@ -1787,6 +1807,7 @@
+  */
+ public enum GtkArgFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	READABLE = ParamFlags.READABLE,
+ 	WRITABLE = ParamFlags.WRITABLE,
+ 	CONSTRUCT = ParamFlags.CONSTRUCT,
+@@ -1815,6 +1836,7 @@
+  */
+ public enum GtkWidgetFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	TOPLEVEL = 1 << 4,
+ 	NO_WINDOW = 1 << 5,
+ 	REALIZED = 1 << 6,
+@@ -1899,6 +1921,7 @@
+  */
+ public enum GtkRecentSortType
+ {
++	GDC_BUG_WORKAROUND,
+ 	NONE = 0,
+ 	MRU,
+ 	LRU,
+@@ -1916,6 +1939,7 @@
+  */
+ public enum GtkRecentFilterFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	URI = 1 << 0,
+ 	DISPLAY_NAME = 1 << 1,
+ 	MIME_TYPE = 1 << 2,
+diff -ru gtkD/src/gtkc/pangotypes.d gtkD/src/gtkc/pangotypes.d
+--- gtkD/src/gtkc/pangotypes.d	2009-02-01 19:02:09.000000000 +0100
++++ gtkD/src/gtkc/pangotypes.d	2009-02-01 22:38:19.000000000 +0100
+@@ -147,6 +147,7 @@
+  */
+ public enum PangoWeight
+ {
++	GDC_BUG_WORKAROUND,
+ 	ULTRALIGHT = 200,
+ 	LIGHT = 300,
+ 	NORMAL = 400,
+@@ -221,6 +222,7 @@
+  */
+ public enum PangoFontMask
+ {
++	GDC_BUG_WORKAROUND,
+ 	FAMILY = 1 << 0,
+ 	STYLE = 1 << 1,
+ 	VARIANT = 1 << 2,
+@@ -411,6 +413,7 @@
+  */
+ public enum PangoScript
+ {
++	GDC_BUG_WORKAROUND,
+ 	INVALID_CODE = -1,
+ 	COMMON = 0, /+* Zyyy +/
+ 	INHERITED, /+* Qaai +/
+diff -ru gtkD/srcsv/gsvc/gsvtypes.d gtkD/srcsv/gsvc/gsvtypes.d
+--- gtkD/srcsv/gsvc/gsvtypes.d	2009-02-02 22:29:32.000000000 +0100
++++ gtkD/srcsv/gsvc/gsvtypes.d	2009-02-02 22:28:32.000000000 +0100
+@@ -43,6 +43,7 @@
+  */
+ public enum GtkSourceDrawSpacesFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	SPACE = 1 << 0,
+ 	TAB = 1 << 1,
+ 	NEWLINE = 1 << 2,
+@@ -54,6 +55,7 @@
+ 
+ public enum GtkSourceSearchFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	VISIBLE_ONLY = 1 << 0,
+ 	TEXT_ONLY = 1 << 1,
+ 	CASE_INSENSITIVE = 1 << 2
+diff -ru gtkD/srcgda/gdac/gdatypes.d gtkD/srcgda/gdac/gdatypes.d
+--- gtkD/srcgda/gdac/gdatypes.d	2009-02-02 22:29:33.000000000 +0100
++++ gtkD/srcgda/gdac/gdatypes.d	2009-02-02 22:32:41.000000000 +0100
+@@ -33,6 +33,7 @@
+ public alias GList GdaValueList;
+ public enum GdaBlobMode
+ {
++	GDC_BUG_WORKAROUND,
+ 	MODE_READ = 1,
+ 	MODE_WRITE = 1 << 1,
+ 	MODE_RDWR = 0x03
+@@ -60,6 +61,7 @@
+  */
+ public enum GdaCommandOptions
+ {
++	GDC_BUG_WORKAROUND,
+ 	IGNORE_ERRORS = 1,
+ 	STOP_ON_ERRORS = 1 << 1,
+ 	BAD_OPTION = 1 << 2
+@@ -91,6 +93,7 @@
+ 
+ public enum GdaConnectionOptions
+ {
++	GDC_BUG_WORKAROUND,
+ 	READ_ONLY = 1 << 0,
+ 	DONT_SHARE = 2 << 0
+ }
+@@ -136,6 +139,7 @@
+ 
+ public enum GdaExportFlags
+ {
++	GDC_BUG_WORKAROUND,
+ 	TABLE_DATA = 1
+ }
+ alias GdaExportFlags daExportFlags;
