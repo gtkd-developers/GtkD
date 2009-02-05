@@ -230,7 +230,10 @@ version(Unix)
 		return symbolHandle;
 	}
 
-	private alias dlclose pUnloadLibrary;
+	private int pUnloadLibrary(void* libraryHandle)
+	{
+		return dlclose(libraryHandle);
+	}
 
     version(build) 
     {
