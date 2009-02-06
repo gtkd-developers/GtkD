@@ -289,10 +289,8 @@ const GLU_TESS_MAX_COORD = 1.0e150;
 /* Internal convenience typedefs */
 alias void  function()_GLUfuncptr;
 
-
-extern(C)
+extern(System)
 {
-	
 	void  gluBeginCurve(GLUnurbs *nurb);
 	void  gluBeginPolygon(GLUtesselator *tess);
 	void  gluBeginSurface(GLUnurbs *nurb);
@@ -352,4 +350,6 @@ extern(C)
 	void  gluTessVertex(GLUtesselator *tess, GLdouble *location, GLvoid *data);
 	GLint  gluUnProject(GLdouble winX, GLdouble winY, GLdouble winZ, GLdouble *model, GLdouble *proj, GLint *view, GLdouble *objX, GLdouble *objY, GLdouble *objZ);
 	GLint  gluUnProject4(GLdouble winX, GLdouble winY, GLdouble winZ, GLdouble clipW, GLdouble *model, GLdouble *proj, GLint *view, GLdouble nearVal, GLdouble farVal, GLdouble *objX, GLdouble *objY, GLdouble *objZ, GLdouble *objW);
-} // extern(C)
+} // extern(System)
+
+

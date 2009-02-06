@@ -1170,11 +1170,8 @@ const GL_ALPHA_BLEND_EQUATION_ATI = 0x883D;
 
 alias void  function(GLenum modeRGB, GLenum modeA)PFNGLBLENDEQUATIONSEPARATEATIPROC;
 
-
-extern(C)
-{
-	
-	
+extern(System)
+{	
 	/*
 	 * Miscellaneous
 	 */
@@ -1985,4 +1982,6 @@ extern(C)
 	void  glMultiTexCoord4ivARB(GLenum target, GLint *v);
 	void  glMultiTexCoord4sARB(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q);
 	void  glMultiTexCoord4svARB(GLenum target, GLshort *v);
-} // extern(C)
+} // extern(System)
+
+

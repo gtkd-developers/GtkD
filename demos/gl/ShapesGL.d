@@ -930,7 +930,7 @@ class TestGL : MainWindow
 {
 	this()
 	{
-		super("GtkD test Shaples GL");
+		super("GtkD ShapesGL (right-click for menu)");
 		setReallocateRedraws(true);
 		//setBorderWidth(10);
 		show();
