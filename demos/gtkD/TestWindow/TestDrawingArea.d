@@ -182,10 +182,10 @@ class TestDrawingArea : VBox
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 
-			spin = new SpinButton(new Adjustment(30, 1, 400, 1, 10, 10),1,0);
+			spin = new SpinButton(new Adjustment(30, 1, 400, 1, 10, 0),1,0);
 			sizeSpinChanged(spin);
 			spin.addOnValueChanged(&sizeSpinChanged);
-			backSpin = new SpinButton(new Adjustment(5, 4, 100, 1, 10, 10),1,0);
+			backSpin = new SpinButton(new Adjustment(5, 4, 100, 1, 10, 0),1,0);
 			backSpin.addOnValueChanged(&backSpinChanged);
 
 

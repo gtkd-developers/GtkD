@@ -90,7 +90,7 @@ class TestIdle : VBox
 		callType.setActive(1);
 		callType.addOnChanged(&drawingArea.onCallTypeChanged);
 
-		timeoutSpin = new SpinButton(new Adjustment(200.0, 1.0, 1000.0, 1.0, 100.0, 1.0),1,0);
+		timeoutSpin = new SpinButton(new Adjustment(200.0, 1.0, 1000.0, 1.0, 100.0, 0),1,0);
 		timeoutSpin.addOnValueChanged(&drawingArea.onTimeoutSpinValueChanged);
 		Box controlBox = new HBox(false, 7);
 
