@@ -66,6 +66,9 @@ private import glib.StringG;
 version(Tango) {
 	private import tango.stdc.stdio;
 	private import tango.stdc.string;
+} else version(D_Version2) {
+	private import core.sys.posix.stdio;
+	private import core.stdc.string;
 } else {
 	private import std.c.stdio;
 	private import std.c.string;

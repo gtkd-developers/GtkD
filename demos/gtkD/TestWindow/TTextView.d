@@ -41,10 +41,14 @@ private import gtk.ComboBox;
 
 private import glib.GException;
 
-version(Tango) private import tango.io.Stdout;
-version(Tango) private import tango.text.convert.Layout;
-
-version(Tango) private import tango.core.Vararg;
+version(Tango)
+{
+	private import tango.io.Stdout;
+	private import tango.text.convert.Layout;
+	private import tango.core.Vararg;
+}
+else
+	private import std.stdio;
 
 /**
  * reproduces the gtk-demo TextView
@@ -277,7 +281,7 @@ static string gray50_bits = [0x02, 0x01];
 		catch (Exception)
 		{
 			version(Tango) Stdout("Failed to load image file gtk-logo-rgb.gif").newline;
-			else printf("Failed to load image file gtk-logo-rgb.gif\n");
+			else writef("Failed to load image file gtk-logo-rgb.gif\n");
 		}
 
 		/* get start of buffer; each insertion will revalidate the

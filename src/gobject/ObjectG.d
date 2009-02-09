@@ -76,6 +76,8 @@ private import glib.Str;
 
 version(Tango) {
 	private import tango.core.Memory;
+} else version(D_Version2) {
+	private import core.memory;
 } else {
 	private import std.gc;
 }
@@ -149,6 +151,12 @@ public class ObjectG
 	}
 	
 	
+	version(Tango) {
+		version = druntime;
+	} else version(D_Version2) {
+		version = druntime;
+	}
+	
 	/**
 	 * Sets our main struct and passes store it on the gobject.
 	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
@@ -181,7 +189,7 @@ public class ObjectG
 	public void objectGSetDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		version(Tango) GC.addRoot(data);
+		version(druntime) GC.addRoot(data);
 		else std.gc.addRoot(data);
 		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
@@ -193,7 +201,7 @@ public class ObjectG
 			//writefln("objectg.destroy entry");
 			//writefln("objectg.destroy");
 			//writefln("removing gc.root to %s",data);
-			version(Tango) GC.removeRoot(data);
+			version(druntime) GC.removeRoot(data);
 			else std.gc.removeRoot(data);
 			//writefln("objectg.destroy exit");
 		}

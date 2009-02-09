@@ -140,7 +140,7 @@ void list_providers ()
 	//gda_config_free_provider_list (prov_list);
 }
 
-int execute_sql_non_query (Connection connection, char buffer[]) 
+int execute_sql_non_query (Connection connection, string buffer) 
 {
 	writefln("execute_sql_non_query %s", buffer);
 	int number;

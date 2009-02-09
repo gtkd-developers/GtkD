@@ -238,7 +238,11 @@ array: g_object_newv parameters n_parameters
 nocode: g_object_set_data_full
 
 code: start
-
+	version(Tango) {
+		version = druntime;
+	} else version(D_Version2) {
+		version = druntime;
+	}
 
 	/**
 	* Sets our main struct and passes store it on the gobject.
@@ -272,7 +276,7 @@ code: start
 	public void objectGSetDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		version(Tango) GC.addRoot(data);
+		version(druntime) GC.addRoot(data);
 		else std.gc.addRoot(data);
 		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
@@ -284,7 +288,7 @@ code: start
 			//writefln("objectg.destroy entry");
 			//writefln("objectg.destroy");
 			//writefln("removing gc.root to %s",data);
-			version(Tango) GC.removeRoot(data);
+			version(druntime) GC.removeRoot(data);
 			else std.gc.removeRoot(data);
 			//writefln("objectg.destroy exit");
 		}

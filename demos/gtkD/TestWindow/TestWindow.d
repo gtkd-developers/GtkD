@@ -27,11 +27,21 @@ version(cairo)private import cairo.clock;
 private import gtk.Version;
 private import gtk.Table;
 
-version(Tango)private import tango.text.convert.Layout;
-version(Tango) import tango.io.Stdout;//TEMP.//private import tango.core.Thread;
-else private import std.thread;
-version(Tango) private import tango.math.Random;
-else private import std.random;
+version(Tango)
+{
+	private import tango.text.convert.Layout;
+	private import tango.io.Stdout;//TEMP.//private import tango.core.Thread;
+}
+else version(D_Version2)
+{
+	private import core.thread;
+	private import std.random;
+}
+else
+{
+	private import std.thread;
+	private import std.random;
+}
 
 import gdk.Threads;
 
@@ -106,7 +116,9 @@ private import gtk.MessageDialog;
 
 
 version(Tango) private import tango.core.Memory;
+else version(D_Version2) private import core.memory;
 else private import std.gc;
+
 private import glib.ListSG;
 
 private import glib.Str;
@@ -119,8 +131,6 @@ private import gtk.VPaned;
 
 private import gtk.Calendar;
 version(Tango) private import tango.io.Stdout;
-//version(Tango) private import tango.stdc.stdio;
-version(Tango) import tango.io.Stdout;//Got to import something, this is TEMP.
 else private import std.stdio;
 private import gtk.VButtonBox;
 private import gtk.FileChooserButton;
@@ -243,6 +253,10 @@ class TestWindow : MainWindow
 			//For some reason the threads example didn't
 			//compile with Tango.
 			//testThreads(notebook);
+		}
+		else version(D_Version2)
+		{
+			//Ditto
 		}
 		else
 		{
@@ -378,7 +392,8 @@ class TestWindow : MainWindow
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
 		// fullCollect helps finding objects that shouldn't have been collected
-		version(Tango) { /*??? no fullCollect on tango ???*/}
+		version(Tango) GC.collect();
+		else version(D_Version2) GC.collect();
 		else std.gc.fullCollect();
 		//writefln("exiting Notebook switch to page %s", pageNumber);
 	}
@@ -899,6 +914,10 @@ class TestWindow : MainWindow
 		//For some reason the Tango version didn't compile with
 		//the thread example.
 	}
+	else version(D_Version2)
+	{
+		//Ditto
+	}
 	else
 	{
 
@@ -916,6 +935,10 @@ class TestWindow : MainWindow
 		}
 
 		version(Tango) override void run()
+		{
+			runCommon();
+		}
+		else version(D_Version2) void run()
 		{
 			runCommon();
 		}
@@ -973,6 +996,13 @@ class TestWindow : MainWindow
 					if ( t.isRunning() )
 					{
 						t.sleep(100.0);
+					}
+				}
+				else version(D_Version2)
+				{
+					if ( t.isRunning() )
+					{
+						t.sleep(100);
 					}
 				}
 				else switch( t.getState() )

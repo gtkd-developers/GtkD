@@ -259,15 +259,44 @@ public class GtkDClass
 		tangoImportConvs["std.c.stdio"] = ["tango.stdc.stdio"];
 		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
 		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
-		
+
+		char[][][char[]] druntimeImportConvs;
+		druntimeImportConvs["std.thread"] = ["core.thread"];
+		druntimeImportConvs["std.c.string"] = ["core.stdc.string"];
+		druntimeImportConvs["std.c.stdio"] = ["core.sys.posix.stdio"];
+		druntimeImportConvs["std.gc"] = ["core.memory"];
+
+		char[][][char[]] phobos2ImportConvs;
+		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
+		phobos2ImportConvs["std.string"] = ["std.string"];
+		phobos2ImportConvs["std.stdarg"] = ["std.stdarg"];
+
 		char[] importTango = "\nversion(Tango) {\n";
+		char[] importDruntime = "} else version(D_Version2) {\n";
 		char[] importElse = "} else {\n";
 		char[] importCommon = "\n";
 		
 		int countTango;
+		int countDruntime;
 		
 		foreach( char[] imprt ; convParms.imprts )
 		{
+			if ( imprt in druntimeImportConvs )
+			{
+				++countDruntime;
+				foreach ( char[] d2Imp ; druntimeImportConvs[imprt] )
+				{ 
+					importDruntime ~= "\tprivate import "~d2Imp~";\n";
+				}
+			}
+			if ( imprt in phobos2ImportConvs )
+			{
+				foreach ( char[] phobos2Imp ; phobos2ImportConvs[imprt] )
+				{ 
+					importDruntime ~= "\tprivate import "~phobos2Imp~";\n";
+				}
+			}
+
 			if ( imprt in tangoImportConvs )
 			{
 				++countTango;
@@ -287,6 +316,10 @@ public class GtkDClass
 		if ( countTango > 0 )
 		{
 			gtkDText ~= importTango;
+
+			if ( countDruntime > 0 )
+				gtkDText ~= importDruntime;
+
 			gtkDText ~= importElse~"}\n";
 		}
 

@@ -69,6 +69,8 @@ private import pango.PgLanguage;
 
 version(Tango) {
 	private import tango.stdc.stdio;
+} else version(D_Version2) {
+	private import core.sys.posix.stdio;
 } else {
 	private import std.c.stdio;
 }

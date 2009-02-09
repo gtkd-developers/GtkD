@@ -105,52 +105,25 @@ const string[LIBRARY.max+1] importLibs =
 
 version(darwin)
 {
-//This version is for the native quartz port of GTK+
-//which can be found from http://www.gtk-osx.org/
-//The libraries in the /opt/ directory are not part of
-//that package and need to be installed separately.
+/**
+* On OS X, currently there are (atleast) two places where
+* GTK+ might be installed. The default for gtkD is the native
+* Quartz port. The other one is the X11 version, which runs
+* under the separate X11 environment of OS X. You can
+* uncomment the version=darwinX11 in the gtkD toplevel dsss.conf file
+* to build gtkD for X11.
+* Currently gtkDgl (which uses gtkglext) is only available under X11,
+* because gtkglext is not yet ported to the Quartz backend.
+*/
 
-const char[] FRAMEWORKS_DIR = "/Library/Frameworks/";
-const char[] INTERFACE = "quartz";
-const char[] DIRECTORY = "/opt/gtk/lib/";
-
-//On OS X we can just specify the framework. But we could also
-//specify the individual libraries like this:
-//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Libraries/libcairo.2.dylib",
-//but we'll do it like this instead:
-//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Cairo",
-
-const string[LIBRARY.max+1] importLibs =
-[
-	LIBRARY.ATK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.CAIRO:         FRAMEWORKS_DIR~"Cairo.framework/Cairo",
-	LIBRARY.GDK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.GDKPIXBUF:     FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.GLIB:          FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GMODULE:       FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GOBJECT:       FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GIO:           FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GTHREAD:       FRAMEWORKS_DIR~"GLib.framework/GLib",
-	LIBRARY.GTK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.PANGO:         FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.PANGOCAIRO:    FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-	LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
-	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
-	LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GLU:           "/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GLEXT:         "/System/Library/Frameworks/OpenGL.framework/OpenGL",
-	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
-	LIBRARY.GLADE:         DIRECTORY~"libglade-2.0.dylib",
-	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-1.0.dylib",
-	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
-	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
- ];
-
-/*
+version(darwinX11)
+{
 //This version is for the non-native OS X, X11 port
-//of GTK+.
-const char[] DIRECTORY = "/opt/gtk/lib/";
-const char[] INTERFACE = "quartz";
+//of GTK+. This directory is according to the Macports http://www.macports.org
+//default installation location. There should be installation instructions
+//in the gtkD wiki at DSource.
+const char[] DIRECTORY = "/opt/local/lib/";
+const char[] INTERFACE = "x11";
 
 const char[][LIBRARY.max+1] importLibs =
 	[
@@ -175,7 +148,51 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
 	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
 	];
-*/
+}
+else //default version (The Quartz GTK+ Framework):
+{
+//This version is for the native Quartz port of GTK+
+//which can be found from http://www.gtk-osx.org/
+//The libraries in the /opt/ directory are not part of
+//that package and need to be installed separately,
+//possibly through Macports.
+
+const char[] FRAMEWORKS_DIR = "/Library/Frameworks/";
+const char[] INTERFACE = "quartz";
+const char[] DIRECTORY = "/opt/local/lib/";
+
+//On OS X we can just specify the framework. But we could also
+//specify the individual libraries like this:
+//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Libraries/libcairo.2.dylib",
+//but we'll do it like this instead:
+//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Cairo",
+
+const string[LIBRARY.max+1] importLibs =
+[
+	LIBRARY.ATK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.CAIRO:         FRAMEWORKS_DIR~"Cairo.framework/Cairo",
+	LIBRARY.GDK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GDKPIXBUF:     FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GLIB:          FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GMODULE:       FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GOBJECT:       FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GIO:           FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GTHREAD:       FRAMEWORKS_DIR~"GLib.framework/GLib",
+	LIBRARY.GTK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.PANGO:         FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.PANGOCAIRO:    FRAMEWORKS_DIR~"Gtk.framework/Gtk",
+	LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",//This isn't currently available
+	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",//This isn't currently available
+	LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLU:           "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GLEXT:         "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GLADE:         DIRECTORY~"libglade-2.0.dylib",
+	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-1.0.dylib",
+	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
+	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
+ ];
+}
 }
 
 version(Windows)

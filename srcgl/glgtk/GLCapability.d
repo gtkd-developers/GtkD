@@ -72,8 +72,13 @@ public import glgtk.GLWidget;
 private import glgdk.GLDrawable;
 public import gdk.Event;
 
-version(Tango) private import tango.core.Memory;
-else private import std.gc;
+version(Tango) {
+	private import tango.core.Memory;
+} else version(D_Version2) {
+	private import core.memory;
+} else {
+	private import std.gc;
+}
 
 
 template GLCapability()
@@ -250,6 +255,7 @@ template GLCapability()
 			height = event.height;
 		}
 		version(Tango) tango.core.Memory.GC.disable();
+		else version(D_Version2) core.memory.GC.disable();
 		else std.gc.disable();
 		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );
@@ -288,7 +294,9 @@ template GLCapability()
 		/*** OpenGL END ***/
 		
 		version(Tango) tango.core.Memory.GC.enable();
+		else version(D_Version2) core.memory.GC.enable();
 		else std.gc.enable();
+		
 		return consumeEvent;
 	}
 	
