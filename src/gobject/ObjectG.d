@@ -76,8 +76,12 @@ private import glib.Str;
 
 version(Tango) {
 	private import tango.core.Memory;
+
+	version = druntime;
 } else version(D_Version2) {
 	private import core.memory;
+
+	version = druntime;
 } else {
 	private import std.gc;
 }
@@ -150,12 +154,6 @@ public class ObjectG
 		return cast(void*)gObject;
 	}
 	
-	
-	version(Tango) {
-		version = druntime;
-	} else version(D_Version2) {
-		version = druntime;
-	}
 	
 	/**
 	 * Sets our main struct and passes store it on the gobject.

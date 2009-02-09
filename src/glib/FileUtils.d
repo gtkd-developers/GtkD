@@ -71,8 +71,12 @@ private import glib.GException;
 
 version(Tango) {
 	private import tango.stdc.stdio;
+
+	version = druntime;
 } else version(D_Version2) {
 	private import core.sys.posix.stdio;
+
+	version = druntime;
 } else {
 	private import std.c.stdio;
 }

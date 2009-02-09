@@ -170,12 +170,6 @@ public class MemoryChunk
 		this.gMemChunk = gMemChunk;
 	}
 	
-	version(Tango) {
-		version = druntime;
-	} else version(D_Version2) {
-		version = druntime;
-	}
-	
 	/**
 	 * Warning
 	 * g_mem_chunk_print has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
@@ -184,7 +178,15 @@ public class MemoryChunk
 	 * It outputs the name of the GMemChunk (set with g_mem_chunk_new()),
 	 * the number of bytes used, and the number of blocks of memory allocated.
 	 */
-	version(druntime)
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_mem_chunk_print (GMemChunk *mem_chunk);
+			g_mem_chunk_print(gMemChunk);
+		}
+	}
+	else version(D_Version2)
 	{
 		public void print()
 		{

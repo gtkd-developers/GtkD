@@ -238,12 +238,6 @@ array: g_object_newv parameters n_parameters
 nocode: g_object_set_data_full
 
 code: start
-	version(Tango) {
-		version = druntime;
-	} else version(D_Version2) {
-		version = druntime;
-	}
-
 	/**
 	* Sets our main struct and passes store it on the gobject.
 	* Add a gabage collector root to the gtk+ struct so it doesn't get collect

@@ -77,11 +77,15 @@ version(Tango) {
 	private import tango.stdc.stdio;
 	private import tango.text.Util;
 	private import tango.stdc.string;
+
+	version = druntime;
 } else version(D_Version2) {
 	private import core.thread;
 	private import core.sys.posix.stdio;
 	private import std.string;
 	private import core.stdc.string;
+
+	version = druntime;
 } else {
 	private import std.thread;
 	private import std.c.stdio;
@@ -99,13 +103,6 @@ public class Spawn
 	
 	
 	version(Tango) alias splitLines splitlines;
-	
-	version(Tango) {
-		version = druntime;
-	} else version(D_Version2) {
-		version = druntime;
-	}
-	
 	
 	string workingDirectory = ".";
 	string[] argv;

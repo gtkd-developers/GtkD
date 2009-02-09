@@ -123,17 +123,19 @@ public class Relation
 		this.gRelation = gRelation;
 	}
 	
-	version(Tango) {
-		version = druntime;
-	} else version(D_Version2) {
-		version = druntime;
-	}
-	
 	/**
 	 * Outputs information about all records in a GRelation, as well as the indexes.
 	 * It is for debugging.
 	 */
-	version(druntime)
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+	else version(D_Version2)
 	{
 		public void print()
 		{

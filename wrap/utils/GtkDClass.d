@@ -316,9 +316,13 @@ public class GtkDClass
 		if ( countTango > 0 )
 		{
 			gtkDText ~= importTango;
-
+			
 			if ( countDruntime > 0 )
+			{
+				gtkDText ~= "\n\tversion = druntime;\n";
 				gtkDText ~= importDruntime;
+				gtkDText ~= "\n\tversion = druntime;\n";
+			}
 
 			gtkDText ~= importElse~"}\n";
 		}
