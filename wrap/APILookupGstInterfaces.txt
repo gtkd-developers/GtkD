@@ -91,5 +91,17 @@ class: XOverlay
 prefix: gst_x_overlay_
 import: gtkc.glibtypes
 import: glib.Str
+import: gstreamer.Element
+code: start
+	/**
+	* The Element parameter should usually be
+	* your videosink that you want to create your
+	* XOverlay with.
+	*/
+	public this(Element elem)
+	{
+		this( cast(GstXOverlay*)elem.getElementStruct() );
+	}
+code: end
 outFile: XOverlay
 

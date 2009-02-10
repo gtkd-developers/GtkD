@@ -103,9 +103,9 @@ public:
 		m_xoverlay = set;
 		
 		debug(MonitorOverlay) Trace.formatln("Monitor.xoverlay(set) xoverlay set. Now setting XwindowId.");
-		m_xoverlay.setXwindowId( X11.drawableGetXid( getDrawable() ) );
+		m_xoverlay.setXwindowId( X11.drawableGetXid( getWindow() ) );
 		
-		debug(MonitorOverlay) Trace.formatln("X11.drawableGetXid: {}", X11.drawableGetXid( getDrawable() ) );
+		debug(MonitorOverlay) Trace.formatln("X11.drawableGetXid: {}", X11.drawableGetXid( getWindow() ) );
 		
 		return m_xoverlay;
 	}

@@ -58,4 +58,6 @@ ln -s gtksourceview-2.0-html-2.4.0 sourceview
 #gstreamer
 curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.12.tar.gz | tar xvfz -
 ln -s gstreamer-0.10.12/docs/gst/html gstreamer
+curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.12.tar.gz | tar xvfz -
+ln -s gst-plugins-base-0.10.12/docs/libs/html gstinterfaces
 

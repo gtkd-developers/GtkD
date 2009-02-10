@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
@@ -53,21 +54,15 @@
  * 	- GstTypeFindFactory* -> TypeFindFactory
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.TypeFindFactory;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -77,6 +72,7 @@ private import gstreamer.Caps;
 
 
 
+private import gstreamer.PluginFeature;
 
 /**
  * Description
@@ -129,7 +125,6 @@ private import gstreamer.Caps;
  * that though.
  * Last reviewed on 2005-11-09 (0.9.4)
  */
-private import gstreamer.PluginFeature;
 public class TypeFindFactory : PluginFeature
 {
 	
@@ -144,7 +139,7 @@ public class TypeFindFactory : PluginFeature
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstTypeFindFactory;
 	}
@@ -154,25 +149,17 @@ public class TypeFindFactory : PluginFeature
 	 */
 	public this (GstTypeFindFactory* gstTypeFindFactory)
 	{
-		version(noAssert)
+		if(gstTypeFindFactory is null)
 		{
-			if ( gstTypeFindFactory is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstTypeFindFactory is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstTypeFindFactory is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstTypeFindFactory);
+		if( ptr !is null )
 		{
-			assert(gstTypeFindFactory !is null, "struct gstTypeFindFactory is null on constructor");
+			this = cast(TypeFindFactory)ptr;
+			return;
 		}
 		super(cast(GstPluginFeature*)gstTypeFindFactory);
 		this.gstTypeFindFactory = gstTypeFindFactory;
@@ -181,17 +168,20 @@ public class TypeFindFactory : PluginFeature
 	/**
 	 */
 	
-	
 	/**
 	 * Gets the list of all registered typefind factories. You must free the
 	 * list using g_list_free.
-	 * Returns:
-	 *  the list of all registered GstTypeFindFactory.
+	 * Returns: the list of all registered GstTypeFindFactory.
 	 */
 	public static ListG getList()
 	{
 		// GList* gst_type_find_factory_get_list (void);
-		return new ListG( gst_type_find_factory_get_list() );
+		auto p = gst_type_find_factory_get_list();
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -199,36 +189,33 @@ public class TypeFindFactory : PluginFeature
 	 * array should not be changed. If you need to change stuff in it, you should
 	 * copy it using g_stdupv(). This function may return NULL to indicate
 	 * a 0-length list.
-	 * factory:
-	 *  A GstTypeFindFactory
-	 * Returns:
-	 *  a NULL-terminated array of extensions associated with this factory
+	 * Returns: a NULL-terminated array of extensions associated with this factory
 	 */
-	public char** getExtensions()
+	public string[] getExtensions()
 	{
 		// gchar** gst_type_find_factory_get_extensions  (GstTypeFindFactory *factory);
-		return gst_type_find_factory_get_extensions(gstTypeFindFactory);
+		return Str.toStringArray(gst_type_find_factory_get_extensions(gstTypeFindFactory));
 	}
 	
 	/**
 	 * Gets the GstCaps associated with a typefind factory.
-	 * factory:
-	 *  A GstTypeFindFactory
-	 * Returns:
-	 *  The GstCaps associated with this factory
+	 * Returns: The GstCaps associated with this factory
 	 */
 	public Caps getCaps()
 	{
 		// GstCaps* gst_type_find_factory_get_caps (GstTypeFindFactory *factory);
-		return new Caps( gst_type_find_factory_get_caps(gstTypeFindFactory) );
+		auto p = gst_type_find_factory_get_caps(gstTypeFindFactory);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Caps(cast(GstCaps*) p);
 	}
 	
 	/**
 	 * Calls the GstTypeFindFunction associated with this factory.
-	 * factory:
-	 *  A GstTypeFindFactory
-	 * find:
-	 *  A properly setup GstTypeFind entry. The get_data and suggest_type
+	 * Params:
+	 * find =  A properly setup GstTypeFind entry. The get_data and suggest_type
 	 *  members must be set.
 	 */
 	public void callFunction(TypeFind find)

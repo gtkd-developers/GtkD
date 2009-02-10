@@ -40,29 +40,24 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtkc.glibtypes
  * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstinterfaces.XOverlay;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstinterfacestypes;
+public  import gstreamerc.gstinterfacestypes;
 
 private import gstreamerc.gstinterfaces;
+private import glib.ConstructionException;
 
-private import gstreamer.Element;//By hand.
+private import gstreamer.Element;
 
 private import gtkc.glibtypes;
 private import glib.Str;
@@ -143,30 +138,20 @@ public class XOverlay
 	 */
 	public this (GstXOverlay* gstXOverlay)
 	{
-		version(noAssert)
+		if(gstXOverlay is null)
 		{
-			if ( gstXOverlay is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstXOverlay is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstXOverlay is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gstXOverlay !is null, "struct gstXOverlay is null on constructor");
+			this = null;
+			return;
 		}
 		this.gstXOverlay = gstXOverlay;
 	}
 	
-	public this(Element elem)//Handedited.
+	/**
+	* The Element parameter should usually be
+	* your videosink that you want to create your
+	* XOverlay with.
+	*/
+	public this(Element elem)
 	{
 		this( cast(GstXOverlay*)elem.getElementStruct() );
 	}
@@ -174,16 +159,13 @@ public class XOverlay
 	/**
 	 */
 	
-	
 	/**
 	 * This will call the video overlay's set_xwindow_id method. You should
 	 * use this method to tell to a XOverlay to display video output to a
 	 * specific XWindow. Passing 0 as the xwindow_id will tell the overlay to
 	 * stop using that window and create an internal one.
-	 * overlay:
-	 *  a GstXOverlay to set the XWindow on.
-	 * xwindow_id:
-	 *  a XID referencing the XWindow.
+	 * Params:
+	 * xwindowId =  a XID referencing the XWindow.
 	 */
 	public void setXwindowId(uint xwindowId)
 	{
@@ -194,10 +176,8 @@ public class XOverlay
 	/**
 	 * This will post a "have-xwindow-id" element message on the bus.
 	 * This function should only be used by video overlay plugin developers.
-	 * overlay:
-	 *  a GstXOverlay which got a XWindow.
-	 * xwindow_id:
-	 *  a XID referencing the XWindow.
+	 * Params:
+	 * xwindowId =  a XID referencing the XWindow.
 	 */
 	public void gotXwindowId(uint xwindowId)
 	{
@@ -211,20 +191,16 @@ public class XOverlay
 	 * gst_x_overlay_set_xwindow_id() before a plugin creates its own
 	 * window.
 	 * This function should only be used by video overlay plugin developers.
-	 * overlay:
-	 *  a GstXOverlay which does not yet have an XWindow.
 	 */
 	public void prepareXwindowId()
 	{
-		// void gst_x_overlay_prepare_xwindow_id (GstXOverlay *overlay);
+		// void gst_x_overlay_prepare_xwindow_id  (GstXOverlay *overlay);
 		gst_x_overlay_prepare_xwindow_id(gstXOverlay);
 	}
 	
 	/**
 	 * Tell an overlay that it has been exposed. This will redraw the current frame
 	 * in the drawable even if the pipeline is PAUSED.
-	 * overlay:
-	 *  a GstXOverlay to expose.
 	 */
 	public void expose()
 	{

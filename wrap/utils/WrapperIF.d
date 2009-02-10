@@ -30,5 +30,5 @@ public interface WrapperIF
 	char[][char[]] getEnumTypes();
 	
 	/** switch on or off the comments enbeded on the source */
-	bit includeComments();
+	bool includeComments();
 }

@@ -80,7 +80,7 @@ public:
 	{
 
 		// create elements
-
+		
 		pipeline = new Pipeline("audio-player");
 
 		source = ElementFactory.make("filesrc", "file-source");
@@ -101,7 +101,7 @@ public:
 
 			throw new Exception("One or more gstreamerD elements could not be created.");
 		}
-
+		
 		// set filename property on the file source. Also add a message handler.
 
 		source.location( file ); //You can also use this like a D property: source.location = file;
@@ -129,6 +129,8 @@ public:
 		//decoder.linkMany( conv, sink );
 		decoder.link( conv );
 		conv.link( sink );
+		//Here's where we set the pad-added signal handler. It will
+		//connect the dynamic pads when they become available.
 		parser.addOnPadAdded(&newPad);
 
 		// Now set to playing and iterate.
@@ -184,7 +186,7 @@ int main(char[][] args)
 
 	Trace.formatln("Checking version of GStreamer...");
 	GStreamer.versio(&major, &minor, &micro, &nano);
-	Trace.formatln("This program is linked against GStreamer {}.{}.{}", major, minor, micro );
+	Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
 
 	Trace.formatln( "The file is: {}", args[1] );
 	GstHello gstHello = new GstHello( args[1] );

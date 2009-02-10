@@ -42,6 +42,7 @@
  * omit prefixes:
  * omit code:
  * 	- gst_plugin_feature_set_name
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
@@ -50,21 +51,15 @@
  * 	- GstPluginFeature* -> PluginFeature
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.PluginFeature;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -72,12 +67,12 @@ private import glib.ListG;
 
 
 
+private import gstreamer.ObjectGst;
 
 /**
  * Description
  * This is a base class for anything that can be added to a GstPlugin.
  */
-private import gstreamer.ObjectGst;
 public class PluginFeature : ObjectGst
 {
 	
@@ -92,7 +87,7 @@ public class PluginFeature : ObjectGst
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstPluginFeature;
 	}
@@ -102,25 +97,17 @@ public class PluginFeature : ObjectGst
 	 */
 	public this (GstPluginFeature* gstPluginFeature)
 	{
-		version(noAssert)
+		if(gstPluginFeature is null)
 		{
-			if ( gstPluginFeature is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstPluginFeature is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstPluginFeature is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstPluginFeature);
+		if( ptr !is null )
 		{
-			assert(gstPluginFeature !is null, "struct gstPluginFeature is null on constructor");
+			this = cast(PluginFeature)ptr;
+			return;
 		}
 		super(cast(GstObject*)gstPluginFeature);
 		this.gstPluginFeature = gstPluginFeature;
@@ -131,12 +118,10 @@ public class PluginFeature : ObjectGst
 	 * within all features of the same type. Renaming a plugin feature is not
 	 * allowed. A copy is made of the name so you should free the supplied name
 	 * after calling this function.
-	 * feature:
-	 *  a feature
-	 * name:
-	 *  the name to set
+	 * Params:
+	 *  name = the name to set
 	 */
-	public void setFeatureName(char[] name)
+	public void setFeatureName(string name)
 	{
 		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
 		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));
@@ -145,19 +130,11 @@ public class PluginFeature : ObjectGst
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Compares type and name of plugin feature. Can be used with gst_filter_run().
-	 * feature:
-	 *  the GstPluginFeature
-	 * data:
-	 *  the type and name to check against
-	 * Returns:
-	 *  TRUE if equal.
+	 * Params:
+	 * data =  the type and name to check against
+	 * Returns: TRUE if equal.
 	 */
 	public int typeNameFilter(GstTypeNameData* data)
 	{
@@ -168,10 +145,8 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Specifies a rank for a plugin feature, so that autoplugging uses
 	 * the most appropriate feature.
-	 * feature:
-	 *  feature to rank
-	 * rank:
-	 *  rank value - higher number means more priority rank
+	 * Params:
+	 * rank =  rank value - higher number means more priority rank
 	 */
 	public void setRank(uint rank)
 	{
@@ -179,13 +154,9 @@ public class PluginFeature : ObjectGst
 		gst_plugin_feature_set_rank(gstPluginFeature, rank);
 	}
 	
-	
 	/**
 	 * Gets the rank of a plugin feature.
-	 * feature:
-	 *  a feature
-	 * Returns:
-	 *  The rank of the feature
+	 * Returns: The rank of the feature
 	 */
 	public uint getRank()
 	{
@@ -195,41 +166,34 @@ public class PluginFeature : ObjectGst
 	
 	/**
 	 * Gets the name of a plugin feature.
-	 * feature:
-	 *  a feature
-	 * Returns:
-	 *  the name
+	 * Returns: the name
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gst_plugin_feature_get_name (GstPluginFeature *feature);
-		return Str.toString(gst_plugin_feature_get_name(gstPluginFeature) );
+		return Str.toString(gst_plugin_feature_get_name(gstPluginFeature));
 	}
 	
 	/**
 	 * Loads the plugin containing feature if it's not already loaded. feature is
 	 * unaffected; use the return value instead.
-	 * Normally this function is used like this:
-	 * GstPluginFeature *loaded_feature;
-	 * loaded_feature = gst_plugin_feature_load (feature);
-	 * // presumably, we're no longer interested in the potentially-unloaded feature
-	 * gst_object_unref (feature);
-	 * feature = loaded_feature;
-	 * feature:
-	 *  the plugin feature to check
-	 * Returns:
-	 *  A reference to the loaded feature, or NULL on error.
+	 * Returns: A reference to the loaded feature, or NULL on error.
 	 */
 	public PluginFeature load()
 	{
 		// GstPluginFeature* gst_plugin_feature_load (GstPluginFeature *feature);
-		return new PluginFeature( gst_plugin_feature_load(gstPluginFeature) );
+		auto p = gst_plugin_feature_load(gstPluginFeature);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PluginFeature(cast(GstPluginFeature*) p);
 	}
 	
 	/**
 	 * Unrefs each member of list, then frees the list.
-	 * list:
-	 *  list of GstPluginFeature
+	 * Params:
+	 * list =  list of GstPluginFeature
 	 */
 	public static void listFree(ListG list)
 	{
@@ -240,19 +204,11 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Checks whether the given plugin feature is at least
 	 *  the required version
-	 * feature:
-	 *  a feature
-	 * min_major:
-	 *  minimum required major version
-	 * min_minor:
-	 *  minimum required minor version
-	 * min_micro:
-	 *  minimum required micro version
-	 * Returns:
-	 *  TRUE if the plugin feature has at least
-	 *  the required version, otherwise FALSE.
-	 * See Also
-	 * GstPlugin
+	 * Params:
+	 * minMajor =  minimum required major version
+	 * minMinor =  minimum required minor version
+	 * minMicro =  minimum required micro version
+	 * Returns: TRUE if the plugin feature has at least the required version, otherwise FALSE.
 	 */
 	public int checkVersion(uint minMajor, uint minMinor, uint minMicro)
 	{

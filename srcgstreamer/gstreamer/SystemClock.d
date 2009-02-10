@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Clock
@@ -48,21 +49,15 @@
  * 	- GstSystemClock* -> SystemClock
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.SystemClock;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -70,6 +65,7 @@ private import gstreamer.Clock;
 
 
 
+private import gstreamer.Clock;
 
 /**
  * Description
@@ -82,7 +78,6 @@ private import gstreamer.Clock;
  * wait operations.
  * Last reviewed on 2006-03-08 (0.10.4)
  */
-private import gstreamer.Clock;
 public class SystemClock : Clock
 {
 	
@@ -97,7 +92,7 @@ public class SystemClock : Clock
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstSystemClock;
 	}
@@ -107,25 +102,17 @@ public class SystemClock : Clock
 	 */
 	public this (GstSystemClock* gstSystemClock)
 	{
-		version(noAssert)
+		if(gstSystemClock is null)
 		{
-			if ( gstSystemClock is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstSystemClock is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstSystemClock is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstSystemClock);
+		if( ptr !is null )
 		{
-			assert(gstSystemClock !is null, "struct gstSystemClock is null on constructor");
+			this = cast(SystemClock)ptr;
+			return;
 		}
 		super(cast(GstClock*)gstSystemClock);
 		this.gstSystemClock = gstSystemClock;
@@ -134,20 +121,20 @@ public class SystemClock : Clock
 	/**
 	 */
 	
-	
 	/**
 	 * Get a handle to the default system clock. The refcount of the
 	 * clock will be increased so you need to unref the clock after
 	 * usage.
-	 * Returns:
-	 *  the default clock.
-	 * MT safe.
-	 * See Also
-	 * GstClock
+	 * Returns: the default clock.MT safe.
 	 */
 	public static Clock obtain()
 	{
 		// GstClock* gst_system_clock_obtain (void);
-		return new Clock( gst_system_clock_obtain() );
+		auto p = gst_system_clock_obtain();
+		if(p is null)
+		{
+			return null;
+		}
+		return new Clock(cast(GstClock*) p);
 	}
 }

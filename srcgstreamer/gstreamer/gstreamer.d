@@ -41,26 +41,21 @@
  * omit prefixes:
  * omit code:
  * 	- gst_init
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.gstreamer;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -134,11 +129,11 @@ public class GStreamer
 	/**
 	 * Call this function before using any other GStreamer functions in your applications.
 	 */
-	public static void init(char[][] args) //public static void init(int* argc, char**[] argv)
+	public static void init(string[] args) //public static void init(int* argc, char**[] argv)
 	{
 		char** argv = cast(char**) new char*[args.length];
 		int argc = 0;
-		foreach (char[] p; args)
+		foreach (string p; args)
 		{
 			argv[argc++] = cast(char*)p;
 		}
@@ -149,7 +144,6 @@ public class GStreamer
 	/**
 	 */
 	
-	
 	/**
 	 * Initializes the GStreamer library, setting up internal path lists,
 	 * registering built-in elements, and loading standard plugins.
@@ -159,19 +153,25 @@ public class GStreamer
 	 * This function should be called before calling any other GLib functions. If
 	 * this is not an option, your program must initialise the GLib thread system
 	 * using g_thread_init() before any other GLib functions are called.
-	 * argc:
-	 *  pointer to application's argc
-	 * argv:
-	 *  pointer to application's argv
-	 * err:
-	 *  pointer to a GError to which a message will be posted on error
-	 * Returns:
-	 *  TRUE if GStreamer could be initialized.
+	 * Params:
+	 * argc =  pointer to application's argc
+	 * argv =  pointer to application's argv
+	 * Returns: TRUE if GStreamer could be initialized.
+	 * Throws: GException on failure.
 	 */
-	public static int initCheck(int* argc, char**[] argv, GError** err)
+	public static int initCheck(int* argc, char**[] argv)
 	{
 		// gboolean gst_init_check (int *argc,  char **argv[],  GError **err);
-		return gst_init_check(argc, argv, err);
+		GError* err = null;
+		
+		auto p = gst_init_check(argc, argv, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -184,8 +184,7 @@ public class GStreamer
 	 * If you use this function, you should make sure you initialise the GLib
 	 * threading system as one of the very first things in your program
 	 * (see the example at the beginning of this section).
-	 * Returns:
-	 *  a pointer to GStreamer's option group.
+	 * Returns: a pointer to GStreamer's option group.
 	 */
 	public static GOptionGroup* initGetOptionGroup()
 	{
@@ -209,14 +208,11 @@ public class GStreamer
 	
 	/**
 	 * Gets the version number of the GStreamer library.
-	 * major:
-	 *  pointer to a guint to store the major version number
-	 * minor:
-	 *  pointer to a guint to store the minor version number
-	 * micro:
-	 *  pointer to a guint to store the micro version number
-	 * nano:
-	 *  pointer to a guint to store the nano version number
+	 * Params:
+	 * major =  pointer to a guint to store the major version number
+	 * minor =  pointer to a guint to store the minor version number
+	 * micro =  pointer to a guint to store the micro version number
+	 * nano =  pointer to a guint to store the nano version number
 	 */
 	public static void versio(uint* major, uint* minor, uint* micro, uint* nano)
 	{
@@ -227,13 +223,12 @@ public class GStreamer
 	/**
 	 * This function returns a string that is useful for describing this version
 	 * of GStreamer to the outside world: user agent strings, logging, ...
-	 * Returns:
-	 *  a newly allocated string describing this version of GStreamer.
+	 * Returns: a newly allocated string describing this version of GStreamer.
 	 */
-	public static char[] versionString()
+	public static string versionString()
 	{
 		// gchar* gst_version_string (void);
-		return Str.toString(gst_version_string() );
+		return Str.toString(gst_version_string());
 	}
 	
 	/**
@@ -243,9 +238,7 @@ public class GStreamer
 	 * Applications might want to disable this behaviour with the
 	 * gst_segtrap_set_enabled() function. This is typically done if the application
 	 * wants to install its own handler without GStreamer interfering.
-	 * Returns:
-	 *  TRUE if GStreamer is allowed to install a custom SIGSEGV handler.
-	 * Since 0.10.10
+	 * Returns: TRUE if GStreamer is allowed to install a custom SIGSEGV handler.Since 0.10.10
 	 */
 	public static int segtrapIsEnabled()
 	{
@@ -256,8 +249,8 @@ public class GStreamer
 	/**
 	 * Applications might want to disable/enable the SIGSEGV handling of
 	 * the GStreamer core. See gst_segtrap_is_enabled() for more information.
-	 * enabled:
-	 *  whether a custom SIGSEGV handler should be installed.
+	 * Params:
+	 * enabled =  whether a custom SIGSEGV handler should be installed.
 	 * Since 0.10.10
 	 */
 	public static void segtrapSetEnabled(int enabled)
@@ -271,10 +264,7 @@ public class GStreamer
 	 * registry file.
 	 * Applications might want to disable this behaviour with the
 	 * gst_registry_fork_set_enabled() function.
-	 * Returns:
-	 *  TRUE if GStreamer will use fork() when rebuilding the registry. On
-	 * platforms without fork(), this function will always return FALSE.
-	 * Since 0.10.10
+	 * Returns: TRUE if GStreamer will use fork() when rebuilding the registry. Onplatforms without fork(), this function will always return FALSE.Since 0.10.10
 	 */
 	public static int registryForkIsEnabled()
 	{
@@ -287,8 +277,8 @@ public class GStreamer
 	 * the registry. See gst_registry_fork_is_enabled() for more information.
 	 * On platforms without fork(), this function will have no effect on the return
 	 * value of gst_registry_fork_is_enabled().
-	 * enabled:
-	 *  whether rebuilding the registry may fork
+	 * Params:
+	 * enabled =  whether rebuilding the registry may fork
 	 * Since 0.10.10
 	 */
 	public static void registryForkSetEnabled(int enabled)
@@ -311,13 +301,7 @@ public class GStreamer
 	 * any elements or access the GStreamer registry while the update is in
 	 * progress.
 	 * Note that this function may block for a significant amount of time.
-	 * Returns:
-	 *  TRUE if the registry has been updated successfully (does not
-	 *  imply that there were changes), otherwise FALSE.
-	 * Since 0.10.12
-	 * See Also
-	 * Check out both OGI's
-	 *  pipeline and Microsoft's DirectShow for some background.
+	 * Returns: TRUE if the registry has been updated successfully (does not imply that there were changes), otherwise FALSE.Since 0.10.12
 	 */
 	public static int updateRegistry()
 	{

@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Caps
@@ -51,21 +52,15 @@
  * 	- GstTypeFind* -> TypeFind
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.TypeFind;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -105,25 +100,10 @@ public class TypeFind
 	 */
 	public this (GstTypeFind* gstTypeFind)
 	{
-		version(noAssert)
+		if(gstTypeFind is null)
 		{
-			if ( gstTypeFind is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstTypeFind is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstTypeFind is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gstTypeFind !is null, "struct gstTypeFind is null on constructor");
+			this = null;
+			return;
 		}
 		this.gstTypeFind = gstTypeFind;
 	}
@@ -131,23 +111,16 @@ public class TypeFind
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * Returns the size bytes of the stream to identify beginning at offset. If
 	 * offset is a positive number, the offset is relative to the beginning of the
 	 * stream, if offset is a negative number the offset is relative to the end of
 	 * the stream. The returned memory is valid until the typefinding function
 	 * returns and must not be freed.
-	 * find:
-	 *  The GstTypeFind object the function was called with
-	 * offset:
-	 *  The offset
-	 * size:
-	 *  The number of bytes to return
-	 * Returns:
-	 *  the requested data, or NULL if that data is not available.
+	 * Params:
+	 * offset =  The offset
+	 * size =  The number of bytes to return
+	 * Returns: the requested data, or NULL if that data is not available.
 	 */
 	public byte* peek(long offset, uint size)
 	{
@@ -160,12 +133,9 @@ public class TypeFind
 	 * given probability. A GstTypeFindFunction may supply different suggestions
 	 * in one call.
 	 * It is up to the caller of the GstTypeFindFunction to interpret these values.
-	 * find:
-	 *  The GstTypeFind object the function was called with
-	 * probability:
-	 *  The probability in percent that the suggestion is right
-	 * caps:
-	 *  The fixed GstCaps to suggest
+	 * Params:
+	 * probability =  The probability in percent that the suggestion is right
+	 * caps =  The fixed GstCaps to suggest
 	 */
 	public void suggest(uint probability, Caps caps)
 	{
@@ -175,10 +145,7 @@ public class TypeFind
 	
 	/**
 	 * Get the length of the data stream.
-	 * find:
-	 *  The GstTypeFind the function was called with
-	 * Returns:
-	 *  The length of the data stream, or 0 if it is not available.
+	 * Returns: The length of the data stream, or 0 if it is not available.
 	 */
 	public ulong getLength()
 	{
@@ -190,29 +157,21 @@ public class TypeFind
 	 * Registers a new typefind function to be used for typefinding. After
 	 * registering this function will be available for typefinding.
 	 * This function is typically called during an element's plugin initialization.
-	 * plugin:
-	 *  A GstPlugin.
-	 * name:
-	 *  The name for registering
-	 * rank:
-	 *  The rank (or importance) of this typefind function
-	 * func:
-	 *  The GstTypeFindFunction to use
-	 * extensions:
-	 *  Optional extensions that could belong to this type
-	 * possible_caps:
-	 *  Optionally the caps that could be returned when typefinding
+	 * Params:
+	 * plugin =  A GstPlugin.
+	 * name =  The name for registering
+	 * rank =  The rank (or importance) of this typefind function
+	 * func =  The GstTypeFindFunction to use
+	 * extensions =  Optional extensions that could belong to this type
+	 * possibleCaps =  Optionally the caps that could be returned when typefinding
 	 *  succeeds
-	 * data:
-	 *  Optional user data. This user data must be available until the plugin
+	 * data =  Optional user data. This user data must be available until the plugin
 	 *  is unloaded.
-	 * data_notify:
-	 *  a GDestroyNotify that will be called on data when the plugin
+	 * dataNotify =  a GDestroyNotify that will be called on data when the plugin
 	 *  is unloaded.
-	 * Returns:
-	 *  TRUE on success, FALSE otherwise
+	 * Returns: TRUE on success, FALSE otherwise
 	 */
-	public static int register(Plugin plugin, char[] name, uint rank, GstTypeFindFunction func, char** extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
+	public static int register(Plugin plugin, string name, uint rank, GstTypeFindFunction func, char** extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
 	{
 		// gboolean gst_type_find_register (GstPlugin *plugin,  const gchar *name,  guint rank,  GstTypeFindFunction func,  gchar **extensions,  const GstCaps *possible_caps,  gpointer data,  GDestroyNotify data_notify);
 		return gst_type_find_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, func, extensions, (possibleCaps is null) ? null : possibleCaps.getCapsStruct(), data, dataNotify);

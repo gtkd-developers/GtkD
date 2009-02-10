@@ -41,33 +41,29 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
  * 	- GstTask* -> Task
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Task;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
 
 
 
+private import gstreamer.ObjectGst;
 
 /**
  * Description
@@ -95,7 +91,6 @@ private import glib.Str;
  * only be done it the task is not running anymore.
  * Last reviewed on 2006-02-13 (0.10.4)
  */
-private import gstreamer.ObjectGst;
 public class Task : ObjectGst
 {
 	
@@ -110,7 +105,7 @@ public class Task : ObjectGst
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstTask;
 	}
@@ -120,25 +115,17 @@ public class Task : ObjectGst
 	 */
 	public this (GstTask* gstTask)
 	{
-		version(noAssert)
+		if(gstTask is null)
 		{
-			if ( gstTask is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstTask is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstTask is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstTask);
+		if( ptr !is null )
 		{
-			assert(gstTask !is null, "struct gstTask is null on constructor");
+			this = cast(Task)ptr;
+			return;
 		}
 		super(cast(GstObject*)gstTask);
 		this.gstTask = gstTask;
@@ -146,15 +133,6 @@ public class Task : ObjectGst
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Wait for all tasks to be stopped. This is mainly used internally
@@ -173,27 +151,25 @@ public class Task : ObjectGst
 	 * a new thread.
 	 * The function cannot be changed after the task has been created. You
 	 * must create a new GstTask to change the function.
-	 * func:
-	 *  The GstTaskFunction to use
-	 * data:
-	 *  User data to pass to func
-	 * Returns:
-	 *  A new GstTask.
-	 * MT safe.
+	 * Params:
+	 * func =  The GstTaskFunction to use
+	 * data =  User data to pass to func
+	 * Returns: A new GstTask.MT safe.
 	 */
 	public static Task create(GstTaskFunction func, void* data)
 	{
 		// GstTask* gst_task_create (GstTaskFunction func,  gpointer data);
-		return new Task( gst_task_create(func, data) );
+		auto p = gst_task_create(func, data);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Task(cast(GstTask*) p);
 	}
 	
 	/**
 	 * Get the current state of the task.
-	 * task:
-	 *  The GstTask to query
-	 * Returns:
-	 *  The GstTaskState of the task
-	 * MT safe.
+	 * Returns: The GstTaskState of the taskMT safe.
 	 */
 	public GstTaskState getState()
 	{
@@ -208,11 +184,7 @@ public class Task : ObjectGst
 	 * This function cannot be called from within a task function as this
 	 * would cause a deadlock. The function will detect this and print a
 	 * g_warning.
-	 * task:
-	 *  The GstTask to join
-	 * Returns:
-	 *  TRUE if the task could be joined.
-	 * MT safe.
+	 * Returns: TRUE if the task could be joined.MT safe.
 	 */
 	public int join()
 	{
@@ -225,11 +197,7 @@ public class Task : ObjectGst
 	 * stopped state, in which case a thread will be started and will remain
 	 * in the paused state. This function does not wait for the task to complete
 	 * the paused state.
-	 * task:
-	 *  The GstTask to pause
-	 * Returns:
-	 *  TRUE if the task could be paused.
-	 * MT safe.
+	 * Returns: TRUE if the task could be paused.MT safe.
 	 */
 	public int pause()
 	{
@@ -243,10 +211,8 @@ public class Task : ObjectGst
 	 * This function has to be called before calling gst_task_pause() or
 	 * gst_task_start().
 	 * MT safe.
-	 * task:
-	 *  The GstTask to use
-	 * mutex:
-	 *  The GMutex to use
+	 * Params:
+	 * mutex =  The GMutex to use
 	 */
 	public void setLock(GStaticRecMutex* mutex)
 	{
@@ -257,11 +223,7 @@ public class Task : ObjectGst
 	/**
 	 * Starts task. The task must have a lock associated with it using
 	 * gst_task_set_lock() or thsi function will return FALSE.
-	 * task:
-	 *  The GstTask to start
-	 * Returns:
-	 *  TRUE if the task could be started.
-	 * MT safe.
+	 * Returns: TRUE if the task could be started.MT safe.
 	 */
 	public int start()
 	{
@@ -273,13 +235,7 @@ public class Task : ObjectGst
 	 * Stops task. This method merely schedules the task to stop and
 	 * will not wait for the task to have completely stopped. Use
 	 * gst_task_join() to stop and wait for completion.
-	 * task:
-	 *  The GstTask to stop
-	 * Returns:
-	 *  TRUE if the task could be stopped.
-	 * MT safe.
-	 * See Also
-	 * GstElement, GstPad
+	 * Returns: TRUE if the task could be stopped.MT safe.
 	 */
 	public int stop()
 	{

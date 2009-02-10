@@ -1,31 +1,36 @@
 /*
- * This file is part of GStreamerD.
+ * This file is part of gtkD.
  *
- * GStreamerD is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * GStreamerD is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with GStreamerD; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+ 
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
-// implement new conversion functionalities on the wrap.utils package
+// implement new conversion functionalities on the wrap.utils pakage
 
 module gstreamerc.gstreamertypes;
+
+private import gtkc.glibtypes;
+private import gtkc.gobjecttypes;
+private import gtkc.gthreadtypes;
+private import glib.Str;
 
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public import gtkc.gthreadtypes;
-
+private import glib.Str;
 
 /***** default padding of structures *****/
 const long GST_PADDING = 4;
@@ -34,7 +39,7 @@ const long GST_PADDING = 4;
 /***** padding for very extensible base classes *****/
 const long GST_PADDING_LARGE = 20;
 
-//Hand added, these might be clean to define as GstClockTimes:
+//These times might be clean to define as GstClockTimes instead of long (maybe):
 
 //#define G_USEC_PER_SEC 1000000 //This should be in glib...
 const ulong G_USEC_PER_SEC = 1000000uL;
@@ -49,7 +54,7 @@ public alias GST_SECOND SECOND;
 const long GST_CLOCK_TIME_NONE = -1L;
 public alias GST_CLOCK_TIME_NONE CLOCK_TIME_NONE;
 
-
+align(1):
 
 /**
  * typedef guint64	GstClockTime;
@@ -104,6 +109,7 @@ public enum GstElementFlags
 alias GstElementFlags ElementFlags;
 
 
+
 /**
  * GstBinFlags are a set of flags specific to bins. Most are set/used
  * internally. They can be checked using the GST_OBJECT_FLAG_IS_SET() macro,
@@ -152,9 +158,9 @@ alias GstBufferFlag BufferFlag;
  */
 public enum GstBusFlags
 {
-	USHING = (GstObjectFlags.FLAG_LAST << 0),
+	FLUSHING = (GstObjectFlags.FLAG_LAST << 0),
 	/+* padding +/
-	AG_LAST = (GstObjectFlags.FLAG_LAST << 1)
+	FLAG_LAST = (GstObjectFlags.FLAG_LAST << 1)
 }
 alias GstBusFlags BusFlags;
 
@@ -166,7 +172,7 @@ public enum GstBusSyncReply
 {
 	DROP = 0,
 	PASS = 1,
-	ASYNC = 2,
+	ASYNC = 2
 }
 alias GstBusSyncReply BusSyncReply;
 
@@ -203,7 +209,7 @@ public enum GstClockReturn
 	BUSY = 3,
 	BADTIME = 4,
 	ERROR = 5,
-	UNSUPPORTED = 6,
+	UNSUPPORTED = 6
 }
 alias GstClockReturn ClockReturn;
 
@@ -255,7 +261,8 @@ public enum GstStateChange
 alias GstStateChange StateChange;
 
 /**
- * the possible return values from a state change function.
+ * The possible return values from a state change function. Only
+ * GST_STATE_CHANGE_FAILURE is a real failure.
  * GST_STATE_CHANGE_FAILURE
  */
 public enum GstStateChangeReturn
@@ -341,10 +348,10 @@ alias GstEventType EventType;
 */
 
 /**
- * The different types of seek events. When constructing a seek event, a format,
- * a seek method and optional flags are to be provided. The seek event is then
- * inserted into the graph with gst_pad_send_event() or
- * gst_element_send_event().
+ * The different types of seek events. When constructing a seek event with
+ * gst_event_new_seek(), a format, a seek method and optional flags are to
+ * be provided. The seek event is then inserted into the graph with
+ * gst_pad_send_event() or gst_element_send_event().
  * GST_SEEK_TYPE_NONE
  */
 public enum GstSeekType
@@ -362,7 +369,8 @@ public enum GstSeekType
 alias GstSeekType SeekType;
 
 /**
- * Flags to be used with gst_element_seek() or gst_event_new_seek()
+ * Flags to be used with gst_element_seek() or gst_event_new_seek(). All flags
+ * can be used together.
  * A non flushing seek might take some time to perform as the currently
  * playing data in the pipeline will not be cleared.
  * An accurate seek might be slower for formats that don't have any indexes
@@ -370,10 +378,10 @@ alias GstSeekType SeekType;
  * complete scan of the file in those cases.
  * When performing a segment seek: after the playback of the segment completes,
  * no EOS will be emmited by the element that performed the seek, but a
- * SEGMENT_DONE message will be posted on the bus by the element. When this
- * message is posted, it is possible to send a new seek event to continue
- * playback. With this seek method it is possible to perform seemless looping
- * or simple linear editing.
+ * GST_MESSAGE_SEGMENT_DONE message will be posted on the bus by the element.
+ * When this message is posted, it is possible to send a new seek event to
+ * continue playback. With this seek method it is possible to perform seemless
+ * looping or simple linear editing.
  * GST_SEEK_FLAG_NONE
  */
 public enum GstSeekFlags
@@ -533,11 +541,11 @@ alias GstIndexLookupMethod IndexLookupMethod;
  */
 public enum GstAssocFlags
 {
-	IATION_FLAG_NONE = 0,
-	IATION_FLAG_KEY_UNIT = (1 << 0),
-	IATION_FLAG_DELTA_UNIT = (1 << 1),
+	ASSOCIATION_FLAG_NONE = 0,
+	ASSOCIATION_FLAG_KEY_UNIT = (1 << 0),
+	ASSOCIATION_FLAG_DELTA_UNIT = (1 << 1),
 	/+* new flags should start here +/
-	IATION_FLAG_LAST = (1 << 8)
+	ASSOCIATION_FLAG_LAST = (1 << 8)
 }
 alias GstAssocFlags AssocFlags;
 
@@ -573,7 +581,7 @@ public enum GstIteratorItem
 {
 	SKIP = 0,
 	PASS = 1,
-	END = 2,
+	END = 2
 }
 alias GstIteratorItem IteratorItem;
 
@@ -586,9 +594,93 @@ public enum GstIteratorResult
 	DONE = 0,
 	OK = 1,
 	RESYNC = 2,
-	ERROR = 3,
+	ERROR = 3
 }
 alias GstIteratorResult IteratorResult;
+
+/**
+ * The direction of a pad.
+ * GST_PAD_UNKNOWN
+ */
+public enum GstPadDirection
+{
+	UNKNOWN,
+	SRC,
+	SINK
+}
+alias GstPadDirection PadDirection;
+
+/**
+ * Pad state flags
+ * GST_PAD_BLOCKED
+ */
+public enum GstPadFlags
+{
+	BLOCKED = (GstObjectFlags.FLAG_LAST << 0),
+	FLUSHING = (GstObjectFlags.FLAG_LAST << 1),
+	IN_GETCAPS = (GstObjectFlags.FLAG_LAST << 2),
+	IN_SETCAPS = (GstObjectFlags.FLAG_LAST << 3),
+	BLOCKING = (GstObjectFlags.FLAG_LAST << 4),
+	/+* padding +/
+	FLAG_LAST = (GstObjectFlags.FLAG_LAST << 8)
+}
+alias GstPadFlags PadFlags;
+
+/**
+ * Result values from gst_pad_link and friends.
+ * GST_PAD_LINK_OK
+ */
+public enum GstPadLinkReturn
+{
+	OK = 0,
+	WRONG_HIERARCHY = -1,
+	WAS_LINKED = -2,
+	WRONG_DIRECTION = -3,
+	NOFORMAT = -4,
+	NOSCHED = -5,
+	REFUSED = -6
+}
+alias GstPadLinkReturn PadLinkReturn;
+
+/**
+ * The result of passing data to a pad.
+ * Note that the custom return values should not be exposed outside of the
+ * element scope and are available since 0.10.7.
+ * GST_FLOW_CUSTOM_SUCCESS
+ */
+public enum GstFlowReturn
+{
+	/+* custom success starts here +/
+	GST_FLOW_CUSTOM_SUCCESS = 100,
+	/+* core predefined +/
+	GST_FLOW_RESEND = 1,
+	GST_FLOW_OK = 0,
+	/+* expected failures +/
+	GST_FLOW_NOT_LINKED = -1,
+	GST_FLOW_WRONG_STATE = -2,
+	/+* error cases +/
+	GST_FLOW_UNEXPECTED = -3,
+	GST_FLOW_NOT_NEGOTIATED = -4,
+	GST_FLOW_ERROR = -5,
+	GST_FLOW_NOT_SUPPORTED = -6,
+	/+* custom error starts here +/
+	GST_FLOW_CUSTOM_ERROR = -100
+}
+alias GstFlowReturn FlowReturn;
+
+/**
+ * The status of a GstPad. After activating a pad, which usually happens when the
+ * parent element goes from READY to PAUSED, the GstActivateMode defines if the
+ * pad operates in push or pull mode.
+ * GST_ACTIVATE_NONE
+ */
+public enum GstActivateMode
+{
+	NONE,
+	PUSH,
+	PULL
+}
+alias GstActivateMode ActivateMode;
 
 /**
  * The different message types that are available.
@@ -616,85 +708,10 @@ public enum GstMessageType
 	SEGMENT_START = (1 << 16),
 	SEGMENT_DONE = (1 << 17),
 	DURATION = (1 << 18),
-	ANY = 0xffffffff
+	LATENCY = (1 << 19),
+	ANY = ~0
 }
-//alias GstMessageType MessageType;
-
-/**
- * The direction of a pad.
- * GST_PAD_UNKNOWN
- */
-public enum GstPadDirection
-{
-	UNKNOWN,
-	SRC,
-	SINK
-}
-alias GstPadDirection PadDirection;
-
-/**
- * Pad state flags
- * GST_PAD_BLOCKED
- */
-public enum GstPadFlags
-{
-	BLOCKED = (GstObjectFlags.FLAG_LAST << 0),
-	FLUSHING = (GstObjectFlags.FLAG_LAST << 1),
-	IN_GETCAPS = (GstObjectFlags.FLAG_LAST << 2),
-	IN_SETCAPS = (GstObjectFlags.FLAG_LAST << 3),
-	/+* padding +/
-	FLAG_LAST = (GstObjectFlags.FLAG_LAST << 8)
-}
-alias GstPadFlags PadFlags;
-
-/**
- * Result values from gst_pad_link and friends.
- * GST_PAD_LINK_OK
- */
-public enum GstPadLinkReturn
-{
-	OK = 0,
-	WRONG_HIERARCHY = -1,
-	WAS_LINKED = -2,
-	WRONG_DIRECTION = -3,
-	NOFORMAT = -4,
-	NOSCHED = -5,
-	REFUSED = -6,
-}
-alias GstPadLinkReturn PadLinkReturn;
-
-/**
- * The result of passing data to a linked pad.
- * GST_FLOW_RESEND
- */
-public enum GstFlowReturn
-{
-	SEND = 1,
-	GST_FLOW_OK = 0,
-	/+* expected failures +/
-	GST_FLOW_NOT_LINKED = -1,
-	GST_FLOW_WRONG_STATE = -2,
-	/+* error cases +/
-	GST_FLOW_UNEXPECTED = -3,
-	GST_FLOW_NOT_NEGOTIATED = -4,
-	GST_FLOW_ERROR = -5,
-	GST_FLOW_NOT_SUPPORTED = -6
-}
-alias GstFlowReturn FlowReturn;
-
-/**
- * The status of a GstPad. After activating a pad, which usually happens when the
- * parent element goes from READY to PAUSED, the GstActivateMode defines if the
- * pad operates in push or pull mode.
- * GST_ACTIVATE_NONE
- */
-public enum GstActivateMode
-{
-	NONE,
-	PUSH,
-	PULL,
-}
-alias GstActivateMode ActivateMode;
+alias GstMessageType MessageType;
 
 /**
  * Flags for the padtemplate
@@ -702,9 +719,9 @@ alias GstActivateMode ActivateMode;
  */
 public enum GstPadTemplateFlags
 {
-	IXED = (GstObjectFlags.FLAG_LAST << 0),
+	FIXED = (GstObjectFlags.FLAG_LAST << 0),
 	/+* padding +/
-	LAG_LAST = (GstObjectFlags.FLAG_LAST << 4)
+	FLAG_LAST = (GstObjectFlags.FLAG_LAST << 4)
 }
 alias GstPadTemplateFlags PadTemplateFlags;
 
@@ -798,7 +815,49 @@ public enum GstQueryType
 alias GstQueryType QueryType;
 
 /**
- * The different tag merging modes.
+ * The different tag merging modes are basically replace, overwrite and append,
+ * but they can be seen from two directions.
+ * Given two taglists: A - the one that are supplied to
+ * gst_tag_setter_merge_tags() or gst_tag_setter_add_tags() and B - the tags
+ * already in the element, how are the tags merged? In the table below this is
+ * shown for the cases that a tag exists in the list (A) or does not exists (!A)
+ * and combination thereof.
+ * Table1.merge mode
+ * merge mode
+ * A + B
+ * A + !B
+ * !A + B
+ * !A + !B
+ * REPLACE_ALL
+ * B
+ * -
+ * B
+ * -
+ * REPLACE
+ * B
+ * A
+ * B
+ * -
+ * APPEND
+ * A, B
+ * A
+ * B
+ * -
+ * PREPEND
+ * B, A
+ * A
+ * B
+ * -
+ * KEEP
+ * A
+ * A
+ * B
+ * -
+ * KEEP_ALL
+ * A
+ * A
+ * -
+ * -
  * GST_TAG_MERGE_UNDEFINED
  */
 public enum GstTagMergeMode
@@ -835,9 +894,9 @@ alias GstTagFlag TagFlag;
  */
 public enum GstTaskState
 {
-	RTED,
-	GST_TASK_STOPPED,
-	GST_TASK_PAUSED,
+	STARTED,
+	STOPPED,
+	PAUSED
 }
 alias GstTaskState TaskState;
 
@@ -856,6 +915,49 @@ public enum GstTypeFindProbability
 }
 alias GstTypeFindProbability TypeFindProbability;
 
+/+
+#	/**
+#	* GstMiniObject.
+#	* Base class for refcounted lightweight objects.
+#	* GTypeInstance instance;
+#	*/
+#	public struct GstMiniObject
+#	{
+	#		GTypeInstance instanc;
+	#		//< public >// with COW
+	#		int refcount;//gint refcount;
+	#		uint flags;//guint flags;
+	#
+	#		//< private >
+	#		gpointer _gst_reserved;
+#	}
+#
+#	struct GstMessage
+#	{
+	#		GstMiniObject mini_object;
+	#
+	#		/*< private > *//* with MESSAGE_LOCK */
+	#		GMutex* lock;                 /* lock and cond for async delivery */
+	#		GCond* cond;
+	#
+	#		/*< public > *//* with COW */
+	#		GstMessageType type;
+	#		ulong timestamp;//guint64 timestamp;
+	#		GstObject* src;
+	#
+	#		GstStructure* structure;
+	#
+	#		/*< private > */
+	#		gpointer _gst_reserved[GST_PADDING];
+#	}
+#
++/
+
+/**
+ * Main Gtk struct.
+ */
+//public struct GstXOverlay{}
+
 
 /**
  * Main Gtk struct.
@@ -863,19 +965,21 @@ alias GstTypeFindProbability TypeFindProbability;
  * the LOCK is taken.
  * gintnumchildren;
  */
-public struct GstBin;
-// /+* our children, subclass are supposed to update these
-// * fields to reflect their state with _Iterate*() +/
-// int numchildren;
-// GList *children;
-// uint childrenCookie;
-// GstBus *childBus;
-// GList *messages;
-// int polling;
-// int stateDirty;
-// int clockDirty;
-// GstClock *providedClock;
-// GstElement *clockProvider;
+public struct GstBin
+{
+	/+* our children, subclass are supposed to update these
+	 * fields to reflect their state with _Iterate*() +/
+	int numchildren;
+	GList *children;
+	uint childrenCookie;
+	GstBus *childBus;
+	GList *messages;
+	int polling;
+	int stateDirty;
+	int clockDirty;
+	GstClock *providedClock;
+	GstElement *clockProvider;
+}
 
 
 /**
@@ -885,12 +989,15 @@ public struct GstBin;
  * message handling.
  * GstElementClassparent_class;
  */
-public struct GstBinClass;
-// GstElementClass parentClass;
-// /+* virtual methods for subclasses +/
-// int (*addElement) (GstBin *bin, GstElement *element);
-// int (*removeElement) (GstBin *bin, GstElement *element);
-// void (*handleMessage) (GstBin *bin, GstMessage *message);
+public struct GstBinClass
+{
+	GstElementClass parentClass;
+	/+* virtual methods for subclasses +/
+	extern(C) int  function(GstBin *bin, GstElement *element) addElement;
+	extern(C) int  function(GstBin *bin, GstElement *element) removeElement;
+	extern(C) void  function(GstBin *bin, GstMessage *message) handleMessage;
+}
+
 
 
 /**
@@ -899,6 +1006,25 @@ public struct GstBinClass;
  * variables.
  * GstMiniObjectmini_object;
  */
+/*
+public struct GstBuffer
+{
+	GstMiniObject miniObject;
+	/+* pointer to data and its size +/
+	byte *data;
+	uint size;
+	/+* timestamp +/
+	GstClockTime timestamp;
+	GstClockTime duration;
+	/+* the media type of this buffer +/
+	GstCaps *caps;
+	/+* media specific offset +/
+	ulong offset;
+	ulong offsetEnd;
+	byte *mallocData;
+}
+*/
+
 align(1)
 public struct GstBuffer
 {
@@ -925,26 +1051,13 @@ public struct GstBuffer
 	/*< private >*/
 	gpointer _gst_reserved[GST_PADDING];
 }
-// GstMiniObject miniObject;
-// /+* pointer to data and its size +/
-// byte *data;
-// uint size;
-// /+* timestamp +/
-// GstClockTime timestamp;
-// GstClockTime duration;
-// /+* the media type of this buffer +/
-// GstCaps *caps;
-// /+* media specific offset +/
-// ulong offset;
-// ulong offsetEnd;
-// byte *mallocData;
 
 
 /**
  * Main Gtk struct.
  * The opaque GstBus data structure.
  */
-public struct GstBus;
+public struct GstBus{}
 
 
 /**
@@ -952,29 +1065,13 @@ public struct GstBus;
  * Object describing media types.
  * GTypetype;
  */
-//public struct GstCaps;
 public struct GstCaps
 {
 	GType type;
-	
-	/*< public >*/ /* with COW */
-	/* refcounting */
-	int refcount;//gint
-	
-	/*< public >*/ /* read only */
+	/+* refcounting +/
+	int refcount;
 	GstCapsFlags flags;
-	
-	/*< private >*/
-	GPtrArray* structs;
-	
-	/*< private >*/
-	gpointer _gst_reserved[GST_PADDING];
 }
-
-// GType type;
-// /+* refcounting +/
-// int refcount;
-// GstCapsFlags flags;
 
 
 /**
@@ -983,15 +1080,74 @@ public struct GstCaps
  * instantiate a GstCaps.
  * GstCapscaps;
  */
-public struct GstStaticCaps;
-// GstCaps caps;
-// char *string;
+public struct GstStaticCaps
+{
+	GstCaps caps;
+	char *string;
+}
 
 
 /**
  * Main Gtk struct.
+ * GstClock base structure. The values of this structure are
+ * protected for subclasses, use the methods to use the GstClock.
  */
-public struct GstClock;
+public struct GstClock{}
+
+
+struct GstObjectClass {
+  GObjectClass	parent_class;
+
+  gchar		*path_string_separator;
+  GObject	*signal_object;
+
+  GStaticRecMutex *lock;
+
+	void* parent_set;
+	void* parent_unset;
+	void* object_saved;
+	void* deep_notify;
+	
+	void* save_thyself;
+	void* restore_thyself;
+
+  /* signals */
+  /*
+  void          (*parent_set)       (GstObject * object, GstObject * parent);
+  void          (*parent_unset)     (GstObject * object, GstObject * parent);
+  void          (*object_saved)     (GstObject * object, GstXmlNodePtr parent);
+  void          (*deep_notify)      (GstObject * object, GstObject * orig, GParamSpec * pspec);
+	*/
+  /*< public >*/
+  /* virtual methods for subclasses */
+  //GstXmlNodePtr (*save_thyself)     (GstObject * object, GstXmlNodePtr parent);
+  //void          (*restore_thyself)  (GstObject * object, GstXmlNodePtr self);
+
+  /*< private >*/
+  gpointer _gst_reserved[GST_PADDING];
+}
+
+/**
+ * GStreamer clock class. Override the vmethods to implement the clock
+ * functionality.
+ * GstObjectClassparent_class;
+ */
+
+public struct GstClockClass
+{
+	GstObjectClass parentClass;
+	/+* vtable +/
+	extern(C) GstClockTime  function(GstClock *clock,GstClockTime oldResolution,GstClockTime newResolution) changeResolution;
+	extern(C) GstClockTime  function(GstClock *clock) getResolution;
+	extern(C) GstClockTime  function(GstClock *clock) getInternalTime;
+	/+* waiting on an ID +/
+	extern(C) GstClockReturn  function(GstClock *clock, GstClockEntry *entry) wait;
+	extern(C) GstClockReturn  function(GstClock *clock, GstClockEntry *entry) waitAsync;
+	extern(C) void  function(GstClock *clock, GstClockEntry *entry) unschedule;
+	/+* ABI added to replace the deprecated wait +/
+	extern(C) GstClockReturn  function(GstClock *clock, GstClockEntry *entry,GstClockTimeDiff *jitter) waitJitter;
+}
+
 
 
 /**
@@ -1010,28 +1166,30 @@ public struct GstClockEntry
  * GStreamer element abstract base class.
  * GStaticRecMutex*state_lock;
  */
-public struct GstElement;
-// GStaticRecMutex *stateLock;
-// /+* element state +/
-// GCond *stateCond;
-// uint stateCookie;
-// GstState currentState;
-// GstState nextState;
-// GstState pendingState;
-// GstStateChangeReturn lastReturn;
-// GstBus *bus;
-// /+* allocated clock +/
-// GstClock *clock;
-// GstClockTimeDiff baseTime; /+* NULL/READY: 0 - PAUSED: current time - PLAYING: difference to clock +/
-// /+* element pads, these lists can only be iterated while holding
-// * the LOCK or checking the cookie after each LOCK. +/
-// ushort numpads;
-// GList *pads;
-// ushort numsrcpads;
-// GList *srcpads;
-// ushort numsinkpads;
-// GList *sinkpads;
-// uint padsCookie;
+public struct GstElement
+{
+	GStaticRecMutex *stateLock;
+	/+* element state +/
+	GCond *stateCond;
+	uint stateCookie;
+	GstState currentState;
+	GstState nextState;
+	GstState pendingState;
+	GstStateChangeReturn lastReturn;
+	GstBus *bus;
+	/+* allocated clock +/
+	GstClock *clock;
+	GstClockTimeDiff baseTime; /+* NULL/READY: 0 - PAUSED: current time - PLAYING: difference to clock +/
+	/+* element pads, these lists can only be iterated while holding
+	 * the LOCK or checking the cookie after each LOCK. +/
+	ushort numpads;
+	GList *pads;
+	ushort numsrcpads;
+	GList *srcpads;
+	ushort numsinkpads;
+	GList *sinkpads;
+	uint padsCookie;
+}
 
 
 /**
@@ -1039,44 +1197,45 @@ public struct GstElement;
  * functionality.
  * GstObjectClassparent_class;
  */
-public struct GstElementClass;
-// GstObjectClass parentClass;
-// /+* the element details +/
-// GstElementDetails details;
-// /+* factory that the element was created from +/
-// GstElementFactory *elementfactory;
-// /+* templates for our pads +/
-// GList *padtemplates;
-// int numpadtemplates;
-// uint padTemplCookie;
-// /+* virtual methods for subclasses +/
-// /+* request/release pads +/
-// GstPad* (*requestNewPad) (GstElement *element, GstPadTemplate *templ, char* name);
-// void (*releasePad) (GstElement *element, GstPad *pad);
-// /+* state changes +/
-// GstStateChangeReturn (*getState) (GstElement * element, GstState * state,
-// GstState * pending, GstClockTime timeout);
-// GstStateChangeReturn (*setState) (GstElement *element, GstState state);
-// GstStateChangeReturn (*changeState) (GstElement *element, GstStateChange transition);
-// /+* bus +/
-// void (*setBus) (GstElement * element, GstBus * bus);
-// /+* set/get clocks +/
-// GstClock* (*provideClock) (GstElement *element);
-// int (*setClock) (GstElement *element, GstClock *clock);
-// /+* index +/
-// GstIndex* (*getIndex) (GstElement *element);
-// void (*setIndex) (GstElement *element, GstIndex *index);
-// /+* query functions +/
-// int (*sendEvent) (GstElement *element, GstEvent *event);
-// GstQueryType* (*getQueryTypes) (GstElement *element);
-// int (*query) (GstElement *element, GstQuery *query);
+public struct GstElementClass
+{
+	GstObjectClass parentClass;
+	/+* the element details +/
+	GstElementDetails details;
+	/+* factory that the element was created from +/
+	GstElementFactory *elementfactory;
+	/+* templates for our pads +/
+	GList *padtemplates;
+	int numpadtemplates;
+	uint padTemplCookie;
+	/+* virtual methods for subclasses +/
+	/+* request/release pads +/
+	extern(C) GstPad*  function(GstElement *element, GstPadTemplate *templ, char* name) requestNewPad;
+	extern(C) void  function(GstElement *element, GstPad *pad) releasePad;
+	/+* state changes +/
+	extern(C) GstStateChangeReturn  function(GstElement * element, GstState * state,GstState * pending, GstClockTime timeout) getState;
+	extern(C) GstStateChangeReturn  function(GstElement *element, GstState state) setState;
+	extern(C) GstStateChangeReturn  function(GstElement *element, GstStateChange transition) changeState;
+	/+* bus +/
+	extern(C) void  function(GstElement * element, GstBus * bus) setBus;
+	/+* set/get clocks +/
+	extern(C) GstClock*  function(GstElement *element) provideClock;
+	extern(C) int  function(GstElement *element, GstClock *clock) setClock;
+	/+* index +/
+	extern(C) GstIndex*  function(GstElement *element) getIndex;
+	extern(C) void  function(GstElement *element, GstIndex *index) setIndex;
+	/+* query functions +/
+	extern(C) int  function(GstElement *element, GstEvent *event) sendEvent;
+	extern(C) GstQueryType*  function(GstElement *element) getQueryTypes;
+	extern(C) int  function(GstElement *element, GstQuery *query) query;
+}
 
 
 /**
  * Main Gtk struct.
  * The opaque GstElementFactory data structure.
  */
-public struct GstElementFactory;
+public struct GstElementFactory{}
 
 
 /**
@@ -1094,72 +1253,84 @@ public struct GstElementDetails
 	char *author;
 }
 
+
 /**
  * Main Gtk struct.
  * A GstEvent.
  * GstMiniObjectmini_object;
  */
-public struct GstEvent;
-/*{
+public struct GstEvent
+{
 	GstMiniObject miniObject;
 	GstEventType type;
 	ulong timestamp;
 	GstObject *src;
 	GstStructure *structure;
-}*/
+}
 
 
 /**
  * A format definition
  * GstFormatvalue;
  */
-public struct GstFormatDefinition;
-// GstFormat value;
-// char *nick;
-// char *description;
-// GQuark quark;
+public struct GstFormatDefinition
+{
+	GstFormat value;
+	char *nick;
+	char *description;
+	GQuark quark;
+}
 
 
 /**
  * Main Gtk struct.
  * Opaque GstGhostPad structure.
  */
-public struct GstGhostPad;
+public struct GstGhostPad{}
+
+
+/**
+ * Main Gtk struct.
+ * Opaque GstImplementsInterface structure.
+ */
+public struct GstImplementsInterface{}
 
 
 /**
  * Main Gtk struct.
  * Opaque GstIndex structure.
  */
-public struct GstIndex;
+public struct GstIndex{}
 
 
 /**
  * The basic element of an index.
  */
-public struct GstIndexEntry;
+public struct GstIndexEntry{}
 
 
 /**
  * A group of related entries in an index.
  */
-public struct GstIndexGroup;
+public struct GstIndexGroup{}
 
 
 /**
  * An association in an entry.
  * GstFormatformat;
  */
-public struct GstIndexAssociation;
-// GstFormat format;
-// long value;
+public struct GstIndexAssociation
+{
+	GstFormat format;
+	long value;
+}
 
 
 /**
  * Main Gtk struct.
  * The GstIndexFactory object
  */
-public struct GstIndexFactory;
+public struct GstIndexFactory{}
 
 
 /**
@@ -1167,37 +1338,7 @@ public struct GstIndexFactory;
  * GstIterator base structure. The values of this structure are
  * protected for subclasses, use the methods to use the GstIterator.
  */
-public struct GstIterator;
-
-/**
- * Main Gtk struct.
- * Base class for refcounted lightweight objects.
- * GTypeInstanceinstance;
- */
-public struct GstMiniObject
-{
-	GTypeInstance instanc;
-	//< public >// with COW
-	int refcount;//gint refcount;
-	uint flags;//guint flags;
-
-	//< private >
-	gpointer _gst_reserved;
-}
-
-
-/**
- * Main Gtk struct.
- * GStreamer base object class.
- * gintrefcount;
- */
-public struct GstObject;
-// int refcount;
-// GMutex *lock; /+* object LOCK +/
-// char *name; /+* object name +/
-// char *namePrefix; /+* used for debugging +/
-// GstObject *parent; /+* this object's parent, weak ref +/
-// uint flags;
+public struct GstIterator{}
 
 
 /**
@@ -1205,207 +1346,68 @@ public struct GstObject;
  * The GstPad structure. Use the functions to update the variables.
  * gpointerelement_private;
  */
-public struct GstPad;
-// void* elementPrivate;
-// GstPadTemplate *padtemplate;
-// GstPadDirection direction;
-// /+* streaming recLock +/
-// GStaticRecMutex *streamRecLock;
-// GstTask *task;
-// GMutex *prerollLock;
-// GCond *prerollCond;
-// /+* block cond, mutex is from the object +/
-// GCond *blockCond;
-// GstPadBlockCallback blockCallback;
-// void* blockData;
-// /+* the pad capabilities +/
-// GstCaps *caps;
-// GstPadGetCapsFunction getcapsfunc;
-// GstPadSetCapsFunction setcapsfunc;
-// GstPadAcceptCapsFunction acceptcapsfunc;
-// GstPadFixateCapsFunction fixatecapsfunc;
-// GstPadActivateFunction activatefunc;
-// GstPadActivateModeFunction activatepushfunc;
-// GstPadActivateModeFunction activatepullfunc;
-// /+* pad link +/
-// GstPadLinkFunction linkfunc;
-// GstPadUnlinkFunction unlinkfunc;
-// GstPad *peer;
-// void* schedPrivate;
-// /+* data transport functions +/
-// GstPadChainFunction chainfunc;
-// GstPadCheckGetRangeFunction checkgetrangefunc;
-// GstPadGetRangeFunction getrangefunc;
-// GstPadEventFunction eventfunc;
-// GstActivateMode mode;
-// /+* generic query method +/
-// GstPadQueryTypeFunction querytypefunc;
-// GstPadQueryFunction queryfunc;
-// /+* internal links +/
-// GstPadIntLinkFunction intlinkfunc;
-// GstPadBufferAllocFunction bufferallocfunc;
-// /+* whether to emit signals for have-data. counts number
-// * of handlers attached. +/
-// int doBufferSignals;
-// int doEventSignals;
+public struct GstPad
+{
+	void* elementPrivate;
+	GstPadTemplate *padtemplate;
+	GstPadDirection direction;
+	/+* streaming recLock +/
+	GStaticRecMutex *streamRecLock;
+	GstTask *task;
+	GMutex *prerollLock;
+	GCond *prerollCond;
+	/+* block cond, mutex is from the object +/
+	GCond *blockCond;
+	GstPadBlockCallback blockCallback;
+	void* blockData;
+	/+* the pad capabilities +/
+	GstCaps *caps;
+	GstPadGetCapsFunction getcapsfunc;
+	GstPadSetCapsFunction setcapsfunc;
+	GstPadAcceptCapsFunction acceptcapsfunc;
+	GstPadFixateCapsFunction fixatecapsfunc;
+	GstPadActivateFunction activatefunc;
+	GstPadActivateModeFunction activatepushfunc;
+	GstPadActivateModeFunction activatepullfunc;
+	/+* pad link +/
+	GstPadLinkFunction linkfunc;
+	GstPadUnlinkFunction unlinkfunc;
+	GstPad *peer;
+	void* schedPrivate;
+	/+* data transport functions +/
+	GstPadChainFunction chainfunc;
+	GstPadCheckGetRangeFunction checkgetrangefunc;
+	GstPadGetRangeFunction getrangefunc;
+	GstPadEventFunction eventfunc;
+	GstActivateMode mode;
+	/+* generic query method +/
+	GstPadQueryTypeFunction querytypefunc;
+	GstPadQueryFunction queryfunc;
+	/+* internal links +/
+	GstPadIntLinkFunction intlinkfunc;
+	GstPadBufferAllocFunction bufferallocfunc;
+	/+* whether to emit signals for have-data. counts number
+	 * of handlers attached. +/
+	int doBufferSignals;
+	int doEventSignals;
+}
 
-
-/**
- * Structure describing the GstStaticPadTemplate.
- * gchar*name_template;
- */
-public struct GstStaticPadTemplate;
-// char *nameTemplate;
-// GstPadDirection direction;
-// GstPadPresence presence;
-// GstStaticCaps staticCaps;
-
-
-/**
- * Main Gtk struct.
- * The padtemplate object.
- */
-public struct GstPadTemplate;
-
-
-/**
- * Main Gtk struct.
- * The GstPipeline structure.
- * GstClock*fixed_clock;
- */
-public struct GstPipeline;
-// GstClock *fixedClock; /+* fixed clock if any +/
-// GstClockTime streamTime;
-// GstClockTime delay;
-
-
-/**
- * Main Gtk struct.
- * The plugin object
- */
-public struct GstPlugin;
-
-
-/**
- * A plugins should export a variable of this type called plugin_desc. This plugin
- * loaded will use this variable to initialize the plugin.
- * gintmajor_version;
- */
-public struct GstPluginDesc;
-// int majorVersion;
-// int minorVersion;
-// char *name;
-// char *description;
-// GstPluginInitFunc pluginInit;
-// char *versio;
-// char *license;
-// char *source;
-// char *p;
-// char *origin;
-// void* _GstReserved[GST_PADDING];
-
-
-/**
- * Main Gtk struct.
- * Opaque GstPluginFeature structure.
- */
-public struct GstPluginFeature;
-
-
-/**
- * Structure used for filtering based on name and type.
- * constgchar*name;
- */
-public struct GstTypeNameData;
-// char *name;
-// GType type;
-
-
-/**
- * Main Gtk struct.
- * The GstQuery structure.
- * GstMiniObjectmini_object;
- */
-public struct GstQuery;
-// GstMiniObject miniObject;
-// GstQueryType type;
-// GstStructure *structure;
-
-
-/**
- * A Query Type definition
- * GstQueryTypevalue;
- */
-public struct GstQueryTypeDefinition;
-// GstQueryType value;
-// char *nick;
-// char *description;
-// GQuark quark;
-
-
-/**
- * Main Gtk struct.
- * Opaque GstRegistry structure.
- */
-public struct GstRegistry;
-
-
-/**
- * Main Gtk struct.
- * A helper structure that holds the configured region of
- * interest in a media file.
- * gdoublerate;
- */
-public struct GstSegment;
-// double rate;
-// double absRate;
-// GstFormat format;
-// GstSeekFlags flags;
-// long start;
-// long stop;
-// long time;
-// long accum;
-// long lastStop;
-// long duration;
-// /+* API added 0.10.6 +/
-// double appliedRate;
-
-
-/**
- * Main Gtk struct.
- * The GstStructure object. Most fields are private.
- * GTypetype;
- */
-public struct GstStructure;
-// GType type;
 
 /**
  * Main Gtk struct.
  * A GstMessage.
  * GstMiniObjectmini_object;
  */
-/*public struct GstMessage
-{
-	GstMiniObject mini_object;
-
-	GstMessageType type;
-	//int type;
-	ulong timestamp;
-	GstObject* src;
-
-	GstStructure* structure;
-}*/
 /*
 public struct GstMessage
 {
-  GstMiniObject mini_object;
-
-  GstMessageType type;
-  long timestamp;
-  GstObject *src;
-
-  GstStructure *structure;
-}*/
+	GstMiniObject miniObject;
+	GstMessageType type;
+	ulong timestamp;
+	GstObject *src;
+	GstStructure *structure;
+}
+*/
 
 align(1)
 struct GstMessage
@@ -1429,26 +1431,217 @@ struct GstMessage
 
 /**
  * Main Gtk struct.
+ * Base class for refcounted lightweight objects.
+ * GTypeInstanceinstance;
+ */
+/*
+public struct GstMiniObject
+{
+	GTypeInstance instanc;
+	int refcount;
+	uint flags;
+}
+*/
+align(1)
+public struct GstMiniObject
+{
+	GTypeInstance instanc;
+	//< public >// with COW
+	int refcount;//gint refcount;
+	uint flags;//guint flags;
+
+	//< private >
+	gpointer _gst_reserved;
+}
+
+/**
+ * Main Gtk struct.
+ * GStreamer base object class.
+ * gintrefcount;
+ */
+public struct GstObject
+{
+	int refcount;
+	GMutex *lock; /+* object LOCK +/
+	char *name; /+* object name +/
+	char *namePrefix; /+* used for debugging +/
+	GstObject *parent; /+* this object's parent, weak doref +/
+	uint flags;
+}
+
+
+/**
+ * Structure describing the GstStaticPadTemplate.
+ * gchar*name_template;
+ */
+public struct GstStaticPadTemplate
+{
+	char *nameTemplate;
+	GstPadDirection direction;
+	GstPadPresence presence;
+	GstStaticCaps staticCaps;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The padtemplate object.
+ */
+public struct GstPadTemplate{}
+
+
+/**
+ * Main Gtk struct.
+ * The GstPipeline structure.
+ * GstClock*fixed_clock;
+ */
+public struct GstPipeline
+{
+	GstClock *fixedClock;
+	GstClockTime streamTime;
+	GstClockTime delay;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The plugin object
+ */
+public struct GstPlugin{}
+
+
+/**
+ * A plugin should export a variable of this type called plugin_desc. The plugin
+ * loader will use the data provided there to initialize the plugin.
+ * The licence parameter must be one of: LGPL, GPL, QPL, GPL/QPL, MPL,
+ * Proprietary, unknown.
+ * gintmajor_version;
+ */
+public struct GstPluginDesc
+{
+	int majorVersion;
+	int minorVersion;
+	char *name;
+	char *description;
+	GstPluginInitFunc pluginInit;
+	char *versio;
+	char *license;
+	char *source;
+	char *p;
+	char *origin;
+	void* _GstReserved[GST_PADDING];
+}
+
+
+/**
+ * Main Gtk struct.
+ * Opaque GstPluginFeature structure.
+ */
+public struct GstPluginFeature{}
+
+
+/**
+ * Structure used for filtering based on name and type.
+ * constgchar*name;
+ */
+public struct GstTypeNameData
+{
+	char *name;
+	GType type;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GstQuery structure.
+ * GstMiniObjectmini_object;
+ */
+public struct GstQuery
+{
+	GstMiniObject miniObject;
+	GstQueryType type;
+	GstStructure *structure;
+}
+
+
+/**
+ * A Query Type definition
+ * GstQueryTypevalue;
+ */
+public struct GstQueryTypeDefinition
+{
+	GstQueryType value;
+	char *nick;
+	char *description;
+	GQuark quark;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Opaque GstRegistry structure.
+ */
+public struct GstRegistry{}
+
+
+/**
+ * Main Gtk struct.
+ * A helper structure that holds the configured region of
+ * interest in a media file.
+ * gdoublerate;
+ */
+public struct GstSegment
+{
+	double rate;
+	double absRate;
+	GstFormat format;
+	GstSeekFlags flags;
+	long start;
+	long stop;
+	long time;
+	long accum;
+	long lastStop;
+	long duration;
+	/+* API added 0.10.6 +/
+	double appliedRate;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GstStructure object. Most fields are private.
+ * GTypetype;
+ */
+public struct GstStructure
+{
+	GType type;
+}
+
+
+/**
+ * Main Gtk struct.
  * The default implementation of a GstClock that uses the system time.
  */
-public struct GstSystemClock;
+public struct GstSystemClock{}
 
 
 /**
  * Main Gtk struct.
  * Opaque GstTagSetter data structure.
  */
-public struct GstTagSetter;
+public struct GstTagSetter{}
 
 
 /**
  * GstTagSetterIFace interface.
  * GTypeInterfaceg_iface;
  */
-public struct GstTagSetterIFace;
-// GTypeInterface gIface;
-// /+* signals +/
-// /+* virtual table +/
+public struct GstTagSetterIFace
+{
+	GTypeInterface gIface;
+	/+* signals +/
+	/+* virtual table +/
+}
 
 
 /**
@@ -1456,13 +1649,15 @@ public struct GstTagSetterIFace;
  * The GstTask object.
  * GstTaskStatestate;
  */
-public struct GstTask;
-// GstTaskState state;
-// GCond *cond;
-// GStaticRecMutex *lock;
-// GstTaskFunction func;
-// void* data;
-// int running;
+public struct GstTask
+{
+	GstTaskState state;
+	GCond *cond;
+	GStaticRecMutex *lock;
+	GstTaskFunction func;
+	void* data;
+	int running;
+}
 
 
 /**
@@ -1470,31 +1665,22 @@ public struct GstTask;
  * Object that stores typefind callbacks. To use with GstTypeFindFactory.
  * peek()
  */
-public struct GstTypeFind;
-// /+* private to the caller of the typefind funct +/
-// byte * (* peek) (void* data,
-// long offset,
-// uint size);
-// void (* suggest) (void* data,
-// uint probability,
-// GstCaps * caps);
-// void* data;
-// /+* optional +/
-// ulong (* getLength) (void* data);
+public struct GstTypeFind
+{
+	/+* private to the caller of the typefind funct +/
+	extern(C) byte *  function(void* data,long offset,uint size)  peek;
+	extern(C) void  function(void* data,uint probability,GstCaps * caps)  suggest;
+	void* data;
+	/+* optional +/
+	extern(C) ulong  function(void* data)  getLength;
+}
 
 
 /**
  * Main Gtk struct.
  * Object that stores information about a typefind function.
  */
-public struct GstTypeFindFactory;
-
-
-/**
- * Main Gtk struct.
- * XML parser object
- */
-public struct GstXML;
+public struct GstTypeFindFactory{}
 
 
 /*
@@ -1672,6 +1858,15 @@ public struct GstXML;
 // #define GST_BUFFER_OFFSET_END_IS_VALID(buffer)	(GST_BUFFER_OFFSET_END (buffer) != GST_BUFFER_OFFSET_NONE)
 
 /*
+ * Tests if the buffer marks a discontinuity in the stream.
+ * buffer:
+ *  a GstBuffer
+ * Since 0.10.9
+ */
+// TODO
+// #define GST_BUFFER_IS_DISCONT(buffer)	(GST_BUFFER_FLAG_IS_SET (buffer, GST_BUFFER_FLAG_DISCONT))
+
+/*
  * Decreases the refcount of the buffer. If the refcount reaches 0, the buffer
  * will be freed. If GST_BUFFER_MALLOCDATA() is non-NULL, this pointer will
  * also be freed at this time.
@@ -1679,7 +1874,7 @@ public struct GstXML;
  *  a GstBuffer.
  */
 // TODO
-// #define		gst_buffer_unref(buf)		gst_mini_object_unref (GST_MINI_OBJECT (buf))
+// #define		gst_buffer_unref(buf)		gst_mini_object_unref (GST_MINI_OBJECT_CAST (buf))
 
 /*
  * A convenience function to set the data and size on a buffer.
@@ -1704,7 +1899,7 @@ public struct GstXML;
  *  a GstBuffer.
  */
 // TODO
-// #define		gst_buffer_copy(buf)		GST_BUFFER_CAST (gst_mini_object_copy (GST_MINI_OBJECT (buf)))
+// #define		gst_buffer_copy(buf)		GST_BUFFER_CAST (gst_mini_object_copy (GST_MINI_OBJECT_CAST (buf)))
 
 /*
  * Tests if you can safely write data into a buffer's data array or validly
@@ -1715,7 +1910,7 @@ public struct GstXML;
  *  a GstBuffer
  */
 // TODO
-// #define		gst_buffer_is_writable(buf)	gst_mini_object_is_writable (GST_MINI_OBJECT (buf))
+// #define		gst_buffer_is_writable(buf)	gst_mini_object_is_writable (GST_MINI_OBJECT_CAST (buf))
 
 /*
  * Makes a writable buffer from the given buffer. If the source buffer is
@@ -1725,7 +1920,7 @@ public struct GstXML;
  *  a GstBuffer
  */
 // TODO
-// #define		gst_buffer_make_writable(buf) GST_BUFFER_CAST (gst_mini_object_make_writable (GST_MINI_OBJECT (buf)))
+// #define		gst_buffer_make_writable(buf) GST_BUFFER_CAST (gst_mini_object_make_writable (GST_MINI_OBJECT_CAST (buf)))
 
 /*
  * Modifies a pointer to a Gstbuffer to point to a different GstBuffer. The
@@ -1740,7 +1935,7 @@ public struct GstXML;
  *  obuf.
  */
 // TODO
-// #define		gst_buffer_replace(obuf,nbuf)	gst_mini_object_replace ((GstMiniObject **)(obuf), GST_MINI_OBJECT (nbuf))
+// #define gst_buffer_replace(obuf,nbuf)
 
 /*
  * Get access to the reference count field of the caps
@@ -1955,7 +2150,7 @@ public struct GstXML;
  *  A target GstState
  */
 // TODO
-// #define GST_STATE_GET_NEXT(cur,pending) 	((cur) + __GST_SIGN ((gint)(pending) - (gint)(cur)))
+// #define GST_STATE_GET_NEXT(cur,pending)		((cur) + __GST_SIGN ((gint)(pending) - (gint)(cur)))
 
 /*
  * This macro returns the next GstState of the element.
@@ -1990,7 +2185,7 @@ public struct GstXML;
  *  A next state
  */
 // TODO
-// #define GST_STATE_TRANSITION(cur,next) 	(((cur)<<3)|(next))
+// #define GST_STATE_TRANSITION(cur,next)		((GstStateChange)(((cur)<<3)|(next)))
 
 /*
  * Given a state transition trans, extract the current GstState.
@@ -1998,7 +2193,7 @@ public struct GstXML;
  *  A GstStateChange
  */
 // TODO
-// #define GST_STATE_TRANSITION_CURRENT(trans) 	((trans)>>3)
+// #define GST_STATE_TRANSITION_CURRENT(trans)	((GstState)((trans)>>3))
 
 /*
  * Given a state transition trans, extract the next GstState.
@@ -2006,7 +2201,7 @@ public struct GstXML;
  *  A GstStateChange
  */
 // TODO
-// #define GST_STATE_TRANSITION_NEXT(trans) 	((trans)0x7)
+// #define GST_STATE_TRANSITION_NEXT(trans)	((GstState)((trans)0x7))
 
 /*
  * Get a reference to the state lock of elem.
@@ -2069,10 +2264,10 @@ public struct GstXML;
 
 /*
  * Utility function that elements can use in case they encountered a fatal
- * data processing error. The pipeline will throw an error signal and the
+ * data processing error. The pipeline will post an error message and the
  * application will be requested to stop further media processing.
  * el:
- *  the element that throws the error
+ *  the element that generates the error
  * domain:
  *  like CORE, LIBRARY, RESOURCE or STREAM (see GstGError)
  * code:
@@ -2089,14 +2284,14 @@ public struct GstXML;
 
 /*
  * Utility function that elements can use in case they encountered a non-fatal
- * data processing problem. The pipeline will throw a warning signal and the
+ * data processing problem. The pipeline will post a warning message and the
  * application will be informed.
  * el:
- *  the element that throws the error
+ *  the element that generates the warning
  * domain:
- *  like CORE, LIBRARY, RESOURCE or STREAM (see GstGError)
+ *  like CORE, LIBRARY, RESOURCE or STREAM (see gstreamer-GstGError)
  * code:
- *  error code defined for that domain (see GstGError)
+ *  error code defined for that domain (see gstreamer-GstGError)
  * text:
  *  the message to display (format string and args enclosed in
  *  parentheses)
@@ -2106,6 +2301,28 @@ public struct GstXML;
  */
 // TODO
 // #define GST_ELEMENT_WARNING(el, domain, code, text, debug)
+
+/*
+ * Utility function that elements can use in case they want to inform
+ * the application of something noteworthy that is not an error.
+ * The pipeline will post a warning message and the
+ * application will be informed.
+ * el:
+ *  the element that generates the information
+ * domain:
+ *  like CORE, LIBRARY, RESOURCE or STREAM (see gstreamer-GstGError)
+ * code:
+ *  error code defined for that domain (see gstreamer-GstGError)
+ * text:
+ *  the message to display (format string and args enclosed in
+ *  parentheses)
+ * debug:
+ *  debugging information for the message (format string and args
+ *  enclosed in parentheses)
+ * Since 0.10.12
+ */
+// TODO
+// #define GST_ELEMENT_INFO(el, domain, code, text, debug)
 
 /*
  * Check if the element is in the locked state and therefore will ignore state
@@ -2157,11 +2374,13 @@ public struct GstXML;
  * longname:
  *  long, english name
  * klass:
- *  type of element, as hierarchy
+ *  string describing the type of element, as an unordered list
+ * separated with slashes ('/'). See draft-klass.txt of the design docs
+ * for more details and common types
  * description:
  *  what the element is about
  * author:
- *  who wrote this thing?
+ *  who wrote this element
  */
 // TODO
 // #define GST_ELEMENT_DETAILS(longname,klass,description,author)
@@ -2241,21 +2460,6 @@ public struct GstXML;
  */
 // TODO
 // #define GST_EVENT_MAKE_TYPE(num,flags)
-
-int GST_EVENT_TYPE_SHIFT = 4;
-
-/**
- * GST_EVENT_MAKE_TYPE:
- * @num: the event number to create
- * @flags: the event flags
- *
- * when making custom event types, use this macro with the num and
- * the given flags
- */
-int GST_EVENT_MAKE_TYPE( int num, int flags )
-{
-	return (((num) << GST_EVENT_TYPE_SHIFT) | (flags));
-}
 
 /*
  * Copy the event using the event specific copy function.
@@ -2405,6 +2609,123 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
 // #define GST_ITERATOR_ORIG_COOKIE(it)	(GST_ITERATOR(it)->master_cookie)
 
 /*
+ * Macro to test if the given GstPadLinkReturn value indicates a failed
+ * link step.
+ * ret:
+ *  the GstPadLinkReturn value
+ */
+// TODO
+// #define GST_PAD_LINK_FAILED(ret) ((ret) < GST_PAD_LINK_OK)
+
+/*
+ * Macro to test if the given GstPadLinkReturn value indicates a successful
+ * link step.
+ * ret:
+ *  the GstPadLinkReturn value
+ */
+// TODO
+// #define GST_PAD_LINK_SUCCESSFUL(ret) ((ret) >= GST_PAD_LINK_OK)
+
+/*
+ * Get a copy of the name of the pad. g_free() after usage.
+ * MT safe.
+ * pad:
+ *  the pad to get the name from
+ */
+// TODO
+// #define gst_pad_get_name(pad) gst_object_get_name (GST_OBJECT_CAST (pad))
+
+/*
+ * Get the parent of pad. This function increases the refcount
+ * of the parent object so you should gst_object_unref() it after usage.
+ * Can return NULL if the pad did not have a parent.
+ * MT safe.
+ * pad:
+ *  the pad to get the parent of
+ */
+// TODO
+// #define gst_pad_get_parent(pad) gst_object_get_parent (GST_OBJECT_CAST (pad))
+
+/*
+ * Get the stream lock of pad. The stream lock is protecting the
+ * resources used in the data processing functions of pad.
+ * pad:
+ *  a GstPad
+ */
+// TODO
+// #define GST_PAD_GET_STREAM_LOCK(pad) (GST_PAD_CAST(pad)->stream_rec_lock)
+
+/*
+ * Lock the stream lock of pad.
+ * pad:
+ *  a GstPad
+ */
+// TODO
+// #define GST_PAD_STREAM_LOCK(pad) (g_static_rec_mutex_lock(GST_PAD_GET_STREAM_LOCK(pad)))
+
+/*
+ * Lock the stream lock of pad t times.
+ * pad:
+ *  a GstPad
+ * t:
+ *  the number of times to recursively lock
+ */
+// TODO
+// #define GST_PAD_STREAM_LOCK_FULL(pad,t) (g_static_rec_mutex_lock_full(GST_PAD_GET_STREAM_LOCK(pad), t))
+
+/*
+ * Try to Lock the stream lock of the pad, return TRUE if the lock could be
+ * taken.
+ * pad:
+ *  a GstPad
+ */
+// TODO
+// #define GST_PAD_STREAM_TRYLOCK(pad) (g_static_rec_mutex_trylock(GST_PAD_GET_STREAM_LOCK(pad)))
+
+/*
+ * Unlock the stream lock of pad.
+ * pad:
+ *  a GstPad
+ */
+// TODO
+// #define GST_PAD_STREAM_UNLOCK(pad) (g_static_rec_mutex_unlock(GST_PAD_GET_STREAM_LOCK(pad)))
+
+/*
+ * Fully unlock the recursive stream lock of pad, return the number of times
+ * pad was locked.
+ * pad:
+ *  a GstPad
+ */
+// TODO
+// #define GST_PAD_STREAM_UNLOCK_FULL(pad) (g_static_rec_mutex_unlock_full(GST_PAD_GET_STREAM_LOCK(pad)))
+
+/*
+ * Macro to test if the given GstFlowReturn value indicates a fatal
+ * error. This macro is mainly used in elements to decide when an error
+ * message should be posted on the bus.
+ * ret:
+ *  a GstFlowReturn value
+ */
+// TODO
+// #define GST_FLOW_IS_FATAL(ret) ((ret) <= GST_FLOW_UNEXPECTED)
+
+/*
+ * Macro to test if the given GstFlowReturn value indicates a
+ * successfull result
+ * This macro is mainly used in elements to decide if the processing
+ * of a buffer was successfull.
+ * ret:
+ *  a GstFlowReturn value
+ * Since 0.10.7
+ * Property Details
+ * The "caps" property
+ *  "caps" GstCaps : Read
+ * The capabilities of the pad.
+ */
+// TODO
+// #define GST_FLOW_IS_SUCCESS(ret) ((ret) >= GST_FLOW_OK)
+
+/*
  * Get the object that posted message.
  * message:
  *  a GstMessage
@@ -2458,8 +2779,8 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
 // #define gst_message_make_writable(msg)	GST_MESSAGE (gst_mini_object_make_writable (GST_MINI_OBJECT (msg)))
 
 /*
- * Convenience macro to decrease the reference count of the message, possibly freeing
- * the it.
+ * Convenience macro to decrease the reference count of the message, possibly
+ * freeing it.
  * msg:
  *  the message to unref
  * See Also
@@ -2474,7 +2795,7 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
  *  MiniObject to return flags for.
  */
 // TODO
-// #define GST_MINI_OBJECT_FLAGS(obj) (GST_MINI_OBJECT(obj)->flags)
+// #define GST_MINI_OBJECT_FLAGS(obj) (GST_MINI_OBJECT_CAST(obj)->flags)
 
 /*
  * This macro checks to see if the given flag is set.
@@ -2606,7 +2927,7 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
  *  a GstObject
  */
 // TODO
-// #define GST_OBJECT_REFCOUNT_VALUE(obj) g_atomic_int_get (GST_OBJECT_REFCOUNT(obj))
+// #define GST_OBJECT_REFCOUNT_VALUE(obj) g_atomic_int_get ((gint *) GST_OBJECT_REFCOUNT(obj))
 
 /*
  * This macro will return the class lock used to protect deep_notify signal
@@ -2676,111 +2997,6 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
 // #define GST_OBJECT_GET_LOCK(obj) (GST_OBJECT_CAST(obj)->lock)
 
 /*
- * Macro to test if the given GstPadLinkReturn value indicates a failed
- * link step.
- * ret:
- *  the GstPadLinkReturn value
- */
-// TODO
-// #define GST_PAD_LINK_FAILED(ret) ((ret) < GST_PAD_LINK_OK)
-
-/*
- * Macro to test if the given GstPadLinkReturn value indicates a successful
- * link step.
- * ret:
- *  the GstPadLinkReturn value
- */
-// TODO
-// #define GST_PAD_LINK_SUCCESSFUL(ret) ((ret) >= GST_PAD_LINK_OK)
-
-/*
- * Get a copy of the name of the pad. g_free() after usage.
- * MT safe.
- * pad:
- *  the pad to get the name from
- */
-// TODO
-// #define gst_pad_get_name(pad) gst_object_get_name (GST_OBJECT_CAST (pad))
-
-/*
- * Get the parent of pad. This function increases the refcount
- * of the parent object so you should gst_object_unref() it after usage.
- * Can return NULL if the pad did not have a parent.
- * MT safe.
- * pad:
- *  the pad to get the parent of
- */
-// TODO
-// #define gst_pad_get_parent(pad) gst_object_get_parent (GST_OBJECT_CAST (pad))
-
-/*
- * Get the stream lock of pad. The stream lock is protecting the
- * resources used in the data processing functions of pad.
- * pad:
- *  a GstPad
- */
-// TODO
-// #define GST_PAD_GET_STREAM_LOCK(pad) (GST_PAD_CAST(pad)->stream_rec_lock)
-
-/*
- * Lock the stream lock of pad.
- * pad:
- *  a GstPad
- */
-// TODO
-// #define GST_PAD_STREAM_LOCK(pad) (g_static_rec_mutex_lock(GST_PAD_GET_STREAM_LOCK(pad)))
-
-/*
- * Lock the stream lock of pad t times.
- * pad:
- *  a GstPad
- * t:
- *  the number of times to recursively lock
- */
-// TODO
-// #define GST_PAD_STREAM_LOCK_FULL(pad,t) (g_static_rec_mutex_lock_full(GST_PAD_GET_STREAM_LOCK(pad), t))
-
-/*
- * Try to Lock the stream lock of the pad, return TRUE if the lock could be
- * taken.
- * pad:
- *  a GstPad
- */
-// TODO
-// #define GST_PAD_STREAM_TRYLOCK(pad) (g_static_rec_mutex_trylock(GST_PAD_GET_STREAM_LOCK(pad)))
-
-/*
- * Unlock the stream lock of pad.
- * pad:
- *  a GstPad
- */
-// TODO
-// #define GST_PAD_STREAM_UNLOCK(pad) (g_static_rec_mutex_unlock(GST_PAD_GET_STREAM_LOCK(pad)))
-
-/*
- * Fully unlock the recursive stream lock of pad, return the number of times
- * pad was locked.
- * pad:
- *  a GstPad
- */
-// TODO
-// #define GST_PAD_STREAM_UNLOCK_FULL(pad) (g_static_rec_mutex_unlock_full(GST_PAD_GET_STREAM_LOCK(pad)))
-
-/*
- * Macro to test if the given GstFlowReturn value indicates a fatal
- * error. This macro is mainly used in elements to decide when an error
- * message should be posted on the bus.
- * ret:
- *  a GstFlowReturn value
- * Property Details
- * The "caps" property
- *  "caps" GstCaps : Read
- * The capabilities of the pad.
- */
-// TODO
-// #define GST_FLOW_IS_FATAL(ret) ((ret) <= GST_FLOW_UNEXPECTED)
-
-/*
  * Convenience macro to fill the values of a GstStaticPadTemplate
  * structure.
  * padname:
@@ -2804,7 +3020,7 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
 // #define GST_PAD_TEMPLATE_NAME_TEMPLATE(templ)	(((GstPadTemplate *)(templ))->name_template)
 
 /*
- * Get the direction of the padtemplate.
+ * Get the GstPadDirection of the padtemplate.
  * templ:
  *  the template to query
  */
@@ -2812,7 +3028,7 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
 // #define GST_PAD_TEMPLATE_DIRECTION(templ)	(((GstPadTemplate *)(templ))->direction)
 
 /*
- * Get the presence of the padtemplate.
+ * Get the GstPadPresence of the padtemplate.
  * templ:
  *  the template to query
  */
@@ -3007,8 +3223,19 @@ int GST_EVENT_MAKE_TYPE( int num, int flags )
  *  only return first match
  * user_data:
  *  user data passed to the filter function
- * See Also
- * GstPlugin, GstPluginFeature
+ * Signal Details
+ * The "feature-added" signal
+ * void user_function (GstRegistry *registry,
+ *  gpointer feature,
+ *  gpointer user_data) : Run last
+ * Signals that a feature has been added to the registry (possibly
+ * replacing a previously-added one by the same name)
+ * registry:
+ *  the registry that emitted the signal
+ * feature:
+ *  the feature that has been added
+ * user_data:
+ * user data set when the signal handler was connected.
  */
 // TODO
 // #define gst_default_registry_feature_filter(filter,first,user_data)
@@ -3108,7 +3335,7 @@ public typedef extern(C) GstBusSyncReply  function (GstBus*, GstMessage*, void*)
  * id:
  *  The GstClockID that expired
  * user_data:
- *  user data passed in the async_wait call
+ *  user data passed in the gst_clock_id_wait_async() function
  * Returns:
  *  TRUE or FALSE (currently unused)
  */
@@ -3228,28 +3455,6 @@ public typedef extern(C) void  function (GstIterator*) GstIteratorFreeFunction;
 public typedef extern(C) int  function (void*, GValue*, void*) GstIteratorFoldFunction;
 
 /*
- * Virtual function prototype for methods to create copies of instances.
- * obj:
- *  MiniObject to copy
- * Returns:
- *  reference to cloned instance.
- */
-// GstMiniObject* (*GstMiniObjectCopyFunction) (const GstMiniObject *obj);
-public typedef extern(C) GstMiniObject*  function (GstMiniObject*) GstMiniObjectCopyFunction;
-
-/*
- * Virtual function prototype for methods to free ressources used by
- * mini-objects. Subclasses of the mini object are allowed to revive the
- * passed object by doing a gst_mini_object_ref(). If the object is not
- * revived after the finalize function, the memory associated with the
- * object is freed.
- * obj:
- *  MiniObject to finalize
- */
-// void (*GstMiniObjectFinalizeFunction)  (GstMiniObject *obj);
-public typedef extern(C) void  function (GstMiniObject*) GstMiniObjectFinalizeFunction;
-
-/*
  * Callback used by gst_pad_set_blocked_async(). Gets called when the blocking
  * operation succeeds.
  * pad:
@@ -3269,11 +3474,14 @@ public typedef extern(C) void  function (GstPad*, int, void*) GstPadBlockCallbac
  * be processed by pad. The function is mostly overridden by elements that can
  * provide a hardware buffer in order to avoid additional memcpy operations.
  * The function can return a buffer that does not have caps, in which case the
- * upstream element requests a format change.
+ * upstream element requests a format change. If a format change was requested,
+ * the returned buffer will be one to hold the data of said new caps, so its
+ * size might be different from size.
  * When this function returns anything else than GST_FLOW_OK, the buffer allocation
  * failed and buf does not contain valid data.
  * By default this function returns a new buffer of size and with caps containing
- * purely malloced data.
+ * purely malloced data. The buffer should be freed with gst_buffer_unref()
+ * after usage.
  * pad:
  *  a sink GstPad
  * offset:
@@ -3293,10 +3501,16 @@ public typedef extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstCaps*
 
 /*
  * A function that will be called on sinkpads when chaining buffers.
+ * The function typically processes the data contained in the buffer and
+ * either consumes the data or passes it on to the internally linked pad(s).
+ * The implementer of this function receives a refcount to buffer and should
+ * gst_buffer_unref() when the buffer is no longer needed.
+ * When a chain function detects an error in the data stream, it must post an
+ * error on the buffer and return an appropriate GstFlowReturn value.
  * pad:
- *  the GstPad that performed the chain.
+ *  the sink GstPad that performed the chain.
  * buffer:
- *  the GstBuffer that is chained.
+ *  the GstBuffer that is chained, not NULL.
  * Returns:
  *  GST_FLOW_OK for success
  */
@@ -3316,18 +3530,38 @@ public typedef extern(C) GstFlowReturn  function (GstPad*, GstBuffer*) GstPadCha
 public typedef extern(C) int  function (GstPad*) GstPadCheckGetRangeFunction;
 
 /*
- * This function will be called on sourcepads when a peer element
+ * This function will be called on source pads when a peer element
  * request a buffer at the specified offset and length. If this function
  * returns GST_FLOW_OK, the result buffer will be stored in buffer. The
  * contents of buffer is invalid for any other return value.
+ * This function is installed on a source pad with
+ * gst_pad_set_getrange_function() and can only be called on source pads after
+ * they are successfully activated with gst_pad_activate_pull().
+ * offset and length are always given in byte units. offset must normally be a value
+ * between 0 and the length in bytes of the data available on pad. The
+ * length (duration in bytes) can be retrieved with a GST_QUERY_DURATION or with a
+ * GST_QUERY_SEEKING.
+ * Any offset larger or equal than the length will make the function return
+ * GST_FLOW_UNEXPECTED, which corresponds to EOS. In this case buffer does not
+ * contain a valid buffer.
+ * The buffer size of buffer might be smaller than length when offset is near
+ * the end of the stream.
+ * It is allowed to call this function with a 0 length and valid offset, in
+ * which case buffer will contain a 0-sized buffer and the function returns
+ * GST_FLOW_OK.
+ * When this function is called with a -1 offset, the sequentially next buffer
+ * of length length in the stream is returned.
+ * When this function is called with a -1 length, a buffer with a default
+ * optimal length is returned in buffer. The length might depend on the value
+ * of offset.
  * pad:
- *  the GstPad to perform the getrange on.
+ *  the src GstPad to perform the getrange on.
  * offset:
  *  the offset of the range
  * length:
  *  the length of the range
  * buffer:
- *  a memory location to hold the result buffer
+ *  a memory location to hold the result buffer, cannot be NULL.
  * Returns:
  *  GST_FLOW_OK for success
  */
@@ -3490,6 +3724,28 @@ public typedef extern(C) GList*  function (GstPad*) GstPadIntLinkFunction;
  */
 // gboolean (*GstPadDispatcherFunction) (GstPad *pad,  gpointer data);
 public typedef extern(C) int  function (GstPad*, void*) GstPadDispatcherFunction;
+
+/*
+ * Virtual function prototype for methods to create copies of instances.
+ * obj:
+ *  MiniObject to copy
+ * Returns:
+ *  reference to cloned instance.
+ */
+// GstMiniObject* (*GstMiniObjectCopyFunction) (const GstMiniObject *obj);
+public typedef extern(C) GstMiniObject*  function (GstMiniObject*) GstMiniObjectCopyFunction;
+
+/*
+ * Virtual function prototype for methods to free ressources used by
+ * mini-objects. Subclasses of the mini object are allowed to revive the
+ * passed object by doing a gst_mini_object_ref(). If the object is not
+ * revived after the finalize function, the memory associated with the
+ * object is freed.
+ * obj:
+ *  MiniObject to finalize
+ */
+// void (*GstMiniObjectFinalizeFunction)  (GstMiniObject *obj);
+public typedef extern(C) void  function (GstMiniObject*) GstMiniObjectFinalizeFunction;
 
 /*
  * A plugin should provide a pointer to a function of this type in the

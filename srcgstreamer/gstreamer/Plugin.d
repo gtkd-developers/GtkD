@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.Module
@@ -52,21 +53,15 @@
  * 	- GstPlugin* -> Plugin
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Plugin;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -76,6 +71,7 @@ private import glib.ListG;
 
 
 
+private import gstreamer.ObjectGst;
 
 /**
  * Description
@@ -97,7 +93,6 @@ private import glib.ListG;
  * repository in which case gst_plugin_load() can be needed to bring the plugin
  * into memory.
  */
-private import gstreamer.ObjectGst;
 public class Plugin : ObjectGst
 {
 	
@@ -112,7 +107,7 @@ public class Plugin : ObjectGst
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstPlugin;
 	}
@@ -122,25 +117,17 @@ public class Plugin : ObjectGst
 	 */
 	public this (GstPlugin* gstPlugin)
 	{
-		version(noAssert)
+		if(gstPlugin is null)
 		{
-			if ( gstPlugin is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstPlugin is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstPlugin is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstPlugin);
+		if( ptr !is null )
 		{
-			assert(gstPlugin !is null, "struct gstPlugin is null on constructor");
+			this = cast(Plugin)ptr;
+			return;
 		}
 		super(cast(GstObject*)gstPlugin);
 		this.gstPlugin = gstPlugin;
@@ -151,8 +138,7 @@ public class Plugin : ObjectGst
 	
 	/**
 	 * Get the error quark.
-	 * Returns:
-	 *  The error quark used in GError messages
+	 * Returns: The error quark used in GError messages
 	 */
 	public static GQuark errorQuark()
 	{
@@ -160,140 +146,105 @@ public class Plugin : ObjectGst
 		return gst_plugin_error_quark();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Get the short name of the plugin
-	 * plugin:
-	 *  plugin to get the name of
-	 * Returns:
-	 *  the name of the plugin
+	 * Returns: the name of the plugin
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gst_plugin_get_name (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_name(gstPlugin) );
+		return Str.toString(gst_plugin_get_name(gstPlugin));
 	}
 	
 	/**
 	 * Get the long descriptive name of the plugin
-	 * plugin:
-	 *  plugin to get long name of
-	 * Returns:
-	 *  the long name of the plugin
+	 * Returns: the long name of the plugin
 	 */
-	public char[] getDescription()
+	public string getDescription()
 	{
 		// const gchar* gst_plugin_get_description (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_description(gstPlugin) );
+		return Str.toString(gst_plugin_get_description(gstPlugin));
 	}
 	
 	/**
 	 * get the filename of the plugin
-	 * plugin:
-	 *  plugin to get the filename of
-	 * Returns:
-	 *  the filename of the plugin
+	 * Returns: the filename of the plugin
 	 */
-	public char[] getFilename()
+	public string getFilename()
 	{
 		// const gchar* gst_plugin_get_filename (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_filename(gstPlugin) );
+		return Str.toString(gst_plugin_get_filename(gstPlugin));
 	}
 	
 	/**
 	 * get the license of the plugin
-	 * plugin:
-	 *  plugin to get the license of
-	 * Returns:
-	 *  the license of the plugin
+	 * Returns: the license of the plugin
 	 */
-	public char[] getLicense()
+	public string getLicense()
 	{
 		// const gchar* gst_plugin_get_license (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_license(gstPlugin) );
+		return Str.toString(gst_plugin_get_license(gstPlugin));
 	}
 	
 	/**
 	 * get the package the plugin belongs to.
-	 * plugin:
-	 *  plugin to get the package of
-	 * Returns:
-	 *  the package of the plugin
+	 * Returns: the package of the plugin
 	 */
-	public char[] getPackage()
+	public string getPackage()
 	{
 		// const gchar* gst_plugin_get_package (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_package(gstPlugin) );
+		return Str.toString(gst_plugin_get_package(gstPlugin));
 	}
 	
 	/**
 	 * get the URL where the plugin comes from
-	 * plugin:
-	 *  plugin to get the origin of
-	 * Returns:
-	 *  the origin of the plugin
+	 * Returns: the origin of the plugin
 	 */
-	public char[] getOrigin()
+	public string getOrigin()
 	{
 		// const gchar* gst_plugin_get_origin (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_origin(gstPlugin) );
+		return Str.toString(gst_plugin_get_origin(gstPlugin));
 	}
 	
 	/**
 	 * get the source module the plugin belongs to.
-	 * plugin:
-	 *  plugin to get the source of
-	 * Returns:
-	 *  the source of the plugin
+	 * Returns: the source of the plugin
 	 */
-	public char[] getSource()
+	public string getSource()
 	{
 		// const gchar* gst_plugin_get_source (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_source(gstPlugin) );
+		return Str.toString(gst_plugin_get_source(gstPlugin));
 	}
 	
 	/**
 	 * get the version of the plugin
-	 * plugin:
-	 *  plugin to get the version of
-	 * Returns:
-	 *  the version of the plugin
+	 * Returns: the version of the plugin
 	 */
-	public char[] getVersion()
+	public string getVersion()
 	{
 		// const gchar* gst_plugin_get_version (GstPlugin *plugin);
-		return Str.toString(gst_plugin_get_version(gstPlugin) );
+		return Str.toString(gst_plugin_get_version(gstPlugin));
 	}
 	
 	/**
 	 * Gets the GModule of the plugin. If the plugin isn't loaded yet, NULL is
 	 * returned.
-	 * plugin:
-	 *  plugin to query
-	 * Returns:
-	 *  module belonging to the plugin or NULL if the plugin isn't
-	 *  loaded yet.
+	 * Returns: module belonging to the plugin or NULL if the plugin isn't loaded yet.
 	 */
 	public Module getModule()
 	{
 		// GModule* gst_plugin_get_module (GstPlugin *plugin);
-		return new Module( gst_plugin_get_module(gstPlugin) );
+		auto p = gst_plugin_get_module(gstPlugin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Module(cast(GModule*) p);
 	}
 	
 	/**
 	 * queries if the plugin is loaded into memory
-	 * plugin:
-	 *  plugin to query
-	 * Returns:
-	 *  TRUE is loaded, FALSE otherwise
+	 * Returns: TRUE is loaded, FALSE otherwise
 	 */
 	public int isLoaded()
 	{
@@ -304,14 +255,11 @@ public class Plugin : ObjectGst
 	/**
 	 * A standard filter that returns TRUE when the plugin is of the
 	 * given name.
-	 * plugin:
-	 *  the plugin to check
-	 * name:
-	 *  the name of the plugin
-	 * Returns:
-	 *  TRUE if the plugin is of the given name.
+	 * Params:
+	 * name =  the name of the plugin
+	 * Returns: TRUE if the plugin is of the given name.
 	 */
-	public int nameFilter(char[] name)
+	public int nameFilter(string name)
 	{
 		// gboolean gst_plugin_name_filter (GstPlugin *plugin,  const gchar *name);
 		return gst_plugin_name_filter(gstPlugin, Str.toStringz(name));
@@ -319,58 +267,66 @@ public class Plugin : ObjectGst
 	
 	/**
 	 * Loads the given plugin and refs it. Caller needs to unref after use.
-	 * filename:
-	 *  the plugin filename to load
-	 * error:
-	 *  pointer to a NULL-valued GError
-	 * Returns:
-	 *  a reference to the existing loaded GstPlugin, a reference to the
-	 * newly-loaded GstPlugin, or NULL if an error occurred.
+	 * Params:
+	 * filename =  the plugin filename to load
+	 * Returns: a reference to the existing loaded GstPlugin, a reference to thenewly-loaded GstPlugin, or NULL if an error occurred.
+	 * Throws: GException on failure.
 	 */
-	public static Plugin loadFile(char[] filename, GError** error)
+	public static Plugin loadFile(string filename)
 	{
 		// GstPlugin* gst_plugin_load_file (const gchar *filename,  GError **error);
-		return new Plugin( gst_plugin_load_file(Str.toStringz(filename), error) );
+		GError* err = null;
+		
+		auto p = gst_plugin_load_file(Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
 	 * Loads plugin. Note that the *return value* is the loaded plugin; plugin is
-	 * untouched. The normal use pattern of this function goes like this:
-	 * GstPlugin *loaded_plugin;
-	 * loaded_plugin = gst_plugin_load (plugin);
-	 * // presumably, we're no longer interested in the potentially-unloaded plugin
-	 * gst_object_unref (plugin);
-	 * plugin = loaded_plugin;
-	 * plugin:
-	 *  plugin to load
-	 * Returns:
-	 *  A reference to a loaded plugin, or NULL on error.
+	 * Returns: A reference to a loaded plugin, or NULL on error.
 	 */
 	public Plugin load()
 	{
 		// GstPlugin* gst_plugin_load (GstPlugin *plugin);
-		return new Plugin( gst_plugin_load(gstPlugin) );
+		auto p = gst_plugin_load(gstPlugin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
 	 * Load the named plugin. Refs the plugin.
-	 * name:
-	 *  name of plugin to load
-	 * Returns:
-	 *  A reference to a loaded plugin, or NULL on error.
+	 * Params:
+	 * name =  name of plugin to load
+	 * Returns: A reference to a loaded plugin, or NULL on error.
 	 */
-	public static Plugin loadByName(char[] name)
+	public static Plugin loadByName(string name)
 	{
 		// GstPlugin* gst_plugin_load_by_name (const gchar *name);
-		return new Plugin( gst_plugin_load_by_name(Str.toStringz(name)) );
+		auto p = gst_plugin_load_by_name(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
 	 * Unrefs each member of list, then frees the list.
-	 * list:
-	 *  list of GstPlugin
-	 * See Also
-	 * GstPluginFeature, GstElementFactory
+	 * Params:
+	 * list =  list of GstPlugin
 	 */
 	public static void listFree(ListG list)
 	{

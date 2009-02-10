@@ -41,26 +41,21 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * 	- GstElement* -> Element
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.ImplementsInterface;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 
@@ -74,8 +69,7 @@ private import gstreamerc.gstreamer;
  */
 public class ImplementsInterface
 {
-	/+TODO
-	 
+	
 	/** the main Gtk struct */
 	protected GstImplementsInterface* gstImplementsInterface;
 	
@@ -97,25 +91,10 @@ public class ImplementsInterface
 	 */
 	public this (GstImplementsInterface* gstImplementsInterface)
 	{
-		version(noAssert)
+		if(gstImplementsInterface is null)
 		{
-			if ( gstImplementsInterface is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstImplementsInterface is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstImplementsInterface is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gstImplementsInterface !is null, "struct gstImplementsInterface is null on constructor");
+			this = null;
+			return;
 		}
 		this.gstImplementsInterface = gstImplementsInterface;
 	}
@@ -123,16 +102,13 @@ public class ImplementsInterface
 	/**
 	 */
 	
-	
 	/**
 	 * Test whether the given element implements a certain interface of type
 	 * iface_type, and test whether it is supported for this specific instance.
-	 * element:
-	 *  GstElement to check for the implementation of the interface
-	 * iface_type:
-	 *  (final) type of the interface which we want to be implemented
-	 * Returns:
-	 *  whether or not the element implements the interface.
+	 * Params:
+	 * element =  GstElement to check for the implementation of the interface
+	 * ifaceType =  (final) type of the interface which we want to be implemented
+	 * Returns: whether or not the element implements the interface.
 	 */
 	public static int elementImplementsInterface(Element element, GType ifaceType)
 	{
@@ -143,12 +119,10 @@ public class ImplementsInterface
 	/**
 	 * cast a given object to an interface type, and check whether this
 	 * interface is supported for this specific instance.
-	 * from:
-	 *  the object (any sort) from which to cast to the interface
-	 * type:
-	 *  the interface type to cast to
-	 * Returns:
-	 *  a gpointer to the interface type
+	 * Params:
+	 * from =  the object (any sort) from which to cast to the interface
+	 * type =  the interface type to cast to
+	 * Returns: a gpointer to the interface type
 	 */
 	public static void* implementsInterfaceCast(void* from, GType type)
 	{
@@ -159,19 +133,14 @@ public class ImplementsInterface
 	/**
 	 * check a given object for an interface implementation, and check
 	 * whether this interface is supported for this specific instance.
-	 * from:
-	 *  the object (any sort) from which to check from for the interface
-	 * type:
-	 *  the interface type to check for
-	 * Returns:
-	 *  whether or not the object implements the given interface
-	 * See Also
-	 * GstElement
+	 * Params:
+	 * from =  the object (any sort) from which to check from for the interface
+	 * type =  the interface type to check for
+	 * Returns: whether or not the object implements the given interface
 	 */
 	public static int implementsInterfaceCheck(void* from, GType type)
 	{
 		// gboolean gst_implements_interface_check (gpointer from,  GType type);
 		return gst_implements_interface_check(from, type);
 	}
-	+/
 }

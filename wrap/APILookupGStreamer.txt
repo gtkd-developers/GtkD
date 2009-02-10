@@ -61,6 +61,7 @@ addEnums: start
 addEnums: end
 
 addStructs: start
+/+
 #	/**
 #	* GstMiniObject.
 #	* Base class for refcounted lightweight objects.
@@ -96,6 +97,7 @@ addStructs: start
 #		gpointer _gst_reserved[GST_PADDING];
 #	}
 #
++/
 addStructs: end
 
 addTypes: start
@@ -1218,6 +1220,7 @@ code: end
 import: glib.Str
 import: glib.Quark
 import: glib.ErrorG
+import: glib.GException
 import: gstreamer.Element
 structWrap: GQuark Quark
 structWrap: GError* ErrorG

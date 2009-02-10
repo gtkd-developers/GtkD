@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Element
@@ -53,21 +54,15 @@
  * 	- GstPipeline* -> Pipeline
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Pipeline;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -77,6 +72,7 @@ private import gstreamer.Bus;
 
 
 
+private import gstreamer.Bin;
 
 /**
  * Description
@@ -123,7 +119,6 @@ private import gstreamer.Bus;
  * seek succeeded.
  * Last reviewed on 2006-03-12 (0.10.5)
  */
-private import gstreamer.Bin;
 public class Pipeline : Bin
 {
 	
@@ -138,7 +133,7 @@ public class Pipeline : Bin
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstPipeline;
 	}
@@ -148,31 +143,24 @@ public class Pipeline : Bin
 	 */
 	public this (GstPipeline* gstPipeline)
 	{
-		version(noAssert)
+		if(gstPipeline is null)
 		{
-			if ( gstPipeline is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstPipeline is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstPipeline is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstPipeline);
+		if( ptr !is null )
 		{
-			assert(gstPipeline !is null, "struct gstPipeline is null on constructor");
+			this = cast(Pipeline)ptr;
+			return;
 		}
 		super(cast(GstBin*)gstPipeline);
 		this.gstPipeline = gstPipeline;
 	}
 	
-	public this (char[] name)
+	/** */
+	public this (string name)
 	{
 		this.gstPipeline = cast(GstPipeline*) gst_pipeline_new(Str.toStringz(name));
 		super(cast(GstBin*)this.gstPipeline);
@@ -181,47 +169,44 @@ public class Pipeline : Bin
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Create a new pipeline with the given name.
-	 * name:
-	 *  name of new pipeline
-	 * Returns:
-	 *  newly created GstPipeline
-	 * MT safe.
+	 * Params:
+	 * name =  name of new pipeline
+	 * Returns: newly created GstPipelineMT safe.
 	 */
-	public static Element newPipeline(char[] name)
+	public static Element newPipeline(string name)
 	{
 		// GstElement* gst_pipeline_new (const gchar *name);
-		return new Element( gst_pipeline_new(Str.toStringz(name)) );
+		auto p = gst_pipeline_new(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Element(cast(GstElement*) p);
 	}
 	
 	/**
 	 * Gets the GstBus of pipeline.
-	 * pipeline:
-	 *  a GstPipeline
-	 * Returns:
-	 *  a GstBus, unref after usage.
-	 * MT safe.
+	 * Returns: a GstBus, unref after usage.MT safe.
 	 */
 	public Bus getBus()
 	{
 		// GstBus* gst_pipeline_get_bus (GstPipeline *pipeline);
-		return new Bus( gst_pipeline_get_bus(gstPipeline) );
+		auto p = gst_pipeline_get_bus(gstPipeline);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Bus(cast(GstBus*) p);
 	}
 	
 	/**
 	 * Set the clock for pipeline. The clock will be distributed
 	 * to all the elements managed by the pipeline.
-	 * pipeline:
-	 *  a GstPipeline
-	 * clock:
-	 *  the clock to set
-	 * Returns:
-	 *  TRUE if the clock could be set on the pipeline. FALSE if
-	 *  some element did not accept the clock.
-	 * MT safe.
+	 * Params:
+	 * clock =  the clock to set
+	 * Returns: TRUE if the clock could be set on the pipeline. FALSE if some element did not accept the clock.MT safe.
 	 */
 	public int setClock(Clock clock)
 	{
@@ -231,15 +216,17 @@ public class Pipeline : Bin
 	
 	/**
 	 * Gets the current clock used by pipeline.
-	 * pipeline:
-	 *  a GstPipeline
-	 * Returns:
-	 *  a GstClock, unref after usage.
+	 * Returns: a GstClock, unref after usage.
 	 */
 	public Clock getClock()
 	{
 		// GstClock* gst_pipeline_get_clock (GstPipeline *pipeline);
-		return new Clock( gst_pipeline_get_clock(gstPipeline) );
+		auto p = gst_pipeline_get_clock(gstPipeline);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Clock(cast(GstClock*) p);
 	}
 	
 	/**
@@ -249,10 +236,8 @@ public class Pipeline : Bin
 	 * If clock is NULL all clocking will be disabled which will make
 	 * the pipeline run as fast as possible.
 	 * MT safe.
-	 * pipeline:
-	 *  a GstPipeline
-	 * clock:
-	 *  the clock to use
+	 * Params:
+	 * clock =  the clock to use
 	 */
 	public void useClock(Clock clock)
 	{
@@ -267,8 +252,6 @@ public class Pipeline : Bin
 	 * gst_pipeline_use_clock() and want to restore the default
 	 * pipeline clock selection algorithm.
 	 * MT safe.
-	 * pipeline:
-	 *  a GstPipeline
 	 */
 	public void autoClock()
 	{
@@ -286,10 +269,8 @@ public class Pipeline : Bin
 	 * synchronize capture from multiple pipelines, and you can also ensure that the
 	 * pipelines have the same clock.
 	 * MT safe.
-	 * pipeline:
-	 *  a GstPipeline
-	 * time:
-	 *  the new stream time to set
+	 * Params:
+	 * time =  the new stream time to set
 	 */
 	public void setNewStreamTime(GstClockTime time)
 	{
@@ -305,11 +286,7 @@ public class Pipeline : Bin
 	 * This function returns GST_CLOCK_TIME_NONE if the pipeline was
 	 * configured to not handle the management of the element's base time
 	 * (see gst_pipeline_set_new_stream_time()).
-	 * pipeline:
-	 *  a GstPipeline
-	 * Returns:
-	 *  a GstClockTime.
-	 * MT safe.
+	 * Returns: a GstClockTime.MT safe.
 	 */
 	public GstClockTime getLastStreamTime()
 	{
@@ -329,10 +306,8 @@ public class Pipeline : Bin
 	 * It is important that all messages on the bus are handled when the
 	 * automatic flushing is disabled else memory leaks will be introduced.
 	 * MT safe.
-	 * pipeline:
-	 *  a GstPipeline
-	 * auto_flush:
-	 *  whether or not to automatically flush the bus when
+	 * Params:
+	 * autoFlush =  whether or not to automatically flush the bus when
 	 * the pipeline goes from READY to NULL state
 	 * Since 0.10.4
 	 */
@@ -345,13 +320,7 @@ public class Pipeline : Bin
 	/**
 	 * Check if pipeline will automatically flush messages when going to
 	 * the NULL state.
-	 * pipeline:
-	 *  a GstPipeline
-	 * Returns:
-	 *  whether the pipeline will automatically flush its bus when
-	 * going from READY to NULL state or not.
-	 * MT safe.
-	 * Since 0.10.4
+	 * Returns: whether the pipeline will automatically flush its bus whengoing from READY to NULL state or not.MT safe.Since 0.10.4
 	 */
 	public int getAutoFlushBus()
 	{
@@ -368,10 +337,8 @@ public class Pipeline : Bin
 	 * This option is used for tuning purposes and should normally not be
 	 * used.
 	 * MT safe.
-	 * pipeline:
-	 *  a GstPipeline
-	 * delay:
-	 *  the delay
+	 * Params:
+	 * delay =  the delay
 	 * Since 0.10.5
 	 */
 	public void setDelay(GstClockTime delay)
@@ -382,25 +349,11 @@ public class Pipeline : Bin
 	
 	/**
 	 * Get the configured delay (see gst_pipeline_set_delay()).
-	 * pipeline:
-	 *  a GstPipeline
-	 * Returns:
-	 *  The configured delay.
-	 * MT safe.
-	 * Since 0.10.5
-	 * Property Details
-	 * The "auto-flush-bus" property
-	 *  "auto-flush-bus" gboolean : Read / Write
-	 * Whether or not to automatically flush all messages on the
-	 * pipeline's bus when going from READY to NULL state. Please see
-	 * gst_pipeline_set_auto_flush_bus() for more information on this option.
-	 * Default value: TRUE
-	 * Since 0.10.4
+	 * Returns: The configured delay.MT safe.Since 0.10.5
 	 */
 	public GstClockTime getDelay()
 	{
 		// GstClockTime gst_pipeline_get_delay (GstPipeline *pipeline);
 		return gst_pipeline_get_delay(gstPipeline);
 	}
-	
 }

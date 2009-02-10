@@ -42,6 +42,7 @@
  * omit prefixes:
  * omit code:
  * 	- gst_bin_new
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Element
@@ -52,22 +53,18 @@
  * 	- GstIterator* -> Iterator
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Bin;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gstreamer.Element;
@@ -75,6 +72,7 @@ private import gstreamer.Iterator;
 
 
 
+private import gstreamer.Element;
 
 /**
  * Description
@@ -162,7 +160,6 @@ private import gstreamer.Iterator;
  * returned. If no sinks are in the bin, the event handler will return TRUE.
  * Last reviewed on 2006-04-28 (0.10.6)
  */
-private import gstreamer.Element;
 public class Bin : Element
 {
 	
@@ -177,7 +174,7 @@ public class Bin : Element
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstBin;
 	}
@@ -187,25 +184,17 @@ public class Bin : Element
 	 */
 	public this (GstBin* gstBin)
 	{
-		version(noAssert)
+		if(gstBin is null)
 		{
-			if ( gstBin is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstBin is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstBin is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstBin);
+		if( ptr !is null )
 		{
-			assert(gstBin !is null, "struct gstBin is null on constructor");
+			this = cast(Bin)ptr;
+			return;
 		}
 		super(cast(GstElement*)gstBin);
 		this.gstBin = gstBin;
@@ -213,17 +202,18 @@ public class Bin : Element
 	
 	/**
 	 * Creates a new bin with the given name.
-	 * name:
-	 *  the name of the new bin
+	 * Params:
+	 *  name = the name of the new bin
 	 * Returns:
 	 *  a new GstBin
 	 */
-	public this(char[] name)
+	public this(string name)
 	{
 		// GstElement* gst_bin_new (const gchar *name);
 		this( cast(GstBin*) gst_bin_new(Str.toStringz(name)) );
 	}
 	
+	/** */
 	public this(Element elem)
 	{
 		super( elem.getElementStruct() );
@@ -232,13 +222,12 @@ public class Bin : Element
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Element, Bin)[] onElementAddedListeners;
+	/**
+	 * Will be emitted after the element was added to the bin.
+	 */
 	void addOnElementAdded(void delegate(Element, Bin) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("element-added" in connectedSignals) )
@@ -256,17 +245,16 @@ public class Bin : Element
 	}
 	extern(C) static void callBackElementAdded(GstBin* binStruct, GstElement* element, Bin bin)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Element, Bin) dlg ; bin.onElementAddedListeners )
 		{
 			dlg(new Element(element), bin);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(Element, Bin)[] onElementRemovedListeners;
+	/**
+	 * Will be emitted after the element was removed from the bin.
+	 */
 	void addOnElementRemoved(void delegate(Element, Bin) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("element-removed" in connectedSignals) )
@@ -284,18 +272,11 @@ public class Bin : Element
 	}
 	extern(C) static void callBackElementRemoved(GstBin* binStruct, GstElement* element, Bin bin)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(Element, Bin) dlg ; bin.onElementRemovedListeners )
 		{
 			dlg(new Element(element), bin);
 		}
-		
-		return consumed;
 	}
-	
-	
-	
 	
 	
 	/**
@@ -304,13 +285,9 @@ public class Bin : Element
 	 * If the element's pads are linked to other pads, the pads will be unlinked
 	 * before the element is added to the bin.
 	 * MT safe.
-	 * bin:
-	 *  a GstBin
-	 * element:
-	 *  the GstElement to add
-	 * Returns:
-	 *  TRUE if the element could be added, FALSE if
-	 * the bin does not want to accept the element.
+	 * Params:
+	 * element =  the GstElement to add
+	 * Returns: TRUE if the element could be added, FALSE ifthe bin does not want to accept the element.
 	 */
 	public int add(Element element)
 	{
@@ -328,13 +305,9 @@ public class Bin : Element
 	 * If the element's pads are linked to other pads, the pads will be unlinked
 	 * before the element is removed from the bin.
 	 * MT safe.
-	 * bin:
-	 *  a GstBin
-	 * element:
-	 *  the GstElement to remove
-	 * Returns:
-	 *  TRUE if the element could be removed, FALSE if
-	 * the bin does not want to remove the element.
+	 * Params:
+	 * element =  the GstElement to remove
+	 * Returns: TRUE if the element could be removed, FALSE ifthe bin does not want to remove the element.
 	 */
 	public int remove(Element element)
 	{
@@ -347,36 +320,37 @@ public class Bin : Element
 	 * function recurses into child bins.
 	 * Returns NULL if no element with the given name is found in the bin.
 	 * MT safe. Caller owns returned reference.
-	 * bin:
-	 *  a GstBin
-	 * name:
-	 *  the element name to search for
-	 * Returns:
-	 *  the GstElement with the given name, or NULL
+	 * Params:
+	 * name =  the element name to search for
+	 * Returns: the GstElement with the given name, or NULL
 	 */
-	public Element getByName(char[] name)
+	public Element getByName(string name)
 	{
 		// GstElement* gst_bin_get_by_name (GstBin *bin,  const gchar *name);
-		return new Element( gst_bin_get_by_name(gstBin, Str.toStringz(name)) );
+		auto p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Element(cast(GstElement*) p);
 	}
 	
 	/**
 	 * Gets the element with the given name from this bin. If the
 	 * element is not found, a recursion is performed on the parent bin.
-	 * Returns NULL if:
-	 * - no element with the given name is found in the bin
-	 * MT safe. Caller owns returned reference.
-	 * bin:
-	 *  a GstBin
-	 * name:
-	 *  the element name to search for
-	 * Returns:
-	 *  the GstElement with the given name, or NULL
+	 * Params:
+	 * name =  the element name to search for
+	 * Returns: the GstElement with the given name, or NULL
 	 */
-	public Element getByNameRecurseUp(char[] name)
+	public Element getByNameRecurseUp(string name)
 	{
 		// GstElement* gst_bin_get_by_name_recurse_up (GstBin *bin,  const gchar *name);
-		return new Element( gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name)) );
+		auto p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -386,17 +360,19 @@ public class Bin : Element
 	 * all elements that implement the interface, use
 	 * gst_bin_iterate_all_by_interface(). This function recurses into child bins.
 	 * MT safe. Caller owns returned reference.
-	 * bin:
-	 *  a GstBin
-	 * iface:
-	 *  the GType of an interface
-	 * Returns:
-	 *  A GstElement inside the bin implementing the interface
+	 * Params:
+	 * iface =  the GType of an interface
+	 * Returns: A GstElement inside the bin implementing the interface
 	 */
 	public Element getByInterface(GType iface)
 	{
 		// GstElement* gst_bin_get_by_interface (GstBin *bin,  GType iface);
-		return new Element( gst_bin_get_by_interface(gstBin, iface) );
+		auto p = gst_bin_get_by_interface(gstBin, iface);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -404,15 +380,17 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * bin:
-	 *  a GstBin
-	 * Returns:
-	 *  a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL
 	 */
 	public Iterator iterateElements()
 	{
 		// GstIterator* gst_bin_iterate_elements (GstBin *bin);
-		return new Iterator( gst_bin_iterate_elements(gstBin) );
+		auto p = gst_bin_iterate_elements(gstBin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -421,15 +399,17 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * bin:
-	 *  a GstBin
-	 * Returns:
-	 *  a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL
 	 */
 	public Iterator iterateRecurse()
 	{
 		// GstIterator* gst_bin_iterate_recurse (GstBin *bin);
-		return new Iterator( gst_bin_iterate_recurse(gstBin) );
+		auto p = gst_bin_iterate_recurse(gstBin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -438,15 +418,17 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * bin:
-	 *  a GstBin
-	 * Returns:
-	 *  a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL
 	 */
 	public Iterator iterateSinks()
 	{
 		// GstIterator* gst_bin_iterate_sinks (GstBin *bin);
-		return new Iterator( gst_bin_iterate_sinks(gstBin) );
+		auto p = gst_bin_iterate_sinks(gstBin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -458,15 +440,17 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * bin:
-	 *  a GstBin
-	 * Returns:
-	 *  a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL
 	 */
 	public Iterator iterateSorted()
 	{
 		// GstIterator* gst_bin_iterate_sorted (GstBin *bin);
-		return new Iterator( gst_bin_iterate_sorted(gstBin) );
+		auto p = gst_bin_iterate_sorted(gstBin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -475,15 +459,17 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * bin:
-	 *  a GstBin
-	 * Returns:
-	 *  a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL
 	 */
 	public Iterator iterateSources()
 	{
 		// GstIterator* gst_bin_iterate_sources (GstBin *bin);
-		return new Iterator( gst_bin_iterate_sources(gstBin) );
+		auto p = gst_bin_iterate_sources(gstBin);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -494,50 +480,19 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * bin:
-	 *  a GstBin
-	 * iface:
-	 *  the GType of an interface
-	 * Returns:
-	 *  a GstIterator of GstElement for all elements in the bin
-	 *  implementing the given interface, or NULL
+	 * Params:
+	 * iface =  the GType of an interface
+	 * Returns: a GstIterator of GstElement for all elements in the bin implementing the given interface, or NULL
 	 */
 	public Iterator iterateAllByInterface(GType iface)
 	{
 		// GstIterator* gst_bin_iterate_all_by_interface  (GstBin *bin,  GType iface);
-		return new Iterator( gst_bin_iterate_all_by_interface(gstBin, iface) );
-	}
-	
-	/**
-	 * Adds a NULL-terminated list of elements to a bin. This function is
-	 * equivalent to calling gst_bin_add() for each member of the list.
-	 * bin:
-	 *  a GstBin
-	 * element_1:
-	 *  the GstElement element to add to the bin
-	 * ...:
-	 *  additional elements to add to the bin
-	 */
-	public void addMany(Element element1, ... )
-	{
-		// void gst_bin_add_many (GstBin *bin,  GstElement *element_1,  ...);
-		gst_bin_add_many(gstBin, (element1 is null) ? null : element1.getElementStruct());
-	}
-	
-	/**
-	 * Remove a list of elements from a bin. This function is equivalent
-	 * to calling gst_bin_remove() with each member of the list.
-	 * bin:
-	 *  a GstBin
-	 * element_1:
-	 *  the first GstElement to remove from the bin
-	 * ...:
-	 *  NULL-terminated list of elements to remove from the bin
-	 */
-	public void removeMany(Element element1, ... )
-	{
-		// void gst_bin_remove_many (GstBin *bin,  GstElement *element_1,  ...);
-		gst_bin_remove_many(gstBin, (element1 is null) ? null : element1.getElementStruct());
+		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -546,22 +501,13 @@ public class Bin : Element
 	 * if one is found, or NULL otherwise. If a pad is found, the caller
 	 * owns a reference to it and should use gst_object_unref() on the
 	 * pad when it is not needed any longer.
-	 * bin:
-	 *  bin in which to look for elements with unconnected pads
-	 * direction:
-	 *  whether to look for an unconnected source or sink pad
-	 * Returns:
-	 *  unconnected pad of the given direction, or NULL.
-	 * Since 0.10.3
+	 * Params:
+	 * direction =  whether to look for an unconnected source or sink pad
+	 * Returns: unconnected pad of the given direction, or NULL.Since 0.10.3
 	 */
 	public GstPad* findUnconnectedPad(GstPadDirection direction)
 	{
 		// GstPad* gst_bin_find_unconnected_pad (GstBin *bin,  GstPadDirection direction);
 		return gst_bin_find_unconnected_pad(gstBin, direction);
 	}
-	
-	
-	
-	
-	
 }

@@ -20,49 +20,52 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-// Adapted from John Reimer's DUI loader modules
-
 
 module gstreamerc.gstinterfaces;
 
-private import std.stdio;
+version(Tango)
+	private import tango.stdc.stdio;
+else
+	private import std.stdio;
+
 private import gstreamerc.gstinterfacestypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
 private import gtkc.glibtypes;
+private import gtkc.gobjecttypes;
+private import gtkc.gthreadtypes;
+private import glib.Str;
 
-private Linker gstinterfaces_Linker;
 
 static this()
 {
- gstinterfaces_Linker = new Linker(libPath ~ importLibs[LIBRARY.GSTINTERFACES] );
- gstinterfaces_Linker.link(gstinterfacesLinks);
- debug writefln("* Finished static this(): gstinterfaces");
+
+	// gstinterfaces.XOverlay
+
+	Linker.link(gst_x_overlay_set_xwindow_id, "gst_x_overlay_set_xwindow_id", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_got_xwindow_id, "gst_x_overlay_got_xwindow_id", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_prepare_xwindow_id, "gst_x_overlay_prepare_xwindow_id", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_expose, "gst_x_overlay_expose", LIBRARY.GSTINTERFACES);
+
 }
 
-static ~this()
+extern(C)
 {
- delete gstinterfaces_Linker;
- debug writefln("* Finished static ~this(): gstinterfaces");
+	// gstinterfaces.XOverlay
+	
+	typedef void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_set_xwindow_id;
+	typedef void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
+	typedef void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;
+	typedef void function(GstXOverlay* overlay) c_gst_x_overlay_expose;
+	
 }
 
-extern(C) 
-{
-	// gstinterfaces.GstXOverlay
-	
-	void function(GstXOverlay* overlay, gulong xwindowId)gst_x_overlay_set_xwindow_id;
-	void function(GstXOverlay* overlay, gulong xwindowId)gst_x_overlay_got_xwindow_id;
-	void function(GstXOverlay* overlay)gst_x_overlay_prepare_xwindow_id;
-	void function(GstXOverlay* overlay)gst_x_overlay_expose;
+// gstinterfaces.XOverlay
 
-}
+c_gst_x_overlay_set_xwindow_id  gst_x_overlay_set_xwindow_id;
+c_gst_x_overlay_got_xwindow_id  gst_x_overlay_got_xwindow_id;
+c_gst_x_overlay_prepare_xwindow_id  gst_x_overlay_prepare_xwindow_id;
+c_gst_x_overlay_expose  gst_x_overlay_expose;
 
-Symbol[] gstinterfacesLinks = 
-[
-	{ "gst_x_overlay_set_xwindow_id",  cast(void**)& gst_x_overlay_set_xwindow_id},
-	{ "gst_x_overlay_got_xwindow_id",  cast(void**)& gst_x_overlay_got_xwindow_id},
-	{ "gst_x_overlay_prepare_xwindow_id",  cast(void**)& gst_x_overlay_prepare_xwindow_id},
-	{ "gst_x_overlay_expose",  cast(void**)& gst_x_overlay_expose},
-	
-];
+

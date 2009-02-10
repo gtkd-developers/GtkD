@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Value
@@ -49,21 +50,15 @@
  * 	- GstStructure* -> Structure
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Structure;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -117,25 +112,10 @@ public class Structure
 	 */
 	public this (GstStructure* gstStructure)
 	{
-		version(noAssert)
+		if(gstStructure is null)
 		{
-			if ( gstStructure is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstStructure is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstStructure is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gstStructure !is null, "struct gstStructure is null on constructor");
+			this = null;
+			return;
 		}
 		this.gstStructure = gstStructure;
 	}
@@ -143,92 +123,79 @@ public class Structure
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * Creates a new, empty GstStructure with the given name.
-	 * name:
-	 *  name of new structure
-	 * Returns:
-	 *  a new, empty GstStructure
+	 * Params:
+	 * name =  name of new structure
+	 * Returns: a new, empty GstStructure
 	 */
-	public static Structure emptyNew(char[] name)
+	public static Structure emptyNew(string name)
 	{
 		// GstStructure* gst_structure_empty_new (const gchar *name);
-		return new Structure( gst_structure_empty_new(Str.toStringz(name)) );
+		auto p = gst_structure_empty_new(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Structure(cast(GstStructure*) p);
 	}
 	
 	/**
 	 * Creates a new, empty GstStructure with the given name as a GQuark.
-	 * quark:
-	 *  name of new structure
-	 * Returns:
-	 *  a new, empty GstStructure
+	 * Params:
+	 * quark =  name of new structure
+	 * Returns: a new, empty GstStructure
 	 */
 	public static Structure idEmptyNew(GQuark quark)
 	{
 		// GstStructure* gst_structure_id_empty_new (GQuark quark);
-		return new Structure( gst_structure_id_empty_new(quark) );
-	}
-	
-	/**
-	 * Creates a new GstStructure with the given name. Parses the
-	 * list of variable arguments and sets fields to the values listed.
-	 * Variable arguments should be passed as field name, field type,
-	 * and value. Last variable argument should be NULL.
-	 * name:
-	 *  name of new structure
-	 * firstfield:
-	 *  name of first field to set
-	 * ...:
-	 *  additional arguments
-	 * Returns:
-	 *  a new GstStructure
-	 */
-	public this (char[] name, char[] firstfield, ... )
-	{
-		// GstStructure* gst_structure_new (const gchar *name,  const gchar *firstfield,  ...);
-		this(cast(GstStructure*)gst_structure_new(Str.toStringz(name), Str.toStringz(firstfield)) );
+		auto p = gst_structure_id_empty_new(quark);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Structure(cast(GstStructure*) p);
 	}
 	
 	/**
 	 * Creates a new GstStructure with the given name. Structure fields
 	 * are set according to the varargs in a manner similar to
 	 * gst_structure_new.
-	 * name:
-	 *  name of new structure
-	 * firstfield:
-	 *  name of first field to set
-	 * varargs:
-	 *  variable argument list
-	 * Returns:
-	 *  a new GstStructure
+	 * Params:
+	 * name =  name of new structure
+	 * firstfield =  name of first field to set
+	 * varargs =  variable argument list
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, char[] firstfield, void* varargs)
+	public this (string name, string firstfield, void* varargs)
 	{
 		// GstStructure* gst_structure_new_valist (const gchar *name,  const gchar *firstfield,  va_list varargs);
-		this(cast(GstStructure*)gst_structure_new_valist(Str.toStringz(name), Str.toStringz(firstfield), varargs) );
+		auto p = gst_structure_new_valist(Str.toStringz(name), Str.toStringz(firstfield), varargs);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_structure_new_valist(Str.toStringz(name), Str.toStringz(firstfield), varargs)");
+		}
+		this(cast(GstStructure*) p);
 	}
 	
 	/**
 	 * Duplicates a GstStructure and all its fields and values.
-	 * structure:
-	 *  a GstStructure to duplicate
-	 * Returns:
-	 *  a new GstStructure.
+	 * Returns: a new GstStructure.
 	 */
 	public Structure copy()
 	{
 		// GstStructure* gst_structure_copy (const GstStructure *structure);
-		return new Structure( gst_structure_copy(gstStructure) );
+		auto p = gst_structure_copy(gstStructure);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Structure(cast(GstStructure*) p);
 	}
 	
 	/**
 	 * Frees a GstStructure and all its fields and values. The structure must not
 	 * have a parent when this function is called.
-	 * structure:
-	 *  the GstStructure to free
 	 */
 	public void free()
 	{
@@ -238,27 +205,21 @@ public class Structure
 	
 	/**
 	 * Get the name of structure as a string.
-	 * structure:
-	 *  a GstStructure
-	 * Returns:
-	 *  the name of the structure.
+	 * Returns: the name of the structure.
 	 */
-	public char[] getName()
+	public string getName()
 	{
 		// const gchar* gst_structure_get_name (const GstStructure *structure);
-		return Str.toString(gst_structure_get_name(gstStructure) );
+		return Str.toString(gst_structure_get_name(gstStructure));
 	}
 	
 	/**
 	 * Checks if the structure has the given name
-	 * structure:
-	 *  a GstStructure
-	 * name:
-	 *  structure name to check for
-	 * Returns:
-	 *  TRUE if name matches the name of the structure.
+	 * Params:
+	 * name =  structure name to check for
+	 * Returns: TRUE if name matches the name of the structure.
 	 */
-	public int hasName(char[] name)
+	public int hasName(string name)
 	{
 		// gboolean gst_structure_has_name (const GstStructure *structure,  const gchar *name);
 		return gst_structure_has_name(gstStructure, Str.toStringz(name));
@@ -267,12 +228,10 @@ public class Structure
 	/**
 	 * Sets the name of the structure to the given name. The string
 	 * provided is copied before being used.
-	 * structure:
-	 *  a GstStructure
-	 * name:
-	 *  the new name of the structure
+	 * Params:
+	 * name =  the new name of the structure
 	 */
-	public void setName(char[] name)
+	public void setName(string name)
 	{
 		// void gst_structure_set_name (GstStructure *structure,  const gchar *name);
 		gst_structure_set_name(gstStructure, Str.toStringz(name));
@@ -280,10 +239,7 @@ public class Structure
 	
 	/**
 	 * Get the name of structure as a GQuark.
-	 * structure:
-	 *  a GstStructure
-	 * Returns:
-	 *  the quark representing the name of the structure.
+	 * Returns: the quark representing the name of the structure.
 	 */
 	public GQuark getNameId()
 	{
@@ -293,30 +249,28 @@ public class Structure
 	
 	/**
 	 * Get the value of the field with GQuark field.
-	 * structure:
-	 *  a GstStructure
-	 * field:
-	 *  the GQuark of the field to get
-	 * Returns:
-	 *  the GValue corresponding to the field with the given name
-	 *  identifier.
+	 * Params:
+	 * field =  the GQuark of the field to get
+	 * Returns: the GValue corresponding to the field with the given name identifier.
 	 */
 	public Value idGetValue(GQuark field)
 	{
 		// const GValue* gst_structure_id_get_value (const GstStructure *structure,  GQuark field);
-		return new Value( gst_structure_id_get_value(gstStructure, field) );
+		auto p = gst_structure_id_get_value(gstStructure, field);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GValue*) p);
 	}
 	
 	/**
 	 * Sets the field with the given GQuark field to value. If the field
 	 * does not exist, it is created. If the field exists, the previous
 	 * value is replaced and freed.
-	 * structure:
-	 *  a GstStructure
-	 * field:
-	 *  a GQuark representing a field
-	 * value:
-	 *  the new value of the field
+	 * Params:
+	 * field =  a GQuark representing a field
+	 * value =  the new value of the field
 	 */
 	public void idSetValue(GQuark field, Value value)
 	{
@@ -326,96 +280,52 @@ public class Structure
 	
 	/**
 	 * Get the value of the field with name fieldname.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to get
-	 * Returns:
-	 *  the GValue corresponding to the field with the given name.
+	 * Params:
+	 * fieldname =  the name of the field to get
+	 * Returns: the GValue corresponding to the field with the given name.
 	 */
-	public Value getValue(char[] fieldname)
+	public Value getValue(string fieldname)
 	{
 		// const GValue* gst_structure_get_value (const GstStructure *structure,  const gchar *fieldname);
-		return new Value( gst_structure_get_value(gstStructure, Str.toStringz(fieldname)) );
+		auto p = gst_structure_get_value(gstStructure, Str.toStringz(fieldname));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Value(cast(GValue*) p);
 	}
 	
 	/**
 	 * Sets the field with the given name field to value. If the field
 	 * does not exist, it is created. If the field exists, the previous
 	 * value is replaced and freed.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to set
-	 * value:
-	 *  the new value of the field
+	 * Params:
+	 * fieldname =  the name of the field to set
+	 * value =  the new value of the field
 	 */
-	public void setValue(char[] fieldname, Value value)
+	public void setValue(string fieldname, Value value)
 	{
 		// void gst_structure_set_value (GstStructure *structure,  const gchar *fieldname,  const GValue *value);
 		gst_structure_set_value(gstStructure, Str.toStringz(fieldname), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
-	 * Parses the variable arguments and sets fields accordingly.
-	 * Variable arguments should be in the form field name, field type
-	 * (as a GType), value(s). The last variable argument should be NULL.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to set
-	 * ...:
-	 *  variable arguments
-	 */
-	public void set(char[] fieldname, ... )
-	{
-		// void gst_structure_set (GstStructure *structure,  const gchar *fieldname,  ...);
-		gst_structure_set(gstStructure, Str.toStringz(fieldname));
-	}
-	
-	/**
 	 * va_list form of gst_structure_set().
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to set
-	 * varargs:
-	 *  variable arguments
+	 * Params:
+	 * fieldname =  the name of the field to set
+	 * varargs =  variable arguments
 	 */
-	public void setValist(char[] fieldname, void* varargs)
+	public void setValist(string fieldname, void* varargs)
 	{
 		// void gst_structure_set_valist (GstStructure *structure,  const gchar *fieldname,  va_list varargs);
 		gst_structure_set_valist(gstStructure, Str.toStringz(fieldname), varargs);
 	}
 	
 	/**
-	 * Identical to gst_structure_set, except that field names are
-	 * passed using the GQuark for the field name. This allows more efficient
-	 * setting of the structure if the caller already knows the associated
-	 * quark values.
-	 * The last variable argument must be NULL.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the GQuark for the name of the field to set
-	 * ...:
-	 *  variable arguments
-	 * Since 0.10.10
-	 */
-	public void idSet(GQuark fieldname, ... )
-	{
-		// void gst_structure_id_set (GstStructure *structure,  GQuark fieldname,  ...);
-		gst_structure_id_set(gstStructure, fieldname);
-	}
-	
-	/**
 	 * va_list form of gst_structure_id_set().
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to set
-	 * varargs:
-	 *  variable arguments
+	 * Params:
+	 * fieldname =  the name of the field to set
+	 * varargs =  variable arguments
 	 * Since 0.10.10
 	 */
 	public void idSetValist(GQuark fieldname, void* varargs)
@@ -427,43 +337,22 @@ public class Structure
 	/**
 	 * Removes the field with the given name. If the field with the given
 	 * name does not exist, the structure is unchanged.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to remove
+	 * Params:
+	 * fieldname =  the name of the field to remove
 	 */
-	public void removeField(char[] fieldname)
+	public void removeField(string fieldname)
 	{
 		// void gst_structure_remove_field (GstStructure *structure,  const gchar *fieldname);
 		gst_structure_remove_field(gstStructure, Str.toStringz(fieldname));
 	}
 	
 	/**
-	 * Removes the fields with the given names. If a field does not exist, the
-	 * argument is ignored.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to remove
-	 * ...:
-	 *  NULL-terminated list of more fieldnames to remove
-	 */
-	public void removeFields(char[] fieldname, ... )
-	{
-		// void gst_structure_remove_fields (GstStructure *structure,  const gchar *fieldname,  ...);
-		gst_structure_remove_fields(gstStructure, Str.toStringz(fieldname));
-	}
-	
-	/**
 	 * va_list form of gst_structure_remove_fields().
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field to remove
-	 * varargs:
-	 *  NULL-terminated list of more fieldnames to remove
+	 * Params:
+	 * fieldname =  the name of the field to remove
+	 * varargs =  NULL-terminated list of more fieldnames to remove
 	 */
-	public void removeFieldsValist(char[] fieldname, void* varargs)
+	public void removeFieldsValist(string fieldname, void* varargs)
 	{
 		// void gst_structure_remove_fields_valist  (GstStructure *structure,  const gchar *fieldname,  va_list varargs);
 		gst_structure_remove_fields_valist(gstStructure, Str.toStringz(fieldname), varargs);
@@ -471,8 +360,6 @@ public class Structure
 	
 	/**
 	 * Removes all fields in a GstStructure.
-	 * structure:
-	 *  a GstStructure
 	 */
 	public void removeAllFields()
 	{
@@ -484,14 +371,11 @@ public class Structure
 	 * Finds the field with the given name, and returns the type of the
 	 * value it contains. If the field is not found, G_TYPE_INVALID is
 	 * returned.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of the field
-	 * Returns:
-	 *  the GValue of the field
+	 * Params:
+	 * fieldname =  the name of the field
+	 * Returns: the GValue of the field
 	 */
-	public GType getFieldType(char[] fieldname)
+	public GType getFieldType(string fieldname)
 	{
 		// GType gst_structure_get_field_type (const GstStructure *structure,  const gchar *fieldname);
 		return gst_structure_get_field_type(gstStructure, Str.toStringz(fieldname));
@@ -500,15 +384,10 @@ public class Structure
 	/**
 	 * Calls the provided function once for each field in the GstStructure. The
 	 * function must not modify the fields. Also see gst_structure_map_in_place().
-	 * structure:
-	 *  a GstStructure
-	 * func:
-	 *  a function to call for each field
-	 * user_data:
-	 *  private data
-	 * Returns:
-	 *  TRUE if the supplied function returns TRUE For each of the fields,
-	 * FALSE otherwise.
+	 * Params:
+	 * func =  a function to call for each field
+	 * userData =  private data
+	 * Returns: TRUE if the supplied function returns TRUE For each of the fields,FALSE otherwise.
 	 */
 	public int foreac(GstStructureForeachFunc func, void* userData)
 	{
@@ -518,10 +397,7 @@ public class Structure
 	
 	/**
 	 * Get the number of fields in the structure.
-	 * structure:
-	 *  a GstStructure
-	 * Returns:
-	 *  the number of fields in the structure
+	 * Returns: the number of fields in the structure
 	 */
 	public int nFields()
 	{
@@ -531,14 +407,11 @@ public class Structure
 	
 	/**
 	 * Check if structure contains a field named fieldname.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * Returns:
-	 *  TRUE if the structure contains a field with the given name
+	 * Params:
+	 * fieldname =  the name of a field
+	 * Returns: TRUE if the structure contains a field with the given name
 	 */
-	public int hasField(char[] fieldname)
+	public int hasField(string fieldname)
 	{
 		// gboolean gst_structure_has_field (const GstStructure *structure,  const gchar *fieldname);
 		return gst_structure_has_field(gstStructure, Str.toStringz(fieldname));
@@ -546,16 +419,12 @@ public class Structure
 	
 	/**
 	 * Check if structure contains a field named fieldname and with GType type.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * type:
-	 *  the type of a value
-	 * Returns:
-	 *  TRUE if the structure contains a field with the given name and type
+	 * Params:
+	 * fieldname =  the name of a field
+	 * type =  the type of a value
+	 * Returns: TRUE if the structure contains a field with the given name and type
 	 */
-	public int hasFieldTyped(char[] fieldname, GType type)
+	public int hasFieldTyped(string fieldname, GType type)
 	{
 		// gboolean gst_structure_has_field_typed (const GstStructure *structure,  const gchar *fieldname,  GType type);
 		return gst_structure_has_field_typed(gstStructure, Str.toStringz(fieldname), type);
@@ -565,18 +434,12 @@ public class Structure
 	 * Sets the boolean pointed to by value corresponding to the value of the
 	 * given field. Caller is responsible for making sure the field exists
 	 * and has the correct type.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value:
-	 *  a pointer to a gboolean to set
-	 * Returns:
-	 *  TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain a boolean, this
-	 * function returns FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * value =  a pointer to a gboolean to set
+	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a boolean, thisfunction returns FALSE.
 	 */
-	public int getBoolean(char[] fieldname, int* value)
+	public int getBoolean(string fieldname, int* value)
 	{
 		// gboolean gst_structure_get_boolean (const GstStructure *structure,  const gchar *fieldname,  gboolean *value);
 		return gst_structure_get_boolean(gstStructure, Str.toStringz(fieldname), value);
@@ -586,18 +449,12 @@ public class Structure
 	 * Sets the int pointed to by value corresponding to the value of the
 	 * given field. Caller is responsible for making sure the field exists
 	 * and has the correct type.
-	 * Returns: TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain an int, this function
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value:
-	 *  a pointer to an int to set
-	 * Returns:
-	 * FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * value =  a pointer to an int to set
+	 * Returns:with fieldname or the existing field did not contain an int, this functionReturns:FALSE.
 	 */
-	public int getInt(char[] fieldname, int* value)
+	public int getInt(string fieldname, int* value)
 	{
 		// gboolean gst_structure_get_int (const GstStructure *structure,  const gchar *fieldname,  gint *value);
 		return gst_structure_get_int(gstStructure, Str.toStringz(fieldname), value);
@@ -607,18 +464,12 @@ public class Structure
 	 * Sets the GstFourcc pointed to by value corresponding to the value of the
 	 * given field. Caller is responsible for making sure the field exists
 	 * and has the correct type.
-	 * Returns: TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain a fourcc, this function
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value:
-	 *  a pointer to a GstFourcc to set
-	 * Returns:
-	 * FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * value =  a pointer to a GstFourcc to set
+	 * Returns:with fieldname or the existing field did not contain a fourcc, this functionReturns:FALSE.
 	 */
-	public int getFourcc(char[] fieldname, uint* value)
+	public int getFourcc(string fieldname, uint* value)
 	{
 		// gboolean gst_structure_get_fourcc (const GstStructure *structure,  const gchar *fieldname,  guint32 *value);
 		return gst_structure_get_fourcc(gstStructure, Str.toStringz(fieldname), value);
@@ -628,18 +479,12 @@ public class Structure
 	 * Sets the double pointed to by value corresponding to the value of the
 	 * given field. Caller is responsible for making sure the field exists
 	 * and has the correct type.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value:
-	 *  a pointer to a GstFourcc to set
-	 * Returns:
-	 *  TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain a double, this
-	 * function returns FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * value =  a pointer to a GstFourcc to set
+	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a double, this function returns FALSE.
 	 */
-	public int getDouble(char[] fieldname, double* value)
+	public int getDouble(string fieldname, double* value)
 	{
 		// gboolean gst_structure_get_double (const GstStructure *structure,  const gchar *fieldname,  gdouble *value);
 		return gst_structure_get_double(gstStructure, Str.toStringz(fieldname), value);
@@ -651,36 +496,26 @@ public class Structure
 	 * sure the field exists and has the correct type.
 	 * The string should not be modified, and remains valid until the next
 	 * call to a gst_structure_*() function with the given structure.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * Returns:
-	 *  a pointer to the string or NULL when the field did not exist
-	 * or did not contain a string.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * Returns: a pointer to the string or NULL when the field did not existor did not contain a string.
 	 */
-	public char[] getString(char[] fieldname)
+	public string getString(string fieldname)
 	{
 		// const gchar* gst_structure_get_string (const GstStructure *structure,  const gchar *fieldname);
-		return Str.toString(gst_structure_get_string(gstStructure, Str.toStringz(fieldname)) );
+		return Str.toString(gst_structure_get_string(gstStructure, Str.toStringz(fieldname)));
 	}
 	
 	/**
 	 * Sets the date pointed to by value corresponding to the date of the
 	 * given field. Caller is responsible for making sure the field exists
 	 * and has the correct type.
-	 * Returns: TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain a data, this function
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value:
-	 *  a pointer to a GDate to set
-	 * Returns:
-	 * FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * value =  a pointer to a GDate to set
+	 * Returns:with fieldname or the existing field did not contain a data, this functionReturns:FALSE.
 	 */
-	public int getDate(char[] fieldname, GDate** value)
+	public int getDate(string fieldname, GDate** value)
 	{
 		// gboolean gst_structure_get_date (const GstStructure *structure,  const gchar *fieldname,  GDate **value);
 		return gst_structure_get_date(gstStructure, Str.toStringz(fieldname), value);
@@ -690,18 +525,12 @@ public class Structure
 	 * Sets the clock time pointed to by value corresponding to the clock time
 	 * of the given field. Caller is responsible for making sure the field exists
 	 * and has the correct type.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value:
-	 *  a pointer to a GstClockTime to set
-	 * Returns:
-	 *  TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain a GstClockTime, this
-	 * function returns FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * value =  a pointer to a GstClockTime to set
+	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a GstClockTime, this function returns FALSE.
 	 */
-	public int getClockTime(char[] fieldname, GstClockTime* value)
+	public int getClockTime(string fieldname, GstClockTime* value)
 	{
 		// gboolean gst_structure_get_clock_time (const GstStructure *structure,  const gchar *fieldname,  GstClockTime *value);
 		return gst_structure_get_clock_time(gstStructure, Str.toStringz(fieldname), value);
@@ -711,20 +540,13 @@ public class Structure
 	 * Sets the int pointed to by value corresponding to the value of the
 	 * given field. Caller is responsible for making sure the field exists,
 	 * has the correct type and that the enumtype is correct.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * enumtype:
-	 *  the enum type of a field
-	 * value:
-	 *  a pointer to an int to set
-	 * Returns:
-	 *  TRUE if the value could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain an enum of the given
-	 * type, this function returns FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * enumtype =  the enum type of a field
+	 * value =  a pointer to an int to set
+	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain an enum of the giventype, this function returns FALSE.
 	 */
-	public int getEnum(char[] fieldname, GType enumtype, int* value)
+	public int getEnum(string fieldname, GType enumtype, int* value)
 	{
 		// gboolean gst_structure_get_enum (const GstStructure *structure,  const gchar *fieldname,  GType enumtype,  gint *value);
 		return gst_structure_get_enum(gstStructure, Str.toStringz(fieldname), enumtype, value);
@@ -734,20 +556,13 @@ public class Structure
 	 * Sets the integers pointed to by value_numerator and value_denominator
 	 * corresponding to the value of the given field. Caller is responsible
 	 * for making sure the field exists and has the correct type.
-	 * structure:
-	 *  a GstStructure
-	 * fieldname:
-	 *  the name of a field
-	 * value_numerator:
-	 *  a pointer to an int to set
-	 * value_denominator:
-	 *  a pointer to an int to set
-	 * Returns:
-	 *  TRUE if the values could be set correctly. If there was no field
-	 * with fieldname or the existing field did not contain a GstFraction, this
-	 * function returns FALSE.
+	 * Params:
+	 * fieldname =  the name of a field
+	 * valueNumerator =  a pointer to an int to set
+	 * valueDenominator =  a pointer to an int to set
+	 * Returns: TRUE if the values could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a GstFraction, this function returns FALSE.
 	 */
-	public int getFraction(char[] fieldname, int* valueNumerator, int* valueDenominator)
+	public int getFraction(string fieldname, int* valueNumerator, int* valueDenominator)
 	{
 		// gboolean gst_structure_get_fraction (const GstStructure *structure,  const gchar *fieldname,  gint *value_numerator,  gint *value_denominator);
 		return gst_structure_get_fraction(gstStructure, Str.toStringz(fieldname), valueNumerator, valueDenominator);
@@ -757,15 +572,10 @@ public class Structure
 	 * Calls the provided function once for each field in the GstStructure. In
 	 * contrast to gst_structure_foreach(), the function may modify but not delete the
 	 * fields. The structure must be mutable.
-	 * structure:
-	 *  a GstStructure
-	 * func:
-	 *  a function to call for each field
-	 * user_data:
-	 *  private data
-	 * Returns:
-	 *  TRUE if the supplied function returns TRUE For each of the fields,
-	 * FALSE otherwise.
+	 * Params:
+	 * func =  a function to call for each field
+	 * userData =  private data
+	 * Returns: TRUE if the supplied function returns TRUE For each of the fields,FALSE otherwise.
 	 */
 	public int mapInPlace(GstStructureMapFunc func, void* userData)
 	{
@@ -775,17 +585,14 @@ public class Structure
 	
 	/**
 	 * Get the name of the given field number, counting from 0 onwards.
-	 * structure:
-	 *  a GstStructure
-	 * index:
-	 *  the index to get the name of
-	 * Returns:
-	 *  the name of the given field number
+	 * Params:
+	 * index =  the index to get the name of
+	 * Returns: the name of the given field number
 	 */
-	public char[] nthFieldName(uint index)
+	public string nthFieldName(uint index)
 	{
 		// const gchar* gst_structure_nth_field_name (const GstStructure *structure,  guint index);
-		return Str.toString(gst_structure_nth_field_name(gstStructure, index) );
+		return Str.toString(gst_structure_nth_field_name(gstStructure, index));
 	}
 	
 	/**
@@ -793,10 +600,8 @@ public class Structure
 	 * determine whether a structure is mutable or not. This function should only be
 	 * called by code implementing parent objects of GstStructure, as described in
 	 * the MT Refcounting section of the design documents.
-	 * structure:
-	 *  a GstStructure
-	 * refcount:
-	 *  a pointer to the parent's refcount
+	 * Params:
+	 * refcount =  a pointer to the parent's refcount
 	 */
 	public void setParentRefcount(int* refcount)
 	{
@@ -806,49 +611,43 @@ public class Structure
 	
 	/**
 	 * Converts structure to a human-readable string representation.
-	 * structure:
-	 *  a GstStructure
-	 * Returns:
-	 *  a pointer to string allocated by g_malloc(). g_free() after
-	 * usage.
+	 * Returns: a pointer to string allocated by g_malloc(). g_free() afterusage.
 	 */
-	public char[] toString()
+	public string toString()
 	{
 		// gchar* gst_structure_to_string (const GstStructure *structure);
-		return Str.toString(gst_structure_to_string(gstStructure) );
+		return Str.toString(gst_structure_to_string(gstStructure));
 	}
 	
 	/**
 	 * Creates a GstStructure from a string representation.
 	 * If end is not NULL, a pointer to the place inside the given string
 	 * where parsing ended will be returned.
-	 * string:
-	 *  a string representation of a GstStructure.
-	 * end:
-	 *  pointer to store the end of the string in.
-	 * Returns:
-	 *  a new GstStructure or NULL when the string could not
-	 * be parsed. Free after usage.
+	 * Params:
+	 * string =  a string representation of a GstStructure.
+	 * end =  pointer to store the end of the string in.
+	 * Returns: a new GstStructure or NULL when the string could notbe parsed. Free after usage.
 	 */
-	public static Structure fromString(char[] string, char** end)
+	public static Structure fromString(string string, char** end)
 	{
 		// GstStructure* gst_structure_from_string (const gchar *string,  gchar **end);
-		return new Structure( gst_structure_from_string(Str.toStringz(string), end) );
+		auto p = gst_structure_from_string(Str.toStringz(string), end);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Structure(cast(GstStructure*) p);
 	}
 	
 	/**
 	 * Fixates a GstStructure by changing the given field to the nearest
 	 * integer to target that is a subset of the existing field.
-	 * structure:
-	 *  a GstStructure
-	 * field_name:
-	 *  a field in structure
-	 * target:
-	 *  the target value of the fixation
-	 * Returns:
-	 *  TRUE if the structure could be fixated
+	 * Params:
+	 * fieldName =  a field in structure
+	 * target =  the target value of the fixation
+	 * Returns: TRUE if the structure could be fixated
 	 */
-	public int fixateFieldNearestInt(char[] fieldName, int target)
+	public int fixateFieldNearestInt(string fieldName, int target)
 	{
 		// gboolean gst_structure_fixate_field_nearest_int  (GstStructure *structure,  const char *field_name,  int target);
 		return gst_structure_fixate_field_nearest_int(gstStructure, Str.toStringz(fieldName), target);
@@ -857,16 +656,12 @@ public class Structure
 	/**
 	 * Fixates a GstStructure by changing the given field to the nearest
 	 * double to target that is a subset of the existing field.
-	 * structure:
-	 *  a GstStructure
-	 * field_name:
-	 *  a field in structure
-	 * target:
-	 *  the target value of the fixation
-	 * Returns:
-	 *  TRUE if the structure could be fixated
+	 * Params:
+	 * fieldName =  a field in structure
+	 * target =  the target value of the fixation
+	 * Returns: TRUE if the structure could be fixated
 	 */
-	public int fixateFieldNearestDouble(char[] fieldName, double target)
+	public int fixateFieldNearestDouble(string fieldName, double target)
 	{
 		// gboolean gst_structure_fixate_field_nearest_double  (GstStructure *structure,  const char *field_name,  double target);
 		return gst_structure_fixate_field_nearest_double(gstStructure, Str.toStringz(fieldName), target);
@@ -876,18 +671,13 @@ public class Structure
 	 * Fixates a GstStructure by changing the given field to the nearest
 	 * fraction to target_numerator/target_denominator that is a subset
 	 * of the existing field.
-	 * structure:
-	 *  a GstStructure
-	 * field_name:
-	 *  a field in structure
-	 * target_numerator:
-	 *  The numerator of the target value of the fixation
-	 * target_denominator:
-	 *  The denominator of the target value of the fixation
-	 * Returns:
-	 *  TRUE if the structure could be fixated
+	 * Params:
+	 * fieldName =  a field in structure
+	 * targetNumerator =  The numerator of the target value of the fixation
+	 * targetDenominator =  The denominator of the target value of the fixation
+	 * Returns: TRUE if the structure could be fixated
 	 */
-	public int fixateFieldNearestFraction(char[] fieldName, int targetNumerator, int targetDenominator)
+	public int fixateFieldNearestFraction(string fieldName, int targetNumerator, int targetDenominator)
 	{
 		// gboolean gst_structure_fixate_field_nearest_fraction  (GstStructure *structure,  const char *field_name,  const gint target_numerator,  const gint target_denominator);
 		return gst_structure_fixate_field_nearest_fraction(gstStructure, Str.toStringz(fieldName), targetNumerator, targetDenominator);
@@ -896,18 +686,12 @@ public class Structure
 	/**
 	 * Fixates a GstStructure by changing the given field_name field to the given
 	 * target boolean if that field is not fixed yet.
-	 * structure:
-	 *  a GstStructure
-	 * field_name:
-	 *  a field in structure
-	 * target:
-	 *  the target value of the fixation
-	 * Returns:
-	 *  TRUE if the structure could be fixated
-	 * See Also
-	 * GstCaps, GstMessage, GstEvent, GstQuery
+	 * Params:
+	 * fieldName =  a field in structure
+	 * target =  the target value of the fixation
+	 * Returns: TRUE if the structure could be fixated
 	 */
-	public int fixateFieldBoolean(char[] fieldName, int target)
+	public int fixateFieldBoolean(string fieldName, int target)
 	{
 		// gboolean gst_structure_fixate_field_boolean  (GstStructure *structure,  const char *field_name,  gboolean target);
 		return gst_structure_fixate_field_boolean(gstStructure, Str.toStringz(fieldName), target);

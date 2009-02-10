@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Value
@@ -49,21 +50,15 @@
  * 	- GstMiniObject* -> MiniObject
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.MiniObject;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -104,25 +99,10 @@ public class MiniObject
 	 */
 	public this (GstMiniObject* gstMiniObject)
 	{
-		version(noAssert)
+		if(gstMiniObject is null)
 		{
-			if ( gstMiniObject is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstMiniObject is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstMiniObject is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gstMiniObject !is null, "struct gstMiniObject is null on constructor");
+			this = null;
+			return;
 		}
 		this.gstMiniObject = gstMiniObject;
 	}
@@ -130,42 +110,38 @@ public class MiniObject
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new mini-object of the desired type.
 	 * MT safe
-	 * type:
-	 *  the GType of the mini-object to create
-	 * Returns:
-	 *  the new mini-object.
+	 * Params:
+	 * type =  the GType of the mini-object to create
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType type)
 	{
 		// GstMiniObject* gst_mini_object_new (GType type);
-		this(cast(GstMiniObject*)gst_mini_object_new(type) );
+		auto p = gst_mini_object_new(type);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_mini_object_new(type)");
+		}
+		this(cast(GstMiniObject*) p);
 	}
 	
 	/**
 	 * Creates a copy of the mini-object.
 	 * MT safe
-	 * mini_object:
-	 *  the mini-object to copy
-	 * Returns:
-	 *  the new mini-object.
+	 * Returns: the new mini-object.
 	 */
 	public MiniObject copy()
 	{
 		// GstMiniObject* gst_mini_object_copy (const GstMiniObject *mini_object);
-		return new MiniObject( gst_mini_object_copy(gstMiniObject) );
+		auto p = gst_mini_object_copy(gstMiniObject);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MiniObject(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -174,10 +150,7 @@ public class MiniObject
 	 * flag is not set. Modification of a mini-object should only be
 	 * done after verifying that it is writable.
 	 * MT safe
-	 * mini_object:
-	 *  the mini-object to check
-	 * Returns:
-	 *  TRUE if the object is writable.
+	 * Returns: TRUE if the object is writable.
 	 */
 	public int isWritable()
 	{
@@ -190,15 +163,17 @@ public class MiniObject
 	 * returned. This gives away the reference to the original mini object,
 	 * and returns a reference to the new object.
 	 * MT safe
-	 * mini_object:
-	 *  the mini-object to make writable
-	 * Returns:
-	 *  a mini-object (possibly the same pointer) that is writable.
+	 * Returns: a mini-object (possibly the same pointer) that is writable.
 	 */
 	public MiniObject makeWritable()
 	{
 		// GstMiniObject* gst_mini_object_make_writable  (GstMiniObject *mini_object);
-		return new MiniObject( gst_mini_object_make_writable(gstMiniObject) );
+		auto p = gst_mini_object_make_writable(gstMiniObject);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MiniObject(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -209,22 +184,22 @@ public class MiniObject
 	 * GstMiniObject instances can potentially increase the number
 	 * of memcpy operations in a pipeline, especially if the minibject
 	 * is a GstBuffer.
-	 * mini_object:
-	 *  the mini-object
-	 * Returns:
-	 *  the mini-object.
+	 * Returns: the mini-object.
 	 */
 	public MiniObject doref()
 	{
 		// GstMiniObject* gst_mini_object_ref (GstMiniObject *mini_object);
-		return new MiniObject( gst_mini_object_ref(gstMiniObject) );
+		auto p = gst_mini_object_ref(gstMiniObject);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MiniObject(cast(GstMiniObject*) p);
 	}
 	
 	/**
 	 * Decreases the reference count of the mini-object, possibly freeing
 	 * the mini-object.
-	 * mini_object:
-	 *  the mini-object
 	 */
 	public void unref()
 	{
@@ -236,10 +211,9 @@ public class MiniObject
 	 * Modifies a pointer to point to a new mini-object. The modification
 	 * is done atomically, and the reference counts are updated correctly.
 	 * Either newdata and the value pointed to by olddata may be NULL.
-	 * olddata:
-	 *  pointer to a pointer to a mini-object to be replaced
-	 * newdata:
-	 *  pointer to new mini-object
+	 * Params:
+	 * olddata =  pointer to a pointer to a mini-object to be replaced
+	 * newdata =  pointer to new mini-object
 	 */
 	public static void replace(GstMiniObject** olddata, MiniObject newdata)
 	{
@@ -249,20 +223,15 @@ public class MiniObject
 	
 	/**
 	 * Creates a new GParamSpec instance that hold GstMiniObject references.
-	 * name:
-	 *  the canonical name of the property
-	 * nick:
-	 *  the nickname of the property
-	 * blurb:
-	 *  a short description of the property
-	 * object_type:
-	 *  the GstMiniObjectType for the property
-	 * flags:
-	 *  a combination of GParamFlags
-	 * Returns:
-	 *  a newly allocated GParamSpec instance
+	 * Params:
+	 * name =  the canonical name of the property
+	 * nick =  the nickname of the property
+	 * blurb =  a short description of the property
+	 * objectType =  the GstMiniObjectType for the property
+	 * flags =  a combination of GParamFlags
+	 * Returns: a newly allocated GParamSpec instance
 	 */
-	public static GParamSpec* gstParamSpecMiniObject(char[] name, char[] nick, char[] blurb, GType objectType, GParamFlags flags)
+	public static GParamSpec* gstParamSpecMiniObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
 		// GParamSpec* gst_param_spec_mini_object (const char *name,  const char *nick,  const char *blurb,  GType object_type,  GParamFlags flags);
 		return gst_param_spec_mini_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
@@ -272,10 +241,9 @@ public class MiniObject
 	 * Set the contents of a GST_TYPE_MINI_OBJECT derived GValue to
 	 * mini_object.
 	 * The caller retains ownership of the reference.
-	 * value:
-	 *  a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * mini_object:
-	 *  mini object value to set
+	 * Params:
+	 * value =  a valid GValue of GST_TYPE_MINI_OBJECT derived type
+	 * miniObject =  mini object value to set
 	 */
 	public static void gstValueSetMiniObject(Value value, MiniObject miniObject)
 	{
@@ -288,10 +256,9 @@ public class MiniObject
 	 * mini_object.
 	 * Takes over the ownership of the caller's reference to mini_object;
 	 * the caller doesn't have to unref it any more.
-	 * value:
-	 *  a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * mini_object:
-	 *  mini object value to take
+	 * Params:
+	 * value =  a valid GValue of GST_TYPE_MINI_OBJECT derived type
+	 * miniObject =  mini object value to take
 	 */
 	public static void gstValueTakeMiniObject(Value value, MiniObject miniObject)
 	{
@@ -302,14 +269,18 @@ public class MiniObject
 	/**
 	 * Get the contents of a GST_TYPE_MINI_OBJECT derived GValue.
 	 * Does not increase the refcount of the returned object.
-	 * value:
-	 *  a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * Returns:
-	 *  mini object contents of value
+	 * Params:
+	 * value =  a valid GValue of GST_TYPE_MINI_OBJECT derived type
+	 * Returns: mini object contents of value
 	 */
 	public static MiniObject gstValueGetMiniObject(Value value)
 	{
 		// GstMiniObject* gst_value_get_mini_object (const GValue *value);
-		return new MiniObject( gst_value_get_mini_object((value is null) ? null : value.getValueStruct()) );
+		auto p = gst_value_get_mini_object((value is null) ? null : value.getValueStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new MiniObject(cast(GstMiniObject*) p);
 	}
 }

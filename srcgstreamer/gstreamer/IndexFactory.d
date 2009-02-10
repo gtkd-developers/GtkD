@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Index
@@ -49,21 +50,15 @@
  * 	- GstIndexFactory* -> IndexFactory
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.IndexFactory;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -71,12 +66,12 @@ private import gstreamer.Index;
 
 
 
+private import gstreamer.PluginFeature;
 
 /**
  * Description
  * GstIndexFactory is used to dynamically create GstIndex implementations.
  */
-private import gstreamer.PluginFeature;
 public class IndexFactory : PluginFeature
 {
 	
@@ -91,7 +86,7 @@ public class IndexFactory : PluginFeature
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstIndexFactory;
 	}
@@ -101,25 +96,17 @@ public class IndexFactory : PluginFeature
 	 */
 	public this (GstIndexFactory* gstIndexFactory)
 	{
-		version(noAssert)
+		if(gstIndexFactory is null)
 		{
-			if ( gstIndexFactory is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstIndexFactory is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstIndexFactory is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstIndexFactory);
+		if( ptr !is null )
 		{
-			assert(gstIndexFactory !is null, "struct gstIndexFactory is null on constructor");
+			this = cast(IndexFactory)ptr;
+			return;
 		}
 		super(cast(GstPluginFeature*)gstIndexFactory);
 		this.gstIndexFactory = gstIndexFactory;
@@ -128,28 +115,27 @@ public class IndexFactory : PluginFeature
 	/**
 	 */
 	
-	
 	/**
 	 * Create a new indexfactory with the given parameters
-	 * name:
-	 *  name of indexfactory to create
-	 * longdesc:
-	 *  long description of indexfactory to create
-	 * type:
-	 *  the GType of the GstIndex element of this factory
-	 * Returns:
-	 *  a new GstIndexFactory.
+	 * Params:
+	 * name =  name of indexfactory to create
+	 * longdesc =  long description of indexfactory to create
+	 * type =  the GType of the GstIndex element of this factory
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] name, char[] longdesc, GType type)
+	public this (string name, string longdesc, GType type)
 	{
 		// GstIndexFactory* gst_index_factory_new (const gchar *name,  const gchar *longdesc,  GType type);
-		this(cast(GstIndexFactory*)gst_index_factory_new(Str.toStringz(name), Str.toStringz(longdesc), type) );
+		auto p = gst_index_factory_new(Str.toStringz(name), Str.toStringz(longdesc), type);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_index_factory_new(Str.toStringz(name), Str.toStringz(longdesc), type)");
+		}
+		this(cast(GstIndexFactory*) p);
 	}
 	
 	/**
 	 * Removes the index from the global list.
-	 * factory:
-	 *  factory to destroy
 	 */
 	public void destroy()
 	{
@@ -159,44 +145,52 @@ public class IndexFactory : PluginFeature
 	
 	/**
 	 * Search for an indexfactory of the given name.
-	 * name:
-	 *  name of indexfactory to find
-	 * Returns:
-	 *  GstIndexFactory if found, NULL otherwise
+	 * Params:
+	 * name =  name of indexfactory to find
+	 * Returns: GstIndexFactory if found, NULL otherwise
 	 */
-	public static IndexFactory find(char[] name)
+	public static IndexFactory find(string name)
 	{
 		// GstIndexFactory* gst_index_factory_find (const gchar *name);
-		return new IndexFactory( gst_index_factory_find(Str.toStringz(name)) );
+		auto p = gst_index_factory_find(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new IndexFactory(cast(GstIndexFactory*) p);
 	}
 	
 	/**
 	 * Create a new GstIndex instance from the
 	 * given indexfactory.
-	 * factory:
-	 *  the factory used to create the instance
-	 * Returns:
-	 *  A new GstIndex instance.
+	 * Returns: A new GstIndex instance.
 	 */
 	public Index create()
 	{
 		// GstIndex* gst_index_factory_create (GstIndexFactory *factory);
-		return new Index( gst_index_factory_create(gstIndexFactory) );
+		auto p = gst_index_factory_create(gstIndexFactory);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Index(cast(GstIndex*) p);
 	}
 	
 	/**
 	 * Create a new GstIndex instance from the
 	 * indexfactory with the given name.
-	 * name:
-	 *  the name of the factory used to create the instance
-	 * Returns:
-	 *  A new GstIndex instance.
-	 * See Also
-	 * GstIndex
+	 * Params:
+	 * name =  the name of the factory used to create the instance
+	 * Returns: A new GstIndex instance.
 	 */
-	public static Index make(char[] name)
+	public static Index make(string name)
 	{
 		// GstIndex* gst_index_factory_make (const gchar *name);
-		return new Index( gst_index_factory_make(Str.toStringz(name)) );
+		auto p = gst_index_factory_make(Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Index(cast(GstIndex*) p);
 	}
 }

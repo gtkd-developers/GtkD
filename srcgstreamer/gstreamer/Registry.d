@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
@@ -53,22 +54,18 @@
  * 	- GstRegistry* -> Registry
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Registry;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListG;
@@ -77,6 +74,7 @@ private import gstreamer.PluginFeature;
 
 
 
+private import gstreamer.ObjectGst;
 
 /**
  * Description
@@ -122,7 +120,6 @@ private import gstreamer.PluginFeature;
  * process are marked with the GST_PLUGIN_FLAG_CACHED bit. These plugins are
  * removed at the end of intitialization.
  */
-private import gstreamer.ObjectGst;
 public class Registry : ObjectGst
 {
 	
@@ -137,7 +134,7 @@ public class Registry : ObjectGst
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gstRegistry;
 	}
@@ -147,25 +144,17 @@ public class Registry : ObjectGst
 	 */
 	public this (GstRegistry* gstRegistry)
 	{
-		version(noAssert)
+		if(gstRegistry is null)
 		{
-			if ( gstRegistry is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstRegistry is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstRegistry is null on constructor");
-				}
-				zero = zero / zero;
-			}
+			this = null;
+			return;
 		}
-		else
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gstRegistry);
+		if( ptr !is null )
 		{
-			assert(gstRegistry !is null, "struct gstRegistry is null on constructor");
+			this = cast(Registry)ptr;
+			return;
 		}
 		super(cast(GstObject*)gstRegistry);
 		this.gstRegistry = gstRegistry;
@@ -173,13 +162,13 @@ public class Registry : ObjectGst
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gpointer, Registry)[] onFeatureAddedListeners;
+	/**
+	 * Signals that a feature has been added to the registry (possibly
+	 * replacing a previously-added one by the same name)
+	 */
 	void addOnFeatureAdded(void delegate(gpointer, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("feature-added" in connectedSignals) )
@@ -197,17 +186,19 @@ public class Registry : ObjectGst
 	}
 	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, gpointer feature, Registry registry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gpointer, Registry) dlg ; registry.onFeatureAddedListeners )
 		{
 			dlg(feature, registry);
 		}
-		
-		return consumed;
 	}
 	
 	void delegate(gpointer, Registry)[] onPluginAddedListeners;
+	/**
+	 * Signals that a plugin has been added to the registry (possibly
+	 * replacing a previously-added one by the same name)
+	 * See Also
+	 * GstPlugin, GstPluginFeature
+	 */
 	void addOnPluginAdded(void delegate(gpointer, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plugin-added" in connectedSignals) )
@@ -225,101 +216,100 @@ public class Registry : ObjectGst
 	}
 	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, gpointer plugin, Registry registry)
 	{
-		bool consumed = false;
-		
 		foreach ( void delegate(gpointer, Registry) dlg ; registry.onPluginAddedListeners )
 		{
 			dlg(plugin, registry);
 		}
-		
-		return consumed;
 	}
-	
 	
 	
 	/**
 	 * Retrieves the default registry. The caller does not own a reference on the
 	 * registry, as it is alive as long as GStreamer is initialized.
-	 * Returns:
-	 *  The default GstRegistry.
+	 * Returns: The default GstRegistry.
 	 */
 	public static Registry getDefault()
 	{
 		// GstRegistry* gst_registry_get_default (void);
-		return new Registry( gst_registry_get_default() );
+		auto p = gst_registry_get_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new Registry(cast(GstRegistry*) p);
 	}
 	
 	/**
 	 * Retrieves a GList of GstPluginFeature of type.
-	 * registry:
-	 *  a GstRegistry
-	 * type:
-	 *  a GType.
-	 * Returns:
-	 *  a GList of GstPluginFeature of type. gst_plugin_feature_list_free
-	 * after usage.
-	 * MT safe.
+	 * Params:
+	 * type =  a GType.
+	 * Returns: a GList of GstPluginFeature of type. gst_plugin_feature_list_freeafter usage.MT safe.
 	 */
 	public ListG getFeatureList(GType type)
 	{
 		// GList* gst_registry_get_feature_list (GstRegistry *registry,  GType type);
-		return new ListG( gst_registry_get_feature_list(gstRegistry, type) );
+		auto p = gst_registry_get_feature_list(gstRegistry, type);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Retrieves a GList of features of the plugin with name name.
-	 * registry:
-	 *  a GstRegistry.
-	 * name:
-	 *  a plugin name.
-	 * Returns:
-	 *  a GList of GstPluginFeature. gst_plugin_feature_list_free() after usage.
+	 * Params:
+	 * name =  a plugin name.
+	 * Returns: a GList of GstPluginFeature. gst_plugin_feature_list_free() after usage.
 	 */
-	public ListG getFeatureListByPlugin(char[] name)
+	public ListG getFeatureListByPlugin(string name)
 	{
 		// GList* gst_registry_get_feature_list_by_plugin  (GstRegistry *registry,  const gchar *name);
-		return new ListG( gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name)) );
+		auto p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Get the list of paths for the given registry.
-	 * registry:
-	 *  the registry to get the pathlist of
-	 * Returns:
-	 *  A Glist of paths as strings. g_list_free after use.
-	 * MT safe.
+	 * Returns: A Glist of paths as strings. g_list_free after use.MT safe.
 	 */
 	public ListG getPathList()
 	{
 		// GList* gst_registry_get_path_list (GstRegistry *registry);
-		return new ListG( gst_registry_get_path_list(gstRegistry) );
+		auto p = gst_registry_get_path_list(gstRegistry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Get a copy of all plugins registered in the given registry. The refcount
 	 * of each element in the list in incremented.
-	 * registry:
-	 *  the registry to search
-	 * Returns:
-	 *  a GList of GstPlugin. gst_plugin_list_free after use.
-	 * MT safe.
+	 * Returns: a GList of GstPlugin. gst_plugin_list_free after use.MT safe.
 	 */
 	public ListG getPluginList()
 	{
 		// GList* gst_registry_get_plugin_list (GstRegistry *registry);
-		return new ListG( gst_registry_get_plugin_list(gstRegistry) );
+		auto p = gst_registry_get_plugin_list(gstRegistry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Add the plugin to the registry. The plugin-added signal will be emitted.
 	 * This function will sink plugin.
-	 * registry:
-	 *  the registry to add the plugin to
-	 * plugin:
-	 *  the plugin to add
-	 * Returns:
-	 *  TRUE on success.
-	 * MT safe.
+	 * Params:
+	 * plugin =  the plugin to add
+	 * Returns: TRUE on success.MT safe.
 	 */
 	public int addPlugin(Plugin plugin)
 	{
@@ -330,10 +320,8 @@ public class Registry : ObjectGst
 	/**
 	 * Remove the plugin from the registry.
 	 * MT safe.
-	 * registry:
-	 *  the registry to remove the plugin from
-	 * plugin:
-	 *  the plugin to remove
+	 * Params:
+	 * plugin =  the plugin to remove
 	 */
 	public void removePlugin(Plugin plugin)
 	{
@@ -347,22 +335,21 @@ public class Registry : ObjectGst
 	 * returned (as a list with a single object).
 	 * Every plugin is reffed; use gst_plugin_list_free() after use, which
 	 * will unref again.
-	 * registry:
-	 *  registry to query
-	 * filter:
-	 *  the filter to use
-	 * first:
-	 *  only return first match
-	 * user_data:
-	 *  user data passed to the filter function
-	 * Returns:
-	 *  a GList of GstPlugin. Use gst_plugin_list_free() after usage.
-	 * MT safe.
+	 * Params:
+	 * filter =  the filter to use
+	 * first =  only return first match
+	 * userData =  user data passed to the filter function
+	 * Returns: a GList of GstPlugin. Use gst_plugin_list_free() after usage.MT safe.
 	 */
 	public ListG pluginFilter(GstPluginFilter filter, int first, void* userData)
 	{
 		// GList* gst_registry_plugin_filter (GstRegistry *registry,  GstPluginFilter filter,  gboolean first,  gpointer user_data);
-		return new ListG( gst_registry_plugin_filter(gstRegistry, filter, first, userData) );
+		auto p = gst_registry_plugin_filter(gstRegistry, filter, first, userData);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -370,90 +357,85 @@ public class Registry : ObjectGst
 	 * and returns a GList with the results.
 	 * If the first flag is set, only the first match is
 	 * returned (as a list with a single object).
-	 * registry:
-	 *  registry to query
-	 * filter:
-	 *  the filter to use
-	 * first:
-	 *  only return first match
-	 * user_data:
-	 *  user data passed to the filter function
-	 * Returns:
-	 *  a GList of plugin features, gst_plugin_feature_list_free after use.
-	 * MT safe.
+	 * Params:
+	 * filter =  the filter to use
+	 * first =  only return first match
+	 * userData =  user data passed to the filter function
+	 * Returns: a GList of plugin features, gst_plugin_feature_list_free after use.MT safe.
 	 */
 	public ListG featureFilter(GstPluginFeatureFilter filter, int first, void* userData)
 	{
 		// GList* gst_registry_feature_filter (GstRegistry *registry,  GstPluginFeatureFilter filter,  gboolean first,  gpointer user_data);
-		return new ListG( gst_registry_feature_filter(gstRegistry, filter, first, userData) );
+		auto p = gst_registry_feature_filter(gstRegistry, filter, first, userData);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Find the plugin with the given name in the registry.
 	 * The plugin will be reffed; caller is responsible for unreffing.
-	 * registry:
-	 *  the registry to search
-	 * name:
-	 *  the plugin name to find
-	 * Returns:
-	 *  The plugin with the given name or NULL if the plugin was not found.
-	 * gst_object_unref() after usage.
-	 * MT safe.
+	 * Params:
+	 * name =  the plugin name to find
+	 * Returns: The plugin with the given name or NULL if the plugin was not found.gst_object_unref() after usage.MT safe.
 	 */
-	public Plugin findPlugin(char[] name)
+	public Plugin findPlugin(string name)
 	{
 		// GstPlugin* gst_registry_find_plugin (GstRegistry *registry,  const gchar *name);
-		return new Plugin( gst_registry_find_plugin(gstRegistry, Str.toStringz(name)) );
+		auto p = gst_registry_find_plugin(gstRegistry, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
 	 * Find the pluginfeature with the given name and type in the registry.
-	 * registry:
-	 *  the registry to search
-	 * name:
-	 *  the pluginfeature name to find
-	 * type:
-	 *  the pluginfeature type to find
-	 * Returns:
-	 *  The pluginfeature with the given name and type or NULL
-	 * if the plugin was not found. gst_object_unref() after usage.
-	 * MT safe.
+	 * Params:
+	 * name =  the pluginfeature name to find
+	 * type =  the pluginfeature type to find
+	 * Returns: The pluginfeature with the given name and type or NULLif the plugin was not found. gst_object_unref() after usage.MT safe.
 	 */
-	public PluginFeature findFeature(char[] name, GType type)
+	public PluginFeature findFeature(string name, GType type)
 	{
 		// GstPluginFeature* gst_registry_find_feature (GstRegistry *registry,  const gchar *name,  GType type);
-		return new PluginFeature( gst_registry_find_feature(gstRegistry, Str.toStringz(name), type) );
+		auto p = gst_registry_find_feature(gstRegistry, Str.toStringz(name), type);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PluginFeature(cast(GstPluginFeature*) p);
 	}
 	
 	/**
 	 * Find a GstPluginFeature with name in registry.
-	 * registry:
-	 *  a GstRegistry
-	 * name:
-	 *  a GstPluginFeature name
-	 * Returns:
-	 *  a GstPluginFeature with its refcount incremented, use
-	 * gst_object_unref() after usage.
-	 * MT safe.
+	 * Params:
+	 * name =  a GstPluginFeature name
+	 * Returns: a GstPluginFeature with its refcount incremented, usegst_object_unref() after usage.MT safe.
 	 */
-	public PluginFeature lookupFeature(char[] name)
+	public PluginFeature lookupFeature(string name)
 	{
 		// GstPluginFeature* gst_registry_lookup_feature  (GstRegistry *registry,  const char *name);
-		return new PluginFeature( gst_registry_lookup_feature(gstRegistry, Str.toStringz(name)) );
+		auto p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new PluginFeature(cast(GstPluginFeature*) p);
 	}
 	
 	/**
 	 * Add the given path to the registry. The syntax of the
 	 * path is specific to the registry. If the path has already been
 	 * added, do nothing.
-	 * registry:
-	 *  the registry to add the path to
-	 * path:
-	 *  the path to add to the registry
-	 * Returns:
-	 *  TRUE if registry changed
+	 * Params:
+	 * path =  the path to add to the registry
+	 * Returns: TRUE if registry changed
 	 */
-	public int scanPath(char[] path)
+	public int scanPath(string path)
 	{
 		// gboolean gst_registry_scan_path (GstRegistry *registry,  const gchar *path);
 		return gst_registry_scan_path(gstRegistry, Str.toStringz(path));
@@ -461,14 +443,11 @@ public class Registry : ObjectGst
 	
 	/**
 	 * Read the contents of the binary cache file at location into registry.
-	 * registry:
-	 *  a GstRegistry
-	 * location:
-	 *  a filename
-	 * Returns:
-	 *  TRUE on success.
+	 * Params:
+	 * location =  a filename
+	 * Returns: TRUE on success.
 	 */
-	public int binaryReadCache(char[] location)
+	public int binaryReadCache(string location)
 	{
 		// gboolean gst_registry_binary_read_cache (GstRegistry *registry,  const char *location);
 		return gst_registry_binary_read_cache(gstRegistry, Str.toStringz(location));
@@ -476,11 +455,10 @@ public class Registry : ObjectGst
 	
 	/**
 	 * Write the cache to file. Part of the code was taken from gstregistryxml.c
-	 * registry:
-	 * location:
+	 * Params:
 	 * Returns:
 	 */
-	public int binaryWriteCache(char[] location)
+	public int binaryWriteCache(string location)
 	{
 		// gboolean gst_registry_binary_write_cache (GstRegistry *registry,  const char *location);
 		return gst_registry_binary_write_cache(gstRegistry, Str.toStringz(location));
@@ -488,14 +466,11 @@ public class Registry : ObjectGst
 	
 	/**
 	 * Read the contents of the XML cache file at location into registry.
-	 * registry:
-	 *  a GstRegistry
-	 * location:
-	 *  a filename
-	 * Returns:
-	 *  TRUE on success.
+	 * Params:
+	 * location =  a filename
+	 * Returns: TRUE on success.
 	 */
-	public int xmlReadCache(char[] location)
+	public int xmlReadCache(string location)
 	{
 		// gboolean gst_registry_xml_read_cache (GstRegistry *registry,  const char *location);
 		return gst_registry_xml_read_cache(gstRegistry, Str.toStringz(location));
@@ -504,14 +479,11 @@ public class Registry : ObjectGst
 	/**
 	 * Write registry in an XML format at the location given by
 	 * location. Directories are automatically created.
-	 * registry:
-	 *  a GstRegistry
-	 * location:
-	 *  a filename
-	 * Returns:
-	 *  TRUE on success.
+	 * Params:
+	 * location =  a filename
+	 * Returns: TRUE on success.
 	 */
-	public int xmlWriteCache(char[] location)
+	public int xmlWriteCache(string location)
 	{
 		// gboolean gst_registry_xml_write_cache (GstRegistry *registry,  const char *location);
 		return gst_registry_xml_write_cache(gstRegistry, Str.toStringz(location));
@@ -520,27 +492,26 @@ public class Registry : ObjectGst
 	/**
 	 * Look up a plugin in the given registry with the given filename.
 	 * If found, plugin is reffed.
-	 * registry:
-	 *  the registry to look up in
-	 * filename:
-	 *  the name of the file to look up
-	 * Returns:
-	 *  the GstPlugin if found, or NULL if not. gst_object_unref()
-	 * after usage.
+	 * Params:
+	 * filename =  the name of the file to look up
+	 * Returns: the GstPlugin if found, or NULL if not. gst_object_unref()after usage.
 	 */
-	public Plugin lookup(char[] filename)
+	public Plugin lookup(string filename)
 	{
 		// GstPlugin* gst_registry_lookup (GstRegistry *registry,  const char *filename);
-		return new Plugin( gst_registry_lookup(gstRegistry, Str.toStringz(filename)) );
+		auto p = gst_registry_lookup(gstRegistry, Str.toStringz(filename));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
 	 * Remove the feature from the registry.
 	 * MT safe.
-	 * registry:
-	 *  the registry to remove the feature from
-	 * feature:
-	 *  the feature to remove
+	 * Params:
+	 * feature =  the feature to remove
 	 */
 	public void removeFeature(PluginFeature feature)
 	{
@@ -551,13 +522,9 @@ public class Registry : ObjectGst
 	/**
 	 * Add the feature to the registry. The feature-added signal will be emitted.
 	 * This function sinks feature.
-	 * registry:
-	 *  the registry to add the plugin to
-	 * feature:
-	 *  the feature to add
-	 * Returns:
-	 *  TRUE on success.
-	 * MT safe.
+	 * Params:
+	 * feature =  the feature to add
+	 * Returns: TRUE on success.MT safe.
 	 */
 	public int addFeature(PluginFeature feature)
 	{
@@ -569,29 +536,16 @@ public class Registry : ObjectGst
 	 * Checks whether a plugin feature by the given name exists in the
 	 * default registry and whether its version is at least the
 	 * version required.
-	 * feature_name:
-	 *  the name of the feature (e.g. "oggdemux")
-	 * min_major:
-	 *  the minimum major version number
-	 * min_minor:
-	 *  the minimum minor version number
-	 * min_micro:
-	 *  the minimum micro version number
-	 * Returns:
-	 *  TRUE if the feature could be found and the version is
-	 * the same as the required version or newer, and FALSE otherwise.
+	 * Params:
+	 * featureName =  the name of the feature (e.g. "oggdemux")
+	 * minMajor =  the minimum major version number
+	 * minMinor =  the minimum minor version number
+	 * minMicro =  the minimum micro version number
+	 * Returns: TRUE if the feature could be found and the version isthe same as the required version or newer, and FALSE otherwise.
 	 */
-	public static int defaultRegistryCheckFeatureVersion(char[] featureName, uint minMajor, uint minMinor, uint minMicro)
+	public static int defaultRegistryCheckFeatureVersion(string featureName, uint minMajor, uint minMinor, uint minMicro)
 	{
 		// gboolean gst_default_registry_check_feature_version  (const gchar *feature_name,  guint min_major,  guint min_minor,  guint min_micro);
 		return gst_default_registry_check_feature_version(Str.toStringz(featureName), minMajor, minMinor, minMicro);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
