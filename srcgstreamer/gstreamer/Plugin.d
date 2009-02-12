@@ -67,6 +67,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Module;
 private import glib.ErrorG;
+private import glib.GException;
 private import glib.ListG;
 
 

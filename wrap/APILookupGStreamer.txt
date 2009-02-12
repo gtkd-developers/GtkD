@@ -148,6 +148,8 @@ file: gstreamer-Gst.html
 class: GStreamer
 prefix: gst_
 #GOptionGroup*
+import: glib.ErrorG
+import: glib.GException
 import: glib.Str
 nocode: gst_init
 code: start
@@ -719,6 +721,7 @@ class: ImplementsInterface
 prefix: gst_
 #prefix: gst_implements_interface_ #problem results in keyword cast
 prefix: gst_element_
+import: gstreamer.Element
 structWrap: GstElement* Element
 outFile: ImplementsInterface
 
@@ -1260,6 +1263,7 @@ import: glib.Str
 #structWrap: GQuark Quark
 import: glib.Module
 import: glib.ErrorG
+import: glib.GException
 import: glib.ListG
 structWrap: GstPlugin* Plugin
 structWrap: GModule* Module

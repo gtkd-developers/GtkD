@@ -57,6 +57,8 @@ public  import gstreamerc.gstreamertypes;
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 
+private import glib.ErrorG;
+private import glib.GException;
 
 private import glib.Str;
 

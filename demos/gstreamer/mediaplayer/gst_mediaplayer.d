@@ -491,7 +491,7 @@ int main(char[][] args)
 
 	Trace.formatln("Checking version of GStreamer...");
 	GStreamer.versio(&major, &minor, &micro, &nano);
-	Trace.formatln("This program is linked against GStreamer {}.{}.{}", major, minor, micro );
+	Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
 
 	GstMediaPlayer gstMediaPlayer = new GstMediaPlayer(args);
 
