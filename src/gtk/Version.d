@@ -75,7 +75,11 @@ private import gtkc.paths;
 public class Version
 {
 	
-	public static uint major()
+	/*
+	 * The major version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 2.)
+	 * This variable is in the library, so represents the GTK+ library you have linked against.
+	 */
+	public static int major()
 	{
 		uint* vers;
 		
@@ -83,7 +87,7 @@ public class Version
 		
 		if ( vers is null )
 		{
-			return -1
+			return -1;
 		}
 		else
 		{
@@ -91,7 +95,11 @@ public class Version
 		}
 	}
 	
-	public static uint minor()
+	/*
+	 * The minor version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 12.)
+	 * This variable is in the library, so represents the GTK+ library you have linked against.
+	 */
+	public static int minor()
 	{
 		uint* vers;
 		
@@ -99,7 +107,7 @@ public class Version
 		
 		if ( vers is null )
 		{
-			return -1
+			return -1;
 		}
 		else
 		{
@@ -107,15 +115,19 @@ public class Version
 		}
 	}
 	
-	public static uint micro()
+	/*
+	 * The micro version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 4.)
+	 * This variable is in the library, so represents the GTK+ library you have linked against.
+	 */
+	public static int micro()
 	{
 		uint* vers;
 		
-		Linker.link(vers, "gtk_minor_micro", LIBRARY.GTK);
+		Linker.link(vers, "gtk_micro_version", LIBRARY.GTK);
 		
 		if ( vers is null )
 		{
-			return -1
+			return -1;
 		}
 		else
 		{
