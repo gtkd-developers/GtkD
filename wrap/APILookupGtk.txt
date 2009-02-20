@@ -909,6 +909,58 @@ file: gtk-Feature-Test-Macros.html
 class: Version
 prefix: gtk_
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
+
+code: start
+	public static int major()
+	{
+		uint* vers;
+		
+		Linker.link(vers, "gtk_major_version", LIBRARY.GTK);
+		
+		if ( vers is null )
+		{
+			return -1;
+		}
+		else
+		{
+			return *vers;
+		}
+	}
+	
+	public static int minor()
+	{
+		uint* vers;
+		
+		Linker.link(vers, "gtk_minor_version", LIBRARY.GTK);
+		
+		if ( vers is null )
+		{
+			return -1;
+		}
+		else
+		{
+			return *vers;
+		}
+	}
+	
+	public static int micro()
+	{
+		uint* vers;
+		
+		Linker.link(vers, "gtk_micro_version", LIBRARY.GTK);
+		
+		if ( vers is null )
+		{
+			return -1;
+		}
+		else
+		{
+			return *vers;
+		}
+	}
+code: end
 outFile: Version
 
 file: gtk-Signals.html

@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Version
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -43,6 +43,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * module aliases:
  * local aliases:
@@ -58,6 +60,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -70,6 +74,54 @@ private import glib.Str;
  */
 public class Version
 {
+	
+	public static uint major()
+	{
+		uint* vers;
+		
+		Linker.link(vers, "gtk_major_version", LIBRARY.GTK);
+		
+		if ( vers is null )
+		{
+			return -1
+		}
+		else
+		{
+			return *vers;
+		}
+	}
+	
+	public static uint minor()
+	{
+		uint* vers;
+		
+		Linker.link(vers, "gtk_minor_version", LIBRARY.GTK);
+		
+		if ( vers is null )
+		{
+			return -1
+		}
+		else
+		{
+			return *vers;
+		}
+	}
+	
+	public static uint micro()
+	{
+		uint* vers;
+		
+		Linker.link(vers, "gtk_minor_micro", LIBRARY.GTK);
+		
+		if ( vers is null )
+		{
+			return -1
+		}
+		else
+		{
+			return *vers;
+		}
+	}
 	
 	/**
 	 */
