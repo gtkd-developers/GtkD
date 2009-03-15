@@ -68,7 +68,7 @@ Docs will be put in the "dsss_docs" subfolder of each folder in "src".
 
 7) Build your own programs using the provided dsss.conf files from any of the
 demo folders. Pay special attention to the buildflags used to build the 
-demos. "-L-ldl" and "-no-export-dynamic" are necessary.
+demos. "-L-ldl" is necessary.
 
 Have fun!
 

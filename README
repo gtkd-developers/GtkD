@@ -5,7 +5,7 @@ Requirements:
 -------------
 - Linux, Windows(2000, XP), or Mac
 - Gtk libs
-- dmd or gdc installation
+- dmd, gdc or ldc installation
   (on your home directory on linux or the root directory on windows)
 optional:
 - OpenGL libs (mesa is fine on linux)
