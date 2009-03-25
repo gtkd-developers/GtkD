@@ -299,7 +299,7 @@ public class ByteArray
 	 * If free_segment is TRUE it frees the actual byte data.
 	 * Params:
 	 * freeSegment = if TRUE the actual byte data is freed as well.
-	 * Returns:the element data if free_segment is FALSE, otherwise NULL
+	 * Returns:the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
 	 */
 	public byte* free(int freeSegment)
 	{

@@ -194,7 +194,7 @@ public class OptionGroup
 	 */
 	public this (string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
 	{
-		// GOptionGroup* g_option_group_new (const gchar *name,  const gchar *description,  const gchar *help_description,  gpointer user_data,  GDestroyNotify destroy);
+		// GOptionGroup * g_option_group_new (const gchar *name,  const gchar *description,  const gchar *help_description,  gpointer user_data,  GDestroyNotify destroy);
 		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
 		if(p is null)
 		{
@@ -247,9 +247,8 @@ public class OptionGroup
 	/**
 	 * Associates a function with group which will be called
 	 * from g_option_context_parse() when an error occurs.
-	 * Note that the user data to be passed to pre_parse_func and
-	 * post_parse_func can be specified when constructing the group
-	 * with g_option_group_new().
+	 * Note that the user data to be passed to error_func can be
+	 * specified when constructing the group with g_option_group_new().
 	 * Since 2.6
 	 * Params:
 	 * errorFunc =  a function to call when an error occurs

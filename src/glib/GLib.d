@@ -97,7 +97,7 @@ public class Version
 	 */
 	public static string checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{
-		// const gchar* glib_check_version (guint required_major,  guint required_minor,  guint required_micro);
+		// const gchar * glib_check_version (guint required_major,  guint required_minor,  guint required_micro);
 		return Str.toString(glib_check_version(requiredMajor, requiredMinor, requiredMicro));
 	}
 }

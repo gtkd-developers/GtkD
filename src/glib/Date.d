@@ -559,7 +559,7 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the date is on the first of a month. The date must be valid.
-	 * Returns:TRUE if the date is the first of the month
+	 * Returns:%TRUE if the date is the first of the month
 	 */
 	public int isFirstOfMonth()
 	{
@@ -569,7 +569,7 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the date is the last day of the month. The date must be valid.
-	 * Returns:TRUE if the date is the last day of the month
+	 * Returns:%TRUE if the date is the last day of the month
 	 */
 	public int isLastOfMonth()
 	{
@@ -581,7 +581,7 @@ public class Date
 	 * Returns TRUE if the year is a leap year.[4]
 	 * Params:
 	 * year = year to check
-	 * Returns:TRUE if the year is a leap year
+	 * Returns:%TRUE if the year is a leap year
 	 */
 	public static int isLeapYear(GDateYear year)
 	{
@@ -713,7 +713,7 @@ public class Date
 	 * between 1 and 31 inclusive).
 	 * Params:
 	 * day = day to check
-	 * Returns:TRUE if the day is valid
+	 * Returns:%TRUE if the day is valid
 	 */
 	public static int validDay(GDateDay day)
 	{
@@ -726,7 +726,7 @@ public class Date
 	 * enumeration values are the only valid months.
 	 * Params:
 	 * month = month
-	 * Returns:TRUE if the month is valid
+	 * Returns:%TRUE if the month is valid
 	 */
 	public static int validMonth(GDateMonth month)
 	{
@@ -739,7 +739,7 @@ public class Date
 	 * though there is a 16-bit limit to what GDate will understand.
 	 * Params:
 	 * year = year
-	 * Returns:TRUE if the year is valid
+	 * Returns:%TRUE if the year is valid
 	 */
 	public static int validYear(GDateYear year)
 	{
@@ -755,7 +755,7 @@ public class Date
 	 * day = day
 	 * month = month
 	 * year = year
-	 * Returns:TRUE if the date is a valid one
+	 * Returns:%TRUE if the date is a valid one
 	 */
 	public static int validDmy(GDateDay day, GDateMonth month, GDateYear year)
 	{
@@ -768,7 +768,7 @@ public class Date
 	 * is basically a valid Julian, though there is a 32-bit limit.
 	 * Params:
 	 * julianDate = Julian day to check
-	 * Returns:TRUE if the Julian day is valid
+	 * Returns:%TRUE if the Julian day is valid
 	 */
 	public static int validJulian(uint julianDate)
 	{
@@ -781,7 +781,7 @@ public class Date
 	 * values are the only valid weekdays.
 	 * Params:
 	 * weekday = weekday
-	 * Returns:TRUE if the weekday is valid[4] For the purposes of this function, leap year is every year divisible by4 unless that year is divisible by 100. If it is divisible by 100 it would be a leap year only if that year is also divisible by 400.
+	 * Returns:%TRUE if the weekday is valid[4] For the purposes of this function, leap year is every year divisible by4 unless that year is divisible by 100. If it is divisible by 100 it wouldbe a leap year only if that year is also divisible by 400.
 	 */
 	public static int validWeekday(GDateWeekday weekday)
 	{

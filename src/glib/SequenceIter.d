@@ -163,7 +163,7 @@ public class SequenceIter
 	 */
 	public SequenceIter next()
 	{
-		// GSequenceIter* g_sequence_iter_next (GSequenceIter *iter);
+		// GSequenceIter * g_sequence_iter_next (GSequenceIter *iter);
 		auto p = g_sequence_iter_next(gSequenceIter);
 		if(p is null)
 		{
@@ -180,7 +180,7 @@ public class SequenceIter
 	 */
 	public SequenceIter prev()
 	{
-		// GSequenceIter* g_sequence_iter_prev (GSequenceIter *iter);
+		// GSequenceIter * g_sequence_iter_prev (GSequenceIter *iter);
 		auto p = g_sequence_iter_prev(gSequenceIter);
 		if(p is null)
 		{
@@ -213,7 +213,7 @@ public class SequenceIter
 	 */
 	public SequenceIter move(int delta)
 	{
-		// GSequenceIter* g_sequence_iter_move (GSequenceIter *iter,  gint delta);
+		// GSequenceIter * g_sequence_iter_move (GSequenceIter *iter,  gint delta);
 		auto p = g_sequence_iter_move(gSequenceIter, delta);
 		if(p is null)
 		{
@@ -229,7 +229,7 @@ public class SequenceIter
 	 */
 	public Sequence getSequence()
 	{
-		// GSequence* g_sequence_iter_get_sequence (GSequenceIter *iter);
+		// GSequence * g_sequence_iter_get_sequence (GSequenceIter *iter);
 		auto p = g_sequence_iter_get_sequence(gSequenceIter);
 		if(p is null)
 		{

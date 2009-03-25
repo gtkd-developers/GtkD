@@ -169,7 +169,7 @@ public class SimpleXML
 	 */
 	public static string vprintfEscaped(string format, void* args)
 	{
-		// gchar* g_markup_vprintf_escaped (const char *format,  va_list args);
+		// gchar * g_markup_vprintf_escaped (const char *format,  va_list args);
 		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args));
 	}
 	
@@ -232,7 +232,7 @@ public class SimpleXML
 	 */
 	public string getElement()
 	{
-		// const gchar* g_markup_parse_context_get_element (GMarkupParseContext *context);
+		// const gchar * g_markup_parse_context_get_element (GMarkupParseContext *context);
 		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext));
 	}
 	
@@ -251,7 +251,7 @@ public class SimpleXML
 	 */
 	public ListSG getElementStack()
 	{
-		// const GSList* g_markup_parse_context_get_element_stack  (GMarkupParseContext *context);
+		// const GSList * g_markup_parse_context_get_element_stack  (GMarkupParseContext *context);
 		auto p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
 		if(p is null)
 		{
@@ -288,7 +288,7 @@ public class SimpleXML
 	 */
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
-		// GMarkupParseContext* g_markup_parse_context_new (const GMarkupParser *parser,  GMarkupParseFlags flags,  gpointer user_data,  GDestroyNotify user_data_dnotify);
+		// GMarkupParseContext * g_markup_parse_context_new (const GMarkupParser *parser,  GMarkupParseFlags flags,  gpointer user_data,  GDestroyNotify user_data_dnotify);
 		auto p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
 		if(p is null)
 		{

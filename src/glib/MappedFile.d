@@ -141,7 +141,7 @@ public class MappedFile
 	 */
 	public this (string filename, int writable)
 	{
-		// GMappedFile* g_mapped_file_new (const gchar *filename,  gboolean writable,  GError **error);
+		// GMappedFile * g_mapped_file_new (const gchar *filename,  gboolean writable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_mapped_file_new(Str.toStringz(filename), writable, &err);
@@ -188,7 +188,7 @@ public class MappedFile
 	 */
 	public string getContents()
 	{
-		// gchar* g_mapped_file_get_contents (GMappedFile *file);
+		// gchar * g_mapped_file_get_contents (GMappedFile *file);
 		return Str.toString(g_mapped_file_get_contents(gMappedFile));
 	}
 }

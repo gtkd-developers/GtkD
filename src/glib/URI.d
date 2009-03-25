@@ -83,7 +83,7 @@ public class URI
 	 */
 	public static string parseScheme(string uri)
 	{
-		// char* g_uri_parse_scheme (const char *uri);
+		// char * g_uri_parse_scheme (const char *uri);
 		return Str.toString(g_uri_parse_scheme(Str.toStringz(uri)));
 	}
 	
@@ -105,7 +105,7 @@ public class URI
 	 */
 	public static string escapeString(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
-		// char* g_uri_escape_string (const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
+		// char * g_uri_escape_string (const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
 		return Str.toString(g_uri_escape_string(Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8));
 	}
 	
@@ -124,7 +124,7 @@ public class URI
 	 */
 	public static string unescapeString(string escapedString, string illegalCharacters)
 	{
-		// char* g_uri_unescape_string (const char *escaped_string,  const char *illegal_characters);
+		// char * g_uri_unescape_string (const char *escaped_string,  const char *illegal_characters);
 		return Str.toString(g_uri_unescape_string(Str.toStringz(escapedString), Str.toStringz(illegalCharacters)));
 	}
 	
@@ -144,7 +144,7 @@ public class URI
 	 */
 	public static string unescapeSegment(string escapedString, string escapedStringEnd, string illegalCharacters)
 	{
-		// char* g_uri_unescape_segment (const char *escaped_string,  const char *escaped_string_end,  const char *illegal_characters);
+		// char * g_uri_unescape_segment (const char *escaped_string,  const char *escaped_string_end,  const char *illegal_characters);
 		return Str.toString(g_uri_unescape_segment(Str.toStringz(escapedString), Str.toStringz(escapedStringEnd), Str.toStringz(illegalCharacters)));
 	}
 }

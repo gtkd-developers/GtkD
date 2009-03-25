@@ -63,6 +63,7 @@ static this()
 	Linker.link(g_main_loop_get_context, "g_main_loop_get_context", LIBRARY.GLIB);
 	Linker.link(g_main_depth, "g_main_depth", LIBRARY.GLIB);
 	Linker.link(g_main_current_source, "g_main_current_source", LIBRARY.GLIB);
+	Linker.link(g_poll, "g_poll", LIBRARY.GLIB);
 
 	// glib.MainContext
 
@@ -444,6 +445,7 @@ static this()
 	Linker.link(g_base64_encode, "g_base64_encode", LIBRARY.GLIB);
 	Linker.link(g_base64_decode_step, "g_base64_decode_step", LIBRARY.GLIB);
 	Linker.link(g_base64_decode, "g_base64_decode", LIBRARY.GLIB);
+	Linker.link(g_base64_decode_inplace, "g_base64_decode_inplace", LIBRARY.GLIB);
 
 	// glib.Checksum
 
@@ -1328,6 +1330,7 @@ extern(C)
 	typedef GMainContext* function(GMainLoop* loop) c_g_main_loop_get_context;
 	typedef gint function() c_g_main_depth;
 	typedef GSource* function() c_g_main_current_source;
+	typedef gint function(GPollFD* fds, guint nfds, gint timeout) c_g_poll;
 	
 	// glib.MainContext
 	
@@ -1709,6 +1712,7 @@ extern(C)
 	typedef gchar* function(guchar* data, gsize len) c_g_base64_encode;
 	typedef gsize function(gchar* inn, gsize len, guchar* f_out, gint* state, guint* save) c_g_base64_decode_step;
 	typedef guchar* function(gchar* text, gsize* outLen) c_g_base64_decode;
+	typedef guchar* function(gchar* text, gsize* outLen) c_g_base64_decode_inplace;
 	
 	// glib.Checksum
 	
@@ -2590,6 +2594,7 @@ c_g_main_loop_is_running  g_main_loop_is_running;
 c_g_main_loop_get_context  g_main_loop_get_context;
 c_g_main_depth  g_main_depth;
 c_g_main_current_source  g_main_current_source;
+c_g_poll  g_poll;
 
 // glib.MainContext
 
@@ -2971,6 +2976,7 @@ c_g_base64_encode_close  g_base64_encode_close;
 c_g_base64_encode  g_base64_encode;
 c_g_base64_decode_step  g_base64_decode_step;
 c_g_base64_decode  g_base64_decode;
+c_g_base64_decode_inplace  g_base64_decode_inplace;
 
 // glib.Checksum
 

@@ -206,7 +206,7 @@ public class QueueG
 	 */
 	public QueueG copy()
 	{
-		// GQueue* g_queue_copy (GQueue *queue);
+		// GQueue * g_queue_copy (GQueue *queue);
 		auto p = g_queue_copy(gQueue);
 		if(p is null)
 		{
@@ -238,7 +238,7 @@ public class QueueG
 	 */
 	public ListG find(void* data)
 	{
-		// GList* g_queue_find (GQueue *queue,  gconstpointer data);
+		// GList * g_queue_find (GQueue *queue,  gconstpointer data);
 		auto p = g_queue_find(gQueue, data);
 		if(p is null)
 		{
@@ -262,7 +262,7 @@ public class QueueG
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
-		// GList* g_queue_find_custom (GQueue *queue,  gconstpointer data,  GCompareFunc func);
+		// GList * g_queue_find_custom (GQueue *queue,  gconstpointer data,  GCompareFunc func);
 		auto p = g_queue_find_custom(gQueue, data, func);
 		if(p is null)
 		{

@@ -88,8 +88,9 @@ private import glib.Str;
  * # localized strings are stored in multiple key-value pairs
  * Welcome=Hello
  * Welcome[de]=Hallo
- * Welcome[fr]=Bonjour
+ * Welcome[fr_FR]=Bonjour
  * Welcome[it]=Ciao
+ * Welcome[be@latin]=Hello
  * [Another Group]
  * Numbers=2;20;-200;0
  * Booleans=true;false;true;true
@@ -99,7 +100,9 @@ private import glib.Str;
  * the end of the file. Each key-value pair must be contained in a group.
  * Key-value pairs generally have the form key=value,
  * with the exception of localized strings, which have the form
- * key[locale]=value. Space before and after the
+ * key[locale]=value, with a locale identifier of the form
+ * lang_COUNTRYMODIFIER where COUNTRY and
+ * MODIFIER are optional. Space before and after the
  * '=' character are ignored. Newline, tab, carriage return and backslash
  * characters in value are escaped as \n, \t, \r, and \\, respectively.
  * To preserve leading spaces in values, these can also be escaped as \s.
@@ -204,7 +207,7 @@ public class KeyFile
 	 */
 	public this ()
 	{
-		// GKeyFile* g_key_file_new (void);
+		// GKeyFile * g_key_file_new (void);
 		auto p = g_key_file_new();
 		if(p is null)
 		{
@@ -334,7 +337,7 @@ public class KeyFile
 	 */
 	public string toData(out uint length)
 	{
-		// gchar* g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
+		// gchar * g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_key_file_to_data(gKeyFile, &length, &err));
@@ -354,7 +357,7 @@ public class KeyFile
 	 */
 	public string getStartGroup()
 	{
-		// gchar* g_key_file_get_start_group (GKeyFile *key_file);
+		// gchar * g_key_file_get_start_group (GKeyFile *key_file);
 		return Str.toString(g_key_file_get_start_group(gKeyFile));
 	}
 	
@@ -369,7 +372,7 @@ public class KeyFile
 	 */
 	public string[] getGroups(out uint length)
 	{
-		// gchar** g_key_file_get_groups (GKeyFile *key_file,  gsize *length);
+		// gchar ** g_key_file_get_groups (GKeyFile *key_file,  gsize *length);
 		return Str.toStringArray(g_key_file_get_groups(gKeyFile, &length));
 	}
 	
@@ -388,7 +391,7 @@ public class KeyFile
 	 */
 	public string[] getKeys(string groupName, out uint length)
 	{
-		// gchar** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
+		// gchar ** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err));
@@ -440,7 +443,8 @@ public class KeyFile
 	}
 	
 	/**
-	 * Returns the value associated with key under group_name.
+	 * Returns the raw value associated with key under group_name.
+	 * Use g_key_file_get_string() to retrieve an unescaped UTF-8 string.
 	 * In the event the key cannot be found, NULL is returned and
 	 * error is set to G_KEY_FILE_ERROR_KEY_NOT_FOUND. In the
 	 * event that the group_name cannot be found, NULL is returned
@@ -454,7 +458,7 @@ public class KeyFile
 	 */
 	public string getValue(string groupName, string key)
 	{
-		// gchar* g_key_file_get_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		// gchar * g_key_file_get_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err));
@@ -468,7 +472,9 @@ public class KeyFile
 	}
 	
 	/**
-	 * Returns the value associated with key under group_name.
+	 * Returns the string value associated with key under group_name.
+	 * Unlike g_key_file_get_value(), this function handles escape sequences
+	 * like \s.
 	 * In the event the key cannot be found, NULL is returned and
 	 * error is set to G_KEY_FILE_ERROR_KEY_NOT_FOUND. In the
 	 * event that the group_name cannot be found, NULL is returned
@@ -482,7 +488,7 @@ public class KeyFile
 	 */
 	public string getString(string groupName, string key)
 	{
-		// gchar* g_key_file_get_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		// gchar * g_key_file_get_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err));
@@ -507,13 +513,13 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * locale =  a locale or NULL
+	 * locale =  a locale identifier or NULL
 	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getLocaleString(string groupName, string key, string locale)
 	{
-		// gchar* g_key_file_get_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  GError **error);
+		// gchar * g_key_file_get_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &err));
@@ -629,7 +635,7 @@ public class KeyFile
 	 */
 	public string[] getStringList(string groupName, string key, out uint length)
 	{
-		// gchar** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		// gchar ** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err));
@@ -656,14 +662,14 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * locale =  a locale
+	 * locale =  a locale identifier or NULL
 	 * length =  return location for the number of returned strings or NULL
 	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
 	public string[] getLocaleStringList(string groupName, string key, string locale, out uint length)
 	{
-		// gchar** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
+		// gchar ** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err));
@@ -692,7 +698,7 @@ public class KeyFile
 	 */
 	public int[] getBooleanList(string groupName, string key)
 	{
-		// gboolean* g_key_file_get_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		// gboolean * g_key_file_get_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		uint length;
 		GError* err = null;
 		
@@ -722,7 +728,7 @@ public class KeyFile
 	 */
 	public int[] getIntegerList(string groupName, string key)
 	{
-		// gint* g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		// gint * g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		uint length;
 		GError* err = null;
 		
@@ -752,7 +758,7 @@ public class KeyFile
 	 */
 	public double[] getDoubleList(string groupName, string key)
 	{
-		// gdouble* g_key_file_get_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		// gdouble * g_key_file_get_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		uint length;
 		GError* err = null;
 		
@@ -780,7 +786,7 @@ public class KeyFile
 	 */
 	public string getComment(string groupName, string key)
 	{
-		// gchar* g_key_file_get_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		// gchar * g_key_file_get_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err));
@@ -795,8 +801,10 @@ public class KeyFile
 	
 	/**
 	 * Associates a new value with key under group_name.
-	 * If key cannot be found then it is created.
-	 * If group_name cannot be found then it is created.
+	 * If key cannot be found then it is created. If group_name cannot
+	 * be found then it is created. To set an UTF-8 string which may contain
+	 * characters that need escaping (such as newlines or spaces), use
+	 * g_key_file_set_string().
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -813,6 +821,8 @@ public class KeyFile
 	 * Associates a new string value with key under group_name.
 	 * If key cannot be found then it is created.
 	 * If group_name cannot be found then it is created.
+	 * Unlike g_key_file_set_value(), this function handles characters
+	 * that need escaping, such as newlines.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -832,7 +842,7 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * locale =  a locale
+	 * locale =  a locale identifier
 	 * string =  a string
 	 */
 	public void setLocaleString(string groupName, string key, string locale, string string)
@@ -894,8 +904,8 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * list =  an array of locale string values
-	 * length =  number of locale string values in list
+	 * list =  an array of string values
+	 * length =  number of string values in list
 	 */
 	public void setStringList(string groupName, string key, char*[] list, uint length)
 	{
@@ -911,7 +921,7 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * key =  a key
-	 * locale =  a locale
+	 * locale =  a locale identifier
 	 * list =  a NULL-terminated array of locale string values
 	 * length =  the length of list
 	 */

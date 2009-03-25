@@ -207,7 +207,7 @@ public class ScannerG
 	
 	/**
 	 * Returns TRUE if the scanner has reached the end of the file or text buffer.
-	 * Returns:TRUE if the scanner has reached the end of the file or text buffer.
+	 * Returns:%TRUE if the scanner has reached the end of the file or text buffer.
 	 */
 	public int eof()
 	{

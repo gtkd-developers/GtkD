@@ -183,7 +183,7 @@ public class Source
 	 */
 	public this (GSourceFuncs* sourceFuncs, uint structSize)
 	{
-		// GSource* g_source_new (GSourceFuncs *source_funcs,  guint struct_size);
+		// GSource * g_source_new (GSourceFuncs *source_funcs,  guint struct_size);
 		auto p = g_source_new(sourceFuncs, structSize);
 		if(p is null)
 		{
@@ -198,7 +198,7 @@ public class Source
 	 */
 	public Source doref()
 	{
-		// GSource* g_source_ref (GSource *source);
+		// GSource * g_source_ref (GSource *source);
 		auto p = g_source_ref(gSource);
 		if(p is null)
 		{
@@ -233,7 +233,7 @@ public class Source
 	
 	/**
 	 * Adds a GSource to a context so that it will be executed within
-	 * that context.
+	 * that context. Remove it by calling g_source_destroy().
 	 * Params:
 	 * context =  a GMainContext (if NULL, the default context will be used)
 	 * Returns: the ID (greater than 0) for the source within the  GMainContext.
@@ -377,7 +377,7 @@ public class Source
 	 */
 	public MainContext getContext()
 	{
-		// GMainContext* g_source_get_context (GSource *source);
+		// GMainContext * g_source_get_context (GSource *source);
 		auto p = g_source_get_context(gSource);
 		if(p is null)
 		{
@@ -473,7 +473,8 @@ public class Source
 	 * functions g_source_attach(), g_idle_add(), g_idle_add_full(),
 	 * g_timeout_add(), g_timeout_add_full(), g_child_watch_add(),
 	 * g_child_watch_add_full(), g_io_add_watch(), and g_io_add_watch_full().
-	 * See also g_source_destroy().
+	 * See also g_source_destroy(). You must use g_source_destroy() for sources
+	 * added to a non-default main context.
 	 * Params:
 	 * tag =  the ID of the source to remove.
 	 * Returns: TRUE if the source was found and removed.

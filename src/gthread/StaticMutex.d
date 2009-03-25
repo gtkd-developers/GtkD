@@ -178,7 +178,7 @@ public class StaticMutex
 	
 	/**
 	 * Works like g_mutex_trylock(), but for a GStaticMutex.
-	 * Returns:TRUE, if the GStaticMutex could be locked.
+	 * Returns:%TRUE, if the GStaticMutex could be locked.
 	 */
 	public int trylock()
 	{
@@ -203,7 +203,7 @@ public class StaticMutex
 	 */
 	public Mutex getMutex()
 	{
-		// GMutex* g_static_mutex_get_mutex (GStaticMutex *mutex);
+		// GMutex * g_static_mutex_get_mutex (GStaticMutex *mutex);
 		auto p = g_static_mutex_get_mutex(gStaticMutex);
 		if(p is null)
 		{

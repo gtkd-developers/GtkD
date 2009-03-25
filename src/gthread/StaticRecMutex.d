@@ -182,7 +182,7 @@ public class StaticRecMutex
 	 * it immediately returns FALSE. Otherwise it locks mutex and returns
 	 * TRUE. If mutex is already locked by the calling thread, this
 	 * functions increases the depth of mutex and immediately returns TRUE.
-	 * Returns:TRUE, if mutex could be locked.
+	 * Returns:%TRUE, if mutex could be locked.
 	 */
 	public int trylock()
 	{

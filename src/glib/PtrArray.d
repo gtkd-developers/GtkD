@@ -178,7 +178,7 @@ public class PtrArray
 	 * was not found.
 	 * Params:
 	 * data = the pointer to remove.
-	 * Returns:TRUE if the pointer is removed. FALSE if the pointer is not foundin the array.
+	 * Returns:%TRUE if the pointer is removed. FALSE if the pointer is not foundin the array.
 	 */
 	public int remove(void* data)
 	{
@@ -208,7 +208,7 @@ public class PtrArray
 	 * was not found.
 	 * Params:
 	 * data = the pointer to remove.
-	 * Returns:TRUE if the pointer was found in the array.
+	 * Returns:%TRUE if the pointer was found in the array.
 	 */
 	public int removeFast(void* data)
 	{

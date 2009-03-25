@@ -120,7 +120,7 @@ public class WindowsUtils
 	 * GETTEXT_PACKAGE in software configured using GNU
 	 * autotools. The function first looks in the Windows Registry for the
 	 * value #InstallationDirectory in the key
-	 * #HKLM\Software\package, and if that value
+	 * #HKLM\Software@package, and if that value
 	 * exists and is a string, returns that.
 	 * It is strongly recommended that packagers of GLib-using libraries
 	 * for Windows do not store installation paths in the Registry to be

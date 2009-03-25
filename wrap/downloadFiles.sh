@@ -3,13 +3,13 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://library.gnome.org/devel/glib/glib-html-2.18.1.tar.gz | tar xvfz -
-ln -s glib-html-2.18.1 gthread
-ln -s glib-html-2.18.1 glib
-#Missing in 2.18.1
+curl http://library.gnome.org/devel/glib/glib-html-2.20.0.tar.gz | tar xvfz -
+ln -s glib-html-2.20.0 gthread
+ln -s glib-html-2.20.0 glib
+#Missing params in 2.20.0
 cd glib
-rm glib-Dynamic-Loading-of-Modules.html
-wget http://library.gnome.org/devel/glib/2.16/glib-Dynamic-Loading-of-Modules.html
+rm glib-Atomic-Operations.html
+wget http://library.gnome.org/devel/glib/2.18/glib-Atomic-Operations.html
 cd ..
 #GOBJECT
 curl http://library.gnome.org/devel/gobject/gobject-html-2.18.1.tar.gz | tar xvfz -

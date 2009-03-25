@@ -313,7 +313,7 @@ public class StringG
 	 */
 	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
-		// GString* g_string_append_uri_escaped (GString *string,  const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
+		// GString * g_string_append_uri_escaped (GString *string,  const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
 		if(p is null)
 		{

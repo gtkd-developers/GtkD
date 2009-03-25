@@ -66,8 +66,33 @@ const uint G_MAXUINT = 4294967295;
 
 
 /**
+ * typedef int GPid;
+ * A type which is used to hold a process identification.
+ * On Unix, processes are identified by a process id (an
+ * integer), while Windows uses process handles (which are
+ * pointers).
+ */
+public alias int GPid;
+
+/**
  * typedef guint32 gunichar;
- * A type which can hold any UCS-4 character code.
+ * A type which can hold any UTF-32 or UCS-4 character code, also known
+ * as a Unicode code point.
+ * To print/scan values of this type to/from text you need to convert
+ * to/from UTF-8, using g_utf32_to_utf8()/g_utf8_to_utf32().
+ * To print/scan values of this type as integer, use
+ * G_GINT32_MODIFIER and/or G_GUINT32_FORMAT.
+ * The notation to express a Unicode code point in running text is as a
+ * hexadecimal number with four to six digits and uppercase letters, prefixed
+ * by the string "U+". Leading zeros are omitted, unless the code point would
+ * have fewer than four hexadecimal digits.
+ * For example, "U+0041 LATIN CAPITAL LETTER A".
+ * To print a code point in the U+-notation, use the format string
+ * "U+04"G_GINT32_FORMAT"X".
+ * To scan, use the format string "U+06"G_GINT32_FORMAT"X".
+ * gunichar c;
+ * sscanf ("U+0041", "U+%06"G_GINT32_FORMAT"X", c)
+ * g_print ("Read U+%04"G_GINT32_FORMAT"X", c);
  */
 public alias uint gunichar;
 
@@ -75,6 +100,10 @@ public alias uint gunichar;
  * typedef guint16 gunichar2;
  * A type which can hold any UTF-16 code
  * point[3].
+ * To print/scan values of this type to/from text you need to convert
+ * to/from UTF-8, using g_utf16_to_utf8()/g_utf8_to_utf16().
+ * To print/scan values of this type as integer, use
+ * G_GINT16_MODIFIER and/or G_GUINT16_FORMAT.
  */
 public alias ushort gunichar2;
 
@@ -570,7 +599,7 @@ alias GUnicodeBreakType UnicodeBreakType;
  * Note that new types may be added in the future. Applications
  * should be ready to handle unknown values.
  * See Unicode Standard Annex
- * "" Script names.
+ * #24: Script names.
  * G_UNICODE_SCRIPT_INVALID_CODE
  * a value never returned from g_unichar_get_script()
  * G_UNICODE_SCRIPT_COMMON
@@ -1037,7 +1066,7 @@ alias GFileError FileError;
 /**
  * A test to perform on a file using g_file_test().
  * G_FILE_TEST_IS_REGULAR
- * TRUE if the file is a regular file (not a directory).
+ * %TRUE if the file is a regular file (not a directory).
  */
 public enum GFileTest
 {
@@ -1913,7 +1942,7 @@ public struct GRand{}
 /**
  * Associates a string with a bit flag.
  * Used in g_parse_debug_string().
- * gchar *key;
+ * const gchar *key;
  * the string
  * guint value;
  * the flag
@@ -2566,7 +2595,7 @@ public struct GAllocator{}
  * loop :
  * a GMainLoop.
  * Returns :
- * TRUE if the main loop is running.
+ * %TRUE if the main loop is running.
  */
 // TODO
 // #define g_main_is_running(loop)
@@ -2581,7 +2610,7 @@ public struct GAllocator{}
  * If set to FALSE it will return immediately if no event source is ready to be
  * processed.
  * Returns :
- * TRUE if more events are pending.
+ * %TRUE if more events are pending.
  */
 // TODO
 // #define g_main_iteration(may_block)
@@ -2592,7 +2621,7 @@ public struct GAllocator{}
  * Checks if any events are pending for the default GMainContext
  * (i.e. ready to be processed).
  * Returns :
- * TRUE if any events are pending.
+ * %TRUE if any events are pending.
  */
 // TODO
 // #define g_main_pending()
@@ -2748,6 +2777,23 @@ public struct GAllocator{}
  */
 // TODO
 // #define g_newa(struct_type, n_structs)
+
+/*
+ * Copies a block of memory len bytes long, from src to dest.
+ * The source and destination areas may overlap.
+ * In order to use this function, you must include
+ * string.h yourself, because this macro will
+ * typically simply resolve to memmove() and GLib does not include
+ * string.h for you.
+ * dest :
+ *  the destination address to copy the bytes to.
+ * src :
+ *  the source address to copy the bytes from.
+ * len :
+ *  the number of bytes to copy.
+ */
+// TODO
+// #define g_memmove(dest,src,len)
 
 /*
  * Returns from the current function if the expression is not true.
@@ -3772,10 +3818,10 @@ public typedef extern(C) int  function (void*) GSourceFunc;
  * module :
  * the GModule corresponding to the module which has just been loaded.
  * Returns :
- * NULL on success, or a string describing the initialization error.
+ * %NULL on success, or a string describing the initialization error.
  */
-// const gchar* (*GModuleCheckInit) (GModule *module);
-public typedef extern(C) char*  function (GModule*) GModuleCheckInit;
+// const gchar * (*GModuleCheckInit) (GModule *module);
+public typedef extern(C) char *  function (GModule*) GModuleCheckInit;
 
 /*
  * Specifies the type of the module function called when it is unloaded.
@@ -3852,7 +3898,7 @@ public typedef extern(C) void  function (void*) GFreeFunc;
  * message :
  * the message.
  * error :
- * TRUE if the message signals an error, FALSE if it
+ * %TRUE if the message signals an error, FALSE if it
  *  signals a warning.
  */
 // void (*GScannerMsgFunc) (GScanner *scanner,  gchar *message,  gboolean error);
@@ -3867,8 +3913,8 @@ public typedef extern(C) void  function (GScanner*, char[], int) GScannerMsgFunc
  * Returns :
  * the string corresponding to the item.
  */
-// gchar* (*GCompletionFunc) (gpointer );
-public typedef extern(C) char*  function (void*) GCompletionFunc;
+// gchar * (*GCompletionFunc) (gpointer );
+public typedef extern(C) char *  function (void*) GCompletionFunc;
 
 /*
  * Specifies the type of the function passed to g_completion_set_compare().
@@ -3926,7 +3972,7 @@ public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
  * A return location for errors. The error code G_OPTION_ERROR_FAILED
  *  is intended to be used for errors in GOptionArgFunc callbacks.
  * Returns :
- * TRUE if the option was successfully parsed, FALSE if an error
+ * %TRUE if the option was successfully parsed, FALSE if an error
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionArgFunc) (const gchar *option_name,  const gchar *value,  gpointer data,  GError **error);
@@ -3944,8 +3990,8 @@ public typedef extern(C) int  function (char[], char[], void*, GError**) GOption
  * a translation of the string for the current locale.
  *  The returned string is owned by GLib and must not be freed.
  */
-// const gchar* (*GTranslateFunc) (const gchar *str,  gpointer data);
-public typedef extern(C) char*  function (char[], void*) GTranslateFunc;
+// const gchar * (*GTranslateFunc) (const gchar *str,  gpointer data);
+public typedef extern(C) char *  function (char[], void*) GTranslateFunc;
 
 /*
  * The type of function that can be called before and after parsing.
@@ -3959,7 +4005,7 @@ public typedef extern(C) char*  function (char[], void*) GTranslateFunc;
  * error :
  * A return location for error details
  * Returns :
- * TRUE if the function completed successfully, FALSE if an error
+ * %TRUE if the function completed successfully, FALSE if an error
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionParseFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
@@ -3994,7 +4040,7 @@ public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, 
  * user_data :
  * user data passed to g_regex_replace_eval()
  * Returns :
- * FALSE to continue the replacement process, TRUE to stop it
+ * %FALSE to continue the replacement process, TRUE to stop it
  * Since 2.14
  */
 // gboolean (*GRegexEvalCallback) (const GMatchInfo *match_info,  GString *result,  gpointer user_data);
@@ -4092,7 +4138,7 @@ public typedef extern(C) uint  function (void*) GHashFunc;
  * b :
  * a value to compare with.
  * Returns :
- * TRUE if a = b; FALSE otherwise.
+ * %TRUE if a = b; FALSE otherwise.
  */
 // gboolean (*GEqualFunc) (gconstpointer a,  gconstpointer b);
 public typedef extern(C) int  function (void*, void*) GEqualFunc;
@@ -4124,7 +4170,7 @@ public typedef extern(C) void  function (void*, void*, void*) GHFunc;
  * user_data :
  * user data passed to g_hash_table_remove().
  * Returns :
- * TRUE if the key/value pair should be removed from the GHashTable.
+ * %TRUE if the key/value pair should be removed from the GHashTable.
  */
 // gboolean (*GHRFunc) (gpointer key,  gpointer value,  gpointer user_data);
 public typedef extern(C) int  function (void*, void*, void*) GHRFunc;
@@ -4141,7 +4187,7 @@ public typedef extern(C) int  function (void*, void*, void*) GHRFunc;
  * data :
  * user data passed to g_tree_traverse().
  * Returns :
- * TRUE to stop the traversal.
+ * %TRUE to stop the traversal.
  */
 // gboolean (*GTraverseFunc) (gpointer key,  gpointer value,  gpointer data);
 public typedef extern(C) int  function (void*, void*, void*) GTraverseFunc;
@@ -4170,7 +4216,7 @@ public typedef extern(C) void*  function (void*, void*) GCopyFunc;
  * data :
  * user data passed to g_node_traverse().
  * Returns :
- * TRUE to stop the traversal.
+ * %TRUE to stop the traversal.
  */
 // gboolean (*GNodeTraverseFunc) (GNode *node,  gpointer data);
 public typedef extern(C) int  function (GNode*, void*) GNodeTraverseFunc;

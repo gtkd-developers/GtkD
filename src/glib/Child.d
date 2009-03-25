@@ -158,7 +158,7 @@ public class Child
 	 */
 	public static Source watchSourceNew(GPid pid)
 	{
-		// GSource* g_child_watch_source_new (GPid pid);
+		// GSource * g_child_watch_source_new (GPid pid);
 		auto p = g_child_watch_source_new(pid);
 		if(p is null)
 		{
@@ -178,6 +178,10 @@ public class Child
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
 	 * GLib supports only a single callback per process id.
+	 * This internally creates a main loop source using
+	 * g_child_watch_source_new() and attaches it to the main loop context
+	 * using g_source_attach(). You can do these steps manually if you
+	 * need greater control.
 	 * Since 2.4
 	 * Params:
 	 * pid =  process id to watch. On POSIX the pid of a child process. On
@@ -202,6 +206,10 @@ public class Child
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
 	 * GLib supports only a single callback per process id.
+	 * This internally creates a main loop source using
+	 * g_child_watch_source_new() and attaches it to the main loop context
+	 * using g_source_attach(). You can do these steps manually if you
+	 * need greater control.
 	 * Since 2.4
 	 * Params:
 	 * priority =  the priority of the idle source. Typically this will be in the

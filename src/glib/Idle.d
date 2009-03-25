@@ -262,7 +262,7 @@ public class Idle
 	 */
 	public static Source sourceNew()
 	{
-		// GSource* g_idle_source_new (void);
+		// GSource * g_idle_source_new (void);
 		auto p = g_idle_source_new();
 		if(p is null)
 		{
@@ -277,6 +277,9 @@ public class Idle
 	 * default idle priority, G_PRIORITY_DEFAULT_IDLE. If the function
 	 * returns FALSE it is automatically removed from the list of event
 	 * sources and will not be called again.
+	 * This internally creates a main loop source using g_idle_source_new()
+	 * and attaches it to the main loop context using g_source_attach().
+	 * You can do these steps manually if you need greater control.
 	 * Params:
 	 * data =  data to pass to function.
 	 * Returns: the ID (greater than 0) of the event source.
@@ -291,6 +294,9 @@ public class Idle
 	 * Adds a function to be called whenever there are no higher priority
 	 * events pending. If the function returns FALSE it is automatically
 	 * removed from the list of event sources and will not be called again.
+	 * This internally creates a main loop source using g_idle_source_new()
+	 * and attaches it to the main loop context using g_source_attach().
+	 * You can do these steps manually if you need greater control.
 	 * Params:
 	 * priority =  the priority of the idle source. Typically this will be in the
 	 *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.

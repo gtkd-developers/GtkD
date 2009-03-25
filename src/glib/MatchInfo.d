@@ -163,7 +163,7 @@ public class MatchInfo
 	 */
 	public Regex getRegex()
 	{
-		// GRegex* g_match_info_get_regex (const GMatchInfo *match_info);
+		// GRegex * g_match_info_get_regex (const GMatchInfo *match_info);
 		auto p = g_match_info_get_regex(gMatchInfo);
 		if(p is null)
 		{
@@ -181,7 +181,7 @@ public class MatchInfo
 	 */
 	public string getString()
 	{
-		// const gchar* g_match_info_get_string (const GMatchInfo *match_info);
+		// const gchar * g_match_info_get_string (const GMatchInfo *match_info);
 		return Str.toString(g_match_info_get_string(gMatchInfo));
 	}
 	
@@ -309,7 +309,7 @@ public class MatchInfo
 	 */
 	public string expandReferences(string stringToExpand)
 	{
-		// gchar* g_match_info_expand_references (const GMatchInfo *match_info,  const gchar *string_to_expand,  GError **error);
+		// gchar * g_match_info_expand_references (const GMatchInfo *match_info,  const gchar *string_to_expand,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), &err));
@@ -343,12 +343,12 @@ public class MatchInfo
 	 */
 	public string fetch(int matchNum)
 	{
-		// gchar* g_match_info_fetch (const GMatchInfo *match_info,  gint match_num);
+		// gchar * g_match_info_fetch (const GMatchInfo *match_info,  gint match_num);
 		return Str.toString(g_match_info_fetch(gMatchInfo, matchNum));
 	}
 	
 	/**
-	 * Retrieves the position of the match_num'th capturing
+	 * Retrieves the position in bytes of the match_num'th capturing
 	 * parentheses. 0 is the full text of the match, 1 is the first
 	 * paren set, 2 the second, and so on.
 	 * If match_num is a valid sub pattern but it didn't match anything
@@ -386,12 +386,12 @@ public class MatchInfo
 	 */
 	public string fetchNamed(string name)
 	{
-		// gchar* g_match_info_fetch_named (const GMatchInfo *match_info,  const gchar *name);
+		// gchar * g_match_info_fetch_named (const GMatchInfo *match_info,  const gchar *name);
 		return Str.toString(g_match_info_fetch_named(gMatchInfo, Str.toStringz(name)));
 	}
 	
 	/**
-	 * Retrieves the position of the capturing parentheses named name.
+	 * Retrieves the position in bytes of the capturing parentheses named name.
 	 * If name is a valid sub pattern name but it didn't match anything
 	 * (e.g. sub pattern "X", matching "b" against "(?P<X>a)?b")
 	 * then start_pos and end_pos are set to -1 and TRUE is returned.
@@ -427,7 +427,7 @@ public class MatchInfo
 	 */
 	public string[] fetchAll()
 	{
-		// gchar** g_match_info_fetch_all (const GMatchInfo *match_info);
+		// gchar ** g_match_info_fetch_all (const GMatchInfo *match_info);
 		return Str.toStringArray(g_match_info_fetch_all(gMatchInfo));
 	}
 }

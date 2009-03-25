@@ -182,7 +182,8 @@ public class FileUtils
 	 * contents is set to NULL and length is set to zero.
 	 * Params:
 	 * filename =  name of a file to read contents from, in the GLib file name encoding
-	 * contents =  location to store an allocated string
+	 * contents =  location to store an allocated string, use g_free() to free
+	 *  the returned string
 	 * length =  location to store length in bytes of the contents, or NULL
 	 * Returns: TRUE on success, FALSE if an error occurred
 	 * Throws: GException on failure.
@@ -343,12 +344,12 @@ public class FileUtils
 	 * Since 2.4
 	 * Params:
 	 * filename =  the symbolic link
-	 * Returns: A newly allocated string with the contents of the symbolic link,  or NULL if an error occurred.
+	 * Returns: A newly-allocated string with the contents of the symbolic link,  or NULL if an error occurred.
 	 * Throws: GException on failure.
 	 */
 	public static string fileReadLink(string filename)
 	{
-		// gchar* g_file_read_link (const gchar *filename,  GError **error);
+		// gchar * g_file_read_link (const gchar *filename,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_file_read_link(Str.toStringz(filename), &err));

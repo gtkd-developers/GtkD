@@ -145,7 +145,7 @@ public class Sequence
 	 */
 	public this (GDestroyNotify dataDestroy)
 	{
-		// GSequence* g_sequence_new (GDestroyNotify data_destroy);
+		// GSequence * g_sequence_new (GDestroyNotify data_destroy);
 		auto p = g_sequence_new(dataDestroy);
 		if(p is null)
 		{
@@ -248,7 +248,7 @@ public class Sequence
 	 */
 	public SequenceIter getBeginIter()
 	{
-		// GSequenceIter* g_sequence_get_begin_iter (GSequence *seq);
+		// GSequenceIter * g_sequence_get_begin_iter (GSequence *seq);
 		auto p = g_sequence_get_begin_iter(gSequence);
 		if(p is null)
 		{
@@ -264,7 +264,7 @@ public class Sequence
 	 */
 	public SequenceIter getEndIter()
 	{
-		// GSequenceIter* g_sequence_get_end_iter (GSequence *seq);
+		// GSequenceIter * g_sequence_get_end_iter (GSequence *seq);
 		auto p = g_sequence_get_end_iter(gSequence);
 		if(p is null)
 		{
@@ -283,7 +283,7 @@ public class Sequence
 	 */
 	public SequenceIter getIterAtPos(int pos)
 	{
-		// GSequenceIter* g_sequence_get_iter_at_pos (GSequence *seq,  gint pos);
+		// GSequenceIter * g_sequence_get_iter_at_pos (GSequence *seq,  gint pos);
 		auto p = g_sequence_get_iter_at_pos(gSequence, pos);
 		if(p is null)
 		{
@@ -301,7 +301,7 @@ public class Sequence
 	 */
 	public SequenceIter append(void* data)
 	{
-		// GSequenceIter* g_sequence_append (GSequence *seq,  gpointer data);
+		// GSequenceIter * g_sequence_append (GSequence *seq,  gpointer data);
 		auto p = g_sequence_append(gSequence, data);
 		if(p is null)
 		{
@@ -319,7 +319,7 @@ public class Sequence
 	 */
 	public SequenceIter prepend(void* data)
 	{
-		// GSequenceIter* g_sequence_prepend (GSequence *seq,  gpointer data);
+		// GSequenceIter * g_sequence_prepend (GSequence *seq,  gpointer data);
 		auto p = g_sequence_prepend(gSequence, data);
 		if(p is null)
 		{
@@ -338,7 +338,7 @@ public class Sequence
 	 */
 	public static SequenceIter insertBefore(SequenceIter iter, void* data)
 	{
-		// GSequenceIter* g_sequence_insert_before (GSequenceIter *iter,  gpointer data);
+		// GSequenceIter * g_sequence_insert_before (GSequenceIter *iter,  gpointer data);
 		auto p = g_sequence_insert_before((iter is null) ? null : iter.getSequenceIterStruct(), data);
 		if(p is null)
 		{
@@ -395,7 +395,7 @@ public class Sequence
 	 */
 	public SequenceIter insertSorted(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
-		// GSequenceIter* g_sequence_insert_sorted (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
+		// GSequenceIter * g_sequence_insert_sorted (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
 		auto p = g_sequence_insert_sorted(gSequence, data, cmpFunc, cmpData);
 		if(p is null)
 		{
@@ -421,7 +421,7 @@ public class Sequence
 	 */
 	public SequenceIter insertSortedIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
-		// GSequenceIter* g_sequence_insert_sorted_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
+		// GSequenceIter * g_sequence_insert_sorted_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
 		auto p = g_sequence_insert_sorted_iter(gSequence, data, iterCmp, cmpData);
 		if(p is null)
 		{
@@ -537,7 +537,7 @@ public class Sequence
 	 */
 	public SequenceIter search(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
-		// GSequenceIter* g_sequence_search (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
+		// GSequenceIter * g_sequence_search (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
 		auto p = g_sequence_search(gSequence, data, cmpFunc, cmpData);
 		if(p is null)
 		{
@@ -563,7 +563,7 @@ public class Sequence
 	 */
 	public SequenceIter searchIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
-		// GSequenceIter* g_sequence_search_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
+		// GSequenceIter * g_sequence_search_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
 		auto p = g_sequence_search_iter(gSequence, data, iterCmp, cmpData);
 		if(p is null)
 		{
@@ -614,7 +614,7 @@ public class Sequence
 	 */
 	public static SequenceIter rangeGetMidpoint(SequenceIter begin, SequenceIter end)
 	{
-		// GSequenceIter* g_sequence_range_get_midpoint (GSequenceIter *begin,  GSequenceIter *end);
+		// GSequenceIter * g_sequence_range_get_midpoint (GSequenceIter *begin,  GSequenceIter *end);
 		auto p = g_sequence_range_get_midpoint((begin is null) ? null : begin.getSequenceIterStruct(), (end is null) ? null : end.getSequenceIterStruct());
 		if(p is null)
 		{

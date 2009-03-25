@@ -186,7 +186,7 @@ public class BookmarkFile
 	 */
 	public this ()
 	{
-		// GBookmarkFile* g_bookmark_file_new (void);
+		// GBookmarkFile * g_bookmark_file_new (void);
 		auto p = g_bookmark_file_new();
 		if(p is null)
 		{
@@ -297,7 +297,7 @@ public class BookmarkFile
 	 */
 	public string toData(out uint length)
 	{
-		// gchar* g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
+		// gchar * g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_bookmark_file_to_data(gBookmarkFile, &length, &err));
@@ -423,7 +423,7 @@ public class BookmarkFile
 	 */
 	public string[] getUris(out uint length)
 	{
-		// gchar** g_bookmark_file_get_uris (GBookmarkFile *bookmark,  gsize *length);
+		// gchar ** g_bookmark_file_get_uris (GBookmarkFile *bookmark,  gsize *length);
 		return Str.toStringArray(g_bookmark_file_get_uris(gBookmarkFile, &length));
 	}
 	
@@ -440,7 +440,7 @@ public class BookmarkFile
 	 */
 	public string getTitle(string uri)
 	{
-		// gchar* g_bookmark_file_get_title (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
+		// gchar * g_bookmark_file_get_title (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), &err));
@@ -465,7 +465,7 @@ public class BookmarkFile
 	 */
 	public string getDescription(string uri)
 	{
-		// gchar* g_bookmark_file_get_description (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
+		// gchar * g_bookmark_file_get_description (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), &err));
@@ -492,7 +492,7 @@ public class BookmarkFile
 	 */
 	public string getMimeType(string uri)
 	{
-		// gchar* g_bookmark_file_get_mime_type (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
+		// gchar * g_bookmark_file_get_mime_type (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), &err));
@@ -653,7 +653,7 @@ public class BookmarkFile
 	 */
 	public string[] getGroups(string uri, out uint length)
 	{
-		// gchar** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
+		// gchar ** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err));
@@ -680,7 +680,7 @@ public class BookmarkFile
 	 */
 	public string[] getApplications(string uri, out uint length)
 	{
-		// gchar** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
+		// gchar ** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err));
@@ -935,7 +935,7 @@ public class BookmarkFile
 	 * the bookmark has been registered by the application and the last
 	 * time the application registered this bookmark.
 	 * If name is NULL, the name of the application will be the
-	 * same returned by g_get_application(); if exec is NULL, the
+	 * same returned by g_get_application_name(); if exec is NULL, the
 	 * command line will be a composition of the program name as
 	 * returned by g_get_prgname() and the "u" modifier, which will be
 	 * expanded to the bookmark's URI.

@@ -560,7 +560,7 @@ public class Util
 	 */
 	public static string buildFilenamev(char** args)
 	{
-		// gchar* g_build_filenamev (gchar **args);
+		// gchar * g_build_filenamev (gchar **args);
 		return Str.toString(g_build_filenamev(args));
 	}
 	
@@ -576,24 +576,25 @@ public class Util
 	 */
 	public static string buildPathv(string separator, char** args)
 	{
-		// gchar* g_build_pathv (const gchar *separator,  gchar **args);
+		// gchar * g_build_pathv (const gchar *separator,  gchar **args);
 		return Str.toString(g_build_pathv(Str.toStringz(separator), args));
 	}
 	
 	/**
 	 * Formats a size (for example the size of a file) into a human readable string.
-	 * Sizes are rounded to the nearest size prefix (KB, MB, GB) and are displayed rounded to
-	 * the nearest tenth. E.g. the file size 3292528 bytes will be converted into
-	 * the string "3.1 MB".
+	 * Sizes are rounded to the nearest size prefix (KB, MB, GB) and are displayed
+	 * rounded to the nearest tenth. E.g. the file size 3292528 bytes will be
+	 * converted into the string "3.1 MB".
 	 * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
+	 * This string should be freed with g_free() when not needed any longer.
 	 * Since 2.16
 	 * Params:
 	 * size =  a size in bytes.
-	 * Returns: a formatted string containing a human readable file size.
+	 * Returns: a newly-allocated formatted string containing a human readable file size.
 	 */
 	public static string formatSizeForDisplay(long size)
 	{
-		// char* g_format_size_for_display (goffset size);
+		// char * g_format_size_for_display (goffset size);
 		return Str.toString(g_format_size_for_display(size));
 	}
 	
@@ -723,9 +724,12 @@ public class Util
 	 * into a guint containing bit flags. This is used
 	 * within GDK and GTK+ to parse the debug options passed on the
 	 * command line or through environment variables.
+	 * If string is equal to "all", all flags are set. If string
+	 * is equal to "help", all the available keys in keys are printed
+	 * out to standard error.
 	 * Params:
 	 * string =  a list of debug options separated by colons, spaces, or
-	 * commas; or the string "all" to set all flags, or NULL.
+	 * commas, or NULL.
 	 * keys =  pointer to an array of GDebugKey which associate
 	 *  strings with bit flags.
 	 * nkeys =  the number of GDebugKeys in the array.

@@ -190,12 +190,23 @@ public class Thread
 	 * Note
 	 * This function is actually a macro. Apart from taking the address of it
 	 * you can however use it as if it was a function.
-	 * Returns:TRUE, if the thread system is initialized.
+	 * Returns:%TRUE, if the thread system is initialized.
 	 */
 	public static int supported()
 	{
 		// gboolean g_thread_supported ();
 		return g_thread_supported();
+	}
+	
+	/**
+	 * Indicates if g_thread_init() has been called.
+	 * Since 2.20
+	 * Returns: TRUE if threads have been initialized.
+	 */
+	public static int getInitialized()
+	{
+		// gboolean g_thread_get_initialized (void);
+		return g_thread_get_initialized();
 	}
 	
 	/**
@@ -216,7 +227,7 @@ public class Thread
 	 */
 	public static Thread create(GThreadFunc func, void* data, int joinable)
 	{
-		// GThread* g_thread_create (GThreadFunc func,  gpointer data,  gboolean joinable,  GError **error);
+		// GThread * g_thread_create (GThreadFunc func,  gpointer data,  gboolean joinable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_thread_create(func, data, joinable, &err);
@@ -402,7 +413,7 @@ public class Thread
 	 * Since 2.14
 	 * Params:
 	 * valueLocation = location of a static initializable variable containing 0.
-	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otherwise
+	 * Returns:%TRUE if the initialization section should be entered, FALSE and blocks otherwise
 	 */
 	public static int onceInitEnter(out uint valueLocation)
 	{

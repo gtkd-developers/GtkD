@@ -176,7 +176,7 @@ public class MainContext
 	 */
 	public this ()
 	{
-		// GMainContext* g_main_context_new (void);
+		// GMainContext * g_main_context_new (void);
 		auto p = g_main_context_new();
 		if(p is null)
 		{
@@ -191,7 +191,7 @@ public class MainContext
 	 */
 	public MainContext doref()
 	{
-		// GMainContext* g_main_context_ref (GMainContext *context);
+		// GMainContext * g_main_context_ref (GMainContext *context);
 		auto p = g_main_context_ref(gMainContext);
 		if(p is null)
 		{
@@ -218,7 +218,7 @@ public class MainContext
 	 */
 	public static MainContext defaulx()
 	{
-		// GMainContext* g_main_context_default (void);
+		// GMainContext * g_main_context_default (void);
 		auto p = g_main_context_default();
 		if(p is null)
 		{
@@ -267,7 +267,7 @@ public class MainContext
 	 */
 	public Source findSourceById(uint sourceId)
 	{
-		// GSource* g_main_context_find_source_by_id (GMainContext *context,  guint source_id);
+		// GSource * g_main_context_find_source_by_id (GMainContext *context,  guint source_id);
 		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
 		if(p is null)
 		{
@@ -286,7 +286,7 @@ public class MainContext
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
-		// GSource* g_main_context_find_source_by_user_data  (GMainContext *context,  gpointer user_data);
+		// GSource * g_main_context_find_source_by_user_data  (GMainContext *context,  gpointer user_data);
 		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
 		if(p is null)
 		{
@@ -306,7 +306,7 @@ public class MainContext
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
-		// GSource* g_main_context_find_source_by_funcs_user_data  (GMainContext *context,  GSourceFuncs *funcs,  gpointer user_data);
+		// GSource * g_main_context_find_source_by_funcs_user_data  (GMainContext *context,  GSourceFuncs *funcs,  gpointer user_data);
 		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
 		if(p is null)
 		{

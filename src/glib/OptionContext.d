@@ -255,7 +255,7 @@ public class OptionContext
 	 */
 	public this (string parameterString)
 	{
-		// GOptionContext* g_option_context_new (const gchar *parameter_string);
+		// GOptionContext * g_option_context_new (const gchar *parameter_string);
 		auto p = g_option_context_new(Str.toStringz(parameterString));
 		if(p is null)
 		{
@@ -269,7 +269,8 @@ public class OptionContext
 	 * before the list of options. This is typically a summary of the
 	 * program functionality.
 	 * Note that the summary is translated (see
-	 * g_option_context_set_translate_func(), g_option_context_set_translation_domain()).
+	 * g_option_context_set_translate_func() and
+	 * g_option_context_set_translation_domain()).
 	 * Since 2.12
 	 * Params:
 	 * summary =  a string to be shown in --help output
@@ -288,7 +289,7 @@ public class OptionContext
 	 */
 	public string getSummary()
 	{
-		// const gchar* g_option_context_get_summary (GOptionContext *context);
+		// const gchar * g_option_context_get_summary (GOptionContext *context);
 		return Str.toString(g_option_context_get_summary(gOptionContext));
 	}
 	
@@ -316,7 +317,7 @@ public class OptionContext
 	 */
 	public string getDescription()
 	{
-		// const gchar* g_option_context_get_description (GOptionContext *context);
+		// const gchar * g_option_context_get_description (GOptionContext *context);
 		return Str.toString(g_option_context_get_description(gOptionContext));
 	}
 	
@@ -329,7 +330,7 @@ public class OptionContext
 	 * the summary (see g_option_context_set_summary()) and the description
 	 * (see g_option_context_set_description()).
 	 * If you are using gettext(), you only need to set the translation
-	 * domain, see g_context_group_set_translation_domain().
+	 * domain, see g_option_context_set_translation_domain().
 	 * Since 2.12
 	 * Params:
 	 * func =  the GTranslateFunc, or NULL
@@ -440,7 +441,7 @@ public class OptionContext
 	 */
 	public string getHelp(int mainHelp, OptionGroup group)
 	{
-		// gchar* g_option_context_get_help (GOptionContext *context,  gboolean main_help,  GOptionGroup *group);
+		// gchar * g_option_context_get_help (GOptionContext *context,  gboolean main_help,  GOptionGroup *group);
 		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct()));
 	}
 	
@@ -498,7 +499,7 @@ public class OptionContext
 	 */
 	public OptionGroup getMainGroup()
 	{
-		// GOptionGroup* g_option_context_get_main_group (GOptionContext *context);
+		// GOptionGroup * g_option_context_get_main_group (GOptionContext *context);
 		auto p = g_option_context_get_main_group(gOptionContext);
 		if(p is null)
 		{

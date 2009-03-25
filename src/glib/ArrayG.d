@@ -128,9 +128,9 @@ public class ArrayG
 	/**
 	 * Creates a new GArray.
 	 * Params:
-	 * zeroTerminated = TRUE if the array should have an extra element at the end
+	 * zeroTerminated = %TRUE if the array should have an extra element at the end
 	 * which is set to 0.
-	 * clear = TRUE if GArray elements should be automatically cleared to 0
+	 * clear = %TRUE if GArray elements should be automatically cleared to 0
 	 * when they are allocated.
 	 * elementSize = the size of each element in bytes.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -152,8 +152,8 @@ public class ArrayG
 	 * add many elements to the array. Note however that the size of the
 	 * array is still 0.
 	 * Params:
-	 * zeroTerminated = TRUE if the array should have an extra element at the end with all bits cleared.
-	 * clear = TRUE if all bits in the array should be cleared to 0 on allocation.
+	 * zeroTerminated = %TRUE if the array should have an extra element at the end with all bits cleared.
+	 * clear = %TRUE if all bits in the array should be cleared to 0 on allocation.
 	 * elementSize = size of each element in the array.
 	 * reservedSize = number of elements preallocated.
 	 * Returns:the new GArray.

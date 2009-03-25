@@ -135,7 +135,7 @@ public class Directory
 	 */
 	public static Directory open(string path, uint flags)
 	{
-		// GDir* g_dir_open (const gchar *path,  guint flags,  GError **error);
+		// GDir * g_dir_open (const gchar *path,  guint flags,  GError **error);
 		GError* err = null;
 		
 		auto p = g_dir_open(Str.toStringz(path), flags, &err);
@@ -160,7 +160,7 @@ public class Directory
 	 */
 	public string readName()
 	{
-		// const gchar* g_dir_read_name (GDir *dir);
+		// const gchar * g_dir_read_name (GDir *dir);
 		return Str.toString(g_dir_read_name(gDir));
 	}
 	

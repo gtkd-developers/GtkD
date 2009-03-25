@@ -98,6 +98,7 @@ static this()
 
 	Linker.link(g_thread_init, "g_thread_init", LIBRARY.GTHREAD);
 	Linker.link(g_thread_supported, "g_thread_supported", LIBRARY.GTHREAD);
+	Linker.link(g_thread_get_initialized, "g_thread_get_initialized", LIBRARY.GTHREAD);
 	Linker.link(g_thread_create, "g_thread_create", LIBRARY.GTHREAD);
 	Linker.link(g_thread_create_full, "g_thread_create_full", LIBRARY.GTHREAD);
 	Linker.link(g_thread_self, "g_thread_self", LIBRARY.GTHREAD);
@@ -177,6 +178,7 @@ extern(C)
 	
 	typedef void function(GThreadFunctions* vtable) c_g_thread_init;
 	typedef gboolean function() c_g_thread_supported;
+	typedef gboolean function() c_g_thread_get_initialized;
 	typedef GThread* function(GThreadFunc func, gpointer data, gboolean joinable, GError** error) c_g_thread_create;
 	typedef GThread* function(GThreadFunc func, gpointer data, gulong stackSize, gboolean joinable, gboolean bound, GThreadPriority priority, GError** error) c_g_thread_create_full;
 	typedef GThread* function() c_g_thread_self;
@@ -253,6 +255,7 @@ c_g_static_private_free  g_static_private_free;
 
 c_g_thread_init  g_thread_init;
 c_g_thread_supported  g_thread_supported;
+c_g_thread_get_initialized  g_thread_get_initialized;
 c_g_thread_create  g_thread_create;
 c_g_thread_create_full  g_thread_create_full;
 c_g_thread_self  g_thread_self;

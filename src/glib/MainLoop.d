@@ -184,7 +184,7 @@ public class MainLoop
 	 */
 	public this (MainContext context, int isRunning)
 	{
-		// GMainLoop* g_main_loop_new (GMainContext *context,  gboolean is_running);
+		// GMainLoop * g_main_loop_new (GMainContext *context,  gboolean is_running);
 		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
 		if(p is null)
 		{
@@ -199,7 +199,7 @@ public class MainLoop
 	 */
 	public MainLoop doref()
 	{
-		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
+		// GMainLoop * g_main_loop_ref (GMainLoop *loop);
 		auto p = g_main_loop_ref(gMainLoop);
 		if(p is null)
 		{
@@ -258,7 +258,7 @@ public class MainLoop
 	 */
 	public MainContext getContext()
 	{
-		// GMainContext* g_main_loop_get_context (GMainLoop *loop);
+		// GMainContext * g_main_loop_get_context (GMainLoop *loop);
 		auto p = g_main_loop_get_context(gMainLoop);
 		if(p is null)
 		{
@@ -290,12 +290,40 @@ public class MainLoop
 	 */
 	public static Source mainCurrentSource()
 	{
-		// GSource* g_main_current_source (void);
+		// GSource * g_main_current_source (void);
 		auto p = g_main_current_source();
 		if(p is null)
 		{
 			return null;
 		}
 		return new Source(cast(GSource*) p);
+	}
+	
+	/**
+	 * Polls fds, as with the poll() system call, but portably. (On
+	 * systems that don't have poll(), it is emulated using select().)
+	 * This is used internally by GMainContext, but it can be called
+	 * directly if you need to block until a file descriptor is ready, but
+	 * don't want to run the full main loop.
+	 * Each element of fds is a GPollFD describing a single file
+	 * descriptor to poll. The fd field indicates the file descriptor,
+	 * and the events field indicates the events to poll for. On return,
+	 * the revents fields will be filled with the events that actually
+	 * occurred.
+	 * On POSIX systems, the file descriptors in fds can be any sort of
+	 * file descriptor, but the situation is much more complicated on
+	 * Windows. If you need to use g_poll() in code that has to run on
+	 * Windows, the easiest solution is to construct all of your
+	 * GPollFDs with g_io_channel_win32_make_pollfd().
+	 * Since 2.20
+	 * Params:
+	 * fds =  file descriptors to poll
+	 * timeout =  amount of time to wait, in milliseconds, or -1 to wait forever
+	 * Returns: the number of entries in fds whose revents fieldswere filled in, or 0 if the operation timed out, or -1 on error orif the call was interrupted.
+	 */
+	public static int poll(GPollFD[] fds, int timeout)
+	{
+		// gint g_poll (GPollFD *fds,  guint nfds,  gint timeout);
+		return g_poll(fds.ptr, fds.length, timeout);
 	}
 }

@@ -311,7 +311,7 @@ public class Timeout
 	 */
 	public static Source sourceNew(uint interval)
 	{
-		// GSource* g_timeout_source_new (guint interval);
+		// GSource * g_timeout_source_new (guint interval);
 		auto p = g_timeout_source_new(interval);
 		if(p is null)
 		{
@@ -334,7 +334,7 @@ public class Timeout
 	 */
 	public static Source sourceNewSeconds(uint interval)
 	{
-		// GSource* g_timeout_source_new_seconds (guint interval);
+		// GSource * g_timeout_source_new_seconds (guint interval);
 		auto p = g_timeout_source_new_seconds(interval);
 		if(p is null)
 		{
@@ -358,6 +358,9 @@ public class Timeout
 	 * about the exact time of the first call of the timer, use the
 	 * g_timeout_add_seconds() function; this function allows for more
 	 * optimizations and more efficient system power usage.
+	 * This internally creates a main loop source using g_timeout_source_new()
+	 * and attaches it to the main loop context using g_source_attach(). You can
+	 * do these steps manually if you need greater control.
 	 * Params:
 	 * interval =  the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
@@ -382,6 +385,9 @@ public class Timeout
 	 * After each call to the timeout function, the time of the next
 	 * timeout is recalculated based on the current time and the given interval
 	 * (it does not try to 'catch up' time lost in delays).
+	 * This internally creates a main loop source using g_timeout_source_new()
+	 * and attaches it to the main loop context using g_source_attach(). You can
+	 * do these steps manually if you need greater control.
 	 * Params:
 	 * priority =  the priority of the timeout source. Typically this will be in
 	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
@@ -402,8 +408,10 @@ public class Timeout
 	 * priority, G_PRIORITY_DEFAULT. The function is called repeatedly until
 	 * it returns FALSE, at which point the timeout is automatically destroyed
 	 * and the function will not be called again.
-	 * See g_timeout_add_seconds_full() for the differences between
-	 * g_timeout_add() and g_timeout_add_seconds().
+	 * This internally creates a main loop source using
+	 * g_timeout_source_new_seconds() and attaches it to the main loop context
+	 * using g_source_attach(). You can do these steps manually if you need
+	 * greater control. Also see g_timout_add_seconds_full().
 	 * Since 2.14
 	 * Params:
 	 * interval =  the time between calls to the function, in seconds
@@ -438,6 +446,10 @@ public class Timeout
 	 * and CPU efficient behavior so if your timer is in multiples of seconds
 	 * and you don't require the first timer exactly one second from now, the
 	 * use of g_timeout_add_seconds() is preferred over g_timeout_add().
+	 * This internally creates a main loop source using
+	 * g_timeout_source_new_seconds() and attaches it to the main loop context
+	 * using g_source_attach(). You can do these steps manually if you need
+	 * greater control.
 	 * Since 2.14
 	 * Params:
 	 * priority =  the priority of the timeout source. Typically this will be in

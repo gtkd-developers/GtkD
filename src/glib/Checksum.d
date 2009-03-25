@@ -146,7 +146,7 @@ public class Checksum
 	 */
 	public this (GChecksumType checksumType)
 	{
-		// GChecksum* g_checksum_new (GChecksumType checksum_type);
+		// GChecksum * g_checksum_new (GChecksumType checksum_type);
 		auto p = g_checksum_new(checksumType);
 		if(p is null)
 		{
@@ -164,7 +164,7 @@ public class Checksum
 	 */
 	public Checksum copy()
 	{
-		// GChecksum* g_checksum_copy (const GChecksum *checksum);
+		// GChecksum * g_checksum_copy (const GChecksum *checksum);
 		auto p = g_checksum_copy(gChecksum);
 		if(p is null)
 		{
@@ -184,7 +184,7 @@ public class Checksum
 	}
 	
 	/**
-	 * Resets the state of the checksum back to it's initial state.
+	 * Resets the state of the checksum back to its initial state.
 	 * Since 2.18
 	 */
 	public void reset()
@@ -212,12 +212,13 @@ public class Checksum
 	 * Gets the digest as an hexadecimal string.
 	 * Once this function has been called the GChecksum can no longer be
 	 * updated with g_checksum_update().
+	 * The hexadecimal characters will be lower case.
 	 * Since 2.16
 	 * Returns: the hexadecimal representation of the checksum. The returned string is owned by the checksum and should not be modified or freed.
 	 */
 	public string getString()
 	{
-		// const gchar* g_checksum_get_string (GChecksum *checksum);
+		// const gchar * g_checksum_get_string (GChecksum *checksum);
 		return Str.toString(g_checksum_get_string(gChecksum));
 	}
 	
@@ -242,6 +243,7 @@ public class Checksum
 	 * Computes the checksum for a binary data of length. This is a
 	 * convenience wrapper for g_checksum_new(), g_checksum_get_string()
 	 * and g_checksum_free().
+	 * The hexadecimal string returned will be in lower case.
 	 * Since 2.16
 	 * Params:
 	 * checksumType =  a GChecksumType
@@ -251,12 +253,13 @@ public class Checksum
 	 */
 	public static string gComputeChecksumForData(GChecksumType checksumType, char* data, uint length)
 	{
-		// gchar* g_compute_checksum_for_data (GChecksumType checksum_type,  const guchar *data,  gsize length);
+		// gchar * g_compute_checksum_for_data (GChecksumType checksum_type,  const guchar *data,  gsize length);
 		return Str.toString(g_compute_checksum_for_data(checksumType, data, length));
 	}
 	
 	/**
 	 * Computes the checksum of a string.
+	 * The hexadecimal string returned will be in lower case.
 	 * Since 2.16
 	 * Params:
 	 * checksumType =  a GChecksumType
@@ -266,7 +269,7 @@ public class Checksum
 	 */
 	public static string gComputeChecksumForString(GChecksumType checksumType, string str, int length)
 	{
-		// gchar* g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
+		// gchar * g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
 		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), length));
 	}
 }

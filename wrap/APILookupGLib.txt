@@ -173,6 +173,7 @@ import: glib.MainContext
 structWrap: GMainContext* MainContext
 import: glib.Source
 structWrap: GSource* Source
+array: g_poll fds nfds
 outFile: MainLoop
 
 struct: GMainContext
@@ -1048,6 +1049,8 @@ inout: g_base64_encode_close state
 inout: g_base64_encode_close save
 inout: g_base64_decode_step state
 inout: g_base64_decode_step save
+array: g_base64_decode Return out_len
+array: g_base64_decode_inplace Return out_len
 
 outFile: Base64
 

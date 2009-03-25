@@ -2070,7 +2070,6 @@ public class GtkDClass
 		Funct fun;
 		fun.init(funct, convParms);
 
-
 		/**
 		 * Checks restrictions on the functions to include
 		 * Params:
@@ -2935,7 +2934,7 @@ public class GtkDClass
 		{
 			if ( name[0] == '*' )
 			{
-				type ~= '*';
+				type = type.dup ~ '*';
 				name = std.string.strip(name[1..name.length]);
 			}
 			else

@@ -310,7 +310,7 @@ public class IOChannel
 	 */
 	public static IOChannel win32_NewSocket(int socket)
 	{
-		// GIOChannel* g_io_channel_win32_new_socket (gint socket);
+		// GIOChannel * g_io_channel_win32_new_socket (gint socket);
 		auto p = g_io_channel_win32_new_socket(socket);
 		if(p is null)
 		{
@@ -329,7 +329,7 @@ public class IOChannel
 	 */
 	public static IOChannel win32_NewMessages(uint hwnd)
 	{
-		// GIOChannel* g_io_channel_win32_new_messages (gsize hwnd);
+		// GIOChannel * g_io_channel_win32_new_messages (gsize hwnd);
 		auto p = g_io_channel_win32_new_messages(hwnd);
 		if(p is null)
 		{
@@ -339,10 +339,10 @@ public class IOChannel
 	}
 	
 	/**
-	 * Initializes a GIOChannel struct. This is called by each of the
-	 * above functions when creating a GIOChannel, and so is not often
-	 * needed by the application programmer (unless you are creating a
-	 * new type of GIOChannel).
+	 * Initializes a GIOChannel struct.
+	 * This is called by each of the above functions when creating a
+	 * GIOChannel, and so is not often needed by the application
+	 * programmer (unless you are creating a new type of GIOChannel).
 	 */
 	public void init()
 	{
@@ -604,7 +604,7 @@ public class IOChannel
 	 */
 	public IOChannel doref()
 	{
-		// GIOChannel* g_io_channel_ref (GIOChannel *channel);
+		// GIOChannel * g_io_channel_ref (GIOChannel *channel);
 		auto p = g_io_channel_ref(gIOChannel);
 		if(p is null)
 		{
@@ -623,21 +623,22 @@ public class IOChannel
 	}
 	
 	/**
-	 * Creates a GSource that's dispatched when condition is met for the given
-	 * channel. For example, if condition is G_IO_IN, the source will be dispatched
-	 * when there's data available for reading. g_io_add_watch() is a simpler
-	 * interface to this same functionality, for the case where you want to add the
-	 * source to the default main loop at the default priority.
+	 * Creates a GSource that's dispatched when condition is met for the
+	 * given channel. For example, if condition is G_IO_IN, the source will
+	 * be dispatched when there's data available for reading.
+	 * g_io_add_watch() is a simpler interface to this same functionality, for
+	 * the case where you want to add the source to the default main loop context
+	 * at the default priority.
 	 * On Windows, polling a GSource created to watch a channel for a socket
 	 * puts the socket in non-blocking mode. This is a side-effect of the
 	 * implementation and unavoidable.
 	 * Params:
-	 * condition = conditions to watch for
-	 * Returns:a new GSource
+	 * condition =  conditions to watch for
+	 * Returns: a new GSource
 	 */
 	public Source gIoCreateWatch(GIOCondition condition)
 	{
-		// GSource* g_io_create_watch (GIOChannel *channel,  GIOCondition condition);
+		// GSource * g_io_create_watch (GIOChannel *channel,  GIOCondition condition);
 		auto p = g_io_create_watch(gIOChannel, condition);
 		if(p is null)
 		{
@@ -647,14 +648,13 @@ public class IOChannel
 	}
 	
 	/**
-	 * Adds the GIOChannel into the
-	 * main event loop
+	 * Adds the GIOChannel into the default main loop context
 	 * with the default priority.
 	 * Params:
-	 * condition = the condition to watch for
-	 * func = the function to call when the condition is satisfied
-	 * userData = user data to pass to func
-	 * Returns:the event source id
+	 * condition =  the condition to watch for
+	 * func =  the function to call when the condition is satisfied
+	 * userData =  user data to pass to func
+	 * Returns: the event source id
 	 */
 	public uint gIoAddWatch(GIOCondition condition, GIOFunc func, void* userData)
 	{
@@ -663,16 +663,18 @@ public class IOChannel
 	}
 	
 	/**
-	 * Adds the GIOChannel into the
-	 * main event loop
+	 * Adds the GIOChannel into the default main loop context
 	 * with the given priority.
+	 * This internally creates a main loop source using g_io_create_watch()
+	 * and attaches it to the main loop context with g_source_attach().
+	 * You can do these steps manuallt if you need greater control.
 	 * Params:
-	 * priority = the priority of the GIOChannel source
-	 * condition = the condition to watch for
-	 * func = the function to call when the condition is satisfied
-	 * userData = user data to pass to func
-	 * notify = the function to call when the source is removed
-	 * Returns:the event source id
+	 * priority =  the priority of the GIOChannel source
+	 * condition =  the condition to watch for
+	 * func =  the function to call when the condition is satisfied
+	 * userData =  user data to pass to func
+	 * notify =  the function to call when the source is removed
+	 * Returns: the event source id
 	 */
 	public uint gIoAddWatchFull(int priority, GIOCondition condition, GIOFunc func, void* userData, GDestroyNotify notify)
 	{

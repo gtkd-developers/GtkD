@@ -73,7 +73,8 @@ private import glib.Str;
  * GLib supports incremental encoding using g_base64_encode_step() and
  * g_base64_encode_close(). Incremental decoding can be done with
  * g_base64_decode_step(). To encode or decode data in one go, use
- * g_base64_encode() or g_base64_decode().
+ * g_base64_encode() or g_base64_decode(). To avoid memory allocation when
+ * decoding, you can use g_base64_decode_inplace().
  * Support for Base64 encoding has been added in GLib 2.12.
  */
 public class Base64
@@ -83,18 +84,14 @@ public class Base64
 	 */
 	
 	/**
-	 * Incrementally encode a sequence of binary data into it's Base-64 stringified
+	 * Incrementally encode a sequence of binary data into its Base-64 stringified
 	 * representation. By calling this function multiple times you can convert
 	 * data in chunks to avoid having to have the full encoded data in memory.
 	 * When all of the data has been converted you must call
 	 * g_base64_encode_close() to flush the saved state.
 	 * The output buffer must be large enough to fit all the data that will
 	 * be written to it. Due to the way base64 encodes you will need
-	 * at least: len * 4 / 3 + 6 bytes. If you enable line-breaking you will
-	 * need at least: len * 4 / 3 + len * 4 / (3 * 72) + 7 bytes.
-	 * break_lines is typically used when putting base64-encoded data in emails.
-	 * It breaks the lines at 72 columns instead of putting all of the text on
-	 * the same line. This avoids problems with long lines in the email system.
+	 * at least: (len / 3 + 1) * 4 + 4 bytes (+ 4 may be needed in case of
 	 * Since 2.12
 	 * Params:
 	 * in =  the binary data to encode
@@ -148,7 +145,8 @@ public class Base64
 	 * data in chunks to avoid having to have the full encoded data in memory.
 	 * The output buffer must be large enough to fit all the data that will
 	 * be written to it. Since base64 encodes 3 bytes in 4 chars you need
-	 * at least: len * 3 / 4 bytes.
+	 * at least: (len / 4) * 3 + 3 bytes (+ 3 may be needed in case of non-zero
+	 * state).
 	 * Since 2.12
 	 * Params:
 	 * in =  binary input data
@@ -169,12 +167,29 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * text =  zero-terminated string with base64 text to decode
-	 * outLen =  The length of the decoded data is written here
 	 * Returns: a newly allocated buffer containing the binary data that text represents. The returned buffer must be freed with g_free().
 	 */
-	public static char* decode(string text, uint* outLen)
+	public static char[] decode(string text)
 	{
-		// guchar* g_base64_decode (const gchar *text,  gsize *out_len);
-		return g_base64_decode(Str.toStringz(text), outLen);
+		// guchar * g_base64_decode (const gchar *text,  gsize *out_len);
+		uint outLen;
+		auto p = g_base64_decode(Str.toStringz(text), &outLen);
+		return p[0 .. outLen];
+	}
+	
+	/**
+	 * Decode a sequence of Base-64 encoded text into binary data
+	 * by overwriting the input data.
+	 * Since 2.20
+	 * Params:
+	 * text =  zero-terminated string with base64 text to decode
+	 * Returns: The binary data that text responds. This pointer is the same as the input text.
+	 */
+	public static char[] decodeInplace(string text)
+	{
+		// guchar * g_base64_decode_inplace (gchar *text,  gsize *out_len);
+		uint outLen;
+		auto p = g_base64_decode_inplace(Str.toStringz(text), &outLen);
+		return p[0 .. outLen];
 	}
 }

@@ -292,7 +292,7 @@ public struct GOnce
  * name :
  * the name of the lock.
  * Returns :
- * TRUE, if the lock could be locked.
+ * %TRUE, if the lock could be locked.
  */
 // TODO
 // #define G_TRYLOCK(name)

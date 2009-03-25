@@ -218,7 +218,7 @@ public class Cond
 	 * Params:
 	 * mutex = a GMutex that is currently locked.
 	 * absTime = a GTimeVal, determining the final time.
-	 * Returns:TRUE if cond was signalled, or FALSE on timeout.
+	 * Returns:%TRUE if cond was signalled, or FALSE on timeout.
 	 */
 	public int timedWait(Mutex mutex, TimeVal absTime)
 	{

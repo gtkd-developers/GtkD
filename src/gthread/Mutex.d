@@ -152,7 +152,7 @@ public class Mutex
 	 */
 	public this ()
 	{
-		// GMutex* g_mutex_new ();
+		// GMutex * g_mutex_new ();
 		auto p = g_mutex_new();
 		if(p is null)
 		{
@@ -190,7 +190,7 @@ public class Mutex
 	 * i.e. the return value of g_mutex_trylock() could be both FALSE or
 	 * TRUE, if the current thread already has locked mutex. Use
 	 * GStaticRecMutex, if you need recursive mutexes.
-	 * Returns:TRUE, if mutex could be locked.
+	 * Returns:%TRUE, if mutex could be locked.
 	 */
 	public int trylock()
 	{

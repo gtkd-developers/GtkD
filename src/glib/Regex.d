@@ -162,14 +162,14 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * pattern =  the regular expression
-	 * compileOptions =  compile options for the regular expression
-	 * matchOptions =  match options for the regular expression
+	 * compileOptions =  compile options for the regular expression, or 0
+	 * matchOptions =  match options for the regular expression, or 0
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string pattern, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
-		// GRegex* g_regex_new (const gchar *pattern,  GRegexCompileFlags compile_options,  GRegexMatchFlags match_options,  GError **error);
+		// GRegex * g_regex_new (const gchar *pattern,  GRegexCompileFlags compile_options,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
 		auto p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
@@ -193,7 +193,7 @@ public class Regex
 	 */
 	public Regex doref()
 	{
-		// GRegex* g_regex_ref (GRegex *regex);
+		// GRegex * g_regex_ref (GRegex *regex);
 		auto p = g_regex_ref(gRegex);
 		if(p is null)
 		{
@@ -221,7 +221,7 @@ public class Regex
 	 */
 	public string getPattern()
 	{
-		// const gchar* g_regex_get_pattern (const GRegex *regex);
+		// const gchar * g_regex_get_pattern (const GRegex *regex);
 		return Str.toString(g_regex_get_pattern(gRegex));
 	}
 	
@@ -277,7 +277,7 @@ public class Regex
 	 */
 	public static string escapeString(string string, int length)
 	{
-		// gchar* g_regex_escape_string (const gchar *string,  gint length);
+		// gchar * g_regex_escape_string (const gchar *string,  gint length);
 		return Str.toString(g_regex_escape_string(Str.toStringz(string), length));
 	}
 	
@@ -294,9 +294,9 @@ public class Regex
 	 * Params:
 	 * pattern =  the regular expression
 	 * string =  the string to scan for matches
-	 * compileOptions =  compile options for the regular expression
-	 * matchOptions =  match options
-	 * Returns: TRUE is the string matched, FALSE otherwise
+	 * compileOptions =  compile options for the regular expression, or 0
+	 * matchOptions =  match options, or 0
+	 * Returns: TRUE if the string matched, FALSE otherwise
 	 */
 	public static int matchSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -334,6 +334,9 @@ public class Regex
 		 *  g_match_info_free (match_info);
 		 *  g_regex_unref (regex);
 	 * }
+	 * string is not copied and is used in GMatchInfo internally. If
+	 * you use any GMatchInfo method (except g_match_info_free()) after
+	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
 	 * string =  the string to scan for matches
@@ -434,6 +437,9 @@ public class Regex
 	 * not NULL then it is created even if the function returns FALSE,
 	 * i.e. you must free it regardless if regular expression actually
 	 * matched.
+	 * string is not copied and is used in GMatchInfo internally. If
+	 * you use any GMatchInfo method (except g_match_info_free()) after
+	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
 	 * string =  the string to scan for matches
@@ -481,6 +487,9 @@ public class Regex
 	 * not NULL then it is created even if the function returns FALSE,
 	 * i.e. you must free it regardless if regular expression actually
 	 * matched.
+	 * string is not copied and is used in GMatchInfo internally. If
+	 * you use any GMatchInfo method (except g_match_info_free()) after
+	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
 	 * string =  the string to scan for matches
@@ -537,13 +546,13 @@ public class Regex
 	 * Params:
 	 * pattern =  the regular expression
 	 * string =  the string to scan for matches
-	 * compileOptions =  compile options for the regular expression
-	 * matchOptions =  match options
-	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
+	 * compileOptions =  compile options for the regular expression, or 0
+	 * matchOptions =  match options, or 0
+	 * Returns: a NULL-terminated array of strings. Free it using g_strfreev()
 	 */
 	public static string[] splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
-		// gchar** g_regex_split_simple (const gchar *pattern,  const gchar *string,  GRegexCompileFlags compile_options,  GRegexMatchFlags match_options);
+		// gchar ** g_regex_split_simple (const gchar *pattern,  const gchar *string,  GRegexCompileFlags compile_options,  GRegexMatchFlags match_options);
 		return Str.toStringArray(g_regex_split_simple(Str.toStringz(pattern), Str.toStringz(string), compileOptions, matchOptions));
 	}
 	
@@ -571,7 +580,7 @@ public class Regex
 	 */
 	public string[] split(string string, GRegexMatchFlags matchOptions)
 	{
-		// gchar** g_regex_split (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options);
+		// gchar ** g_regex_split (const GRegex *regex,  const gchar *string,  GRegexMatchFlags match_options);
 		return Str.toStringArray(g_regex_split(gRegex, Str.toStringz(string), matchOptions));
 	}
 	
@@ -607,7 +616,7 @@ public class Regex
 	 */
 	public string[] splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
 	{
-		// gchar** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
+		// gchar ** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_regex_split_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, maxTokens, &err));
@@ -621,7 +630,7 @@ public class Regex
 	}
 	
 	/**
-	 * Replaces all occurances of the pattern in regex with the
+	 * Replaces all occurrences of the pattern in regex with the
 	 * replacement text. Backreferences of the form '\number' or
 	 * '\g<number>' in the replacement text are interpolated by the
 	 * number-th captured subexpression of the match, '\g<name>' refers
@@ -640,7 +649,7 @@ public class Regex
 	 */
 	public string replace(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
-		// gchar* g_regex_replace (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
+		// gchar * g_regex_replace (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_regex_replace(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err));
@@ -654,7 +663,7 @@ public class Regex
 	}
 	
 	/**
-	 * Replaces all occurances of the pattern in regex with the
+	 * Replaces all occurrences of the pattern in regex with the
 	 * replacement text. replacement is replaced literally, to
 	 * include backreferences use g_regex_replace().
 	 * Setting start_position differs from just passing over a
@@ -673,7 +682,7 @@ public class Regex
 	 */
 	public string replaceLiteral(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
-		// gchar* g_regex_replace_literal (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
+		// gchar * g_regex_replace_literal (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_regex_replace_literal(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err));
@@ -687,11 +696,12 @@ public class Regex
 	}
 	
 	/**
-	 * Replaces occurances of the pattern in regex with the output of
-	 * eval for that occurance.
+	 * Replaces occurrences of the pattern in regex with the output of
+	 * eval for that occurrence.
 	 * Setting start_position differs from just passing over a shortened
 	 * string and setting G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
+	 * The following example uses g_regex_replace_eval() to replace multiple
 	 * Since 2.14
 	 * Params:
 	 * string =  string to perform matches against
@@ -705,7 +715,7 @@ public class Regex
 	 */
 	public string replaceEval(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
 	{
-		// gchar* g_regex_replace_eval (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GRegexEvalCallback eval,  gpointer user_data,  GError **error);
+		// gchar * g_regex_replace_eval (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GRegexEvalCallback eval,  gpointer user_data,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_regex_replace_eval(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, eval, userData, &err));

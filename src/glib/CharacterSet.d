@@ -375,7 +375,7 @@ public class CharacterSet
 	 */
 	public static string filenameFromUri(string uri, out string hostname)
 	{
-		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
+		// gchar * g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
 		char* outhostname = null;
 		GError* err = null;
 		
@@ -403,7 +403,7 @@ public class CharacterSet
 	 */
 	public static string filenameToUri(string filename, string hostname)
 	{
-		// gchar* g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
+		// gchar * g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), &err));
@@ -475,7 +475,7 @@ public class CharacterSet
 	 */
 	public static string filenameDisplayName(string filename)
 	{
-		// gchar* g_filename_display_name (const gchar *filename);
+		// gchar * g_filename_display_name (const gchar *filename);
 		return Str.toString(g_filename_display_name(Str.toStringz(filename)));
 	}
 	
@@ -500,7 +500,7 @@ public class CharacterSet
 	 */
 	public static string filenameDisplayBasename(string filename)
 	{
-		// gchar* g_filename_display_basename (const gchar *filename);
+		// gchar * g_filename_display_basename (const gchar *filename);
 		return Str.toString(g_filename_display_basename(Str.toStringz(filename)));
 	}
 	
@@ -515,7 +515,7 @@ public class CharacterSet
 	 */
 	public static string[] uriListExtractUris(string uriList)
 	{
-		// gchar** g_uri_list_extract_uris (const gchar *uri_list);
+		// gchar ** g_uri_list_extract_uris (const gchar *uri_list);
 		return Str.toStringArray(g_uri_list_extract_uris(Str.toStringz(uriList)));
 	}
 	

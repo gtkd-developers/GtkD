@@ -246,10 +246,12 @@ public class HashTable
 	 * associated value and a gboolean which is TRUE if the key was found. This
 	 * is useful if you need to free the memory allocated for the original key,
 	 * for example before calling g_hash_table_remove().
+	 * You can actually pass NULL for lookup_key to test
+	 * whether the NULL key exists.
 	 * Params:
-	 * lookupKey =  the key to look up.
-	 * origKey =  returns the original key.
-	 * value =  returns the value associated with the key.
+	 * lookupKey =  the key to look up
+	 * origKey =  return location for the original key, or NULL
+	 * value =  return location for the value associated with the key, or NULL
 	 * Returns: TRUE if the key was found in the GHashTable.
 	 */
 	public int lookupExtended(void* lookupKey, void** origKey, void** value)
@@ -337,7 +339,7 @@ public class HashTable
 	 * GHashTable. If you supplied key or value destroy functions when creating
 	 * the GHashTable, they are used to free the memory allocated for the removed
 	 * keys and values.
-	 * See GHashTableIterator for an alternative way to loop over the
+	 * See GHashTableIter for an alternative way to loop over the
 	 * key/value pairs in the hash table.
 	 * Params:
 	 * func =  the function to call for each key/value pair.
@@ -354,7 +356,7 @@ public class HashTable
 	 * Calls the given function for each key/value pair in the GHashTable.
 	 * If the function returns TRUE, then the key/value pair is removed from the
 	 * GHashTable, but no key or value destroy functions are called.
-	 * See GHashTableIterator for an alternative way to loop over the
+	 * See GHashTableIter for an alternative way to loop over the
 	 * key/value pairs in the hash table.
 	 * Params:
 	 * func =  the function to call for each key/value pair.
@@ -400,7 +402,7 @@ public class HashTable
 	 */
 	public ListG getKeys()
 	{
-		// GList* g_hash_table_get_keys (GHashTable *hash_table);
+		// GList * g_hash_table_get_keys (GHashTable *hash_table);
 		auto p = g_hash_table_get_keys(gHashTable);
 		if(p is null)
 		{
@@ -417,7 +419,7 @@ public class HashTable
 	 */
 	public ListG getValues()
 	{
-		// GList* g_hash_table_get_values (GHashTable *hash_table);
+		// GList * g_hash_table_get_values (GHashTable *hash_table);
 		auto p = g_hash_table_get_values(gHashTable);
 		if(p is null)
 		{

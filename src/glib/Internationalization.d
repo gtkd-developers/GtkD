@@ -105,7 +105,7 @@ public class Internationalization
 	 */
 	public static string dgettext(string domain, string msgid)
 	{
-		// const gchar* g_dgettext (const gchar *domain,  const gchar *msgid);
+		// const gchar * g_dgettext (const gchar *domain,  const gchar *msgid);
 		return Str.toString(g_dgettext(Str.toStringz(domain), Str.toStringz(msgid)));
 	}
 	
@@ -126,7 +126,7 @@ public class Internationalization
 	 */
 	public static string dngettext(string domain, string msgid, string msgidPlural, uint n)
 	{
-		// const gchar* g_dngettext (const gchar *domain,  const gchar *msgid,  const gchar *msgid_plural,  gulong n);
+		// const gchar * g_dngettext (const gchar *domain,  const gchar *msgid,  const gchar *msgid_plural,  gulong n);
 		return Str.toString(g_dngettext(Str.toStringz(domain), Str.toStringz(msgid), Str.toStringz(msgidPlural), n));
 	}
 	
@@ -153,7 +153,7 @@ public class Internationalization
 	 */
 	public static string dpgettext(string domain, string msgctxtid, uint msgidoffset)
 	{
-		// const gchar* g_dpgettext (const gchar *domain,  const gchar *msgctxtid,  gsize msgidoffset);
+		// const gchar * g_dpgettext (const gchar *domain,  const gchar *msgctxtid,  gsize msgidoffset);
 		return Str.toString(g_dpgettext(Str.toStringz(domain), Str.toStringz(msgctxtid), msgidoffset));
 	}
 	
@@ -176,7 +176,7 @@ public class Internationalization
 	 */
 	public static string dpgettext2(string domain, string context, string msgid)
 	{
-		// const gchar* g_dpgettext2 (const gchar *domain,  const gchar *context,  const gchar *msgid);
+		// const gchar * g_dpgettext2 (const gchar *domain,  const gchar *context,  const gchar *msgid);
 		return Str.toString(g_dpgettext2(Str.toStringz(domain), Str.toStringz(context), Str.toStringz(msgid)));
 	}
 	
@@ -190,7 +190,7 @@ public class Internationalization
 	 */
 	public static string stripContext(string msgid, string msgval)
 	{
-		// const gchar* g_strip_context (const gchar *msgid,  const gchar *msgval);
+		// const gchar * g_strip_context (const gchar *msgid,  const gchar *msgval);
 		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval)));
 	}
 	

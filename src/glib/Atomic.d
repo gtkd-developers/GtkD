@@ -163,7 +163,7 @@ public class Atomic
 	 * atomic = a pointer to an integer.
 	 * oldval = the assumed old value of *atomic.
 	 * newval = the new value of *atomic.
-	 * Returns:TRUE, if *atomic was equal oldval. FALSE otherwise.
+	 * Returns:%TRUE, if *atomic was equal oldval. FALSE otherwise.
 	 */
 	public static int intCompareAndExchange(int* atomic, int oldval, int newval)
 	{
@@ -208,7 +208,7 @@ public class Atomic
 	 * atomic = a pointer to a gpointer.
 	 * oldval = the assumed old value of *atomic.
 	 * newval = the new value of *atomic.
-	 * Returns:TRUE, if *atomic was equal oldval. FALSE otherwise.
+	 * Returns:%TRUE, if *atomic was equal oldval. FALSE otherwise.
 	 */
 	public static int pointerCompareAndExchange(void** atomic, void* oldval, void* newval)
 	{
@@ -233,7 +233,7 @@ public class Atomic
 	 * Since 2.4
 	 * Params:
 	 * atomic = a pointer to an integer.
-	 * Returns:TRUE, if the integer pointed to by atomic is 0 afterdecrementing it.
+	 * Returns:%TRUE, if the integer pointed to by atomic is 0 afterdecrementing it.
 	 */
 	public static int intDecAndTest(int* atomic)
 	{
