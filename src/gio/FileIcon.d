@@ -44,6 +44,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gio.IconT
  * 	- gio.IconIF
  * 	- glib.Str
@@ -68,6 +71,9 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gio.IconT;
 private import gio.IconIF;
 private import glib.Str;
@@ -145,7 +151,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	 */
 	public this (GFile* file)
 	{
-		// GIcon* g_file_icon_new (GFile *file);
+		// GIcon * g_file_icon_new (GFile *file);
 		auto p = g_file_icon_new(file);
 		if(p is null)
 		{
@@ -160,7 +166,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	 */
 	public GFile* getFile()
 	{
-		// GFile* g_file_icon_get_file (GFileIcon *icon);
+		// GFile * g_file_icon_get_file (GFileIcon *icon);
 		return g_file_icon_get_file(gFileIcon);
 	}
 }

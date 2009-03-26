@@ -116,12 +116,34 @@ public class FilterOutputStream : OutputStream
 	 */
 	public OutputStream getBaseStream()
 	{
-		// GOutputStream* g_filter_output_stream_get_base_stream  (GFilterOutputStream *stream);
+		// GOutputStream * g_filter_output_stream_get_base_stream  (GFilterOutputStream *stream);
 		auto p = g_filter_output_stream_get_base_stream(gFilterOutputStream);
 		if(p is null)
 		{
 			return null;
 		}
 		return new OutputStream(cast(GOutputStream*) p);
+	}
+	
+	/**
+	 * Returns whether the base stream will be closed when stream is
+	 * closed.
+	 * Returns: TRUE if the base stream will be closed.
+	 */
+	public int getCloseBaseStream()
+	{
+		// gboolean g_filter_output_stream_get_close_base_stream  (GFilterOutputStream *stream);
+		return g_filter_output_stream_get_close_base_stream(gFilterOutputStream);
+	}
+	
+	/**
+	 * Sets whether the base stream will be closed when stream is closed.
+	 * Params:
+	 * closeBase =  TRUE to close the base stream.
+	 */
+	public void setCloseBaseStream(int closeBase)
+	{
+		// void g_filter_output_stream_set_close_base_stream  (GFilterOutputStream *stream,  gboolean close_base);
+		g_filter_output_stream_set_close_base_stream(gFilterOutputStream, closeBase);
 	}
 }

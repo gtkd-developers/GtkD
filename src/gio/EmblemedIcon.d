@@ -47,6 +47,9 @@
  * 	- gio.Emblem
  * 	- gio.Icon
  * 	- gio.IconIF
+ * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gio.IconT
  * structWrap:
  * 	- GEmblem* -> Emblem
@@ -69,6 +72,9 @@ private import glib.ListG;
 private import gio.Emblem;
 private import gio.Icon;
 private import gio.IconIF;
+private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gio.IconT;
 
 
@@ -139,7 +145,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	 */
 	public this (IconIF icon, Emblem emblem)
 	{
-		// GIcon* g_emblemed_icon_new (GIcon *icon,  GEmblem *emblem);
+		// GIcon * g_emblemed_icon_new (GIcon *icon,  GEmblem *emblem);
 		auto p = g_emblemed_icon_new((icon is null) ? null : icon.getIconTStruct(), (emblem is null) ? null : emblem.getEmblemStruct());
 		if(p is null)
 		{
@@ -155,7 +161,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon* g_emblemed_icon_get_icon (GEmblemedIcon *emblemed);
+		// GIcon * g_emblemed_icon_get_icon (GEmblemedIcon *emblemed);
 		auto p = g_emblemed_icon_get_icon(gEmblemedIcon);
 		if(p is null)
 		{
@@ -171,7 +177,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	 */
 	public ListG getEmblems()
 	{
-		// GList* g_emblemed_icon_get_emblems (GEmblemedIcon *emblemed);
+		// GList * g_emblemed_icon_get_emblems (GEmblemedIcon *emblemed);
 		auto p = g_emblemed_icon_get_emblems(gEmblemedIcon);
 		if(p is null)
 		{

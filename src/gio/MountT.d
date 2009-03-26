@@ -207,7 +207,7 @@ public template MountT(TStruct)
 	 */
 	public string getName()
 	{
-		// char* g_mount_get_name (GMount *mount);
+		// char * g_mount_get_name (GMount *mount);
 		return Str.toString(g_mount_get_name(getMountTStruct()));
 	}
 	
@@ -220,7 +220,7 @@ public template MountT(TStruct)
 	 */
 	public string getUuid()
 	{
-		// char* g_mount_get_uuid (GMount *mount);
+		// char * g_mount_get_uuid (GMount *mount);
 		return Str.toString(g_mount_get_uuid(getMountTStruct()));
 	}
 	
@@ -230,7 +230,7 @@ public template MountT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon* g_mount_get_icon (GMount *mount);
+		// GIcon * g_mount_get_icon (GMount *mount);
 		auto p = g_mount_get_icon(getMountTStruct());
 		if(p is null)
 		{
@@ -247,7 +247,7 @@ public template MountT(TStruct)
 	 */
 	public DriveIF getDrive()
 	{
-		// GDrive* g_mount_get_drive (GMount *mount);
+		// GDrive * g_mount_get_drive (GMount *mount);
 		auto p = g_mount_get_drive(getMountTStruct());
 		if(p is null)
 		{
@@ -262,7 +262,7 @@ public template MountT(TStruct)
 	 */
 	public File getRoot()
 	{
-		// GFile* g_mount_get_root (GMount *mount);
+		// GFile * g_mount_get_root (GMount *mount);
 		auto p = g_mount_get_root(getMountTStruct());
 		if(p is null)
 		{
@@ -277,7 +277,7 @@ public template MountT(TStruct)
 	 */
 	public VolumeIF getVolume()
 	{
-		// GVolume* g_mount_get_volume (GMount *mount);
+		// GVolume * g_mount_get_volume (GMount *mount);
 		auto p = g_mount_get_volume(getMountTStruct());
 		if(p is null)
 		{
@@ -474,7 +474,7 @@ public template MountT(TStruct)
 	 */
 	public string[] guessContentTypeFinish(AsyncResultIF result)
 	{
-		// gchar** g_mount_guess_content_type_finish (GMount *mount,  GAsyncResult *result,  GError **error);
+		// gchar ** g_mount_guess_content_type_finish (GMount *mount,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_mount_guess_content_type_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err));
@@ -496,11 +496,6 @@ public template MountT(TStruct)
 	 * This is an synchronous operation and as such may block doing IO;
 	 * see g_mount_guess_content_type() for the asynchronous version.
 	 * Since 2.18
-	 * Signal Details
-	 * The "changed" signal
-	 * void user_function (GMount *mount,
-	 *  gpointer user_data) : Run Last
-	 * Emitted when the mount has been changed.
 	 * Params:
 	 * forceRescan =  Whether to force a rescan of the content.
 	 *  Otherwise a cached result will be used if available
@@ -510,7 +505,7 @@ public template MountT(TStruct)
 	 */
 	public string[] guessContentTypeSync(int forceRescan, Cancellable cancellable)
 	{
-		// gchar** g_mount_guess_content_type_sync (GMount *mount,  gboolean force_rescan,  GCancellable *cancellable,  GError **error);
+		// gchar ** g_mount_guess_content_type_sync (GMount *mount,  gboolean force_rescan,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toStringArray(g_mount_guess_content_type_sync(getMountTStruct(), forceRescan, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
@@ -521,5 +516,66 @@ public template MountT(TStruct)
 		}
 		
 		return p;
+	}
+	
+	/**
+	 * Determines if mount is shadowed. Applications or libraries should
+	 * avoid displaying mount in the user interface if it is shadowed.
+	 * A mount is said to be shadowed if there exists one or more user
+	 * visible objects (currently GMount objects) with a root that is
+	 * inside the root of mount.
+	 * One application of shadow mounts is when exposing a single file
+	 * system that is used to address several logical volumes. In this
+	 * situation, a GVolumeMonitor implementation would create two
+	 * GVolume objects (for example, one for the camera functionality of
+	 * the device and one for a SD card reader on the device) with
+	 * activation URIs gphoto2://[usb:001,002]/store1/
+	 * and gphoto2://[usb:001,002]/store2/. When the
+	 * underlying mount (with root
+	 * gphoto2://[usb:001,002]/) is mounted, said
+	 * GVolumeMonitor implementation would create two GMount objects
+	 * (each with their root matching the corresponding volume activation
+	 * root) that would shadow the original mount.
+	 * The proxy monitor in GVfs 2.26 and later, automatically creates and
+	 * manage shadow mounts (and shadows the underlying mount) if the
+	 * activation root on a GVolume is set.
+	 * Since 2.20
+	 * Returns: TRUE if mount is shadowed.
+	 */
+	public int isShadowed()
+	{
+		// gboolean g_mount_is_shadowed (GMount *mount);
+		return g_mount_is_shadowed(getMountTStruct());
+	}
+	
+	/**
+	 * Increments the shadow count on mount. Usually used by
+	 * GVolumeMonitor implementations when creating a shadow mount for
+	 * mount, see g_mount_is_shadowed() for more information. The caller
+	 * will need to emit the "changed" signal on mount manually.
+	 * Since 2.20
+	 */
+	public void shadow()
+	{
+		// void g_mount_shadow (GMount *mount);
+		g_mount_shadow(getMountTStruct());
+	}
+	
+	/**
+	 * Decrements the shadow count on mount. Usually used by
+	 * GVolumeMonitor implementations when destroying a shadow mount for
+	 * mount, see g_mount_is_shadowed() for more information. The caller
+	 * will need to emit the "changed" signal on mount manually.
+	 * Since 2.20
+	 * Signal Details
+	 * The "changed" signal
+	 * void user_function (GMount *mount,
+	 *  gpointer user_data) : Run Last
+	 * Emitted when the mount has been changed.
+	 */
+	public void unshadow()
+	{
+		// void g_mount_unshadow (GMount *mount);
+		g_mount_unshadow(getMountTStruct());
 	}
 }

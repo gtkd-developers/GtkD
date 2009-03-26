@@ -43,6 +43,9 @@
  * omit signals:
  * imports:
  * 	- gobject.ObjectG
+ * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gio.IconT
  * 	- gio.IconIF
  * structWrap:
@@ -60,6 +63,9 @@ private import glib.ConstructionException;
 
 
 private import gobject.ObjectG;
+private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gio.IconT;
 private import gio.IconIF;
 

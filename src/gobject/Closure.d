@@ -104,7 +104,7 @@ private import glib.Source;
  * for each callback type.
  * The reference counting of GClosure makes it easy to handle reentrancy
  * right; if a callback is removed while it is being invoked, the closure
- * and it's parameters won't be freed until the invocation finishes.
+ * and its parameters won't be freed until the invocation finishes.
  * g_closure_invalidate() and invalidation notifiers allow callbacks to be
  * automatically removed when the objects they point to go away.
  */
@@ -225,7 +225,7 @@ public class Closure
 	}
 	
 	/**
-	 * Sets a flag on the closure to indicate that it's calling
+	 * Sets a flag on the closure to indicate that its calling
 	 * environment has become invalid, and thus causes any future
 	 * invocations of g_closure_invoke() on this closure to be
 	 * ignored. Also, invalidation notifiers installed on the closure will

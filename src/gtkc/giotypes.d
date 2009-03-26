@@ -46,7 +46,8 @@ public enum GFileCreateFlags
 {
 	GDC_BUG_WORKAROUND,
 	NONE = 0,
-	PRIVATE = (1 << 0)
+	PRIVATE = (1 << 0),
+	REPLACE_DESTINATION = (1 << 1)
 }
 alias GFileCreateFlags FileCreateFlags;
 
@@ -62,7 +63,8 @@ public enum GFileCopyFlags
 	BACKUP = (1 << 1),
 	NOFOLLOW_SYMLINKS = (1 << 2),
 	ALL_METADATA = (1 << 3),
-	NO_FALLBACK_FOR_MOVE = (1 << 4)
+	NO_FALLBACK_FOR_MOVE = (1 << 4),
+	TARGET_DEFAULT_PERMS = (1 << 5)
 }
 alias GFileCopyFlags FileCopyFlags;
 
@@ -235,7 +237,8 @@ public enum GIOErrorEnum
 	WOULD_BLOCK,
 	HOST_NOT_FOUND,
 	WOULD_MERGE,
-	FAILED_HANDLED
+	FAILED_HANDLED,
+	TOO_MANY_OPEN_FILES
 }
 alias GIOErrorEnum IOErrorEnum;
 
@@ -712,6 +715,9 @@ public struct GAppInfoIface
 	extern(C) int  function(GAppInfo *appinfo,char *contentType,GError **error)  addSupportsType;
 	extern(C) int  function(GAppInfo *appinfo)  canRemoveSupportsType;
 	extern(C) int  function(GAppInfo *appinfo,char *contentType,GError **error)  removeSupportsType;
+	extern(C) int  function(GAppInfo *appinfo)  canDelete;
+	extern(C) int  function(GAppInfo *appinfo)  doDelete;
+	extern(C) char *  function(GAppInfo *appinfo)  getCommandline;
 }
 
 
@@ -901,6 +907,8 @@ public struct GIconIface
 	/+* Virtual Table +/
 	extern(C) uint  function(GIcon *icon)  hash;
 	extern(C) int  function(GIcon *icon1,GIcon *icon2)  equal;
+	extern(C) int  function(GIcon *icon,GPtrArray *tokens,int *outVersion)  toTokens;
+	extern(C) GIcon *  function(char **tokens,int numTokens,int versio,GError **error)  fromTokens;
 }
 
 
@@ -999,7 +1007,7 @@ public struct GIOExtensionPoint{}
 public typedef extern(C) void  function (long, long, void*) GFileProgressCallback;
 
 /*
- * When loading the partial contents of a file with g_file_read_partial_contents(),
+ * When loading the partial contents of a file with g_file_load_partial_contents_async(),
  * it may become necessary to determine if any more data from the file should be loaded.
  * A GFileReadMoreCallback function facilitates this by returning TRUE if more data
  * should be read, or FALSE otherwise.

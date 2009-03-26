@@ -109,7 +109,7 @@ public template LoadableIconT(TStruct)
 	 */
 	public InputStream load(int size, out string type, Cancellable cancellable)
 	{
-		// GInputStream* g_loadable_icon_load (GLoadableIcon *icon,  int size,  char **type,  GCancellable *cancellable,  GError **error);
+		// GInputStream * g_loadable_icon_load (GLoadableIcon *icon,  int size,  char **type,  GCancellable *cancellable,  GError **error);
 		char* outtype = null;
 		GError* err = null;
 		
@@ -154,7 +154,7 @@ public template LoadableIconT(TStruct)
 	 */
 	public InputStream loadFinish(AsyncResultIF res, out string type)
 	{
-		// GInputStream* g_loadable_icon_load_finish (GLoadableIcon *icon,  GAsyncResult *res,  char **type,  GError **error);
+		// GInputStream * g_loadable_icon_load_finish (GLoadableIcon *icon,  GAsyncResult *res,  char **type,  GError **error);
 		char* outtype = null;
 		GError* err = null;
 		

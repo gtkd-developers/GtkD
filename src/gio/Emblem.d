@@ -45,6 +45,9 @@
  * imports:
  * 	- gio.Icon
  * 	- gio.IconIF
+ * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gio.IconT
  * structWrap:
  * 	- GIcon* -> IconIF
@@ -63,6 +66,9 @@ private import glib.ConstructionException;
 
 private import gio.Icon;
 private import gio.IconIF;
+private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gio.IconT;
 
 
@@ -132,7 +138,7 @@ public class Emblem : ObjectG, IconIF
 	 */
 	public this (IconIF icon)
 	{
-		// GEmblem* g_emblem_new (GIcon *icon);
+		// GEmblem * g_emblem_new (GIcon *icon);
 		auto p = g_emblem_new((icon is null) ? null : icon.getIconTStruct());
 		if(p is null)
 		{
@@ -151,7 +157,7 @@ public class Emblem : ObjectG, IconIF
 	 */
 	public this (IconIF icon, GEmblemOrigin origin)
 	{
-		// GEmblem* g_emblem_new_with_origin (GIcon *icon,  GEmblemOrigin origin);
+		// GEmblem * g_emblem_new_with_origin (GIcon *icon,  GEmblemOrigin origin);
 		auto p = g_emblem_new_with_origin((icon is null) ? null : icon.getIconTStruct(), origin);
 		if(p is null)
 		{
@@ -167,7 +173,7 @@ public class Emblem : ObjectG, IconIF
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon* g_emblem_get_icon (GEmblem *emblem);
+		// GIcon * g_emblem_get_icon (GEmblem *emblem);
 		auto p = g_emblem_get_icon(gEmblem);
 		if(p is null)
 		{

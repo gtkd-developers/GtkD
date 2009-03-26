@@ -253,6 +253,7 @@ static this()
 	Linker.link(g_cancellable_is_cancelled, "g_cancellable_is_cancelled", LIBRARY.GIO);
 	Linker.link(g_cancellable_set_error_if_cancelled, "g_cancellable_set_error_if_cancelled", LIBRARY.GIO);
 	Linker.link(g_cancellable_get_fd, "g_cancellable_get_fd", LIBRARY.GIO);
+	Linker.link(g_cancellable_make_pollfd, "g_cancellable_make_pollfd", LIBRARY.GIO);
 	Linker.link(g_cancellable_get_current, "g_cancellable_get_current", LIBRARY.GIO);
 	Linker.link(g_cancellable_pop_current, "g_cancellable_pop_current", LIBRARY.GIO);
 	Linker.link(g_cancellable_push_current, "g_cancellable_push_current", LIBRARY.GIO);
@@ -286,6 +287,7 @@ static this()
 	Linker.link(g_simple_async_result_set_op_res_gboolean, "g_simple_async_result_set_op_res_gboolean", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_get_op_res_gboolean, "g_simple_async_result_get_op_res_gboolean", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_get_source_tag, "g_simple_async_result_get_source_tag", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_is_valid, "g_simple_async_result_is_valid", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_set_handle_cancellation, "g_simple_async_result_set_handle_cancellation", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_complete, "g_simple_async_result_complete", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_complete_in_idle, "g_simple_async_result_complete_in_idle", LIBRARY.GIO);
@@ -361,10 +363,14 @@ static this()
 	// gio.FilterInputStream
 
 	Linker.link(g_filter_input_stream_get_base_stream, "g_filter_input_stream_get_base_stream", LIBRARY.GIO);
+	Linker.link(g_filter_input_stream_get_close_base_stream, "g_filter_input_stream_get_close_base_stream", LIBRARY.GIO);
+	Linker.link(g_filter_input_stream_set_close_base_stream, "g_filter_input_stream_set_close_base_stream", LIBRARY.GIO);
 
 	// gio.FilterOutputStream
 
 	Linker.link(g_filter_output_stream_get_base_stream, "g_filter_output_stream_get_base_stream", LIBRARY.GIO);
+	Linker.link(g_filter_output_stream_get_close_base_stream, "g_filter_output_stream_get_close_base_stream", LIBRARY.GIO);
+	Linker.link(g_filter_output_stream_set_close_base_stream, "g_filter_output_stream_set_close_base_stream", LIBRARY.GIO);
 
 	// gio.MemoryInputStream
 
@@ -417,7 +423,11 @@ static this()
 	Linker.link(g_data_input_stream_read_int64, "g_data_input_stream_read_int64", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_uint64, "g_data_input_stream_read_uint64", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_line, "g_data_input_stream_read_line", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_line_async, "g_data_input_stream_read_line_async", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_line_finish, "g_data_input_stream_read_line_finish", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_until, "g_data_input_stream_read_until", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_until_async, "g_data_input_stream_read_until_async", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_until_finish, "g_data_input_stream_read_until_finish", LIBRARY.GIO);
 
 	// gio.DataOutputStream
 
@@ -436,10 +446,16 @@ static this()
 	// gio.UnixInputStream
 
 	Linker.link(g_unix_input_stream_new, "g_unix_input_stream_new", LIBRARY.GIO);
+	Linker.link(g_unix_input_stream_set_close_fd, "g_unix_input_stream_set_close_fd", LIBRARY.GIO);
+	Linker.link(g_unix_input_stream_get_close_fd, "g_unix_input_stream_get_close_fd", LIBRARY.GIO);
+	Linker.link(g_unix_input_stream_get_fd, "g_unix_input_stream_get_fd", LIBRARY.GIO);
 
 	// gio.UnixOutputStream
 
 	Linker.link(g_unix_output_stream_new, "g_unix_output_stream_new", LIBRARY.GIO);
+	Linker.link(g_unix_output_stream_set_close_fd, "g_unix_output_stream_set_close_fd", LIBRARY.GIO);
+	Linker.link(g_unix_output_stream_get_close_fd, "g_unix_output_stream_get_close_fd", LIBRARY.GIO);
+	Linker.link(g_unix_output_stream_get_fd, "g_unix_output_stream_get_fd", LIBRARY.GIO);
 
 	// gio.ContentType
 
@@ -467,12 +483,16 @@ static this()
 	Linker.link(g_app_info_get_name, "g_app_info_get_name", LIBRARY.GIO);
 	Linker.link(g_app_info_get_description, "g_app_info_get_description", LIBRARY.GIO);
 	Linker.link(g_app_info_get_executable, "g_app_info_get_executable", LIBRARY.GIO);
+	Linker.link(g_app_info_get_commandline, "g_app_info_get_commandline", LIBRARY.GIO);
 	Linker.link(g_app_info_get_icon, "g_app_info_get_icon", LIBRARY.GIO);
 	Linker.link(g_app_info_launch, "g_app_info_launch", LIBRARY.GIO);
 	Linker.link(g_app_info_supports_files, "g_app_info_supports_files", LIBRARY.GIO);
 	Linker.link(g_app_info_supports_uris, "g_app_info_supports_uris", LIBRARY.GIO);
 	Linker.link(g_app_info_launch_uris, "g_app_info_launch_uris", LIBRARY.GIO);
 	Linker.link(g_app_info_should_show, "g_app_info_should_show", LIBRARY.GIO);
+	Linker.link(g_app_info_can_delete, "g_app_info_can_delete", LIBRARY.GIO);
+	Linker.link(g_app_info_delete, "g_app_info_delete", LIBRARY.GIO);
+	Linker.link(g_app_info_reset_type_associations, "g_app_info_reset_type_associations", LIBRARY.GIO);
 	Linker.link(g_app_info_set_as_default_for_type, "g_app_info_set_as_default_for_type", LIBRARY.GIO);
 	Linker.link(g_app_info_set_as_default_for_extension, "g_app_info_set_as_default_for_extension", LIBRARY.GIO);
 	Linker.link(g_app_info_add_supports_type, "g_app_info_add_supports_type", LIBRARY.GIO);
@@ -555,6 +575,9 @@ static this()
 	Linker.link(g_mount_guess_content_type, "g_mount_guess_content_type", LIBRARY.GIO);
 	Linker.link(g_mount_guess_content_type_finish, "g_mount_guess_content_type_finish", LIBRARY.GIO);
 	Linker.link(g_mount_guess_content_type_sync, "g_mount_guess_content_type_sync", LIBRARY.GIO);
+	Linker.link(g_mount_is_shadowed, "g_mount_is_shadowed", LIBRARY.GIO);
+	Linker.link(g_mount_shadow, "g_mount_shadow", LIBRARY.GIO);
+	Linker.link(g_mount_unshadow, "g_mount_unshadow", LIBRARY.GIO);
 
 	// gio.Mount
 
@@ -629,6 +652,8 @@ static this()
 
 	Linker.link(g_icon_hash, "g_icon_hash", LIBRARY.GIO);
 	Linker.link(g_icon_equal, "g_icon_equal", LIBRARY.GIO);
+	Linker.link(g_icon_to_string, "g_icon_to_string", LIBRARY.GIO);
+	Linker.link(g_icon_new_for_string, "g_icon_new_for_string", LIBRARY.GIO);
 
 	// gio.Icon
 
@@ -933,6 +958,7 @@ extern(C)
 	typedef gboolean function(GCancellable* cancellable) c_g_cancellable_is_cancelled;
 	typedef gboolean function(GCancellable* cancellable, GError** error) c_g_cancellable_set_error_if_cancelled;
 	typedef int function(GCancellable* cancellable) c_g_cancellable_get_fd;
+	typedef void function(GCancellable* cancellable, GPollFD* pollfd) c_g_cancellable_make_pollfd;
 	typedef GCancellable* function() c_g_cancellable_get_current;
 	typedef void function(GCancellable* cancellable) c_g_cancellable_pop_current;
 	typedef void function(GCancellable* cancellable) c_g_cancellable_push_current;
@@ -966,6 +992,7 @@ extern(C)
 	typedef void function(GSimpleAsyncResult* simple, gboolean opRes) c_g_simple_async_result_set_op_res_gboolean;
 	typedef gboolean function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gboolean;
 	typedef gpointer function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_source_tag;
+	typedef gboolean function(GAsyncResult* result, GObject* source, gpointer sourceTag) c_g_simple_async_result_is_valid;
 	typedef void function(GSimpleAsyncResult* simple, gboolean handleCancellation) c_g_simple_async_result_set_handle_cancellation;
 	typedef void function(GSimpleAsyncResult* simple) c_g_simple_async_result_complete;
 	typedef void function(GSimpleAsyncResult* simple) c_g_simple_async_result_complete_in_idle;
@@ -1041,10 +1068,14 @@ extern(C)
 	// gio.FilterInputStream
 	
 	typedef GInputStream* function(GFilterInputStream* stream) c_g_filter_input_stream_get_base_stream;
+	typedef gboolean function(GFilterInputStream* stream) c_g_filter_input_stream_get_close_base_stream;
+	typedef void function(GFilterInputStream* stream, gboolean closeBase) c_g_filter_input_stream_set_close_base_stream;
 	
 	// gio.FilterOutputStream
 	
 	typedef GOutputStream* function(GFilterOutputStream* stream) c_g_filter_output_stream_get_base_stream;
+	typedef gboolean function(GFilterOutputStream* stream) c_g_filter_output_stream_get_close_base_stream;
+	typedef void function(GFilterOutputStream* stream, gboolean closeBase) c_g_filter_output_stream_set_close_base_stream;
 	
 	// gio.MemoryInputStream
 	
@@ -1097,7 +1128,11 @@ extern(C)
 	typedef gint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_int64;
 	typedef guint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_uint64;
 	typedef char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_line;
+	typedef void function(GDataInputStream* stream, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_line_async;
+	typedef char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_line_finish;
 	typedef char* function(GDataInputStream* stream, gchar* stopChars, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_until;
+	typedef void function(GDataInputStream* stream, gchar* stopChars, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_until_async;
+	typedef char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_until_finish;
 	
 	// gio.DataOutputStream
 	
@@ -1115,11 +1150,17 @@ extern(C)
 	
 	// gio.UnixInputStream
 	
-	typedef GInputStream* function(int fd, gboolean closeFdAtClose) c_g_unix_input_stream_new;
+	typedef GInputStream* function(gint fd, gboolean closeFd) c_g_unix_input_stream_new;
+	typedef void function(GUnixInputStream* stream, gboolean closeFd) c_g_unix_input_stream_set_close_fd;
+	typedef gboolean function(GUnixInputStream* stream) c_g_unix_input_stream_get_close_fd;
+	typedef gint function(GUnixInputStream* stream) c_g_unix_input_stream_get_fd;
 	
 	// gio.UnixOutputStream
 	
-	typedef GOutputStream* function(int fd, gboolean closeFdAtClose) c_g_unix_output_stream_new;
+	typedef GOutputStream* function(gint fd, gboolean closeFd) c_g_unix_output_stream_new;
+	typedef void function(GUnixOutputStream* stream, gboolean closeFd) c_g_unix_output_stream_set_close_fd;
+	typedef gboolean function(GUnixOutputStream* stream) c_g_unix_output_stream_get_close_fd;
+	typedef gint function(GUnixOutputStream* stream) c_g_unix_output_stream_get_fd;
 	
 	// gio.ContentType
 	
@@ -1147,12 +1188,16 @@ extern(C)
 	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_name;
 	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_description;
 	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_executable;
+	typedef char* function(GAppInfo* appinfo) c_g_app_info_get_commandline;
 	typedef GIcon* function(GAppInfo* appinfo) c_g_app_info_get_icon;
 	typedef gboolean function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** error) c_g_app_info_launch;
 	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_supports_files;
 	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_supports_uris;
 	typedef gboolean function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** error) c_g_app_info_launch_uris;
 	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_should_show;
+	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_can_delete;
+	typedef gboolean function(GAppInfo* appinfo) c_g_app_info_delete;
+	typedef void function(char* contentType) c_g_app_info_reset_type_associations;
 	typedef gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_set_as_default_for_type;
 	typedef gboolean function(GAppInfo* appinfo, char* extension, GError** error) c_g_app_info_set_as_default_for_extension;
 	typedef gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_add_supports_type;
@@ -1235,6 +1280,9 @@ extern(C)
 	typedef void function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_guess_content_type;
 	typedef gchar** function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_guess_content_type_finish;
 	typedef gchar** function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GError** error) c_g_mount_guess_content_type_sync;
+	typedef gboolean function(GMount* mount) c_g_mount_is_shadowed;
+	typedef void function(GMount* mount) c_g_mount_shadow;
+	typedef void function(GMount* mount) c_g_mount_unshadow;
 	
 	// gio.Mount
 	
@@ -1309,6 +1357,8 @@ extern(C)
 	
 	typedef guint function(gconstpointer icon) c_g_icon_hash;
 	typedef gboolean function(GIcon* icon1, GIcon* icon2) c_g_icon_equal;
+	typedef gchar* function(GIcon* icon) c_g_icon_to_string;
+	typedef GIcon* function(gchar* str, GError** error) c_g_icon_new_for_string;
 	
 	// gio.Icon
 	
@@ -1610,6 +1660,7 @@ c_g_cancellable_new  g_cancellable_new;
 c_g_cancellable_is_cancelled  g_cancellable_is_cancelled;
 c_g_cancellable_set_error_if_cancelled  g_cancellable_set_error_if_cancelled;
 c_g_cancellable_get_fd  g_cancellable_get_fd;
+c_g_cancellable_make_pollfd  g_cancellable_make_pollfd;
 c_g_cancellable_get_current  g_cancellable_get_current;
 c_g_cancellable_pop_current  g_cancellable_pop_current;
 c_g_cancellable_push_current  g_cancellable_push_current;
@@ -1643,6 +1694,7 @@ c_g_simple_async_result_get_op_res_gssize  g_simple_async_result_get_op_res_gssi
 c_g_simple_async_result_set_op_res_gboolean  g_simple_async_result_set_op_res_gboolean;
 c_g_simple_async_result_get_op_res_gboolean  g_simple_async_result_get_op_res_gboolean;
 c_g_simple_async_result_get_source_tag  g_simple_async_result_get_source_tag;
+c_g_simple_async_result_is_valid  g_simple_async_result_is_valid;
 c_g_simple_async_result_set_handle_cancellation  g_simple_async_result_set_handle_cancellation;
 c_g_simple_async_result_complete  g_simple_async_result_complete;
 c_g_simple_async_result_complete_in_idle  g_simple_async_result_complete_in_idle;
@@ -1718,10 +1770,14 @@ c_g_file_output_stream_get_etag  g_file_output_stream_get_etag;
 // gio.FilterInputStream
 
 c_g_filter_input_stream_get_base_stream  g_filter_input_stream_get_base_stream;
+c_g_filter_input_stream_get_close_base_stream  g_filter_input_stream_get_close_base_stream;
+c_g_filter_input_stream_set_close_base_stream  g_filter_input_stream_set_close_base_stream;
 
 // gio.FilterOutputStream
 
 c_g_filter_output_stream_get_base_stream  g_filter_output_stream_get_base_stream;
+c_g_filter_output_stream_get_close_base_stream  g_filter_output_stream_get_close_base_stream;
+c_g_filter_output_stream_set_close_base_stream  g_filter_output_stream_set_close_base_stream;
 
 // gio.MemoryInputStream
 
@@ -1774,7 +1830,11 @@ c_g_data_input_stream_read_uint32  g_data_input_stream_read_uint32;
 c_g_data_input_stream_read_int64  g_data_input_stream_read_int64;
 c_g_data_input_stream_read_uint64  g_data_input_stream_read_uint64;
 c_g_data_input_stream_read_line  g_data_input_stream_read_line;
+c_g_data_input_stream_read_line_async  g_data_input_stream_read_line_async;
+c_g_data_input_stream_read_line_finish  g_data_input_stream_read_line_finish;
 c_g_data_input_stream_read_until  g_data_input_stream_read_until;
+c_g_data_input_stream_read_until_async  g_data_input_stream_read_until_async;
+c_g_data_input_stream_read_until_finish  g_data_input_stream_read_until_finish;
 
 // gio.DataOutputStream
 
@@ -1793,10 +1853,16 @@ c_g_data_output_stream_put_string  g_data_output_stream_put_string;
 // gio.UnixInputStream
 
 c_g_unix_input_stream_new  g_unix_input_stream_new;
+c_g_unix_input_stream_set_close_fd  g_unix_input_stream_set_close_fd;
+c_g_unix_input_stream_get_close_fd  g_unix_input_stream_get_close_fd;
+c_g_unix_input_stream_get_fd  g_unix_input_stream_get_fd;
 
 // gio.UnixOutputStream
 
 c_g_unix_output_stream_new  g_unix_output_stream_new;
+c_g_unix_output_stream_set_close_fd  g_unix_output_stream_set_close_fd;
+c_g_unix_output_stream_get_close_fd  g_unix_output_stream_get_close_fd;
+c_g_unix_output_stream_get_fd  g_unix_output_stream_get_fd;
 
 // gio.ContentType
 
@@ -1824,12 +1890,16 @@ c_g_app_info_get_id  g_app_info_get_id;
 c_g_app_info_get_name  g_app_info_get_name;
 c_g_app_info_get_description  g_app_info_get_description;
 c_g_app_info_get_executable  g_app_info_get_executable;
+c_g_app_info_get_commandline  g_app_info_get_commandline;
 c_g_app_info_get_icon  g_app_info_get_icon;
 c_g_app_info_launch  g_app_info_launch;
 c_g_app_info_supports_files  g_app_info_supports_files;
 c_g_app_info_supports_uris  g_app_info_supports_uris;
 c_g_app_info_launch_uris  g_app_info_launch_uris;
 c_g_app_info_should_show  g_app_info_should_show;
+c_g_app_info_can_delete  g_app_info_can_delete;
+c_g_app_info_delete  g_app_info_delete;
+c_g_app_info_reset_type_associations  g_app_info_reset_type_associations;
 c_g_app_info_set_as_default_for_type  g_app_info_set_as_default_for_type;
 c_g_app_info_set_as_default_for_extension  g_app_info_set_as_default_for_extension;
 c_g_app_info_add_supports_type  g_app_info_add_supports_type;
@@ -1912,6 +1982,9 @@ c_g_mount_eject_finish  g_mount_eject_finish;
 c_g_mount_guess_content_type  g_mount_guess_content_type;
 c_g_mount_guess_content_type_finish  g_mount_guess_content_type_finish;
 c_g_mount_guess_content_type_sync  g_mount_guess_content_type_sync;
+c_g_mount_is_shadowed  g_mount_is_shadowed;
+c_g_mount_shadow  g_mount_shadow;
+c_g_mount_unshadow  g_mount_unshadow;
 
 // gio.Mount
 
@@ -1986,6 +2059,8 @@ c_g_unix_mount_monitor_set_rate_limit  g_unix_mount_monitor_set_rate_limit;
 
 c_g_icon_hash  g_icon_hash;
 c_g_icon_equal  g_icon_equal;
+c_g_icon_to_string  g_icon_to_string;
+c_g_icon_new_for_string  g_icon_new_for_string;
 
 // gio.Icon
 

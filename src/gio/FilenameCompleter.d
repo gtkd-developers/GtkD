@@ -149,7 +149,7 @@ public class FilenameCompleter : ObjectG
 	 */
 	public this ()
 	{
-		// GFilenameCompleter* g_filename_completer_new (void);
+		// GFilenameCompleter * g_filename_completer_new (void);
 		auto p = g_filename_completer_new();
 		if(p is null)
 		{
@@ -166,7 +166,7 @@ public class FilenameCompleter : ObjectG
 	 */
 	public string getCompletionSuffix(string initialText)
 	{
-		// char* g_filename_completer_get_completion_suffix  (GFilenameCompleter *completer,  const char *initial_text);
+		// char * g_filename_completer_get_completion_suffix  (GFilenameCompleter *completer,  const char *initial_text);
 		return Str.toString(g_filename_completer_get_completion_suffix(gFilenameCompleter, Str.toStringz(initialText)));
 	}
 	
@@ -178,7 +178,7 @@ public class FilenameCompleter : ObjectG
 	 */
 	public string[] getCompletions(string initialText)
 	{
-		// char** g_filename_completer_get_completions  (GFilenameCompleter *completer,  const char *initial_text);
+		// char ** g_filename_completer_get_completions  (GFilenameCompleter *completer,  const char *initial_text);
 		return Str.toStringArray(g_filename_completer_get_completions(gFilenameCompleter, Str.toStringz(initialText)));
 	}
 	

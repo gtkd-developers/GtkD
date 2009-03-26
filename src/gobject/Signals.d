@@ -81,7 +81,7 @@ private import glib.Quark;
  * emission mainly involves invocation of a certain set of callbacks
  * in precisely defined manner. There are two main categories of such
  * callbacks, per-object
- * [12]
+ * [10]
  * ones and user provided ones.
  * The per-object callbacks are most often referred to as "object method
  * handler" or "default (signal) handler", while user provided callbacks are
@@ -134,18 +134,18 @@ public class Signals
 	 * Params:
 	 * signalName =  the name for the signal
 	 * itype =  the type this signal pertains to. It will also pertain to
-	 *  types which are derived from this type.
+	 *  types which are derived from this type
 	 * signalFlags =  a combination of GSignalFlags specifying detail of when
 	 *  the default handler is to be invoked. You should at least specify
-	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
-	 * classClosure =  The closure to invoke on signal emission; may be NULL.
-	 * accumulator =  the accumulator for this signal; may be NULL.
-	 * accuData =  user data for the accumulator.
+	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST
+	 * classClosure =  The closure to invoke on signal emission; may be NULL
+	 * accumulator =  the accumulator for this signal; may be NULL
+	 * accuData =  user data for the accumulator
 	 * cMarshaller =  the function to translate arrays of parameter values to
-	 *  signal emissions into C language callback invocations.
+	 *  signal emissions into C language callback invocations
 	 * returnType =  the type of return value, or G_TYPE_NONE for a signal
-	 *  without a return value.
-	 * paramTypes =  an array types, one for each parameter.
+	 *  without a return value
+	 * paramTypes =  an array of types, one for each parameter
 	 * Returns: the signal id
 	 */
 	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, GType[] paramTypes)
@@ -716,7 +716,7 @@ public class Signals
 	 * indicates that the callback handled the signal,
 	 * and no further handling is needed.
 	 * Since 2.4
-	 * [12] Although signals can deal with any kind of instantiatable
+	 * [10] Although signals can deal with any kind of instantiatable
 	 * type, i'm referring to those types as "object types" in the following,
 	 * simply because that is the context most users will encounter signals in.
 	 * Params:

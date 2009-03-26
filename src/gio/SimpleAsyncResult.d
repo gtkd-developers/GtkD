@@ -115,7 +115,9 @@ private import gobject.ObjectG;
  * g_simple_async_result_propagate_error().
  * An asynchronous operation can be made to ignore a cancellation event by
  * calling g_simple_async_result_set_handle_cancellation() with a
- * GSimpleAsyncResult for the operation and FALSE.
+ * GSimpleAsyncResult for the operation and FALSE. This is useful for
+ * operations that are dangerous to cancel, such as close (which would
+ * cause a leak if cancelled before being run).
  * GSimpleAsyncResult can integrate into GLib's event loop, GMainLoop,
  * or it can use GThreads if available.
  * g_simple_async_result_complete() will finish an I/O task directly within
@@ -185,7 +187,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Creates a GSimpleAsyncResult.
 	 * Params:
-	 * sourceObject =  a GObject the asynchronous function was called with.
+	 * sourceObject =  a GObject the asynchronous function was called with,
+	 * or NULL.
 	 * callback =  a GAsyncReadyCallback.
 	 * userData =  user data passed to callback.
 	 * sourceTag =  the asynchronous function.
@@ -193,7 +196,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this (ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, void* sourceTag)
 	{
-		// GSimpleAsyncResult* g_simple_async_result_new (GObject *source_object,  GAsyncReadyCallback callback,  gpointer user_data,  gpointer source_tag);
+		// GSimpleAsyncResult * g_simple_async_result_new (GObject *source_object,  GAsyncReadyCallback callback,  gpointer user_data,  gpointer source_tag);
 		auto p = g_simple_async_result_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, sourceTag);
 		if(p is null)
 		{
@@ -205,7 +208,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Creates a GSimpleAsyncResult from an error condition.
 	 * Params:
-	 * sourceObject =  a GObject.
+	 * sourceObject =  a GObject, or NULL.
 	 * callback =  a GAsyncReadyCallback.
 	 * userData =  user data passed to callback.
 	 * error =  a GError location.
@@ -213,7 +216,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this (ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
-		// GSimpleAsyncResult* g_simple_async_result_new_from_error  (GObject *source_object,  GAsyncReadyCallback callback,  gpointer user_data,  GError *error);
+		// GSimpleAsyncResult * g_simple_async_result_new_from_error  (GObject *source_object,  GAsyncReadyCallback callback,  gpointer user_data,  GError *error);
 		auto p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
 		if(p is null)
 		{
@@ -298,6 +301,28 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	}
 	
 	/**
+	 * Ensures that the data passed to the _finish function of an async
+	 * operation is consistent. Three checks are performed.
+	 * First, result is checked to ensure that it is really a
+	 * GSimpleAsyncResult. Second, source is checked to ensure that it
+	 * matches the source object of result. Third, source_tag is
+	 * checked to ensure that it is equal to the source_tag argument given
+	 * to g_simple_async_result_new() (which, by convention, is a pointer
+	 * to the _async function corresponding to the _finish function from
+	 * which this function is called).
+	 * Params:
+	 * result =  the GAsyncResult passed to the _finish function.
+	 * source =  the GObject passed to the _finish function.
+	 * sourceTag =  the asynchronous function.
+	 * Returns: TRUE if all checks passed or FALSE if any failed.
+	 */
+	public static int isValid(GAsyncResult* result, ObjectG source, void* sourceTag)
+	{
+		// gboolean g_simple_async_result_is_valid (GAsyncResult *result,  GObject *source,  gpointer source_tag);
+		return g_simple_async_result_is_valid(result, (source is null) ? null : source.getObjectGStruct(), sourceTag);
+	}
+	
+	/**
 	 * Sets whether to handle cancellation within the asynchronous operation.
 	 * Params:
 	 * handleCancellation =  a gboolean.
@@ -310,6 +335,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	
 	/**
 	 * Completes an asynchronous I/O job.
+	 * Must be called in the main thread, as it invokes the callback that
+	 * should be called in the main thread. If you are in a different thread
+	 * use g_simple_async_result_complete_in_idle().
 	 */
 	public void complete()
 	{

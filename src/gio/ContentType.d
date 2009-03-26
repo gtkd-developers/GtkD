@@ -134,7 +134,7 @@ public class ContentType
 	 */
 	public static string getDescription(string type)
 	{
-		// char* g_content_type_get_description (const char *type);
+		// char * g_content_type_get_description (const char *type);
 		return Str.toString(g_content_type_get_description(Str.toStringz(type)));
 	}
 	
@@ -146,7 +146,7 @@ public class ContentType
 	 */
 	public static string getMimeType(string type)
 	{
-		// char* g_content_type_get_mime_type (const char *type);
+		// char * g_content_type_get_mime_type (const char *type);
 		return Str.toString(g_content_type_get_mime_type(Str.toStringz(type)));
 	}
 	
@@ -158,7 +158,7 @@ public class ContentType
 	 */
 	public static IconIF getIcon(string type)
 	{
-		// GIcon* g_content_type_get_icon (const char *type);
+		// GIcon * g_content_type_get_icon (const char *type);
 		auto p = g_content_type_get_icon(Str.toStringz(type));
 		if(p is null)
 		{
@@ -189,7 +189,7 @@ public class ContentType
 	 */
 	public static string fromMimeType(string mimeType)
 	{
-		// char* g_content_type_from_mime_type (const char *mime_type);
+		// char * g_content_type_from_mime_type (const char *mime_type);
 		return Str.toString(g_content_type_from_mime_type(Str.toStringz(mimeType)));
 	}
 	
@@ -206,7 +206,7 @@ public class ContentType
 	 */
 	public static string guess(string filename, char[] data, out int resultUncertain)
 	{
-		// char* g_content_type_guess (const char *filename,  const guchar *data,  gsize data_size,  gboolean *result_uncertain);
+		// char * g_content_type_guess (const char *filename,  const guchar *data,  gsize data_size,  gboolean *result_uncertain);
 		return Str.toString(g_content_type_guess(Str.toStringz(filename), data.ptr, data.length, &resultUncertain));
 	}
 	
@@ -226,7 +226,7 @@ public class ContentType
 	 */
 	public static string[] guessForTree(File root)
 	{
-		// char** g_content_type_guess_for_tree (GFile *root);
+		// char ** g_content_type_guess_for_tree (GFile *root);
 		return Str.toStringArray(g_content_type_guess_for_tree((root is null) ? null : root.getFileStruct()));
 	}
 	
@@ -238,7 +238,7 @@ public class ContentType
 	 */
 	public static ListG gContentTypesGetRegistered()
 	{
-		// GList* g_content_types_get_registered (void);
+		// GList * g_content_types_get_registered (void);
 		auto p = g_content_types_get_registered();
 		if(p is null)
 		{

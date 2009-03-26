@@ -239,6 +239,8 @@ public class BufferedInputStream : FilterInputStream
 	 * It is not an error if this is not the same as the requested size, as it
 	 * can happen e.g. near the end of a file. Zero is returned on end of file
 	 * (or if count is zero), but never otherwise.
+	 * If count is -1 then the attempted read size is equal to the number of
+	 * bytes that are required to fill the buffer.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned. If an
@@ -272,8 +274,10 @@ public class BufferedInputStream : FilterInputStream
 	 * Reads data into stream's buffer asynchronously, up to count size.
 	 * io_priority can be used to prioritize reads. For the synchronous
 	 * version of this function, see g_buffered_input_stream_fill().
+	 * If count is -1 then the attempted read size is equal to the number
+	 * of bytes that are required to fill the buffer.
 	 * Params:
-	 * count =  a gssize.
+	 * count =  the number of bytes that will be read from the stream.
 	 * ioPriority =  the I/O priority
 	 *  of the request.
 	 * cancellable =  optional GCancellable object

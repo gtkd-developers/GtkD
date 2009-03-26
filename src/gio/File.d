@@ -224,7 +224,7 @@ public class File : ObjectG
 	 */
 	public this (string arg)
 	{
-		// GFile* g_file_new_for_commandline_arg (const char *arg);
+		// GFile * g_file_new_for_commandline_arg (const char *arg);
 		auto p = g_file_new_for_commandline_arg(Str.toStringz(arg));
 		if(p is null)
 		{
@@ -243,7 +243,7 @@ public class File : ObjectG
 	 */
 	public static File parseName(string parseName)
 	{
-		// GFile* g_file_parse_name (const char *parse_name);
+		// GFile * g_file_parse_name (const char *parse_name);
 		auto p = g_file_parse_name(Str.toStringz(parseName));
 		if(p is null)
 		{
@@ -261,7 +261,7 @@ public class File : ObjectG
 	 */
 	public File dup()
 	{
-		// GFile* g_file_dup (GFile *file);
+		// GFile * g_file_dup (GFile *file);
 		auto p = g_file_dup(gFile);
 		if(p is null)
 		{
@@ -314,7 +314,7 @@ public class File : ObjectG
 	 */
 	public string getBasename()
 	{
-		// char* g_file_get_basename (GFile *file);
+		// char * g_file_get_basename (GFile *file);
 		return Str.toString(g_file_get_basename(gFile));
 	}
 	
@@ -325,7 +325,7 @@ public class File : ObjectG
 	 */
 	public string getPath()
 	{
-		// char* g_file_get_path (GFile *file);
+		// char * g_file_get_path (GFile *file);
 		return Str.toString(g_file_get_path(gFile));
 	}
 	
@@ -336,7 +336,7 @@ public class File : ObjectG
 	 */
 	public string getUri()
 	{
-		// char* g_file_get_uri (GFile *file);
+		// char * g_file_get_uri (GFile *file);
 		return Str.toString(g_file_get_uri(gFile));
 	}
 	
@@ -356,7 +356,7 @@ public class File : ObjectG
 	 */
 	public string getParseName()
 	{
-		// char* g_file_get_parse_name (GFile *file);
+		// char * g_file_get_parse_name (GFile *file);
 		return Str.toString(g_file_get_parse_name(gFile));
 	}
 	
@@ -369,7 +369,7 @@ public class File : ObjectG
 	 */
 	public File getParent()
 	{
-		// GFile* g_file_get_parent (GFile *file);
+		// GFile * g_file_get_parent (GFile *file);
 		auto p = g_file_get_parent(gFile);
 		if(p is null)
 		{
@@ -390,7 +390,7 @@ public class File : ObjectG
 	 */
 	public File getChild(string name)
 	{
-		// GFile* g_file_get_child (GFile *file,  const char *name);
+		// GFile * g_file_get_child (GFile *file,  const char *name);
 		auto p = g_file_get_child(gFile, Str.toStringz(name));
 		if(p is null)
 		{
@@ -413,7 +413,7 @@ public class File : ObjectG
 	 */
 	public File getChildForDisplayName(string displayName)
 	{
-		// GFile* g_file_get_child_for_display_name (GFile *file,  const char *display_name,  GError **error);
+		// GFile * g_file_get_child_for_display_name (GFile *file,  const char *display_name,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_get_child_for_display_name(gFile, Str.toStringz(displayName), &err);
@@ -433,6 +433,8 @@ public class File : ObjectG
 	/**
 	 * Checks whether file has the prefix specified by prefix. In other word,
 	 * if the names of inital elements of files pathname match prefix.
+	 * Only full pathname elements are matched, so a path like /foo is not
+	 * considered a prefix of /foobar, only of /foo/bar.
 	 * This call does no i/o, as it works purely on names. As such it can
 	 * sometimes return FALSE even if file is inside a prefix (from a
 	 * filesystem point of view), because the prefix of file is an alias
@@ -456,7 +458,7 @@ public class File : ObjectG
 	 */
 	public string getRelativePath(File descendant)
 	{
-		// char* g_file_get_relative_path (GFile *parent,  GFile *descendant);
+		// char * g_file_get_relative_path (GFile *parent,  GFile *descendant);
 		return Str.toString(g_file_get_relative_path(gFile, (descendant is null) ? null : descendant.getFileStruct()));
 	}
 	
@@ -469,7 +471,7 @@ public class File : ObjectG
 	 */
 	public File resolveRelativePath(string relativePath)
 	{
-		// GFile* g_file_resolve_relative_path (GFile *file,  const char *relative_path);
+		// GFile * g_file_resolve_relative_path (GFile *file,  const char *relative_path);
 		auto p = g_file_resolve_relative_path(gFile, Str.toStringz(relativePath));
 		if(p is null)
 		{
@@ -515,7 +517,7 @@ public class File : ObjectG
 	 */
 	public string getUriScheme()
 	{
-		// char* g_file_get_uri_scheme (GFile *file);
+		// char * g_file_get_uri_scheme (GFile *file);
 		return Str.toString(g_file_get_uri_scheme(gFile));
 	}
 	
@@ -535,7 +537,7 @@ public class File : ObjectG
 	 */
 	public FileInputStream read(Cancellable cancellable)
 	{
-		// GFileInputStream* g_file_read (GFile *file,  GCancellable *cancellable,  GError **error);
+		// GFileInputStream * g_file_read (GFile *file,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_read(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -581,7 +583,7 @@ public class File : ObjectG
 	 */
 	public FileInputStream readFinish(AsyncResultIF res)
 	{
-		// GFileInputStream* g_file_read_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileInputStream * g_file_read_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_read_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -621,7 +623,7 @@ public class File : ObjectG
 	 */
 	public FileOutputStream appendTo(GFileCreateFlags flags, Cancellable cancellable)
 	{
-		// GFileOutputStream* g_file_append_to (GFile *file,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
+		// GFileOutputStream * g_file_append_to (GFile *file,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_append_to(gFile, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -663,7 +665,7 @@ public class File : ObjectG
 	 */
 	public FileOutputStream create(GFileCreateFlags flags, Cancellable cancellable)
 	{
-		// GFileOutputStream* g_file_create (GFile *file,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
+		// GFileOutputStream * g_file_create (GFile *file,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_create(gFile, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -727,7 +729,7 @@ public class File : ObjectG
 	 */
 	public FileOutputStream replace(string etag, int makeBackup, GFileCreateFlags flags, Cancellable cancellable)
 	{
-		// GFileOutputStream* g_file_replace (GFile *file,  const char *etag,  gboolean make_backup,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
+		// GFileOutputStream * g_file_replace (GFile *file,  const char *etag,  gboolean make_backup,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_replace(gFile, Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -774,7 +776,7 @@ public class File : ObjectG
 	 */
 	public FileOutputStream appendToFinish(AsyncResultIF res)
 	{
-		// GFileOutputStream* g_file_append_to_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileOutputStream * g_file_append_to_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_append_to_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -822,7 +824,7 @@ public class File : ObjectG
 	 */
 	public FileOutputStream createFinish(AsyncResultIF res)
 	{
-		// GFileOutputStream* g_file_create_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileOutputStream * g_file_create_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_create_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -873,7 +875,7 @@ public class File : ObjectG
 	 */
 	public FileOutputStream replaceFinish(AsyncResultIF res)
 	{
-		// GFileOutputStream* g_file_replace_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileOutputStream * g_file_replace_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_replace_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -921,7 +923,7 @@ public class File : ObjectG
 	 */
 	public FileInfo queryInfo(string attributes, GFileQueryInfoFlags flags, Cancellable cancellable)
 	{
-		// GFileInfo* g_file_query_info (GFile *file,  const char *attributes,  GFileQueryInfoFlags flags,  GCancellable *cancellable,  GError **error);
+		// GFileInfo * g_file_query_info (GFile *file,  const char *attributes,  GFileQueryInfoFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_info(gFile, Str.toStringz(attributes), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -971,7 +973,7 @@ public class File : ObjectG
 	 */
 	public FileInfo queryInfoFinish(AsyncResultIF res)
 	{
-		// GFileInfo* g_file_query_info_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileInfo * g_file_query_info_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_info_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1062,7 +1064,7 @@ public class File : ObjectG
 	 */
 	public FileInfo queryFilesystemInfo(string attributes, Cancellable cancellable)
 	{
-		// GFileInfo* g_file_query_filesystem_info (GFile *file,  const char *attributes,  GCancellable *cancellable,  GError **error);
+		// GFileInfo * g_file_query_filesystem_info (GFile *file,  const char *attributes,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_filesystem_info(gFile, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1113,7 +1115,7 @@ public class File : ObjectG
 	 */
 	public FileInfo queryFilesystemInfoFinish(AsyncResultIF res)
 	{
-		// GFileInfo* g_file_query_filesystem_info_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileInfo * g_file_query_filesystem_info_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_filesystem_info_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1143,7 +1145,7 @@ public class File : ObjectG
 	 */
 	public AppInfoIF queryDefaultHandler(Cancellable cancellable)
 	{
-		// GAppInfo* g_file_query_default_handler (GFile *file,  GCancellable *cancellable,  GError **error);
+		// GAppInfo * g_file_query_default_handler (GFile *file,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_default_handler(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1175,7 +1177,7 @@ public class File : ObjectG
 	 */
 	public MountIF findEnclosingMount(Cancellable cancellable)
 	{
-		// GMount* g_file_find_enclosing_mount (GFile *file,  GCancellable *cancellable,  GError **error);
+		// GMount * g_file_find_enclosing_mount (GFile *file,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_find_enclosing_mount(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1221,7 +1223,7 @@ public class File : ObjectG
 	 */
 	public MountIF findEnclosingMountFinish(AsyncResultIF res)
 	{
-		// GMount* g_file_find_enclosing_mount_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GMount * g_file_find_enclosing_mount_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_find_enclosing_mount_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1264,7 +1266,7 @@ public class File : ObjectG
 	 */
 	public FileEnumerator enumerateChildren(string attributes, GFileQueryInfoFlags flags, Cancellable cancellable)
 	{
-		// GFileEnumerator* g_file_enumerate_children (GFile *file,  const char *attributes,  GFileQueryInfoFlags flags,  GCancellable *cancellable,  GError **error);
+		// GFileEnumerator * g_file_enumerate_children (GFile *file,  const char *attributes,  GFileQueryInfoFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_enumerate_children(gFile, Str.toStringz(attributes), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1314,7 +1316,7 @@ public class File : ObjectG
 	 */
 	public FileEnumerator enumerateChildrenFinish(AsyncResultIF res)
 	{
-		// GFileEnumerator* g_file_enumerate_children_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileEnumerator * g_file_enumerate_children_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_enumerate_children_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1350,7 +1352,7 @@ public class File : ObjectG
 	 */
 	public File setDisplayName(string displayName, Cancellable cancellable)
 	{
-		// GFile* g_file_set_display_name (GFile *file,  const char *display_name,  GCancellable *cancellable,  GError **error);
+		// GFile * g_file_set_display_name (GFile *file,  const char *display_name,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_set_display_name(gFile, Str.toStringz(displayName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1397,7 +1399,7 @@ public class File : ObjectG
 	 */
 	public File setDisplayNameFinish(AsyncResultIF res)
 	{
-		// GFile* g_file_set_display_name_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFile * g_file_set_display_name_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_set_display_name_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1725,7 +1727,7 @@ public class File : ObjectG
 	 */
 	public FileAttributeInfoList querySettableAttributes(Cancellable cancellable)
 	{
-		// GFileAttributeInfoList* g_file_query_settable_attributes  (GFile *file,  GCancellable *cancellable,  GError **error);
+		// GFileAttributeInfoList * g_file_query_settable_attributes  (GFile *file,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_settable_attributes(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1756,7 +1758,7 @@ public class File : ObjectG
 	 */
 	public FileAttributeInfoList queryWritableNamespaces(Cancellable cancellable)
 	{
-		// GFileAttributeInfoList* g_file_query_writable_namespaces  (GFile *file,  GCancellable *cancellable,  GError **error);
+		// GFileAttributeInfoList * g_file_query_writable_namespaces  (GFile *file,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_writable_namespaces(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -2089,7 +2091,7 @@ public class File : ObjectG
 	 */
 	public File mountMountableFinish(AsyncResultIF result)
 	{
-		// GFile* g_file_mount_mountable_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		// GFile * g_file_mount_mountable_finish (GFile *file,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_mount_mountable_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
@@ -2582,9 +2584,10 @@ public class File : ObjectG
 	 * Copies the file attributes from source to destination.
 	 * Normally only a subset of the file attributes are copied,
 	 * those that are copies in a normal file copy operation
-	 * (which for instance does not include e.g. mtime). However
+	 * (which for instance does not include e.g. owner). However
 	 * if G_FILE_COPY_ALL_METADATA is specified in flags, then
-	 * all the metadata that is possible to copy is copied.
+	 * all the metadata that is possible to copy is copied. This
+	 * is useful when implementing move by copy + delete source.
 	 * Params:
 	 * destination =  a GFile to copy attributes to.
 	 * flags =  a set of GFileCopyFlags.

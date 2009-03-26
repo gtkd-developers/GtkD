@@ -75,6 +75,9 @@ private import gio.IconIF;
 /**
  * Description
  * Routines for managing mounted UNIX mount points and paths.
+ * Note that <gio/gunixmounts.h> belongs to the
+ * UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
 public class UnixMountPoint
 {
@@ -138,7 +141,7 @@ public class UnixMountPoint
 	 */
 	public string getMountPath()
 	{
-		// const char* g_unix_mount_point_get_mount_path (GUnixMountPoint *mount_point);
+		// const char * g_unix_mount_point_get_mount_path (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_get_mount_path(gUnixMountPoint));
 	}
 	
@@ -148,7 +151,7 @@ public class UnixMountPoint
 	 */
 	public string getDevicePath()
 	{
-		// const char* g_unix_mount_point_get_device_path (GUnixMountPoint *mount_point);
+		// const char * g_unix_mount_point_get_device_path (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_get_device_path(gUnixMountPoint));
 	}
 	
@@ -158,7 +161,7 @@ public class UnixMountPoint
 	 */
 	public string getFsType()
 	{
-		// const char* g_unix_mount_point_get_fs_type (GUnixMountPoint *mount_point);
+		// const char * g_unix_mount_point_get_fs_type (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_get_fs_type(gUnixMountPoint));
 	}
 	
@@ -198,7 +201,7 @@ public class UnixMountPoint
 	 */
 	public IconIF guessIcon()
 	{
-		// GIcon* g_unix_mount_point_guess_icon (GUnixMountPoint *mount_point);
+		// GIcon * g_unix_mount_point_guess_icon (GUnixMountPoint *mount_point);
 		auto p = g_unix_mount_point_guess_icon(gUnixMountPoint);
 		if(p is null)
 		{
@@ -214,7 +217,7 @@ public class UnixMountPoint
 	 */
 	public string guessName()
 	{
-		// char* g_unix_mount_point_guess_name (GUnixMountPoint *mount_point);
+		// char * g_unix_mount_point_guess_name (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_guess_name(gUnixMountPoint));
 	}
 	

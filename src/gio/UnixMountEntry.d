@@ -81,6 +81,9 @@ private import gio.IconIF;
 /**
  * Description
  * Routines for managing mounted UNIX mount points and paths.
+ * Note that <gio/gunixmounts.h> belongs to the
+ * UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
 public class UnixMountEntry
 {
@@ -144,7 +147,7 @@ public class UnixMountEntry
 	 */
 	public string getMountPath()
 	{
-		// const char* g_unix_mount_get_mount_path (GUnixMountEntry *mount_entry);
+		// const char * g_unix_mount_get_mount_path (GUnixMountEntry *mount_entry);
 		return Str.toString(g_unix_mount_get_mount_path(gUnixMountEntry));
 	}
 	
@@ -154,7 +157,7 @@ public class UnixMountEntry
 	 */
 	public string getDevicePath()
 	{
-		// const char* g_unix_mount_get_device_path (GUnixMountEntry *mount_entry);
+		// const char * g_unix_mount_get_device_path (GUnixMountEntry *mount_entry);
 		return Str.toString(g_unix_mount_get_device_path(gUnixMountEntry));
 	}
 	
@@ -164,7 +167,7 @@ public class UnixMountEntry
 	 */
 	public string getFsType()
 	{
-		// const char* g_unix_mount_get_fs_type (GUnixMountEntry *mount_entry);
+		// const char * g_unix_mount_get_fs_type (GUnixMountEntry *mount_entry);
 		return Str.toString(g_unix_mount_get_fs_type(gUnixMountEntry));
 	}
 	
@@ -194,7 +197,7 @@ public class UnixMountEntry
 	 */
 	public IconIF guessIcon()
 	{
-		// GIcon* g_unix_mount_guess_icon (GUnixMountEntry *mount_entry);
+		// GIcon * g_unix_mount_guess_icon (GUnixMountEntry *mount_entry);
 		auto p = g_unix_mount_guess_icon(gUnixMountEntry);
 		if(p is null)
 		{
@@ -210,7 +213,7 @@ public class UnixMountEntry
 	 */
 	public string guessName()
 	{
-		// char* g_unix_mount_guess_name (GUnixMountEntry *mount_entry);
+		// char * g_unix_mount_guess_name (GUnixMountEntry *mount_entry);
 		return Str.toString(g_unix_mount_guess_name(gUnixMountEntry));
 	}
 	
@@ -245,7 +248,7 @@ public class UnixMountEntry
 	 */
 	public static ListG pointsGet(ulong* timeRead)
 	{
-		// GList* g_unix_mount_points_get (guint64 *time_read);
+		// GList * g_unix_mount_points_get (guint64 *time_read);
 		auto p = g_unix_mount_points_get(timeRead);
 		if(p is null)
 		{
@@ -265,7 +268,7 @@ public class UnixMountEntry
 	 */
 	public static ListG mountsGet(inout ulong timeRead)
 	{
-		// GList* g_unix_mounts_get (guint64 *time_read);
+		// GList * g_unix_mounts_get (guint64 *time_read);
 		auto p = g_unix_mounts_get(&timeRead);
 		if(p is null)
 		{
@@ -285,7 +288,7 @@ public class UnixMountEntry
 	 */
 	public static UnixMountEntry at(string mountPath, inout ulong timeRead)
 	{
-		// GUnixMountEntry* g_unix_mount_at (const char *mount_path,  guint64 *time_read);
+		// GUnixMountEntry * g_unix_mount_at (const char *mount_path,  guint64 *time_read);
 		auto p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
 		if(p is null)
 		{

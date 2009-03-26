@@ -145,7 +145,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 */
 	public this (void* data, uint len, GReallocFunc reallocFn, GDestroyNotify destroy)
 	{
-		// GOutputStream* g_memory_output_stream_new (gpointer data,  gsize len,  GReallocFunc realloc_fn,  GDestroyNotify destroy);
+		// GOutputStream * g_memory_output_stream_new (gpointer data,  gsize len,  GReallocFunc realloc_fn,  GDestroyNotify destroy);
 		auto p = g_memory_output_stream_new(data, len, reallocFn, destroy);
 		if(p is null)
 		{

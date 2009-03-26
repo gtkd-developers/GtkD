@@ -150,7 +150,7 @@ public class FileInfo : ObjectG
 	 */
 	public this ()
 	{
-		// GFileInfo* g_file_info_new (void);
+		// GFileInfo * g_file_info_new (void);
 		auto p = g_file_info_new();
 		if(p is null)
 		{
@@ -165,7 +165,7 @@ public class FileInfo : ObjectG
 	 */
 	public FileInfo dup()
 	{
-		// GFileInfo* g_file_info_dup (GFileInfo *other);
+		// GFileInfo * g_file_info_dup (GFileInfo *other);
 		auto p = g_file_info_dup(gFileInfo);
 		if(p is null)
 		{
@@ -205,7 +205,7 @@ public class FileInfo : ObjectG
 	 */
 	public string[] listAttributes(string nameSpace)
 	{
-		// char** g_file_info_list_attributes (GFileInfo *info,  const char *name_space);
+		// char ** g_file_info_list_attributes (GFileInfo *info,  const char *name_space);
 		return Str.toStringArray(g_file_info_list_attributes(gFileInfo, Str.toStringz(nameSpace)));
 	}
 	
@@ -242,7 +242,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getAttributeAsString(string attribute)
 	{
-		// char* g_file_info_get_attribute_as_string (GFileInfo *info,  const char *attribute);
+		// char * g_file_info_get_attribute_as_string (GFileInfo *info,  const char *attribute);
 		return Str.toString(g_file_info_get_attribute_as_string(gFileInfo, Str.toStringz(attribute)));
 	}
 	
@@ -282,7 +282,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getAttributeString(string attribute)
 	{
-		// const char* g_file_info_get_attribute_string (GFileInfo *info,  const char *attribute);
+		// const char * g_file_info_get_attribute_string (GFileInfo *info,  const char *attribute);
 		return Str.toString(g_file_info_get_attribute_string(gFileInfo, Str.toStringz(attribute)));
 	}
 	
@@ -295,7 +295,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getAttributeByteString(string attribute)
 	{
-		// const char* g_file_info_get_attribute_byte_string  (GFileInfo *info,  const char *attribute);
+		// const char * g_file_info_get_attribute_byte_string  (GFileInfo *info,  const char *attribute);
 		return Str.toString(g_file_info_get_attribute_byte_string(gFileInfo, Str.toStringz(attribute)));
 	}
 	
@@ -377,7 +377,7 @@ public class FileInfo : ObjectG
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{
-		// GObject* g_file_info_get_attribute_object (GFileInfo *info,  const char *attribute);
+		// GObject * g_file_info_get_attribute_object (GFileInfo *info,  const char *attribute);
 		auto p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
 		if(p is null)
 		{
@@ -559,7 +559,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getName()
 	{
-		// const char* g_file_info_get_name (GFileInfo *info);
+		// const char * g_file_info_get_name (GFileInfo *info);
 		return Str.toString(g_file_info_get_name(gFileInfo));
 	}
 	
@@ -569,7 +569,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getDisplayName()
 	{
-		// const char* g_file_info_get_display_name (GFileInfo *info);
+		// const char * g_file_info_get_display_name (GFileInfo *info);
 		return Str.toString(g_file_info_get_display_name(gFileInfo));
 	}
 	
@@ -579,7 +579,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getEditName()
 	{
-		// const char* g_file_info_get_edit_name (GFileInfo *info);
+		// const char * g_file_info_get_edit_name (GFileInfo *info);
 		return Str.toString(g_file_info_get_edit_name(gFileInfo));
 	}
 	
@@ -589,7 +589,7 @@ public class FileInfo : ObjectG
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon* g_file_info_get_icon (GFileInfo *info);
+		// GIcon * g_file_info_get_icon (GFileInfo *info);
 		auto p = g_file_info_get_icon(gFileInfo);
 		if(p is null)
 		{
@@ -600,11 +600,11 @@ public class FileInfo : ObjectG
 	
 	/**
 	 * Gets the file's content type.
-	 * Returns: a string containing the file's content type.s
+	 * Returns: a string containing the file's content type.
 	 */
 	public string getContentType()
 	{
-		// const char* g_file_info_get_content_type (GFileInfo *info);
+		// const char * g_file_info_get_content_type (GFileInfo *info);
 		return Str.toString(g_file_info_get_content_type(gFileInfo));
 	}
 	
@@ -636,7 +636,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getSymlinkTarget()
 	{
-		// const char* g_file_info_get_symlink_target (GFileInfo *info);
+		// const char * g_file_info_get_symlink_target (GFileInfo *info);
 		return Str.toString(g_file_info_get_symlink_target(gFileInfo));
 	}
 	
@@ -647,7 +647,7 @@ public class FileInfo : ObjectG
 	 */
 	public string getEtag()
 	{
-		// const char* g_file_info_get_etag (GFileInfo *info);
+		// const char * g_file_info_get_etag (GFileInfo *info);
 		return Str.toString(g_file_info_get_etag(gFileInfo));
 	}
 	

@@ -52,7 +52,6 @@ public alias dchar unichar;
 public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
-public alias int GPid;
 
 version(Tango)
 {

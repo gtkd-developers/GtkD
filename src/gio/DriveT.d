@@ -88,7 +88,7 @@ private import gio.IconIF;
 /**
  * Description
  * GDrive - this represent a piece of hardware connected to the machine.
- * Its generally only created for removable hardware or hardware with
+ * It's generally only created for removable hardware or hardware with
  * removable media.
  * GDrive is a container class for GVolume objects that stem from
  * the same piece of media. As such, GDrive abstracts a drive with
@@ -223,7 +223,7 @@ public template DriveT(TStruct)
 	 */
 	public string getName()
 	{
-		// char* g_drive_get_name (GDrive *drive);
+		// char * g_drive_get_name (GDrive *drive);
 		return Str.toString(g_drive_get_name(getDriveTStruct()));
 	}
 	
@@ -233,7 +233,7 @@ public template DriveT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon* g_drive_get_icon (GDrive *drive);
+		// GIcon * g_drive_get_icon (GDrive *drive);
 		auto p = g_drive_get_icon(getDriveTStruct());
 		if(p is null)
 		{
@@ -260,7 +260,7 @@ public template DriveT(TStruct)
 	 */
 	public ListG getVolumes()
 	{
-		// GList* g_drive_get_volumes (GDrive *drive);
+		// GList * g_drive_get_volumes (GDrive *drive);
 		auto p = g_drive_get_volumes(getDriveTStruct());
 		if(p is null)
 		{
@@ -406,7 +406,7 @@ public template DriveT(TStruct)
 	 */
 	public string[] enumerateIdentifiers()
 	{
-		// char** g_drive_enumerate_identifiers (GDrive *drive);
+		// char ** g_drive_enumerate_identifiers (GDrive *drive);
 		return Str.toStringArray(g_drive_enumerate_identifiers(getDriveTStruct()));
 	}
 	
@@ -418,7 +418,7 @@ public template DriveT(TStruct)
 	 */
 	public string getIdentifier(string kind)
 	{
-		// char* g_drive_get_identifier (GDrive *drive,  const char *kind);
+		// char * g_drive_get_identifier (GDrive *drive,  const char *kind);
 		return Str.toString(g_drive_get_identifier(getDriveTStruct(), Str.toStringz(kind)));
 	}
 }

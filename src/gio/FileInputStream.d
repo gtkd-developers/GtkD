@@ -154,7 +154,7 @@ public class FileInputStream : InputStream, SeekableIF
 	 */
 	public FileInfo queryInfo(string attributes, Cancellable cancellable)
 	{
-		// GFileInfo* g_file_input_stream_query_info (GFileInputStream *stream,  char *attributes,  GCancellable *cancellable,  GError **error);
+		// GFileInfo * g_file_input_stream_query_info (GFileInputStream *stream,  const char *attributes,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_input_stream_query_info(gFileInputStream, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -191,7 +191,7 @@ public class FileInputStream : InputStream, SeekableIF
 	 */
 	public void queryInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		// void g_file_input_stream_query_info_async  (GFileInputStream *stream,  char *attributes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		// void g_file_input_stream_query_info_async  (GFileInputStream *stream,  const char *attributes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_file_input_stream_query_info_async(gFileInputStream, Str.toStringz(attributes), ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
@@ -204,7 +204,7 @@ public class FileInputStream : InputStream, SeekableIF
 	 */
 	public FileInfo queryInfoFinish(AsyncResultIF result)
 	{
-		// GFileInfo* g_file_input_stream_query_info_finish  (GFileInputStream *stream,  GAsyncResult *result,  GError **error);
+		// GFileInfo * g_file_input_stream_query_info_finish  (GFileInputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_input_stream_query_info_finish(gFileInputStream, (result is null) ? null : result.getAsyncResultTStruct(), &err);

@@ -196,6 +196,9 @@ private import glib.Str;
  * G_FILE_ATTRIBUTE_STANDARD_SIZE
  * standard::size
  * uint64
+ * G_FILE_ATTRIBUTE_STANDARD_ALLOCATED_SIZE
+ * standard::allocated-size
+ * uint64
  * G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET
  * standard::symlink-target
  * byte string
@@ -322,6 +325,9 @@ private import glib.Str;
  * G_FILE_ATTRIBUTE_THUMBNAILING_FAILED
  * thumbnail::failed
  * boolean
+ * G_FILE_ATTRIBUTE_PREVIEW_ICON
+ * preview::icon
+ * object (GIcon)
  * G_FILE_ATTRIBUTE_FILESYSTEM_SIZE
  * filesystem::size
  * uint64
@@ -390,7 +396,7 @@ public class FileAttributeInfoList
 	 */
 	public this ()
 	{
-		// GFileAttributeInfoList* g_file_attribute_info_list_new (void);
+		// GFileAttributeInfoList * g_file_attribute_info_list_new (void);
 		auto p = g_file_attribute_info_list_new();
 		if(p is null)
 		{
@@ -405,7 +411,7 @@ public class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList doref()
 	{
-		// GFileAttributeInfoList* g_file_attribute_info_list_ref (GFileAttributeInfoList *list);
+		// GFileAttributeInfoList * g_file_attribute_info_list_ref (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
 		if(p is null)
 		{
@@ -430,7 +436,7 @@ public class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList dup()
 	{
-		// GFileAttributeInfoList* g_file_attribute_info_list_dup (GFileAttributeInfoList *list);
+		// GFileAttributeInfoList * g_file_attribute_info_list_dup (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
 		if(p is null)
 		{
@@ -447,7 +453,7 @@ public class FileAttributeInfoList
 	 */
 	public GFileAttributeInfo* lookup(string name)
 	{
-		// const GFileAttributeInfo* g_file_attribute_info_list_lookup  (GFileAttributeInfoList *list,  const char *name);
+		// const GFileAttributeInfo * g_file_attribute_info_list_lookup  (GFileAttributeInfoList *list,  const char *name);
 		return g_file_attribute_info_list_lookup(gFileAttributeInfoList, Str.toStringz(name));
 	}
 	

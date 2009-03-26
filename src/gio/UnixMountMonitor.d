@@ -66,6 +66,9 @@ private import gobject.ObjectG;
 /**
  * Description
  * Routines for managing mounted UNIX mount points and paths.
+ * Note that <gio/gunixmounts.h> belongs to the
+ * UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
 public class UnixMountMonitor : ObjectG
 {
@@ -175,7 +178,7 @@ public class UnixMountMonitor : ObjectG
 	 */
 	public this ()
 	{
-		// GUnixMountMonitor* g_unix_mount_monitor_new (void);
+		// GUnixMountMonitor * g_unix_mount_monitor_new (void);
 		auto p = g_unix_mount_monitor_new();
 		if(p is null)
 		{

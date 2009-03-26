@@ -420,7 +420,7 @@ public class VolumeMonitor : ObjectG
 	/**
 	 * Emitted when a mountable volume is removed from the system.
 	 * See Also
-	 * GFileMonitor
+	 * #GFileMonitor
 	 */
 	void addOnVolumeRemoved(void delegate(VolumeIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -454,7 +454,7 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getConnectedDrives()
 	{
-		// GList* g_volume_monitor_get_connected_drives  (GVolumeMonitor *volume_monitor);
+		// GList * g_volume_monitor_get_connected_drives  (GVolumeMonitor *volume_monitor);
 		auto p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
 		if(p is null)
 		{
@@ -471,7 +471,7 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getVolumes()
 	{
-		// GList* g_volume_monitor_get_volumes (GVolumeMonitor *volume_monitor);
+		// GList * g_volume_monitor_get_volumes (GVolumeMonitor *volume_monitor);
 		auto p = g_volume_monitor_get_volumes(gVolumeMonitor);
 		if(p is null)
 		{
@@ -488,7 +488,7 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getMounts()
 	{
-		// GList* g_volume_monitor_get_mounts (GVolumeMonitor *volume_monitor);
+		// GList * g_volume_monitor_get_mounts (GVolumeMonitor *volume_monitor);
 		auto p = g_volume_monitor_get_mounts(gVolumeMonitor);
 		if(p is null)
 		{
@@ -498,25 +498,31 @@ public class VolumeMonitor : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * g_volume_monitor_adopt_orphan_mount has been deprecated since version 2.20 and should not be used in newly-written code. Instead of using this function, GVolumeMonitor
+	 * implementations should instead create shadow mounts with the URI of
+	 * the mount they intend to adopt. See the proxy volume monitor in
+	 * gvfs for an example of this. Also see g_mount_is_shadowed(),
+	 * g_mount_shadow() and g_mount_unshadow() functions.
 	 * This function should be called by any GVolumeMonitor
 	 * implementation when a new GMount object is created that is not
 	 * associated with a GVolume object. It must be called just before
 	 * emitting the mount_added signal.
 	 * If the return value is not NULL, the caller must associate the
 	 * returned GVolume object with the GMount. This involves returning
-	 * it in it's g_mount_get_volume() implementation. The caller must
+	 * it in its g_mount_get_volume() implementation. The caller must
 	 * also listen for the "removed" signal on the returned object
-	 * and give up it's reference when handling that signal
+	 * and give up its reference when handling that signal
 	 * Similary, if implementing g_volume_monitor_adopt_orphan_mount(),
 	 * the implementor must take a reference to mount and return it in
-	 * it's g_volume_get_mount() implemented. Also, the implementor must
-	 * listen for the "unmounted" signal on mount and give up it's
+	 * its g_volume_get_mount() implemented. Also, the implementor must
+	 * listen for the "unmounted" signal on mount and give up its
 	 * reference upon handling that signal.
 	 * There are two main use cases for this function.
 	 * One is when implementing a user space file system driver that reads
 	 * blocks of a block device that is already represented by the native
 	 * volume monitor (for example a CD Audio file system driver). Such
-	 * a driver will generate it's own GMount object that needs to be
+	 * a driver will generate its own GMount object that needs to be
 	 * assoicated with the GVolume object that represents the volume.
 	 * The other is for implementing a GVolumeMonitor whose sole purpose
 	 * is to return GVolume objects representing entries in the users
@@ -527,7 +533,7 @@ public class VolumeMonitor : ObjectG
 	 */
 	public static VolumeIF adoptOrphanMount(MountIF mount)
 	{
-		// GVolume* g_volume_monitor_adopt_orphan_mount (GMount *mount);
+		// GVolume * g_volume_monitor_adopt_orphan_mount (GMount *mount);
 		auto p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountTStruct());
 		if(p is null)
 		{
@@ -537,14 +543,14 @@ public class VolumeMonitor : ObjectG
 	}
 	
 	/**
-	 * Finds a GMount object by it's UUID (see g_mount_get_uuid())
+	 * Finds a GMount object by its UUID (see g_mount_get_uuid())
 	 * Params:
 	 * uuid =  the UUID to look for
 	 * Returns: a GMount or NULL if no such mount is available. Free the returned object with g_object_unref().
 	 */
 	public MountIF getMountForUuid(string uuid)
 	{
-		// GMount* g_volume_monitor_get_mount_for_uuid (GVolumeMonitor *volume_monitor,  const char *uuid);
+		// GMount * g_volume_monitor_get_mount_for_uuid (GVolumeMonitor *volume_monitor,  const char *uuid);
 		auto p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
 		if(p is null)
 		{
@@ -554,14 +560,14 @@ public class VolumeMonitor : ObjectG
 	}
 	
 	/**
-	 * Finds a GVolume object by it's UUID (see g_volume_get_uuid())
+	 * Finds a GVolume object by its UUID (see g_volume_get_uuid())
 	 * Params:
 	 * uuid =  the UUID to look for
 	 * Returns: a GVolume or NULL if no such volume is available. Free the returned object with g_object_unref().Signal DetailsThe "drive-changed" signalvoid user_function (GVolumeMonitor *volume_monitor, GDrive *drive, gpointer user_data) : Run LastEmitted when a drive changes.
 	 */
 	public VolumeIF getVolumeForUuid(string uuid)
 	{
-		// GVolume* g_volume_monitor_get_volume_for_uuid  (GVolumeMonitor *volume_monitor,  const char *uuid);
+		// GVolume * g_volume_monitor_get_volume_for_uuid  (GVolumeMonitor *volume_monitor,  const char *uuid);
 		auto p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
 		if(p is null)
 		{

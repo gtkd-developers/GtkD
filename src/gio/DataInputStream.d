@@ -130,7 +130,7 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public this (InputStream baseStream)
 	{
-		// GDataInputStream* g_data_input_stream_new (GInputStream *base_stream);
+		// GDataInputStream * g_data_input_stream_new (GInputStream *base_stream);
 		auto p = g_data_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
 		if(p is null)
 		{
@@ -157,7 +157,7 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public GDataStreamByteOrder getByteOrder()
 	{
-		// GDataStreamByteOrder g_data_input_stream_get_byte_order (GDataInputStream *stream);
+		// GDataStreamByteOrder g_data_input_stream_get_byte_order  (GDataInputStream *stream);
 		return g_data_input_stream_get_byte_order(gDataInputStream);
 	}
 	
@@ -349,12 +349,12 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 * length =  a gsize to get the length of the data read in.
 	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * Returns: a string with the line that was read in (including the newlines).Set length to a gsize to get the length of the read line. Returns NULL on an error.
+	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.
 	 * Throws: GException on failure.
 	 */
 	public string readLine(out uint length, Cancellable cancellable)
 	{
-		// char* g_data_input_stream_read_line (GDataInputStream *stream,  gsize *length,  GCancellable *cancellable,  GError **error);
+		// char * g_data_input_stream_read_line (GDataInputStream *stream,  gsize *length,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_data_input_stream_read_line(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
@@ -368,8 +368,52 @@ public class DataInputStream : BufferedInputStream
 	}
 	
 	/**
+	 * The asynchronous version of g_data_input_stream_read_line(). It is
+	 * an error to have two outstanding calls to this function.
+	 * When the operation is finished, callback will be called. You
+	 * can then call g_data_input_stream_read_line_finish() to get
+	 * the result of the operation.
+	 * Since 2.20
+	 * Params:
+	 * ioPriority =  the I/O priority
+	 *  of the request.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  callback to call when the request is satisfied.
+	 * userData =  the data to pass to callback function.
+	 */
+	public void readLineAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_data_input_stream_read_line_async (GDataInputStream *stream,  gint io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_data_input_stream_read_line_async(gDataInputStream, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finish an asynchronous call started by
+	 * g_data_input_stream_read_line_async().
+	 * Params:
+	 * result =  the GAsyncResult that was provided to the callback.
+	 * length =  a gsize to get the length of the data read in.
+	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.Since 2,20
+	 * Throws: GException on failure.
+	 */
+	public string readLineFinish(out GAsyncResult result, uint* length)
+	{
+		// char * g_data_input_stream_read_line_finish  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
+		GError* err = null;
+		
+		auto p = Str.toString(g_data_input_stream_read_line_finish(gDataInputStream, &result, length, &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Reads a string from the data input stream, up to the first
-	 * occurrance of any of the stop characters.
+	 * occurrence of any of the stop characters.
 	 * Params:
 	 * stopChars =  characters to terminate the read.
 	 * length =  a gsize to get the length of the data read in.
@@ -379,10 +423,56 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public string readUntil(string stopChars, out uint length, Cancellable cancellable)
 	{
-		// char* g_data_input_stream_read_until (GDataInputStream *stream,  const gchar *stop_chars,  gsize *length,  GCancellable *cancellable,  GError **error);
+		// char * g_data_input_stream_read_until (GDataInputStream *stream,  const gchar *stop_chars,  gsize *length,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_data_input_stream_read_until(gDataInputStream, Str.toStringz(stopChars), &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * The asynchronous version of g_data_input_stream_read_until().
+	 * It is an error to have two outstanding calls to this function.
+	 * When the operation is finished, callback will be called. You
+	 * can then call g_data_input_stream_read_until_finish() to get
+	 * the result of the operation.
+	 * Since 2.20
+	 * Params:
+	 * stopChars =  characters to terminate the read.
+	 * ioPriority =  the I/O priority
+	 *  of the request.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  callback to call when the request is satisfied.
+	 * userData =  the data to pass to callback function.
+	 */
+	public void readUntilAsync(string stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_data_input_stream_read_until_async  (GDataInputStream *stream,  const gchar *stop_chars,  gint io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_data_input_stream_read_until_async(gDataInputStream, Str.toStringz(stopChars), ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finish an asynchronous call started by
+	 * g_data_input_stream_read_until_async().
+	 * Since 2.20
+	 * Params:
+	 * result =  the GAsyncResult that was provided to the callback.
+	 * length =  a gsize to get the length of the data read in.
+	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error.
+	 * Throws: GException on failure.
+	 */
+	public string readUntilFinish(out GAsyncResult result, uint* length)
+	{
+		// char * g_data_input_stream_read_until_finish  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
+		GError* err = null;
+		
+		auto p = Str.toString(g_data_input_stream_read_until_finish(gDataInputStream, &result, length, &err));
 		
 		if (err !is null)
 		{

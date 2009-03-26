@@ -129,7 +129,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	 */
 	public this ()
 	{
-		// GInputStream* g_memory_input_stream_new (void);
+		// GInputStream * g_memory_input_stream_new (void);
 		auto p = g_memory_input_stream_new();
 		if(p is null)
 		{
@@ -148,7 +148,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	 */
 	public this (void* data, int len, GDestroyNotify destroy)
 	{
-		// GInputStream* g_memory_input_stream_new_from_data (const void *data,  gssize len,  GDestroyNotify destroy);
+		// GInputStream * g_memory_input_stream_new_from_data (const void *data,  gssize len,  GDestroyNotify destroy);
 		auto p = g_memory_input_stream_new_from_data(data, len, destroy);
 		if(p is null)
 		{

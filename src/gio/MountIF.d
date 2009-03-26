@@ -319,11 +319,6 @@ public interface MountIF
 	 * This is an synchronous operation and as such may block doing IO;
 	 * see g_mount_guess_content_type() for the asynchronous version.
 	 * Since 2.18
-	 * Signal Details
-	 * The "changed" signal
-	 * void user_function (GMount *mount,
-	 *  gpointer user_data) : Run Last
-	 * Emitted when the mount has been changed.
 	 * Params:
 	 * forceRescan =  Whether to force a rescan of the content.
 	 *  Otherwise a cached result will be used if available
@@ -332,4 +327,53 @@ public interface MountIF
 	 * Throws: GException on failure.
 	 */
 	public string[] guessContentTypeSync(int forceRescan, Cancellable cancellable);
+	
+	/**
+	 * Determines if mount is shadowed. Applications or libraries should
+	 * avoid displaying mount in the user interface if it is shadowed.
+	 * A mount is said to be shadowed if there exists one or more user
+	 * visible objects (currently GMount objects) with a root that is
+	 * inside the root of mount.
+	 * One application of shadow mounts is when exposing a single file
+	 * system that is used to address several logical volumes. In this
+	 * situation, a GVolumeMonitor implementation would create two
+	 * GVolume objects (for example, one for the camera functionality of
+	 * the device and one for a SD card reader on the device) with
+	 * activation URIs gphoto2://[usb:001,002]/store1/
+	 * and gphoto2://[usb:001,002]/store2/. When the
+	 * underlying mount (with root
+	 * gphoto2://[usb:001,002]/) is mounted, said
+	 * GVolumeMonitor implementation would create two GMount objects
+	 * (each with their root matching the corresponding volume activation
+	 * root) that would shadow the original mount.
+	 * The proxy monitor in GVfs 2.26 and later, automatically creates and
+	 * manage shadow mounts (and shadows the underlying mount) if the
+	 * activation root on a GVolume is set.
+	 * Since 2.20
+	 * Returns: TRUE if mount is shadowed.
+	 */
+	public int isShadowed();
+	
+	/**
+	 * Increments the shadow count on mount. Usually used by
+	 * GVolumeMonitor implementations when creating a shadow mount for
+	 * mount, see g_mount_is_shadowed() for more information. The caller
+	 * will need to emit the "changed" signal on mount manually.
+	 * Since 2.20
+	 */
+	public void shadow();
+	
+	/**
+	 * Decrements the shadow count on mount. Usually used by
+	 * GVolumeMonitor implementations when destroying a shadow mount for
+	 * mount, see g_mount_is_shadowed() for more information. The caller
+	 * will need to emit the "changed" signal on mount manually.
+	 * Since 2.20
+	 * Signal Details
+	 * The "changed" signal
+	 * void user_function (GMount *mount,
+	 *  gpointer user_data) : Run Last
+	 * Emitted when the mount has been changed.
+	 */
+	public void unshadow();
 }

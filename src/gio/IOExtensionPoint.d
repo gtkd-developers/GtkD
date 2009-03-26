@@ -142,7 +142,7 @@ public class IOExtensionPoint
 	 */
 	public IOExtension getExtensionByName(string name)
 	{
-		// GIOExtension* g_io_extension_point_get_extension_by_name  (GIOExtensionPoint *extension_point,  const char *name);
+		// GIOExtension * g_io_extension_point_get_extension_by_name  (GIOExtensionPoint *extension_point,  const char *name);
 		auto p = g_io_extension_point_get_extension_by_name(gIOExtensionPoint, Str.toStringz(name));
 		if(p is null)
 		{
@@ -158,7 +158,7 @@ public class IOExtensionPoint
 	 */
 	public ListG getExtensions()
 	{
-		// GList* g_io_extension_point_get_extensions (GIOExtensionPoint *extension_point);
+		// GList * g_io_extension_point_get_extensions (GIOExtensionPoint *extension_point);
 		auto p = g_io_extension_point_get_extensions(gIOExtensionPoint);
 		if(p is null)
 		{
@@ -191,7 +191,7 @@ public class IOExtensionPoint
 	 */
 	public static IOExtension implement(string extensionPointName, GType type, string extensionName, int priority)
 	{
-		// GIOExtension* g_io_extension_point_implement (const char *extension_point_name,  GType type,  const char *extension_name,  gint priority);
+		// GIOExtension * g_io_extension_point_implement (const char *extension_point_name,  GType type,  const char *extension_name,  gint priority);
 		auto p = g_io_extension_point_implement(Str.toStringz(extensionPointName), type, Str.toStringz(extensionName), priority);
 		if(p is null)
 		{
@@ -208,7 +208,7 @@ public class IOExtensionPoint
 	 */
 	public static IOExtensionPoint lookup(string name)
 	{
-		// GIOExtensionPoint* g_io_extension_point_lookup (const char *name);
+		// GIOExtensionPoint * g_io_extension_point_lookup (const char *name);
 		auto p = g_io_extension_point_lookup(Str.toStringz(name));
 		if(p is null)
 		{
@@ -225,7 +225,7 @@ public class IOExtensionPoint
 	 */
 	public static IOExtensionPoint register(string name)
 	{
-		// GIOExtensionPoint* g_io_extension_point_register (const char *name);
+		// GIOExtensionPoint * g_io_extension_point_register (const char *name);
 		auto p = g_io_extension_point_register(Str.toStringz(name));
 		if(p is null)
 		{

@@ -137,7 +137,7 @@ public class IOExtension
 	 */
 	public string getName()
 	{
-		// const char* g_io_extension_get_name (GIOExtension *extension);
+		// const char * g_io_extension_get_name (GIOExtension *extension);
 		return Str.toString(g_io_extension_get_name(gIOExtension));
 	}
 	

@@ -129,7 +129,7 @@ public class DataOutputStream : FilterOutputStream
 	 */
 	public this (OutputStream baseStream)
 	{
-		// GDataOutputStream* g_data_output_stream_new (GOutputStream *base_stream);
+		// GDataOutputStream * g_data_output_stream_new (GOutputStream *base_stream);
 		auto p = g_data_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct());
 		if(p is null)
 		{

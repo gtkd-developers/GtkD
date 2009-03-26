@@ -93,6 +93,9 @@ private import gobject.ObjectG;
  * Description
  * GDesktopAppInfo is an implementation of GAppInfo based on
  * desktop files.
+ * Note that <gio/gdesktopappinfo.h> belongs to
+ * the UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
 public class DesktopAppInfo : ObjectG, AppInfoIF
 {
@@ -154,7 +157,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public this (KeyFile keyFile)
 	{
-		// GDesktopAppInfo* g_desktop_app_info_new_from_keyfile (GKeyFile *key_file);
+		// GDesktopAppInfo * g_desktop_app_info_new_from_keyfile (GKeyFile *key_file);
 		auto p = g_desktop_app_info_new_from_keyfile((keyFile is null) ? null : keyFile.getKeyFileStruct());
 		if(p is null)
 		{
@@ -164,14 +167,23 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 	
 	/**
-	 * Creates a new GDesktopAppInfo.
+	 * Creates a new GDesktopAppInfo based on a desktop file id.
+	 * A desktop file id is the basename of the desktop file, including the
+	 * .desktop extension. GIO is looking for a desktop file with this name
+	 * in the applications subdirectories of the XDG data
+	 * directories (i.e. the directories specified in the
+	 * XDG_DATA_HOME and XDG_DATA_DIRS environment
+	 * variables). GIO also supports the prefix-to-subdirectory mapping that is
+	 * described in the Menu Spec
+	 * (i.e. a desktop id of kde-foo.desktop will match
+	 * /usr/share/applications/kde/foo.desktop).
 	 * Params:
 	 * desktopId =  the desktop file id
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string desktopId)
 	{
-		// GDesktopAppInfo* g_desktop_app_info_new (const char *desktop_id);
+		// GDesktopAppInfo * g_desktop_app_info_new (const char *desktop_id);
 		auto p = g_desktop_app_info_new(Str.toStringz(desktopId));
 		if(p is null)
 		{
@@ -221,7 +233,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public static AppInfoIF lookupGetDefaultForUriScheme(GDesktopAppInfoLookup* lookup, string uriScheme)
 	{
-		// GAppInfo* g_desktop_app_info_lookup_get_default_for_uri_scheme  (GDesktopAppInfoLookup *lookup,  const char *uri_scheme);
+		// GAppInfo * g_desktop_app_info_lookup_get_default_for_uri_scheme  (GDesktopAppInfoLookup *lookup,  const char *uri_scheme);
 		auto p = g_desktop_app_info_lookup_get_default_for_uri_scheme(lookup, Str.toStringz(uriScheme));
 		if(p is null)
 		{

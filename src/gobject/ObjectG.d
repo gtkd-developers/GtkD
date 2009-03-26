@@ -262,7 +262,7 @@ public class ObjectG
 	 * canonical parameter names as
 	 * detail strings for the notify signal.
 	 * See Also
-	 * GParamSpecObject, g_param_spec_object()
+	 * #GParamSpecObject, g_param_spec_object()
 	 */
 	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -279,17 +279,20 @@ public class ObjectG
 		}
 		onNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackNotify(GObject* pspecStruct, GParamSpec* gobject, ObjectG objectG)
+	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, ObjectG objectG)
 	{
 		foreach ( void delegate(ParamSpec, ObjectG) dlg ; objectG.onNotifyListeners )
 		{
-			dlg(new ParamSpec(gobject), objectG);
+			dlg(new ParamSpec(pspec), objectG);
 		}
 	}
 	
 	
 	/**
 	 * Installs a new property. This is usually done in the class initializer.
+	 * Note that it is possible to redefine a property in a derived class,
+	 * by installing a property with the same name. This can be useful at times,
+	 * e.g. to change the range of allowed values or the default value.
 	 * Params:
 	 * oclass =  a GObjectClass
 	 * propertyId =  the id for the new property
@@ -785,7 +788,7 @@ public class ObjectG
 	/**
 	 * This function gets back user data pointers stored via
 	 * g_object_set_qdata() and removes the data from object
-	 * without invoking it's destroy() function (if any was
+	 * without invoking its destroy() function (if any was
 	 * set).
 	 * Usually, calling this function is only required to update
 	 * Params:

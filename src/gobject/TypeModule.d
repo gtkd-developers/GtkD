@@ -143,6 +143,8 @@ public class TypeModule : ObjectG
 	/**
 	 * Increases the use count of a GTypeModule by one. If the
 	 * use count was zero before, the plugin will be loaded.
+	 * If loading the plugin fails, the use count is reset to
+	 * its prior value.
 	 * Returns: FALSE if the plugin needed to be loaded and loading the plugin failed.
 	 */
 	public int use()

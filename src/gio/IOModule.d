@@ -125,7 +125,7 @@ public class IOModule : TypeModule
 	 */
 	public this (string filename)
 	{
-		// GIOModule* g_io_module_new (const gchar *filename);
+		// GIOModule * g_io_module_new (const gchar *filename);
 		auto p = g_io_module_new(Str.toStringz(filename));
 		if(p is null)
 		{
@@ -142,7 +142,7 @@ public class IOModule : TypeModule
 	 */
 	public static ListG modulesLoadAllInDirectory(string dirname)
 	{
-		// GList* g_io_modules_load_all_in_directory (const gchar *dirname);
+		// GList * g_io_modules_load_all_in_directory (const gchar *dirname);
 		auto p = g_io_modules_load_all_in_directory(Str.toStringz(dirname));
 		if(p is null)
 		{

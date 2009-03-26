@@ -137,7 +137,7 @@ public class FileAttributeMatcher
 	 */
 	public this (string attributes)
 	{
-		// GFileAttributeMatcher* g_file_attribute_matcher_new (const char *attributes);
+		// GFileAttributeMatcher * g_file_attribute_matcher_new (const char *attributes);
 		auto p = g_file_attribute_matcher_new(Str.toStringz(attributes));
 		if(p is null)
 		{
@@ -152,7 +152,7 @@ public class FileAttributeMatcher
 	 */
 	public FileAttributeMatcher doref()
 	{
-		// GFileAttributeMatcher* g_file_attribute_matcher_ref (GFileAttributeMatcher *matcher);
+		// GFileAttributeMatcher * g_file_attribute_matcher_ref (GFileAttributeMatcher *matcher);
 		auto p = g_file_attribute_matcher_ref(gFileAttributeMatcher);
 		if(p is null)
 		{
@@ -220,7 +220,7 @@ public class FileAttributeMatcher
 	 */
 	public string enumerateNext()
 	{
-		// const char* g_file_attribute_matcher_enumerate_next  (GFileAttributeMatcher *matcher);
+		// const char * g_file_attribute_matcher_enumerate_next  (GFileAttributeMatcher *matcher);
 		return Str.toString(g_file_attribute_matcher_enumerate_next(gFileAttributeMatcher));
 	}
 }

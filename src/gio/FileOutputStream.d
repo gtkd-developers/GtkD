@@ -168,7 +168,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public FileInfo queryInfo(string attributes, Cancellable cancellable)
 	{
-		// GFileInfo* g_file_output_stream_query_info (GFileOutputStream *stream,  char *attributes,  GCancellable *cancellable,  GError **error);
+		// GFileInfo * g_file_output_stream_query_info (GFileOutputStream *stream,  const char *attributes,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_output_stream_query_info(gFileOutputStream, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -201,7 +201,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public void queryInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		// void g_file_output_stream_query_info_async  (GFileOutputStream *stream,  char *attributes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		// void g_file_output_stream_query_info_async  (GFileOutputStream *stream,  const char *attributes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_file_output_stream_query_info_async(gFileOutputStream, Str.toStringz(attributes), ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
@@ -215,7 +215,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public FileInfo queryInfoFinish(AsyncResultIF result)
 	{
-		// GFileInfo* g_file_output_stream_query_info_finish  (GFileOutputStream *stream,  GAsyncResult *result,  GError **error);
+		// GFileInfo * g_file_output_stream_query_info_finish  (GFileOutputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_output_stream_query_info_finish(gFileOutputStream, (result is null) ? null : result.getAsyncResultTStruct(), &err);
@@ -240,7 +240,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public string getEtag()
 	{
-		// char* g_file_output_stream_get_etag (GFileOutputStream *stream);
+		// char * g_file_output_stream_get_etag (GFileOutputStream *stream);
 		return Str.toString(g_file_output_stream_get_etag(gFileOutputStream));
 	}
 }

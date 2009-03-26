@@ -157,7 +157,7 @@ public template AsyncResultT(TStruct)
 	 */
 	public ObjectG getSourceObject()
 	{
-		// GObject* g_async_result_get_source_object (GAsyncResult *res);
+		// GObject * g_async_result_get_source_object (GAsyncResult *res);
 		auto p = g_async_result_get_source_object(getAsyncResultTStruct());
 		if(p is null)
 		{

@@ -12,11 +12,11 @@ rm glib-Atomic-Operations.html
 wget http://library.gnome.org/devel/glib/2.18/glib-Atomic-Operations.html
 cd ..
 #GOBJECT
-curl http://library.gnome.org/devel/gobject/gobject-html-2.18.1.tar.gz | tar xvfz -
-ln -s gobject-html-2.18.1 gobject
+curl http://library.gnome.org/devel/gobject/gobject-html-2.20.0.tar.gz | tar xvfz -
+ln -s gobject-html-2.20.0 gobject
 #GIO
-curl http://library.gnome.org/devel/gio/gio-html-2.18.0.tar.gz | tar xvfz -
-ln -s gio-html-2.18.0 gio
+curl http://library.gnome.org/devel/gio/gio-html-2.20.0.tar.gz | tar xvfz -
+ln -s gio-html-2.20.0 gio
 #ATK
 curl http://library.gnome.org/devel/atk/atk-html-1.24.0.tar.gz | tar xvfz -
 ln -s atk-html-1.24.0 atk

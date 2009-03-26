@@ -123,9 +123,43 @@ public class MountOperation : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
+	void delegate(MountOperation)[] onAbortedListeners;
+	/**
+	 * Emitted by the backend when e.g. a device becomes unavailable
+	 * while a mount operation is in progress.
+	 * Implementations of GMountOperation should handle this signal
+	 * by dismissing open password dialogs.
+	 * Since 2.20
+	 */
+	void addOnAborted(void delegate(MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("aborted" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"aborted",
+			cast(GCallback)&callBackAborted,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["aborted"] = 1;
+		}
+		onAbortedListeners ~= dlg;
+	}
+	extern(C) static void callBackAborted(GMountOperation* arg0Struct, MountOperation mountOperation)
+	{
+		foreach ( void delegate(MountOperation) dlg ; mountOperation.onAbortedListeners )
+		{
+			dlg(mountOperation);
+		}
+	}
+	
 	void delegate(string, string, string, GAskPasswordFlags, MountOperation)[] onAskPasswordListeners;
 	/**
 	 * Emitted when a mount operation asks the user for a password.
+	 * If the message contains a line break, the first line should be
+	 * presented as a heading. For example, it may be used as the
+	 * primary text in a GtkMessageDialog.
 	 */
 	void addOnAskPassword(void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -154,6 +188,9 @@ public class MountOperation : ObjectG
 	/**
 	 * Emitted when asking the user a question and gives a list of
 	 * choices for the user to choose from.
+	 * If the message contains a line break, the first line should be
+	 * presented as a heading. For example, it may be used as the
+	 * primary text in a GtkMessageDialog.
 	 */
 	void addOnAskQuestion(void delegate(string, GStrv*, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -212,7 +249,7 @@ public class MountOperation : ObjectG
 	 */
 	public this ()
 	{
-		// GMountOperation* g_mount_operation_new (void);
+		// GMountOperation * g_mount_operation_new (void);
 		auto p = g_mount_operation_new();
 		if(p is null)
 		{
@@ -227,7 +264,7 @@ public class MountOperation : ObjectG
 	 */
 	public string getUsername()
 	{
-		// const char* g_mount_operation_get_username (GMountOperation *op);
+		// const char * g_mount_operation_get_username (GMountOperation *op);
 		return Str.toString(g_mount_operation_get_username(gMountOperation));
 	}
 	
@@ -248,7 +285,7 @@ public class MountOperation : ObjectG
 	 */
 	public string getPassword()
 	{
-		// const char* g_mount_operation_get_password (GMountOperation *op);
+		// const char * g_mount_operation_get_password (GMountOperation *op);
 		return Str.toString(g_mount_operation_get_password(gMountOperation));
 	}
 	
@@ -291,7 +328,7 @@ public class MountOperation : ObjectG
 	 */
 	public string getDomain()
 	{
-		// const char* g_mount_operation_get_domain (GMountOperation *op);
+		// const char * g_mount_operation_get_domain (GMountOperation *op);
 		return Str.toString(g_mount_operation_get_domain(gMountOperation));
 	}
 	

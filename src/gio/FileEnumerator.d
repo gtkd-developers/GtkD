@@ -148,12 +148,12 @@ public class FileEnumerator : ObjectG
 	 * be unset.
 	 * Params:
 	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * Returns: A GFileInfo or NULL on error or end of enumerator
+	 * Returns: A GFileInfo or NULL on error or end of enumerator. Free the returned object with g_object_unref() when no longer needed.
 	 * Throws: GException on failure.
 	 */
 	public GFileInfo* nextFile(Cancellable cancellable)
 	{
-		// GFileInfo* g_file_enumerator_next_file (GFileEnumerator *enumerator,  GCancellable *cancellable,  GError **error);
+		// GFileInfo * g_file_enumerator_next_file (GFileEnumerator *enumerator,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_enumerator_next_file(gFileEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -229,7 +229,7 @@ public class FileEnumerator : ObjectG
 	 */
 	public ListG nextFilesFinish(AsyncResultIF result)
 	{
-		// GList* g_file_enumerator_next_files_finish (GFileEnumerator *enumerator,  GAsyncResult *result,  GError **error);
+		// GList * g_file_enumerator_next_files_finish (GFileEnumerator *enumerator,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_enumerator_next_files_finish(gFileEnumerator, (result is null) ? null : result.getAsyncResultTStruct(), &err);
@@ -333,7 +333,7 @@ public class FileEnumerator : ObjectG
 	 */
 	public File getContainer()
 	{
-		// GFile* g_file_enumerator_get_container (GFileEnumerator *enumerator);
+		// GFile * g_file_enumerator_get_container (GFileEnumerator *enumerator);
 		auto p = g_file_enumerator_get_container(gFileEnumerator);
 		if(p is null)
 		{

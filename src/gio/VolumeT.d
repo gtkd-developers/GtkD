@@ -218,7 +218,7 @@ public template VolumeT(TStruct)
 	 */
 	public string getName()
 	{
-		// char* g_volume_get_name (GVolume *volume);
+		// char * g_volume_get_name (GVolume *volume);
 		return Str.toString(g_volume_get_name(getVolumeTStruct()));
 	}
 	
@@ -231,7 +231,7 @@ public template VolumeT(TStruct)
 	 */
 	public string getUuid()
 	{
-		// char* g_volume_get_uuid (GVolume *volume);
+		// char * g_volume_get_uuid (GVolume *volume);
 		return Str.toString(g_volume_get_uuid(getVolumeTStruct()));
 	}
 	
@@ -241,7 +241,7 @@ public template VolumeT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon* g_volume_get_icon (GVolume *volume);
+		// GIcon * g_volume_get_icon (GVolume *volume);
 		auto p = g_volume_get_icon(getVolumeTStruct());
 		if(p is null)
 		{
@@ -256,7 +256,7 @@ public template VolumeT(TStruct)
 	 */
 	public DriveIF getDrive()
 	{
-		// GDrive* g_volume_get_drive (GVolume *volume);
+		// GDrive * g_volume_get_drive (GVolume *volume);
 		auto p = g_volume_get_drive(getVolumeTStruct());
 		if(p is null)
 		{
@@ -271,7 +271,7 @@ public template VolumeT(TStruct)
 	 */
 	public MountIF getMount()
 	{
-		// GMount* g_volume_get_mount (GVolume *volume);
+		// GMount * g_volume_get_mount (GVolume *volume);
 		auto p = g_volume_get_mount(getVolumeTStruct());
 		if(p is null)
 		{
@@ -317,39 +317,15 @@ public template VolumeT(TStruct)
 	 *  (g_file_has_prefix (volume_activation_root, mount_root) ||
 	 *  g_file_equal (volume_activation_root, mount_root))
 	 * will always be TRUE.
-	 * There is a number of possible uses of this function.
-	 * First, implementations of GVolumeMonitor can use this method to
-	 * determine if a GMount should be adopted in the implementation of
-	 * g_volume_monitor_adopt_orphan_mount() by testing if the result of
-	 * this function equals (or has as prefix) the root of the given
-	 * GMount. In particular this is useful in the in-process proxy part
-	 * of an out-of-process volume monitor implementation.
-	 * Second, applications such as a file manager can use this to
-	 * navigate to the correct root in response to the user navigating to
-	 * a server. Now suppose there is a volume monitor for networked
-	 * servers that creates GVolume objects corresponding to the
-	 * "favorite servers" (e.g. set up by the user via some "Connect to
-	 * Server" dialog). Suppose also that one of the favorite servers is
-	 * named "public_html @ fd.o" and the URI is
-	 * sftp://people.freedesktop.org/home/david/public_html.
-	 * Now, due to the way GIO works, when the corresponding GVolume is
-	 * mounted then a GMount (typically adopted by the volume monitor)
-	 * will appear with the mount root (e.g. the result of
-	 * g_mount_get_root())
-	 * sftp://people.freedesktop.org. However, this
-	 * function (g_volume_get_activation_root()) can return a GFile for
-	 * the URI
-	 * sftp://people.freedesktop.org/home/david/public_html.
-	 * All this means that a file manager can use the latter URI for
-	 * navigating when the user clicks an icon representing the GVolume
-	 * (e.g. clicking an icon with the name "public_html @ fd.o" or
-	 * similar).
+	 * Activation roots are typically used in GVolumeMonitor
+	 * implementations to find the underlying mount to shadow, see
+	 * g_mount_is_shadowed() for more details.
 	 * Since 2.18
 	 * Returns: the activation root of volume or NULL. Useg_object_unref() to free.
 	 */
 	public File getActivationRoot()
 	{
-		// GFile* g_volume_get_activation_root (GVolume *volume);
+		// GFile * g_volume_get_activation_root (GVolume *volume);
 		auto p = g_volume_get_activation_root(getVolumeTStruct());
 		if(p is null)
 		{
@@ -378,6 +354,10 @@ public template VolumeT(TStruct)
 	/**
 	 * Finishes mounting a volume. If any errors occured during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
+	 * If the mount operation succeeded, g_volume_get_mount() on volume
+	 * is guaranteed to return the mount right after calling this
+	 * function; there's no need to listen for the 'mount-added' signal on
+	 * GVolumeMonitor.
 	 * Params:
 	 * result =  a GAsyncResult
 	 * Returns: TRUE, FALSE if operation failed.
@@ -455,7 +435,7 @@ public template VolumeT(TStruct)
 	 */
 	public string[] enumerateIdentifiers()
 	{
-		// char** g_volume_enumerate_identifiers (GVolume *volume);
+		// char ** g_volume_enumerate_identifiers (GVolume *volume);
 		return Str.toStringArray(g_volume_enumerate_identifiers(getVolumeTStruct()));
 	}
 	
@@ -469,7 +449,7 @@ public template VolumeT(TStruct)
 	 */
 	public string getIdentifier(string kind)
 	{
-		// char* g_volume_get_identifier (GVolume *volume,  const char *kind);
+		// char * g_volume_get_identifier (GVolume *volume,  const char *kind);
 		return Str.toString(g_volume_get_identifier(getVolumeTStruct(), Str.toStringz(kind)));
 	}
 }

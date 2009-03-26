@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gio.IconT
  * 	- gio.IconIF
  * structWrap:
@@ -62,6 +64,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import gio.IconT;
 private import gio.IconIF;
 
@@ -135,7 +139,7 @@ public class ThemedIcon : ObjectG, IconIF
 	 */
 	public this (string[] iconnames, int len)
 	{
-		// GIcon* g_themed_icon_new_from_names (char **iconnames,  int len);
+		// GIcon * g_themed_icon_new_from_names (char **iconnames,  int len);
 		auto p = g_themed_icon_new_from_names(Str.toStringzArray(iconnames), len);
 		if(p is null)
 		{
@@ -153,7 +157,7 @@ public class ThemedIcon : ObjectG, IconIF
 	 */
 	public this (string iconname)
 	{
-		// GIcon* g_themed_icon_new_with_default_fallbacks  (const char *iconname);
+		// GIcon * g_themed_icon_new_with_default_fallbacks  (const char *iconname);
 		auto p = g_themed_icon_new_with_default_fallbacks(Str.toStringz(iconname));
 		if(p is null)
 		{

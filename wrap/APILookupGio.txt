@@ -447,6 +447,8 @@ structWrap: GCancellable* Cancellable
 structWrap: GInputStream* InputStream
 out: g_data_input_stream_read_line length
 out: g_data_input_stream_read_until length
+out: g_data_input_stream_read_line_finish result
+out: g_data_input_stream_read_until_finish result
 
 nocode: g_data_input_stream_read_byte
 outFile: DataInputStream
@@ -927,6 +929,11 @@ struct: GIcon
 class: IconT
 template: TStruct
 prefix: g_icon_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+#Skip this one for now
+nocode: g_icon_new_for_string
 interface: IconIF
 outFile: IconT
 
@@ -937,6 +944,9 @@ implements: IconIF
 import: gobject.ObjectG
 
 #imports for Icon Interface.
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gio.IconT
 import: gio.IconIF
 
@@ -976,6 +986,9 @@ implements: LoadableIconIF
 prefix: g_file_icon_
 
 #imports for Icon Interface.
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gio.IconT
 import: gio.IconIF
 
@@ -1028,6 +1041,9 @@ prefix: g_themed_icon_
 import: glib.Str
 
 #imports for Icon Interface.
+#import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gio.IconT
 import: gio.IconIF
 
@@ -1055,6 +1071,9 @@ structWrap: GEmblem* Emblem
 structWrap: GIcon* IconIF
 
 #imports for Icon Interface.
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gio.IconT
 #import: gio.IconIF
 
@@ -1076,6 +1095,9 @@ import: gio.IconIF
 structWrap: GIcon* IconIF
 
 #imports for Icon Interface.
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: gio.IconT
 #import: gio.IconIF
 

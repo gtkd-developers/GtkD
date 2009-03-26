@@ -66,6 +66,9 @@ private import gio.OutputStream;
  * GUnixOutputStream implements GOutputStream for writing to a
  * unix file descriptor, including asynchronous operations. The file
  * descriptor must be selectable, so it doesn't work with opened files.
+ * Note that <gio/gunixoutputstream.h> belongs
+ * to the UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
 public class UnixOutputStream : OutputStream
 {
@@ -111,21 +114,58 @@ public class UnixOutputStream : OutputStream
 	 */
 	
 	/**
-	 * Creates a new unix output stream for fd. If close_fd_at_close
-	 * is TRUE, the fd will be closed when the output stream is destroyed.
+	 * Creates a new GUnixOutputStream for the given fd.
+	 * If close_fd, is TRUE, the file descriptor will be closed when
+	 * the output stream is destroyed.
 	 * Params:
-	 * fd =  unix's file descriptor.
-	 * closeFdAtClose =  a gboolean.
+	 * fd =  a UNIX file descriptor
+	 * closeFd =  TRUE to close the file descriptor when done
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int fd, int closeFdAtClose)
+	public this (int fd, int closeFd)
 	{
-		// GOutputStream* g_unix_output_stream_new (int fd,  gboolean close_fd_at_close);
-		auto p = g_unix_output_stream_new(fd, closeFdAtClose);
+		// GOutputStream * g_unix_output_stream_new (gint fd,  gboolean close_fd);
+		auto p = g_unix_output_stream_new(fd, closeFd);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_unix_output_stream_new(fd, closeFdAtClose)");
+			throw new ConstructionException("null returned by g_unix_output_stream_new(fd, closeFd)");
 		}
 		this(cast(GUnixOutputStream*) p);
+	}
+	
+	/**
+	 * Sets whether the file descriptor of stream shall be closed
+	 * when the stream is closed.
+	 * Since 2.20
+	 * Params:
+	 * closeFd =  TRUE to close the file descriptor when done
+	 */
+	public void setCloseFd(int closeFd)
+	{
+		// void g_unix_output_stream_set_close_fd (GUnixOutputStream *stream,  gboolean close_fd);
+		g_unix_output_stream_set_close_fd(gUnixOutputStream, closeFd);
+	}
+	
+	/**
+	 * Returns whether the file descriptor of stream will be
+	 * closed when the stream is closed.
+	 * Since 2.20
+	 * Returns: TRUE if the file descriptor is closed when done
+	 */
+	public int getCloseFd()
+	{
+		// gboolean g_unix_output_stream_get_close_fd (GUnixOutputStream *stream);
+		return g_unix_output_stream_get_close_fd(gUnixOutputStream);
+	}
+	
+	/**
+	 * Return the UNIX file descriptor that the stream writes to.
+	 * Since 2.20
+	 * Returns: The file descriptor of stream
+	 */
+	public int getFd()
+	{
+		// gint g_unix_output_stream_get_fd (GUnixOutputStream *stream);
+		return g_unix_output_stream_get_fd(gUnixOutputStream);
 	}
 }

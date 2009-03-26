@@ -122,7 +122,7 @@ public class Vfs : ObjectG
 	 */
 	public File getFileForPath(string path)
 	{
-		// GFile* g_vfs_get_file_for_path (GVfs *vfs,  const char *path);
+		// GFile * g_vfs_get_file_for_path (GVfs *vfs,  const char *path);
 		auto p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
 		if(p is null)
 		{
@@ -142,7 +142,7 @@ public class Vfs : ObjectG
 	 */
 	public File getFileForUri(string uri)
 	{
-		// GFile* g_vfs_get_file_for_uri (GVfs *vfs,  const char *uri);
+		// GFile * g_vfs_get_file_for_uri (GVfs *vfs,  const char *uri);
 		auto p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
 		if(p is null)
 		{
@@ -161,7 +161,7 @@ public class Vfs : ObjectG
 	 */
 	public File parseName(string parseName)
 	{
-		// GFile* g_vfs_parse_name (GVfs *vfs,  const char *parse_name);
+		// GFile * g_vfs_parse_name (GVfs *vfs,  const char *parse_name);
 		auto p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
 		if(p is null)
 		{
@@ -176,7 +176,7 @@ public class Vfs : ObjectG
 	 */
 	public static Vfs getDefault()
 	{
-		// GVfs* g_vfs_get_default (void);
+		// GVfs * g_vfs_get_default (void);
 		auto p = g_vfs_get_default();
 		if(p is null)
 		{
@@ -191,7 +191,7 @@ public class Vfs : ObjectG
 	 */
 	public static Vfs getLocal()
 	{
-		// GVfs* g_vfs_get_local (void);
+		// GVfs * g_vfs_get_local (void);
 		auto p = g_vfs_get_local();
 		if(p is null)
 		{

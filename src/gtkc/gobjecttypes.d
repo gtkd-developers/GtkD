@@ -62,7 +62,7 @@ enum GType
  * typedef gchar** GStrv;
  * A C representable type name for G_TYPE_STRV.
  * See Also
- * GParamSpecBoxed, g_param_spec_boxed()
+ * #GParamSpecBoxed, g_param_spec_boxed()
  */
 public alias char** GStrv;
 
@@ -504,7 +504,7 @@ public struct GFlagsClass
 
 /**
  * Main Gtk struct.
- * A structure which contains a single enum value, it's name, and it's
+ * A structure which contains a single enum value, its name, and its
  * nickname.
  * gint value;
  */
@@ -517,7 +517,7 @@ public struct GEnumValue
 
 
 /**
- * A structure which contains a single flags value, it's name, and it's
+ * A structure which contains a single flags value, its name, and its
  * nickname.
  * guint value;
  */
@@ -844,7 +844,7 @@ public struct GParamSpecClass
  * required to initialize and destruct (finalize) a parameter's class and
  * instances thereof.
  * The initialized structure is passed to the g_param_type_register_static()
- * The type system will perform a deep copy of this structure, so it's memory
+ * The type system will perform a deep copy of this structure, so its memory
  * does not need to be persistent across invocation of
  * g_param_type_register_static().
  * guint16 instance_size;
@@ -1546,8 +1546,8 @@ public struct GValueArray
  *  the GParamSpec of the property
  * Signal Details
  * The "notify" signal
- * void user_function (GObject *pspec,
- *  GParamSpec *gobject,
+ * void user_function (GObject *gobject,
+ *  GParamSpec *pspec,
  *  gpointer user_data) : Run First / No Recursion / Has Details / Action / No Hooks
  * The notify signal is emitted on an object when one of its
  * properties has been changed. Note that getting this signal
@@ -1563,14 +1563,14 @@ public struct GValueArray
  * It is important to note that you must use
  * canonical parameter names as
  * detail strings for the notify signal.
- * pspec :
- *  the GParamSpec of the property which changed
  * gobject :
  *  the object which received the signal.
+ * pspec :
+ *  the GParamSpec of the property which changed.
  * user_data :
  * user data set when the signal handler was connected.
  * See Also
- * GParamSpecObject, g_param_spec_object()
+ * #GParamSpecObject, g_param_spec_object()
  */
 // TODO
 // #define G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec)
