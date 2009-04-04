@@ -329,7 +329,7 @@ public class Component
 	 * Returns the alpha value (i.e. the opacity) for this
 	 * component, on a scale from 0 (fully transparent) to 1.0
 	 * (fully opaque).
-	 * Returns: An alpha value from 0 to 1.0, inclusive.Since ATK 1.12Signal DetailsThe "bounds-changed" signalvoid user_function (AtkComponent *atkcomponent, AtkRectangle *arg1, gpointer user_data) : Run LastThe 'bounds-changed" signal is emitted when the bposition or size of the a component changes.
+	 * Returns: An alpha value from 0 to 1.0, inclusive.Since ATK 1.12Signal DetailsThe "bounds-changed" signalvoid user_function (AtkComponent *atkcomponent, AtkRectangle *arg1, gpointer user_data) : Run LastThe 'bounds-changed" signal is emitted when the bposition or size of thea component changes.
 	 */
 	public double getAlpha()
 	{

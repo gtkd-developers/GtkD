@@ -217,7 +217,7 @@ public class Util
 	 */
 	public static string getToolkitName()
 	{
-		// const gchar* atk_get_toolkit_name (void);
+		// const gchar * atk_get_toolkit_name (void);
 		return Str.toString(atk_get_toolkit_name());
 	}
 	
@@ -227,7 +227,7 @@ public class Util
 	 */
 	public static string getToolkitVersion()
 	{
-		// const gchar* atk_get_toolkit_version (void);
+		// const gchar * atk_get_toolkit_version (void);
 		return Str.toString(atk_get_toolkit_version());
 	}
 }

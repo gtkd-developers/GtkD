@@ -429,7 +429,7 @@ public class Table
 	 */
 	public ObjectAtk getCaption()
 	{
-		// AtkObject* atk_table_get_caption (AtkTable *table);
+		// AtkObject * atk_table_get_caption (AtkTable *table);
 		auto p = atk_table_get_caption(atkTable);
 		if(p is null)
 		{
@@ -446,7 +446,7 @@ public class Table
 	 */
 	public string getColumnDescription(int column)
 	{
-		// const gchar* atk_table_get_column_description (AtkTable *table,  gint column);
+		// const gchar * atk_table_get_column_description (AtkTable *table,  gint column);
 		return Str.toString(atk_table_get_column_description(atkTable, column));
 	}
 	
@@ -458,7 +458,7 @@ public class Table
 	 */
 	public string getRowDescription(int row)
 	{
-		// const gchar* atk_table_get_row_description (AtkTable *table,  gint row);
+		// const gchar * atk_table_get_row_description (AtkTable *table,  gint row);
 		return Str.toString(atk_table_get_row_description(atkTable, row));
 	}
 	
@@ -700,7 +700,7 @@ public class Table
 	 * Removes the specified row from the selection.
 	 * Params:
 	 * row =  a gint representing a row in table
-	 * Returns: a gboolean representing if the row was successfully removed fromthe selection, or 0 if value does not implement this interface.Signal DetailsThe "column-deleted" signalvoid user_function (AtkTable *atktable, gint arg1, gint arg2, gpointer user_data) : Run LastThe "column-deleted" signal is emitted by an object which implements the AtkTable interface when a column is deleted.
+	 * Returns: a gboolean representing if the row was successfully removed fromthe selection, or 0 if value does not implement this interface.Signal DetailsThe "column-deleted" signalvoid user_function (AtkTable *atktable, gint arg1, gint arg2, gpointer user_data) : Run LastThe "column-deleted" signal is emitted by an object which implements theAtkTable interface when a column is deleted.
 	 */
 	public int removeRowSelection(int row)
 	{

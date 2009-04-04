@@ -268,7 +268,7 @@ public class Document
 	 *  text substrings or images within this document may have
 	 *  a different locale, see atk_text_get_attributes and
 	 *  atk_image_get_image_locale.
-	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of the document content as a whole, or NULL if the document content does not specify a locale.Signal DetailsThe "load-complete" signalvoid user_function (AtkDocument *atkdocument, gpointer user_data) : Run LastThe 'load-complete' signal is emitted when a pending load of a staticdocument has completed. This signal is to be expected by ATK clients if and when AtkDocument implementors expose ATK_STATE_BUSY. If the stateof an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,it should be safe for clients to assume that the AtkDocument's static contentsare fully loaded into the container. (Dynamic document contents shouldbe exposed via other signals.)
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of the document content as a whole, or NULL if the document content does not specify a locale.Signal DetailsThe "load-complete" signalvoid user_function (AtkDocument *atkdocument, gpointer user_data) : Run LastThe 'load-complete' signal is emitted when a pending load of a staticdocument has completed. This signal is to be expected by ATK clientsif and when AtkDocument implementors expose ATK_STATE_BUSY. If the stateof an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,it should be safe for clients to assume that the AtkDocument's static contentsare fully loaded into the container. (Dynamic document contents shouldbe exposed via other signals.)
 	 */
 	public string getLocale()
 	{

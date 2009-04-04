@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = atk-AtkStateSet.html
+ * inFile  = AtkStateSet.html
  * outPack = atk
  * outFile = StateSet
  * strct   = AtkStateSet
@@ -62,13 +62,14 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  * An AtkStateSet determines a component's state set. It is composed of a set
  * of AtkStates.
  */
-public class StateSet
+public class StateSet : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -82,7 +83,7 @@ public class StateSet
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)atkStateSet;
 	}
@@ -97,6 +98,14 @@ public class StateSet
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)atkStateSet);
+		if( ptr !is null )
+		{
+			this = cast(StateSet)ptr;
+			return;
+		}
+		super(cast(GObject*)atkStateSet);
 		this.atkStateSet = atkStateSet;
 	}
 	

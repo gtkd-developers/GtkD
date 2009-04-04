@@ -669,7 +669,7 @@ public class Text
 	 * Params:
 	 * attr =  The AtkTextAttribute for which a value is required
 	 * index =  The index of the required value
-	 * Returns: a string containing the value; this string should not be freed;NULL is returned if there are no values maintained for the attr value. Signal DetailsThe "text-attributes-changed" signalvoid user_function (AtkText *atktext, gpointer user_data) : Run LastThe "text-attributes-changed" signal is emitted when the text attributes of the text of an object which implements AtkText changes.
+	 * Returns: a string containing the value; this string should not be freed;NULL is returned if there are no values maintained for the attr value. Signal DetailsThe "text-attributes-changed" signalvoid user_function (AtkText *atktext, gpointer user_data) : Run LastThe "text-attributes-changed" signal is emitted when the text attributes ofthe text of an object which implements AtkText changes.
 	 */
 	public static string attributeGetValue(AtkTextAttribute attr, int index)
 	{

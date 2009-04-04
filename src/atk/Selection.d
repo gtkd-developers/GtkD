@@ -236,7 +236,7 @@ public class Selection
 	/**
 	 * Causes every child of the object to be selected if the object
 	 * supports multiple selections.
-	 * Returns: TRUE if success, FALSE otherwise.Signal DetailsThe "selection-changed" signalvoid user_function (AtkSelection *atkselection, gpointer user_data) : Run LastThe "selection-changed" signal is emitted by an object which implements AtkSelection interface when the selection changes.
+	 * Returns: TRUE if success, FALSE otherwise.Signal DetailsThe "selection-changed" signalvoid user_function (AtkSelection *atkselection, gpointer user_data) : Run LastThe "selection-changed" signal is emitted by an object which implementsAtkSelection interface when the selection changes.
 	 */
 	public int selectAllSelection()
 	{

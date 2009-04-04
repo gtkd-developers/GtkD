@@ -125,7 +125,7 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public static ObjectAtk forObject(ObjectG obj)
 	{
-		// AtkObject* atk_gobject_accessible_for_object (GObject *obj);
+		// AtkObject * atk_gobject_accessible_for_object (GObject *obj);
 		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
 		if(p is null)
 		{
@@ -136,11 +136,11 @@ public class GObjectAccessible : ObjectAtk
 	
 	/**
 	 * Gets the GObject for which obj is the accessible object.
-	 * Returns: a GObject which is the object for which obj is the accessible objedct
+	 * Returns: a GObject which is the object for which obj is the accessible object
 	 */
 	public ObjectG getObject()
 	{
-		// GObject* atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
+		// GObject * atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
 		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);
 		if(p is null)
 		{

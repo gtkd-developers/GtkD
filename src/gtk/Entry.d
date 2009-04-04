@@ -43,6 +43,9 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_entry_select_region
+ * 	- gtk_entry_set_position
+ * 	- gtk_entry_set_editable
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -509,24 +512,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_entry_set_position has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_set_position() instead.
-	 * Sets the cursor position in an entry to the given value.
-	 * Params:
-	 * position =  the position of the cursor. The cursor is displayed
-	 *  before the character with the given (base 0) index in the widget.
-	 *  The value must be less than or equal to the number of characters
-	 *  in the widget. A value of -1 indicates that the position should
-	 *  be set after the last character in the entry. Note that this
-	 *  position is in characters, not in bytes.
-	 */
-	public void setPosition(int position)
-	{
-		// void gtk_entry_set_position (GtkEntry *entry,  gint position);
-		gtk_entry_set_position(gtkEntry, position);
-	}
-	
-	/**
 	 * Retrieves the contents of the entry widget.
 	 * See also gtk_editable_get_chars().
 	 * Returns: a pointer to the contents of the widget as a string. This string points to internally allocated storage in the widget and must not be freed, modified or stored.
@@ -547,24 +532,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// guint16 gtk_entry_get_text_length (GtkEntry *entry);
 		return gtk_entry_get_text_length(gtkEntry);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_entry_select_region has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_select_region() instead.
-	 * Selects a region of text. The characters that are selected are
-	 * those characters at positions from start_pos up to, but not
-	 * including end_pos. If end_pos is negative, then the the characters
-	 * selected will be those characters from start_pos to the end of
-	 * the text.
-	 * Params:
-	 * start =  the starting position
-	 * end =  the end position
-	 */
-	public void selectRegion(int start, int end)
-	{
-		// void gtk_entry_select_region (GtkEntry *entry,  gint start,  gint end);
-		gtk_entry_select_region(gtkEntry, start, end);
 	}
 	
 	/**
@@ -599,21 +566,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// void gtk_entry_set_invisible_char (GtkEntry *entry,  gunichar ch);
 		gtk_entry_set_invisible_char(gtkEntry, ch);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_entry_set_editable has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_set_editable() instead.
-	 * Determines if the user can edit the text in the editable
-	 * widget or not.
-	 * Params:
-	 * editable =  TRUE if the user is allowed to edit the text
-	 *  in the widget
-	 */
-	public void setEditable(int editable)
-	{
-		// void gtk_entry_set_editable (GtkEntry *entry,  gboolean editable);
-		gtk_entry_set_editable(gtkEntry, editable);
 	}
 	
 	/**

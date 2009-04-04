@@ -240,7 +240,7 @@ prefix: atk_state_
 import: glib.Str
 outFile: State
 
-file: atk-AtkStateSet.html
+file: AtkStateSet.html
 struct: AtkStateSet
 class: StateSet
 prefix: atk_state_set_

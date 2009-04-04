@@ -2278,6 +2278,10 @@ import: gtk.EntryCompletion
 structWrap: GtkEntryCompletion* EntryCompletion
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+#Deprecated since 2.0 also shadowed setEditable in EditableIF
+nocode: gtk_entry_select_region
+nocode: gtk_entry_set_position
+nocode: gtk_entry_set_editable
 
 # imports for TreeModel Interface
 #import: glib.Str
