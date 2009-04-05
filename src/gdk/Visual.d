@@ -317,7 +317,7 @@ public class Visual
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gdk_visual_get_screen (GdkVisual *visual);
+		// GdkScreen * gdk_visual_get_screen (GdkVisual *visual);
 		auto p = gdk_visual_get_screen(gdkVisual);
 		if(p is null)
 		{

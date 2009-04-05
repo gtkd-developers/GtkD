@@ -128,7 +128,7 @@ public class AppLaunchContext
 	 */
 	public this ()
 	{
-		// GdkAppLaunchContext* gdk_app_launch_context_new (void);
+		// GdkAppLaunchContext * gdk_app_launch_context_new (void);
 		auto p = gdk_app_launch_context_new();
 		if(p is null)
 		{
@@ -204,7 +204,10 @@ public class AppLaunchContext
 	
 	/**
 	 * Sets the icon for applications that are launched with this
-	 * context. See also gdk_app_launch_context_set_icon_name().
+	 * context.
+	 * Window Managers can use this information when displaying startup
+	 * notification.
+	 * See also gdk_app_launch_context_set_icon_name().
 	 * Since 2.14
 	 * Params:
 	 * icon =  a GIcon, or NULL

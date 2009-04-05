@@ -159,7 +159,7 @@ public class GC : ObjectG
 	 */
 	public this (Drawable drawable)
 	{
-		// GdkGC* gdk_gc_new (GdkDrawable *drawable);
+		// GdkGC * gdk_gc_new (GdkDrawable *drawable);
 		auto p = gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct());
 		if(p is null)
 		{
@@ -180,7 +180,7 @@ public class GC : ObjectG
 	 */
 	public this (Drawable drawable, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
-		// GdkGC* gdk_gc_new_with_values (GdkDrawable *drawable,  GdkGCValues *values,  GdkGCValuesMask values_mask);
+		// GdkGC * gdk_gc_new_with_values (GdkDrawable *drawable,  GdkGCValues *values,  GdkGCValuesMask values_mask);
 		auto p = gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask);
 		if(p is null)
 		{
@@ -196,7 +196,7 @@ public class GC : ObjectG
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gdk_gc_get_screen (GdkGC *gc);
+		// GdkScreen * gdk_gc_get_screen (GdkGC *gc);
 		auto p = gdk_gc_get_screen(gdkGC);
 		if(p is null)
 		{
@@ -213,7 +213,7 @@ public class GC : ObjectG
 	 */
 	public GC doref()
 	{
-		// GdkGC* gdk_gc_ref (GdkGC *gc);
+		// GdkGC * gdk_gc_ref (GdkGC *gc);
 		auto p = gdk_gc_ref(gdkGC);
 		if(p is null)
 		{
@@ -552,7 +552,7 @@ public class GC : ObjectG
 	 */
 	public Colormap getColormap()
 	{
-		// GdkColormap* gdk_gc_get_colormap (GdkGC *gc);
+		// GdkColormap * gdk_gc_get_colormap (GdkGC *gc);
 		auto p = gdk_gc_get_colormap(gdkGC);
 		if(p is null)
 		{

@@ -593,6 +593,7 @@ static this()
 	Linker.link(gdk_keymap_get_entries_for_keycode, "gdk_keymap_get_entries_for_keycode", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_get_direction, "gdk_keymap_get_direction", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_have_bidi_layouts, "gdk_keymap_have_bidi_layouts", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_keymap_get_caps_lock_state, "gdk_keymap_get_caps_lock_state", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keyval_name, "gdk_keyval_name", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keyval_from_name, "gdk_keyval_from_name", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keyval_convert_case, "gdk_keyval_convert_case", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -1272,6 +1273,7 @@ extern(C)
 	typedef gboolean function(GdkKeymap* keymap, guint hardwareKeycode, GdkKeymapKey** keys, guint** keyvals, gint* nEntries) c_gdk_keymap_get_entries_for_keycode;
 	typedef PangoDirection function(GdkKeymap* keymap) c_gdk_keymap_get_direction;
 	typedef gboolean function(GdkKeymap* keymap) c_gdk_keymap_have_bidi_layouts;
+	typedef gboolean function(GdkKeymap* keymap) c_gdk_keymap_get_caps_lock_state;
 	typedef gchar* function(guint keyval) c_gdk_keyval_name;
 	typedef guint function(gchar* keyvalName) c_gdk_keyval_from_name;
 	typedef void function(guint symbol, guint* lower, guint* upper) c_gdk_keyval_convert_case;
@@ -1948,6 +1950,7 @@ c_gdk_keymap_get_entries_for_keyval  gdk_keymap_get_entries_for_keyval;
 c_gdk_keymap_get_entries_for_keycode  gdk_keymap_get_entries_for_keycode;
 c_gdk_keymap_get_direction  gdk_keymap_get_direction;
 c_gdk_keymap_have_bidi_layouts  gdk_keymap_have_bidi_layouts;
+c_gdk_keymap_get_caps_lock_state  gdk_keymap_get_caps_lock_state;
 c_gdk_keyval_name  gdk_keyval_name;
 c_gdk_keyval_from_name  gdk_keyval_from_name;
 c_gdk_keyval_convert_case  gdk_keyval_convert_case;

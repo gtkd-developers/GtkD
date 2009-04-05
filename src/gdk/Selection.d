@@ -118,7 +118,7 @@ public class Selection
 	 * sendEvent = if TRUE, and the new owner is different
 	 *  from the current owner, the current owner
 	 *  will be sent a SelectionClear event.
-	 * Returns:TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
+	 * Returns:%TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
 	 */
 	public static int ownerSet(Window owner, GdkAtom selection, uint time, int sendEvent)
 	{
@@ -177,7 +177,7 @@ public class Selection
 	 */
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
 	{
-		// GdkWindow* gdk_selection_owner_get_for_display (GdkDisplay *display,  GdkAtom selection);
+		// GdkWindow * gdk_selection_owner_get_for_display (GdkDisplay *display,  GdkAtom selection);
 		auto p = gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
 		if(p is null)
 		{

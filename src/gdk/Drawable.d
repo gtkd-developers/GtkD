@@ -370,7 +370,7 @@ public class Drawable : ObjectG
 	 */
 	public Region getClipRegion()
 	{
-		// GdkRegion* gdk_drawable_get_clip_region (GdkDrawable *drawable);
+		// GdkRegion * gdk_drawable_get_clip_region (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_clip_region(gdkDrawable);
 		if(p is null)
 		{
@@ -388,7 +388,7 @@ public class Drawable : ObjectG
 	 */
 	public Region getVisibleRegion()
 	{
-		// GdkRegion* gdk_drawable_get_visible_region (GdkDrawable *drawable);
+		// GdkRegion * gdk_drawable_get_visible_region (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_visible_region(gdkDrawable);
 		if(p is null)
 		{
@@ -877,7 +877,7 @@ public class Drawable : ObjectG
 	 */
 	public ImageGdk copyToImage(ImageGdk image, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
-		// GdkImage* gdk_drawable_copy_to_image (GdkDrawable *drawable,  GdkImage *image,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
+		// GdkImage * gdk_drawable_copy_to_image (GdkDrawable *drawable,  GdkImage *image,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
 		auto p = gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height);
 		if(p is null)
 		{

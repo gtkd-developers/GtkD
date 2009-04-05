@@ -1012,7 +1012,7 @@ public class Window : Drawable
 	 */
 	public Region getUpdateArea()
 	{
-		// GdkRegion* gdk_window_get_update_area (GdkWindow *window);
+		// GdkRegion * gdk_window_get_update_area (GdkWindow *window);
 		auto p = gdk_window_get_update_area(gdkWindow);
 		if(p is null)
 		{
@@ -1511,12 +1511,11 @@ public class Window : Drawable
 	}
 	
 	/**
-	 * Sets the mouse pointer for a GdkWindow. Use gdk_cursor_new() or
-	 * gdk_cursor_new_from_pixmap() to create the cursor.
-	 * To make the cursor invisible, use gdk_cursor_new_from_pixmap() to create
-	 * a cursor with no pixels in it. Passing NULL for the cursor argument
-	 * to gdk_window_set_cursor() means that window will use the cursor of
-	 * its parent window. Most windows should use this default.
+	 * Sets the mouse pointer for a GdkWindow. Use gdk_cursor_new_for_display()
+	 * or gdk_cursor_new_from_pixmap() to create the cursor. To make the cursor
+	 * invisible, use GDK_BLANK_CURSOR. Passing NULL for the cursor argument
+	 * to gdk_window_set_cursor() means that window will use the cursor of its
+	 * parent window. Most windows should use this default.
 	 * Params:
 	 * cursor =  a cursor
 	 */
@@ -1822,7 +1821,7 @@ public class Window : Drawable
 	 */
 	public Window getParent()
 	{
-		// GdkWindow* gdk_window_get_parent (GdkWindow *window);
+		// GdkWindow * gdk_window_get_parent (GdkWindow *window);
 		auto p = gdk_window_get_parent(gdkWindow);
 		if(p is null)
 		{
@@ -1837,7 +1836,7 @@ public class Window : Drawable
 	 */
 	public Window getToplevel()
 	{
-		// GdkWindow* gdk_window_get_toplevel (GdkWindow *window);
+		// GdkWindow * gdk_window_get_toplevel (GdkWindow *window);
 		auto p = gdk_window_get_toplevel(gdkWindow);
 		if(p is null)
 		{
@@ -1857,7 +1856,7 @@ public class Window : Drawable
 	 */
 	public ListG getChildren()
 	{
-		// GList* gdk_window_get_children (GdkWindow *window);
+		// GList * gdk_window_get_children (GdkWindow *window);
 		auto p = gdk_window_get_children(gdkWindow);
 		if(p is null)
 		{
@@ -1873,7 +1872,7 @@ public class Window : Drawable
 	 */
 	public ListG peekChildren()
 	{
-		// GList* gdk_window_peek_children (GdkWindow *window);
+		// GList * gdk_window_peek_children (GdkWindow *window);
 		auto p = gdk_window_peek_children(gdkWindow);
 		if(p is null)
 		{
@@ -2078,6 +2077,8 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_window_get_toplevels has been deprecated since version 2.16 and should not be used in newly-written code. Use gdk_screen_get_toplevel_windows() instead.
 	 * Obtains a list of all toplevel windows known to GDK on the default
 	 * screen (see gdk_screen_get_toplevel_windows()).
 	 * A toplevel window is a child of the root window (see
@@ -2088,7 +2089,7 @@ public class Window : Drawable
 	 */
 	public static ListG getToplevels()
 	{
-		// GList* gdk_window_get_toplevels (void);
+		// GList * gdk_window_get_toplevels (void);
 		auto p = gdk_window_get_toplevels();
 		if(p is null)
 		{
@@ -2104,7 +2105,7 @@ public class Window : Drawable
 	 */
 	public static Window gdkGetDefaultRootWindow()
 	{
-		// GdkWindow* gdk_get_default_root_window (void);
+		// GdkWindow * gdk_get_default_root_window (void);
 		auto p = gdk_get_default_root_window();
 		if(p is null)
 		{
@@ -2129,7 +2130,7 @@ public class Window : Drawable
 	 */
 	public static GdkPointerHooks* gdkSetPointerHooks(GdkPointerHooks* newHooks)
 	{
-		// GdkPointerHooks* gdk_set_pointer_hooks (const GdkPointerHooks *new_hooks);
+		// GdkPointerHooks * gdk_set_pointer_hooks (const GdkPointerHooks *new_hooks);
 		return gdk_set_pointer_hooks(newHooks);
 	}
 	

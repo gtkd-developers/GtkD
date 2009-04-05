@@ -252,7 +252,7 @@ public class Screen : ObjectG
 	 */
 	public static Screen getDefault()
 	{
-		// GdkScreen* gdk_screen_get_default (void);
+		// GdkScreen * gdk_screen_get_default (void);
 		auto p = gdk_screen_get_default();
 		if(p is null)
 		{
@@ -268,7 +268,7 @@ public class Screen : ObjectG
 	 */
 	public Colormap getDefaultColormap()
 	{
-		// GdkColormap* gdk_screen_get_default_colormap (GdkScreen *screen);
+		// GdkColormap * gdk_screen_get_default_colormap (GdkScreen *screen);
 		auto p = gdk_screen_get_default_colormap(gdkScreen);
 		if(p is null)
 		{
@@ -334,7 +334,7 @@ public class Screen : ObjectG
 	 */
 	public Colormap getRgbColormap()
 	{
-		// GdkColormap* gdk_screen_get_rgb_colormap (GdkScreen *screen);
+		// GdkColormap * gdk_screen_get_rgb_colormap (GdkScreen *screen);
 		auto p = gdk_screen_get_rgb_colormap(gdkScreen);
 		if(p is null)
 		{
@@ -355,7 +355,7 @@ public class Screen : ObjectG
 	 */
 	public Visual getRgbVisual()
 	{
-		// GdkVisual* gdk_screen_get_rgb_visual (GdkScreen *screen);
+		// GdkVisual * gdk_screen_get_rgb_visual (GdkScreen *screen);
 		auto p = gdk_screen_get_rgb_visual(gdkScreen);
 		if(p is null)
 		{
@@ -381,7 +381,7 @@ public class Screen : ObjectG
 	 */
 	public Colormap getRgbaColormap()
 	{
-		// GdkColormap* gdk_screen_get_rgba_colormap (GdkScreen *screen);
+		// GdkColormap * gdk_screen_get_rgba_colormap (GdkScreen *screen);
 		auto p = gdk_screen_get_rgba_colormap(gdkScreen);
 		if(p is null)
 		{
@@ -399,7 +399,7 @@ public class Screen : ObjectG
 	 */
 	public Visual getRgbaVisual()
 	{
-		// GdkVisual* gdk_screen_get_rgba_visual (GdkScreen *screen);
+		// GdkVisual * gdk_screen_get_rgba_visual (GdkScreen *screen);
 		auto p = gdk_screen_get_rgba_visual(gdkScreen);
 		if(p is null)
 		{
@@ -430,7 +430,7 @@ public class Screen : ObjectG
 	 */
 	public Window getRootWindow()
 	{
-		// GdkWindow* gdk_screen_get_root_window (GdkScreen *screen);
+		// GdkWindow * gdk_screen_get_root_window (GdkScreen *screen);
 		auto p = gdk_screen_get_root_window(gdkScreen);
 		if(p is null)
 		{
@@ -446,7 +446,7 @@ public class Screen : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		// GdkDisplay* gdk_screen_get_display (GdkScreen *screen);
+		// GdkDisplay * gdk_screen_get_display (GdkScreen *screen);
 		auto p = gdk_screen_get_display(gdkScreen);
 		if(p is null)
 		{
@@ -524,7 +524,7 @@ public class Screen : ObjectG
 	 */
 	public ListG listVisuals()
 	{
-		// GList* gdk_screen_list_visuals (GdkScreen *screen);
+		// GList * gdk_screen_list_visuals (GdkScreen *screen);
 		auto p = gdk_screen_list_visuals(gdkScreen);
 		if(p is null)
 		{
@@ -544,7 +544,7 @@ public class Screen : ObjectG
 	 */
 	public ListG getToplevelWindows()
 	{
-		// GList* gdk_screen_get_toplevel_windows (GdkScreen *screen);
+		// GList * gdk_screen_get_toplevel_windows (GdkScreen *screen);
 		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
 		if(p is null)
 		{
@@ -561,7 +561,7 @@ public class Screen : ObjectG
 	 */
 	public string makeDisplayName()
 	{
-		// gchar* gdk_screen_make_display_name (GdkScreen *screen);
+		// gchar * gdk_screen_make_display_name (GdkScreen *screen);
 		return Str.toString(gdk_screen_make_display_name(gdkScreen));
 	}
 	
@@ -657,7 +657,7 @@ public class Screen : ObjectG
 	 */
 	public string getMonitorPlugName(int monitorNum)
 	{
-		// gchar* gdk_screen_get_monitor_plug_name (GdkScreen *screen,  gint monitor_num);
+		// gchar * gdk_screen_get_monitor_plug_name (GdkScreen *screen,  gint monitor_num);
 		return Str.toString(gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum));
 	}
 	
@@ -705,7 +705,7 @@ public class Screen : ObjectG
 	 */
 	public FontOption getFontOptions()
 	{
-		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
+		// const cairo_font_options_t * gdk_screen_get_font_options  (GdkScreen *screen);
 		auto p = gdk_screen_get_font_options(gdkScreen);
 		if(p is null)
 		{
@@ -775,7 +775,7 @@ public class Screen : ObjectG
 	 */
 	public Window getActiveWindow()
 	{
-		// GdkWindow* gdk_screen_get_active_window (GdkScreen *screen);
+		// GdkWindow * gdk_screen_get_active_window (GdkScreen *screen);
 		auto p = gdk_screen_get_active_window(gdkScreen);
 		if(p is null)
 		{
@@ -801,7 +801,7 @@ public class Screen : ObjectG
 	 */
 	public ListG getWindowStack()
 	{
-		// GList* gdk_screen_get_window_stack (GdkScreen *screen);
+		// GList * gdk_screen_get_window_stack (GdkScreen *screen);
 		auto p = gdk_screen_get_window_stack(gdkScreen);
 		if(p is null)
 		{

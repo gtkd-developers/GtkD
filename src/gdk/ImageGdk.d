@@ -203,7 +203,7 @@ public class ImageGdk
 	 */
 	public ImageGdk doref()
 	{
-		// GdkImage* gdk_image_ref (GdkImage *image);
+		// GdkImage * gdk_image_ref (GdkImage *image);
 		auto p = gdk_image_ref(gdkImage);
 		if(p is null)
 		{

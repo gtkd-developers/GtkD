@@ -305,7 +305,7 @@ public class Colormap
 	 */
 	public Visual getVisual()
 	{
-		// GdkVisual* gdk_colormap_get_visual (GdkColormap *colormap);
+		// GdkVisual * gdk_colormap_get_visual (GdkColormap *colormap);
 		auto p = gdk_colormap_get_visual(gdkColormap);
 		if(p is null)
 		{
@@ -321,7 +321,7 @@ public class Colormap
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gdk_colormap_get_screen (GdkColormap *cmap);
+		// GdkScreen * gdk_colormap_get_screen (GdkColormap *cmap);
 		auto p = gdk_colormap_get_screen(gdkColormap);
 		if(p is null)
 		{

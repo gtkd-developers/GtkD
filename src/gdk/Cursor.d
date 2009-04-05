@@ -129,8 +129,7 @@ public class Cursor
 	/**
 	 * Creates a new cursor from the set of builtin cursors for the default display.
 	 * See gdk_cursor_new_for_display().
-	 * To make the cursor invisible, use gdk_cursor_new_from_pixmap() to create
-	 * a cursor with no pixels in it.
+	 * To make the cursor invisible, use GDK_BLANK_CURSOR.
 	 * Params:
 	 * cursorType =  cursor to create
 	 * Throws: ConstructionException GTK+ fails to create the object.

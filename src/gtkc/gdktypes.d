@@ -624,9 +624,10 @@ alias GdkFontType FontType;
  * GDK_XTERM
  * GDK_LAST_CURSOR
  * last cursor type
+ * GDK_BLANK_CURSOR
+ * Blank cursor. Since 2.16
  * GDK_CURSOR_IS_PIXMAP
  * type of cursors constructed with
- * gdk_cursor_new_from_pixmap() or gdk_cursor_new_from_pixbuf()
  */
 public enum GdkCursorType
 {
@@ -709,6 +710,7 @@ public enum GdkCursorType
 	WATCH = 150,
 	XTERM = 152,
 	LAST_CURSOR,
+	BLANK_CURSOR = -2,
 	CURSOR_IS_PIXMAP = -1
 }
 alias GdkCursorType CursorType;
@@ -2035,11 +2037,11 @@ public struct GdkGeometry
  * gint height;
  * height of window
  * GdkWindowClass wclass;
- * GDK_INPUT_OUTPUT (normal window) or GDK_INPUT_ONLY (invisible window that receives events)
+ * #GDK_INPUT_OUTPUT (normal window) or GDK_INPUT_ONLY (invisible window that receives events)
  * GdkVisual *visual;
- * GdkVisual for window
+ * #GdkVisual for window
  * GdkColormap *colormap;
- * GdkColormap for window
+ * #GdkColormap for window
  * GdkWindowType window_type;
  * type of window
  * GdkCursor *cursor;
@@ -2049,7 +2051,7 @@ public struct GdkGeometry
  * gchar *wmclass_class;
  * don't use (see gtk_window_set_wmclass())
  * gboolean override_redirect;
- * TRUE to bypass the window manager
+ * %TRUE to bypass the window manager
  * GdkWindowTypeHint type_hint;
  * a hint of the function of the window
  */
@@ -2097,7 +2099,7 @@ public struct GdkPointerHooks
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  */
 public struct GdkEventAny
@@ -2115,7 +2117,7 @@ public struct GdkEventAny
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * guint32 time;
  * the time of the event in milliseconds.
@@ -2197,7 +2199,7 @@ public struct GdkEventKey
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * guint32 time;
  * the time of the event in milliseconds.
@@ -2206,7 +2208,7 @@ public struct GdkEventKey
  * gdouble y;
  * the y coordinate of the pointer relative to the window.
  * gdouble *axes;
- * x, y translated to the axes of device, or NULL if device is
+ * @x, y translated to the axes of device, or NULL if device is
  */
 public struct GdkEventButton
 {
@@ -2233,7 +2235,7 @@ public struct GdkEventButton
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * guint32 time;
  * the time of the event in milliseconds.
@@ -2269,7 +2271,7 @@ public struct GdkEventScroll
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * guint32 time;
  * the time of the event in milliseconds.
@@ -2278,7 +2280,7 @@ public struct GdkEventScroll
  * gdouble y;
  * the y coordinate of the pointer relative to the window.
  * gdouble *axes;
- * x, y translated to the axes of device, or NULL if device is
+ * @x, y translated to the axes of device, or NULL if device is
  */
 public struct GdkEventMotion
 {
@@ -2304,7 +2306,7 @@ public struct GdkEventMotion
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * GdkRectangle area;
  * bounding box of region.
@@ -2334,7 +2336,7 @@ public struct GdkEventExpose
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * GdkVisibilityState state;
  * the new visibility state (GDK_VISIBILITY_FULLY_OBSCURED,
@@ -2356,7 +2358,7 @@ public struct GdkEventVisibility
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using
+ * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  * GdkWindow *subwindow;
  * the window that was entered or left.
@@ -2398,9 +2400,9 @@ public struct GdkEventCrossing
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * gint16 in;
- * TRUE if the window has gained the keyboard focus, FALSE if it has lost
+ * %TRUE if the window has gained the keyboard focus, FALSE if it has lost
  * the focus.
  */
 public struct GdkEventFocus
@@ -2419,7 +2421,7 @@ public struct GdkEventFocus
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * gint x;
  * the new x coordinate of the window, relative to its parent.
  * gint y;
@@ -2447,7 +2449,7 @@ public struct GdkEventConfigure
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * GdkAtom atom;
  * the property that was changed.
  * guint32 time;
@@ -2476,7 +2478,7 @@ public struct GdkEventProperty
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * GdkAtom selection;
  * the selection.
  * GdkAtom target;
@@ -2529,7 +2531,7 @@ public struct GdkEventDND
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * guint32 time;
  * the time of the event in milliseconds.
  * GdkDevice *device;
@@ -2552,7 +2554,7 @@ public struct GdkEventProximity
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * GdkAtom message_type;
  * the type of the message, which can be defined by the
  * application.
@@ -2587,7 +2589,7 @@ public struct GdkEventClient
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  */
 public struct GdkEventNoExpose
 {
@@ -2604,7 +2606,7 @@ public struct GdkEventNoExpose
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * GdkWindowState changed_mask;
  * mask specifying what flags have changed.
  * GdkWindowState new_window_state;
@@ -2627,7 +2629,7 @@ public struct GdkEventWindowState
  * GdkWindow *window;
  * the window which received the event.
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * GdkSettingAction action;
  * what happened to the setting (GDK_SETTING_ACTION_NEW,
  */
@@ -2649,7 +2651,7 @@ public struct GdkEventSetting
  * GdkWindow *window;
  * the window which received the event
  * gint8 send_event;
- * TRUE if the event was sent explicitly (e.g. using XSendEvent).
+ * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  * GdkNativeWindow owner;
  * the new owner of the selection
  * GdkOwnerChange reason;
@@ -2732,7 +2734,7 @@ public struct GdkKeymapKey
  * GdkDragProtocol protocol;
  * the DND protocol which governs this drag.
  * gboolean is_source;
- * TRUE if the context is used on the source side.
+ * %TRUE if the context is used on the source side.
  * GdkWindow *source_window;
  * the source of this drag.
  * GdkWindow *dest_window;
@@ -2773,7 +2775,7 @@ public struct GdkDragContext
  * GdkInputMode mode;
  * the mode of this device
  * gboolean has_cursor;
- * TRUE if the pointer follows device motion.
+ * %TRUE if the pointer follows device motion.
  * gint num_axes;
  * the length of the axes array.
  * GdkDeviceAxis *axes;
@@ -2847,6 +2849,7 @@ public struct GdkTimeCoord
 
 /**
  * Main Gtk struct.
+ * An opaque structure representing an application launch context.
  */
 public struct GdkAppLaunchContext{}
 
@@ -3231,7 +3234,7 @@ public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * data :
  * user data passed to gdk_pixbuf_save_to_callback().
  * Returns :
- * TRUE if successful, FALSE (with error set) if failed.
+ * %TRUE if successful, FALSE (with error set) if failed.
  * Since 2.4
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);

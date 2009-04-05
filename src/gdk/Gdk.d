@@ -110,7 +110,7 @@ public class Gdk
 	 * by GTK+ applications.
 	 * Params:
 	 * argv = the array of command line arguments.
-	 * Returns:TRUE if initialization succeeded.
+	 * Returns:%TRUE if initialization succeeded.
 	 */
 	public static int initCheck(inout string[] argv)
 	{
@@ -249,7 +249,7 @@ public class Gdk
 	 */
 	public static string getProgramClass()
 	{
-		// const char* gdk_get_program_class (void);
+		// const char * gdk_get_program_class (void);
 		return Str.toString(gdk_get_program_class());
 	}
 	
@@ -370,7 +370,7 @@ public class Gdk
 	 * time = the timestamp of the event which led to this pointer grab. This usually
 	 * comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used if
 	 * the time isn't known.
-	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns:%GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus pointerGrab(Window window, int ownerEvents, GdkEventMask eventMask, Window confineTo, Cursor cursor, uint time)
 	{
@@ -435,7 +435,7 @@ public class Gdk
 	 * independant of the event mask set by the application.
 	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 	 * available.
-	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns:%GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus keyboardGrab(Window window, int ownerEvents, uint time)
 	{
@@ -474,7 +474,7 @@ public class Gdk
 	 * It enables much faster drawing by communicating with the X server through
 	 * SYSV shared memory calls. However, it can only be used if the X client and
 	 * server are on the same machine and the server supports it.
-	 * Returns:TRUE if use of the MIT shared memory extension will be attempted.
+	 * Returns:%TRUE if use of the MIT shared memory extension will be attempted.
 	 */
 	public static int getUseXshm()
 	{
@@ -490,7 +490,7 @@ public class Gdk
 	 * to set this to FALSE, since if it is set to TRUE and the server does not
 	 * support the extension it may cause warning messages to be output.
 	 * Params:
-	 * useXshm = TRUE if use of the MIT shared memory extension should be attempted.
+	 * useXshm = %TRUE if use of the MIT shared memory extension should be attempted.
 	 */
 	public static void setUseXshm(int useXshm)
 	{

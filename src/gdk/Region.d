@@ -120,7 +120,7 @@ public class Region
 	 */
 	public this ()
 	{
-		// GdkRegion* gdk_region_new (void);
+		// GdkRegion * gdk_region_new (void);
 		auto p = gdk_region_new();
 		if(p is null)
 		{
@@ -140,7 +140,7 @@ public class Region
 	 */
 	public static Region polygon(GdkPoint[] points, GdkFillRule fillRule)
 	{
-		// GdkRegion* gdk_region_polygon (const GdkPoint *points,  gint n_points,  GdkFillRule fill_rule);
+		// GdkRegion * gdk_region_polygon (const GdkPoint *points,  gint n_points,  GdkFillRule fill_rule);
 		auto p = gdk_region_polygon(points.ptr, points.length, fillRule);
 		if(p is null)
 		{
@@ -155,7 +155,7 @@ public class Region
 	 */
 	public Region copy()
 	{
-		// GdkRegion* gdk_region_copy (const GdkRegion *region);
+		// GdkRegion * gdk_region_copy (const GdkRegion *region);
 		auto p = gdk_region_copy(gdkRegion);
 		if(p is null)
 		{
@@ -172,7 +172,7 @@ public class Region
 	 */
 	public static Region rectangle(Rectangle rectangle)
 	{
-		// GdkRegion* gdk_region_rectangle (const GdkRectangle *rectangle);
+		// GdkRegion * gdk_region_rectangle (const GdkRectangle *rectangle);
 		auto p = gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct());
 		if(p is null)
 		{

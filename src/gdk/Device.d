@@ -203,7 +203,7 @@ public class Device
 	 */
 	public static ListG gdkDevicesList()
 	{
-		// GList* gdk_devices_list (void);
+		// GList * gdk_devices_list (void);
 		auto p = gdk_devices_list();
 		if(p is null)
 		{
@@ -229,7 +229,7 @@ public class Device
 	 * entire screen or to a single window.
 	 * Params:
 	 * mode = the input mode.
-	 * Returns:TRUE if the mode was successfully changed.
+	 * Returns:%TRUE if the mode was successfully changed.
 	 */
 	public int setMode(GdkInputMode mode)
 	{
@@ -269,7 +269,7 @@ public class Device
 	 */
 	public static Device getCorePointer()
 	{
-		// GdkDevice* gdk_device_get_core_pointer (void);
+		// GdkDevice * gdk_device_get_core_pointer (void);
 		auto p = gdk_device_get_core_pointer();
 		if(p is null)
 		{

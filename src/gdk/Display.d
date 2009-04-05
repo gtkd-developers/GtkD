@@ -174,7 +174,7 @@ public class Display : ObjectG
 	 */
 	public static Display open(string displayName)
 	{
-		// GdkDisplay* gdk_display_open (const gchar *display_name);
+		// GdkDisplay * gdk_display_open (const gchar *display_name);
 		auto p = gdk_display_open(Str.toStringz(displayName));
 		if(p is null)
 		{
@@ -192,7 +192,7 @@ public class Display : ObjectG
 	 */
 	public static Display getDefault()
 	{
-		// GdkDisplay* gdk_display_get_default (void);
+		// GdkDisplay * gdk_display_get_default (void);
 		auto p = gdk_display_get_default();
 		if(p is null)
 		{
@@ -208,7 +208,7 @@ public class Display : ObjectG
 	 */
 	public string getName()
 	{
-		// const gchar* gdk_display_get_name (GdkDisplay *display);
+		// const gchar * gdk_display_get_name (GdkDisplay *display);
 		return Str.toString(gdk_display_get_name(gdkDisplay));
 	}
 	
@@ -232,7 +232,7 @@ public class Display : ObjectG
 	 */
 	public Screen getScreen(int screenNum)
 	{
-		// GdkScreen* gdk_display_get_screen (GdkDisplay *display,  gint screen_num);
+		// GdkScreen * gdk_display_get_screen (GdkDisplay *display,  gint screen_num);
 		auto p = gdk_display_get_screen(gdkDisplay, screenNum);
 		if(p is null)
 		{
@@ -248,7 +248,7 @@ public class Display : ObjectG
 	 */
 	public Screen getDefaultScreen()
 	{
-		// GdkScreen* gdk_display_get_default_screen (GdkDisplay *display);
+		// GdkScreen * gdk_display_get_default_screen (GdkDisplay *display);
 		auto p = gdk_display_get_default_screen(gdkDisplay);
 		if(p is null)
 		{
@@ -355,7 +355,7 @@ public class Display : ObjectG
 	 */
 	public ListG listDevices()
 	{
-		// GList* gdk_display_list_devices (GdkDisplay *display);
+		// GList * gdk_display_list_devices (GdkDisplay *display);
 		auto p = gdk_display_list_devices(gdkDisplay);
 		if(p is null)
 		{
@@ -485,18 +485,20 @@ public class Display : ObjectG
 	
 	/**
 	 * Obtains the window underneath the mouse pointer, returning the location
-	 * of that window in win_x, win_y for screen. Returns NULL if the window
-	 * under the mouse pointer is not known to GDK (for example, belongs to
-	 * another application).
+	 * of the pointer in that window in win_x, win_y for screen. Returns NULL
+	 * if the window under the mouse pointer is not known to GDK (for example,
+	 * belongs to another application).
 	 * Since 2.2
 	 * Params:
-	 * winX =  return location for origin of the window under the pointer
-	 * winY =  return location for origin of the window under the pointer
+	 * winX =  return location for x coordinate of the pointer location relative
+	 *  to the window origin, or NULL
+	 * winY =  return location for y coordinate of the pointer location relative
+	 *   to the window origin, or NULL
 	 * Returns: the window under the mouse pointer, or NULL
 	 */
 	public Window getWindowAtPointer(out int winX, out int winY)
 	{
-		// GdkWindow* gdk_display_get_window_at_pointer (GdkDisplay *display,  gint *win_x,  gint *win_y);
+		// GdkWindow * gdk_display_get_window_at_pointer (GdkDisplay *display,  gint *win_x,  gint *win_y);
 		auto p = gdk_display_get_window_at_pointer(gdkDisplay, &winX, &winY);
 		if(p is null)
 		{
@@ -520,7 +522,7 @@ public class Display : ObjectG
 	 */
 	public GdkDisplayPointerHooks* setPointerHooks(GdkDisplayPointerHooks* newHooks)
 	{
-		// GdkDisplayPointerHooks* gdk_display_set_pointer_hooks (GdkDisplay *display,  const GdkDisplayPointerHooks *new_hooks);
+		// GdkDisplayPointerHooks * gdk_display_set_pointer_hooks (GdkDisplay *display,  const GdkDisplayPointerHooks *new_hooks);
 		return gdk_display_set_pointer_hooks(gdkDisplay, newHooks);
 	}
 	
@@ -606,7 +608,7 @@ public class Display : ObjectG
 	 */
 	public Window getDefaultGroup()
 	{
-		// GdkWindow* gdk_display_get_default_group (GdkDisplay *display);
+		// GdkWindow * gdk_display_get_default_group (GdkDisplay *display);
 		auto p = gdk_display_get_default_group(gdkDisplay);
 		if(p is null)
 		{

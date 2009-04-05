@@ -144,7 +144,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public this (string filename)
 	{
-		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file (const char *filename,  GError **error);
+		// GdkPixbufAnimation * gdk_pixbuf_animation_new_from_file (const char *filename,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err);
@@ -169,7 +169,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public PixbufAnimation doref()
 	{
-		// GdkPixbufAnimation* gdk_pixbuf_animation_ref (GdkPixbufAnimation *animation);
+		// GdkPixbufAnimation * gdk_pixbuf_animation_ref (GdkPixbufAnimation *animation);
 		auto p = gdk_pixbuf_animation_ref(gdkPixbufAnimation);
 		if(p is null)
 		{
@@ -244,7 +244,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public PixbufAnimationIter getIter(TimeVal startTime)
 	{
-		// GdkPixbufAnimationIter* gdk_pixbuf_animation_get_iter (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
+		// GdkPixbufAnimationIter * gdk_pixbuf_animation_get_iter (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
 		auto p = gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, (startTime is null) ? null : startTime.getTimeValStruct());
 		if(p is null)
 		{
@@ -277,7 +277,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public Pixbuf getStaticImage()
 	{
-		// GdkPixbuf* gdk_pixbuf_animation_get_static_image  (GdkPixbufAnimation *animation);
+		// GdkPixbuf * gdk_pixbuf_animation_get_static_image  (GdkPixbufAnimation *animation);
 		auto p = gdk_pixbuf_animation_get_static_image(gdkPixbufAnimation);
 		if(p is null)
 		{

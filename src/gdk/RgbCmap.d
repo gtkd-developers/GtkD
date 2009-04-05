@@ -181,7 +181,7 @@ public class RgbCmap
 	 */
 	public this (uint[] colors)
 	{
-		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
+		// GdkRgbCmap * gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
 		auto p = gdk_rgb_cmap_new(colors.ptr, colors.length);
 		if(p is null)
 		{

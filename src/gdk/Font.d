@@ -283,7 +283,7 @@ public class Font
 	 */
 	public static Font loadForDisplay(Display display, string fontName)
 	{
-		// GdkFont* gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
+		// GdkFont * gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
 		auto p = gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName));
 		if(p is null)
 		{
@@ -329,7 +329,7 @@ public class Font
 	 */
 	public static Font fontsetLoadForDisplay(Display display, string fontsetName)
 	{
-		// GdkFont* gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
+		// GdkFont * gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
 		auto p = gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName));
 		if(p is null)
 		{
@@ -377,7 +377,7 @@ public class Font
 	 */
 	public static Font fromDescriptionForDisplay(Display display, PgFontDescription fontDesc)
 	{
-		// GdkFont* gdk_font_from_description_for_display  (GdkDisplay *display,  PangoFontDescription *font_desc);
+		// GdkFont * gdk_font_from_description_for_display  (GdkDisplay *display,  PangoFontDescription *font_desc);
 		auto p = gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
@@ -395,7 +395,7 @@ public class Font
 	 */
 	public Display getDisplay()
 	{
-		// GdkDisplay* gdk_font_get_display (GdkFont *font);
+		// GdkDisplay * gdk_font_get_display (GdkFont *font);
 		auto p = gdk_font_get_display(gdkFont);
 		if(p is null)
 		{
@@ -711,7 +711,7 @@ public class Font
 	 */
 	public static string wcstombs(GdkWChar* src)
 	{
-		// gchar* gdk_wcstombs (const GdkWChar *src);
+		// gchar * gdk_wcstombs (const GdkWChar *src);
 		return Str.toString(gdk_wcstombs(src));
 	}
 	

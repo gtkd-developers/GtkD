@@ -128,7 +128,7 @@ public class PixbufSimpleAnimation : ObjectG
 	 */
 	public this (int width, int height, float rate)
 	{
-		// GdkPixbufSimpleAnim* gdk_pixbuf_simple_anim_new (gint width,  gint height,  gfloat rate);
+		// GdkPixbufSimpleAnim * gdk_pixbuf_simple_anim_new (gint width,  gint height,  gfloat rate);
 		auto p = gdk_pixbuf_simple_anim_new(width, height, rate);
 		if(p is null)
 		{

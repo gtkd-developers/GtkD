@@ -160,7 +160,7 @@ public class DisplayManager : ObjectG
 	 */
 	public static DisplayManager get()
 	{
-		// GdkDisplayManager* gdk_display_manager_get (void);
+		// GdkDisplayManager * gdk_display_manager_get (void);
 		auto p = gdk_display_manager_get();
 		if(p is null)
 		{
@@ -176,7 +176,7 @@ public class DisplayManager : ObjectG
 	 */
 	public Display getDefaultDisplay()
 	{
-		// GdkDisplay* gdk_display_manager_get_default_display  (GdkDisplayManager *display_manager);
+		// GdkDisplay * gdk_display_manager_get_default_display  (GdkDisplayManager *display_manager);
 		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
 		if(p is null)
 		{
@@ -204,7 +204,7 @@ public class DisplayManager : ObjectG
 	 */
 	public ListSG listDisplays()
 	{
-		// GSList* gdk_display_manager_list_displays (GdkDisplayManager *display_manager);
+		// GSList * gdk_display_manager_list_displays (GdkDisplayManager *display_manager);
 		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
 		if(p is null)
 		{
@@ -222,7 +222,7 @@ public class DisplayManager : ObjectG
 	 */
 	public static Device gdkDisplayGetCorePointer(Display display)
 	{
-		// GdkDevice* gdk_display_get_core_pointer (GdkDisplay *display);
+		// GdkDevice * gdk_display_get_core_pointer (GdkDisplay *display);
 		auto p = gdk_display_get_core_pointer((display is null) ? null : display.getDisplayStruct());
 		if(p is null)
 		{

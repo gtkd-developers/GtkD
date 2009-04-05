@@ -401,7 +401,7 @@ public class RGB
 	 * A private colormap has more colors, leading to better quality display,
 	 * but also leads to the dreaded "colormap flashing" effect.
 	 * Params:
-	 * install = TRUE to set install mode.
+	 * install = %TRUE to set install mode.
 	 */
 	public static void rgbSetInstall(int install)
 	{
@@ -434,7 +434,7 @@ public class RGB
 	 */
 	public static Visual rgbGetVisual()
 	{
-		// GdkVisual* gdk_rgb_get_visual (void);
+		// GdkVisual * gdk_rgb_get_visual (void);
 		auto p = gdk_rgb_get_visual();
 		if(p is null)
 		{
@@ -453,7 +453,7 @@ public class RGB
 	 */
 	public static Colormap rgbGetColormap()
 	{
-		// GdkColormap* gdk_rgb_get_colormap (void);
+		// GdkColormap * gdk_rgb_get_colormap (void);
 		auto p = gdk_rgb_get_colormap();
 		if(p is null)
 		{
@@ -467,7 +467,7 @@ public class RGB
 	 * useful for presenting a user interface choice to the user about which
 	 * dither mode is desired; if the display is not ditherable, it may make
 	 * sense to gray out or hide the corresponding UI widget.
-	 * Returns:TRUE if the preferred visual is ditherable.
+	 * Returns:%TRUE if the preferred visual is ditherable.
 	 */
 	public static int rgbDitherable()
 	{
@@ -482,7 +482,7 @@ public class RGB
 	 * make sense to gray out or hide the corresponding UI widget.
 	 * Params:
 	 * cmap = a GdkColormap
-	 * Returns:TRUE if the visual associated with cmap is ditherable.
+	 * Returns:%TRUE if the visual associated with cmap is ditherable.
 	 */
 	public static int rgbColormapDitherable(Colormap cmap)
 	{
@@ -493,7 +493,7 @@ public class RGB
 	/**
 	 * Sets the "verbose" flag. This is generally only useful for debugging.
 	 * Params:
-	 * verbose = TRUE if verbose messages are desired.
+	 * verbose = %TRUE if verbose messages are desired.
 	 */
 	public static void rgbSetVerbose(int verbose)
 	{

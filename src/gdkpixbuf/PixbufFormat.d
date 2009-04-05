@@ -178,7 +178,7 @@ public class PixbufFormat
 	 */
 	public static ListSG gdkPixbufGetFormats()
 	{
-		// GSList* gdk_pixbuf_get_formats (void);
+		// GSList * gdk_pixbuf_get_formats (void);
 		auto p = gdk_pixbuf_get_formats();
 		if(p is null)
 		{
@@ -194,7 +194,7 @@ public class PixbufFormat
 	 */
 	public string getName()
 	{
-		// gchar* gdk_pixbuf_format_get_name (GdkPixbufFormat *format);
+		// gchar * gdk_pixbuf_format_get_name (GdkPixbufFormat *format);
 		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat));
 	}
 	
@@ -205,7 +205,7 @@ public class PixbufFormat
 	 */
 	public string getDescription()
 	{
-		// gchar* gdk_pixbuf_format_get_description (GdkPixbufFormat *format);
+		// gchar * gdk_pixbuf_format_get_description (GdkPixbufFormat *format);
 		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat));
 	}
 	
@@ -216,7 +216,7 @@ public class PixbufFormat
 	 */
 	public string[] getMimeTypes()
 	{
-		// gchar** gdk_pixbuf_format_get_mime_types (GdkPixbufFormat *format);
+		// gchar ** gdk_pixbuf_format_get_mime_types (GdkPixbufFormat *format);
 		return Str.toStringArray(gdk_pixbuf_format_get_mime_types(gdkPixbufFormat));
 	}
 	
@@ -228,7 +228,7 @@ public class PixbufFormat
 	 */
 	public string[] getExtensions()
 	{
-		// gchar** gdk_pixbuf_format_get_extensions (GdkPixbufFormat *format);
+		// gchar ** gdk_pixbuf_format_get_extensions (GdkPixbufFormat *format);
 		return Str.toStringArray(gdk_pixbuf_format_get_extensions(gdkPixbufFormat));
 	}
 	
@@ -294,7 +294,7 @@ public class PixbufFormat
 	 */
 	public string getLicense()
 	{
-		// gchar* gdk_pixbuf_format_get_license (GdkPixbufFormat *format);
+		// gchar * gdk_pixbuf_format_get_license (GdkPixbufFormat *format);
 		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat));
 	}
 	
@@ -309,7 +309,7 @@ public class PixbufFormat
 	 */
 	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
 	{
-		// GdkPixbufFormat* gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
+		// GdkPixbufFormat * gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
 		auto p = gdk_pixbuf_get_file_info(Str.toStringz(filename), &width, &height);
 		if(p is null)
 		{

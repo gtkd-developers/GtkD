@@ -340,7 +340,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public this ()
 	{
-		// GdkPixbufLoader* gdk_pixbuf_loader_new (void);
+		// GdkPixbufLoader * gdk_pixbuf_loader_new (void);
 		auto p = gdk_pixbuf_loader_new();
 		if(p is null)
 		{
@@ -357,7 +357,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public PixbufFormat getFormat()
 	{
-		// GdkPixbufFormat* gdk_pixbuf_loader_get_format (GdkPixbufLoader *loader);
+		// GdkPixbufFormat * gdk_pixbuf_loader_get_format (GdkPixbufLoader *loader);
 		auto p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
 		if(p is null)
 		{
@@ -427,7 +427,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		// GdkPixbuf* gdk_pixbuf_loader_get_pixbuf (GdkPixbufLoader *loader);
+		// GdkPixbuf * gdk_pixbuf_loader_get_pixbuf (GdkPixbufLoader *loader);
 		auto p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
 		if(p is null)
 		{
@@ -446,7 +446,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public PixbufAnimation getAnimation()
 	{
-		// GdkPixbufAnimation* gdk_pixbuf_loader_get_animation (GdkPixbufLoader *loader);
+		// GdkPixbufAnimation * gdk_pixbuf_loader_get_animation (GdkPixbufLoader *loader);
 		auto p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
 		if(p is null)
 		{
@@ -465,7 +465,7 @@ public class PixbufLoader : ObjectG
 	 * domains. If you're just cancelling a load rather than expecting it
 	 * to be finished, passing NULL for error to ignore it is
 	 * reasonable.
-	 * Returns: TRUE if all image data written so far was successfully passed out via the update_area signalSignal DetailsThe "area-prepared" signalvoid user_function (GdkPixbufLoader *loader, gpointer user_data) : Run LastThis signal is emitted when the pixbuf loader has allocated the pixbuf in the desired size. After this signal is emitted, applications can call gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
+	 * Returns: TRUE if all image data written so far was successfully passed out via the update_area signalSignal DetailsThe "area-prepared" signalvoid user_function (GdkPixbufLoader *loader, gpointer user_data) : Run LastThis signal is emitted when the pixbuf loader has allocated thepixbuf in the desired size. After this signal is emitted, applications can call gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
 	 * Throws: GException on failure.
 	 */
 	public int close()

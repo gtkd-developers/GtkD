@@ -599,7 +599,7 @@ public class Pixbuf
 	 */
 	public Pixbuf getFromImage(ImageGdk src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
-		// GdkPixbuf* gdk_pixbuf_get_from_image (GdkPixbuf *dest,  GdkImage *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
+		// GdkPixbuf * gdk_pixbuf_get_from_image (GdkPixbuf *dest,  GdkImage *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
 		auto p = gdk_pixbuf_get_from_image(gdkPixbuf, (src is null) ? null : src.getImageGdkStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height);
 		if(p is null)
 		{
@@ -611,7 +611,7 @@ public class Pixbuf
 	/**
 	 * <hr>
 	 * gdk_pixbuf_new ()
-	 * GdkPixbuf* gdk_pixbuf_new (GdkColorspace colorspace,
+	 * GdkPixbuf * gdk_pixbuf_new (GdkColorspace colorspace,
 	 *  gboolean has_alpha,
 	 *  int bits_per_sample,
 	 *  int width,
@@ -645,7 +645,7 @@ public class Pixbuf
 	 */
 	public this (char* data, GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_data (const guchar *data,  GdkColorspace colorspace,  gboolean has_alpha,  int bits_per_sample,  int width,  int height,  int rowstride,  GdkPixbufDestroyNotify destroy_fn,  gpointer destroy_fn_data);
+		// GdkPixbuf * gdk_pixbuf_new_from_data (const guchar *data,  GdkColorspace colorspace,  gboolean has_alpha,  int bits_per_sample,  int width,  int height,  int rowstride,  GdkPixbufDestroyNotify destroy_fn,  gpointer destroy_fn_data);
 		auto p = gdk_pixbuf_new_from_data(data, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
 		if(p is null)
 		{
@@ -663,7 +663,7 @@ public class Pixbuf
 	 */
 	public this (string[] data)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_xpm_data (const char **data);
+		// GdkPixbuf * gdk_pixbuf_new_from_xpm_data (const char **data);
 		auto p = gdk_pixbuf_new_from_xpm_data(Str.toStringzArray(data));
 		if(p is null)
 		{
@@ -722,7 +722,7 @@ public class Pixbuf
 	 */
 	public this (int srcX, int srcY, int width, int height)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_subpixbuf (GdkPixbuf *src_pixbuf,  int src_x,  int src_y,  int width,  int height);
+		// GdkPixbuf * gdk_pixbuf_new_subpixbuf (GdkPixbuf *src_pixbuf,  int src_x,  int src_y,  int width,  int height);
 		auto p = gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height);
 		if(p is null)
 		{
@@ -738,7 +738,7 @@ public class Pixbuf
 	 */
 	public Pixbuf copy()
 	{
-		// GdkPixbuf* gdk_pixbuf_copy (const GdkPixbuf *pixbuf);
+		// GdkPixbuf * gdk_pixbuf_copy (const GdkPixbuf *pixbuf);
 		auto p = gdk_pixbuf_copy(gdkPixbuf);
 		if(p is null)
 		{
@@ -793,7 +793,7 @@ public class Pixbuf
 	 */
 	public char* getPixels()
 	{
-		// guchar* gdk_pixbuf_get_pixels (const GdkPixbuf *pixbuf);
+		// guchar * gdk_pixbuf_get_pixels (const GdkPixbuf *pixbuf);
 		return gdk_pixbuf_get_pixels(gdkPixbuf);
 	}
 	
@@ -844,7 +844,7 @@ public class Pixbuf
 	 */
 	public string getOption(string key)
 	{
-		// const gchar* gdk_pixbuf_get_option (GdkPixbuf *pixbuf,  const gchar *key);
+		// const gchar * gdk_pixbuf_get_option (GdkPixbuf *pixbuf,  const gchar *key);
 		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key)));
 	}
 	
@@ -859,7 +859,7 @@ public class Pixbuf
 	 */
 	public this (string filename)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_file (const char *filename,  GError **error);
+		// GdkPixbuf * gdk_pixbuf_new_from_file (const char *filename,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), &err);
@@ -896,7 +896,7 @@ public class Pixbuf
 	 */
 	public this (string filename, int width, int height)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size (const char *filename,  int width,  int height,  GError **error);
+		// GdkPixbuf * gdk_pixbuf_new_from_file_at_size (const char *filename,  int width,  int height,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, &err);
@@ -936,7 +936,7 @@ public class Pixbuf
 	 */
 	public this (string filename, int width, int height, int preserveAspectRatio)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
+		// GdkPixbuf * gdk_pixbuf_new_from_file_at_scale (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err);
@@ -970,7 +970,7 @@ public class Pixbuf
 	 */
 	public this (InputStream stream, Cancellable cancellable)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_stream (GInputStream *stream,  GCancellable *cancellable,  GError **error);
+		// GdkPixbuf * gdk_pixbuf_new_from_stream (GInputStream *stream,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1013,7 +1013,7 @@ public class Pixbuf
 	 */
 	public this (InputStream stream, int width, int height, int preserveAspectRatio, Cancellable cancellable)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_stream_at_scale (GInputStream *stream,  gint width,  gint height,  gboolean preserve_aspect_ratio,  GCancellable *cancellable,  GError **error);
+		// GdkPixbuf * gdk_pixbuf_new_from_stream_at_scale (GInputStream *stream,  gint width,  gint height,  gboolean preserve_aspect_ratio,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_new_from_stream_at_scale((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -1106,7 +1106,7 @@ public class Pixbuf
 	 */
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
-		// GdkPixbuf* gdk_pixbuf_scale_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type);
+		// GdkPixbuf * gdk_pixbuf_scale_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type);
 		auto p = gdk_pixbuf_scale_simple(gdkPixbuf, destWidth, destHeight, interpType);
 		if(p is null)
 		{
@@ -1161,7 +1161,7 @@ public class Pixbuf
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
-		// GdkPixbuf* gdk_pixbuf_composite_color_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type,  int overall_alpha,  int check_size,  guint32 color1,  guint32 color2);
+		// GdkPixbuf * gdk_pixbuf_composite_color_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type,  int overall_alpha,  int check_size,  guint32 color1,  guint32 color2);
 		auto p = gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2);
 		if(p is null)
 		{
@@ -1243,7 +1243,7 @@ public class Pixbuf
 	 */
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
-		// GdkPixbuf* gdk_pixbuf_rotate_simple (const GdkPixbuf *src,  GdkPixbufRotation angle);
+		// GdkPixbuf * gdk_pixbuf_rotate_simple (const GdkPixbuf *src,  GdkPixbufRotation angle);
 		auto p = gdk_pixbuf_rotate_simple(gdkPixbuf, angle);
 		if(p is null)
 		{
@@ -1262,7 +1262,7 @@ public class Pixbuf
 	 */
 	public Pixbuf flip(int horizontal)
 	{
-		// GdkPixbuf* gdk_pixbuf_flip (const GdkPixbuf *src,  gboolean horizontal);
+		// GdkPixbuf * gdk_pixbuf_flip (const GdkPixbuf *src,  gboolean horizontal);
 		auto p = gdk_pixbuf_flip(gdkPixbuf, horizontal);
 		if(p is null)
 		{
@@ -1289,7 +1289,7 @@ public class Pixbuf
 	 */
 	public Pixbuf addAlpha(int substituteColor, char r, char g, char b)
 	{
-		// GdkPixbuf* gdk_pixbuf_add_alpha (const GdkPixbuf *pixbuf,  gboolean substitute_color,  guchar r,  guchar g,  guchar b);
+		// GdkPixbuf * gdk_pixbuf_add_alpha (const GdkPixbuf *pixbuf,  gboolean substitute_color,  guchar r,  guchar g,  guchar b);
 		auto p = gdk_pixbuf_add_alpha(gdkPixbuf, substituteColor, r, g, b);
 		if(p is null)
 		{
@@ -1353,7 +1353,7 @@ public class Pixbuf
 	 */
 	public Pixbuf applyEmbeddedOrientation()
 	{
-		// GdkPixbuf* gdk_pixbuf_apply_embedded_orientation  (GdkPixbuf *src);
+		// GdkPixbuf * gdk_pixbuf_apply_embedded_orientation  (GdkPixbuf *src);
 		auto p = gdk_pixbuf_apply_embedded_orientation(gdkPixbuf);
 		if(p is null)
 		{

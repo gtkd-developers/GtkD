@@ -467,7 +467,7 @@ public class Event
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gdk_event_get_screen (const GdkEvent *event);
+		// GdkScreen * gdk_event_get_screen (const GdkEvent *event);
 		auto p = gdk_event_get_screen(gdkEvent);
 		if(p is null)
 		{

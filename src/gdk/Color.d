@@ -254,7 +254,7 @@ public class Color
 	 */
 	public Color copy()
 	{
-		// GdkColor* gdk_color_copy (const GdkColor *color);
+		// GdkColor * gdk_color_copy (const GdkColor *color);
 		auto p = gdk_color_copy(gdkColor);
 		if(p is null)
 		{
@@ -399,7 +399,7 @@ public class Color
 	 */
 	public override string toString()
 	{
-		// gchar* gdk_color_to_string (const GdkColor *color);
+		// gchar * gdk_color_to_string (const GdkColor *color);
 		return Str.toString(gdk_color_to_string(gdkColor));
 	}
 }

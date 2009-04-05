@@ -278,7 +278,7 @@ public class X11
 	 */
 	public static string displayGetStartupNotificationId(Display display)
 	{
-		// const gchar* gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
+		// const gchar * gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
 		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct()));
 	}
 	
@@ -307,7 +307,7 @@ public class X11
 	 */
 	public static string fontGetName(Font font)
 	{
-		// const char* gdk_x11_font_get_name (GdkFont *font);
+		// const char * gdk_x11_font_get_name (GdkFont *font);
 		return Str.toString(gdk_x11_font_get_name((font is null) ? null : font.getFontStruct()));
 	}
 	

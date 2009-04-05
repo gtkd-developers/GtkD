@@ -160,7 +160,7 @@ public class DragContext
 	 */
 	public static DragContext gdkDragContextNew()
 	{
-		// GdkDragContext* gdk_drag_context_new (void);
+		// GdkDragContext * gdk_drag_context_new (void);
 		auto p = gdk_drag_context_new();
 		if(p is null)
 		{
@@ -250,7 +250,7 @@ public class DragContext
 	 */
 	public static DragContext gdkDragBegin(Window window, ListG targets)
 	{
-		// GdkDragContext* gdk_drag_begin (GdkWindow *window,  GList *targets);
+		// GdkDragContext * gdk_drag_begin (GdkWindow *window,  GList *targets);
 		auto p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
 		if(p is null)
 		{
@@ -348,7 +348,7 @@ public class DragContext
 	}
 	
 	/**
-	 * Returns wether the dropped data has been successfully
+	 * Returns whether the dropped data has been successfully
 	 * transferred. This function is intended to be used while
 	 * handling a GDK_DROP_FINISHED event, its return value is
 	 * meaningless at other times.

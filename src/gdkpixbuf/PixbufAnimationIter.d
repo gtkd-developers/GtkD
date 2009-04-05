@@ -190,7 +190,7 @@ public class PixbufAnimationIter : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		// GdkPixbuf* gdk_pixbuf_animation_iter_get_pixbuf  (GdkPixbufAnimationIter *iter);
+		// GdkPixbuf * gdk_pixbuf_animation_iter_get_pixbuf  (GdkPixbufAnimationIter *iter);
 		auto p = gdk_pixbuf_animation_iter_get_pixbuf(gdkPixbufAnimationIter);
 		if(p is null)
 		{

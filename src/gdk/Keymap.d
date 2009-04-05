@@ -76,7 +76,7 @@ private import gobject.ObjectG;
  * GdkEventKey structure, which is passed to signal handlers for the
  * "key-press-event" and "key-release-event" signals.
  * The complete list of key values can be found in the <gdk/gdkkeysyms.h>
- * header file. <gdk/gdkkeysyms.h> is not included in <gtk/gtk.h>,
+ * header file. <gdk/gdkkeysyms.h> is not included in <gdk/gdk.h>,
  * it must be included independently, because the file is quite large.
  * Key values can be converted into a string representation using
  * gdk_keyval_name(). The reverse function, converting a string to a key value,
@@ -220,6 +220,36 @@ public class Keymap : ObjectG
 	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap keymap)
 	{
 		foreach ( void delegate(Keymap) dlg ; keymap.onKeysChangedListeners )
+		{
+			dlg(keymap);
+		}
+	}
+	
+	void delegate(Keymap)[] onStateChangedListeners;
+	/**
+	 * The ::state-changed signal is emitted when the state of the
+	 * keyboard changes, e.g when Caps Lock is turned on or off.
+	 * See gdk_keymap_get_caps_lock_state().
+	 * Since 2.16
+	 */
+	void addOnStateChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("state-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"state-changed",
+			cast(GCallback)&callBackStateChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["state-changed"] = 1;
+		}
+		onStateChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	{
+		foreach ( void delegate(Keymap) dlg ; keymap.onStateChangedListeners )
 		{
 			dlg(keymap);
 		}
@@ -400,6 +430,17 @@ public class Keymap : ObjectG
 	}
 	
 	/**
+	 * Returns whether the Caps Lock modifer is locked.
+	 * Since 2.16
+	 * Returns: TRUE if Caps Lock is on
+	 */
+	public int getCapsLockState()
+	{
+		// gboolean gdk_keymap_get_caps_lock_state (GdkKeymap *keymap);
+		return gdk_keymap_get_caps_lock_state(gdkKeymap);
+	}
+	
+	/**
 	 * Converts a key value into a symbolic name.
 	 * The names are the same as those in the <gdk/gdkkeysyms.h> header file
 	 * but without the leading "GDK_".
@@ -467,7 +508,7 @@ public class Keymap : ObjectG
 	 * Returns TRUE if the given key value is in upper case.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:TRUE if keyval is in upper case, or if keyval is not subject tocase conversion.
+	 * Returns:%TRUE if keyval is in upper case, or if keyval is not subject tocase conversion.
 	 */
 	public static int gdkKeyvalIsUpper(uint keyval)
 	{
@@ -479,7 +520,7 @@ public class Keymap : ObjectG
 	 * Returns TRUE if the given key value is in lower case.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:TRUE if keyval is in lower case, or if keyval is not subject tocase conversion.
+	 * Returns:%TRUE if keyval is in lower case, or if keyval is not subject tocase conversion.
 	 */
 	public static int gdkKeyvalIsLower(uint keyval)
 	{
