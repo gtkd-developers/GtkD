@@ -26,7 +26,6 @@ module gtkc.atktypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public alias void* AtkFocusHandler;
-public alias void* AtkStateSet;
 public struct AtkRectangle;
 
 
