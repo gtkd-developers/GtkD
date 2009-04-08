@@ -226,7 +226,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public static PgFontMap getDefault()
 	{
-		// PangoFontMap* pango_cairo_font_map_get_default (void);
+		// PangoFontMap * pango_cairo_font_map_get_default (void);
 		auto p = pango_cairo_font_map_get_default();
 		if(p is null)
 		{
@@ -266,7 +266,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public this ()
 	{
-		// PangoFontMap* pango_cairo_font_map_new (void);
+		// PangoFontMap * pango_cairo_font_map_new (void);
 		auto p = pango_cairo_font_map_new();
 		if(p is null)
 		{
@@ -288,7 +288,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public this (cairo_font_type_t fonttype)
 	{
-		// PangoFontMap* pango_cairo_font_map_new_for_font_type  (cairo_font_type_t fonttype);
+		// PangoFontMap * pango_cairo_font_map_new_for_font_type  (cairo_font_type_t fonttype);
 		auto p = pango_cairo_font_map_new_for_font_type(fonttype);
 		if(p is null)
 		{
@@ -344,7 +344,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public PgContext createContext()
 	{
-		// PangoContext* pango_cairo_font_map_create_context (PangoCairoFontMap *fontmap);
+		// PangoContext * pango_cairo_font_map_create_context (PangoCairoFontMap *fontmap);
 		auto p = pango_cairo_font_map_create_context(pangoCairoFontMap);
 		if(p is null)
 		{

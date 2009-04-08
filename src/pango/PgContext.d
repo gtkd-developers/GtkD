@@ -201,7 +201,7 @@ public class PgContext : ObjectG
 	 */
 	public ListG itemize(string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
-		// GList* pango_itemize (PangoContext *context,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
+		// GList * pango_itemize (PangoContext *context,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
 		auto p = pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
 		if(p is null)
 		{
@@ -228,7 +228,7 @@ public class PgContext : ObjectG
 	 */
 	public ListG itemizeWithBaseDir(PangoDirection baseDir, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
-		// GList* pango_itemize_with_base_dir (PangoContext *context,  PangoDirection base_dir,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
+		// GList * pango_itemize_with_base_dir (PangoContext *context,  PangoDirection base_dir,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
 		auto p = pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
 		if(p is null)
 		{
@@ -247,7 +247,7 @@ public class PgContext : ObjectG
 	 */
 	public static ListG reorderItems(ListG logicalItems)
 	{
-		// GList* pango_reorder_items (GList *logical_items);
+		// GList * pango_reorder_items (GList *logical_items);
 		auto p = pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct());
 		if(p is null)
 		{
@@ -271,7 +271,7 @@ public class PgContext : ObjectG
 	 */
 	public this ()
 	{
-		// PangoContext* pango_context_new (void);
+		// PangoContext * pango_context_new (void);
 		auto p = pango_context_new();
 		if(p is null)
 		{
@@ -300,7 +300,7 @@ public class PgContext : ObjectG
 	 */
 	public PgFontMap getFontMap()
 	{
-		// PangoFontMap* pango_context_get_font_map (PangoContext *context);
+		// PangoFontMap * pango_context_get_font_map (PangoContext *context);
 		auto p = pango_context_get_font_map(pangoContext);
 		if(p is null)
 		{
@@ -315,7 +315,7 @@ public class PgContext : ObjectG
 	 */
 	public PgFontDescription getFontDescription()
 	{
-		// PangoFontDescription* pango_context_get_font_description  (PangoContext *context);
+		// PangoFontDescription * pango_context_get_font_description  (PangoContext *context);
 		auto p = pango_context_get_font_description(pangoContext);
 		if(p is null)
 		{
@@ -341,7 +341,7 @@ public class PgContext : ObjectG
 	 */
 	public PgLanguage getLanguage()
 	{
-		// PangoLanguage* pango_context_get_language (PangoContext *context);
+		// PangoLanguage * pango_context_get_language (PangoContext *context);
 		auto p = pango_context_get_language(pangoContext);
 		if(p is null)
 		{
@@ -465,7 +465,7 @@ public class PgContext : ObjectG
 	 */
 	public PgMatrix getMatrix()
 	{
-		// const PangoMatrix* pango_context_get_matrix (PangoContext *context);
+		// const PangoMatrix * pango_context_get_matrix (PangoContext *context);
 		auto p = pango_context_get_matrix(pangoContext);
 		if(p is null)
 		{
@@ -501,7 +501,7 @@ public class PgContext : ObjectG
 	 */
 	public PgFont loadFont(PgFontDescription desc)
 	{
-		// PangoFont* pango_context_load_font (PangoContext *context,  const PangoFontDescription *desc);
+		// PangoFont * pango_context_load_font (PangoContext *context,  const PangoFontDescription *desc);
 		auto p = pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
@@ -520,7 +520,7 @@ public class PgContext : ObjectG
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
 	{
-		// PangoFontset* pango_context_load_fontset (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
+		// PangoFontset * pango_context_load_fontset (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
 		auto p = pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
@@ -542,18 +542,18 @@ public class PgContext : ObjectG
 	 * be a composite of the metrics for the fonts loaded for the
 	 * individual families.
 	 * Params:
-	 * desc =  a PangoFontDescription structure
+	 * desc =  a PangoFontDescription structure. NULL means that the font
+	 * 	 description from the context will be used.
 	 * language =  language tag used to determine which script to get the metrics
 	 *  for. NULL means that the language tag from the context will
 	 *  be used. If no language tag is set on the context, metrics
-	 *  large enough to cover a range of languages will be returned.
-	 *  The process of determining such metrics is slow, so it is best
-	 *  to always make sure some real language tag will be used.
+	 *  for the default language (as determined by
+	 *  pango_language_get_default()) will be returned.
 	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
 	{
-		// PangoFontMetrics* pango_context_get_metrics (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
+		// PangoFontMetrics * pango_context_get_metrics (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
 		auto p = pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{

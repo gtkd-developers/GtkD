@@ -115,7 +115,7 @@ public class PgGlyphItemIter
 	 */
 	public PgGlyphItemIter copy()
 	{
-		// PangoGlyphItemIter* pango_glyph_item_iter_copy (PangoGlyphItemIter *orig);
+		// PangoGlyphItemIter * pango_glyph_item_iter_copy (PangoGlyphItemIter *orig);
 		auto p = pango_glyph_item_iter_copy(pangoGlyphItemIter);
 		if(p is null)
 		{

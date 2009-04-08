@@ -146,7 +146,7 @@ public class PgFontMap : ObjectG
 	 */
 	public PgContext createContext()
 	{
-		// PangoContext* pango_font_map_create_context (PangoFontMap *fontmap);
+		// PangoContext * pango_font_map_create_context (PangoFontMap *fontmap);
 		auto p = pango_font_map_create_context(pangoFontMap);
 		if(p is null)
 		{
@@ -164,7 +164,7 @@ public class PgFontMap : ObjectG
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
-		// PangoFont* pango_font_map_load_font (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc);
+		// PangoFont * pango_font_map_load_font (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc);
 		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
@@ -184,7 +184,7 @@ public class PgFontMap : ObjectG
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
-		// PangoFontset* pango_font_map_load_fontset (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
+		// PangoFontset * pango_font_map_load_fontset (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
 		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
@@ -224,7 +224,7 @@ public class PgFontMap : ObjectG
 	 */
 	public string getShapeEngineType()
 	{
-		// const char* pango_font_map_get_shape_engine_type  (PangoFontMap *fontmap);
+		// const char * pango_font_map_get_shape_engine_type  (PangoFontMap *fontmap);
 		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap));
 	}
 }

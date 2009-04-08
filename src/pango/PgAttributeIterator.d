@@ -122,7 +122,7 @@ public class PgAttributeIterator
 	 */
 	public PgAttributeIterator copy()
 	{
-		// PangoAttrIterator* pango_attr_iterator_copy (PangoAttrIterator *iterator);
+		// PangoAttrIterator * pango_attr_iterator_copy (PangoAttrIterator *iterator);
 		auto p = pango_attr_iterator_copy(pangoAttrIterator);
 		if(p is null)
 		{
@@ -168,7 +168,7 @@ public class PgAttributeIterator
 	 */
 	public PgAttribute get(PangoAttrType type)
 	{
-		// PangoAttribute* pango_attr_iterator_get (PangoAttrIterator *iterator,  PangoAttrType type);
+		// PangoAttribute * pango_attr_iterator_get (PangoAttrIterator *iterator,  PangoAttrType type);
 		auto p = pango_attr_iterator_get(pangoAttrIterator, type);
 		if(p is null)
 		{
@@ -186,11 +186,7 @@ public class PgAttributeIterator
 	 *  an attribute in the PangoAttrList associated with the iterator,
 	 * language =  if non-NULL, location to store language tag for item, or NULL
 	 *  if none is found.
-	 * extraAttrs =  if non-NULL, location in which to store a list of non-font
-	 *  attributes at the the current position; only the highest priority
-	 *  value of each attribute will be added to this list. In order
-	 *  to free this value, you must call pango_attribute_destroy() on
-	 *  each member.
+	 * extraAttrs = element type Pango.Attribute): (transfer full. element type Pango.Attribute): (transfer full.
 	 */
 	public void getFont(PgFontDescription desc, out PgLanguage language, out ListSG extraAttrs)
 	{
@@ -208,11 +204,11 @@ public class PgAttributeIterator
 	 * Gets a list of all attributes at the current position of the
 	 * iterator.
 	 * Since 1.2
-	 * Returns: a list of all attributes for the current range. To free this value, call pango_attribute_destroy() on each value and g_slist_free() on the list.
+	 * Returns:element-type Pango.Attribute): (transfer full. element-type Pango.Attribute): (transfer full.
 	 */
 	public ListSG getAttrs()
 	{
-		// GSList* pango_attr_iterator_get_attrs (PangoAttrIterator *iterator);
+		// GSList * pango_attr_iterator_get_attrs (PangoAttrIterator *iterator);
 		auto p = pango_attr_iterator_get_attrs(pangoAttrIterator);
 		if(p is null)
 		{

@@ -178,7 +178,7 @@ public class PgEngine : ObjectG
 	 */
 	public static PgEngine create(string id)
 	{
-		// PangoEngine* script_engine_create (const char *id);
+		// PangoEngine * script_engine_create (const char *id);
 		auto p = script_engine_create(Str.toStringz(id));
 		if(p is null)
 		{

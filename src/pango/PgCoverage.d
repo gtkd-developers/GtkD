@@ -109,7 +109,7 @@ public class PgCoverage
 	 */
 	public this ()
 	{
-		// PangoCoverage* pango_coverage_new (void);
+		// PangoCoverage * pango_coverage_new (void);
 		auto p = pango_coverage_new();
 		if(p is null)
 		{
@@ -124,7 +124,7 @@ public class PgCoverage
 	 */
 	public PgCoverage doref()
 	{
-		// PangoCoverage* pango_coverage_ref (PangoCoverage *coverage);
+		// PangoCoverage * pango_coverage_ref (PangoCoverage *coverage);
 		auto p = pango_coverage_ref(pangoCoverage);
 		if(p is null)
 		{
@@ -150,7 +150,7 @@ public class PgCoverage
 	 */
 	public PgCoverage copy()
 	{
-		// PangoCoverage* pango_coverage_copy (PangoCoverage *coverage);
+		// PangoCoverage * pango_coverage_copy (PangoCoverage *coverage);
 		auto p = pango_coverage_copy(pangoCoverage);
 		if(p is null)
 		{
@@ -221,7 +221,7 @@ public class PgCoverage
 	 */
 	public static PgCoverage fromBytes(char[] bytes)
 	{
-		// PangoCoverage* pango_coverage_from_bytes (guchar *bytes,  int n_bytes);
+		// PangoCoverage * pango_coverage_from_bytes (guchar *bytes,  int n_bytes);
 		auto p = pango_coverage_from_bytes(bytes.ptr, bytes.length);
 		if(p is null)
 		{

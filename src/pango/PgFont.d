@@ -149,7 +149,7 @@ public class PgFont : ObjectG
 	 */
 	public PgEngineShape findShaper(PgLanguage language, uint ch)
 	{
-		// PangoEngineShape* pango_font_find_shaper (PangoFont *font,  PangoLanguage *language,  guint32 ch);
+		// PangoEngineShape * pango_font_find_shaper (PangoFont *font,  PangoLanguage *language,  guint32 ch);
 		auto p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
 		if(p is null)
 		{
@@ -166,7 +166,7 @@ public class PgFont : ObjectG
 	 */
 	public PgFontDescription describe()
 	{
-		// PangoFontDescription* pango_font_describe (PangoFont *font);
+		// PangoFontDescription * pango_font_describe (PangoFont *font);
 		auto p = pango_font_describe(pangoFont);
 		if(p is null)
 		{
@@ -184,7 +184,7 @@ public class PgFont : ObjectG
 	 */
 	public PgFontDescription describeWithAbsoluteSize()
 	{
-		// PangoFontDescription* pango_font_describe_with_absolute_size  (PangoFont *font);
+		// PangoFontDescription * pango_font_describe_with_absolute_size  (PangoFont *font);
 		auto p = pango_font_describe_with_absolute_size(pangoFont);
 		if(p is null)
 		{
@@ -201,7 +201,7 @@ public class PgFont : ObjectG
 	 */
 	public PgCoverage getCoverage(PgLanguage language)
 	{
-		// PangoCoverage* pango_font_get_coverage (PangoFont *font,  PangoLanguage *language);
+		// PangoCoverage * pango_font_get_coverage (PangoFont *font,  PangoLanguage *language);
 		auto p = pango_font_get_coverage(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
@@ -248,7 +248,7 @@ public class PgFont : ObjectG
 	 */
 	public PgFontMetrics getMetrics(PgLanguage language)
 	{
-		// PangoFontMetrics* pango_font_get_metrics (PangoFont *font,  PangoLanguage *language);
+		// PangoFontMetrics * pango_font_get_metrics (PangoFont *font,  PangoLanguage *language);
 		auto p = pango_font_get_metrics(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
@@ -271,7 +271,7 @@ public class PgFont : ObjectG
 	 */
 	public PgFontMap getFontMap()
 	{
-		// PangoFontMap* pango_font_get_font_map (PangoFont *font);
+		// PangoFontMap * pango_font_get_font_map (PangoFont *font);
 		auto p = pango_font_get_font_map(pangoFont);
 		if(p is null)
 		{

@@ -206,7 +206,7 @@ public class PgCairo
 	 */
 	public static ScaledFont fontGetScaledFont(PangoCairoFont* font)
 	{
-		// cairo_scaled_font_t* pango_cairo_font_get_scaled_font (PangoCairoFont *font);
+		// cairo_scaled_font_t * pango_cairo_font_get_scaled_font (PangoCairoFont *font);
 		auto p = pango_cairo_font_get_scaled_font(font);
 		if(p is null)
 		{
@@ -264,7 +264,7 @@ public class PgCairo
 	
 	/**
 	 * Retrieves any font rendering options previously set with
-	 * pango_cairo_font_map_set_font_options(). This functions not report options
+	 * pango_cairo_font_map_set_font_options(). This function does not report options
 	 * that are derived from the target surface by pango_cairo_update_context()
 	 * Since 1.10
 	 * Params:
@@ -273,7 +273,7 @@ public class PgCairo
 	 */
 	public static FontOption contextGetFontOptions(PgContext context)
 	{
-		// const cairo_font_options_t* pango_cairo_context_get_font_options  (PangoContext *context);
+		// const cairo_font_options_t * pango_cairo_context_get_font_options  (PangoContext *context);
 		auto p = pango_cairo_context_get_font_options((context is null) ? null : context.getPgContextStruct());
 		if(p is null)
 		{
@@ -335,7 +335,7 @@ public class PgCairo
 	 */
 	public static PgContext createContext(Context cr)
 	{
-		// PangoContext* pango_cairo_create_context (cairo_t *cr);
+		// PangoContext * pango_cairo_create_context (cairo_t *cr);
 		auto p = pango_cairo_create_context((cr is null) ? null : cr.getContextStruct());
 		if(p is null)
 		{
@@ -379,7 +379,7 @@ public class PgCairo
 	 */
 	public static PgLayout createLayout(Context cr)
 	{
-		// PangoLayout* pango_cairo_create_layout (cairo_t *cr);
+		// PangoLayout * pango_cairo_create_layout (cairo_t *cr);
 		auto p = pango_cairo_create_layout((cr is null) ? null : cr.getContextStruct());
 		if(p is null)
 		{

@@ -117,7 +117,7 @@ public class PgScriptIter
 	 */
 	public this (string text, int length)
 	{
-		// PangoScriptIter* pango_script_iter_new (const char *text,  int length);
+		// PangoScriptIter * pango_script_iter_new (const char *text,  int length);
 		auto p = pango_script_iter_new(Str.toStringz(text), length);
 		if(p is null)
 		{

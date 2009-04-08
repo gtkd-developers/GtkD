@@ -127,7 +127,7 @@ public class PgFontFace : ObjectG
 	 */
 	public string getFaceName()
 	{
-		// const char* pango_font_face_get_face_name (PangoFontFace *face);
+		// const char * pango_font_face_get_face_name (PangoFontFace *face);
 		return Str.toString(pango_font_face_get_face_name(pangoFontFace));
 	}
 	
@@ -160,7 +160,7 @@ public class PgFontFace : ObjectG
 	 */
 	public PgFontDescription describe()
 	{
-		// PangoFontDescription* pango_font_face_describe (PangoFontFace *face);
+		// PangoFontDescription * pango_font_face_describe (PangoFontFace *face);
 		auto p = pango_font_face_describe(pangoFontFace);
 		if(p is null)
 		{

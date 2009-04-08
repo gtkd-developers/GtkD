@@ -126,7 +126,7 @@ public class PgFontFamily : ObjectG
 	 */
 	public string getName()
 	{
-		// const char* pango_font_family_get_name (PangoFontFamily *family);
+		// const char * pango_font_family_get_name (PangoFontFamily *family);
 		return Str.toString(pango_font_family_get_name(pangoFontFamily));
 	}
 	

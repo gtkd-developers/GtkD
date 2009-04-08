@@ -190,11 +190,12 @@ public class PgRenderer : ObjectG
 	 * output format supports it (PDF for example).
 	 * Note that text is the start of the text for layout, which is then
 	 * indexed by glyph_item->item->offset.
+	 * If text is NULL, this simply calls pango_renderer_draw_glyphs().
 	 * The default implementation of this method simply falls back to
 	 * pango_renderer_draw_glyphs().
 	 * Since 1.22
 	 * Params:
-	 * text =  the UTF-8 text that glyph_item refers to
+	 * text =  the UTF-8 text that glyph_item refers to, or NULL
 	 * glyphItem =  a PangoGlyphItem
 	 * x =  X position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
@@ -350,7 +351,7 @@ public class PgRenderer : ObjectG
 	 */
 	public PgColor getColor(PangoRenderPart part)
 	{
-		// PangoColor* pango_renderer_get_color (PangoRenderer *renderer,  PangoRenderPart part);
+		// PangoColor * pango_renderer_get_color (PangoRenderer *renderer,  PangoRenderPart part);
 		auto p = pango_renderer_get_color(pangoRenderer, part);
 		if(p is null)
 		{
@@ -380,7 +381,7 @@ public class PgRenderer : ObjectG
 	 */
 	public PgMatrix getMatrix()
 	{
-		// const PangoMatrix* pango_renderer_get_matrix (PangoRenderer *renderer);
+		// const PangoMatrix * pango_renderer_get_matrix (PangoRenderer *renderer);
 		auto p = pango_renderer_get_matrix(pangoRenderer);
 		if(p is null)
 		{
@@ -400,7 +401,7 @@ public class PgRenderer : ObjectG
 	 */
 	public PgLayout getLayout()
 	{
-		// PangoLayout* pango_renderer_get_layout (PangoRenderer *renderer);
+		// PangoLayout * pango_renderer_get_layout (PangoRenderer *renderer);
 		auto p = pango_renderer_get_layout(pangoRenderer);
 		if(p is null)
 		{
@@ -420,7 +421,7 @@ public class PgRenderer : ObjectG
 	 */
 	public PgLayoutLine getLayoutLine()
 	{
-		// PangoLayoutLine* pango_renderer_get_layout_line (PangoRenderer *renderer);
+		// PangoLayoutLine * pango_renderer_get_layout_line (PangoRenderer *renderer);
 		auto p = pango_renderer_get_layout_line(pangoRenderer);
 		if(p is null)
 		{

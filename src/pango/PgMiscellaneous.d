@@ -101,7 +101,7 @@ public class PgMiscellaneous
 	 */
 	public static string[] splitFileList(string str)
 	{
-		// char** pango_split_file_list (const char *str);
+		// char ** pango_split_file_list (const char *str);
 		return Str.toStringArray(pango_split_file_list(Str.toStringz(str)));
 	}
 	
@@ -113,7 +113,7 @@ public class PgMiscellaneous
 	 */
 	public static string trimString(string str)
 	{
-		// char* pango_trim_string (const char *str);
+		// char * pango_trim_string (const char *str);
 		return Str.toString(pango_trim_string(Str.toStringz(str)));
 	}
 	
@@ -223,7 +223,7 @@ public class PgMiscellaneous
 	 */
 	public static string configKeyGet(string key)
 	{
-		// char* pango_config_key_get (const char *key);
+		// char * pango_config_key_get (const char *key);
 		return Str.toString(pango_config_key_get(Str.toStringz(key)));
 	}
 	
@@ -248,9 +248,10 @@ public class PgMiscellaneous
 	}
 	
 	/**
-	 * Parses an enum type and stored the result in value.
+	 * Parses an enum type and stores the result in value.
 	 * If str does not match the nick name of any of the possible values for the
-	 * enum, FALSE is returned, a warning is issued if warn is TRUE, and a
+	 * enum and is not an integer, FALSE is returned, a warning is issued
+	 * if warn is TRUE, and a
 	 * string representing the list of possible values is stored in
 	 * possible_values. The list is slash-separated, eg.
 	 * "none/start/middle/end". If failed and possible_values is not NULL,
@@ -350,7 +351,7 @@ public class PgMiscellaneous
 	 */
 	public static string getSysconfSubdirectory()
 	{
-		// const char* pango_get_sysconf_subdirectory (void);
+		// const char * pango_get_sysconf_subdirectory (void);
 		return Str.toString(pango_get_sysconf_subdirectory());
 	}
 	
@@ -363,7 +364,7 @@ public class PgMiscellaneous
 	 */
 	public static string getLibSubdirectory()
 	{
-		// const char* pango_get_lib_subdirectory (void);
+		// const char * pango_get_lib_subdirectory (void);
 		return Str.toString(pango_get_lib_subdirectory());
 	}
 	
@@ -379,7 +380,7 @@ public class PgMiscellaneous
 	 */
 	public static byte* log2visGetEmbeddingLevels(string text, int length, out PangoDirection pbaseDir)
 	{
-		// guint8* pango_log2vis_get_embedding_levels (const gchar *text,  int length,  PangoDirection *pbase_dir);
+		// guint8 * pango_log2vis_get_embedding_levels (const gchar *text,  int length,  PangoDirection *pbase_dir);
 		return pango_log2vis_get_embedding_levels(Str.toStringz(text), length, &pbaseDir);
 	}
 	

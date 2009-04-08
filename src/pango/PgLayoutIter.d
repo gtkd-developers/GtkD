@@ -118,7 +118,7 @@ public class PgLayoutIter
 	 */
 	public PgLayoutIter copy()
 	{
-		// PangoLayoutIter* pango_layout_iter_copy (PangoLayoutIter *iter);
+		// PangoLayoutIter * pango_layout_iter_copy (PangoLayoutIter *iter);
 		auto p = pango_layout_iter_copy(pangoLayoutIter);
 		if(p is null)
 		{
@@ -225,7 +225,7 @@ public class PgLayoutIter
 	 */
 	public PangoLayoutRun* getRun()
 	{
-		// PangoLayoutRun* pango_layout_iter_get_run (PangoLayoutIter *iter);
+		// PangoLayoutRun * pango_layout_iter_get_run (PangoLayoutIter *iter);
 		return pango_layout_iter_get_run(pangoLayoutIter);
 	}
 	
@@ -242,7 +242,7 @@ public class PgLayoutIter
 	 */
 	public PangoLayoutRun* getRunReadonly()
 	{
-		// PangoLayoutRun* pango_layout_iter_get_run_readonly (PangoLayoutIter *iter);
+		// PangoLayoutRun * pango_layout_iter_get_run_readonly (PangoLayoutIter *iter);
 		return pango_layout_iter_get_run_readonly(pangoLayoutIter);
 	}
 	
@@ -254,7 +254,7 @@ public class PgLayoutIter
 	 */
 	public PgLayoutLine getLine()
 	{
-		// PangoLayoutLine* pango_layout_iter_get_line (PangoLayoutIter *iter);
+		// PangoLayoutLine * pango_layout_iter_get_line (PangoLayoutIter *iter);
 		auto p = pango_layout_iter_get_line(pangoLayoutIter);
 		if(p is null)
 		{
@@ -273,7 +273,7 @@ public class PgLayoutIter
 	 */
 	public PgLayoutLine getLineReadonly()
 	{
-		// PangoLayoutLine* pango_layout_iter_get_line_readonly (PangoLayoutIter *iter);
+		// PangoLayoutLine * pango_layout_iter_get_line_readonly (PangoLayoutIter *iter);
 		auto p = pango_layout_iter_get_line_readonly(pangoLayoutIter);
 		if(p is null)
 		{
@@ -289,7 +289,7 @@ public class PgLayoutIter
 	 */
 	public PgLayout getLayout()
 	{
-		// PangoLayout* pango_layout_iter_get_layout (PangoLayoutIter *iter);
+		// PangoLayout * pango_layout_iter_get_layout (PangoLayoutIter *iter);
 		auto p = pango_layout_iter_get_layout(pangoLayoutIter);
 		if(p is null)
 		{

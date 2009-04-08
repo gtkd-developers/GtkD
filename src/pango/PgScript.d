@@ -106,7 +106,7 @@ public class PgScript
 	 */
 	public static PgLanguage scriptGetSampleLanguage(PangoScript script)
 	{
-		// PangoLanguage* pango_script_get_sample_language (PangoScript script);
+		// PangoLanguage * pango_script_get_sample_language (PangoScript script);
 		auto p = pango_script_get_sample_language(script);
 		if(p is null)
 		{

@@ -111,7 +111,7 @@ public class PgFontMetrics
 	 */
 	public PgFontMetrics doref()
 	{
-		// PangoFontMetrics* pango_font_metrics_ref (PangoFontMetrics *metrics);
+		// PangoFontMetrics * pango_font_metrics_ref (PangoFontMetrics *metrics);
 		auto p = pango_font_metrics_ref(pangoFontMetrics);
 		if(p is null)
 		{

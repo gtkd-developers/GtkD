@@ -134,7 +134,7 @@ public class PgColor
 	 */
 	public PgColor copy()
 	{
-		// PangoColor* pango_color_copy (const PangoColor *src);
+		// PangoColor * pango_color_copy (const PangoColor *src);
 		auto p = pango_color_copy(pangoColor);
 		if(p is null)
 		{
@@ -162,7 +162,7 @@ public class PgColor
 	 */
 	public override string toString()
 	{
-		// gchar* pango_color_to_string (const PangoColor *color);
+		// gchar * pango_color_to_string (const PangoColor *color);
 		return Str.toString(pango_color_to_string(pangoColor));
 	}
 }

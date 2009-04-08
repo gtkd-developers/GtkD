@@ -141,20 +141,43 @@ public enum PangoStyle
 /**
  * An enumeration specifying the weight (boldness) of a font. This is a numerical
  * value ranging from 100 to 900, but there are some predefined values:
+ * PANGO_WEIGHT_THIN
+ * the thin weight (= 100; Since: 1.24)
  * PANGO_WEIGHT_ULTRALIGHT
  * the ultralight weight (= 200)
  * PANGO_WEIGHT_LIGHT
+ * the light weight (= 300)
+ * PANGO_WEIGHT_BOOK
+ * the book weight (= 380; Since: 1.24)
+ * PANGO_WEIGHT_NORMAL
+ * the default weight (= 400)
+ * PANGO_WEIGHT_MEDIUM
+ * the normal weight (= 500; Since: 1.24)
+ * PANGO_WEIGHT_SEMIBOLD
+ * the semibold weight (= 600)
+ * PANGO_WEIGHT_BOLD
+ * the bold weight (= 700)
+ * PANGO_WEIGHT_ULTRABOLD
+ * the ultrabold weight (= 800)
+ * PANGO_WEIGHT_HEAVY
+ * the heavy weight (= 900)
+ * PANGO_WEIGHT_ULTRAHEAVY
+ * the ultraheavy weight (= 1000; Since: 1.24)
  */
 public enum PangoWeight
 {
 	GDC_BUG_WORKAROUND,
+	THIN = 100,
 	ULTRALIGHT = 200,
 	LIGHT = 300,
+	BOOK = 380,
 	NORMAL = 400,
+	MEDIUM = 500,
 	SEMIBOLD = 600,
 	BOLD = 700,
 	ULTRABOLD = 800,
-	HEAVY = 900
+	HEAVY = 900,
+	ULTRAHEAVY = 1000
 }
 /**
  * An enumeration specifying capitalization variant of the font.
@@ -403,7 +426,7 @@ public enum PangoAlignment
  * Note that new types may be added in the future. Applications should be ready
  * to handle unknown values. This enumeration is interchangeable with
  * GUnicodeScript. See Unicode Standard Annex
- * "" Script names.
+ * #24: Script names.
  * PANGO_SCRIPT_INVALID_CODE
  * a value never returned from pango_script_for_unichar()
  * PANGO_SCRIPT_COMMON
@@ -1251,7 +1274,7 @@ public struct PangoLayoutIter{}
  * GSList *runs;
  * a list containing the runs of the line in visual order
  * guint is_paragraph_start : 1;
- * TRUE if this is the first line of the paragraph
+ * %TRUE if this is the first line of the paragraph
  * guint resolved_dir : 3;
  * the resolved PangoDirection of the line
  */
@@ -1763,7 +1786,7 @@ public typedef extern(C) void*  function (void*) PangoAttrDataCopyFunc;
  * data :
  * callback data passed to pango_attr_list_filter()
  * Returns :
- * TRUE if the attribute should be filtered out
+ * %TRUE if the attribute should be filtered out
  */
 // gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer data);
 public typedef extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;

@@ -191,13 +191,15 @@ public class PgAttribute
 	 */
 	public static string typeGetName(PangoAttrType type)
 	{
-		// const char* pango_attr_type_get_name (PangoAttrType type);
+		// const char * pango_attr_type_get_name (PangoAttrType type);
 		return Str.toString(pango_attr_type_get_name(type));
 	}
 	
 	/**
-	 * Initializes attr's klass to klass, it's start_index to zero,
-	 * and end_index to G_MAXUINT such that the attribute applies
+	 * Initializes attr's klass to klass,
+	 * it's start_index to PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING
+	 * and end_index to PANGO_ATTR_INDEX_TO_TEXT_END
+	 * such that the attribute applies
 	 * to the entire text by default.
 	 * Since 1.20
 	 * Params:
@@ -218,7 +220,7 @@ public class PgAttribute
 	 */
 	public PgAttribute attributeCopy()
 	{
-		// PangoAttribute* pango_attribute_copy (const PangoAttribute *attr);
+		// PangoAttribute * pango_attribute_copy (const PangoAttribute *attr);
 		auto p = pango_attribute_copy(pangoAttribute);
 		if(p is null)
 		{
@@ -260,7 +262,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute languageNew(PgLanguage language)
 	{
-		// PangoAttribute* pango_attr_language_new (PangoLanguage *language);
+		// PangoAttribute * pango_attr_language_new (PangoLanguage *language);
 		auto p = pango_attr_language_new((language is null) ? null : language.getPgLanguageStruct());
 		if(p is null)
 		{
@@ -277,7 +279,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute familyNew(string family)
 	{
-		// PangoAttribute* pango_attr_family_new (const char *family);
+		// PangoAttribute * pango_attr_family_new (const char *family);
 		auto p = pango_attr_family_new(Str.toStringz(family));
 		if(p is null)
 		{
@@ -294,7 +296,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute styleNew(PangoStyle style)
 	{
-		// PangoAttribute* pango_attr_style_new (PangoStyle style);
+		// PangoAttribute * pango_attr_style_new (PangoStyle style);
 		auto p = pango_attr_style_new(style);
 		if(p is null)
 		{
@@ -311,7 +313,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute variantNew(PangoVariant variant)
 	{
-		// PangoAttribute* pango_attr_variant_new (PangoVariant variant);
+		// PangoAttribute * pango_attr_variant_new (PangoVariant variant);
 		auto p = pango_attr_variant_new(variant);
 		if(p is null)
 		{
@@ -328,7 +330,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute stretchNew(PangoStretch stretch)
 	{
-		// PangoAttribute* pango_attr_stretch_new (PangoStretch stretch);
+		// PangoAttribute * pango_attr_stretch_new (PangoStretch stretch);
 		auto p = pango_attr_stretch_new(stretch);
 		if(p is null)
 		{
@@ -345,7 +347,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute weightNew(PangoWeight weight)
 	{
-		// PangoAttribute* pango_attr_weight_new (PangoWeight weight);
+		// PangoAttribute * pango_attr_weight_new (PangoWeight weight);
 		auto p = pango_attr_weight_new(weight);
 		if(p is null)
 		{
@@ -362,7 +364,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute sizeNew(int size)
 	{
-		// PangoAttribute* pango_attr_size_new (int size);
+		// PangoAttribute * pango_attr_size_new (int size);
 		auto p = pango_attr_size_new(size);
 		if(p is null)
 		{
@@ -380,7 +382,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute sizeNewAbsolute(int size)
 	{
-		// PangoAttribute* pango_attr_size_new_absolute (int size);
+		// PangoAttribute * pango_attr_size_new_absolute (int size);
 		auto p = pango_attr_size_new_absolute(size);
 		if(p is null)
 		{
@@ -399,7 +401,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute fontDescNew(PgFontDescription desc)
 	{
-		// PangoAttribute* pango_attr_font_desc_new (const PangoFontDescription *desc);
+		// PangoAttribute * pango_attr_font_desc_new (const PangoFontDescription *desc);
 		auto p = pango_attr_font_desc_new((desc is null) ? null : desc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
@@ -418,7 +420,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute foregroundNew(ushort red, ushort green, ushort blue)
 	{
-		// PangoAttribute* pango_attr_foreground_new (guint16 red,  guint16 green,  guint16 blue);
+		// PangoAttribute * pango_attr_foreground_new (guint16 red,  guint16 green,  guint16 blue);
 		auto p = pango_attr_foreground_new(red, green, blue);
 		if(p is null)
 		{
@@ -437,7 +439,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute backgroundNew(ushort red, ushort green, ushort blue)
 	{
-		// PangoAttribute* pango_attr_background_new (guint16 red,  guint16 green,  guint16 blue);
+		// PangoAttribute * pango_attr_background_new (guint16 red,  guint16 green,  guint16 blue);
 		auto p = pango_attr_background_new(red, green, blue);
 		if(p is null)
 		{
@@ -454,7 +456,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute strikethroughNew(int strikethrough)
 	{
-		// PangoAttribute* pango_attr_strikethrough_new (gboolean strikethrough);
+		// PangoAttribute * pango_attr_strikethrough_new (gboolean strikethrough);
 		auto p = pango_attr_strikethrough_new(strikethrough);
 		if(p is null)
 		{
@@ -476,7 +478,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute strikethroughColorNew(ushort red, ushort green, ushort blue)
 	{
-		// PangoAttribute* pango_attr_strikethrough_color_new (guint16 red,  guint16 green,  guint16 blue);
+		// PangoAttribute * pango_attr_strikethrough_color_new (guint16 red,  guint16 green,  guint16 blue);
 		auto p = pango_attr_strikethrough_color_new(red, green, blue);
 		if(p is null)
 		{
@@ -493,7 +495,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute underlineNew(PangoUnderline underline)
 	{
-		// PangoAttribute* pango_attr_underline_new (PangoUnderline underline);
+		// PangoAttribute * pango_attr_underline_new (PangoUnderline underline);
 		auto p = pango_attr_underline_new(underline);
 		if(p is null)
 		{
@@ -515,7 +517,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute underlineColorNew(ushort red, ushort green, ushort blue)
 	{
-		// PangoAttribute* pango_attr_underline_color_new (guint16 red,  guint16 green,  guint16 blue);
+		// PangoAttribute * pango_attr_underline_color_new (guint16 red,  guint16 green,  guint16 blue);
 		auto p = pango_attr_underline_color_new(red, green, blue);
 		if(p is null)
 		{
@@ -536,7 +538,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute shapeNew(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
-		// PangoAttribute* pango_attr_shape_new (const PangoRectangle *ink_rect,  const PangoRectangle *logical_rect);
+		// PangoAttribute * pango_attr_shape_new (const PangoRectangle *ink_rect,  const PangoRectangle *logical_rect);
 		auto p = pango_attr_shape_new(inkRect, logicalRect);
 		if(p is null)
 		{
@@ -563,7 +565,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute shapeNewWithData(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)
 	{
-		// PangoAttribute* pango_attr_shape_new_with_data (const PangoRectangle *ink_rect,  const PangoRectangle *logical_rect,  gpointer data,  PangoAttrDataCopyFunc copy_func,  GDestroyNotify destroy_func);
+		// PangoAttribute * pango_attr_shape_new_with_data (const PangoRectangle *ink_rect,  const PangoRectangle *logical_rect,  gpointer data,  PangoAttrDataCopyFunc copy_func,  GDestroyNotify destroy_func);
 		auto p = pango_attr_shape_new_with_data(inkRect, logicalRect, data, copyFunc, destroyFunc);
 		if(p is null)
 		{
@@ -581,7 +583,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute scaleNew(double scaleFactor)
 	{
-		// PangoAttribute* pango_attr_scale_new (double scale_factor);
+		// PangoAttribute * pango_attr_scale_new (double scale_factor);
 		auto p = pango_attr_scale_new(scaleFactor);
 		if(p is null)
 		{
@@ -599,7 +601,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute riseNew(int rise)
 	{
-		// PangoAttribute* pango_attr_rise_new (int rise);
+		// PangoAttribute * pango_attr_rise_new (int rise);
 		auto p = pango_attr_rise_new(rise);
 		if(p is null)
 		{
@@ -618,7 +620,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute letterSpacingNew(int letterSpacing)
 	{
-		// PangoAttribute* pango_attr_letter_spacing_new (int letter_spacing);
+		// PangoAttribute * pango_attr_letter_spacing_new (int letter_spacing);
 		auto p = pango_attr_letter_spacing_new(letterSpacing);
 		if(p is null)
 		{
@@ -641,7 +643,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute fallbackNew(int enableFallback)
 	{
-		// PangoAttribute* pango_attr_fallback_new (gboolean enable_fallback);
+		// PangoAttribute * pango_attr_fallback_new (gboolean enable_fallback);
 		auto p = pango_attr_fallback_new(enableFallback);
 		if(p is null)
 		{
@@ -659,7 +661,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute gravityNew(PangoGravity gravity)
 	{
-		// PangoAttribute* pango_attr_gravity_new (PangoGravity gravity);
+		// PangoAttribute * pango_attr_gravity_new (PangoGravity gravity);
 		auto p = pango_attr_gravity_new(gravity);
 		if(p is null)
 		{
@@ -677,7 +679,7 @@ public class PgAttribute
 	 */
 	public static PgAttribute gravityHintNew(PangoGravityHint hint)
 	{
-		// PangoAttribute* pango_attr_gravity_hint_new (PangoGravityHint hint);
+		// PangoAttribute * pango_attr_gravity_hint_new (PangoGravityHint hint);
 		auto p = pango_attr_gravity_hint_new(hint);
 		if(p is null)
 		{

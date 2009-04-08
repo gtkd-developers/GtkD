@@ -127,7 +127,7 @@ public class PgFontDescription
 	 */
 	public this ()
 	{
-		// PangoFontDescription* pango_font_description_new (void);
+		// PangoFontDescription * pango_font_description_new (void);
 		auto p = pango_font_description_new();
 		if(p is null)
 		{
@@ -142,7 +142,7 @@ public class PgFontDescription
 	 */
 	public PgFontDescription copy()
 	{
-		// PangoFontDescription* pango_font_description_copy (const PangoFontDescription *desc);
+		// PangoFontDescription * pango_font_description_copy (const PangoFontDescription *desc);
 		auto p = pango_font_description_copy(pangoFontDescription);
 		if(p is null)
 		{
@@ -160,7 +160,7 @@ public class PgFontDescription
 	 */
 	public PgFontDescription copyStatic()
 	{
-		// PangoFontDescription* pango_font_description_copy_static  (const PangoFontDescription *desc);
+		// PangoFontDescription * pango_font_description_copy_static  (const PangoFontDescription *desc);
 		auto p = pango_font_description_copy_static(pangoFontDescription);
 		if(p is null)
 		{
@@ -244,7 +244,7 @@ public class PgFontDescription
 	 */
 	public string getFamily()
 	{
-		// const char* pango_font_description_get_family (const PangoFontDescription *desc);
+		// const char * pango_font_description_get_family (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_get_family(pangoFontDescription));
 	}
 	
@@ -494,9 +494,15 @@ public class PgFontDescription
 	
 	/**
 	 * Determines if the style attributes of new_match are a closer match
-	 * for desc than old_match, or if old_match is NULL, determines if
-	 * new_match is a match at all. Approximate matching is done for
-	 * weight and style; other attributes must match exactly.
+	 * for desc than those of old_match are, or if old_match is NULL,
+	 * determines if new_match is a match at all.
+	 * Approximate matching is done for
+	 * weight and style; other style attributes must match exactly.
+	 * Style attributes are all attributes other than family and size-related
+	 * attributes. Approximate matching for style considers PANGO_STYLE_OBLIQUE
+	 * and PANGO_STYLE_ITALIC as matches, but not as good a match as when the
+	 * styles are equal.
+	 * Note that old_match must match desc.
 	 * Params:
 	 * oldMatch =  a PangoFontDescription, or NULL
 	 * newMatch =  a PangoFontDescription
@@ -527,7 +533,7 @@ public class PgFontDescription
 	 */
 	public static PgFontDescription fromString(string str)
 	{
-		// PangoFontDescription* pango_font_description_from_string  (const char *str);
+		// PangoFontDescription * pango_font_description_from_string  (const char *str);
 		auto p = pango_font_description_from_string(Str.toStringz(str));
 		if(p is null)
 		{
@@ -546,7 +552,7 @@ public class PgFontDescription
 	 */
 	public override string toString()
 	{
-		// char* pango_font_description_to_string (const PangoFontDescription *desc);
+		// char * pango_font_description_to_string (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_to_string(pangoFontDescription));
 	}
 	
@@ -559,7 +565,7 @@ public class PgFontDescription
 	 */
 	public string toFilename()
 	{
-		// char* pango_font_description_to_filename (const PangoFontDescription *desc);
+		// char * pango_font_description_to_filename (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_to_filename(pangoFontDescription));
 	}
 }

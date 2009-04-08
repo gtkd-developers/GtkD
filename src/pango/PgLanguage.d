@@ -120,7 +120,7 @@ public class PgLanguage
 	 */
 	public static PgLanguage fromString(string language)
 	{
-		// PangoLanguage* pango_language_from_string (const char *language);
+		// PangoLanguage * pango_language_from_string (const char *language);
 		auto p = pango_language_from_string(Str.toStringz(language));
 		if(p is null)
 		{
@@ -135,7 +135,7 @@ public class PgLanguage
 	 */
 	public string toString()
 	{
-		// const char* pango_language_to_string (PangoLanguage *language);
+		// const char * pango_language_to_string (PangoLanguage *language);
 		return Str.toString(pango_language_to_string(pangoLanguage));
 	}
 	
@@ -203,7 +203,7 @@ public class PgLanguage
 	 */
 	public PangoScript* getScripts(int* numScripts)
 	{
-		// const PangoScript* pango_language_get_scripts (PangoLanguage *language,  int *num_scripts);
+		// const PangoScript * pango_language_get_scripts (PangoLanguage *language,  int *num_scripts);
 		return pango_language_get_scripts(pangoLanguage, numScripts);
 	}
 	
@@ -236,7 +236,7 @@ public class PgLanguage
 	 */
 	public static PgLanguage getDefault()
 	{
-		// PangoLanguage* pango_language_get_default (void);
+		// PangoLanguage * pango_language_get_default (void);
 		auto p = pango_language_get_default();
 		if(p is null)
 		{
@@ -261,7 +261,7 @@ public class PgLanguage
 	 */
 	public string getSampleString()
 	{
-		// const char* pango_language_get_sample_string (PangoLanguage *language);
+		// const char * pango_language_get_sample_string (PangoLanguage *language);
 		return Str.toString(pango_language_get_sample_string(pangoLanguage));
 	}
 }

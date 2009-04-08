@@ -114,7 +114,7 @@ public class PgGlyphString
 	 */
 	public this ()
 	{
-		// PangoGlyphString* pango_glyph_string_new (void);
+		// PangoGlyphString * pango_glyph_string_new (void);
 		auto p = pango_glyph_string_new();
 		if(p is null)
 		{
@@ -129,7 +129,7 @@ public class PgGlyphString
 	 */
 	public PgGlyphString copy()
 	{
-		// PangoGlyphString* pango_glyph_string_copy (PangoGlyphString *string);
+		// PangoGlyphString * pango_glyph_string_copy (PangoGlyphString *string);
 		auto p = pango_glyph_string_copy(pangoGlyphString);
 		if(p is null)
 		{

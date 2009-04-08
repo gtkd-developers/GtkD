@@ -112,7 +112,7 @@ public class PgLayoutLine
 	 */
 	public PgLayoutLine doref()
 	{
-		// PangoLayoutLine* pango_layout_line_ref (PangoLayoutLine *line);
+		// PangoLayoutLine * pango_layout_line_ref (PangoLayoutLine *line);
 		auto p = pango_layout_line_ref(pangoLayoutLine);
 		if(p is null)
 		{
@@ -226,12 +226,7 @@ public class PgLayoutLine
 	 *  the last range will extend all the way to the trailing
 	 *  edge of the layout. Otherwise, it will end at the
 	 *  trailing edge of the last character.
-	 * ranges =  location to store a pointer to an array of ranges.
-	 *  The array will be of length 2*n_ranges,
-	 *  with each range starting at (*ranges)[2*n]
-	 *  and of width (*ranges)[2*n + 1] - (*ranges)[2*n].
-	 *  This array must be freed with g_free(). The coordinates are relative
-	 *  to the layout and are in Pango units.
+	 * ranges = out): (array length=n_ranges): (transfer=full. out): (array length=n_ranges): (transfer=full.
 	 */
 	public void getXRanges(int startIndex, int endIndex, out int[] ranges)
 	{

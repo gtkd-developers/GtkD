@@ -112,7 +112,7 @@ public class PgTabArray
 	 */
 	public this (int initialSize, int positionsInPixels)
 	{
-		// PangoTabArray* pango_tab_array_new (gint initial_size,  gboolean positions_in_pixels);
+		// PangoTabArray * pango_tab_array_new (gint initial_size,  gboolean positions_in_pixels);
 		auto p = pango_tab_array_new(initialSize, positionsInPixels);
 		if(p is null)
 		{
@@ -127,7 +127,7 @@ public class PgTabArray
 	 */
 	public PgTabArray copy()
 	{
-		// PangoTabArray* pango_tab_array_copy (PangoTabArray *src);
+		// PangoTabArray * pango_tab_array_copy (PangoTabArray *src);
 		auto p = pango_tab_array_copy(pangoTabArray);
 		if(p is null)
 		{

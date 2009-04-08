@@ -129,7 +129,7 @@ public class PgFontset : ObjectG
 	 */
 	public PgFont getFont(uint wc)
 	{
-		// PangoFont* pango_fontset_get_font (PangoFontset *fontset,  guint wc);
+		// PangoFont * pango_fontset_get_font (PangoFontset *fontset,  guint wc);
 		auto p = pango_fontset_get_font(pangoFontset, wc);
 		if(p is null)
 		{
@@ -144,7 +144,7 @@ public class PgFontset : ObjectG
 	 */
 	public PgFontMetrics getMetrics()
 	{
-		// PangoFontMetrics* pango_fontset_get_metrics (PangoFontset *fontset);
+		// PangoFontMetrics * pango_fontset_get_metrics (PangoFontset *fontset);
 		auto p = pango_fontset_get_metrics(pangoFontset);
 		if(p is null)
 		{

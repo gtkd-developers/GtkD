@@ -161,7 +161,7 @@ public class PgLayout : ObjectG
 	 */
 	public this (PgContext context)
 	{
-		// PangoLayout* pango_layout_new (PangoContext *context);
+		// PangoLayout * pango_layout_new (PangoContext *context);
 		auto p = pango_layout_new((context is null) ? null : context.getPgContextStruct());
 		if(p is null)
 		{
@@ -178,7 +178,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayout copy()
 	{
-		// PangoLayout* pango_layout_copy (PangoLayout *src);
+		// PangoLayout * pango_layout_copy (PangoLayout *src);
 		auto p = pango_layout_copy(pangoLayout);
 		if(p is null)
 		{
@@ -193,7 +193,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgContext getContext()
 	{
-		// PangoContext* pango_layout_get_context (PangoLayout *layout);
+		// PangoContext * pango_layout_get_context (PangoLayout *layout);
 		auto p = pango_layout_get_context(pangoLayout);
 		if(p is null)
 		{
@@ -221,7 +221,7 @@ public class PgLayout : ObjectG
 	 */
 	public string getText()
 	{
-		// const char* pango_layout_get_text (PangoLayout *layout);
+		// const char * pango_layout_get_text (PangoLayout *layout);
 		return Str.toString(pango_layout_get_text(pangoLayout));
 	}
 	
@@ -282,7 +282,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgAttributeList getAttributes()
 	{
-		// PangoAttrList* pango_layout_get_attributes (PangoLayout *layout);
+		// PangoAttrList * pango_layout_get_attributes (PangoLayout *layout);
 		auto p = pango_layout_get_attributes(pangoLayout);
 		if(p is null)
 		{
@@ -312,7 +312,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgFontDescription getFontDescription()
 	{
-		// const PangoFontDescription* pango_layout_get_font_description  (PangoLayout *layout);
+		// const PangoFontDescription * pango_layout_get_font_description  (PangoLayout *layout);
 		auto p = pango_layout_get_font_description(pangoLayout);
 		if(p is null)
 		{
@@ -932,7 +932,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayoutLine getLine(int line)
 	{
-		// PangoLayoutLine* pango_layout_get_line (PangoLayout *layout,  int line);
+		// PangoLayoutLine * pango_layout_get_line (PangoLayout *layout,  int line);
 		auto p = pango_layout_get_line(pangoLayout, line);
 		if(p is null)
 		{
@@ -954,7 +954,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayoutLine getLineReadonly(int line)
 	{
-		// PangoLayoutLine* pango_layout_get_line_readonly (PangoLayout *layout,  int line);
+		// PangoLayoutLine * pango_layout_get_line_readonly (PangoLayout *layout,  int line);
 		auto p = pango_layout_get_line_readonly(pangoLayout, line);
 		if(p is null)
 		{
@@ -967,11 +967,11 @@ public class PgLayout : ObjectG
 	 * Returns the lines of the layout as a list.
 	 * Use the faster pango_layout_get_lines_readonly() if you do not plan
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
-	 * Returns: a GSList containing the lines in the layout. Thispoints to internal data of the PangoLayout and must be used withcare. It will become invalid on any change to the layout'stext or properties.
+	 * Returns:element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
 	 */
 	public ListSG getLines()
 	{
-		// GSList* pango_layout_get_lines (PangoLayout *layout);
+		// GSList * pango_layout_get_lines (PangoLayout *layout);
 		auto p = pango_layout_get_lines(pangoLayout);
 		if(p is null)
 		{
@@ -986,11 +986,11 @@ public class PgLayout : ObjectG
 	 * but the user is not expected
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 * Since 1.16
-	 * Returns: a GSList containing the lines in the layout. Thispoints to internal data of the PangoLayout and must be used withcare. It will become invalid on any change to the layout'stext or properties. No changes should be made to the lines.
+	 * Returns:element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
 	 */
 	public ListSG getLinesReadonly()
 	{
-		// GSList* pango_layout_get_lines_readonly (PangoLayout *layout);
+		// GSList * pango_layout_get_lines_readonly (PangoLayout *layout);
 		auto p = pango_layout_get_lines_readonly(pangoLayout);
 		if(p is null)
 		{
@@ -1005,7 +1005,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayoutIter getIter()
 	{
-		// PangoLayoutIter* pango_layout_get_iter (PangoLayout *layout);
+		// PangoLayoutIter * pango_layout_get_iter (PangoLayout *layout);
 		auto p = pango_layout_get_iter(pangoLayout);
 		if(p is null)
 		{

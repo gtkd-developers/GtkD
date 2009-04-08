@@ -168,7 +168,7 @@ public class PgMatrix
 	 */
 	public PgMatrix matrixCopy()
 	{
-		// PangoMatrix* pango_matrix_copy (const PangoMatrix *matrix);
+		// PangoMatrix * pango_matrix_copy (const PangoMatrix *matrix);
 		auto p = pango_matrix_copy(pangoMatrix);
 		if(p is null)
 		{

@@ -132,7 +132,7 @@ public class PgVersion
 	 */
 	public static string check(int requiredMajor, int requiredMinor, int requiredMicro)
 	{
-		// const char* pango_version_check (int required_major,  int required_minor,  int required_micro);
+		// const char * pango_version_check (int required_major,  int required_minor,  int required_micro);
 		return Str.toString(pango_version_check(requiredMajor, requiredMinor, requiredMicro));
 	}
 }

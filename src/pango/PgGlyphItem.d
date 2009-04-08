@@ -119,7 +119,7 @@ public class PgGlyphItem
 	 */
 	public PgGlyphItem copy()
 	{
-		// PangoGlyphItem* pango_glyph_item_copy (PangoGlyphItem *orig);
+		// PangoGlyphItem * pango_glyph_item_copy (PangoGlyphItem *orig);
 		auto p = pango_glyph_item_copy(pangoGlyphItem);
 		if(p is null)
 		{
@@ -156,7 +156,7 @@ public class PgGlyphItem
 	 */
 	public PgGlyphItem split(string text, int splitIndex)
 	{
-		// PangoGlyphItem* pango_glyph_item_split (PangoGlyphItem *orig,  const char *text,  int split_index);
+		// PangoGlyphItem * pango_glyph_item_split (PangoGlyphItem *orig,  const char *text,  int split_index);
 		auto p = pango_glyph_item_split(pangoGlyphItem, Str.toStringz(text), splitIndex);
 		if(p is null)
 		{
@@ -188,7 +188,7 @@ public class PgGlyphItem
 	 */
 	public ListSG applyAttrs(string text, PgAttributeList list)
 	{
-		// GSList* pango_glyph_item_apply_attrs (PangoGlyphItem *glyph_item,  const char *text,  PangoAttrList *list);
+		// GSList * pango_glyph_item_apply_attrs (PangoGlyphItem *glyph_item,  const char *text,  PangoAttrList *list);
 		auto p = pango_glyph_item_apply_attrs(pangoGlyphItem, Str.toStringz(text), (list is null) ? null : list.getPgAttributeListStruct());
 		if(p is null)
 		{

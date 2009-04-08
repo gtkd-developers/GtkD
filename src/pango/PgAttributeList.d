@@ -116,7 +116,7 @@ public class PgAttributeList
 	 */
 	public this ()
 	{
-		// PangoAttrList* pango_attr_list_new (void);
+		// PangoAttrList * pango_attr_list_new (void);
 		auto p = pango_attr_list_new();
 		if(p is null)
 		{
@@ -132,7 +132,7 @@ public class PgAttributeList
 	 */
 	public PgAttributeList doref()
 	{
-		// PangoAttrList* pango_attr_list_ref (PangoAttrList *list);
+		// PangoAttrList * pango_attr_list_ref (PangoAttrList *list);
 		auto p = pango_attr_list_ref(pangoAttrList);
 		if(p is null)
 		{
@@ -158,7 +158,7 @@ public class PgAttributeList
 	 */
 	public PgAttributeList copy()
 	{
-		// PangoAttrList* pango_attr_list_copy (PangoAttrList *list);
+		// PangoAttrList * pango_attr_list_copy (PangoAttrList *list);
 		auto p = pango_attr_list_copy(pangoAttrList);
 		if(p is null)
 		{
@@ -249,7 +249,7 @@ public class PgAttributeList
 	 */
 	public PgAttributeList filter(PangoAttrFilterFunc func, void* data)
 	{
-		// PangoAttrList* pango_attr_list_filter (PangoAttrList *list,  PangoAttrFilterFunc func,  gpointer data);
+		// PangoAttrList * pango_attr_list_filter (PangoAttrList *list,  PangoAttrFilterFunc func,  gpointer data);
 		auto p = pango_attr_list_filter(pangoAttrList, func, data);
 		if(p is null)
 		{
@@ -265,7 +265,7 @@ public class PgAttributeList
 	 */
 	public PgAttributeIterator getIterator()
 	{
-		// PangoAttrIterator* pango_attr_list_get_iterator (PangoAttrList *list);
+		// PangoAttrIterator * pango_attr_list_get_iterator (PangoAttrList *list);
 		auto p = pango_attr_list_get_iterator(pangoAttrList);
 		if(p is null)
 		{
