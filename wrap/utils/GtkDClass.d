@@ -209,6 +209,8 @@ public class GtkDClass
 
 		needSignalImports = true;
 
+		char[] privPub = ( convParms.templ.length > 0 ) ? "public" : "private";
+
 		externalDeclarations ~= "";
 		externalDeclarations ~= "// " ~ convParms.outPack ~ '.' ~ convParms.clss;
 		externalDeclarations ~= "";
@@ -228,13 +230,10 @@ public class GtkDClass
 		}
 		gtkDText ~= ";\n\n";
 
-		/* Deprecated */ /*
-		gtkDText ~= getNoAssertVersion(); */
-
 		/* Type information should be publicly imported by all modules. */
 		gtkDText ~= "public  import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
-		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n";
-		gtkDText ~= "private import glib.ConstructionException;\n\n";
+		gtkDText ~= privPub ~" import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n";
+		gtkDText ~= privPub ~" import glib.ConstructionException;\n\n";
 		
 		// move signal imports out of classes - JJR
 		if (needSignalImports)
@@ -244,7 +243,7 @@ public class GtkDClass
 			// than we know that we need signal imports.
 			if (i < inLines.length)
 			{
-				gtkDText ~= "private import gobject.Signals;\n";
+				gtkDText ~= privPub ~" import gobject.Signals;\n";
 				gtkDText ~= "public  import gtkc.gdktypes;\n";
 			}	
 		}	
@@ -286,14 +285,14 @@ public class GtkDClass
 				++countDruntime;
 				foreach ( char[] d2Imp ; druntimeImportConvs[imprt] )
 				{ 
-					importDruntime ~= "\tprivate import "~d2Imp~";\n";
+					importDruntime ~= "\t"~ privPub ~" import "~d2Imp~";\n";
 				}
 			}
 			if ( imprt in phobos2ImportConvs )
 			{
 				foreach ( char[] phobos2Imp ; phobos2ImportConvs[imprt] )
 				{ 
-					importDruntime ~= "\tprivate import "~phobos2Imp~";\n";
+					importDruntime ~= "\t"~ privPub ~" import "~phobos2Imp~";\n";
 				}
 			}
 
@@ -302,13 +301,13 @@ public class GtkDClass
 				++countTango;
 				foreach ( char[] tangoImp ; tangoImportConvs[imprt] )
 				{ 
-					importTango ~= "\tprivate import "~tangoImp~";\n";
+					importTango ~= "\t"~ privPub ~" import "~tangoImp~";\n";
 				}
-				importElse ~= "\tprivate import "~imprt~";\n";
+				importElse ~= "\t"~ privPub ~" import "~imprt~";\n";
 			}
 			else
 			{
-				importCommon ~= "private import "~imprt~";\n";
+				importCommon ~= privPub ~" import "~imprt~";\n";
 			}
 		}
 		
@@ -359,21 +358,6 @@ public class GtkDClass
 		append(gtkDText, classHead, tabs);
 
 	}
-	/* Deprecated */ /*
-	private char[] getNoAssertVersion()
-	{
-		return 
-			"version(noAssert)"
-			"\n{"
-			"\n	version(Tango)"
-			"\n	{"
-			"\n		import tango.io.Stdout;	// use the tango loging?"
-			"\n	}"	
-			"\n}"
-			"\n"
-			"\n"
-			;
-	}*/
 
 	private void readGtkDClass(ConvParms* convParms)
 	{

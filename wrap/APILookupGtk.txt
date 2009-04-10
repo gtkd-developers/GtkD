@@ -2284,15 +2284,12 @@ nocode: gtk_entry_set_position
 nocode: gtk_entry_set_editable
 
 # imports for TreeModel Interface
-#import: glib.Str
 import: gtk.EditableT
 import: gtk.EditableIF
 
 # imports for CellEditable Interface
-import: gdk.Event
 import: gtk.CellEditableT
 import: gtk.CellEditableIF
-import: gobject.Signals
 
 out: gtk_entry_get_layout_offsets x
 out: gtk_entry_get_layout_offsets y
@@ -2335,9 +2332,6 @@ import: gtk.TreeModelIF
 structWrap: GtkTreeModel* TreeModelIF
 
 #imports for CellLayout Interface.
-#import: glib.Str
-import: gtk.CellRenderer
-import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
@@ -3667,9 +3661,6 @@ structWrap: GdkRectangle* Rectangle
 import: glib.Str
 
 #imports for CellLayout Interface.
-#import: glib.Str
-#import: gtk.CellRenderer
-#import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
@@ -3951,6 +3942,7 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
+import: gtk.TreeModel
 import: gtk.TreeModelIF
 structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
@@ -3963,9 +3955,6 @@ import: glib.ListG
 structWrap: GList* ListG
 
 #imports for CellLayout Interface.
-#import: glib.Str
-import: gtk.CellRenderer
-#import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
@@ -4047,9 +4036,6 @@ import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
 
 #imports for CellLayout Interface.
-import: glib.Str
-#import: gtk.CellRenderer
-#import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
@@ -4109,18 +4095,10 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
 # imports for TreeModel Interface
-#import: glib.Str
-#import: gtk.TreeIter
-#import: gtk.TreePath
-import: gobject.Value
 import: gtk.TreeModelT
 #import: gtk.TreeModelIF
-import: gobject.Signals
 
 # imports for TreeDragSource Interface
-#import: gtk.TreePath
-#import: gtk.TreeModelIF
-#import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
@@ -4156,18 +4134,10 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
 # imports for TreeModel Interface
-import: glib.Str
-#import: gtk.TreeIter
-#import: gtk.TreePath
-import: gobject.Value
 import: gtk.TreeModelT
 #import: gtk.TreeModelIF
-import: gobject.Signals
 
 # imports for TreeDragSource Interface
-#import: gtk.TreePath
-#import: gtk.TreeModelIF
-#import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
@@ -4241,10 +4211,8 @@ implements: CellEditableIF
 import: gobject.ObjectG
 
 # imports for CellEditable Interface
-import: gdk.Event
 import: gtk.CellEditableT
 import: gtk.CellEditableIF
-import: gobject.Signals
 
 code: start
 	// Minimal implementation.
@@ -4381,32 +4349,18 @@ import: gobject.Value
 structWrap: GValue* Value
 
 #imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-#import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
 # imports for TreeModel Interface
-#import: glib.Str
-#import: gtk.TreeIter
-import: gtk.TreePath
-#import: gobject.Value
 import: gtk.TreeModelT
 import: gtk.TreeModelIF
-import: gobject.Signals
 
 # imports for TreeDragSource Interface
-#import: gtk.TreePath
-#import: gtk.TreeModelIF
-#import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
 # imports for GtkTreeDragDest Interface
-#import: gtk.TreePath
 import: gtk.TreeDragDestT
 import: gtk.TreeDragDestIF
 
@@ -4524,23 +4478,14 @@ import: gdk.Pixbuf;
 import: gobject.Value;
 
 # imports for TreeModel Interface
-#import: glib.Str
-#import: gtk.TreeIter
-import: gtk.TreePath
-#import: gobject.Value
 import: gtk.TreeModelT
 import: gtk.TreeModelIF
-import: gobject.Signals
 
 # imports for TreeDragSource Interface
-#import: gtk.TreePath
-#import: gtk.TreeModelIF
-import: gtk.TreeModel
 import: gtk.TreeDragSourceT
 import: gtk.TreeDragSourceIF
 
 # imports for GtkTreeDragDest Interface
-#import: gtk.TreePath
 import: gtk.TreeDragDestT
 import: gtk.TreeDragDestIF
 
@@ -4748,17 +4693,12 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
 #imports for CellLayout Interface.
-#import: glib.Str
-import: gtk.CellRenderer
-import: glib.ListG
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
 # imports for CellEditable Interface
-import: gdk.Event
 import: gtk.CellEditableT
 import: gtk.CellEditableIF
-import: gobject.Signals
 
 nocode: gtk_combo_box_new
 nocode: gtk_combo_box_new_text
@@ -5674,11 +5614,6 @@ import: gtk.Action
 structWrap: GtkAction* Action
 
 #imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
@@ -5709,11 +5644,6 @@ structWrap: GtkWidget* Widget
 #structWrap: GtkRadioActionEntry* RadioActionEntry
 
 #imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
@@ -5747,11 +5677,6 @@ import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 
 #imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
@@ -5984,14 +5909,6 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 
 # imports for FileChooser Interface
-#import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListSG
-import: gio.File
-#import: gtk.Widget
-import: gtk.Window
-import: gtk.FileFilter
 import: gtk.FileChooserT
 import: gtk.FileChooserIF
 
@@ -6011,17 +5928,8 @@ import: glib.Str
 import: gtk.Window
 
 # imports for FileChooser Interface
-#import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListSG
-import: gio.File
-import: gtk.Widget
-#import: gtk.Window
-import: gtk.FileFilter
 import: gtk.FileChooserT
 import: gtk.FileChooserIF
-import: gobject.Signals
 
 nocode: gtk_file_chooser_dialog_new
 nocode: gtk_file_chooser_dialog_new_with_backend
@@ -6133,17 +6041,8 @@ prefix: gtk_
 import: glib.Str
 
 # imports for FileChooser Interface
-#import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListSG
-import: gio.File
-import: gtk.Widget
-import: gtk.Window
-import: gtk.FileFilter
 import: gtk.FileChooserT
 import: gtk.FileChooserIF
-import: gobject.Signals
 
 code: start
 	// add the FileChooser capabilities
@@ -7066,11 +6965,6 @@ import: glib.ListSG
 structWrap: GSList* ListSG
 
 #imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
@@ -7435,11 +7329,6 @@ import: gtk.Tooltips
 import: gobject.Type
 
 #imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
@@ -7966,14 +7855,6 @@ import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
-#import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gtk.RecentInfo
-import: gtk.RecentFilter
-import: glib.ListG
-import: glib.ListSG
-import: gobject.Signals
 import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 
@@ -8048,14 +7929,6 @@ import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
-#import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gtk.RecentInfo
-import: gtk.RecentFilter
-import: glib.ListG
-import: glib.ListSG
-import: gobject.Signals
 import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 
@@ -8077,14 +7950,6 @@ import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gtk.RecentInfo
-import: gtk.RecentFilter
-import: glib.ListG
-import: glib.ListSG
-import: gobject.Signals
 import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 

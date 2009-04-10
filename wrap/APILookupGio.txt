@@ -243,7 +243,6 @@ structWrap: GObject* ObjectG
 structWrap: GCancellable* Cancellable
 
 #imports for AsyncResult Interface.
-import: gobject.ObjectG
 import: gio.AsyncResultIF
 import: gio.AsyncResultT
 
@@ -313,9 +312,6 @@ structWrap: GCancellable* Cancellable
 structWrap: GFileInfo* FileInfo
 
 #imports for Seekable Interface.
-#import: glib.ErrorG
-#import: glib.GException
-#import: gio.Cancellable
 import: gio.SeekableT
 import: gio.SeekableIF
 
@@ -341,9 +337,6 @@ structWrap: GCancellable* Cancellable
 structWrap: GFileInfo* FileInfo
 
 #imports for Seekable Interface.
-#import: glib.ErrorG
-#import: glib.GException
-#import: gio.Cancellable
 import: gio.SeekableT
 import: gio.SeekableIF
 
@@ -377,9 +370,6 @@ implements: SeekableIF
 prefix: g_memory_input_stream_
 
 #imports for Seekable Interface.
-import: glib.ErrorG
-import: glib.GException
-import: gio.Cancellable
 import: gio.SeekableT
 import: gio.SeekableIF
 
@@ -397,9 +387,6 @@ implements: SeekableIF
 prefix: g_memory_output_stream_
 
 #imports for Seekable Interface.
-import: glib.ErrorG
-import: glib.GException
-import: gio.Cancellable
 import: gio.SeekableT
 import: gio.SeekableIF
 
@@ -527,13 +514,6 @@ implements: AppInfoIF
 import: gobject.ObjectG
 
 # imports for AppInfo Interface
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListG
-import: gio.AppLaunchContext
-import: gio.Icon
-import: gio.IconIF
 import: gio.AppInfoT
 import: gio.AppInfoIF
 
@@ -587,13 +567,6 @@ structWrap: GKeyFile* KeyFile
 structWrap: GAppInfo* AppInfoIF
 
 #imports for AppInfo Interface.
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListG
-import: gio.AppLaunchContext
-import: gio.Icon
-import: gio.IconIF
 import: gio.AppInfoT
 import: gio.AppInfoIF
 
@@ -685,20 +658,6 @@ implements: VolumeIF
 import: gobject.ObjectG
 
 # imports for Volume Interface
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gobject.Signals
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.Drive
-import: gio.DriveIF
-import: gio.File
-import: gio.Icon
-import: gio.IconIF
-import: gio.Mount
-import: gio.MountIF
-import: gio.MountOperation
 import: gio.VolumeT
 import: gio.VolumeIF
 
@@ -765,20 +724,6 @@ implements: MountIF
 import: gobject.ObjectG
 
 # imports for Mount Interface
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gobject.Signals
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.Drive
-import: gio.DriveIF
-import: gio.File
-import: gio.Icon
-import: gio.IconIF
-import: gio.MountOperation
-import: gio.Volume
-import: gio.VolumeIF
 import: gio.MountT
 import: gio.MountIF
 
@@ -837,15 +782,6 @@ implements: DriveIF
 import: gobject.ObjectG
 
 # imports for Drive Interface
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListG
-import: gobject.Signals
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.Icon
-import: gio.IconIF
 import: gio.DriveT
 import: gio.DriveIF
 
@@ -944,9 +880,6 @@ implements: IconIF
 import: gobject.ObjectG
 
 #imports for Icon Interface.
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
 import: gio.IconT
 import: gio.IconIF
 
@@ -986,19 +919,10 @@ implements: LoadableIconIF
 prefix: g_file_icon_
 
 #imports for Icon Interface.
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
 import: gio.IconT
 import: gio.IconIF
 
 #imports for LoadableIcon Interface.
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.InputStream
 import: gio.LoadableIconT
 import: gio.LoadableIconIF
 
@@ -1041,9 +965,6 @@ prefix: g_themed_icon_
 import: glib.Str
 
 #imports for Icon Interface.
-#import: glib.Str
-import: glib.ErrorG
-import: glib.GException
 import: gio.IconT
 import: gio.IconIF
 
@@ -1071,9 +992,6 @@ structWrap: GEmblem* Emblem
 structWrap: GIcon* IconIF
 
 #imports for Icon Interface.
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
 import: gio.IconT
 #import: gio.IconIF
 
@@ -1095,9 +1013,6 @@ import: gio.IconIF
 structWrap: GIcon* IconIF
 
 #imports for Icon Interface.
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
 import: gio.IconT
 #import: gio.IconIF
 
