@@ -117,7 +117,7 @@ public class IMContextSimple : IMContext
 	 */
 	public static IMContext newIMContextSimple()
 	{
-		// GtkIMContext* gtk_im_context_simple_new (void);
+		// GtkIMContext * gtk_im_context_simple_new (void);
 		auto p = gtk_im_context_simple_new();
 		if(p is null)
 		{

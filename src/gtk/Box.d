@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = Box
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_box_
  * 	- gtk_
@@ -44,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -60,6 +63,8 @@ private import glib.ConstructionException;
 
 
 private import gtk.Widget;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -105,7 +110,7 @@ private import gtk.Container;
  * "fill" and "padding" child properties.
  * Use gtk_box_query_child_packing() to query these fields.
  */
-public class Box : Container
+public class Box : Container, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -144,6 +149,9 @@ public class Box : Container
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkBox);
 	
 	/**
 	 */

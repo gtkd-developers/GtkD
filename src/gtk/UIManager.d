@@ -53,9 +53,6 @@
  * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gtk.Action
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -89,9 +86,6 @@ private import gtk.AccelGroup;
 private import gtk.Widget;
 private import glib.ListSG;
 private import gtk.Action;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -125,7 +119,8 @@ private import gobject.ObjectG;
  * <!ATTLIST toolbar name num;IMPLIED
  *  action num;IMPLIED >
  * <!ATTLIST popup name num;IMPLIED
- *  action num;IMPLIED >
+ *  action num;IMPLIED
+ *  accelerators (true|false) num;IMPLIED >
  * <!ATTLIST placeholder name num;IMPLIED
  *  action num;IMPLIED >
  * <!ATTLIST separator name num;IMPLIED
@@ -153,7 +148,7 @@ private import gobject.ObjectG;
  * would mess up path lookup) and must be usable as XML attributes when
  * enclosed in doublequotes, thus they must not '"' characters or references
  * to the quot; entity.
- * Example 29. A UI definition
+ * Example 32. A UI definition
  * <ui>
  *  <menubar>
  *  <menu name="FileMenu" action="FileMenuAction">
@@ -251,7 +246,7 @@ private import gobject.ObjectG;
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
  * "constructor" attribute. See the example below.
- * Example 30. An embedded GtkUIManager UI definition
+ * Example 33. An embedded GtkUIManager UI definition
  * <object class="GtkUIManager" id="uiman">
  *  <child>
  *  <object class="GtkActionGroup" id="actiongroup">
@@ -514,7 +509,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public this ()
 	{
-		// GtkUIManager* gtk_ui_manager_new (void);
+		// GtkUIManager * gtk_ui_manager_new (void);
 		auto p = gtk_ui_manager_new();
 		if(p is null)
 		{
@@ -585,7 +580,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public ListG getActionGroups()
 	{
-		// GList* gtk_ui_manager_get_action_groups (GtkUIManager *self);
+		// GList * gtk_ui_manager_get_action_groups (GtkUIManager *self);
 		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
 		if(p is null)
 		{
@@ -601,7 +596,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		// GtkAccelGroup* gtk_ui_manager_get_accel_group (GtkUIManager *self);
+		// GtkAccelGroup * gtk_ui_manager_get_accel_group (GtkUIManager *self);
 		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
 		if(p is null)
 		{
@@ -629,7 +624,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public Widget getWidget(string path)
 	{
-		// GtkWidget* gtk_ui_manager_get_widget (GtkUIManager *self,  const gchar *path);
+		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *self,  const gchar *path);
 		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
 		if(p is null)
 		{
@@ -649,7 +644,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
-		// GSList* gtk_ui_manager_get_toplevels (GtkUIManager *self,  GtkUIManagerItemType types);
+		// GSList * gtk_ui_manager_get_toplevels (GtkUIManager *self,  GtkUIManagerItemType types);
 		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
 		if(p is null)
 		{
@@ -668,7 +663,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public Action getAction(string path)
 	{
-		// GtkAction* gtk_ui_manager_get_action (GtkUIManager *self,  const gchar *path);
+		// GtkAction * gtk_ui_manager_get_action (GtkUIManager *self,  const gchar *path);
 		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
 		if(p is null)
 		{
@@ -782,7 +777,7 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public string getUi()
 	{
-		// gchar* gtk_ui_manager_get_ui (GtkUIManager *self);
+		// gchar * gtk_ui_manager_get_ui (GtkUIManager *self);
 		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager));
 	}
 	

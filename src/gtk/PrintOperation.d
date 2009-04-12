@@ -107,7 +107,7 @@ private import gobject.ObjectG;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example 41. The high-level printing API
+ * Example 45. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -579,7 +579,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public this ()
 	{
-		// GtkPrintOperation* gtk_print_operation_new (void);
+		// GtkPrintOperation * gtk_print_operation_new (void);
 		auto p = gtk_print_operation_new();
 		if(p is null)
 		{
@@ -647,7 +647,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public PageSetup getDefaultPageSetup()
 	{
-		// GtkPageSetup* gtk_print_operation_get_default_page_setup  (GtkPrintOperation *op);
+		// GtkPageSetup * gtk_print_operation_get_default_page_setup  (GtkPrintOperation *op);
 		auto p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
 		if(p is null)
 		{
@@ -680,7 +680,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public PrintSettings getPrintSettings()
 	{
-		// GtkPrintSettings* gtk_print_operation_get_print_settings  (GtkPrintOperation *op);
+		// GtkPrintSettings * gtk_print_operation_get_print_settings  (GtkPrintOperation *op);
 		auto p = gtk_print_operation_get_print_settings(gtkPrintOperation);
 		if(p is null)
 		{
@@ -914,6 +914,34 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	/**
+	 * Signalize that drawing of particular page is complete.
+	 * It is called after completion of page drawing (e.g. drawing in another
+	 * thread).
+	 * If gtk_print_operation_set_defer_drawing() was called before, then this function
+	 * has to be called by application. In another case it is called by the library
+	 * itself.
+	 * Since 2.16
+	 */
+	public void drawPageFinish()
+	{
+		// void gtk_print_operation_draw_page_finish  (GtkPrintOperation *op);
+		gtk_print_operation_draw_page_finish(gtkPrintOperation);
+	}
+	
+	/**
+	 * Sets up the GtkPrintOperation to wait for calling of
+	 * gtk_print_operation_draw_page_finish() from application. It can
+	 * be used for drawing page in another thread.
+	 * This function must be called in the callback of "draw-page" signal.
+	 * Since 2.16
+	 */
+	public void setDeferDrawing()
+	{
+		// void gtk_print_operation_set_defer_drawing  (GtkPrintOperation *op);
+		gtk_print_operation_set_defer_drawing(gtkPrintOperation);
+	}
+	
+	/**
 	 * Returns the status of the print operation.
 	 * Also see gtk_print_operation_get_status_string().
 	 * Since 2.10
@@ -936,7 +964,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public string getStatusString()
 	{
-		// const gchar* gtk_print_operation_get_status_string  (GtkPrintOperation *op);
+		// const gchar * gtk_print_operation_get_status_string  (GtkPrintOperation *op);
 		return Str.toString(gtk_print_operation_get_status_string(gtkPrintOperation));
 	}
 	
@@ -973,7 +1001,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public static PageSetup gtkPrintRunPageSetupDialog(Window parent, PageSetup pageSetup, PrintSettings settings)
 	{
-		// GtkPageSetup* gtk_print_run_page_setup_dialog (GtkWindow *parent,  GtkPageSetup *page_setup,  GtkPrintSettings *settings);
+		// GtkPageSetup * gtk_print_run_page_setup_dialog (GtkWindow *parent,  GtkPageSetup *page_setup,  GtkPrintSettings *settings);
 		auto p = gtk_print_run_page_setup_dialog((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct());
 		if(p is null)
 		{

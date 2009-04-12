@@ -65,19 +65,19 @@ module gtk.RecentChooserT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
-private import gobject.Signals;
+public import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import gtk.RecentInfo;
-private import gtk.RecentFilter;
-private import glib.ListG;
-private import glib.ListSG;
+public import glib.Str;
+public import glib.ErrorG;
+public import glib.GException;
+public import gtk.RecentInfo;
+public import gtk.RecentFilter;
+public import glib.ListG;
+public import glib.ListSG;
 
 
 
@@ -456,7 +456,7 @@ public template RecentChooserT(TStruct)
 	 */
 	public string getCurrentUri()
 	{
-		// gchar* gtk_recent_chooser_get_current_uri (GtkRecentChooser *chooser);
+		// gchar * gtk_recent_chooser_get_current_uri (GtkRecentChooser *chooser);
 		return Str.toString(gtk_recent_chooser_get_current_uri(getRecentChooserTStruct()));
 	}
 	
@@ -467,7 +467,7 @@ public template RecentChooserT(TStruct)
 	 */
 	public RecentInfo getCurrentItem()
 	{
-		// GtkRecentInfo* gtk_recent_chooser_get_current_item (GtkRecentChooser *chooser);
+		// GtkRecentInfo * gtk_recent_chooser_get_current_item (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_get_current_item(getRecentChooserTStruct());
 		if(p is null)
 		{
@@ -541,7 +541,7 @@ public template RecentChooserT(TStruct)
 	 */
 	public ListG getItems()
 	{
-		// GList* gtk_recent_chooser_get_items (GtkRecentChooser *chooser);
+		// GList * gtk_recent_chooser_get_items (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_get_items(getRecentChooserTStruct());
 		if(p is null)
 		{
@@ -560,7 +560,7 @@ public template RecentChooserT(TStruct)
 	 */
 	public string[] getUris()
 	{
-		// gchar** gtk_recent_chooser_get_uris (GtkRecentChooser *chooser,  gsize *length);
+		// gchar ** gtk_recent_chooser_get_uris (GtkRecentChooser *chooser,  gsize *length);
 		uint length;
 		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserTStruct(), &length));
 	}
@@ -598,7 +598,7 @@ public template RecentChooserT(TStruct)
 	 */
 	public ListSG listFilters()
 	{
-		// GSList* gtk_recent_chooser_list_filters (GtkRecentChooser *chooser);
+		// GSList * gtk_recent_chooser_list_filters (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_list_filters(getRecentChooserTStruct());
 		if(p is null)
 		{
@@ -628,7 +628,7 @@ public template RecentChooserT(TStruct)
 	 */
 	public RecentFilter getFilter()
 	{
-		// GtkRecentFilter* gtk_recent_chooser_get_filter (GtkRecentChooser *chooser);
+		// GtkRecentFilter * gtk_recent_chooser_get_filter (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_get_filter(getRecentChooserTStruct());
 		if(p is null)
 		{

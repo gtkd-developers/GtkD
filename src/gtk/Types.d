@@ -108,6 +108,7 @@ public class Types
 	 * gtk_type_init is deprecated and should not be used in newly-written code.
 	 * Initializes the data structures associated with GTK+ types.
 	 * Params:
+	 * debugFlags = debug flags
 	 */
 	public static void init(GTypeDebugFlags debugFlags)
 	{
@@ -120,8 +121,9 @@ public class Types
 	 * gtk_type_unique is deprecated and should not be used in newly-written code.
 	 * Creates a new, unique type.
 	 * Params:
-	 * parentType = if zero, a fundamental type is created.
-	 * Returns:the new GtkType.
+	 * parentType = if zero, a fundamental type is created
+	 * gtkinfo = must not be NULL, and type_info->type_name must also not be NULL
+	 * Returns:the new GtkType
 	 */
 	public static GtkType unique(GtkType parentType, GtkTypeInfo* gtkinfo)
 	{
@@ -170,7 +172,7 @@ public class Types
 	 * If enum_type has values, then return a pointer to all of them.
 	 * Params:
 	 * enumType = a GtkType.
-	 * Returns:GtkEnumValue*
+	 * Returns:#GtkEnumValue*
 	 */
 	public static GtkEnumValue* enumGetValues(GtkType enumType)
 	{
@@ -184,7 +186,7 @@ public class Types
 	 * If flags_type has values, then return a pointer to all of them.
 	 * Params:
 	 * flagsType = a GtkType.
-	 * Returns:GtkFlagValue*
+	 * Returns:#GtkFlagValue*
 	 */
 	public static GtkFlagValue* flagsGetValues(GtkType flagsType)
 	{
@@ -199,7 +201,7 @@ public class Types
 	 * Params:
 	 * enumType = a GtkType.
 	 * valueName = the name to look for.
-	 * Returns:GtkEnumValue*
+	 * Returns:#GtkEnumValue*
 	 */
 	public static GtkEnumValue* enumFindValue(GtkType enumType, string valueName)
 	{
@@ -214,7 +216,7 @@ public class Types
 	 * Params:
 	 * flagsType = a GtkType.
 	 * valueName = the name to look for.
-	 * Returns:GtkFlagValue*
+	 * Returns:#GtkFlagValue*
 	 */
 	public static GtkFlagValue* flagsFindValue(GtkType flagsType, string valueName)
 	{

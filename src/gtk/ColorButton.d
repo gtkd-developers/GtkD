@@ -166,7 +166,7 @@ public class ColorButton : Button
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_color_button_new (void);
+		// GtkWidget * gtk_color_button_new (void);
 		auto p = gtk_color_button_new();
 		if(p is null)
 		{
@@ -184,7 +184,7 @@ public class ColorButton : Button
 	 */
 	public this (Color color)
 	{
-		// GtkWidget* gtk_color_button_new_with_color (const GdkColor *color);
+		// GtkWidget * gtk_color_button_new_with_color (const GdkColor *color);
 		auto p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
 		if(p is null)
 		{
@@ -282,7 +282,7 @@ public class ColorButton : Button
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_color_button_get_title (GtkColorButton *color_button);
+		// const gchar * gtk_color_button_get_title (GtkColorButton *color_button);
 		return Str.toString(gtk_color_button_get_title(gtkColorButton));
 	}
 }

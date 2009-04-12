@@ -158,7 +158,7 @@ private import gtk.Widget;
  * supports a <packing> element for children, which can
  * contain multiple <property> elements that specify
  * child properties for the child.
- * Example 47. Child properties in UI definitions
+ * Example 51. Child properties in UI definitions
  * <object class="GtkVBox">
  *  <child>
  *  <object class="GtkLabel"/>
@@ -167,6 +167,9 @@ private import gtk.Widget;
  *  </packing>
  *  </child>
  * </object>
+ * Since 2.16, child properties can also be marked as translatable using
+ * the same "translatable", "comments" and "context" attributes that are used
+ * for regular properties.
  */
 public class Container : Widget
 {
@@ -465,7 +468,7 @@ public class Container : Widget
 	 */
 	public Widget getFocusChild()
 	{
-		// GtkWidget* gtk_container_get_focus_child (GtkContainer *container);
+		// GtkWidget * gtk_container_get_focus_child (GtkContainer *container);
 		auto p = gtk_container_get_focus_child(gtkContainer);
 		if(p is null)
 		{
@@ -495,7 +498,7 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusVadjustment()
 	{
-		// GtkAdjustment* gtk_container_get_focus_vadjustment (GtkContainer *container);
+		// GtkAdjustment * gtk_container_get_focus_vadjustment (GtkContainer *container);
 		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
 		if(p is null)
 		{
@@ -530,7 +533,7 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusHadjustment()
 	{
-		// GtkAdjustment* gtk_container_get_focus_hadjustment (GtkContainer *container);
+		// GtkAdjustment * gtk_container_get_focus_hadjustment (GtkContainer *container);
 		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
 		if(p is null)
 		{

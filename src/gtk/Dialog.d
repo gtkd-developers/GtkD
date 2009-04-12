@@ -119,7 +119,7 @@ private import gtk.Window;
  * For the simple dialog in the following example, in reality you'd probably use
  * GtkMessageDialog to save yourself some effort. But you'd need to create the
  * dialog contents manually if you had more than a simple message in the dialog.
- * Example 5. Simple GtkDialog usage.
+ * Example 6. Simple GtkDialog usage.
  * /+* Function to open a dialog box displaying the message provided. +/
  * void quick_message (gchar *message) {
 	 *  GtkWidget *dialog, *label, *content_area;
@@ -149,7 +149,7 @@ private import gtk.Window;
  * can contain multiple <action-widget> elements. The "response"
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
- * Example 6. A GtkDialog UI definition fragment.
+ * Example 7. A GtkDialog UI definition fragment.
  * <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">"
  *  <object class="GtkVBox">
@@ -277,7 +277,7 @@ public class Dialog : Window
 	/**
 	 * The ::close signal is a
 	 * keybinding signal
-	 * which getrs emitted when the user uses a keybinding to close
+	 * which gets emitted when the user uses a keybinding to close
 	 * the dialog.
 	 * The default binding for this signal is the Escape key.
 	 */

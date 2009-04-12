@@ -140,7 +140,7 @@ private import glib.Str;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 17. Acquiring a GtkTreeIter
+ * Example 19. Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -165,7 +165,7 @@ private import glib.Str;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 18. Reading data from a GtkTreeModel
+ * Example 20. Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -279,7 +279,7 @@ public class TreePath
 	 */
 	public this (string path)
 	{
-		// GtkTreePath* gtk_tree_path_new_from_string (const gchar *path);
+		// GtkTreePath * gtk_tree_path_new_from_string (const gchar *path);
 		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
 		if(p is null)
 		{
@@ -295,7 +295,7 @@ public class TreePath
 	 */
 	public override string toString()
 	{
-		// gchar* gtk_tree_path_to_string (GtkTreePath *path);
+		// gchar * gtk_tree_path_to_string (GtkTreePath *path);
 		return Str.toString(gtk_tree_path_to_string(gtkTreePath));
 	}
 	
@@ -340,7 +340,7 @@ public class TreePath
 	 */
 	public int[] getIndices()
 	{
-		// gint* gtk_tree_path_get_indices (GtkTreePath *path);
+		// gint * gtk_tree_path_get_indices (GtkTreePath *path);
 		auto p = gtk_tree_path_get_indices(gtkTreePath);
 		return p[0 .. getDepth()];
 	}
@@ -360,7 +360,7 @@ public class TreePath
 	 */
 	public TreePath copy()
 	{
-		// GtkTreePath* gtk_tree_path_copy (const GtkTreePath *path);
+		// GtkTreePath * gtk_tree_path_copy (const GtkTreePath *path);
 		auto p = gtk_tree_path_copy(gtkTreePath);
 		if(p is null)
 		{

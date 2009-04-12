@@ -79,7 +79,7 @@ private import gtk.Entry;
  * that it can be checked to ensure it is in a given range.
  * The main properties of a GtkSpinButton are through a GtkAdjustment. See the
  * GtkAdjustment section for more details about an adjustment's properties.
- * Example 14. Using a GtkSpinButton to get an integer.
+ * Example 16. Using a GtkSpinButton to get an integer.
  * /+* Provides a function to retrieve an integer value from a GtkSpinButton
  *  * and creates a spin button to model percentage values.
  *  +/
@@ -98,7 +98,7 @@ private import gtk.Entry;
 	 *  gtk_widget_show_all (window);
 	 *  return;
  * }
- * Example 15. Using a GtkSpinButton to get a floating point value.
+ * Example 17. Using a GtkSpinButton to get a floating point value.
  * /+* Provides a function to retrieve a floating point value from a
  *  * GtkSpinButton, and creates a high precision spin button.
  *  +/
@@ -226,7 +226,6 @@ public class SpinButton : Entry
 		 *  GtkAdjustment *adj;
 		 *  gchar *text;
 		 *  int value;
-		 *
 		 *  adj = gtk_spin_button_get_adjustment (spin);
 		 *  value = (int)gtk_adjustment_get_value (adj);
 		 *  text = g_strdup_printf ("%02d", value);

@@ -136,7 +136,7 @@ public class MountOperation : GioMountOperation
 	 */
 	public this (Window parent)
 	{
-		// GMountOperation* gtk_mount_operation_new (GtkWindow *parent);
+		// GMountOperation * gtk_mount_operation_new (GtkWindow *parent);
 		auto p = gtk_mount_operation_new((parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
@@ -177,7 +177,7 @@ public class MountOperation : GioMountOperation
 	 */
 	public Window getParent()
 	{
-		// GtkWindow* gtk_mount_operation_get_parent (GtkMountOperation *op);
+		// GtkWindow * gtk_mount_operation_get_parent (GtkMountOperation *op);
 		auto p = gtk_mount_operation_get_parent(gtkMountOperation);
 		if(p is null)
 		{
@@ -206,7 +206,7 @@ public class MountOperation : GioMountOperation
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gtk_mount_operation_get_screen (GtkMountOperation *op);
+		// GdkScreen * gtk_mount_operation_get_screen (GtkMountOperation *op);
 		auto p = gtk_mount_operation_get_screen(gtkMountOperation);
 		if(p is null)
 		{

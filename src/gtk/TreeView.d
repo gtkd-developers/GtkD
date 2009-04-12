@@ -131,7 +131,7 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements in UI definitions.
- * Example 19. A UI definition fragment with GtkTreeView
+ * Example 21. A UI definition fragment with GtkTreeView
  * <object class="GtkTreeView" id="treeview">
  *  <property name="model">liststore1</property>
  *  <child>
@@ -572,6 +572,9 @@ public class TreeView : Container
 	
 	void delegate(Adjustment, Adjustment, TreeView)[] onSetScrollAdjustmentsListeners;
 	/**
+	 * Set the scroll adjustments for the tree view. Usually scrolled containers
+	 * like GtkScrolledWindow will emit this signal to connect two instances
+	 * of GtkScrollbar to the scroll directions of the GtkTreeView.
 	 */
 	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -588,11 +591,11 @@ public class TreeView : Container
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTreeView* treeviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, TreeView treeView)
+	extern(C) static void callBackSetScrollAdjustments(GtkTreeView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TreeView treeView)
 	{
 		foreach ( void delegate(Adjustment, Adjustment, TreeView) dlg ; treeView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(arg1), new Adjustment(arg2), treeView);
+			dlg(new Adjustment(vertical), new Adjustment(arg2), treeView);
 		}
 	}
 	
@@ -764,7 +767,7 @@ public class TreeView : Container
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_tree_view_new (void);
+		// GtkWidget * gtk_tree_view_new (void);
 		auto p = gtk_tree_view_new();
 		if(p is null)
 		{
@@ -838,7 +841,7 @@ public class TreeView : Container
 	 */
 	public this (TreeModelIF model)
 	{
-		// GtkWidget* gtk_tree_view_new_with_model (GtkTreeModel *model);
+		// GtkWidget * gtk_tree_view_new_with_model (GtkTreeModel *model);
 		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
@@ -854,7 +857,7 @@ public class TreeView : Container
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_tree_view_get_model (GtkTreeView *tree_view);
+		// GtkTreeModel * gtk_tree_view_get_model (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_model(gtkTreeView);
 		if(p is null)
 		{
@@ -882,7 +885,7 @@ public class TreeView : Container
 	 */
 	public TreeSelection getSelection()
 	{
-		// GtkTreeSelection* gtk_tree_view_get_selection (GtkTreeView *tree_view);
+		// GtkTreeSelection * gtk_tree_view_get_selection (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_selection(gtkTreeView);
 		if(p is null)
 		{
@@ -897,7 +900,7 @@ public class TreeView : Container
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_tree_view_get_hadjustment (GtkTreeView *tree_view);
+		// GtkAdjustment * gtk_tree_view_get_hadjustment (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_hadjustment(gtkTreeView);
 		if(p is null)
 		{
@@ -923,7 +926,7 @@ public class TreeView : Container
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_tree_view_get_vadjustment (GtkTreeView *tree_view);
+		// GtkAdjustment * gtk_tree_view_get_vadjustment (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_vadjustment(gtkTreeView);
 		if(p is null)
 		{
@@ -1100,7 +1103,7 @@ public class TreeView : Container
 	 */
 	public TreeViewColumn getColumn(int n)
 	{
-		// GtkTreeViewColumn* gtk_tree_view_get_column (GtkTreeView *tree_view,  gint n);
+		// GtkTreeViewColumn * gtk_tree_view_get_column (GtkTreeView *tree_view,  gint n);
 		auto p = gtk_tree_view_get_column(gtkTreeView, n);
 		if(p is null)
 		{
@@ -1116,7 +1119,7 @@ public class TreeView : Container
 	 */
 	public ListG getColumns()
 	{
-		// GList* gtk_tree_view_get_columns (GtkTreeView *tree_view);
+		// GList * gtk_tree_view_get_columns (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_columns(gtkTreeView);
 		if(p is null)
 		{
@@ -1160,7 +1163,7 @@ public class TreeView : Container
 	 */
 	public TreeViewColumn getExpanderColumn()
 	{
-		// GtkTreeViewColumn* gtk_tree_view_get_expander_column (GtkTreeView *tree_view);
+		// GtkTreeViewColumn * gtk_tree_view_get_expander_column (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
 		if(p is null)
 		{
@@ -1553,7 +1556,7 @@ public class TreeView : Container
 	 */
 	public Window getBinWindow()
 	{
-		// GdkWindow* gtk_tree_view_get_bin_window (GtkTreeView *tree_view);
+		// GdkWindow * gtk_tree_view_get_bin_window (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
 		if(p is null)
 		{
@@ -1700,7 +1703,7 @@ public class TreeView : Container
 	
 	/**
 	 * Turns tree_view into a drop destination for automatic DND. Calling
-	 * this method sets reorderable to FALSE.
+	 * this method sets "reorderable" to FALSE.
 	 * Params:
 	 * targets =  the table of targets that the drag will support
 	 * actions =  the bitmask of possible actions for a drag from this
@@ -1714,7 +1717,7 @@ public class TreeView : Container
 	
 	/**
 	 * Turns tree_view into a drag source for automatic DND. Calling this
-	 * method sets reorderable to FALSE.
+	 * method sets "reorderable" to FALSE.
 	 * Params:
 	 * startButtonMask =  Mask of allowed buttons to start drag
 	 * targets =  the table of targets that the drag will support
@@ -1730,7 +1733,7 @@ public class TreeView : Container
 	/**
 	 * Undoes the effect of
 	 * gtk_tree_view_enable_model_drag_source(). Calling this method sets
-	 * reorderable to FALSE.
+	 * "reorderable" to FALSE.
 	 */
 	public void unsetRowsDragSource()
 	{
@@ -1741,7 +1744,7 @@ public class TreeView : Container
 	/**
 	 * Undoes the effect of
 	 * gtk_tree_view_enable_model_drag_dest(). Calling this method sets
-	 * reorderable to FALSE.
+	 * "reorderable" to FALSE.
 	 */
 	public void unsetRowsDragDest()
 	{
@@ -1807,7 +1810,7 @@ public class TreeView : Container
 	 */
 	public Pixmap createRowDragIcon(TreePath path)
 	{
-		// GdkPixmap* gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
+		// GdkPixmap * gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
 		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
@@ -1902,7 +1905,7 @@ public class TreeView : Container
 	 */
 	public Entry getSearchEntry()
 	{
-		// GtkEntry* gtk_tree_view_get_search_entry (GtkTreeView *tree_view);
+		// GtkEntry * gtk_tree_view_get_search_entry (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
 		if(p is null)
 		{
@@ -1939,7 +1942,7 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Sets the function to use when positioning the seach dialog.
+	 * Sets the function to use when positioning the search dialog.
 	 * Since 2.10
 	 * Params:
 	 * func =  the function to use to position the search dialog, or NULL
@@ -2019,7 +2022,7 @@ public class TreeView : Container
 	
 	/**
 	 * Enables of disables the hover expansion mode of tree_view.
-	 * Hover expansion makes rows expand or collaps if the pointer
+	 * Hover expansion makes rows expand or collapse if the pointer
 	 * moves over them.
 	 * Since 2.6
 	 * Params:
@@ -2162,6 +2165,7 @@ public class TreeView : Container
 	
 	/**
 	 * Sets the tip area of tooltip to be the area covered by the row at path.
+	 * See also gtk_tree_view_set_tooltip_column() for a simpler alternative.
 	 * See also gtk_tooltip_set_tip_area().
 	 * Since 2.12
 	 * Params:
@@ -2183,6 +2187,7 @@ public class TreeView : Container
 	 * containing the expander, the tooltip might not show and hide at the correct
 	 * position. In such cases path must be set to the current node under the
 	 * mouse cursor for this function to operate correctly.
+	 * See also gtk_tree_view_set_tooltip_column() for a simpler alternative.
 	 * Since 2.12
 	 * Params:
 	 * tooltip =  a GtkTooltip

@@ -43,9 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.Cancellable
  * 	- gio.SeekableT
  * 	- gio.SeekableIF
  * structWrap:
@@ -62,9 +59,6 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.Cancellable;
 private import gio.SeekableT;
 private import gio.SeekableIF;
 

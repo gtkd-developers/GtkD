@@ -209,7 +209,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public this ()
 	{
-		// GtkTreeViewColumn* gtk_tree_view_column_new (void);
+		// GtkTreeViewColumn * gtk_tree_view_column_new (void);
 		auto p = gtk_tree_view_column_new();
 		if(p is null)
 		{
@@ -262,7 +262,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public ListG getCellRenderers()
 	{
-		// GList* gtk_tree_view_column_get_cell_renderers  (GtkTreeViewColumn *tree_column);
+		// GList * gtk_tree_view_column_get_cell_renderers  (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_cell_renderers(gtkTreeViewColumn);
 		if(p is null)
 		{
@@ -403,7 +403,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public GtkTreeViewColumnSizing getSizing()
 	{
-		// GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing (GtkTreeViewColumn *tree_column);
+		// GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing  (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_sizing(gtkTreeViewColumn);
 	}
 	
@@ -519,7 +519,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_tree_view_column_get_title (GtkTreeViewColumn *tree_column);
+		// const gchar * gtk_tree_view_column_get_title (GtkTreeViewColumn *tree_column);
 		return Str.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn));
 	}
 	
@@ -590,7 +590,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public Widget getWidget()
 	{
-		// GtkWidget* gtk_tree_view_column_get_widget (GtkTreeViewColumn *tree_column);
+		// GtkWidget * gtk_tree_view_column_get_widget (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
 		if(p is null)
 		{
@@ -817,7 +817,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public Widget getTreeView()
 	{
-		// GtkWidget* gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
+		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
 		if(p is null)
 		{

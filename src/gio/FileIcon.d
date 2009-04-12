@@ -44,17 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
  * 	- gio.IconT
  * 	- gio.IconIF
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.InputStream
  * 	- gio.LoadableIconT
  * 	- gio.LoadableIconIF
  * structWrap:
@@ -71,17 +62,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
 private import gio.IconT;
 private import gio.IconIF;
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.InputStream;
 private import gio.LoadableIconT;
 private import gio.LoadableIconIF;
 

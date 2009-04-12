@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gtk.IMContext
  * 	- gtk.MenuShell
  * structWrap:
@@ -61,6 +62,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import gtk.IMContext;
 private import gtk.MenuShell;
 
@@ -120,7 +122,7 @@ public class IMMulticontext : IMContext
 	 */
 	public static IMContext newIMMulticontext()
 	{
-		// GtkIMContext* gtk_im_multicontext_new (void);
+		// GtkIMContext * gtk_im_multicontext_new (void);
 		auto p = gtk_im_multicontext_new();
 		if(p is null)
 		{
@@ -140,5 +142,31 @@ public class IMMulticontext : IMContext
 	{
 		// void gtk_im_multicontext_append_menuitems  (GtkIMMulticontext *context,  GtkMenuShell *menushell);
 		gtk_im_multicontext_append_menuitems(gtkIMMulticontext, (menushell is null) ? null : menushell.getMenuShellStruct());
+	}
+	
+	/**
+	 * Gets the id of the currently active slave of the context.
+	 * Since 2.16
+	 * Returns: the id of the currently active slave
+	 */
+	public string getContextId()
+	{
+		// const char * gtk_im_multicontext_get_context_id (GtkIMMulticontext *context);
+		return Str.toString(gtk_im_multicontext_get_context_id(gtkIMMulticontext));
+	}
+	
+	/**
+	 * Sets the context id for context.
+	 * This causes the currently active slave of context to be
+	 * replaced by the slave corresponding to the new context id.
+	 * Since 2.16
+	 * Params:
+	 * context =  a GtkIMMulticontext
+	 * contextId =  the id to use
+	 */
+	public void setContextId(string contextId)
+	{
+		// void gtk_im_multicontext_set_context_id (GtkIMMulticontext *context,  const char *context_id);
+		gtk_im_multicontext_set_context_id(gtkIMMulticontext, Str.toStringz(contextId));
 	}
 }

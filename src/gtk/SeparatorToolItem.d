@@ -125,7 +125,7 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public this ()
 	{
-		// GtkToolItem* gtk_separator_tool_item_new (void);
+		// GtkToolItem * gtk_separator_tool_item_new (void);
 		auto p = gtk_separator_tool_item_new();
 		if(p is null)
 		{
@@ -135,12 +135,12 @@ public class SeparatorToolItem : ToolItem
 	}
 	
 	/**
-	 * When separator_tool_items is drawn as a vertical line, or just blank.
-	 * Setting this FALSE along with gtk_tool_item_set_expand() is useful
+	 * Whether item is drawn as a vertical line, or just blank.
+	 * Setting this to FALSE along with gtk_tool_item_set_expand() is useful
 	 * to create an item that forces following items to the end of the toolbar.
 	 * Since 2.4
 	 * Params:
-	 * draw =  whether separator_tool_item is drawn as a vertical line
+	 * draw =  whether item is drawn as a vertical line
 	 */
 	public void setDraw(int draw)
 	{
@@ -149,10 +149,10 @@ public class SeparatorToolItem : ToolItem
 	}
 	
 	/**
-	 * Returns whether separator_tool_item is drawn as a
-	 * line, or just blank. See gtk_separator_tool_item_set_draw().
+	 * Returns whether item is drawn as a line, or just blank.
+	 * See gtk_separator_tool_item_set_draw().
 	 * Since 2.4
-	 * Returns: TRUE if separator_tool_item is drawn as a line, or just blank.
+	 * Returns: TRUE if item is drawn as a line, or just blank.
 	 */
 	public int getDraw()
 	{

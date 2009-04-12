@@ -46,12 +46,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListSG
- * 	- gio.File
- * 	- gtk.Window
- * 	- gtk.FileFilter
  * 	- gtk.FileChooserT
  * 	- gtk.FileChooserIF
  * structWrap:
@@ -73,12 +67,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.ListSG;
-private import gio.File;
-private import gtk.Window;
-private import gtk.FileFilter;
 private import gtk.FileChooserT;
 private import gtk.FileChooserIF;
 
@@ -94,7 +82,7 @@ private import gtk.HBox;
  * The user can then use that dialog to change the file associated with
  * that button. This widget does not support setting the "select-multiple"
  * property to TRUE.
- * Example 36. Create a button to let the user select a file in /etc
+ * Example 40. Create a button to let the user select a file in /etc
  * {
 	 *  GtkWidget *button;
 	 *  button = gtk_file_chooser_button_new (_("Select a file"),
@@ -200,7 +188,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 */
 	public this (string title, GtkFileChooserAction action)
 	{
-		// GtkWidget* gtk_file_chooser_button_new (const gchar *title,  GtkFileChooserAction action);
+		// GtkWidget * gtk_file_chooser_button_new (const gchar *title,  GtkFileChooserAction action);
 		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
 		if(p is null)
 		{
@@ -211,7 +199,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	
 	/**
 	 * Warning
-	 * gtk_file_chooser_button_new_with_backend is deprecated and should not be used in newly-written code. 2.14
+	 * gtk_file_chooser_button_new_with_backend has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_file_chooser_button_new() instead.
 	 * Creates a new file-selecting button widget using backend.
 	 * Since 2.6
 	 * Params:
@@ -222,7 +210,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 */
 	public this (string title, GtkFileChooserAction action, string backend)
 	{
-		// GtkWidget* gtk_file_chooser_button_new_with_backend  (const gchar *title,  GtkFileChooserAction action,  const gchar *backend);
+		// GtkWidget * gtk_file_chooser_button_new_with_backend  (const gchar *title,  GtkFileChooserAction action,  const gchar *backend);
 		auto p = gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend));
 		if(p is null)
 		{
@@ -247,7 +235,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 */
 	public this (Widget dialog)
 	{
-		// GtkWidget* gtk_file_chooser_button_new_with_dialog  (GtkWidget *dialog);
+		// GtkWidget * gtk_file_chooser_button_new_with_dialog  (GtkWidget *dialog);
 		auto p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct());
 		if(p is null)
 		{
@@ -264,7 +252,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_file_chooser_button_get_title (GtkFileChooserButton *button);
+		// const gchar * gtk_file_chooser_button_get_title (GtkFileChooserButton *button);
 		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton));
 	}
 	

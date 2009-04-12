@@ -210,7 +210,7 @@ public class ToolButton : ToolItem
 	 */
 	public this (Widget iconWidget, string label)
 	{
-		// GtkToolItem* gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
+		// GtkToolItem * gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
 		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
 		if(p is null)
 		{
@@ -231,7 +231,7 @@ public class ToolButton : ToolItem
 	 */
 	public this (string stockId)
 	{
-		// GtkToolItem* gtk_tool_button_new_from_stock (const gchar *stock_id);
+		// GtkToolItem * gtk_tool_button_new_from_stock (const gchar *stock_id);
 		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
 		if(p is null)
 		{
@@ -265,7 +265,7 @@ public class ToolButton : ToolItem
 	 */
 	public string getLabel()
 	{
-		// const gchar* gtk_tool_button_get_label (GtkToolButton *button);
+		// const gchar * gtk_tool_button_get_label (GtkToolButton *button);
 		return Str.toString(gtk_tool_button_get_label(gtkToolButton));
 	}
 	
@@ -321,7 +321,7 @@ public class ToolButton : ToolItem
 	 */
 	public string getStockId()
 	{
-		// const gchar* gtk_tool_button_get_stock_id (GtkToolButton *button);
+		// const gchar * gtk_tool_button_get_stock_id (GtkToolButton *button);
 		return Str.toString(gtk_tool_button_get_stock_id(gtkToolButton));
 	}
 	
@@ -349,7 +349,7 @@ public class ToolButton : ToolItem
 	 */
 	public string getIconName()
 	{
-		// const gchar* gtk_tool_button_get_icon_name (GtkToolButton *button);
+		// const gchar * gtk_tool_button_get_icon_name (GtkToolButton *button);
 		return Str.toString(gtk_tool_button_get_icon_name(gtkToolButton));
 	}
 	
@@ -375,7 +375,7 @@ public class ToolButton : ToolItem
 	 */
 	public Widget getIconWidget()
 	{
-		// GtkWidget* gtk_tool_button_get_icon_widget (GtkToolButton *button);
+		// GtkWidget * gtk_tool_button_get_icon_widget (GtkToolButton *button);
 		auto p = gtk_tool_button_get_icon_widget(gtkToolButton);
 		if(p is null)
 		{
@@ -408,7 +408,7 @@ public class ToolButton : ToolItem
 	 */
 	public Widget getLabelWidget()
 	{
-		// GtkWidget* gtk_tool_button_get_label_widget (GtkToolButton *button);
+		// GtkWidget * gtk_tool_button_get_label_widget (GtkToolButton *button);
 		auto p = gtk_tool_button_get_label_widget(gtkToolButton);
 		if(p is null)
 		{

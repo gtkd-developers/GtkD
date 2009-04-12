@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ActivatableIF
  * prefixes:
  * 	- gtk_menu_item_
  * 	- gtk_
@@ -48,6 +49,8 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
+ * 	- gtk.ActivatableT
+ * 	- gtk.ActivatableIF
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -71,6 +74,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.AccelGroup;
+private import gtk.ActivatableT;
+private import gtk.ActivatableIF;
 
 
 
@@ -83,8 +88,18 @@ private import gtk.Item;
  * alignment, events and submenus.
  * As it derives from GtkBin it can hold any valid child widget, altough
  * only a few are really useful.
+ * GtkMenuItem as GtkBuildable
+ * The GtkMenuItem implementation of the GtkBuildable interface
+ * supports adding a submenu by specifying "submenu" as the "type"
+ * attribute of a <child> element.
+ * Example 30. A UI definition fragment with submenus
+ * <object class="GtkMenuItem">
+ *  <child type="submenu">
+ *  <object class="GtkMenu"/>
+ *  </child>
+ * </object>
  */
-public class MenuItem : Item
+public class MenuItem : Item, ActivatableIF
 {
 	
 	/** the main Gtk struct */
@@ -124,9 +139,11 @@ public class MenuItem : Item
 		this.gtkMenuItem = gtkMenuItem;
 	}
 	
-	
 	/** store the action code passed in by the applcation */
 	private string actionLabel;
+	
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkMenuItem);
 	
 	/** Gets the application set action code */
 	public string getActionName()
@@ -379,6 +396,54 @@ public class MenuItem : Item
 	}
 	
 	/**
+	 * Sets text on the menu_item label
+	 * Since 2.16
+	 * Returns: The text in the menu_item label. This is the internal string used by the label, and must not be modified.
+	 */
+	public string getLabel()
+	{
+		// const gchar * gtk_menu_item_get_label (GtkMenuItem *menu_item);
+		return Str.toString(gtk_menu_item_get_label(gtkMenuItem));
+	}
+	
+	/**
+	 * Sets text on the menu_item label
+	 * Since 2.16
+	 * Params:
+	 * label =  the text you want to set
+	 */
+	public void setLabel(string label)
+	{
+		// void gtk_menu_item_set_label (GtkMenuItem *menu_item,  const gchar *label);
+		gtk_menu_item_set_label(gtkMenuItem, Str.toStringz(label));
+	}
+	
+	/**
+	 * Checks if an underline in the text indicates the next character should be
+	 * used for the mnemonic accelerator key.
+	 * Since 2.16
+	 * Returns: TRUE if an embedded underline in the label indicates the mnemonic accelerator key.
+	 */
+	public int getUseUnderline()
+	{
+		// gboolean gtk_menu_item_get_use_underline (GtkMenuItem *menu_item);
+		return gtk_menu_item_get_use_underline(gtkMenuItem);
+	}
+	
+	/**
+	 * If true, an underline in the text indicates the next character should be
+	 * used for the mnemonic accelerator key.
+	 * Since 2.16
+	 * Params:
+	 * setting =  TRUE if underlines in the text indicate mnemonics
+	 */
+	public void setUseUnderline(int setting)
+	{
+		// void gtk_menu_item_set_use_underline (GtkMenuItem *menu_item,  gboolean setting);
+		gtk_menu_item_set_use_underline(gtkMenuItem, setting);
+	}
+	
+	/**
 	 * Sets or replaces the menu item's submenu, or removes it when a NULL
 	 * submenu is passed.
 	 * Params:
@@ -404,6 +469,19 @@ public class MenuItem : Item
 			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_menu_item_remove_submenu has been deprecated since version 2.12 and should not be used in newly-written code. gtk_menu_item_remove_submenu() is deprecated and
+	 *  should not be used in newly written code. Use
+	 *  gtk_menu_item_set_submenu() instead.
+	 * Removes the widget's submenu.
+	 */
+	public void removeSubmenu()
+	{
+		// void gtk_menu_item_remove_submenu (GtkMenuItem *menu_item);
+		gtk_menu_item_remove_submenu(gtkMenuItem);
 	}
 	
 	/**
@@ -442,19 +520,6 @@ public class MenuItem : Item
 	{
 		// const gchar* gtk_menu_item_get_accel_path (GtkMenuItem *menu_item);
 		return Str.toString(gtk_menu_item_get_accel_path(gtkMenuItem));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_menu_item_remove_submenu has been deprecated since version 2.12 and should not be used in newly-written code. gtk_menu_item_remove_submenu() is deprecated and
-	 *  should not be used in newly written code. Use
-	 *  gtk_menu_item_set_submenu() instead.
-	 * Removes the widget's submenu.
-	 */
-	public void removeSubmenu()
-	{
-		// void gtk_menu_item_remove_submenu (GtkMenuItem *menu_item);
-		gtk_menu_item_remove_submenu(gtkMenuItem);
 	}
 	
 	/**

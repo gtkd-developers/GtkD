@@ -145,7 +145,7 @@ private import gtk.FileFilter;
  * 	gtk_file_chooser_set_preview_widget_active() with a boolean
  * 	flag that indicates whether your callback could successfully
  * 	generate a preview.
- * Example 32. Sample Usage
+ * Example 36. Sample Usage
  * {
 	 *  GtkImage *preview;
 	 *  ...
@@ -168,7 +168,7 @@ private import gtk.FileFilter;
 	 *  g_free (filename);
 	 *  gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
 	 *  if (pixbuf)
-	 *  gobject_unref (pixbuf);
+	 *  g_object_unref (pixbuf);
 	 *  gtk_file_chooser_set_preview_widget_active (file_chooser, have_preview);
  * }
  * <hr>
@@ -179,7 +179,7 @@ private import gtk.FileFilter;
  * 	file in read-only mode. You can use
  * 	gtk_file_chooser_set_extra_widget() to insert additional
  * 	widgets in a file chooser.
- * Example 33. Sample Usage
+ * Example 37. Sample Usage
  * {
 	 *  GtkWidget *toggle;
 	 *  ...
@@ -200,7 +200,7 @@ private import gtk.FileFilter;
  * 	widget has several key
  * 	bindings and their associated signals. This section
  * 	describes the available key binding signals.
- * Example 34. GtkFileChooser key binding example
+ * Example 38. GtkFileChooser key binding example
  * 	 The default keys that activate the key-binding signals in
  * 	 GtkFileChooserDefaultClass are as
  * 	 follows:
@@ -396,7 +396,7 @@ public interface FileChooserIF
 	 *  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
 	 *  illustrates this.
 	 *
-	 * Example 35. Custom confirmation
+	 * Example 39. Custom confirmation
 	 * static GtkFileChooserConfirmation
 	 * confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
 	 * {
@@ -419,9 +419,6 @@ public interface FileChooserIF
 		 * if (gtk_dialog_run (chooser) == GTK_RESPONSE_ACCEPT)
 		 *  save_to_file (gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 		 * gtk_widget_destroy (chooser);
-		 *
-		 * GtkFileChooserConfirmation value that indicates which
-		 *  action to take after emitting the signal.
 		 *
 		 *  Since 2.8
 		 *

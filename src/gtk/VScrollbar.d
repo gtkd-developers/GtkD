@@ -67,6 +67,11 @@ private import gtk.Scrollbar;
 
 /**
  * Description
+ * The GtkVScrollbar widget is a widget arranged verticall creating a
+ * scrollbar. See GtkScrollbar for details on
+ * scrollbars. GtkAdjustment pointers may be added to handle the
+ * adjustment of the scrollbar or it may be left NULL in which case one
+ * will be created for you. See GtkAdjustment for details.
  */
 public class VScrollbar : Scrollbar
 {
@@ -112,7 +117,9 @@ public class VScrollbar : Scrollbar
 	 */
 	
 	/**
+	 * Creates a new vertical scrollbar.
 	 * Params:
+	 * adjustment =  the GtkAdjustment to use, or NULL to create a new adjustment
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)

@@ -253,7 +253,7 @@ public class Assistant : Window
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_assistant_new (void);
+		// GtkWidget * gtk_assistant_new (void);
 		auto p = gtk_assistant_new();
 		if(p is null)
 		{
@@ -310,7 +310,7 @@ public class Assistant : Window
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		// GtkWidget* gtk_assistant_get_nth_page (GtkAssistant *assistant,  gint page_num);
+		// GtkWidget * gtk_assistant_get_nth_page (GtkAssistant *assistant,  gint page_num);
 		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
 		if(p is null)
 		{
@@ -428,7 +428,7 @@ public class Assistant : Window
 	 */
 	public string getPageTitle(Widget page)
 	{
-		// const gchar* gtk_assistant_get_page_title (GtkAssistant *assistant,  GtkWidget *page);
+		// const gchar * gtk_assistant_get_page_title (GtkAssistant *assistant,  GtkWidget *page);
 		return Str.toString(gtk_assistant_get_page_title(gtkAssistant, (page is null) ? null : page.getWidgetStruct()));
 	}
 	
@@ -455,7 +455,7 @@ public class Assistant : Window
 	 */
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
-		// GdkPixbuf* gtk_assistant_get_page_header_image (GtkAssistant *assistant,  GtkWidget *page);
+		// GdkPixbuf * gtk_assistant_get_page_header_image (GtkAssistant *assistant,  GtkWidget *page);
 		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 		if(p is null)
 		{
@@ -487,7 +487,7 @@ public class Assistant : Window
 	 */
 	public Pixbuf getPageSideImage(Widget page)
 	{
-		// GdkPixbuf* gtk_assistant_get_page_side_image (GtkAssistant *assistant,  GtkWidget *page);
+		// GdkPixbuf * gtk_assistant_get_page_side_image (GtkAssistant *assistant,  GtkWidget *page);
 		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 		if(p is null)
 		{

@@ -91,7 +91,7 @@ private import gobject.ObjectG;
  * To obtain a GtkPageSetup use gtk_page_setup_new()
  * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
  * the page setup dialog and receive the resulting page setup.
- * Example 43. A page setup dialog
+ * Example 47. A page setup dialog
  * static GtkPrintSettings *settings = NULL;
  * static GtkPageSetup *page_setup = NULL;
  * static void
@@ -158,7 +158,7 @@ public class PageSetup : ObjectG
 	 */
 	public this ()
 	{
-		// GtkPageSetup* gtk_page_setup_new (void);
+		// GtkPageSetup * gtk_page_setup_new (void);
 		auto p = gtk_page_setup_new();
 		if(p is null)
 		{
@@ -174,7 +174,7 @@ public class PageSetup : ObjectG
 	 */
 	public PageSetup copy()
 	{
-		// GtkPageSetup* gtk_page_setup_copy (GtkPageSetup *other);
+		// GtkPageSetup * gtk_page_setup_copy (GtkPageSetup *other);
 		auto p = gtk_page_setup_copy(gtkPageSetup);
 		if(p is null)
 		{
@@ -213,7 +213,7 @@ public class PageSetup : ObjectG
 	 */
 	public PaperSize getPaperSize()
 	{
-		// GtkPaperSize* gtk_page_setup_get_paper_size (GtkPageSetup *setup);
+		// GtkPaperSize * gtk_page_setup_get_paper_size (GtkPageSetup *setup);
 		auto p = gtk_page_setup_get_paper_size(gtkPageSetup);
 		if(p is null)
 		{
@@ -429,7 +429,7 @@ public class PageSetup : ObjectG
 	 */
 	public this (string fileName)
 	{
-		// GtkPageSetup* gtk_page_setup_new_from_file (const gchar *file_name,  GError **error);
+		// GtkPageSetup * gtk_page_setup_new_from_file (const gchar *file_name,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_page_setup_new_from_file(Str.toStringz(fileName), &err);
@@ -460,7 +460,7 @@ public class PageSetup : ObjectG
 	 */
 	public this (KeyFile keyFile, string groupName)
 	{
-		// GtkPageSetup* gtk_page_setup_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
+		// GtkPageSetup * gtk_page_setup_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);

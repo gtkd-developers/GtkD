@@ -64,16 +64,16 @@ module gtk.TreeModelT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
-private import gobject.Signals;
+public import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import gtk.TreeIter;
-private import gtk.TreePath;
-private import gobject.Value;
+public import glib.Str;
+public import gtk.TreeIter;
+public import gtk.TreePath;
+public import gobject.Value;
 
 
 
@@ -145,7 +145,7 @@ private import gobject.Value;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 17. Acquiring a GtkTreeIter
+ * Example 19. Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -170,7 +170,7 @@ private import gobject.Value;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 18. Reading data from a GtkTreeModel
+ * Example 20. Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -511,7 +511,7 @@ public template TreeModelT(TStruct)
 	 */
 	public TreePath getPath(TreeIter iter)
 	{
-		// GtkTreePath* gtk_tree_model_get_path (GtkTreeModel *tree_model,  GtkTreeIter *iter);
+		// GtkTreePath * gtk_tree_model_get_path (GtkTreeModel *tree_model,  GtkTreeIter *iter);
 		auto p = gtk_tree_model_get_path(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 		if(p is null)
 		{
@@ -521,8 +521,9 @@ public template TreeModelT(TStruct)
 	}
 	
 	/**
-	 * Sets initializes and sets value to that at column. When done with value,
-	 * g_value_unset() needs to be called to free any allocated memory.
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
 	 * Params:
 	 * iter =  The GtkTreeIter.
 	 * column =  The column to lookup the value at.
@@ -634,7 +635,7 @@ public template TreeModelT(TStruct)
 	 */
 	public string getStringFromIter(TreeIter iter)
 	{
-		// gchar* gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter);
+		// gchar * gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter);
 		return Str.toString(gtk_tree_model_get_string_from_iter(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct()));
 	}
 	

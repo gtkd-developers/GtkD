@@ -225,4 +225,73 @@ public class ImageMenuItem : MenuItem
 		}
 		this(cast(GtkImageMenuItem*) p);
 	}
+	
+	/**
+	 * Checks whether the label set in the menuitem is used as a
+	 * stock id to select the stock item for the item.
+	 * Since 2.16
+	 * Returns: TRUE if the label set in the menuitem is used as a stock id to select the stock item for the item
+	 */
+	public int getUseStock()
+	{
+		// gboolean gtk_image_menu_item_get_use_stock (GtkImageMenuItem *image_menu_item);
+		return gtk_image_menu_item_get_use_stock(gtkImageMenuItem);
+	}
+	
+	/**
+	 * If TRUE, the label set in the menuitem is used as a
+	 * stock id to select the stock item for the item.
+	 * Since 2.16
+	 * Params:
+	 * useStock =  TRUE if the menuitem should use a stock item
+	 */
+	public void setUseStock(int useStock)
+	{
+		// void gtk_image_menu_item_set_use_stock (GtkImageMenuItem *image_menu_item,  gboolean use_stock);
+		gtk_image_menu_item_set_use_stock(gtkImageMenuItem, useStock);
+	}
+	
+	/**
+	 * Returns whether the menu item will ignore the "gtk-menu-images"
+	 * setting and always show the image, if available.
+	 * Since 2.16
+	 * Returns: TRUE if the menu item will always show the image
+	 */
+	public int getAlwaysShowImage()
+	{
+		// gboolean gtk_image_menu_item_get_always_show_image  (GtkImageMenuItem *image_menu_item);
+		return gtk_image_menu_item_get_always_show_image(gtkImageMenuItem);
+	}
+	
+	/**
+	 * If TRUE, the menu item will ignore the "gtk-menu-images"
+	 * setting and always show the image, if available.
+	 * Use this property if the menuitem would be useless or hard to use
+	 * without the image.
+	 * Since 2.16
+	 * Params:
+	 * alwaysShow =  TRUE if the menuitem should always show the image
+	 */
+	public void setAlwaysShowImage(int alwaysShow)
+	{
+		// void gtk_image_menu_item_set_always_show_image  (GtkImageMenuItem *image_menu_item,  gboolean always_show);
+		gtk_image_menu_item_set_always_show_image(gtkImageMenuItem, alwaysShow);
+	}
+	
+	/**
+	 * Specifies an accel_group to add the menu items accelerator to
+	 * (this only applies to stock items so a stock item must already
+	 * be set, make sure to call gtk_image_menu_item_set_use_stock()
+	 * and gtk_menu_item_set_label() with a valid stock item first).
+	 * If you want this menu item to have changeable accelerators then
+	 * you shouldnt need this (see gtk_image_menu_item_new_from_stock()).
+	 * Since 2.16
+	 * Params:
+	 * accelGroup =  the GtkAccelGroup
+	 */
+	public void setAccelGroup(AccelGroup accelGroup)
+	{
+		// void gtk_image_menu_item_set_accel_group (GtkImageMenuItem *image_menu_item,  GtkAccelGroup *accel_group);
+		gtk_image_menu_item_set_accel_group(gtkImageMenuItem, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+	}
 }

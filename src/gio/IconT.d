@@ -57,13 +57,13 @@ module gio.IconT;
 
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
+public import gtkc.gio;
+public import glib.ConstructionException;
 
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
+public import glib.Str;
+public import glib.ErrorG;
+public import glib.GException;
 
 
 

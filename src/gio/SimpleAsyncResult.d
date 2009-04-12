@@ -48,7 +48,6 @@
  * 	- glib.GException
  * 	- gobject.ObjectG
  * 	- gio.Cancellable
- * 	- gobject.ObjectG
  * 	- gio.AsyncResultIF
  * 	- gio.AsyncResultT
  * structWrap:
@@ -73,7 +72,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
 private import gio.Cancellable;
-private import gobject.ObjectG;
 private import gio.AsyncResultIF;
 private import gio.AsyncResultT;
 

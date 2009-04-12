@@ -136,7 +136,7 @@ public class RecentFilter : ObjectGtk
 	 */
 	public this ()
 	{
-		// GtkRecentFilter* gtk_recent_filter_new (void);
+		// GtkRecentFilter * gtk_recent_filter_new (void);
 		auto p = gtk_recent_filter_new();
 		if(p is null)
 		{
@@ -153,7 +153,7 @@ public class RecentFilter : ObjectGtk
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_recent_filter_get_name (GtkRecentFilter *filter);
+		// const gchar * gtk_recent_filter_get_name (GtkRecentFilter *filter);
 		return Str.toString(gtk_recent_filter_get_name(gtkRecentFilter));
 	}
 	

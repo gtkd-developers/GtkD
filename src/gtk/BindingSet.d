@@ -175,9 +175,8 @@ public class BindingSet
 	 */
 	
 	/**
-	 * Warning
-	 * gtk_binding_entry_add_signall is deprecated and should not be used in newly-written code.
-	 * Deprecated.
+	 * Override or install a new key binding for keyval with modifiers on
+	 * binding_set.
 	 * Params:
 	 * keyval =  key value
 	 * modifiers =  key modifier
@@ -192,8 +191,8 @@ public class BindingSet
 	
 	/**
 	 * Warning
-	 * gtk_binding_entry_clear is deprecated and should not be used in newly-written code.
-	 * Use of this function is deprecated.
+	 * gtk_binding_entry_clear has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_binding_entry_remove() instead.
+	 * Clears a binding entry.
 	 * Params:
 	 * keyval =  key value of binding to clear
 	 * modifiers =  key modifier of binding to clear
@@ -206,8 +205,8 @@ public class BindingSet
 	
 	/**
 	 * Warning
-	 * gtk_binding_parse_binding is deprecated and should not be used in newly-written code.
-	 * Deprecated as public API, used only internally.
+	 * gtk_binding_parse_binding has been deprecated since version 2.12 and should not be used in newly-written code. There should be no need to call this function outside GTK+.
+	 * Parse a binding entry from a gtkrc file.
 	 * Params:
 	 * scanner =  GtkRC scanner
 	 * Returns: expected token upon errors, G_TOKEN_NONE on success.

@@ -93,11 +93,11 @@ private import gtk.MenuShell;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
- * Example 26. Connecting the popup signal handler.
+ * Example 28. Connecting the popup signal handler.
  *  /+* connect our handler which will popup the menu +/
  *  g_signal_connect_swapped (window, "button_press_event",
  * 	G_CALLBACK (my_popup_handler), menu);
- * Example 27. Signal handler which displays a popup menu.
+ * Example 29. Signal handler which displays a popup menu.
  * static gint
  * my_popup_handler (GtkWidget *widget, GdkEvent *event)
  * {
@@ -412,7 +412,7 @@ public class Menu : MenuShell
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_menu_get_title (GtkMenu *menu);
+		// const gchar * gtk_menu_get_title (GtkMenu *menu);
 		return Str.toString(gtk_menu_get_title(gtkMenu));
 	}
 	

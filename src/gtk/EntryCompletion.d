@@ -48,8 +48,6 @@
  * 	- gtk.Widget
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
- * 	- gtk.CellRenderer
- * 	- glib.ListG
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
@@ -74,8 +72,6 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
-private import gtk.CellRenderer;
-private import glib.ListG;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -302,7 +298,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 */
 	public this ()
 	{
-		// GtkEntryCompletion* gtk_entry_completion_new (void);
+		// GtkEntryCompletion * gtk_entry_completion_new (void);
 		auto p = gtk_entry_completion_new();
 		if(p is null)
 		{
@@ -318,7 +314,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 */
 	public Widget getEntry()
 	{
-		// GtkWidget* gtk_entry_completion_get_entry (GtkEntryCompletion *completion);
+		// GtkWidget * gtk_entry_completion_get_entry (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
 		if(p is null)
 		{
@@ -349,7 +345,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_entry_completion_get_model (GtkEntryCompletion *completion);
+		// GtkTreeModel * gtk_entry_completion_get_model (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
 		if(p is null)
 		{
@@ -420,7 +416,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 */
 	public string getCompletionPrefix()
 	{
-		// const gchar* gtk_entry_completion_get_completion_prefix  (GtkEntryCompletion *completion);
+		// const gchar * gtk_entry_completion_get_completion_prefix  (GtkEntryCompletion *completion);
 		return Str.toString(gtk_entry_completion_get_completion_prefix(gtkEntryCompletion));
 	}
 	

@@ -220,7 +220,7 @@ public class ObjectGtk : ObjectG
 	 * Warning
 	 * gtk_object_ref is deprecated and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Increases the reference count of the object.
-	 * Returns:object.
+	 * Returns:@object.
 	 */
 	public ObjectGtk doref()
 	{
@@ -413,9 +413,9 @@ public class ObjectGtk : ObjectG
 	 * argId = an internal number, passed in from here to the "set_arg" and
 	 * "get_arg" handlers of the object.
 	 */
-	public static void addArgType(string argName, GtkType argType, uint argFlags, uint argId)
+	public static void addArgType(string argName, GType argType, uint argFlags, uint argId)
 	{
-		// void gtk_object_add_arg_type (const gchar *arg_name,  GtkType arg_type,  guint arg_flags,  guint arg_id);
+		// void gtk_object_add_arg_type (const gchar *arg_name,  GType arg_type,  guint arg_flags,  guint arg_id);
 		gtk_object_add_arg_type(Str.toStringz(argName), argType, argFlags, argId);
 	}
 	

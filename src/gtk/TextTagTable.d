@@ -206,7 +206,7 @@ public class TextTagTable : ObjectG
 	 */
 	public static TextTagTable tableNew()
 	{
-		// GtkTextTagTable* gtk_text_tag_table_new (void);
+		// GtkTextTagTable * gtk_text_tag_table_new (void);
 		auto p = gtk_text_tag_table_new();
 		if(p is null)
 		{
@@ -253,7 +253,7 @@ public class TextTagTable : ObjectG
 	 */
 	public TextTag tableLookup(string name)
 	{
-		// GtkTextTag* gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
+		// GtkTextTag * gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
 		if(p is null)
 		{

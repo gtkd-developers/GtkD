@@ -52,11 +52,13 @@
  * 	- gdk.Pixbuf
  * 	- gdk.Screen
  * 	- gtk.Menu
+ * 	- gtk.Tooltip
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkScreen* -> Screen
  * 	- GtkMenu* -> Menu
+ * 	- GtkTooltip* -> Tooltip
  * module aliases:
  * local aliases:
  * overrides:
@@ -78,6 +80,7 @@ private import gio.IconIF;
 private import gdk.Pixbuf;
 private import gdk.Screen;
 private import gtk.Menu;
+private import gtk.Tooltip;
 
 
 
@@ -236,6 +239,78 @@ public class StatusIcon : ObjectG
 		}
 	}
 	
+	bool delegate(GdkEventButton*, StatusIcon)[] onButtonPressListeners;
+	/**
+	 * The ::button-press-event signal will be emitted when a button
+	 * (typically from a mouse) is pressed.
+	 * Whether this event is emitted is platform-dependent. Use the ::activate
+	 * and ::popup-menu signals in preference.
+	 * Since 2.14
+	 */
+	void addOnButtonPress(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("button-press-event" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"button-press-event",
+			cast(GCallback)&callBackButtonPress,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["button-press-event"] = 1;
+		}
+		onButtonPressListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackButtonPress(GtkStatusIcon* statusIconStruct, GdkEventButton* event, StatusIcon statusIcon)
+	{
+		foreach ( bool delegate(GdkEventButton*, StatusIcon) dlg ; statusIcon.onButtonPressListeners )
+		{
+			if ( dlg(event, statusIcon) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
+	bool delegate(GdkEventButton*, StatusIcon)[] onButtonReleaseListeners;
+	/**
+	 * The ::button-release-event signal will be emitted when a button
+	 * (typically from a mouse) is released.
+	 * Whether this event is emitted is platform-dependent. Use the ::activate
+	 * and ::popup-menu signals in preference.
+	 * Since 2.14
+	 */
+	void addOnButtonRelease(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("button-release-event" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"button-release-event",
+			cast(GCallback)&callBackButtonRelease,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["button-release-event"] = 1;
+		}
+		onButtonReleaseListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackButtonRelease(GtkStatusIcon* statusIconStruct, GdkEventButton* event, StatusIcon statusIcon)
+	{
+		foreach ( bool delegate(GdkEventButton*, StatusIcon) dlg ; statusIcon.onButtonReleaseListeners )
+		{
+			if ( dlg(event, statusIcon) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
 	void delegate(guint, guint, StatusIcon)[] onPopupMenuListeners;
 	/**
 	 * Gets emitted when the user brings up the context menu
@@ -268,6 +343,85 @@ public class StatusIcon : ObjectG
 		{
 			dlg(button, activateTime, statusIcon);
 		}
+	}
+	
+	bool delegate(gint, gint, gboolean, Tooltip, StatusIcon)[] onQueryTooltipListeners;
+	/**
+	 * Emitted when the "gtk-tooltip-timeout" has expired with the
+	 * cursor hovering above status_icon; or emitted when status_icon got
+	 * focus in keyboard mode.
+	 * Using the given coordinates, the signal handler should determine
+	 * whether a tooltip should be shown for status_icon. If this is
+	 * the case TRUE should be returned, FALSE otherwise. Note that if
+	 * keyboard_mode is TRUE, the values of x and y are undefined and
+	 * should not be used.
+	 * The signal handler is free to manipulate tooltip with the therefore
+	 * destined function calls.
+	 * Whether this signal is emitted is platform-dependent.
+	 * For plain text tooltips, use "tooltip-text" in preference.
+	 * Since 2.16
+	 */
+	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("query-tooltip" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"query-tooltip",
+			cast(GCallback)&callBackQueryTooltip,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["query-tooltip"] = 1;
+		}
+		onQueryTooltipListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackQueryTooltip(GtkStatusIcon* statusIconStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, StatusIcon statusIcon)
+	{
+		foreach ( bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg ; statusIcon.onQueryTooltipListeners )
+		{
+			if ( dlg(x, y, keyboardMode, new Tooltip(tooltip), statusIcon) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
+	bool delegate(GdkEventScroll*, StatusIcon)[] onScrollListeners;
+	/**
+	 * The ::scroll-event signal is emitted when a button in the 4 to 7
+	 * range is pressed. Wheel mice are usually configured to generate
+	 * button press events for buttons 4 and 5 when the wheel is turned.
+	 * Whether this event is emitted is platform-dependent.
+	 */
+	void addOnScroll(bool delegate(GdkEventScroll*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("scroll-event" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"scroll-event",
+			cast(GCallback)&callBackScroll,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["scroll-event"] = 1;
+		}
+		onScrollListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackScroll(GtkStatusIcon* statusIconStruct, GdkEventScroll* event, StatusIcon statusIcon)
+	{
+		foreach ( bool delegate(GdkEventScroll*, StatusIcon) dlg ; statusIcon.onScrollListeners )
+		{
+			if ( dlg(event, statusIcon) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
 	}
 	
 	bool delegate(gint, StatusIcon)[] onSizeChangedListeners;
@@ -312,7 +466,7 @@ public class StatusIcon : ObjectG
 	 */
 	public this ()
 	{
-		// GtkStatusIcon* gtk_status_icon_new (void);
+		// GtkStatusIcon * gtk_status_icon_new (void);
 		auto p = gtk_status_icon_new();
 		if(p is null)
 		{
@@ -332,7 +486,7 @@ public class StatusIcon : ObjectG
 	 */
 	public this (Pixbuf pixbuf)
 	{
-		// GtkStatusIcon* gtk_status_icon_new_from_pixbuf (GdkPixbuf *pixbuf);
+		// GtkStatusIcon * gtk_status_icon_new_from_pixbuf (GdkPixbuf *pixbuf);
 		auto p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
@@ -351,7 +505,7 @@ public class StatusIcon : ObjectG
 	 */
 	public this (IconIF icon)
 	{
-		// GtkStatusIcon* gtk_status_icon_new_from_gicon (GIcon *icon);
+		// GtkStatusIcon * gtk_status_icon_new_from_gicon (GIcon *icon);
 		auto p = gtk_status_icon_new_from_gicon((icon is null) ? null : icon.getIconTStruct());
 		if(p is null)
 		{
@@ -450,7 +604,7 @@ public class StatusIcon : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		// GdkPixbuf* gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
+		// GdkPixbuf * gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
 		if(p is null)
 		{
@@ -470,7 +624,7 @@ public class StatusIcon : ObjectG
 	 */
 	public string getStock()
 	{
-		// const gchar* gtk_status_icon_get_stock (GtkStatusIcon *status_icon);
+		// const gchar * gtk_status_icon_get_stock (GtkStatusIcon *status_icon);
 		return Str.toString(gtk_status_icon_get_stock(gtkStatusIcon));
 	}
 	
@@ -485,7 +639,7 @@ public class StatusIcon : ObjectG
 	 */
 	public string getIconName()
 	{
-		// const gchar* gtk_status_icon_get_icon_name (GtkStatusIcon *status_icon);
+		// const gchar * gtk_status_icon_get_icon_name (GtkStatusIcon *status_icon);
 		return Str.toString(gtk_status_icon_get_icon_name(gtkStatusIcon));
 	}
 	
@@ -501,7 +655,7 @@ public class StatusIcon : ObjectG
 	 */
 	public IconIF getGicon()
 	{
-		// GIcon* gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
+		// GIcon * gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_gicon(gtkStatusIcon);
 		if(p is null)
 		{
@@ -548,7 +702,7 @@ public class StatusIcon : ObjectG
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gtk_status_icon_get_screen (GtkStatusIcon *status_icon);
+		// GdkScreen * gtk_status_icon_get_screen (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
 		if(p is null)
 		{
@@ -558,6 +712,8 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_status_icon_set_tooltip has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_status_icon_set_tooltip_text() instead.
 	 * Sets the tooltip of the status icon.
 	 * Since 2.10
 	 * Params:
@@ -567,6 +723,87 @@ public class StatusIcon : ObjectG
 	{
 		// void gtk_status_icon_set_tooltip (GtkStatusIcon *status_icon,  const gchar *tooltip_text);
 		gtk_status_icon_set_tooltip(gtkStatusIcon, Str.toStringz(tooltipText));
+	}
+	
+	/**
+	 * Sets text as the contents of the tooltip.
+	 * This function will take care of setting "has-tooltip" to
+	 * TRUE and of the default handler for the "query-tooltip"
+	 * signal.
+	 * See also the "tooltip-text" property and
+	 * gtk_tooltip_set_text().
+	 * Since 2.16
+	 * Params:
+	 * text =  the contents of the tooltip for status_icon
+	 */
+	public void setTooltipText(string text)
+	{
+		// void gtk_status_icon_set_tooltip_text (GtkStatusIcon *status_icon,  const gchar *text);
+		gtk_status_icon_set_tooltip_text(gtkStatusIcon, Str.toStringz(text));
+	}
+	
+	/**
+	 * Gets the contents of the tooltip for status_icon.
+	 * Since 2.16
+	 * Returns: the tooltip text, or NULL. You should free the returned string with g_free() when done.
+	 */
+	public string getTooltipText()
+	{
+		// gchar * gtk_status_icon_get_tooltip_text (GtkStatusIcon *status_icon);
+		return Str.toString(gtk_status_icon_get_tooltip_text(gtkStatusIcon));
+	}
+	
+	/**
+	 * Sets markup as the contents of the tooltip, which is marked up with
+	 *  the Pango text markup language.
+	 * This function will take care of setting "has-tooltip" to TRUE
+	 * and of the default handler for the "query-tooltip" signal.
+	 * See also the "tooltip-markup" property and
+	 * gtk_tooltip_set_markup().
+	 * Since 2.16
+	 * Params:
+	 * markup =  the contents of the tooltip for status_icon, or NULL
+	 */
+	public void setTooltipMarkup(string markup)
+	{
+		// void gtk_status_icon_set_tooltip_markup (GtkStatusIcon *status_icon,  const gchar *markup);
+		gtk_status_icon_set_tooltip_markup(gtkStatusIcon, Str.toStringz(markup));
+	}
+	
+	/**
+	 * Gets the contents of the tooltip for status_icon.
+	 * Since 2.16
+	 * Returns: the tooltip text, or NULL. You should free the returned string with g_free() when done.
+	 */
+	public string getTooltipMarkup()
+	{
+		// gchar * gtk_status_icon_get_tooltip_markup (GtkStatusIcon *status_icon);
+		return Str.toString(gtk_status_icon_get_tooltip_markup(gtkStatusIcon));
+	}
+	
+	/**
+	 * Sets the has-tooltip property on status_icon to has_tooltip.
+	 * See "has-tooltip" for more information.
+	 * Since 2.16
+	 * Params:
+	 * hasTooltip =  whether or not status_icon has a tooltip
+	 */
+	public void setHasTooltip(int hasTooltip)
+	{
+		// void gtk_status_icon_set_has_tooltip (GtkStatusIcon *status_icon,  gboolean has_tooltip);
+		gtk_status_icon_set_has_tooltip(gtkStatusIcon, hasTooltip);
+	}
+	
+	/**
+	 * Returns the current value of the has-tooltip property.
+	 * See "has-tooltip" for more information.
+	 * Since 2.16
+	 * Returns: current value of has-tooltip on status_icon.
+	 */
+	public int getHasTooltip()
+	{
+		// gboolean gtk_status_icon_get_has_tooltip (GtkStatusIcon *status_icon);
+		return gtk_status_icon_get_has_tooltip(gtkStatusIcon);
 	}
 	
 	/**

@@ -180,7 +180,7 @@ public class PrintJob : ObjectG
 	 */
 	public this (string title, Printer printer, PrintSettings settings, PageSetup pageSetup)
 	{
-		// GtkPrintJob* gtk_print_job_new (const gchar *title,  GtkPrinter *printer,  GtkPrintSettings *settings,  GtkPageSetup *page_setup);
+		// GtkPrintJob * gtk_print_job_new (const gchar *title,  GtkPrinter *printer,  GtkPrintSettings *settings,  GtkPageSetup *page_setup);
 		auto p = gtk_print_job_new(Str.toStringz(title), (printer is null) ? null : printer.getPrinterStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct());
 		if(p is null)
 		{
@@ -196,7 +196,7 @@ public class PrintJob : ObjectG
 	 */
 	public PrintSettings getSettings()
 	{
-		// GtkPrintSettings* gtk_print_job_get_settings (GtkPrintJob *job);
+		// GtkPrintSettings * gtk_print_job_get_settings (GtkPrintJob *job);
 		auto p = gtk_print_job_get_settings(gtkPrintJob);
 		if(p is null)
 		{
@@ -212,7 +212,7 @@ public class PrintJob : ObjectG
 	 */
 	public Printer getPrinter()
 	{
-		// GtkPrinter* gtk_print_job_get_printer (GtkPrintJob *job);
+		// GtkPrinter * gtk_print_job_get_printer (GtkPrintJob *job);
 		auto p = gtk_print_job_get_printer(gtkPrintJob);
 		if(p is null)
 		{
@@ -228,7 +228,7 @@ public class PrintJob : ObjectG
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_print_job_get_title (GtkPrintJob *job);
+		// const gchar * gtk_print_job_get_title (GtkPrintJob *job);
 		return Str.toString(gtk_print_job_get_title(gtkPrintJob));
 	}
 	
@@ -279,7 +279,7 @@ public class PrintJob : ObjectG
 	 */
 	public Surface getSurface()
 	{
-		// cairo_surface_t* gtk_print_job_get_surface (GtkPrintJob *job,  GError **error);
+		// cairo_surface_t * gtk_print_job_get_surface (GtkPrintJob *job,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_print_job_get_surface(gtkPrintJob, &err);

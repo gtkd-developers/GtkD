@@ -49,10 +49,7 @@
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gtk.TreeIter
- * 	- glib.Str
- * 	- gobject.Value
  * 	- gtk.TreeModelT
- * 	- gobject.Signals
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
  * structWrap:
@@ -76,10 +73,7 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeIter;
-private import glib.Str;
-private import gobject.Value;
 private import gtk.TreeModelT;
-private import gobject.Signals;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
 
@@ -163,7 +157,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 */
 	public static TreeModelIF newTreeModelFilter(TreeModelIF childModel, TreePath root)
 	{
-		// GtkTreeModel* gtk_tree_model_filter_new (GtkTreeModel *child_model,  GtkTreePath *root);
+		// GtkTreeModel * gtk_tree_model_filter_new (GtkTreeModel *child_model,  GtkTreePath *root);
 		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelTStruct(), (root is null) ? null : root.getTreePathStruct());
 		if(p is null)
 		{
@@ -252,7 +246,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
+		// GtkTreeModel * gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
 		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
 		if(p is null)
 		{
@@ -305,7 +299,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
-		// GtkTreePath* gtk_tree_model_filter_convert_child_path_to_path  (GtkTreeModelFilter *filter,  GtkTreePath *child_path);
+		// GtkTreePath * gtk_tree_model_filter_convert_child_path_to_path  (GtkTreeModelFilter *filter,  GtkTreePath *child_path);
 		auto p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
 		if(p is null)
 		{
@@ -327,7 +321,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 */
 	public TreePath convertPathToChildPath(TreePath filterPath)
 	{
-		// GtkTreePath* gtk_tree_model_filter_convert_path_to_child_path  (GtkTreeModelFilter *filter,  GtkTreePath *filter_path);
+		// GtkTreePath * gtk_tree_model_filter_convert_path_to_child_path  (GtkTreeModelFilter *filter,  GtkTreePath *filter_path);
 		auto p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
 		if(p is null)
 		{

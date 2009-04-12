@@ -22,36 +22,33 @@
 
 /*
  * Conversion parameters:
- * inFile  = 
+ * inFile  = gtk-Orientable.html
  * outPack = gtk
- * outFile = CellEditable
- * strct   = 
+ * outFile = OrientableIF
+ * strct   = GtkOrientable
  * realStrct=
  * ctorStrct=
- * clss    = CellEditable
- * interf  = 
- * class Code: Yes
+ * clss    = OrientableT
+ * interf  = OrientableIF
+ * class Code: No
  * interface Code: No
  * template for:
- * extend  = ObjectG
+ * extend  = 
  * implements:
- * 	- CellEditableIF
  * prefixes:
+ * 	- gtk_orientable_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gobject.ObjectG
- * 	- gtk.CellEditableT
- * 	- gtk.CellEditableIF
  * structWrap:
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gtk.CellEditable;
+module gtk.OrientableIF;
 
 public  import gtkc.gtktypes;
 
@@ -59,42 +56,45 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gobject.ObjectG;
-private import gtk.CellEditableT;
-private import gtk.CellEditableIF;
 
 
 
 
 /**
+ * Description
+ * The GtkOrientable interface is implemented by all widgets that can be
+ * oriented horizontally or vertically. Historically, such widgets have been
+ * realized as subclasses of a common base class (e.g GtkBox/GtkHBox/GtkVBox
+ * and GtkScale/GtkHScale/GtkVScale). GtkOrientable is more flexible in that
+ * it allows the orientation to be changed at runtime, allowing the widgets
+ * to 'flip'.
+ * GtkOrientable was introduced in GTK+ 2.16.
  */
-public class CellEditable : ObjectG, CellEditableIF
+public interface OrientableIF
 {
 	
-	// Minimal implementation.
-	mixin CellEditableT!(GtkCellEditable);
+	
+	public GtkOrientable* getOrientableTStruct();
 	
 	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
-	{
-		return cast(void*)gtkCellEditable;
-	}
+	protected void* getStruct();
 	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkCellEditable* gtkCellEditable)
-	{
-		if(gtkCellEditable is null)
-		{
-			this = null;
-			return;
-		}
-		
-		super(cast(GObject*)gtkCellEditable);
-		this.gtkCellEditable = gtkCellEditable;
-	}
 	
 	/**
 	 */
+	
+	/**
+	 * Retrieves the orientation of the orientable.
+	 * Since 2.16
+	 * Returns: the orientation of the orientable.
+	 */
+	public GtkOrientation getOrientation();
+	
+	/**
+	 * Sets the orientation of the orientable.
+	 * Since 2.16
+	 * Params:
+	 * orientation =  the orientable's new orientation.
+	 */
+	public void setOrientation(GtkOrientation orientation);
 }

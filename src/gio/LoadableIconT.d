@@ -62,16 +62,16 @@ module gio.LoadableIconT;
 
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
+public import gtkc.gio;
+public import glib.ConstructionException;
 
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.InputStream;
+public import glib.Str;
+public import glib.ErrorG;
+public import glib.GException;
+public import gio.AsyncResultIF;
+public import gio.Cancellable;
+public import gio.InputStream;
 
 
 

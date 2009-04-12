@@ -43,15 +43,6 @@
  * omit signals:
  * imports:
  * 	- gobject.ObjectG
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListG
- * 	- gobject.Signals
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.Icon
- * 	- gio.IconIF
  * 	- gio.DriveT
  * 	- gio.DriveIF
  * structWrap:
@@ -69,15 +60,6 @@ private import glib.ConstructionException;
 
 
 private import gobject.ObjectG;
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.ListG;
-private import gobject.Signals;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.Icon;
-private import gio.IconIF;
 private import gio.DriveT;
 private import gio.DriveIF;
 

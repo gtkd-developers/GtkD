@@ -54,11 +54,8 @@
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
  * 	- gobject.Value;
- * 	- gtk.TreePath
  * 	- gtk.TreeModelT
  * 	- gtk.TreeModelIF
- * 	- gobject.Signals
- * 	- gtk.TreeModel
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
  * 	- gtk.TreeDragDestT
@@ -87,11 +84,8 @@ private import gobject.Value;
 private import gtk.TreeNode;
 private import gdk.Pixbuf;;
 private import gobject.Value;;
-private import gtk.TreePath;
 private import gtk.TreeModelT;
 private import gtk.TreeModelIF;
-private import gobject.Signals;
-private import gtk.TreeModel;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragDestT;
@@ -116,7 +110,7 @@ private import gobject.ObjectG;
  * to specify the model columns with a <columns> element that may
  * contain multiple <column> elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
- * Example 25. A UI Definition fragment for a tree store
+ * Example 27. A UI Definition fragment for a tree store
  * <object class="GtkTreeStore">
  *  <columns>
  *  <column type="gchararray"/>
@@ -334,7 +328,7 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	 */
 	public this (GType[] types)
 	{
-		// GtkTreeStore* gtk_tree_store_newv (gint n_columns,  GType *types);
+		// GtkTreeStore * gtk_tree_store_newv (gint n_columns,  GType *types);
 		auto p = gtk_tree_store_newv(types.length, types.ptr);
 		if(p is null)
 		{

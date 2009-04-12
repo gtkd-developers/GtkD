@@ -240,9 +240,9 @@ public class Testing
 	}
 	
 	/**
-	 * This function will adjust theslider position of all GtkRange
+	 * This function will adjust the slider position of all GtkRange
 	 * based widgets, such as scrollbars or scales, it'll also adjust
-	 * spin buttons. The adjustment value of tehse widgets is set to
+	 * spin buttons. The adjustment value of these widgets is set to
 	 * a value between the lower and upper limits, according to the
 	 * percentage argument.
 	 * Since 2.14
@@ -279,7 +279,7 @@ public class Testing
 	 * Since 2.14
 	 * Params:
 	 * widget =  valid widget pointer.
-	 * Returns: new 0-terminated C string, needs to be releaed with g_free().
+	 * Returns: new 0-terminated C string, needs to be released with g_free().
 	 */
 	public static string textGet(Widget widget)
 	{

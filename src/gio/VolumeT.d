@@ -74,26 +74,26 @@ module gio.VolumeT;
 
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
+public import gtkc.gio;
+public import glib.ConstructionException;
 
-private import gobject.Signals;
+public import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import gobject.Signals;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.Drive;
-private import gio.DriveIF;
-private import gio.File;
-private import gio.Icon;
-private import gio.IconIF;
-private import gio.Mount;
-private import gio.MountIF;
-private import gio.MountOperation;
+public import glib.Str;
+public import glib.ErrorG;
+public import glib.GException;
+public import gobject.Signals;
+public import gio.AsyncResultIF;
+public import gio.Cancellable;
+public import gio.Drive;
+public import gio.DriveIF;
+public import gio.File;
+public import gio.Icon;
+public import gio.IconIF;
+public import gio.Mount;
+public import gio.MountIF;
+public import gio.MountOperation;
 
 
 

@@ -92,6 +92,19 @@ private import gtk.Bin;
 
 /**
  * Description
+ * GtkWindow as GtkBuildable
+ * The GtkWindow implementation of the GtkBuildable interface supports a
+ * custom <accel-groups> element, which supports any number of <group>
+ * elements representing the GtkAccelGroup objects you want to add to your
+ * window (synonymous with gtk_window_add_accel_group().
+ * Example 10. A UI definition fragment with accel groups
+ * <object class="GtkWindow">
+ *  <accel-groups>
+ *  <group name="accelgroup1"/>
+ *  </accel-groups>
+ * </object>
+ * ...
+ * <object class="GtkAccelGroup" id="accelgroup1"/>
  */
 public class Window : Bin
 {
@@ -160,6 +173,10 @@ public class Window : Bin
 	
 	void delegate(Window)[] onActivateDefaultListeners;
 	/**
+	 * The ::activate-default signal is a
+	 * keybinding signal
+	 * which gets emitted when the user activates the default widget
+	 * of window.
 	 */
 	void addOnActivateDefault(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -186,6 +203,10 @@ public class Window : Bin
 	
 	void delegate(Window)[] onActivateFocusListeners;
 	/**
+	 * The ::activate-default signal is a
+	 * keybinding signal
+	 * which gets emitted when the user activates the currently
+	 * focused widget of window.
 	 */
 	void addOnActivateFocus(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -243,6 +264,8 @@ public class Window : Bin
 	
 	void delegate(Window)[] onKeysChangedListeners;
 	/**
+	 * The ::keys-changed signal gets emitted when the set of accelerators
+	 * or mnemonics that are associated with window changes.
 	 */
 	void addOnKeysChanged(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -737,7 +760,7 @@ public class Window : Bin
 	 */
 	public Widget getFocus()
 	{
-		// GtkWidget* gtk_window_get_focus (GtkWindow *window);
+		// GtkWidget * gtk_window_get_focus (GtkWindow *window);
 		auto p = gtk_window_get_focus(gtkWindow);
 		if(p is null)
 		{
@@ -770,7 +793,7 @@ public class Window : Bin
 	 */
 	public Widget getDefaultWidget()
 	{
-		// GtkWidget* gtk_window_get_default_widget (GtkWindow *window);
+		// GtkWidget * gtk_window_get_default_widget (GtkWindow *window);
 		auto p = gtk_window_get_default_widget(gtkWindow);
 		if(p is null)
 		{
@@ -1150,26 +1173,6 @@ public class Window : Bin
 	}
 	
 	/**
-	 * This function is only useful on X11, not with other GTK+ targets.
-	 * In combination with the window title, the window role allows a
-	 * window manager to identify "the
-	 * same" window when an application is restarted. So for example you
-	 * might set the "toolbox" role on your app's toolbox window, so that
-	 * when the user restarts their session, the window manager can put
-	 * the toolbox back in the same place.
-	 * If a window already has a unique title, you don't need to set the
-	 * role, since the WM can use the title to identify the window when
-	 * restoring the session.
-	 * Params:
-	 * role =  unique identifier for the window to be used when restoring a session
-	 */
-	public void setRole(string role)
-	{
-		// void gtk_window_set_role (GtkWindow *window,  const gchar *role);
-		gtk_window_set_role(gtkWindow, Str.toStringz(role));
-	}
-	
-	/**
 	 * By setting the type hint for the window, you allow the window
 	 * manager to decorate and handle the window in a way which is
 	 * suitable to the function of the window in your application.
@@ -1275,6 +1278,26 @@ public class Window : Bin
 	}
 	
 	/**
+	 * This function is only useful on X11, not with other GTK+ targets.
+	 * In combination with the window title, the window role allows a
+	 * window manager to identify "the
+	 * same" window when an application is restarted. So for example you
+	 * might set the "toolbox" role on your app's toolbox window, so that
+	 * when the user restarts their session, the window manager can put
+	 * the toolbox back in the same place.
+	 * If a window already has a unique title, you don't need to set the
+	 * role, since the WM can use the title to identify the window when
+	 * restoring the session.
+	 * Params:
+	 * role =  unique identifier for the window to be used when restoring a session
+	 */
+	public void setRole(string role)
+	{
+		// void gtk_window_set_role (GtkWindow *window,  const gchar *role);
+		gtk_window_set_role(gtkWindow, Str.toStringz(role));
+	}
+	
+	/**
 	 * Returns whether the window has been set to have decorations
 	 * such as a title bar via gtk_window_set_decorated().
 	 * Returns: TRUE if the window has been set to have decorations
@@ -1313,6 +1336,21 @@ public class Window : Bin
 			return null;
 		}
 		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Returns the fallback icon name for windows that has been set
+	 * with gtk_window_set_default_icon_name(). The returned
+	 * string is owned by GTK+ and should not be modified. It
+	 * is only valid until the next call to
+	 * gtk_window_set_default_icon_name().
+	 * Since 2.16
+	 * Returns: the fallback icon name for windows
+	 */
+	public static string getDefaultIconName()
+	{
+		// gchar * gtk_window_get_default_icon_name (void);
+		return Str.toString(gtk_window_get_default_icon_name());
 	}
 	
 	/**
@@ -1415,7 +1453,7 @@ public class Window : Bin
 	 */
 	public string getIconName()
 	{
-		// gchar* gtk_window_get_icon_name (GtkWindow *window);
+		// gchar * gtk_window_get_icon_name (GtkWindow *window);
 		return Str.toString(gtk_window_get_icon_name(gtkWindow));
 	}
 	
@@ -1489,7 +1527,7 @@ public class Window : Bin
 	 */
 	public string getRole()
 	{
-		// const gchar* gtk_window_get_role (GtkWindow *window);
+		// const gchar * gtk_window_get_role (GtkWindow *window);
 		return Str.toString(gtk_window_get_role(gtkWindow));
 	}
 	
@@ -1549,7 +1587,7 @@ public class Window : Bin
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_window_get_title (GtkWindow *window);
+		// const gchar * gtk_window_get_title (GtkWindow *window);
 		return Str.toString(gtk_window_get_title(gtkWindow));
 	}
 	
@@ -1560,7 +1598,7 @@ public class Window : Bin
 	 */
 	public Window getTransientFor()
 	{
-		// GtkWindow* gtk_window_get_transient_for (GtkWindow *window);
+		// GtkWindow * gtk_window_get_transient_for (GtkWindow *window);
 		auto p = gtk_window_get_transient_for(gtkWindow);
 		if(p is null)
 		{
@@ -1643,7 +1681,7 @@ public class Window : Bin
 	 */
 	public WindowGroup getGroup()
 	{
-		// GtkWindowGroup* gtk_window_get_group (GtkWindow *window);
+		// GtkWindowGroup * gtk_window_get_group (GtkWindow *window);
 		auto p = gtk_window_get_group(gtkWindow);
 		if(p is null)
 		{

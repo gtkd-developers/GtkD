@@ -45,7 +45,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Style
  * 	- gdk.Color
  * 	- gdk.Window
  * 	- gdk.Rectangle
@@ -55,8 +54,10 @@
  * 	- gtk.Widget
  * 	- gdk.Font
  * 	- gdk.Drawable
+ * 	- gobject.Value
  * 	- pango.PgLayout
  * structWrap:
+ * 	- GValue* -> Value
  * 	- GdkColor* -> Color
  * 	- GdkDrawable* -> Drawable
  * 	- GdkFont* -> Font
@@ -84,7 +85,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Style;
 private import gdk.Color;
 private import gdk.Window;
 private import gdk.Rectangle;
@@ -94,6 +94,7 @@ private import gtk.IconSource;
 private import gtk.Widget;
 private import gdk.Font;
 private import gdk.Drawable;
+private import gobject.Value;
 private import pango.PgLayout;
 
 
@@ -277,6 +278,7 @@ public class Style : ObjectG
 	/**
 	 * Warning
 	 * gtk_style_ref has been deprecated since version 2.0 and should not be used in newly-written code. use g_object_ref() instead.
+	 * Increase the reference count of style.
 	 * Returns: style.
 	 */
 	public Style doref()
@@ -293,6 +295,7 @@ public class Style : ObjectG
 	/**
 	 * Warning
 	 * gtk_style_unref has been deprecated since version 2.0 and should not be used in newly-written code. use g_object_unref() instead.
+	 * Decrease the reference count of style.
 	 */
 	public void unref()
 	{
@@ -341,8 +344,12 @@ public class Style : ObjectG
 	}
 	
 	/**
+	 * Looks up stock_id in the icon factories associated with style
+	 * and the default icon factory, returning an icon set if found,
+	 * otherwise NULL.
 	 * Params:
-	 * Returns:
+	 * stockId =  an icon name
+	 * Returns: icon set of stock_id
 	 */
 	public IconSet lookupIconSet(string stockId)
 	{
@@ -391,7 +398,7 @@ public class Style : ObjectG
 	 */
 	public Font getFont()
 	{
-		// GdkFont* gtk_style_get_font (GtkStyle *style);
+		// GdkFont * gtk_style_get_font (GtkStyle *style);
 		auto p = gtk_style_get_font(gtkStyle);
 		if(p is null)
 		{
@@ -415,6 +422,39 @@ public class Style : ObjectG
 	{
 		// void gtk_style_set_font (GtkStyle *style,  GdkFont *font);
 		gtk_style_set_font(gtkStyle, (font is null) ? null : font.getFontStruct());
+	}
+	
+	/**
+	 * Queries the value of a style property corresponding to a
+	 * widget class is in the given style.
+	 * Since 2.16
+	 * Params:
+	 * widgetType =  the GType of a descendant of GtkWidget
+	 * propertyName =  the name of the style property to get
+	 * value =  a GValue where the value of the property being
+	 *  queried will be stored
+	 */
+	public void getStyleProperty(GType widgetType, string propertyName, Value value)
+	{
+		// void gtk_style_get_style_property (GtkStyle *style,  GType widget_type,  const gchar *property_name,  GValue *value);
+		gtk_style_get_style_property(gtkStyle, widgetType, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
+	}
+	
+	/**
+	 * Non-vararg variant of gtk_style_get().
+	 * Used primarily by language bindings.
+	 * Since 2.16
+	 * Params:
+	 * widgetType =  the GType of a descendant of GtkWidget
+	 * firstPropertyName =  the name of the first style property to get
+	 * varArgs =  a va_list of pairs of property names and
+	 *  locations to return the property values, starting with the
+	 *  location for first_property_name.
+	 */
+	public void getValist(GType widgetType, string firstPropertyName, void* varArgs)
+	{
+		// void gtk_style_get_valist (GtkStyle *style,  GType widget_type,  const gchar *first_property_name,  va_list var_args);
+		gtk_style_get_valist(gtkStyle, widgetType, Str.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -735,7 +775,17 @@ public class Style : ObjectG
 	/**
 	 * Warning
 	 * gtk_draw_slider is deprecated and should not be used in newly-written code.
+	 * Draws a slider in the given rectangle on window using the
+	 * given style and orientation.
 	 * Params:
+	 * window =  a GdkWindow
+	 * stateType =  a state
+	 * shadowType =  a shadow
+	 * x =  the x origin of the rectangle in which to draw a slider
+	 * y =  the y origin of the rectangle in which to draw a slider
+	 * width =  the width of the rectangle in which to draw a slider
+	 * height =  the height of the rectangle in which to draw a slider
+	 * orientation =  the orientation to be used
 	 */
 	public void drawSlider(Window window, GtkStateType stateType, GtkShadowType shadowType, int x, int y, int width, int height, GtkOrientation orientation)
 	{
@@ -783,7 +833,15 @@ public class Style : ObjectG
 	/**
 	 * Warning
 	 * gtk_draw_layout is deprecated and should not be used in newly-written code.
+	 * Draws a layout on window using the given parameters.
 	 * Params:
+	 * window =  a GdkWindow
+	 * stateType =  a state
+	 * useText =  whether to use the text or foreground
+	 *  graphics context of style
+	 * x =  x origin
+	 * y =  y origin
+	 * layout =  the layout to draw
 	 */
 	public void drawLayout(Window window, GtkStateType stateType, int useText, int x, int y, PgLayout layout)
 	{

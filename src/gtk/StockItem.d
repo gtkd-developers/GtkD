@@ -158,7 +158,7 @@ public class StockItem
 	 */
 	public StockItem itemCopy()
 	{
-		// GtkStockItem* gtk_stock_item_copy (const GtkStockItem *item);
+		// GtkStockItem * gtk_stock_item_copy (const GtkStockItem *item);
 		auto p = gtk_stock_item_copy(gtkStockItem);
 		if(p is null)
 		{
@@ -216,6 +216,11 @@ public class StockItem
 	 * a stock item.
 	 * If no function is registered for a translation domain,
 	 * g_dgettext() is used.
+	 * The function is used for all stock items whose
+	 * translation_domain matches domain. Note that it is possible
+	 * to use strings different from the actual gettext translation domain
+	 * of your application for this, as long as your GtkTranslateFunc uses
+	 * the correct domain when calling dgettext(). This can be useful, e.g.
 	 * Since 2.8
 	 * Params:
 	 * domain =  the translation domain for which func shall be used

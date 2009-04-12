@@ -142,7 +142,7 @@ public class VButtonBox : ButtonBox
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_vbutton_box_new (void);
+		// GtkWidget * gtk_vbutton_box_new (void);
 		auto p = gtk_vbutton_box_new();
 		if(p is null)
 		{

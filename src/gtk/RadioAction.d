@@ -187,7 +187,7 @@ public class RadioAction : ToggleAction
 	 */
 	public this (string name, string label, string tooltip, string stockId, int value)
 	{
-		// GtkRadioAction* gtk_radio_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  gint value);
+		// GtkRadioAction * gtk_radio_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  gint value);
 		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
 		if(p is null)
 		{
@@ -205,7 +205,7 @@ public class RadioAction : ToggleAction
 	 */
 	public ListSG getGroup()
 	{
-		// GSList* gtk_radio_action_get_group (GtkRadioAction *action);
+		// GSList * gtk_radio_action_get_group (GtkRadioAction *action);
 		auto p = gtk_radio_action_get_group(gtkRadioAction);
 		if(p is null)
 		{

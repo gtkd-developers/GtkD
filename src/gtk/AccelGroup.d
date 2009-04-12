@@ -316,7 +316,7 @@ public class AccelGroup : ObjectG
 	 *  to activate the accelerator.
 	 * accelKey =  accelerator keyval from a key event
 	 * accelMods =  keyboard state mask from a key event
-	 * Returns: TRUE if the accelerator was handled, FALSE otherwise
+	 * Returns: TRUE if an accelerator was activated and handled this keypress
 	 */
 	public int activate(GQuark accelQuark, ObjectG acceleratable, uint accelKey, GdkModifierType accelMods)
 	{
@@ -399,7 +399,7 @@ public class AccelGroup : ObjectG
 	 *  to activate the accelerator.
 	 * accelKey =  accelerator keyval from a key event
 	 * accelMods =  keyboard state mask from a key event
-	 * Returns: TRUE if the accelerator was handled, FALSE otherwise
+	 * Returns: TRUE if an accelerator was activated and handled this keypress
 	 */
 	public static int accelGroupsActivate(ObjectG object, uint accelKey, GdkModifierType accelMods)
 	{

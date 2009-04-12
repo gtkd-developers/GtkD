@@ -134,7 +134,7 @@ public class FileFilter : ObjectGtk
 	 */
 	public this ()
 	{
-		// GtkFileFilter* gtk_file_filter_new (void);
+		// GtkFileFilter * gtk_file_filter_new (void);
 		auto p = gtk_file_filter_new();
 		if(p is null)
 		{
@@ -165,7 +165,7 @@ public class FileFilter : ObjectGtk
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_file_filter_get_name (GtkFileFilter *filter);
+		// const gchar * gtk_file_filter_get_name (GtkFileFilter *filter);
 		return Str.toString(gtk_file_filter_get_name(gtkFileFilter));
 	}
 	

@@ -182,7 +182,7 @@ public class CellRendererCombo : CellRendererText
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_combo_new (void);
+		// GtkCellRenderer * gtk_cell_renderer_combo_new (void);
 		auto p = gtk_cell_renderer_combo_new();
 		if(p is null)
 		{

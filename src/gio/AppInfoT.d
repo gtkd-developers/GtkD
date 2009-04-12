@@ -66,18 +66,18 @@ module gio.AppInfoT;
 
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
+public import gtkc.gio;
+public import glib.ConstructionException;
 
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.ListG;
-private import gio.AppInfoIF;
-private import gio.AppLaunchContext;
-private import gio.Icon;
-private import gio.IconIF;
+public import glib.Str;
+public import glib.ErrorG;
+public import glib.GException;
+public import glib.ListG;
+public import gio.AppInfoIF;
+public import gio.AppLaunchContext;
+public import gio.Icon;
+public import gio.IconIF;
 
 
 

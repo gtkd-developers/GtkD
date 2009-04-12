@@ -45,9 +45,6 @@
  * imports:
  * 	- gio.Icon
  * 	- gio.IconIF
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
  * 	- gio.IconT
  * structWrap:
  * 	- GIcon* -> IconIF
@@ -66,9 +63,6 @@ private import glib.ConstructionException;
 
 private import gio.Icon;
 private import gio.IconIF;
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
 private import gio.IconT;
 
 

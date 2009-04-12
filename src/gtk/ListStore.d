@@ -53,14 +53,10 @@
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
- * 	- gobject.ObjectG
- * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
- * 	- gtk.TreePath
  * 	- gtk.TreeModelT
  * 	- gtk.TreeModelIF
- * 	- gobject.Signals
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
  * 	- gtk.TreeDragDestT
@@ -87,14 +83,10 @@ private import gtk.TreeModel;
 private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;
-private import gobject.ObjectG;
-private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-private import gtk.TreePath;
 private import gtk.TreeModelT;
 private import gtk.TreeModelIF;
-private import gobject.Signals;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragDestT;
@@ -123,7 +115,7 @@ private import gobject.ObjectG;
  * application writer to call gtk_tree_model_row_changed to emit the
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
- * Example 23. Creating a simple list store.
+ * Example 25. Creating a simple list store.
  * enum {
 	 *  COLUMN_STRING,
 	 *  COLUMN_INT,
@@ -203,7 +195,7 @@ private import gobject.ObjectG;
  * to specify the content of a list store in a UI definition,
  * data, not presentation,
  * and common wisdom is to separate the two, as far as possible.
- * Example 24. A UI Definition fragment for a list store
+ * Example 26. A UI Definition fragment for a list store
  * <object class="GtkListStore">
  *  <columns>
  *  <column type="gchararray"/>
@@ -352,7 +344,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 */
 	public this (GType[] types)
 	{
-		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
+		// GtkListStore * gtk_list_store_newv (gint n_columns,  GType *types);
 		auto p = gtk_list_store_newv(types.length, types.ptr);
 		if(p is null)
 		{

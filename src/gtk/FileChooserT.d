@@ -69,20 +69,20 @@ module gtk.FileChooserT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
-private import gobject.Signals;
+public import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.File;
-private import gtk.Window;
-private import glib.ListSG;
-private import gtk.Widget;
-private import gtk.FileFilter;
+public import glib.Str;
+public import glib.ErrorG;
+public import glib.GException;
+public import gio.File;
+public import gtk.Window;
+public import glib.ListSG;
+public import gtk.Widget;
+public import gtk.FileFilter;
 
 
 
@@ -146,7 +146,7 @@ private import gtk.FileFilter;
  * 	gtk_file_chooser_set_preview_widget_active() with a boolean
  * 	flag that indicates whether your callback could successfully
  * 	generate a preview.
- * Example 32. Sample Usage
+ * Example 36. Sample Usage
  * {
 	 *  GtkImage *preview;
 	 *  ...
@@ -169,7 +169,7 @@ private import gtk.FileFilter;
 	 *  g_free (filename);
 	 *  gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
 	 *  if (pixbuf)
-	 *  gobject_unref (pixbuf);
+	 *  g_object_unref (pixbuf);
 	 *  gtk_file_chooser_set_preview_widget_active (file_chooser, have_preview);
  * }
  * <hr>
@@ -180,7 +180,7 @@ private import gtk.FileFilter;
  * 	file in read-only mode. You can use
  * 	gtk_file_chooser_set_extra_widget() to insert additional
  * 	widgets in a file chooser.
- * Example 33. Sample Usage
+ * Example 37. Sample Usage
  * {
 	 *  GtkWidget *toggle;
 	 *  ...
@@ -201,7 +201,7 @@ private import gtk.FileFilter;
  * 	widget has several key
  * 	bindings and their associated signals. This section
  * 	describes the available key binding signals.
- * Example 34. GtkFileChooser key binding example
+ * Example 38. GtkFileChooser key binding example
  * 	 The default keys that activate the key-binding signals in
  * 	 GtkFileChooserDefaultClass are as
  * 	 follows:
@@ -405,7 +405,7 @@ public template FileChooserT(TStruct)
 	 *  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
 	 *  illustrates this.
 	 *
-	 * Example 35. Custom confirmation
+	 * Example 39. Custom confirmation
 	 * static GtkFileChooserConfirmation
 	 * confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
 	 * {
@@ -428,9 +428,6 @@ public template FileChooserT(TStruct)
 		 * if (gtk_dialog_run (chooser) == GTK_RESPONSE_ACCEPT)
 		 *  save_to_file (gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 		 * gtk_widget_destroy (chooser);
-		 *
-		 * GtkFileChooserConfirmation value that indicates which
-		 *  action to take after emitting the signal.
 		 *
 		 *  Since 2.8
 		 *
@@ -804,7 +801,7 @@ public template FileChooserT(TStruct)
 		 */
 		public string getFilename()
 		{
-			// gchar* gtk_file_chooser_get_filename (GtkFileChooser *chooser);
+			// gchar * gtk_file_chooser_get_filename (GtkFileChooser *chooser);
 			return Str.toString(gtk_file_chooser_get_filename(getFileChooserTStruct()));
 		}
 		
@@ -895,7 +892,7 @@ public template FileChooserT(TStruct)
 		 */
 		public ListSG getFilenames()
 		{
-			// GSList* gtk_file_chooser_get_filenames (GtkFileChooser *chooser);
+			// GSList * gtk_file_chooser_get_filenames (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_filenames(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -934,7 +931,7 @@ public template FileChooserT(TStruct)
 		 */
 		public string getCurrentFolder()
 		{
-			// gchar* gtk_file_chooser_get_current_folder (GtkFileChooser *chooser);
+			// gchar * gtk_file_chooser_get_current_folder (GtkFileChooser *chooser);
 			return Str.toString(gtk_file_chooser_get_current_folder(getFileChooserTStruct()));
 		}
 		
@@ -949,7 +946,7 @@ public template FileChooserT(TStruct)
 		 */
 		public string getUri()
 		{
-			// gchar* gtk_file_chooser_get_uri (GtkFileChooser *chooser);
+			// gchar * gtk_file_chooser_get_uri (GtkFileChooser *chooser);
 			return Str.toString(gtk_file_chooser_get_uri(getFileChooserTStruct()));
 		}
 		
@@ -1018,7 +1015,7 @@ public template FileChooserT(TStruct)
 		 */
 		public ListSG getUris()
 		{
-			// GSList* gtk_file_chooser_get_uris (GtkFileChooser *chooser);
+			// GSList * gtk_file_chooser_get_uris (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_uris(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1057,7 +1054,7 @@ public template FileChooserT(TStruct)
 		 */
 		public string getCurrentFolderUri()
 		{
-			// gchar* gtk_file_chooser_get_current_folder_uri  (GtkFileChooser *chooser);
+			// gchar * gtk_file_chooser_get_current_folder_uri  (GtkFileChooser *chooser);
 			return Str.toString(gtk_file_chooser_get_current_folder_uri(getFileChooserTStruct()));
 		}
 		
@@ -1092,7 +1089,7 @@ public template FileChooserT(TStruct)
 		 */
 		public Widget getPreviewWidget()
 		{
-			// GtkWidget* gtk_file_chooser_get_preview_widget (GtkFileChooser *chooser);
+			// GtkWidget * gtk_file_chooser_get_preview_widget (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_preview_widget(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1166,7 +1163,7 @@ public template FileChooserT(TStruct)
 		 */
 		public string getPreviewFilename()
 		{
-			// char* gtk_file_chooser_get_preview_filename  (GtkFileChooser *chooser);
+			// char * gtk_file_chooser_get_preview_filename  (GtkFileChooser *chooser);
 			return Str.toString(gtk_file_chooser_get_preview_filename(getFileChooserTStruct()));
 		}
 		
@@ -1178,7 +1175,7 @@ public template FileChooserT(TStruct)
 		 */
 		public string getPreviewUri()
 		{
-			// char* gtk_file_chooser_get_preview_uri (GtkFileChooser *chooser);
+			// char * gtk_file_chooser_get_preview_uri (GtkFileChooser *chooser);
 			return Str.toString(gtk_file_chooser_get_preview_uri(getFileChooserTStruct()));
 		}
 		
@@ -1202,7 +1199,7 @@ public template FileChooserT(TStruct)
 		 */
 		public Widget getExtraWidget()
 		{
-			// GtkWidget* gtk_file_chooser_get_extra_widget (GtkFileChooser *chooser);
+			// GtkWidget * gtk_file_chooser_get_extra_widget (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_extra_widget(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1247,7 +1244,7 @@ public template FileChooserT(TStruct)
 		 */
 		public ListSG listFilters()
 		{
-			// GSList* gtk_file_chooser_list_filters (GtkFileChooser *chooser);
+			// GSList * gtk_file_chooser_list_filters (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_list_filters(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1280,7 +1277,7 @@ public template FileChooserT(TStruct)
 		 */
 		public FileFilter getFilter()
 		{
-			// GtkFileFilter* gtk_file_chooser_get_filter (GtkFileChooser *chooser);
+			// GtkFileFilter * gtk_file_chooser_get_filter (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_filter(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1346,7 +1343,7 @@ public template FileChooserT(TStruct)
 		 */
 		public ListSG listShortcutFolders()
 		{
-			// GSList* gtk_file_chooser_list_shortcut_folders  (GtkFileChooser *chooser);
+			// GSList * gtk_file_chooser_list_shortcut_folders  (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_list_shortcut_folders(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1412,7 +1409,7 @@ public template FileChooserT(TStruct)
 		 */
 		public ListSG listShortcutFolderUris()
 		{
-			// GSList* gtk_file_chooser_list_shortcut_folder_uris  (GtkFileChooser *chooser);
+			// GSList * gtk_file_chooser_list_shortcut_folder_uris  (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1429,7 +1426,7 @@ public template FileChooserT(TStruct)
 		 */
 		public File getCurrentFolderFile()
 		{
-			// GFile* gtk_file_chooser_get_current_folder_file  (GtkFileChooser *chooser);
+			// GFile * gtk_file_chooser_get_current_folder_file  (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_current_folder_file(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1449,7 +1446,7 @@ public template FileChooserT(TStruct)
 		 */
 		public File getFile()
 		{
-			// GFile* gtk_file_chooser_get_file (GtkFileChooser *chooser);
+			// GFile * gtk_file_chooser_get_file (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_file(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1466,7 +1463,7 @@ public template FileChooserT(TStruct)
 		 */
 		public ListSG getFiles()
 		{
-			// GSList* gtk_file_chooser_get_files (GtkFileChooser *chooser);
+			// GSList * gtk_file_chooser_get_files (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_files(getFileChooserTStruct());
 			if(p is null)
 			{
@@ -1483,7 +1480,7 @@ public template FileChooserT(TStruct)
 		 */
 		public File getPreviewFile()
 		{
-			// GFile* gtk_file_chooser_get_preview_file (GtkFileChooser *chooser);
+			// GFile * gtk_file_chooser_get_preview_file (GtkFileChooser *chooser);
 			auto p = gtk_file_chooser_get_preview_file(getFileChooserTStruct());
 			if(p is null)
 			{

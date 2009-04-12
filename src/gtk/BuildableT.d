@@ -63,14 +63,14 @@ module gtk.BuildableT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
+public import glib.Str;
+public import gobject.ObjectG;
+public import gobject.Value;
+public import gtk.Builder;
 
 
 
@@ -126,7 +126,7 @@ public template BuildableT(TStruct)
 	 */
 	public string buildableGetName()
 	{
-		// const gchar* gtk_buildable_get_name (GtkBuildable *buildable);
+		// const gchar * gtk_buildable_get_name (GtkBuildable *buildable);
 		return Str.toString(gtk_buildable_get_name(getBuildableTStruct()));
 	}
 	
@@ -171,7 +171,7 @@ public template BuildableT(TStruct)
 	 */
 	public ObjectG constructChild(Builder builder, string name)
 	{
-		// GObject* gtk_buildable_construct_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *name);
+		// GObject * gtk_buildable_construct_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *name);
 		auto p = gtk_buildable_construct_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
 		if(p is null)
 		{
@@ -256,7 +256,7 @@ public template BuildableT(TStruct)
 	 */
 	public ObjectG getInternalChild(Builder builder, string childname)
 	{
-		// GObject* gtk_buildable_get_internal_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *childname);
+		// GObject * gtk_buildable_get_internal_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *childname);
 		auto p = gtk_buildable_get_internal_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));
 		if(p is null)
 		{

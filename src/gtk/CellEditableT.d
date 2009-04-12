@@ -56,13 +56,13 @@ module gtk.CellEditableT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
-private import gobject.Signals;
+public import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gdk.Event;
+public import gdk.Event;
 
 
 

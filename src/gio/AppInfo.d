@@ -43,13 +43,6 @@
  * omit signals:
  * imports:
  * 	- gobject.ObjectG
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListG
- * 	- gio.AppLaunchContext
- * 	- gio.Icon
- * 	- gio.IconIF
  * 	- gio.AppInfoT
  * 	- gio.AppInfoIF
  * structWrap:
@@ -67,13 +60,6 @@ private import glib.ConstructionException;
 
 
 private import gobject.ObjectG;
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.ListG;
-private import gio.AppLaunchContext;
-private import gio.Icon;
-private import gio.IconIF;
 private import gio.AppInfoT;
 private import gio.AppInfoIF;
 

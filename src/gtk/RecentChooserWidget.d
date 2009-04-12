@@ -46,14 +46,6 @@
  * imports:
  * 	- gtk.Widget
  * 	- gtk.RecentManager
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gtk.RecentInfo
- * 	- gtk.RecentFilter
- * 	- glib.ListG
- * 	- glib.ListSG
- * 	- gobject.Signals
  * 	- gtk.RecentChooserIF
  * 	- gtk.RecentChooserT
  * structWrap:
@@ -74,14 +66,6 @@ private import glib.ConstructionException;
 
 private import gtk.Widget;
 private import gtk.RecentManager;
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import gtk.RecentInfo;
-private import gtk.RecentFilter;
-private import glib.ListG;
-private import glib.ListSG;
-private import gobject.Signals;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
 
@@ -153,7 +137,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_recent_chooser_widget_new (void);
+		// GtkWidget * gtk_recent_chooser_widget_new (void);
 		auto p = gtk_recent_chooser_widget_new();
 		if(p is null)
 		{
@@ -173,7 +157,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 	 */
 	public this (RecentManager manager)
 	{
-		// GtkWidget* gtk_recent_chooser_widget_new_for_manager  (GtkRecentManager *manager);
+		// GtkWidget * gtk_recent_chooser_widget_new_for_manager  (GtkRecentManager *manager);
 		auto p = gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{

@@ -113,7 +113,7 @@ private import gdk.Threads;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example 1. Typical main function for a GTK+ application
+ * Example 2. Typical main function for a GTK+ application
  * int
  * main (int argc, char **argv)
  * {
@@ -191,7 +191,7 @@ public class Main
 	 */
 	public static string setLocale()
 	{
-		// gchar* gtk_set_locale (void);
+		// gchar * gtk_set_locale (void);
 		return Str.toString(gtk_set_locale());
 	}
 	
@@ -222,7 +222,7 @@ public class Main
 	 */
 	public static PgLanguage getDefaultLanguage()
 	{
-		// PangoLanguage* gtk_get_default_language (void);
+		// PangoLanguage * gtk_get_default_language (void);
 		auto p = gtk_get_default_language();
 		if(p is null)
 		{
@@ -357,7 +357,7 @@ public class Main
 	 */
 	public static GOptionGroup* getOptionGroup(int openDefaultDisplay)
 	{
-		// GOptionGroup* gtk_get_option_group (gboolean open_default_display);
+		// GOptionGroup * gtk_get_option_group (gboolean open_default_display);
 		return gtk_get_option_group(openDefaultDisplay);
 	}
 	
@@ -380,14 +380,14 @@ public class Main
 	/**
 	 * Checks if any events are pending. This can be used to update the GUI
 	 * and invoke timeouts etc. while doing some time intensive computation.
-	 * Example 2. Updating the GUI during a long computation.
+	 * Example 3. Updating the GUI during a long computation.
 	 * 	/+* computation going on +/
 	 * ...
 	 *  while (gtk_events_pending ())
 	 * 	 gtk_main_iteration ();
 	 * ...
 	 * 	/+* computation continued +/
-	 * Returns:TRUE if any events are pending, FALSE otherwise.
+	 * Returns:%TRUE if any events are pending, FALSE otherwise.
 	 */
 	public static int eventsPending()
 	{
@@ -432,7 +432,7 @@ public class Main
 	 * processed GTK+ will block until the next event is noticed. If you don't
 	 * want to block look at gtk_main_iteration_do() or check if any events are
 	 * pending with gtk_events_pending() first.
-	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Returns:%TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int iteration()
 	{
@@ -444,8 +444,8 @@ public class Main
 	 * Runs a single iteration of the mainloop. If no events are available either
 	 * return or block dependent on the value of blocking.
 	 * Params:
-	 * blocking = TRUE if you want GTK+ to block if no events are pending.
-	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * blocking = %TRUE if you want GTK+ to block if no events are pending.
+	 * Returns:%TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int iterationDo(int blocking)
 	{

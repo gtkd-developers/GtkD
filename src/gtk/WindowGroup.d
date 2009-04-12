@@ -121,7 +121,7 @@ public class WindowGroup : ObjectG
 	 */
 	public this ()
 	{
-		// GtkWindowGroup* gtk_window_group_new (void);
+		// GtkWindowGroup * gtk_window_group_new (void);
 		auto p = gtk_window_group_new();
 		if(p is null)
 		{
@@ -159,7 +159,7 @@ public class WindowGroup : ObjectG
 	 */
 	public ListG listWindows()
 	{
-		// GList* gtk_window_group_list_windows (GtkWindowGroup *window_group);
+		// GList * gtk_window_group_list_windows (GtkWindowGroup *window_group);
 		auto p = gtk_window_group_list_windows(gtkWindowGroup);
 		if(p is null)
 		{

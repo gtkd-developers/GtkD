@@ -493,7 +493,7 @@ public class Calendar : Widget
 	
 	/**
 	 * Warning
-	 * gtk_calendar_display_options is deprecated and should not be used in newly-written code.
+	 * gtk_calendar_display_options has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_calendar_set_display_options() instead
 	 * Sets display options (whether to display the heading and the month headings).
 	 * Params:
 	 * flags =  the display options to set.

@@ -128,17 +128,14 @@ public class FontSelectionDialog : Dialog
 	 */
 	
 	/**
-	 * The title is used to set the title of the GtkFontSelectionDialog
-	 * returned. This GtkDialog is specifically catered with widgets for
-	 * selecting a font from those installed.
 	 * Creates a new GtkFontSelectionDialog.
 	 * Params:
-	 * title =  a pointer to a string
+	 * title =  the title of the dialog window
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title)
 	{
-		// GtkWidget* gtk_font_selection_dialog_new (const gchar *title);
+		// GtkWidget * gtk_font_selection_dialog_new (const gchar *title);
 		auto p = gtk_font_selection_dialog_new(Str.toStringz(title));
 		if(p is null)
 		{
@@ -151,7 +148,7 @@ public class FontSelectionDialog : Dialog
 	 * Warning
 	 * gtk_font_selection_dialog_get_font has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_font_selection_dialog_get_font_name() instead.
 	 * Gets the currently-selected font.
-	 * Returns: the GdkFont from the GtkFontSelection for thecurrently selected font in the dialog.
+	 * Returns: the GdkFont from the GtkFontSelection for the currently selected font in the dialog, or NULL if no font is selected
 	 */
 	public Font getFont()
 	{
@@ -165,13 +162,14 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
-	 * Gets the currently-selected font name. Note that this can be a different
-	 * string than what you set with gtk_font_selection_dialog_set_font_name(), as
-	 * the font selection widget may normalize font names and thus return a string
-	 * with a different structure. For example, "Helvetica Italic Bold 12" could be
-	 * normalized to "Helvetica Bold Italic 12". Use pango_font_description_equal()
+	 * Gets the currently-selected font name.
+	 * Note that this can be a different string than what you set with
+	 * gtk_font_selection_dialog_set_font_name(), as the font selection widget
+	 * may normalize font names and thus return a string with a different
+	 * structure. For example, "Helvetica Italic Bold 12" could be normalized
+	 * to "Helvetica Bold Italic 12". Use pango_font_description_equal()
 	 * if you want to compare two font descriptions.
-	 * Returns: A string with the name of the current font, or NULL if no fontis selected. You must free this string with g_free().
+	 * Returns: A string with the name of the current font, or NULL if no  font is selected. You must free this string with g_free().
 	 */
 	public string getFontName()
 	{
@@ -181,10 +179,9 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Sets the currently selected font.
-	 * Sets the currently-selected font.
 	 * Params:
-	 * fontname =  a pointer to a string
-	 * Returns: TRUE if the font selected in fsd is now thefontname specified. FALSE otherwise.
+	 * fontname =  a font name like "Helvetica 12" or "Times Bold 18"
+	 * Returns: TRUE if the font selected in fsd is now the fontname specified, FALSE otherwise.
 	 */
 	public int setFontName(string fontname)
 	{
@@ -193,22 +190,19 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
-	 * The text returned is the preview text used to show how the selected
-	 * font looks.
 	 * Gets the text displayed in the preview area.
-	 * Returns: pointer to the preview text string. This stringpoints to internally allocated storage in the widget and must notbe freed, modified or stored.
+	 * Returns: the text displayed in the preview area.  This string is owned by the widget and should not be  modified or freed
 	 */
 	public string getPreviewText()
 	{
-		// const gchar* gtk_font_selection_dialog_get_preview_text  (GtkFontSelectionDialog *fsd);
+		// const gchar * gtk_font_selection_dialog_get_preview_text  (GtkFontSelectionDialog *fsd);
 		return Str.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog));
 	}
 	
 	/**
-	 * The text is used to show how the selected font looks.
 	 * Sets the text displayed in the preview area.
 	 * Params:
-	 * text =  a pointer to a string
+	 * text =  the text to display in the preview area
 	 */
 	public void setPreviewText(string text)
 	{
@@ -217,13 +211,15 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
-	 * Gets the 'Apply' button.
+	 * Warning
+	 * gtk_font_selection_dialog_get_apply_button has been deprecated since version 2.16 and should not be used in newly-written code. Don't use this function.
+	 * Obtains a button. The button doesn't have any function.
 	 * Since 2.14
-	 * Returns: the GtkWidget used in the dialog for the 'Apply' button.
+	 * Returns: a GtkWidget
 	 */
 	public Widget getApplyButton()
 	{
-		// GtkWidget* gtk_font_selection_dialog_get_apply_button  (GtkFontSelectionDialog *fsd);
+		// GtkWidget * gtk_font_selection_dialog_get_apply_button  (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_apply_button(gtkFontSelectionDialog);
 		if(p is null)
 		{
@@ -239,7 +235,7 @@ public class FontSelectionDialog : Dialog
 	 */
 	public Widget getCancelButton()
 	{
-		// GtkWidget* gtk_font_selection_dialog_get_cancel_button  (GtkFontSelectionDialog *fsd);
+		// GtkWidget * gtk_font_selection_dialog_get_cancel_button  (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_cancel_button(gtkFontSelectionDialog);
 		if(p is null)
 		{
@@ -255,7 +251,7 @@ public class FontSelectionDialog : Dialog
 	 */
 	public Widget getOkButton()
 	{
-		// GtkWidget* gtk_font_selection_dialog_get_ok_button  (GtkFontSelectionDialog *fsd);
+		// GtkWidget * gtk_font_selection_dialog_get_ok_button  (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
 		if(p is null)
 		{

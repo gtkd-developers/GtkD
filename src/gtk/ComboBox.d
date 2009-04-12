@@ -52,14 +52,10 @@
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.TreeIter
- * 	- gtk.CellRenderer
- * 	- glib.ListG
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
- * 	- gdk.Event
  * 	- gtk.CellEditableT
  * 	- gtk.CellEditableIF
- * 	- gobject.Signals
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GtkTreeIter* -> TreeIter
@@ -84,14 +80,10 @@ private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreeIter;
-private import gtk.CellRenderer;
-private import glib.ListG;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
-private import gdk.Event;
 private import gtk.CellEditableT;
 private import gtk.CellEditableIF;
-private import gobject.Signals;
 
 
 
@@ -415,7 +407,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 */
 	public this (TreeModelIF model)
 	{
-		// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
+		// GtkWidget * gtk_combo_box_new_with_model (GtkTreeModel *model);
 		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
@@ -562,7 +554,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_combo_box_get_model (GtkComboBox *combo_box);
+		// GtkTreeModel * gtk_combo_box_get_model (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_model(gtkComboBox);
 		if(p is null)
 		{
@@ -653,7 +645,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 */
 	public string getActiveText()
 	{
-		// gchar* gtk_combo_box_get_active_text (GtkComboBox *combo_box);
+		// gchar * gtk_combo_box_get_active_text (GtkComboBox *combo_box);
 		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox));
 	}
 	
@@ -769,7 +761,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_combo_box_get_title (GtkComboBox *combo_box);
+		// const gchar * gtk_combo_box_get_title (GtkComboBox *combo_box);
 		return Str.toString(gtk_combo_box_get_title(gtkComboBox));
 	}
 	

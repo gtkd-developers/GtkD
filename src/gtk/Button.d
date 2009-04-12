@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ActivatableIF
  * prefixes:
  * 	- gtk_button_
  * 	- gtk_
@@ -49,6 +50,8 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Image
+ * 	- gtk.ActivatableT
+ * 	- gtk.ActivatableIF
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -69,6 +72,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Image;
+private import gtk.ActivatableT;
+private import gtk.ActivatableIF;
 
 
 
@@ -83,7 +88,7 @@ private import gtk.Bin;
  * hold most any other standard GtkWidget. The most commonly used child is
  * the GtkLabel.
  */
-public class Button : Bin
+public class Button : Bin, ActivatableIF
 {
 	
 	/** the main Gtk struct */
@@ -127,6 +132,9 @@ public class Button : Bin
 	
 	/** An arbitrary string to be used by the application */
 	private string action;
+	
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkButton);
 	
 	/** */
 	public static void setIconSize(IconSize iconSize)
@@ -510,7 +518,7 @@ public class Button : Bin
 	 */
 	public string getLabel()
 	{
-		// const gchar* gtk_button_get_label (GtkButton *button);
+		// const gchar * gtk_button_get_label (GtkButton *button);
 		return Str.toString(gtk_button_get_label(gtkButton));
 	}
 	

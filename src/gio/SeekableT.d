@@ -57,13 +57,13 @@ module gio.SeekableT;
 
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
+public import gtkc.gio;
+public import glib.ConstructionException;
 
 
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.Cancellable;
+public import glib.ErrorG;
+public import glib.GException;
+public import gio.Cancellable;
 
 
 

@@ -175,7 +175,7 @@ public class TextTag : ObjectG
 	 */
 	public this (string name)
 	{
-		// GtkTextTag* gtk_text_tag_new (const gchar *name);
+		// GtkTextTag * gtk_text_tag_new (const gchar *name);
 		auto p = gtk_text_tag_new(Str.toStringz(name));
 		if(p is null)
 		{

@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_paned_
  * 	- gtk_
@@ -44,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -62,6 +65,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.Widget;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -100,7 +105,7 @@ private import gtk.Container;
  * The application can set the position of the slider
  * as if it were set by the user, by calling
  * gtk_paned_set_position().
- * Example 48. Creating a paned widget with minimum sizes.
+ * Example 52. Creating a paned widget with minimum sizes.
  * GtkWidget *hpaned = gtk_hpaned_new ();
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);
@@ -112,7 +117,7 @@ private import gtk.Container;
  * gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
  * gtk_widget_set_size_request (frame2, 50, -1);
  */
-public class Paned : Container
+public class Paned : Container, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -151,6 +156,9 @@ public class Paned : Container
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkPaned);
 	
 	/** */
 	public void add(Widget child1, Widget child2)
@@ -444,7 +452,7 @@ public class Paned : Container
 	 */
 	public Widget getChild1()
 	{
-		// GtkWidget* gtk_paned_get_child1 (GtkPaned *paned);
+		// GtkWidget * gtk_paned_get_child1 (GtkPaned *paned);
 		auto p = gtk_paned_get_child1(gtkPaned);
 		if(p is null)
 		{
@@ -460,7 +468,7 @@ public class Paned : Container
 	 */
 	public Widget getChild2()
 	{
-		// GtkWidget* gtk_paned_get_child2 (GtkPaned *paned);
+		// GtkWidget * gtk_paned_get_child2 (GtkPaned *paned);
 		auto p = gtk_paned_get_child2(gtkPaned);
 		if(p is null)
 		{

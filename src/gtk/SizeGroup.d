@@ -46,10 +46,6 @@
  * imports:
  * 	- gtk.Widget
  * 	- glib.ListSG
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -70,10 +66,6 @@ private import glib.ConstructionException;
 
 private import gtk.Widget;
 private import glib.ListSG;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -119,7 +111,7 @@ private import gobject.ObjectG;
  * size group are specified by a <widgets> element that may
  * contain multiple <widget> elements, one for each member
  * of the size group. The name attribute gives the id of the widget.
- * Example 46. A UI definition fragment with GtkSizeGroup
+ * Example 50. A UI definition fragment with GtkSizeGroup
  * <object class="GtkSizeGroup">
  *  <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
  *  <widgets>
@@ -182,7 +174,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public this (GtkSizeGroupMode mode)
 	{
-		// GtkSizeGroup* gtk_size_group_new (GtkSizeGroupMode mode);
+		// GtkSizeGroup * gtk_size_group_new (GtkSizeGroupMode mode);
 		auto p = gtk_size_group_new(mode);
 		if(p is null)
 		{
@@ -277,7 +269,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public ListSG getWidgets()
 	{
-		// GSList* gtk_size_group_get_widgets (GtkSizeGroup *size_group);
+		// GSList * gtk_size_group_get_widgets (GtkSizeGroup *size_group);
 		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
 		if(p is null)
 		{

@@ -123,7 +123,7 @@ public class TargetList
 	 */
 	public this (GtkTargetEntry[] targets)
 	{
-		// GtkTargetList* gtk_target_list_new (const GtkTargetEntry *targets,  guint ntargets);
+		// GtkTargetList * gtk_target_list_new (const GtkTargetEntry *targets,  guint ntargets);
 		auto p = gtk_target_list_new(targets.ptr, targets.length);
 		if(p is null)
 		{
@@ -138,7 +138,7 @@ public class TargetList
 	 */
 	public TargetList doref()
 	{
-		// GtkTargetList* gtk_target_list_ref (GtkTargetList *list);
+		// GtkTargetList * gtk_target_list_ref (GtkTargetList *list);
 		auto p = gtk_target_list_ref(gtkTargetList);
 		if(p is null)
 		{
@@ -289,7 +289,7 @@ public class TargetList
 	 */
 	public GtkTargetEntry[] gtkTargetTableNewFromList()
 	{
-		// GtkTargetEntry* gtk_target_table_new_from_list (GtkTargetList *list,  gint *n_targets);
+		// GtkTargetEntry * gtk_target_table_new_from_list (GtkTargetList *list,  gint *n_targets);
 		int nTargets;
 		auto p = gtk_target_table_new_from_list(gtkTargetList, &nTargets);
 		return p[0 .. nTargets];

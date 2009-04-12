@@ -50,13 +50,6 @@
  * 	- gtk.Widget
  * 	- gtk.Window
  * 	- gtk.RecentManager
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gtk.RecentInfo
- * 	- gtk.RecentFilter
- * 	- glib.ListG
- * 	- glib.ListSG
- * 	- gobject.Signals
  * 	- gtk.RecentChooserIF
  * 	- gtk.RecentChooserT
  * structWrap:
@@ -80,13 +73,6 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.RecentManager;
-private import glib.ErrorG;
-private import glib.GException;
-private import gtk.RecentInfo;
-private import gtk.RecentFilter;
-private import glib.ListG;
-private import glib.ListSG;
-private import gobject.Signals;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
 
@@ -103,7 +89,7 @@ private import gtk.Dialog;
  * those for GtkDialog.
  * Note that GtkRecentChooserDialog does not have any methods of its own.
  * Instead, you should use the functions that work on a GtkRecentChooser.
- * Example 52. Typical usage
+ * Example 56. Typical usage
  *  In the simplest of cases, you can use the following code to use
  *  a GtkRecentChooserDialog to select a recently used file:
  * GtkWidget *dialog;

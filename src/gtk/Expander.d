@@ -113,7 +113,7 @@ private import gtk.Bin;
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
- * Example 39. A UI definition fragment with GtkExpander
+ * Example 43. A UI definition fragment with GtkExpander
  * <object class="GtkExpander">
  *  <child type="label">
  *  <object class="GtkLabel" id="expander-label"/>
@@ -304,7 +304,7 @@ public class Expander : Bin
 	 */
 	public string getLabel()
 	{
-		// const gchar* gtk_expander_get_label (GtkExpander *expander);
+		// const gchar * gtk_expander_get_label (GtkExpander *expander);
 		return Str.toString(gtk_expander_get_label(gtkExpander));
 	}
 	
@@ -380,7 +380,7 @@ public class Expander : Bin
 	 */
 	public Widget getLabelWidget()
 	{
-		// GtkWidget* gtk_expander_get_label_widget (GtkExpander *expander);
+		// GtkWidget * gtk_expander_get_label_widget (GtkExpander *expander);
 		auto p = gtk_expander_get_label_widget(gtkExpander);
 		if(p is null)
 		{

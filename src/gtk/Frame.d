@@ -80,7 +80,7 @@ private import gtk.Bin;
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
- * Example 40. A UI definition fragment with GtkFrame
+ * Example 44. A UI definition fragment with GtkFrame
  * <object class="GtkFrame">
  *  <child type="label">
  *  <object class="GtkLabel" id="frame-label"/>
@@ -223,7 +223,7 @@ public class Frame : Bin
 	 */
 	public string getLabel()
 	{
-		// const gchar* gtk_frame_get_label (GtkFrame *frame);
+		// const gchar * gtk_frame_get_label (GtkFrame *frame);
 		return Str.toString(gtk_frame_get_label(gtkFrame));
 	}
 	
@@ -247,7 +247,7 @@ public class Frame : Bin
 	 */
 	public Widget getLabelWidget()
 	{
-		// GtkWidget* gtk_frame_get_label_widget (GtkFrame *frame);
+		// GtkWidget * gtk_frame_get_label_widget (GtkFrame *frame);
 		auto p = gtk_frame_get_label_widget(gtkFrame);
 		if(p is null)
 		{

@@ -42,20 +42,22 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_action_get_stock_id
+ * 	- gtk_action_set_stock_id
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gio.Icon
+ * 	- gio.IconIF
  * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gobject.Closure
  * 	- gtk.AccelGroup
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
  * 	- GClosure* -> Closure
+ * 	- GIcon* -> IconIF
  * 	- GSList* -> ListSG
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
@@ -75,13 +77,12 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gio.Icon;
+private import gio.IconIF;
 private import gtk.Widget;
 private import glib.ListSG;
 private import gobject.Closure;
 private import gtk.AccelGroup;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -180,6 +181,37 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Gets the stock id of action.
+	 * Since 2.16
+	 * Returns: the stock id
+	 */
+	public StockID getStockId()
+	{
+		// const gchar * gtk_action_get_stock_id (GtkAction *action);
+		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
+		
+		foreach(i, desc; StockDesc)
+		{
+			if(desc == id)
+			return cast(StockID)i;
+		}
+		
+		return StockID.DISCARD;
+	}
+	
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId =  the stock id
+	 */
+	public void setStockId(StockID stockId)
+	{
+		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
+		gtk_action_set_stock_id(gtkAction, Str.toStringz(StockDesc[stockId]));
+	}
+	
+	/**
 	 */
 	int[char[]] connectedSignals;
 	
@@ -231,7 +263,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public this (string name, string label, string tooltip, string stockId)
 	{
-		// GtkAction* gtk_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
+		// GtkAction * gtk_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 		if(p is null)
 		{
@@ -352,7 +384,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public Widget createIcon(GtkIconSize iconSize)
 	{
-		// GtkWidget* gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
+		// GtkWidget * gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
 		auto p = gtk_action_create_icon(gtkAction, iconSize);
 		if(p is null)
 		{
@@ -368,7 +400,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public Widget createMenuItem()
 	{
-		// GtkWidget* gtk_action_create_menu_item (GtkAction *action);
+		// GtkWidget * gtk_action_create_menu_item (GtkAction *action);
 		auto p = gtk_action_create_menu_item(gtkAction);
 		if(p is null)
 		{
@@ -384,7 +416,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public Widget createToolItem()
 	{
-		// GtkWidget* gtk_action_create_tool_item (GtkAction *action);
+		// GtkWidget * gtk_action_create_tool_item (GtkAction *action);
 		auto p = gtk_action_create_tool_item(gtkAction);
 		if(p is null)
 		{
@@ -402,7 +434,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public Widget createMenu()
 	{
-		// GtkWidget* gtk_action_create_menu (GtkAction *action);
+		// GtkWidget * gtk_action_create_menu (GtkAction *action);
 		auto p = gtk_action_create_menu(gtkAction);
 		if(p is null)
 		{
@@ -412,6 +444,8 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_connect_proxy has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_activatable_set_related_action() instead.
 	 * Connects a widget to an action object as a proxy. Synchronises
 	 * various properties of the action with the widget (such as label
 	 * text, icon, tooltip, etc), and attaches a callback so that the
@@ -429,6 +463,8 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_disconnect_proxy has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_activatable_set_related_action() instead.
 	 * Disconnects a proxy widget from an action.
 	 * Does not destroy the widget, however.
 	 * Since 2.4
@@ -449,7 +485,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public ListSG getProxies()
 	{
-		// GSList* gtk_action_get_proxies (GtkAction *action);
+		// GSList * gtk_action_get_proxies (GtkAction *action);
 		auto p = gtk_action_get_proxies(gtkAction);
 		if(p is null)
 		{
@@ -485,6 +521,33 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Disable activation signals from the action
+	 * This is needed when updating the state of your proxy
+	 * GtkActivatable widget could result in calling gtk_action_activate(),
+	 * this is a convenience function to avoid recursing in those
+	 * cases (updating toggle state for instance).
+	 * Since 2.16
+	 */
+	public void blockActivate()
+	{
+		// void gtk_action_block_activate (GtkAction *action);
+		gtk_action_block_activate(gtkAction);
+	}
+	
+	/**
+	 * Reenable activation signals from the action
+	 * Since 2.16
+	 */
+	public void unblockActivate()
+	{
+		// void gtk_action_unblock_activate (GtkAction *action);
+		gtk_action_unblock_activate(gtkAction);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_action_block_activate_from has been deprecated since version 2.16 and should not be used in newly-written code. activatables are now responsible for activating the
+	 * action directly so this doesnt apply anymore.
 	 * Disables calls to the gtk_action_activate()
 	 * function by signals on the given proxy widget. This is used to
 	 * break notification loops for things like check or radio actions.
@@ -500,6 +563,9 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_unblock_activate_from has been deprecated since version 2.16 and should not be used in newly-written code. activatables are now responsible for activating the
+	 * action directly so this doesnt apply anymore.
 	 * Re-enables calls to the gtk_action_activate()
 	 * function by signals on the given proxy widget. This undoes the
 	 * blocking done by gtk_action_block_activate_from().
@@ -521,7 +587,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public string getAccelPath()
 	{
-		// const gchar* gtk_action_get_accel_path (GtkAction *action);
+		// const gchar * gtk_action_get_accel_path (GtkAction *action);
 		return Str.toString(gtk_action_get_accel_path(gtkAction));
 	}
 	
@@ -549,7 +615,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public Closure getAccelClosure()
 	{
-		// GClosure* gtk_action_get_accel_closure (GtkAction *action);
+		// GClosure * gtk_action_get_accel_closure (GtkAction *action);
 		auto p = gtk_action_get_accel_closure(gtkAction);
 		if(p is null)
 		{
@@ -569,5 +635,196 @@ public class Action : ObjectG, BuildableIF
 	{
 		// void gtk_action_set_accel_group (GtkAction *action,  GtkAccelGroup *accel_group);
 		gtk_action_set_accel_group(gtkAction, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+	}
+	
+	/**
+	 * Sets the label of action.
+	 * Since 2.16
+	 * Params:
+	 * label =  the label text to set
+	 */
+	public void setLabel(string label)
+	{
+		// void gtk_action_set_label (GtkAction *action,  const gchar *label);
+		gtk_action_set_label(gtkAction, Str.toStringz(label));
+	}
+	
+	/**
+	 * Gets the label text of action.
+	 * Since 2.16
+	 * Returns: the label text
+	 */
+	public string getLabel()
+	{
+		// const gchar * gtk_action_get_label (GtkAction *action);
+		return Str.toString(gtk_action_get_label(gtkAction));
+	}
+	
+	/**
+	 * Sets a shorter label text on action.
+	 * Since 2.16
+	 * Params:
+	 * shortLabel =  the label text to set
+	 */
+	public void setShortLabel(string shortLabel)
+	{
+		// void gtk_action_set_short_label (GtkAction *action,  const gchar *short_label);
+		gtk_action_set_short_label(gtkAction, Str.toStringz(shortLabel));
+	}
+	
+	/**
+	 * Gets the short label text of action.
+	 * Since 2.16
+	 * Returns: the short label text.
+	 */
+	public string getShortLabel()
+	{
+		// const gchar * gtk_action_get_short_label (GtkAction *action);
+		return Str.toString(gtk_action_get_short_label(gtkAction));
+	}
+	
+	/**
+	 * Sets the tooltip text on action
+	 * Since 2.16
+	 * Params:
+	 * tooltip =  the tooltip text
+	 */
+	public void setTooltip(string tooltip)
+	{
+		// void gtk_action_set_tooltip (GtkAction *action,  const gchar *tooltip);
+		gtk_action_set_tooltip(gtkAction, Str.toStringz(tooltip));
+	}
+	
+	/**
+	 * Gets the tooltip text of action.
+	 * Since 2.16
+	 * Returns: the tooltip text
+	 */
+	public string getTooltip()
+	{
+		// const gchar * gtk_action_get_tooltip (GtkAction *action);
+		return Str.toString(gtk_action_get_tooltip(gtkAction));
+	}
+	
+	/**
+	 * Sets the icon of action.
+	 * Since 2.16
+	 * Params:
+	 * icon =  the GIcon to set
+	 */
+	public void setGicon(IconIF icon)
+	{
+		// void gtk_action_set_gicon (GtkAction *action,  GIcon *icon);
+		gtk_action_set_gicon(gtkAction, (icon is null) ? null : icon.getIconTStruct());
+	}
+	
+	/**
+	 * Gets the gicon of action.
+	 * Since 2.16
+	 * Returns: The action's GIcon if one is set.
+	 */
+	public IconIF getGicon()
+	{
+		// GIcon * gtk_action_get_gicon (GtkAction *action);
+		auto p = gtk_action_get_gicon(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
+	 * Sets the icon name on action
+	 * Since 2.16
+	 * Params:
+	 * iconName =  the icon name to set
+	 */
+	public void setIconName(string iconName)
+	{
+		// void gtk_action_set_icon_name (GtkAction *action,  const gchar *icon_name);
+		gtk_action_set_icon_name(gtkAction, Str.toStringz(iconName));
+	}
+	
+	/**
+	 * Gets the icon name of action.
+	 * Since 2.16
+	 * Returns: the icon name
+	 */
+	public string getIconName()
+	{
+		// const gchar * gtk_action_get_icon_name (GtkAction *action);
+		return Str.toString(gtk_action_get_icon_name(gtkAction));
+	}
+	
+	/**
+	 * Sets whether action is visible when horizontal
+	 * Since 2.16
+	 * Params:
+	 * visibleHorizontal =  whether the action is visible horizontally
+	 */
+	public void setVisibleHorizontal(int visibleHorizontal)
+	{
+		// void gtk_action_set_visible_horizontal (GtkAction *action,  gboolean visible_horizontal);
+		gtk_action_set_visible_horizontal(gtkAction, visibleHorizontal);
+	}
+	
+	/**
+	 * Checks whether action is visible when horizontal
+	 * Since 2.16
+	 * Returns: whether action is visible when horizontal
+	 */
+	public int getVisibleHorizontal()
+	{
+		// gboolean gtk_action_get_visible_horizontal (GtkAction *action);
+		return gtk_action_get_visible_horizontal(gtkAction);
+	}
+	
+	/**
+	 * Sets whether action is visible when vertical
+	 * Since 2.16
+	 * Params:
+	 * visibleVertical =  whether the action is visible vertically
+	 */
+	public void setVisibleVertical(int visibleVertical)
+	{
+		// void gtk_action_set_visible_vertical (GtkAction *action,  gboolean visible_vertical);
+		gtk_action_set_visible_vertical(gtkAction, visibleVertical);
+	}
+	
+	/**
+	 * Checks whether action is visible when horizontal
+	 * Since 2.16
+	 * Returns: whether action is visible when horizontal
+	 */
+	public int getVisibleVertical()
+	{
+		// gboolean gtk_action_get_visible_vertical (GtkAction *action);
+		return gtk_action_get_visible_vertical(gtkAction);
+	}
+	
+	/**
+	 * Sets whether the action is important, this attribute is used
+	 * primarily by toolbar items to decide whether to show a label
+	 * or not.
+	 * Since 2.16
+	 * Params:
+	 * isImportant =  TRUE to make the action important
+	 */
+	public void setIsImportant(int isImportant)
+	{
+		// void gtk_action_set_is_important (GtkAction *action,  gboolean is_important);
+		gtk_action_set_is_important(gtkAction, isImportant);
+	}
+	
+	/**
+	 * Checks whether action is important or not
+	 * Since 2.16
+	 * Returns: whether action is important
+	 */
+	public int getIsImportant()
+	{
+		// gboolean gtk_action_get_is_important (GtkAction *action);
+		return gtk_action_get_is_important(gtkAction);
 	}
 }

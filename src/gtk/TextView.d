@@ -331,6 +331,11 @@ public class TextView : Container
 	
 	void delegate(string, TextView)[] onInsertAtCursorListeners;
 	/**
+	 * The ::insert-at-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates the insertion of a
+	 * fixed string at the cursor.
+	 * This signal has no default bindings.
 	 */
 	void addOnInsertAtCursor(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -347,11 +352,11 @@ public class TextView : Container
 		}
 		onInsertAtCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkTextView* textviewStruct, gchar* arg1, TextView textView)
+	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextView textView)
 	{
 		foreach ( void delegate(string, TextView) dlg ; textView.onInsertAtCursorListeners )
 		{
-			dlg(Str.toString(arg1), textView);
+			dlg(Str.toString(str), textView);
 		}
 	}
 	
@@ -363,7 +368,7 @@ public class TextView : Container
 	 * If the cursor is not visible in text_view, this signal causes
 	 * the viewport to be moved instead.
 	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name() if they need to control scrolling
+	 * g_signal_emit_by_name() if they need to control the cursor
 	 * programmatically.
 	 * The default bindings for this signal come in two variants,
 	 * the variant with the Shift modifier extends the selection,
@@ -497,6 +502,10 @@ public class TextView : Container
 	
 	void delegate(GtkMenu*, TextView)[] onPopulatePopupListeners;
 	/**
+	 * The ::populate-popup signal gets emitted before showing the
+	 * context menu of the text view.
+	 * If you need to add items to the context menu, connect
+	 * to this signal and append your menuitems to the menu.
 	 */
 	void addOnPopulatePopup(void delegate(GtkMenu*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -513,11 +522,11 @@ public class TextView : Container
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* textviewStruct, GtkMenu* arg1, TextView textView)
+	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextView textView)
 	{
 		foreach ( void delegate(GtkMenu*, TextView) dlg ; textView.onPopulatePopupListeners )
 		{
-			dlg(arg1, textView);
+			dlg(menu, textView);
 		}
 	}
 	
@@ -555,6 +564,12 @@ public class TextView : Container
 	
 	void delegate(TextView)[] onSetAnchorListeners;
 	/**
+	 * The ::set-anchor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates setting the "anchor"
+	 * mark. The "anchor" mark gets placed at the same position as the
+	 * "insert" mark.
+	 * This signal has no default bindings.
 	 */
 	void addOnSetAnchor(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -571,7 +586,7 @@ public class TextView : Container
 		}
 		onSetAnchorListeners ~= dlg;
 	}
-	extern(C) static void callBackSetAnchor(GtkTextView* textviewStruct, TextView textView)
+	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextView textView)
 	{
 		foreach ( void delegate(TextView) dlg ; textView.onSetAnchorListeners )
 		{
@@ -581,6 +596,9 @@ public class TextView : Container
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, TextView)[] onSetScrollAdjustmentsListeners;
 	/**
+	 * Set the scroll adjustments for the text view. Usually scrolled containers
+	 * like GtkScrolledWindow will emit this signal to connect two instances
+	 * of GtkScrollbar to the scroll directions of the GtkTextView.
 	 */
 	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -597,11 +615,11 @@ public class TextView : Container
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTextView* textviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, TextView textView)
+	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextView textView)
 	{
 		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg ; textView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(arg1, arg2, textView);
+			dlg(vertical, arg2, textView);
 		}
 	}
 	
@@ -639,7 +657,7 @@ public class TextView : Container
 	/**
 	 * The ::toggle-overwrite signal is a
 	 * keybinding signal
-	 * which gets emitted to change the editability of the text view.
+	 * which gets emitted to toggle the overwrite mode of the text view.
 	 * The default bindings for this signal is Insert.
 	 * See Also
 	 * GtkTextBuffer, GtkTextIter
@@ -677,7 +695,7 @@ public class TextView : Container
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_text_view_new (void);
+		// GtkWidget * gtk_text_view_new (void);
 		auto p = gtk_text_view_new();
 		if(p is null)
 		{
@@ -699,7 +717,7 @@ public class TextView : Container
 	 */
 	public this (TextBuffer buffer)
 	{
-		// GtkWidget* gtk_text_view_new_with_buffer (GtkTextBuffer *buffer);
+		// GtkWidget * gtk_text_view_new_with_buffer (GtkTextBuffer *buffer);
 		auto p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
 		if(p is null)
 		{
@@ -731,7 +749,7 @@ public class TextView : Container
 	 */
 	public TextBuffer getBuffer()
 	{
-		// GtkTextBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
+		// GtkTextBuffer * gtk_text_view_get_buffer (GtkTextView *text_view);
 		auto p = gtk_text_view_get_buffer(gtkTextView);
 		if(p is null)
 		{
@@ -917,7 +935,7 @@ public class TextView : Container
 	 * Since 2.6
 	 * Params:
 	 * iter =  a GtkTextIter
-	 * trailing =  location to store an integer indicating where
+	 * trailing =  if non-NULL, location to store an integer indicating where
 	 *  in the grapheme the user clicked. It will either be
 	 *  zero, or the number of characters in the grapheme.
 	 *  0 represents the trailing edge of the grapheme.

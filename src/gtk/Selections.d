@@ -228,7 +228,7 @@ public class Selections
 	 */
 	public static char* dataGetText(GtkSelectionData* selectionData)
 	{
-		// guchar* gtk_selection_data_get_text (GtkSelectionData *selection_data);
+		// guchar * gtk_selection_data_get_text (GtkSelectionData *selection_data);
 		return gtk_selection_data_get_text(selectionData);
 	}
 	
@@ -257,7 +257,7 @@ public class Selections
 	 */
 	public static Pixbuf dataGetPixbuf(GtkSelectionData* selectionData)
 	{
-		// GdkPixbuf* gtk_selection_data_get_pixbuf (GtkSelectionData *selection_data);
+		// GdkPixbuf * gtk_selection_data_get_pixbuf (GtkSelectionData *selection_data);
 		auto p = gtk_selection_data_get_pixbuf(selectionData);
 		if(p is null)
 		{
@@ -291,7 +291,7 @@ public class Selections
 	 */
 	public static string[] dataGetUris(GtkSelectionData* selectionData)
 	{
-		// gchar** gtk_selection_data_get_uris (GtkSelectionData *selection_data);
+		// gchar ** gtk_selection_data_get_uris (GtkSelectionData *selection_data);
 		return Str.toStringArray(gtk_selection_data_get_uris(selectionData));
 	}
 	
@@ -381,6 +381,19 @@ public class Selections
 	}
 	
 	/**
+	 * Retrieves the selection GdkAtom of the selection data.
+	 * Since 2.16
+	 * Params:
+	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * Returns: the selection GdkAtom of the selection data.
+	 */
+	public static GdkAtom dataGetSelection(GtkSelectionData* selectionData)
+	{
+		// GdkAtom gtk_selection_data_get_selection (GtkSelectionData *selection_data);
+		return gtk_selection_data_get_selection(selectionData);
+	}
+	
+	/**
 	 * Retrieves the raw data of the selection.
 	 * Since 2.14
 	 * Params:
@@ -389,7 +402,7 @@ public class Selections
 	 */
 	public static char* dataGetData(GtkSelectionData* selectionData)
 	{
-		// const guchar* gtk_selection_data_get_data (GtkSelectionData *selection_data);
+		// const guchar * gtk_selection_data_get_data (GtkSelectionData *selection_data);
 		return gtk_selection_data_get_data(selectionData);
 	}
 	
@@ -428,7 +441,7 @@ public class Selections
 	 */
 	public static Display dataGetDisplay(GtkSelectionData* selectionData)
 	{
-		// GdkDisplay* gtk_selection_data_get_display (GtkSelectionData *selection_data);
+		// GdkDisplay * gtk_selection_data_get_display (GtkSelectionData *selection_data);
 		auto p = gtk_selection_data_get_display(selectionData);
 		if(p is null)
 		{
@@ -480,9 +493,9 @@ public class Selections
 	/**
 	 * Warning
 	 * gtk_selection_clear has been deprecated since version 2.4 and should not be used in newly-written code. Instead of calling this function, chain up from
-	 * your selection_clear_event handler. Calling this function
+	 * your selection-clear-event handler. Calling this function
 	 * from any other context is illegal.
-	 * The default handler for the GtkWidget::selection_clear_event
+	 * The default handler for the "selection-clear-event"
 	 * signal.
 	 * Since 2.2
 	 * Params:
@@ -504,7 +517,7 @@ public class Selections
 	 */
 	public static GtkSelectionData* dataCopy(GtkSelectionData* data)
 	{
-		// GtkSelectionData* gtk_selection_data_copy (GtkSelectionData *data);
+		// GtkSelectionData * gtk_selection_data_copy (GtkSelectionData *data);
 		return gtk_selection_data_copy(data);
 	}
 	

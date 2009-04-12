@@ -47,9 +47,6 @@
  * 	- gio.Emblem
  * 	- gio.Icon
  * 	- gio.IconIF
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
  * 	- gio.IconT
  * structWrap:
  * 	- GEmblem* -> Emblem
@@ -72,9 +69,6 @@ private import glib.ListG;
 private import gio.Emblem;
 private import gio.Icon;
 private import gio.IconIF;
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
 private import gio.IconT;
 
 

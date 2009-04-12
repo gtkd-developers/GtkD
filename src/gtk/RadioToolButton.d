@@ -135,7 +135,7 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this (ListSG group)
 	{
-		// GtkToolItem* gtk_radio_tool_button_new (GSList *group);
+		// GtkToolItem * gtk_radio_tool_button_new (GSList *group);
 		auto p = gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
@@ -156,7 +156,7 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this (ListSG group, string stockId)
 	{
-		// GtkToolItem* gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
+		// GtkToolItem * gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
 		auto p = gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId));
 		if(p is null)
 		{
@@ -172,7 +172,7 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this ()
 	{
-		// GtkToolItem* gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
+		// GtkToolItem * gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
 		auto p = gtk_radio_tool_button_new_from_widget(gtkRadioToolButton);
 		if(p is null)
 		{
@@ -192,7 +192,7 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this (string stockId)
 	{
-		// GtkToolItem* gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
+		// GtkToolItem * gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
 		auto p = gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId));
 		if(p is null)
 		{
@@ -208,7 +208,7 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public ListSG getGroup()
 	{
-		// GSList* gtk_radio_tool_button_get_group (GtkRadioToolButton *button);
+		// GSList * gtk_radio_tool_button_get_group (GtkRadioToolButton *button);
 		auto p = gtk_radio_tool_button_get_group(gtkRadioToolButton);
 		if(p is null)
 		{

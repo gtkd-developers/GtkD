@@ -168,7 +168,7 @@ public class ToggleToolButton : ToolButton
 	 */
 	public this ()
 	{
-		// GtkToolItem* gtk_toggle_tool_button_new (void);
+		// GtkToolItem * gtk_toggle_tool_button_new (void);
 		auto p = gtk_toggle_tool_button_new();
 		if(p is null)
 		{
@@ -189,7 +189,7 @@ public class ToggleToolButton : ToolButton
 	 */
 	public this (string stockId)
 	{
-		// GtkToolItem* gtk_toggle_tool_button_new_from_stock  (const gchar *stock_id);
+		// GtkToolItem * gtk_toggle_tool_button_new_from_stock  (const gchar *stock_id);
 		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
 		if(p is null)
 		{

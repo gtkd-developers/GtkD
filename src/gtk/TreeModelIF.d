@@ -144,7 +144,7 @@ private import gobject.Value;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 17. Acquiring a GtkTreeIter
+ * Example 19. Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -169,7 +169,7 @@ private import gobject.Value;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 18. Reading data from a GtkTreeModel
+ * Example 20. Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -339,8 +339,9 @@ public interface TreeModelIF
 	public TreePath getPath(TreeIter iter);
 	
 	/**
-	 * Sets initializes and sets value to that at column. When done with value,
-	 * g_value_unset() needs to be called to free any allocated memory.
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
 	 * Params:
 	 * iter =  The GtkTreeIter.
 	 * column =  The column to lookup the value at.

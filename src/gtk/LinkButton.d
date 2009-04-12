@@ -133,7 +133,7 @@ public class LinkButton : Button
 	 */
 	public this (string uri)
 	{
-		// GtkWidget* gtk_link_button_new (const gchar *uri);
+		// GtkWidget * gtk_link_button_new (const gchar *uri);
 		auto p = gtk_link_button_new(Str.toStringz(uri));
 		if(p is null)
 		{
@@ -152,7 +152,7 @@ public class LinkButton : Button
 	 */
 	public this (string uri, string label)
 	{
-		// GtkWidget* gtk_link_button_new_with_label (const gchar *uri,  const gchar *label);
+		// GtkWidget * gtk_link_button_new_with_label (const gchar *uri,  const gchar *label);
 		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
 		if(p is null)
 		{
@@ -168,7 +168,7 @@ public class LinkButton : Button
 	 */
 	public string getUri()
 	{
-		// const gchar* gtk_link_button_get_uri (GtkLinkButton *link_button);
+		// const gchar * gtk_link_button_get_uri (GtkLinkButton *link_button);
 		return Str.toString(gtk_link_button_get_uri(gtkLinkButton));
 	}
 	
@@ -189,6 +189,7 @@ public class LinkButton : Button
 	 * Sets func as the function that should be invoked every time a user clicks
 	 * a GtkLinkButton. This function is called before every callback registered
 	 * for the "clicked" signal.
+	 * If no uri hook has been set, GTK+ defaults to calling gtk_show_uri().
 	 * Since 2.10
 	 * Params:
 	 * func =  a function called each time a GtkLinkButton is clicked, or NULL

@@ -48,9 +48,6 @@
  * 	- gtk.Action
  * 	- glib.ListG
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -76,9 +73,6 @@ private import glib.Str;
 private import gtk.Action;
 private import glib.ListG;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -114,7 +108,7 @@ private import gobject.ObjectG;
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
- * Example 31. A GtkDialog UI definition fragment.
+ * Example 34. A GtkDialog UI definition fragment.
  * <object class="GtkActionGroup" id="actiongroup">
  *  <child>
  *  <object class="GtkAction" id="About">
@@ -315,7 +309,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public this (string name)
 	{
-		// GtkActionGroup* gtk_action_group_new (const gchar *name);
+		// GtkActionGroup * gtk_action_group_new (const gchar *name);
 		auto p = gtk_action_group_new(Str.toStringz(name));
 		if(p is null)
 		{
@@ -331,7 +325,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_action_group_get_name (GtkActionGroup *action_group);
+		// const gchar * gtk_action_group_get_name (GtkActionGroup *action_group);
 		return Str.toString(gtk_action_group_get_name(gtkActionGroup));
 	}
 	
@@ -396,7 +390,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public Action getAction(string actionName)
 	{
-		// GtkAction* gtk_action_group_get_action (GtkActionGroup *action_group,  const gchar *action_name);
+		// GtkAction * gtk_action_group_get_action (GtkActionGroup *action_group,  const gchar *action_name);
 		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
 		if(p is null)
 		{
@@ -412,7 +406,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public ListG listActions()
 	{
-		// GList* gtk_action_group_list_actions (GtkActionGroup *action_group);
+		// GList * gtk_action_group_list_actions (GtkActionGroup *action_group);
 		auto p = gtk_action_group_list_actions(gtkActionGroup);
 		if(p is null)
 		{
@@ -615,7 +609,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public string translateString(string string)
 	{
-		// const gchar* gtk_action_group_translate_string (GtkActionGroup *action_group,  const gchar *string);
+		// const gchar * gtk_action_group_translate_string (GtkActionGroup *action_group,  const gchar *string);
 		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string)));
 	}
 }

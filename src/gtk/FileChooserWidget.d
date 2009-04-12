@@ -44,16 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListSG
- * 	- gio.File
- * 	- gtk.Widget
- * 	- gtk.Window
- * 	- gtk.FileFilter
  * 	- gtk.FileChooserT
  * 	- gtk.FileChooserIF
- * 	- gobject.Signals
  * structWrap:
  * module aliases:
  * local aliases:
@@ -69,16 +61,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.ListSG;
-private import gio.File;
-private import gtk.Widget;
-private import gtk.Window;
-private import gtk.FileFilter;
 private import gtk.FileChooserT;
 private import gtk.FileChooserIF;
-private import gobject.Signals;
 
 
 
@@ -152,7 +136,7 @@ public class FileChooserWidget : VBox
 	 */
 	public this (GtkFileChooserAction action)
 	{
-		// GtkWidget* gtk_file_chooser_widget_new (GtkFileChooserAction action);
+		// GtkWidget * gtk_file_chooser_widget_new (GtkFileChooserAction action);
 		auto p = gtk_file_chooser_widget_new(action);
 		if(p is null)
 		{
@@ -177,7 +161,7 @@ public class FileChooserWidget : VBox
 	 */
 	public this (GtkFileChooserAction action, string backend)
 	{
-		// GtkWidget* gtk_file_chooser_widget_new_with_backend  (GtkFileChooserAction action,  const gchar *backend);
+		// GtkWidget * gtk_file_chooser_widget_new_with_backend  (GtkFileChooserAction action,  const gchar *backend);
 		auto p = gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend));
 		if(p is null)
 		{

@@ -115,13 +115,13 @@ public class VBox : Box
 	/**
 	 * Creates a new GtkVBox.
 	 * Params:
-	 * homogeneous = TRUE if all children are to be given equal space allotments.
+	 * homogeneous = %TRUE if all children are to be given equal space allotments.
 	 * spacing = the number of pixels to place by default between children.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int homogeneous, int spacing)
 	{
-		// GtkWidget* gtk_vbox_new (gboolean homogeneous,  gint spacing);
+		// GtkWidget * gtk_vbox_new (gboolean homogeneous,  gint spacing);
 		auto p = gtk_vbox_new(homogeneous, spacing);
 		if(p is null)
 		{

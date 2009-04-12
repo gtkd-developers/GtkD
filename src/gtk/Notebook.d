@@ -89,7 +89,7 @@ private import gtk.Container;
  * of the tab must be created before the tab can be filled.
  * A tab child can be specified without specifying a <child>
  * type attribute.
- * Example 38. A UI definition fragment with GtkNotebook
+ * Example 42. A UI definition fragment with GtkNotebook
  * <object class="GtkNotebook">
  *  <child>
  *  <object class="GtkLabel" id="notebook-content">
@@ -479,7 +479,7 @@ public class Notebook : Container
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_notebook_new (void);
+		// GtkWidget * gtk_notebook_new (void);
 		auto p = gtk_notebook_new();
 		if(p is null)
 		{
@@ -760,7 +760,7 @@ public class Notebook : Container
 	 */
 	public Widget getMenuLabel(Widget child)
 	{
-		// GtkWidget* gtk_notebook_get_menu_label (GtkNotebook *notebook,  GtkWidget *child);
+		// GtkWidget * gtk_notebook_get_menu_label (GtkNotebook *notebook,  GtkWidget *child);
 		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 		if(p is null)
 		{
@@ -808,7 +808,7 @@ public class Notebook : Container
 	 */
 	public Widget getTabLabel(Widget child)
 	{
-		// GtkWidget* gtk_notebook_get_tab_label (GtkNotebook *notebook,  GtkWidget *child);
+		// GtkWidget * gtk_notebook_get_tab_label (GtkNotebook *notebook,  GtkWidget *child);
 		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 		if(p is null)
 		{
@@ -1002,7 +1002,7 @@ public class Notebook : Container
 	 */
 	public string getMenuLabelText(Widget child)
 	{
-		// const gchar* gtk_notebook_get_menu_label_text (GtkNotebook *notebook,  GtkWidget *child);
+		// const gchar * gtk_notebook_get_menu_label_text (GtkNotebook *notebook,  GtkWidget *child);
 		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()));
 	}
 	
@@ -1048,7 +1048,7 @@ public class Notebook : Container
 	 */
 	public string getTabLabelText(Widget child)
 	{
-		// const gchar* gtk_notebook_get_tab_label_text (GtkNotebook *notebook,  GtkWidget *child);
+		// const gchar * gtk_notebook_get_tab_label_text (GtkNotebook *notebook,  GtkWidget *child);
 		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()));
 	}
 	

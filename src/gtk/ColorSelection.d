@@ -156,7 +156,7 @@ public class ColorSelection : VBox
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_color_selection_new (void);
+		// GtkWidget * gtk_color_selection_new (void);
 		auto p = gtk_color_selection_new();
 		if(p is null)
 		{
@@ -357,9 +357,8 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Warning
-	 * gtk_color_selection_set_change_palette_hook has been deprecated since version 2.4 and should not be used in newly-written code. This function is deprecated in favor of
-	 * gtk_color_selection_set_change_palette_with_screen_hook(), and does
-	 * not work in multihead environments.
+	 * gtk_color_selection_set_change_palette_hook has been deprecated since version 2.4 and should not be used in newly-written code. This function does not work in multihead environments.
+	 *  Use gtk_color_selection_set_change_palette_with_screen_hook() instead.
 	 * Installs a global function to be called whenever the user tries to
 	 * modify the palette in a color selection. This function should save
 	 * the new palette contents, and update the GtkSettings property
@@ -407,9 +406,8 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Warning
-	 * gtk_color_selection_get_color is deprecated and should not be used in newly-written code.
+	 * gtk_color_selection_get_color is deprecated and should not be used in newly-written code. Use gtk_color_selection_get_current_color() instead.
 	 * Sets color to be the current color in the GtkColorSelection widget.
-	 * This function is deprecated, use gtk_color_selection_get_current_color() instead.
 	 * Params:
 	 * color =  an array of 4 gdouble to fill in with the current color.
 	 */

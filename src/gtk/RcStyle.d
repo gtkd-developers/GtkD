@@ -587,7 +587,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_add_widget_name_style is deprecated and should not be used in newly-written code.
+	 * gtk_rc_add_widget_name_style is deprecated and should not be used in newly-written code. Use gtk_rc_parse_string() with a suitable string instead.
 	 * Adds a GtkRcStyle that will be looked up by a match against
 	 * Params:
 	 * pattern = the pattern
@@ -600,7 +600,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_add_widget_class_style is deprecated and should not be used in newly-written code.
+	 * gtk_rc_add_widget_class_style is deprecated and should not be used in newly-written code. Use gtk_rc_parse_string() with a suitable string instead.
 	 * Adds a GtkRcStyle that will be looked up by a match against
 	 * Params:
 	 * pattern = the pattern
@@ -613,7 +613,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_add_class_style is deprecated and should not be used in newly-written code.
+	 * gtk_rc_add_class_style is deprecated and should not be used in newly-written code. Use gtk_rc_parse_string() with a suitable string instead.
 	 * Adds a GtkRcStyle that will be looked up by a matching against
 	 * Params:
 	 * pattern = the pattern
@@ -771,7 +771,7 @@ public class RcStyle : ObjectG
 	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
 	 * state = A pointer to a GtkStateType variable in which to
 	 * store the result.
-	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
+	 * Returns:%G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
 	 */
 	public static uint parseState(ScannerG scanner, out GtkStateType state)
 	{
@@ -786,7 +786,7 @@ public class RcStyle : ObjectG
 	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
 	 * priority = A pointer to GtkPathPriorityType variable in which
 	 * to store the result.
-	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
+	 * Returns:%G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
 	 */
 	public static uint parsePriority(ScannerG scanner, out GtkPathPriorityType priority)
 	{

@@ -295,11 +295,12 @@ public class Progress : Widget
 	 * the GtkProgress.
 	 * Params:
 	 * value = the current progress value.
+	 * min = the minimum progress value.
 	 * max = the maximum progress value.
 	 */
-	public void configure(double value, double hmin, double max)
+	public void configure(double value, double min, double max)
 	{
-		// void gtk_progress_configure (GtkProgress *progress,  gdouble value,  gdouble hmin,  gdouble max);
-		gtk_progress_configure(gtkProgress, value, hmin, max);
+		// void gtk_progress_configure (GtkProgress *progress,  gdouble value,  gdouble min,  gdouble max);
+		gtk_progress_configure(gtkProgress, value, min, max);
 	}
 }

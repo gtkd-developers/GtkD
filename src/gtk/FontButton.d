@@ -158,7 +158,7 @@ public class FontButton : Button
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_font_button_new (void);
+		// GtkWidget * gtk_font_button_new (void);
 		auto p = gtk_font_button_new();
 		if(p is null)
 		{
@@ -176,7 +176,7 @@ public class FontButton : Button
 	 */
 	public this (string fontname)
 	{
-		// GtkWidget* gtk_font_button_new_with_font (const gchar *fontname);
+		// GtkWidget * gtk_font_button_new_with_font (const gchar *fontname);
 		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
 		if(p is null)
 		{
@@ -199,7 +199,12 @@ public class FontButton : Button
 	}
 	
 	/**
-	 * Retrieves the name of the currently selected font.
+	 * Retrieves the name of the currently selected font. This name includes
+	 * style and size information as well. If you want to render something
+	 * with the font, use this string with pango_font_description_from_string() .
+	 * If you're interested in peeking certain values (family name,
+	 * style, size, weight) just query these properties from the
+	 * PangoFontDescription object.
 	 * Since 2.4
 	 * Returns: an internal copy of the font name which must not be freed.
 	 */
@@ -320,7 +325,7 @@ public class FontButton : Button
 	 */
 	public string getTitle()
 	{
-		// const gchar* gtk_font_button_get_title (GtkFontButton *font_button);
+		// const gchar * gtk_font_button_get_title (GtkFontButton *font_button);
 		return Str.toString(gtk_font_button_get_title(gtkFontButton));
 	}
 }

@@ -60,13 +60,13 @@ module gtk.TreeDragSourceT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
 
-private import gtk.TreePath;
-private import gtk.TreeModelIF;
-private import gtk.TreeModel;
+public import gtk.TreePath;
+public import gtk.TreeModelIF;
+public import gtk.TreeModel;
 
 
 

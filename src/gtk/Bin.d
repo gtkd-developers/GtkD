@@ -124,7 +124,7 @@ public class Bin : Container
 	 */
 	public Widget getChild()
 	{
-		// GtkWidget* gtk_bin_get_child (GtkBin *bin);
+		// GtkWidget * gtk_bin_get_child (GtkBin *bin);
 		auto p = gtk_bin_get_child(gtkBin);
 		if(p is null)
 		{

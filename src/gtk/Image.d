@@ -121,7 +121,7 @@ private import gtk.Misc;
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
- * Example 10. Handling button press events on a
+ * Example 12. Handling button press events on a
  * GtkImage.
  *  static gboolean
  *  button_press_callback (GtkWidget *event_box,
@@ -262,8 +262,8 @@ public class Image : Misc
 	 * The storage type of the image must be GTK_IMAGE_EMPTY or
 	 * GTK_IMAGE_ICON_SET (see gtk_image_get_storage_type()).
 	 * Params:
-	 * iconSet =  location to store a GtkIconSet
-	 * size =  location to store a stock icon size
+	 * iconSet =  location to store a GtkIconSet, or NULL
+	 * size =  location to store a stock icon size, or NULL
 	 */
 	public void getIconSet(out IconSet iconSet, out GtkIconSize size)
 	{
@@ -282,8 +282,8 @@ public class Image : Misc
 	 * The caller of this function does not own a reference to the
 	 * returned image and mask.
 	 * Params:
-	 * gdkImage =  return location for a GtkImage
-	 * mask =  return location for a GdkBitmap
+	 * gdkImage =  return location for a GtkImage, or NULL
+	 * mask =  return location for a GdkBitmap, or NULL
 	 */
 	public void getImage(out ImageGdk gdkImage, out Bitmap mask)
 	{
@@ -345,8 +345,8 @@ public class Image : Misc
 	 * The returned string is owned by the GtkImage and should not
 	 * be freed.
 	 * Params:
-	 * stockId =  place to store a stock icon name
-	 * size =  place to store a stock icon size
+	 * stockId =  place to store a stock icon name, or NULL
+	 * size =  place to store a stock icon size, or NULL
 	 */
 	public void getStock(out string stockId, out GtkIconSize size)
 	{
@@ -385,8 +385,8 @@ public class Image : Misc
 	 * be freed.
 	 * Since 2.6
 	 * Params:
-	 * iconName =  place to store an icon name
-	 * size =  place to store an icon size
+	 * iconName =  place to store an icon name, or NULL
+	 * size =  place to store an icon size, or NULL
 	 */
 	public void getIconName(out string iconName, out GtkIconSize size)
 	{
@@ -406,8 +406,8 @@ public class Image : Misc
 	 * returned GIcon.
 	 * Since 2.14
 	 * Params:
-	 * gicon =  place to store a GIcon
-	 * size =  place to store an icon size
+	 * gicon =  place to store a GIcon, or NULL
+	 * size =  place to store an icon size, or NULL
 	 */
 	public void getGicon(out IconIF gicon, out GtkIconSize size)
 	{

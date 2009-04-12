@@ -134,7 +134,7 @@ public class PaperSize
 	 */
 	public this (string name)
 	{
-		// GtkPaperSize* gtk_paper_size_new (const gchar *name);
+		// GtkPaperSize * gtk_paper_size_new (const gchar *name);
 		auto p = gtk_paper_size_new(Str.toStringz(name));
 		if(p is null)
 		{
@@ -159,7 +159,7 @@ public class PaperSize
 	 */
 	public this (string ppdName, string ppdDisplayName, double width, double height)
 	{
-		// GtkPaperSize* gtk_paper_size_new_from_ppd (const gchar *ppd_name,  const gchar *ppd_display_name,  gdouble width,  gdouble height);
+		// GtkPaperSize * gtk_paper_size_new_from_ppd (const gchar *ppd_name,  const gchar *ppd_display_name,  gdouble width,  gdouble height);
 		auto p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
 		if(p is null)
 		{
@@ -182,7 +182,7 @@ public class PaperSize
 	 */
 	public this (string name, string displayName, double width, double height, GtkUnit unit)
 	{
-		// GtkPaperSize* gtk_paper_size_new_custom (const gchar *name,  const gchar *display_name,  gdouble width,  gdouble height,  GtkUnit unit);
+		// GtkPaperSize * gtk_paper_size_new_custom (const gchar *name,  const gchar *display_name,  gdouble width,  gdouble height,  GtkUnit unit);
 		auto p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
 		if(p is null)
 		{
@@ -198,7 +198,7 @@ public class PaperSize
 	 */
 	public PaperSize copy()
 	{
-		// GtkPaperSize* gtk_paper_size_copy (GtkPaperSize *other);
+		// GtkPaperSize * gtk_paper_size_copy (GtkPaperSize *other);
 		auto p = gtk_paper_size_copy(gtkPaperSize);
 		if(p is null)
 		{
@@ -240,7 +240,7 @@ public class PaperSize
 	 */
 	public static ListG getPaperSizes(int includeCustom)
 	{
-		// GList* gtk_paper_size_get_paper_sizes (gboolean include_custom);
+		// GList * gtk_paper_size_get_paper_sizes (gboolean include_custom);
 		auto p = gtk_paper_size_get_paper_sizes(includeCustom);
 		if(p is null)
 		{
@@ -256,7 +256,7 @@ public class PaperSize
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_paper_size_get_name (GtkPaperSize *size);
+		// const gchar * gtk_paper_size_get_name (GtkPaperSize *size);
 		return Str.toString(gtk_paper_size_get_name(gtkPaperSize));
 	}
 	
@@ -267,7 +267,7 @@ public class PaperSize
 	 */
 	public string getDisplayName()
 	{
-		// const gchar* gtk_paper_size_get_display_name (GtkPaperSize *size);
+		// const gchar * gtk_paper_size_get_display_name (GtkPaperSize *size);
 		return Str.toString(gtk_paper_size_get_display_name(gtkPaperSize));
 	}
 	
@@ -279,7 +279,7 @@ public class PaperSize
 	 */
 	public string getPpdName()
 	{
-		// const gchar* gtk_paper_size_get_ppd_name (GtkPaperSize *size);
+		// const gchar * gtk_paper_size_get_ppd_name (GtkPaperSize *size);
 		return Str.toString(gtk_paper_size_get_ppd_name(gtkPaperSize));
 	}
 	
@@ -395,7 +395,7 @@ public class PaperSize
 	 */
 	public static string getDefault()
 	{
-		// const gchar* gtk_paper_size_get_default (void);
+		// const gchar * gtk_paper_size_get_default (void);
 		return Str.toString(gtk_paper_size_get_default());
 	}
 	
@@ -412,7 +412,7 @@ public class PaperSize
 	 */
 	public this (KeyFile keyFile, string groupName)
 	{
-		// GtkPaperSize* gtk_paper_size_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
+		// GtkPaperSize * gtk_paper_size_new_from_key_file (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);

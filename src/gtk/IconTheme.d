@@ -236,7 +236,7 @@ public class IconTheme : ObjectG
 	 */
 	public this ()
 	{
-		// GtkIconTheme* gtk_icon_theme_new (void);
+		// GtkIconTheme * gtk_icon_theme_new (void);
 		auto p = gtk_icon_theme_new();
 		if(p is null)
 		{
@@ -253,7 +253,7 @@ public class IconTheme : ObjectG
 	 */
 	public static IconTheme getDefault()
 	{
-		// GtkIconTheme* gtk_icon_theme_get_default (void);
+		// GtkIconTheme * gtk_icon_theme_get_default (void);
 		auto p = gtk_icon_theme_get_default();
 		if(p is null)
 		{
@@ -278,7 +278,7 @@ public class IconTheme : ObjectG
 	 */
 	public static IconTheme getForScreen(Screen screen)
 	{
-		// GtkIconTheme* gtk_icon_theme_get_for_screen (GdkScreen *screen);
+		// GtkIconTheme * gtk_icon_theme_get_for_screen (GdkScreen *screen);
 		auto p = gtk_icon_theme_get_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
@@ -412,7 +412,7 @@ public class IconTheme : ObjectG
 	 */
 	public IconInfo lookupIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
-		// GtkIconInfo* gtk_icon_theme_lookup_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags);
+		// GtkIconInfo * gtk_icon_theme_lookup_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags);
 		auto p = gtk_icon_theme_lookup_icon(gtkIconTheme, Str.toStringz(iconName), size, flags);
 		if(p is null)
 		{
@@ -439,7 +439,7 @@ public class IconTheme : ObjectG
 	 */
 	public IconInfo chooseIcon(char*[] iconNames, int size, GtkIconLookupFlags flags)
 	{
-		// GtkIconInfo* gtk_icon_theme_choose_icon (GtkIconTheme *icon_theme,  const gchar *icon_names[],  gint size,  GtkIconLookupFlags flags);
+		// GtkIconInfo * gtk_icon_theme_choose_icon (GtkIconTheme *icon_theme,  const gchar *icon_names[],  gint size,  GtkIconLookupFlags flags);
 		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, iconNames, size, flags);
 		if(p is null)
 		{
@@ -462,7 +462,7 @@ public class IconTheme : ObjectG
 	 */
 	public IconInfo lookupByGicon(IconIF icon, int size, GtkIconLookupFlags flags)
 	{
-		// GtkIconInfo* gtk_icon_theme_lookup_by_gicon (GtkIconTheme *icon_theme,  GIcon *icon,  gint size,  GtkIconLookupFlags flags);
+		// GtkIconInfo * gtk_icon_theme_lookup_by_gicon (GtkIconTheme *icon_theme,  GIcon *icon,  gint size,  GtkIconLookupFlags flags);
 		auto p = gtk_icon_theme_lookup_by_gicon(gtkIconTheme, (icon is null) ? null : icon.getIconTStruct(), size, flags);
 		if(p is null)
 		{
@@ -494,7 +494,7 @@ public class IconTheme : ObjectG
 	 */
 	public Pixbuf loadIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
-		// GdkPixbuf* gtk_icon_theme_load_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags,  GError **error);
+		// GdkPixbuf * gtk_icon_theme_load_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, &err);
@@ -519,7 +519,7 @@ public class IconTheme : ObjectG
 	 */
 	public ListG listContexts()
 	{
-		// GList* gtk_icon_theme_list_contexts (GtkIconTheme *icon_theme);
+		// GList * gtk_icon_theme_list_contexts (GtkIconTheme *icon_theme);
 		auto p = gtk_icon_theme_list_contexts(gtkIconTheme);
 		if(p is null)
 		{
@@ -542,7 +542,7 @@ public class IconTheme : ObjectG
 	 */
 	public ListG listIcons(string context)
 	{
-		// GList* gtk_icon_theme_list_icons (GtkIconTheme *icon_theme,  const gchar *context);
+		// GList * gtk_icon_theme_list_icons (GtkIconTheme *icon_theme,  const gchar *context);
 		auto p = gtk_icon_theme_list_icons(gtkIconTheme, Str.toStringz(context));
 		if(p is null)
 		{
@@ -563,7 +563,7 @@ public class IconTheme : ObjectG
 	 */
 	public int* getIconSizes(string iconName)
 	{
-		// gint* gtk_icon_theme_get_icon_sizes (GtkIconTheme *icon_theme,  const gchar *icon_name);
+		// gint * gtk_icon_theme_get_icon_sizes (GtkIconTheme *icon_theme,  const gchar *icon_name);
 		return gtk_icon_theme_get_icon_sizes(gtkIconTheme, Str.toStringz(iconName));
 	}
 	
@@ -576,7 +576,7 @@ public class IconTheme : ObjectG
 	 */
 	public string getExampleIconName()
 	{
-		// char* gtk_icon_theme_get_example_icon_name  (GtkIconTheme *icon_theme);
+		// char * gtk_icon_theme_get_example_icon_name  (GtkIconTheme *icon_theme);
 		return Str.toString(gtk_icon_theme_get_example_icon_name(gtkIconTheme));
 	}
 	

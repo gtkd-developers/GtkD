@@ -129,7 +129,7 @@ public class CellRendererSpin : CellRendererText
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_spin_new (void);
+		// GtkCellRenderer * gtk_cell_renderer_spin_new (void);
 		auto p = gtk_cell_renderer_spin_new();
 		if(p is null)
 		{

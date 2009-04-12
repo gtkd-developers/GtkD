@@ -137,7 +137,7 @@ public class PageSetupUnixDialog : Dialog
 	 */
 	public this (string title, Window parent)
 	{
-		// GtkWidget* gtk_page_setup_unix_dialog_new (const gchar *title,  GtkWindow *parent);
+		// GtkWidget * gtk_page_setup_unix_dialog_new (const gchar *title,  GtkWindow *parent);
 		auto p = gtk_page_setup_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
@@ -166,7 +166,7 @@ public class PageSetupUnixDialog : Dialog
 	 */
 	public PageSetup getPageSetup()
 	{
-		// GtkPageSetup* gtk_page_setup_unix_dialog_get_page_setup  (GtkPageSetupUnixDialog *dialog);
+		// GtkPageSetup * gtk_page_setup_unix_dialog_get_page_setup  (GtkPageSetupUnixDialog *dialog);
 		auto p = gtk_page_setup_unix_dialog_get_page_setup(gtkPageSetupUnixDialog);
 		if(p is null)
 		{
@@ -195,7 +195,7 @@ public class PageSetupUnixDialog : Dialog
 	 */
 	public PrintSettings getPrintSettings()
 	{
-		// GtkPrintSettings* gtk_page_setup_unix_dialog_get_print_settings  (GtkPageSetupUnixDialog *dialog);
+		// GtkPrintSettings * gtk_page_setup_unix_dialog_get_print_settings  (GtkPageSetupUnixDialog *dialog);
 		auto p = gtk_page_setup_unix_dialog_get_print_settings(gtkPageSetupUnixDialog);
 		if(p is null)
 		{

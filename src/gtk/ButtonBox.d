@@ -209,7 +209,10 @@ public class ButtonBox : Box
 	/**
 	 * Warning
 	 * gtk_button_box_get_child_ipadding is deprecated and should not be used in newly-written code. Use the style properties
-	 * "child-internal-pad-x/-y" instead.
+	 *  "child-internal-pad-x"
+	 *  and
+	 *  "child-internal-pad-y"
+	 *  instead.
 	 * Gets the default number of pixels that pad the buttons in a given button box.
 	 * Params:
 	 * ipadX = the horizontal padding used by buttons in widget.
@@ -248,11 +251,14 @@ public class ButtonBox : Box
 	/**
 	 * Warning
 	 * gtk_button_box_set_child_size is deprecated and should not be used in newly-written code. Use the style properties
-	 * "child-min-width/-height" instead.
+	 *  "child-min-width"
+	 *  and
+	 *  "child-min-height"
+	 *  instead.
 	 * Sets a new default size for the children of a given button box.
 	 * Params:
-	 * minWidth = a default width for buttons in widget.
-	 * minHeight = a default height for buttons in widget.
+	 * minWidth = a default width for buttons in widget
+	 * minHeight = a default height for buttons in widget
 	 */
 	public void setChildSize(int minWidth, int minHeight)
 	{

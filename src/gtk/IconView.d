@@ -52,7 +52,6 @@
  * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gdk.Pixmap
- * 	- glib.Str
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
@@ -86,7 +85,6 @@ private import gtk.Tooltip;
 private import gtk.TreeIter;
 private import glib.ListG;
 private import gdk.Pixmap;
-private import glib.Str;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -152,6 +150,13 @@ public class IconView : Container, CellLayoutIF
 	
 	bool delegate(IconView)[] onActivateCursorItemListeners;
 	/**
+	 * A keybinding signal
+	 * which gets emitted when the user activates the currently
+	 * focused item.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control activation
+	 * programmatically.
+	 * The default bindings for this signal are Space, Return and Enter.
 	 */
 	void addOnActivateCursorItem(bool delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -183,6 +188,11 @@ public class IconView : Container, CellLayoutIF
 	
 	void delegate(TreePath, IconView)[] onItemActivatedListeners;
 	/**
+	 * The ::item-activated signal is emitted when the method
+	 * gtk_icon_view_item_activated() is called or the user double
+	 * clicks an item. It is also emitted when a non-editable item
+	 * is selected and one of the keys: Space, Return or Enter is
+	 * pressed.
 	 */
 	void addOnItemActivated(void delegate(TreePath, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -199,16 +209,28 @@ public class IconView : Container, CellLayoutIF
 		}
 		onItemActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* arg1, IconView iconView)
+	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, IconView iconView)
 	{
 		foreach ( void delegate(TreePath, IconView) dlg ; iconView.onItemActivatedListeners )
 		{
-			dlg(new TreePath(arg1), iconView);
+			dlg(new TreePath(path), iconView);
 		}
 	}
 	
 	bool delegate(GtkMovementStep, gint, IconView)[] onMoveCursorListeners;
 	/**
+	 * The ::move-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates a cursor movement.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control the cursor
+	 * programmatically.
+	 * The default bindings for this signal include
+	 * Arrow keys which move by individual steps
+	 * Home/End keys which move to the first/last item
+	 * PageUp/PageDown which move by "pages"
+	 * All of these will extend the selection when combined with
+	 * the Shift modifier.
 	 */
 	void addOnMoveCursor(bool delegate(GtkMovementStep, gint, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -225,11 +247,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep arg1, gint arg2, IconView iconView)
+	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, gint count, IconView iconView)
 	{
 		foreach ( bool delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
 		{
-			if ( dlg(arg1, arg2, iconView) )
+			if ( dlg(step, count, iconView) )
 			{
 				return 1;
 			}
@@ -240,6 +262,12 @@ public class IconView : Container, CellLayoutIF
 	
 	void delegate(IconView)[] onSelectAllListeners;
 	/**
+	 * A keybinding signal
+	 * which gets emitted when the user selects all items.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control selection
+	 * programmatically.
+	 * The default binding for this signal is Ctrl-a.
 	 */
 	void addOnSelectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -266,6 +294,13 @@ public class IconView : Container, CellLayoutIF
 	
 	void delegate(IconView)[] onSelectCursorItemListeners;
 	/**
+	 * A keybinding signal
+	 * which gets emitted when the user selects the item that is currently
+	 * focused.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control selection
+	 * programmatically.
+	 * There is no default binding for this signal.
 	 */
 	void addOnSelectCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -292,6 +327,8 @@ public class IconView : Container, CellLayoutIF
 	
 	void delegate(IconView)[] onSelectionChangedListeners;
 	/**
+	 * The ::selection-changed signal is emitted when the selection
+	 * (i.e. the set of selected items) changes.
 	 */
 	void addOnSelectionChanged(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -318,6 +355,9 @@ public class IconView : Container, CellLayoutIF
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, IconView)[] onSetScrollAdjustmentsListeners;
 	/**
+	 * Set the scroll adjustments for the icon view. Usually scrolled containers
+	 * like GtkScrolledWindow will emit this signal to connect two instances
+	 * of GtkScrollbar to the scroll directions of the GtkIconView.
 	 */
 	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -334,16 +374,24 @@ public class IconView : Container, CellLayoutIF
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkIconView* iconviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, IconView iconView)
+	extern(C) static void callBackSetScrollAdjustments(GtkIconView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, IconView iconView)
 	{
 		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg ; iconView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(arg1, arg2, iconView);
+			dlg(vertical, arg2, iconView);
 		}
 	}
 	
 	void delegate(IconView)[] onToggleCursorItemListeners;
 	/**
+	 * A keybinding signal
+	 * which gets emitted when the user toggles whether the currently
+	 * focused item is selected or not. The exact effect of this
+	 * depend on the selection mode.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control selection
+	 * programmatically.
+	 * There is no default binding for this signal is Ctrl-Space.
 	 */
 	void addOnToggleCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -370,6 +418,12 @@ public class IconView : Container, CellLayoutIF
 	
 	void delegate(IconView)[] onUnselectAllListeners;
 	/**
+	 * A keybinding signal
+	 * which gets emitted when the user unselects all items.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control selection
+	 * programmatically.
+	 * The default binding for this signal is Ctrl-Shift-a.
 	 */
 	void addOnUnselectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -402,7 +456,7 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_icon_view_new (void);
+		// GtkWidget * gtk_icon_view_new (void);
 		auto p = gtk_icon_view_new();
 		if(p is null)
 		{
@@ -420,7 +474,7 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public this (TreeModelIF model)
 	{
-		// GtkWidget* gtk_icon_view_new_with_model (GtkTreeModel *model);
+		// GtkWidget * gtk_icon_view_new_with_model (GtkTreeModel *model);
 		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		if(p is null)
 		{
@@ -452,7 +506,7 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_icon_view_get_model (GtkIconView *icon_view);
+		// GtkTreeModel * gtk_icon_view_get_model (GtkIconView *icon_view);
 		auto p = gtk_icon_view_get_model(gtkIconView);
 		if(p is null)
 		{
@@ -549,7 +603,7 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public TreePath getPathAtPos(int x, int y)
 	{
-		// GtkTreePath* gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,  gint x,  gint y);
+		// GtkTreePath * gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,  gint x,  gint y);
 		auto p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
 		if(p is null)
 		{
@@ -907,7 +961,7 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public ListG getSelectedItems()
 	{
-		// GList* gtk_icon_view_get_selected_items (GtkIconView *icon_view);
+		// GList * gtk_icon_view_get_selected_items (GtkIconView *icon_view);
 		auto p = gtk_icon_view_get_selected_items(gtkIconView);
 		if(p is null)
 		{
@@ -1000,6 +1054,7 @@ public class IconView : Container, CellLayoutIF
 	
 	/**
 	 * Sets the tip area of tooltip to be the area covered by the item at path.
+	 * See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
 	 * See also gtk_tooltip_set_tip_area().
 	 * Since 2.12
 	 * Params:
@@ -1015,6 +1070,7 @@ public class IconView : Container, CellLayoutIF
 	/**
 	 * Sets the tip area of tooltip to the area which cell occupies in
 	 * the item pointed to by path. See also gtk_tooltip_set_tip_area().
+	 * See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
 	 * Since 2.12
 	 * Params:
 	 * tooltip =  a GtkTooltip
@@ -1091,7 +1147,8 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * Turns icon_view into a drag source for automatic DND.
+	 * Turns icon_view into a drag source for automatic DND. Calling this
+	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 * Params:
 	 * startButtonMask =  Mask of allowed buttons to start drag
@@ -1106,7 +1163,8 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * Turns icon_view into a drop destination for automatic DND.
+	 * Turns icon_view into a drop destination for automatic DND. Calling this
+	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 * Params:
 	 * targets =  the table of targets that the drag will support
@@ -1120,7 +1178,8 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * Undoes the effect of gtk_icon_view_enable_model_drag_source().
+	 * Undoes the effect of gtk_icon_view_enable_model_drag_source(). Calling this
+	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 */
 	public void unsetModelDragSource()
@@ -1130,7 +1189,8 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * Undoes the effect of gtk_icon_view_enable_model_drag_dest().
+	 * Undoes the effect of gtk_icon_view_enable_model_drag_dest(). Calling this
+	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 */
 	public void unsetModelDragDest()
@@ -1145,7 +1205,9 @@ public class IconView : Container, CellLayoutIF
 	 * GtkTreeStore and GtkListStore support these. If reorderable is TRUE, then
 	 * the user can reorder the model by dragging and dropping rows. The
 	 * developer can listen to these changes by connecting to the model's
-	 * row_inserted and row_deleted signals.
+	 * row_inserted and row_deleted signals. The reordering is implemented by setting up
+	 * the icon view as a drag source and destination. Therefore, drag and
+	 * drop can not be used in a reorderable view for any other purpose.
 	 * This function does not give you any degree of control over the order -- any
 	 * reordering is allowed. If more control is needed, you should probably
 	 * handle drag and drop manually.
@@ -1232,7 +1294,7 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public Pixmap createDragIcon(TreePath path)
 	{
-		// GdkPixmap* gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
+		// GdkPixmap * gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
 		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{

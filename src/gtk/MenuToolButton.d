@@ -218,6 +218,12 @@ public class MenuToolButton : ToolButton
 	
 	void delegate(MenuToolButton)[] onShowMenuListeners;
 	/**
+	 * The ::show-menu signal is emitted before the menu is shown.
+	 * It can be used to populate the menu on demand, using
+	 * gtk_menu_tool_button_get_menu().
+	 * Note that even if you populate the menu dynamically in this way,
+	 * you must set an empty menu on the GtkMenuToolButton beforehand,
+	 * since the arrow is made insensitive if the menu is not set.
 	 * See Also
 	 *
 	 * GtkToolbar, GtkToolButton
@@ -243,7 +249,7 @@ public class MenuToolButton : ToolButton
 		}
 		onShowMenuListeners ~= dlg;
 	}
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, MenuToolButton menuToolButton)
+	extern(C) static void callBackShowMenu(GtkMenuToolButton* buttonStruct, MenuToolButton menuToolButton)
 	{
 		foreach ( void delegate(MenuToolButton) dlg ; menuToolButton.onShowMenuListeners )
 		{

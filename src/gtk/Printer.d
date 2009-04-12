@@ -170,7 +170,7 @@ public class Printer : ObjectG
 	 */
 	public this (string name, GtkPrintBackend* backend, int virtual)
 	{
-		// GtkPrinter* gtk_printer_new (const gchar *name,  GtkPrintBackend *backend,  gboolean virtual_);
+		// GtkPrinter * gtk_printer_new (const gchar *name,  GtkPrintBackend *backend,  gboolean virtual_);
 		auto p = gtk_printer_new(Str.toStringz(name), backend, virtual);
 		if(p is null)
 		{
@@ -186,7 +186,7 @@ public class Printer : ObjectG
 	 */
 	public GtkPrintBackend* getBackend()
 	{
-		// GtkPrintBackend* gtk_printer_get_backend (GtkPrinter *printer);
+		// GtkPrintBackend * gtk_printer_get_backend (GtkPrinter *printer);
 		return gtk_printer_get_backend(gtkPrinter);
 	}
 	
@@ -197,7 +197,7 @@ public class Printer : ObjectG
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_printer_get_name (GtkPrinter *printer);
+		// const gchar * gtk_printer_get_name (GtkPrinter *printer);
 		return Str.toString(gtk_printer_get_name(gtkPrinter));
 	}
 	
@@ -209,7 +209,7 @@ public class Printer : ObjectG
 	 */
 	public string getStateMessage()
 	{
-		// const gchar* gtk_printer_get_state_message (GtkPrinter *printer);
+		// const gchar * gtk_printer_get_state_message (GtkPrinter *printer);
 		return Str.toString(gtk_printer_get_state_message(gtkPrinter));
 	}
 	
@@ -220,7 +220,7 @@ public class Printer : ObjectG
 	 */
 	public string getDescription()
 	{
-		// const gchar* gtk_printer_get_description (GtkPrinter *printer);
+		// const gchar * gtk_printer_get_description (GtkPrinter *printer);
 		return Str.toString(gtk_printer_get_description(gtkPrinter));
 	}
 	
@@ -231,7 +231,7 @@ public class Printer : ObjectG
 	 */
 	public string getLocation()
 	{
-		// const gchar* gtk_printer_get_location (GtkPrinter *printer);
+		// const gchar * gtk_printer_get_location (GtkPrinter *printer);
 		return Str.toString(gtk_printer_get_location(gtkPrinter));
 	}
 	
@@ -242,7 +242,7 @@ public class Printer : ObjectG
 	 */
 	public string getIconName()
 	{
-		// const gchar* gtk_printer_get_icon_name (GtkPrinter *printer);
+		// const gchar * gtk_printer_get_icon_name (GtkPrinter *printer);
 		return Str.toString(gtk_printer_get_icon_name(gtkPrinter));
 	}
 	
@@ -350,7 +350,7 @@ public class Printer : ObjectG
 	 */
 	public ListG listPapers()
 	{
-		// GList* gtk_printer_list_papers (GtkPrinter *printer);
+		// GList * gtk_printer_list_papers (GtkPrinter *printer);
 		auto p = gtk_printer_list_papers(gtkPrinter);
 		if(p is null)
 		{
@@ -419,7 +419,7 @@ public class Printer : ObjectG
 	 */
 	public PageSetup getDefaultPageSize()
 	{
-		// GtkPageSetup* gtk_printer_get_default_page_size (GtkPrinter *printer);
+		// GtkPageSetup * gtk_printer_get_default_page_size (GtkPrinter *printer);
 		auto p = gtk_printer_get_default_page_size(gtkPrinter);
 		if(p is null)
 		{

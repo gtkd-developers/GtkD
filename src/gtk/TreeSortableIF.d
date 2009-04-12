@@ -84,13 +84,16 @@ public interface TreeSortableIF
 	
 	void delegate(TreeSortableIF)[] onSortColumnChangedListeners();
 	/**
+	 * The ::sort-column-changed signal is emitted when the sort column
+	 * or sort order of sortable is changed. The signal is emitted before
+	 * the contents of sortable are resorted.
 	 * See Also
 	 * GtkTreeModel, GtkTreeView
 	 */
 	void addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
-	 * Emits a GtkTreeSortable::sort_column_changed signal on
+	 * Emits a "sort-column-changed" signal on sortable.
 	 */
 	public void sortColumnChanged();
 	
@@ -109,9 +112,7 @@ public interface TreeSortableIF
 	/**
 	 * Sets the current sort column to be sort_column_id. The sortable will
 	 * resort itself to reflect this change, after emitting a
-	 * GtkTreeSortable::sort_column_changed signal. If sort_column_id is
-	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, then the default sort function
-	 * will be used, if it is set.
+	 * "sort-column-changed" signal. sortable may either be
 	 * Params:
 	 * sortColumnId =  the sort column id to set
 	 * order =  The sort order of the column
@@ -120,8 +121,8 @@ public interface TreeSortableIF
 	
 	/**
 	 * Sets the comparison function used when sorting to be sort_func. If the
-	 * current sort column id of sortable is the same as sort_column_id, then the
-	 * model will sort using this function.
+	 * current sort column id of sortable is the same as sort_column_id, then
+	 * the model will sort using this function.
 	 * Params:
 	 * sortColumnId =  the sort column id to set the function for
 	 * sortFunc =  The comparison function
@@ -137,8 +138,8 @@ public interface TreeSortableIF
 	 * this function.
 	 * If sort_func is NULL, then there will be no default comparison function.
 	 * This means that once the model has been sorted, it can't go back to the
-	 * default state. In this case, when the current sort column id of sortable is
-	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
+	 * default state. In this case, when the current sort column id of sortable
+	 * is GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
 	 * Params:
 	 * sortFunc =  The comparison function
 	 * userData =  User data to pass to sort_func, or NULL
@@ -148,9 +149,9 @@ public interface TreeSortableIF
 	
 	/**
 	 * Returns TRUE if the model has a default sort function. This is used
-	 * primarily by GtkTreeViewColumns in order to determine if a model can go back
-	 * to the default state, or not.
-	 * Returns: TRUE, if the model has a default sort functionSignal DetailsThe "sort-column-changed" signalvoid user_function (GtkTreeSortable *treesortable, gpointer user_data) : Run Last
+	 * primarily by GtkTreeViewColumns in order to determine if a model can
+	 * go back to the default state, or not.
+	 * Returns: TRUE, if the model has a default sort functionSignal DetailsThe "sort-column-changed" signalvoid user_function (GtkTreeSortable *sortable, gpointer user_data) : Run LastThe ::sort-column-changed signal is emitted when the sort columnor sort order of sortable is changed. The signal is emitted beforethe contents of sortable are resorted.
 	 */
 	public int hasDefaultSortFunc();
 }

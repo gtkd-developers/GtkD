@@ -138,7 +138,7 @@ public class PrintSettings : ObjectG
 	 */
 	public this ()
 	{
-		// GtkPrintSettings* gtk_print_settings_new (void);
+		// GtkPrintSettings * gtk_print_settings_new (void);
 		auto p = gtk_print_settings_new();
 		if(p is null)
 		{
@@ -154,7 +154,7 @@ public class PrintSettings : ObjectG
 	 */
 	public PrintSettings copy()
 	{
-		// GtkPrintSettings* gtk_print_settings_copy (GtkPrintSettings *other);
+		// GtkPrintSettings * gtk_print_settings_copy (GtkPrintSettings *other);
 		auto p = gtk_print_settings_copy(gtkPrintSettings);
 		if(p is null)
 		{
@@ -185,7 +185,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string get(string key)
 	{
-		// const gchar* gtk_print_settings_get (GtkPrintSettings *settings,  const gchar *key);
+		// const gchar * gtk_print_settings_get (GtkPrintSettings *settings,  const gchar *key);
 		return Str.toString(gtk_print_settings_get(gtkPrintSettings, Str.toStringz(key)));
 	}
 	
@@ -378,7 +378,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string getPrinter()
 	{
-		// const gchar* gtk_print_settings_get_printer (GtkPrintSettings *settings);
+		// const gchar * gtk_print_settings_get_printer (GtkPrintSettings *settings);
 		return Str.toString(gtk_print_settings_get_printer(gtkPrintSettings));
 	}
 	
@@ -427,7 +427,7 @@ public class PrintSettings : ObjectG
 	 */
 	public PaperSize getPaperSize()
 	{
-		// GtkPaperSize* gtk_print_settings_get_paper_size (GtkPrintSettings *settings);
+		// GtkPaperSize * gtk_print_settings_get_paper_size (GtkPrintSettings *settings);
 		auto p = gtk_print_settings_get_paper_size(gtkPrintSettings);
 		if(p is null)
 		{
@@ -700,7 +700,9 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
-	 * Sets the value of GTK_PRINT_SETTINGS_RESOLUTION.
+	 * Sets the values of GTK_PRINT_SETTINGS_RESOLUTION,
+	 * GTK_PRINT_SETTINGS_RESOLUTION_X and
+	 * GTK_PRINT_SETTINGS_RESOLUTION_Y.
 	 * Since 2.10
 	 * Params:
 	 * resolution =  the resolution in dpi
@@ -709,6 +711,66 @@ public class PrintSettings : ObjectG
 	{
 		// void gtk_print_settings_set_resolution (GtkPrintSettings *settings,  gint resolution);
 		gtk_print_settings_set_resolution(gtkPrintSettings, resolution);
+	}
+	
+	/**
+	 * Sets the values of GTK_PRINT_SETTINGS_RESOLUTION,
+	 * GTK_PRINT_SETTINGS_RESOLUTION_X and
+	 * GTK_PRINT_SETTINGS_RESOLUTION_Y.
+	 * Since 2.16
+	 * Params:
+	 * resolutionX =  the horizontal resolution in dpi
+	 * resolutionY =  the vertical resolution in dpi
+	 */
+	public void setResolutionXy(int resolutionX, int resolutionY)
+	{
+		// void gtk_print_settings_set_resolution_xy  (GtkPrintSettings *settings,  gint resolution_x,  gint resolution_y);
+		gtk_print_settings_set_resolution_xy(gtkPrintSettings, resolutionX, resolutionY);
+	}
+	
+	/**
+	 * Gets the value of GTK_PRINT_SETTINGS_RESOLUTION_X.
+	 * Since 2.16
+	 * Returns: the horizontal resolution in dpi
+	 */
+	public int getResolutionX()
+	{
+		// gint gtk_print_settings_get_resolution_x (GtkPrintSettings *settings);
+		return gtk_print_settings_get_resolution_x(gtkPrintSettings);
+	}
+	
+	/**
+	 * Gets the value of GTK_PRINT_SETTINGS_RESOLUTION_Y.
+	 * Since 2.16
+	 * Returns: the vertical resolution in dpi
+	 */
+	public int getResolutionY()
+	{
+		// gint gtk_print_settings_get_resolution_y (GtkPrintSettings *settings);
+		return gtk_print_settings_get_resolution_y(gtkPrintSettings);
+	}
+	
+	/**
+	 * Gets the value of GTK_PRINT_SETTINGS_PRINTER_LPI.
+	 * Since 2.16
+	 * Returns: the resolution in lpi (lines per inch)
+	 */
+	public double getPrinterLpi()
+	{
+		// gdouble gtk_print_settings_get_printer_lpi (GtkPrintSettings *settings);
+		return gtk_print_settings_get_printer_lpi(gtkPrintSettings);
+	}
+	
+	/**
+	 * Sets the value of GTK_PRINT_SETTINGS_PRINTER_LPI.
+	 * Since 2.16
+	 * Params:
+	 * lpi =  the resolution in lpi (lines per inch)
+	 */
+	public void setPrinterLpi(double lpi)
+	{
+		// void gtk_print_settings_set_printer_lpi (GtkPrintSettings *settings,  gdouble lpi);
+		gtk_print_settings_set_printer_lpi(gtkPrintSettings, lpi);
 	}
 	
 	/**
@@ -764,7 +826,7 @@ public class PrintSettings : ObjectG
 	 */
 	public GtkPageRange[] getPageRanges()
 	{
-		// GtkPageRange* gtk_print_settings_get_page_ranges (GtkPrintSettings *settings,  gint *num_ranges);
+		// GtkPageRange * gtk_print_settings_get_page_ranges (GtkPrintSettings *settings,  gint *num_ranges);
 		int numRanges;
 		auto p = gtk_print_settings_get_page_ranges(gtkPrintSettings, &numRanges);
 		return p[0 .. numRanges];
@@ -812,7 +874,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string getDefaultSource()
 	{
-		// const gchar* gtk_print_settings_get_default_source  (GtkPrintSettings *settings);
+		// const gchar * gtk_print_settings_get_default_source  (GtkPrintSettings *settings);
 		return Str.toString(gtk_print_settings_get_default_source(gtkPrintSettings));
 	}
 	
@@ -836,7 +898,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string getMediaType()
 	{
-		// const gchar* gtk_print_settings_get_media_type (GtkPrintSettings *settings);
+		// const gchar * gtk_print_settings_get_media_type (GtkPrintSettings *settings);
 		return Str.toString(gtk_print_settings_get_media_type(gtkPrintSettings));
 	}
 	
@@ -860,7 +922,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string getDither()
 	{
-		// const gchar* gtk_print_settings_get_dither (GtkPrintSettings *settings);
+		// const gchar * gtk_print_settings_get_dither (GtkPrintSettings *settings);
 		return Str.toString(gtk_print_settings_get_dither(gtkPrintSettings));
 	}
 	
@@ -883,7 +945,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string getFinishings()
 	{
-		// const gchar* gtk_print_settings_get_finishings (GtkPrintSettings *settings);
+		// const gchar * gtk_print_settings_get_finishings (GtkPrintSettings *settings);
 		return Str.toString(gtk_print_settings_get_finishings(gtkPrintSettings));
 	}
 	
@@ -906,7 +968,7 @@ public class PrintSettings : ObjectG
 	 */
 	public string getOutputBin()
 	{
-		// const gchar* gtk_print_settings_get_output_bin (GtkPrintSettings *settings);
+		// const gchar * gtk_print_settings_get_output_bin (GtkPrintSettings *settings);
 		return Str.toString(gtk_print_settings_get_output_bin(gtkPrintSettings));
 	}
 	
@@ -934,7 +996,7 @@ public class PrintSettings : ObjectG
 	 */
 	public this (string fileName)
 	{
-		// GtkPrintSettings* gtk_print_settings_new_from_file (const gchar *file_name,  GError **error);
+		// GtkPrintSettings * gtk_print_settings_new_from_file (const gchar *file_name,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), &err);
@@ -965,7 +1027,7 @@ public class PrintSettings : ObjectG
 	 */
 	public this (KeyFile keyFile, string groupName)
 	{
-		// GtkPrintSettings* gtk_print_settings_new_from_key_file  (GKeyFile *key_file,  const gchar *group_name,  GError **error);
+		// GtkPrintSettings * gtk_print_settings_new_from_key_file  (GKeyFile *key_file,  const gchar *group_name,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);

@@ -206,7 +206,7 @@ public class TextAttributes
 	 */
 	public TextAttributes doref()
 	{
-		// GtkTextAttributes* gtk_text_attributes_ref (GtkTextAttributes *values);
+		// GtkTextAttributes * gtk_text_attributes_ref (GtkTextAttributes *values);
 		auto p = gtk_text_attributes_ref(gtkTextAttributes);
 		if(p is null)
 		{

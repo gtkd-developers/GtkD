@@ -51,9 +51,7 @@
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gtk.TreeIter
- * 	- gobject.Value
  * 	- gtk.TreeModelT
- * 	- gobject.Signals
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
  * 	- gtk.TreeSortableT
@@ -80,9 +78,7 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeIter;
-private import gobject.Value;
 private import gtk.TreeModelT;
-private import gobject.Signals;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeSortableT;
@@ -108,7 +104,7 @@ private import gobject.ObjectG;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
- * Example 20. Using a GtkTreeModelSort
+ * Example 22. Using a GtkTreeModelSort
  * {
 	 *  GtkTreeView *tree_view1;
 	 *  GtkTreeView *tree_view2;
@@ -134,7 +130,7 @@ private import gobject.ObjectG;
  * "changed" signal. In this callback, we get a string from COLUMN_1 of
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
- * Example 21. Accessing the child model of in a selection changed callback
+ * Example 23. Accessing the child model of in a selection changed callback
  * void
  * selection_changed (GtkTreeSelection *selection, gpointer data)
  * {
@@ -232,7 +228,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 */
 	public static TreeModelIF newWithModel(TreeModelIF childModel)
 	{
-		// GtkTreeModel* gtk_tree_model_sort_new_with_model (GtkTreeModel *child_model);
+		// GtkTreeModel * gtk_tree_model_sort_new_with_model (GtkTreeModel *child_model);
 		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelTStruct());
 		if(p is null)
 		{
@@ -247,7 +243,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_tree_model_sort_get_model (GtkTreeModelSort *tree_model);
+		// GtkTreeModel * gtk_tree_model_sort_get_model (GtkTreeModelSort *tree_model);
 		auto p = gtk_tree_model_sort_get_model(gtkTreeModelSort);
 		if(p is null)
 		{
@@ -267,7 +263,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
-		// GtkTreePath* gtk_tree_model_sort_convert_child_path_to_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *child_path);
+		// GtkTreePath * gtk_tree_model_sort_convert_child_path_to_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *child_path);
 		auto p = gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, (childPath is null) ? null : childPath.getTreePathStruct());
 		if(p is null)
 		{
@@ -303,7 +299,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 */
 	public TreePath convertPathToChildPath(TreePath sortedPath)
 	{
-		// GtkTreePath* gtk_tree_model_sort_convert_path_to_child_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *sorted_path);
+		// GtkTreePath * gtk_tree_model_sort_convert_path_to_child_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *sorted_path);
 		auto p = gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, (sortedPath is null) ? null : sortedPath.getTreePathStruct());
 		if(p is null)
 		{

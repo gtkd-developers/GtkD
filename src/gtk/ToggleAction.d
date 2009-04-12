@@ -175,7 +175,7 @@ public class ToggleAction : Action
 	 */
 	public this (string name, string label, string tooltip, string stockId)
 	{
-		// GtkToggleAction* gtk_toggle_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
+		// GtkToggleAction * gtk_toggle_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 		if(p is null)
 		{

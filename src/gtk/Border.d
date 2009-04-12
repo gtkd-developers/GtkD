@@ -172,7 +172,7 @@ public class Border
 	 */
 	public this ()
 	{
-		// GtkBorder* gtk_border_new (void);
+		// GtkBorder * gtk_border_new (void);
 		auto p = gtk_border_new();
 		if(p is null)
 		{
@@ -187,7 +187,7 @@ public class Border
 	 */
 	public Border copy()
 	{
-		// GtkBorder* gtk_border_copy (const GtkBorder *border_);
+		// GtkBorder * gtk_border_copy (const GtkBorder *border_);
 		auto p = gtk_border_copy(gtkBorder);
 		if(p is null)
 		{

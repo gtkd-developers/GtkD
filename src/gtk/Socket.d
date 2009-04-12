@@ -81,7 +81,7 @@ private import gtk.Container;
  * gtk_socket_get_id(). Before using this function,
  * the socket must have been realized, and for hence,
  * have been added to its parent.
- * Example 51. Obtaining the window ID of a socket.
+ * Example 55. Obtaining the window ID of a socket.
  * GtkWidget *socket = gtk_socket_new ();
  * gtk_widget_show (socket);
  * gtk_container_add (GTK_CONTAINER (parent), socket);

@@ -184,7 +184,7 @@ public class CellRendererAccel : CellRendererText
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_accel_new (void);
+		// GtkCellRenderer * gtk_cell_renderer_accel_new (void);
 		auto p = gtk_cell_renderer_accel_new();
 		if(p is null)
 		{

@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_toolbar_
  * 	- gtk_
@@ -48,6 +49,8 @@
  * 	- gtk.Widget
  * 	- gtk.Button
  * 	- gtk.ToolItem
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * 	- GtkWidget* -> Widget
@@ -71,6 +74,8 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.Button;
 private import gtk.ToolItem;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -91,7 +96,7 @@ private import gtk.Container;
  * Creating a context menu for the toolbar can be done by connecting to
  * the "popup-context-menu" signal.
  */
-public class Toolbar : Container
+public class Toolbar : Container, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -131,6 +136,9 @@ public class Toolbar : Container
 		this.gtkToolbar = gtkToolbar;
 	}
 	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkToolbar);
+	
 	/**
 	 * Insert a GtkToolItem into the toolbar at position pos.
 	 * If pos is 0 the item is prepended to the start of the toolbar. If pos is negative, the item is appended to the end of the toolbar.
@@ -145,7 +153,7 @@ public class Toolbar : Container
 	}
 	
 	/** */
-	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GCallback callback, void* userData, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
 	}
@@ -318,7 +326,7 @@ public class Toolbar : Container
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_toolbar_new (void);
+		// GtkWidget * gtk_toolbar_new (void);
 		auto p = gtk_toolbar_new();
 		if(p is null)
 		{
@@ -362,7 +370,7 @@ public class Toolbar : Container
 	 */
 	public ToolItem getNthItem(int n)
 	{
-		// GtkToolItem* gtk_toolbar_get_nth_item (GtkToolbar *toolbar,  gint n);
+		// GtkToolItem * gtk_toolbar_get_nth_item (GtkToolbar *toolbar,  gint n);
 		auto p = gtk_toolbar_get_nth_item(gtkToolbar, n);
 		if(p is null)
 		{
@@ -421,6 +429,8 @@ public class Toolbar : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toolbar_set_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_set_orientation() instead.
 	 * Sets whether a toolbar should appear horizontally or vertically.
 	 * Params:
 	 * orientation =  a new GtkOrientation.
@@ -468,6 +478,8 @@ public class Toolbar : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toolbar_get_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_get_orientation() instead.
 	 * Retrieves the current orientation of the toolbar. See
 	 * gtk_toolbar_set_orientation().
 	 * Returns: the orientation
@@ -527,11 +539,11 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_append_item is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_append_item has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a new item into the toolbar. You must specify the position
 	 * in the toolbar where it will be inserted.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * text =  give your toolbar button a label.
 	 * tooltipText =  a string that appears when the user holds the mouse over this item.
@@ -541,9 +553,9 @@ public class Toolbar : Container
 	 * userData =  a pointer to any data you wish to be passed to the callback.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
-	public Widget appendItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget appendItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
+		// GtkWidget* gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -554,10 +566,10 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_prepend_item is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_prepend_item has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a new button to the beginning (top or left edges) of the given toolbar.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * text =  give your toolbar button a label.
 	 * tooltipText =  a string that appears when the user holds the mouse over this item.
@@ -567,9 +579,9 @@ public class Toolbar : Container
 	 * userData =  a pointer to any data you wish to be passed to the callback.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
-	public Widget prependItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget prependItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
+		// GtkWidget* gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -580,11 +592,11 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_insert_item is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_insert_item has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a new item into the toolbar. You must specify the position in the
 	 * toolbar where it will be inserted.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * text =  give your toolbar button a label.
 	 * tooltipText =  a string that appears when the user holds the mouse over this item.
@@ -595,9 +607,9 @@ public class Toolbar : Container
 	 * position =  the number of widgets to insert this item after.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
-	public Widget insertItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData, int position)
 	{
-		// GtkWidget* gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
+		// GtkWidget* gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
 		if(p is null)
 		{
@@ -608,7 +620,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_append_space is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_append_space has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a new space to the end of the toolbar.
 	 */
 	public void appendSpace()
@@ -619,7 +631,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_prepend_space is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_prepend_space has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a new space to the beginning of the toolbar.
 	 */
 	public void prependSpace()
@@ -630,7 +642,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_insert_space is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_insert_space has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a new space in the toolbar at the specified position.
 	 * Params:
 	 * position =  the number of widgets after which a space should be inserted.
@@ -643,14 +655,14 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_append_element is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_append_element has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a new element to the end of a toolbar.
 	 * If type == GTK_TOOLBAR_CHILD_WIDGET, widget is used as the new element.
 	 * If type == GTK_TOOLBAR_CHILD_RADIOBUTTON, widget is used to determine
 	 * the radio group for the new element. In all other cases, widget must
 	 * be NULL.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * type =  a value of type GtkToolbarChildType that determines what widget will be.
 	 * widget =  a GtkWidget, or NULL.
@@ -662,9 +674,9 @@ public class Toolbar : Container
 	 * userData =  any data you wish to pass to the callback.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
-	public Widget appendElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget appendElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
+		// GtkWidget* gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -675,14 +687,14 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_prepend_element is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_prepend_element has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a new element to the beginning of a toolbar.
 	 * If type == GTK_TOOLBAR_CHILD_WIDGET, widget is used as the new element.
 	 * If type == GTK_TOOLBAR_CHILD_RADIOBUTTON, widget is used to determine
 	 * the radio group for the new element. In all other cases, widget must
 	 * be NULL.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * type =  a value of type GtkToolbarChildType that determines what widget will be.
 	 * widget =  a GtkWidget, or NULL
@@ -694,9 +706,9 @@ public class Toolbar : Container
 	 * userData =  any data you wish to pass to the callback.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
-	public Widget prependElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
+	public Widget prependElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
+		// GtkWidget* gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -707,14 +719,14 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_insert_element is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_insert_element has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a new element in the toolbar at the given position.
 	 * If type == GTK_TOOLBAR_CHILD_WIDGET, widget is used as the new element.
 	 * If type == GTK_TOOLBAR_CHILD_RADIOBUTTON, widget is used to determine
 	 * the radio group for the new element. In all other cases, widget must
 	 * be NULL.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * type =  a value of type GtkToolbarChildType that determines what widget
 	 *  will be.
@@ -728,9 +740,9 @@ public class Toolbar : Container
 	 * position =  the number of widgets to insert this element after.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
-	public Widget insertElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData, int position)
 	{
-		// GtkWidget* gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
+		// GtkWidget* gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
 		if(p is null)
 		{
@@ -741,7 +753,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_append_widget is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_append_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a widget to the end of the given toolbar.
 	 * Params:
 	 * widget =  a GtkWidget to add to the toolbar.
@@ -756,7 +768,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_prepend_widget is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_prepend_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a widget to the beginning of the given toolbar.
 	 * Params:
 	 * widget =  a GtkWidget to add to the toolbar.
@@ -771,7 +783,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_insert_widget is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_insert_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a widget in the toolbar at the given position.
 	 * Params:
 	 * widget =  a GtkWidget to add to the toolbar.
@@ -798,12 +810,12 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_insert_stock is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_insert_stock has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a stock item at the specified position of the toolbar. If
 	 * stock_id is not a known stock item ID, it's inserted verbatim,
 	 * except that underscores used to mark mnemonics are removed.
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
-	 * arguments. Use the GTK_SIGNAL_FUNC() to cast the function to GtkSignalFunc.
+	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * stockId =  The id of the stock item you want to insert
 	 * tooltipText =  The text in the tooltip of the toolbar button
@@ -814,9 +826,9 @@ public class Toolbar : Container
 	 *  -1 means at the end.
 	 * Returns: the inserted widget
 	 */
-	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, GCallback callback, void* userData, int position)
 	{
-		// GtkWidget* gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GtkSignalFunc callback,  gpointer user_data,  gint position);
+		// GtkWidget* gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position);
 		if(p is null)
 		{
@@ -844,7 +856,7 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_remove_space is deprecated and should not be used in newly-written code.
+	 * gtk_toolbar_remove_space has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Removes a space from the specified position.
 	 * Params:
 	 * position =  the index of the space to remove.

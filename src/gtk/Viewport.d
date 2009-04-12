@@ -69,6 +69,16 @@ private import gtk.Bin;
 
 /**
  * Description
+ * The GtkViewport widget acts as an adaptor class, implementing
+ * scrollability for child widgets that lack their own scrolling
+ * capabilities. Use GtkViewport to scroll child widgets such as
+ * GtkTable, GtkBox, and so on.
+ * If a widget has native scrolling abilities, such as GtkTextView,
+ * GtkTreeView or GtkIconview, it can be added to a GtkScrolledWindow
+ * with gtk_container_add(). If a widget does not, you must first add the
+ * widget to a GtkViewport, then add the viewport to the scrolled window.
+ * The convenience function gtk_scrolled_window_add_with_viewport() does
+ * exactly this, so you can ignore the presence of the viewport.
  */
 public class Viewport : Bin
 {
@@ -116,6 +126,11 @@ public class Viewport : Bin
 	
 	void delegate(Adjustment, Adjustment, Viewport)[] onSetScrollAdjustmentsListeners;
 	/**
+	 * Set the scroll adjustments for the viewport. Usually scrolled containers
+	 * like GtkScrolledWindow will emit this signal to connect two instances
+	 * of GtkScrollbar to the scroll directions of the GtkViewport.
+	 * See Also
+	 * GtkScrolledWindow, GtkAdjustment
 	 */
 	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Viewport) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -132,11 +147,11 @@ public class Viewport : Bin
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkViewport* viewportStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, Viewport viewport)
+	extern(C) static void callBackSetScrollAdjustments(GtkViewport* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Viewport viewport)
 	{
 		foreach ( void delegate(Adjustment, Adjustment, Viewport) dlg ; viewport.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(arg1), new Adjustment(arg2), viewport);
+			dlg(new Adjustment(vertical), new Adjustment(arg2), viewport);
 		}
 	}
 	

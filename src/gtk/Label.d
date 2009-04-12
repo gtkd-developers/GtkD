@@ -87,7 +87,7 @@ private import gtk.Misc;
  * custom <attributes> element, which supports any number of <attribute>
  * elements. the <attribute> element has attributes named name, value,
  * start and end and allows you to specify PangoAttribute values for this label.
- * Example 11. A UI definition fragment specifying Pango attributes
+ * Example 13. A UI definition fragment specifying Pango attributes
  * <object class="GtkLabel">
  *  <attributes>
  *  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
@@ -256,6 +256,10 @@ public class Label : Misc
 	
 	void delegate(Label)[] onCopyClipboardListeners;
 	/**
+	 * The ::copy-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to copy the selection to the clipboard.
+	 * The default binding for this signal is Ctrl-c.
 	 */
 	void addOnCopyClipboard(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -282,6 +286,21 @@ public class Label : Misc
 	
 	void delegate(GtkMovementStep, gint, gboolean, Label)[] onMoveCursorListeners;
 	/**
+	 * The ::move-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates a cursor movement.
+	 * If the cursor is not visible in entry, this signal causes
+	 * the viewport to be moved instead.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control the cursor
+	 * programmatically.
+	 * The default bindings for this signal come in two variants,
+	 * the variant with the Shift modifier extends the selection,
+	 * the variant without the Shift modifer does not.
+	 * There are too many key combinations to list them all here.
+	 * Arrow keys move by individual characters/lines
+	 * Ctrl-arrow key combinations move by words/paragraphs
+	 * Home/End keys move to the ends of the buffer
 	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -298,16 +317,21 @@ public class Label : Misc
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkLabel* labelStruct, GtkMovementStep arg1, gint arg2, gboolean arg3, Label label)
+	extern(C) static void callBackMoveCursor(GtkLabel* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Label label)
 	{
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; label.onMoveCursorListeners )
 		{
-			dlg(arg1, arg2, arg3, label);
+			dlg(step, count, extendSelection, label);
 		}
 	}
 	
 	void delegate(GtkMenu*, Label)[] onPopulatePopupListeners;
 	/**
+	 * The ::populate-popup signal gets emitted before showing the
+	 * context menu of the label. Note that only selectable labels
+	 * have context menus.
+	 * If you need to add items to the context menu, connect
+	 * to this signal and append your menuitems to the menu.
 	 */
 	void addOnPopulatePopup(void delegate(GtkMenu*, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -324,11 +348,11 @@ public class Label : Misc
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* arg1, Label label)
+	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, Label label)
 	{
 		foreach ( void delegate(GtkMenu*, Label) dlg ; label.onPopulatePopupListeners )
 		{
-			dlg(arg1, label);
+			dlg(menu, label);
 		}
 	}
 	
@@ -348,9 +372,14 @@ public class Label : Misc
 	
 	/**
 	 * Sets a PangoAttrList; the attributes in the list are applied to the
-	 * label text. The attributes set with this function will be ignored
-	 * if the "use-underline"" or "use-markup" properties
-	 * are set to TRUE.
+	 * label text.
+	 * Note
+	 * The attributes set with this function will be applied
+	 * and merged with any other attributes previously effected by way
+	 * of the "use-underline" or "use-markup" properties.
+	 * While it is not recommended to mix markup strings with manually set
+	 * attributes, if you must; know that the attributes will be applied
+	 * to the label after the markup string is parsed.
 	 * Params:
 	 * attrs =  a PangoAttrList
 	 */
@@ -458,7 +487,7 @@ public class Label : Misc
 	
 	/**
 	 * Warning
-	 * gtk_label_get is deprecated and should not be used in newly-written code.
+	 * gtk_label_get is deprecated and should not be used in newly-written code. Use gtk_label_get_text() instead.
 	 * Gets the current string of text within the GtkLabel and writes it to
 	 * the given str argument. It does not make a copy of this string so you
 	 * must not write to it.
@@ -477,7 +506,7 @@ public class Label : Misc
 	
 	/**
 	 * Warning
-	 * gtk_label_parse_uline is deprecated and should not be used in newly-written code.
+	 * gtk_label_parse_uline is deprecated and should not be used in newly-written code. Use gtk_label_set_use_underline() instead.
 	 * Parses the given string for underscores and converts the next
 	 * character to an underlined character. The last character that
 	 * was underlined will have its lower-cased accelerator keyval returned (i.e.
@@ -654,7 +683,7 @@ public class Label : Misc
 	 */
 	public PgAttributeList getAttributes()
 	{
-		// PangoAttrList* gtk_label_get_attributes (GtkLabel *label);
+		// PangoAttrList * gtk_label_get_attributes (GtkLabel *label);
 		auto p = gtk_label_get_attributes(gtkLabel);
 		if(p is null)
 		{
@@ -716,7 +745,7 @@ public class Label : Misc
 	 */
 	public string getLabel()
 	{
-		// const gchar* gtk_label_get_label (GtkLabel *label);
+		// const gchar * gtk_label_get_label (GtkLabel *label);
 		return Str.toString(gtk_label_get_label(gtkLabel));
 	}
 	
@@ -730,7 +759,7 @@ public class Label : Misc
 	 */
 	public PgLayout getLayout()
 	{
-		// PangoLayout* gtk_label_get_layout (GtkLabel *label);
+		// PangoLayout * gtk_label_get_layout (GtkLabel *label);
 		auto p = gtk_label_get_layout(gtkLabel);
 		if(p is null)
 		{
@@ -768,7 +797,7 @@ public class Label : Misc
 	 */
 	public Widget getMnemonicWidget()
 	{
-		// GtkWidget* gtk_label_get_mnemonic_widget (GtkLabel *label);
+		// GtkWidget * gtk_label_get_mnemonic_widget (GtkLabel *label);
 		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
 		if(p is null)
 		{

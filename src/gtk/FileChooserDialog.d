@@ -48,15 +48,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Window
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListSG
- * 	- gio.File
- * 	- gtk.Widget
- * 	- gtk.FileFilter
  * 	- gtk.FileChooserT
  * 	- gtk.FileChooserIF
- * 	- gobject.Signals
  * structWrap:
  * module aliases:
  * local aliases:
@@ -73,15 +66,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gtk.Window;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.ListSG;
-private import gio.File;
-private import gtk.Widget;
-private import gtk.FileFilter;
 private import gtk.FileChooserT;
 private import gtk.FileChooserIF;
-private import gobject.Signals;
 
 
 
@@ -98,7 +84,7 @@ private import gtk.Dialog;
  *  Note that GtkFileChooserDialog does not have any methods of its
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
- * Example 37. Typical usage
+ * Example 41. Typical usage
  * 	In the simplest of cases, you can the following code to use
  * 	GtkFileChooserDialog to select a file for opening:
  * GtkWidget *dialog;

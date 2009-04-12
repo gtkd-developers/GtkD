@@ -82,7 +82,7 @@ private import gtk.Dialog;
  * you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
  * makes the dialog modal and waits for the user to respond to it. gtk_dialog_run()
  * returns when any dialog button is clicked.
- * Example 7. A modal dialog.
+ * Example 8. A modal dialog.
  *  dialog = gtk_message_dialog_new (main_application_window,
  *  GTK_DIALOG_DESTROY_WITH_PARENT,
  *  GTK_MESSAGE_ERROR,
@@ -92,7 +92,7 @@ private import gtk.Dialog;
  *  gtk_dialog_run (GTK_DIALOG (dialog));
  *  gtk_widget_destroy (dialog);
  * You might do a non-modal GtkMessageDialog as follows:
- * Example 8. A non-modal dialog.
+ * Example 9. A non-modal dialog.
  *  dialog = gtk_message_dialog_new (main_application_window,
  *  GTK_DIALOG_DESTROY_WITH_PARENT,
  *  GTK_MESSAGE_ERROR,
@@ -279,7 +279,7 @@ public class MessageDialog : Dialog
 	 */
 	public Widget getImage()
 	{
-		// GtkWidget* gtk_message_dialog_get_image (GtkMessageDialog *dialog);
+		// GtkWidget * gtk_message_dialog_get_image (GtkMessageDialog *dialog);
 		auto p = gtk_message_dialog_get_image(gtkMessageDialog);
 		if(p is null)
 		{

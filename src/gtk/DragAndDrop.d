@@ -376,7 +376,7 @@ public class DragAndDrop
 	 */
 	public Widget getSourceWidget()
 	{
-		// GtkWidget* gtk_drag_get_source_widget (GdkDragContext *context);
+		// GtkWidget * gtk_drag_get_source_widget (GdkDragContext *context);
 		auto p = gtk_drag_get_source_widget(gdkDragContext);
 		if(p is null)
 		{
@@ -427,7 +427,7 @@ public class DragAndDrop
 	 */
 	public static DragContext begin(Widget widget, TargetList targets, GdkDragAction actions, int button, Event event)
 	{
-		// GdkDragContext* gtk_drag_begin (GtkWidget *widget,  GtkTargetList *targets,  GdkDragAction actions,  gint button,  GdkEvent *event);
+		// GdkDragContext * gtk_drag_begin (GtkWidget *widget,  GtkTargetList *targets,  GdkDragAction actions,  gint button,  GdkEvent *event);
 		auto p = gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct());
 		if(p is null)
 		{
@@ -526,11 +526,10 @@ public class DragAndDrop
 	
 	/**
 	 * Warning
-	 * gtk_drag_set_default_icon is deprecated and should not be used in newly-written code.
+	 * gtk_drag_set_default_icon is deprecated and should not be used in newly-written code. Change the default drag icon via the stock system by
+	 *  changing the stock pixbuf for GTK_STOCK_DND instead.
 	 * Changes the default drag icon. GTK+ retains references for the
 	 * arguments, and will release them when they are no longer needed.
-	 * This function is obsolete. The default icon should now be changed
-	 * via the stock system by changing the stock pixbuf for GTK_STOCK_DND.
 	 * Params:
 	 * colormap =  the colormap of the icon
 	 * pixmap =  the image data for the icon

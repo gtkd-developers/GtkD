@@ -253,7 +253,7 @@ public class Plug : Window
 	 */
 	public GdkWindow* getSocketWindow()
 	{
-		// GdkWindow* gtk_plug_get_socket_window (GtkPlug *plug);
+		// GdkWindow * gtk_plug_get_socket_window (GtkPlug *plug);
 		return gtk_plug_get_socket_window(gtkPlug);
 	}
 }

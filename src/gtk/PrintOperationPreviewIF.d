@@ -90,7 +90,7 @@ public  import gtkc.gdktypes;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example 41. The high-level printing API
+ * Example 45. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -136,10 +136,18 @@ public interface PrintOperationPreviewIF
 	
 	void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF)[] onGotPageSizeListeners();
 	/**
+	 * The ::got-page-size signal is emitted once for each page
+	 * that gets rendered to the preview.
+	 * A handler for this signal should update the context
+	 * according to page_setup and set up a suitable cairo
+	 * context, using gtk_print_context_set_cairo_context().
 	 */
 	void addOnGotPageSize(void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] onReadyListeners();
 	/**
+	 * The ::ready signal gets emitted once per preview operation,
+	 * before the first page is rendered.
+	 * A handler for this signal can be used for setup tasks.
 	 * See Also
 	 * GtkPrintContext, GtkPrintUnixDialog
 	 */
@@ -166,6 +174,8 @@ public interface PrintOperationPreviewIF
 	 * Renders a page to the preview, using the print context that
 	 * was passed to the "preview" handler together
 	 * with preview.
+	 * A custom iprint preview should use this function in its ::expose
+	 * handler to render the currently selected page.
 	 * Note that this function requires a suitable cairo context to
 	 * be associated with the print context.
 	 * Since 2.10

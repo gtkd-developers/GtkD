@@ -140,7 +140,7 @@ public class TextIter
 	 */
 	public TextBuffer getBuffer()
 	{
-		// GtkTextBuffer* gtk_text_iter_get_buffer (const GtkTextIter *iter);
+		// GtkTextBuffer * gtk_text_iter_get_buffer (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_buffer(gtkTextIter);
 		if(p is null)
 		{
@@ -158,7 +158,7 @@ public class TextIter
 	 */
 	public TextIter copy()
 	{
-		// GtkTextIter* gtk_text_iter_copy (const GtkTextIter *iter);
+		// GtkTextIter * gtk_text_iter_copy (const GtkTextIter *iter);
 		auto p = gtk_text_iter_copy(gtkTextIter);
 		if(p is null)
 		{
@@ -288,7 +288,7 @@ public class TextIter
 	 */
 	public string getSlice(TextIter end)
 	{
-		// gchar* gtk_text_iter_get_slice (const GtkTextIter *start,  const GtkTextIter *end);
+		// gchar * gtk_text_iter_get_slice (const GtkTextIter *start,  const GtkTextIter *end);
 		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
@@ -304,7 +304,7 @@ public class TextIter
 	 */
 	public string getText(TextIter end)
 	{
-		// gchar* gtk_text_iter_get_text (const GtkTextIter *start,  const GtkTextIter *end);
+		// gchar * gtk_text_iter_get_text (const GtkTextIter *start,  const GtkTextIter *end);
 		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
@@ -318,7 +318,7 @@ public class TextIter
 	 */
 	public string getVisibleSlice(TextIter end)
 	{
-		// gchar* gtk_text_iter_get_visible_slice (const GtkTextIter *start,  const GtkTextIter *end);
+		// gchar * gtk_text_iter_get_visible_slice (const GtkTextIter *start,  const GtkTextIter *end);
 		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
@@ -332,7 +332,7 @@ public class TextIter
 	 */
 	public string getVisibleText(TextIter end)
 	{
-		// gchar* gtk_text_iter_get_visible_text (const GtkTextIter *start,  const GtkTextIter *end);
+		// gchar * gtk_text_iter_get_visible_text (const GtkTextIter *start,  const GtkTextIter *end);
 		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
 	}
 	
@@ -363,7 +363,7 @@ public class TextIter
 	 */
 	public ListSG getMarks()
 	{
-		// GSList* gtk_text_iter_get_marks (const GtkTextIter *iter);
+		// GSList * gtk_text_iter_get_marks (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_marks(gtkTextIter);
 		if(p is null)
 		{
@@ -385,7 +385,7 @@ public class TextIter
 	 */
 	public ListSG getToggledTags(int toggledOn)
 	{
-		// GSList* gtk_text_iter_get_toggled_tags (const GtkTextIter *iter,  gboolean toggled_on);
+		// GSList * gtk_text_iter_get_toggled_tags (const GtkTextIter *iter,  gboolean toggled_on);
 		auto p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
 		if(p is null)
 		{
@@ -480,7 +480,7 @@ public class TextIter
 	 */
 	public ListSG getTags()
 	{
-		// GSList* gtk_text_iter_get_tags (const GtkTextIter *iter);
+		// GSList * gtk_text_iter_get_tags (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_tags(gtkTextIter);
 		if(p is null)
 		{

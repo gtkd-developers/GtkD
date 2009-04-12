@@ -334,7 +334,7 @@ public class AccelMap : ObjectG
 	 */
 	public static AccelMap get()
 	{
-		// GtkAccelMap* gtk_accel_map_get (void);
+		// GtkAccelMap * gtk_accel_map_get (void);
 		auto p = gtk_accel_map_get();
 		if(p is null)
 		{

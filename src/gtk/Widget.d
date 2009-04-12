@@ -80,9 +80,6 @@
  * 	- gdk.Drawable
  * 	- gtk.Tooltips
  * 	- gobject.Type
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -163,9 +160,6 @@ private import pango.PgFontDescription;
 private import gdk.Drawable;
 private import gtk.Tooltips;
 private import gobject.Type;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -191,7 +185,7 @@ private import gtk.ObjectGtk;
  * The GtkWidget implementation of the GtkBuildable interface supports a
  * custom <accelerator> element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
- * Example 49. A UI definition fragment specifying an accelerator
+ * Example 53. A UI definition fragment specifying an accelerator
  * <object class="GtkButton">
  *  <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
  * </object>
@@ -199,7 +193,7 @@ private import gtk.ObjectGtk;
  * custom <accessible> element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
- * Example 50. A UI definition fragment specifying an accessible
+ * Example 54. A UI definition fragment specifying an accessible
  * <object class="GtkButton" id="label1"/>
  *  <property name="label">I am a Label for a Button</property>
  * </object>
@@ -994,6 +988,9 @@ public class Widget : ObjectGtk, BuildableIF
 	 * The ::drag-begin signal is emitted on the drag source when a drag is
 	 * started. A typical reason to connect to this signal is to set up a
 	 * custom drag icon with gtk_drag_source_set_icon().
+	 * Note that some widgets set up a drag icon in the default handler of
+	 * this signal, so you may have to use g_signal_connect_after() to
+	 * override what the default handler did.
 	 */
 	void addOnDragBegin(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1540,7 +1537,6 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	bool delegate(GtkDirectionType, Widget)[] onFocusListeners;
 	/**
-	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
 	 */
 	void addOnFocus(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2295,8 +2291,8 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	bool delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
 	/**
-	 * Emitted when the "gtk-tooltip-timeout" has expired with
-	 * the cursor hovering "above" widget; or emitted when widget got
+	 * Emitted when "has-tooltip" is TRUE and the "gtk-tooltip-timeout"
+	 * has expired with the cursor hovering "above" widget; or emitted when widget got
 	 * focus in keyboard mode.
 	 * Using the given coordinates, the signal handler should determine
 	 * whether a tooltip should be shown for widget. If this is the case
@@ -2487,7 +2483,6 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	bool delegate(GdkEventSelection*, Widget)[] onSelectionNotifyListeners;
 	/**
-	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
 	 */
 	void addOnSelectionNotify(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3484,7 +3479,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Window getParentWindow()
 	{
-		// GdkWindow* gtk_widget_get_parent_window (GtkWidget *widget);
+		// GdkWindow * gtk_widget_get_parent_window (GtkWidget *widget);
 		auto p = gtk_widget_get_parent_window(gtkWidget);
 		if(p is null)
 		{
@@ -4109,7 +4104,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public RcStyle getModifierStyle()
 	{
-		// GtkRcStyle* gtk_widget_get_modifier_style (GtkWidget *widget);
+		// GtkRcStyle * gtk_widget_get_modifier_style (GtkWidget *widget);
 		auto p = gtk_widget_get_modifier_style(gtkWidget);
 		if(p is null)
 		{
@@ -4241,7 +4236,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public PgContext createPangoContext()
 	{
-		// PangoContext* gtk_widget_create_pango_context (GtkWidget *widget);
+		// PangoContext * gtk_widget_create_pango_context (GtkWidget *widget);
 		auto p = gtk_widget_create_pango_context(gtkWidget);
 		if(p is null)
 		{
@@ -4265,7 +4260,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public PgContext getPangoContext()
 	{
-		// PangoContext* gtk_widget_get_pango_context (GtkWidget *widget);
+		// PangoContext * gtk_widget_get_pango_context (GtkWidget *widget);
 		auto p = gtk_widget_get_pango_context(gtkWidget);
 		if(p is null)
 		{
@@ -4289,7 +4284,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public PgLayout createPangoLayout(string text)
 	{
-		// PangoLayout* gtk_widget_create_pango_layout (GtkWidget *widget,  const gchar *text);
+		// PangoLayout * gtk_widget_create_pango_layout (GtkWidget *widget,  const gchar *text);
 		auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
 		if(p is null)
 		{
@@ -4319,7 +4314,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
 	{
-		// GdkPixbuf* gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
+		// GdkPixbuf * gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
 		auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
 		if(p is null)
 		{
@@ -4525,8 +4520,13 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Emits the "mnemonic-activate" signal.
+	 * The default handler for this signal activates the widget if
+	 * group_cycling is FALSE, and just grabs the focus if group_cycling
+	 * is TRUE.
 	 * Params:
-	 * Returns:
+	 * groupCycling =  TRUE if there are other widgets with the same mnemonic
+	 * Returns: TRUE if the signal has been handled
 	 */
 	public int mnemonicActivate(int groupCycling)
 	{
@@ -4618,7 +4618,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Region regionIntersect(Region region)
 	{
-		// GdkRegion* gtk_widget_region_intersect (GtkWidget *widget,  const GdkRegion *region);
+		// GdkRegion * gtk_widget_region_intersect (GtkWidget *widget,  const GdkRegion *region);
 		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
 		if(p is null)
 		{
@@ -4778,7 +4778,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Widget getParent()
 	{
-		// GtkWidget* gtk_widget_get_parent (GtkWidget *widget);
+		// GtkWidget * gtk_widget_get_parent (GtkWidget *widget);
 		auto p = gtk_widget_get_parent(gtkWidget);
 		if(p is null)
 		{
@@ -4822,7 +4822,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Clipboard getClipboard(GdkAtom selection)
 	{
-		// GtkClipboard* gtk_widget_get_clipboard (GtkWidget *widget,  GdkAtom selection);
+		// GtkClipboard * gtk_widget_get_clipboard (GtkWidget *widget,  GdkAtom selection);
 		auto p = gtk_widget_get_clipboard(gtkWidget, selection);
 		if(p is null)
 		{
@@ -4843,7 +4843,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Display getDisplay()
 	{
-		// GdkDisplay* gtk_widget_get_display (GtkWidget *widget);
+		// GdkDisplay * gtk_widget_get_display (GtkWidget *widget);
 		auto p = gtk_widget_get_display(gtkWidget);
 		if(p is null)
 		{
@@ -4855,7 +4855,7 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Get the root window where this widget is located. This function can
 	 * only be called after the widget has been added to a widget
-	 * heirarchy with GtkWindow at the top.
+	 * hierarchy with GtkWindow at the top.
 	 * The root window is useful for such purposes as creating a popup
 	 * GdkWindow associated with the window. In general, you should only
 	 * create display specific resources when a widget has been realized,
@@ -4865,7 +4865,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Window getRootWindow()
 	{
-		// GdkWindow* gtk_widget_get_root_window (GtkWidget *widget);
+		// GdkWindow * gtk_widget_get_root_window (GtkWidget *widget);
 		auto p = gtk_widget_get_root_window(gtkWidget);
 		if(p is null)
 		{
@@ -4887,7 +4887,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gtk_widget_get_screen (GtkWidget *widget);
+		// GdkScreen * gtk_widget_get_screen (GtkWidget *widget);
 		auto p = gtk_widget_get_screen(gtkWidget);
 		if(p is null)
 		{
@@ -4899,7 +4899,7 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Checks whether there is a GdkScreen is associated with
 	 * this widget. All toplevel widgets have an associated
-	 * screen, and all widgets added into a heirarchy with a toplevel
+	 * screen, and all widgets added into a hierarchy with a toplevel
 	 * window at the top.
 	 * Since 2.2
 	 * Returns: TRUE if there is a GdkScreen associcated with the widget.
@@ -5085,6 +5085,8 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_get_action has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_activatable_get_related_action() instead.
 	 * Returns the GtkAction that widget is a proxy for.
 	 * See also gtk_action_get_proxies().
 	 * Since 2.10
@@ -5092,7 +5094,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Action getAction()
 	{
-		// GtkAction* gtk_widget_get_action (GtkWidget *widget);
+		// GtkAction * gtk_widget_get_action (GtkWidget *widget);
 		auto p = gtk_widget_get_action(gtkWidget);
 		if(p is null)
 		{
@@ -5107,8 +5109,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * compositing manager is running for widget's screen.
 	 * Please note that the semantics of this call will change
 	 * in the future if used on a widget that has a composited
-	 * window in its heirarchy (as set by
-	 * gdk_window_set_composited()).
+	 * window in its hierarchy (as set by gdk_window_set_composited()).
 	 * Since 2.10
 	 * Returns: TRUE if the widget can rely on its alphachannel being drawn correctly.
 	 */
@@ -5156,7 +5157,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public string getTooltipMarkup()
 	{
-		// gchar* gtk_widget_get_tooltip_markup (GtkWidget *widget);
+		// gchar * gtk_widget_get_tooltip_markup (GtkWidget *widget);
 		return Str.toString(gtk_widget_get_tooltip_markup(gtkWidget));
 	}
 	
@@ -5184,7 +5185,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public string getTooltipText()
 	{
-		// gchar* gtk_widget_get_tooltip_text (GtkWidget *widget);
+		// gchar * gtk_widget_get_tooltip_text (GtkWidget *widget);
 		return Str.toString(gtk_widget_get_tooltip_text(gtkWidget));
 	}
 	
@@ -5212,7 +5213,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public GtkWindow* getTooltipWindow()
 	{
-		// GtkWindow* gtk_widget_get_tooltip_window (GtkWidget *widget);
+		// GtkWindow * gtk_widget_get_tooltip_window (GtkWidget *widget);
 		return gtk_widget_get_tooltip_window(gtkWidget);
 	}
 	
@@ -5299,7 +5300,7 @@ public class Widget : ObjectGtk, BuildableIF
  */
 public Pixmap getSnapshot(Rectangle clipRect)
 {
-	// GdkPixmap* gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
+	// GdkPixmap * gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
 	auto p = gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
 	if(p is null)
 	{
@@ -5316,7 +5317,7 @@ public Pixmap getSnapshot(Rectangle clipRect)
  */
 public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
 {
-	// GtkRequisition* gtk_requisition_copy (const GtkRequisition *requisition);
+	// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
 	return gtk_requisition_copy(requisition);
 }
 

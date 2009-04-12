@@ -273,7 +273,7 @@ public class ScrolledWindow : Bin
 	 * Returns the horizontal scrollbar's adjustment, used to connect the
 	 * horizontal scrollbar to the child widget's horizontal scroll
 	 * functionality.
-	 * Returns:The horizontal GtkAdjustment.
+	 * Returns: the horizontal GtkAdjustment
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -290,7 +290,7 @@ public class ScrolledWindow : Bin
 	 * Returns the vertical scrollbar's adjustment, used to connect the
 	 * vertical scrollbar to the child widget's vertical scroll
 	 * functionality.
-	 * Returns:The vertical GtkAdjustment.
+	 * Returns: the vertical GtkAdjustment
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -344,8 +344,8 @@ public class ScrolledWindow : Bin
 	 * if needed (that is, if the slider part of the bar would be smaller
 	 * than the trough - the display is larger than the page size).
 	 * Params:
-	 * hscrollbarPolicy = Policy for horizontal bar.
-	 * vscrollbarPolicy = Policy for vertical bar.
+	 * hscrollbarPolicy =  policy for horizontal bar
+	 * vscrollbarPolicy =  policy for vertical bar
 	 */
 	public void setPolicy(GtkPolicyType hscrollbarPolicy, GtkPolicyType vscrollbarPolicy)
 	{
@@ -354,22 +354,23 @@ public class ScrolledWindow : Bin
 	}
 	
 	/**
-	 * Used to add children without native scrolling capabilities. This is
-	 * simply a convenience function; it is equivalent to adding the
+	 * Used to add children without native scrolling capabilities. This
+	 * is simply a convenience function; it is equivalent to adding the
 	 * unscrollable child to a viewport, then adding the viewport to the
 	 * scrolled window. If a child has native scrolling, use
 	 * gtk_container_add() instead of this function.
-	 * The viewport scrolls the child by moving its GdkWindow, and takes the
-	 * size of the child to be the size of its toplevel GdkWindow. This will
-	 * be very wrong for most widgets that support native scrolling; for
-	 * example, if you add a widget such as GtkTreeView with a viewport, the
-	 * whole widget will scroll, including the column headings. Thus, widgets
-	 * with native scrolling support should not be used with the GtkViewport proxy.
+	 * The viewport scrolls the child by moving its GdkWindow, and takes
+	 * the size of the child to be the size of its toplevel GdkWindow.
+	 * This will be very wrong for most widgets that support native scrolling;
+	 * for example, if you add a widget such as GtkTreeView with a viewport,
+	 * the whole widget will scroll, including the column headings. Thus,
+	 * widgets with native scrolling support should not be used with the
+	 * GtkViewport proxy.
 	 * A widget supports scrolling natively if the
 	 * set_scroll_adjustments_signal field in GtkWidgetClass is non-zero,
 	 * i.e. has been filled in with a valid signal identifier.
 	 * Params:
-	 * child = Widget you want to scroll.
+	 * child =  the widget you want to scroll
 	 */
 	public void addWithViewport(Widget child)
 	{
@@ -386,11 +387,6 @@ public class ScrolledWindow : Bin
 	 * GTK_CORNER_BOTTOM_LEFT, and GTK_CORNER_BOTTOM_RIGHT.
 	 * See also gtk_scrolled_window_get_placement() and
 	 * gtk_scrolled_window_unset_placement().
-	 * Determines the location of the child widget with respect to the
-	 * scrollbars. The default is GTK_CORNER_TOP_LEFT, meaning the child is
-	 * in the top left, with the scrollbars underneath and to the right.
-	 * Other values in GtkCornerType are GTK_CORNER_TOP_RIGHT,
-	 * GTK_CORNER_BOTTOM_LEFT, and GTK_CORNER_BOTTOM_RIGHT.
 	 * Params:
 	 * windowPlacement =  position of the child window
 	 */
@@ -429,7 +425,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Sets the GtkAdjustment for the horizontal scrollbar.
 	 * Params:
-	 * hadjustment = Horizontal scroll adjustment.
+	 * hadjustment =  horizontal scroll adjustment
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
@@ -440,7 +436,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Sets the GtkAdjustment for the vertical scrollbar.
 	 * Params:
-	 * vadjustment = Vertical scroll adjustment.
+	 * vadjustment =  vertical scroll adjustment
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{
@@ -463,8 +459,10 @@ public class ScrolledWindow : Bin
 	 * Retrieves the current policy values for the horizontal and vertical
 	 * scrollbars. See gtk_scrolled_window_set_policy().
 	 * Params:
-	 * hscrollbarPolicy =  location to store the policy for the horizontal scrollbar, or NULL.
-	 * vscrollbarPolicy =  location to store the policy for the horizontal scrollbar, or NULL.
+	 * hscrollbarPolicy =  location to store the policy for the horizontal
+	 *  scrollbar, or NULL.
+	 * vscrollbarPolicy =  location to store the policy for the vertical
+	 *  scrollbar, or NULL.
 	 */
 	public void getPolicy(out GtkPolicyType hscrollbarPolicy, out GtkPolicyType vscrollbarPolicy)
 	{

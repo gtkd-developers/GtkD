@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = Range
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_range_
  * 	- gtk_
@@ -44,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- gtk.Adjustment
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -62,6 +65,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.Adjustment;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -76,7 +81,7 @@ private import gtk.Widget;
  * of the "steppers". It also provides properties and methods for setting a
  * "fill level" on range widgets. See gtk_range_set_fill_level().
  */
-public class Range : Widget
+public class Range : Widget, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -115,6 +120,9 @@ public class Range : Widget
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkRange);
 	
 	/**
 	 */

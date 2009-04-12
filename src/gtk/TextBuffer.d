@@ -572,7 +572,7 @@ public class TextBuffer : ObjectG
 	void delegate(TextBuffer)[] onEndUserActionListeners;
 	/**
 	 * The ::end-user-action signal is emitted at the end of a single
-	 * user-visible operation GtkTextBuffer.
+	 * user-visible operation on the GtkTextBuffer.
 	 * See also:
 	 * gtk_text_buffer_end_user_action(),
 	 * gtk_text_buffer_insert_interactive(),
@@ -794,6 +794,36 @@ public class TextBuffer : ObjectG
 		}
 	}
 	
+	void delegate(Clipboard, TextBuffer)[] onPasteDoneListeners;
+	/**
+	 * The paste-done signal is emitted after paste operation has been completed.
+	 * This is useful to properly scroll the view to the end of the pasted text.
+	 * See gtk_text_buffer_paste_clipboard() for more details.
+	 * Since 2.16
+	 */
+	void addOnPasteDone(void delegate(Clipboard, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("paste-done" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"paste-done",
+			cast(GCallback)&callBackPasteDone,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["paste-done"] = 1;
+		}
+		onPasteDoneListeners ~= dlg;
+	}
+	extern(C) static void callBackPasteDone(GtkTextBuffer* textbufferStruct, GtkClipboard* arg1, TextBuffer textBuffer)
+	{
+		foreach ( void delegate(Clipboard, TextBuffer) dlg ; textBuffer.onPasteDoneListeners )
+		{
+			dlg(new Clipboard(arg1), textBuffer);
+		}
+	}
+	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onRemoveTagListeners;
 	/**
 	 * The ::remove-tag signal is emitted to remove all occurrences of tag from
@@ -838,7 +868,7 @@ public class TextBuffer : ObjectG
 	 */
 	public this (TextTagTable table)
 	{
-		// GtkTextBuffer* gtk_text_buffer_new (GtkTextTagTable *table);
+		// GtkTextBuffer * gtk_text_buffer_new (GtkTextTagTable *table);
 		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
@@ -1070,7 +1100,7 @@ public class TextBuffer : ObjectG
 	 */
 	public string getText(TextIter start, TextIter end, int includeHiddenChars)
 	{
-		// gchar* gtk_text_buffer_get_text (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
+		// gchar * gtk_text_buffer_get_text (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
 		return Str.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars));
 	}
 	
@@ -1093,7 +1123,7 @@ public class TextBuffer : ObjectG
 	 */
 	public string getSlice(TextIter start, TextIter end, int includeHiddenChars)
 	{
-		// gchar* gtk_text_buffer_get_slice (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
+		// gchar * gtk_text_buffer_get_slice (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
 		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars));
 	}
 	
@@ -1150,7 +1180,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
-		// GtkTextChildAnchor* gtk_text_buffer_create_child_anchor (GtkTextBuffer *buffer,  GtkTextIter *iter);
+		// GtkTextChildAnchor * gtk_text_buffer_create_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter);
 		auto p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 		if(p is null)
 		{
@@ -1183,7 +1213,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark createMark(string markName, TextIter where, int leftGravity)
 	{
-		// GtkTextMark* gtk_text_buffer_create_mark (GtkTextBuffer *buffer,  const gchar *mark_name,  const GtkTextIter *where,  gboolean left_gravity);
+		// GtkTextMark * gtk_text_buffer_create_mark (GtkTextBuffer *buffer,  const gchar *mark_name,  const GtkTextIter *where,  gboolean left_gravity);
 		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
 		if(p is null)
 		{
@@ -1817,7 +1847,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TargetList getCopyTargetList()
 	{
-		// GtkTargetList* gtk_text_buffer_get_copy_target_list  (GtkTextBuffer *buffer);
+		// GtkTargetList * gtk_text_buffer_get_copy_target_list  (GtkTextBuffer *buffer);
 		auto p = gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
 		if(p is null)
 		{
@@ -1835,7 +1865,7 @@ public class TextBuffer : ObjectG
 	 */
 	public GdkAtom[] getDeserializeFormats()
 	{
-		// GdkAtom* gtk_text_buffer_get_deserialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
+		// GdkAtom * gtk_text_buffer_get_deserialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
 		int nFormats;
 		auto p = gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, &nFormats);
 		return p[0 .. nFormats];
@@ -1852,7 +1882,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TargetList getPasteTargetList()
 	{
-		// GtkTargetList* gtk_text_buffer_get_paste_target_list  (GtkTextBuffer *buffer);
+		// GtkTargetList * gtk_text_buffer_get_paste_target_list  (GtkTextBuffer *buffer);
 		auto p = gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
 		if(p is null)
 		{
@@ -1870,7 +1900,7 @@ public class TextBuffer : ObjectG
 	 */
 	public GdkAtom[] getSerializeFormats()
 	{
-		// GdkAtom* gtk_text_buffer_get_serialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
+		// GdkAtom * gtk_text_buffer_get_serialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
 		int nFormats;
 		auto p = gtk_text_buffer_get_serialize_formats(gtkTextBuffer, &nFormats);
 		return p[0 .. nFormats];
@@ -1966,7 +1996,7 @@ public class TextBuffer : ObjectG
 	 */
 	public byte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
 	{
-		// guint8* gtk_text_buffer_serialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length);
+		// guint8 * gtk_text_buffer_serialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length);
 		uint length;
 		auto p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
 		return p[0 .. length];

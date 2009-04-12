@@ -135,7 +135,7 @@ public class HPaned : Paned
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_hpaned_new (void);
+		// GtkWidget * gtk_hpaned_new (void);
 		auto p = gtk_hpaned_new();
 		if(p is null)
 		{

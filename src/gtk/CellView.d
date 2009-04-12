@@ -48,11 +48,11 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
+ * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * 	- gdk.Color
  * 	- glib.ListG
- * 	- gtk.CellRenderer
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
@@ -76,11 +76,11 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gdk.Pixbuf;
+private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gdk.Color;
 private import glib.ListG;
-private import gtk.CellRenderer;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -183,7 +183,7 @@ public class CellView : Widget, CellLayoutIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_cell_view_new (void);
+		// GtkWidget * gtk_cell_view_new (void);
 		auto p = gtk_cell_view_new();
 		if(p is null)
 		{
@@ -202,7 +202,7 @@ public class CellView : Widget, CellLayoutIF
 	 */
 	public this (Pixbuf pixbuf)
 	{
-		// GtkWidget* gtk_cell_view_new_with_pixbuf (GdkPixbuf *pixbuf);
+		// GtkWidget * gtk_cell_view_new_with_pixbuf (GdkPixbuf *pixbuf);
 		auto p = gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
@@ -223,6 +223,23 @@ public class CellView : Widget, CellLayoutIF
 	{
 		// void gtk_cell_view_set_model (GtkCellView *cell_view,  GtkTreeModel *model);
 		gtk_cell_view_set_model(gtkCellView, (model is null) ? null : model.getTreeModelTStruct());
+	}
+	
+	/**
+	 * Returns the model for cell_view. If no model is used NULL is
+	 * returned.
+	 * Since 2.16
+	 * Returns: a GtkTreeModel used or NULL
+	 */
+	public TreeModelIF getModel()
+	{
+		// GtkTreeModel * gtk_cell_view_get_model (GtkCellView *cell_view);
+		auto p = gtk_cell_view_get_model(gtkCellView);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -251,7 +268,7 @@ public class CellView : Widget, CellLayoutIF
 	 */
 	public TreePath getDisplayedRow()
 	{
-		// GtkTreePath* gtk_cell_view_get_displayed_row (GtkCellView *cell_view);
+		// GtkTreePath * gtk_cell_view_get_displayed_row (GtkCellView *cell_view);
 		auto p = gtk_cell_view_get_displayed_row(gtkCellView);
 		if(p is null)
 		{
@@ -294,7 +311,7 @@ public class CellView : Widget, CellLayoutIF
 	 */
 	public ListG getCellRenderers()
 	{
-		// GList* gtk_cell_view_get_cell_renderers (GtkCellView *cell_view);
+		// GList * gtk_cell_view_get_cell_renderers (GtkCellView *cell_view);
 		auto p = gtk_cell_view_get_cell_renderers(gtkCellView);
 		if(p is null)
 		{

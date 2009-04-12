@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = Ruler
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_ruler_
  * 	- gtk_
@@ -43,6 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +60,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -79,7 +84,7 @@ private import gtk.Widget;
  * ruler. See GtkHRuler to learn how to create a new horizontal ruler. See
  * GtkVRuler to learn how to create a new vertical ruler.
  */
-public class Ruler : Widget
+public class Ruler : Widget, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -118,6 +123,9 @@ public class Ruler : Widget
 		super(cast(GtkWidget*)gtkRuler);
 		this.gtkRuler = gtkRuler;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkRuler);
 	
 	/**
 	 */

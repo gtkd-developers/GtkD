@@ -214,7 +214,7 @@ public class IconInfo
 	 */
 	public IconInfo copy()
 	{
-		// GtkIconInfo* gtk_icon_info_copy (GtkIconInfo *icon_info);
+		// GtkIconInfo * gtk_icon_info_copy (GtkIconInfo *icon_info);
 		auto p = gtk_icon_info_copy(gtkIconInfo);
 		if(p is null)
 		{
@@ -243,7 +243,7 @@ public class IconInfo
 	 */
 	public this (IconTheme iconTheme, Pixbuf pixbuf)
 	{
-		// GtkIconInfo* gtk_icon_info_new_for_pixbuf (GtkIconTheme *icon_theme,  GdkPixbuf *pixbuf);
+		// GtkIconInfo * gtk_icon_info_new_for_pixbuf (GtkIconTheme *icon_theme,  GdkPixbuf *pixbuf);
 		auto p = gtk_icon_info_new_for_pixbuf((iconTheme is null) ? null : iconTheme.getIconThemeStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
@@ -281,7 +281,7 @@ public class IconInfo
 	 */
 	public string getFilename()
 	{
-		// const gchar* gtk_icon_info_get_filename (GtkIconInfo *icon_info);
+		// const gchar * gtk_icon_info_get_filename (GtkIconInfo *icon_info);
 		return Str.toString(gtk_icon_info_get_filename(gtkIconInfo));
 	}
 	
@@ -295,7 +295,7 @@ public class IconInfo
 	 */
 	public Pixbuf getBuiltinPixbuf()
 	{
-		// GdkPixbuf* gtk_icon_info_get_builtin_pixbuf (GtkIconInfo *icon_info);
+		// GdkPixbuf * gtk_icon_info_get_builtin_pixbuf (GtkIconInfo *icon_info);
 		auto p = gtk_icon_info_get_builtin_pixbuf(gtkIconInfo);
 		if(p is null)
 		{
@@ -322,7 +322,7 @@ public class IconInfo
 	 */
 	public Pixbuf loadIcon()
 	{
-		// GdkPixbuf* gtk_icon_info_load_icon (GtkIconInfo *icon_info,  GError **error);
+		// GdkPixbuf * gtk_icon_info_load_icon (GtkIconInfo *icon_info,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_icon_info_load_icon(gtkIconInfo, &err);
@@ -421,7 +421,7 @@ public class IconInfo
 	 */
 	public string getDisplayName()
 	{
-		// const gchar* gtk_icon_info_get_display_name (GtkIconInfo *icon_info);
+		// const gchar * gtk_icon_info_get_display_name (GtkIconInfo *icon_info);
 		return Str.toString(gtk_icon_info_get_display_name(gtkIconInfo));
 	}
 }

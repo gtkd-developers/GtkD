@@ -149,7 +149,7 @@ public class RecentInfo
 	 */
 	public RecentInfo doref()
 	{
-		// GtkRecentInfo* gtk_recent_info_ref (GtkRecentInfo *info);
+		// GtkRecentInfo * gtk_recent_info_ref (GtkRecentInfo *info);
 		auto p = gtk_recent_info_ref(gtkRecentInfo);
 		if(p is null)
 		{
@@ -176,7 +176,7 @@ public class RecentInfo
 	 */
 	public string getUri()
 	{
-		// const gchar* gtk_recent_info_get_uri (GtkRecentInfo *info);
+		// const gchar * gtk_recent_info_get_uri (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_get_uri(gtkRecentInfo));
 	}
 	
@@ -188,7 +188,7 @@ public class RecentInfo
 	 */
 	public string getDisplayName()
 	{
-		// const gchar* gtk_recent_info_get_display_name (GtkRecentInfo *info);
+		// const gchar * gtk_recent_info_get_display_name (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_get_display_name(gtkRecentInfo));
 	}
 	
@@ -199,7 +199,7 @@ public class RecentInfo
 	 */
 	public string getDescription()
 	{
-		// const gchar* gtk_recent_info_get_description (GtkRecentInfo *info);
+		// const gchar * gtk_recent_info_get_description (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_get_description(gtkRecentInfo));
 	}
 	
@@ -210,7 +210,7 @@ public class RecentInfo
 	 */
 	public string getMimeType()
 	{
-		// const gchar* gtk_recent_info_get_mime_type (GtkRecentInfo *info);
+		// const gchar * gtk_recent_info_get_mime_type (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_get_mime_type(gtkRecentInfo));
 	}
 	
@@ -295,7 +295,7 @@ public class RecentInfo
 	 */
 	public string[] getApplications()
 	{
-		// gchar** gtk_recent_info_get_applications (GtkRecentInfo *info,  gsize *length);
+		// gchar ** gtk_recent_info_get_applications (GtkRecentInfo *info,  gsize *length);
 		uint length;
 		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, &length));
 	}
@@ -308,7 +308,7 @@ public class RecentInfo
 	 */
 	public string lastApplication()
 	{
-		// gchar* gtk_recent_info_last_application (GtkRecentInfo *info);
+		// gchar * gtk_recent_info_last_application (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_last_application(gtkRecentInfo));
 	}
 	
@@ -321,7 +321,7 @@ public class RecentInfo
 	 */
 	public string[] getGroups()
 	{
-		// gchar** gtk_recent_info_get_groups (GtkRecentInfo *info,  gsize *length);
+		// gchar ** gtk_recent_info_get_groups (GtkRecentInfo *info,  gsize *length);
 		uint length;
 		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, &length));
 	}
@@ -362,7 +362,7 @@ public class RecentInfo
 	 */
 	public Pixbuf getIcon(int size)
 	{
-		// GdkPixbuf* gtk_recent_info_get_icon (GtkRecentInfo *info,  gint size);
+		// GdkPixbuf * gtk_recent_info_get_icon (GtkRecentInfo *info,  gint size);
 		auto p = gtk_recent_info_get_icon(gtkRecentInfo, size);
 		if(p is null)
 		{
@@ -380,7 +380,7 @@ public class RecentInfo
 	 */
 	public string getShortName()
 	{
-		// gchar* gtk_recent_info_get_short_name (GtkRecentInfo *info);
+		// gchar * gtk_recent_info_get_short_name (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_get_short_name(gtkRecentInfo));
 	}
 	
@@ -393,7 +393,7 @@ public class RecentInfo
 	 */
 	public string getUriDisplay()
 	{
-		// gchar* gtk_recent_info_get_uri_display (GtkRecentInfo *info);
+		// gchar * gtk_recent_info_get_uri_display (GtkRecentInfo *info);
 		return Str.toString(gtk_recent_info_get_uri_display(gtkRecentInfo));
 	}
 	

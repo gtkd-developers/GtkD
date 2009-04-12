@@ -86,7 +86,7 @@ private import gobject.ObjectG;
  * of the cairo surface.
  * GtkPrintContext objects gets passed to the ::begin-print, ::end-print,
  * ::request-page-setup and ::draw-page signals on the GtkPrintOperation.
- * Example 42. Using GtkPrintContext in a ::draw-page callback
+ * Example 46. Using GtkPrintContext in a ::draw-page callback
  * static void
  * draw_page (GtkPrintOperation *operation,
  * 	 GtkPrintContext *context,
@@ -180,7 +180,7 @@ public class PrintContext : ObjectG
 	 */
 	public Context getCairoContext()
 	{
-		// cairo_t* gtk_print_context_get_cairo_context (GtkPrintContext *context);
+		// cairo_t * gtk_print_context_get_cairo_context (GtkPrintContext *context);
 		auto p = gtk_print_context_get_cairo_context(gtkPrintContext);
 		if(p is null)
 		{
@@ -215,7 +215,7 @@ public class PrintContext : ObjectG
 	 */
 	public PageSetup getPageSetup()
 	{
-		// GtkPageSetup* gtk_print_context_get_page_setup (GtkPrintContext *context);
+		// GtkPageSetup * gtk_print_context_get_page_setup (GtkPrintContext *context);
 		auto p = gtk_print_context_get_page_setup(gtkPrintContext);
 		if(p is null)
 		{
@@ -278,7 +278,7 @@ public class PrintContext : ObjectG
 	 */
 	public PgFontMap getPangoFontmap()
 	{
-		// PangoFontMap* gtk_print_context_get_pango_fontmap (GtkPrintContext *context);
+		// PangoFontMap * gtk_print_context_get_pango_fontmap (GtkPrintContext *context);
 		auto p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
 		if(p is null)
 		{
@@ -295,7 +295,7 @@ public class PrintContext : ObjectG
 	 */
 	public PgContext createPangoContext()
 	{
-		// PangoContext* gtk_print_context_create_pango_context  (GtkPrintContext *context);
+		// PangoContext * gtk_print_context_create_pango_context  (GtkPrintContext *context);
 		auto p = gtk_print_context_create_pango_context(gtkPrintContext);
 		if(p is null)
 		{
@@ -312,7 +312,7 @@ public class PrintContext : ObjectG
 	 */
 	public PgLayout createPangoLayout()
 	{
-		// PangoLayout* gtk_print_context_create_pango_layout  (GtkPrintContext *context);
+		// PangoLayout * gtk_print_context_create_pango_layout  (GtkPrintContext *context);
 		auto p = gtk_print_context_create_pango_layout(gtkPrintContext);
 		if(p is null)
 		{

@@ -98,7 +98,7 @@ private import gtk.Label;
  * set (see GtkAccelFlags).
  * A GtkAccelLabel can display multiple accelerators and even signal names,
  * though it is almost always used to display just one accelerator key.
- * Example 9. Creating a simple menu item with an accelerator key.
+ * Example 11. Creating a simple menu item with an accelerator key.
  *  GtkWidget *save_item;
  *  GtkAccelGroup *accel_group;
  *  /+* Create a GtkAccelGroup and add it to the window. +/

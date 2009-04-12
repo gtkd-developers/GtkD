@@ -151,7 +151,7 @@ public class TextMark : ObjectG
 	 */
 	public this (string name, int leftGravity)
 	{
-		// GtkTextMark* gtk_text_mark_new (const gchar *name,  gboolean left_gravity);
+		// GtkTextMark * gtk_text_mark_new (const gchar *name,  gboolean left_gravity);
 		auto p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
 		if(p is null)
 		{

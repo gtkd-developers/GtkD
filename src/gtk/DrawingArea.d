@@ -84,7 +84,7 @@ private import gtk.Widget;
  * Note that GDK automatically clears the exposed area
  * to the background color before sending the expose event, and
  * that drawing is implicitly clipped to the exposed area.
- * Example 45. Simple GtkDrawingArea usage.
+ * Example 49. Simple GtkDrawingArea usage.
  * gboolean
  * expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
  * {
@@ -189,16 +189,15 @@ public class DrawingArea : Widget
 	
 	/**
 	 * Warning
-	 * gtk_drawing_area_size is deprecated and should not be used in newly-written code.
-	 * (Use gtk_widget_set_size_request() instead.)
+	 * gtk_drawing_area_size is deprecated and should not be used in newly-written code. Use gtk_widget_set_size_request() instead.
 	 * Sets the size that the drawing area will request
 	 * in response to a "size_request" signal. The
 	 * drawing area may actually be allocated a size
 	 * larger than this depending on how it is packed
 	 * within the enclosing containers.
 	 * Params:
-	 * width = the width to request.
-	 * height = the height to request.
+	 * width = the width to request
+	 * height = the height to request
 	 */
 	public void size(int width, int height)
 	{

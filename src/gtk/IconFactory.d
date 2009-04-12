@@ -108,7 +108,7 @@ private import gobject.ObjectG;
  * state
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
- * Example 4. A GtkIconFactory UI definition fragment.
+ * Example 5. A GtkIconFactory UI definition fragment.
  * <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>

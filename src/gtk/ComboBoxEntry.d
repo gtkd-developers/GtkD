@@ -186,7 +186,7 @@ public class ComboBoxEntry : ComboBox
 	 */
 	public this (TreeModelIF model, int textColumn)
 	{
-		// GtkWidget* gtk_combo_box_entry_new_with_model (GtkTreeModel *model,  gint text_column);
+		// GtkWidget * gtk_combo_box_entry_new_with_model (GtkTreeModel *model,  gint text_column);
 		auto p = gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelTStruct(), textColumn);
 		if(p is null)
 		{

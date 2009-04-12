@@ -132,6 +132,9 @@ public class Layout : Container
 	
 	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;
 	/**
+	 * Set the scroll adjustments for the layout. Usually scrolled containers
+	 * like GtkScrolledWindow will emit this signal to connect two instances
+	 * of GtkScrollbar to the scroll directions of the GtkLayout.
 	 * See Also
 	 * GtkDrawingArea, GtkScrolledWindow
 	 */
@@ -150,11 +153,11 @@ public class Layout : Container
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkLayout* layoutStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, Layout layout)
+	extern(C) static void callBackSetScrollAdjustments(GtkLayout* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Layout layout)
 	{
 		foreach ( void delegate(Adjustment, Adjustment, Layout) dlg ; layout.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(arg1), new Adjustment(arg2), layout);
+			dlg(new Adjustment(vertical), new Adjustment(arg2), layout);
 		}
 	}
 	

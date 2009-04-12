@@ -149,7 +149,7 @@ private import gtk.TreeIter;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 17. Acquiring a GtkTreeIter
+ * Example 19. Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -174,7 +174,7 @@ private import gtk.TreeIter;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 18. Reading data from a GtkTreeModel
+ * Example 20. Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -259,7 +259,7 @@ public class TreeRowReference
 	 */
 	public this (TreeModelIF model, TreePath path)
 	{
-		// GtkTreeRowReference* gtk_tree_row_reference_new (GtkTreeModel *model,  GtkTreePath *path);
+		// GtkTreeRowReference * gtk_tree_row_reference_new (GtkTreeModel *model,  GtkTreePath *path);
 		auto p = gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
@@ -295,7 +295,7 @@ public class TreeRowReference
 	 */
 	public this (ObjectG proxy, TreeModelIF model, TreePath path)
 	{
-		// GtkTreeRowReference* gtk_tree_row_reference_new_proxy (GObject *proxy,  GtkTreeModel *model,  GtkTreePath *path);
+		// GtkTreeRowReference * gtk_tree_row_reference_new_proxy (GObject *proxy,  GtkTreeModel *model,  GtkTreePath *path);
 		auto p = gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 		if(p is null)
 		{
@@ -311,7 +311,7 @@ public class TreeRowReference
 	 */
 	public TreeModelIF getModel()
 	{
-		// GtkTreeModel* gtk_tree_row_reference_get_model (GtkTreeRowReference *reference);
+		// GtkTreeModel * gtk_tree_row_reference_get_model (GtkTreeRowReference *reference);
 		auto p = gtk_tree_row_reference_get_model(gtkTreeRowReference);
 		if(p is null)
 		{
@@ -327,7 +327,7 @@ public class TreeRowReference
 	 */
 	public TreePath getPath()
 	{
-		// GtkTreePath* gtk_tree_row_reference_get_path (GtkTreeRowReference *reference);
+		// GtkTreePath * gtk_tree_row_reference_get_path (GtkTreeRowReference *reference);
 		auto p = gtk_tree_row_reference_get_path(gtkTreeRowReference);
 		if(p is null)
 		{
@@ -363,7 +363,7 @@ public class TreeRowReference
 	 */
 	public TreeRowReference copy()
 	{
-		// GtkTreeRowReference* gtk_tree_row_reference_copy (GtkTreeRowReference *reference);
+		// GtkTreeRowReference * gtk_tree_row_reference_copy (GtkTreeRowReference *reference);
 		auto p = gtk_tree_row_reference_copy(gtkTreeRowReference);
 		if(p is null)
 		{

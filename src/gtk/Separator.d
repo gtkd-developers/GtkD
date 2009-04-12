@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = Separator
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_separator
  * 	- gtk_
@@ -43,6 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +60,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -67,7 +72,7 @@ private import gtk.Widget;
  * The GtkSeparator widget is an abstract class, used only for deriving the
  * subclasses GtkHSeparator and GtkVSeparator.
  */
-public class Separator : Widget
+public class Separator : Widget, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,6 +111,9 @@ public class Separator : Widget
 		super(cast(GtkWidget*)gtkSeparator);
 		this.gtkSeparator = gtkSeparator;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkSeparator);
 	
 	/**
 	 */

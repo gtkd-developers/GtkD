@@ -204,7 +204,7 @@ public class RecentManager : ObjectG
 	 */
 	public this ()
 	{
-		// GtkRecentManager* gtk_recent_manager_new (void);
+		// GtkRecentManager * gtk_recent_manager_new (void);
 		auto p = gtk_recent_manager_new();
 		if(p is null)
 		{
@@ -222,7 +222,7 @@ public class RecentManager : ObjectG
 	 */
 	public static RecentManager getDefault()
 	{
-		// GtkRecentManager* gtk_recent_manager_get_default (void);
+		// GtkRecentManager * gtk_recent_manager_get_default (void);
 		auto p = gtk_recent_manager_get_default();
 		if(p is null)
 		{
@@ -251,7 +251,7 @@ public class RecentManager : ObjectG
 	 */
 	public static RecentManager getForScreen(Screen screen)
 	{
-		// GtkRecentManager* gtk_recent_manager_get_for_screen (GdkScreen *screen);
+		// GtkRecentManager * gtk_recent_manager_get_for_screen (GdkScreen *screen);
 		auto p = gtk_recent_manager_get_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
@@ -362,7 +362,7 @@ public class RecentManager : ObjectG
 	 */
 	public RecentInfo lookupItem(string uri)
 	{
-		// GtkRecentInfo* gtk_recent_manager_lookup_item (GtkRecentManager *manager,  const gchar *uri,  GError **error);
+		// GtkRecentInfo * gtk_recent_manager_lookup_item (GtkRecentManager *manager,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
@@ -453,7 +453,7 @@ public class RecentManager : ObjectG
 	 */
 	public ListG getItems()
 	{
-		// GList* gtk_recent_manager_get_items (GtkRecentManager *manager);
+		// GList * gtk_recent_manager_get_items (GtkRecentManager *manager);
 		auto p = gtk_recent_manager_get_items(gtkRecentManager);
 		if(p is null)
 		{

@@ -59,13 +59,13 @@ module gtk.CellLayoutT;
 
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
+public import gtkc.gtk;
+public import glib.ConstructionException;
 
 
-private import glib.Str;
-private import gtk.CellRenderer;
-private import glib.ListG;
+public import glib.Str;
+public import gtk.CellRenderer;
+public import glib.ListG;
 
 
 
@@ -93,7 +93,7 @@ private import glib.ListG;
  * multiple <attribute> elements. Each <attribute> element has
  * a name attribute which specifies a property of the cell renderer; the
  * content of the element is the attribute value.
- * Example 22. A UI definition fragment specifying attributes
+ * Example 24. A UI definition fragment specifying attributes
  * <object class="GtkCellView">
  *  <child>
  *  <object class="GtkCellRendererText"/>
@@ -158,7 +158,7 @@ public template CellLayoutT(TStruct)
 	 */
 	public ListG getCells()
 	{
-		// GList* gtk_cell_layout_get_cells (GtkCellLayout *cell_layout);
+		// GList * gtk_cell_layout_get_cells (GtkCellLayout *cell_layout);
 		auto p = gtk_cell_layout_get_cells(getCellLayoutTStruct());
 		if(p is null)
 		{

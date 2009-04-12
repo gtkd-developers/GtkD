@@ -154,7 +154,7 @@ public class MenuBar : MenuShell
 	 * Sets how items should be packed inside a menubar.
 	 * Since 2.8
 	 * Params:
-	 * packDir =  a new GtkPackDirection.
+	 * packDir =  a new GtkPackDirection
 	 */
 	public void setPackDirection(GtkPackDirection packDir)
 	{
@@ -163,8 +163,8 @@ public class MenuBar : MenuShell
 	}
 	
 	/**
-	 * Retrieves the current pack direction of the menubar. See
-	 * gtk_menu_bar_set_pack_direction().
+	 * Retrieves the current pack direction of the menubar.
+	 * See gtk_menu_bar_set_pack_direction().
 	 * Since 2.8
 	 * Returns: the pack direction
 	 */
@@ -178,7 +178,7 @@ public class MenuBar : MenuShell
 	 * Sets how widgets should be packed inside the children of a menubar.
 	 * Since 2.8
 	 * Params:
-	 * childPackDir =  a new GtkPackDirection.
+	 * childPackDir =  a new GtkPackDirection
 	 */
 	public void setChildPackDirection(GtkPackDirection childPackDir)
 	{
@@ -187,8 +187,8 @@ public class MenuBar : MenuShell
 	}
 	
 	/**
-	 * Retrieves the current child pack direction of the menubar. See
-	 * gtk_menu_bar_set_child_pack_direction().
+	 * Retrieves the current child pack direction of the menubar.
+	 * See gtk_menu_bar_set_child_pack_direction().
 	 * Since 2.8
 	 * Returns: the child pack direction
 	 */

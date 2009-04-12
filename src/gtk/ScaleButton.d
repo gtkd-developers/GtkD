@@ -30,11 +30,12 @@
  * ctorStrct=
  * clss    = ScaleButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_scale_button_
  * 	- gtk_
@@ -46,6 +47,8 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Adjustment
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -67,6 +70,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Adjustment;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -79,7 +84,7 @@ private import gtk.Button;
  * applications, and GTK+ provides a GtkVolumeButton subclass that
  * is tailored for this use case.
  */
-public class ScaleButton : Button
+public class ScaleButton : Button, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -118,6 +123,9 @@ public class ScaleButton : Button
 		super(cast(GtkButton*)gtkScaleButton);
 		this.gtkScaleButton = gtkScaleButton;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkScaleButton);
 	
 	/**
 	 */
@@ -231,7 +239,7 @@ public class ScaleButton : Button
 	 */
 	public this (GtkIconSize size, double min, double max, double step, string[] icons)
 	{
-		// GtkWidget* gtk_scale_button_new (GtkIconSize size,  gdouble min,  gdouble max,  gdouble step,  const gchar **icons);
+		// GtkWidget * gtk_scale_button_new (GtkIconSize size,  gdouble min,  gdouble max,  gdouble step,  const gchar **icons);
 		auto p = gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons));
 		if(p is null)
 		{
@@ -290,7 +298,7 @@ public class ScaleButton : Button
 	 */
 	public Adjustment getAdjustment()
 	{
-		// GtkAdjustment* gtk_scale_button_get_adjustment (GtkScaleButton *button);
+		// GtkAdjustment * gtk_scale_button_get_adjustment (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
 		if(p is null)
 		{
@@ -317,7 +325,7 @@ public class ScaleButton : Button
 	 */
 	public Widget getPopup()
 	{
-		// GtkWidget* gtk_scale_button_get_popup (GtkScaleButton *button);
+		// GtkWidget * gtk_scale_button_get_popup (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_popup(gtkScaleButton);
 		if(p is null)
 		{
@@ -333,7 +341,7 @@ public class ScaleButton : Button
 	 */
 	public Widget getPlusButton()
 	{
-		// GtkWidget* gtk_scale_button_get_plus_button (GtkScaleButton *button);
+		// GtkWidget * gtk_scale_button_get_plus_button (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
 		if(p is null)
 		{
@@ -349,7 +357,7 @@ public class ScaleButton : Button
 	 */
 	public Widget getMinusButton()
 	{
-		// GtkWidget* gtk_scale_button_get_minus_button (GtkScaleButton *button);
+		// GtkWidget * gtk_scale_button_get_minus_button (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
 		if(p is null)
 		{
@@ -359,6 +367,8 @@ public class ScaleButton : Button
 	}
 	
 	/**
+	 * Warning
+	 * gtk_scale_button_set_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_set_orientation() instead.
 	 * Sets the orientation of the GtkScaleButton's popup window.
 	 * Since 2.14
 	 * Params:
@@ -371,6 +381,8 @@ public class ScaleButton : Button
 	}
 	
 	/**
+	 * Warning
+	 * gtk_scale_button_get_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_get_orientation() instead.
 	 * Gets the orientation of the GtkScaleButton's popup window.
 	 * Since 2.14
 	 * Returns: the GtkScaleButton's orientation.

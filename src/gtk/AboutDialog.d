@@ -162,7 +162,7 @@ public class AboutDialog : Dialog
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_about_dialog_new (void);
+		// GtkWidget * gtk_about_dialog_new (void);
 		auto p = gtk_about_dialog_new();
 		if(p is null)
 		{
@@ -180,7 +180,7 @@ public class AboutDialog : Dialog
 	 */
 	public override string getName()
 	{
-		// const gchar* gtk_about_dialog_get_name (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_name (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog));
 	}
 	
@@ -206,7 +206,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getProgramName()
 	{
-		// const gchar* gtk_about_dialog_get_program_name (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_program_name (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog));
 	}
 	
@@ -230,7 +230,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getVersion()
 	{
-		// const gchar* gtk_about_dialog_get_version (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_version (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_version(gtkAboutDialog));
 	}
 	
@@ -251,7 +251,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getCopyright()
 	{
-		// const gchar* gtk_about_dialog_get_copyright (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_copyright (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_copyright(gtkAboutDialog));
 	}
 	
@@ -275,7 +275,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getComments()
 	{
-		// const gchar* gtk_about_dialog_get_comments (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_comments (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_comments(gtkAboutDialog));
 	}
 	
@@ -300,7 +300,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getLicense()
 	{
-		// const gchar* gtk_about_dialog_get_license (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_license (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_license(gtkAboutDialog));
 	}
 	
@@ -350,7 +350,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getWebsite()
 	{
-		// const gchar* gtk_about_dialog_get_website (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_website (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_website(gtkAboutDialog));
 	}
 	
@@ -375,7 +375,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getWebsiteLabel()
 	{
-		// const gchar* gtk_about_dialog_get_website_label (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_website_label (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_website_label(gtkAboutDialog));
 	}
 	
@@ -475,7 +475,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getTranslatorCredits()
 	{
-		// const gchar* gtk_about_dialog_get_translator_credits  (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_translator_credits  (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog));
 	}
 	
@@ -502,7 +502,7 @@ public class AboutDialog : Dialog
 	 */
 	public Pixbuf getLogo()
 	{
-		// GdkPixbuf* gtk_about_dialog_get_logo (GtkAboutDialog *about);
+		// GdkPixbuf * gtk_about_dialog_get_logo (GtkAboutDialog *about);
 		auto p = gtk_about_dialog_get_logo(gtkAboutDialog);
 		if(p is null)
 		{
@@ -533,7 +533,7 @@ public class AboutDialog : Dialog
 	 */
 	public string getLogoIconName()
 	{
-		// const gchar* gtk_about_dialog_get_logo_icon_name (GtkAboutDialog *about);
+		// const gchar * gtk_about_dialog_get_logo_icon_name (GtkAboutDialog *about);
 		return Str.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog));
 	}
 	

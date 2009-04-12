@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ActivatableIF
  * prefixes:
  * 	- gtk_tool_item_
  * 	- gtk_
@@ -46,6 +47,8 @@
  * 	- glib.Str
  * 	- gtk.Tooltips
  * 	- gtk.Widget
+ * 	- gtk.ActivatableT
+ * 	- gtk.ActivatableIF
  * structWrap:
  * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
@@ -69,6 +72,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Tooltips;
 private import gtk.Widget;
+private import gtk.ActivatableT;
+private import gtk.ActivatableIF;
 
 
 
@@ -85,7 +90,7 @@ private import gtk.Bin;
  * See the GtkToolbar class for a description of the toolbar widget, and
  * GtkToolShell for a description of the tool shell interface.
  */
-public class ToolItem : Bin
+public class ToolItem : Bin, ActivatableIF
 {
 	
 	/** the main Gtk struct */
@@ -124,6 +129,9 @@ public class ToolItem : Bin
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}
+	
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkToolItem);
 	
 	/**
 	 * Sets this widget tooltip
@@ -275,7 +283,7 @@ public class ToolItem : Bin
 	 */
 	public this ()
 	{
-		// GtkToolItem* gtk_tool_item_new (void);
+		// GtkToolItem * gtk_tool_item_new (void);
 		auto p = gtk_tool_item_new();
 		if(p is null)
 		{
@@ -302,7 +310,7 @@ public class ToolItem : Bin
 	 * Returns whether tool_item is the same size as other homogeneous
 	 * items. See gtk_tool_item_set_homogeneous().
 	 * Since 2.4
-	 * Returns: TRUE if the item is the same size as other homogeneousitem.s
+	 * Returns: TRUE if the item is the same size as other homogeneousitems.
 	 */
 	public int getHomogeneous()
 	{
@@ -551,7 +559,7 @@ public class ToolItem : Bin
 	 */
 	public Widget retrieveProxyMenuItem()
 	{
-		// GtkWidget* gtk_tool_item_retrieve_proxy_menu_item  (GtkToolItem *tool_item);
+		// GtkWidget * gtk_tool_item_retrieve_proxy_menu_item  (GtkToolItem *tool_item);
 		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
 		if(p is null)
 		{
@@ -574,7 +582,7 @@ public class ToolItem : Bin
 	 */
 	public Widget getProxyMenuItem(string menuItemId)
 	{
-		// GtkWidget* gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
+		// GtkWidget * gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
 		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
 		if(p is null)
 		{

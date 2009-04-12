@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- pango.PgLayout
  * structWrap:
  * 	- PangoLayout* -> PgLayout
@@ -61,6 +62,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import glib.Str;
 private import pango.PgLayout;
 
 
@@ -125,9 +127,9 @@ public class Scale : Range
 	
 	string delegate(gdouble, Scale)[] onFormatValueListeners;
 	/**
-	 * Signal which allows you to change how the scale value is displayed. Connect a
-	 * signal handler which returns an allocated string representing value.
-	 * That string will then be used to display the scale's value.
+	 * Signal which allows you to change how the scale value is displayed.
+	 * Connect a signal handler which returns an allocated string representing
+	 * value. That string will then be used to display the scale's value.
 	 * Here's an example signal handler which displays a value 1.0 as
 	 * with "-->1.0<--".
 	 * static gchar*
@@ -136,7 +138,7 @@ public class Scale : Range
 	 * {
 		 *  return g_strdup_printf ("-->%0.*g<--",
 		 *  gtk_scale_get_digits (scale), value);
-	 * }
+	 *  }
 	 */
 	void addOnFormatValue(string delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -153,22 +155,22 @@ public class Scale : Range
 		}
 		onFormatValueListeners ~= dlg;
 	}
-	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble arg1, Scale scale)
+	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble value, Scale scale)
 	{
 		foreach ( string delegate(gdouble, Scale) dlg ; scale.onFormatValueListeners )
 		{
-			dlg(arg1, scale);
+			dlg(value, scale);
 		}
 	}
 	
 	
 	/**
-	 * Sets the number of decimal places that are displayed in the value. Also causes
-	 * the value of the adjustment to be rounded off to this number of digits, so the
-	 * retrieved value matches the value the user saw.
+	 * Sets the number of decimal places that are displayed in the value.
+	 * Also causes the value of the adjustment to be rounded off to this
+	 * number of digits, so the retrieved value matches the value the user saw.
 	 * Params:
-	 * digits = the number of decimal places to display, e.g. use 1 to display 1.0,
-	 * 2 to display 1.00 etc.
+	 * digits =  the number of decimal places to display,
+	 *  e.g. use 1 to display 1.0, 2 to display 1.00, etc
 	 */
 	public void setDigits(int digits)
 	{
@@ -177,10 +179,10 @@ public class Scale : Range
 	}
 	
 	/**
-	 * Specifies whether the current value is displayed as a string next to the
-	 * slider.
+	 * Specifies whether the current value is displayed as a string next
+	 * to the slider.
 	 * Params:
-	 * drawValue = a boolean.
+	 * drawValue =  TRUE to draw the value
 	 */
 	public void setDrawValue(int drawValue)
 	{
@@ -191,7 +193,7 @@ public class Scale : Range
 	/**
 	 * Sets the position in which the current value is displayed.
 	 * Params:
-	 * pos = the position in which the current value is displayed.
+	 * pos =  the position in which the current value is displayed
 	 */
 	public void setValuePos(GtkPositionType pos)
 	{
@@ -201,7 +203,7 @@ public class Scale : Range
 	
 	/**
 	 * Gets the number of decimal places that are displayed in the value.
-	 * Returns:the number of decimal places that are displayed.
+	 * Returns: the number of decimal places that are displayed
 	 */
 	public int getDigits()
 	{
@@ -210,9 +212,9 @@ public class Scale : Range
 	}
 	
 	/**
-	 * Returns whether the current value is displayed as a string next to the
-	 * slider.
-	 * Returns:whether the current value is displayed as a string.
+	 * Returns whether the current value is displayed as a string
+	 * next to the slider.
+	 * Returns: whether the current value is displayed as a string
 	 */
 	public int getDrawValue()
 	{
@@ -222,7 +224,7 @@ public class Scale : Range
 	
 	/**
 	 * Gets the position in which the current value is displayed.
-	 * Returns:the position in which the current value is displayed.
+	 * Returns: the position in which the current value is displayed
 	 */
 	public GtkPositionType getValuePos()
 	{
@@ -239,7 +241,7 @@ public class Scale : Range
 	 */
 	public PgLayout getLayout()
 	{
-		// PangoLayout* gtk_scale_get_layout (GtkScale *scale);
+		// PangoLayout * gtk_scale_get_layout (GtkScale *scale);
 		auto p = gtk_scale_get_layout(gtkScale);
 		if(p is null)
 		{
@@ -264,5 +266,38 @@ public class Scale : Range
 	{
 		// void gtk_scale_get_layout_offsets (GtkScale *scale,  gint *x,  gint *y);
 		gtk_scale_get_layout_offsets(gtkScale, &x, &y);
+	}
+	
+	/**
+	 * Adds a mark at value.
+	 * A mark is indicated visually by drawing a tick mark next to the scale,
+	 * and GTK+ makes it easy for the user to position the scale exactly at the
+	 * marks value.
+	 * If markup is not NULL, text is shown next to the tick mark.
+	 * To remove marks from a scale, use gtk_scale_clear_marks().
+	 * Since 2.16
+	 * Params:
+	 * value =  the value at which the mark is placed, must be between
+	 *  the lower and upper limits of the scales' adjustment
+	 * position =  where to draw the mark. For a horizontal scale, GTK_POS_TOP
+	 *  is drawn above the scale, anything else below. For a vertical scale,
+	 *  GTK_POS_LEFT is drawn to the left of the scale, anything else to the
+	 *  right.
+	 * markup =  Text to be shown at the mark, using Pango markup, or NULL
+	 */
+	public void addMark(double value, GtkPositionType position, string markup)
+	{
+		// void gtk_scale_add_mark (GtkScale *scale,  gdouble value,  GtkPositionType position,  const gchar *markup);
+		gtk_scale_add_mark(gtkScale, value, position, Str.toStringz(markup));
+	}
+	
+	/**
+	 * Removes any marks that have been added with gtk_scale_add_mark().
+	 * Since 2.16
+	 */
+	public void clearMarks()
+	{
+		// void gtk_scale_clear_marks (GtkScale *scale);
+		gtk_scale_clear_marks(gtkScale);
 	}
 }

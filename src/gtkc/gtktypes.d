@@ -113,20 +113,6 @@ public alias GEnumValue GtkEnumValue;
  * GtkFlagValue is deprecated and should not be used in newly-written code.
  */
 public alias GFlagsValue GtkFlagValue;
-
-enum GtkNumberUpLayout
-{
-	LEFT_TO_RIGHT_TOP_TO_BOTTOM,
-	LEFT_TO_RIGHT_BOTTOM_TO_TOP,
-	RIGHT_TO_LEFT_TOP_TO_BOTTOM,
-	RIGHT_TO_LEFT_BOTTOM_TO_TOP,
-	TOP_TO_BOTTOM_LEFT_TO_RIGHT,
-	TOP_TO_BOTTOM_RIGHT_TO_LEFT,
-	BOTTOM_TO_TOP_LEFT_TO_RIGHT,
-	BOTTOM_TO_TOP_RIGHT_TO_LEFT
-}
-alias GtkNumberUpLayout NumberUpLayout;
-
 /**
  * The GtkDestDefaults enumeration specifies the various
  * types of action that will be taken on behalf
@@ -301,6 +287,23 @@ public enum GtkAnchorType
 	E = EAST
 }
 alias GtkAnchorType AnchorType;
+
+/**
+ * Used to specify the placement of scroll arrows in scrolling menus.
+ * GTK_ARROWS_BOTH
+ * Place one arrow on each end of the menu.
+ * GTK_ARROWS_START
+ * Place both arrows at the top of the menu.
+ * GTK_ARROWS_END
+ * Place both arrows at the bottom of the menu.
+ */
+public enum GtkArrowPlacement
+{
+	ARROWS_BOTH,
+	ARROWS_START,
+	ARROWS_END
+}
+alias GtkArrowPlacement ArrowPlacement;
 
 /**
  * Used to indicate the direction in which a GtkArrow should point.
@@ -1064,6 +1067,7 @@ alias GtkResponseType ResponseType;
  * GTK_MESSAGE_ERROR
  * Fatal error message
  * GTK_MESSAGE_OTHER
+ * None of the above, doesn't get an icon
  */
 public enum GtkMessageType
 {
@@ -1202,6 +1206,20 @@ public enum GtkProgressBarStyle
 	DISCRETE
 }
 alias GtkProgressBarStyle ProgressBarStyle;
+
+/**
+ * Specifies the side of the entry at which an icon is placed.
+ * GTK_ENTRY_ICON_PRIMARY
+ * At the beginning of the entry (depending on the text direction).
+ * GTK_ENTRY_ICON_SECONDARY
+ * At the end of the entry (depending on the text direction).
+ */
+public enum GtkEntryIconPosition
+{
+	PRIMARY,
+	SECONDARY
+}
+alias GtkEntryIconPosition EntryIconPosition;
 
 /**
  * GTK_UPDATE_ALWAYS
@@ -1348,6 +1366,17 @@ public enum GtkTreeViewDropPosition
 }
 alias GtkTreeViewDropPosition TreeViewDropPosition;
 
+/**
+ * Used to indicate which grid lines to draw in a tree view.
+ * GTK_TREE_VIEW_GRID_LINES_NONE
+ * No grid lines.
+ * GTK_TREE_VIEW_GRID_LINES_HORIZONTAL
+ * Horizontal grid lines.
+ * GTK_TREE_VIEW_GRID_LINES_VERTICAL
+ * Vertical grid lines.
+ * GTK_TREE_VIEW_GRID_LINES_BOTH
+ * Horizontal and vertical grid lines.
+ */
 public enum GtkTreeViewGridLines
 {
 	NONE,
@@ -1436,6 +1465,18 @@ public enum GtkCellRendererAccelMode
 }
 alias GtkCellRendererAccelMode CellRendererAccelMode;
 
+/**
+ * Determines how widgets should be packed insided menubars and
+ * menuitems contained in menubars.
+ * GTK_PACK_DIRECTION_LTR
+ * Widgets are packed left-to-right.
+ * GTK_PACK_DIRECTION_RTL
+ * Widgets are packed right-to-left.
+ * GTK_PACK_DIRECTION_TTB
+ * Widgets are packed top-to-bottom.
+ * GTK_PACK_DIRECTION_BTT
+ * Widgets are packed bottom-to-top.
+ */
 public enum GtkPackDirection
 {
 	LTR,
@@ -1501,6 +1542,8 @@ alias GtkToolbarSpaceStyle ToolbarSpaceStyle;
  * Create a separator.
  * GTK_UI_MANAGER_ACCELERATOR
  * Install an accelerator.
+ * GTK_UI_MANAGER_POPUP_WITH_ACCELS
+ * Same as GTK_UI_MANAGER_POPUP, but the actions' accelerators are shown.
  */
 public enum GtkUIManagerItemType
 {
@@ -1514,7 +1557,8 @@ public enum GtkUIManagerItemType
 	MENUITEM = 1 << 5,
 	TOOLITEM = 1 << 6,
 	SEPARATOR = 1 << 7,
-	ACCELERATOR = 1 << 8
+	ACCELERATOR = 1 << 8,
+	POPUP_WITH_ACCELS = 1 << 9
 }
 alias GtkUIManagerItemType UIManagerItemType;
 
@@ -1545,7 +1589,8 @@ public enum GtkFileChooserError
 {
 	NONEXISTENT,
 	BAD_FILENAME,
-	ALREADY_EXISTS
+	ALREADY_EXISTS,
+	INCOMPLETE_HOSTNAME
 }
 alias GtkFileChooserError FileChooserError;
 
@@ -1624,6 +1669,18 @@ public enum GtkPrintOperationResult
 }
 alias GtkPrintOperationResult PrintOperationResult;
 
+/**
+ * Error codes that identify various errors that can occur while
+ * using the GTK+ printing support.
+ * GTK_PRINT_ERROR_GENERAL
+ * An unspecified error occurred.
+ * GTK_PRINT_ERROR_INTERNAL_ERROR
+ * An internal error occurred.
+ * GTK_PRINT_ERROR_NOMEM
+ * A memory allocation failed.
+ * GTK_PRINT_ERROR_INVALID_FILE
+ * An error occurred while loading a page setup
+ */
 public enum GtkPrintError
 {
 	GENERAL,
@@ -1659,6 +1716,31 @@ public enum GtkPrintQuality
 }
 alias GtkPrintQuality PrintQuality;
 
+/**
+ * Used to determine the layout of pages on a sheet when printing
+ * multiple pages per sheet.
+ * GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_TOP_TO_BOTTOM
+ * GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_BOTTOM_TO_TOP
+ * GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_TOP_TO_BOTTOM
+ * GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_BOTTOM_TO_TOP
+ * GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_LEFT_TO_RIGHT
+ * GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_RIGHT_TO_LEFT
+ * GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_LEFT_TO_RIGHT
+ * GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_RIGHT_TO_LEFT
+ */
+public enum GtkNumberUpLayout
+{
+	LEFT_TO_RIGHT_TOP_TO_BOTTOM, /+*< nick=lrtb >+/
+	LEFT_TO_RIGHT_BOTTOM_TO_TOP, /+*< nick=lrbt >+/
+	RIGHT_TO_LEFT_TOP_TO_BOTTOM, /+*< nick=rltb >+/
+	RIGHT_TO_LEFT_BOTTOM_TO_TOP, /+*< nick=rlbt >+/
+	TOP_TO_BOTTOM_LEFT_TO_RIGHT, /+*< nick=tblr >+/
+	TOP_TO_BOTTOM_RIGHT_TO_LEFT, /+*< nick=tbrl >+/
+	BOTTOM_TO_TOP_LEFT_TO_RIGHT, /+*< nick=btlr >+/
+	BOTTOM_TO_TOP_RIGHT_TO_LEFT /+*< nick=btrl >+/
+}
+alias GtkNumberUpLayout NumberUpLayout;
+
 public enum GtkPrintPages
 {
 	ALL,
@@ -1686,22 +1768,21 @@ alias GtkUnit Unit;
 
 /**
  * An enum for specifying which features the print dialog should offer.
- * If neither GTK_PRINT_CAPABILITY_GENERATE_PDF nor GTK_PRINT_CAPABILITY_GENERATE_PS is
- * specified, GTK+ assumes that all formats are supported.
+ * If neither GTK_PRINT_CAPABILITY_GENERATE_PDF nor
+ * GTK_PRINT_CAPABILITY_GENERATE_PS is specified, GTK+ assumes that all
+ * formats are supported.
  * GTK_PRINT_CAPABILITY_PAGE_SET
+ * Print dialog will offer printing even/odd pages.
  * GTK_PRINT_CAPABILITY_COPIES
+ * Print dialog will allow to print multiple copies.
  * GTK_PRINT_CAPABILITY_COLLATE
+ * Print dialog will allow to collate multiple copies.
  * GTK_PRINT_CAPABILITY_REVERSE
+ * Print dialog will allow to print pages in reverse order.
  * GTK_PRINT_CAPABILITY_SCALE
+ * Print dialog will allow to scale the output.
  * GTK_PRINT_CAPABILITY_GENERATE_PDF
- * The program will send the document to the printer in PDF format
- * GTK_PRINT_CAPABILITY_GENERATE_PS
- * The program will send the document to the printer in Postscript format
- * GTK_PRINT_CAPABILITY_PREVIEW
- * GTK_PRINT_CAPABILITY_NUMBER_UP
- * Print dialog will offer printing multiple pages per sheet. Since 2.12
- * GTK_PRINT_CAPABILITY_NUMBER_UP_LAYOUT
- * Print dialog will allow to rearrange pages when printing multiple pages per sheet. Since 2.14
+ * The program will send the document to
  */
 public enum GtkPrintCapabilities
 {
@@ -1949,6 +2030,12 @@ public enum GtkRecentFilterFlags
 }
 alias GtkRecentFilterFlags RecentFilterFlags;
 
+/**
+ * Error codes that identify various errors that can occur while
+ * using GtkBuilder.
+ * GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION
+ * A type-func attribute didn't name
+ */
 public enum GtkBuilderError
 {
 	INVALID_TYPE_FUNCTION,
@@ -2323,6 +2410,18 @@ public struct GtkStyle
 }
 
 
+/**
+ * A struct that specifies a border around a rectangular area that can
+ * be of different width on each side.
+ * gint left;
+ * The width of the left border.
+ * gint right;
+ * The width of the right border.
+ * gint top;
+ * The width of the top border.
+ * gint bottom;
+ * The width of the bottom border.
+ */
 public struct GtkBorder
 {
 	int left;
@@ -2654,11 +2753,8 @@ public struct GtkSpinButton{}
 
 /**
  * Main Gtk struct.
- * The GtkEditable structure contains the following fields.
- * (These fields should be considered read-only. They should
- * never be set by an application.)
- * guint selection_start;
- * the starting position of the selected characters
+ * The GtkEditable structure is an opaque structure whose members
+ * cannot be directly accessed.
  */
 public struct GtkEditable{}
 
@@ -3323,6 +3419,25 @@ public struct GtkRecentAction{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkActivatable{}
+
+
+/**
+ * GTypeInterface g_iface;
+ * update ()
+ */
+public struct GtkActivatableIface
+{
+	GTypeInterface gIface;
+	/+* virtual table +/
+	extern(C) void  function(GtkActivatable *activatable,GtkAction *action,char *propertyName)  update;
+	extern(C) void  function(GtkActivatable *activatable,GtkAction *action)  syncActionProperties;
+}
+
+
+/**
+ * Main Gtk struct.
  * The GtkColorButton struct has only private fields and
  * should not be used directly.
  */
@@ -3497,27 +3612,6 @@ public struct GtkFixed{}
 
 
 /**
- * The GtkFixedChild struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * GtkWidget *widget;
- * the child GtkWidget.
- * gint x;
- * the horizontal position of the widget within the GtkFixed
- * container.
- * gint y;
- * the vertical position of the widget within the GtkFixed
- * container.
- */
-public struct GtkFixedChild
-{
-	GtkWidget *widget;
-	int x;
-	int y;
-}
-
-
-/**
  * Main Gtk struct.
  */
 public struct GtkHPaned{}
@@ -3560,56 +3654,15 @@ public struct GtkTable{}
 
 
 /**
- * The widget field is a pointer to the widget that
- * this GtkTableChild structure is keeping track of.
- * The left_attach,
- * right_attach,
- * top_attach, and
- * bottom_attach fields specify the row and column
- * numbers which make up the invisible rectangle that the child widget is packed into.
- * xpadding and ypadding
- * specify the space between this widget and the surrounding table cells.
+ * Main Gtk struct.
  */
-public struct GtkTableChild
-{
-	GtkWidget *widget;
-	ushort leftAttach;
-	ushort rightAttach;
-	ushort topAttach;
-	ushort bottomAttach;
-	ushort xpadding;
-	ushort ypadding;
-	uint bitfield0;
-	//uint xexpand : 1;
-	//uint yexpand : 1;
-	//uint xshrink : 1;
-	//uint yshrink : 1;
-	//uint xfill : 1;
-	//uint yfill : 1;
-}
-
-
-/**
- * These fields should be considered read-only and not be modified directly.
- */
-public struct GtkTableRowCol
-{
-	ushort requisition;
-	ushort allocation;
-	ushort spacing;
-	uint bitfield0;
-	//uint needExpand : 1;
-	//uint needShrink : 1;
-	//uint expand : 1;
-	//uint shrink : 1;
-	//uint empty : 1;
-}
+public struct GtkExpander{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkExpander{}
+public struct GtkOrientable{}
 
 
 /**
@@ -3644,6 +3697,8 @@ public struct GtkHScrollbar{}
 
 /**
  * Main Gtk struct.
+ * The GtkVScrollbar struct contains private data and should be accessed
+ * using the functions below.
  */
 public struct GtkVScrollbar{}
 
@@ -3979,15 +4034,8 @@ public struct GtkRange{}
 
 /**
  * Main Gtk struct.
- * The GtkScale struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * guint draw_value;
- * non-zero if the scale's current value is displayed next to the
- * slider.
- * guint value_pos;
- * the position in which the textual value is displayed, selected from
- * GtkPositionType.
+ * The fields of the GtkScale struct should only be accessed via
+ * the accessor functions.
  */
 public struct GtkScale{}
 
@@ -4109,6 +4157,46 @@ public struct GtkWidgetShapeInfo
  * Main Gtk struct.
  */
 public struct GtkIMContext{}
+
+
+/**
+ * preedit_start ()
+ */
+public struct GtkIMContextClass
+{
+	/+* Signals +/
+	extern(C) void  function(GtkIMContext *context) preeditStart;
+	extern(C) void  function(GtkIMContext *context) preeditEnd;
+	extern(C) void  function(GtkIMContext *context) preeditChanged;
+	extern(C) void  function(GtkIMContext *context, char *str) commit;
+	extern(C) int  function(GtkIMContext *context) retrieveSurrounding;
+	extern(C) int  function(GtkIMContext *context,int offset,int nChars) deleteSurrounding;
+	/+* Virtual functions +/
+	extern(C) void  function(GtkIMContext *context,GdkWindow *window) setClientWindow;
+	extern(C) void  function(GtkIMContext *context,char **str,PangoAttrList **attrs,int *cursorPos) getPreeditString;
+	extern(C) int  function(GtkIMContext *context,GdkEventKey *event) filterKeypress;
+	extern(C) void  function(GtkIMContext *context) focusIn;
+	extern(C) void  function(GtkIMContext *context) focusOut;
+	extern(C) void  function(GtkIMContext *context) reset;
+	extern(C) void  function(GtkIMContext *context,GdkRectangle *area) setCursorLocation;
+	extern(C) void  function(GtkIMContext *context,int usePreedit) setUsePreedit;
+	extern(C) void  function(GtkIMContext *context,char *text,int len,int cursorIndex) setSurrounding;
+	extern(C) int  function(GtkIMContext *context,char **text,int *cursorIndex) getSurrounding;
+}
+
+
+/**
+ * Bookkeeping information about a loadable input method.
+ * const gchar *context_id;
+ */
+public struct GtkIMContextInfo
+{
+	char *contextId;
+	char *contextName;
+	char *domain;
+	char *domainDirname;
+	char *defaultLocales;
+}
 
 
 /**
@@ -4465,8 +4553,8 @@ public struct GtkProgress{}
 
 /*
  * Warning
- * gtk_style_apply_default_pixmap is deprecated and should not be used in newly-written code.
- * Deprecated alias for gtk_style_apply_default_background().
+ * gtk_style_apply_default_pixmap is deprecated and should not be used in newly-written code. Use gtk_style_apply_default_background() instead.
+ * Does the same as gtk_style_apply_default_background().
  * s :
  * gw :
  * st :
@@ -5217,7 +5305,7 @@ public struct GtkProgress{}
  * is_a_type :
  * another GtkType.
  * Returns :
- * TRUE if type is a is_a_type.
+ * %TRUE if type is a is_a_type.
  */
 // TODO
 // #define	gtk_type_is_a(type, is_a_type)	 g_type_is_a ((type), (is_a_type))
@@ -5352,24 +5440,24 @@ public struct GtkProgress{}
 
 /*
  * Warning
- * gtk_button_box_get_spacing is deprecated and should not be used in newly-written code.
+ * gtk_button_box_get_spacing is deprecated and should not be used in newly-written code. Use gtk_box_get_spacing() instead.
  * Retrieves how much space a button box is placing between each child button.
  * b :
  * a GtkButtonBox
  * Returns :
- * the current spacing applied to the buttons in widget.
+ * the current spacing applied to the buttons in widget
  */
 // TODO
 // #define gtk_button_box_get_spacing(b) gtk_box_get_spacing (GTK_BOX (b))
 
 /*
  * Warning
- * gtk_button_box_set_spacing is deprecated and should not be used in newly-written code.
+ * gtk_button_box_set_spacing is deprecated and should not be used in newly-written code. Use gtk_box_set_spacing() instead.
  * Sets the amount of spacing between buttons in a given button box.
  * b :
- * a GtkButtonBox.
+ * a GtkButtonBox
  * s :
- * the number of pixels of spacing.
+ * the number of pixels of spacing
  */
 // TODO
 // #define gtk_button_box_set_spacing(b,s) gtk_box_set_spacing (GTK_BOX (b), s)
@@ -5669,7 +5757,7 @@ public struct GtkProgress{}
 
 /*
  * Warning
- * gtk_widget_set_rc_style is deprecated and should not be used in newly-written code.
+ * gtk_widget_set_rc_style is deprecated and should not be used in newly-written code. Use gtk_widget_set_style() with a NULL style argument instead.
  * Equivalent to gtk_widget_set_style (widget, NULL).
  * widget :
  * a GtkWidget.
@@ -5679,7 +5767,7 @@ public struct GtkProgress{}
 
 /*
  * Warning
- * gtk_widget_restore_default_style is deprecated and should not be used in newly-written code.
+ * gtk_widget_restore_default_style is deprecated and should not be used in newly-written code. Use gtk_widget_set_style() with a NULL style argument instead.
  * Equivalent to gtk_widget_set_style (widget, NULL).
  * widget :
  * a GtkWidget.
@@ -5700,6 +5788,7 @@ public struct GtkProgress{}
  * gtk_widget_push_visual is deprecated and should not be used in newly-written code.
  * This function is deprecated; it does nothing.
  * visual :
+ * a visual
  */
 // TODO
 // #define gtk_widget_push_visual(visual) ((void) 0)
@@ -5709,6 +5798,7 @@ public struct GtkProgress{}
  * gtk_widget_set_default_visual is deprecated and should not be used in newly-written code.
  * This function is deprecated; it does nothing.
  * visual :
+ * a visual
  */
 // TODO
 // #define gtk_widget_set_default_visual(visual) ((void) 0)
@@ -5718,14 +5808,20 @@ public struct GtkProgress{}
  * gtk_widget_set_visual is deprecated and should not be used in newly-written code.
  * This function is deprecated; it does nothing.
  * widget :
+ * a GtkWidget
  * visual :
+ * a visual
  */
 // TODO
 // #define gtk_widget_set_visual(widget,visual) ((void) 0)
 
 /*
+ * This macro should be used to emit a warning about and unexpected
+ * type value in a GtkBuildable add_child implementation.
  * object :
+ * the GtkBuildable on which the warning ocurred
  * type :
+ * the unexpected type value
  */
 // TODO
 // #define GTK_BUILDER_WARN_INVALID_CHILD_TYPE(object, type)
@@ -5759,7 +5855,7 @@ public typedef extern(C) void  function (GdkDisplay*) GtkModuleDisplayInitFunc;
  * func_data :
  * the func_data supplied to gtk_key_snooper_install().
  * Returns :
- * TRUE to stop further processing of event, FALSE to continue.
+ * %TRUE to stop further processing of event, FALSE to continue.
  */
 // gint (*GtkKeySnoopFunc) (GtkWidget *grab_widget,  GdkEventKey *event,  gpointer func_data);
 public typedef extern(C) int  function (GtkWidget*, GdkEventKey*, void*) GtkKeySnoopFunc;
@@ -5943,9 +6039,9 @@ public typedef extern(C) void  function () GtkSignalFunc;
 /*
  * Defines a function pointer.
  * data :
- * gpointer
+ * #gpointer
  * Returns :
- * gint
+ * #gint
  */
 // gboolean (*GtkFunction) (gpointer data);
 public typedef extern(C) int  function (void*) GtkFunction;
@@ -5955,7 +6051,7 @@ public typedef extern(C) int  function (void*) GtkFunction;
  * GtkDestroyNotify is deprecated and should not be used in newly-written code.
  * Defines a function pointer.
  * data :
- * gpointer
+ * #gpointer
  */
 // void (*GtkDestroyNotify) (gpointer data);
 public typedef extern(C) void  function (void*) GtkDestroyNotify;
@@ -5963,13 +6059,13 @@ public typedef extern(C) void  function (void*) GtkDestroyNotify;
 /*
  * Defines a function pointer.
  * object :
- * GtkObject*
+ * #GtkObject*
  * data :
- * gpointer
+ * #gpointer
  * n_args :
- * guint
+ * #guint
  * args :
- * GtkArg*
+ * #GtkArg*
  */
 // void (*GtkCallbackMarshal) (GtkObject *object,  gpointer data,  guint n_args,  GtkArg *args);
 public typedef extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCallbackMarshal;
@@ -6010,6 +6106,7 @@ public typedef extern(C) int  function (int, void*) GtkAssistantPageFunc;
  * button :
  * the GtkLinkButton which was clicked
  * link_ :
+ * the URI to which the clicked GtkLinkButton points
  * user_data :
  * user data that was passed when the function was registered
  *  with gtk_link_button_set_uri_hook()
@@ -6032,7 +6129,7 @@ public typedef extern(C) void  function (GtkLinkButton*, char[], void*) GtkLinkB
  * user_data :
  * user data given to gtk_entry_completion_set_match_func()
  * Returns :
- * TRUE if iter should be displayed as a possible completion for key
+ * %TRUE if iter should be displayed as a possible completion for key
  */
 // gboolean (*GtkEntryCompletionMatchFunc) (GtkEntryCompletion *completion,  const gchar *key,  GtkTreeIter *iter,  gpointer user_data);
 public typedef extern(C) int  function (GtkEntryCompletion*, char[], GtkTreeIter*, void*) GtkEntryCompletionMatchFunc;
@@ -6059,13 +6156,13 @@ public typedef extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
  * length :
  * length of data
  * create_tags :
- * TRUE if deserializing may create tags
+ * %TRUE if deserializing may create tags
  * user_data :
  * user data that was specified when registering the format
  * error :
  * return location for a GError
  * Returns :
- * TRUE on success, FALSE otherwise
+ * %TRUE on success, FALSE otherwise
  */
 // gboolean (*GtkTextBufferDeserializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GtkTextIter *iter,  const guint8 *data,  gsize length,  gboolean create_tags,  gpointer user_data,  GError **error);
 public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, guint8*, uint, int, void*, GError**) GtkTextBufferDeserializeFunc;
@@ -6089,8 +6186,8 @@ public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextI
  * a newly-allocated array of guint8 which contains the serialized
  *  data, or NULL if an error occurred
  */
-// guint8* (*GtkTextBufferSerializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length,  gpointer user_data);
-public typedef extern(C) byte*  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
+// guint8 * (*GtkTextBufferSerializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length,  gpointer user_data);
+public typedef extern(C) byte *  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
 
 /*
  * tag :
@@ -6109,7 +6206,7 @@ public typedef extern(C) void  function (GtkTextTag*, void*) GtkTextTagTableFore
  * data :
  * The user data passed to gtk_tree_model_foreach()
  * Returns :
- * TRUE to stop iterating, FALSE to continue.
+ * %TRUE to stop iterating, FALSE to continue.
  */
 // gboolean (*GtkTreeModelForeachFunc) (GtkTreeModel *model,  GtkTreePath *path,  GtkTreeIter *iter,  gpointer data);
 public typedef extern(C) int  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, void*) GtkTreeModelForeachFunc;
@@ -6126,11 +6223,11 @@ public typedef extern(C) int  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter
  * path :
  * The GtkTreePath of the row in question
  * path_currently_selected :
- * TRUE, if the path is currently selected
+ * %TRUE, if the path is currently selected
  * data :
  * user data
  * Returns :
- * TRUE, if the selection state of the row can be toggled
+ * %TRUE, if the selection state of the row can be toggled
  */
 // gboolean (*GtkTreeSelectionFunc) (GtkTreeSelection *selection,  GtkTreeModel *model,  GtkTreePath *path,  gboolean path_currently_selected,  gpointer data);
 public typedef extern(C) int  function (GtkTreeSelection*, GtkTreeModel*, GtkTreePath*, int, void*) GtkTreeSelectionFunc;
@@ -6191,7 +6288,7 @@ public typedef extern(C) void  function (GtkTreeViewColumn*, GtkCellRenderer*, G
  * data :
  * user data
  * Returns :
- * TRUE, if column can be dropped in this spot
+ * %TRUE, if column can be dropped in this spot
  */
 // gboolean (*GtkTreeViewColumnDropFunc) (GtkTreeView *tree_view,  GtkTreeViewColumn *column,  GtkTreeViewColumn *prev_column,  GtkTreeViewColumn *next_column,  gpointer data);
 public typedef extern(C) int  function (GtkTreeView*, GtkTreeViewColumn*, GtkTreeViewColumn*, GtkTreeViewColumn*, void*) GtkTreeViewColumnDropFunc;
@@ -6225,7 +6322,7 @@ public typedef extern(C) void  function (GtkTreeView*, GtkTreePath*, void*) GtkT
  * search_data :
  * user data from gtk_tree_view_set_search_equal_func()
  * Returns :
- * FALSE if the row matches, TRUE otherwise.
+ * %FALSE if the row matches, TRUE otherwise.
  */
 // gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel *model,  gint column,  const gchar *key,  GtkTreeIter *iter,  gpointer search_data);
 public typedef extern(C) int  function (GtkTreeModel*, int, char[], GtkTreeIter*, void*) GtkTreeViewSearchEqualFunc;
@@ -6259,7 +6356,7 @@ public typedef extern(C) void  function (GtkTreeView*, GtkTreePath*, int, void*)
  * data :
  * user data
  * Returns :
- * TRUE if the row is a separator
+ * %TRUE if the row is a separator
  */
 // gboolean (*GtkTreeViewRowSeparatorFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
 public typedef extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTreeViewRowSeparatorFunc;
@@ -6297,6 +6394,8 @@ public typedef extern(C) void  function (GtkIconView*, GtkTreePath*, void*) GtkI
  * Data passed when the compare func is assigned e.g. by
  * gtk_tree_sortable_set_sort_func()
  * Returns :
+ * a negative integer, zero or a positive integer depending on whether
+ *  a sorts before, with or after b
  */
 // gint (*GtkTreeIterCompareFunc) (GtkTreeModel *model,  GtkTreeIter *a,  GtkTreeIter *b,  gpointer user_data);
 public typedef extern(C) int  function (GtkTreeModel*, GtkTreeIter*, GtkTreeIter*, void*) GtkTreeIterCompareFunc;
@@ -6428,7 +6527,7 @@ public typedef extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSel
  * data :
  * user data passed to gtk_file_filter_add_custom()
  * Returns :
- * TRUE if the file should be displayed
+ * %TRUE if the file should be displayed
  */
 // gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,  gpointer data);
 public typedef extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFunc;
@@ -6453,8 +6552,8 @@ public typedef extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilter
  * Returns :
  * The created GtkNotebook where the tab will be attached, or NULL to cancel the drag
  */
-// GtkNotebook* (*GtkNotebookWindowCreationFunc) (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
-public typedef extern(C) GtkNotebook*  function (GtkNotebook*, GtkWidget*, int, int, void*) GtkNotebookWindowCreationFunc;
+// GtkNotebook * (*GtkNotebookWindowCreationFunc) (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
+public typedef extern(C) GtkNotebook *  function (GtkNotebook*, GtkWidget*, int, int, void*) GtkNotebookWindowCreationFunc;
 
 /*
  * The type of function that is passed to gtk_print_run_page_setup_dialog_async().
@@ -6486,7 +6585,7 @@ public typedef extern(C) void  function (char[], char[], void*) GtkPrintSettings
  * data :
  * user data passed to gtk_enumerate_printers()
  * Returns :
- * TRUE to stop the enumeration, FALSE to continue
+ * %TRUE to stop the enumeration, FALSE to continue
  */
 // gboolean (*GtkPrinterFunc) (GtkPrinter *printer,  gpointer data);
 public typedef extern(C) int  function (GtkPrinter*, void*) GtkPrinterFunc;
@@ -6524,8 +6623,8 @@ public typedef extern(C) void  function (GtkPrintJob*, void*, GError*) GtkPrintJ
  * for the specified day, or NULL.
  * Since 2.14
  */
-// gchar* (*GtkCalendarDetailFunc) (GtkCalendar *calendar,  guint year,  guint month,  guint day,  gpointer user_data);
-public typedef extern(C) char*  function (GtkCalendar*, uint, uint, uint, void*) GtkCalendarDetailFunc;
+// gchar * (*GtkCalendarDetailFunc) (GtkCalendar *calendar,  guint year,  guint month,  guint day,  gpointer user_data);
+public typedef extern(C) char *  function (GtkCalendar*, uint, uint, uint, void*) GtkCalendarDetailFunc;
 
 /*
  * The type of the callback functions used for e.g. iterating over
@@ -6556,7 +6655,7 @@ public typedef extern(C) int  function (GtkRecentInfo*, GtkRecentInfo*, void*) G
  * user_data :
  * user data passed to gtk_recent_filter_add_custom()
  * Returns :
- * TRUE if the file should be displayed
+ * %TRUE if the file should be displayed
  */
 // gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,  gpointer user_data);
 public typedef extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilterFunc;
@@ -6607,8 +6706,8 @@ public typedef extern(C) void  function (void*, char[]) GtkPrintFunc;
  * Returns :
  * the translated message
  */
-// gchar* (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
-public typedef extern(C) char*  function (char[], void*) GtkTranslateFunc;
+// gchar * (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
+public typedef extern(C) char *  function (char[], void*) GtkTranslateFunc;
 
 /*
  * Warning
@@ -6667,6 +6766,12 @@ enum StockID
 	 * The "Cancel" item.
 	 */
 	CANCEL,
+	
+	/**
+	 * The "Caps Lock Warning" icon.
+	 * Since 2.16
+	 */
+	CAPS_LOCK_WARNING,
 	
 	/**
 	 * The "CD-Rom" item.
@@ -7215,6 +7320,7 @@ string[] StockDesc =
 	"gtk-apply",
 	"gtk-bold",
 	"gtk-cancel",
+	"gtk-caps-lock-warning",
 	"gtk-cdrom",
 	"gtk-clear",
 	"gtk-close",

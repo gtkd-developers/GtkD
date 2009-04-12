@@ -102,7 +102,7 @@ private import gtk.Dialog;
  * GtkPrintUnixDialog as GtkBuildable
  * The GtkPrintUnixDialog implementation of the GtkBuildable interface exposes its
  * notebook internal children with the name "notebook".
- * Example 44. A GtkPrintUnixDialog UI definition fragment.
+ * Example 48. A GtkPrintUnixDialog UI definition fragment.
  * <object class="GtkPrintUnixDialog" id="dialog1">
  *  <child internal-child="notebook">
  *  <object class="GtkNotebook" id="notebook">
@@ -177,7 +177,7 @@ public class PrintUnixDialog : Dialog
 	 */
 	public this (string title, Window parent)
 	{
-		// GtkWidget* gtk_print_unix_dialog_new (const gchar *title,  GtkWindow *parent);
+		// GtkWidget * gtk_print_unix_dialog_new (const gchar *title,  GtkWindow *parent);
 		auto p = gtk_print_unix_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
@@ -205,7 +205,7 @@ public class PrintUnixDialog : Dialog
 	 */
 	public PageSetup getPageSetup()
 	{
-		// GtkPageSetup* gtk_print_unix_dialog_get_page_setup  (GtkPrintUnixDialog *dialog);
+		// GtkPageSetup * gtk_print_unix_dialog_get_page_setup  (GtkPrintUnixDialog *dialog);
 		auto p = gtk_print_unix_dialog_get_page_setup(gtkPrintUnixDialog);
 		if(p is null)
 		{
@@ -262,7 +262,7 @@ public class PrintUnixDialog : Dialog
 	 */
 	public PrintSettings getPrintSettings()
 	{
-		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
+		// GtkPrintSettings * gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
 		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
 		if(p is null)
 		{
@@ -278,7 +278,7 @@ public class PrintUnixDialog : Dialog
 	 */
 	public Printer getSelectedPrinter()
 	{
-		// GtkPrinter* gtk_print_unix_dialog_get_selected_printer  (GtkPrintUnixDialog *dialog);
+		// GtkPrinter * gtk_print_unix_dialog_get_selected_printer  (GtkPrintUnixDialog *dialog);
 		auto p = gtk_print_unix_dialog_get_selected_printer(gtkPrintUnixDialog);
 		if(p is null)
 		{
