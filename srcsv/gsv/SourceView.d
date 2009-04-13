@@ -202,7 +202,7 @@ public class SourceView : TextView
 	 */
 	public this ()
 	{
-		// GtkWidget** gtk_source_view_new (void);
+		// GtkWidget * gtk_source_view_new (void);
 		auto p = gtk_source_view_new();
 		if(p is null)
 		{
@@ -220,7 +220,7 @@ public class SourceView : TextView
 	 */
 	public this (SourceBuffer buffer)
 	{
-		// GtkWidget** gtk_source_view_new_with_buffer (GtkSourceBuffer *buffer);
+		// GtkWidget * gtk_source_view_new_with_buffer (GtkSourceBuffer *buffer);
 		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
@@ -397,7 +397,7 @@ public class SourceView : TextView
 	 */
 	public Pixbuf getMarkCategoryPixbuf(string category)
 	{
-		// GdkPixbuf** gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
+		// GdkPixbuf * gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
 		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
 		if(p is null)
 		{

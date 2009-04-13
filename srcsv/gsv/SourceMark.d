@@ -131,7 +131,7 @@ public class SourceMark : TextMark
 	 * Since 2.2
 	 * Params:
 	 * name =  Name of the GtkSourceMark, can be NULL when not using a name
-	 * category is used to classify marks according to common characteristics
+	 * category =  is used to classify marks according to common characteristics
 	 * (e.g. all the marks representing a bookmark could belong to the "bookmark"
 	 * category, or all the marks representing a compilation error could belong to
 	 * "error" category).
@@ -139,7 +139,7 @@ public class SourceMark : TextMark
 	 */
 	public this (string name, string category)
 	{
-		// GtkSourceMark** gtk_source_mark_new (const gchar *name,  const gchar *category);
+		// GtkSourceMark * gtk_source_mark_new (const gchar *name,  const gchar *category);
 		auto p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
 		if(p is null)
 		{
@@ -170,7 +170,7 @@ public class SourceMark : TextMark
 	 */
 	public SourceMark next(string category)
 	{
-		// GtkSourceMark** gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
+		// GtkSourceMark * gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
 		auto p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
 		if(p is null)
 		{
@@ -190,7 +190,7 @@ public class SourceMark : TextMark
 	 */
 	public SourceMark prev(string category)
 	{
-		// GtkSourceMark** gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
+		// GtkSourceMark * gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
 		auto p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
 		if(p is null)
 		{

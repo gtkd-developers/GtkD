@@ -52,8 +52,8 @@ curl http://library.gnome.org/devel/libglade/libglade-html-2.6.2.tar.gz | tar xv
 ln -s libglade-html-2.6.2 glade
 
 #gtkSourceView
-curl http://library.gnome.org/devel/gtksourceview-2.0/gtksourceview-2.0-html-2.4.0.tar.gz | tar xvfz -
-ln -s gtksourceview-2.0-html-2.4.0 sourceview
+curl http://library.gnome.org/devel/gtksourceview/gtksourceview-html-2.6.1.tar.gz | tar xvfz -
+ln -s gtksourceview-html-2.6.1 sourceview
 
 #gstreamer
 curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.12.tar.gz | tar xvfz -

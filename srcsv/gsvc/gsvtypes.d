@@ -47,9 +47,11 @@ public enum GtkSourceDrawSpacesFlags
 	SPACE = 1 << 0,
 	TAB = 1 << 1,
 	NEWLINE = 1 << 2,
+	NBSP = 1 << 3,
 	ALL = (SPACE |
 	TAB |
-	NEWLINE)
+	NEWLINE |
+	NBSP)
 }
 alias GtkSourceDrawSpacesFlags SourceDrawSpacesFlags;
 

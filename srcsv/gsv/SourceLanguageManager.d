@@ -129,7 +129,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public this ()
 	{
-		// GtkSourceLanguageManager** gtk_source_language_manager_new  (void);
+		// GtkSourceLanguageManager * gtk_source_language_manager_new  (void);
 		auto p = gtk_source_language_manager_new();
 		if(p is null)
 		{
@@ -144,7 +144,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public static SourceLanguageManager getDefault()
 	{
-		// GtkSourceLanguageManager** gtk_source_language_manager_get_default  (void);
+		// GtkSourceLanguageManager * gtk_source_language_manager_get_default  (void);
 		auto p = gtk_source_language_manager_get_default();
 		if(p is null)
 		{
@@ -200,7 +200,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public SourceLanguage getLanguage(string id)
 	{
-		// GtkSourceLanguage** gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
+		// GtkSourceLanguage * gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
 		auto p = gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
 		if(p is null)
 		{
@@ -220,7 +220,7 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public SourceLanguage guessLanguage(string filename, string contentType)
 	{
-		// GtkSourceLanguage** gtk_source_language_manager_guess_language  (GtkSourceLanguageManager *lm,  const gchar *filename,  const gchar *content_type);
+		// GtkSourceLanguage * gtk_source_language_manager_guess_language  (GtkSourceLanguageManager *lm,  const gchar *filename,  const gchar *content_type);
 		auto p = gtk_source_language_manager_guess_language(gtkSourceLanguageManager, Str.toStringz(filename), Str.toStringz(contentType));
 		if(p is null)
 		{

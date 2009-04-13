@@ -85,7 +85,7 @@ private import gobject.ObjectG;
  * This is the same as name attribute, except it will be translated.
  * name and _name may not be used simultaneously.
  * parent-scheme (optional)
- * Style schemes may have <em>parent</em> schemes: all styles but those specified
+ * Style schemes may have parent schemes: all styles but those specified
  * in the scheme will be taken from the parent scheme. In this way a scheme may
  * be customized without copying all its content.
  * version (mandatory)
@@ -108,7 +108,7 @@ private import gobject.ObjectG;
  * Each style tag describes a single element of style scheme (it corresponds
  * to GtkSourceStyle object). It has the following attributes:
  * name (mandatory)
- * Name of the style. It can be anything, syntax highlighting uses <em>lang-id:style-id</em>,
+ * Name of the style. It can be anything, syntax highlighting uses lang-id:style-id,
  * and there are few special styles which are used to control general appearance
  * of the text. Style scheme may contain other names to be used in an application. For instance,
  * it may define color to highlight compilation errors in a build log or a color for
@@ -252,7 +252,7 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public SourceStyle getStyle(string styleId)
 	{
-		// GtkSourceStyle** gtk_source_style_scheme_get_style (GtkSourceStyleScheme *scheme,  const gchar *style_id);
+		// GtkSourceStyle * gtk_source_style_scheme_get_style (GtkSourceStyleScheme *scheme,  const gchar *style_id);
 		auto p = gtk_source_style_scheme_get_style(gtkSourceStyleScheme, Str.toStringz(styleId));
 		if(p is null)
 		{

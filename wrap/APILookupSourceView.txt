@@ -119,7 +119,7 @@ import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
 outFile: SourceBuffer
 
-file: gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
+file: gtksourceview-2.0-Searching-in-a-GtkSourceBuffer.html
 #struct: 
 class: SourceSearch
 prefix: gtk_source_iter_

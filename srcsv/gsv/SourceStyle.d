@@ -116,7 +116,7 @@ public class SourceStyle : ObjectG
 	 */
 	public SourceStyle copy()
 	{
-		// GtkSourceStyle** gtk_source_style_copy (const GtkSourceStyle *style);
+		// GtkSourceStyle * gtk_source_style_copy (const GtkSourceStyle *style);
 		auto p = gtk_source_style_copy(gtkSourceStyle);
 		if(p is null)
 		{

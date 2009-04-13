@@ -175,7 +175,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] gtkSourceLanguageGetMimeTypes()
 	{
-		// gchar*** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
+		// gchar ** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_mime_types(gtkSourceLanguage));
 	}
 	
@@ -187,7 +187,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] gtkSourceLanguageGetGlobs()
 	{
-		// gchar*** gtk_source_language_get_globs (GtkSourceLanguage *language);
+		// gchar ** gtk_source_language_get_globs (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_globs(gtkSourceLanguage));
 	}
 	
@@ -209,7 +209,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] gtkSourceLanguageGetStyleIds()
 	{
-		// gchar*** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
+		// gchar ** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_style_ids(gtkSourceLanguage));
 	}
 }

@@ -209,7 +209,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (TextTagTable table)
 	{
-		// GtkSourceBuffer** gtk_source_buffer_new (GtkTextTagTable *table);
+		// GtkSourceBuffer * gtk_source_buffer_new (GtkTextTagTable *table);
 		auto p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 		if(p is null)
 		{
@@ -228,7 +228,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (SourceLanguage language)
 	{
-		// GtkSourceBuffer** gtk_source_buffer_new_with_language (GtkSourceLanguage *language);
+		// GtkSourceBuffer * gtk_source_buffer_new_with_language (GtkSourceLanguage *language);
 		auto p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
 		if(p is null)
 		{
@@ -288,7 +288,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceLanguage getLanguage()
 	{
-		// GtkSourceLanguage** gtk_source_buffer_get_language (GtkSourceBuffer *buffer);
+		// GtkSourceLanguage * gtk_source_buffer_get_language (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
 		if(p is null)
 		{
@@ -341,7 +341,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceStyleScheme getStyleScheme()
 	{
-		// GtkSourceStyleScheme** gtk_source_buffer_get_style_scheme  (GtkSourceBuffer *buffer);
+		// GtkSourceStyleScheme * gtk_source_buffer_get_style_scheme  (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
 		if(p is null)
 		{
@@ -473,7 +473,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceMark createSourceMark(string name, string category, TextIter where)
 	{
-		// GtkSourceMark** gtk_source_buffer_create_source_mark  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *category,  const GtkTextIter *where);
+		// GtkSourceMark * gtk_source_buffer_create_source_mark  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *category,  const GtkTextIter *where);
 		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
 		if(p is null)
 		{
@@ -493,7 +493,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public ListSG getSourceMarksAtLine(int line, string category)
 	{
-		// GSList** gtk_source_buffer_get_source_marks_at_line  (GtkSourceBuffer *buffer,  gint line,  const gchar *category);
+		// GSList * gtk_source_buffer_get_source_marks_at_line  (GtkSourceBuffer *buffer,  gint line,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
 		if(p is null)
 		{
@@ -513,7 +513,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public ListSG getSourceMarksAtIter(TextIter iter, string category)
 	{
-		// GSList** gtk_source_buffer_get_source_marks_at_iter  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
+		// GSList * gtk_source_buffer_get_source_marks_at_iter  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
 		if(p is null)
 		{

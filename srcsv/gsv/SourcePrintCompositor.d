@@ -137,7 +137,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public this (SourceBuffer buffer)
 	{
-		// GtkSourcePrintCompositor** gtk_source_print_compositor_new  (GtkSourceBuffer *buffer);
+		// GtkSourcePrintCompositor * gtk_source_print_compositor_new  (GtkSourceBuffer *buffer);
 		auto p = gtk_source_print_compositor_new((buffer is null) ? null : buffer.getSourceBufferStruct());
 		if(p is null)
 		{
@@ -153,7 +153,7 @@ public class SourcePrintCompositor : ObjectG
 	 * printed output match view as much as possible. The properties set are
 	 * "tab-width", "highlight-syntax",
 	 * "wrap-mode", "body-font-name" and
-	 * "print-line-numbers".
+	 * "print-line-numbers."
 	 * Since 2.2
 	 * Params:
 	 * view =  a GtkSourceView to get configuration from.
@@ -161,7 +161,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public this (SourceView view)
 	{
-		// GtkSourcePrintCompositor** gtk_source_print_compositor_new_from_view  (GtkSourceView *view);
+		// GtkSourcePrintCompositor * gtk_source_print_compositor_new_from_view  (GtkSourceView *view);
 		auto p = gtk_source_print_compositor_new_from_view((view is null) ? null : view.getSourceViewStruct());
 		if(p is null)
 		{
@@ -179,7 +179,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public SourceBuffer getBuffer()
 	{
-		// GtkSourceBuffer** gtk_source_print_compositor_get_buffer  (GtkSourcePrintCompositor *compositor);
+		// GtkSourceBuffer * gtk_source_print_compositor_get_buffer  (GtkSourcePrintCompositor *compositor);
 		auto p = gtk_source_print_compositor_get_buffer(gtkSourcePrintCompositor);
 		if(p is null)
 		{
@@ -322,7 +322,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getBodyFontName()
 	{
-		// gchar** gtk_source_print_compositor_get_body_font_name  (GtkSourcePrintCompositor *compositor);
+		// gchar * gtk_source_print_compositor_get_body_font_name  (GtkSourcePrintCompositor *compositor);
 		return Str.toString(gtk_source_print_compositor_get_body_font_name(gtkSourcePrintCompositor));
 	}
 	
@@ -354,7 +354,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getLineNumbersFontName()
 	{
-		// gchar** gtk_source_print_compositor_get_line_numbers_font_name  (GtkSourcePrintCompositor *compositor);
+		// gchar * gtk_source_print_compositor_get_line_numbers_font_name  (GtkSourcePrintCompositor *compositor);
 		return Str.toString(gtk_source_print_compositor_get_line_numbers_font_name(gtkSourcePrintCompositor));
 	}
 	
@@ -386,7 +386,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getHeaderFontName()
 	{
-		// gchar** gtk_source_print_compositor_get_header_font_name  (GtkSourcePrintCompositor *compositor);
+		// gchar * gtk_source_print_compositor_get_header_font_name  (GtkSourcePrintCompositor *compositor);
 		return Str.toString(gtk_source_print_compositor_get_header_font_name(gtkSourcePrintCompositor));
 	}
 	
@@ -418,7 +418,7 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getFooterFontName()
 	{
-		// gchar** gtk_source_print_compositor_get_footer_font_name  (GtkSourcePrintCompositor *compositor);
+		// gchar * gtk_source_print_compositor_get_footer_font_name  (GtkSourcePrintCompositor *compositor);
 		return Str.toString(gtk_source_print_compositor_get_footer_font_name(gtkSourcePrintCompositor));
 	}
 	

@@ -1,6 +1,6 @@
-diff -ru gtkD/src/gtkc/Loader.d gtkD/src/gtkc/Loader.d
---- gtkD/src/gtkc/Loader.d	2009-04-08 21:17:37.000000000 +0200
-+++ gtkD/src/gtkc/Loader.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/Loader.d gtkD-svn/src/gtkc/Loader.d
+--- gtkD-2.16/src/gtkc/Loader.d	2009-04-13 16:46:29.000000000 +0200
++++ gtkD-svn/src/gtkc/Loader.d	2009-04-13 14:37:00.000000000 +0200
 @@ -196,6 +196,7 @@
  
  	enum RTLD
@@ -9,9 +9,9 @@ diff -ru gtkD/src/gtkc/Loader.d gtkD/src/gtkc/Loader.d
  		LAZY     = 0x00001,  // Lazy function call binding
  		NOW      = 0x00002,  // Immediate function call binding
  		NOLOAD   = 0x00004,  // No object load
-diff -ru gtkD/src/gtkc/atktypes.d gtkD/src/gtkc/atktypes.d
---- gtkD/src/gtkc/atktypes.d	2009-04-08 21:17:38.000000000 +0200
-+++ gtkD/src/gtkc/atktypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/atktypes.d gtkD-svn/src/gtkc/atktypes.d
+--- gtkD-2.16/src/gtkc/atktypes.d	2009-04-13 16:46:31.000000000 +0200
++++ gtkD-svn/src/gtkc/atktypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -48,6 +48,7 @@
   */
  public enum AtkHyperlinkStateFlags
@@ -44,9 +44,9 @@ diff -ru gtkD/src/gtkc/atktypes.d gtkD/src/gtkc/atktypes.d
  	INVALID = 0,
  	LEFT_MARGIN,
  	RIGHT_MARGIN,
-diff -ru gtkD/src/gtkc/cairotypes.d gtkD/src/gtkc/cairotypes.d
---- gtkD/src/gtkc/cairotypes.d	2009-04-08 21:17:38.000000000 +0200
-+++ gtkD/src/gtkc/cairotypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/cairotypes.d gtkD-svn/src/gtkc/cairotypes.d
+--- gtkD-2.16/src/gtkc/cairotypes.d	2009-04-13 16:46:31.000000000 +0200
++++ gtkD-svn/src/gtkc/cairotypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -179,6 +179,7 @@
   */
  public enum cairo_text_cluster_flags_t
@@ -71,9 +71,9 @@ diff -ru gtkD/src/gtkc/cairotypes.d gtkD/src/gtkc/cairotypes.d
  	SUCCESS = 0,
  	NO_MEMORY,
  	INVALID_RESTORE,
-diff -ru gtkD/src/gtkc/gdkpixbuftypes.d gtkD/src/gtkc/gdkpixbuftypes.d
---- gtkD/src/gtkc/gdkpixbuftypes.d	2009-04-08 21:17:38.000000000 +0200
-+++ gtkD/src/gtkc/gdkpixbuftypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/gdkpixbuftypes.d gtkD-svn/src/gtkc/gdkpixbuftypes.d
+--- gtkD-2.16/src/gtkc/gdkpixbuftypes.d	2009-04-13 16:46:31.000000000 +0200
++++ gtkD-svn/src/gtkc/gdkpixbuftypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -41,6 +41,7 @@
   */
  public enum GdkPixdataType
@@ -98,9 +98,9 @@ diff -ru gtkD/src/gtkc/gdkpixbuftypes.d gtkD/src/gtkc/gdkpixbuftypes.d
  	WRITABLE = 1 << 0,
  	SCALABLE = 1 << 1,
  	THREADSAFE = 1 << 2
-diff -ru gtkD/src/gtkc/gdktypes.d gtkD/src/gtkc/gdktypes.d
---- gtkD/src/gtkc/gdktypes.d	2009-04-08 21:17:39.000000000 +0200
-+++ gtkD/src/gtkc/gdktypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/gdktypes.d gtkD-svn/src/gtkc/gdktypes.d
+--- gtkD-2.16/src/gtkc/gdktypes.d	2009-04-13 16:46:31.000000000 +0200
++++ gtkD-svn/src/gtkc/gdktypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -116,6 +116,7 @@
   */
  public enum GdkGrabStatus
@@ -237,9 +237,9 @@ diff -ru gtkD/src/gtkc/gdktypes.d gtkD/src/gtkc/gdktypes.d
  	READ = 1 << 0,
  	WRITE = 1 << 1,
  	EXCEPTION = 1 << 2
-diff -ru gtkD/src/gtkc/giotypes.d gtkD/src/gtkc/giotypes.d
---- gtkD/src/gtkc/giotypes.d	2009-04-08 21:17:38.000000000 +0200
-+++ gtkD/src/gtkc/giotypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/giotypes.d gtkD-svn/src/gtkc/giotypes.d
+--- gtkD-2.16/src/gtkc/giotypes.d	2009-04-13 16:46:30.000000000 +0200
++++ gtkD-svn/src/gtkc/giotypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -32,6 +32,7 @@
   */
  public enum GFileQueryInfoFlags
@@ -352,9 +352,9 @@ diff -ru gtkD/src/gtkc/giotypes.d gtkD/src/gtkc/giotypes.d
  	NONE = 0,
  	FORCE = (1 << 0)
  }
-diff -ru gtkD/src/gtkc/glibtypes.d gtkD/src/gtkc/glibtypes.d
---- gtkD/src/gtkc/glibtypes.d	2009-04-08 21:17:37.000000000 +0200
-+++ gtkD/src/gtkc/glibtypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/glibtypes.d gtkD-svn/src/gtkc/glibtypes.d
+--- gtkD-2.16/src/gtkc/glibtypes.d	2009-04-13 16:46:30.000000000 +0200
++++ gtkD-svn/src/gtkc/glibtypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -148,6 +148,7 @@
  
  enum GPriority
@@ -499,9 +499,9 @@ diff -ru gtkD/src/gtkc/glibtypes.d gtkD/src/gtkc/glibtypes.d
  	LEAVES = 1 << 0,
  	NON_LEAVES = 1 << 1,
  	ALL = LEAVES | NON_LEAVES,
-diff -ru gtkD/src/gtkc/gobjecttypes.d gtkD/src/gtkc/gobjecttypes.d
---- gtkD/src/gtkc/gobjecttypes.d	2009-04-08 21:17:38.000000000 +0200
-+++ gtkD/src/gtkc/gobjecttypes.d	2009-04-08 21:09:36.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/gobjecttypes.d gtkD-svn/src/gtkc/gobjecttypes.d
+--- gtkD-2.16/src/gtkc/gobjecttypes.d	2009-04-13 16:46:30.000000000 +0200
++++ gtkD-svn/src/gtkc/gobjecttypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -32,6 +32,7 @@
  // G_TYPE_*
  enum GType
@@ -566,10 +566,10 @@ diff -ru gtkD/src/gtkc/gobjecttypes.d gtkD/src/gtkc/gobjecttypes.d
  	AFTER = 1 << 0,
  	SWAPPED = 1 << 1
  }
-diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
---- gtkD/src/gtkc/gtktypes.d	2009-04-08 21:17:40.000000000 +0200
-+++ gtkD/src/gtkc/gtktypes.d	2009-04-08 21:09:36.000000000 +0200
-@@ -135,6 +135,7 @@
+diff -ru gtkD-2.16/src/gtkc/gtktypes.d gtkD-svn/src/gtkc/gtktypes.d
+--- gtkD-2.16/src/gtkc/gtktypes.d	2009-04-13 16:46:33.000000000 +0200
++++ gtkD-svn/src/gtkc/gtktypes.d	2009-04-13 14:37:00.000000000 +0200
+@@ -121,6 +121,7 @@
   */
  public enum GtkDestDefaults
  {
@@ -577,7 +577,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	MOTION = 1 << 0, /+* respond to "dragMotion" +/
  	HIGHLIGHT = 1 << 1, /+* auto-highlight +/
  	DROP = 1 << 2, /+* respond to "dragDrop" +/
-@@ -149,6 +150,7 @@
+@@ -135,6 +136,7 @@
   */
  public enum GtkTargetFlags
  {
@@ -585,7 +585,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	SAME_APP = 1 << 0, /+*< nick=same-app >+/
  	SAME_WIDGET = 1 << 1, /+*< nick=same-widget >+/
  	OTHER_APP = 1 << 2, /+*< nick=other-app >+/
-@@ -162,6 +164,7 @@
+@@ -148,6 +150,7 @@
   */
  public enum GtkIconLookupFlags
  {
@@ -593,7 +593,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	NO_SVG = 1 << 0,
  	FORCE_SVG = 1 << 1,
  	USE_BUILTIN = 1 << 2,
-@@ -208,6 +211,7 @@
+@@ -194,6 +197,7 @@
   */
  public enum GtkRcFlags
  {
@@ -601,7 +601,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	FG = 1 << 0,
  	BG = 1 << 1,
  	TEXT = 1 << 2,
-@@ -223,6 +227,7 @@
+@@ -209,6 +213,7 @@
   */
  public enum GtkRcTokenType
  {
@@ -609,7 +609,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	INVALID = TokenType.LAST,
  	INCLUDE,
  	NORMAL,
-@@ -268,6 +273,7 @@
+@@ -254,6 +259,7 @@
  
  public enum GtkAccelFlags
  {
@@ -617,7 +617,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	VISIBLE = 1 << 0, /+* display inn GtkAccelLabel? +/
  	LOCKED = 1 << 1, /+* is it removable? +/
  	MASK = 0x07
-@@ -332,6 +338,7 @@
+@@ -335,6 +341,7 @@
   */
  public enum GtkAttachOptions
  {
@@ -625,7 +625,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	EXPAND = 1 << 0,
  	SHRINK = 1 << 1,
  	FILL = 1 << 2
-@@ -557,6 +564,7 @@
+@@ -560,6 +567,7 @@
  
  public enum GtkPathPriorityType
  {
@@ -633,7 +633,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	LOWEST = 0,
  	GTK = 4,
  	APPLICATION = 8,
-@@ -986,6 +994,7 @@
+@@ -989,6 +997,7 @@
   */
  public enum GtkSignalRunType
  {
@@ -641,7 +641,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	RUN_FIRST = SignalFlags.RUN_FIRST,
  	RUN_LAST = SignalFlags.RUN_LAST,
  	RUN_BOTH = (RUN_FIRST | RUN_LAST),
-@@ -1002,6 +1011,7 @@
+@@ -1005,6 +1014,7 @@
   */
  public enum GtkDialogFlags
  {
@@ -649,7 +649,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	MODAL = 1 << 0, /+* call windowSetModal (win, TRUE) +/
  	DESTROY_WITH_PARENT = 1 << 1, /+* call windowSetDestroyWithParent () +/
  	NO_SEPARATOR = 1 << 2 /+* no separator bar above buttons +/
-@@ -1020,6 +1030,7 @@
+@@ -1023,6 +1033,7 @@
  	/+* GTK returns this if a response widget has no responseId,
  	 * or if the dialog gets programmatically hidden or destroyed.
  	+/
@@ -657,7 +657,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	GTK_RESPONSE_NONE = -1,
  	/+* GTK won't return these unless you pass them inn
  	 * as the response for an action widget. They are
-@@ -1231,6 +1242,7 @@
+@@ -1249,6 +1260,7 @@
  
  public enum GtkTextSearchFlags
  {
@@ -665,7 +665,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	VISIBLE_ONLY = 1 << 0,
  	TEXT_ONLY = 1 << 1
  	/+* Possible future plans: SEARCH_CASE_INSENSITIVE, SEARCH_REGEXP +/
-@@ -1239,6 +1251,7 @@
+@@ -1257,6 +1269,7 @@
  
  public enum GtkTextBufferTargetInfo
  {
@@ -673,7 +673,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	BUFFER_CONTENTS = - 1,
  	RICH_TEXT = - 2,
  	TEXT = - 3
-@@ -1286,6 +1299,7 @@
+@@ -1304,6 +1317,7 @@
   */
  public enum GtkTreeModelFlags
  {
@@ -681,7 +681,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	ITERS_PERSIST = 1 << 0,
  	LIST_ONLY = 1 << 1
  }
-@@ -1385,6 +1399,7 @@
+@@ -1414,6 +1428,7 @@
   */
  public enum GtkCellRendererState
  {
@@ -689,7 +689,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	SELECTED = 1 << 0,
  	PRELIT = 1 << 1,
  	INSENSITIVE = 1 << 2,
-@@ -1489,6 +1504,7 @@
+@@ -1532,6 +1547,7 @@
   */
  public enum GtkUIManagerItemType
  {
@@ -697,7 +697,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	AUTO = 0,
  	MENUBAR = 1 << 0,
  	MENU = 1 << 1,
-@@ -1545,6 +1561,7 @@
+@@ -1590,6 +1606,7 @@
   */
  public enum GtkFileFilterFlags
  {
@@ -705,7 +705,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	FILENAME = 1 << 0,
  	URI = 1 << 1,
  	DISPLAY_NAME = 1 << 2,
-@@ -1688,6 +1705,7 @@
+@@ -1769,6 +1786,7 @@
   */
  public enum GtkPrintCapabilities
  {
@@ -713,7 +713,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	CAPABILITY_PAGE_SET = 1 << 0,
  	CAPABILITY_COPIES = 1 << 1,
  	CAPABILITY_COLLATE = 1 << 2,
-@@ -1707,6 +1725,7 @@
+@@ -1788,6 +1806,7 @@
   */
  public enum GtkCalendarDisplayOptions
  {
@@ -721,7 +721,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	SHOW_HEADING = 1 << 0,
  	SHOW_DAY_NAMES = 1 << 1,
  	NO_MONTH_CHANGE = 1 << 2,
-@@ -1759,6 +1778,7 @@
+@@ -1840,6 +1859,7 @@
   */
  public enum GtkObjectFlags
  {
@@ -729,7 +729,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	IN_DESTRUCTION = 1 << 0, /+* Used internally during dispose +/
  	FLOATING = 1 << 1,
  	RESERVED_1 = 1 << 2,
-@@ -1787,6 +1807,7 @@
+@@ -1868,6 +1888,7 @@
   */
  public enum GtkArgFlags
  {
@@ -737,7 +737,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	READABLE = ParamFlags.READABLE,
  	WRITABLE = ParamFlags.WRITABLE,
  	CONSTRUCT = ParamFlags.CONSTRUCT,
-@@ -1815,6 +1836,7 @@
+@@ -1896,6 +1917,7 @@
   */
  public enum GtkWidgetFlags
  {
@@ -745,7 +745,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	TOPLEVEL = 1 << 4,
  	NO_WINDOW = 1 << 5,
  	REALIZED = 1 << 6,
-@@ -1899,6 +1921,7 @@
+@@ -1980,6 +2002,7 @@
   */
  public enum GtkRecentSortType
  {
@@ -753,7 +753,7 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	NONE = 0,
  	MRU,
  	LRU,
-@@ -1916,6 +1939,7 @@
+@@ -1997,6 +2020,7 @@
   */
  public enum GtkRecentFilterFlags
  {
@@ -761,9 +761,9 @@ diff -ru gtkD/src/gtkc/gtktypes.d gtkD/src/gtkc/gtktypes.d
  	URI = 1 << 0,
  	DISPLAY_NAME = 1 << 1,
  	MIME_TYPE = 1 << 2,
-diff -ru gtkD/src/gtkc/pangotypes.d gtkD/src/gtkc/pangotypes.d
---- gtkD/src/gtkc/pangotypes.d	2009-04-08 21:17:38.000000000 +0200
-+++ gtkD/src/gtkc/pangotypes.d	2009-04-08 21:11:55.000000000 +0200
+diff -ru gtkD-2.16/src/gtkc/pangotypes.d gtkD-svn/src/gtkc/pangotypes.d
+--- gtkD-2.16/src/gtkc/pangotypes.d	2009-04-13 16:46:31.000000000 +0200
++++ gtkD-svn/src/gtkc/pangotypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -166,6 +166,7 @@
   */
  public enum PangoWeight
@@ -788,9 +788,9 @@ diff -ru gtkD/src/gtkc/pangotypes.d gtkD/src/gtkc/pangotypes.d
  	INVALID_CODE = -1,
  	COMMON = 0, /+* Zyyy +/
  	INHERITED, /+* Qaai +/
-diff -ru gtkD/srcgda/gdac/gdatypes.d gtkD/srcgda/gdac/gdatypes.d
---- gtkD/srcgda/gdac/gdatypes.d	2009-04-08 21:17:40.000000000 +0200
-+++ gtkD/srcgda/gdac/gdatypes.d	2009-02-09 22:56:41.000000000 +0100
+diff -ru gtkD-2.16/srcgda/gdac/gdatypes.d gtkD-svn/srcgda/gdac/gdatypes.d
+--- gtkD-2.16/srcgda/gdac/gdatypes.d	2009-04-13 16:46:33.000000000 +0200
++++ gtkD-svn/srcgda/gdac/gdatypes.d	2009-04-13 14:37:00.000000000 +0200
 @@ -33,6 +33,7 @@
  public alias GList GdaValueList;
  public enum GdaBlobMode
@@ -823,9 +823,9 @@ diff -ru gtkD/srcgda/gdac/gdatypes.d gtkD/srcgda/gdac/gdatypes.d
  	TABLE_DATA = 1
  }
  alias GdaExportFlags daExportFlags;
-diff -ru gtkD/srcsv/gsvc/gsvtypes.d gtkD/srcsv/gsvc/gsvtypes.d
---- gtkD/srcsv/gsvc/gsvtypes.d	2009-04-08 21:17:40.000000000 +0200
-+++ gtkD/srcsv/gsvc/gsvtypes.d	2009-02-09 22:56:41.000000000 +0100
+diff -ru gtkD-2.16/srcsv/gsvc/gsvtypes.d gtkD-svn/srcsv/gsvc/gsvtypes.d
+--- gtkD-2.16/srcsv/gsvc/gsvtypes.d	2009-04-13 16:46:33.000000000 +0200
++++ gtkD-svn/srcsv/gsvc/gsvtypes.d	2009-04-13 16:45:23.000000000 +0200
 @@ -43,6 +43,7 @@
   */
  public enum GtkSourceDrawSpacesFlags
@@ -834,7 +834,7 @@ diff -ru gtkD/srcsv/gsvc/gsvtypes.d gtkD/srcsv/gsvc/gsvtypes.d
  	SPACE = 1 << 0,
  	TAB = 1 << 1,
  	NEWLINE = 1 << 2,
-@@ -54,6 +55,7 @@
+@@ -56,6 +57,7 @@
  
  public enum GtkSourceSearchFlags
  {

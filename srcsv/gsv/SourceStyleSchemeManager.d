@@ -122,7 +122,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 */
 	public this ()
 	{
-		// GtkSourceStyleSchemeManager** gtk_source_style_scheme_manager_new  (void);
+		// GtkSourceStyleSchemeManager * gtk_source_style_scheme_manager_new  (void);
 		auto p = gtk_source_style_scheme_manager_new();
 		if(p is null)
 		{
@@ -137,7 +137,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 */
 	public static SourceStyleSchemeManager getDefault()
 	{
-		// GtkSourceStyleSchemeManager** gtk_source_style_scheme_manager_get_default  (void);
+		// GtkSourceStyleSchemeManager * gtk_source_style_scheme_manager_get_default  (void);
 		auto p = gtk_source_style_scheme_manager_get_default();
 		if(p is null)
 		{
@@ -214,7 +214,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 */
 	public SourceStyleScheme getScheme(string schemeId)
 	{
-		// GtkSourceStyleScheme** gtk_source_style_scheme_manager_get_scheme  (GtkSourceStyleSchemeManager *manager,  const gchar *scheme_id);
+		// GtkSourceStyleScheme * gtk_source_style_scheme_manager_get_scheme  (GtkSourceStyleSchemeManager *manager,  const gchar *scheme_id);
 		auto p = gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
 		if(p is null)
 		{
