@@ -48,20 +48,6 @@ addAliases: start
 addAliases: end
 
 addEnums: start
-
-enum GtkNumberUpLayout
-{
-	LEFT_TO_RIGHT_TOP_TO_BOTTOM,
-	LEFT_TO_RIGHT_BOTTOM_TO_TOP,
-	RIGHT_TO_LEFT_TOP_TO_BOTTOM,
-	RIGHT_TO_LEFT_BOTTOM_TO_TOP,
-	TOP_TO_BOTTOM_LEFT_TO_RIGHT,
-	TOP_TO_BOTTOM_RIGHT_TO_LEFT,
-	BOTTOM_TO_TOP_LEFT_TO_RIGHT,
-	BOTTOM_TO_TOP_RIGHT_TO_LEFT
-} 
-alias GtkNumberUpLayout NumberUpLayout;
-
 addEnums: end
 
 addStructs: start
@@ -558,12 +544,9 @@ class: Clipboard
 prefix: gtk_clipboard_
 prefix: gtk_
 import: glib.Str
-import: gtk.Clipboard
 structWrap: GtkClipboard* Clipboard
 import: gdk.Display
 structWrap: GdkDisplay* Display
-#import: gtk.TargetEntry
-#structWrap: GtkTargetEntry* TargetEntry
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 import: gobject.ObjectG
@@ -572,8 +555,6 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: gtk.SelectionData
 #structWrap: GtkSelectionData* SelectionData
-#import: gdk.Atom*
-#structWrap: GdkAtom** Atom*
 
 array: gtk_clipboard_set_with_data targets n_targets
 array: gtk_clipboard_set_with_owner targets n_targets
@@ -822,7 +803,6 @@ prefix: gtk_style_
 prefix: gtk_
 noprefix: gtk_border_
 import: glib.Str
-import: gtk.Style
 structWrap: GtkStyle* Style
 import: gdk.Color
 structWrap: GdkColor* Color
@@ -842,6 +822,8 @@ import: gdk.Font
 structWrap: GdkFont* Font
 import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
+import: gobject.Value
+structWrap: GValue* Value
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
@@ -862,6 +844,8 @@ struct: GtkTargetList
 class: TargetList
 prefix: gtk_target_list_
 noprefix: gtk_selection_
+#import: gdk.Atom
+#structWrap: GdkAtom* Atom
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 structWrap: GtkTargetList* TargetList
@@ -1803,6 +1787,8 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: gtk.Menu
 structWrap: GtkMenu* Menu
+import: gtk.Tooltip
+structWrap: GtkTooltip* Tooltip
 
 out: gtk_status_icon_position_menu x
 out: gtk_status_icon_position_menu y
@@ -1884,12 +1870,17 @@ outFile: StatusIcon
 file: GtkButton.html
 struct: GtkButton
 class: Button
+implements: ActivatableIF
 prefix: gtk_button_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
+
+# imports for Activatable Interface
+import: gtk.ActivatableT
+import: gtk.ActivatableIF
 
 out: gtk_button_get_alignment xalign
 out: gtk_button_get_alignment yalign
@@ -1899,11 +1890,13 @@ nocode: gtk_button_new_with_label
 nocode: gtk_button_new_from_stock
 
 code: start
-
 	private static IconSize currentIconSize = IconSize.BUTTON;
 
 	/** An arbitrary string to be used by the application */
 	private string action;
+
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkButton);
 
 	/** */
 	public static void setIconSize(IconSize iconSize)
@@ -2235,6 +2228,7 @@ outFile: LinkButton
 file: GtkScaleButton.html
 struct: GtkScaleButton
 class: ScaleButton
+implements: OrientableIF
 prefix: gtk_scale_button_
 prefix: gtk_
 import: glib.Str
@@ -2243,9 +2237,17 @@ structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
 array: gtk_scale_button_new icons
 array: gtk_scale_button_set_icons icons
 
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkScaleButton);
+code: end
 outFile: ScaleButton
 
 file: GtkVolumeButton.html
@@ -2270,6 +2272,11 @@ implements: CellEditableIF
 prefix: gtk_entry_
 prefix: gtk_
 import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+structWrap: GIcon* IconIF
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 import: gtk.Border
@@ -2313,6 +2320,37 @@ code: start
 	{
 		this(max);
 		setText(text);
+	}
+
+	/**
+	 * Gets the stock id of action.
+	 * Since 2.16
+	 * Returns: the stock id
+	 */
+	public StockID getStockId(GtkEntryIconPosition iconPos)
+	{
+		// const gchar* gtk_entry_get_icon_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos);
+		string id = Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
+
+		foreach(i, desc; StockDesc)
+		{
+			if(desc == id)
+				return cast(StockID)i;
+		}
+
+		return StockID.DISCARD;
+	}
+
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId =  the stock id
+	 */
+	public void setStockId(GtkEntryIconPosition iconPos, StockID stockId)
+	{
+		// void gtk_entry_set_icon_from_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos, const gchar *stock_id);
+		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(StockDesc[stockId]));
 	}
 code: end
 
@@ -4969,12 +5007,17 @@ outFile: MenuBar
 file: GtkMenuItem.html
 struct: GtkMenuItem
 class: MenuItem
+implements: ActivatableIF
 prefix: gtk_menu_item_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 import: gtk.AccelGroup
 structWrap: GtkWidget* Widget
+
+# imports for Activatable Interface
+import: gtk.ActivatableT
+import: gtk.ActivatableIF
 
 nocode: gtk_menu_item_new_with_label
 nocode: gtk_menu_item_new_with_mnemonic
@@ -4985,9 +5028,11 @@ override: select
 override: deselect
 
 code: start
-	
 	/** store the action code passed in by the applcation */
 	private string actionLabel;
+
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkMenuItem);
 	
 	/** Gets the application set action code */
 	public string getActionName()
@@ -5311,6 +5356,7 @@ outFile: TearoffMenuItem
 file: GtkToolbar.html
 struct: GtkToolbar
 class: Toolbar
+implements: OrientableIF
 prefix: gtk_toolbar_
 prefix: gtk_
 import: glib.Str
@@ -5320,11 +5366,18 @@ import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 structWrap: GtkWidget* Widget
 
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
 alias: getStyle toolbarGetStyle
 
 nocode: gtk_toolbar_insert
 
 code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkToolbar);
+
 	/**
 	 * Insert a GtkToolItem into the toolbar at position pos.
 	 * If pos is 0 the item is prepended to the start of the toolbar. If pos is negative, the item is appended to the end of the toolbar.
@@ -5339,7 +5392,7 @@ code: start
 	}
 
 	/** */	
-	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GCallback callback, void* userData, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
 	}
@@ -5379,6 +5432,7 @@ outFile: Toolbar
 file: GtkToolItem.html
 struct: GtkToolItem
 class: ToolItem
+implements: ActivatableIF
 prefix: gtk_tool_item_
 prefix: gtk_
 import: glib.Str
@@ -5387,10 +5441,17 @@ structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
+# imports for Activatable Interface
+import: gtk.ActivatableT
+import: gtk.ActivatableIF
+
 override: setTooltipText
 override: setTooltipMarkup
 
 code: start
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkToolItem);
+
 	/**
 	 * Sets this widget tooltip
 	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
@@ -5667,6 +5728,9 @@ implements: BuildableIF
 prefix: gtk_action_
 prefix: gtk_
 import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+structWrap: GIcon* IconIF
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: glib.ListSG
@@ -5679,6 +5743,9 @@ structWrap: GtkAccelGroup* AccelGroup
 #imports for Buildable Interface.
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+nocode: gtk_action_get_stock_id
+nocode: gtk_action_set_stock_id
 
 code: start
 	// add the Buildable capabilities
@@ -5702,6 +5769,37 @@ code: start
 	public this (string name, string label, string tooltip, StockID stockId)
 	{
 		this(name, label, tooltip, StockDesc[stockId]);
+	}
+
+	/**
+	 * Gets the stock id of action.
+	 * Since 2.16
+	 * Returns: the stock id
+	 */
+	public StockID getStockId()
+	{
+		// const gchar * gtk_action_get_stock_id (GtkAction *action);
+		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
+
+		foreach(i, desc; StockDesc)
+		{
+			if(desc == id)
+				return cast(StockID)i;
+		}
+
+		return StockID.DISCARD;
+	}
+
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId =  the stock id
+	 */
+	public void setStockId(StockID stockId)
+	{
+		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
+		gtk_action_set_stock_id(gtkAction, Str.toStringz(StockDesc[stockId]));
 	}
 code: end
 outFile: Action
@@ -5831,6 +5929,16 @@ code: start
 	}
 code: end
 outFile: RecentAction
+
+file: GtkActivatable.html
+struct: GtkActivatable
+class: ActivatableT
+template: TStruct
+prefix: gtk_activatable_
+import: gtk.Action
+structWrap: GtkAction* Action
+interface: ActivatableIF
+outFile: ActivatableT
 
 ###########################################################
 ###  Selectors (File/Font/Color/Input Devices) ############
@@ -6544,6 +6652,14 @@ code: end
 
 outFile: Expander
 
+file: gtk-Orientable.html
+struct: GtkOrientable
+class: OrientableT
+template: TStruct
+prefix: gtk_orientable_
+interface: OrientableIF
+outFile: OrientableT
+
 ###########################################################
 ### Ornaments #############################################
 ###########################################################
@@ -6947,6 +7063,7 @@ struct: GtkIMMulticontext
 class: IMMulticontext
 prefix: gtk_im_multicontext_
 prefix: gtk_
+import: glib.Str
 import: gtk.IMContext
 structWrap: GtkIMContext* IMContext
 import: gtk.MenuShell
@@ -7022,16 +7139,25 @@ outFile: Bin
 file: GtkBox.html
 struct: GtkBox
 class: Box
-import: gtk.Widget
-structWrap: GtkWidget* Widget
+implements: OrientableIF
 prefix: gtk_box_
 prefix: gtk_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
 
 out: gtk_box_query_child_packing expand
 out: gtk_box_query_child_packing fill
 out: gtk_box_query_child_packing padding
 out: gtk_box_query_child_packing pack_type
 
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkBox);
+code: end
 outFile: Box
 
 file: GtkButtonBox.html
@@ -7200,29 +7326,46 @@ outFile: ObjectGtk
 file: GtkPaned.html
 struct: GtkPaned
 class: Paned
+implements: OrientableIF
 prefix: gtk_paned_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
 code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkPaned);
+
 	/** */
 	public void add(Widget child1, Widget child2)
 	{
 		add1(child1);
 		add2(child2);
 	}
-
 code: end
 outFile: Paned
 
 file: GtkRange.html
 struct: GtkRange
 class: Range
+implements: OrientableIF
 prefix: gtk_range_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkRange);
+code: end
 outFile: Range
 
 file: GtkScale.html
@@ -7230,6 +7373,7 @@ struct: GtkScale
 class: Scale
 prefix: gtk_scale_
 prefix: gtk_
+import: glib.Str
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
@@ -7248,8 +7392,18 @@ outFile: Scrollbar
 file: GtkSeparator.html
 struct: GtkSeparator
 class: Separator
+implements: OrientableIF
 prefix: gtk_separator
 prefix: gtk_
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkSeparator);
+code: end
 outFile: Separator
 
 file: GtkWidget.html
@@ -7754,14 +7908,23 @@ outFile: GammaCurve
 file: GtkRuler.html
 struct: GtkRuler
 class: Ruler
+implements: OrientableIF
 prefix: gtk_ruler_
 prefix: gtk_
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
 
 out: gtk_ruler_get_range lower
 out: gtk_ruler_get_range upper
 out: gtk_ruler_get_range position
 out: gtk_ruler_get_range max_size
 
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkRuler);
+code: end
 outFile: Ruler
 
 file: GtkHRuler.html
@@ -7919,6 +8082,7 @@ outFile: RecentChooserDialog
 file: GtkRecentChooserMenu.html
 struct: GtkRecentChooserMenu
 class: RecentChooserMenu
+implements: ActivatableIF
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_menu_
 prefix: gtk_
@@ -7928,11 +8092,18 @@ structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
+# imports for Activatable Interface
+import: gtk.ActivatableT
+import: gtk.ActivatableIF
+
 #imports for RecentChooser interface
 import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 
 code: start
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkRecentChooserMenu);
+
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserMenu);
 code: end

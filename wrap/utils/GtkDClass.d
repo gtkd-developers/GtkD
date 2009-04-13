@@ -1048,7 +1048,7 @@ public class GtkDClass
 			else
 			{
 				text ~= "extern(C) static void callBack"~gtkDSignal~"("
-						~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
+						~fun.getCallbackParameters(0, convParms, wrapper.getAliases()).replace("string", "str")
 						~")";
 			}
 			text ~= "{";
@@ -1066,7 +1066,7 @@ public class GtkDClass
 			}
 			else
 			{
-				text ~= "		dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~");";
+				text ~= "		dlg("~fun.getCallbackVars(convParms, wrapper.getAliases()).replace("string", "str")~");";
 				text ~= "	}";
 			}
 			text ~= "}";
@@ -1084,13 +1084,16 @@ public class GtkDClass
 			text ~= "{";
 
 			// TODO move this to the config files or read it from the Gtk docs (how?)
-			switch ( signalName )
+			if ( convParms.clss != "StatusIcon")
 			{
-				case  "button-press-event": text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);"; break;
-				case  "button-release-event": text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);"; break;
-				case  "motion-notify-event": text ~= "addEvents(EventMask.POINTER_MOTION_MASK);"; break;
-				default:
-					break;
+				switch ( signalName )
+				{
+					case  "button-press-event": text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);"; break;
+					case  "button-release-event": text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);"; break;
+					case  "motion-notify-event": text ~= "addEvents(EventMask.POINTER_MOTION_MASK);"; break;
+					default:
+						break;
+				}
 			}
 
 			text ~= "	Signals.connectData(";

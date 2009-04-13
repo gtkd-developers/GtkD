@@ -30,8 +30,8 @@ ln -s gdk-pixbuf-html-2.16.2 gdk-pixbuf
 curl http://library.gnome.org/devel/gdk/gdk-html-2.16.0.tar.gz | tar xvfz -
 ln -s gdk-html-2.16.0 gdk
 #GTK
-curl http://library.gnome.org/devel/gtk/gtk-html-2.14.2.tar.gz | tar xvfz -
-ln -s gtk-html-2.14.2 gtk
+curl http://library.gnome.org/devel/gtk/gtk-html-2.16.0.tar.gz | tar xvfz -
+ln -s gtk-html-2.16.0 gtk
 #CAIRO
 curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
 ln -s cairo-html-1.8.0 cairo
