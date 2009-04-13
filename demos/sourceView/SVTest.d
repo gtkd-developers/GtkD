@@ -36,7 +36,7 @@ version(Tango)
 {
 	private import tango.io.Stdout;
 	private import tango.text.Util;
-	private import tango.io.FileConduit;
+	private import tango.io.device.File;
 
     void writefln( string frm, ... ){
         string frm2 = substitute( frm, "%s", "{}" );
@@ -76,10 +76,9 @@ class HelloWorld : MainWindow
 		{
 			try
 			{
-				auto file = new FileConduit ("SVTest.d");
+				auto file = new File ("SVTest.d");
 				text = new char[file.length];
-				file.input.read(text);
-
+				file.read(text);
 			}
 			catch (Exception) { }
 		}
@@ -89,10 +88,7 @@ class HelloWorld : MainWindow
 			{
 				text = cast(string)std.file.read("SVTest.d");
 			}
-			catch ( FileException fe )
-			{
-
-			}
+			catch ( FileException fe ) { }
 		}
 
 		return text;
