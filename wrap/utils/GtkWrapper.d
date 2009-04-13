@@ -941,13 +941,10 @@ public class GtkWrapper : WrapperIF
 			                "extern(C)\n"
 			                "{\n";
 
-			//Generate the typedefs for the functions.
+			//Generate the functions.
 			foreach(char[] declaration ; declarations)
 			{
 				char[] dec = std.string.strip(declaration);
-
-				if ( loaderTableName == "glib" )
-					dec = dec.replace("FILE*", "void*"); //Phobos workaround.
 
 				int pos = std.string.rfind(dec,')') + 1;
 				externalText ~= '\t';
@@ -956,7 +953,7 @@ public class GtkWrapper : WrapperIF
 					externalText ~= "// ";
 
 				if ( dec.length > 0 && !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
-					externalText ~= "typedef "~ dec[0..pos] ~" c_"~ dec[pos..$] ~';';
+					externalText ~= dec[0..pos] ~" c_"~ dec[pos..$] ~';';
 				else
 					externalText ~= dec;
 
@@ -965,7 +962,7 @@ public class GtkWrapper : WrapperIF
 
 			externalText ~= "}\n";
 
-			//Generate the variables to hold the function pointers.
+			//Generate the aliases.
 			foreach ( char[] declaration; declarations )
 			{
 				char[] dec = std.string.strip(declaration);
@@ -985,7 +982,7 @@ public class GtkWrapper : WrapperIF
 						char[] functName = std.string.strip(dec[pos+1..$]);
 						if ( functName.length > 0 )
 						{
-							externalText ~= "c_"~ functName ~"  "~ functName ~";";
+							externalText ~= "alias c_"~ functName ~"  "~ functName ~";";
 						}
 					}
 					externalText ~= '\n';

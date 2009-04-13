@@ -116,153 +116,153 @@ extern(C)
 	
 	// gthread.Mutex
 	
-	typedef GMutex* function() c_g_mutex_new;
-	typedef void function(GMutex* mutex) c_g_mutex_lock;
-	typedef gboolean function(GMutex* mutex) c_g_mutex_trylock;
-	typedef void function(GMutex* mutex) c_g_mutex_unlock;
-	typedef void function(GMutex* mutex) c_g_mutex_free;
+	GMutex* function() c_g_mutex_new;
+	void function(GMutex* mutex) c_g_mutex_lock;
+	gboolean function(GMutex* mutex) c_g_mutex_trylock;
+	void function(GMutex* mutex) c_g_mutex_unlock;
+	void function(GMutex* mutex) c_g_mutex_free;
 	
 	// gthread.StaticMutex
 	
-	typedef void function(GStaticMutex* mutex) c_g_static_mutex_init;
-	typedef void function(GStaticMutex* mutex) c_g_static_mutex_lock;
-	typedef gboolean function(GStaticMutex* mutex) c_g_static_mutex_trylock;
-	typedef void function(GStaticMutex* mutex) c_g_static_mutex_unlock;
-	typedef GMutex* function(GStaticMutex* mutex) c_g_static_mutex_get_mutex;
-	typedef void function(GStaticMutex* mutex) c_g_static_mutex_free;
+	void function(GStaticMutex* mutex) c_g_static_mutex_init;
+	void function(GStaticMutex* mutex) c_g_static_mutex_lock;
+	gboolean function(GStaticMutex* mutex) c_g_static_mutex_trylock;
+	void function(GStaticMutex* mutex) c_g_static_mutex_unlock;
+	GMutex* function(GStaticMutex* mutex) c_g_static_mutex_get_mutex;
+	void function(GStaticMutex* mutex) c_g_static_mutex_free;
 	
 	// gthread.StaticRecMutex
 	
-	typedef void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_init;
-	typedef void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_lock;
-	typedef gboolean function(GStaticRecMutex* mutex) c_g_static_rec_mutex_trylock;
-	typedef void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_unlock;
-	typedef void function(GStaticRecMutex* mutex, guint depth) c_g_static_rec_mutex_lock_full;
-	typedef guint function(GStaticRecMutex* mutex) c_g_static_rec_mutex_unlock_full;
-	typedef void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_free;
+	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_init;
+	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_lock;
+	gboolean function(GStaticRecMutex* mutex) c_g_static_rec_mutex_trylock;
+	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_unlock;
+	void function(GStaticRecMutex* mutex, guint depth) c_g_static_rec_mutex_lock_full;
+	guint function(GStaticRecMutex* mutex) c_g_static_rec_mutex_unlock_full;
+	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_free;
 	
 	// gthread.RWLock
 	
-	typedef void function(GStaticRWLock* lock) c_g_static_rw_lock_init;
-	typedef void function(GStaticRWLock* lock) c_g_static_rw_lock_reader_lock;
-	typedef gboolean function(GStaticRWLock* lock) c_g_static_rw_lock_reader_trylock;
-	typedef void function(GStaticRWLock* lock) c_g_static_rw_lock_reader_unlock;
-	typedef void function(GStaticRWLock* lock) c_g_static_rw_lock_writer_lock;
-	typedef gboolean function(GStaticRWLock* lock) c_g_static_rw_lock_writer_trylock;
-	typedef void function(GStaticRWLock* lock) c_g_static_rw_lock_writer_unlock;
-	typedef void function(GStaticRWLock* lock) c_g_static_rw_lock_free;
+	void function(GStaticRWLock* lock) c_g_static_rw_lock_init;
+	void function(GStaticRWLock* lock) c_g_static_rw_lock_reader_lock;
+	gboolean function(GStaticRWLock* lock) c_g_static_rw_lock_reader_trylock;
+	void function(GStaticRWLock* lock) c_g_static_rw_lock_reader_unlock;
+	void function(GStaticRWLock* lock) c_g_static_rw_lock_writer_lock;
+	gboolean function(GStaticRWLock* lock) c_g_static_rw_lock_writer_trylock;
+	void function(GStaticRWLock* lock) c_g_static_rw_lock_writer_unlock;
+	void function(GStaticRWLock* lock) c_g_static_rw_lock_free;
 	
 	// gthread.Cond
 	
-	typedef GCond* function() c_g_cond_new;
-	typedef void function(GCond* cond) c_g_cond_signal;
-	typedef void function(GCond* cond) c_g_cond_broadcast;
-	typedef void function(GCond* cond, GMutex* mutex) c_g_cond_wait;
-	typedef gboolean function(GCond* cond, GMutex* mutex, GTimeVal* absTime) c_g_cond_timed_wait;
-	typedef void function(GCond* cond) c_g_cond_free;
+	GCond* function() c_g_cond_new;
+	void function(GCond* cond) c_g_cond_signal;
+	void function(GCond* cond) c_g_cond_broadcast;
+	void function(GCond* cond, GMutex* mutex) c_g_cond_wait;
+	gboolean function(GCond* cond, GMutex* mutex, GTimeVal* absTime) c_g_cond_timed_wait;
+	void function(GCond* cond) c_g_cond_free;
 	
 	// gthread.Private
 	
-	typedef GPrivate* function(GDestroyNotify destructor) c_g_private_new;
-	typedef gpointer function(GPrivate* privateKey) c_g_private_get;
-	typedef void function(GPrivate* privateKey, gpointer data) c_g_private_set;
+	GPrivate* function(GDestroyNotify destructor) c_g_private_new;
+	gpointer function(GPrivate* privateKey) c_g_private_get;
+	void function(GPrivate* privateKey, gpointer data) c_g_private_set;
 	
 	// gthread.StaticPrivate
 	
-	typedef void function(GStaticPrivate* privateKey) c_g_static_private_init;
-	typedef gpointer function(GStaticPrivate* privateKey) c_g_static_private_get;
-	typedef void function(GStaticPrivate* privateKey, gpointer data, GDestroyNotify notify) c_g_static_private_set;
-	typedef void function(GStaticPrivate* privateKey) c_g_static_private_free;
+	void function(GStaticPrivate* privateKey) c_g_static_private_init;
+	gpointer function(GStaticPrivate* privateKey) c_g_static_private_get;
+	void function(GStaticPrivate* privateKey, gpointer data, GDestroyNotify notify) c_g_static_private_set;
+	void function(GStaticPrivate* privateKey) c_g_static_private_free;
 	
 	// gthread.Thread
 	
-	typedef void function(GThreadFunctions* vtable) c_g_thread_init;
-	typedef gboolean function() c_g_thread_supported;
-	typedef gboolean function() c_g_thread_get_initialized;
-	typedef GThread* function(GThreadFunc func, gpointer data, gboolean joinable, GError** error) c_g_thread_create;
-	typedef GThread* function(GThreadFunc func, gpointer data, gulong stackSize, gboolean joinable, gboolean bound, GThreadPriority priority, GError** error) c_g_thread_create_full;
-	typedef GThread* function() c_g_thread_self;
-	typedef gpointer function(GThread* thread) c_g_thread_join;
-	typedef void function(GThread* thread, GThreadPriority priority) c_g_thread_set_priority;
-	typedef void function() c_g_thread_yield;
-	typedef void function(gpointer retval) c_g_thread_exit;
-	typedef void function(GFunc threadFunc, gpointer userData) c_g_thread_foreach;
-	typedef gboolean function(gsize* valueLocation) c_g_once_init_enter;
-	typedef void function(gsize* valueLocation, gsize initializationValue) c_g_once_init_leave;
+	void function(GThreadFunctions* vtable) c_g_thread_init;
+	gboolean function() c_g_thread_supported;
+	gboolean function() c_g_thread_get_initialized;
+	GThread* function(GThreadFunc func, gpointer data, gboolean joinable, GError** error) c_g_thread_create;
+	GThread* function(GThreadFunc func, gpointer data, gulong stackSize, gboolean joinable, gboolean bound, GThreadPriority priority, GError** error) c_g_thread_create_full;
+	GThread* function() c_g_thread_self;
+	gpointer function(GThread* thread) c_g_thread_join;
+	void function(GThread* thread, GThreadPriority priority) c_g_thread_set_priority;
+	void function() c_g_thread_yield;
+	void function(gpointer retval) c_g_thread_exit;
+	void function(GFunc threadFunc, gpointer userData) c_g_thread_foreach;
+	gboolean function(gsize* valueLocation) c_g_once_init_enter;
+	void function(gsize* valueLocation, gsize initializationValue) c_g_once_init_leave;
 }
 
 // gthread.Mutex
 
-c_g_mutex_new  g_mutex_new;
-c_g_mutex_lock  g_mutex_lock;
-c_g_mutex_trylock  g_mutex_trylock;
-c_g_mutex_unlock  g_mutex_unlock;
-c_g_mutex_free  g_mutex_free;
+alias c_g_mutex_new  g_mutex_new;
+alias c_g_mutex_lock  g_mutex_lock;
+alias c_g_mutex_trylock  g_mutex_trylock;
+alias c_g_mutex_unlock  g_mutex_unlock;
+alias c_g_mutex_free  g_mutex_free;
 
 // gthread.StaticMutex
 
-c_g_static_mutex_init  g_static_mutex_init;
-c_g_static_mutex_lock  g_static_mutex_lock;
-c_g_static_mutex_trylock  g_static_mutex_trylock;
-c_g_static_mutex_unlock  g_static_mutex_unlock;
-c_g_static_mutex_get_mutex  g_static_mutex_get_mutex;
-c_g_static_mutex_free  g_static_mutex_free;
+alias c_g_static_mutex_init  g_static_mutex_init;
+alias c_g_static_mutex_lock  g_static_mutex_lock;
+alias c_g_static_mutex_trylock  g_static_mutex_trylock;
+alias c_g_static_mutex_unlock  g_static_mutex_unlock;
+alias c_g_static_mutex_get_mutex  g_static_mutex_get_mutex;
+alias c_g_static_mutex_free  g_static_mutex_free;
 
 // gthread.StaticRecMutex
 
-c_g_static_rec_mutex_init  g_static_rec_mutex_init;
-c_g_static_rec_mutex_lock  g_static_rec_mutex_lock;
-c_g_static_rec_mutex_trylock  g_static_rec_mutex_trylock;
-c_g_static_rec_mutex_unlock  g_static_rec_mutex_unlock;
-c_g_static_rec_mutex_lock_full  g_static_rec_mutex_lock_full;
-c_g_static_rec_mutex_unlock_full  g_static_rec_mutex_unlock_full;
-c_g_static_rec_mutex_free  g_static_rec_mutex_free;
+alias c_g_static_rec_mutex_init  g_static_rec_mutex_init;
+alias c_g_static_rec_mutex_lock  g_static_rec_mutex_lock;
+alias c_g_static_rec_mutex_trylock  g_static_rec_mutex_trylock;
+alias c_g_static_rec_mutex_unlock  g_static_rec_mutex_unlock;
+alias c_g_static_rec_mutex_lock_full  g_static_rec_mutex_lock_full;
+alias c_g_static_rec_mutex_unlock_full  g_static_rec_mutex_unlock_full;
+alias c_g_static_rec_mutex_free  g_static_rec_mutex_free;
 
 // gthread.RWLock
 
-c_g_static_rw_lock_init  g_static_rw_lock_init;
-c_g_static_rw_lock_reader_lock  g_static_rw_lock_reader_lock;
-c_g_static_rw_lock_reader_trylock  g_static_rw_lock_reader_trylock;
-c_g_static_rw_lock_reader_unlock  g_static_rw_lock_reader_unlock;
-c_g_static_rw_lock_writer_lock  g_static_rw_lock_writer_lock;
-c_g_static_rw_lock_writer_trylock  g_static_rw_lock_writer_trylock;
-c_g_static_rw_lock_writer_unlock  g_static_rw_lock_writer_unlock;
-c_g_static_rw_lock_free  g_static_rw_lock_free;
+alias c_g_static_rw_lock_init  g_static_rw_lock_init;
+alias c_g_static_rw_lock_reader_lock  g_static_rw_lock_reader_lock;
+alias c_g_static_rw_lock_reader_trylock  g_static_rw_lock_reader_trylock;
+alias c_g_static_rw_lock_reader_unlock  g_static_rw_lock_reader_unlock;
+alias c_g_static_rw_lock_writer_lock  g_static_rw_lock_writer_lock;
+alias c_g_static_rw_lock_writer_trylock  g_static_rw_lock_writer_trylock;
+alias c_g_static_rw_lock_writer_unlock  g_static_rw_lock_writer_unlock;
+alias c_g_static_rw_lock_free  g_static_rw_lock_free;
 
 // gthread.Cond
 
-c_g_cond_new  g_cond_new;
-c_g_cond_signal  g_cond_signal;
-c_g_cond_broadcast  g_cond_broadcast;
-c_g_cond_wait  g_cond_wait;
-c_g_cond_timed_wait  g_cond_timed_wait;
-c_g_cond_free  g_cond_free;
+alias c_g_cond_new  g_cond_new;
+alias c_g_cond_signal  g_cond_signal;
+alias c_g_cond_broadcast  g_cond_broadcast;
+alias c_g_cond_wait  g_cond_wait;
+alias c_g_cond_timed_wait  g_cond_timed_wait;
+alias c_g_cond_free  g_cond_free;
 
 // gthread.Private
 
-c_g_private_new  g_private_new;
-c_g_private_get  g_private_get;
-c_g_private_set  g_private_set;
+alias c_g_private_new  g_private_new;
+alias c_g_private_get  g_private_get;
+alias c_g_private_set  g_private_set;
 
 // gthread.StaticPrivate
 
-c_g_static_private_init  g_static_private_init;
-c_g_static_private_get  g_static_private_get;
-c_g_static_private_set  g_static_private_set;
-c_g_static_private_free  g_static_private_free;
+alias c_g_static_private_init  g_static_private_init;
+alias c_g_static_private_get  g_static_private_get;
+alias c_g_static_private_set  g_static_private_set;
+alias c_g_static_private_free  g_static_private_free;
 
 // gthread.Thread
 
-c_g_thread_init  g_thread_init;
-c_g_thread_supported  g_thread_supported;
-c_g_thread_get_initialized  g_thread_get_initialized;
-c_g_thread_create  g_thread_create;
-c_g_thread_create_full  g_thread_create_full;
-c_g_thread_self  g_thread_self;
-c_g_thread_join  g_thread_join;
-c_g_thread_set_priority  g_thread_set_priority;
-c_g_thread_yield  g_thread_yield;
-c_g_thread_exit  g_thread_exit;
-c_g_thread_foreach  g_thread_foreach;
-c_g_once_init_enter  g_once_init_enter;
-c_g_once_init_leave  g_once_init_leave;
+alias c_g_thread_init  g_thread_init;
+alias c_g_thread_supported  g_thread_supported;
+alias c_g_thread_get_initialized  g_thread_get_initialized;
+alias c_g_thread_create  g_thread_create;
+alias c_g_thread_create_full  g_thread_create_full;
+alias c_g_thread_self  g_thread_self;
+alias c_g_thread_join  g_thread_join;
+alias c_g_thread_set_priority  g_thread_set_priority;
+alias c_g_thread_yield  g_thread_yield;
+alias c_g_thread_exit  g_thread_exit;
+alias c_g_thread_foreach  g_thread_foreach;
+alias c_g_once_init_enter  g_once_init_enter;
+alias c_g_once_init_leave  g_once_init_leave;

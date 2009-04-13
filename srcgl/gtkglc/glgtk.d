@@ -61,18 +61,18 @@ extern(C)
 	
 	// glgtk.GLtInit
 	
-	typedef void function(int* argc, char*** argv) c_gtk_gl_init;
-	typedef gboolean function(int* argc, char*** argv) c_gtk_gl_init_check;
-	typedef gboolean function(int* argc, char*** argv) c_gtk_gl_parse_args;
+	void function(int* argc, char*** argv) c_gtk_gl_init;
+	gboolean function(int* argc, char*** argv) c_gtk_gl_init_check;
+	gboolean function(int* argc, char*** argv) c_gtk_gl_parse_args;
 	
 	// glgtk.GLWidget
 	
-	typedef gboolean function(GtkWidget* widget, GdkGLConfig* glconfig, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_set_gl_capability;
-	typedef gboolean function(GtkWidget* widget) c_gtk_widget_is_gl_capable;
-	typedef GdkGLConfig* function(GtkWidget* widget) c_gtk_widget_get_gl_config;
-	typedef GdkGLContext* function(GtkWidget* widget, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_create_gl_context;
-	typedef GdkGLContext* function(GtkWidget* widget) c_gtk_widget_get_gl_context;
-	typedef GdkGLWindow* function(GtkWidget* widget) c_gtk_widget_get_gl_window;
+	gboolean function(GtkWidget* widget, GdkGLConfig* glconfig, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_set_gl_capability;
+	gboolean function(GtkWidget* widget) c_gtk_widget_is_gl_capable;
+	GdkGLConfig* function(GtkWidget* widget) c_gtk_widget_get_gl_config;
+	GdkGLContext* function(GtkWidget* widget, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_create_gl_context;
+	GdkGLContext* function(GtkWidget* widget) c_gtk_widget_get_gl_context;
+	GdkGLWindow* function(GtkWidget* widget) c_gtk_widget_get_gl_window;
 	
 	// glgtk.GLtVersion
 	
@@ -83,18 +83,18 @@ extern(C)
 
 // glgtk.GLtInit
 
-c_gtk_gl_init  gtk_gl_init;
-c_gtk_gl_init_check  gtk_gl_init_check;
-c_gtk_gl_parse_args  gtk_gl_parse_args;
+alias c_gtk_gl_init  gtk_gl_init;
+alias c_gtk_gl_init_check  gtk_gl_init_check;
+alias c_gtk_gl_parse_args  gtk_gl_parse_args;
 
 // glgtk.GLWidget
 
-c_gtk_widget_set_gl_capability  gtk_widget_set_gl_capability;
-c_gtk_widget_is_gl_capable  gtk_widget_is_gl_capable;
-c_gtk_widget_get_gl_config  gtk_widget_get_gl_config;
-c_gtk_widget_create_gl_context  gtk_widget_create_gl_context;
-c_gtk_widget_get_gl_context  gtk_widget_get_gl_context;
-c_gtk_widget_get_gl_window  gtk_widget_get_gl_window;
+alias c_gtk_widget_set_gl_capability  gtk_widget_set_gl_capability;
+alias c_gtk_widget_is_gl_capable  gtk_widget_is_gl_capable;
+alias c_gtk_widget_get_gl_config  gtk_widget_get_gl_config;
+alias c_gtk_widget_create_gl_context  gtk_widget_create_gl_context;
+alias c_gtk_widget_get_gl_context  gtk_widget_get_gl_context;
+alias c_gtk_widget_get_gl_window  gtk_widget_get_gl_window;
 
 // glgtk.GLtVersion
 

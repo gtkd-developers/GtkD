@@ -54,18 +54,18 @@ extern(C)
 {
 	// gstinterfaces.XOverlay
 	
-	typedef void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_set_xwindow_id;
-	typedef void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
-	typedef void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;
-	typedef void function(GstXOverlay* overlay) c_gst_x_overlay_expose;
+	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_set_xwindow_id;
+	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
+	void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;
+	void function(GstXOverlay* overlay) c_gst_x_overlay_expose;
 	
 }
 
 // gstinterfaces.XOverlay
 
-c_gst_x_overlay_set_xwindow_id  gst_x_overlay_set_xwindow_id;
-c_gst_x_overlay_got_xwindow_id  gst_x_overlay_got_xwindow_id;
-c_gst_x_overlay_prepare_xwindow_id  gst_x_overlay_prepare_xwindow_id;
-c_gst_x_overlay_expose  gst_x_overlay_expose;
+alias c_gst_x_overlay_set_xwindow_id  gst_x_overlay_set_xwindow_id;
+alias c_gst_x_overlay_got_xwindow_id  gst_x_overlay_got_xwindow_id;
+alias c_gst_x_overlay_prepare_xwindow_id  gst_x_overlay_prepare_xwindow_id;
+alias c_gst_x_overlay_expose  gst_x_overlay_expose;
 
 
