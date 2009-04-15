@@ -96,14 +96,14 @@ static this()
 	Linker.link(gst_bus_pop, "gst_bus_pop", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_timed_pop, "gst_bus_timed_pop", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_set_flushing, "gst_bus_set_flushing", LIBRARY.GSTREAMER);
-	Linker.link(gst_bus_set_synalias c_handler, "gst_bus_set_synalias c_handler", LIBRARY.GSTREAMER);
-	Linker.link(gst_bus_synalias c_signal_handler, "gst_bus_synalias c_signal_handler", LIBRARY.GSTREAMER);
+	Linker.link(gst_bus_set_sync_handler, "gst_bus_set_sync_handler", LIBRARY.GSTREAMER);
+	Linker.link(gst_bus_sync_signal_handler, "gst_bus_sync_signal_handler", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_create_watch, "gst_bus_create_watch", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_add_watch_full, "gst_bus_add_watch_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_add_watch, "gst_bus_add_watch", LIBRARY.GSTREAMER);
-	Linker.link(gst_bus_disable_synalias c_message_emission, "gst_bus_disable_synalias c_message_emission", LIBRARY.GSTREAMER);
-	Linker.link(gst_bus_enable_synalias c_message_emission, "gst_bus_enable_synalias c_message_emission", LIBRARY.GSTREAMER);
-	Linker.link(gst_bus_asynalias c_signal_func, "gst_bus_asynalias c_signal_func", LIBRARY.GSTREAMER);
+	Linker.link(gst_bus_disable_sync_message_emission, "gst_bus_disable_sync_message_emission", LIBRARY.GSTREAMER);
+	Linker.link(gst_bus_enable_sync_message_emission, "gst_bus_enable_sync_message_emission", LIBRARY.GSTREAMER);
+	Linker.link(gst_bus_async_signal_func, "gst_bus_async_signal_func", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_add_signal_watch, "gst_bus_add_signal_watch", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_add_signal_watch_full, "gst_bus_add_signal_watch_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_remove_signal_watch, "gst_bus_remove_signal_watch", LIBRARY.GSTREAMER);
@@ -118,7 +118,7 @@ static this()
 	Linker.link(gst_caps_new_full_valist, "gst_caps_new_full_valist", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_copy, "gst_caps_copy", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_copy_nth, "gst_caps_copy_nth", LIBRARY.GSTREAMER);
-	Linker.link(gst_statialias c_caps_get, "gst_statialias c_caps_get", LIBRARY.GSTREAMER);
+	Linker.link(gst_static_caps_get, "gst_static_caps_get", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_append, "gst_caps_append", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_merge, "gst_caps_merge", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_append_structure, "gst_caps_append_structure", LIBRARY.GSTREAMER);
@@ -159,7 +159,7 @@ static this()
 	Linker.link(gst_clock_get_resolution, "gst_clock_get_resolution", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_time, "gst_clock_get_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_new_single_shot_id, "gst_clock_new_single_shot_id", LIBRARY.GSTREAMER);
-	Linker.link(gst_clock_new_periodialias c_id, "gst_clock_new_periodialias c_id", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_new_periodic_id, "gst_clock_new_periodic_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_internal_time, "gst_clock_get_internal_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_adjust_unlocked, "gst_clock_adjust_unlocked", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_calibration, "gst_clock_get_calibration", LIBRARY.GSTREAMER);
@@ -185,13 +185,13 @@ static this()
 	Linker.link(gst_element_get_compatible_pad, "gst_element_get_compatible_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_compatible_pad_template, "gst_element_get_compatible_pad_template", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_request_pad, "gst_element_get_request_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_statialias c_pad, "gst_element_get_statialias c_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_static_pad, "gst_element_get_static_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_no_more_pads, "gst_element_no_more_pads", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_release_request_pad, "gst_element_release_request_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_remove_pad, "gst_element_remove_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_iterate_pads, "gst_element_iterate_pads", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_iterate_sink_pads, "gst_element_iterate_sink_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_iterate_sralias c_pads, "gst_element_iterate_sralias c_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_iterate_src_pads, "gst_element_iterate_src_pads", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_link, "gst_element_link", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_unlink, "gst_element_unlink", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_link_many, "gst_element_link_many", LIBRARY.GSTREAMER);
@@ -222,7 +222,7 @@ static this()
 	Linker.link(gst_element_lost_state, "gst_element_lost_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_state_get_name, "gst_element_state_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_state_change_return_get_name, "gst_element_state_change_return_get_name", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_synalias c_state_with_parent, "gst_element_synalias c_state_with_parent", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_sync_state_with_parent, "gst_element_sync_state_with_parent", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_found_tags, "gst_element_found_tags", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_found_tags_for_pad, "gst_element_found_tags_for_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_message_full, "gst_element_message_full", LIBRARY.GSTREAMER);
@@ -251,8 +251,8 @@ static this()
 	Linker.link(gst_element_factory_create, "gst_element_factory_create", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_make, "gst_element_factory_make", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_can_sink_caps, "gst_element_factory_can_sink_caps", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_factory_can_sralias c_caps, "gst_element_factory_can_sralias c_caps", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_factory_get_statialias c_pad_templates, "gst_element_factory_get_statialias c_pad_templates", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_factory_can_src_caps, "gst_element_factory_can_src_caps", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_factory_get_static_pad_templates, "gst_element_factory_get_static_pad_templates", LIBRARY.GSTREAMER);
 
 	// gstreamer.Event
 
@@ -328,11 +328,11 @@ static this()
 	Linker.link(gst_index_add_associationv, "gst_index_add_associationv", LIBRARY.GSTREAMER);
 	Linker.link(gst_index_add_object, "gst_index_add_object", LIBRARY.GSTREAMER);
 	Linker.link(gst_index_add_id, "gst_index_add_id", LIBRARY.GSTREAMER);
-	Linker.link(gst_index_get_assoalias c_entry, "gst_index_get_assoalias c_entry", LIBRARY.GSTREAMER);
-	Linker.link(gst_index_get_assoalias c_entry_full, "gst_index_get_assoalias c_entry_full", LIBRARY.GSTREAMER);
+	Linker.link(gst_index_get_assoc_entry, "gst_index_get_assoc_entry", LIBRARY.GSTREAMER);
+	Linker.link(gst_index_get_assoc_entry_full, "gst_index_get_assoc_entry_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_index_entry_copy, "gst_index_entry_copy", LIBRARY.GSTREAMER);
 	Linker.link(gst_index_entry_free, "gst_index_entry_free", LIBRARY.GSTREAMER);
-	Linker.link(gst_index_entry_assoalias c_map, "gst_index_entry_assoalias c_map", LIBRARY.GSTREAMER);
+	Linker.link(gst_index_entry_assoc_map, "gst_index_entry_assoc_map", LIBRARY.GSTREAMER);
 
 	// gstreamer.IndexFactory
 
@@ -385,10 +385,10 @@ static this()
 	Linker.link(gst_pad_remove_event_probe, "gst_pad_remove_event_probe", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_new, "gst_pad_new", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_new_from_template, "gst_pad_new_from_template", LIBRARY.GSTREAMER);
-	Linker.link(gst_pad_new_from_statialias c_template, "gst_pad_new_from_statialias c_template", LIBRARY.GSTREAMER);
-	Linker.link(gst_pad_alloalias c_buffer, "gst_pad_alloalias c_buffer", LIBRARY.GSTREAMER);
-	Linker.link(gst_pad_alloalias c_buffer_and_set_caps, "gst_pad_alloalias c_buffer_and_set_caps", LIBRARY.GSTREAMER);
-	Linker.link(gst_pad_set_bufferalloalias c_function, "gst_pad_set_bufferalloalias c_function", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_new_from_static_template, "gst_pad_new_from_static_template", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_alloc_buffer, "gst_pad_alloc_buffer", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_alloc_buffer_and_set_caps, "gst_pad_alloc_buffer_and_set_caps", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_set_bufferalloc_function, "gst_pad_set_bufferalloc_function", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_chain_function, "gst_pad_set_chain_function", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_checkgetrange_function, "gst_pad_set_checkgetrange_function", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_range, "gst_pad_get_range", LIBRARY.GSTREAMER);
@@ -488,7 +488,7 @@ static this()
 	Linker.link(gst_mini_object_ref, "gst_mini_object_ref", LIBRARY.GSTREAMER);
 	Linker.link(gst_mini_object_unref, "gst_mini_object_unref", LIBRARY.GSTREAMER);
 	Linker.link(gst_mini_object_replace, "gst_mini_object_replace", LIBRARY.GSTREAMER);
-	Linker.link(gst_param_spealias c_mini_object, "gst_param_spealias c_mini_object", LIBRARY.GSTREAMER);
+	Linker.link(gst_param_spec_mini_object, "gst_param_spec_mini_object", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_set_mini_object, "gst_value_set_mini_object", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_take_mini_object, "gst_value_take_mini_object", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_get_mini_object, "gst_value_get_mini_object", LIBRARY.GSTREAMER);
@@ -518,8 +518,8 @@ static this()
 
 	// gstreamer.PadTemplate
 
-	Linker.link(gst_statialias c_pad_template_get, "gst_statialias c_pad_template_get", LIBRARY.GSTREAMER);
-	Linker.link(gst_statialias c_pad_template_get_caps, "gst_statialias c_pad_template_get_caps", LIBRARY.GSTREAMER);
+	Linker.link(gst_static_pad_template_get, "gst_static_pad_template_get", LIBRARY.GSTREAMER);
+	Linker.link(gst_static_pad_template_get_caps, "gst_static_pad_template_get_caps", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_template_new, "gst_pad_template_new", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_template_get_caps, "gst_pad_template_get_caps", LIBRARY.GSTREAMER);
 
@@ -852,14 +852,14 @@ extern(C)
 	GstMessage* function(GstBus* bus) c_gst_bus_pop;
 	GstMessage* function(GstBus* bus, GstClockTime timeout) c_gst_bus_timed_pop;
 	void function(GstBus* bus, gboolean flushing) c_gst_bus_set_flushing;
-	void function(GstBus* bus, GstBusSyncHandler func, gpointer data) c_gst_bus_set_synalias c_handler;
-	GstBusSyncReply function(GstBus* bus, GstMessage* message, gpointer data) c_gst_bus_synalias c_signal_handler;
+	void function(GstBus* bus, GstBusSyncHandler func, gpointer data) c_gst_bus_set_sync_handler;
+	GstBusSyncReply function(GstBus* bus, GstMessage* message, gpointer data) c_gst_bus_sync_signal_handler;
 	GSource* function(GstBus* bus) c_gst_bus_create_watch;
 	guint function(GstBus* bus, gint priority, GstBusFunc func, gpointer userData, GDestroyNotify notify) c_gst_bus_add_watch_full;
 	guint function(GstBus* bus, GstBusFunc func, gpointer userData) c_gst_bus_add_watch;
-	void function(GstBus* bus) c_gst_bus_disable_synalias c_message_emission;
-	void function(GstBus* bus) c_gst_bus_enable_synalias c_message_emission;
-	gboolean function(GstBus* bus, GstMessage* message, gpointer data) c_gst_bus_asynalias c_signal_func;
+	void function(GstBus* bus) c_gst_bus_disable_sync_message_emission;
+	void function(GstBus* bus) c_gst_bus_enable_sync_message_emission;
+	gboolean function(GstBus* bus, GstMessage* message, gpointer data) c_gst_bus_async_signal_func;
 	void function(GstBus* bus) c_gst_bus_add_signal_watch;
 	void function(GstBus* bus, gint priority) c_gst_bus_add_signal_watch_full;
 	void function(GstBus* bus) c_gst_bus_remove_signal_watch;
@@ -874,7 +874,7 @@ extern(C)
 	GstCaps* function(GstStructure* structure, va_list varArgs) c_gst_caps_new_full_valist;
 	GstCaps* function(GstCaps* caps) c_gst_caps_copy;
 	GstCaps* function(GstCaps* caps, guint nth) c_gst_caps_copy_nth;
-	GstCaps* function(GstStaticCaps* staticCaps) c_gst_statialias c_caps_get;
+	GstCaps* function(GstStaticCaps* staticCaps) c_gst_static_caps_get;
 	void function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_append;
 	void function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_merge;
 	void function(GstCaps* caps, GstStructure* structure) c_gst_caps_append_structure;
@@ -895,8 +895,8 @@ extern(C)
 	GstCaps* function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_union;
 	GstCaps* function(GstCaps* caps) c_gst_caps_normalize;
 	gboolean function(GstCaps* caps) c_gst_caps_do_simplify;
-	//xmlNodePtr function(GstCaps* caps, xmlNodePtr parent) c_gst_caps_save_thyself;
-	//GstCaps* function(xmlNodePtr parent) c_gst_caps_load_thyself;
+	//typedef xmlNodePtr function(GstCaps* caps, xmlNodePtr parent) c_gst_caps_save_thyself;
+	//typedef GstCaps* function(xmlNodePtr parent) c_gst_caps_load_thyself;
 	void function(GstCaps** caps, GstCaps* newcaps) c_gst_caps_replace;
 	gchar* function(GstCaps* caps) c_gst_caps_to_string;
 	GstCaps* function(gchar* string) c_gst_caps_from_string;
@@ -915,7 +915,7 @@ extern(C)
 	GstClockTime function(GstClock* clock) c_gst_clock_get_resolution;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_time;
 	GstClockID function(GstClock* clock, GstClockTime time) c_gst_clock_new_single_shot_id;
-	GstClockID function(GstClock* clock, GstClockTime startTime, GstClockTime interval) c_gst_clock_new_periodialias c_id;
+	GstClockID function(GstClock* clock, GstClockTime startTime, GstClockTime interval) c_gst_clock_new_periodic_id;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_internal_time;
 	GstClockTime function(GstClock* clock, GstClockTime internal) c_gst_clock_adjust_unlocked;
 	void function(GstClock* clock, GstClockTime* internal, GstClockTime* external, GstClockTime* rateNum, GstClockTime* rateDenom) c_gst_clock_get_calibration;
@@ -941,13 +941,13 @@ extern(C)
 	GstPad* function(GstElement* element, GstPad* pad, GstCaps* caps) c_gst_element_get_compatible_pad;
 	GstPadTemplate* function(GstElement* element, GstPadTemplate* compattempl) c_gst_element_get_compatible_pad_template;
 	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_request_pad;
-	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_statialias c_pad;
+	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_static_pad;
 	void function(GstElement* element) c_gst_element_no_more_pads;
 	void function(GstElement* element, GstPad* pad) c_gst_element_release_request_pad;
 	gboolean function(GstElement* element, GstPad* pad) c_gst_element_remove_pad;
 	GstIterator* function(GstElement* element) c_gst_element_iterate_pads;
 	GstIterator* function(GstElement* element) c_gst_element_iterate_sink_pads;
-	GstIterator* function(GstElement* element) c_gst_element_iterate_sralias c_pads;
+	GstIterator* function(GstElement* element) c_gst_element_iterate_src_pads;
 	gboolean function(GstElement* src, GstElement* dest) c_gst_element_link;
 	void function(GstElement* src, GstElement* dest) c_gst_element_unlink;
 	gboolean function(GstElement* element1, GstElement* element2, ... ) c_gst_element_link_many;
@@ -978,7 +978,7 @@ extern(C)
 	void function(GstElement* element) c_gst_element_lost_state;
 	gchar* function(GstState state) c_gst_element_state_get_name;
 	gchar* function(GstStateChangeReturn stateRet) c_gst_element_state_change_return_get_name;
-	gboolean function(GstElement* element) c_gst_element_synalias c_state_with_parent;
+	gboolean function(GstElement* element) c_gst_element_sync_state_with_parent;
 	void function(GstElement* element, GstTagList* list) c_gst_element_found_tags;
 	void function(GstElement* element, GstPad* pad, GstTagList* list) c_gst_element_found_tags_for_pad;
 	void function(GstElement* element, GstMessageType type, GQuark domain, gint code, gchar* text, gchar* dbug, gchar* file, gchar* funct, gint line) c_gst_element_message_full;
@@ -1007,8 +1007,8 @@ extern(C)
 	GstElement* function(GstElementFactory* factory, gchar* name) c_gst_element_factory_create;
 	GstElement* function(gchar* factoryname, gchar* name) c_gst_element_factory_make;
 	gboolean function(GstElementFactory* factory, GstCaps* caps) c_gst_element_factory_can_sink_caps;
-	gboolean function(GstElementFactory* factory, GstCaps* caps) c_gst_element_factory_can_sralias c_caps;
-	GList* function(GstElementFactory* factory) c_gst_element_factory_get_statialias c_pad_templates;
+	gboolean function(GstElementFactory* factory, GstCaps* caps) c_gst_element_factory_can_src_caps;
+	GList* function(GstElementFactory* factory) c_gst_element_factory_get_static_pad_templates;
 	
 	// gstreamer.Event
 	
@@ -1084,11 +1084,11 @@ extern(C)
 	GstIndexEntry* function(GstIndex* index, gint id, GstAssocFlags flags, gint n, GstIndexAssociation* list) c_gst_index_add_associationv;
 	GstIndexEntry* function(GstIndex* index, gint id, gchar* key, GType type, gpointer object) c_gst_index_add_object;
 	GstIndexEntry* function(GstIndex* index, gint id, gchar* description) c_gst_index_add_id;
-	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value) c_gst_index_get_assoalias c_entry;
-	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value, GCompareDataFunc func, gpointer userData) c_gst_index_get_assoalias c_entry_full;
+	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value) c_gst_index_get_assoc_entry;
+	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value, GCompareDataFunc func, gpointer userData) c_gst_index_get_assoc_entry_full;
 	GstIndexEntry* function(GstIndexEntry* entry) c_gst_index_entry_copy;
 	void function(GstIndexEntry* entry) c_gst_index_entry_free;
-	gboolean function(GstIndexEntry* entry, GstFormat format, gint64* value) c_gst_index_entry_assoalias c_map;
+	gboolean function(GstIndexEntry* entry, GstFormat format, gint64* value) c_gst_index_entry_assoc_map;
 	
 	// gstreamer.IndexFactory
 	
@@ -1141,10 +1141,10 @@ extern(C)
 	void function(GstPad* pad, guint handlerId) c_gst_pad_remove_event_probe;
 	GstPad* function(gchar* name, GstPadDirection direction) c_gst_pad_new;
 	GstPad* function(GstPadTemplate* templ, gchar* name) c_gst_pad_new_from_template;
-	GstPad* function(GstStaticPadTemplate* templ, gchar* name) c_gst_pad_new_from_statialias c_template;
-	GstFlowReturn function(GstPad* pad, guint64 offset, gint size, GstCaps* caps, GstBuffer** buf) c_gst_pad_alloalias c_buffer;
-	GstFlowReturn function(GstPad* pad, guint64 offset, gint size, GstCaps* caps, GstBuffer** buf) c_gst_pad_alloalias c_buffer_and_set_caps;
-	void function(GstPad* pad, GstPadBufferAllocFunction bufalloc) c_gst_pad_set_bufferalloalias c_function;
+	GstPad* function(GstStaticPadTemplate* templ, gchar* name) c_gst_pad_new_from_static_template;
+	GstFlowReturn function(GstPad* pad, guint64 offset, gint size, GstCaps* caps, GstBuffer** buf) c_gst_pad_alloc_buffer;
+	GstFlowReturn function(GstPad* pad, guint64 offset, gint size, GstCaps* caps, GstBuffer** buf) c_gst_pad_alloc_buffer_and_set_caps;
+	void function(GstPad* pad, GstPadBufferAllocFunction bufalloc) c_gst_pad_set_bufferalloc_function;
 	void function(GstPad* pad, GstPadChainFunction chain) c_gst_pad_set_chain_function;
 	void function(GstPad* pad, GstPadCheckGetRangeFunction check) c_gst_pad_set_checkgetrange_function;
 	GstFlowReturn function(GstPad* pad, guint64 offset, guint size, GstBuffer** buffer) c_gst_pad_get_range;
@@ -1188,7 +1188,7 @@ extern(C)
 	void function(GstPad* pad, GstPadIntLinkFunction intlink) c_gst_pad_set_internal_link_function;
 	GList* function(GstPad* pad) c_gst_pad_get_internal_links;
 	GList* function(GstPad* pad) c_gst_pad_get_internal_links_default;
-	//void function(xmlNodePtr self, GstObject* parent) c_gst_pad_load_and_link;
+	//typedef void function(xmlNodePtr self, GstObject* parent) c_gst_pad_load_and_link;
 	gboolean function(GstPad* pad, GstPadDispatcherFunction dispatch, gpointer data) c_gst_pad_dispatcher;
 	void function(GstPad* pad, gpointer priv) c_gst_pad_set_element_private;
 	gpointer function(GstPad* pad) c_gst_pad_get_element_private;
@@ -1244,7 +1244,7 @@ extern(C)
 	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_ref;
 	void function(GstMiniObject* miniObject) c_gst_mini_object_unref;
 	void function(GstMiniObject** olddata, GstMiniObject* newdata) c_gst_mini_object_replace;
-	GParamSpec* function(char* name, char* nick, char* blurb, GType objectType, GParamFlags flags) c_gst_param_spealias c_mini_object;
+	GParamSpec* function(char* name, char* nick, char* blurb, GType objectType, GParamFlags flags) c_gst_param_spec_mini_object;
 	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_set_mini_object;
 	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_take_mini_object;
 	GstMiniObject* function(GValue* value) c_gst_value_get_mini_object;
@@ -1262,20 +1262,20 @@ extern(C)
 	void function(GstObject* source, GError* error, gchar* dbug) c_gst_object_default_error;
 	gboolean function(GList* list, gchar* name) c_gst_object_check_uniqueness;
 	gboolean function(GstObject* object, GstObject* ancestor) c_gst_object_has_ancestor;
-	//GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) c_gst_object_save_thyself;
-	//void function(GstObject* object, GstXmlNodePtr self) c_gst_object_restore_thyself;
+	//typedef GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) c_gst_object_save_thyself;
+	//typedef void function(GstObject* object, GstXmlNodePtr self) c_gst_object_restore_thyself;
 	gpointer function(gpointer object) c_gst_object_ref;
 	void function(gpointer object) c_gst_object_unref;
 	void function(gpointer object) c_gst_object_sink;
 	void function(GstObject** oldobj, GstObject* newobj) c_gst_object_replace;
 	gchar* function(GstObject* object) c_gst_object_get_path_string;
-	//guint function(GstObjectClass* klass, gchar* name, gpointer func, gpointer funcData) c_gst_class_signal_connect;
-	//void function(GstObject* object, gchar* name, GstXmlNodePtr self) c_gst_class_signal_emit_by_name;
+	//typedef guint function(GstObjectClass* klass, gchar* name, gpointer func, gpointer funcData) c_gst_class_signal_connect;
+	//typedef void function(GstObject* object, gchar* name, GstXmlNodePtr self) c_gst_class_signal_emit_by_name;
 	
 	// gstreamer.PadTemplate
 	
-	GstPadTemplate* function(GstStaticPadTemplate* padTemplate) c_gst_statialias c_pad_template_get;
-	GstCaps* function(GstStaticPadTemplate* templ) c_gst_statialias c_pad_template_get_caps;
+	GstPadTemplate* function(GstStaticPadTemplate* padTemplate) c_gst_static_pad_template_get;
+	GstCaps* function(GstStaticPadTemplate* templ) c_gst_static_pad_template_get_caps;
 	GstPadTemplate* function(gchar* nameTemplate, GstPadDirection direction, GstPadPresence presence, GstCaps* caps) c_gst_pad_template_new;
 	GstCaps* function(GstPadTemplate* templ) c_gst_pad_template_get_caps;
 	
@@ -1606,14 +1606,14 @@ alias c_gst_bus_peek  gst_bus_peek;
 alias c_gst_bus_pop  gst_bus_pop;
 alias c_gst_bus_timed_pop  gst_bus_timed_pop;
 alias c_gst_bus_set_flushing  gst_bus_set_flushing;
-alias c_gst_bus_set_synalias c_handler  gst_bus_set_synalias c_handler;
-alias c_gst_bus_synalias c_signal_handler  gst_bus_synalias c_signal_handler;
+alias c_gst_bus_set_sync_handler  gst_bus_set_sync_handler;
+alias c_gst_bus_sync_signal_handler  gst_bus_sync_signal_handler;
 alias c_gst_bus_create_watch  gst_bus_create_watch;
 alias c_gst_bus_add_watch_full  gst_bus_add_watch_full;
 alias c_gst_bus_add_watch  gst_bus_add_watch;
-alias c_gst_bus_disable_synalias c_message_emission  gst_bus_disable_synalias c_message_emission;
-alias c_gst_bus_enable_synalias c_message_emission  gst_bus_enable_synalias c_message_emission;
-alias c_gst_bus_asynalias c_signal_func  gst_bus_asynalias c_signal_func;
+alias c_gst_bus_disable_sync_message_emission  gst_bus_disable_sync_message_emission;
+alias c_gst_bus_enable_sync_message_emission  gst_bus_enable_sync_message_emission;
+alias c_gst_bus_async_signal_func  gst_bus_async_signal_func;
 alias c_gst_bus_add_signal_watch  gst_bus_add_signal_watch;
 alias c_gst_bus_add_signal_watch_full  gst_bus_add_signal_watch_full;
 alias c_gst_bus_remove_signal_watch  gst_bus_remove_signal_watch;
@@ -1628,7 +1628,7 @@ alias c_gst_caps_new_full  gst_caps_new_full;
 alias c_gst_caps_new_full_valist  gst_caps_new_full_valist;
 alias c_gst_caps_copy  gst_caps_copy;
 alias c_gst_caps_copy_nth  gst_caps_copy_nth;
-alias c_gst_statialias c_caps_get  gst_statialias c_caps_get;
+alias c_gst_static_caps_get  gst_static_caps_get;
 alias c_gst_caps_append  gst_caps_append;
 alias c_gst_caps_merge  gst_caps_merge;
 alias c_gst_caps_append_structure  gst_caps_append_structure;
@@ -1669,7 +1669,7 @@ alias c_gst_clock_set_resolution  gst_clock_set_resolution;
 alias c_gst_clock_get_resolution  gst_clock_get_resolution;
 alias c_gst_clock_get_time  gst_clock_get_time;
 alias c_gst_clock_new_single_shot_id  gst_clock_new_single_shot_id;
-alias c_gst_clock_new_periodialias c_id  gst_clock_new_periodialias c_id;
+alias c_gst_clock_new_periodic_id  gst_clock_new_periodic_id;
 alias c_gst_clock_get_internal_time  gst_clock_get_internal_time;
 alias c_gst_clock_adjust_unlocked  gst_clock_adjust_unlocked;
 alias c_gst_clock_get_calibration  gst_clock_get_calibration;
@@ -1695,13 +1695,13 @@ alias c_gst_element_create_all_pads  gst_element_create_all_pads;
 alias c_gst_element_get_compatible_pad  gst_element_get_compatible_pad;
 alias c_gst_element_get_compatible_pad_template  gst_element_get_compatible_pad_template;
 alias c_gst_element_get_request_pad  gst_element_get_request_pad;
-alias c_gst_element_get_statialias c_pad  gst_element_get_statialias c_pad;
+alias c_gst_element_get_static_pad  gst_element_get_static_pad;
 alias c_gst_element_no_more_pads  gst_element_no_more_pads;
 alias c_gst_element_release_request_pad  gst_element_release_request_pad;
 alias c_gst_element_remove_pad  gst_element_remove_pad;
 alias c_gst_element_iterate_pads  gst_element_iterate_pads;
 alias c_gst_element_iterate_sink_pads  gst_element_iterate_sink_pads;
-alias c_gst_element_iterate_sralias c_pads  gst_element_iterate_sralias c_pads;
+alias c_gst_element_iterate_src_pads  gst_element_iterate_src_pads;
 alias c_gst_element_link  gst_element_link;
 alias c_gst_element_unlink  gst_element_unlink;
 alias c_gst_element_link_many  gst_element_link_many;
@@ -1732,7 +1732,7 @@ alias c_gst_element_continue_state  gst_element_continue_state;
 alias c_gst_element_lost_state  gst_element_lost_state;
 alias c_gst_element_state_get_name  gst_element_state_get_name;
 alias c_gst_element_state_change_return_get_name  gst_element_state_change_return_get_name;
-alias c_gst_element_synalias c_state_with_parent  gst_element_synalias c_state_with_parent;
+alias c_gst_element_sync_state_with_parent  gst_element_sync_state_with_parent;
 alias c_gst_element_found_tags  gst_element_found_tags;
 alias c_gst_element_found_tags_for_pad  gst_element_found_tags_for_pad;
 alias c_gst_element_message_full  gst_element_message_full;
@@ -1761,8 +1761,8 @@ alias c_gst_element_factory_get_uri_protocols  gst_element_factory_get_uri_proto
 alias c_gst_element_factory_create  gst_element_factory_create;
 alias c_gst_element_factory_make  gst_element_factory_make;
 alias c_gst_element_factory_can_sink_caps  gst_element_factory_can_sink_caps;
-alias c_gst_element_factory_can_sralias c_caps  gst_element_factory_can_sralias c_caps;
-alias c_gst_element_factory_get_statialias c_pad_templates  gst_element_factory_get_statialias c_pad_templates;
+alias c_gst_element_factory_can_src_caps  gst_element_factory_can_src_caps;
+alias c_gst_element_factory_get_static_pad_templates  gst_element_factory_get_static_pad_templates;
 
 // gstreamer.Event
 
@@ -1838,11 +1838,11 @@ alias c_gst_index_add_association  gst_index_add_association;
 alias c_gst_index_add_associationv  gst_index_add_associationv;
 alias c_gst_index_add_object  gst_index_add_object;
 alias c_gst_index_add_id  gst_index_add_id;
-alias c_gst_index_get_assoalias c_entry  gst_index_get_assoalias c_entry;
-alias c_gst_index_get_assoalias c_entry_full  gst_index_get_assoalias c_entry_full;
+alias c_gst_index_get_assoc_entry  gst_index_get_assoc_entry;
+alias c_gst_index_get_assoc_entry_full  gst_index_get_assoc_entry_full;
 alias c_gst_index_entry_copy  gst_index_entry_copy;
 alias c_gst_index_entry_free  gst_index_entry_free;
-alias c_gst_index_entry_assoalias c_map  gst_index_entry_assoalias c_map;
+alias c_gst_index_entry_assoc_map  gst_index_entry_assoc_map;
 
 // gstreamer.IndexFactory
 
@@ -1895,10 +1895,10 @@ alias c_gst_pad_remove_buffer_probe  gst_pad_remove_buffer_probe;
 alias c_gst_pad_remove_event_probe  gst_pad_remove_event_probe;
 alias c_gst_pad_new  gst_pad_new;
 alias c_gst_pad_new_from_template  gst_pad_new_from_template;
-alias c_gst_pad_new_from_statialias c_template  gst_pad_new_from_statialias c_template;
-alias c_gst_pad_alloalias c_buffer  gst_pad_alloalias c_buffer;
-alias c_gst_pad_alloalias c_buffer_and_set_caps  gst_pad_alloalias c_buffer_and_set_caps;
-alias c_gst_pad_set_bufferalloalias c_function  gst_pad_set_bufferalloalias c_function;
+alias c_gst_pad_new_from_static_template  gst_pad_new_from_static_template;
+alias c_gst_pad_alloc_buffer  gst_pad_alloc_buffer;
+alias c_gst_pad_alloc_buffer_and_set_caps  gst_pad_alloc_buffer_and_set_caps;
+alias c_gst_pad_set_bufferalloc_function  gst_pad_set_bufferalloc_function;
 alias c_gst_pad_set_chain_function  gst_pad_set_chain_function;
 alias c_gst_pad_set_checkgetrange_function  gst_pad_set_checkgetrange_function;
 alias c_gst_pad_get_range  gst_pad_get_range;
@@ -1998,7 +1998,7 @@ alias c_gst_mini_object_make_writable  gst_mini_object_make_writable;
 alias c_gst_mini_object_ref  gst_mini_object_ref;
 alias c_gst_mini_object_unref  gst_mini_object_unref;
 alias c_gst_mini_object_replace  gst_mini_object_replace;
-alias c_gst_param_spealias c_mini_object  gst_param_spealias c_mini_object;
+alias c_gst_param_spec_mini_object  gst_param_spec_mini_object;
 alias c_gst_value_set_mini_object  gst_value_set_mini_object;
 alias c_gst_value_take_mini_object  gst_value_take_mini_object;
 alias c_gst_value_get_mini_object  gst_value_get_mini_object;
@@ -2028,8 +2028,8 @@ alias c_gst_object_get_path_string  gst_object_get_path_string;
 
 // gstreamer.PadTemplate
 
-alias c_gst_statialias c_pad_template_get  gst_statialias c_pad_template_get;
-alias c_gst_statialias c_pad_template_get_caps  gst_statialias c_pad_template_get_caps;
+alias c_gst_static_pad_template_get  gst_static_pad_template_get;
+alias c_gst_static_pad_template_get_caps  gst_static_pad_template_get_caps;
 alias c_gst_pad_template_new  gst_pad_template_new;
 alias c_gst_pad_template_get_caps  gst_pad_template_get_caps;
 
