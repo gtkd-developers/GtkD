@@ -41,11 +41,12 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_tree_selection_get_selected
  * 	- gtk_tree_selection_get_selected_rows
  * omit signals:
  * imports:
  * 	- gtk.TreeView
+ * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
  * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gtk.TreePath
@@ -54,6 +55,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkTreeIter* -> TreeIter
+ * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * 	- GtkTreeView* -> TreeView
  * module aliases:
@@ -72,6 +74,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.TreeView;
+private import gtk.TreeModel;
+private import gtk.TreeModelIF;
 private import gtk.TreeIter;
 private import glib.ListG;
 private import gtk.TreePath;
@@ -147,24 +151,6 @@ public class TreeSelection : ObjectG
 	}
 	
 	/**
-	 * Sets iter to the currently selected node if selection is set to
-	 * GTK_SELECTION_SINGLE or GTK_SELECTION_BROWSE. iter may be NULL if you
-	 * just want to test if selection has any selected nodes. model is filled
-	 * with the current model as a convenience. This function will not work if you
-	 * use selection is GTK_SELECTION_MULTIPLE.
-	 * Params:
-	 *  model = A pointer to set to the GtkTreeModel, or NULL.
-	 *  iter = The GtkTreeIter, or NULL.
-	 * Returns:
-	 *  TRUE, if there is a selected node.
-	 */
-	int getSelected(TreeModelIF model, TreeIter iter)
-	{
-		GtkTreeModel* m = model.getTreeModelTStruct();
-		return gtk_tree_selection_get_selected(gtkTreeSelection, &m, iter.getTreeIterStruct())==0 ? false : true;
-	}
-	
-	/**
 	 * Creates a list of path of all selected rows. Additionally, if you are
 	 * planning on modifying the model after calling this function, you may
 	 * want to convert the returned list into a list of GtkTreeRowReferences.
@@ -181,7 +167,7 @@ public class TreeSelection : ObjectG
 	TreePath[] getSelectedRows(TreeModelIF model)
 	{
 		TreePath[] paths;
-		GtkTreeModel* m = model.getTreeModelTStruct();
+		GtkTreeModel* m = (model is null) ? null : model.getTreeModelTStruct();
 		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &m);
 		if ( gList !is null )
 		{
@@ -305,6 +291,28 @@ public class TreeSelection : ObjectG
 			return null;
 		}
 		return new TreeView(cast(GtkTreeView*) p);
+	}
+	
+	/**
+	 * Sets iter to the currently selected node if selection is set to
+	 * GTK_SELECTION_SINGLE or GTK_SELECTION_BROWSE. iter may be NULL if you
+	 * just want to test if selection has any selected nodes. model is filled
+	 * with the current model as a convenience. This function will not work if you
+	 * use selection is GTK_SELECTION_MULTIPLE.
+	 * Params:
+	 * model =  A pointer to set to the GtkTreeModel, or NULL.
+	 * iter =  The GtkTreeIter, or NULL.
+	 * Returns: TRUE, if there is a selected node.
+	 */
+	public int getSelected(out TreeModelIF model, TreeIter iter)
+	{
+		// gboolean gtk_tree_selection_get_selected (GtkTreeSelection *selection,  GtkTreeModel **model,  GtkTreeIter *iter);
+		GtkTreeModel* outmodel = null;
+		
+		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, (iter is null) ? null : iter.getTreeIterStruct());
+		
+		model = new TreeModel(outmodel);
+		return p;
 	}
 	
 	/**
