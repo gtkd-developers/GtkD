@@ -158,10 +158,10 @@ public class TreeSelection : ObjectG
 	 */
 	public TreeIter getSelected()
 	{
-		GtkTreeModel* model = null;
+		TreeModelIF model;
 		TreeIter iter = new TreeIter();
 		
-		if ( gtk_tree_selection_get_selected(gtkTreeSelection, &model, iter.getTreeIterStruct()) )
+		if ( getSelected(model, iter) )
 		{
 			iter.setModel(model);
 			return iter;
