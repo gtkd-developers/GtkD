@@ -3626,6 +3626,28 @@ nocode: gtk_tree_selection_get_selected_rows
 
 code: start
 	/**
+	 * Returns an TreeIter set to the currently selected node if selection
+	 * is set to GTK_SELECTION_SINGLE or GTK_SELECTION_BROWSE.
+	 * This function will not work if you use selection is GTK_SELECTION_MULTIPLE.
+	 * Returns: A TreeIter for the selected node.
+	 */
+	public TreeIter getSelected()
+	{
+		GtkTreeModel* model = null;
+		TreeIter iter = new TreeIter();
+		
+		if ( gtk_tree_selection_get_selected(gtkTreeSelection, &model, iter.getTreeIterStruct()) )
+		{
+			iter.setModel(model);
+			return iter;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	/**
 	 * Creates a list of path of all selected rows. Additionally, if you are
 	 * planning on modifying the model after calling this function, you may
 	 * want to convert the returned list into a list of GtkTreeRowReferences.
@@ -3639,11 +3661,11 @@ code: start
 	 * Returns:
 	 *  A GList containing a GtkTreePath for each selected row.
 	 */
-	TreePath[] getSelectedRows(TreeModelIF model)
+	TreePath[] getSelectedRows(out TreeModelIF model)
 	{
 		TreePath[] paths;
-		GtkTreeModel* m = (model is null) ? null : model.getTreeModelTStruct();
-		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &m);
+		GtkTreeModel* outmodel = null;
+		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &outmodel);
 		if ( gList !is null )
 		{  
 			ListG list = new ListG(gList);
@@ -3652,6 +3674,8 @@ code: start
 				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
 			}
 		}
+		model = new TreeModel(outmodel);
+
 		return paths;
 	}
 
