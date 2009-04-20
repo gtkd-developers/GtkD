@@ -424,6 +424,139 @@ public class TreeIter
 	{
 		gtkTreeIter.userData = data;
 	}
+
+	public struct IterData
+	{
+		/// Data fields.
+		union
+		{
+			int     dataInt;
+			long    dataLong;
+			double  dataFloat;
+			double  dataDouble;
+			char[]  dataString;
+			void*   dataUser;
+		}
+
+		TypeInfo type = typeid(void);
+	}
+
+	public void setUserData(T)(T data)
+	{
+		IterData* itData = new IterData;
+		itData.type = typeid(T);
+
+		static if(is(T == int))
+		{
+			itData.dataInt = data;
+		}
+		else static if(is(T == long))
+		{
+			itData.dataLong = data;
+		}
+		else static if(is(T == float))
+		{
+			itData.dataFloat = data;
+		}
+		else static if(is(T == double))
+		{
+			itData.dataDouble = data;
+		}
+		else static if(is(T == string))
+		{
+			itData.dataString = data;
+		}
+		else static if(is(T == void*))
+		{
+			itData.dataUser = data;
+		}
+		else
+		{
+			pragma(msg, "IterData Type not Suported");
+
+			throw new TreeIterError("getUserData", "IterData Type not Suported");
+		}
+
+		gtkTreeIter.userData = itData;
+	}
+
+	public T getUserData(T)()
+	{
+		IterData* itData = cast(IterData*)gtkTreeIter.userData;
+
+		static if(is(T == int))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataInt;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: int");
+			}
+		}
+		else static if(is(T == long))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataLong;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: long");
+			}
+		}
+		else static if(is(T == float))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataFloat;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: float");
+			}
+		}
+		else static if(is(T == double))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataDouble;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: double");
+			}
+		}
+		else static if(is(T == string))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataString;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: string");
+			}
+		}
+		else static if(is(T == void*))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataUser;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: void*");
+			}
+		}
+		else
+		{
+			pragma(msg, "IterData Type not Suported");
+
+			throw new TreeIterError("getUserData", "IterData Type not Suported");
+		}
+	}
 	
 	/**
 	 */
