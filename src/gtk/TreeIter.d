@@ -405,21 +405,25 @@ public class TreeIter
 		return grandParent;
 	}
 	
+	/** A unique stamp to catch invalid iterators */
 	public int stamp()
 	{
 		return gtkTreeIter.stamp;
 	}
 	
+	/** Ditto */
 	public void stamp(int stamp)
 	{
 		gtkTreeIter.stamp = stamp;
 	}
 	
+	/** Model specific data */
 	public void* userData()
 	{
 		return gtkTreeIter.userData;
 	}
 	
+	/** Ditto */
 	public void userData(void* data)
 	{
 		gtkTreeIter.userData = data;
@@ -442,6 +446,18 @@ public class TreeIter
 		TypeInfo type = typeid(void);
 	}
 	
+	/**
+	 * setUserData and getUserData provide simple boxing
+	 * around the userData field in the TreeIter struct.
+	 * Throws: TreeIterError for unsuported types or a type mismatch.
+	 * Example:
+	 * ---
+	 * Treeiter iter = new TreeIter();
+	 *
+	 * iter.setUserData(20);
+	 * int i = iter.getUserData!(int)();
+	 * ---
+	 */
 	public void setUserData(T)(T data)
 	{
 		IterData* itData = new IterData;
@@ -481,6 +497,7 @@ public class TreeIter
 		gtkTreeIter.userData = itData;
 	}
 	
+	/** Ditto */
 	public T getUserData(T)()
 	{
 		IterData* itData = cast(IterData*)gtkTreeIter.userData;
