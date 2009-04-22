@@ -258,6 +258,7 @@ public class GtkDClass
 		tangoImportConvs["std.c.stdio"] = ["tango.stdc.stdio"];
 		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
 		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
+		tangoImportConvs["std.conv"] = ["tango.text.convert.Integer"];
 
 		char[][][char[]] druntimeImportConvs;
 		druntimeImportConvs["std.thread"] = ["core.thread"];
@@ -269,6 +270,7 @@ public class GtkDClass
 		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
 		phobos2ImportConvs["std.string"] = ["std.string"];
 		phobos2ImportConvs["std.stdarg"] = ["std.stdarg"];
+		phobos2ImportConvs["std.conv"] = ["std.conv"];
 
 		char[] importTango = "\nversion(Tango) {\n";
 		char[] importDruntime = "} else version(D_Version2) {\n";

@@ -80,6 +80,7 @@
  * 	- gdk.Drawable
  * 	- gtk.Tooltips
  * 	- gobject.Type
+ * 	- std.conv
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -163,6 +164,12 @@ private import gobject.Type;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
+
+version(Tango) {
+	private import tango.text.convert.Integer;
+} else {
+	private import std.conv;
+}
 
 
 private import gtk.ObjectGtk;
@@ -376,8 +383,6 @@ public class Widget : ObjectGtk, BuildableIF
 		getWindow().setCursor(null);
 	}
 	
-	version(Tango)static import tango.text.convert.Integer;
-	
 	/**
 	 * Modifies the font for this widget.
 	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
@@ -392,6 +397,14 @@ public class Widget : ObjectGtk, BuildableIF
 			modifyFont(
 			PgFontDescription.fromString(
 			family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
+			)
+			);
+		}
+		else version(D_Version2)
+		{
+			modifyFont(
+			PgFontDescription.fromString(
+			family ~ " " ~ to!(string)(size)
 			)
 			);
 		}

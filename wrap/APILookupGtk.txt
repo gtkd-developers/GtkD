@@ -7621,6 +7621,7 @@ structWrap: PangoFontDescription* PgFontDescription
 import: gdk.Drawable
 import: gtk.Tooltips
 import: gobject.Type
+import: std.conv
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
@@ -7779,8 +7780,6 @@ code: start
 		getWindow().setCursor(null);
 	}
 
-	version(Tango)static import tango.text.convert.Integer;
-
 	/**
 	 * Modifies the font for this widget.
 	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
@@ -7795,6 +7794,14 @@ code: start
 			modifyFont(
 				PgFontDescription.fromString(
 					family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
+				)
+			);
+		}
+		else version(D_Version2)
+		{
+			modifyFont(
+				PgFontDescription.fromString(
+					family ~ " " ~ to!(string)(size)
 				)
 			);
 		}
