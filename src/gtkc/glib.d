@@ -1572,8 +1572,8 @@ extern(C)
 	gchar* function(gchar* format, va_list args) c_g_strdup_vprintf;
 	gint function(gchar* format, ... ) c_g_printf;
 	gint function(gchar* format, va_list args) c_g_vprintf;
-	gint function(FILE* file, gchar* format, ... ) c_g_fprintf;
-	gint function(FILE* file, gchar* format, va_list args) c_g_vfprintf;
+	gint function(void* file, gchar* format, ... ) c_g_fprintf;
+	gint function(void* file, gchar* format, va_list args) c_g_vfprintf;
 	gint function(gchar* string, gchar* format, ... ) c_g_sprintf;
 	gint function(gchar* string, gchar* format, va_list args) c_g_vsprintf;
 	gint function(gchar* string, gulong n, gchar* format, ... ) c_g_snprintf;
@@ -1928,8 +1928,8 @@ extern(C)
 	int function(gchar* filename) c_g_unlink;
 	int function(gchar* filename) c_g_remove;
 	int function(gchar* filename) c_g_rmdir;
-	FILE* function(gchar* filename, gchar* mode) c_g_fopen;
-	FILE* function(gchar* filename, gchar* mode, FILE* stream) c_g_freopen;
+	void* function(gchar* filename, gchar* mode) c_g_fopen;
+	void* function(gchar* filename, gchar* mode, void* stream) c_g_freopen;
 	int function(gchar* filename, int mode) c_g_chmod;
 	int function(gchar* filename, int mode) c_g_access;
 	int function(gchar* filename, int mode) c_g_creat;

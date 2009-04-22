@@ -967,7 +967,7 @@ extern(C)
 	
 	char** function(char* str) c_pango_split_file_list;
 	char* function(char* str) c_pango_trim_string;
-	gint function(FILE* stream, GString* str) c_pango_read_line;
+	gint function(void* stream, GString* str) c_pango_read_line;
 	gboolean function(char** pos) c_pango_skip_space;
 	gboolean function(char** pos, GString* f_out) c_pango_scan_word;
 	gboolean function(char** pos, GString* f_out) c_pango_scan_string;

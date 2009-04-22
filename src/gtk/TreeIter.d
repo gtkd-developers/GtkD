@@ -424,7 +424,7 @@ public class TreeIter
 	{
 		gtkTreeIter.userData = data;
 	}
-
+	
 	public struct IterData
 	{
 		/// Data fields.
@@ -434,18 +434,19 @@ public class TreeIter
 			long    dataLong;
 			double  dataFloat;
 			double  dataDouble;
-			char[]  dataString;
+			char[]  dataString;
+			
 			void*   dataUser;
 		}
-
+		
 		TypeInfo type = typeid(void);
 	}
-
+	
 	public void setUserData(T)(T data)
 	{
 		IterData* itData = new IterData;
 		itData.type = typeid(T);
-
+		
 		static if(is(T == int))
 		{
 			itData.dataInt = data;
@@ -473,17 +474,17 @@ public class TreeIter
 		else
 		{
 			pragma(msg, "IterData Type not Suported");
-
+			
 			throw new TreeIterError("getUserData", "IterData Type not Suported");
 		}
-
+		
 		gtkTreeIter.userData = itData;
 	}
-
+	
 	public T getUserData(T)()
 	{
 		IterData* itData = cast(IterData*)gtkTreeIter.userData;
-
+		
 		static if(is(T == int))
 		{
 			if(itData.type is typeid(T))
@@ -553,7 +554,7 @@ public class TreeIter
 		else
 		{
 			pragma(msg, "IterData Type not Suported");
-
+			
 			throw new TreeIterError("getUserData", "IterData Type not Suported");
 		}
 	}

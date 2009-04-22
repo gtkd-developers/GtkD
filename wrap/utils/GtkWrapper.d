@@ -946,6 +946,9 @@ public class GtkWrapper : WrapperIF
 			{
 				char[] dec = std.string.strip(declaration);
 
+				if ( loaderTableName == "glib" || loaderTableName == "pango" ) 
+					dec = dec.replace("FILE*", "void*"); //Phobos workaround. 
+
 				int pos = std.string.rfind(dec,')') + 1;
 				externalText ~= '\t';
 
