@@ -30,7 +30,7 @@ alias void GTypeCValue;
 
 
 // G_TYPE_*
-enum GType
+enum GType : size_t
 {
 	GDC_BUG_WORKAROUND,
 	INVALID = 0<<2,

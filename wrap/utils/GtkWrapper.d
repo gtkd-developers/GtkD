@@ -1012,7 +1012,7 @@ public class GtkWrapper : WrapperIF
         if ( gTypes.length > 0 )
         {
             def ~= "\n\n// G_TYPE_*";
-            def ~= "\nenum GType";
+            def ~= "\nenum GType : size_t";
             def ~= "\n{\n";
             tabs ~= "\t";
             GtkDClass.append(def, gTypes, tabs);
