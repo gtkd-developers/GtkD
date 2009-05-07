@@ -4315,6 +4315,7 @@ outFile: TreeModelSort
 
 file: GtkTreeModelFilter.html
 struct: GtkTreeModelFilter
+ctorStruct: GtkTreeModel
 class: TreeModelFilter
 implements: TreeModelIF
 implements: TreeDragSourceIF

@@ -27,7 +27,7 @@
  * outFile = TreeModelFilter
  * strct   = GtkTreeModelFilter
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GtkTreeModel
  * clss    = TreeModelFilter
  * interf  = 
  * class Code: Yes
@@ -153,17 +153,17 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Params:
 	 * childModel =  A GtkTreeModel.
 	 * root =  A GtkTreePath or NULL.
-	 * Returns: A new GtkTreeModel.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static TreeModelIF newTreeModelFilter(TreeModelIF childModel, TreePath root)
+	public this (TreeModelIF childModel, TreePath root)
 	{
 		// GtkTreeModel * gtk_tree_model_filter_new (GtkTreeModel *child_model,  GtkTreePath *root);
 		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelTStruct(), (root is null) ? null : root.getTreePathStruct());
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelTStruct(), (root is null) ? null : root.getTreePathStruct())");
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		this(cast(GtkTreeModelFilter*) p);
 	}
 	
 	/**
