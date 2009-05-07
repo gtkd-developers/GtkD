@@ -66,7 +66,7 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         "libgtkglext-win32-1.0-0.dll",
 	LIBRARY.GL:            "opengl32.dll",
 	LIBRARY.GLU:           "glu32.dll",
-	LIBRARY.GDA:           "libgda-2.dll",
+	LIBRARY.GDA:           "libgda-4.0-4.dll",
 	LIBRARY.GLADE:         "libglade-2.0-0.dll",
 	LIBRARY.GSV:           "libgtksourceview-2.0-0.dll",
 	LIBRARY.GSTREAMER:     "libgstreamer-0.10.dll",
@@ -79,7 +79,7 @@ version(linux)
 const string[LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:           "libatk-1.0.so",
-	LIBRARY.CAIRO:         "libcairo.so.2",
+	LIBRARY.CAIRO:         "libcairo.so",
 	LIBRARY.GDK:           "libgdk-x11-2.0.so",
 	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0.so",
 	LIBRARY.GLIB:          "libglib-2.0.so",
@@ -95,7 +95,7 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GL:            "libGL.so",
 	LIBRARY.GLU:           "libGLU.so",
 	LIBRARY.GLEXT:         "libGL.so",
-	LIBRARY.GDA:           "libgda-2.so.3",
+	LIBRARY.GDA:           "libgda-4.0.so",
 	LIBRARY.GLADE:         "libglade-2.0.so",
 	LIBRARY.GSV:           "libgtksourceview-2.0.so",
 	LIBRARY.GSTREAMER:     "libgstreamer-0.10.so",
