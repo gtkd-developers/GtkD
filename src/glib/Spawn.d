@@ -81,7 +81,7 @@ version(Tango) {
 	version = druntime;
 } else version(D_Version2) {
 	private import core.thread;
-	private import core.sys.posix.stdio;
+	private import std.c.stdio;
 	private import std.string;
 	private import core.stdc.string;
 
@@ -209,6 +209,13 @@ public class Spawn
 		else
 		private import tango.stdc.posix.stdio;
 	}
+	else version(D_Version2)
+	{
+		version (Windows)
+		extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
+		else
+		private import core.sys.posix.stdio;
+	}
 	
 	/**
 	 * Executes the prepared process
@@ -236,9 +243,9 @@ public class Spawn
 		{
 			this.externalWatch = externalWatch;
 			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), cast(void*)this);
-			standardInput = fdopen(stdIn, "w");
-			standardOutput = fdopen(stdOut, "r");
-			standardError = fdopen(stdErr, "r");
+			standardInput = fdopen(stdIn, Str.toStringz("w"));
+			standardOutput = fdopen(stdOut, Str.toStringz("r"));
+			standardError = fdopen(stdErr, Str.toStringz("r"));
 			
 			if ( readOutput !is null )
 			{

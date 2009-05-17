@@ -69,7 +69,7 @@ version(Tango) {
 
 	version = druntime;
 } else version(D_Version2) {
-	private import core.sys.posix.stdio;
+	private import std.c.stdio;
 	private import core.stdc.string;
 
 	version = druntime;

@@ -234,6 +234,7 @@ version(Windows)
 		if(libPath.length > 0)
 			return libPath ~ "\\bin\\";
 
+/* Throws an Access Violation with DMD 2.*
 		// version(Phobos)
 		version(Tango){} else
 		{
@@ -262,6 +263,7 @@ version(Windows)
 				libPath = "";
 			}
 		}
+*/
 
 		// Returns the found location or an empty string
 		// to load the libraries from the path.
