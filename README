@@ -1,5 +1,7 @@
 GtkD is the Digital Mars D programing language OO wrapper for Gtk+.
-GtkD is release on the LGPL license.
+GtkD is release on the LGPL license with additional exceptions.
+
+Please view COPYING for GtkD's license.
 
 Requirements:
 -------------
