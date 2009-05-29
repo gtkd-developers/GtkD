@@ -140,7 +140,7 @@ public class FileUtils
 	public static FILE* freopen(string filename, string mode, FILE* stream)
 	{
 		// FILE* g_freopen (const gchar *filename,  const gchar *mode,  FILE *stream);
-		return cast(FILE*)g_freopen(Str.toStringz(filename), Str.toStringz(mode), stream);
+		return cast(FILE*)g_freopen(Str.toStringz(filename), Str.toStringz(mode), cast(void*)stream);
 	}
 	
 	/**

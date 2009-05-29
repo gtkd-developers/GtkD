@@ -600,7 +600,7 @@ public class Str
 	public static int vfprintf(FILE* file, string format, void* args)
 	{
 		// gint g_vfprintf (FILE *file,  gchar const *format,  va_list args);
-		return g_vfprintf(file, Str.toStringz(format), args);
+		return g_vfprintf(cast(void*)file, Str.toStringz(format), args);
 	}
 	
 	/**

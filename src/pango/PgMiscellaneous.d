@@ -127,7 +127,7 @@ public class PgMiscellaneous
 	public static int readLine(FILE* stream, StringG str)
 	{
 		// gint pango_read_line (FILE *stream,  GString *str);
-		return pango_read_line(stream, (str is null) ? null : str.getStringGStruct());
+		return pango_read_line(cast(void*)stream, (str is null) ? null : str.getStringGStruct());
 	}
 	
 	/**
