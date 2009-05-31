@@ -144,7 +144,7 @@ public class Str
 		
 		if (s.length == 0)
 		{
-			copy = "".dup;
+			copy = "\0".dup;
 		}
 		else
 		{
