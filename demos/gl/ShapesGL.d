@@ -163,7 +163,7 @@ static MaterialProp mat_silver = {
   0.4
 };
 
-static MaterialProp *mat_current = &mat_silver;
+static MaterialProp* mat_current;
 
 static float view_quat_diff[4] = [ 0.0, 0.0, 0.0, 1.0 ];
 static float view_quat[4] = [ 0.0, 0.0, 0.0, 1.0 ];
@@ -235,6 +235,8 @@ class ShapesGL : DrawingArea
 	
 	this(TestGL testGL)
 	{
+		mat_current = &mat_silver;
+
 		this.testGL = testGL;
 		//super(false,0);
 		//super(null, null);
