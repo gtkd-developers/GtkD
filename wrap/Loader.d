@@ -36,8 +36,8 @@ import gtkc.paths;
 
 public struct Linker
 {
-	private static void*[LIBRARY]    loadedLibraries;
-	private static string[][LIBRARY] loadFailures;
+	private static void*[string]    loadedLibraries;
+	private static string[][string] loadFailures;
 
 	/*
 	 * Links the provided symbol
@@ -52,12 +52,42 @@ public struct Linker
 	}
 
 	/*
+	 * Links the provided symbol
+	 * Params:
+	 *     funct     = The function we are linking
+	 *     symbol    = The name of the symbol to link
+	 *     libraries = One or more libraries to search for the symbol
+	 */
+	public static void link(T)(inout T funct, string symbol, string[] libraries ...)
+	{
+		funct = cast(T)getSymbol(symbol, libraries);
+	}
+
+	/*
 	 * Gets a simbol from one of the provided libraries
 	 * Params:
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
 	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
+	{
+		string[] libStr = new char[][libraries.length];
+
+		foreach (i, library; libraries )
+		{
+			libStr[i] = importLibs[library];
+		}
+
+		return getSymbol(symbol, libStr);
+	}
+
+	/*
+	 * Gets a simbol from one of the provided libraries
+	 * Params:
+	 *     symbol    = The name of the symbol to link
+	 *     libraries = One or more libraries to search for the symbol
+	 */
+	public static void* getSymbol(string symbol, string[] libraries ...)
 	{
 		void* handle;
 
@@ -84,12 +114,12 @@ public struct Linker
 	/*
 	 * Loads a library
 	 */
-	public static void loadLibrary(LIBRARY library)
+	public static void loadLibrary(string library)
 	{
-		void* handle = pLoadLibrary(libPath ~ importLibs[library]);
+		void* handle = pLoadLibrary(libPath ~ library);
 
 		if ( handle is null )
-			throw new Exception("Library load failed: " ~ importLibs[library]);
+			throw new Exception("Library load failed: " ~ library);
 
 		loadedLibraries[library] = handle;
 	}
@@ -98,6 +128,14 @@ public struct Linker
 	 * Unload a library
 	 */
 	public static void unloadLibrary(LIBRARY library)
+	{
+		unloadLibrary( importLibs[library] );
+	}
+
+	/*
+	 * Unload a library
+	 */
+	public static void unloadLibrary(string library)
 	{
 		pUnloadLibrary(loadedLibraries[library]);
 
@@ -117,7 +155,7 @@ public struct Linker
 	 * Gets all libraries loaded.
 	 * returns: An array with the loaded libraries
 	 */
-	public static LIBRARY[] getLoadLibraries()
+	public static string[] getLoadLibraries()
 	{
 		return loadedLibraries.keys;
 	}
@@ -130,10 +168,31 @@ public struct Linker
 		foreach ( lib; getLoadLibraries() )
 		{
 			version(Tango)
-				Stdout.formatln("Loaded lib = {}", importLibs[lib]);
+				Stdout.formatln("Loaded lib = {}", lib);
 			else
-				writefln("Loaded lib = %s", importLibs[lib]);
+				writefln("Loaded lib = %s", lib);
 		}
+	}
+
+	/**
+	 * Checks if a library is loaded.
+	 * Returns: true is the library was loaded sucsessfully.
+	 */
+	public static bool isLoaded(LIBRARY library)
+	{
+		return isLoaded(importLibs[library]);
+	}
+
+	/**
+	 * Checks if a library is loaded.
+	 * Returns: true is the library was loaded sucsessfully.
+	 */
+	public static bool isLoaded(string library)
+	{
+		if ( library in loadedLibraries )
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -142,6 +201,16 @@ public struct Linker
 	 *          or null if none was found
 	 */
 	public static string[] getLoadFailures(LIBRARY library)
+	{
+		return getLoadFailures(importLibs[library]);
+	}
+
+	/**
+	 * Gets all the failed loads for a specific library.
+	 * returns: An array of the names hat failed to load for a specific library
+	 *          or null if none was found
+	 */
+	public static string[] getLoadFailures(string library)
 	{
 		if ( library in loadFailures )
 			return loadFailures[library];
@@ -159,9 +228,9 @@ public struct Linker
 			foreach ( symbol; getLoadFailures(library) )
 			{
 				version(Tango)
-					Stdout.formatln("failed ({}) {}", importLibs[library], symbol);
+					Stdout.formatln("failed ({}) {}", library, symbol);
 				else
-					writefln("failed (%s) %s", importLibs[library], symbol);
+					writefln("failed (%s) %s", library, symbol);
 			}
 		}
 	}
