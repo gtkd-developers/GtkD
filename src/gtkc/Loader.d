@@ -265,6 +265,7 @@ version(Unix)
 
 	enum RTLD
 	{
+		GDC_BUG_WORKAROUND, 
 		LAZY     = 0x00001,  // Lazy function call binding
 		NOW      = 0x00002,  // Immediate function call binding
 		NOLOAD   = 0x00004,  // No object load
