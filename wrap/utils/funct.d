@@ -866,6 +866,10 @@ public struct Funct
 				bd ~= GtkDClass.tokenToGtkD(parmsType[i].chomp("*"), convParms, aliases) ~" "~ id ~";";
 				gtkCall ~= "&"~ id;
 			}
+			else if ( parmsWrap[i] == "FILE*" ) //Phobos Workaround
+			{
+				gtkCall ~= "cast(void*)"~ GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+			}
 			else
 			{
 				if ( parms[i].length > 0 )
@@ -898,6 +902,10 @@ public struct Funct
 				bd ~= end;
 
 			return bd;
+		}
+		else if (type == "FILE*") //Phobos Workaround.
+		{
+			return bd ~= "return cast(FILE*)" ~ gtkCall ~ ";";
 		}
 		else
 		{

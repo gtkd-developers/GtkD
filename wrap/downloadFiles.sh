@@ -25,7 +25,7 @@ curl http://library.gnome.org/devel/pango/pango-html-1.24.0.tar.gz | tar xvfz -
 ln -s pango-html-1.24.0 pango
 #GDK-PIXBUF
 curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.16.0.tar.gz | tar xvfz -
-ln -s gdk-pixbuf-html-2.16.2 gdk-pixbuf
+ln -s gdk-pixbuf-html-2.16.0 gdk-pixbuf
 #GDK
 curl http://library.gnome.org/devel/gdk/gdk-html-2.16.0.tar.gz | tar xvfz -
 ln -s gdk-html-2.16.0 gdk
