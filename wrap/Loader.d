@@ -71,7 +71,7 @@ public struct Linker
 	 */
 	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
 	{
-		string[] libStr = new char[][libraries.length];
+		string[] libStr = new string[libraries.length];
 
 		foreach (i, library; libraries )
 		{
