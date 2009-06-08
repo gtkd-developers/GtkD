@@ -116,7 +116,7 @@ gtkd:      $(LIBNAME_GTKD)
 gtkdgl:    $(LIBNAME_GTKDGL)
 sv:        $(LIBNAME_GTKDSV)
 gda:       $(LIBNAME_GTKDGDA)
-gstreamer: $(LIBNAME_GTKDGST)
+gstreamer: $(LIBNAME_GSTREAMERD)
 
 $(LIBNAME_GTKD): IMPORTS=-Isrc
 $(LIBNAME_GTKD): $(OBJECTS_GTKD)

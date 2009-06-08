@@ -52,6 +52,7 @@
  * 	- gst_message_new_eos
  * 	- gst_message_new_error
  * 	- gst_message_new_info
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.Quark
@@ -59,9 +60,9 @@
  * 	- gstreamer.ObjectGst
  * 	- gstreamer.Clock
  * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gstreamer.TagList
  * structWrap:
- * 	- GError* -> ErrorG
  * 	- GQuark -> Quark
  * 	- GstClock* -> Clock
  * 	- GstMessage* -> Message
@@ -70,21 +71,15 @@
  * 	- GstTagList* -> TagList
  * module aliases:
  * local aliases:
+ * overrides:
  */
 
 module gstreamer.Message;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gstreamerc.gstreamertypes;
+public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
+private import glib.ConstructionException;
 
 
 private import glib.Str;
@@ -93,6 +88,7 @@ private import gstreamer.Structure;
 private import gstreamer.ObjectGst;
 private import gstreamer.Clock;
 private import glib.ErrorG;
+private import glib.GException;
 private import gstreamer.TagList;
 
 
@@ -137,25 +133,10 @@ public class Message
 	 */
 	public this (GstMessage* gstMessage)
 	{
-		version(noAssert)
+		if(gstMessage is null)
 		{
-			if ( gstMessage is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gstMessage is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gstMessage is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gstMessage !is null, "struct gstMessage is null on constructor");
+			this = null;
+			return;
 		}
 		this.gstMessage = gstMessage;
 	}
@@ -188,10 +169,8 @@ public class Message
 	 * Extracts the tag list from the GstMessage. The tag list returned in the
 	 * output argument is a copy; the caller must free it when done.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_TAG.
-	 * tag_list:
-	 *  Return location for the tag-list.
+	 * Params:
+	 *  tagList = Return location for the tag-list.
 	 */
 	/*public void parseTag(GstTagList** tagList)
 	{
@@ -209,8 +188,8 @@ public class Message
 	//I'm not so sure about the following:
 	/**
 	 * Get the unique quark for the given message type.
-	 * type:
-	 *  the message type
+	 * Params:
+	 *  type = the message type
 	 * Returns:
 	 *  the quark associated with the message type
 	 */
@@ -225,14 +204,13 @@ public class Message
 	 * allowing one-way communication from an element to an application, for example
 	 * "the firewire cable was unplugged". The format of the message should be
 	 * documented in the element's documentation. The structure field can be NULL.
-	 * src:
-	 *  The object originating the message.
-	 * structure:
-	 *  The structure for the message. The message will take ownership of
-	 * the structure.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  structure = The structure for the message. The message will take ownership of
+	 *  the structure.
 	 * Returns:
 	 *  The new element message.
-	 * MT safe.
 	 */
 	public static Message newElement(ObjectGst src, Structure structure)
 	{
@@ -243,13 +221,12 @@ public class Message
 	/**
 	 * Create a new clock message. This message is posted whenever the
 	 * pipeline selectes a new clock for the pipeline.
-	 * src:
-	 *  The object originating the message.
-	 * clock:
-	 *  the new selected clock
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  clock = the new selected clock
 	 * Returns:
 	 *  The new new clock message.
-	 * MT safe.
 	 */
 	public static Message newNewClock(ObjectGst src, Clock clock)
 	{
@@ -262,15 +239,13 @@ public class Message
 	 * finish playback of a segment as a result of a segment seek. This message
 	 * is received by the application after all elements that posted a segment_start
 	 * have posted the segment_done.
-	 * src:
-	 *  The object originating the message.
-	 * format:
-	 *  The format of the position being done
-	 * position:
-	 *  The position of the segment being done
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  format = The format of the position being done
+	 *  position = The position of the segment being done
 	 * Returns:
 	 *  The new segment done message.
-	 * MT safe.
 	 */
 	public static Message newSegmentDone(ObjectGst src, GstFormat format, long position)
 	{
@@ -283,15 +258,13 @@ public class Message
 	 * start playback of a segment as a result of a segment seek. This message
 	 * is not received by the application but is used for maintenance reasons in
 	 * container elements.
-	 * src:
-	 *  The object originating the message.
-	 * format:
-	 *  The format of the position being played
-	 * position:
-	 *  The position of the segment being played
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  format = The format of the position being played
+	 *  position = The position of the segment being played
 	 * Returns:
 	 *  The new segment start message.
-	 * MT safe.
 	 */
 	public static Message newSegmentStart(ObjectGst src, GstFormat format, long position)
 	{
@@ -302,17 +275,15 @@ public class Message
 	/**
 	 * Create a new warning message. The message will make copies of error and
 	 * debug.
-	 * src:
-	 *  The object originating the message.
-	 * error:
-	 *  The GError for this message.
-	 * debug:
-	 *  A debugging string for something or other.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
 	 * Returns:
 	 *  The new warning message.
-	 * MT safe.
 	 */
-	public static Message newWarning(ObjectGst src, ErrorG error, char[] dbug)
+	public static Message newWarning(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
@@ -322,11 +293,11 @@ public class Message
 	 * Create a state dirty message. This message is posted whenever an element
 	 * changed its state asynchronously and is used internally to update the
 	 * states of container objects.
-	 * src:
-	 *  the object originating the message
+	 * MT safe.
+	 * Params:
+	 *  src = the object originating the message
 	 * Returns:
 	 *  The new state dirty message.
-	 * MT safe.
 	 */
 	public static Message newStateDirty(ObjectGst src)
 	{
@@ -338,11 +309,11 @@ public class Message
 	 * Create a new eos message. This message is generated and posted in
 	 * the sink elements of a GstBin. The bin will only forward the EOS
 	 * message to the application if all sinks have posted an EOS message.
-	 * src:
-	 *  The object originating the message.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
 	 * Returns:
 	 *  The new eos message.
-	 * MT safe.
 	 */
 	public static Message newEOS(ObjectGst src)
 	{
@@ -355,17 +326,15 @@ public class Message
 	 * debug. This message is posted by element when a fatal event
 	 * occured. The pipeline will probably (partially) stop. The application
 	 * receiving this message should stop the pipeline.
-	 * src:
-	 *  The object originating the message.
-	 * error:
-	 *  The GError for this message.
-	 * debug:
-	 *  A debugging string for something or other.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
 	 * Returns:
 	 *  The new error message.
-	 * MT safe.
 	 */
-	public static Message newError(ObjectGst src, ErrorG error, char[] dbug)
+	public static Message newError(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_error (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
@@ -374,18 +343,16 @@ public class Message
 	/**
 	 * Create a new info message. The message will make copies of error and
 	 * debug.
-	 * src:
-	 *  The object originating the message.
-	 * error:
-	 *  The GError for this message.
-	 * debug:
-	 *  A debugging string for something or other.
+	 * MT safe.
+	 * Since 0.10.12
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
 	 * Returns:
 	 *  The new info message.
-	 * Since 0.10.12
-	 * MT safe.
 	 */
-	public static Message newInfo(ObjectGst src, ErrorG error, char[] dbug)
+	public static Message newInfo(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
@@ -394,61 +361,51 @@ public class Message
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Get a printable name for the given message type. Do not modify or free.
-	 * type:
-	 *  the message type
-	 * Returns:
-	 *  a reference to the static name of the message.
+	 * Params:
+	 * type =  the message type
+	 * Returns: a reference to the static name of the message.
 	 */
-	public static char[] typeGetName(GstMessageType type)
+	public static string typeGetName(GstMessageType type)
 	{
 		// const gchar* gst_message_type_get_name (GstMessageType type);
-		return Str.toString(gst_message_type_get_name(type) );
+		return Str.toString(gst_message_type_get_name(type));
 	}
-	
 	
 	/**
 	 * Access the structure of the message.
-	 * message:
-	 *  The GstMessage.
-	 * Returns:
-	 *  The structure of the message. The structure is still
-	 * owned by the message, which means that you should not free it and
-	 * that the pointer becomes invalid when you free the message.
-	 * MT safe.
+	 * Returns: The structure of the message. The structure is stillowned by the message, which means that you should not free it andthat the pointer becomes invalid when you free the message.MT safe.
 	 */
 	public Structure getStructure()
 	{
 		// const GstStructure* gst_message_get_structure  (GstMessage *message);
-		return new Structure( gst_message_get_structure(gstMessage) );
+		auto p = gst_message_get_structure(gstMessage);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Structure(cast(GstStructure*) p);
 	}
-	
 	
 	/**
 	 * Create a new application-typed message. GStreamer will never create these
 	 * messages; they are a gift from us to you. Enjoy.
-	 * src:
-	 *  The object originating the message.
-	 * structure:
-	 *  The structure for the message. The message will take ownership of
+	 * Params:
+	 * src =  The object originating the message.
+	 * structure =  The structure for the message. The message will take ownership of
 	 * the structure.
-	 * Returns:
-	 *  The new application message.
-	 * MT safe.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, Structure structure)
 	{
 		// GstMessage* gst_message_new_application (GstObject *src,  GstStructure *structure);
-		this(cast(GstMessage*)gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct()) );
+		auto p = gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct())");
+		}
+		this(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -457,20 +414,21 @@ public class Message
 	 * a clock (maybe because it paused or became EOS).
 	 * This message is mainly used internally to manage the clock
 	 * selection.
-	 * src:
-	 *  The object originating the message.
-	 * clock:
-	 *  The clock it provides
-	 * ready:
-	 *  TRUE if the sender can provide a clock
-	 * Returns:
-	 *  The new provide clock message.
-	 * MT safe.
+	 * Params:
+	 * src =  The object originating the message.
+	 * clock =  The clock it provides
+	 * ready =  TRUE if the sender can provide a clock
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, Clock clock, int ready)
 	{
 		// GstMessage* gst_message_new_clock_provide (GstObject *src,  GstClock *clock,  gboolean ready);
-		this(cast(GstMessage*)gst_message_new_clock_provide((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct(), ready) );
+		auto p = gst_message_new_clock_provide((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct(), ready);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_clock_provide((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct(), ready)");
+		}
+		this(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -479,84 +437,82 @@ public class Message
 	 * If this message is posted by the pipeline, the pipeline will
 	 * select a new clock again when it goes to PLAYING. It might therefore
 	 * be needed to set the pipeline to PAUSED and PLAYING again.
-	 * src:
-	 *  The object originating the message.
-	 * clock:
-	 *  the clock that was lost
-	 * Returns:
-	 *  The new clock lost message.
-	 * MT safe.
+	 * Params:
+	 * src =  The object originating the message.
+	 * clock =  the clock that was lost
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, Clock clock)
 	{
 		// GstMessage* gst_message_new_clock_lost (GstObject *src,  GstClock *clock);
-		this(cast(GstMessage*)gst_message_new_clock_lost((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct()) );
+		auto p = gst_message_new_clock_lost((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_clock_lost((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct())");
+		}
+		this(cast(GstMessage*) p);
 	}
 	
 	/**
 	 * Create a new custom-typed message. This can be used for anything not
 	 * handled by other message-specific functions to pass a message to the
 	 * app. The structure field can be NULL.
-	 * type:
-	 *  The GstMessageType to distinguish messages
-	 * src:
-	 *  The object originating the message.
-	 * structure:
-	 *  The structure for the message. The message will take ownership of
+	 * Params:
+	 * type =  The GstMessageType to distinguish messages
+	 * src =  The object originating the message.
+	 * structure =  The structure for the message. The message will take ownership of
 	 * the structure.
-	 * Returns:
-	 *  The new message.
-	 * MT safe.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GstMessageType type, ObjectGst src, Structure structure)
 	{
 		// GstMessage* gst_message_new_custom (GstMessageType type,  GstObject *src,  GstStructure *structure);
-		this(cast(GstMessage*)gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct()) );
+		auto p = gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct())");
+		}
+		this(cast(GstMessage*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Create a state change message. This message is posted whenever an element
 	 * changed its state.
-	 * src:
-	 *  the object originating the message
-	 * oldstate:
-	 *  the previous state
-	 * newstate:
-	 *  the new (current) state
-	 * pending:
-	 *  the pending (target) state
-	 * Returns:
-	 *  The new state change message.
-	 * MT safe.
+	 * Params:
+	 * src =  the object originating the message
+	 * oldstate =  the previous state
+	 * newstate =  the new (current) state
+	 * pending =  the pending (target) state
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, GstState oldstate, GstState newstate, GstState pending)
 	{
 		// GstMessage* gst_message_new_state_changed (GstObject *src,  GstState oldstate,  GstState newstate,  GstState pending);
-		this(cast(GstMessage*)gst_message_new_state_changed((src is null) ? null : src.getObjectGstStruct(), oldstate, newstate, pending) );
+		auto p = gst_message_new_state_changed((src is null) ? null : src.getObjectGstStruct(), oldstate, newstate, pending);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_state_changed((src is null) ? null : src.getObjectGstStruct(), oldstate, newstate, pending)");
+		}
+		this(cast(GstMessage*) p);
 	}
 	
 	/**
 	 * Create a new tag message. The message will take ownership of the tag list.
 	 * The message is posted by elements that discovered a new taglist.
-	 * src:
-	 *  The object originating the message.
-	 * tag_list:
-	 *  The tag list for the message.
-	 * Returns:
-	 *  The new tag message.
-	 * MT safe.
+	 * Params:
+	 * src =  The object originating the message.
+	 * tagList =  The tag list for the message.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, TagList tagList)
 	{
 		// GstMessage* gst_message_new_tag (GstObject *src,  GstTagList *tag_list);
-		this(cast(GstMessage*)gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct()) );
+		auto p = gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct())");
+		}
+		this(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -569,21 +525,21 @@ public class Message
 	 * PREROLLING state and may only set the pipeline to PLAYING after receiving a
 	 * message with percent set to 100, which can happen after the pipeline
 	 * completed prerolling.
-	 * src:
-	 *  The object originating the message.
-	 * percent:
-	 *  The buffering percent
-	 * Returns:
-	 *  The new buffering message.
-	 * Since 0.10.11
-	 * MT safe.
+	 * Params:
+	 * src =  The object originating the message.
+	 * percent =  The buffering percent
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, int percent)
 	{
 		// GstMessage* gst_message_new_buffering (GstObject *src,  gint percent);
-		this(cast(GstMessage*)gst_message_new_buffering((src is null) ? null : src.getObjectGstStruct(), percent) );
+		auto p = gst_message_new_buffering((src is null) ? null : src.getObjectGstStruct(), percent);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_buffering((src is null) ? null : src.getObjectGstStruct(), percent)");
+		}
+		this(cast(GstMessage*) p);
 	}
-	
 	
 	/**
 	 * Create a new duration message. This message is posted by elements that
@@ -593,47 +549,47 @@ public class Message
 	 * GST_CLOCK_TIME_NONE to indicate that the duration has changed and the
 	 * cached duration should be discarded. The new duration can then be
 	 * retrieved via a query.
-	 * src:
-	 *  The object originating the message.
-	 * format:
-	 *  The format of the duration
-	 * duration:
-	 *  The new duration
-	 * Returns:
-	 *  The new duration message.
-	 * MT safe.
+	 * Params:
+	 * src =  The object originating the message.
+	 * format =  The format of the duration
+	 * duration =  The new duration
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, GstFormat format, long duration)
 	{
 		// GstMessage* gst_message_new_duration (GstObject *src,  GstFormat format,  gint64 duration);
-		this(cast(GstMessage*)gst_message_new_duration((src is null) ? null : src.getObjectGstStruct(), format, duration) );
+		auto p = gst_message_new_duration((src is null) ? null : src.getObjectGstStruct(), format, duration);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_duration((src is null) ? null : src.getObjectGstStruct(), format, duration)");
+		}
+		this(cast(GstMessage*) p);
 	}
-	
 	
 	/**
 	 * This message can be posted by elements when their latency requirements have
 	 * changed.
-	 * src:
-	 *  The object originating the message.
-	 * Returns:
-	 *  The new latency message.
-	 * MT safe.
-	 * Since 0.10.12
+	 * Params:
+	 * src =  The object originating the message.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src)
 	{
 		// GstMessage* gst_message_new_latency (GstObject *src);
-		this(cast(GstMessage*)gst_message_new_latency((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_latency((src is null) ? null : src.getObjectGstStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_latency((src is null) ? null : src.getObjectGstStruct())");
+		}
+		this(cast(GstMessage*) p);
 	}
 	
 	/**
 	 * Extracts the lost clock from the GstMessage.
 	 * The clock object returned remains valid until the message is freed.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_CLOCK_LOST.
-	 * clock:
-	 *  A pointer to hold the lost clock
+	 * Params:
+	 * clock =  A pointer to hold the lost clock
 	 */
 	public void parseClockLost(GstClock** clock)
 	{
@@ -645,12 +601,9 @@ public class Message
 	 * Extracts the clock and ready flag from the GstMessage.
 	 * The clock object returned remains valid until the message is freed.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_CLOCK_PROVIDE.
-	 * clock:
-	 *  A pointer to hold a clock object.
-	 * ready:
-	 *  A pointer to hold the ready flag.
+	 * Params:
+	 * clock =  A pointer to hold a clock object.
+	 * ready =  A pointer to hold the ready flag.
 	 */
 	public void parseClockProvide(GstClock** clock, int* ready)
 	{
@@ -662,45 +615,57 @@ public class Message
 	 * Extracts the GError and debug string from the GstMessage. The values returned
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_ERROR.
-	 * gerror:
-	 *  Location for the GError
-	 * debug:
-	 *  Location for the debug message, or NULL
+	 * Params:
+	 * dbug =  Location for the debug message, or NULL
+	 * Throws: GException on failure.
 	 */
-	public void parseError(GError** gerror, char** dbug)
+	public void parseError(out string dbug)
 	{
 		// void gst_message_parse_error (GstMessage *message,  GError **gerror,  gchar **debug);
-		gst_message_parse_error(gstMessage, gerror, dbug);
+		GError* err = null;
+		char* outdbug = null;
+		
+		gst_message_parse_error(gstMessage, &err, &outdbug);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		dbug = Str.toString(outdbug);
 	}
 	
 	/**
 	 * Extracts the GError and debug string from the GstMessage. The values returned
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_INFO.
-	 * gerror:
-	 *  Location for the GError
-	 * debug:
-	 *  Location for the debug message, or NULL
+	 * Params:
+	 * dbug =  Location for the debug message, or NULL
 	 * Since 0.10.12
+	 * Throws: GException on failure.
 	 */
-	public void parseInfo(GError** gerror, char** dbug)
+	public void parseInfo(out string dbug)
 	{
 		// void gst_message_parse_info (GstMessage *message,  GError **gerror,  gchar **debug);
-		gst_message_parse_info(gstMessage, gerror, dbug);
+		GError* err = null;
+		char* outdbug = null;
+		
+		gst_message_parse_info(gstMessage, &err, &outdbug);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		dbug = Str.toString(outdbug);
 	}
 	
 	/**
 	 * Extracts the new clock from the GstMessage.
 	 * The clock object returned remains valid until the message is freed.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_NEW_CLOCK.
-	 * clock:
-	 *  A pointer to hold the selected new clock
+	 * Params:
+	 * clock =  A pointer to hold the selected new clock
 	 */
 	public void parseNewClock(GstClock** clock)
 	{
@@ -711,12 +676,9 @@ public class Message
 	/**
 	 * Extracts the position and format from the segment start message.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_SEGMENT_DONE.
-	 * format:
-	 *  Result location for the format, or NULL
-	 * position:
-	 *  Result location for the position, or NULL
+	 * Params:
+	 * format =  Result location for the format, or NULL
+	 * position =  Result location for the position, or NULL
 	 */
 	public void parseSegmentDone(GstFormat* format, long* position)
 	{
@@ -727,12 +689,9 @@ public class Message
 	/**
 	 * Extracts the position and format from the segment start message.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_SEGMENT_START.
-	 * format:
-	 *  Result location for the format, or NULL
-	 * position:
-	 *  Result location for the position, or NULL
+	 * Params:
+	 * format =  Result location for the format, or NULL
+	 * position =  Result location for the position, or NULL
 	 */
 	public void parseSegmentStart(GstFormat* format, long* position)
 	{
@@ -743,14 +702,10 @@ public class Message
 	/**
 	 * Extracts the old and new states from the GstMessage.
 	 * MT safe.
-	 * message:
-	 *  a valid GstMessage of type GST_MESSAGE_STATE_CHANGED
-	 * oldstate:
-	 *  the previous state, or NULL
-	 * newstate:
-	 *  the new (current) state, or NULL
-	 * pending:
-	 *  the pending (target) state, or NULL
+	 * Params:
+	 * oldstate =  the previous state, or NULL
+	 * newstate =  the new (current) state, or NULL
+	 * pending =  the pending (target) state, or NULL
 	 */
 	public void parseStateChanged(GstState* oldstate, GstState* newstate, GstState* pending)
 	{
@@ -758,14 +713,11 @@ public class Message
 		gst_message_parse_state_changed(gstMessage, oldstate, newstate, pending);
 	}
 	
-	
 	/**
 	 * Extracts the buffering percent from the GstMessage. see also
 	 * gst_message_new_buffering().
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_BUFFERING.
-	 * percent:
-	 *  Return location for the percent.
+	 * Params:
+	 * percent =  Return location for the percent.
 	 * Since 0.10.11
 	 * MT safe.
 	 */
@@ -779,17 +731,24 @@ public class Message
 	 * Extracts the GError and debug string from the GstMessage. The values returned
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_WARNING.
-	 * gerror:
-	 *  Location for the GError
-	 * debug:
-	 *  Location for the debug message, or NULL
+	 * Params:
+	 * dbug =  Location for the debug message, or NULL
+	 * Throws: GException on failure.
 	 */
-	public void parseWarning(GError** gerror, char** dbug)
+	public void parseWarning(out string dbug)
 	{
 		// void gst_message_parse_warning (GstMessage *message,  GError **gerror,  gchar **debug);
-		gst_message_parse_warning(gstMessage, gerror, dbug);
+		GError* err = null;
+		char* outdbug = null;
+		
+		gst_message_parse_warning(gstMessage, &err, &outdbug);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		dbug = Str.toString(outdbug);
 	}
 	
 	/**
@@ -798,12 +757,9 @@ public class Message
 	 * changed. Applications should always use a query to retrieve the duration
 	 * of a pipeline.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_DURATION.
-	 * format:
-	 *  Result location for the format, or NULL
-	 * duration:
-	 *  Result location for the duration, or NULL
+	 * Params:
+	 * format =  Result location for the format, or NULL
+	 * duration =  Result location for the duration, or NULL
 	 */
 	public void parseDuration(GstFormat* format, long* duration)
 	{
@@ -813,15 +769,16 @@ public class Message
 	
 	/**
 	 * Convenience macro to increase the reference count of the message.
-	 * msg:
-	 *  the message to ref
-	 * Returns:
-	 *  msg (for convenience when doing assignments)
+	 * Returns: msg (for convenience when doing assignments)
 	 */
 	public Message doref()
 	{
 		// GstMessage* gst_message_ref (GstMessage *msg);
-		return new Message( gst_message_ref(gstMessage) );
+		auto p = gst_message_ref(gstMessage);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Message(cast(GstMessage*) p);
 	}
-	
 }
