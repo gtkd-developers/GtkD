@@ -163,11 +163,11 @@ public:
 
 			case GstMessageType.ERROR:
 			{
-				gchar *dbug;
-				GError *err;
-				msg.parseError(&err, &dbug);
+				string  dbug;
+				GError* err;
+				msg.parseError(err, dbug);
 				//g_free (dbug);
-				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.message), Stringz.fromStringz(dbug) );
+				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.message), dbug );
 				//g_error_free (err);
 				Main.quit();
 			break;
