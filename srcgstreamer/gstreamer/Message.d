@@ -60,7 +60,6 @@
  * 	- gstreamer.ObjectGst
  * 	- gstreamer.Clock
  * 	- glib.ErrorG
- * 	- glib.GException
  * 	- gstreamer.TagList
  * structWrap:
  * 	- GQuark -> Quark
@@ -88,7 +87,6 @@ private import gstreamer.Structure;
 private import gstreamer.ObjectGst;
 private import gstreamer.Clock;
 private import glib.ErrorG;
-private import glib.GException;
 private import gstreamer.TagList;
 
 
@@ -616,21 +614,15 @@ public class Message
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
 	 * Params:
+	 * gerror =  Location for the GError
 	 * dbug =  Location for the debug message, or NULL
-	 * Throws: GException on failure.
 	 */
-	public void parseError(out string dbug)
+	public void parseError(out GError* gerror, out string dbug)
 	{
 		// void gst_message_parse_error (GstMessage *message,  GError **gerror,  gchar **debug);
-		GError* err = null;
 		char* outdbug = null;
 		
-		gst_message_parse_error(gstMessage, &err, &outdbug);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
+		gst_message_parse_error(gstMessage, &gerror, &outdbug);
 		
 		dbug = Str.toString(outdbug);
 	}
@@ -640,22 +632,16 @@ public class Message
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
 	 * Params:
+	 * gerror =  Location for the GError
 	 * dbug =  Location for the debug message, or NULL
 	 * Since 0.10.12
-	 * Throws: GException on failure.
 	 */
-	public void parseInfo(out string dbug)
+	public void parseInfo(out GError* gerror, out string dbug)
 	{
 		// void gst_message_parse_info (GstMessage *message,  GError **gerror,  gchar **debug);
-		GError* err = null;
 		char* outdbug = null;
 		
-		gst_message_parse_info(gstMessage, &err, &outdbug);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
+		gst_message_parse_info(gstMessage, &gerror, &outdbug);
 		
 		dbug = Str.toString(outdbug);
 	}
@@ -732,21 +718,15 @@ public class Message
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
 	 * Params:
+	 * gerror =  Location for the GError
 	 * dbug =  Location for the debug message, or NULL
-	 * Throws: GException on failure.
 	 */
-	public void parseWarning(out string dbug)
+	public void parseWarning(out GError* gerror, out string dbug)
 	{
 		// void gst_message_parse_warning (GstMessage *message,  GError **gerror,  gchar **debug);
-		GError* err = null;
 		char* outdbug = null;
 		
-		gst_message_parse_warning(gstMessage, &err, &outdbug);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
+		gst_message_parse_warning(gstMessage, &gerror, &outdbug);
 		
 		dbug = Str.toString(outdbug);
 	}

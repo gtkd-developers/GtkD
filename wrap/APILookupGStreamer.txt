@@ -1119,7 +1119,6 @@ import: gstreamer.Structure
 import: gstreamer.ObjectGst
 import: gstreamer.Clock
 import: glib.ErrorG
-import: glib.GException
 #import: gstreamer.Format
 import: gstreamer.TagList
 structWrap: GstMessage* Message
@@ -1127,14 +1126,18 @@ structWrap: GQuark Quark
 structWrap: GstStructure* Structure
 structWrap: GstObject* ObjectGst
 structWrap: GstClock* Clock
+#structWrap: GError* ErrorG 
 #GstClock**
 #structWrap: GFormat Format
 #structWrap: GFormat* Format
 structWrap: GstTagList* TagList
 
 out: gst_message_parse_error debug
+out: gst_message_parse_error gerror
 out: gst_message_parse_info debug
+out: gst_message_parse_info gerror
 out: gst_message_parse_warning debug
+out: gst_message_parse_warning gerror
 outFile: Message
 
 file: gstreamer-GstMiniObject.html

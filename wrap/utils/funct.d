@@ -513,7 +513,7 @@ public struct Funct
 				}
 			}
 
-			if ( GtkDClass.startsWith(parmsType[i], "GError**") && convParms.strct != "GError" )
+			if ( GtkDClass.startsWith(parmsWrap[i], "GError**") && convParms.strct != "GError" )
 			{
 				++i;
 				continue;
@@ -708,7 +708,7 @@ public struct Funct
 					gtkCall ~= "get"~convParms.clss~"Struct()";
 				}
 			}
-			else if ( parmsType[i] == "GError**" && convParms.strct != "GError")
+			else if ( parmsWrap[i] == "GError**" && convParms.strct != "GError")
 			{
 				bd ~= "GError* err = null;";
 

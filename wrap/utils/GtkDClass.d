@@ -2240,7 +2240,7 @@ public class GtkDClass
 								description ~= ret;
 
 							if ( find(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
-							   && find(fun.declaration(convParms,wrapper.getAliases()), "t ErrorG") == -1 )
+							   && find(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
 							{
 								description ~= "Throws: GException on failure.";
 							}
