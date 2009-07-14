@@ -608,7 +608,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * gtk_print_operation_run(), or in the "done" signal
 	 * handler. The returned GError will contain more details on what went wrong.
 	 * Since 2.10
-	 * Throws: GException on failure.
 	 */
 	public void getError()
 	{

@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Builder
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_builder_new
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -50,6 +51,10 @@
  * 	- glib.ListSG
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gtkc.gobject: g_type_from_name
+ * 	- gtkc.paths
+ * 	- glib.Module
+ * 	- gobject.Type
  * structWrap:
  * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
@@ -75,6 +80,10 @@ private import gobject.Value;
 private import glib.ListSG;
 private import glib.ErrorG;
 private import glib.GException;
+private import gtkc.gobject: g_type_from_name;
+private import gtkc.paths;
+private import glib.Module;
+private import gobject.Type;
 
 
 
@@ -308,8 +317,21 @@ public class Builder : ObjectG
 		this.gtkBuilder = gtkBuilder;
 	}
 	
-	/**
-	 */
+	private struct GtkBuilderClass
+	{
+		GObjectClass parentClass;
+		extern(C) GType function( GtkBuilder*, char* ) get_type_from_name;
+		
+		/* Padding for future expansion */
+		extern(C) void  function()  _gtk_reserved1;
+		extern(C) void  function()  _gtk_reserved2;
+		extern(C) void  function()  _gtk_reserved3;
+		extern(C) void  function()  _gtk_reserved4;
+		extern(C) void  function()  _gtk_reserved5;
+		extern(C) void  function()  _gtk_reserved6;
+		extern(C) void  function()  _gtk_reserved7;
+		extern(C) void  function()  _gtk_reserved8;
+	}
 	
 	/**
 	 * Creates a new builder object.
@@ -325,7 +347,74 @@ public class Builder : ObjectG
 			throw new ConstructionException("null returned by gtk_builder_new()");
 		}
 		this(cast(GtkBuilder*) p);
+		
+		GtkBuilderClass* klass = Type.getInstanceClass!(GtkBuilderClass)( this );
+		klass.get_type_from_name = &gtk_builder_real_get_type_from_name_override;
 	}
+	
+	/**
+	 * This function is a modification of _gtk_builder_resolve_type_lazily from "gtk/gtkbuilder.c".
+	 * It is needed because it assumes we are linking at compile time to the gtk libs.
+	 * specifically the NULL in g_module_open( NULL, 0 );
+	 * It replaces the default function pointer "get_type_from_name" in GtkBuilderClass.
+	 */
+	extern(C) private static GType gtk_builder_real_get_type_from_name_override ( GtkBuilder* builder, char *name )
+	{
+		GType gtype;
+		gtype = g_type_from_name( name );
+		if (gtype != GType.INVALID)
+		{
+			return gtype;
+		}
+		
+		/*
+		 * Try to map a type name to a _get_type function
+		 * and call it, eg:
+		 *
+		 * GtkWindow -> gtk_window_get_type
+		 * GtkHBox -> gtk_hbox_get_type
+		 * GtkUIManager -> gtk_ui_manager_get_type
+		 *
+		 */
+		char   c;
+		char[] symbol_name;
+		
+		for (int i = 0; name[i] != '\0'; i++)
+		{
+			c = name[i];
+			/* skip if uppercase, first or previous is uppercase */
+			if ((c == Str.asciiToupper (c) &&
+			i > 0 && name[i-1] != Str.asciiToupper (name[i-1])) ||
+			(i > 2 && name[i]   == Str.asciiToupper (name[i]) &&
+			name[i-1] == Str.asciiToupper (name[i-1]) &&
+			name[i-2] == Str.asciiToupper (name[i-2]))
+			)
+			
+			symbol_name ~= '_';
+			symbol_name ~= Str.asciiTolower (c);
+		}
+		symbol_name ~=  "_get_type" ;
+		
+		/* scan linked librarys for function symbol */
+		foreach ( lib; importLibs )
+		{
+			GType function() func;
+			Module mod = Module.open( libPath ~ lib, GModuleFlags.BIND_LAZY );
+			if( mod is null )
+			continue;
+			
+			scope(exit) mod.close();
+			
+			if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
+				return func();
+			}
+		}
+		
+		return GType.INVALID;
+	}
+	
+	/**
+	 */
 	
 	/**
 	 * Parses a file containing a GtkBuilder
