@@ -30,8 +30,7 @@ public import gtkc.gobjecttypes;
 ///* The pango Basic Types */
 public alias void FcPattern;
 public alias void FcCharSet;
-
-struct FT_Face;
+public alias void FT_Face;
 
 
 const int PANGO_SCALE = 1024;

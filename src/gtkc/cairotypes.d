@@ -27,8 +27,7 @@ public import gtkc.glibtypes;
 
 //public import std.c.windows.windows;
 private alias void* HDC;
-
-struct cairo_path_data_t;
+public  alias void  cairo_path_data_t;
 
 alias ubyte uchar;
 
