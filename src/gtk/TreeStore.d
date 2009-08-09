@@ -198,7 +198,7 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	/** */
 	void setValue(TreeIter iter, int column, int value)
 	{
-		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, (new Value(value)).getValueStruct() , -1);
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, value, -1);
 	}
 	
 	
