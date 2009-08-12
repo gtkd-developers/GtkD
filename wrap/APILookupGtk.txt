@@ -3576,7 +3576,7 @@ public class TreeModel : ObjectG, TreeModelIF
 
 		static GType customTreeModelgetType()
 		{
-			GType customTreeModelType = GType.INVALID;
+			GType customTreeModelType = Type.fromName("CustomTreeModel");
 
 			/* Some boilerplate type registration stuff */
 			if (customTreeModelType == GType.INVALID)
