@@ -237,7 +237,7 @@ public class Str
 		{
 			while (u)
 			{
-				c = (u % 10) + '0';
+				c = cast(char)((u % 10) + '0');
 				u /= 10;
 				ndigits++;
 				buffer[buffer.length - ndigits] = c;
@@ -271,7 +271,7 @@ public class Str
 		ndigits = 0;
 		while (u)
 		{
-			c = (u % 10) + '0';
+			c = cast(char)((u % 10) + '0');
 			u /= 10;
 			ndigits++;
 			buffer[buffer.length - ndigits] = c;
@@ -309,7 +309,7 @@ public class Str
 		int ndigits = 1;
 		while (u)
 		{
-			c = (u % 10) + '0';
+			c = cast(char)((u % 10)) + '0');
 			u /= 10;
 			buffer[buffer.length - ndigits] = c;
 			ndigits++;

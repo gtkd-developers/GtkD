@@ -377,7 +377,7 @@ public class Builder : ObjectG
 		 *
 		 */
 		char   c;
-		char[] symbol_name;
+		string symbol_name;
 		
 		for (int i = 0; name[i] != '\0'; i++)
 		{

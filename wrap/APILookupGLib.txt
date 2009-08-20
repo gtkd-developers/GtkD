@@ -885,7 +885,7 @@ code: start
 		{
 			while (u)
 			{
-				c = (u % 10) + '0';
+				c = cast(char)((u % 10) + '0');
 				u /= 10;
 				ndigits++;
 				buffer[buffer.length - ndigits] = c;
@@ -919,7 +919,7 @@ code: start
 		ndigits = 0;
 		while (u)
 		{
-			c = (u % 10) + '0';
+			c = cast(char)((u % 10) + '0');
 			u /= 10;
 			ndigits++;
 			buffer[buffer.length - ndigits] = c;
@@ -957,7 +957,7 @@ code: start
 		int ndigits = 1;
 		while (u)
 		{
-			c = (u % 10) + '0';
+			c = cast(char)((u % 10)) + '0');
 			u /= 10;
 			buffer[buffer.length - ndigits] = c;
 			ndigits++;
