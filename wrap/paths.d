@@ -229,10 +229,15 @@ version(Windows)
 	{
 		string libPath;
 
-		libPath = GetEnvironmentVariable("%GTK_BASEPATH%");
+		libPath = GetEnvironmentVariable("GTK_BASEPATH");
 
-		if(libPath.length > 0)
-			return libPath ~ "\\bin\\";
+		if ( libPath.length > 0 )
+		{
+			if ( libPath.length > 5 && lipPath[$-5..$] == "\\bin\\" )
+				return libPath;
+			else
+				return libPath ~ "\\bin\\";
+		}
 
 /* Throws an Access Violation with DMD 2.*
 		// version(Phobos)
