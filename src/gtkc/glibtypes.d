@@ -35,7 +35,7 @@ public alias ushort gushort;
 public alias int glong;
 public alias uint gulong;
 public alias byte gint8;
-public alias byte guint8;
+public alias ubyte guint8;
 public alias short gint16;
 public alias ushort guint16;
 public alias int gint32;
@@ -129,7 +129,7 @@ public alias int GTime;
  * Integer representing a day of the month; between 1 and
  * 31. G_DATE_BAD_DAY represents an invalid day of the month.
  */
-public alias byte GDateDay;
+public alias ubyte GDateDay;
 
 /**
  * typedef guint16 GDateYear;
@@ -2442,7 +2442,7 @@ public struct GPtrArray
  */
 public struct GByteArray
 {
-	byte *data;
+	ubyte *data;
 	uint len;
 }
 

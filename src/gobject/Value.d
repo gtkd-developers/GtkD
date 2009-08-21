@@ -471,7 +471,7 @@ public class Value
 	 * flags =  flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUchar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUchar(string name, string nick, string blurb, ubyte minimum, ubyte maximum, ubyte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);

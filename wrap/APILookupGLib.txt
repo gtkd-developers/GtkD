@@ -40,7 +40,7 @@ public alias ushort gushort;
 public alias int glong;
 public alias uint gulong;
 public alias byte gint8;
-public alias byte guint8;
+public alias ubyte guint8;
 public alias short gint16;
 public alias ushort guint16;
 public alias int gint32;

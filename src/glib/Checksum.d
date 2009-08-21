@@ -233,7 +233,7 @@ public class Checksum
 	 * digestLen =  an inout parameter. The caller initializes it to the size of buffer.
 	 *  After the call it contains the length of the digest.
 	 */
-	public void getDigest(byte* buffer, uint* digestLen)
+	public void getDigest(ubyte* buffer, uint* digestLen)
 	{
 		// void g_checksum_get_digest (GChecksum *checksum,  guint8 *buffer,  gsize *digest_len);
 		g_checksum_get_digest(gChecksum, buffer, digestLen);

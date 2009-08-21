@@ -64,7 +64,7 @@ alias: gushort ushort
 alias: glong int
 alias: gulong uint
 alias: gint8 byte
-alias: guint8 byte
+alias: guint8 ubyte
 alias: gint16 short
 alias: guint16 ushort
 alias: gint32 int

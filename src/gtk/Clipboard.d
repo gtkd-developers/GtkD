@@ -574,7 +574,7 @@ public class Clipboard : ObjectG
 	 * format =  return location for the format of the returned data
 	 * Returns: a newly-allocated binary block of data which must be freed with g_free(), or NULL if retrieving the selection data failed. (This could happen for various reasons, in particular if the clipboard was empty or if the contents of the clipboard could not be converted into text form.)
 	 */
-	public byte[] waitForRichText(TextBuffer buffer, out GdkAtom format)
+	public ubyte[] waitForRichText(TextBuffer buffer, out GdkAtom format)
 	{
 		// guint8 * gtk_clipboard_wait_for_rich_text (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
 		uint length;

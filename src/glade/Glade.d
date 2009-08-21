@@ -192,10 +192,10 @@ public class Glade : ObjectG
 		// GList* glade_xml_get_widget_prefix (GladeXML *self,  const char *name);
 		Widget[] ret;
 		ListG widgets = new ListG( glade_xml_get_widget_prefix(gladeXML, Str.toStringz(name)) );
-
+		
 		if (widgets  is null)
-			return null;
-
+		return null;
+		
 		for (int i=0;i < widgets.length; i++)
 		{
 			ret ~= newFromWidget( cast(void *)widgets.nthData(i) );

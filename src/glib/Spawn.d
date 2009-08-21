@@ -494,7 +494,6 @@ public class Spawn
 	 * standardError =  return location for child error messages, or NULL
 	 * exitStatus =  return location for child exit status, as returned by waitpid(), or NULL
 	 * Returns: TRUE on success, FALSE if an error was set.
-	 * Throws: GException on failure.
 	 */
 	public static int sync(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out string standardOutput, out string standardError, out int exitStatus)
 	{
@@ -571,7 +570,6 @@ public class Spawn
 	 * standardError =  return location for child errors
 	 * exitStatus =  return location for child exit status, as returned by waitpid()
 	 * Returns: TRUE on success, FALSE if an error was set
-	 * Throws: GException on failure.
 	 */
 	public static int commandLineSync(string commandLine, out string standardOutput, out string standardError, out int exitStatus)
 	{

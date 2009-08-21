@@ -560,9 +560,9 @@ public struct GParamSpecChar
 public struct GParamSpecUChar
 {
 	GParamSpec parentInstance;
-	byte minimum;
-	byte maximum;
-	byte defaultValue;
+	ubyte minimum;
+	ubyte maximum;
+	ubyte defaultValue;
 }
 
 

@@ -372,7 +372,7 @@ public class PgMiscellaneous
 	 * pbaseDir =  input base direction, and output resolved direction.
 	 * Returns: a newly allocated array of embedding levels, one item per character (not byte), that should be freed using g_free.
 	 */
-	public static byte* log2visGetEmbeddingLevels(string text, int length, out PangoDirection pbaseDir)
+	public static ubyte* log2visGetEmbeddingLevels(string text, int length, out PangoDirection pbaseDir)
 	{
 		// guint8 * pango_log2vis_get_embedding_levels (const gchar *text,  int length,  PangoDirection *pbase_dir);
 		return pango_log2vis_get_embedding_levels(Str.toStringz(text), length, &pbaseDir);

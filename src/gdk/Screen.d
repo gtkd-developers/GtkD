@@ -868,7 +868,6 @@ public class Screen : ObjectG
 	 * standardError =  return location for file descriptor to read child's
 	 *  stderr, or NULL
 	 * Returns: TRUE on success, FALSE if an error was set
-	 * Throws: GException on failure.
 	 */
 	public int gdkSpawnOnScreenWithPipes(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out int childPid, out int standardInput, out int standardOutput, out int standardError)
 	{

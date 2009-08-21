@@ -632,10 +632,10 @@ public struct PangoAnalysis
 	PangoEngineShape *shapeEngine;
 	PangoEngineLang *langEngine;
 	PangoFont *font;
-	byte level;
-	byte gravity; /+* PangoGravity +/
-	byte flags;
-	byte script; /+* PangoScript +/
+	ubyte level;
+	ubyte gravity; /+* PangoGravity +/
+	ubyte flags;
+	ubyte script; /+* PangoScript +/
 	PangoLanguage *language;
 	GSList *extraAttrs;
 }

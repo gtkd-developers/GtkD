@@ -220,7 +220,6 @@ public class Cancellable : ObjectG
 	 * If the cancellable is cancelled, sets the error to notify
 	 * that the operation was cancelled.
 	 * Returns: TRUE if cancellable was cancelled, FALSE if it was not.
-	 * Throws: GException on failure.
 	 */
 	public int setErrorIfCancelled()
 	{

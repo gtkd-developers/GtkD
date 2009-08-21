@@ -113,7 +113,7 @@ public struct GdkPixdata
 	uint rowstride;
 	uint width;
 	uint height;
-	byte *pixelData;
+	ubyte *pixelData;
 }
 
 

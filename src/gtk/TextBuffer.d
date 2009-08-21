@@ -1780,7 +1780,7 @@ public class TextBuffer : ObjectG
 	 * Returns: TRUE on success, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
-	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, byte[] data)
+	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, ubyte[] data)
 	{
 		// gboolean gtk_text_buffer_deserialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  GtkTextIter *iter,  const guint8 *data,  gsize length,  GError **error);
 		GError* err = null;
@@ -1994,7 +1994,7 @@ public class TextBuffer : ObjectG
 	 * end =  end of block of test to serialize
 	 * Returns: the serialized data, encoded as format
 	 */
-	public byte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
+	public ubyte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
 	{
 		// guint8 * gtk_text_buffer_serialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length);
 		uint length;

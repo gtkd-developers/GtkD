@@ -687,7 +687,7 @@ public class Pixbuf
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (byte[] data, int copyPixels)
+	public this (ubyte[] data, int copyPixels)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_inline (gint data_length,  const guint8 *data,  gboolean copy_pixels,  GError **error);
 		GError* err = null;

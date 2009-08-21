@@ -2160,7 +2160,7 @@ public struct GdkEventKey
 	int length;
 	char *string;
 	ushort hardwareKeycode;
-	byte group;
+	ubyte group;
 	uint bitfield0;
 	//uint isModifier : 1;
 }

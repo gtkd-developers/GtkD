@@ -551,7 +551,7 @@ public class Date
 	 * year = year
 	 * Returns:number of days in month during the year
 	 */
-	public static byte getDaysInMonth(GDateMonth month, GDateYear year)
+	public static ubyte getDaysInMonth(GDateMonth month, GDateYear year)
 	{
 		// guint8 g_date_get_days_in_month (GDateMonth month,  GDateYear year);
 		return g_date_get_days_in_month(month, year);
@@ -612,7 +612,7 @@ public class Date
 	 * year = a year
 	 * Returns:number of Mondays in the year
 	 */
-	public static byte getMondayWeeksInYear(GDateYear year)
+	public static ubyte getMondayWeeksInYear(GDateYear year)
 	{
 		// guint8 g_date_get_monday_weeks_in_year (GDateYear year);
 		return g_date_get_monday_weeks_in_year(year);
@@ -641,7 +641,7 @@ public class Date
 	 * year = year to count weeks in
 	 * Returns:number of weeks
 	 */
-	public static byte getSundayWeeksInYear(GDateYear year)
+	public static ubyte getSundayWeeksInYear(GDateYear year)
 	{
 		// guint8 g_date_get_sunday_weeks_in_year (GDateYear year);
 		return g_date_get_sunday_weeks_in_year(year);

@@ -381,7 +381,6 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Propagates an error from within the simple asynchronous result to
 	 * a given destination.
 	 * Returns: TRUE if the error was propegated to dest. FALSE otherwise.
-	 * Throws: GException on failure.
 	 */
 	public int propagateError()
 	{

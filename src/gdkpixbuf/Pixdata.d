@@ -167,7 +167,7 @@ public class Pixdata
 	 * bytes the structure points to.
 	 * Returns: A newly-allocated string containing the serializedGdkPixdata structure.
 	 */
-	public byte[] serialize()
+	public ubyte[] serialize()
 	{
 		// guint8* gdk_pixdata_serialize (const GdkPixdata *pixdata,  guint *stream_length_p);
 		uint streamLengthP;
@@ -188,7 +188,7 @@ public class Pixdata
 	 * Returns: Upon successful deserialization TRUE is returned,FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
-	public int deserialize(byte[] stream)
+	public int deserialize(ubyte[] stream)
 	{
 		// gboolean gdk_pixdata_deserialize (GdkPixdata *pixdata,  guint stream_length,  const guint8 *stream,  GError **error);
 		GError* err = null;

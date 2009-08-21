@@ -6187,7 +6187,7 @@ public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextI
  *  data, or NULL if an error occurred
  */
 // guint8 * (*GtkTextBufferSerializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length,  gpointer user_data);
-public typedef extern(C) byte *  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
+public typedef extern(C) ubyte *  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
 
 /*
  * tag :

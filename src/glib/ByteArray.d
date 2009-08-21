@@ -161,7 +161,7 @@ public class ByteArray
 	 * data = the byte data to be added.
 	 * Returns:the GByteArray.
 	 */
-	public ByteArray append(byte[] data)
+	public ByteArray append(ubyte[] data)
 	{
 		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
 		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
@@ -179,7 +179,7 @@ public class ByteArray
 	 * data = the byte data to be added.
 	 * Returns:the GByteArray.
 	 */
-	public ByteArray prepend(byte[] data)
+	public ByteArray prepend(ubyte[] data)
 	{
 		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
 		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
@@ -301,7 +301,7 @@ public class ByteArray
 	 * freeSegment = if TRUE the actual byte data is freed as well.
 	 * Returns:the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
 	 */
-	public byte* free(int freeSegment)
+	public ubyte* free(int freeSegment)
 	{
 		// guint8* g_byte_array_free (GByteArray *array,  gboolean free_segment);
 		return g_byte_array_free(gByteArray, freeSegment);
