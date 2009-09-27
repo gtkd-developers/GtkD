@@ -64,8 +64,8 @@ private import glib.Str;
 
 /**
  * Description
- * Base64 is an encoding that allows to encode a sequence of arbitrary
- * bytes as a sequence of printable ASCII characters. For the definition
+ * Base64 is an encoding that allows a sequence of arbitrary bytes to be
+ * encoded as a sequence of printable ASCII characters. For the definition
  * of Base64, see RFC
  * 1421 or RFC
  * 2045. Base64 is most commonly used as a MIME transfer encoding

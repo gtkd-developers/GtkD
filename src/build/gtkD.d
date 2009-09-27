@@ -52,6 +52,7 @@ private import glib.FileUtils;
 private import glib.Directory;
 private import glib.MappedFile;
 private import glib.URI;
+private import glib.Hostname;
 private import glib.ShellUtils;
 private import glib.OptionContext;
 private import glib.OptionGroup;

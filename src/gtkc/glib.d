@@ -89,6 +89,9 @@ static this()
 	Linker.link(g_main_context_get_poll_func, "g_main_context_get_poll_func", LIBRARY.GLIB);
 	Linker.link(g_main_context_add_poll, "g_main_context_add_poll", LIBRARY.GLIB);
 	Linker.link(g_main_context_remove_poll, "g_main_context_remove_poll", LIBRARY.GLIB);
+	Linker.link(g_main_context_get_thread_default, "g_main_context_get_thread_default", LIBRARY.GLIB);
+	Linker.link(g_main_context_push_thread_default, "g_main_context_push_thread_default", LIBRARY.GLIB);
+	Linker.link(g_main_context_pop_thread_default, "g_main_context_pop_thread_default", LIBRARY.GLIB);
 
 	// glib.Timeout
 
@@ -250,6 +253,7 @@ static this()
 
 	Linker.link(g_error_new, "g_error_new", LIBRARY.GLIB);
 	Linker.link(g_error_new_literal, "g_error_new_literal", LIBRARY.GLIB);
+	Linker.link(g_error_new_valist, "g_error_new_valist", LIBRARY.GLIB);
 	Linker.link(g_error_free, "g_error_free", LIBRARY.GLIB);
 	Linker.link(g_error_copy, "g_error_copy", LIBRARY.GLIB);
 	Linker.link(g_error_matches, "g_error_matches", LIBRARY.GLIB);
@@ -373,7 +377,6 @@ static this()
 	Linker.link(g_get_filename_charsets, "g_get_filename_charsets", LIBRARY.GLIB);
 	Linker.link(g_filename_display_name, "g_filename_display_name", LIBRARY.GLIB);
 	Linker.link(g_filename_display_basename, "g_filename_display_basename", LIBRARY.GLIB);
-	Linker.link(g_uri_list_extract_uris, "g_uri_list_extract_uris", LIBRARY.GLIB);
 	Linker.link(g_locale_from_utf8, "g_locale_from_utf8", LIBRARY.GLIB);
 	Linker.link(g_get_charset, "g_get_charset", LIBRARY.GLIB);
 
@@ -565,6 +568,7 @@ static this()
 	Linker.link(g_get_user_special_dir, "g_get_user_special_dir", LIBRARY.GLIB);
 	Linker.link(g_get_system_data_dirs, "g_get_system_data_dirs", LIBRARY.GLIB);
 	Linker.link(g_get_system_config_dirs, "g_get_system_config_dirs", LIBRARY.GLIB);
+	Linker.link(g_reload_user_special_dirs_cache, "g_reload_user_special_dirs_cache", LIBRARY.GLIB);
 	Linker.link(g_get_host_name, "g_get_host_name", LIBRARY.GLIB);
 	Linker.link(g_get_home_dir, "g_get_home_dir", LIBRARY.GLIB);
 	Linker.link(g_get_tmp_dir, "g_get_tmp_dir", LIBRARY.GLIB);
@@ -650,6 +654,7 @@ static this()
 	Linker.link(g_file_set_contents, "g_file_set_contents", LIBRARY.GLIB);
 	Linker.link(g_file_test, "g_file_test", LIBRARY.GLIB);
 	Linker.link(g_mkstemp, "g_mkstemp", LIBRARY.GLIB);
+	Linker.link(g_mkstemp_full, "g_mkstemp_full", LIBRARY.GLIB);
 	Linker.link(g_file_open_tmp, "g_file_open_tmp", LIBRARY.GLIB);
 	Linker.link(g_file_read_link, "g_file_read_link", LIBRARY.GLIB);
 	Linker.link(g_mkdir_with_parents, "g_mkdir_with_parents", LIBRARY.GLIB);
@@ -679,6 +684,8 @@ static this()
 	// glib.MappedFile
 
 	Linker.link(g_mapped_file_new, "g_mapped_file_new", LIBRARY.GLIB);
+	Linker.link(g_mapped_file_ref, "g_mapped_file_ref", LIBRARY.GLIB);
+	Linker.link(g_mapped_file_unref, "g_mapped_file_unref", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_free, "g_mapped_file_free", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_get_length, "g_mapped_file_get_length", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_get_contents, "g_mapped_file_get_contents", LIBRARY.GLIB);
@@ -689,6 +696,15 @@ static this()
 	Linker.link(g_uri_escape_string, "g_uri_escape_string", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_string, "g_uri_unescape_string", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_segment, "g_uri_unescape_segment", LIBRARY.GLIB);
+	Linker.link(g_uri_list_extract_uris, "g_uri_list_extract_uris", LIBRARY.GLIB);
+
+	// glib.Hostname
+
+	Linker.link(g_hostname_to_ascii, "g_hostname_to_ascii", LIBRARY.GLIB);
+	Linker.link(g_hostname_to_unicode, "g_hostname_to_unicode", LIBRARY.GLIB);
+	Linker.link(g_hostname_is_non_ascii, "g_hostname_is_non_ascii", LIBRARY.GLIB);
+	Linker.link(g_hostname_is_ascii_encoded, "g_hostname_is_ascii_encoded", LIBRARY.GLIB);
+	Linker.link(g_hostname_is_ip_address, "g_hostname_is_ip_address", LIBRARY.GLIB);
 
 	// glib.ShellUtils
 
@@ -1090,6 +1106,10 @@ static this()
 	Linker.link(g_direct_hash, "g_direct_hash", LIBRARY.GLIB);
 	Linker.link(g_int_equal, "g_int_equal", LIBRARY.GLIB);
 	Linker.link(g_int_hash, "g_int_hash", LIBRARY.GLIB);
+	Linker.link(g_int64_equal, "g_int64_equal", LIBRARY.GLIB);
+	Linker.link(g_int64_hash, "g_int64_hash", LIBRARY.GLIB);
+	Linker.link(g_double_equal, "g_double_equal", LIBRARY.GLIB);
+	Linker.link(g_double_hash, "g_double_hash", LIBRARY.GLIB);
 	Linker.link(g_str_equal, "g_str_equal", LIBRARY.GLIB);
 	Linker.link(g_str_hash, "g_str_hash", LIBRARY.GLIB);
 
@@ -1148,6 +1168,9 @@ static this()
 
 	Linker.link(g_array_new, "g_array_new", LIBRARY.GLIB);
 	Linker.link(g_array_sized_new, "g_array_sized_new", LIBRARY.GLIB);
+	Linker.link(g_array_ref, "g_array_ref", LIBRARY.GLIB);
+	Linker.link(g_array_unref, "g_array_unref", LIBRARY.GLIB);
+	Linker.link(g_array_get_element_size, "g_array_get_element_size", LIBRARY.GLIB);
 	Linker.link(g_array_append_vals, "g_array_append_vals", LIBRARY.GLIB);
 	Linker.link(g_array_prepend_vals, "g_array_prepend_vals", LIBRARY.GLIB);
 	Linker.link(g_array_insert_vals, "g_array_insert_vals", LIBRARY.GLIB);
@@ -1163,6 +1186,10 @@ static this()
 
 	Linker.link(g_ptr_array_new, "g_ptr_array_new", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_sized_new, "g_ptr_array_sized_new", LIBRARY.GLIB);
+	Linker.link(g_ptr_array_new_with_free_func, "g_ptr_array_new_with_free_func", LIBRARY.GLIB);
+	Linker.link(g_ptr_array_set_free_func, "g_ptr_array_set_free_func", LIBRARY.GLIB);
+	Linker.link(g_ptr_array_ref, "g_ptr_array_ref", LIBRARY.GLIB);
+	Linker.link(g_ptr_array_unref, "g_ptr_array_unref", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_add, "g_ptr_array_add", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_remove, "g_ptr_array_remove", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_remove_index, "g_ptr_array_remove_index", LIBRARY.GLIB);
@@ -1179,6 +1206,8 @@ static this()
 
 	Linker.link(g_byte_array_new, "g_byte_array_new", LIBRARY.GLIB);
 	Linker.link(g_byte_array_sized_new, "g_byte_array_sized_new", LIBRARY.GLIB);
+	Linker.link(g_byte_array_ref, "g_byte_array_ref", LIBRARY.GLIB);
+	Linker.link(g_byte_array_unref, "g_byte_array_unref", LIBRARY.GLIB);
 	Linker.link(g_byte_array_append, "g_byte_array_append", LIBRARY.GLIB);
 	Linker.link(g_byte_array_prepend, "g_byte_array_prepend", LIBRARY.GLIB);
 	Linker.link(g_byte_array_remove_index, "g_byte_array_remove_index", LIBRARY.GLIB);
@@ -1192,6 +1221,8 @@ static this()
 	// glib.BBTree
 
 	Linker.link(g_tree_new, "g_tree_new", LIBRARY.GLIB);
+	Linker.link(g_tree_ref, "g_tree_ref", LIBRARY.GLIB);
+	Linker.link(g_tree_unref, "g_tree_unref", LIBRARY.GLIB);
 	Linker.link(g_tree_new_with_data, "g_tree_new_with_data", LIBRARY.GLIB);
 	Linker.link(g_tree_new_full, "g_tree_new_full", LIBRARY.GLIB);
 	Linker.link(g_tree_insert, "g_tree_insert", LIBRARY.GLIB);
@@ -1356,6 +1387,9 @@ extern(C)
 	GPollFunc function(GMainContext* context) c_g_main_context_get_poll_func;
 	void function(GMainContext* context, GPollFD* fd, gint priority) c_g_main_context_add_poll;
 	void function(GMainContext* context, GPollFD* fd) c_g_main_context_remove_poll;
+	GMainContext* function() c_g_main_context_get_thread_default;
+	void function(GMainContext* context) c_g_main_context_push_thread_default;
+	void function(GMainContext* context) c_g_main_context_pop_thread_default;
 	
 	// glib.Timeout
 	
@@ -1517,6 +1551,7 @@ extern(C)
 	
 	GError* function(GQuark domain, gint code, gchar* format, ... ) c_g_error_new;
 	GError* function(GQuark domain, gint code, gchar* message) c_g_error_new_literal;
+	GError* function(GQuark domain, gint code, gchar* format, va_list args) c_g_error_new_valist;
 	void function(GError* error) c_g_error_free;
 	GError* function(GError* error) c_g_error_copy;
 	gboolean function(GError* error, GQuark domain, gint code) c_g_error_matches;
@@ -1640,7 +1675,6 @@ extern(C)
 	gboolean function(gchar*** charsets) c_g_get_filename_charsets;
 	gchar* function(gchar* filename) c_g_filename_display_name;
 	gchar* function(gchar* filename) c_g_filename_display_basename;
-	gchar** function(gchar* uriList) c_g_uri_list_extract_uris;
 	gchar* function(gchar* utf8string, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_locale_from_utf8;
 	gboolean function(char** charset) c_g_get_charset;
 	
@@ -1832,6 +1866,7 @@ extern(C)
 	gchar* function(GUserDirectory directory) c_g_get_user_special_dir;
 	gchar** function() c_g_get_system_data_dirs;
 	gchar** function() c_g_get_system_config_dirs;
+	void function() c_g_reload_user_special_dirs_cache;
 	gchar* function() c_g_get_host_name;
 	gchar* function() c_g_get_home_dir;
 	gchar* function() c_g_get_tmp_dir;
@@ -1917,6 +1952,7 @@ extern(C)
 	gboolean function(gchar* filename, gchar* contents, gssize length, GError** error) c_g_file_set_contents;
 	gboolean function(gchar* filename, GFileTest test) c_g_file_test;
 	gint function(gchar* tmpl) c_g_mkstemp;
+	gint function(gchar* tmpl, int flags, int mode) c_g_mkstemp_full;
 	gint function(gchar* tmpl, gchar** nameUsed, GError** error) c_g_file_open_tmp;
 	gchar* function(gchar* filename, GError** error) c_g_file_read_link;
 	int function(gchar* pathname, int mode) c_g_mkdir_with_parents;
@@ -1946,6 +1982,8 @@ extern(C)
 	// glib.MappedFile
 	
 	GMappedFile* function(gchar* filename, gboolean writable, GError** error) c_g_mapped_file_new;
+	GMappedFile* function(GMappedFile* file) c_g_mapped_file_ref;
+	void function(GMappedFile* file) c_g_mapped_file_unref;
 	void function(GMappedFile* file) c_g_mapped_file_free;
 	gsize function(GMappedFile* file) c_g_mapped_file_get_length;
 	gchar* function(GMappedFile* file) c_g_mapped_file_get_contents;
@@ -1956,6 +1994,15 @@ extern(C)
 	char* function(char* unescaped, char* reservedCharsAllowed, gboolean allowUtf8) c_g_uri_escape_string;
 	char* function(char* escapedString, char* illegalCharacters) c_g_uri_unescape_string;
 	char* function(char* escapedString, char* escapedStringEnd, char* illegalCharacters) c_g_uri_unescape_segment;
+	gchar** function(gchar* uriList) c_g_uri_list_extract_uris;
+	
+	// glib.Hostname
+	
+	gchar* function(gchar* hostname) c_g_hostname_to_ascii;
+	gchar* function(gchar* hostname) c_g_hostname_to_unicode;
+	gboolean function(gchar* hostname) c_g_hostname_is_non_ascii;
+	gboolean function(gchar* hostname) c_g_hostname_is_ascii_encoded;
+	gboolean function(gchar* hostname) c_g_hostname_is_ip_address;
 	
 	// glib.ShellUtils
 	
@@ -2357,6 +2404,10 @@ extern(C)
 	guint function(gconstpointer v) c_g_direct_hash;
 	gboolean function(gconstpointer v1, gconstpointer v2) c_g_int_equal;
 	guint function(gconstpointer v) c_g_int_hash;
+	gboolean function(gconstpointer v1, gconstpointer v2) c_g_int64_equal;
+	guint function(gconstpointer v) c_g_int64_hash;
+	gboolean function(gconstpointer v1, gconstpointer v2) c_g_double_equal;
+	guint function(gconstpointer v) c_g_double_hash;
 	gboolean function(gconstpointer v1, gconstpointer v2) c_g_str_equal;
 	guint function(gconstpointer v) c_g_str_hash;
 	
@@ -2415,6 +2466,9 @@ extern(C)
 	
 	GArray* function(gboolean zeroTerminated, gboolean clear, guint elementSize) c_g_array_new;
 	GArray* function(gboolean zeroTerminated, gboolean clear, guint elementSize, guint reservedSize) c_g_array_sized_new;
+	GArray* function(GArray* array) c_g_array_ref;
+	void function(GArray* array) c_g_array_unref;
+	guint function(GArray* array) c_g_array_get_element_size;
 	GArray* function(GArray* array, gconstpointer data, guint len) c_g_array_append_vals;
 	GArray* function(GArray* array, gconstpointer data, guint len) c_g_array_prepend_vals;
 	GArray* function(GArray* array, guint index, gconstpointer data, guint len) c_g_array_insert_vals;
@@ -2430,6 +2484,10 @@ extern(C)
 	
 	GPtrArray* function() c_g_ptr_array_new;
 	GPtrArray* function(guint reservedSize) c_g_ptr_array_sized_new;
+	GPtrArray* function(GDestroyNotify elementFreeFunc) c_g_ptr_array_new_with_free_func;
+	void function(GPtrArray* array, GDestroyNotify elementFreeFunc) c_g_ptr_array_set_free_func;
+	GPtrArray* function(GPtrArray* array) c_g_ptr_array_ref;
+	void function(GPtrArray* array) c_g_ptr_array_unref;
 	void function(GPtrArray* array, gpointer data) c_g_ptr_array_add;
 	gboolean function(GPtrArray* array, gpointer data) c_g_ptr_array_remove;
 	gpointer function(GPtrArray* array, guint index) c_g_ptr_array_remove_index;
@@ -2446,6 +2504,8 @@ extern(C)
 	
 	GByteArray* function() c_g_byte_array_new;
 	GByteArray* function(guint reservedSize) c_g_byte_array_sized_new;
+	GByteArray* function(GByteArray* array) c_g_byte_array_ref;
+	void function(GByteArray* array) c_g_byte_array_unref;
 	GByteArray* function(GByteArray* array, guint8* data, guint len) c_g_byte_array_append;
 	GByteArray* function(GByteArray* array, guint8* data, guint len) c_g_byte_array_prepend;
 	GByteArray* function(GByteArray* array, guint index) c_g_byte_array_remove_index;
@@ -2459,6 +2519,8 @@ extern(C)
 	// glib.BBTree
 	
 	GTree* function(GCompareFunc keyCompareFunc) c_g_tree_new;
+	GTree* function(GTree* tree) c_g_tree_ref;
+	void function(GTree* tree) c_g_tree_unref;
 	GTree* function(GCompareDataFunc keyCompareFunc, gpointer keyCompareData) c_g_tree_new_with_data;
 	GTree* function(GCompareDataFunc keyCompareFunc, gpointer keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_tree_new_full;
 	void function(GTree* tree, gpointer key, gpointer value) c_g_tree_insert;
@@ -2620,6 +2682,9 @@ alias c_g_main_context_set_poll_func  g_main_context_set_poll_func;
 alias c_g_main_context_get_poll_func  g_main_context_get_poll_func;
 alias c_g_main_context_add_poll  g_main_context_add_poll;
 alias c_g_main_context_remove_poll  g_main_context_remove_poll;
+alias c_g_main_context_get_thread_default  g_main_context_get_thread_default;
+alias c_g_main_context_push_thread_default  g_main_context_push_thread_default;
+alias c_g_main_context_pop_thread_default  g_main_context_pop_thread_default;
 
 // glib.Timeout
 
@@ -2781,6 +2846,7 @@ alias c_g_io_channel_close  g_io_channel_close;
 
 alias c_g_error_new  g_error_new;
 alias c_g_error_new_literal  g_error_new_literal;
+alias c_g_error_new_valist  g_error_new_valist;
 alias c_g_error_free  g_error_free;
 alias c_g_error_copy  g_error_copy;
 alias c_g_error_matches  g_error_matches;
@@ -2904,7 +2970,6 @@ alias c_g_filename_to_uri  g_filename_to_uri;
 alias c_g_get_filename_charsets  g_get_filename_charsets;
 alias c_g_filename_display_name  g_filename_display_name;
 alias c_g_filename_display_basename  g_filename_display_basename;
-alias c_g_uri_list_extract_uris  g_uri_list_extract_uris;
 alias c_g_locale_from_utf8  g_locale_from_utf8;
 alias c_g_get_charset  g_get_charset;
 
@@ -3096,6 +3161,7 @@ alias c_g_get_user_config_dir  g_get_user_config_dir;
 alias c_g_get_user_special_dir  g_get_user_special_dir;
 alias c_g_get_system_data_dirs  g_get_system_data_dirs;
 alias c_g_get_system_config_dirs  g_get_system_config_dirs;
+alias c_g_reload_user_special_dirs_cache  g_reload_user_special_dirs_cache;
 alias c_g_get_host_name  g_get_host_name;
 alias c_g_get_home_dir  g_get_home_dir;
 alias c_g_get_tmp_dir  g_get_tmp_dir;
@@ -3181,6 +3247,7 @@ alias c_g_file_get_contents  g_file_get_contents;
 alias c_g_file_set_contents  g_file_set_contents;
 alias c_g_file_test  g_file_test;
 alias c_g_mkstemp  g_mkstemp;
+alias c_g_mkstemp_full  g_mkstemp_full;
 alias c_g_file_open_tmp  g_file_open_tmp;
 alias c_g_file_read_link  g_file_read_link;
 alias c_g_mkdir_with_parents  g_mkdir_with_parents;
@@ -3210,6 +3277,8 @@ alias c_g_dir_close  g_dir_close;
 // glib.MappedFile
 
 alias c_g_mapped_file_new  g_mapped_file_new;
+alias c_g_mapped_file_ref  g_mapped_file_ref;
+alias c_g_mapped_file_unref  g_mapped_file_unref;
 alias c_g_mapped_file_free  g_mapped_file_free;
 alias c_g_mapped_file_get_length  g_mapped_file_get_length;
 alias c_g_mapped_file_get_contents  g_mapped_file_get_contents;
@@ -3220,6 +3289,15 @@ alias c_g_uri_parse_scheme  g_uri_parse_scheme;
 alias c_g_uri_escape_string  g_uri_escape_string;
 alias c_g_uri_unescape_string  g_uri_unescape_string;
 alias c_g_uri_unescape_segment  g_uri_unescape_segment;
+alias c_g_uri_list_extract_uris  g_uri_list_extract_uris;
+
+// glib.Hostname
+
+alias c_g_hostname_to_ascii  g_hostname_to_ascii;
+alias c_g_hostname_to_unicode  g_hostname_to_unicode;
+alias c_g_hostname_is_non_ascii  g_hostname_is_non_ascii;
+alias c_g_hostname_is_ascii_encoded  g_hostname_is_ascii_encoded;
+alias c_g_hostname_is_ip_address  g_hostname_is_ip_address;
 
 // glib.ShellUtils
 
@@ -3621,6 +3699,10 @@ alias c_g_direct_equal  g_direct_equal;
 alias c_g_direct_hash  g_direct_hash;
 alias c_g_int_equal  g_int_equal;
 alias c_g_int_hash  g_int_hash;
+alias c_g_int64_equal  g_int64_equal;
+alias c_g_int64_hash  g_int64_hash;
+alias c_g_double_equal  g_double_equal;
+alias c_g_double_hash  g_double_hash;
 alias c_g_str_equal  g_str_equal;
 alias c_g_str_hash  g_str_hash;
 
@@ -3679,6 +3761,9 @@ alias c_g_string_chunk_free  g_string_chunk_free;
 
 alias c_g_array_new  g_array_new;
 alias c_g_array_sized_new  g_array_sized_new;
+alias c_g_array_ref  g_array_ref;
+alias c_g_array_unref  g_array_unref;
+alias c_g_array_get_element_size  g_array_get_element_size;
 alias c_g_array_append_vals  g_array_append_vals;
 alias c_g_array_prepend_vals  g_array_prepend_vals;
 alias c_g_array_insert_vals  g_array_insert_vals;
@@ -3694,6 +3779,10 @@ alias c_g_array_free  g_array_free;
 
 alias c_g_ptr_array_new  g_ptr_array_new;
 alias c_g_ptr_array_sized_new  g_ptr_array_sized_new;
+alias c_g_ptr_array_new_with_free_func  g_ptr_array_new_with_free_func;
+alias c_g_ptr_array_set_free_func  g_ptr_array_set_free_func;
+alias c_g_ptr_array_ref  g_ptr_array_ref;
+alias c_g_ptr_array_unref  g_ptr_array_unref;
 alias c_g_ptr_array_add  g_ptr_array_add;
 alias c_g_ptr_array_remove  g_ptr_array_remove;
 alias c_g_ptr_array_remove_index  g_ptr_array_remove_index;
@@ -3710,6 +3799,8 @@ alias c_g_ptr_array_foreach  g_ptr_array_foreach;
 
 alias c_g_byte_array_new  g_byte_array_new;
 alias c_g_byte_array_sized_new  g_byte_array_sized_new;
+alias c_g_byte_array_ref  g_byte_array_ref;
+alias c_g_byte_array_unref  g_byte_array_unref;
 alias c_g_byte_array_append  g_byte_array_append;
 alias c_g_byte_array_prepend  g_byte_array_prepend;
 alias c_g_byte_array_remove_index  g_byte_array_remove_index;
@@ -3723,6 +3814,8 @@ alias c_g_byte_array_free  g_byte_array_free;
 // glib.BBTree
 
 alias c_g_tree_new  g_tree_new;
+alias c_g_tree_ref  g_tree_ref;
+alias c_g_tree_unref  g_tree_unref;
 alias c_g_tree_new_with_data  g_tree_new_with_data;
 alias c_g_tree_new_full  g_tree_new_full;
 alias c_g_tree_insert  g_tree_insert;

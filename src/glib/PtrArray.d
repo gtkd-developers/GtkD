@@ -125,7 +125,7 @@ public class PtrArray
 	 */
 	
 	/**
-	 * Creates a new GPtrArray.
+	 * Creates a new GPtrArray with a reference count of 1.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
@@ -141,9 +141,9 @@ public class PtrArray
 	
 	/**
 	 * Creates a new GPtrArray with reserved_size pointers
-	 * preallocated. This avoids frequent reallocation, if you are going to
-	 * add many pointers to the array. Note however that the size of the
-	 * array is still 0.
+	 * preallocated and a reference count of 1. This avoids frequent reallocation,
+	 * if you are going to add many pointers to the array. Note however that the size
+	 * of the array is still 0.
 	 * Params:
 	 * reservedSize = number of pointers preallocated.
 	 * Returns:the new GPtrArray.
@@ -157,6 +157,71 @@ public class PtrArray
 			return null;
 		}
 		return new PtrArray(cast(GPtrArray*) p);
+	}
+	
+	/**
+	 * Creates a new GPtrArray with a reference count of 1 and use element_free_func
+	 * for freeing each element when the array is destroyed either via
+	 * g_ptr_array_unref(), when g_ptr_array_free() is called with free_segment
+	 * set to TRUE or when removing elements.
+	 * Since 2.22
+	 * Params:
+	 * elementFreeFunc =  A function to free elements with destroy array or NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GDestroyNotify elementFreeFunc)
+	{
+		// GPtrArray* g_ptr_array_new_with_free_func (GDestroyNotify element_free_func);
+		auto p = g_ptr_array_new_with_free_func(elementFreeFunc);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_ptr_array_new_with_free_func(elementFreeFunc)");
+		}
+		this(cast(GPtrArray*) p);
+	}
+	
+	/**
+	 * Sets a function for freeing each element when array is destroyed
+	 * either via g_ptr_array_unref(), when g_ptr_array_free() is called
+	 * with free_segment set to TRUE or when removing elements.
+	 * Since 2.22
+	 * Params:
+	 * elementFreeFunc =  A function to free elements with destroy array or NULL.
+	 */
+	public void setFreeFunc(GDestroyNotify elementFreeFunc)
+	{
+		// void g_ptr_array_set_free_func (GPtrArray *array,  GDestroyNotify element_free_func);
+		g_ptr_array_set_free_func(gPtrArray, elementFreeFunc);
+	}
+	
+	/**
+	 * Atomically increments the reference count of array by one. This
+	 * function is MT-safe and may be called from any thread.
+	 * Since 2.22
+	 * Returns: The passed in GPtrArray.
+	 */
+	public PtrArray doref()
+	{
+		// GPtrArray* g_ptr_array_ref (GPtrArray *array);
+		auto p = g_ptr_array_ref(gPtrArray);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PtrArray(cast(GPtrArray*) p);
+	}
+	
+	/**
+	 * Atomically decrements the reference count of array by one. If the
+	 * reference count drops to 0, the effect is the same as calling
+	 * g_ptr_array_free() with free_segment set to TRUE. This function
+	 * is MT-safe and may be called from any thread.
+	 * Since 2.22
+	 */
+	public void unref()
+	{
+		// void g_ptr_array_unref (GPtrArray *array);
+		g_ptr_array_unref(gPtrArray);
 	}
 	
 	/**
@@ -174,6 +239,8 @@ public class PtrArray
 	/**
 	 * Removes the first occurrence of the given pointer from the pointer array.
 	 * The following elements are moved down one place.
+	 * If array has a non-NULL GDestroyNotify function it is called for
+	 * the removed element.
 	 * It returns TRUE if the pointer was removed, or FALSE if the pointer
 	 * was not found.
 	 * Params:
@@ -189,6 +256,8 @@ public class PtrArray
 	/**
 	 * Removes the pointer at the given index from the pointer array.
 	 * The following elements are moved down one place.
+	 * If array has a non-NULL GDestroyNotify function it is called for
+	 * the removed element.
 	 * Params:
 	 * index = the index of the pointer to remove.
 	 * Returns:the pointer which was removed.
@@ -204,6 +273,8 @@ public class PtrArray
 	 * The last element in the array is used to fill in the space, so this function
 	 * does not preserve the order of the array. But it is faster than
 	 * g_ptr_array_remove().
+	 * If array has a non-NULL GDestroyNotify function it is called for
+	 * the removed element.
 	 * It returns TRUE if the pointer was removed, or FALSE if the pointer
 	 * was not found.
 	 * Params:
@@ -221,6 +292,8 @@ public class PtrArray
 	 * The last element in the array is used to fill in the space, so this function
 	 * does not preserve the order of the array. But it is faster than
 	 * g_ptr_array_remove_index().
+	 * If array has a non-NULL GDestroyNotify function it is called for
+	 * the removed element.
 	 * Params:
 	 * index = the index of the pointer to remove.
 	 * Returns:the pointer which was removed.
@@ -234,6 +307,8 @@ public class PtrArray
 	/**
 	 * Removes the given number of pointers starting at the given index from a
 	 * GPtrArray. The following elements are moved to close the gap.
+	 * If array has a non-NULL GDestroyNotify function it is called for
+	 * the removed elements.
 	 * Since 2.4
 	 * Params:
 	 * index = the index of the first pointer to remove.
@@ -281,8 +356,10 @@ public class PtrArray
 	}
 	
 	/**
-	 * Sets the size of the array, expanding it if necessary.
-	 * New elements are set to NULL.
+	 * Sets the size of the array. When making the array larger, newly-added
+	 * elements will be set to NULL. When making it smaller, if array has a
+	 * non-NULL GDestroyNotify function then it will be called for the
+	 * removed elements.
 	 * Params:
 	 * length = the new length of the pointer array.
 	 */
@@ -294,12 +371,15 @@ public class PtrArray
 	
 	/**
 	 * Frees the memory allocated for the GPtrArray.
-	 * If free_segment is TRUE it frees the memory block holding the elements
+	 * If free_seg is TRUE it frees the memory block holding the elements
 	 * as well. Pass FALSE if you want to free the GPtrArray wrapper but preserve
-	 * the underlying array for use elsewhere.
+	 * the underlying array for use elsewhere. If the reference count of array
+	 * is greater than one, the GPtrArray wrapper is preserved but the size of
+	 * array will be set to zero.
 	 * Note
-	 * If array contents point to dynamically-allocated memory, they should be freed
-	 * separately.
+	 * If array contents point to dynamically-allocated memory, they should
+	 * be freed separately if free_seg is TRUE and no GDestroyNotify
+	 * function has been set for array.
 	 * Params:
 	 * freeSeg = if TRUE the actual pointer array is freed as well.
 	 * Returns:the pointer array if free_seg is FALSE, otherwise NULL.	The pointer array should be freed using g_free().

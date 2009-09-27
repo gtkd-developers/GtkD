@@ -935,7 +935,7 @@ public class Unicode
 	 * added to the result after the converted text.
 	 * Params:
 	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length (number of characters) of str to use.
+	 * len =  the maximum length (number of bytes) of str to use.
 	 *  If len < 0, then the string is nul-terminated.
 	 * itemsRead =  location to store number of bytes read, or NULL.
 	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be

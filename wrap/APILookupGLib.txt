@@ -1605,6 +1605,7 @@ strictPrefix: Y
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+structWrap: GMappedFile* MappedFile
 outFile: MappedFile
 
 file: glib-URI-Functions.html
@@ -1612,6 +1613,12 @@ class: URI
 prefix: g_uri_
 import: glib.Str
 outFile: URI
+
+file: glib-Hostname-Utilities.html
+class: Hostname
+prefix: g_hostname_
+import: glib.Str
+outFile: Hostname
 
 file: glib-Shell-related-Utilities.html
 class: ShellUtils
@@ -2112,6 +2119,7 @@ file: glib-Balanced-Binary-Trees.html
 struct: GTree
 class: BBTree
 prefix: g_tree_
+structWrap: GTree* BBTree
 outFile: BBTree
 
 file: glib-N-ary-Trees.html

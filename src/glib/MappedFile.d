@@ -46,6 +46,7 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * structWrap:
+ * 	- GMappedFile* -> MappedFile
  * module aliases:
  * local aliases:
  * overrides:
@@ -159,7 +160,39 @@ public class MappedFile
 	}
 	
 	/**
-	 * Unmaps the buffer of file and frees it.
+	 * Increments the reference count of file by one. It is safe to call
+	 * this function from any thread.
+	 * Since 2.22
+	 * Returns: the passed in GMappedFile.
+	 */
+	public MappedFile doref()
+	{
+		// GMappedFile * g_mapped_file_ref (GMappedFile *file);
+		auto p = g_mapped_file_ref(gMappedFile);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MappedFile(cast(GMappedFile*) p);
+	}
+	
+	/**
+	 * Decrements the reference count of file by one. If the reference count
+	 * drops to 0, unmaps the buffer of file and frees it.
+	 * It is safe to call this function from any thread.
+	 * Since 2.22
+	 */
+	public void unref()
+	{
+		// void g_mapped_file_unref (GMappedFile *file);
+		g_mapped_file_unref(gMappedFile);
+	}
+	
+	/**
+	 * Warning
+	 * g_mapped_file_free has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mapped_file_unref() instead.
+	 * This call existed before GMappedFile had refcounting and is currently
+	 * exactly the same as g_mapped_file_unref().
 	 * Since 2.8
 	 */
 	public void free()

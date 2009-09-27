@@ -212,6 +212,8 @@ public class Mutex
 	
 	/**
 	 * Destroys mutex.
+	 * Note
+	 * Calling g_mutex_free() on a locked mutex may result in undefined behaviour.
 	 */
 	public void free()
 	{

@@ -1100,7 +1100,6 @@ alias GShellError ShellError;
 /**
  * Error codes returned by option parsing.
  * G_OPTION_ERROR_UNKNOWN_OPTION
- * An option was not known to the parser.
  */
 public enum GOptionError
 {
@@ -1117,13 +1116,6 @@ alias GOptionError OptionError;
  * -x arg, with a long option: --name arg
  * or combined in a single argument: --name=arg.
  * G_OPTION_ARG_NONE
- * No extra argument. This is useful for simple flags.
- * G_OPTION_ARG_STRING
- * The option takes a string argument.
- * G_OPTION_ARG_INT
- * The option takes an integer argument.
- * G_OPTION_ARG_CALLBACK
- * The option provides a callback to parse the
  */
 public enum GOptionArg
 {
@@ -1142,7 +1134,6 @@ alias GOptionArg OptionArg;
 /**
  * Flags which modify individual options.
  * G_OPTION_FLAG_HIDDEN
- * The option doesn't appear in --help
  */
 public enum GOptionFlags
 {
@@ -1298,7 +1289,8 @@ alias GRegexError RegexError;
  * Flags specifying compile-time options.
  * G_REGEX_CASELESS
  * Letters in the pattern match both upper and lower case
- * letters. It be changed within a pattern by a "(?i)" option setting.
+ * letters. This option can be changed within a pattern by a "(?i)" option
+ * setting.
  * G_REGEX_MULTILINE
  * By default, GRegex treats the strings as consisting
  * of a single line of characters (even if it actually contains newlines).
@@ -2166,7 +2158,6 @@ public struct GOptionContext{}
  * To have an effect, they must be added to a GOptionGroup with
  * g_option_context_add_main_entries() or g_option_group_add_entries().
  * const gchar *long_name;
- * The long name of an option can be used to specify it
  */
 public struct GOptionEntry
 {
@@ -2407,7 +2398,7 @@ public struct GStringChunk{}
  * a pointer to the element data. The data may be moved as elements are
  * added to the GArray.
  * guint len;
- * the number of elements in the GArray.
+ * the number of elements in the GArray not including the possible terminating zero element.
  */
 public struct GArray
 {
@@ -3324,7 +3315,7 @@ public struct GAllocator{}
 // #define g_chunk_free(mem, mem_chunk)
 
 /*
- * A convenience macro to gets the previous element in a GList.
+ * A convenience macro to get the previous element in a GList.
  * list :
  * an element in a GList.
  * Returns :
@@ -3334,7 +3325,7 @@ public struct GAllocator{}
 // #define g_list_previous(list)
 
 /*
- * A convenience macro to gets the next element in a GList.
+ * A convenience macro to get the next element in a GList.
  * list :
  * an element in a GList.
  * Returns :
@@ -3344,7 +3335,7 @@ public struct GAllocator{}
 // #define g_list_next(list)
 
 /*
- * A convenience macro to gets the next element in a GSList.
+ * A convenience macro to get the next element in a GSList.
  * slist :
  * an element in a GSList.
  * Returns :
@@ -3959,19 +3950,19 @@ public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
  * The type of function to be passed as callback for G_OPTION_ARG_CALLBACK
  * options.
  * option_name :
- * The name of the option being parsed. This will be either a
+ *  The name of the option being parsed. This will be either a
  *  single dash followed by a single letter (for a short name) or two dashes
  *  followed by a long option name.
  * value :
- * The value to be parsed.
+ *  The value to be parsed.
  * data :
- * User data added to the GOptionGroup containing the option when it
+ *  User data added to the GOptionGroup containing the option when it
  *  was created with g_option_group_new()
  * error :
- * A return location for errors. The error code G_OPTION_ERROR_FAILED
+ *  A return location for errors. The error code G_OPTION_ERROR_FAILED
  *  is intended to be used for errors in GOptionArgFunc callbacks.
  * Returns :
- * %TRUE if the option was successfully parsed, FALSE if an error
+ *  TRUE if the option was successfully parsed, FALSE if an error
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionArgFunc) (const gchar *option_name,  const gchar *value,  gpointer data,  GError **error);
@@ -3981,12 +3972,12 @@ public typedef extern(C) int  function (char[], char[], void*, GError**) GOption
  * The type of functions which are used to translate user-visible
  * strings, for --help output.
  * str :
- * the untranslated string
+ *  the untranslated string
  * data :
- * user data specified when installing the function, e.g.
+ *  user data specified when installing the function, e.g.
  *  in g_option_group_set_translate_func()
  * Returns :
- * a translation of the string for the current locale.
+ *  a translation of the string for the current locale.
  *  The returned string is owned by GLib and must not be freed.
  */
 // const gchar * (*GTranslateFunc) (const gchar *str,  gpointer data);
@@ -3995,16 +3986,16 @@ public typedef extern(C) char *  function (char[], void*) GTranslateFunc;
 /*
  * The type of function that can be called before and after parsing.
  * context :
- * The active GOptionContext
+ *  The active GOptionContext
  * group :
- * The group to which the function belongs
+ *  The group to which the function belongs
  * data :
- * User data added to the GOptionGroup containing the option when it
+ *  User data added to the GOptionGroup containing the option when it
  *  was created with g_option_group_new()
  * error :
- * A return location for error details
+ *  A return location for error details
  * Returns :
- * %TRUE if the function completed successfully, FALSE if an error
+ *  TRUE if the function completed successfully, FALSE if an error
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionParseFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
@@ -4013,14 +4004,14 @@ public typedef extern(C) int  function (GOptionContext*, GOptionGroup*, void*, G
 /*
  * The type of function to be used as callback when a parse error occurs.
  * context :
- * The active GOptionContext
+ *  The active GOptionContext
  * group :
- * The group to which the function belongs
+ *  The group to which the function belongs
  * data :
- * User data added to the GOptionGroup containing the option when it
+ *  User data added to the GOptionGroup containing the option when it
  *  was created with g_option_group_new()
  * error :
- * The GError containing details about the parse error
+ *  The GError containing details about the parse error
  */
 // void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
 public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionErrorFunc;

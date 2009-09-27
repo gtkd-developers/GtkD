@@ -89,7 +89,7 @@ private import glib.Str;
  * Usage:
  *  testtreemodel [OPTION...] - test tree model performance
  * Help Options:
- *  -?, --help Show help options
+ *  -h, --help Show help options
  *  --help-all Show all help options
  *  --help-gtk Show GTK+ Options
  * Application Options:
@@ -137,7 +137,7 @@ private import glib.Str;
 		 *  g_print ("option parsing failed: %s\n", error->message);
 		 *  exit (1);
 	 *  }
-	 *  /+* ... +/
+	 *  // ...
  * }
  */
 public class OptionGroup

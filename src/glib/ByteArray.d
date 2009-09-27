@@ -121,7 +121,7 @@ public class ByteArray
 	 */
 	
 	/**
-	 * Creates a new GByteArray.
+	 * Creates a new GByteArray with a reference count of 1.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
@@ -152,6 +152,36 @@ public class ByteArray
 			return null;
 		}
 		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Atomically increments the reference count of array by one. This
+	 * function is MT-safe and may be called from any thread.
+	 * Since 2.22
+	 * Returns: The passed in GByteArray.
+	 */
+	public ByteArray doref()
+	{
+		// GByteArray * g_byte_array_ref (GByteArray *array);
+		auto p = g_byte_array_ref(gByteArray);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ByteArray(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Atomically decrements the reference count of array by one. If the
+	 * reference count drops to 0, all memory allocated by the array is
+	 * released. This function is MT-safe and may be called from any
+	 * thread.
+	 * Since 2.22
+	 */
+	public void unref()
+	{
+		// void g_byte_array_unref (GByteArray *array);
+		g_byte_array_unref(gByteArray);
 	}
 	
 	/**
@@ -296,7 +326,9 @@ public class ByteArray
 	
 	/**
 	 * Frees the memory allocated by the GByteArray.
-	 * If free_segment is TRUE it frees the actual byte data.
+	 * If free_segment is TRUE it frees the actual byte data. If the reference
+	 * count of array is greater than one, the GByteArray wrapper is preserved but
+	 * the size of array will be set to zero.
 	 * Params:
 	 * freeSegment = if TRUE the actual byte data is freed as well.
 	 * Returns:the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().

@@ -98,7 +98,7 @@ private import glib.Str;
  * Usage:
  *  testtreemodel [OPTION...] - test tree model performance
  * Help Options:
- *  -?, --help Show help options
+ *  -h, --help Show help options
  *  --help-all Show all help options
  *  --help-gtk Show GTK+ Options
  * Application Options:
@@ -146,7 +146,7 @@ private import glib.Str;
 		 *  g_print ("option parsing failed: %s\n", error->message);
 		 *  exit (1);
 	 *  }
-	 *  /+* ... +/
+	 *  // ...
  * }
  */
 public class OptionContext
@@ -359,6 +359,8 @@ public class OptionContext
 	/**
 	 * Frees context and all the groups which have been
 	 * added to it.
+	 * Please note that parsed arguments need to be freed separately (see
+	 * GOptionEntry).
 	 * Since 2.6
 	 */
 	public void free()
@@ -370,7 +372,8 @@ public class OptionContext
 	/**
 	 * Enables or disables automatic generation of --help
 	 * output. By default, g_option_context_parse() recognizes
-	 * --help, -?, --help-all
+	 * --help, -h,
+	 * -?, --help-all
 	 * and --help-groupname and creates
 	 * suitable output to stdout.
 	 * Since 2.6

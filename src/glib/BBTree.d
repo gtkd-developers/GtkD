@@ -43,6 +43,7 @@
  * omit signals:
  * imports:
  * structWrap:
+ * 	- GTree* -> BBTree
  * module aliases:
  * local aliases:
  * overrides:
@@ -129,6 +130,37 @@ public class BBTree
 			throw new ConstructionException("null returned by g_tree_new(keyCompareFunc)");
 		}
 		this(cast(GTree*) p);
+	}
+	
+	/**
+	 * Increments the reference count of tree by one. It is safe to call
+	 * this function from any thread.
+	 * Since 2.22
+	 * Returns: the passed in GTree.
+	 */
+	public BBTree doref()
+	{
+		// GTree* g_tree_ref (GTree *tree);
+		auto p = g_tree_ref(gTree);
+		if(p is null)
+		{
+			return null;
+		}
+		return new BBTree(cast(GTree*) p);
+	}
+	
+	/**
+	 * Decrements the reference count of tree by one. If the reference count
+	 * drops to 0, all keys and values will be destroyed (if destroy
+	 * functions were specified) and all memory allocated by tree will be
+	 * released.
+	 * It is safe to call this function from any thread.
+	 * Since 2.22
+	 */
+	public void unref()
+	{
+		// void g_tree_unref (GTree *tree);
+		g_tree_unref(gTree);
 	}
 	
 	/**
@@ -357,10 +389,12 @@ public class BBTree
 	}
 	
 	/**
-	 * Destroys the GTree. If keys and/or values are dynamically allocated, you
-	 * should either free them first or create the GTree using g_tree_new_full().
-	 * In the latter case the destroy functions you supplied will be called on
-	 * all keys and values before destroying the GTree.
+	 * Removes all keys and values from the GTree and decreases its
+	 * reference count by one. If keys and/or values are dynamically
+	 * allocated, you should either free them first or create the GTree
+	 * using g_tree_new_full(). In the latter case the destroy functions
+	 * you supplied will be called on all keys and values before destroying
+	 * the GTree.
 	 */
 	public void destroy()
 	{

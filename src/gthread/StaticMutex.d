@@ -218,6 +218,8 @@ public class StaticMutex
 	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
 	 * GStaticMutex as a member of a structure and the structure is freed,
 	 * you should also free the GStaticMutex.
+	 * Note
+	 * Calling g_static_mutex_free() on a locked mutex may result in undefined behaviour.
 	 */
 	public void free()
 	{

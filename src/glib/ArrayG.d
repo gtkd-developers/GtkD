@@ -126,7 +126,7 @@ public class ArrayG
 	 */
 	
 	/**
-	 * Creates a new GArray.
+	 * Creates a new GArray with a reference count of 1.
 	 * Params:
 	 * zeroTerminated = %TRUE if the array should have an extra element at the end
 	 * which is set to 0.
@@ -148,9 +148,9 @@ public class ArrayG
 	
 	/**
 	 * Creates a new GArray with reserved_size elements
-	 * preallocated. This avoids frequent reallocation, if you are going to
-	 * add many elements to the array. Note however that the size of the
-	 * array is still 0.
+	 * preallocated and a reference count of 1. This avoids frequent reallocation,
+	 * if you are going to add many elements to the array. Note however that the
+	 * size of the array is still 0.
 	 * Params:
 	 * zeroTerminated = %TRUE if the array should have an extra element at the end with all bits cleared.
 	 * clear = %TRUE if all bits in the array should be cleared to 0 on allocation.
@@ -167,6 +167,47 @@ public class ArrayG
 			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
+	}
+	
+	/**
+	 * Atomically increments the reference count of array by one. This
+	 * function is MT-safe and may be called from any thread.
+	 * Since 2.22
+	 * Returns: The passed in GArray.
+	 */
+	public ArrayG doref()
+	{
+		// GArray * g_array_ref (GArray *array);
+		auto p = g_array_ref(gArray);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ArrayG(cast(GArray*) p);
+	}
+	
+	/**
+	 * Atomically decrements the reference count of array by one. If the
+	 * reference count drops to 0, all memory allocated by the array is
+	 * released. This function is MT-safe and may be called from any
+	 * thread.
+	 * Since 2.22
+	 */
+	public void unref()
+	{
+		// void g_array_unref (GArray *array);
+		g_array_unref(gArray);
+	}
+	
+	/**
+	 * Gets the size of the elements in array.
+	 * Since 2.22
+	 * Returns: Size of each element, in bytes.
+	 */
+	public uint getElementSize()
+	{
+		// guint g_array_get_element_size (GArray *array);
+		return g_array_get_element_size(gArray);
 	}
 	
 	/**
@@ -333,8 +374,11 @@ public class ArrayG
 	/**
 	 * Frees the memory allocated for the GArray.
 	 * If free_segment is TRUE it frees the memory block holding the elements
-	 * as well. Pass FALSE if you want to free the GArray wrapper but preserve
-	 * the underlying array for use elsewhere.
+	 * as well and also each element if array has a element_free_func set.
+	 * Pass FALSE if you want to free the GArray wrapper but preserve
+	 * the underlying array for use elsewhere. If the reference count of array
+	 * is greater than one, the GArray wrapper is preserved but the size of
+	 * array will be set to zero.
 	 * Note
 	 * If array elements contain dynamically-allocated memory, they should be freed
 	 * separately.

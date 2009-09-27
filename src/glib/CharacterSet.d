@@ -505,21 +505,6 @@ public class CharacterSet
 	}
 	
 	/**
-	 * Splits an URI list conforming to the text/uri-list
-	 * mime type defined in RFC 2483 into individual URIs,
-	 * discarding any comments. The URIs are not validated.
-	 * Since 2.6
-	 * Params:
-	 * uriList =  an URI list
-	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev().
-	 */
-	public static string[] uriListExtractUris(string uriList)
-	{
-		// gchar ** g_uri_list_extract_uris (const gchar *uri_list);
-		return Str.toStringArray(g_uri_list_extract_uris(Str.toStringz(uriList)));
-	}
-	
-	/**
 	 * Converts a string from UTF-8 to the encoding used for strings by
 	 * the C runtime (usually the same as that used by the operating
 	 * system) in the current locale. On

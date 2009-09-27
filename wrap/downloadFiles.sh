@@ -3,10 +3,10 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://library.gnome.org/devel/glib/glib-html-2.20.0.tar.gz | tar xvfz -
-ln -s glib-html-2.20.0 gthread
-ln -s glib-html-2.20.0 glib
-#Missing params in 2.20.0
+curl http://library.gnome.org/devel/glib/glib-html-2.22.0.tar.gz | tar xvfz -
+ln -s glib-html-2.22.0 gthread
+ln -s glib-html-2.22.0 glib
+#Missing params in 2.20.0 / 2.22.0
 cd glib
 rm glib-Atomic-Operations.html
 wget http://library.gnome.org/devel/glib/2.18/glib-Atomic-Operations.html

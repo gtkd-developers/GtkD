@@ -134,15 +134,16 @@ public class HashTable
 	 * Params:
 	 * hashFunc =  a function to create a hash value from a key.
 	 *  Hash values are used to determine where keys are stored within the
-	 *  GHashTable data structure. The g_direct_hash(), g_int_hash() and
-	 *  g_str_hash() functions are provided for some common types of keys.
+	 *  GHashTable data structure. The g_direct_hash(), g_int_hash(),
+	 *  g_int64_hash(), g_double_hash() and g_str_hash() functions are provided
+	 *  for some common types of keys.
 	 *  If hash_func is NULL, g_direct_hash() is used.
 	 * keyEqualFunc =  a function to check two keys for equality. This is
 	 *  used when looking up keys in the GHashTable. The g_direct_equal(),
-	 *  g_int_equal() and g_str_equal() functions are provided for the most
-	 *  common types of keys. If key_equal_func is NULL, keys are compared
-	 *  directly in a similar fashion to g_direct_equal(), but without the
-	 *  overhead of a function call.
+	 *  g_int_equal(), g_int64_equal(), g_double_equal() and g_str_equal()
+	 *  functions are provided for the most common types of keys.
+	 *  If key_equal_func is NULL, keys are compared directly in a similar
+	 *  fashion to g_direct_equal(), but without the overhead of a function call.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc)
@@ -532,9 +533,76 @@ public class HashTable
 	}
 	
 	/**
+	 * Compares the two gint64 values being pointed to and returns
+	 * TRUE if they are equal.
+	 * It can be passed to g_hash_table_new() as the key_equal_func
+	 * parameter, when using pointers to 64-bit integers as keys in a GHashTable.
+	 * Since 2.22
+	 * Params:
+	 * v1 =  a pointer to a gint64 key.
+	 * v2 =  a pointer to a gint64 key to compare with v1.
+	 * Returns: TRUE if the two keys match.
+	 */
+	public static int gInt64_Equal(void* v1, void* v2)
+	{
+		// gboolean g_int64_equal (gconstpointer v1,  gconstpointer v2);
+		return g_int64_equal(v1, v2);
+	}
+	
+	/**
+	 * Converts a pointer to a gint64 to a hash value.
+	 * It can be passed to g_hash_table_new() as the hash_func parameter,
+	 * when using pointers to 64-bit integers values as keys in a GHashTable.
+	 * Since 2.22
+	 * Params:
+	 * v =  a pointer to a gint64 key
+	 * Returns: a hash value corresponding to the key.
+	 */
+	public static uint gInt64_Hash(void* v)
+	{
+		// guint g_int64_hash (gconstpointer v);
+		return g_int64_hash(v);
+	}
+	
+	/**
+	 * Compares the two gdouble values being pointed to and returns
+	 * TRUE if they are equal.
+	 * It can be passed to g_hash_table_new() as the key_equal_func
+	 * parameter, when using pointers to doubles as keys in a GHashTable.
+	 * Since 2.22
+	 * Params:
+	 * v1 =  a pointer to a gdouble key.
+	 * v2 =  a pointer to a gdouble key to compare with v1.
+	 * Returns: TRUE if the two keys match.
+	 */
+	public static int gDoubleEqual(void* v1, void* v2)
+	{
+		// gboolean g_double_equal (gconstpointer v1,  gconstpointer v2);
+		return g_double_equal(v1, v2);
+	}
+	
+	/**
+	 * Converts a pointer to a gdouble to a hash value.
+	 * It can be passed to g_hash_table_new() as the hash_func parameter,
+	 * when using pointers to doubles as keys in a GHashTable.
+	 * Since 2.22
+	 * Params:
+	 * v =  a pointer to a gdouble key
+	 * Returns: a hash value corresponding to the key.
+	 */
+	public static uint gDoubleHash(void* v)
+	{
+		// guint g_double_hash (gconstpointer v);
+		return g_double_hash(v);
+	}
+	
+	/**
 	 * Compares two strings for byte-by-byte equality and returns TRUE
 	 * if they are equal. It can be passed to g_hash_table_new() as the
 	 * key_equal_func parameter, when using strings as keys in a GHashTable.
+	 * Note that this function is primarily meant as a hash table comparison
+	 * function. For a general-purpose, NULL-safe string comparison function,
+	 * see g_strcmp0().
 	 * Params:
 	 * v1 =  a key
 	 * v2 =  a key to compare with v1

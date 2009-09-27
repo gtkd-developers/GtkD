@@ -147,4 +147,19 @@ public class URI
 		// char * g_uri_unescape_segment (const char *escaped_string,  const char *escaped_string_end,  const char *illegal_characters);
 		return Str.toString(g_uri_unescape_segment(Str.toStringz(escapedString), Str.toStringz(escapedStringEnd), Str.toStringz(illegalCharacters)));
 	}
+	
+	/**
+	 * Splits an URI list conforming to the text/uri-list
+	 * mime type defined in RFC 2483 into individual URIs,
+	 * discarding any comments. The URIs are not validated.
+	 * Since 2.6
+	 * Params:
+	 * uriList =  an URI list
+	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev().
+	 */
+	public static string[] listExtractUris(string uriList)
+	{
+		// gchar ** g_uri_list_extract_uris (const gchar *uri_list);
+		return Str.toStringArray(g_uri_list_extract_uris(Str.toStringz(uriList)));
+	}
 }

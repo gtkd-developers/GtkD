@@ -170,7 +170,7 @@ public class StringGChunk
 	 * if they do match.
 	 * Params:
 	 * string =  the string to add
-	 * Returns: a pointer to the new or existing copy of string  within the GStringChunk
+	 * Returns: a pointer to the new or existing copy of string within the GStringChunk
 	 */
 	public string insertConst(string string)
 	{

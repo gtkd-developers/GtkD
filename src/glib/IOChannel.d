@@ -518,7 +518,7 @@ public class IOChannel
 	
 	/**
 	 * Flushes the write buffer for the GIOChannel.
-	 * Returns: the status of the operation: One of G_IO_CHANNEL_NORMAL, G_IO_CHANNEL_AGAIN, or G_IO_CHANNEL_ERROR.
+	 * Returns: the status of the operation: One of G_IO_STATUS_NORMAL, G_IO_STATUS_AGAIN, or G_IO_STATUS_ERROR.
 	 * Throws: GException on failure.
 	 */
 	public GIOStatus flush()

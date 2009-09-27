@@ -324,9 +324,9 @@ public class ErrorG
 	 */
 	
 	/**
-	 * Creates a new GError; unlike g_error_new(), message is not
-	 * a printf()-style format string. Use this
-	 * function if message contains text you don't have control over,
+	 * Creates a new GError; unlike g_error_new(), message is
+	 * not a printf()-style format string. Use this function if
+	 * message contains text you don't have control over,
 	 * that could include printf() escape sequences.
 	 * Params:
 	 * domain =  error domain
@@ -341,6 +341,28 @@ public class ErrorG
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_error_new_literal(domain, code, Str.toStringz(message))");
+		}
+		this(cast(GError*) p);
+	}
+	
+	/**
+	 * Creates a new GError with the given domain and code,
+	 * and a message formatted with format.
+	 * Since 2.22
+	 * Params:
+	 * domain =  error domain
+	 * code =  error code
+	 * format =  printf()-style format for error message
+	 * args =  va_list of parameters for the message format
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GQuark domain, int code, string format, void* args)
+	{
+		// GError* g_error_new_valist (GQuark domain,  gint code,  const gchar *format,  va_list args);
+		auto p = g_error_new_valist(domain, code, Str.toStringz(format), args);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_error_new_valist(domain, code, Str.toStringz(format), args)");
 		}
 		this(cast(GError*) p);
 	}
@@ -371,7 +393,8 @@ public class ErrorG
 	
 	/**
 	 * Returns TRUE if error matches domain and code, FALSE
-	 * otherwise.
+	 * otherwise. In particular, when error is NULL, FALSE will
+	 * be returned.
 	 * Params:
 	 * domain =  an error domain
 	 * code =  an error code
@@ -384,8 +407,8 @@ public class ErrorG
 	}
 	
 	/**
-	 * Does nothing if err is NULL; if err is non-NULL, then *err must
-	 * be NULL. A new GError is created and assigned to *err.
+	 * Does nothing if err is NULL; if err is non-NULL, then *err
+	 * must be NULL. A new GError is created and assigned to *err.
 	 * Unlike g_set_error(), message is not a printf()-style format string.
 	 * Use this function if message contains text you don't have control over,
 	 * that could include printf() escape sequences.
