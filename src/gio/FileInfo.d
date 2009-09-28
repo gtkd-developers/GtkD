@@ -198,6 +198,20 @@ public class FileInfo : ObjectG
 	}
 	
 	/**
+	 * Checks if a file info structure has an attribute in the
+	 * specified name_space.
+	 * Since 2.22
+	 * Params:
+	 * nameSpace =  a file attribute namespace.
+	 * Returns: TRUE if Ginfo has an attribute in name_space, FALSE otherwise.
+	 */
+	public int hasNamespace(string nameSpace)
+	{
+		// gboolean g_file_info_has_namespace (GFileInfo *info,  const char *name_space);
+		return g_file_info_has_namespace(gFileInfo, Str.toStringz(nameSpace));
+	}
+	
+	/**
 	 * Lists the file info structure's attributes.
 	 * Params:
 	 * nameSpace =  a file attribute key's namespace.
@@ -213,7 +227,7 @@ public class FileInfo : ObjectG
 	 * Gets the attribute type for an attribute key.
 	 * Params:
 	 * attribute =  a file attribute key.
-	 * Returns: a GFileAttributeType for the given attribute, or G_FILE_ATTRIBUTE_TYPE_INVALID if the key is invalid.
+	 * Returns: a GFileAttributeType for the given attribute, or G_FILE_ATTRIBUTE_TYPE_INVALID if the key is not set.
 	 */
 	public GFileAttributeType getAttributeType(string attribute)
 	{
@@ -284,6 +298,20 @@ public class FileInfo : ObjectG
 	{
 		// const char * g_file_info_get_attribute_string (GFileInfo *info,  const char *attribute);
 		return Str.toString(g_file_info_get_attribute_string(gFileInfo, Str.toStringz(attribute)));
+	}
+	
+	/**
+	 * Gets the value of a stringv attribute. If the attribute does
+	 * not contain a stringv, NULL will be returned.
+	 * Since 2.22
+	 * Params:
+	 * attribute =  a file attribute key.
+	 * Returns: the contents of the attribute value as a stringv, orNULL otherwise. Do not free.
+	 */
+	public string[] getAttributeStringv(string attribute)
+	{
+		// char ** g_file_info_get_attribute_stringv (GFileInfo *info,  const char *attribute);
+		return Str.toStringArray(g_file_info_get_attribute_stringv(gFileInfo, Str.toStringz(attribute)));
 	}
 	
 	/**
@@ -400,6 +428,24 @@ public class FileInfo : ObjectG
 	}
 	
 	/**
+	 * Sets the attribute status for an attribute key. This is only
+	 * needed by external code that implement g_file_set_attributes_from_info()
+	 * or similar functions.
+	 * The attribute must exist in info for this to work. Otherwise FALSE
+	 * is returned and info is unchanged.
+	 * Since 2.22
+	 * Params:
+	 * attribute =  a file attribute key
+	 * status =  a GFileAttributeStatus
+	 * Returns: TRUE if the status was changed, FALSE if the key was not set.
+	 */
+	public int setAttributeStatus(string attribute, GFileAttributeStatus status)
+	{
+		// gboolean g_file_info_set_attribute_status (GFileInfo *info,  const char *attribute,  GFileAttributeStatus status);
+		return g_file_info_set_attribute_status(gFileInfo, Str.toStringz(attribute), status);
+	}
+	
+	/**
 	 * Sets the attribute to contain the given attr_value,
 	 * if possible.
 	 * Params:
@@ -410,6 +456,20 @@ public class FileInfo : ObjectG
 	{
 		// void g_file_info_set_attribute_string (GFileInfo *info,  const char *attribute,  const char *attr_value);
 		g_file_info_set_attribute_string(gFileInfo, Str.toStringz(attribute), Str.toStringz(attrValue));
+	}
+	
+	/**
+	 * Sets the attribute to contain the given attr_value,
+	 * if possible.
+	 * Sinze: 2.22
+	 * Params:
+	 * attribute =  a file attribute key.
+	 * attrValue =  a NULL terminated string array
+	 */
+	public void setAttributeStringv(string attribute, string[] attrValue)
+	{
+		// void g_file_info_set_attribute_stringv (GFileInfo *info,  const char *attribute,  char **attr_value);
+		g_file_info_set_attribute_stringv(gFileInfo, Str.toStringz(attribute), Str.toStringzArray(attrValue));
 	}
 	
 	/**

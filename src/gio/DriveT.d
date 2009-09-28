@@ -52,11 +52,13 @@
  * 	- gio.Cancellable
  * 	- gio.Icon
  * 	- gio.IconIF
+ * 	- gio.MountOperation
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GIcon* -> IconIF
  * 	- GList* -> ListG
+ * 	- GMountOperation* -> MountOperation
  * module aliases:
  * local aliases:
  * overrides:
@@ -81,6 +83,7 @@ public import gio.AsyncResultIF;
 public import gio.Cancellable;
 public import gio.Icon;
 public import gio.IconIF;
+public import gio.MountOperation;
 
 
 
@@ -99,6 +102,14 @@ public import gio.IconIF;
  * can poll for media; typically one should not do this periodically
  * as a poll for media operation is potententially expensive and may
  * spin up the drive creating noise.
+ * GDrive supports starting and stopping drives with authentication
+ * support for the former. This can be used to support a diverse set
+ * of use cases including connecting/disconnecting iSCSI devices,
+ * powering down external disk enclosures and starting/stopping
+ * multi-disk devices such as RAID devices. Note that the actual
+ * semantics and side-effects of starting/stopping a GDrive may vary
+ * according to implementation. To choose the correct verbs in e.g. a
+ * file manager, use g_drive_get_start_stop_type().
  * For porting from GnomeVFS note that there is no equivalent of
  * GDrive in that API.
  */
@@ -216,6 +227,39 @@ public template DriveT(TStruct)
 		}
 	}
 	
+	void delegate(DriveIF)[] _onStopButtonListeners;
+	void delegate(DriveIF)[] onStopButtonListeners()
+	{
+		return  _onStopButtonListeners;
+	}
+	/**
+	 * Emitted when the physical stop button (if any) of a drive has
+	 * been pressed.
+	 * Since 2.22
+	 */
+	void addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("stop-button" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"stop-button",
+			cast(GCallback)&callBackStopButton,
+			cast(void*)cast(DriveIF)this,
+			null,
+			connectFlags);
+			connectedSignals["stop-button"] = 1;
+		}
+		_onStopButtonListeners ~= dlg;
+	}
+	extern(C) static void callBackStopButton(GDrive* driveStruct, DriveIF driveIF)
+	{
+		foreach ( void delegate(DriveIF) dlg ; driveIF.onStopButtonListeners )
+		{
+			dlg(driveIF);
+		}
+	}
+	
 	
 	/**
 	 * Gets the name of drive.
@@ -277,6 +321,50 @@ public template DriveT(TStruct)
 	{
 		// gboolean g_drive_can_eject (GDrive *drive);
 		return g_drive_can_eject(getDriveTStruct());
+	}
+	
+	/**
+	 * Gets a hint about how a drive can be started/stopped.
+	 * Since 2.22
+	 * Returns: A value from the GDriveStartStopType enumeration.
+	 */
+	public GDriveStartStopType getStartStopType()
+	{
+		// GDriveStartStopType g_drive_get_start_stop_type (GDrive *drive);
+		return g_drive_get_start_stop_type(getDriveTStruct());
+	}
+	
+	/**
+	 * Checks if a drive can be started.
+	 * Since 2.22
+	 * Returns: TRUE if the drive can be started, FALSE otherwise.
+	 */
+	public int canStart()
+	{
+		// gboolean g_drive_can_start (GDrive *drive);
+		return g_drive_can_start(getDriveTStruct());
+	}
+	
+	/**
+	 * Checks if a drive can be started degraded.
+	 * Since 2.22
+	 * Returns: TRUE if the drive can be started degraded, FALSE otherwise.
+	 */
+	public int canStartDegraded()
+	{
+		// gboolean g_drive_can_start_degraded (GDrive *drive);
+		return g_drive_can_start_degraded(getDriveTStruct());
+	}
+	
+	/**
+	 * Checks if a drive can be stopped.
+	 * Since 2.22
+	 * Returns: TRUE if the drive can be stopped, FALSE otherwise.
+	 */
+	public int canStop()
+	{
+		// gboolean g_drive_can_stop (GDrive *drive);
+		return g_drive_can_stop(getDriveTStruct());
 	}
 	
 	/**
@@ -360,6 +448,8 @@ public template DriveT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_drive_eject has been deprecated since version 2.22 and should not be used in newly-written code. Use g_drive_eject_with_operation() instead.
 	 * Asynchronously ejects a drive.
 	 * When the operation is finished, callback will be called.
 	 * You can then call g_drive_eject_finish() to obtain the
@@ -377,6 +467,8 @@ public template DriveT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_drive_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_drive_eject_with_operation_finish() instead.
 	 * Finishes ejecting a drive.
 	 * Params:
 	 * result =  a GAsyncResult.
@@ -389,6 +481,132 @@ public template DriveT(TStruct)
 		GError* err = null;
 		
 		auto p = g_drive_eject_finish(getDriveTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Ejects a drive. This is an asynchronous operation, and is
+	 * finished by calling g_drive_eject_with_operation_finish() with the drive
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the unmount if required for eject
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_drive_eject_with_operation (GDrive *drive,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_drive_eject_with_operation(getDriveTStruct(), flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes ejecting a drive. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the drive was successfully ejected. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectWithOperationFinish(AsyncResultIF result)
+	{
+		// gboolean g_drive_eject_with_operation_finish (GDrive *drive,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_drive_eject_with_operation_finish(getDriveTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Asynchronously starts a drive.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_drive_start_finish() to obtain the
+	 * result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the start operation.
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data to pass to callback
+	 */
+	public void start(GDriveStartFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_drive_start (GDrive *drive,  GDriveStartFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_drive_start(getDriveTStruct(), flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes starting a drive.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the drive has been started successfully, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int startFinish(AsyncResultIF result)
+	{
+		// gboolean g_drive_start_finish (GDrive *drive,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_drive_start_finish(getDriveTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Asynchronously stops a drive.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_drive_stop_finish() to obtain the
+	 * result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the unmount if required for stopping.
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data to pass to callback
+	 */
+	public void stop(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_drive_stop (GDrive *drive,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_drive_stop(getDriveTStruct(), flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes stopping a drive.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the drive has been stopped successfully, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int stopFinish(AsyncResultIF result)
+	{
+		// gboolean g_drive_stop_finish (GDrive *drive,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_drive_stop_finish(getDriveTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{

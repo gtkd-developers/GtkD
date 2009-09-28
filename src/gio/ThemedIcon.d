@@ -192,4 +192,14 @@ public class ThemedIcon : ObjectG, IconIF
 		// void g_themed_icon_append_name (GThemedIcon *icon,  const char *iconname);
 		g_themed_icon_append_name(gThemedIcon, Str.toStringz(iconname));
 	}
+	
+	/**
+	 * Gets the names of icons from within icon.
+	 * Returns: a list of icon names.
+	 */
+	public string[] getNames()
+	{
+		// const gchar* const * g_themed_icon_get_names (GThemedIcon *icon);
+		return Str.toStringArray(g_themed_icon_get_names(gThemedIcon));
+	}
 }

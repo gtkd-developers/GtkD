@@ -144,11 +144,11 @@ public class IOSchedulerJob
 	}
 	
 	/**
-	 * Used from an I/O job to send a callback to be run in the
-	 * main loop (main thread), waiting for the result (and thus
+	 * Used from an I/O job to send a callback to be run in the thread
+	 * that the job was started from, waiting for the result (and thus
 	 * blocking the I/O job).
 	 * Params:
-	 * func =  a GSourceFunc callback that will be called in the main thread
+	 * func =  a GSourceFunc callback that will be called in the original thread
 	 * userData =  data to pass to func
 	 * notify =  a GDestroyNotify for user_data, or NULL
 	 * Returns: The return value of func
@@ -160,16 +160,16 @@ public class IOSchedulerJob
 	}
 	
 	/**
-	 * Used from an I/O job to send a callback to be run asynchronously
-	 * in the main loop (main thread). The callback will be run when the
-	 * main loop is available, but at that time the I/O job might have
-	 * finished. The return value from the callback is ignored.
+	 * Used from an I/O job to send a callback to be run asynchronously in
+	 * the thread that the job was started from. The callback will be run
+	 * when the main loop is available, but at that time the I/O job might
+	 * have finished. The return value from the callback is ignored.
 	 * Note that if you are passing the user_data from g_io_scheduler_push_job()
 	 * on to this function you have to ensure that it is not freed before
 	 * func is called, either by passing NULL as notify to
 	 * g_io_scheduler_push_job() or by using refcounting for user_data.
 	 * Params:
-	 * func =  a GSourceFunc callback that will be called in the main thread
+	 * func =  a GSourceFunc callback that will be called in the original thread
 	 * userData =  data to pass to func
 	 * notify =  a GDestroyNotify for user_data, or NULL
 	 */

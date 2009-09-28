@@ -449,7 +449,7 @@ public class FileAttributeInfoList
 	 * Gets the file attribute with the name name from list.
 	 * Params:
 	 * name =  the name of the attribute to lookup.
-	 * Returns: a GFileAttributeInfo for the name, or NULL if an attribute isn't found.
+	 * Returns: a GFileAttributeInfo for the name, or NULL if anattribute isn't found.
 	 */
 	public GFileAttributeInfo* lookup(string name)
 	{

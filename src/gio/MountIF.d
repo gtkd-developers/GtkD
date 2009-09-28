@@ -108,13 +108,13 @@ private import gio.VolumeIF;
  * Unmounting a GMount instance is an asynchronous operation. For
  * more information about asynchronous operations, see GAsyncReady
  * and GSimpleAsyncReady. To unmount a GMount instance, first call
- * g_mount_unmount() with (at least) the GMount instance and a
+ * g_mount_unmount_with_operation() with (at least) the GMount instance and a
  * GAsyncReadyCallback. The callback will be fired when the
  * operation has resolved (either with success or failure), and a
  * GAsyncReady structure will be passed to the callback. That
- * callback should then call g_mount_unmount_finish() with the GMount
+ * callback should then call g_mount_unmount_with_operation_finish() with the GMount
  * and the GAsyncReady data to see if the operation was completed
- * successfully. If an error is present when g_mount_unmount_finish()
+ * successfully. If an error is present when g_mount_unmount_with_operation_finish()
  * is called, then it will be filled with any error information.
  */
 public interface MountIF
@@ -135,6 +135,13 @@ public interface MountIF
 	 * Emitted when the mount has been changed.
 	 */
 	void addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void delegate(MountIF)[] onPreUnmountListeners();
+	/**
+	 * This signal is emitted when the GMount is about to be
+	 * unmounted.
+	 * Since 2.22
+	 */
+	void addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	void delegate(MountIF)[] onUnmountedListeners();
 	/**
 	 * This signal is emitted when the GMount have been
@@ -194,6 +201,8 @@ public interface MountIF
 	public int canUnmount();
 	
 	/**
+	 * Warning
+	 * g_mount_unmount has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_unmount_with_operation() instead.
 	 * Unmounts a mount. This is an asynchronous operation, and is
 	 * finished by calling g_mount_unmount_finish() with the mount
 	 * and GAsyncResult data returned in the callback.
@@ -207,6 +216,8 @@ public interface MountIF
 	public void unmount(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
 	/**
+	 * Warning
+	 * g_mount_unmount_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_unmount_with_operation_finish() instead.
 	 * Finishes unmounting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
@@ -216,6 +227,33 @@ public interface MountIF
 	 * Throws: GException on failure.
 	 */
 	public int unmountFinish(AsyncResultIF result);
+	
+	/**
+	 * Unmounts a mount. This is an asynchronous operation, and is
+	 * finished by calling g_mount_unmount_with_operation_finish() with the mount
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * mount =  a GMount.
+	 * flags =  flags affecting the operation
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void unmountWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	
+	/**
+	 * Finishes unmounting a mount. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * mount =  a GMount.
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the mount was successfully unmounted. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int unmountWithOperationFinish(AsyncResultIF result);
 	
 	/**
 	 * Remounts a mount. This is an asynchronous operation, and is
@@ -254,6 +292,8 @@ public interface MountIF
 	public int canEject();
 	
 	/**
+	 * Warning
+	 * g_mount_eject has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_eject_with_operation() instead.
 	 * Ejects a mount. This is an asynchronous operation, and is
 	 * finished by calling g_mount_eject_finish() with the mount
 	 * and GAsyncResult data returned in the callback.
@@ -267,6 +307,8 @@ public interface MountIF
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
 	/**
+	 * Warning
+	 * g_mount_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_eject_with_operation_finish() instead.
 	 * Finishes ejecting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
@@ -275,6 +317,32 @@ public interface MountIF
 	 * Throws: GException on failure.
 	 */
 	public int ejectFinish(AsyncResultIF result);
+	
+	/**
+	 * Ejects a mount. This is an asynchronous operation, and is
+	 * finished by calling g_mount_eject_with_operation_finish() with the mount
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * mount =  a GMount.
+	 * flags =  flags affecting the unmount if required for eject
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	
+	/**
+	 * Finishes ejecting a mount. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the mount was successfully ejected. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectWithOperationFinish(AsyncResultIF result);
 	
 	/**
 	 * Tries to guess the type of content stored on mount. Returns one or

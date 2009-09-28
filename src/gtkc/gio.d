@@ -111,8 +111,18 @@ static this()
 	Linker.link(g_file_mount_mountable_finish, "g_file_mount_mountable_finish", LIBRARY.GIO);
 	Linker.link(g_file_unmount_mountable, "g_file_unmount_mountable", LIBRARY.GIO);
 	Linker.link(g_file_unmount_mountable_finish, "g_file_unmount_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_unmount_mountable_with_operation, "g_file_unmount_mountable_with_operation", LIBRARY.GIO);
+	Linker.link(g_file_unmount_mountable_with_operation_finish, "g_file_unmount_mountable_with_operation_finish", LIBRARY.GIO);
 	Linker.link(g_file_eject_mountable, "g_file_eject_mountable", LIBRARY.GIO);
 	Linker.link(g_file_eject_mountable_finish, "g_file_eject_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_eject_mountable_with_operation, "g_file_eject_mountable_with_operation", LIBRARY.GIO);
+	Linker.link(g_file_eject_mountable_with_operation_finish, "g_file_eject_mountable_with_operation_finish", LIBRARY.GIO);
+	Linker.link(g_file_start_mountable, "g_file_start_mountable", LIBRARY.GIO);
+	Linker.link(g_file_start_mountable_finish, "g_file_start_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_stop_mountable, "g_file_stop_mountable", LIBRARY.GIO);
+	Linker.link(g_file_stop_mountable_finish, "g_file_stop_mountable_finish", LIBRARY.GIO);
+	Linker.link(g_file_poll_mountable, "g_file_poll_mountable", LIBRARY.GIO);
+	Linker.link(g_file_poll_mountable_finish, "g_file_poll_mountable_finish", LIBRARY.GIO);
 	Linker.link(g_file_mount_enclosing_volume, "g_file_mount_enclosing_volume", LIBRARY.GIO);
 	Linker.link(g_file_mount_enclosing_volume_finish, "g_file_mount_enclosing_volume_finish", LIBRARY.GIO);
 	Linker.link(g_file_monitor_directory, "g_file_monitor_directory", LIBRARY.GIO);
@@ -127,6 +137,16 @@ static this()
 	Linker.link(g_file_replace_contents_async, "g_file_replace_contents_async", LIBRARY.GIO);
 	Linker.link(g_file_replace_contents_finish, "g_file_replace_contents_finish", LIBRARY.GIO);
 	Linker.link(g_file_copy_attributes, "g_file_copy_attributes", LIBRARY.GIO);
+	Linker.link(g_file_create_readwrite, "g_file_create_readwrite", LIBRARY.GIO);
+	Linker.link(g_file_create_readwrite_async, "g_file_create_readwrite_async", LIBRARY.GIO);
+	Linker.link(g_file_create_readwrite_finish, "g_file_create_readwrite_finish", LIBRARY.GIO);
+	Linker.link(g_file_open_readwrite, "g_file_open_readwrite", LIBRARY.GIO);
+	Linker.link(g_file_open_readwrite_async, "g_file_open_readwrite_async", LIBRARY.GIO);
+	Linker.link(g_file_open_readwrite_finish, "g_file_open_readwrite_finish", LIBRARY.GIO);
+	Linker.link(g_file_replace_readwrite, "g_file_replace_readwrite", LIBRARY.GIO);
+	Linker.link(g_file_replace_readwrite_async, "g_file_replace_readwrite_async", LIBRARY.GIO);
+	Linker.link(g_file_replace_readwrite_finish, "g_file_replace_readwrite_finish", LIBRARY.GIO);
+	Linker.link(g_file_supports_thread_contexts, "g_file_supports_thread_contexts", LIBRARY.GIO);
 
 	// gio.FileAttributeInfoList
 
@@ -143,6 +163,7 @@ static this()
 	Linker.link(g_file_info_dup, "g_file_info_dup", LIBRARY.GIO);
 	Linker.link(g_file_info_copy_into, "g_file_info_copy_into", LIBRARY.GIO);
 	Linker.link(g_file_info_has_attribute, "g_file_info_has_attribute", LIBRARY.GIO);
+	Linker.link(g_file_info_has_namespace, "g_file_info_has_namespace", LIBRARY.GIO);
 	Linker.link(g_file_info_list_attributes, "g_file_info_list_attributes", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_type, "g_file_info_get_attribute_type", LIBRARY.GIO);
 	Linker.link(g_file_info_remove_attribute, "g_file_info_remove_attribute", LIBRARY.GIO);
@@ -150,6 +171,7 @@ static this()
 	Linker.link(g_file_info_get_attribute_data, "g_file_info_get_attribute_data", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_status, "g_file_info_get_attribute_status", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_string, "g_file_info_get_attribute_string", LIBRARY.GIO);
+	Linker.link(g_file_info_get_attribute_stringv, "g_file_info_get_attribute_stringv", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_byte_string, "g_file_info_get_attribute_byte_string", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_boolean, "g_file_info_get_attribute_boolean", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_uint32, "g_file_info_get_attribute_uint32", LIBRARY.GIO);
@@ -158,7 +180,9 @@ static this()
 	Linker.link(g_file_info_get_attribute_int64, "g_file_info_get_attribute_int64", LIBRARY.GIO);
 	Linker.link(g_file_info_get_attribute_object, "g_file_info_get_attribute_object", LIBRARY.GIO);
 	Linker.link(g_file_info_set_attribute, "g_file_info_set_attribute", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_status, "g_file_info_set_attribute_status", LIBRARY.GIO);
 	Linker.link(g_file_info_set_attribute_string, "g_file_info_set_attribute_string", LIBRARY.GIO);
+	Linker.link(g_file_info_set_attribute_stringv, "g_file_info_set_attribute_stringv", LIBRARY.GIO);
 	Linker.link(g_file_info_set_attribute_byte_string, "g_file_info_set_attribute_byte_string", LIBRARY.GIO);
 	Linker.link(g_file_info_set_attribute_boolean, "g_file_info_set_attribute_boolean", LIBRARY.GIO);
 	Linker.link(g_file_info_set_attribute_uint32, "g_file_info_set_attribute_uint32", LIBRARY.GIO);
@@ -219,6 +243,10 @@ static this()
 	Linker.link(g_file_enumerator_set_pending, "g_file_enumerator_set_pending", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_get_container, "g_file_enumerator_get_container", LIBRARY.GIO);
 
+	// gio.ErrorGIO
+
+	Linker.link(g_io_error_from_errno, "g_io_error_from_errno", LIBRARY.GIO);
+
 	// gio.MountOperation
 
 	Linker.link(g_mount_operation_new, "g_mount_operation_new", LIBRARY.GIO);
@@ -236,10 +264,6 @@ static this()
 	Linker.link(g_mount_operation_set_choice, "g_mount_operation_set_choice", LIBRARY.GIO);
 	Linker.link(g_mount_operation_reply, "g_mount_operation_reply", LIBRARY.GIO);
 
-	// gio.ErrorGIO
-
-	Linker.link(g_io_error_from_errno, "g_io_error_from_errno", LIBRARY.GIO);
-
 	// gio.FileMonitor
 
 	Linker.link(g_file_monitor_cancel, "g_file_monitor_cancel", LIBRARY.GIO);
@@ -254,10 +278,13 @@ static this()
 	Linker.link(g_cancellable_set_error_if_cancelled, "g_cancellable_set_error_if_cancelled", LIBRARY.GIO);
 	Linker.link(g_cancellable_get_fd, "g_cancellable_get_fd", LIBRARY.GIO);
 	Linker.link(g_cancellable_make_pollfd, "g_cancellable_make_pollfd", LIBRARY.GIO);
+	Linker.link(g_cancellable_release_fd, "g_cancellable_release_fd", LIBRARY.GIO);
 	Linker.link(g_cancellable_get_current, "g_cancellable_get_current", LIBRARY.GIO);
 	Linker.link(g_cancellable_pop_current, "g_cancellable_pop_current", LIBRARY.GIO);
 	Linker.link(g_cancellable_push_current, "g_cancellable_push_current", LIBRARY.GIO);
 	Linker.link(g_cancellable_reset, "g_cancellable_reset", LIBRARY.GIO);
+	Linker.link(g_cancellable_connect, "g_cancellable_connect", LIBRARY.GIO);
+	Linker.link(g_cancellable_disconnect, "g_cancellable_disconnect", LIBRARY.GIO);
 	Linker.link(g_cancellable_cancel, "g_cancellable_cancel", LIBRARY.GIO);
 
 	// gio.AsyncResultT
@@ -347,6 +374,18 @@ static this()
 	Linker.link(g_output_stream_set_pending, "g_output_stream_set_pending", LIBRARY.GIO);
 	Linker.link(g_output_stream_clear_pending, "g_output_stream_clear_pending", LIBRARY.GIO);
 
+	// gio.IOStream
+
+	Linker.link(g_io_stream_get_input_stream, "g_io_stream_get_input_stream", LIBRARY.GIO);
+	Linker.link(g_io_stream_get_output_stream, "g_io_stream_get_output_stream", LIBRARY.GIO);
+	Linker.link(g_io_stream_close, "g_io_stream_close", LIBRARY.GIO);
+	Linker.link(g_io_stream_close_async, "g_io_stream_close_async", LIBRARY.GIO);
+	Linker.link(g_io_stream_close_finish, "g_io_stream_close_finish", LIBRARY.GIO);
+	Linker.link(g_io_stream_is_closed, "g_io_stream_is_closed", LIBRARY.GIO);
+	Linker.link(g_io_stream_has_pending, "g_io_stream_has_pending", LIBRARY.GIO);
+	Linker.link(g_io_stream_set_pending, "g_io_stream_set_pending", LIBRARY.GIO);
+	Linker.link(g_io_stream_clear_pending, "g_io_stream_clear_pending", LIBRARY.GIO);
+
 	// gio.FileInputStream
 
 	Linker.link(g_file_input_stream_query_info, "g_file_input_stream_query_info", LIBRARY.GIO);
@@ -359,6 +398,13 @@ static this()
 	Linker.link(g_file_output_stream_query_info_async, "g_file_output_stream_query_info_async", LIBRARY.GIO);
 	Linker.link(g_file_output_stream_query_info_finish, "g_file_output_stream_query_info_finish", LIBRARY.GIO);
 	Linker.link(g_file_output_stream_get_etag, "g_file_output_stream_get_etag", LIBRARY.GIO);
+
+	// gio.FileIOStream
+
+	Linker.link(g_file_io_stream_get_etag, "g_file_io_stream_get_etag", LIBRARY.GIO);
+	Linker.link(g_file_io_stream_query_info, "g_file_io_stream_query_info", LIBRARY.GIO);
+	Linker.link(g_file_io_stream_query_info_async, "g_file_io_stream_query_info_async", LIBRARY.GIO);
+	Linker.link(g_file_io_stream_query_info_finish, "g_file_io_stream_query_info_finish", LIBRARY.GIO);
 
 	// gio.FilterInputStream
 
@@ -547,6 +593,8 @@ static this()
 	Linker.link(g_volume_can_eject, "g_volume_can_eject", LIBRARY.GIO);
 	Linker.link(g_volume_eject, "g_volume_eject", LIBRARY.GIO);
 	Linker.link(g_volume_eject_finish, "g_volume_eject_finish", LIBRARY.GIO);
+	Linker.link(g_volume_eject_with_operation, "g_volume_eject_with_operation", LIBRARY.GIO);
+	Linker.link(g_volume_eject_with_operation_finish, "g_volume_eject_with_operation_finish", LIBRARY.GIO);
 	Linker.link(g_volume_enumerate_identifiers, "g_volume_enumerate_identifiers", LIBRARY.GIO);
 	Linker.link(g_volume_get_identifier, "g_volume_get_identifier", LIBRARY.GIO);
 
@@ -567,11 +615,15 @@ static this()
 	Linker.link(g_mount_can_unmount, "g_mount_can_unmount", LIBRARY.GIO);
 	Linker.link(g_mount_unmount, "g_mount_unmount", LIBRARY.GIO);
 	Linker.link(g_mount_unmount_finish, "g_mount_unmount_finish", LIBRARY.GIO);
+	Linker.link(g_mount_unmount_with_operation, "g_mount_unmount_with_operation", LIBRARY.GIO);
+	Linker.link(g_mount_unmount_with_operation_finish, "g_mount_unmount_with_operation_finish", LIBRARY.GIO);
 	Linker.link(g_mount_remount, "g_mount_remount", LIBRARY.GIO);
 	Linker.link(g_mount_remount_finish, "g_mount_remount_finish", LIBRARY.GIO);
 	Linker.link(g_mount_can_eject, "g_mount_can_eject", LIBRARY.GIO);
 	Linker.link(g_mount_eject, "g_mount_eject", LIBRARY.GIO);
 	Linker.link(g_mount_eject_finish, "g_mount_eject_finish", LIBRARY.GIO);
+	Linker.link(g_mount_eject_with_operation, "g_mount_eject_with_operation", LIBRARY.GIO);
+	Linker.link(g_mount_eject_with_operation_finish, "g_mount_eject_with_operation_finish", LIBRARY.GIO);
 	Linker.link(g_mount_guess_content_type, "g_mount_guess_content_type", LIBRARY.GIO);
 	Linker.link(g_mount_guess_content_type_finish, "g_mount_guess_content_type_finish", LIBRARY.GIO);
 	Linker.link(g_mount_guess_content_type_sync, "g_mount_guess_content_type_sync", LIBRARY.GIO);
@@ -592,6 +644,10 @@ static this()
 	Linker.link(g_drive_has_volumes, "g_drive_has_volumes", LIBRARY.GIO);
 	Linker.link(g_drive_get_volumes, "g_drive_get_volumes", LIBRARY.GIO);
 	Linker.link(g_drive_can_eject, "g_drive_can_eject", LIBRARY.GIO);
+	Linker.link(g_drive_get_start_stop_type, "g_drive_get_start_stop_type", LIBRARY.GIO);
+	Linker.link(g_drive_can_start, "g_drive_can_start", LIBRARY.GIO);
+	Linker.link(g_drive_can_start_degraded, "g_drive_can_start_degraded", LIBRARY.GIO);
+	Linker.link(g_drive_can_stop, "g_drive_can_stop", LIBRARY.GIO);
 	Linker.link(g_drive_can_poll_for_media, "g_drive_can_poll_for_media", LIBRARY.GIO);
 	Linker.link(g_drive_poll_for_media, "g_drive_poll_for_media", LIBRARY.GIO);
 	Linker.link(g_drive_poll_for_media_finish, "g_drive_poll_for_media_finish", LIBRARY.GIO);
@@ -600,6 +656,12 @@ static this()
 	Linker.link(g_drive_is_media_removable, "g_drive_is_media_removable", LIBRARY.GIO);
 	Linker.link(g_drive_eject, "g_drive_eject", LIBRARY.GIO);
 	Linker.link(g_drive_eject_finish, "g_drive_eject_finish", LIBRARY.GIO);
+	Linker.link(g_drive_eject_with_operation, "g_drive_eject_with_operation", LIBRARY.GIO);
+	Linker.link(g_drive_eject_with_operation_finish, "g_drive_eject_with_operation_finish", LIBRARY.GIO);
+	Linker.link(g_drive_start, "g_drive_start", LIBRARY.GIO);
+	Linker.link(g_drive_start_finish, "g_drive_start_finish", LIBRARY.GIO);
+	Linker.link(g_drive_stop, "g_drive_stop", LIBRARY.GIO);
+	Linker.link(g_drive_stop_finish, "g_drive_stop_finish", LIBRARY.GIO);
 	Linker.link(g_drive_enumerate_identifiers, "g_drive_enumerate_identifiers", LIBRARY.GIO);
 	Linker.link(g_drive_get_identifier, "g_drive_get_identifier", LIBRARY.GIO);
 
@@ -679,6 +741,7 @@ static this()
 	Linker.link(g_themed_icon_new_with_default_fallbacks, "g_themed_icon_new_with_default_fallbacks", LIBRARY.GIO);
 	Linker.link(g_themed_icon_prepend_name, "g_themed_icon_prepend_name", LIBRARY.GIO);
 	Linker.link(g_themed_icon_append_name, "g_themed_icon_append_name", LIBRARY.GIO);
+	Linker.link(g_themed_icon_get_names, "g_themed_icon_get_names", LIBRARY.GIO);
 
 	// gio.EmblemedIcon
 
@@ -693,6 +756,28 @@ static this()
 	Linker.link(g_emblem_new_with_origin, "g_emblem_new_with_origin", LIBRARY.GIO);
 	Linker.link(g_emblem_get_icon, "g_emblem_get_icon", LIBRARY.GIO);
 	Linker.link(g_emblem_get_origin, "g_emblem_get_origin", LIBRARY.GIO);
+
+	// gio.InitableT
+
+
+	// gio.InitableT
+
+	Linker.link(g_initable_init, "g_initable_init", LIBRARY.GIO);
+	Linker.link(g_initable_new, "g_initable_new", LIBRARY.GIO);
+	Linker.link(g_initable_new_valist, "g_initable_new_valist", LIBRARY.GIO);
+	Linker.link(g_initable_newv, "g_initable_newv", LIBRARY.GIO);
+
+	// gio.AsyncInitableT
+
+
+	// gio.AsyncInitableT
+
+	Linker.link(g_async_initable_init_async, "g_async_initable_init_async", LIBRARY.GIO);
+	Linker.link(g_async_initable_init_finish, "g_async_initable_init_finish", LIBRARY.GIO);
+	Linker.link(g_async_initable_new_async, "g_async_initable_new_async", LIBRARY.GIO);
+	Linker.link(g_async_initable_new_finish, "g_async_initable_new_finish", LIBRARY.GIO);
+	Linker.link(g_async_initable_new_valist_async, "g_async_initable_new_valist_async", LIBRARY.GIO);
+	Linker.link(g_async_initable_newv_async, "g_async_initable_newv_async", LIBRARY.GIO);
 
 	// gio.FilenameCompleter
 
@@ -816,8 +901,18 @@ extern(C)
 	GFile* function(GFile* file, GAsyncResult* result, GError** error) c_g_file_mount_mountable_finish;
 	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_unmount_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_unmount_mountable_finish;
+	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_unmount_mountable_with_operation;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_unmount_mountable_with_operation_finish;
 	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_eject_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_eject_mountable_finish;
+	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_eject_mountable_with_operation;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_eject_mountable_with_operation_finish;
+	void function(GFile* file, GDriveStartFlags flags, GMountOperation* startOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_start_mountable;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_start_mountable_finish;
+	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_stop_mountable;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_stop_mountable_finish;
+	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_poll_mountable;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_poll_mountable_finish;
 	void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_mount_enclosing_volume;
 	gboolean function(GFile* location, GAsyncResult* result, GError** error) c_g_file_mount_enclosing_volume_finish;
 	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor_directory;
@@ -832,6 +927,16 @@ extern(C)
 	void function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_contents_async;
 	gboolean function(GFile* file, GAsyncResult* res, char** newEtag, GError** error) c_g_file_replace_contents_finish;
 	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GError** error) c_g_file_copy_attributes;
+	GFileIOStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_create_readwrite;
+	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_create_readwrite_async;
+	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_create_readwrite_finish;
+	GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_open_readwrite;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_open_readwrite_async;
+	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_open_readwrite_finish;
+	GFileIOStream* function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_replace_readwrite;
+	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_readwrite_async;
+	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_replace_readwrite_finish;
+	gboolean function(GFile* file) c_g_file_supports_thread_contexts;
 	
 	// gio.FileAttributeInfoList
 	
@@ -848,6 +953,7 @@ extern(C)
 	GFileInfo* function(GFileInfo* other) c_g_file_info_dup;
 	void function(GFileInfo* srcInfo, GFileInfo* destInfo) c_g_file_info_copy_into;
 	gboolean function(GFileInfo* info, char* attribute) c_g_file_info_has_attribute;
+	gboolean function(GFileInfo* info, char* nameSpace) c_g_file_info_has_namespace;
 	char** function(GFileInfo* info, char* nameSpace) c_g_file_info_list_attributes;
 	GFileAttributeType function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_type;
 	void function(GFileInfo* info, char* attribute) c_g_file_info_remove_attribute;
@@ -855,6 +961,7 @@ extern(C)
 	gboolean function(GFileInfo* info, char* attribute, GFileAttributeType* type, gpointer* valuePp, GFileAttributeStatus* status) c_g_file_info_get_attribute_data;
 	GFileAttributeStatus function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_status;
 	char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_string;
+	char** function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_stringv;
 	char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_byte_string;
 	gboolean function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_boolean;
 	guint32 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_uint32;
@@ -863,7 +970,9 @@ extern(C)
 	gint64 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_int64;
 	GObject* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_object;
 	void function(GFileInfo* info, char* attribute, GFileAttributeType type, gpointer valueP) c_g_file_info_set_attribute;
+	gboolean function(GFileInfo* info, char* attribute, GFileAttributeStatus status) c_g_file_info_set_attribute_status;
 	void function(GFileInfo* info, char* attribute, char* attrValue) c_g_file_info_set_attribute_string;
+	void function(GFileInfo* info, char* attribute, char** attrValue) c_g_file_info_set_attribute_stringv;
 	void function(GFileInfo* info, char* attribute, char* attrValue) c_g_file_info_set_attribute_byte_string;
 	void function(GFileInfo* info, char* attribute, gboolean attrValue) c_g_file_info_set_attribute_boolean;
 	void function(GFileInfo* info, char* attribute, guint32 attrValue) c_g_file_info_set_attribute_uint32;
@@ -924,6 +1033,10 @@ extern(C)
 	void function(GFileEnumerator* enumerator, gboolean pending) c_g_file_enumerator_set_pending;
 	GFile* function(GFileEnumerator* enumerator) c_g_file_enumerator_get_container;
 	
+	// gio.ErrorGIO
+	
+	GIOErrorEnum function(gint errNo) c_g_io_error_from_errno;
+	
 	// gio.MountOperation
 	
 	GMountOperation* function() c_g_mount_operation_new;
@@ -941,10 +1054,6 @@ extern(C)
 	void function(GMountOperation* op, int choice) c_g_mount_operation_set_choice;
 	void function(GMountOperation* op, GMountOperationResult result) c_g_mount_operation_reply;
 	
-	// gio.ErrorGIO
-	
-	GIOErrorEnum function(gint errNo) c_g_io_error_from_errno;
-	
 	// gio.FileMonitor
 	
 	gboolean function(GFileMonitor* monitor) c_g_file_monitor_cancel;
@@ -958,11 +1067,14 @@ extern(C)
 	gboolean function(GCancellable* cancellable) c_g_cancellable_is_cancelled;
 	gboolean function(GCancellable* cancellable, GError** error) c_g_cancellable_set_error_if_cancelled;
 	int function(GCancellable* cancellable) c_g_cancellable_get_fd;
-	void function(GCancellable* cancellable, GPollFD* pollfd) c_g_cancellable_make_pollfd;
+	gboolean function(GCancellable* cancellable, GPollFD* pollfd) c_g_cancellable_make_pollfd;
+	void function(GCancellable* cancellable) c_g_cancellable_release_fd;
 	GCancellable* function() c_g_cancellable_get_current;
 	void function(GCancellable* cancellable) c_g_cancellable_pop_current;
 	void function(GCancellable* cancellable) c_g_cancellable_push_current;
 	void function(GCancellable* cancellable) c_g_cancellable_reset;
+	gulong function(GCancellable* cancellable, GCallback callback, gpointer data, GDestroyNotify dataDestroyFunc) c_g_cancellable_connect;
+	void function(GCancellable* cancellable, gulong handlerId) c_g_cancellable_disconnect;
 	void function(GCancellable* cancellable) c_g_cancellable_cancel;
 	
 	// gio.AsyncResultT
@@ -1052,6 +1164,18 @@ extern(C)
 	gboolean function(GOutputStream* stream, GError** error) c_g_output_stream_set_pending;
 	void function(GOutputStream* stream) c_g_output_stream_clear_pending;
 	
+	// gio.IOStream
+	
+	GInputStream* function(GIOStream* stream) c_g_io_stream_get_input_stream;
+	GOutputStream* function(GIOStream* stream) c_g_io_stream_get_output_stream;
+	gboolean function(GIOStream* stream, GCancellable* cancellable, GError** error) c_g_io_stream_close;
+	void function(GIOStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_io_stream_close_async;
+	gboolean function(GIOStream* stream, GAsyncResult* result, GError** error) c_g_io_stream_close_finish;
+	gboolean function(GIOStream* stream) c_g_io_stream_is_closed;
+	gboolean function(GIOStream* stream) c_g_io_stream_has_pending;
+	gboolean function(GIOStream* stream, GError** error) c_g_io_stream_set_pending;
+	void function(GIOStream* stream) c_g_io_stream_clear_pending;
+	
 	// gio.FileInputStream
 	
 	GFileInfo* function(GFileInputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_input_stream_query_info;
@@ -1064,6 +1188,13 @@ extern(C)
 	void function(GFileOutputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_output_stream_query_info_async;
 	GFileInfo* function(GFileOutputStream* stream, GAsyncResult* result, GError** error) c_g_file_output_stream_query_info_finish;
 	char* function(GFileOutputStream* stream) c_g_file_output_stream_get_etag;
+	
+	// gio.FileIOStream
+	
+	char* function(GFileIOStream* stream) c_g_file_io_stream_get_etag;
+	GFileInfo* function(GFileIOStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_io_stream_query_info;
+	void function(GFileIOStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_io_stream_query_info_async;
+	GFileInfo* function(GFileIOStream* stream, GAsyncResult* result, GError** error) c_g_file_io_stream_query_info_finish;
 	
 	// gio.FilterInputStream
 	
@@ -1252,6 +1383,8 @@ extern(C)
 	gboolean function(GVolume* volume) c_g_volume_can_eject;
 	void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_eject;
 	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_finish;
+	void function(GVolume* volume, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_eject_with_operation;
+	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_with_operation_finish;
 	char** function(GVolume* volume) c_g_volume_enumerate_identifiers;
 	char* function(GVolume* volume, char* kind) c_g_volume_get_identifier;
 	
@@ -1272,11 +1405,15 @@ extern(C)
 	gboolean function(GMount* mount) c_g_mount_can_unmount;
 	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_unmount;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_unmount_finish;
+	void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_unmount_with_operation;
+	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_unmount_with_operation_finish;
 	void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_remount;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_remount_finish;
 	gboolean function(GMount* mount) c_g_mount_can_eject;
 	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_eject;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_eject_finish;
+	void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_eject_with_operation;
+	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_eject_with_operation_finish;
 	void function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_guess_content_type;
 	gchar** function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_guess_content_type_finish;
 	gchar** function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GError** error) c_g_mount_guess_content_type_sync;
@@ -1297,6 +1434,10 @@ extern(C)
 	gboolean function(GDrive* drive) c_g_drive_has_volumes;
 	GList* function(GDrive* drive) c_g_drive_get_volumes;
 	gboolean function(GDrive* drive) c_g_drive_can_eject;
+	GDriveStartStopType function(GDrive* drive) c_g_drive_get_start_stop_type;
+	gboolean function(GDrive* drive) c_g_drive_can_start;
+	gboolean function(GDrive* drive) c_g_drive_can_start_degraded;
+	gboolean function(GDrive* drive) c_g_drive_can_stop;
 	gboolean function(GDrive* drive) c_g_drive_can_poll_for_media;
 	void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_poll_for_media;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_poll_for_media_finish;
@@ -1305,6 +1446,12 @@ extern(C)
 	gboolean function(GDrive* drive) c_g_drive_is_media_removable;
 	void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_eject;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_eject_finish;
+	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_eject_with_operation;
+	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_eject_with_operation_finish;
+	void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_start;
+	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_start_finish;
+	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_stop;
+	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_stop_finish;
 	char** function(GDrive* drive) c_g_drive_enumerate_identifiers;
 	char* function(GDrive* drive, char* kind) c_g_drive_get_identifier;
 	
@@ -1384,6 +1531,7 @@ extern(C)
 	GIcon* function(char* iconname) c_g_themed_icon_new_with_default_fallbacks;
 	void function(GThemedIcon* icon, char* iconname) c_g_themed_icon_prepend_name;
 	void function(GThemedIcon* icon, char* iconname) c_g_themed_icon_append_name;
+	gchar** function(GThemedIcon* icon) c_g_themed_icon_get_names;
 	
 	// gio.EmblemedIcon
 	
@@ -1398,6 +1546,28 @@ extern(C)
 	GEmblem* function(GIcon* icon, GEmblemOrigin origin) c_g_emblem_new_with_origin;
 	GIcon* function(GEmblem* emblem) c_g_emblem_get_icon;
 	GEmblemOrigin function(GEmblem* emblem) c_g_emblem_get_origin;
+	
+	// gio.InitableT
+	
+	
+	// gio.InitableT
+	
+	gboolean function(GInitable* initable, GCancellable* cancellable, GError** error) c_g_initable_init;
+	gpointer function(GType objectType, GCancellable* cancellable, GError** error, gchar* firstPropertyName, ... ) c_g_initable_new;
+	GObject* function(GType objectType, gchar* firstPropertyName, va_list varArgs, GCancellable* cancellable, GError** error) c_g_initable_new_valist;
+	gpointer function(GType objectType, guint nParameters, GParameter* parameters, GCancellable* cancellable, GError** error) c_g_initable_newv;
+	
+	// gio.AsyncInitableT
+	
+	
+	// gio.AsyncInitableT
+	
+	void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_init_async;
+	gboolean function(GAsyncInitable* initable, GAsyncResult* res, GError** error) c_g_async_initable_init_finish;
+	void function(GType objectType, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData, gchar* firstPropertyName, ... ) c_g_async_initable_new_async;
+	GObject* function(GAsyncInitable* initable, GAsyncResult* res, GError** error) c_g_async_initable_new_finish;
+	void function(GType objectType, gchar* firstPropertyName, va_list varArgs, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_new_valist_async;
+	void function(GType objectType, guint nParameters, GParameter* parameters, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_newv_async;
 	
 	// gio.FilenameCompleter
 	
@@ -1518,8 +1688,18 @@ alias c_g_file_mount_mountable  g_file_mount_mountable;
 alias c_g_file_mount_mountable_finish  g_file_mount_mountable_finish;
 alias c_g_file_unmount_mountable  g_file_unmount_mountable;
 alias c_g_file_unmount_mountable_finish  g_file_unmount_mountable_finish;
+alias c_g_file_unmount_mountable_with_operation  g_file_unmount_mountable_with_operation;
+alias c_g_file_unmount_mountable_with_operation_finish  g_file_unmount_mountable_with_operation_finish;
 alias c_g_file_eject_mountable  g_file_eject_mountable;
 alias c_g_file_eject_mountable_finish  g_file_eject_mountable_finish;
+alias c_g_file_eject_mountable_with_operation  g_file_eject_mountable_with_operation;
+alias c_g_file_eject_mountable_with_operation_finish  g_file_eject_mountable_with_operation_finish;
+alias c_g_file_start_mountable  g_file_start_mountable;
+alias c_g_file_start_mountable_finish  g_file_start_mountable_finish;
+alias c_g_file_stop_mountable  g_file_stop_mountable;
+alias c_g_file_stop_mountable_finish  g_file_stop_mountable_finish;
+alias c_g_file_poll_mountable  g_file_poll_mountable;
+alias c_g_file_poll_mountable_finish  g_file_poll_mountable_finish;
 alias c_g_file_mount_enclosing_volume  g_file_mount_enclosing_volume;
 alias c_g_file_mount_enclosing_volume_finish  g_file_mount_enclosing_volume_finish;
 alias c_g_file_monitor_directory  g_file_monitor_directory;
@@ -1534,6 +1714,16 @@ alias c_g_file_replace_contents  g_file_replace_contents;
 alias c_g_file_replace_contents_async  g_file_replace_contents_async;
 alias c_g_file_replace_contents_finish  g_file_replace_contents_finish;
 alias c_g_file_copy_attributes  g_file_copy_attributes;
+alias c_g_file_create_readwrite  g_file_create_readwrite;
+alias c_g_file_create_readwrite_async  g_file_create_readwrite_async;
+alias c_g_file_create_readwrite_finish  g_file_create_readwrite_finish;
+alias c_g_file_open_readwrite  g_file_open_readwrite;
+alias c_g_file_open_readwrite_async  g_file_open_readwrite_async;
+alias c_g_file_open_readwrite_finish  g_file_open_readwrite_finish;
+alias c_g_file_replace_readwrite  g_file_replace_readwrite;
+alias c_g_file_replace_readwrite_async  g_file_replace_readwrite_async;
+alias c_g_file_replace_readwrite_finish  g_file_replace_readwrite_finish;
+alias c_g_file_supports_thread_contexts  g_file_supports_thread_contexts;
 
 // gio.FileAttributeInfoList
 
@@ -1550,6 +1740,7 @@ alias c_g_file_info_new  g_file_info_new;
 alias c_g_file_info_dup  g_file_info_dup;
 alias c_g_file_info_copy_into  g_file_info_copy_into;
 alias c_g_file_info_has_attribute  g_file_info_has_attribute;
+alias c_g_file_info_has_namespace  g_file_info_has_namespace;
 alias c_g_file_info_list_attributes  g_file_info_list_attributes;
 alias c_g_file_info_get_attribute_type  g_file_info_get_attribute_type;
 alias c_g_file_info_remove_attribute  g_file_info_remove_attribute;
@@ -1557,6 +1748,7 @@ alias c_g_file_info_get_attribute_as_string  g_file_info_get_attribute_as_string
 alias c_g_file_info_get_attribute_data  g_file_info_get_attribute_data;
 alias c_g_file_info_get_attribute_status  g_file_info_get_attribute_status;
 alias c_g_file_info_get_attribute_string  g_file_info_get_attribute_string;
+alias c_g_file_info_get_attribute_stringv  g_file_info_get_attribute_stringv;
 alias c_g_file_info_get_attribute_byte_string  g_file_info_get_attribute_byte_string;
 alias c_g_file_info_get_attribute_boolean  g_file_info_get_attribute_boolean;
 alias c_g_file_info_get_attribute_uint32  g_file_info_get_attribute_uint32;
@@ -1565,7 +1757,9 @@ alias c_g_file_info_get_attribute_uint64  g_file_info_get_attribute_uint64;
 alias c_g_file_info_get_attribute_int64  g_file_info_get_attribute_int64;
 alias c_g_file_info_get_attribute_object  g_file_info_get_attribute_object;
 alias c_g_file_info_set_attribute  g_file_info_set_attribute;
+alias c_g_file_info_set_attribute_status  g_file_info_set_attribute_status;
 alias c_g_file_info_set_attribute_string  g_file_info_set_attribute_string;
+alias c_g_file_info_set_attribute_stringv  g_file_info_set_attribute_stringv;
 alias c_g_file_info_set_attribute_byte_string  g_file_info_set_attribute_byte_string;
 alias c_g_file_info_set_attribute_boolean  g_file_info_set_attribute_boolean;
 alias c_g_file_info_set_attribute_uint32  g_file_info_set_attribute_uint32;
@@ -1626,6 +1820,10 @@ alias c_g_file_enumerator_has_pending  g_file_enumerator_has_pending;
 alias c_g_file_enumerator_set_pending  g_file_enumerator_set_pending;
 alias c_g_file_enumerator_get_container  g_file_enumerator_get_container;
 
+// gio.ErrorGIO
+
+alias c_g_io_error_from_errno  g_io_error_from_errno;
+
 // gio.MountOperation
 
 alias c_g_mount_operation_new  g_mount_operation_new;
@@ -1643,10 +1841,6 @@ alias c_g_mount_operation_get_choice  g_mount_operation_get_choice;
 alias c_g_mount_operation_set_choice  g_mount_operation_set_choice;
 alias c_g_mount_operation_reply  g_mount_operation_reply;
 
-// gio.ErrorGIO
-
-alias c_g_io_error_from_errno  g_io_error_from_errno;
-
 // gio.FileMonitor
 
 alias c_g_file_monitor_cancel  g_file_monitor_cancel;
@@ -1661,10 +1855,13 @@ alias c_g_cancellable_is_cancelled  g_cancellable_is_cancelled;
 alias c_g_cancellable_set_error_if_cancelled  g_cancellable_set_error_if_cancelled;
 alias c_g_cancellable_get_fd  g_cancellable_get_fd;
 alias c_g_cancellable_make_pollfd  g_cancellable_make_pollfd;
+alias c_g_cancellable_release_fd  g_cancellable_release_fd;
 alias c_g_cancellable_get_current  g_cancellable_get_current;
 alias c_g_cancellable_pop_current  g_cancellable_pop_current;
 alias c_g_cancellable_push_current  g_cancellable_push_current;
 alias c_g_cancellable_reset  g_cancellable_reset;
+alias c_g_cancellable_connect  g_cancellable_connect;
+alias c_g_cancellable_disconnect  g_cancellable_disconnect;
 alias c_g_cancellable_cancel  g_cancellable_cancel;
 
 // gio.AsyncResultT
@@ -1754,6 +1951,18 @@ alias c_g_output_stream_has_pending  g_output_stream_has_pending;
 alias c_g_output_stream_set_pending  g_output_stream_set_pending;
 alias c_g_output_stream_clear_pending  g_output_stream_clear_pending;
 
+// gio.IOStream
+
+alias c_g_io_stream_get_input_stream  g_io_stream_get_input_stream;
+alias c_g_io_stream_get_output_stream  g_io_stream_get_output_stream;
+alias c_g_io_stream_close  g_io_stream_close;
+alias c_g_io_stream_close_async  g_io_stream_close_async;
+alias c_g_io_stream_close_finish  g_io_stream_close_finish;
+alias c_g_io_stream_is_closed  g_io_stream_is_closed;
+alias c_g_io_stream_has_pending  g_io_stream_has_pending;
+alias c_g_io_stream_set_pending  g_io_stream_set_pending;
+alias c_g_io_stream_clear_pending  g_io_stream_clear_pending;
+
 // gio.FileInputStream
 
 alias c_g_file_input_stream_query_info  g_file_input_stream_query_info;
@@ -1766,6 +1975,13 @@ alias c_g_file_output_stream_query_info  g_file_output_stream_query_info;
 alias c_g_file_output_stream_query_info_async  g_file_output_stream_query_info_async;
 alias c_g_file_output_stream_query_info_finish  g_file_output_stream_query_info_finish;
 alias c_g_file_output_stream_get_etag  g_file_output_stream_get_etag;
+
+// gio.FileIOStream
+
+alias c_g_file_io_stream_get_etag  g_file_io_stream_get_etag;
+alias c_g_file_io_stream_query_info  g_file_io_stream_query_info;
+alias c_g_file_io_stream_query_info_async  g_file_io_stream_query_info_async;
+alias c_g_file_io_stream_query_info_finish  g_file_io_stream_query_info_finish;
 
 // gio.FilterInputStream
 
@@ -1954,6 +2170,8 @@ alias c_g_volume_mount_finish  g_volume_mount_finish;
 alias c_g_volume_can_eject  g_volume_can_eject;
 alias c_g_volume_eject  g_volume_eject;
 alias c_g_volume_eject_finish  g_volume_eject_finish;
+alias c_g_volume_eject_with_operation  g_volume_eject_with_operation;
+alias c_g_volume_eject_with_operation_finish  g_volume_eject_with_operation_finish;
 alias c_g_volume_enumerate_identifiers  g_volume_enumerate_identifiers;
 alias c_g_volume_get_identifier  g_volume_get_identifier;
 
@@ -1974,11 +2192,15 @@ alias c_g_mount_get_volume  g_mount_get_volume;
 alias c_g_mount_can_unmount  g_mount_can_unmount;
 alias c_g_mount_unmount  g_mount_unmount;
 alias c_g_mount_unmount_finish  g_mount_unmount_finish;
+alias c_g_mount_unmount_with_operation  g_mount_unmount_with_operation;
+alias c_g_mount_unmount_with_operation_finish  g_mount_unmount_with_operation_finish;
 alias c_g_mount_remount  g_mount_remount;
 alias c_g_mount_remount_finish  g_mount_remount_finish;
 alias c_g_mount_can_eject  g_mount_can_eject;
 alias c_g_mount_eject  g_mount_eject;
 alias c_g_mount_eject_finish  g_mount_eject_finish;
+alias c_g_mount_eject_with_operation  g_mount_eject_with_operation;
+alias c_g_mount_eject_with_operation_finish  g_mount_eject_with_operation_finish;
 alias c_g_mount_guess_content_type  g_mount_guess_content_type;
 alias c_g_mount_guess_content_type_finish  g_mount_guess_content_type_finish;
 alias c_g_mount_guess_content_type_sync  g_mount_guess_content_type_sync;
@@ -1999,6 +2221,10 @@ alias c_g_drive_get_icon  g_drive_get_icon;
 alias c_g_drive_has_volumes  g_drive_has_volumes;
 alias c_g_drive_get_volumes  g_drive_get_volumes;
 alias c_g_drive_can_eject  g_drive_can_eject;
+alias c_g_drive_get_start_stop_type  g_drive_get_start_stop_type;
+alias c_g_drive_can_start  g_drive_can_start;
+alias c_g_drive_can_start_degraded  g_drive_can_start_degraded;
+alias c_g_drive_can_stop  g_drive_can_stop;
 alias c_g_drive_can_poll_for_media  g_drive_can_poll_for_media;
 alias c_g_drive_poll_for_media  g_drive_poll_for_media;
 alias c_g_drive_poll_for_media_finish  g_drive_poll_for_media_finish;
@@ -2007,6 +2233,12 @@ alias c_g_drive_is_media_check_automatic  g_drive_is_media_check_automatic;
 alias c_g_drive_is_media_removable  g_drive_is_media_removable;
 alias c_g_drive_eject  g_drive_eject;
 alias c_g_drive_eject_finish  g_drive_eject_finish;
+alias c_g_drive_eject_with_operation  g_drive_eject_with_operation;
+alias c_g_drive_eject_with_operation_finish  g_drive_eject_with_operation_finish;
+alias c_g_drive_start  g_drive_start;
+alias c_g_drive_start_finish  g_drive_start_finish;
+alias c_g_drive_stop  g_drive_stop;
+alias c_g_drive_stop_finish  g_drive_stop_finish;
 alias c_g_drive_enumerate_identifiers  g_drive_enumerate_identifiers;
 alias c_g_drive_get_identifier  g_drive_get_identifier;
 
@@ -2086,6 +2318,7 @@ alias c_g_themed_icon_new_from_names  g_themed_icon_new_from_names;
 alias c_g_themed_icon_new_with_default_fallbacks  g_themed_icon_new_with_default_fallbacks;
 alias c_g_themed_icon_prepend_name  g_themed_icon_prepend_name;
 alias c_g_themed_icon_append_name  g_themed_icon_append_name;
+alias c_g_themed_icon_get_names  g_themed_icon_get_names;
 
 // gio.EmblemedIcon
 
@@ -2100,6 +2333,28 @@ alias c_g_emblem_new  g_emblem_new;
 alias c_g_emblem_new_with_origin  g_emblem_new_with_origin;
 alias c_g_emblem_get_icon  g_emblem_get_icon;
 alias c_g_emblem_get_origin  g_emblem_get_origin;
+
+// gio.InitableT
+
+
+// gio.InitableT
+
+alias c_g_initable_init  g_initable_init;
+alias c_g_initable_new  g_initable_new;
+alias c_g_initable_new_valist  g_initable_new_valist;
+alias c_g_initable_newv  g_initable_newv;
+
+// gio.AsyncInitableT
+
+
+// gio.AsyncInitableT
+
+alias c_g_async_initable_init_async  g_async_initable_init_async;
+alias c_g_async_initable_init_finish  g_async_initable_init_finish;
+alias c_g_async_initable_new_async  g_async_initable_new_async;
+alias c_g_async_initable_new_finish  g_async_initable_new_finish;
+alias c_g_async_initable_new_valist_async  g_async_initable_new_valist_async;
+alias c_g_async_initable_newv_async  g_async_initable_newv_async;
 
 // gio.FilenameCompleter
 

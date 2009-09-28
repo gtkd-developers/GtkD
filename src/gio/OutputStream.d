@@ -204,7 +204,7 @@ public class OutputStream : ObjectG
 	 * source =  a GInputStream.
 	 * flags =  a set of GOutputStreamSpliceFlags.
 	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * Returns: a gssize containing the size of the data spliced.
+	 * Returns: a gssize containing the size of the data spliced, or -1 if an error occurred.
 	 * Throws: GException on failure.
 	 */
 	public int splice(InputStream source, GOutputStreamSpliceFlags flags, Cancellable cancellable)

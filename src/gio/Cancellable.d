@@ -126,41 +126,39 @@ public class Cancellable : ObjectG
 	 * emitted in the thread that cancelled the operation, not the
 	 * thread that is running the operation.
 	 * Note that disconnecting from this signal (or any signal) in a
-	 * multi-threaded program is prone to race conditions, and it is
-	 * possible that a signal handler may be invoked even
+	 * multi-threaded program is prone to race conditions. For instance
+	 * it is possible that a signal handler may be invoked even
 	 * after a call to
 	 * g_signal_handler_disconnect() for that handler has already
-	 * returned. Therefore, code such as the following is wrong in a
+	 * returned.
+	 * There is also a problem when cancellation happen
+	 * right before connecting to the signal. If this happens the
+	 * signal will unexpectedly not be emitted, and checking before
+	 * connecting to the signal leaves a race condition where this is
+	 * still happening.
+	 * In order to make it safe and easy to connect handlers there
+	 * are two helper functions: g_cancellable_connect() and
+	 * g_cancellable_disconnect() which protect against problems
+	 * like this.
+	 *  /+* Make sure we don't do any unnecessary work if already cancelled +/
+	 *  if (g_cancellable_set_error_if_cancelled (cancellable))
+	 *  return;
+	 *  /+* Set up all the data needed to be able to
+	 *  * handle cancellation of the operation +/
 	 *  my_data = my_data_new (...);
-	 *  id = g_signal_connect (cancellable, "cancelled",
-	 *  G_CALLBACK (cancelled_handler), my_data);
+	 *  id = 0;
+	 *  if (cancellable)
+	 *  id = g_cancellable_connect (cancellable,
+	 *  			 G_CALLBACK (cancelled_handler)
+	 *  			 data, NULL);
 	 *  /+* cancellable operation here... +/
-	 *  g_signal_handler_disconnect (cancellable, id);
-	 *  my_data_free (my_data); /+* WRONG! +/
-	 *  /+* if g_cancellable_cancel() is called from another
-	 *  * thread, cancelled_handler() may be running at this point,
-	 *  * so it's not safe to free my_data.
-	 *  +/
-	 * The correct way to free data (or otherwise clean up temporary
-	 * state) in this situation is to use g_signal_connect_data() (or
-	 * g_signal_connect_closure()) to connect to the signal, and do the
-	 * cleanup from a GClosureNotify, which will not be called until
-	 * static void
-	 * cancelled_disconnect_notify (gpointer my_data, GClosure *closure)
-	 * {
-		 *  my_data_free (my_data);
-	 * }
-	 * ...
-	 *  my_data = my_data_new (...);
-	 *  id = g_signal_connect_data (cancellable, "cancelled",
-	 *  G_CALLBACK (cancelled_handler), my_data,
-	 *  cancelled_disconnect_notify, 0);
-	 *  /+* cancellable operation here... +/
-	 *  g_signal_handler_disconnect (cancellable, id);
-	 *  /+* cancelled_disconnect_notify() may or may not have
-	 *  * already been called at this point, so the code has to treat
-	 *  * my_data as though it has been freed.
-	 *  +/
+	 *  g_cancellable_disconnect (cancellable, id);
+	 *  /+* cancelled_handler is never called after this, it
+	 *  * is now safe to free the data +/
+	 *  my_data_free (my_data);
+	 * Note that the cancelled signal is emitted in the thread that
+	 * the user cancelled from, which may be the main thread. So, the
+	 * cancellable signal should not do something that can block.
 	 */
 	void addOnCancelled(void delegate(Cancellable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -240,6 +238,12 @@ public class Cancellable : ObjectG
 	 * Gets the file descriptor for a cancellable job. This can be used to
 	 * implement cancellable operations on Unix systems. The returned fd will
 	 * turn readable when cancellable is cancelled.
+	 * You are not supposed to read from the fd yourself, just check for
+	 * readable status. Reading to unset the readable status is done
+	 * with g_cancellable_reset().
+	 * After a successful return from this function, you should use
+	 * g_cancellable_release_fd() to free up resources allocated for
+	 * the returned file descriptor.
 	 * See also g_cancellable_make_pollfd().
 	 * Returns: A valid file descriptor. -1 if the file descriptor is not supported, or on errors.
 	 */
@@ -251,14 +255,46 @@ public class Cancellable : ObjectG
 	
 	/**
 	 * Creates a GPollFD corresponding to cancellable; this can be passed
-	 * to g_poll() and used to poll for cancellation.
+	 * to g_poll() and used to poll for cancellation. This is useful both
+	 * for unix systems without a native poll and for portability to
+	 * windows.
+	 * When this function returns TRUE, you should use
+	 * g_cancellable_release_fd() to free up resources allocated for the
+	 * pollfd. After a FALSE return, do not call g_cancellable_release_fd().
+	 * If this function returns FALSE, either no cancellable was given or
+	 * resource limits prevent this function from allocating the necessary
+	 * structures for polling. (On Linux, you will likely have reached
+	 * the maximum number of file descriptors.) The suggested way to handle
+	 * these cases is to ignore the cancellable.
+	 * You are not supposed to read from the fd yourself, just check for
+	 * readable status. Reading to unset the readable status is done
+	 * with g_cancellable_reset().
+	 * Since 2.22
 	 * Params:
 	 * pollfd =  a pointer to a GPollFD
+	 * Returns: TRUE if pollfd was successfully initialized, FALSE on  failure to prepare the cancellable.
 	 */
-	public void makePollfd(GPollFD* pollfd)
+	public int makePollfd(GPollFD* pollfd)
 	{
-		// void g_cancellable_make_pollfd (GCancellable *cancellable,  GPollFD *pollfd);
-		g_cancellable_make_pollfd(gCancellable, pollfd);
+		// gboolean g_cancellable_make_pollfd (GCancellable *cancellable,  GPollFD *pollfd);
+		return g_cancellable_make_pollfd(gCancellable, pollfd);
+	}
+	
+	/**
+	 * Releases a resources previously allocated by g_cancellable_get_fd()
+	 * or g_cancellable_make_pollfd().
+	 * For compatibility reasons with older releases, calling this function
+	 * is not strictly required, the resources will be automatically freed
+	 * when the cancellable is finalized. However, the cancellable will
+	 * block scarce file descriptors until it is finalized if this function
+	 * is not called. This can cause the application to run out of file
+	 * descriptors when many GCancellables are used at the same time.
+	 * Since 2.22
+	 */
+	public void releaseFd()
+	{
+		// void g_cancellable_release_fd (GCancellable *cancellable);
+		g_cancellable_release_fd(gCancellable);
 	}
 	
 	/**
@@ -307,6 +343,50 @@ public class Cancellable : ObjectG
 	{
 		// void g_cancellable_reset (GCancellable *cancellable);
 		g_cancellable_reset(gCancellable);
+	}
+	
+	/**
+	 * Convenience function to connect to the "cancelled"
+	 * signal. Also handles the race condition that may happen
+	 * if the cancellable is cancelled right before connecting.
+	 * callback is called at most once, either directly at the
+	 * time of the connect if cancellable is already cancelled,
+	 * or when cancellable is cancelled in some thread.
+	 * data_destroy_func will be called when the handler is
+	 * disconnected, or immediately if the cancellable is already
+	 * cancelled.
+	 * See "cancelled" for details on how to use this.
+	 * Since 2.22
+	 * Params:
+	 * callback =  The GCallback to connect.
+	 * data =  Data to pass to callback.
+	 * dataDestroyFunc =  Free function for data or NULL.
+	 * Returns: The id of the signal handler or 0 if cancellable has already been cancelled.
+	 */
+	public uint connect(GCallback callback, void* data, GDestroyNotify dataDestroyFunc)
+	{
+		// gulong g_cancellable_connect (GCancellable *cancellable,  GCallback callback,  gpointer data,  GDestroyNotify data_destroy_func);
+		return g_cancellable_connect(gCancellable, callback, data, dataDestroyFunc);
+	}
+	
+	/**
+	 * Disconnects a handler from an cancellable instance similar to
+	 * g_signal_handler_disconnect() but ensures that once this
+	 * function returns the handler will not run anymore in any thread.
+	 * This avoids a race condition where a thread cancels at the
+	 * same time as the cancellable operation is finished and the
+	 * signal handler is removed. See "cancelled" for
+	 * details on how to use this.
+	 * If cancellable is NULL or handler_id is 0 this function does
+	 * nothing.
+	 * Since 2.22
+	 * Params:
+	 * handlerId =  Handler id of the handler to be disconnected, or 0.
+	 */
+	public void disconnect(uint handlerId)
+	{
+		// void g_cancellable_disconnect (GCancellable *cancellable,  gulong handler_id);
+		g_cancellable_disconnect(gCancellable, handlerId);
 	}
 	
 	/**

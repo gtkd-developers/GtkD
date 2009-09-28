@@ -109,13 +109,13 @@ public import gio.VolumeIF;
  * Unmounting a GMount instance is an asynchronous operation. For
  * more information about asynchronous operations, see GAsyncReady
  * and GSimpleAsyncReady. To unmount a GMount instance, first call
- * g_mount_unmount() with (at least) the GMount instance and a
+ * g_mount_unmount_with_operation() with (at least) the GMount instance and a
  * GAsyncReadyCallback. The callback will be fired when the
  * operation has resolved (either with success or failure), and a
  * GAsyncReady structure will be passed to the callback. That
- * callback should then call g_mount_unmount_finish() with the GMount
+ * callback should then call g_mount_unmount_with_operation_finish() with the GMount
  * and the GAsyncReady data to see if the operation was completed
- * successfully. If an error is present when g_mount_unmount_finish()
+ * successfully. If an error is present when g_mount_unmount_with_operation_finish()
  * is called, then it will be filled with any error information.
  */
 public template MountT(TStruct)
@@ -161,6 +161,39 @@ public template MountT(TStruct)
 	extern(C) static void callBackChanged(GMount* mountStruct, MountIF mountIF)
 	{
 		foreach ( void delegate(MountIF) dlg ; mountIF.onChangedListeners )
+		{
+			dlg(mountIF);
+		}
+	}
+	
+	void delegate(MountIF)[] _onPreUnmountListeners;
+	void delegate(MountIF)[] onPreUnmountListeners()
+	{
+		return  _onPreUnmountListeners;
+	}
+	/**
+	 * This signal is emitted when the GMount is about to be
+	 * unmounted.
+	 * Since 2.22
+	 */
+	void addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("pre-unmount" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"pre-unmount",
+			cast(GCallback)&callBackPreUnmount,
+			cast(void*)cast(MountIF)this,
+			null,
+			connectFlags);
+			connectedSignals["pre-unmount"] = 1;
+		}
+		_onPreUnmountListeners ~= dlg;
+	}
+	extern(C) static void callBackPreUnmount(GMount* mountStruct, MountIF mountIF)
+	{
+		foreach ( void delegate(MountIF) dlg ; mountIF.onPreUnmountListeners )
 		{
 			dlg(mountIF);
 		}
@@ -299,6 +332,8 @@ public template MountT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_mount_unmount has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_unmount_with_operation() instead.
 	 * Unmounts a mount. This is an asynchronous operation, and is
 	 * finished by calling g_mount_unmount_finish() with the mount
 	 * and GAsyncResult data returned in the callback.
@@ -316,6 +351,8 @@ public template MountT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_mount_unmount_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_unmount_with_operation_finish() instead.
 	 * Finishes unmounting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
@@ -330,6 +367,50 @@ public template MountT(TStruct)
 		GError* err = null;
 		
 		auto p = g_mount_unmount_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Unmounts a mount. This is an asynchronous operation, and is
+	 * finished by calling g_mount_unmount_with_operation_finish() with the mount
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * mount =  a GMount.
+	 * flags =  flags affecting the operation
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void unmountWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_mount_unmount_with_operation (GMount *mount,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_mount_unmount_with_operation(getMountTStruct(), flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes unmounting a mount. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * mount =  a GMount.
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the mount was successfully unmounted. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int unmountWithOperationFinish(AsyncResultIF result)
+	{
+		// gboolean g_mount_unmount_with_operation_finish  (GMount *mount,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_mount_unmount_with_operation_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -397,6 +478,8 @@ public template MountT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_mount_eject has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_eject_with_operation() instead.
 	 * Ejects a mount. This is an asynchronous operation, and is
 	 * finished by calling g_mount_eject_finish() with the mount
 	 * and GAsyncResult data returned in the callback.
@@ -414,6 +497,8 @@ public template MountT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_mount_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_mount_eject_with_operation_finish() instead.
 	 * Finishes ejecting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
@@ -427,6 +512,49 @@ public template MountT(TStruct)
 		GError* err = null;
 		
 		auto p = g_mount_eject_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Ejects a mount. This is an asynchronous operation, and is
+	 * finished by calling g_mount_eject_with_operation_finish() with the mount
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * mount =  a GMount.
+	 * flags =  flags affecting the unmount if required for eject
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_mount_eject_with_operation (GMount *mount,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_mount_eject_with_operation(getMountTStruct(), flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes ejecting a mount. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the mount was successfully ejected. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectWithOperationFinish(AsyncResultIF result)
+	{
+		// gboolean g_mount_eject_with_operation_finish (GMount *mount,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_mount_eject_with_operation_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{

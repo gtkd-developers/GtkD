@@ -129,6 +129,11 @@ public import gio.MountOperation;
  * of identifiers: G_VOLUME_IDENTIFIER_KIND_HAL_UDI,
  * G_VOLUME_IDENTIFIER_KIND_LABEL, etc. Use g_volume_get_identifier()
  * to obtain an identifier for a volume.
+ * Note that G_VOLUME_IDENTIFIER_KIND_HAL_UDI will only be available
+ * when the gvfs hal volume monitor is in use. Other volume monitors
+ * will generally be able to provide the G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE
+ * identifier, which can be used to obtain a hal device by means of
+ * libhal_manger_find_device_string_match().
  */
 public template VolumeT(TStruct)
 {
@@ -389,6 +394,8 @@ public template VolumeT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_volume_eject has been deprecated since version 2.22 and should not be used in newly-written code. Use g_volume_eject_with_operation() instead.
 	 * Ejects a volume. This is an asynchronous operation, and is
 	 * finished by calling g_volume_eject_finish() with the volume
 	 * and GAsyncResult returned in the callback.
@@ -405,6 +412,8 @@ public template VolumeT(TStruct)
 	}
 	
 	/**
+	 * Warning
+	 * g_volume_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_volume_eject_with_operation_finish() instead.
 	 * Finishes ejecting a volume. If any errors occured during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
@@ -418,6 +427,48 @@ public template VolumeT(TStruct)
 		GError* err = null;
 		
 		auto p = g_volume_eject_finish(getVolumeTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Ejects a volume. This is an asynchronous operation, and is
+	 * finished by calling g_volume_eject_with_operation_finish() with the volume
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the unmount if required for eject
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_volume_eject_with_operation (GVolume *volume,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_volume_eject_with_operation(getVolumeTStruct(), flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes ejecting a volume. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the volume was successfully ejected. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectWithOperationFinish(AsyncResultIF result)
+	{
+		// gboolean g_volume_eject_with_operation_finish  (GVolume *volume,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_volume_eject_with_operation_finish(getVolumeTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{

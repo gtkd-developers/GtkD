@@ -87,7 +87,7 @@ private import gobject.ObjectG;
  * of the children within a directory).
  * To get the next file's information from a GFileEnumerator, use
  * g_file_enumerator_next_file() or its asynchronous version,
- * g_file_enumerator_next_file_async(). Note that the asynchronous
+ * g_file_enumerator_next_files_async(). Note that the asynchronous
  * version will return a list of GFileInfos, whereas the
  * synchronous will only return the next file in the enumerator.
  * To close a GFileEnumerator, use g_file_enumerator_close(), or
@@ -224,7 +224,7 @@ public class FileEnumerator : ObjectG
 	 * Finishes the asynchronous operation started with g_file_enumerator_next_files_async().
 	 * Params:
 	 * result =  a GAsyncResult.
-	 * Returns: a GList of GFileInfos. You must free the list with  g_list_free() and unref the infos with g_object_unref when you're  done with them.
+	 * Returns: a GList of GFileInfos. You must free the list with  g_list_free() and unref the infos with g_object_unref() when you're  done with them.
 	 * Throws: GException on failure.
 	 */
 	public ListG nextFilesFinish(AsyncResultIF result)
@@ -328,7 +328,7 @@ public class FileEnumerator : ObjectG
 	
 	/**
 	 * Get the GFile container which is being enumerated.
-	 * Since 2.18.
+	 * Since 2.18
 	 * Returns: the GFile which is being enumerated.
 	 */
 	public File getContainer()

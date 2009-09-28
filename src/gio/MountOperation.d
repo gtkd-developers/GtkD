@@ -43,7 +43,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ArrayG
  * structWrap:
+ * 	- GArray* -> ArrayG
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,6 +62,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ArrayG;
 
 
 
@@ -67,17 +70,19 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * GMountOperation provides a mechanism for authenticating mountable
- * operations, such as loop mounting files, hard drive partitions or
- * server locations.
- * Mounting operations are handed a GMountOperation that then can use
- * if they require any privileges or authentication for their volumes
- * to be mounted (e.g. a hard disk partition or an encrypted filesystem),
- * or if they are implementing a remote server protocol which requires
- * user credentials such as FTP or WebDAV.
- * Users should instantiate a subclass of this that implements all
- * the various callbacks to show the required dialogs, such as
- * GtkMountOperation.
+ * GMountOperation provides a mechanism for interacting with the user.
+ * It can be used for authenticating mountable operations, such as loop
+ * mounting files, hard drive partitions or server locations. It can
+ * also be used to ask the user questions or show a list of applications
+ * preventing unmount or eject operations from completing.
+ * Note that GMountOperation is used for more than just GMount
+ * objects – for example it is also used in g_drive_start() and
+ * g_drive_stop().
+ * Users should instantiate a subclass of this that implements all the
+ * various callbacks to show the required dialogs, such as
+ * GtkMountOperation. If no user interaction is desired (for example
+ * when automounting filesystems at login time), usually NULL can be
+ * passed, see each method taking a GMountOperation for details.
  */
 public class MountOperation : ObjectG
 {
@@ -239,6 +244,43 @@ public class MountOperation : ObjectG
 		foreach ( void delegate(GMountOperationResult, MountOperation) dlg ; mountOperation.onReplyListeners )
 		{
 			dlg(result, mountOperation);
+		}
+	}
+	
+	void delegate(string, ArrayG, GStrv*, MountOperation)[] onShowProcessesListeners;
+	/**
+	 * Emitted when one or more processes are blocking an operation
+	 * e.g. unmounting/ejecting a GMount or stopping a GDrive.
+	 * Note that this signal may be emitted several times to update the
+	 * list of blocking processes as processes close files. The
+	 * application should only respond with g_mount_operation_reply() to
+	 * the latest signal (setting "choice" to the choice
+	 * the user made).
+	 * If the message contains a line break, the first line should be
+	 * presented as a heading. For example, it may be used as the
+	 * primary text in a GtkMessageDialog.
+	 * Since 2.22
+	 */
+	void addOnShowProcesses(void delegate(string, ArrayG, GStrv*, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("show-processes" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"show-processes",
+			cast(GCallback)&callBackShowProcesses,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["show-processes"] = 1;
+		}
+		onShowProcessesListeners ~= dlg;
+	}
+	extern(C) static void callBackShowProcesses(GMountOperation* opStruct, gchar* message, GArray* processes, GStrv* choices, MountOperation mountOperation)
+	{
+		foreach ( void delegate(string, ArrayG, GStrv*, MountOperation) dlg ; mountOperation.onShowProcessesListeners )
+		{
+			dlg(Str.toString(message), new ArrayG(processes), choices, mountOperation);
 		}
 	}
 	

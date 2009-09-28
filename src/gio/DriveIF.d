@@ -51,11 +51,13 @@
  * 	- gio.Cancellable
  * 	- gio.Icon
  * 	- gio.IconIF
+ * 	- gio.MountOperation
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GIcon* -> IconIF
  * 	- GList* -> ListG
+ * 	- GMountOperation* -> MountOperation
  * module aliases:
  * local aliases:
  * overrides:
@@ -80,6 +82,7 @@ private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.Icon;
 private import gio.IconIF;
+private import gio.MountOperation;
 
 
 
@@ -98,6 +101,14 @@ private import gio.IconIF;
  * can poll for media; typically one should not do this periodically
  * as a poll for media operation is potententially expensive and may
  * spin up the drive creating noise.
+ * GDrive supports starting and stopping drives with authentication
+ * support for the former. This can be used to support a diverse set
+ * of use cases including connecting/disconnecting iSCSI devices,
+ * powering down external disk enclosures and starting/stopping
+ * multi-disk devices such as RAID devices. Note that the actual
+ * semantics and side-effects of starting/stopping a GDrive may vary
+ * according to implementation. To choose the correct verbs in e.g. a
+ * file manager, use g_drive_get_start_stop_type().
  * For porting from GnomeVFS note that there is no equivalent of
  * GDrive in that API.
  */
@@ -133,6 +144,13 @@ public interface DriveIF
 	 * been pressed.
 	 */
 	void addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void delegate(DriveIF)[] onStopButtonListeners();
+	/**
+	 * Emitted when the physical stop button (if any) of a drive has
+	 * been pressed.
+	 * Since 2.22
+	 */
+	void addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Gets the name of drive.
@@ -165,6 +183,34 @@ public interface DriveIF
 	 * Returns: TRUE if the drive can be ejected, FALSE otherwise.
 	 */
 	public int canEject();
+	
+	/**
+	 * Gets a hint about how a drive can be started/stopped.
+	 * Since 2.22
+	 * Returns: A value from the GDriveStartStopType enumeration.
+	 */
+	public GDriveStartStopType getStartStopType();
+	
+	/**
+	 * Checks if a drive can be started.
+	 * Since 2.22
+	 * Returns: TRUE if the drive can be started, FALSE otherwise.
+	 */
+	public int canStart();
+	
+	/**
+	 * Checks if a drive can be started degraded.
+	 * Since 2.22
+	 * Returns: TRUE if the drive can be started degraded, FALSE otherwise.
+	 */
+	public int canStartDegraded();
+	
+	/**
+	 * Checks if a drive can be stopped.
+	 * Since 2.22
+	 * Returns: TRUE if the drive can be stopped, FALSE otherwise.
+	 */
+	public int canStop();
 	
 	/**
 	 * Checks if a drive can be polled for media changes.
@@ -214,6 +260,8 @@ public interface DriveIF
 	public int isMediaRemovable();
 	
 	/**
+	 * Warning
+	 * g_drive_eject has been deprecated since version 2.22 and should not be used in newly-written code. Use g_drive_eject_with_operation() instead.
 	 * Asynchronously ejects a drive.
 	 * When the operation is finished, callback will be called.
 	 * You can then call g_drive_eject_finish() to obtain the
@@ -227,6 +275,8 @@ public interface DriveIF
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
 	/**
+	 * Warning
+	 * g_drive_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_drive_eject_with_operation_finish() instead.
 	 * Finishes ejecting a drive.
 	 * Params:
 	 * result =  a GAsyncResult.
@@ -234,6 +284,81 @@ public interface DriveIF
 	 * Throws: GException on failure.
 	 */
 	public int ejectFinish(AsyncResultIF result);
+	
+	/**
+	 * Ejects a drive. This is an asynchronous operation, and is
+	 * finished by calling g_drive_eject_with_operation_finish() with the drive
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the unmount if required for eject
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	
+	/**
+	 * Finishes ejecting a drive. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the drive was successfully ejected. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectWithOperationFinish(AsyncResultIF result);
+	
+	/**
+	 * Asynchronously starts a drive.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_drive_start_finish() to obtain the
+	 * result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the start operation.
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data to pass to callback
+	 */
+	public void start(GDriveStartFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	
+	/**
+	 * Finishes starting a drive.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the drive has been started successfully, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int startFinish(AsyncResultIF result);
+	
+	/**
+	 * Asynchronously stops a drive.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_drive_stop_finish() to obtain the
+	 * result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the unmount if required for stopping.
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data to pass to callback
+	 */
+	public void stop(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	
+	/**
+	 * Finishes stopping a drive.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the drive has been stopped successfully, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int stopFinish(AsyncResultIF result);
 	
 	/**
 	 * Gets the kinds of identifiers that drive has.

@@ -118,11 +118,12 @@ private import gobject.ObjectG;
  * cause a leak if cancelled before being run).
  * GSimpleAsyncResult can integrate into GLib's event loop, GMainLoop,
  * or it can use GThreads if available.
- * g_simple_async_result_complete() will finish an I/O task directly within
- * the main event loop. g_simple_async_result_complete_in_idle() will
- * integrate the I/O task into the main event loop as an idle function and
- * g_simple_async_result_run_in_thread() will run the job in a separate
- * thread.
+ * g_simple_async_result_complete() will finish an I/O task directly
+ * from the point where it is called. g_simple_async_result_complete_in_idle()
+ * will finish it from an idle handler in the thread-default main
+ * context. g_simple_async_result_run_in_thread() will run the
+ * job in a separate thread and then deliver the result to the
+ * thread-default main context.
  * To set the results of an asynchronous function,
  * g_simple_async_result_set_op_res_gpointer(),
  * g_simple_async_result_set_op_res_gboolean(), and
@@ -332,10 +333,10 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	}
 	
 	/**
-	 * Completes an asynchronous I/O job.
-	 * Must be called in the main thread, as it invokes the callback that
-	 * should be called in the main thread. If you are in a different thread
-	 * use g_simple_async_result_complete_in_idle().
+	 * Completes an asynchronous I/O job immediately. Must be called in
+	 * the thread where the asynchronous result was to be delivered, as it
+	 * invokes the callback directly. If you are in a different thread use
+	 * g_simple_async_result_complete_in_idle().
 	 */
 	public void complete()
 	{
@@ -344,8 +345,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	}
 	
 	/**
-	 * Completes an asynchronous function in the main event loop using
-	 * an idle function.
+	 * Completes an asynchronous function in an idle handler in the thread-default main
+	 * loop of the thread that simple was initially created in.
 	 */
 	public void completeInIdle()
 	{
@@ -354,7 +355,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	}
 	
 	/**
-	 * Runs the asynchronous job in a separated thread.
+	 * Runs the asynchronous job in a separate thread and then calls
+	 * g_simple_async_result_complete_in_idle() on simple to return
+	 * the result to the appropriate main loop.
 	 * Params:
 	 * func =  a GSimpleAsyncThreadFunc.
 	 * ioPriority =  the io priority of the request.
@@ -373,7 +376,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public void setFromError(ErrorG error)
 	{
-		// void g_simple_async_result_set_from_error  (GSimpleAsyncResult *simple,  GError *error);
+		// void g_simple_async_result_set_from_error  (GSimpleAsyncResult *simple,  const GError *error);
 		g_simple_async_result_set_from_error(gSimpleAsyncResult, (error is null) ? null : error.getErrorGStruct());
 	}
 	

@@ -271,7 +271,7 @@ public class InputStream : ObjectG
 	 * starting at buffer. When the operation is finished callback will be called.
 	 * You can then call g_input_stream_read_finish() to get the result of the
 	 * operation.
-	 * During an async request no other sync and async calls are allowed, and will
+	 * During an async request no other sync and async calls are allowed on stream, and will
 	 * result in G_IO_ERROR_PENDING errors.
 	 * A value of count larger than G_MAXSSIZE will cause a G_IO_ERROR_INVALID_ARGUMENT error.
 	 * On success, the number of bytes read into the buffer will be passed to the
@@ -323,8 +323,8 @@ public class InputStream : ObjectG
 	}
 	
 	/**
-	 * Request an asynchronous skip of count bytes from the stream into the buffer
-	 * starting at buffer. When the operation is finished callback will be called.
+	 * Request an asynchronous skip of count bytes from the stream.
+	 * When the operation is finished callback will be called.
 	 * You can then call g_input_stream_skip_finish() to get the result of the
 	 * operation.
 	 * During an async request no other sync and async calls are allowed, and will

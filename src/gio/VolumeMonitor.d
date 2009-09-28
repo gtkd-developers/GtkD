@@ -45,11 +45,14 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- gio.Drive
+ * 	- gio.DriveIF
  * 	- gio.Mount
  * 	- gio.MountIF
  * 	- gio.Volume
  * 	- gio.VolumeIF
  * structWrap:
+ * 	- GDrive* -> DriveIF
  * 	- GList* -> ListG
  * 	- GMount* -> MountIF
  * 	- GVolume* -> VolumeIF
@@ -71,6 +74,8 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListG;
+private import gio.Drive;
+private import gio.DriveIF;
 private import gio.Mount;
 private import gio.MountIF;
 private import gio.Volume;
@@ -85,6 +90,9 @@ private import gobject.ObjectG;
  * GVolumeMonitor is for listing the user interesting devices and volumes
  * on the computer. In other words, what a file selector or file manager
  * would show in a sidebar.
+ * GVolumeMonitor is not thread-default-context
+ * aware, and so should not be used other than from the main
+ * thread, with no thread-default-context active.
  */
 public class VolumeMonitor : ObjectG
 {
@@ -145,11 +153,11 @@ public class VolumeMonitor : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(GDrive*, VolumeMonitor)[] onDriveChangedListeners;
+	void delegate(DriveIF, VolumeMonitor)[] onDriveChangedListeners;
 	/**
 	 * Emitted when a drive changes.
 	 */
-	void addOnDriveChanged(void delegate(GDrive*, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDriveChanged(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drive-changed" in connectedSignals) )
 		{
@@ -166,17 +174,17 @@ public class VolumeMonitor : ObjectG
 	}
 	extern(C) static void callBackDriveChanged(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
 	{
-		foreach ( void delegate(GDrive*, VolumeMonitor) dlg ; volumeMonitor.onDriveChangedListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveChangedListeners )
 		{
-			dlg(drive, volumeMonitor);
+			dlg(new Drive(drive), volumeMonitor);
 		}
 	}
 	
-	void delegate(GDrive*, VolumeMonitor)[] onDriveConnectedListeners;
+	void delegate(DriveIF, VolumeMonitor)[] onDriveConnectedListeners;
 	/**
 	 * Emitted when a drive is connected to the system.
 	 */
-	void addOnDriveConnected(void delegate(GDrive*, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDriveConnected(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drive-connected" in connectedSignals) )
 		{
@@ -193,17 +201,17 @@ public class VolumeMonitor : ObjectG
 	}
 	extern(C) static void callBackDriveConnected(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
 	{
-		foreach ( void delegate(GDrive*, VolumeMonitor) dlg ; volumeMonitor.onDriveConnectedListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveConnectedListeners )
 		{
-			dlg(drive, volumeMonitor);
+			dlg(new Drive(drive), volumeMonitor);
 		}
 	}
 	
-	void delegate(GDrive*, VolumeMonitor)[] onDriveDisconnectedListeners;
+	void delegate(DriveIF, VolumeMonitor)[] onDriveDisconnectedListeners;
 	/**
 	 * Emitted when a drive is disconnected from the system.
 	 */
-	void addOnDriveDisconnected(void delegate(GDrive*, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDriveDisconnected(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drive-disconnected" in connectedSignals) )
 		{
@@ -220,18 +228,18 @@ public class VolumeMonitor : ObjectG
 	}
 	extern(C) static void callBackDriveDisconnected(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
 	{
-		foreach ( void delegate(GDrive*, VolumeMonitor) dlg ; volumeMonitor.onDriveDisconnectedListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveDisconnectedListeners )
 		{
-			dlg(drive, volumeMonitor);
+			dlg(new Drive(drive), volumeMonitor);
 		}
 	}
 	
-	void delegate(GDrive*, VolumeMonitor)[] onDriveEjectButtonListeners;
+	void delegate(DriveIF, VolumeMonitor)[] onDriveEjectButtonListeners;
 	/**
 	 * Emitted when the eject button is pressed on drive.
 	 * Since 2.18
 	 */
-	void addOnDriveEjectButton(void delegate(GDrive*, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDriveEjectButton(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drive-eject-button" in connectedSignals) )
 		{
@@ -248,9 +256,37 @@ public class VolumeMonitor : ObjectG
 	}
 	extern(C) static void callBackDriveEjectButton(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
 	{
-		foreach ( void delegate(GDrive*, VolumeMonitor) dlg ; volumeMonitor.onDriveEjectButtonListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveEjectButtonListeners )
 		{
-			dlg(drive, volumeMonitor);
+			dlg(new Drive(drive), volumeMonitor);
+		}
+	}
+	
+	void delegate(DriveIF, VolumeMonitor)[] onDriveStopButtonListeners;
+	/**
+	 * Emitted when the stop button is pressed on drive.
+	 * Since 2.22
+	 */
+	void addOnDriveStopButton(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("drive-stop-button" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"drive-stop-button",
+			cast(GCallback)&callBackDriveStopButton,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["drive-stop-button"] = 1;
+		}
+		onDriveStopButtonListeners ~= dlg;
+	}
+	extern(C) static void callBackDriveStopButton(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
+	{
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveStopButtonListeners )
+		{
+			dlg(new Drive(drive), volumeMonitor);
 		}
 	}
 	

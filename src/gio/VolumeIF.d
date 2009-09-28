@@ -128,6 +128,11 @@ private import gio.MountOperation;
  * of identifiers: G_VOLUME_IDENTIFIER_KIND_HAL_UDI,
  * G_VOLUME_IDENTIFIER_KIND_LABEL, etc. Use g_volume_get_identifier()
  * to obtain an identifier for a volume.
+ * Note that G_VOLUME_IDENTIFIER_KIND_HAL_UDI will only be available
+ * when the gvfs hal volume monitor is in use. Other volume monitors
+ * will generally be able to provide the G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE
+ * identifier, which can be used to obtain a hal device by means of
+ * libhal_manger_find_device_string_match().
  */
 public interface VolumeIF
 {
@@ -259,6 +264,8 @@ public interface VolumeIF
 	public int canEject();
 	
 	/**
+	 * Warning
+	 * g_volume_eject has been deprecated since version 2.22 and should not be used in newly-written code. Use g_volume_eject_with_operation() instead.
 	 * Ejects a volume. This is an asynchronous operation, and is
 	 * finished by calling g_volume_eject_finish() with the volume
 	 * and GAsyncResult returned in the callback.
@@ -271,6 +278,8 @@ public interface VolumeIF
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
 	/**
+	 * Warning
+	 * g_volume_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_volume_eject_with_operation_finish() instead.
 	 * Finishes ejecting a volume. If any errors occured during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
@@ -279,6 +288,31 @@ public interface VolumeIF
 	 * Throws: GException on failure.
 	 */
 	public int ejectFinish(AsyncResultIF result);
+	
+	/**
+	 * Ejects a volume. This is an asynchronous operation, and is
+	 * finished by calling g_volume_eject_with_operation_finish() with the volume
+	 * and GAsyncResult data returned in the callback.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the unmount if required for eject
+	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback, or NULL.
+	 * userData =  user data passed to callback.
+	 */
+	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	
+	/**
+	 * Finishes ejecting a volume. If any errors occurred during the operation,
+	 * error will be set to contain the errors and FALSE will be returned.
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the volume was successfully ejected. FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectWithOperationFinish(AsyncResultIF result);
 	
 	/**
 	 * Gets the kinds of identifiers

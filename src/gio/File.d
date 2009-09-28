@@ -55,6 +55,7 @@
  * 	- gio.FileEnumerator
  * 	- gio.FileInfo
  * 	- gio.FileInputStream
+ * 	- gio.FileIOStream
  * 	- gio.FileMonitor
  * 	- gio.FileOutputStream
  * 	- gio.Mount
@@ -67,6 +68,7 @@
  * 	- GFile* -> File
  * 	- GFileAttributeInfoList* -> FileAttributeInfoList
  * 	- GFileEnumerator* -> FileEnumerator
+ * 	- GFileIOStream* -> FileIOStream
  * 	- GFileInfo* -> FileInfo
  * 	- GFileInputStream* -> FileInputStream
  * 	- GFileMonitor* -> FileMonitor
@@ -97,6 +99,7 @@ private import gio.FileAttributeInfoList;
 private import gio.FileEnumerator;
 private import gio.FileInfo;
 private import gio.FileInputStream;
+private import gio.FileIOStream;
 private import gio.FileMonitor;
 private import gio.FileOutputStream;
 private import gio.Mount;
@@ -160,8 +163,8 @@ private import gobject.ObjectG;
  * take a very long time to finish, and blocking may leave an application
  * unusable. Notable cases include:
  * g_file_mount_mountable() to mount a mountable file.
- * g_file_unmount_mountable() to unmount a mountable file.
- * g_file_eject_mountable() to eject a mountable file.
+ * g_file_unmount_mountable_with_operation() to unmount a mountable file.
+ * g_file_eject_mountable_with_operation() to eject a mountable file.
  * One notable feature of GFiles are entity tags, or "etags" for
  * short. Entity tags are somewhat like a more abstract version of the
  * traditional mtime, and can be used to quickly determine if the file has
@@ -1371,7 +1374,7 @@ public class File : ObjectG
 	
 	/**
 	 * Asynchronously sets the display name for a given GFile.
-	 * For more details, see g_set_display_name() which is
+	 * For more details, see g_file_set_display_name() which is
 	 * the synchronous version of this call.
 	 * When the operation is finished, callback will be called. You can then call
 	 * g_file_set_display_name_finish() to get the result of the operation.
@@ -2109,6 +2112,8 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * g_file_unmount_mountable has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_unmount_mountable_with_operation() instead.
 	 * Unmounts a file of type G_FILE_TYPE_MOUNTABLE.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -2128,6 +2133,8 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * g_file_unmount_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_unmount_mountable_with_operation_finish() instead.
 	 * Finishes an unmount operation, see g_file_unmount_mountable() for details.
 	 * Finish an asynchronous unmount operation that was started
 	 * with g_file_unmount_mountable().
@@ -2152,6 +2159,54 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Unmounts a file of type G_FILE_TYPE_MOUNTABLE.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_file_unmount_mountable_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the operation
+	 * mountOperation =  a GMountOperation, or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+	 * userData =  the data to pass to callback function
+	 */
+	public void unmountMountableWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_unmount_mountable_with_operation  (GFile *file,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_unmount_mountable_with_operation(gFile, flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an unmount operation, see g_file_unmount_mountable_with_operation() for details.
+	 * Finish an asynchronous unmount operation that was started
+	 * with g_file_unmount_mountable_with_operation().
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Throws: GException on failure.
+	 */
+	public int unmountMountableWithOperationFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_unmount_mountable_with_operation_finish  (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_unmount_mountable_with_operation_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Warning
+	 * g_file_eject_mountable has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_eject_mountable_with_operation() instead.
 	 * Starts an asynchronous eject on a mountable.
 	 * When this operation has completed, callback will be called with
 	 * user_user data, and the operation can be finalized with
@@ -2172,6 +2227,8 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * g_file_eject_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_eject_mountable_with_operation_finish() instead.
 	 * Finishes an asynchronous eject operation started by
 	 * g_file_eject_mountable().
 	 * Params:
@@ -2185,6 +2242,190 @@ public class File : ObjectG
 		GError* err = null;
 		
 		auto p = g_file_eject_mountable_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Starts an asynchronous eject on a mountable.
+	 * When this operation has completed, callback will be called with
+	 * user_user data, and the operation can be finalized with
+	 * g_file_eject_mountable_with_operation_finish().
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the operation
+	 * mountOperation =  a GMountOperation, or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+	 * userData =  the data to pass to callback function
+	 */
+	public void ejectMountableWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_eject_mountable_with_operation  (GFile *file,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_eject_mountable_with_operation(gFile, flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous eject operation started by
+	 * g_file_eject_mountable_with_operation().
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the file was ejected successfully. FALSEotherwise.
+	 * Throws: GException on failure.
+	 */
+	public int ejectMountableWithOperationFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_eject_mountable_with_operation_finish  (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_eject_mountable_with_operation_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Starts a file of type G_FILE_TYPE_MOUNTABLE.
+	 * Using start_operation, you can request callbacks when, for instance,
+	 * passwords are needed during authentication.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_file_mount_mountable_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the operation
+	 * startOperation =  a GMountOperation, or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+	 * userData =  the data to pass to callback function
+	 */
+	public void startMountable(GDriveStartFlags flags, MountOperation startOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_start_mountable (GFile *file,  GDriveStartFlags flags,  GMountOperation *start_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_start_mountable(gFile, flags, (startOperation is null) ? null : startOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes a start operation. See g_file_start_mountable() for details.
+	 * Finish an asynchronous start operation that was started
+	 * with g_file_start_mountable().
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Throws: GException on failure.
+	 */
+	public int startMountableFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_start_mountable_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_start_mountable_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Stops a file of type G_FILE_TYPE_MOUNTABLE.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_file_stop_mountable_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  flags affecting the operation
+	 * mountOperation =  a GMountOperation, or NULL to avoid user interaction.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+	 * userData =  the data to pass to callback function
+	 */
+	public void stopMountable(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_stop_mountable (GFile *file,  GMountUnmountFlags flags,  GMountOperation *mount_operation,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_stop_mountable(gFile, flags, (mountOperation is null) ? null : mountOperation.getMountOperationStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an stop operation, see g_file_stop_mountable() for details.
+	 * Finish an asynchronous stop operation that was started
+	 * with g_file_stop_mountable().
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Throws: GException on failure.
+	 */
+	public int stopMountableFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_stop_mountable_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_stop_mountable_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Polls a file of type G_FILE_TYPE_MOUNTABLE.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_file_mount_mountable_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+	 * userData =  the data to pass to callback function
+	 */
+	public void pollMountable(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_poll_mountable (GFile *file,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_poll_mountable(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes a poll operation. See g_file_poll_mountable() for details.
+	 * Finish an asynchronous poll operation that was polled
+	 * with g_file_poll_mountable().
+	 * Since 2.22
+	 * Params:
+	 * result =  a GAsyncResult.
+	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Throws: GException on failure.
+	 */
+	public int pollMountableFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_poll_mountable_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_poll_mountable_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -2608,5 +2849,289 @@ public class File : ObjectG
 		}
 		
 		return p;
+	}
+	
+	/**
+	 * Creates a new file and returns a stream for reading and writing to it.
+	 * The file must not already exist.
+	 * By default files created are generally readable by everyone,
+	 * but if you pass G_FILE_CREATE_PRIVATE in flags the file
+	 * will be made readable only to the current user, to the level that
+	 * is supported on the target filesystem.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * If a file or directory with this name already exists the G_IO_ERROR_EXISTS
+	 * error will be returned. Some file systems don't allow all file names,
+	 * and may return an G_IO_ERROR_INVALID_FILENAME error, and if the name
+	 * is too long, G_IO_ERROR_FILENAME_TOO_LONG will be returned. Other errors
+	 * are possible too, and depend on what kind of filesystem the file is on.
+	 * Note that in many non-local file cases read and write streams are not
+	 * supported, so make sure you really need to do read and write streaming,
+	 * rather than just opening for reading or writing.
+	 * Since 2.22
+	 * Params:
+	 * flags =  a set of GFileCreateFlags
+	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * Returns: a GFileIOStream for the newly created file, or NULL on error. Free the returned object with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public FileIOStream createReadwrite(GFileCreateFlags flags, Cancellable cancellable)
+	{
+		// GFileIOStream * g_file_create_readwrite (GFile *file,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_create_readwrite(gFile, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileIOStream(cast(GFileIOStream*) p);
+	}
+	
+	/**
+	 * Asynchronously creates a new file and returns a stream for reading and
+	 * writing to it. The file must not already exist.
+	 * For more details, see g_file_create_readwrite() which is
+	 * the synchronous version of this call.
+	 * When the operation is finished, callback will be called. You can then
+	 * call g_file_create_readwrite_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * flags =  a set of GFileCreateFlags
+	 * ioPriority =  the I/O priority
+	 *  of the request
+	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
+	 * userData =  the data to pass to callback function
+	 */
+	public void createReadwriteAsync(GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_create_readwrite_async (GFile *file,  GFileCreateFlags flags,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_create_readwrite_async(gFile, flags, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous file create operation started with
+	 * g_file_create_readwrite_async().
+	 * Since 2.22
+	 * Params:
+	 * res =  a GAsyncResult
+	 * Returns: a GFileIOStream or NULL on error. Free the returned object with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public FileIOStream createReadwriteFinish(AsyncResultIF res)
+	{
+		// GFileIOStream * g_file_create_readwrite_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_create_readwrite_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileIOStream(cast(GFileIOStream*) p);
+	}
+	
+	/**
+	 * Opens an existing file for reading and writing. The result is
+	 * a GFileIOStream that can be used to read and write the contents of the file.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
+	 * If the file is a directory, the G_IO_ERROR_IS_DIRECTORY error will be returned.
+	 * Other errors are possible too, and depend on what kind of filesystem the file is on.
+	 * Note that in many non-local file cases read and write streams are not supported,
+	 * so make sure you really need to do read and write streaming, rather than
+	 * just opening for reading or writing.
+	 * Since 2.22
+	 * Params:
+	 * cancellable =  a GCancellable
+	 * Returns: GFileIOStream or NULL on error. Free the returned object with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public FileIOStream openReadwrite(Cancellable cancellable)
+	{
+		// GFileIOStream * g_file_open_readwrite (GFile *file,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_open_readwrite(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileIOStream(cast(GFileIOStream*) p);
+	}
+	
+	/**
+	 * Asynchronously opens file for reading and writing.
+	 * For more details, see g_file_open_readwrite() which is
+	 * the synchronous version of this call.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_file_open_readwrite_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * ioPriority =  the I/O priority
+	 *  of the request.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
+	 * userData =  the data to pass to callback function
+	 */
+	public void openReadwriteAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_open_readwrite_async (GFile *file,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_open_readwrite_async(gFile, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous file read operation started with
+	 * g_file_open_readwrite_async().
+	 * Since 2.22
+	 * Params:
+	 * res =  a GAsyncResult.
+	 * Returns: a GFileIOStream or NULL on error. Free the returned object with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public FileIOStream openReadwriteFinish(AsyncResultIF res)
+	{
+		// GFileIOStream * g_file_open_readwrite_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_open_readwrite_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileIOStream(cast(GFileIOStream*) p);
+	}
+	
+	/**
+	 * Returns an output stream for overwriting the file in readwrite mode,
+	 * possibly creating a backup copy of the file first. If the file doesn't
+	 * exist, it will be created.
+	 * For details about the behaviour, see g_file_replace() which does the same
+	 * thing but returns an output stream only.
+	 * Note that in many non-local file cases read and write streams are not
+	 * supported, so make sure you really need to do read and write streaming,
+	 * rather than just opening for reading or writing.
+	 * Since 2.22
+	 * Params:
+	 * etag =  an optional entity tag for the
+	 *  current GFile, or NULL to ignore
+	 * makeBackup =  TRUE if a backup should be created
+	 * flags =  a set of GFileCreateFlags
+	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * Returns: a GFileIOStream or NULL on error. Free the returned object with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public FileIOStream replaceReadwrite(string etag, int makeBackup, GFileCreateFlags flags, Cancellable cancellable)
+	{
+		// GFileIOStream * g_file_replace_readwrite (GFile *file,  const char *etag,  gboolean make_backup,  GFileCreateFlags flags,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_replace_readwrite(gFile, Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileIOStream(cast(GFileIOStream*) p);
+	}
+	
+	/**
+	 * Asynchronously overwrites the file in read-write mode, replacing the
+	 * contents, possibly creating a backup copy of the file first.
+	 * For more details, see g_file_replace_readwrite() which is
+	 * the synchronous version of this call.
+	 * When the operation is finished, callback will be called. You can then
+	 * call g_file_replace_readwrite_finish() to get the result of the operation.
+	 * Since 2.22
+	 * Params:
+	 * etag =  an entity tag for the
+	 *  current GFile, or NULL to ignore.
+	 * makeBackup =  TRUE if a backup should be created.
+	 * flags =  a set of GFileCreateFlags.
+	 * ioPriority =  the I/O priority
+	 *  of the request.
+	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
+	 * userData =  the data to pass to callback function
+	 */
+	public void replaceReadwriteAsync(string etag, int makeBackup, GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_replace_readwrite_async (GFile *file,  const char *etag,  gboolean make_backup,  GFileCreateFlags flags,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_replace_readwrite_async(gFile, Str.toStringz(etag), makeBackup, flags, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous file replace operation started with
+	 * g_file_replace_readwrite_async().
+	 * Since 2.22
+	 * Params:
+	 * res =  a GAsyncResult.
+	 * Returns: a GFileIOStream, or NULL on error. Free the returned object with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public FileIOStream replaceReadwriteFinish(AsyncResultIF res)
+	{
+		// GFileIOStream * g_file_replace_readwrite_finish (GFile *file,  GAsyncResult *res,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_replace_readwrite_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileIOStream(cast(GFileIOStream*) p);
+	}
+	
+	/**
+	 * Checks if file supports thread-default
+	 * contexts. If this returns FALSE, you cannot perform
+	 * asynchronous operations on file in a thread that has a
+	 * thread-default context.
+	 * Since 2.22
+	 * Returns: Whether or not file supports thread-default contexts.
+	 */
+	public int supportsThreadContexts()
+	{
+		// gboolean g_file_supports_thread_contexts (GFile *file);
+		return g_file_supports_thread_contexts(gFile);
 	}
 }

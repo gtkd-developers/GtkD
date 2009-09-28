@@ -87,12 +87,10 @@ private import gio.InputStream;
  * content from a file.
  * GFileInputStream implements GSeekable, which allows the input
  * stream to jump to arbitrary positions in the file, provided the
- * filesystem of the file allows it. In addition to the generic
- * g_seekable_ API, GFileInputStream has its own API for seeking
- * and positioning. To find the position of a file input stream,
- * use g_file_input_stream_tell(). To find out if a file input
- * stream supports seeking, use g_file_input_stream_can_seek().
- * To position a file input stream, use g_file_input_stream_seek().
+ * filesystem of the file allows it. To find the position of a file
+ * input stream, use g_seekable_tell(). To find out if a file input
+ * stream supports seeking, use g_seekable_stream_can_seek().
+ * To position a file input stream, use g_seekable_seek().
  */
 public class FileInputStream : InputStream, SeekableIF
 {

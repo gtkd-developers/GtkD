@@ -1315,33 +1315,30 @@ public struct GValueArray
  * GType
  * gtk_gadget_get_type (void)
  * {
-	 *  static GType g_define_type_id = 0;
-	 *  if (G_UNLIKELY (g_define_type_id == 0))
+	 *  static volatile gsize g_define_type_id__volatile = 0;
+	 *  if (g_once_init_enter (g_define_type_id__volatile))
 	 *  {
-		 *  static const GTypeInfo g_define_type_info = {
-			 *  sizeof (GtkGadgetClass),
-			 *  (GBaseInitFunc) NULL,
-			 *  (GBaseFinalizeFunc) NULL,
-			 *  (GClassInitFunc) gtk_gadget_class_intern_init,
-			 *  (GClassFinalizeFunc) NULL,
-			 *  NULL, // class_data
-			 *  sizeof (GtkGadget),
-			 *  0, // n_preallocs
-			 *  (GInstanceInitFunc) gtk_gadget_init,
-		 *  };
-		 *  g_define_type_id = g_type_register_static (GTK_TYPE_WIDGET, "GtkGadget", g_define_type_info, 0);
+		 *  GType g_define_type_id =
+		 *  g_type_register_static_simple (GTK_TYPE_WIDGET,
+		 *  g_intern_static_string ("GtkGadget"),
+		 *  sizeof (GtkGadgetClass),
+		 *  (GClassInitFunc) gtk_gadget_class_intern_init,
+		 *  sizeof (GtkGadget),
+		 *  (GInstanceInitFunc) gtk_gadget_init,
+		 *  (GTypeFlags) flags);
 		 *  {
 			 *  static const GInterfaceInfo g_implement_interface_info = {
 				 *  (GInterfaceInitFunc) gtk_gadget_gizmo_init
 			 *  };
 			 *  g_type_add_interface_static (g_define_type_id, TYPE_GIZMO, g_implement_interface_info);
 		 *  }
+		 *  g_once_init_leave (g_define_type_id__volatile, g_define_type_id);
 	 *  }
-	 *  return g_define_type_id;
+	 *  return g_define_type_id__volatile;
  * }
- * The only pieces which have to be manually provided are the definitions of the
- * instance and class structure and the definitions of the instance and class
- * init functions.
+ * The only pieces which have to be manually provided are the definitions of
+ * the instance and class structure and the definitions of the instance and
+ * class init functions.
  * TN :
  *  The name of the new type, in Camel case.
  * t_n :

@@ -390,10 +390,11 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Finish an asynchronous call started by
 	 * g_data_input_stream_read_line_async().
+	 * Since 2.20
 	 * Params:
 	 * result =  the GAsyncResult that was provided to the callback.
 	 * length =  a gsize to get the length of the data read in.
-	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.Since 2,20
+	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.
 	 * Throws: GException on failure.
 	 */
 	public string readLineFinish(out GAsyncResult result, uint* length)

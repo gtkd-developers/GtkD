@@ -22,13 +22,13 @@
 
 /*
  * Conversion parameters:
- * inFile  = GFileOutputStream.html
+ * inFile  = GFileIOStream.html
  * outPack = gio
- * outFile = FileOutputStream
- * strct   = GFileOutputStream
+ * outFile = FileIOStream
+ * strct   = GFileIOStream
  * realStrct=
  * ctorStrct=
- * clss    = FileOutputStream
+ * clss    = FileIOStream
  * interf  = 
  * class Code: Yes
  * interface Code: No
@@ -37,7 +37,7 @@
  * implements:
  * 	- SeekableIF
  * prefixes:
- * 	- g_file_output_stream_
+ * 	- g_file_io_stream_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -60,7 +60,7 @@
  * overrides:
  */
 
-module gio.FileOutputStream;
+module gio.FileIOStream;
 
 public  import gtkc.giotypes;
 
@@ -79,85 +79,103 @@ private import gio.SeekableIF;
 
 
 
-private import gio.OutputStream;
+private import gio.IOStream;
 
 /**
  * Description
- * GFileOutputStream provides output streams that write their
- * content to a file.
- * GFileOutputStream implements GSeekable, which allows the output
+ * GFileIOStream provides io streams that both read and write to the same
+ * file handle.
+ * GFileIOStream implements GSeekable, which allows the io
  * stream to jump to arbitrary positions in the file and to truncate
  * the file, provided the filesystem of the file supports these
  * operations.
- * To find the position of a file output stream, use g_seekable_tell().
- * To find out if a file output stream supports seeking, use
- * g_seekable_can_seek().To position a file output stream, use
- * g_seekable_seek(). To find out if a file output stream supports
- * truncating, use g_seekable_can_truncate(). To truncate a file output
+ * To find the position of a file io stream, use
+ * g_seekable_tell().
+ * To find out if a file io stream supports seeking, use g_seekable_can_seek().
+ * To position a file io stream, use g_seekable_seek().
+ * To find out if a file io stream supports truncating, use
+ * g_seekable_can_truncate(). To truncate a file io
  * stream, use g_seekable_truncate().
+ * The default implementation of all the GFileIOStream operations
+ * and the implementation of GSeekable just call into the same operations
+ * on the output stream.
  */
-public class FileOutputStream : OutputStream, SeekableIF
+public class FileIOStream : IOStream, SeekableIF
 {
 	
 	/** the main Gtk struct */
-	protected GFileOutputStream* gFileOutputStream;
+	protected GFileIOStream* gFileIOStream;
 	
 	
-	public GFileOutputStream* getFileOutputStreamStruct()
+	public GFileIOStream* getFileIOStreamStruct()
 	{
-		return gFileOutputStream;
+		return gFileIOStream;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gFileOutputStream;
+		return cast(void*)gFileIOStream;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GFileOutputStream* gFileOutputStream)
+	public this (GFileIOStream* gFileIOStream)
 	{
-		if(gFileOutputStream is null)
+		if(gFileIOStream is null)
 		{
 			this = null;
 			return;
 		}
 		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFileOutputStream);
+		void* ptr = getDObject(cast(GObject*)gFileIOStream);
 		if( ptr !is null )
 		{
-			this = cast(FileOutputStream)ptr;
+			this = cast(FileIOStream)ptr;
 			return;
 		}
-		super(cast(GOutputStream*)gFileOutputStream);
-		this.gFileOutputStream = gFileOutputStream;
+		super(cast(GIOStream*)gFileIOStream);
+		this.gFileIOStream = gFileIOStream;
 	}
 	
 	// add the Seekable capabilities
-	mixin SeekableT!(GFileOutputStream);
+	mixin SeekableT!(GFileIOStream);
 	
 	/**
 	 */
 	
 	/**
-	 * Queries a file output stream for the given attributes.
+	 * Gets the entity tag for the file when it has been written.
+	 * This must be called after the stream has been written
+	 * and closed, as the etag can change while writing.
+	 * Since 2.22
+	 * Returns: the entity tag for the stream.
+	 */
+	public string getEtag()
+	{
+		// char * g_file_io_stream_get_etag (GFileIOStream *stream);
+		return Str.toString(g_file_io_stream_get_etag(gFileIOStream));
+	}
+	
+	/**
+	 * Queries a file io stream for the given attributes.
 	 * This function blocks while querying the stream. For the asynchronous
-	 * version of this function, see g_file_output_stream_query_info_async().
+	 * version of this function, see g_file_io_stream_query_info_async().
 	 * While the stream is blocked, the stream will set the pending flag
 	 * internally, and any other operations on the stream will fail with
 	 * G_IO_ERROR_PENDING.
 	 * Can fail if the stream was already closed (with error being set to
 	 * G_IO_ERROR_CLOSED), the stream has pending operations (with error being
 	 * set to G_IO_ERROR_PENDING), or if querying info is not supported for
-	 * the stream's interface (with error being set to G_IO_ERROR_NOT_SUPPORTED). In
+	 * the stream's interface (with error being set to G_IO_ERROR_NOT_SUPPORTED). I
 	 * all cases of failure, NULL will be returned.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be set, and NULL will
 	 * be returned.
+	 * Since 2.22
 	 * Params:
 	 * attributes =  a file attribute query string.
 	 * cancellable =  optional GCancellable object, NULL to ignore.
@@ -166,10 +184,10 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public FileInfo queryInfo(string attributes, Cancellable cancellable)
 	{
-		// GFileInfo * g_file_output_stream_query_info (GFileOutputStream *stream,  const char *attributes,  GCancellable *cancellable,  GError **error);
+		// GFileInfo * g_file_io_stream_query_info (GFileIOStream *stream,  const char *attributes,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_file_output_stream_query_info(gFileOutputStream, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_file_io_stream_query_info(gFileIOStream, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -186,9 +204,10 @@ public class FileOutputStream : OutputStream, SeekableIF
 	/**
 	 * Asynchronously queries the stream for a GFileInfo. When completed,
 	 * callback will be called with a GAsyncResult which can be used to
-	 * finish the operation with g_file_output_stream_query_info_finish().
+	 * finish the operation with g_file_io_stream_query_info_finish().
 	 * For the synchronous version of this function, see
-	 * g_file_output_stream_query_info().
+	 * g_file_io_stream_query_info().
+	 * Since 2.22
 	 * Params:
 	 * attributes =  a file attribute query string.
 	 * ioPriority =  the I/O priority
@@ -199,13 +218,14 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public void queryInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		// void g_file_output_stream_query_info_async  (GFileOutputStream *stream,  const char *attributes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
-		g_file_output_stream_query_info_async(gFileOutputStream, Str.toStringz(attributes), ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		// void g_file_io_stream_query_info_async (GFileIOStream *stream,  const char *attributes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_io_stream_query_info_async(gFileIOStream, Str.toStringz(attributes), ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
 	/**
 	 * Finalizes the asynchronous query started
-	 * by g_file_output_stream_query_info_async().
+	 * by g_file_io_stream_query_info_async().
+	 * Since 2.22
 	 * Params:
 	 * result =  a GAsyncResult.
 	 * Returns: A GFileInfo for the finished query.
@@ -213,10 +233,10 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public FileInfo queryInfoFinish(AsyncResultIF result)
 	{
-		// GFileInfo * g_file_output_stream_query_info_finish  (GFileOutputStream *stream,  GAsyncResult *result,  GError **error);
+		// GFileInfo * g_file_io_stream_query_info_finish (GFileIOStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
-		auto p = g_file_output_stream_query_info_finish(gFileOutputStream, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		auto p = g_file_io_stream_query_info_finish(gFileIOStream, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -228,17 +248,5 @@ public class FileOutputStream : OutputStream, SeekableIF
 			return null;
 		}
 		return new FileInfo(cast(GFileInfo*) p);
-	}
-	
-	/**
-	 * Gets the entity tag for the file when it has been written.
-	 * This must be called after the stream has been written
-	 * and closed, as the etag can change while writing.
-	 * Returns: the entity tag for the stream.
-	 */
-	public string getEtag()
-	{
-		// char * g_file_output_stream_get_etag (GFileOutputStream *stream);
-		return Str.toString(g_file_output_stream_get_etag(gFileOutputStream));
 	}
 }

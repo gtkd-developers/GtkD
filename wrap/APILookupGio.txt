@@ -77,6 +77,7 @@ import: gio.FileAttributeInfoList
 import: gio.FileEnumerator
 import: gio.FileInfo
 import: gio.FileInputStream
+import: gio.FileIOStream
 import: gio.FileMonitor
 import: gio.FileOutputStream
 import: gio.Mount
@@ -90,6 +91,7 @@ structWrap: GFileAttributeInfoList* FileAttributeInfoList
 structWrap: GFileEnumerator* FileEnumerator
 structWrap: GFileInfo* FileInfo
 structWrap: GFileInputStream* FileInputStream
+structWrap: GFileIOStream* FileIOStream
 structWrap: GFileMonitor* FileMonitor
 structWrap: GFileOutputStream* FileOutputStream
 structWrap: GMount* MountIF
@@ -143,6 +145,7 @@ structWrap: GFileInfo* FileInfo
 out: g_file_info_get_attribute_data type
 out: g_file_info_get_attribute_data value_pp
 out: g_file_info_get_attribute_data status
+array: g_file_info_set_attribute_stringv attr_value
 
 outFile: FileInfo
 
@@ -172,17 +175,19 @@ structWrap: GCancellable* Cancellable
 structWrap: GFile* File
 outFile: FileEnumerator
 
+file: gio-GIOError.html
+class: ErrorGIO
+prefix: g_io_error_
+outFile: ErrorGIO
+
 file: GMountOperation.html
 struct: GMountOperation
 class: MountOperation
 prefix: g_mount_operation_
 import: glib.Str
+import: glib.ArrayG
+structWrap: GArray* ArrayG
 outFile: MountOperation
-
-file: gio-GIOError.html
-class: ErrorGIO
-prefix: g_io_error_
-outFile: ErrorGIO
 
 ###########################################################
 ### File System Monitoring ################################
@@ -296,6 +301,22 @@ structWrap: GInputStream* InputStream
 out: g_output_stream_write_all bytes_read
 outFile: OutputStream
 
+file: GIOStream.html
+struct: GIOStream
+class: IOStream
+prefix: g_io_stream_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.InputStream
+import: gio.OutputStream
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GInputStream* InputStream
+structWrap: GOutputStream* OutputStream
+outFile: IOStream
+
 file: GFileInputStream.html
 struct: GFileInputStream
 class: FileInputStream
@@ -345,6 +366,31 @@ code: start
 	mixin SeekableT!(GFileOutputStream);
 code: end
 outFile: FileOutputStream
+
+file: GFileIOStream.html
+struct: GFileIOStream
+class: FileIOStream
+implements: SeekableIF
+prefix: g_file_io_stream_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.FileInfo
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GFileInfo* FileInfo
+
+#imports for Seekable Interface.
+import: gio.SeekableT
+import: gio.SeekableIF
+
+code: start
+	// add the Seekable capabilities
+	mixin SeekableT!(GFileIOStream);
+code: end
+outFile: FileIOStream
 
 file: GFilterInputStream.html
 struct: GFilterInputStream
@@ -593,11 +639,14 @@ class: VolumeMonitor
 prefix: g_volume_monitor_
 import: glib.Str
 import: glib.ListG
+import: gio.Drive
+import: gio.DriveIF
 import: gio.Mount
 import: gio.MountIF
 import: gio.Volume
 import: gio.VolumeIF
 structWrap: GList* ListG
+structWrap: GDrive* DriveIF
 structWrap: GMount* MountIF
 structWrap: GVolume* VolumeIF
 structWrap: GVolumeMonitor*
@@ -768,10 +817,12 @@ import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.Icon
 import: gio.IconIF
+import: gio.MountOperation
 structWrap: GList* ListG
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GIcon* IconIF
+structWrap: GMountOperation* MountOperation
 interface: DriveIF
 outFile: DriveT
 
@@ -1023,6 +1074,44 @@ code: start
 	mixin IconT!(GEmblem);
 code: end
 outFile: Emblem
+
+###########################################################
+### Failable Initialization ###############################
+###########################################################
+
+file: GInitable.html
+struct: GInitable
+class: InitableT
+template: TStruct
+prefix: g_initable_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.ObjectG
+import: gio.Cancellable
+structWrap: GObject* ObjectG
+structWrap: GCancellable* Cancellable
+array: g_initable_newv parameters n_parameters
+interface: InitableIF
+outFile: InitableT
+
+file: GAsyncInitable.html
+struct: GAsyncInitable
+class: AsyncInitableT
+template: TStruct
+prefix: g_initable_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.ObjectG
+import: gio.AsyncResultIF
+import: gio.Cancellable
+structWrap: GObject* ObjectG
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+array: g_async_initable_newv_async parameters n_parameters
+interface: AsyncInitableIF
+outFile: AsyncInitableT
 
 ###########################################################
 ### Utilities #############################################

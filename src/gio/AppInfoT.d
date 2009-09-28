@@ -234,7 +234,7 @@ public template AppInfoT(TStruct)
 	
 	/**
 	 * Gets the executable's name for the installed application.
-	 * Returns: a string containing the appinfo's application binary's name
+	 * Returns: a string containing the appinfo's application binaries name
 	 */
 	public string getExecutable()
 	{
@@ -377,7 +377,7 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
-	 * Tries to delete an GAppInfo.
+	 * Tries to delete a GAppInfo.
 	 * On some platforms, there may be a difference between user-defined
 	 * GAppInfos which can be deleted, and system-wide ones which
 	 * cannot. See g_app_info_can_delete().
@@ -394,7 +394,7 @@ public template AppInfoT(TStruct)
 	 * Removes all changes to the type associations done by
 	 * g_app_info_set_as_default_for_type(),
 	 * g_app_info_set_as_default_for_extension(),
-	 * g_app_info_add_supports_type() of g_app_info_remove_supports_type().
+	 * g_app_info_add_supports_type() or g_app_info_remove_supports_type().
 	 * Since 2.20
 	 * Params:
 	 * contentType =  a content type
@@ -428,7 +428,7 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
-	 * Sets the application as the default handler for the given file extention.
+	 * Sets the application as the default handler for the given file extension.
 	 * Params:
 	 * extension =  a string containing the file extension (without the dot).
 	 * Returns: TRUE on success, FALSE on error.
@@ -527,10 +527,10 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
-	 * Gets a list of all GAppInfo s for a given content type.
+	 * Gets a list of all GAppInfos for a given content type.
 	 * Params:
 	 * contentType =  the content type to find a GAppInfo for
-	 * Returns: GList of GAppInfo s for given content_type or NULL on error.
+	 * Returns: GList of GAppInfos for given content_type or NULL on error.
 	 */
 	public static ListG getAllForType(string contentType)
 	{
@@ -544,7 +544,7 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
-	 * Gets the GAppInfo that correspond to a given content type.
+	 * Gets the GAppInfo that corresponds to a given content type.
 	 * Params:
 	 * contentType =  the content type to find a GAppInfo for
 	 * mustSupportUris =  if TRUE, the GAppInfo is expected to
