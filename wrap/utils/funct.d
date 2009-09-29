@@ -755,7 +755,7 @@ public struct Funct
 					if (GtkDClass.startsWith(parmsWrap[i], "out") )
 						bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = null;";
 					else
-						bd ~= bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = "~ id ~".ptr;";
+						bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = "~ id ~".ptr;";
 				
 					gtkCall ~= "&out" ~ id;
 
@@ -790,8 +790,6 @@ public struct Funct
 					}
 					else
 					{
-						bd ~= bd ~= parmsType[i].removechars("*") ~"** out"~ id ~ " = "~ id ~".ptr;";
-
 						bd ~= "";
 						bd ~= parmsType[i].removechars("*") ~ "*[] out"~ id ~" = new "~ parmsType[i].removechars("*") ~"*["~ id ~".length];";
 						bd ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";

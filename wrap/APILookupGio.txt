@@ -1114,6 +1114,39 @@ interface: AsyncInitableIF
 outFile: AsyncInitableT
 
 ###########################################################
+### Lowlevel platform-independent network support #########
+###########################################################
+
+file: GSocket.html
+struct: GSocket
+class: Socket
+prefix: g_socket_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.Source
+import: gio.SocketAddress
+import: gio.Cancellable
+import: gio.SocketControlMessage
+structWrap: GSource* Source
+structWrap: GSocketAddress* SocketAddress
+structWrap: GCancellable* Cancellable
+structWrap: GSocketControlMessage* SocketControlMessage
+
+inout: g_socket_receive_from address
+array: g_socket_receive_from buffer size
+inout: g_socket_receive_message address
+array: g_socket_receive_message vectors num_vectors
+inout: g_socket_receive_message messages
+array: g_socket_receive_message messages num_messages
+inout: g_socket_receive_message flags
+array: g_socket_send_message vectors num_vectors
+inout: g_socket_send_message messages
+array: g_socket_send_message messages num_messages
+
+outFile: Socket
+
+###########################################################
 ### Utilities #############################################
 ###########################################################
 
