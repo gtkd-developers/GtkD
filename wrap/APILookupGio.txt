@@ -1120,6 +1120,7 @@ outFile: AsyncInitableT
 file: GSocket.html
 struct: GSocket
 class: Socket
+implements: InitableIF
 prefix: g_socket_
 import: glib.Str
 import: glib.ErrorG
@@ -1133,6 +1134,10 @@ structWrap: GSocketAddress* SocketAddress
 structWrap: GCancellable* Cancellable
 structWrap: GSocketControlMessage* SocketControlMessage
 
+#imports for Initable Interface.
+import: gio.InitableT
+import: gio.InitableIF
+
 inout: g_socket_receive_from address
 array: g_socket_receive_from buffer size
 inout: g_socket_receive_message address
@@ -1144,7 +1149,71 @@ array: g_socket_send_message vectors num_vectors
 inout: g_socket_send_message messages
 array: g_socket_send_message messages num_messages
 
+code: start
+	// add the Initable capabilities
+	mixin InitableT!(GSocket);
+code: end
 outFile: Socket
+
+file: GInetAddress.html
+struct: GInetAddress
+class: InetAddress
+prefix: g_inet_address_
+import: glib.Str
+array: g_inet_address_new_from_bytes bytes
+array: g_inet_address_to_bytes Return getNativeSize()
+outFile: InetAddress
+
+file: GSocketAddress.html
+struct: GSocketAddress
+class: SocketAddress
+implements: SocketConnectableIF
+prefix: g_socket_address_
+import: glib.ErrorG
+import: glib.GException
+
+#imports for SocketConnectable Interface.
+import: gio.SocketConnectableT
+import: gio.SocketConnectableIF
+
+code: start
+	// add the SocketConnectable capabilities
+	mixin SocketConnectableT!(GSocketAddress);
+code: end
+outFile: SocketAddress
+
+file: GInetSocketAddress.html
+struct: GInetSocketAddress
+ctorStruct: GSocketAddress
+class: InetSocketAddress
+prefix: g_inet_socket_address_
+import: gio.InetAddress
+structWrap: GInetAddress* InetAddress
+outFile: InetSocketAddress
+
+file: GUnixSocketAddress.html
+struct: GUnixSocketAddress
+ctorStruct: GSocketAddress
+class: UnixSocketAddress
+prefix: g_unix_socket_address_
+outFile: UnixSocketAddress
+
+file: GSocketControlMessage.html
+struct: GSocketControlMessage
+class: SocketControlMessage
+prefix: g_socket_control_message_
+structWrap: GSocketControlMessage* SocketControlMessage
+outFile: SocketControlMessage
+
+file: GUnixFDMessage.html
+struct: GUnixFDMessage
+ctorStruct: GSocketControlMessage
+class: UnixFDMessage
+prefix: g_unix_fd_message_
+import: glib.ErrorG
+import: glib.GException
+array: g_unix_fd_message_steal_fds Return length
+outFile: UnixFDMessage
 
 ###########################################################
 ### Utilities #############################################
