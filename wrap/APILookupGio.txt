@@ -1216,6 +1216,144 @@ array: g_unix_fd_message_steal_fds Return length
 outFile: UnixFDMessage
 
 ###########################################################
+### DNS resolution ########################################
+###########################################################
+
+file: GResolver.html
+struct: GResolver
+class: Resolver
+prefix: g_resolver_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gio.AsyncResult
+import: gio.Cancellable
+structWrap: GList* ListG
+structWrap: GAsyncResult* AsyncResult
+structWrap: GCancellable* Cancellable
+structWrap: GResolver* Resolver
+outFile: Resolver
+
+file: GSocketConnectable.html
+struct: GSocketConnectable
+class: SocketConnectableT
+template: TStruct
+prefix: g_socket_connectable_
+strictPrefix: Y
+import: gio.SocketAddressEnumerator
+structWrap: GSocketAddressEnumerator* SocketAddressEnumerator
+interface: SocketConnectableIF
+outFile: SocketConnectableT
+
+struct: GSocketAddressEnumerator
+class: SocketAddressEnumerator
+prefix: g_socket_address_enumerator_
+noprefix: g_socket_connectable_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResult
+import: gio.Cancellable
+import: gio.SocketAddress
+structWrap: GAsyncResult* AsyncResult
+structWrap: GCancellable* Cancellable
+structWrap: GSocketAddress* SocketAddress
+outFile: SocketAddressEnumerator
+
+file: GNetworkAddress.html
+struct: GNetworkAddress
+ctorStruct: GSocketConnectable
+class: NetworkAddress
+implements: SocketConnectableIF
+prefix: g_network_address_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.SocketConnectableIF
+structWrap: GSocketConnectable* SocketConnectableIF
+
+#imports for SocketConnectable Interface.
+import: gio.SocketConnectableT
+#import: gio.SocketConnectableIF
+
+nocode: g_network_address_parse
+
+code: start
+	// add the SocketConnectable capabilities
+	mixin SocketConnectableT!(GNetworkAddress);
+
+	/**
+	 * Creates a new GSocketConnectable for connecting to the given
+	 * hostname and port. May fail and return NULL in case
+	 * parsing host_and_port fails.
+	 * host_and_port may be in any of a number of recognised formats: an IPv6
+	 * address, an IPv4 address, or a domain name (in which case a DNS
+	 * lookup is performed). Quoting with [] is supported for all address
+	 * types. A port override may be specified in the usual way with a
+	 * colon. Ports may be given as decimal numbers or symbolic names (in
+	 * which case an /etc/services lookup is performed).
+	 * If no port is specified in host_and_port then default_port will be
+	 * used as the port number to connect to.
+	 * In general, host_and_port is expected to be provided by the user
+	 * (allowing them to give the hostname, and a port overide if necessary)
+	 * and default_port is expected to be provided by the application.
+	 * Since 2.22
+	 * Params:
+	 * hostAndPort =  the hostname and optionally a port
+	 * defaultPort =  the default port if not in host_and_port
+	 * Returns: the new GNetworkAddress, or NULL on error
+	 * Throws: GException on failure.
+	 */
+	public static SocketConnectableIF parse(string hostAndPort, ushort defaultPort)
+	{
+		// GSocketConnectable * g_network_address_parse (const gchar *host_and_port,  guint16 default_port,  GError **error);
+		GError* err = null;
+		
+		auto p = g_network_address_parse(Str.toStringz(hostAndPort), defaultPort, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new NetworkAddress(cast(GNetworkAddress*) p);
+	}
+code: end
+outFile: NetworkAddress
+
+file: GNetworkService.html
+struct: GNetworkService
+ctorStruct: GSocketConnectable
+class: NetworkService
+implements: SocketConnectableIF
+prefix: g_network_service_
+import: glib.Str
+
+#imports for SocketConnectable Interface.
+import: gio.SocketConnectableT
+import: gio.SocketConnectableIF
+
+code: start
+	// add the SocketConnectable capabilities
+	mixin SocketConnectableT!(GNetworkService);
+code: end
+outFile: NetworkService
+
+file: gio-GSrvTarget.html
+struct: GSrvTarget
+class: SrvTarget
+prefix: g_srv_target_
+import: glib.Str
+import: glib.ListG
+structWrap: GList* ListG
+structWrap: GSrvTarget* SrvTarget
+outFile: SrvTarget
+
+###########################################################
 ### Utilities #############################################
 ###########################################################
 
