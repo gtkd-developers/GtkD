@@ -597,12 +597,18 @@ public struct Funct
 				if ( name in convParms.outParms && convParms.outParms[name].contains(convParms.array[name].contains(parms[i])) )
 				{
 					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-					parmToGtk = "&"~ id;
+					if ( GtkDClass.endsWith(parmsType[i], "*") )
+						parmToGtk = "&"~ id;
+					else
+						parmToGtk ~= id;
 				}
 				else if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(convParms.array[name].contains(parms[i])) )
 				{
 					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-					parmToGtk = "&"~ id;
+					if ( GtkDClass.endsWith(parmsType[i], "*") )
+						parmToGtk = "&"~ id;
+					else
+						parmToGtk ~= id;
 				}
 				else
 				{
@@ -791,12 +797,13 @@ public struct Funct
 					else
 					{
 						bd ~= "";
-						bd ~= parmsType[i].removechars("*") ~ "*[] out"~ id ~" = new "~ parmsType[i].removechars("*") ~"*["~ id ~".length];";
+						bd ~= parmsType[i].removechars("*") ~ "*[] inout"~ id ~" = new "~ parmsType[i].removechars("*") ~"*["~ id ~".length];";
 						bd ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
 						bd ~= "{";
-						bd ~= "\tout"~ id ~"[i] = "~ id~ "[i].get"~ split(parmsWrap[i])[1][0 .. $-2] ~"Struct();";
+						bd ~= "\tinout"~ id ~"[i] = "~ id~ "[i].get"~ split(parmsWrap[i])[1][0 .. $-2] ~"Struct();";
 						bd ~= "}";
 						bd ~= "";
+						bd ~= parmsType[i].removechars("*") ~ "** out"~ id ~" = inout"~ id ~".ptr;";
 					}
 
 					gtkCall ~= "&out" ~ id;

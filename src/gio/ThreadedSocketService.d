@@ -1,0 +1,182 @@
+/*
+ * This file is part of gtkD.
+ *
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+ 
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
+
+/*
+ * Conversion parameters:
+ * inFile  = GThreadedSocketService.html
+ * outPack = gio
+ * outFile = ThreadedSocketService
+ * strct   = GThreadedSocketService
+ * realStrct=
+ * ctorStrct=GSocketService
+ * clss    = ThreadedSocketService
+ * interf  = 
+ * class Code: No
+ * interface Code: No
+ * template for:
+ * extend  = 
+ * implements:
+ * prefixes:
+ * 	- g_threaded_socket_service_
+ * omit structs:
+ * omit prefixes:
+ * omit code:
+ * omit signals:
+ * imports:
+ * structWrap:
+ * module aliases:
+ * local aliases:
+ * overrides:
+ */
+
+module gio.ThreadedSocketService;
+
+public  import gtkc.giotypes;
+
+private import gtkc.gio;
+private import glib.ConstructionException;
+
+private import gobject.Signals;
+public  import gtkc.gdktypes;
+
+
+
+
+private import gio.SocketService;
+
+/**
+ * Description
+ * A GThreadedSocketService is a simple subclass of GSocketService
+ * that handles incoming connections by creating a worker thread and
+ * dispatching the connection to it by emitting the ::run signal in
+ * the new thread.
+ * The signal handler may perform blocking IO and need not return
+ * until the connection is closed.
+ * The service is implemented using a thread pool, so there is a
+ * limited amount of threads availible to serve incomming requests.
+ * The service automatically stops the GSocketService from accepting
+ * new connections when all threads are busy.
+ * As with GSocketService, you may connect to "run",
+ * or subclass and override the default handler.
+ */
+public class ThreadedSocketService : SocketService
+{
+	
+	/** the main Gtk struct */
+	protected GThreadedSocketService* gThreadedSocketService;
+	
+	
+	public GThreadedSocketService* getThreadedSocketServiceStruct()
+	{
+		return gThreadedSocketService;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gThreadedSocketService;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GThreadedSocketService* gThreadedSocketService)
+	{
+		if(gThreadedSocketService is null)
+		{
+			this = null;
+			return;
+		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gThreadedSocketService);
+		if( ptr !is null )
+		{
+			this = cast(ThreadedSocketService)ptr;
+			return;
+		}
+		super(cast(GSocketService*)gThreadedSocketService);
+		this.gThreadedSocketService = gThreadedSocketService;
+	}
+	
+	/**
+	 */
+	int[char[]] connectedSignals;
+	
+	bool delegate(GSocketConnection*, GObject*, ThreadedSocketService)[] onRunListeners;
+	/**
+	 * The ::run signal is emitted in a worker thread in response to an
+	 * incoming connection. This thread is dedicated to handling
+	 * connection and may perform blocking IO. The signal handler need
+	 * not return until the connection is closed.
+	 * See Also
+	 * #GSocketService.
+	 */
+	void addOnRun(bool delegate(GSocketConnection*, GObject*, ThreadedSocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("run" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"run",
+			cast(GCallback)&callBackRun,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["run"] = 1;
+		}
+		onRunListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackRun(GThreadedSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, ThreadedSocketService threadedSocketService)
+	{
+		foreach ( bool delegate(GSocketConnection*, GObject*, ThreadedSocketService) dlg ; threadedSocketService.onRunListeners )
+		{
+			if ( dlg(connection, sourceObject, threadedSocketService) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
+	
+	/**
+	 * Creates a new GThreadedSocketService with no listeners. Listeners
+	 * must be added with g_socket_service_add_listeners().
+	 * Since 2.22
+	 * Params:
+	 * maxThreads =  the maximal number of threads to execute concurrently
+	 *  handling incoming clients, -1 means no limit
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (int maxThreads)
+	{
+		// GSocketService * g_threaded_socket_service_new (int max_threads);
+		auto p = g_threaded_socket_service_new(maxThreads);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_threaded_socket_service_new(maxThreads)");
+		}
+		this(cast(GThreadedSocketService*) p);
+	}
+}

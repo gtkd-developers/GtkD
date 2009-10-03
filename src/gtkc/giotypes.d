@@ -374,6 +374,84 @@ public enum GEmblemOrigin
 }
 alias GEmblemOrigin EmblemOrigin;
 
+/**
+ * Flags used when creating a GSocket. Some protocols may not implement
+ * all the socket types.
+ * G_SOCKET_TYPE_INVALID
+ */
+public enum GSocketType
+{
+	TYPE_INVALID,
+	TYPE_STREAM,
+	TYPE_DATAGRAM,
+	TYPE_SEQPACKET
+}
+alias GSocketType SocketType;
+
+/**
+ * A protocol identifier is specified when creating a GSocket, which is a
+ * family/type specific identifier, where 0 means the default protocol for
+ * the particular family/type.
+ * This enum contains a set of commonly available and used protocols. You
+ * can also pass any other identifiers handled by the platform in order to
+ * use protocols not listed here.
+ * G_SOCKET_PROTOCOL_UNKNOWN
+ */
+public enum GSocketProtocol
+{
+	UNKNOWN = -1,
+	DEFAULT = 0,
+	TCP = 6,
+	UDP = 17,
+	SCTP = 132
+}
+alias GSocketProtocol SocketProtocol;
+
+/**
+ * Flags used in g_socket_receive_message() and g_socket_send_message().
+ * The flags listed in the enum are some commonly available flags, but the
+ * values used for them are the same as on the platform, and any other flags
+ * are passed in/out as is. So to use a platform specific flag, just include
+ * the right system header and pass in the flag.
+ * G_SOCKET_MSG_NONE
+ */
+public enum GSocketMsgFlags
+{
+	NONE,
+	OOB = 1,
+	PEEK = 2,
+	DONTROUTE = 4
+}
+alias GSocketMsgFlags SocketMsgFlags;
+
+/**
+ * The protocol family of a GSocketAddress. (These values are
+ * identical to the system defines AF_INET, AF_INET6 and AF_UNIX,
+ * if available.)
+ * G_SOCKET_FAMILY_INVALID
+ */
+public enum GSocketFamily
+{
+	INVALID,
+	UNIX = 1,
+	IPV4 = 2,
+	IPV6 = 23
+}
+alias GSocketFamily SocketFamily;
+
+/**
+ * An error code used with G_RESOLVER_ERROR in a GError returned
+ * from a GResolver routine.
+ * G_RESOLVER_ERROR_NOT_FOUND
+ */
+public enum GResolverError
+{
+	NOT_FOUND,
+	TEMPORARY_FAILURE,
+	INTERNAL
+}
+alias GResolverError ResolverError;
+
 
 /**
  * Main Gtk struct.
@@ -1090,6 +1168,194 @@ public struct GAsyncInitableIface
 
 /**
  * Main Gtk struct.
+ * A lowlevel network socket object.
+ * Since 2.22
+ */
+public struct GSocket{}
+
+
+/**
+ * Structure used for scatter/gather data input.
+ * You generally pass in an array of GInputVectors
+ * and the operation will store the read data starting in the
+ * first buffer, switching to the next as needed.
+ * gpointer buffer;
+ */
+public struct GInputVector
+{
+	void* buffer;
+	uint size;
+}
+
+
+/**
+ * Structure used for scatter/gather data output.
+ * You generally pass in an array of GOutputVectors
+ * and the operation will use all the buffers as if they were
+ * one buffer.
+ * gconstpointer buffer;
+ */
+public struct GOutputVector
+{
+	void* buffer;
+	uint size;
+}
+
+
+/**
+ * Main Gtk struct.
+ * An IPv4 or IPv6 internet address.
+ */
+public struct GInetAddress{}
+
+
+/**
+ * Main Gtk struct.
+ * A socket endpoint address, corresponding to struct sockaddr
+ * or one of its subtypes.
+ */
+public struct GSocketAddress{}
+
+
+/**
+ * Main Gtk struct.
+ * An IPv4 or IPv6 socket address, corresponding to a struct
+ * sockaddr_in or struct sockaddr_in6.
+ */
+public struct GInetSocketAddress{}
+
+
+/**
+ * Main Gtk struct.
+ * A UNIX-domain (local) socket address, corresponding to a
+ * struct sockaddr_un.
+ */
+public struct GUnixSocketAddress{}
+
+
+/**
+ * Main Gtk struct.
+ * Base class for socket-type specific control messages that can be sent and
+ * received over GSocket.
+ */
+public struct GSocketControlMessage{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GUnixFDMessage{}
+
+
+/**
+ * Main Gtk struct.
+ * The object that handles DNS resolution. Use g_resolver_get_default()
+ * to get the default resolver.
+ */
+public struct GResolver{}
+
+
+/**
+ * Interface for objects that contain or generate GSocketAddresses.
+ */
+public struct GSocketConnectable{}
+
+
+/**
+ * Provides an interface for returning a GSocketAddressEnumerator
+ * GTypeInterface g_iface;
+ */
+public struct GSocketConnectableIface
+{
+	GTypeInterface gIface;
+	/+* Virtual Table +/
+	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  enumerate;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Enumerator type for objects that contain or generate
+ * GSocketAddresses.
+ */
+public struct GSocketAddressEnumerator{}
+
+
+/**
+ * Main Gtk struct.
+ * A GSocketConnectable for resolving a hostname and connecting to
+ * that host.
+ */
+public struct GNetworkAddress{}
+
+
+/**
+ * Main Gtk struct.
+ * A GSocketConnectable for resolving a SRV record and connecting to
+ * that service.
+ */
+public struct GNetworkService{}
+
+
+/**
+ * Main Gtk struct.
+ * A single target host/port that a network service is running on.
+ */
+public struct GSrvTarget{}
+
+
+/**
+ * Main Gtk struct.
+ * A helper class for network servers to listen for and accept connections.
+ * Since 2.22
+ */
+public struct GSocketClient{}
+
+
+/**
+ * Main Gtk struct.
+ * A socket connection GIOStream object for connection-oriented sockets.
+ * Since 2.22
+ */
+public struct GSocketConnection{}
+
+
+/**
+ * A GSocketConnection for UNIX domain socket connections.
+ * Since 2.22
+ */
+public struct GTcpConnection{}
+
+
+public struct GUnixConnection{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GSocketListener{}
+
+
+/**
+ * Main Gtk struct.
+ * A helper class for handling accepting incomming connections in the
+ * glib mainloop.
+ * Since 2.22
+ */
+public struct GSocketService{}
+
+
+/**
+ * Main Gtk struct.
+ * A helper class for handling accepting incomming connections in the
+ * glib mainloop and handling them in a thread.
+ * Since 2.22
+ */
+public struct GThreadedSocketService{}
+
+
+/**
+ * Main Gtk struct.
  * Completes filenames based on files that exist within the file system.
  */
 public struct GFilenameCompleter{}
@@ -1208,3 +1474,19 @@ public typedef extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancell
  */
 // gpointer (*GReallocFunc) (gpointer data,  gsize size);
 public typedef extern(C) void*  function (void*, uint) GReallocFunc;
+
+/*
+ * This is the function type of the callback used for the GSource
+ * returned by g_socket_create_source().
+ * socket :
+ *  the GSocket
+ * condition :
+ *  the current condition at the source fired.
+ * user_data :
+ *  data passed in by the user.
+ * Returns :
+ *  it should return FALSE if the source should be removed.
+ * Since 2.22
+ */
+// gboolean (*GSocketSourceFunc) (GSocket *socket,  GIOCondition condition,  gpointer user_data);
+public typedef extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSourceFunc;

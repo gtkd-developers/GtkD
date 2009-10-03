@@ -1125,7 +1125,7 @@ prefix: g_socket_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gio.Source
+import: glib.Source
 import: gio.SocketAddress
 import: gio.Cancellable
 import: gio.SocketControlMessage
@@ -1137,6 +1137,10 @@ structWrap: GSocketControlMessage* SocketControlMessage
 #imports for Initable Interface.
 import: gio.InitableT
 import: gio.InitableIF
+
+alias: GLIB_SYSDEF_MSG_OOB 1
+alias: GLIB_SYSDEF_MSG_PEEK 2
+alias: GLIB_SYSDEF_MSG_DONTROUTE 4
 
 inout: g_socket_receive_from address
 array: g_socket_receive_from buffer size
@@ -1176,6 +1180,10 @@ import: glib.GException
 import: gio.SocketConnectableT
 import: gio.SocketConnectableIF
 
+alias: GLIB_SYSDEF_AF_UNIX 1
+alias: GLIB_SYSDEF_AF_INET 2
+alias: GLIB_SYSDEF_AF_INET6 23
+
 code: start
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GSocketAddress);
@@ -1196,6 +1204,7 @@ struct: GUnixSocketAddress
 ctorStruct: GSocketAddress
 class: UnixSocketAddress
 prefix: g_unix_socket_address_
+import: glib.Str
 outFile: UnixSocketAddress
 
 file: GSocketControlMessage.html
@@ -1227,10 +1236,10 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListG
-import: gio.AsyncResult
+import: gio.AsyncResultIF
 import: gio.Cancellable
 structWrap: GList* ListG
-structWrap: GAsyncResult* AsyncResult
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GResolver* Resolver
 outFile: Resolver
@@ -1252,10 +1261,10 @@ prefix: g_socket_address_enumerator_
 noprefix: g_socket_connectable_
 import: glib.ErrorG
 import: glib.GException
-import: gio.AsyncResult
+import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.SocketAddress
-structWrap: GAsyncResult* AsyncResult
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GSocketAddress* SocketAddress
 outFile: SocketAddressEnumerator
@@ -1352,6 +1361,99 @@ import: glib.ListG
 structWrap: GList* ListG
 structWrap: GSrvTarget* SrvTarget
 outFile: SrvTarget
+
+###########################################################
+### Highlevel network functionallity ######################
+###########################################################
+
+file: GSocketClient.html
+struct: GSocketClient
+class: SocketClient
+prefix: g_socket_client_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.SocketAddress
+import: gio.SocketConnection
+import: gio.SocketConnectableIF
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GSocketAddress* SocketAddress
+structWrap: GSocketConnection* SocketConnection
+structWrap: GSocketConnectable* SocketConnectableIF
+outFile: SocketClient
+
+file: GSocketConnection.html
+struct: GSocketConnection
+class: SocketConnection
+prefix: g_socket_connection_
+noprefix: g_tcp_connection_
+noprefix: g_unix_connection_
+import: glib.ErrorG
+import: glib.GException
+import: gio.Socket
+import: gio.SocketAddress
+structWrap: GSocket* Socket
+structWrap: GSocketAddress* SocketAddress
+structWrap: GSocketConnection* SocketConnection
+outFile: SocketConnection
+
+struct: GTcpConnection
+class: TcpConnection
+prefix: g_tcp_connection_
+strictPrefix: Y
+outFile: TcpConnection
+
+struct: GUnixConnection
+class: UnixConnection
+prefix:  g_unix_connection_
+strictPrefix: Y
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+structWrap: GCancellable* Cancellable
+outFile: UnixConnection
+
+file: GSocketListener.html
+struct: GSocketListener
+class: SocketListener
+prefix: g_socket_listener_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Socket
+import: gio.SocketAddress
+import: gio.SocketConnection
+structWrap: GObject* ObjectG
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GSocketAddress* SocketAddress
+structWrap: GSocketConnection* SocketConnection
+structWrap: GSocket* Socket
+
+out: g_socket_listener_add_address effective_address
+out: g_socket_listener_accept source_object
+inout: g_socket_listener_accept_finish source_object
+out: g_socket_listener_accept_socket source_object
+inout: g_socket_listener_accept_socket_finish source_object
+
+outFile: SocketListener
+
+file: GSocketService.html
+struct: GSocketService
+class: SocketService
+prefix: g_socket_service_
+outFile: SocketService
+
+file: GThreadedSocketService.html
+struct: GThreadedSocketService
+ctorStruct: GSocketService
+class: ThreadedSocketService
+prefix: g_threaded_socket_service_
+outFile: ThreadedSocketService
 
 ###########################################################
 ### Utilities #############################################
