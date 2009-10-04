@@ -110,6 +110,7 @@ static this()
 	Linker.link(pango_glyph_item_split, "pango_glyph_item_split", LIBRARY.PANGO);
 	Linker.link(pango_glyph_item_apply_attrs, "pango_glyph_item_apply_attrs", LIBRARY.PANGO);
 	Linker.link(pango_glyph_item_letter_space, "pango_glyph_item_letter_space", LIBRARY.PANGO);
+	Linker.link(pango_glyph_item_get_logical_widths, "pango_glyph_item_get_logical_widths", LIBRARY.PANGO);
 
 	// pango.PgGlyphItemIter
 
@@ -402,6 +403,7 @@ static this()
 
 	Linker.link(pango_gravity_get_for_matrix, "pango_gravity_get_for_matrix", LIBRARY.PANGO);
 	Linker.link(pango_gravity_get_for_script, "pango_gravity_get_for_script", LIBRARY.PANGO);
+	Linker.link(pango_gravity_get_for_script_and_width, "pango_gravity_get_for_script_and_width", LIBRARY.PANGO);
 	Linker.link(pango_gravity_to_rotation, "pango_gravity_to_rotation", LIBRARY.PANGO);
 
 	// pango.PgCairoFontMap
@@ -590,6 +592,7 @@ extern(C)
 	PangoGlyphItem* function(PangoGlyphItem* orig, char* text, int splitIndex) c_pango_glyph_item_split;
 	GSList* function(PangoGlyphItem* glyphItem, char* text, PangoAttrList* list) c_pango_glyph_item_apply_attrs;
 	void function(PangoGlyphItem* glyphItem, char* text, PangoLogAttr* logAttrs, int letterSpacing) c_pango_glyph_item_letter_space;
+	void function(PangoGlyphItem* glyphItem, char* text, int* logicalWidths) c_pango_glyph_item_get_logical_widths;
 	
 	// pango.PgGlyphItemIter
 	
@@ -882,6 +885,7 @@ extern(C)
 	
 	PangoGravity function(PangoMatrix* matrix) c_pango_gravity_get_for_matrix;
 	PangoGravity function(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint) c_pango_gravity_get_for_script;
+	PangoGravity function(PangoScript script, gboolean wide, PangoGravity baseGravity, PangoGravityHint hint) c_pango_gravity_get_for_script_and_width;
 	double function(PangoGravity gravity) c_pango_gravity_to_rotation;
 	
 	// pango.PgCairoFontMap
@@ -1067,6 +1071,7 @@ alias c_pango_glyph_item_free  pango_glyph_item_free;
 alias c_pango_glyph_item_split  pango_glyph_item_split;
 alias c_pango_glyph_item_apply_attrs  pango_glyph_item_apply_attrs;
 alias c_pango_glyph_item_letter_space  pango_glyph_item_letter_space;
+alias c_pango_glyph_item_get_logical_widths  pango_glyph_item_get_logical_widths;
 
 // pango.PgGlyphItemIter
 
@@ -1359,6 +1364,7 @@ alias c_pango_language_get_sample_string  pango_language_get_sample_string;
 
 alias c_pango_gravity_get_for_matrix  pango_gravity_get_for_matrix;
 alias c_pango_gravity_get_for_script  pango_gravity_get_for_script;
+alias c_pango_gravity_get_for_script_and_width  pango_gravity_get_for_script_and_width;
 alias c_pango_gravity_to_rotation  pango_gravity_to_rotation;
 
 // pango.PgCairoFontMap

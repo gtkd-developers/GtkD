@@ -137,7 +137,7 @@ public class PgFontMetrics
 	 * of text. (The logical top may be above or below the top of the
 	 * actual drawn ink. It is necessary to lay out the text to figure
 	 * where the ink will be.)
-	 * Returns: the ascent, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the ascent, in Pango units.
 	 */
 	public int getAscent()
 	{
@@ -151,7 +151,7 @@ public class PgFontMetrics
 	 * of text. (The logical bottom may be above or below the bottom of the
 	 * actual drawn ink. It is necessary to lay out the text to figure
 	 * where the ink will be.)
-	 * Returns: the descent, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the descent, in Pango units.
 	 */
 	public int getDescent()
 	{
@@ -164,7 +164,7 @@ public class PgFontMetrics
 	 * This is merely a representative value useful, for example, for
 	 * determining the initial size for a window. Actual characters in
 	 * text will be wider and narrower than this.
-	 * Returns: the character width, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the character width, in Pango units.
 	 */
 	public int getApproximateCharWidth()
 	{
@@ -179,7 +179,7 @@ public class PgFontMetrics
 	 * text can be wider or narrower than this, though this value
 	 * is generally somewhat more accurate than the result of
 	 * pango_font_metrics_get_approximate_char_width() for digits.
-	 * Returns: the digit width, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the digit width, in Pango units.
 	 */
 	public int getApproximateDigitWidth()
 	{

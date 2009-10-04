@@ -461,9 +461,10 @@ public class PgFontDescription
 	 * desc. If replace_existing is FALSE, only fields in desc that
 	 * are not already set are affected. If TRUE, then fields that are
 	 * already set will be replaced as well.
+	 * If desc_to_merge is NULL, this function performs nothing.
 	 * Params:
 	 * desc =  a PangoFontDescription
-	 * descToMerge =  the PangoFontDescription to merge from
+	 * descToMerge =  the PangoFontDescription to merge from, or NULL
 	 * replaceExisting =  if TRUE, replace fields in desc with the
 	 *  corresponding values from desc_to_merge, even if they
 	 *  are already exist.

@@ -227,10 +227,11 @@ public class Document
 	}
 	
 	/**
+	 * Since 1.12
 	 * Params:
 	 * attributeName =  a character string representing the name of the attribute
 	 *  whose value is being queried.
-	 * Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document.Since ATK 1.12
+	 * Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document.
 	 */
 	public string getAttributeValue(string attributeName)
 	{
@@ -239,11 +240,12 @@ public class Document
 	}
 	
 	/**
+	 * Since 1.12
 	 * Params:
 	 * attributeName =  a character string representing the name of the attribute
 	 *  whose value is being set.
 	 * attributeValue =  a string value to be associated with attribute_name.
-	 * Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified).Since ATK 1.12
+	 * Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified).
 	 */
 	public int setAttributeValue(string attributeName, string attributeValue)
 	{
@@ -254,7 +256,8 @@ public class Document
 	/**
 	 * Gets an AtkAttributeSet which describes document-wide
 	 *  attributes as name-value pairs.
-	 * Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole.Since ATK 1.12
+	 * Since 1.12
+	 * Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole.
 	 */
 	public AtkAttributeSet* getAttributes()
 	{

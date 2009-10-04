@@ -163,10 +163,11 @@ public class StreamableContent
 	 * returned.
 	 * Note that it is possible for get_uri to return NULL but for
 	 * get_stream to work nonetheless, since not all GIOChannels connect to URIs.
+	 * Since 1.12
 	 * Params:
 	 * mimeType =  a gchar* representing the mime type, or NULL to request a URI
 	 * for the default mime type.
-	 * Returns: Returns a string representing a URI, or NULL if no corresponding URIcan be constructed.Since ATK 1.12
+	 * Returns: Returns a string representing a URI, or NULL if no corresponding URIcan be constructed.
 	 */
 	public string getUri(string mimeType)
 	{

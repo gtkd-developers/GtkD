@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = PgGlyphItem
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- pango_glyph_item_iter_
  * omit code:
+ * 	- pango_glyph_item_get_logical_widths
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -107,6 +108,29 @@ public class PgGlyphItem
 			return;
 		}
 		this.pangoGlyphItem = pangoGlyphItem;
+	}
+	
+	/**
+	 * Given a PangoGlyphItem and the corresponding
+	 * text, determine the screen width corresponding to each character. When
+	 * multiple characters compose a single cluster, the width of the entire
+	 * cluster is divided equally among the characters.
+	 * See also pango_glyph_string_get_logical_widths().
+	 * Since 1.26
+	 * Params:
+	 * text =  text that glyph_item corresponds to
+	 *  (glyph_item->item->offset is an offset from the
+	 *  start of text)
+	 * logicalWidths =  an array whose length is the number of characters in
+	 *  glyph_item (equal to glyph_item->item->num_chars)
+	 *  to be filled in with the resulting character widths.
+	 */
+	public void getLogicalWidths(string text, out int[] logicalWidths)
+	{
+		logicalWidths = new int[pangoGlyphItem.item.numChars];
+		
+		// void pango_glyph_item_get_logical_widths (PangoGlyphItem *glyph_item,  const char *text,  int *logical_widths);
+		pango_glyph_item_get_logical_widths(pangoGlyphItem, Str.toStringz(text), logicalWidths.ptr);
 	}
 	
 	/**
@@ -212,9 +236,9 @@ public class PgGlyphItem
 	 *  in Pango units. May be negative, though too large
 	 *  negative values will give ugly results.
 	 */
-	public void letterSpace(string text, PangoLogAttr* logAttrs, int letterSpacing)
+	public void letterSpace(string text, inout PangoLogAttr logAttrs, int letterSpacing)
 	{
 		// void pango_glyph_item_letter_space (PangoGlyphItem *glyph_item,  const char *text,  PangoLogAttr *log_attrs,  int letter_spacing);
-		pango_glyph_item_letter_space(pangoGlyphItem, Str.toStringz(text), logAttrs, letterSpacing);
+		pango_glyph_item_letter_space(pangoGlyphItem, Str.toStringz(text), &logAttrs, letterSpacing);
 	}
 }

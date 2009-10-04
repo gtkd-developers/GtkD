@@ -257,11 +257,14 @@ public class PgGlyphString
 	 * text, determine the screen width corresponding to each character. When
 	 * multiple characters compose a single cluster, the width of the entire
 	 * cluster is divided equally among the characters.
+	 * See also pango_glyph_item_get_logical_widths().
 	 * Params:
 	 * text =  the text corresponding to the glyphs
 	 * length =  the length of text, in bytes
 	 * embeddingLevel =  the embedding level of the string
-	 * logicalWidths =  an array whose length is g_utf8_strlen (text, length)
+	 * logicalWidths =  an array whose length is the number of characters in
+	 *  text (equal to g_utf8_strlen (text, length) unless
+	 *  text has NUL bytes)
 	 *  to be filled in with the resulting character widths.
 	 */
 	public void getLogicalWidths(string text, int length, int embeddingLevel, int* logicalWidths)

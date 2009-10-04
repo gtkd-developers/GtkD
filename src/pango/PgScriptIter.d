@@ -108,7 +108,7 @@ public class PgScriptIter
 	 * Create a new PangoScriptIter, used to break a string of
 	 * Unicode into runs by text. No copy is made of text, so
 	 * the caller needs to make sure it remains valid until
-	 * the iterator is freed with pango_script_iter_free().x
+	 * the iterator is freed with pango_script_iter_free().
 	 * Since 1.4
 	 * Params:
 	 * text =  a UTF-8 string

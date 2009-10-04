@@ -243,7 +243,8 @@ public class Hyperlink : ObjectG
 	 * Warning
 	 * atk_hyperlink_is_selected_link is deprecated and should not be used in newly-written code. Please use ATK_STATE_SELECTED to indicate when a hyperlink within a Hypertext container is selected.
 	 * Determines whether this AtkHyperlink is selected
-	 * Returns: True is the AtkHyperlink is selected, False otherwiseSince ATK 1.4
+	 * Since 1.4
+	 * Returns: True is the AtkHyperlink is selected, False otherwise
 	 */
 	public int isSelectedLink()
 	{

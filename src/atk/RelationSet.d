@@ -222,10 +222,10 @@ public class RelationSet : ObjectG
 	 * the current relation set if the relation set does not contain a relation
 	 * of that type. If it is does contain a relation of that typea the target
 	 * is added to the relation.
+	 * Since 1.9
 	 * Params:
 	 * relationship =  an AtkRelationType
 	 * target =  an AtkObject
-	 * Since ATK 1.9
 	 */
 	public void atkRelationSetAddRelationByType(AtkRelationType relationship, ObjectAtk target)
 	{

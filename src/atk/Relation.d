@@ -209,9 +209,9 @@ public class Relation : ObjectG
 	/**
 	 * Adds the specified AtkObject to the target for the relation, if it is
 	 * not already present. See also atk_object_add_relationship().
+	 * Since 1.9
 	 * Params:
 	 * target =  an AtkObject
-	 * Since ATK 1.9
 	 */
 	public void addTarget(ObjectAtk target)
 	{

@@ -430,7 +430,8 @@ public class Text
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
 	 * Params:
-	 * offset =  the offset at which to get the attributes
+	 * offset =  the offset at which to get the attributes, -1 means the offset of
+	 * the character to be inserted at the caret location.
 	 * startOffset =  the address to put the start offset of the range
 	 * endOffset =  the address to put the end offset of the range
 	 * Returns: an AtkAttributeSet which contains the attributes explicitly setat offset. This AtkAttributeSet should be freed by a call toatk_attribute_set_free().
@@ -483,12 +484,13 @@ public class Text
 	
 	/**
 	 * Get the ranges of text in the specified bounding box.
+	 * Since 1.3
 	 * Params:
 	 * rect =  An AtkTextRectagle giving the dimensions of the bounding box.
 	 * coordType =  Specify whether coordinates are relative to the screen or widget window.
 	 * xClipType =  Specify the horizontal clip type.
 	 * yClipType =  Specify the vertical clip type.
-	 * Returns: Array of AtkTextRange. The last element of the array returned  by this function will be NULL.Since ATK 1.3
+	 * Returns: Array of AtkTextRange. The last element of the array returned  by this function will be NULL.
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
@@ -498,6 +500,7 @@ public class Text
 	
 	/**
 	 * Get the bounding box for text within the specified range.
+	 * Since 1.3
 	 * Params:
 	 * startOffset =  The offset of the first text character for which boundary
 	 *  information is required.
@@ -505,7 +508,6 @@ public class Text
 	 *  for which boundary information is required.
 	 * coordType =  Specify whether coordinates are relative to the screen or widget window.
 	 * rect =  A pointer to a AtkTextRectangle which is filled in by this function.
-	 * Since ATK 1.3
 	 */
 	public void getRangeExtents(int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect)
 	{
@@ -517,9 +519,9 @@ public class Text
 	 * Frees the memory associated with an array of AtkTextRange. It is assumed
 	 * that the array was returned by the function atk_text_get_bounded_ranges
 	 * and is NULL terminated.
+	 * Since 1.3
 	 * Params:
 	 * ranges =  A pointer to an array of AtkTextRange which is to be freed.
-	 * Since ATK 1.3
 	 */
 	public static void freeRanges(AtkTextRange** ranges)
 	{

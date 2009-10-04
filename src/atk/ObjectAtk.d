@@ -607,7 +607,8 @@ public class ObjectAtk : ObjectG
 	 * name-value pairs. As such these attributes may be considered weakly-typed properties or annotations,
 	 * as distinct from strongly-typed object data available via other get/set methods.
 	 * Not all objects have explicit "name-value pair" AtkAttributeSet properties.
-	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it.Since ATK 1.12
+	 * Since 1.12
+	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it.
 	 */
 	public AtkAttributeSet* getAttributes()
 	{

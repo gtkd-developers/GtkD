@@ -134,12 +134,38 @@ public class PgVertical
 	 * script =  PangoScript to query
 	 * baseGravity =  base gravity of the paragraph
 	 * hint =  orientation hint
-	 * Returns: resolved gravity suitable to use for a run of text
+	 * Returns: resolved gravity suitable to use for a run of textwith script.
 	 */
 	public static PangoGravity gravityGetForScript(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)
 	{
 		// PangoGravity pango_gravity_get_for_script (PangoScript script,  PangoGravity base_gravity,  PangoGravityHint hint);
 		return pango_gravity_get_for_script(script, baseGravity, hint);
+	}
+	
+	/**
+	 * Based on the script, East Asian width, base gravity, and hint,
+	 * returns actual gravity to use in laying out a single character
+	 * or PangoItem.
+	 * This function is similar to pango_gravity_get_for_script() except
+	 * that this function makes a distinction between narrow/half-width and
+	 * wide/full-width characters also. Wide/full-width characters always
+	 * stand <emph>upright</emph>, that is, they always take the base gravity,
+	 * whereas narrow/full-width characters are always rotated in vertical
+	 * context.
+	 * If base_gravity is PANGO_GRAVITY_AUTO, it is first replaced with the
+	 * preferred gravity of script.
+	 * Since 1.26
+	 * Params:
+	 * script =  PangoScript to query
+	 * wide =  TRUE for wide characters as returned by g_unichar_iswide()
+	 * baseGravity =  base gravity of the paragraph
+	 * hint =  orientation hint
+	 * Returns: resolved gravity suitable to use for a run of textwith script and wide.
+	 */
+	public static PangoGravity gravityGetForScriptAndWidth(PangoScript script, int wide, PangoGravity baseGravity, PangoGravityHint hint)
+	{
+		// PangoGravity pango_gravity_get_for_script_and_width  (PangoScript script,  gboolean wide,  PangoGravity base_gravity,  PangoGravityHint hint);
+		return pango_gravity_get_for_script_and_width(script, wide, baseGravity, hint);
 	}
 	
 	/**

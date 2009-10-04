@@ -18,11 +18,11 @@ ln -s gobject-html-2.22.0 gobject
 curl http://library.gnome.org/devel/gio/gio-html-2.22.0.tar.gz | tar xvfz -
 ln -s gio-html-2.22.0 gio
 #ATK
-curl http://library.gnome.org/devel/atk/atk-html-1.26.0.tar.gz | tar xvfz -
-ln -s atk-html-1.26.0 atk
+curl http://library.gnome.org/devel/atk/atk-html-1.28.0.tar.gz | tar xvfz -
+ln -s atk-html-1.28.0 atk
 #PANGO
-curl http://library.gnome.org/devel/pango/pango-html-1.24.0.tar.gz | tar xvfz -
-ln -s pango-html-1.24.0 pango
+curl http://library.gnome.org/devel/pango/pango-html-1.26.0.tar.gz | tar xvfz -
+ln -s pango-html-1.26.0 pango
 #GDK-PIXBUF
 curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.16.0.tar.gz | tar xvfz -
 ln -s gdk-pixbuf-html-2.16.0 gdk-pixbuf

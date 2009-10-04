@@ -157,9 +157,9 @@ public class ValueAtk
 	 * Gets the minimum increment by which the value of this object may be changed. If zero,
 	 * the minimum increment is undefined, which may mean that it is limited only by the
 	 * floating point precision of the platform.
+	 * Since 1.12
 	 * Params:
 	 * value =  a GValue representing the minimum increment by which the accessible value may be changed
-	 * Since ATK 1.12
 	 */
 	public void getMinimumIncrement(Value value)
 	{
