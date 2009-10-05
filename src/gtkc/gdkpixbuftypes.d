@@ -119,20 +119,20 @@ public struct GdkPixdata
 
 /**
  * Main Gtk struct.
- * And opaque struct representing an animation.
+ * An opaque struct representing an animation.
  */
 public struct GdkPixbufAnimation{}
 
 
 /**
- * And opaque struct representing an iterator which points to a
+ * An opaque struct representing an iterator which points to a
  * certain position in an animation.
  */
 public struct GdkPixbufAnimationIter{}
 
 
 /**
- * An
+ * An opaque struct representing a simple animation.
  */
 public struct GdkPixbufSimpleAnim{}
 

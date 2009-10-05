@@ -64,6 +64,8 @@ static this()
 
 	Linker.link(gdk_pixbuf_simple_anim_new, "gdk_pixbuf_simple_anim_new", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_simple_anim_add_frame, "gdk_pixbuf_simple_anim_add_frame", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_simple_anim_set_loop, "gdk_pixbuf_simple_anim_set_loop", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_simple_anim_get_loop, "gdk_pixbuf_simple_anim_get_loop", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufLoader
 
@@ -126,6 +128,8 @@ extern(C)
 	
 	GdkPixbufSimpleAnim* function(gint width, gint height, gfloat rate) c_gdk_pixbuf_simple_anim_new;
 	void function(GdkPixbufSimpleAnim* animation, GdkPixbuf* pixbuf) c_gdk_pixbuf_simple_anim_add_frame;
+	void function(GdkPixbufSimpleAnim* animation, gboolean loop) c_gdk_pixbuf_simple_anim_set_loop;
+	gboolean function(GdkPixbufSimpleAnim* animation) c_gdk_pixbuf_simple_anim_get_loop;
 	
 	// gdkpixbuf.PixbufLoader
 	
@@ -185,6 +189,8 @@ alias c_gdk_pixbuf_animation_iter_get_pixbuf  gdk_pixbuf_animation_iter_get_pixb
 
 alias c_gdk_pixbuf_simple_anim_new  gdk_pixbuf_simple_anim_new;
 alias c_gdk_pixbuf_simple_anim_add_frame  gdk_pixbuf_simple_anim_add_frame;
+alias c_gdk_pixbuf_simple_anim_set_loop  gdk_pixbuf_simple_anim_set_loop;
+alias c_gdk_pixbuf_simple_anim_get_loop  gdk_pixbuf_simple_anim_get_loop;
 
 // gdkpixbuf.PixbufLoader
 
