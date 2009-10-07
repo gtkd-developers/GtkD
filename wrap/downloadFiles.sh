@@ -3,20 +3,20 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://library.gnome.org/devel/glib/glib-html-2.22.0.tar.gz | tar xvfz -
-ln -s glib-html-2.22.0 gthread
-ln -s glib-html-2.22.0 glib
+curl http://library.gnome.org/devel/glib/glib-html-2.22.1.tar.gz | tar xvfz -
+ln -s glib-html-2.22.1 gthread
+ln -s glib-html-2.22.1 glib
 #Missing params in 2.20.0 / 2.22.0
 cd glib
 rm glib-Atomic-Operations.html
 wget http://library.gnome.org/devel/glib/2.18/glib-Atomic-Operations.html
 cd ..
 #GOBJECT
-curl http://library.gnome.org/devel/gobject/gobject-html-2.22.0.tar.gz | tar xvfz -
-ln -s gobject-html-2.22.0 gobject
+curl http://library.gnome.org/devel/gobject/gobject-html-2.22.2.tar.gz | tar xvfz -
+ln -s gobject-html-2.22.2 gobject
 #GIO
-curl http://library.gnome.org/devel/gio/gio-html-2.22.0.tar.gz | tar xvfz -
-ln -s gio-html-2.22.0 gio
+curl http://library.gnome.org/devel/gio/gio-html-2.22.2.tar.gz | tar xvfz -
+ln -s gio-html-2.22.2 gio
 #ATK
 curl http://library.gnome.org/devel/atk/atk-html-1.28.0.tar.gz | tar xvfz -
 ln -s atk-html-1.28.0 atk
@@ -24,11 +24,11 @@ ln -s atk-html-1.28.0 atk
 curl http://library.gnome.org/devel/pango/pango-html-1.26.0.tar.gz | tar xvfz -
 ln -s pango-html-1.26.0 pango
 #GDK-PIXBUF
-curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.16.0.tar.gz | tar xvfz -
-ln -s gdk-pixbuf-html-2.16.0 gdk-pixbuf
+curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.18.2.tar.gz | tar xvfz -
+ln -s gdk-pixbuf-html-2.18.2 gdk-pixbuf
 #GDK
-curl http://library.gnome.org/devel/gdk/gdk-html-2.16.0.tar.gz | tar xvfz -
-ln -s gdk-html-2.16.0 gdk
+curl http://library.gnome.org/devel/gdk/gdk-html-2.18.2.tar.gz | tar xvfz -
+ln -s gdk-html-2.18.2 gdk
 #GTK
 curl http://library.gnome.org/devel/gtk/gtk-html-2.16.0.tar.gz | tar xvfz -
 ln -s gtk-html-2.16.0 gtk

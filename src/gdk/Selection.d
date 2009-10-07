@@ -225,7 +225,7 @@ public class Selection
 	 */
 	public static int propertyGet(Window requestor, char** data, GdkAtom* propType, int* propFormat)
 	{
-		// gboolean gdk_selection_property_get (GdkWindow *requestor,  guchar **data,  GdkAtom *prop_type,  gint *prop_format);
+		// gint gdk_selection_property_get (GdkWindow *requestor,  guchar **data,  GdkAtom *prop_type,  gint *prop_format);
 		return gdk_selection_property_get((requestor is null) ? null : requestor.getWindowStruct(), data, propType, propFormat);
 	}
 	

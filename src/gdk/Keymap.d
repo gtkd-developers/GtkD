@@ -78,6 +78,9 @@ private import gobject.ObjectG;
  * The complete list of key values can be found in the <gdk/gdkkeysyms.h>
  * header file. <gdk/gdkkeysyms.h> is not included in <gdk/gdk.h>,
  * it must be included independently, because the file is quite large.
+ * Key values are regularly updated from the upstream X.org X11 implementation,
+ * so new values are added regularly. They will be prefixed with GDK_ rather than
+ * XF86XK_ or XK_ (for older symbols).
  * Key values can be converted into a string representation using
  * gdk_keyval_name(). The reverse function, converting a string to a key value,
  * is provided by gdk_keyval_from_name().

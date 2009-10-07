@@ -137,7 +137,7 @@ public class X11
 	 * XID.
 	 * Params:
 	 * anid =  a native window handle.
-	 * Returns: the newly-created GdkWindow wrapper for the  native window or NULL if the window has been destroyed.
+	 * Returns: the newly-created GdkWindow wrapper for the native window or NULL if the window has been destroyed.
 	 */
 	public static Window gdkWindowForeignNew(GdkNativeWindow anid)
 	{
@@ -151,10 +151,11 @@ public class X11
 	}
 	
 	/**
-	 * Returns the Gdk object associated with the given X id.
+	 * Returns the Gdk object associated with the given X id for the default
+	 * display.
 	 * Params:
 	 * xid =  an X id.
-	 * Returns: the associated Gdk object, which may be a GdkPixmap,a GdkWindow or a GdkFont.
+	 * Returns: the associated Gdk object, which may be a GdkPixmap, a GdkWindow or a GdkFont or NULL if no object is associated with the X id.
 	 */
 	public static void* gdkXidTableLookup(uint xid)
 	{
@@ -187,7 +188,7 @@ public class X11
 	 * XID.
 	 * Params:
 	 * anid =  a native pixmap handle.
-	 * Returns: the GdkWindow wrapper for the native window, or NULL if there is none.
+	 * Returns: the GdkPixmap wrapper for the native pixmap, or NULL if there is none.
 	 */
 	public static Pixmap gdkPixmapLookup(GdkNativeWindow anid)
 	{

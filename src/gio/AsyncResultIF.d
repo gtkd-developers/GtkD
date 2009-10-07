@@ -145,7 +145,7 @@ public interface AsyncResultIF
 	
 	/**
 	 * Gets the source object from a GAsyncResult.
-	 * Returns: the source object for the res.
+	 * Returns: a new reference to the source object for the res, or NULL if there is none.
 	 */
 	public ObjectG getSourceObject();
 }

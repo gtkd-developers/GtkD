@@ -927,6 +927,8 @@ out: gdk_window_get_pointer x
 out: gdk_window_get_pointer y
 out: gdk_window_get_pointer mask
 out: gdk_window_get_decorations decorations
+out: gdk_window_get_root_coords root_x
+out: gdk_window_get_root_coords root_y
 
 outFile: Window
 
@@ -1226,6 +1228,7 @@ nocode: gdk_cairo_set_source_pixbuf
 nocode: gdk_cairo_set_source_pixmap
 nocode: gdk_cairo_rectangle
 nocode: gdk_cairo_region
+nocode: gdk_cairo_reset_clip
 
 code: start
 

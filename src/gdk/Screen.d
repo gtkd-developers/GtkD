@@ -638,7 +638,7 @@ public class Screen : ObjectG
 	 * Since 2.14
 	 * Params:
 	 * monitorNum =  number of the monitor
-	 * Returns:the width of the monitor, or -1 if not available
+	 * Returns: the width of the monitor, or -1 if not available
 	 */
 	public int getMonitorWidthMm(int monitorNum)
 	{

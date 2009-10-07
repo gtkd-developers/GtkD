@@ -74,6 +74,8 @@ public  import gtkc.gdktypes;
 private import gtkc.gdk;
 private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Region;
@@ -96,6 +98,12 @@ private import gdk.Drawable;
  * GTK+ level. A GtkWindow is a toplevel window, the thing a user might think of
  * as a "window" with a titlebar and so on; a GtkWindow may contain many GdkWindow.
  * For example, each GtkButton has a GdkWindow associated with it.
+ * Composited Windows
+ * Normally, the windowing system takes care of rendering the contents of a child
+ * window onto its parent window. This mechanism can be intercepted by calling
+ * gdk_window_set_composited() on the child window. For a
+ * composited window it is the responsibility of the
+ * application to render the window contents at the right spot.
  * Example 7. Composited windows
  * #include <gtk/gtk.h>
  * /+* The expose event handler for the event box.
@@ -133,7 +141,7 @@ private import gdk.Drawable;
  *  * this handler is called after the red has been drawn. If it was
  *  * called before then GTK would just blindly paint over our work.
  *  *
- *  * Note: if the child window has children, then you need a cairo 1.16
+ *  * Note: if the child window has children, then you need a cairo 1.6
  *  * feature to make this work correctly.
  *  +/
  * static gboolean
@@ -222,6 +230,21 @@ private import gdk.Drawable;
  * In our case, we merge the contents with a 50% transparency. We
  * also set the background colour of the window to red. The effect is
  * that the background shows through the button.
+ * <hr>
+ * Offscreen Windows
+ * Offscreen windows are more general than composited windows, since they
+ * allow not only to modify the rendering of the child window onto its parent,
+ * but also to apply coordinate transformations.
+ * To integrate an offscreen window into a window hierarchy, one has to call
+ * gdk_window_set_embedder() and handle a number of signals. The
+ * gdk_offscreen_window_set_embedder() and handle a number of signals. The
+ * "pick-embedded-child" signal on the embedder window is used to
+ * select an offscreen child at given coordinates, and the "to-embedder"
+ * and "from-embedder" signals on the offscreen window are used to
+ * translate coordinates between the embedder and the offscreen window.
+ * For rendering an offscreen window onto its embedder, the contents of the
+ * offscreen window are available as a pixmap, via
+ * gdk_offscreen_window_get_pixmap().
  */
 public class Window : Drawable
 {
@@ -265,6 +288,97 @@ public class Window : Drawable
 	
 	/**
 	 */
+	int[char[]] connectedSignals;
+	
+	void delegate(gdouble, gdouble, gpointer, gpointer, Window)[] onFromEmbedderListeners;
+	/**
+	 * The ::from-embedder signal is emitted to translate coordinates
+	 * in the embedder of an offscreen window to the offscreen window.
+	 * See also "to-embedder".
+	 * Since 2.18
+	 */
+	void addOnFromEmbedder(void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("from-embedder" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"from-embedder",
+			cast(GCallback)&callBackFromEmbedder,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["from-embedder"] = 1;
+		}
+		onFromEmbedderListeners ~= dlg;
+	}
+	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, gpointer offscreen_x, gpointer offscreen_y, Window window)
+	{
+		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; window.onFromEmbedderListeners )
+		{
+			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, window);
+		}
+	}
+	
+	Window delegate(gdouble, gdouble, Window)[] onPickEmbeddedChildListeners;
+	/**
+	 * The ::pick-embedded-child signal is emitted to find an embedded
+	 * child at the given position.
+	 * Since 2.18
+	 */
+	void addOnPickEmbeddedChild(Window delegate(gdouble, gdouble, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("pick-embedded-child" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"pick-embedded-child",
+			cast(GCallback)&callBackPickEmbeddedChild,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["pick-embedded-child"] = 1;
+		}
+		onPickEmbeddedChildListeners ~= dlg;
+	}
+	extern(C) static void callBackPickEmbeddedChild(GdkWindow* windowStruct, gdouble x, gdouble y, Window window)
+	{
+		foreach ( Window delegate(gdouble, gdouble, Window) dlg ; window.onPickEmbeddedChildListeners )
+		{
+			dlg(x, y, window);
+		}
+	}
+	
+	void delegate(gdouble, gdouble, gpointer, gpointer, Window)[] onToEmbedderListeners;
+	/**
+	 * The ::to-embedder signal is emitted to translate coordinates
+	 * in an offscreen window to its embedder.
+	 * See also "from-embedder".
+	 * Since 2.18
+	 */
+	void addOnToEmbedder(void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("to-embedder" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"to-embedder",
+			cast(GCallback)&callBackToEmbedder,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["to-embedder"] = 1;
+		}
+		onToEmbedderListeners ~= dlg;
+	}
+	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, gpointer embedder_x, gpointer embedder_y, Window window)
+	{
+		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; window.onToEmbedderListeners )
+		{
+			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, window);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new GdkWindow using the attributes from
@@ -373,6 +487,16 @@ public class Window : Drawable
 	{
 		// void gdk_window_hide (GdkWindow *window);
 		gdk_window_hide(gdkWindow);
+	}
+	
+	/**
+	 * Check to see if a window is destroyed..
+	 * Returns: TRUE if the window is destroyed
+	 */
+	public int isDestroyed()
+	{
+		// gboolean gdk_window_is_destroyed (GdkWindow *window);
+		return gdk_window_is_destroyed(gdkWindow);
 	}
 	
 	/**
@@ -716,6 +840,42 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Flush all outstanding cached operations on a window, leaving the
+	 * window in a state which reflects all that has been drawn before.
+	 * Gdk uses multiple kinds of caching to get better performance and
+	 * nicer drawing. For instance, during exposes all paints to a window
+	 * using double buffered rendering are keep on a pixmap until the last
+	 * window has been exposed. It also delays window moves/scrolls until
+	 * as long as possible until next update to avoid tearing when moving
+	 * windows.
+	 * Normally this should be completely invisible to applications, as
+	 * we automatically flush the windows when required, but this might
+	 * be needed if you for instance mix direct native drawing with
+	 * gdk drawing. For Gtk widgets that don't use double buffering this
+	 * will be called automatically before sending the expose event.
+	 * Since 2.18
+	 */
+	public void flush()
+	{
+		// void gdk_window_flush (GdkWindow *window);
+		gdk_window_flush(gdkWindow);
+	}
+	
+	/**
+	 * Tries to ensure that there is a window-system native window for this
+	 * GdkWindow. This may fail in some situations, returning FALSE.
+	 * Offscreen window and children of them can never have native windows.
+	 * Some backends may not support native child windows.
+	 * Since 2.18
+	 * Returns: TRUE if the window has a native window, FALSE otherwise
+	 */
+	public int ensureNative()
+	{
+		// gboolean gdk_window_ensure_native (GdkWindow *window);
+		return gdk_window_ensure_native(gdkWindow);
+	}
+	
+	/**
 	 * Reparents window into the given new_parent. The window being
 	 * reparented will be unmapped as a side effect.
 	 * Params:
@@ -797,6 +957,26 @@ public class Window : Drawable
 	{
 		// void gdk_window_lower (GdkWindow *window);
 		gdk_window_lower(gdkWindow);
+	}
+	
+	/**
+	 * Changes the position of window in the Z-order (stacking order), so that
+	 * it is above sibling (if above is TRUE) or below sibling (if above is
+	 * FALSE).
+	 * If sibling is NULL, then this either raises (if above is TRUE) or
+	 * lowers the window.
+	 * If window is a toplevel, the window manager may choose to deny the
+	 * request to move the window in the Z-order, gdk_window_restack() only
+	 * requests the restack, does not guarantee it.
+	 * Since 2.18
+	 * Params:
+	 * sibling =  a GdkWindow that is a sibling of window, or NULL
+	 * above =  a boolean
+	 */
+	public void restack(Window sibling, int above)
+	{
+		// void gdk_window_restack (GdkWindow *window,  GdkWindow *sibling,  gboolean above);
+		gdk_window_restack(gdkWindow, (sibling is null) ? null : sibling.getWindowStruct(), above);
 	}
 	
 	/**
@@ -1348,7 +1528,7 @@ public class Window : Drawable
 	 * function does nothing.
 	 * Since 2.10
 	 * Params:
-	 * mask =  shape mask
+	 * mask =  shape mask, or NULL
 	 * x =  X position of shape mask with respect to window
 	 * y =  Y position of shape mask with respect to window
 	 */
@@ -1523,6 +1703,25 @@ public class Window : Drawable
 	{
 		// void gdk_window_set_cursor (GdkWindow *window,  GdkCursor *cursor);
 		gdk_window_set_cursor(gdkWindow, (cursor is null) ? null : cursor.getCursorStruct());
+	}
+	
+	/**
+	 * Retrieves a GdkCursor pointer for the cursor currently set on the
+	 * specified GdkWindow, or NULL. If the return value is NULL then
+	 * there is no custom cursor set on the specified window, and it is
+	 * using the cursor for its parent window.
+	 * Since 2.18
+	 * Returns: a GdkCursor, or NULL. The returned object is owned by the GdkWindow and should not be unreferenced directly. Use gdk_window_set_cursor() to unset the cursor of the window
+	 */
+	public Cursor getCursor()
+	{
+		// GdkCursor * gdk_window_get_cursor (GdkWindow *window);
+		auto p = gdk_window_get_cursor(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Cursor(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -1787,6 +1986,23 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Obtains the position of a window position in root
+	 * window coordinates. This is similar to
+	 * gdk_window_get_origin() but allows you go pass
+	 * in any position in the window, not just the origin.
+	 * Params:
+	 * x =  X coordinate in window
+	 * y =  Y coordinate in window
+	 * rootX =  return location for X coordinate
+	 * rootY =  return location for Y coordinate
+	 */
+	public void getRootCoords(int x, int y, out int rootX, out int rootY)
+	{
+		// void gdk_window_get_root_coords (GdkWindow *window,  gint x,  gint y,  gint *root_x,  gint *root_y);
+		gdk_window_get_root_coords(gdkWindow, x, y, &rootX, &rootY);
+	}
+	
+	/**
 	 * Obtains the current pointer position and modifier state.
 	 * The position is given in coordinates relative to the upper left
 	 * corner of window.
@@ -1832,6 +2048,9 @@ public class Window : Drawable
 	
 	/**
 	 * Gets the toplevel window that's an ancestor of window.
+	 * Any window type but GDK_WINDOW_CHILD is considered a
+	 * toplevel window, as is a GDK_WINDOW_CHILD window that
+	 * has a root window as parent.
 	 * Returns: the toplevel window containing window
 	 */
 	public Window getToplevel()
@@ -1927,6 +2146,10 @@ public class Window : Drawable
 	 * name they display in their titlebar. Most of the time this is a bad
 	 * idea from a user interface standpoint. But you can set such a name
 	 * with this function, if you like.
+	 * After calling this with a non-NULL name, calls to gdk_window_set_title()
+	 * will not update the icon title.
+	 * Using NULL for name unsets the icon title; further calls to
+	 * gdk_window_set_title() will again update the icon title as well.
 	 * Params:
 	 * name =  name of window while iconified (minimized)
 	 */
@@ -2135,6 +2358,68 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Gets the offscreen pixmap that an offscreen window renders into.
+	 * If you need to keep this around over window resizes, you need to
+	 * add a reference to it.
+	 * Since 2.18
+	 * Returns: The offscreen pixmap, or NULL if not offscreen
+	 */
+	public Pixmap gdkOffscreenWindowGetPixmap()
+	{
+		// GdkPixmap * gdk_offscreen_window_get_pixmap (GdkWindow *window);
+		auto p = gdk_offscreen_window_get_pixmap(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixmap(cast(GdkPixmap*) p);
+	}
+	
+	/**
+	 * Sets window to be embedded in embedder.
+	 * To fully embed an offscreen window, in addition to calling this
+	 * function, it is also necessary to handle the "pick-embedded-child"
+	 * signal on the embedder and the "to-embedder" and
+	 * "from-embedder" signals on window.
+	 * Since 2.18
+	 * Params:
+	 * embedder =  the GdkWindow that window gets embedded in
+	 */
+	public void gdkOffscreenWindowSetEmbedder(Window embedder)
+	{
+		// void gdk_offscreen_window_set_embedder (GdkWindow *window,  GdkWindow *embedder);
+		gdk_offscreen_window_set_embedder(gdkWindow, (embedder is null) ? null : embedder.getWindowStruct());
+	}
+	
+	/**
+	 * Gets the window that window is embedded in.
+	 * Since 2.18
+	 * Returns: the embedding GdkWindow, or NULL if window is not an embedded offscreen window
+	 */
+	public Window gdkOffscreenWindowGetEmbedder()
+	{
+		// GdkWindow * gdk_offscreen_window_get_embedder (GdkWindow *window);
+		auto p = gdk_offscreen_window_get_embedder(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
+	}
+	
+	/**
+	 * This function informs GDK that the geometry of an embedded
+	 * offscreen window has changed. This is necessary for GDK to keep
+	 * track of which offscreen window the pointer is in.
+	 * Since 2.18
+	 */
+	public void geometryChanged()
+	{
+		// void gdk_window_geometry_changed (GdkWindow *window);
+		gdk_window_geometry_changed(gdkWindow);
+	}
+	
+	/**
 	 * Redirects drawing into window so that drawing to the
 	 * window in the rectangle specified by src_x, src_y,
 	 * width and height is also drawn into drawable at
@@ -2151,8 +2436,8 @@ public class Window : Drawable
 	 * srcY =  y position in window
 	 * destX =  x position in drawable
 	 * destY =  y position in drawable
-	 * width =  width of redirection
-	 * height =  height of redirection
+	 * width =  width of redirection, or -1 to use the width of window
+	 * height =  height of redirection or -1 to use the height of window
 	 */
 	public void redirectToDrawable(Drawable drawable, int srcX, int srcY, int destX, int destY, int width, int height)
 	{

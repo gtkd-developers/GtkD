@@ -170,6 +170,7 @@ static this()
 	Linker.link(gdk_region_get_rectangles, "gdk_region_get_rectangles", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_region_empty, "gdk_region_empty", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_region_equal, "gdk_region_equal", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_region_rect_equal, "gdk_region_rect_equal", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_region_point_in, "gdk_region_point_in", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_region_rect_in, "gdk_region_rect_in", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_region_offset, "gdk_region_offset", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -448,6 +449,7 @@ static this()
 	Linker.link(gdk_window_show, "gdk_window_show", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_show_unraised, "gdk_window_show_unraised", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_hide, "gdk_window_hide", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_is_destroyed, "gdk_window_is_destroyed", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_is_visible, "gdk_window_is_visible", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_is_viewable, "gdk_window_is_viewable", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_state, "gdk_window_get_state", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -469,12 +471,15 @@ static this()
 	Linker.link(gdk_window_move_resize, "gdk_window_move_resize", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_scroll, "gdk_window_scroll", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_move_region, "gdk_window_move_region", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_flush, "gdk_window_flush", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_ensure_native, "gdk_window_ensure_native", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_reparent, "gdk_window_reparent", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_clear, "gdk_window_clear", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_clear_area, "gdk_window_clear_area", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_clear_area_e, "gdk_window_clear_area_e", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_raise, "gdk_window_raise", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_lower, "gdk_window_lower", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_restack, "gdk_window_restack", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_focus, "gdk_window_focus", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_register_dnd, "gdk_window_register_dnd", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_begin_resize_drag, "gdk_window_begin_resize_drag", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -515,6 +520,7 @@ static this()
 	Linker.link(gdk_window_set_background, "gdk_window_set_background", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_back_pixmap, "gdk_window_set_back_pixmap", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_cursor, "gdk_window_set_cursor", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_cursor, "gdk_window_get_cursor", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_user_data, "gdk_window_get_user_data", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_geometry, "gdk_window_get_geometry", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_geometry_hints, "gdk_window_set_geometry_hints", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -530,6 +536,7 @@ static this()
 	Linker.link(gdk_window_get_frame_extents, "gdk_window_get_frame_extents", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_origin, "gdk_window_get_origin", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_deskrelative_origin, "gdk_window_get_deskrelative_origin", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_root_coords, "gdk_window_get_root_coords", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_pointer, "gdk_window_get_pointer", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_parent, "gdk_window_get_parent", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_toplevel, "gdk_window_get_toplevel", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -550,6 +557,10 @@ static this()
 	Linker.link(gdk_window_get_toplevels, "gdk_window_get_toplevels", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_get_default_root_window, "gdk_get_default_root_window", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_set_pointer_hooks, "gdk_set_pointer_hooks", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_offscreen_window_get_pixmap, "gdk_offscreen_window_get_pixmap", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_offscreen_window_set_embedder, "gdk_offscreen_window_set_embedder", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_offscreen_window_get_embedder, "gdk_offscreen_window_get_embedder", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_geometry_changed, "gdk_window_geometry_changed", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_redirect_to_drawable, "gdk_window_redirect_to_drawable", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_remove_redirection, "gdk_window_remove_redirection", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
@@ -710,6 +721,7 @@ static this()
 	Linker.link(gdk_cairo_set_source_pixmap, "gdk_cairo_set_source_pixmap", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_rectangle, "gdk_cairo_rectangle", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_region, "gdk_cairo_region", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_cairo_reset_clip, "gdk_cairo_reset_clip", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 }
 
 extern(C)
@@ -850,6 +862,7 @@ extern(C)
 	void function(GdkRegion* region, GdkRectangle** rectangles, gint* nRectangles) c_gdk_region_get_rectangles;
 	gboolean function(GdkRegion* region) c_gdk_region_empty;
 	gboolean function(GdkRegion* region1, GdkRegion* region2) c_gdk_region_equal;
+	gboolean function(GdkRegion* region, GdkRectangle* rectangle) c_gdk_region_rect_equal;
 	gboolean function(GdkRegion* region, int x, int y) c_gdk_region_point_in;
 	GdkOverlapType function(GdkRegion* region, GdkRectangle* rectangle) c_gdk_region_rect_in;
 	void function(GdkRegion* region, gint dx, gint dy) c_gdk_region_offset;
@@ -1128,6 +1141,7 @@ extern(C)
 	void function(GdkWindow* window) c_gdk_window_show;
 	void function(GdkWindow* window) c_gdk_window_show_unraised;
 	void function(GdkWindow* window) c_gdk_window_hide;
+	gboolean function(GdkWindow* window) c_gdk_window_is_destroyed;
 	gboolean function(GdkWindow* window) c_gdk_window_is_visible;
 	gboolean function(GdkWindow* window) c_gdk_window_is_viewable;
 	GdkWindowState function(GdkWindow* window) c_gdk_window_get_state;
@@ -1149,12 +1163,15 @@ extern(C)
 	void function(GdkWindow* window, gint x, gint y, gint width, gint height) c_gdk_window_move_resize;
 	void function(GdkWindow* window, gint dx, gint dy) c_gdk_window_scroll;
 	void function(GdkWindow* window, GdkRegion* region, gint dx, gint dy) c_gdk_window_move_region;
+	void function(GdkWindow* window) c_gdk_window_flush;
+	gboolean function(GdkWindow* window) c_gdk_window_ensure_native;
 	void function(GdkWindow* window, GdkWindow* newParent, gint x, gint y) c_gdk_window_reparent;
 	void function(GdkWindow* window) c_gdk_window_clear;
 	void function(GdkWindow* window, gint x, gint y, gint width, gint height) c_gdk_window_clear_area;
 	void function(GdkWindow* window, gint x, gint y, gint width, gint height) c_gdk_window_clear_area_e;
 	void function(GdkWindow* window) c_gdk_window_raise;
 	void function(GdkWindow* window) c_gdk_window_lower;
+	void function(GdkWindow* window, GdkWindow* sibling, gboolean above) c_gdk_window_restack;
 	void function(GdkWindow* window, guint32 timestamp) c_gdk_window_focus;
 	void function(GdkWindow* window) c_gdk_window_register_dnd;
 	void function(GdkWindow* window, GdkWindowEdge edge, gint button, gint rootX, gint rootY, guint32 timestamp) c_gdk_window_begin_resize_drag;
@@ -1195,6 +1212,7 @@ extern(C)
 	void function(GdkWindow* window, GdkColor* color) c_gdk_window_set_background;
 	void function(GdkWindow* window, GdkPixmap* pixmap, gboolean parentRelative) c_gdk_window_set_back_pixmap;
 	void function(GdkWindow* window, GdkCursor* cursor) c_gdk_window_set_cursor;
+	GdkCursor* function(GdkWindow* window) c_gdk_window_get_cursor;
 	void function(GdkWindow* window, gpointer* data) c_gdk_window_get_user_data;
 	void function(GdkWindow* window, gint* x, gint* y, gint* width, gint* height, gint* depth) c_gdk_window_get_geometry;
 	void function(GdkWindow* window, GdkGeometry* geometry, GdkWindowHints geomMask) c_gdk_window_set_geometry_hints;
@@ -1210,6 +1228,7 @@ extern(C)
 	void function(GdkWindow* window, GdkRectangle* rect) c_gdk_window_get_frame_extents;
 	gint function(GdkWindow* window, gint* x, gint* y) c_gdk_window_get_origin;
 	gboolean function(GdkWindow* window, gint* x, gint* y) c_gdk_window_get_deskrelative_origin;
+	void function(GdkWindow* window, gint x, gint y, gint* rootX, gint* rootY) c_gdk_window_get_root_coords;
 	GdkWindow* function(GdkWindow* window, gint* x, gint* y, GdkModifierType* mask) c_gdk_window_get_pointer;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_parent;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_toplevel;
@@ -1230,6 +1249,10 @@ extern(C)
 	GList* function() c_gdk_window_get_toplevels;
 	GdkWindow* function() c_gdk_get_default_root_window;
 	GdkPointerHooks* function(GdkPointerHooks* newHooks) c_gdk_set_pointer_hooks;
+	GdkPixmap* function(GdkWindow* window) c_gdk_offscreen_window_get_pixmap;
+	void function(GdkWindow* window, GdkWindow* embedder) c_gdk_offscreen_window_set_embedder;
+	GdkWindow* function(GdkWindow* window) c_gdk_offscreen_window_get_embedder;
+	void function(GdkWindow* window) c_gdk_window_geometry_changed;
 	void function(GdkWindow* window, GdkDrawable* drawable, gint srcX, gint srcY, gint destX, gint destY, gint width, gint height) c_gdk_window_redirect_to_drawable;
 	void function(GdkWindow* window) c_gdk_window_remove_redirection;
 	
@@ -1291,7 +1314,7 @@ extern(C)
 	GdkWindow* function(GdkAtom selection) c_gdk_selection_owner_get;
 	GdkWindow* function(GdkDisplay* display, GdkAtom selection) c_gdk_selection_owner_get_for_display;
 	void function(GdkWindow* requestor, GdkAtom selection, GdkAtom target, guint32 time) c_gdk_selection_convert;
-	gboolean function(GdkWindow* requestor, guchar** data, GdkAtom* propType, gint* propFormat) c_gdk_selection_property_get;
+	gint function(GdkWindow* requestor, guchar** data, GdkAtom* propType, gint* propFormat) c_gdk_selection_property_get;
 	void function(GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, guint32 time) c_gdk_selection_send_notify;
 	void function(GdkDisplay* display, GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, guint32 time) c_gdk_selection_send_notify_for_display;
 	
@@ -1390,6 +1413,7 @@ extern(C)
 	void function(cairo_t* cr, GdkPixmap* pixmap, double pixmapX, double pixmapY) c_gdk_cairo_set_source_pixmap;
 	void function(cairo_t* cr, GdkRectangle* rectangle) c_gdk_cairo_rectangle;
 	void function(cairo_t* cr, GdkRegion* region) c_gdk_cairo_region;
+	void function(cairo_t* cr, GdkDrawable* drawable) c_gdk_cairo_reset_clip;
 }
 
 // gdk.Gdk
@@ -1527,6 +1551,7 @@ alias c_gdk_region_get_clipbox  gdk_region_get_clipbox;
 alias c_gdk_region_get_rectangles  gdk_region_get_rectangles;
 alias c_gdk_region_empty  gdk_region_empty;
 alias c_gdk_region_equal  gdk_region_equal;
+alias c_gdk_region_rect_equal  gdk_region_rect_equal;
 alias c_gdk_region_point_in  gdk_region_point_in;
 alias c_gdk_region_rect_in  gdk_region_rect_in;
 alias c_gdk_region_offset  gdk_region_offset;
@@ -1805,6 +1830,7 @@ alias c_gdk_window_at_pointer  gdk_window_at_pointer;
 alias c_gdk_window_show  gdk_window_show;
 alias c_gdk_window_show_unraised  gdk_window_show_unraised;
 alias c_gdk_window_hide  gdk_window_hide;
+alias c_gdk_window_is_destroyed  gdk_window_is_destroyed;
 alias c_gdk_window_is_visible  gdk_window_is_visible;
 alias c_gdk_window_is_viewable  gdk_window_is_viewable;
 alias c_gdk_window_get_state  gdk_window_get_state;
@@ -1826,12 +1852,15 @@ alias c_gdk_window_resize  gdk_window_resize;
 alias c_gdk_window_move_resize  gdk_window_move_resize;
 alias c_gdk_window_scroll  gdk_window_scroll;
 alias c_gdk_window_move_region  gdk_window_move_region;
+alias c_gdk_window_flush  gdk_window_flush;
+alias c_gdk_window_ensure_native  gdk_window_ensure_native;
 alias c_gdk_window_reparent  gdk_window_reparent;
 alias c_gdk_window_clear  gdk_window_clear;
 alias c_gdk_window_clear_area  gdk_window_clear_area;
 alias c_gdk_window_clear_area_e  gdk_window_clear_area_e;
 alias c_gdk_window_raise  gdk_window_raise;
 alias c_gdk_window_lower  gdk_window_lower;
+alias c_gdk_window_restack  gdk_window_restack;
 alias c_gdk_window_focus  gdk_window_focus;
 alias c_gdk_window_register_dnd  gdk_window_register_dnd;
 alias c_gdk_window_begin_resize_drag  gdk_window_begin_resize_drag;
@@ -1872,6 +1901,7 @@ alias c_gdk_window_set_title  gdk_window_set_title;
 alias c_gdk_window_set_background  gdk_window_set_background;
 alias c_gdk_window_set_back_pixmap  gdk_window_set_back_pixmap;
 alias c_gdk_window_set_cursor  gdk_window_set_cursor;
+alias c_gdk_window_get_cursor  gdk_window_get_cursor;
 alias c_gdk_window_get_user_data  gdk_window_get_user_data;
 alias c_gdk_window_get_geometry  gdk_window_get_geometry;
 alias c_gdk_window_set_geometry_hints  gdk_window_set_geometry_hints;
@@ -1887,6 +1917,7 @@ alias c_gdk_window_get_root_origin  gdk_window_get_root_origin;
 alias c_gdk_window_get_frame_extents  gdk_window_get_frame_extents;
 alias c_gdk_window_get_origin  gdk_window_get_origin;
 alias c_gdk_window_get_deskrelative_origin  gdk_window_get_deskrelative_origin;
+alias c_gdk_window_get_root_coords  gdk_window_get_root_coords;
 alias c_gdk_window_get_pointer  gdk_window_get_pointer;
 alias c_gdk_window_get_parent  gdk_window_get_parent;
 alias c_gdk_window_get_toplevel  gdk_window_get_toplevel;
@@ -1907,6 +1938,10 @@ alias c_gdk_window_set_functions  gdk_window_set_functions;
 alias c_gdk_window_get_toplevels  gdk_window_get_toplevels;
 alias c_gdk_get_default_root_window  gdk_get_default_root_window;
 alias c_gdk_set_pointer_hooks  gdk_set_pointer_hooks;
+alias c_gdk_offscreen_window_get_pixmap  gdk_offscreen_window_get_pixmap;
+alias c_gdk_offscreen_window_set_embedder  gdk_offscreen_window_set_embedder;
+alias c_gdk_offscreen_window_get_embedder  gdk_offscreen_window_get_embedder;
+alias c_gdk_window_geometry_changed  gdk_window_geometry_changed;
 alias c_gdk_window_redirect_to_drawable  gdk_window_redirect_to_drawable;
 alias c_gdk_window_remove_redirection  gdk_window_remove_redirection;
 
@@ -2067,3 +2102,4 @@ alias c_gdk_cairo_set_source_pixbuf  gdk_cairo_set_source_pixbuf;
 alias c_gdk_cairo_set_source_pixmap  gdk_cairo_set_source_pixmap;
 alias c_gdk_cairo_rectangle  gdk_cairo_rectangle;
 alias c_gdk_cairo_region  gdk_cairo_region;
+alias c_gdk_cairo_reset_clip  gdk_cairo_reset_clip;

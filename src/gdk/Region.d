@@ -241,6 +241,19 @@ public class Region
 	}
 	
 	/**
+	 * Finds out if a regions is the same as a rectangle.
+	 * Since 2.18
+	 * Params:
+	 * rectangle =  a GdkRectangle
+	 * Returns: TRUE if region and rectangle are equal.
+	 */
+	public int rectEqual(Rectangle rectangle)
+	{
+		// gboolean gdk_region_rect_equal (const GdkRegion *region,  const GdkRectangle *rectangle);
+		return gdk_region_rect_equal(gdkRegion, (rectangle is null) ? null : rectangle.getRectangleStruct());
+	}
+	
+	/**
 	 * Finds out if a point is in a region.
 	 * Params:
 	 * x =  the x coordinate of a point

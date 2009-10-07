@@ -46,6 +46,7 @@
  * 	- gdk_cairo_set_source_pixmap
  * 	- gdk_cairo_rectangle
  * 	- gdk_cairo_region
+ * 	- gdk_cairo_reset_clip
  * omit signals:
  * imports:
  * 	- cairo.Context

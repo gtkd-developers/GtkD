@@ -345,7 +345,7 @@ public struct Funct
 			++i;
 		}
 
-		return parameters;
+		return parameters.replace("-", "_");
 	}
 	
 	/**
@@ -390,7 +390,7 @@ public struct Funct
 			++i;
 		}
 
-		return parameters;
+		return parameters.replace("-", "_");
 	}
 
 	char[] getDelegateDeclaration(ConvParms* convParms, int firstParameter = 0)

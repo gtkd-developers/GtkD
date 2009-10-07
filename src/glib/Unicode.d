@@ -1056,6 +1056,11 @@ public class Unicode
 	 * an initial byte-order-mark character is not handled specially.
 	 * g_convert() can be used to convert a byte buffer of UTF-16 data of
 	 * ambiguous endianess.
+	 * Further note that this function does not validate the result
+	 * string; it may e.g. include embedded NUL characters. The only
+	 * validation done by this function is to ensure that the input can
+	 * be correctly interpreted as UTF-16, i.e. it doesn't contain
+	 * things unpaired surrogates.
 	 * Params:
 	 * str =  a UTF-16 encoded string
 	 * len =  the maximum length (number of gunichar2) of str to use.

@@ -729,6 +729,8 @@ alias GdkCursorType CursorType;
  * override redirect temporary window (used to implement GtkMenu)
  * GDK_WINDOW_FOREIGN
  * foreign window (see gdk_window_foreign_new())
+ * GDK_WINDOW_OFFSCREEN
+ * offscreen window (see the section called “Offscreen Windows”). Since 2.18
  */
 public enum GdkWindowType
 {
@@ -737,7 +739,8 @@ public enum GdkWindowType
 	CHILD,
 	DIALOG,
 	TEMP,
-	FOREIGN
+	FOREIGN,
+	OFFSCREEN
 }
 alias GdkWindowType WindowType;
 
@@ -1200,7 +1203,8 @@ public enum GdkEventType
 	SETTING = 33,
 	OWNER_CHANGE = 34,
 	GRAB_BROKEN = 35,
-	DAMAGE = 36
+	DAMAGE = 36,
+	EVENT_LAST /+* helper variable for decls +/
 }
 alias GdkEventType EventType;
 
