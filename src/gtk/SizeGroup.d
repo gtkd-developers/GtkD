@@ -111,7 +111,7 @@ private import gobject.ObjectG;
  * size group are specified by a <widgets> element that may
  * contain multiple <widget> elements, one for each member
  * of the size group. The name attribute gives the id of the widget.
- * Example 50. A UI definition fragment with GtkSizeGroup
+ * Example 51. A UI definition fragment with GtkSizeGroup
  * <object class="GtkSizeGroup">
  *  <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
  *  <widgets>

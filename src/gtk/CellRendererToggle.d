@@ -217,4 +217,28 @@ public class CellRendererToggle : CellRenderer
 		// void gtk_cell_renderer_toggle_set_active (GtkCellRendererToggle *toggle,  gboolean setting);
 		gtk_cell_renderer_toggle_set_active(gtkCellRendererToggle, setting);
 	}
+	
+	/**
+	 * Returns whether the cell renderer is activatable. See
+	 * gtk_cell_renderer_toggle_set_activatable().
+	 * Since 2.18
+	 * Returns: TRUE if the cell renderer is activatable.
+	 */
+	public int getActivatable()
+	{
+		// gboolean gtk_cell_renderer_toggle_get_activatable  (GtkCellRendererToggle *toggle);
+		return gtk_cell_renderer_toggle_get_activatable(gtkCellRendererToggle);
+	}
+	
+	/**
+	 * Makes the cell renderer activatable.
+	 * Since 2.18
+	 * Params:
+	 * setting =  the value to set.
+	 */
+	public void setActivatable(int setting)
+	{
+		// void gtk_cell_renderer_toggle_set_activatable  (GtkCellRendererToggle *toggle,  gboolean setting);
+		gtk_cell_renderer_toggle_set_activatable(gtkCellRendererToggle, setting);
+	}
 }

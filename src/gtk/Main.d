@@ -271,6 +271,13 @@ public class Main
 	 * the GUI for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gtk_init_check() instead.
 	 * Note
+	 * Since 2.18, GTK+ calls signal (SIGPIPE, SIG_IGN)
+	 * during initialization, to ignore SIGPIPE signals, since these are
+	 * almost never wanted in graphical applications. If you do need to
+	 * handle SIGPIPE for some reason, reset the handler after gtk_init(),
+	 * but notice that other libraries (e.g. libdbus or gvfs) might do
+	 * similar things.
+	 * Note
 	 * Params:
 	 * argc =  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments were handled.

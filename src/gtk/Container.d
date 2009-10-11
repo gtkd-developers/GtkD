@@ -158,7 +158,7 @@ private import gtk.Widget;
  * supports a <packing> element for children, which can
  * contain multiple <property> elements that specify
  * child properties for the child.
- * Example 51. Child properties in UI definitions
+ * Example 52. Child properties in UI definitions
  * <object class="GtkVBox">
  *  <child>
  *  <object class="GtkLabel"/>

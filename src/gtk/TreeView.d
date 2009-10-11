@@ -131,7 +131,7 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements in UI definitions.
- * Example 21. A UI definition fragment with GtkTreeView
+ * Example 22. A UI definition fragment with GtkTreeView
  * <object class="GtkTreeView" id="treeview">
  *  <property name="model">liststore1</property>
  *  <child>
@@ -1247,6 +1247,8 @@ public class TreeView : Container
 	 * This function is often followed by gtk_widget_grab_focus (tree_view)
 	 * in order to give keyboard focus to the widget. Please note that editing
 	 * can only happen when the widget is realized.
+	 * If path is invalid for model, the current cursor (if any) will be unset
+	 * and the function will return without failing.
 	 * Params:
 	 * path =  A GtkTreePath
 	 * focusColumn =  A GtkTreeViewColumn, or NULL
@@ -1270,6 +1272,8 @@ public class TreeView : Container
 	 * gtk_widget_grab_focus (tree_view) in order to give keyboard focus to the
 	 * widget. Please note that editing can only happen when the widget is
 	 * realized.
+	 * If path is invalid for model, the current cursor (if any) will be unset
+	 * and the function will return without failing.
 	 * Since 2.2
 	 * Params:
 	 * path =  A GtkTreePath
@@ -1442,7 +1446,8 @@ public class TreeView : Container
 	 * with the column at that point. cell_x and cell_y return the coordinates
 	 * relative to the cell background (i.e. the background_area passed to
 	 * gtk_cell_renderer_render()). This function is only meaningful if
-	 * tree_view is realized.
+	 * tree_view is realized. Therefore this function will always return FALSE
+	 * if tree_view is not realized or does not have a model.
 	 * For converting widget coordinates (eg. the ones you get from
 	 * GtkWidget::query-tooltip), please see
 	 * gtk_tree_view_convert_widget_to_bin_window_coords().
@@ -1782,13 +1787,15 @@ public class TreeView : Container
 	
 	/**
 	 * Determines the destination row for a given position. drag_x and
-	 * drag_y are expected to be in widget coordinates.
+	 * drag_y are expected to be in widget coordinates. This function is only
+	 * meaningful if tree_view is realized. Therefore this function will always
+	 * return FALSE if tree_view is not realized or does not have a model.
 	 * Params:
 	 * dragX =  the position to determine the destination row for
 	 * dragY =  the position to determine the destination row for
 	 * path =  Return location for the path of the highlighted row, or NULL.
 	 * pos =  Return location for the drop position, or NULL
-	 * Returns: whether there is a row at the given position.
+	 * Returns: whether there is a row at the given position, TRUE if thisis indeed the case.
 	 */
 	public int getDestRowAtPos(int dragX, int dragY, out TreePath path, out GtkTreeViewDropPosition pos)
 	{

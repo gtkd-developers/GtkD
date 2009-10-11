@@ -1772,6 +1772,101 @@ prefix: gtk_statusbar_
 prefix: gtk_
 outFile: Statusbar
 
+file: GtkInfoBar.html
+struct: GtkInfoBar
+ctorStruct: GtkWidget
+class: InfoBar
+import: glib.Str
+prefix:  gtk_info_bar_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.HBox;
+import: gtk.VButtonBox
+
+nocode: gtk_info_bar_get_action_area
+nocode: gtk_info_bar_get_content_area
+
+code: start
+	/** */
+	public this(string[] buttonsText, ResponseType[] responses)
+	{
+		this();
+
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+
+	/** */
+	public this(StockID[] stockIDs, ResponseType[] responses)
+	{
+		this();
+
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
+		}
+	}
+
+	/** */
+	public Widget addButton(StockID stockID, int responseId)
+	{
+		return addButton(StockDesc[stockID], responseId);
+	}
+	
+	/** */
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+	
+	/** */
+	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
+		}
+	}
+
+	/**
+	 * Returns the action area of info_bar.
+	 * Since 2.18
+	 * Returns: the action area.
+	 */
+	public VButtonBox getActionArea()
+	{
+		// GtkWidget * gtk_info_bar_get_action_area (GtkInfoBar *info_bar);
+		auto p = gtk_info_bar_get_action_area(gtkInfoBar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VButtonBox(cast(GtkVButtonBox*) p);
+	}
+	
+	/**
+	 * Returns the content area of info_bar.
+	 * Since 2.18
+	 * Returns: the content area.
+	 */
+	public HBox getContentArea()
+	{
+		// GtkWidget * gtk_info_bar_get_content_area (GtkInfoBar *info_bar);
+		auto p = gtk_info_bar_get_content_area(gtkInfoBar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new HBox(cast(GtkHBox*) p);
+	}
+code: end
+outFile: InfoBar
+
 file: GtkStatusIcon.html
 struct: GtkStatusIcon
 class: StatusIcon
@@ -2281,6 +2376,8 @@ import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 import: gtk.Border
 structWrap: GtkBorder* Border
+import: gtk.EntryBuffer
+structWrap: GtkEntryBuffer* EntryBuffer
 import: gtk.EntryCompletion
 structWrap: GtkEntryCompletion* EntryCompletion
 import: pango.PgLayout
@@ -2355,6 +2452,17 @@ code: start
 code: end
 
 outFile: Entry
+
+file: GtkEntryBuffer.html
+struct: GtkEntryBuffer
+class: EntryBuffer
+prefix: gtk_entry_buffer_
+import: glib.Str
+array: gtk_entry_buffer_new initial_chars n_initial_chars
+array: gtk_entry_buffer_set_text chars n_chars
+array: gtk_entry_buffer_insert_text chars n_chars
+array: gtk_entry_buffer_emit_inserted_text chars n_chars
+outFile: EntryBuffer
 
 file: GtkEntryCompletion.html
 struct: GtkEntryCompletion
@@ -4386,6 +4494,10 @@ out: gtk_cell_renderer_get_size width
 out: gtk_cell_renderer_get_size height
 out: gtk_cell_renderer_get_fixed_size width
 out: gtk_cell_renderer_get_fixed_size height
+out: gtk_cell_renderer_get_alignment xalign
+out: gtk_cell_renderer_get_alignment yalign
+out: gtk_cell_renderer_get_padding xpad
+out: gtk_cell_renderer_get_padding ypad
 
 outFile: CellRenderer
 
@@ -6965,6 +7077,8 @@ noprefix: gtk_print_operation_preview_
 nosignal: got-page-size 
 nosignal: ready
 import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.PageSetup
@@ -6973,10 +7087,15 @@ import: gtk.PrintContext
 structWrap: GtkPrintContext* PrintContext
 import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
-import: gtk.PrintOperationPreviewT
-import: gtk.PrintOperationPreviewIF
 import: glib.ErrorG
 import: glib.GException
+
+#imports for PrintOperationPreview Interface.
+import: gtk.PrintOperationPreviewT
+import: gtk.PrintOperationPreviewIF
+#import: gtk.Widget
+#import: gtk.PageSetup
+#import: gtk.PrintSettings
 
 code: start
 	// add the PrintOperationPreview capabilities
@@ -7000,6 +7119,12 @@ nosignal: request-page-setup
 nosignal: status-changed
 prefix: gtk_print_operation_preview_
 #prefix: gtk_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
+import: gtk.PrintSettings
+structWrap: GtkPrintSettings* PrintSettings
 interface: PrintOperationPreviewIF
 outFile: PrintOperationPreviewT
 
@@ -7669,6 +7794,7 @@ out: gtk_widget_path path_reversed
 out: gtk_widget_class_path path_length
 out: gtk_widget_class_path path
 out: gtk_widget_class_path path_reversed
+inout: gtk_widget_set_allocation allocation
 
 code: start
 	// add the Buildable capabilities

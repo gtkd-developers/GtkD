@@ -113,7 +113,7 @@ private import gtk.Bin;
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
- * Example 43. A UI definition fragment with GtkExpander
+ * Example 44. A UI definition fragment with GtkExpander
  * <object class="GtkExpander">
  *  <child type="label">
  *  <object class="GtkLabel" id="expander-label"/>
@@ -299,6 +299,11 @@ public class Expander : Bin
 	 * gtk_expander_set_label(). If the label text has not been set the
 	 * return value will be NULL. This will be the case if you create an
 	 * empty button with gtk_button_new() to use as a container.
+	 * Note that this function behaved differently in versions prior to
+	 * 2.14 and used to return the label text stripped of embedded
+	 * underlines indicating mnemonics and Pango markup. This problem can
+	 * be avoided by fetching the label text directly from the label
+	 * widget.
 	 * Since 2.4
 	 * Returns: The text of the label widget. This string is ownedby the widget and must not be modified or freed.
 	 */

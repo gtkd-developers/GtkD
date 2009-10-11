@@ -52,7 +52,13 @@
  * 	- request-page-setup
  * 	- status-changed
  * imports:
+ * 	- gtk.Widget
+ * 	- gtk.PageSetup
+ * 	- gtk.PrintSettings
  * structWrap:
+ * 	- GtkPageSetup* -> PageSetup
+ * 	- GtkPrintSettings* -> PrintSettings
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -68,6 +74,9 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gtk.Widget;
+private import gtk.PageSetup;
+private import gtk.PrintSettings;
 
 
 
@@ -90,7 +99,7 @@ public  import gtkc.gdktypes;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example 45. The high-level printing API
+ * Example 46. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -134,7 +143,15 @@ public interface PrintOperationPreviewIF
 	/**
 	 */
 	
-	void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF)[] onGotPageSizeListeners();
+	void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF)[] onUpdateCustomWidgetListeners();
+	/**
+	 * Emitted after change of selected printer. The actual page setup and
+	 * print settings are passed to the custom widget, which can actualize
+	 * itself according to this change.
+	 * Since 2.18
+	 */
+	void addOnUpdateCustomWidget(void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void delegate(GtkPrintContext*, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners();
 	/**
 	 * The ::got-page-size signal is emitted once for each page
 	 * that gets rendered to the preview.
@@ -142,7 +159,7 @@ public interface PrintOperationPreviewIF
 	 * according to page_setup and set up a suitable cairo
 	 * context, using gtk_print_context_set_cairo_context().
 	 */
-	void addOnGotPageSize(void delegate(GtkPrintContext*, GtkPageSetup*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void addOnGotPageSize(void delegate(GtkPrintContext*, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] onReadyListeners();
 	/**
 	 * The ::ready signal gets emitted once per preview operation,

@@ -256,6 +256,8 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tree_view_column_get_cell_renderers has been deprecated since version 2.18 and should not be used in newly-written code. use gtk_cell_layout_get_cells() instead.
 	 * Returns a newly-allocated GList of all the cell renderers in the column,
 	 * in no particular order. The list must be freed with g_list_free().
 	 * Returns: A list of GtkCellRenderers

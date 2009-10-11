@@ -145,7 +145,7 @@ private import gtk.FileFilter;
  * 	gtk_file_chooser_set_preview_widget_active() with a boolean
  * 	flag that indicates whether your callback could successfully
  * 	generate a preview.
- * Example 36. Sample Usage
+ * Example 37. Sample Usage
  * {
 	 *  GtkImage *preview;
 	 *  ...
@@ -179,7 +179,7 @@ private import gtk.FileFilter;
  * 	file in read-only mode. You can use
  * 	gtk_file_chooser_set_extra_widget() to insert additional
  * 	widgets in a file chooser.
- * Example 37. Sample Usage
+ * Example 38. Sample Usage
  * {
 	 *  GtkWidget *toggle;
 	 *  ...
@@ -200,7 +200,7 @@ private import gtk.FileFilter;
  * 	widget has several key
  * 	bindings and their associated signals. This section
  * 	describes the available key binding signals.
- * Example 38. GtkFileChooser key binding example
+ * Example 39. GtkFileChooser key binding example
  * 	 The default keys that activate the key-binding signals in
  * 	 GtkFileChooserDefaultClass are as
  * 	 follows:
@@ -396,7 +396,7 @@ public interface FileChooserIF
 	 *  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
 	 *  illustrates this.
 	 *
-	 * Example 39. Custom confirmation
+	 * Example 40. Custom confirmation
 	 * static GtkFileChooserConfirmation
 	 * confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
 	 * {
@@ -595,6 +595,24 @@ public interface FileChooserIF
 		 * Returns: TRUE if the file chooser will present a confirmation dialog;FALSE otherwise.
 		 */
 		public int getDoOverwriteConfirmation();
+		
+		/**
+		 * Sets whether file choser will offer to create new folders.
+		 * This is only relevant if the action is not set to be
+		 * GTK_FILE_CHOOSER_ACTION_OPEN.
+		 * Since 2.18
+		 * Params:
+		 * createFolders =  TRUE if the New Folder button should be displayed
+		 */
+		public void setCreateFolders(int createFolders);
+		
+		/**
+		 * Gets whether file choser will offer to create new folders.
+		 * See gtk_file_chooser_set_create_folders().
+		 * Since 2.18
+		 * Returns: TRUE if the New Folder button should be displayed.
+		 */
+		public int getCreateFolders();
 		
 		/**
 		 * Sets the current name in the file selector, as if entered
@@ -1030,7 +1048,7 @@ public interface FileChooserIF
 		 * If the file chooser is in folder mode, this function returns the selected
 		 * folder.
 		 * Since 2.14
-		 * Returns: a selected GFile
+		 * Returns: a selected GFile. You own the returned file; use g_object_unref() to release it.
 		 */
 		public File getFile();
 		

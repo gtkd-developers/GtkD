@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- gdk_window_
+ * 	- gdk_
  * omit structs:
  * omit prefixes:
  * 	- gdk_window_invalidate_maybe_recurse
@@ -2326,7 +2327,7 @@ public class Window : Drawable
 	 * for the default display and screen.
 	 * Returns: the default root window
 	 */
-	public static Window gdkGetDefaultRootWindow()
+	public static Window getDefaultRootWindow()
 	{
 		// GdkWindow * gdk_get_default_root_window (void);
 		auto p = gdk_get_default_root_window();
@@ -2351,7 +2352,7 @@ public class Window : Drawable
 	 *  or NULL to restore the default table.
 	 * Returns: the previous pointer hook table
 	 */
-	public static GdkPointerHooks* gdkSetPointerHooks(GdkPointerHooks* newHooks)
+	public static GdkPointerHooks* setPointerHooks(GdkPointerHooks* newHooks)
 	{
 		// GdkPointerHooks * gdk_set_pointer_hooks (const GdkPointerHooks *new_hooks);
 		return gdk_set_pointer_hooks(newHooks);
@@ -2364,7 +2365,7 @@ public class Window : Drawable
 	 * Since 2.18
 	 * Returns: The offscreen pixmap, or NULL if not offscreen
 	 */
-	public Pixmap gdkOffscreenWindowGetPixmap()
+	public Pixmap offscreenWindowGetPixmap()
 	{
 		// GdkPixmap * gdk_offscreen_window_get_pixmap (GdkWindow *window);
 		auto p = gdk_offscreen_window_get_pixmap(gdkWindow);
@@ -2385,7 +2386,7 @@ public class Window : Drawable
 	 * Params:
 	 * embedder =  the GdkWindow that window gets embedded in
 	 */
-	public void gdkOffscreenWindowSetEmbedder(Window embedder)
+	public void offscreenWindowSetEmbedder(Window embedder)
 	{
 		// void gdk_offscreen_window_set_embedder (GdkWindow *window,  GdkWindow *embedder);
 		gdk_offscreen_window_set_embedder(gdkWindow, (embedder is null) ? null : embedder.getWindowStruct());
@@ -2396,7 +2397,7 @@ public class Window : Drawable
 	 * Since 2.18
 	 * Returns: the embedding GdkWindow, or NULL if window is not an embedded offscreen window
 	 */
-	public Window gdkOffscreenWindowGetEmbedder()
+	public Window offscreenWindowGetEmbedder()
 	{
 		// GdkWindow * gdk_offscreen_window_get_embedder (GdkWindow *window);
 		auto p = gdk_offscreen_window_get_embedder(gdkWindow);

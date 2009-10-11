@@ -102,7 +102,7 @@ private import gtk.Dialog;
  * GtkPrintUnixDialog as GtkBuildable
  * The GtkPrintUnixDialog implementation of the GtkBuildable interface exposes its
  * notebook internal children with the name "notebook".
- * Example 48. A GtkPrintUnixDialog UI definition fragment.
+ * Example 49. A GtkPrintUnixDialog UI definition fragment.
  * <object class="GtkPrintUnixDialog" id="dialog1">
  *  <child internal-child="notebook">
  *  <object class="GtkNotebook" id="notebook">
@@ -301,6 +301,86 @@ public class PrintUnixDialog : Dialog
 	}
 	
 	/**
+	 * Sets whether the print dialog allows user to print a selection.
+	 * Since 2.18
+	 * Params:
+	 * supportSelection =  TRUE to allow print selection
+	 */
+	public void setSupportSelection(int supportSelection)
+	{
+		// void gtk_print_unix_dialog_set_support_selection  (GtkPrintUnixDialog *dialog,  gboolean support_selection);
+		gtk_print_unix_dialog_set_support_selection(gtkPrintUnixDialog, supportSelection);
+	}
+	
+	/**
+	 * Gets the value of "support-selection" property.
+	 * Since 2.18
+	 * Returns: whether the application supports print of selection
+	 */
+	public int getSupportSelection()
+	{
+		// gboolean gtk_print_unix_dialog_get_support_selection  (GtkPrintUnixDialog *dialog);
+		return gtk_print_unix_dialog_get_support_selection(gtkPrintUnixDialog);
+	}
+	
+	/**
+	 * Sets whether a selection exists.
+	 * Since 2.18
+	 * Params:
+	 * hasSelection =  TRUE indicates that a selection exists
+	 */
+	public void setHasSelection(int hasSelection)
+	{
+		// void gtk_print_unix_dialog_set_has_selection  (GtkPrintUnixDialog *dialog,  gboolean has_selection);
+		gtk_print_unix_dialog_set_has_selection(gtkPrintUnixDialog, hasSelection);
+	}
+	
+	/**
+	 * Gets the value of "has-selection" property.
+	 * Since 2.18
+	 * Returns: whether there is a selection
+	 */
+	public int getHasSelection()
+	{
+		// gboolean gtk_print_unix_dialog_get_has_selection  (GtkPrintUnixDialog *dialog);
+		return gtk_print_unix_dialog_get_has_selection(gtkPrintUnixDialog);
+	}
+	
+	/**
+	 * Embed page size combo box and orientation combo box into page setup page.
+	 * Since 2.18
+	 * Params:
+	 * embed =  embed page setup selection
+	 */
+	public void setEmbedPageSetup(int embed)
+	{
+		// void gtk_print_unix_dialog_set_embed_page_setup  (GtkPrintUnixDialog *dialog,  gboolean embed);
+		gtk_print_unix_dialog_set_embed_page_setup(gtkPrintUnixDialog, embed);
+	}
+	
+	/**
+	 * Gets the value of "embed-page-setup" property.
+	 * Since 2.18
+	 * Returns: whether there is a selection
+	 */
+	public int getEmbedPageSetup()
+	{
+		// gboolean gtk_print_unix_dialog_get_embed_page_setup  (GtkPrintUnixDialog *dialog);
+		return gtk_print_unix_dialog_get_embed_page_setup(gtkPrintUnixDialog);
+	}
+	
+	/**
+	 * Gets the page setup that is used by the GtkPrintUnixDialog.
+	 * Since 2.18
+	 * Returns: whether a page setup was set by user.
+	 */
+	public int getPageSetupSet()
+	{
+		// gboolean gtk_print_unix_dialog_get_page_setup_set  (GtkPrintUnixDialog *dialog);
+		return gtk_print_unix_dialog_get_page_setup_set(gtkPrintUnixDialog);
+	}
+	
+	/**
 	 * This lets you specify the printing capabilities your application
 	 * supports. For instance, if you can handle scaling the output then
 	 * you pass GTK_PRINT_CAPABILITY_SCALE. If you don't pass that, then
@@ -314,5 +394,16 @@ public class PrintUnixDialog : Dialog
 	{
 		// void gtk_print_unix_dialog_set_manual_capabilities  (GtkPrintUnixDialog *dialog,  GtkPrintCapabilities capabilities);
 		gtk_print_unix_dialog_set_manual_capabilities(gtkPrintUnixDialog, capabilities);
+	}
+	
+	/**
+	 * Gets the value of "manual-capabilities" property.
+	 * Since 2.18
+	 * Returns: the printing capabilities
+	 */
+	public GtkPrintCapabilities getManualCapabilities()
+	{
+		// GtkPrintCapabilities gtk_print_unix_dialog_get_manual_capabilities  (GtkPrintUnixDialog *dialog);
+		return gtk_print_unix_dialog_get_manual_capabilities(gtkPrintUnixDialog);
 	}
 }

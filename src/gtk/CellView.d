@@ -305,6 +305,8 @@ public class CellView : Widget, CellLayoutIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_cell_view_get_cell_renderers has been deprecated since version 2.18 and should not be used in newly-written code. use gtk_cell_layout_get_cells() instead.
 	 * Returns the cell renderers which have been added to cell_view.
 	 * Since 2.6
 	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.

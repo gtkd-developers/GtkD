@@ -641,7 +641,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * boxes constructed with gtk_combo_box_new_text() and with
 	 * GtkComboBoxEntrys.
 	 * Since 2.6
-	 * Returns: a newly allocated string containing the currently active text.
+	 * Returns: a newly allocated string containing the currently active text. Must be freed with g_free().
 	 */
 	public string getActiveText()
 	{

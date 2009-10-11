@@ -80,7 +80,7 @@ private import gtk.Dialog;
  * that match a given pattern. This can be used for example, to show only
  * *.txt files, or only files beginning with gtk*.
  * Simple file operations; create directory, delete file, and rename file, are available from buttons at the top of the dialog. These can be hidden using gtk_file_selection_hide_fileop_buttons() and shown again using gtk_file_selection_show_fileop_buttons().
- * Example 60. Getting a filename from the user.
+ * Example 61. Getting a filename from the user.
  * /+* The file selection widget and the string to store the chosen filename +/
  * void store_filename (GtkWidget *widget, gpointer user_data) {
 	 *  GtkWidget *file_selector = GTK_WIDGET (user_data);

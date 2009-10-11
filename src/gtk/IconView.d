@@ -914,6 +914,29 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
+	 * Sets the ::item-padding property which specifies the padding
+	 * around each of the icon view's items.
+	 * Since 2.18
+	 * Params:
+	 */
+	public void setItemPadding(int itemPadding)
+	{
+		// void gtk_icon_view_set_item_padding (GtkIconView *icon_view,  gint item_padding);
+		gtk_icon_view_set_item_padding(gtkIconView, itemPadding);
+	}
+	
+	/**
+	 * Returns the value of the ::item-padding property.
+	 * Since 2.18
+	 * Returns: the padding around items
+	 */
+	public int getItemPadding()
+	{
+		// gint gtk_icon_view_get_item_padding (GtkIconView *icon_view);
+		return gtk_icon_view_get_item_padding(gtkIconView);
+	}
+	
+	/**
 	 * Selects the row at path.
 	 * Since 2.6
 	 * Params:

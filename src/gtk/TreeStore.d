@@ -110,7 +110,7 @@ private import gobject.ObjectG;
  * to specify the model columns with a <columns> element that may
  * contain multiple <column> elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
- * Example 27. A UI Definition fragment for a tree store
+ * Example 28. A UI Definition fragment for a tree store
  * <object class="GtkTreeStore">
  *  <columns>
  *  <column type="gchararray"/>

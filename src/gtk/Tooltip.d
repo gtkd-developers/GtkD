@@ -226,13 +226,15 @@ public class Tooltip : ObjectG
 	}
 	
 	/**
-	 * Replaces the widget packed into the tooltip with custom_widget.
+	 * Replaces the widget packed into the tooltip with
+	 * custom_widget. custom_widget does not get destroyed when the tooltip goes
+	 * away.
 	 * By default a box with a GtkImage and GtkLabel is embedded in
 	 * the tooltip, which can be configured using gtk_tooltip_set_markup()
 	 * and gtk_tooltip_set_icon().
 	 * Since 2.12
 	 * Params:
-	 * customWidget =  a GtkWidget
+	 * customWidget =  a GtkWidget, or NULL to unset the old custom widget.
 	 */
 	public void setCustom(Widget customWidget)
 	{

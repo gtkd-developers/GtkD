@@ -84,7 +84,7 @@ private import gtk.Dialog;
  *  Note that GtkFileChooserDialog does not have any methods of its
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
- * Example 41. Typical usage
+ * Example 42. Typical usage
  * 	In the simplest of cases, you can the following code to use
  * 	GtkFileChooserDialog to select a file for opening:
  * GtkWidget *dialog;

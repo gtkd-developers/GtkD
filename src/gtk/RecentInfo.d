@@ -275,11 +275,11 @@ public class RecentInfo
 	 * count =  return location for the number of times this item was registered
 	 * time =  return location for the timestamp this item was last registered
 	 *  for this application
-	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. You should free the returned command line using g_free().
+	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. The app_exec string is owned by the GtkRecentInfo and should not be modified or freed
 	 */
 	public int getApplicationInfo(string appName, out string appExec, out uint count, out uint time)
 	{
-		// gboolean gtk_recent_info_get_application_info  (GtkRecentInfo *info,  const gchar *app_name,  gchar **app_exec,  guint *count,  time_t *time_);
+		// gboolean gtk_recent_info_get_application_info  (GtkRecentInfo *info,  const gchar *app_name,  const gchar **app_exec,  guint *count,  time_t *time_);
 		char* outappExec = null;
 		
 		auto p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &time);

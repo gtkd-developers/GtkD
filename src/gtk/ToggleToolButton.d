@@ -128,13 +128,13 @@ public class ToggleToolButton : ToolButton
 	 *
 	 * GtkToolbar, GtkToolButton, GtkSeparatorToolItem
 	 * The toolbar widget
-	 * 	The parent class of GtkToggleToolButton. The properties
-	 * 	"label_widget", "label", "icon_widget", and "stock_id" on
-	 * 	GtkToolButton determine the label and icon used on
-	 * 	GtkToggleToolButtons.
+	 *  The parent class of GtkToggleToolButton. The properties
+	 *  "label_widget", "label", "icon_widget", and "stock_id" on
+	 *  GtkToolButton determine the label and icon used on
+	 *  GtkToggleToolButtons.
 	 *
 	 * A subclass of GtkToolItem that separates groups of
-	 * 	items on a toolbar.
+	 *  items on a toolbar.
 	 *
 	 */
 	void addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

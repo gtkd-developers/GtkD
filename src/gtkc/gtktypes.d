@@ -793,8 +793,9 @@ alias GtkStateType StateType;
  * GtkSubmenuDirection is deprecated and should not be used in newly-written code.
  * Indicates the direction a sub-menu will appear.
  * GTK_DIRECTION_LEFT
- * A sub-menu will appear
+ * A sub-menu will appear to the left of the current menu.
  * GTK_DIRECTION_RIGHT
+ * A sub-menu will appear to the right of the current menu.
  */
 public enum GtkSubmenuDirection
 {
@@ -839,6 +840,15 @@ public enum GtkToolbarStyle
 }
 alias GtkToolbarStyle ToolbarStyle;
 
+/**
+ * Used by GtkRange to control the policy for notifying value changes.
+ * GTK_UPDATE_CONTINUOUS
+ * Notify updates whenever the value changed
+ * GTK_UPDATE_DISCONTINUOUS
+ * Notify updates when the mouse button has been released
+ * GTK_UPDATE_DELAYED
+ * Space out updates with a small timeout
+ */
 public enum GtkUpdateType
 {
 	CONTINUOUS,
@@ -1745,7 +1755,8 @@ public enum GtkPrintPages
 {
 	ALL,
 	CURRENT,
-	RANGES
+	RANGES,
+	SELECTION
 }
 alias GtkPrintPages PrintPages;
 
@@ -2045,7 +2056,8 @@ public enum GtkBuilderError
 	INVALID_TAG,
 	MISSING_PROPERTY_VALUE,
 	INVALID_VALUE,
-	VERSION_MISMATCH
+	VERSION_MISMATCH,
+	DUPLICATE_ID
 }
 alias GtkBuilderError BuilderError;
 
@@ -2557,8 +2569,10 @@ public struct GtkTypeInfo
  * Main Gtk struct.
  * GtkMountOperation is an implementation of GMountOperation that
  * can be used with GIO functions for mounting volumes such as
- * g_file_mount_enclosing_volume() or g_file_mount_mountable().
- * When necessary, GtkMountOperation shows dialogs to ask for passwords.
+ * g_file_mount_enclosing_volume(), g_file_mount_mountable(),
+ * g_volume_mount(), g_mount_unmount() and others.
+ * When necessary, GtkMountOperation shows dialogs to ask for
+ * passwords, questions or show processes blocking unmount.
  */
 public struct GtkMountOperation{}
 
@@ -2660,6 +2674,12 @@ public struct GtkStatusbar{}
 /**
  * Main Gtk struct.
  */
+public struct GtkInfoBar{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkStatusIcon{}
 
 
@@ -2717,6 +2737,12 @@ public struct GtkVolumeButton{}
  * The GtkEntry struct contains only private data.
  */
 public struct GtkEntry{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkEntryBuffer{}
 
 
 /**
@@ -6457,6 +6483,8 @@ public typedef extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTr
  * A user function supplied when calling gtk_menu_popup() which controls the
  * positioning of the menu when it is displayed. The function sets the x
  * and y parameters to the coordinates where the menu is to be drawn.
+ * To make the menu appear on a different monitor than the mouse pointer,
+ * gtk_menu_set_monitor() must be called.
  * menu :
  * a GtkMenu.
  * x :
@@ -6476,9 +6504,6 @@ public typedef extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTr
  *  In practice, this behavior is only useful for combobox popups or option
  *  menus and cannot be used to simply confine a menu to monitor boundaries.
  *  In that case, changing the scroll offset is not desirable.
- *  To simply constrain the menu within the monitor, get its size with
- *  gtk_widget_size_request() before showing it, and alter the coordinates
- *  passed to gtk_menu_popup() accordingly.
  * user_data :
  * the data supplied by the user in the gtk_menu_popup() data
  * parameter.

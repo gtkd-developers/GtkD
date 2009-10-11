@@ -152,9 +152,9 @@ private import gtk.Window;
  * Example 7. A GtkDialog UI definition fragment.
  * <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">"
- *  <object class="GtkVBox">
+ *  <object class="GtkVBox" id="vbox">
  *  <child internal-child="action_area">
- *  <object class="GtkHButtonBox">
+ *  <object class="GtkHButtonBox" id="button_box">
  *  <child>
  *  <object class="GtkButton" id="button_cancel"/>
  *  </child>

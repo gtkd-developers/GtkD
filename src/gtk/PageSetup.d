@@ -91,7 +91,7 @@ private import gobject.ObjectG;
  * To obtain a GtkPageSetup use gtk_page_setup_new()
  * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
  * the page setup dialog and receive the resulting page setup.
- * Example 47. A page setup dialog
+ * Example 48. A page setup dialog
  * static GtkPrintSettings *settings = NULL;
  * static GtkPageSetup *page_setup = NULL;
  * static void

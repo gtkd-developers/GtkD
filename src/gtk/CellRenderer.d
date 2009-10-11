@@ -366,8 +366,8 @@ public class CellRenderer : ObjectGtk
 	/**
 	 * Fills in width and height with the appropriate size of cell.
 	 * Params:
-	 * width =  location to fill in with the fixed width of the widget, or NULL
-	 * height =  location to fill in with the fixed height of the widget, or NULL
+	 * width =  location to fill in with the fixed width of the cell, or NULL
+	 * height =  location to fill in with the fixed height of the cell, or NULL
 	 */
 	public void getFixedSize(out int width, out int height)
 	{
@@ -385,5 +385,103 @@ public class CellRenderer : ObjectGtk
 	{
 		// void gtk_cell_renderer_set_fixed_size (GtkCellRenderer *cell,  gint width,  gint height);
 		gtk_cell_renderer_set_fixed_size(gtkCellRenderer, width, height);
+	}
+	
+	/**
+	 * Returns the cell renderer's visibility.
+	 * Since 2.18
+	 * Returns: TRUE if the cell renderer is visible
+	 */
+	public int getVisible()
+	{
+		// gboolean gtk_cell_renderer_get_visible (GtkCellRenderer *cell);
+		return gtk_cell_renderer_get_visible(gtkCellRenderer);
+	}
+	
+	/**
+	 * Sets the cell renderer's visibility.
+	 * Since 2.18
+	 * Params:
+	 * visible =  the visibility of the cell
+	 */
+	public void setVisible(int visible)
+	{
+		// void gtk_cell_renderer_set_visible (GtkCellRenderer *cell,  gboolean visible);
+		gtk_cell_renderer_set_visible(gtkCellRenderer, visible);
+	}
+	
+	/**
+	 * Returns the cell renderer's sensitivity.
+	 * Since 2.18
+	 * Returns: TRUE if the cell renderer is sensitive
+	 */
+	public int getSensitive()
+	{
+		// gboolean gtk_cell_renderer_get_sensitive (GtkCellRenderer *cell);
+		return gtk_cell_renderer_get_sensitive(gtkCellRenderer);
+	}
+	
+	/**
+	 * Sets the cell renderer's sensitivity.
+	 * Since 2.18
+	 * Params:
+	 * sensitive =  the sensitivity of the cell
+	 */
+	public void setSensitive(int sensitive)
+	{
+		// void gtk_cell_renderer_set_sensitive (GtkCellRenderer *cell,  gboolean sensitive);
+		gtk_cell_renderer_set_sensitive(gtkCellRenderer, sensitive);
+	}
+	
+	/**
+	 * Fills in xalign and yalign with the appropriate values of cell.
+	 * Since 2.18
+	 * Params:
+	 * xalign =  location to fill in with the x alignment of the cell, or NULL
+	 * yalign =  location to fill in with the y alignment of the cell, or NULL
+	 */
+	public void getAlignment(out float xalign, out float yalign)
+	{
+		// void gtk_cell_renderer_get_alignment (GtkCellRenderer *cell,  gfloat *xalign,  gfloat *yalign);
+		gtk_cell_renderer_get_alignment(gtkCellRenderer, &xalign, &yalign);
+	}
+	
+	/**
+	 * Sets the renderer's alignment within its available space.
+	 * Since 2.18
+	 * Params:
+	 * xalign =  the x alignment of the cell renderer
+	 * yalign =  the y alignment of the cell renderer
+	 */
+	public void setAlignment(float xalign, float yalign)
+	{
+		// void gtk_cell_renderer_set_alignment (GtkCellRenderer *cell,  gfloat xalign,  gfloat yalign);
+		gtk_cell_renderer_set_alignment(gtkCellRenderer, xalign, yalign);
+	}
+	
+	/**
+	 * Fills in xpad and ypad with the appropriate values of cell.
+	 * Since 2.18
+	 * Params:
+	 * xpad =  location to fill in with the x padding of the cell, or NULL
+	 * ypad =  location to fill in with the y padding of the cell, or NULL
+	 */
+	public void getPadding(out int xpad, out int ypad)
+	{
+		// void gtk_cell_renderer_get_padding (GtkCellRenderer *cell,  gint *xpad,  gint *ypad);
+		gtk_cell_renderer_get_padding(gtkCellRenderer, &xpad, &ypad);
+	}
+	
+	/**
+	 * Sets the renderer's padding.
+	 * Since 2.18
+	 * Params:
+	 * xpad =  the x padding of the cell renderer
+	 * ypad =  the y padding of the cell renderer
+	 */
+	public void setPadding(int xpad, int ypad)
+	{
+		// void gtk_cell_renderer_set_padding (GtkCellRenderer *cell,  gint xpad,  gint ypad);
+		gtk_cell_renderer_set_padding(gtkCellRenderer, xpad, ypad);
 	}
 }

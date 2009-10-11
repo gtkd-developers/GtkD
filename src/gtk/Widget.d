@@ -192,7 +192,7 @@ private import gtk.ObjectGtk;
  * The GtkWidget implementation of the GtkBuildable interface supports a
  * custom <accelerator> element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
- * Example 53. A UI definition fragment specifying an accelerator
+ * Example 54. A UI definition fragment specifying an accelerator
  * <object class="GtkButton">
  *  <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
  * </object>
@@ -200,13 +200,13 @@ private import gtk.ObjectGtk;
  * custom <accessible> element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
- * Example 54. A UI definition fragment specifying an accessible
+ * Example 55. A UI definition fragment specifying an accessible
  * <object class="GtkButton" id="label1"/>
  *  <property name="label">I am a Label for a Button</property>
  * </object>
  * <object class="GtkButton" id="button1">
  *  <accessibility>
- *  <action action_name="click" description="Click the button."/>
+ *  <action action_name="click" translatable="yes">Click the button.</action>
  *  <relation target="label1" type="labelled-by"/>
  *  </accessibility>
  *  <child internal-child="accessible">
@@ -3382,8 +3382,9 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Causes widget to have the keyboard focus for the GtkWindow it's
 	 * inside. widget must be a focusable widget, such as a GtkEntry;
-	 * something like GtkFrame won't work. (More precisely, it must have the
-	 * GTK_CAN_FOCUS flag set.)
+	 * something like GtkFrame won't work.
+	 * More precisely, it must have the GTK_CAN_FOCUS flag set. Use
+	 * gtk_widget_set_can_focus() to modify that flag.
 	 */
 	public void grabFocus()
 	{
@@ -3394,8 +3395,8 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Causes widget to become the default widget. widget must have the
 	 * GTK_CAN_DEFAULT flag set; typically you have to set this flag
-	 * yourself by calling GTK_WIDGET_SET_FLAGS (widget,
-	 * GTK_CAN_DEFAULT). The default widget is activated when
+	 * yourself by calling gtk_widget_set_can_default (widget,
+	 * TRUE). The default widget is activated when
 	 * the user presses Enter in a window. Default widgets must be
 	 * activatable, that is, gtk_widget_activate() should affect them.
 	 */
@@ -5236,6 +5237,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * hiding custom_window at the right moment, to behave likewise as
 	 * the default tooltip window. If custom_window is NULL, the default
 	 * tooltip window will be used.
+	 * If the custom window should have the default theming it needs to
+	 * have the name "gtk-tooltip", see gtk_widget_set_name().
 	 * Since 2.12
 	 * Params:
 	 * customWindow =  a GtkWindow, or NULL
@@ -5320,6 +5323,308 @@ public Pixmap getSnapshot(Rectangle clipRect)
 		return null;
 	}
 	return new Pixmap(cast(GdkPixmap*) p);
+}
+
+/**
+ * Sets the widget's allocation. This should not be used
+ * directly, but from within a widget's size_allocate method.
+ * Since 2.18
+ * Params:
+ * allocation =  a pointer to a GtkAllocation to copy from
+ */
+public void setAllocation(inout GtkAllocation allocation)
+{
+	// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
+	gtk_widget_set_allocation(gtkWidget, &allocation);
+}
+
+/**
+ * Determines whether the application intends to draw on the widget in
+ * an "expose-event" handler.
+ * See gtk_widget_set_app_paintable()
+ * Since 2.18
+ * Returns: TRUE if the widget is app paintable
+ */
+public int getAppPaintable()
+{
+	// gboolean gtk_widget_get_app_paintable (GtkWidget *widget);
+	return gtk_widget_get_app_paintable(gtkWidget);
+}
+
+/**
+ * Determines whether widget can be a default widget. See
+ * gtk_widget_set_can_default().
+ * Since 2.18
+ * Returns: TRUE if widget can be a default widget, FALSE otherwise
+ */
+public int getCanDefault()
+{
+	// gboolean gtk_widget_get_can_default (GtkWidget *widget);
+	return gtk_widget_get_can_default(gtkWidget);
+}
+
+/**
+ * Specifies whether widget can be a default widget. See
+ * gtk_widget_grab_default() for details about the meaning of
+ * "default".
+ * Since 2.18
+ * Params:
+ * canDefault =  whether or not widget can be a default widget.
+ */
+public void setCanDefault(int canDefault)
+{
+	// void gtk_widget_set_can_default (GtkWidget *widget,  gboolean can_default);
+	gtk_widget_set_can_default(gtkWidget, canDefault);
+}
+
+/**
+ * Determines whether widget can own the input focus. See
+ * gtk_widget_set_can_focus().
+ * Since 2.18
+ * Returns: TRUE if widget can own the input focus, FALSE otherwise
+ */
+public int getCanFocus()
+{
+	// gboolean gtk_widget_get_can_focus (GtkWidget *widget);
+	return gtk_widget_get_can_focus(gtkWidget);
+}
+
+/**
+ * Specifies whether widget can own the input focus. See
+ * gtk_widget_grab_focus() for actually setting the input focus on a
+ * widget.
+ * Since 2.18
+ * Params:
+ * canFocus =  whether or not widget can own the input focus.
+ */
+public void setCanFocus(int canFocus)
+{
+	// void gtk_widget_set_can_focus (GtkWidget *widget,  gboolean can_focus);
+	gtk_widget_set_can_focus(gtkWidget, canFocus);
+}
+
+/**
+ * Determines whether the widget is double buffered.
+ * See gtk_widget_set_double_buffered()
+ * Since 2.18
+ * Returns: TRUE if the widget is double buffered
+ */
+public int getDoubleBuffered()
+{
+	// gboolean gtk_widget_get_double_buffered (GtkWidget *widget);
+	return gtk_widget_get_double_buffered(gtkWidget);
+}
+
+/**
+ * Determines whether widget has a GdkWindow of its own. See
+ * gtk_widget_set_has_window().
+ * Since 2.18
+ * Returns: TRUE if widget has a window, FALSE otherwise
+ */
+public int getHasWindow()
+{
+	// gboolean gtk_widget_get_has_window (GtkWidget *widget);
+	return gtk_widget_get_has_window(gtkWidget);
+}
+
+/**
+ * Specifies whether widget has a GdkWindow of its own. Note that
+ * all realized widgets have a non-NULL "window" pointer
+ * (gtk_widget_get_window() never returns a NULL window when a widget
+ * is realized), but for many of them it's actually the GdkWindow of
+ * one of its parent widgets. Widgets that create a window for
+ * themselves in GtkWidget::realize() however must announce this by
+ * calling this function with has_window = TRUE.
+ * This function should only be called by widget implementations,
+ * and they should call it in their init() function.
+ * Since 2.18
+ * Params:
+ * hasWindow =  whether or not widget has a window.
+ */
+public void setHasWindow(int hasWindow)
+{
+	// void gtk_widget_set_has_window (GtkWidget *widget,  gboolean has_window);
+	gtk_widget_set_has_window(gtkWidget, hasWindow);
+}
+
+/**
+ * Returns the widget's sensitivity (in the sense of returning
+ * the value that has been set using gtk_widget_set_sensitive()).
+ * The effective sensitivity of a widget is however determined by both its
+ * own and its parent widget's sensitivity. See gtk_widget_is_sensitive().
+ * Since 2.18
+ * Returns: TRUE if the widget is sensitive
+ */
+public int getSensitive()
+{
+	// gboolean gtk_widget_get_sensitive (GtkWidget *widget);
+	return gtk_widget_get_sensitive(gtkWidget);
+}
+
+/**
+ * Returns the widget's effective sensitivity, which means
+ * it is sensitive itself and also its parent widget is sensntive
+ * Since 2.18
+ * Returns: TRUE if the widget is effectively sensitive
+ */
+public int isSensitive()
+{
+	// gboolean gtk_widget_is_sensitive (GtkWidget *widget);
+	return gtk_widget_is_sensitive(gtkWidget);
+}
+
+/**
+ * Returns the widget's state. See gtk_widget_set_state().
+ * Since 2.18
+ * Returns: the state of widget.
+ */
+public GtkStateType getState()
+{
+	// GtkStateType gtk_widget_get_state (GtkWidget *widget);
+	return gtk_widget_get_state(gtkWidget);
+}
+
+/**
+ * Determines whether the widget is visible. Note that this doesn't
+ * take into account whether the widget's parent is also visible
+ * or the widget is obscured in any way.
+ * See gtk_widget_set_visible().
+ * Since 2.18
+ * Returns: TRUE if the widget is visible
+ */
+public int getVisible()
+{
+	// gboolean gtk_widget_get_visible (GtkWidget *widget);
+	return gtk_widget_get_visible(gtkWidget);
+}
+
+/**
+ * Sets the visibility state of widget. Note that setting this to
+ * TRUE doesn't mean the widget is actually viewable, see
+ * gtk_widget_get_visible().
+ * This function simply calls gtk_widget_show() or gtk_widget_hide()
+ * but is nicer to use when the visibility of the widget depends on
+ * some condition.
+ * Since 2.18
+ * Params:
+ * visible =  whether the widget should be shown or not
+ */
+public void setVisible(int visible)
+{
+	// void gtk_widget_set_visible (GtkWidget *widget,  gboolean visible);
+	gtk_widget_set_visible(gtkWidget, visible);
+}
+
+/**
+ * Determines whether widget is the current default widget within its
+ * toplevel. See gtk_widget_set_can_default().
+ * Since 2.18
+ * Returns: TRUE if widget is the current default widget within its toplevel, FALSE otherwise
+ */
+public int hasDefault()
+{
+	// gboolean gtk_widget_has_default (GtkWidget *widget);
+	return gtk_widget_has_default(gtkWidget);
+}
+
+/**
+ * Determines if the widget has the global input focus. See
+ * gtk_widget_is_focus() for the difference between having the global
+ * input focus, and only having the focus within a toplevel.
+ * Since 2.18
+ * Returns: TRUE if the widget has the global input focus.
+ */
+public int hasFocus()
+{
+	// gboolean gtk_widget_has_focus (GtkWidget *widget);
+	return gtk_widget_has_focus(gtkWidget);
+}
+
+/**
+ * Determines whether the widget is currently grabbing events, so it
+ * is the only widget receiving input events (keyboard and mouse).
+ * See also gtk_grab_add().
+ * Since 2.18
+ * Returns: TRUE if the widget is in the grab_widgets stack
+ */
+public int hasGrab()
+{
+	// gboolean gtk_widget_has_grab (GtkWidget *widget);
+	return gtk_widget_has_grab(gtkWidget);
+}
+
+/**
+ * Determines whether widget can be drawn to. A widget can be drawn
+ * to if it is mapped and visible.
+ * Since 2.18
+ * Returns: TRUE if widget is drawable, FALSE otherwise
+ */
+public int isDrawable()
+{
+	// gboolean gtk_widget_is_drawable (GtkWidget *widget);
+	return gtk_widget_is_drawable(gtkWidget);
+}
+
+/**
+ * Determines whether widget is a toplevel widget. Currently only
+ * GtkWindow and GtkInvisible are toplevel widgets. Toplevel
+ * widgets have no parent widget.
+ * Since 2.18
+ * Returns: TRUE if widget is a toplevel, FALSE otherwise
+ */
+public int isToplevel()
+{
+	// gboolean gtk_widget_is_toplevel (GtkWidget *widget);
+	return gtk_widget_is_toplevel(gtkWidget);
+}
+
+/**
+ * Sets a widget's window. This function should only be used in a
+ * widget's GtkWidget::realize() implementation. The window passed is
+ * usually either new window created with gdk_window_new(), or the
+ * window of its parent widget as returned by
+ * gtk_widget_get_parent_window().
+ * Widgets must indicate whether they will create their own GdkWindow
+ * by calling gtk_widget_set_has_window(). This is usually done in the
+ * widget's init() function.
+ * Since 2.18
+ * Params:
+ * window =  a GdkWindow
+ */
+public void setWindow(Window window)
+{
+	// void gtk_widget_set_window (GtkWidget *widget,  GdkWindow *window);
+	gtk_widget_set_window(gtkWidget, (window is null) ? null : window.getWindowStruct());
+}
+
+/**
+ * Specifies whether widget will be treated as the default widget
+ * within its toplevel when it has the focus, even if another widget
+ * is the default.
+ * See gtk_widget_grab_default() for details about the meaning of
+ * "default".
+ * Since 2.18
+ * Params:
+ * receivesDefault =  whether or not widget can be a default widget.
+ */
+public void setReceivesDefault(int receivesDefault)
+{
+	// void gtk_widget_set_receives_default (GtkWidget *widget,  gboolean receives_default);
+	gtk_widget_set_receives_default(gtkWidget, receivesDefault);
+}
+
+/**
+ * Determines whether widget is alyways treated as default widget
+ * withing its toplevel when it has the focus, even if another widget
+ * is the default.
+ * See gtk_widget_set_receives_default().
+ * Since 2.18
+ * Returns: TRUE if widget acts as default widget when focussed, FALSE otherwise
+ */
+public int getReceivesDefault()
+{
+	// gboolean gtk_widget_get_receives_default (GtkWidget *widget);
+	return gtk_widget_get_receives_default(gtkWidget);
 }
 
 /**

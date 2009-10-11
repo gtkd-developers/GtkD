@@ -71,7 +71,8 @@ private import gtk.Scrollbar;
  * scrollbar. See GtkScrollbar for details on
  * scrollbars. GtkAdjustment pointers may be added to handle the
  * adjustment of the scrollbar or it may be left NULL in which case one
- * will be created for you. See GtkAdjustment for details.
+ * will be created for you. See GtkScrollbar for a description of what the
+ * fields in an adjustment represent for a scrollbar.
  */
 public class HScrollbar : Scrollbar
 {

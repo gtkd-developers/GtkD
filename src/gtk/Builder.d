@@ -227,7 +227,7 @@ private import gobject.ObjectG;
  * in a UI definition by specifying the "type" attribute on a <child>
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
- * Example 57. A GtkBuilder UI Definition
+ * Example 58. A GtkBuilder UI Definition
  * <interface>
  *  <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">
@@ -275,7 +275,9 @@ private import gobject.ObjectG;
  * GtkTreeView,
  * GtkUIManager,
  * GtkActionGroup.
- * GtkMenuItem.
+ * GtkMenuItem,
+ * GtkAssistant,
+ * GtkScale.
  */
 public class Builder : ObjectG
 {

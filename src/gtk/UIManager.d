@@ -148,7 +148,7 @@ private import gobject.ObjectG;
  * would mess up path lookup) and must be usable as XML attributes when
  * enclosed in doublequotes, thus they must not '"' characters or references
  * to the quot; entity.
- * Example 32. A UI definition
+ * Example 33. A UI definition
  * <ui>
  *  <menubar>
  *  <menu name="FileMenu" action="FileMenuAction">
@@ -246,7 +246,7 @@ private import gobject.ObjectG;
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
  * "constructor" attribute. See the example below.
- * Example 33. An embedded GtkUIManager UI definition
+ * Example 34. An embedded GtkUIManager UI definition
  * <object class="GtkUIManager" id="uiman">
  *  <child>
  *  <object class="GtkActionGroup" id="actiongroup">

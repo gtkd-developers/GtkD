@@ -77,6 +77,11 @@ private import gtk.Window;
  * A GtkAssistant is a widget used to represent a generally complex
  * operation splitted in several steps, guiding the user through its pages
  * and controlling the page flow to collect the necessary data.
+ * GtkAssistant as GtkBuildable
+ * The GtkAssistant implementation of the GtkBuildable interface exposes the
+ * action_area as internal children with the name "action_area".
+ * To add pages to an assistant in GtkBuilder, simply add it as a <child>
+ * to the GtkAssistant object, and set its child properties as necessary.
  */
 public class Assistant : Window
 {
@@ -125,13 +130,13 @@ public class Assistant : Window
 	void delegate(Assistant)[] onApplyListeners;
 	/**
 	 * The ::apply signal is emitted when the apply button is clicked. The default
-	 * behavior of the GtkAssistant is to switch to the page after the current page,
-	 * unless the current page is the last one.
-	 * A handler for the ::apply signal should carry out the actions for which the
-	 * wizard has collected data. If the action takes a long time to complete, you
-	 * might consider to put a page of type GTK_ASSISTANT_PAGE_PROGRESS after the
-	 * confirmation page and handle this operation within the ::prepare signal of
-	 * the progress page.
+	 * behavior of the GtkAssistant is to switch to the page after the current
+	 * page, unless the current page is the last one.
+	 * A handler for the ::apply signal should carry out the actions for which
+	 * the wizard has collected data. If the action takes a long time to complete,
+	 * you might consider to put a page of type GTK_ASSISTANT_PAGE_PROGRESS
+	 * after the confirmation page and handle this operation within the
+	 * "prepare" signal of the progress page.
 	 * Since 2.10
 	 */
 	void addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -217,7 +222,7 @@ public class Assistant : Window
 	
 	void delegate(Widget, Assistant)[] onPrepareListeners;
 	/**
-	 * The ::prepared signal is emitted when a new page is set as the assistant's
+	 * The ::prepare signal is emitted when a new page is set as the assistant's
 	 * current page, before making the new page visible. A handler for this signal
 	 * can do any preparation which are necessary before showing page.
 	 * Since 2.10
@@ -511,7 +516,7 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Gets whether page is complete..
+	 * Gets whether page is complete.
 	 * Since 2.10
 	 * Params:
 	 * page =  a page of assistant

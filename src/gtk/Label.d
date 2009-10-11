@@ -166,6 +166,16 @@ private import gtk.Misc;
  * gtk_label_set_justify() sets how the lines in a label align
  * with one another. If you want to set how the label as a whole
  * aligns in its available space, see gtk_misc_set_alignment().
+ * <hr>
+ * Links
+ * Since 2.18, GTK+ supports markup for clickable hyperlinks in addition
+ * to regular Pango markup. The markup for links is borrowed from HTML, using the
+ * a with href and title attributes. GTK+ renders links similar to the
+ * way they appear in web browsers, with colored, underlined text. The title
+ * attribute is displayed as a tooltip on the link. An example looks like this:
+ * gtk_label_set_markup (label, "Go to the <a href=\"http://www.gtk.org\" title=\"lt;igt;Our/igt; website\">GTK+ website</a> for more...");
+ * It is possible to implement custom handling for links and their tooltips with
+ * the "activate-link" signal and the gtk_label_get_current_uri() function.
  */
 public class Label : Misc
 {
@@ -253,6 +263,73 @@ public class Label : Misc
 	/**
 	 */
 	int[char[]] connectedSignals;
+	
+	void delegate(Label)[] onActivateCurrentLinkListeners;
+	/**
+	 * A keybinding signal
+	 * which gets emitted when the user activates a link in the label.
+	 * Applications may also emit the signal with g_signal_emit_by_name()
+	 * if they need to control activation of URIs programmatically.
+	 * The default bindings for this signal are all forms of the Enter key.
+	 * Since 2.18
+	 */
+	void addOnActivateCurrentLink(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("activate-current-link" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"activate-current-link",
+			cast(GCallback)&callBackActivateCurrentLink,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["activate-current-link"] = 1;
+		}
+		onActivateCurrentLinkListeners ~= dlg;
+	}
+	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, Label label)
+	{
+		foreach ( void delegate(Label) dlg ; label.onActivateCurrentLinkListeners )
+		{
+			dlg(label);
+		}
+	}
+	
+	bool delegate(string, Label)[] onActivateLinkListeners;
+	/**
+	 * The signal which gets emitted to activate a URI.
+	 * Applications may connect to it to override the default behaviour,
+	 * which is to call gtk_show_uri().
+	 * Since 2.18
+	 */
+	void addOnActivateLink(bool delegate(string, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("activate-link" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"activate-link",
+			cast(GCallback)&callBackActivateLink,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["activate-link"] = 1;
+		}
+		onActivateLinkListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackActivateLink(GtkLabel* labelStruct, gchar* uri, Label label)
+	{
+		foreach ( bool delegate(string, Label) dlg ; label.onActivateLinkListeners )
+		{
+			if ( dlg(Str.toString(uri), label) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
 	
 	void delegate(Label)[] onCopyClipboardListeners;
 	/**
@@ -930,5 +1007,46 @@ public class Label : Misc
 	{
 		// void gtk_label_set_angle (GtkLabel *label,  gdouble angle);
 		gtk_label_set_angle(gtkLabel, angle);
+	}
+	
+	/**
+	 * Returns the URI for the currently active link in the label.
+	 * The active link is the one under the mouse pointer or, in a
+	 * selectable label, the link in which the text cursor is currently
+	 * positioned.
+	 * This function is intended for use in a "link-activate" handler
+	 * or for use in a "query-tooltip" handler.
+	 * Since 2.18
+	 * Returns: the currently active URI. The string is owned by GTK+ and must not be freed or modified.
+	 */
+	public string getCurrentUri()
+	{
+		// const gchar * gtk_label_get_current_uri (GtkLabel *label);
+		return Str.toString(gtk_label_get_current_uri(gtkLabel));
+	}
+	
+	/**
+	 * Sets whether the label should keep track of clicked
+	 * links (and use a different color for them).
+	 * Since 2.18
+	 * Params:
+	 * trackLinks =  TRUE to track visited links
+	 */
+	public void setTrackVisitedLinks(int trackLinks)
+	{
+		// void gtk_label_set_track_visited_links (GtkLabel *label,  gboolean track_links);
+		gtk_label_set_track_visited_links(gtkLabel, trackLinks);
+	}
+	
+	/**
+	 * Returns whether the label is currently keeping track
+	 * of clicked links.
+	 * Since 2.18
+	 * Returns: TRUE if clicked links are remembered
+	 */
+	public int getTrackVisitedLinks()
+	{
+		// gboolean gtk_label_get_track_visited_links (GtkLabel *label);
+		return gtk_label_get_track_visited_links(gtkLabel);
 	}
 }

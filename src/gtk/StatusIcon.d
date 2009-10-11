@@ -807,6 +807,32 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Sets the title of this tray icon.
+	 * This should be a short, human-readable, localized string
+	 * describing the tray icon. It may be used by tools like screen
+	 * readers to render the tray icon.
+	 * Since 2.18
+	 * Params:
+	 * title =  the title
+	 */
+	public void setTitle(string title)
+	{
+		// void gtk_status_icon_set_title (GtkStatusIcon *status_icon,  const gchar *title);
+		gtk_status_icon_set_title(gtkStatusIcon, Str.toStringz(title));
+	}
+	
+	/**
+	 * Gets the title of this tray icon. See gtk_status_icon_set_title().
+	 * Since 2.18
+	 * Returns: the title of the status icon
+	 */
+	public string getTitle()
+	{
+		// const gchar * gtk_status_icon_get_title (GtkStatusIcon *status_icon);
+		return Str.toString(gtk_status_icon_get_title(gtkStatusIcon));
+	}
+	
+	/**
 	 * Shows or hides a status icon.
 	 * Since 2.10
 	 * Params:

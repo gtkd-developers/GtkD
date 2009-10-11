@@ -88,12 +88,14 @@ private import gtk.Dialog;
  * <user@host>, URLs are
  * recognized by looking for http://url, with
  * url extending to the next space, tab or line break.
- * When setting the website and email hooks for the GtkAboutDialog widget,
- * you should remember that the order is important: you should set the hook
- * functions before setting the website and email URL properties, like this:
+ * Since 2.18 GtkAboutDialog provides default website and email hooks that use
+ * gtk_show_uri().
+ * If you want provide your own hooks overriding the default ones, it is important
+ * to do so before setting the website and email URL properties, like this:
  * gtk_about_dialog_set_url_hook (GTK_ABOUT_DIALOG (dialog), launch_url, NULL, NULL);
  * gtk_about_dialog_set_website (GTK_ABOUT_DIALOG (dialog), app_url);
- * Otherwise the GtkAboutDialog widget will not display the website and the
+ * To disable the default hooks, you can pass NULL as the hook func. Then,
+ * the GtkAboutDialog widget will not display the website or the
  * email addresses as clickable.
  * To make constructing a GtkAboutDialog as convenient as possible, you can
  * use the function gtk_show_about_dialog() which constructs and shows a dialog
@@ -555,6 +557,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Installs a global function to be called whenever the user activates an
 	 * email link in an about dialog.
+	 * Since 2.18 there exists a default function which uses gtk_show_uri(). To
+	 * deactivate it, you can pass NULL for func.
 	 * Since 2.6
 	 * Params:
 	 * func =  a function to call when an email link is activated.
@@ -571,6 +575,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Installs a global function to be called whenever the user activates a
 	 * URL link in an about dialog.
+	 * Since 2.18 there exists a default function which uses gtk_show_uri(). To
+	 * deactivate it, you can pass NULL for func.
 	 * Since 2.6
 	 * Params:
 	 * func =  a function to call when a URL link is activated.

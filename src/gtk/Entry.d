@@ -54,6 +54,7 @@
  * 	- gdk.Pixbuf
  * 	- gtk.Adjustment
  * 	- gtk.Border
+ * 	- gtk.EntryBuffer
  * 	- gtk.EntryCompletion
  * 	- pango.PgLayout
  * 	- gtk.EditableT
@@ -65,6 +66,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkBorder* -> Border
+ * 	- GtkEntryBuffer* -> EntryBuffer
  * 	- GtkEntryCompletion* -> EntryCompletion
  * 	- PangoLayout* -> PgLayout
  * module aliases:
@@ -88,6 +90,7 @@ private import gio.IconIF;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
 private import gtk.Border;
+private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
 private import pango.PgLayout;
 private import gtk.EditableT;
@@ -632,6 +635,24 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Creates a new entry with the specified text buffer.
+	 * Since 2.18
+	 * Params:
+	 * buffer =  The buffer to use for the new GtkEntry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (EntryBuffer buffer)
+	{
+		// GtkWidget* gtk_entry_new_with_buffer (GtkEntryBuffer *buffer);
+		auto p = gtk_entry_new_with_buffer((buffer is null) ? null : buffer.getEntryBufferStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_entry_new_with_buffer((buffer is null) ? null : buffer.getEntryBufferStruct())");
+		}
+		this(cast(GtkEntry*) p);
+	}
+	
+	/**
 	 * Warning
 	 * gtk_entry_new_with_max_length is deprecated and should not be used in newly-written code. Use gtk_entry_set_max_length() instead.
 	 * Creates a new GtkEntry widget with the given maximum length.
@@ -653,8 +674,39 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Get the GtkEntryBuffer object which holds the text for
+	 * this widget.
+	 * Since 2.18
+	 * Returns: A GtkEntryBuffer object.
+	 */
+	public EntryBuffer getBuffer()
+	{
+		// GtkEntryBuffer* gtk_entry_get_buffer (GtkEntry *entry);
+		auto p = gtk_entry_get_buffer(gtkEntry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new EntryBuffer(cast(GtkEntryBuffer*) p);
+	}
+	
+	/**
+	 * Set the GtkEntryBuffer object which holds the text for
+	 * this widget.
+	 * Since 2.18
+	 * Params:
+	 * buffer =  a GtkEntryBuffer
+	 */
+	public void setBuffer(EntryBuffer buffer)
+	{
+		// void gtk_entry_set_buffer (GtkEntry *entry,  GtkEntryBuffer *buffer);
+		gtk_entry_set_buffer(gtkEntry, (buffer is null) ? null : buffer.getEntryBufferStruct());
+	}
+	
+	/**
 	 * Sets the text in the widget to the given
 	 * value, replacing the current contents.
+	 * See gtk_entry_buffer_set_text().
 	 * Params:
 	 * text =  the new text
 	 */
@@ -1469,6 +1521,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * "drag-begin" signal to set a different icon. Note that you
 	 * have to use g_signal_connect_after() to ensure that your signal handler
 	 * gets executed after the default handler.
+	 * Since 2.16
 	 * Params:
 	 * iconPos =  icon position
 	 * targetList =  the targets (data formats) in which the data can be provided
@@ -1485,6 +1538,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * DND operation, or -1.
 	 * This function is meant to be used in a "drag-data-get"
 	 * callback.
+	 * Since 2.16
 	 * Returns: index of the icon which is the source of the current DND operation, or -1.
 	 */
 	public int getCurrentIconDragSource()

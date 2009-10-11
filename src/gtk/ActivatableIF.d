@@ -80,7 +80,7 @@ private import gtk.Action;
  * the action pointer and boolean flag on your instance, and calling
  * gtk_activatable_do_set_related_action() and
  * gtk_activatable_sync_action_properties() at the appropriate times.
- * Example 35. A class fragment implementing GtkActivatable
+ * Example 36. A class fragment implementing GtkActivatable
  * enum {
 	 * ...
 	 * PROP_ACTIVATABLE_RELATED_ACTION,

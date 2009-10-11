@@ -234,7 +234,7 @@ public class IconInfo
 	}
 	
 	/**
-	 * Creates a GtkIconInfo for a GtkPixbuf.
+	 * Creates a GtkIconInfo for a GdkPixbuf.
 	 * Since 2.14
 	 * Params:
 	 * iconTheme =  a GtkIconTheme

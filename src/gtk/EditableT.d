@@ -76,7 +76,7 @@ public import glib.Str;
  * As an example of the latter usage, by connecting
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
- * Example 18. Forcing entry to uppercase.
+ * Example 19. Forcing entry to uppercase.
  * #include <ctype.h>
  * void
  * insert_text_handler (GtkEditable *editable,

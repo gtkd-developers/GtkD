@@ -108,7 +108,7 @@ private import gobject.ObjectG;
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
- * Example 34. A GtkDialog UI definition fragment.
+ * Example 35. A GtkDialog UI definition fragment.
  * <object class="GtkActionGroup" id="actiongroup">
  *  <child>
  *  <object class="GtkAction" id="About">

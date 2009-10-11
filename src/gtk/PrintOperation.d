@@ -47,18 +47,20 @@
  * 	- ready
  * imports:
  * 	- glib.Str
+ * 	- gtk.Widget
  * 	- gtk.Window
  * 	- gtk.PageSetup
  * 	- gtk.PrintContext
  * 	- gtk.PrintSettings
- * 	- gtk.PrintOperationPreviewT
- * 	- gtk.PrintOperationPreviewIF
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gtk.PrintOperationPreviewT
+ * 	- gtk.PrintOperationPreviewIF
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintContext* -> PrintContext
  * 	- GtkPrintSettings* -> PrintSettings
+ * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -76,14 +78,15 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Widget;
 private import gtk.Window;
 private import gtk.PageSetup;
 private import gtk.PrintContext;
 private import gtk.PrintSettings;
-private import gtk.PrintOperationPreviewT;
-private import gtk.PrintOperationPreviewIF;
 private import glib.ErrorG;
 private import glib.GException;
+private import gtk.PrintOperationPreviewT;
+private import gtk.PrintOperationPreviewIF;
 
 
 
@@ -107,7 +110,7 @@ private import gobject.ObjectG;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example 45. The high-level printing API
+ * Example 46. The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -253,16 +256,16 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 	}
 	
-	void delegate(GtkWidget*, PrintOperation)[] onCustomWidgetApplyListeners;
+	void delegate(Widget, PrintOperation)[] onCustomWidgetApplyListeners;
 	/**
 	 * Emitted right before "begin-print" if you added
-	 * a custom widget in the "";create-custom-widget handler.
+	 * a custom widget in the "create-custom-widget" handler.
 	 * When you get this signal you should read the information from the
 	 * custom widgets, as the widgets are not guaraneed to be around at a
 	 * later time.
 	 * Since 2.10
 	 */
-	void addOnCustomWidgetApply(void delegate(GtkWidget*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCustomWidgetApply(void delegate(Widget, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("custom-widget-apply" in connectedSignals) )
 		{
@@ -279,9 +282,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* operationStruct, GtkWidget* widget, PrintOperation printOperation)
 	{
-		foreach ( void delegate(GtkWidget*, PrintOperation) dlg ; printOperation.onCustomWidgetApplyListeners )
+		foreach ( void delegate(Widget, PrintOperation) dlg ; printOperation.onCustomWidgetApplyListeners )
 		{
-			dlg(widget, printOperation);
+			dlg(new Widget(widget), printOperation);
 		}
 	}
 	
@@ -571,6 +574,36 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 	}
 	
+	void delegate(Widget, PageSetup, PrintSettings, PrintOperation)[] onUpdateCustomWidgetListeners;
+	/**
+	 * Emitted after change of selected printer. The actual page setup and
+	 * print settings are passed to the custom widget, which can actualize
+	 * itself according to this change.
+	 * Since 2.18
+	 */
+	void addOnUpdateCustomWidget(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("update-custom-widget" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"update-custom-widget",
+			cast(GCallback)&callBackUpdateCustomWidget,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["update-custom-widget"] = 1;
+		}
+		onUpdateCustomWidgetListeners ~= dlg;
+	}
+	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* operationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings, PrintOperation printOperation)
+	{
+		foreach ( void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg ; printOperation.onUpdateCustomWidgetListeners )
+		{
+			dlg(new Widget(widget), new PageSetup(setup), new PrintSettings(settings), printOperation);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new GtkPrintOperation.
@@ -721,6 +754,24 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		// void gtk_print_operation_set_n_pages (GtkPrintOperation *op,  gint n_pages);
 		gtk_print_operation_set_n_pages(gtkPrintOperation, nPages);
+	}
+	
+	/**
+	 * Returns the number of pages that will be printed.
+	 * Note that this value is set during print preparation phase
+	 * (GTK_PRINT_STATUS_PREPARING), so this function should never be
+	 * called before the data generation phase (GTK_PRINT_STATUS_GENERATING_DATA).
+	 * You can connect to the "status-changed" signal
+	 * and call gtk_print_operation_get_n_pages_to_print() when
+	 * print status is GTK_PRINT_STATUS_GENERATING_DATA.
+	 * This is typically used to track the progress of print operation.
+	 * Since 2.18
+	 * Returns: the number of pages that will be printed
+	 */
+	public int getNPagesToPrint()
+	{
+		// gint gtk_print_operation_get_n_pages_to_print  (GtkPrintOperation *op);
+		return gtk_print_operation_get_n_pages_to_print(gtkPrintOperation);
 	}
 	
 	/**
@@ -981,6 +1032,79 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		// gboolean gtk_print_operation_is_finished (GtkPrintOperation *op);
 		return gtk_print_operation_is_finished(gtkPrintOperation);
+	}
+	
+	/**
+	 * Sets whether selection is supported by GtkPrintOperation.
+	 * Since 2.18
+	 * Params:
+	 * supportSelection =  TRUE to support selection
+	 */
+	public void setSupportSelection(int supportSelection)
+	{
+		// void gtk_print_operation_set_support_selection  (GtkPrintOperation *op,  gboolean support_selection);
+		gtk_print_operation_set_support_selection(gtkPrintOperation, supportSelection);
+	}
+	
+	/**
+	 * Gets the value of "support-selection" property.
+	 * Since 2.18
+	 * Returns: whether the application supports print of selection
+	 */
+	public int getSupportSelection()
+	{
+		// gboolean gtk_print_operation_get_support_selection  (GtkPrintOperation *op);
+		return gtk_print_operation_get_support_selection(gtkPrintOperation);
+	}
+	
+	/**
+	 * Sets whether there is a selection to print.
+	 * Application has to set number of pages to which the selection
+	 * will draw by gtk_print_operation_set_n_pages() in a callback of
+	 * "begin-print".
+	 * Since 2.18
+	 * Params:
+	 * hasSelection =  TRUE indicates that a selection exists
+	 */
+	public void setHasSelection(int hasSelection)
+	{
+		// void gtk_print_operation_set_has_selection  (GtkPrintOperation *op,  gboolean has_selection);
+		gtk_print_operation_set_has_selection(gtkPrintOperation, hasSelection);
+	}
+	
+	/**
+	 * Gets the value of "has-selection" property.
+	 * Since 2.18
+	 * Returns: whether there is a selection
+	 */
+	public int getHasSelection()
+	{
+		// gboolean gtk_print_operation_get_has_selection  (GtkPrintOperation *op);
+		return gtk_print_operation_get_has_selection(gtkPrintOperation);
+	}
+	
+	/**
+	 * Embed page size combo box and orientation combo box into page setup page.
+	 * Selected page setup is stored as default page setup in GtkPrintOperation.
+	 * Since 2.18
+	 * Params:
+	 * embed =  TRUE to embed page setup selection in the GtkPrintDialog
+	 */
+	public void setEmbedPageSetup(int embed)
+	{
+		// void gtk_print_operation_set_embed_page_setup  (GtkPrintOperation *op,  gboolean embed);
+		gtk_print_operation_set_embed_page_setup(gtkPrintOperation, embed);
+	}
+	
+	/**
+	 * Gets the value of "embed-page-setup" property.
+	 * Since 2.18
+	 * Returns: whether page setup selection combos are embedded
+	 */
+	public int getEmbedPageSetup()
+	{
+		// gboolean gtk_print_operation_get_embed_page_setup  (GtkPrintOperation *op);
+		return gtk_print_operation_get_embed_page_setup(gtkPrintOperation);
 	}
 	
 	/**

@@ -93,11 +93,11 @@ private import gtk.MenuShell;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
- * Example 28. Connecting the popup signal handler.
+ * Example 29. Connecting the popup signal handler.
  *  /+* connect our handler which will popup the menu +/
  *  g_signal_connect_swapped (window, "button_press_event",
  * 	G_CALLBACK (my_popup_handler), menu);
- * Example 29. Signal handler which displays a popup menu.
+ * Example 30. Signal handler which displays a popup menu.
  * static gint
  * my_popup_handler (GtkWidget *widget, GdkEvent *event)
  * {
@@ -455,6 +455,31 @@ public class Menu : MenuShell
 	{
 		// gboolean gtk_menu_get_tearoff_state (GtkMenu *menu);
 		return gtk_menu_get_tearoff_state(gtkMenu);
+	}
+	
+	/**
+	 * Sets whether the menu should reserve space for drawing toggles
+	 * or icons, regardless of their actual presence.
+	 * Since 2.18
+	 * Params:
+	 * reserveToggleSize =  whether to reserve size for toggles
+	 */
+	public void setReserveToggleSize(int reserveToggleSize)
+	{
+		// void gtk_menu_set_reserve_toggle_size (GtkMenu *menu,  gboolean reserve_toggle_size);
+		gtk_menu_set_reserve_toggle_size(gtkMenu, reserveToggleSize);
+	}
+	
+	/**
+	 * Returns whether the menu reserves space for toggles and
+	 * icons, regardless of their actual presence.
+	 * Since 2.18
+	 * Returns: Whether the menu reserves toggle space
+	 */
+	public int getReserveToggleSize()
+	{
+		// gboolean gtk_menu_get_reserve_toggle_size (GtkMenu *menu);
+		return gtk_menu_get_reserve_toggle_size(gtkMenu);
 	}
 	
 	/**

@@ -273,7 +273,7 @@ public class Selections
 	 * Since 2.6
 	 * Params:
 	 * selectionData =  a GtkSelectionData
-	 * uris =  a NULL-terminated array of strings hilding URIs
+	 * uris =  a NULL-terminated array of strings holding URIs
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
 	 */
 	public static int dataSetUris(GtkSelectionData* selectionData, string[] uris)

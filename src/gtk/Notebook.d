@@ -89,7 +89,7 @@ private import gtk.Container;
  * of the tab must be created before the tab can be filled.
  * A tab child can be specified without specifying a <child>
  * type attribute.
- * Example 42. A UI definition fragment with GtkNotebook
+ * Example 43. A UI definition fragment with GtkNotebook
  * <object class="GtkNotebook">
  *  <child>
  *  <object class="GtkLabel" id="notebook-content">

@@ -228,10 +228,10 @@ public class MenuToolButton : ToolButton
 	 *
 	 * GtkToolbar, GtkToolButton
 	 * The toolbar widget
-	 * 	The parent class of GtkMenuToolButton. The properties
-	 * 	"label_widget", "label", "icon_widget", and "stock_id" on
-	 * 	GtkToolButton determine the label and icon used on
-	 * 	GtkMenuToolButtons.
+	 *  The parent class of GtkMenuToolButton. The properties
+	 *  "label_widget", "label", "icon_widget", and "stock_id" on
+	 *  GtkToolButton determine the label and icon used on
+	 *  GtkMenuToolButtons.
 	 *
 	 */
 	void addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

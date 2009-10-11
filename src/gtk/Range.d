@@ -529,4 +529,29 @@ public class Range : Widget, OrientableIF
 		// GtkSensitivityType gtk_range_get_upper_stepper_sensitivity  (GtkRange *range);
 		return gtk_range_get_upper_stepper_sensitivity(gtkRange);
 	}
+	
+	/**
+	 * Gets the value set by gtk_range_set_flippable().
+	 * Since 2.18
+	 * Returns: TRUE if the range is flippable
+	 */
+	public int getFlippable()
+	{
+		// gboolean gtk_range_get_flippable (GtkRange *range);
+		return gtk_range_get_flippable(gtkRange);
+	}
+	
+	/**
+	 * If a range is flippable, it will switch its direction if it is
+	 * horizontal and its direction is GTK_TEXT_DIR_RTL.
+	 * See gtk_widget_get_direction().
+	 * Since 2.18
+	 * Params:
+	 * flippable =  TRUE to make the range flippable
+	 */
+	public void setFlippable(int flippable)
+	{
+		// void gtk_range_set_flippable (GtkRange *range,  gboolean flippable);
+		gtk_range_set_flippable(gtkRange, flippable);
+	}
 }

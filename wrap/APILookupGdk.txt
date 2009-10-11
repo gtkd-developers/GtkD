@@ -873,6 +873,7 @@ file: gdk-Windows.html
 struct: GdkWindow
 class: Window
 prefix: gdk_window_
+prefix: gdk_
 noprefix: gdk_window_invalidate_maybe_recurse
 import: glib.Str
 #import: gdk.WindowAttr
