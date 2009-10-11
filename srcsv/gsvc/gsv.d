@@ -52,8 +52,13 @@ static this()
 	Linker.link(gtk_source_view_get_mark_category_priority, "gtk_source_view_get_mark_category_priority", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_mark_category_pixbuf, "gtk_source_view_set_mark_category_pixbuf", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_mark_category_pixbuf, "gtk_source_view_get_mark_category_pixbuf", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_category_icon_from_pixbuf, "gtk_source_view_set_mark_category_icon_from_pixbuf", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_category_icon_from_stock, "gtk_source_view_set_mark_category_icon_from_stock", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_category_icon_from_icon_name, "gtk_source_view_set_mark_category_icon_from_icon_name", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_mark_category_background, "gtk_source_view_get_mark_category_background", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_mark_category_background, "gtk_source_view_set_mark_category_background", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_category_tooltip_func, "gtk_source_view_set_mark_category_tooltip_func", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_category_tooltip_markup_func, "gtk_source_view_set_mark_category_tooltip_markup_func", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_highlight_current_line, "gtk_source_view_set_highlight_current_line", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_highlight_current_line, "gtk_source_view_get_highlight_current_line", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_show_line_marks, "gtk_source_view_set_show_line_marks", LIBRARY.GSV);
@@ -68,6 +73,7 @@ static this()
 	Linker.link(gtk_source_view_get_tab_width, "gtk_source_view_get_tab_width", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_draw_spaces, "gtk_source_view_set_draw_spaces", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_draw_spaces, "gtk_source_view_get_draw_spaces", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_gutter, "gtk_source_view_get_gutter", LIBRARY.GSV);
 
 	// gsv.SourceBuffer
 
@@ -96,6 +102,16 @@ static this()
 	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, "gtk_source_buffer_forward_iter_to_source_mark", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_backward_iter_to_source_mark, "gtk_source_buffer_backward_iter_to_source_mark", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_ensure_highlight, "gtk_source_buffer_ensure_highlight", LIBRARY.GSV);
+
+	// gsv.SourceGutter
+
+	Linker.link(gtk_source_gutter_get_window, "gtk_source_gutter_get_window", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_insert, "gtk_source_gutter_insert", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_reorder, "gtk_source_gutter_reorder", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_remove, "gtk_source_gutter_remove", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_set_cell_data_func, "gtk_source_gutter_set_cell_data_func", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_set_cell_size_func, "gtk_source_gutter_set_cell_size_func", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_queue_draw, "gtk_source_gutter_queue_draw", LIBRARY.GSV);
 
 	// gsv.SourceSearch
 
@@ -218,8 +234,13 @@ extern(C)
 	gint function(GtkSourceView* view, gchar* category) c_gtk_source_view_get_mark_category_priority;
 	void function(GtkSourceView* view, gchar* category, GdkPixbuf* pixbuf) c_gtk_source_view_set_mark_category_pixbuf;
 	GdkPixbuf* function(GtkSourceView* view, gchar* category) c_gtk_source_view_get_mark_category_pixbuf;
+	void function(GtkSourceView* view, gchar* category, GdkPixbuf* pixbuf) c_gtk_source_view_set_mark_category_icon_from_pixbuf;
+	void function(GtkSourceView* view, gchar* category, gchar* stockId) c_gtk_source_view_set_mark_category_icon_from_stock;
+	void function(GtkSourceView* view, gchar* category, gchar* name) c_gtk_source_view_set_mark_category_icon_from_icon_name;
 	gboolean function(GtkSourceView* view, gchar* category, GdkColor* dest) c_gtk_source_view_get_mark_category_background;
 	void function(GtkSourceView* view, gchar* category, GdkColor* color) c_gtk_source_view_set_mark_category_background;
+	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc func, gpointer userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_func;
+	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc markupFunc, gpointer userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_markup_func;
 	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_highlight_current_line;
 	gboolean function(GtkSourceView* view) c_gtk_source_view_get_highlight_current_line;
 	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_marks;
@@ -234,6 +255,7 @@ extern(C)
 	guint function(GtkSourceView* view) c_gtk_source_view_get_tab_width;
 	void function(GtkSourceView* view, GtkSourceDrawSpacesFlags flags) c_gtk_source_view_set_draw_spaces;
 	GtkSourceDrawSpacesFlags function(GtkSourceView* view) c_gtk_source_view_get_draw_spaces;
+	GtkSourceGutter* function(GtkSourceView* view, GtkTextWindowType windowType) c_gtk_source_view_get_gutter;
 	
 	// gsv.SourceBuffer
 	
@@ -263,6 +285,16 @@ extern(C)
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_backward_iter_to_source_mark;
 	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
 	
+	// gsv.SourceGutter
+	
+	GdkWindow* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_insert;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_reorder;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer) c_gtk_source_gutter_remove;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_data_func;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterSizeFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_size_func;
+	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
+	
 	// gsv.SourceSearch
 	
 	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_backward_search;
@@ -284,7 +316,7 @@ extern(C)
 	gchar* function(GtkSourceLanguage* language, gchar* name) c_gtk_source_language_get_metadata;
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_mime_types;
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_globs;
-	char* function(GtkSourceLanguage* language, char* styleId) c_gtk_source_language_get_style_name;
+	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_name;
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_style_ids;
 	
 	// gsv.SourceLanguageManager
@@ -381,8 +413,13 @@ alias c_gtk_source_view_set_mark_category_priority  gtk_source_view_set_mark_cat
 alias c_gtk_source_view_get_mark_category_priority  gtk_source_view_get_mark_category_priority;
 alias c_gtk_source_view_set_mark_category_pixbuf  gtk_source_view_set_mark_category_pixbuf;
 alias c_gtk_source_view_get_mark_category_pixbuf  gtk_source_view_get_mark_category_pixbuf;
+alias c_gtk_source_view_set_mark_category_icon_from_pixbuf  gtk_source_view_set_mark_category_icon_from_pixbuf;
+alias c_gtk_source_view_set_mark_category_icon_from_stock  gtk_source_view_set_mark_category_icon_from_stock;
+alias c_gtk_source_view_set_mark_category_icon_from_icon_name  gtk_source_view_set_mark_category_icon_from_icon_name;
 alias c_gtk_source_view_get_mark_category_background  gtk_source_view_get_mark_category_background;
 alias c_gtk_source_view_set_mark_category_background  gtk_source_view_set_mark_category_background;
+alias c_gtk_source_view_set_mark_category_tooltip_func  gtk_source_view_set_mark_category_tooltip_func;
+alias c_gtk_source_view_set_mark_category_tooltip_markup_func  gtk_source_view_set_mark_category_tooltip_markup_func;
 alias c_gtk_source_view_set_highlight_current_line  gtk_source_view_set_highlight_current_line;
 alias c_gtk_source_view_get_highlight_current_line  gtk_source_view_get_highlight_current_line;
 alias c_gtk_source_view_set_show_line_marks  gtk_source_view_set_show_line_marks;
@@ -397,6 +434,7 @@ alias c_gtk_source_view_set_tab_width  gtk_source_view_set_tab_width;
 alias c_gtk_source_view_get_tab_width  gtk_source_view_get_tab_width;
 alias c_gtk_source_view_set_draw_spaces  gtk_source_view_set_draw_spaces;
 alias c_gtk_source_view_get_draw_spaces  gtk_source_view_get_draw_spaces;
+alias c_gtk_source_view_get_gutter  gtk_source_view_get_gutter;
 
 // gsv.SourceBuffer
 
@@ -425,6 +463,16 @@ alias c_gtk_source_buffer_remove_source_marks  gtk_source_buffer_remove_source_m
 alias c_gtk_source_buffer_forward_iter_to_source_mark  gtk_source_buffer_forward_iter_to_source_mark;
 alias c_gtk_source_buffer_backward_iter_to_source_mark  gtk_source_buffer_backward_iter_to_source_mark;
 alias c_gtk_source_buffer_ensure_highlight  gtk_source_buffer_ensure_highlight;
+
+// gsv.SourceGutter
+
+alias c_gtk_source_gutter_get_window  gtk_source_gutter_get_window;
+alias c_gtk_source_gutter_insert  gtk_source_gutter_insert;
+alias c_gtk_source_gutter_reorder  gtk_source_gutter_reorder;
+alias c_gtk_source_gutter_remove  gtk_source_gutter_remove;
+alias c_gtk_source_gutter_set_cell_data_func  gtk_source_gutter_set_cell_data_func;
+alias c_gtk_source_gutter_set_cell_size_func  gtk_source_gutter_set_cell_size_func;
+alias c_gtk_source_gutter_queue_draw  gtk_source_gutter_queue_draw;
 
 // gsv.SourceSearch
 

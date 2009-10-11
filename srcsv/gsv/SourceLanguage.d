@@ -199,7 +199,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public string gtkSourceLanguageGetStyleName(string styleId)
 	{
-		// const char * gtk_source_language_get_style_name (GtkSourceLanguage *language,  const char *style_id);
+		// const gchar * gtk_source_language_get_style_name (GtkSourceLanguage *language,  const gchar *style_id);
 		return Str.toString(gtk_source_language_get_style_name(gtkSourceLanguage, Str.toStringz(styleId)));
 	}
 	

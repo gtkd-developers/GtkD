@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtksourceview-2.0-Searching-in-a-GtkSourceBuffer.html
+ * inFile  = gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
  * outPack = gsv
  * outFile = SourceSearch
  * strct   = 

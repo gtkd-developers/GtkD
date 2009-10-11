@@ -153,7 +153,7 @@ public class SourcePrintCompositor : ObjectG
 	 * printed output match view as much as possible. The properties set are
 	 * "tab-width", "highlight-syntax",
 	 * "wrap-mode", "body-font-name" and
-	 * "print-line-numbers."
+	 * "print-line-numbers".
 	 * Since 2.2
 	 * Params:
 	 * view =  a GtkSourceView to get configuration from.

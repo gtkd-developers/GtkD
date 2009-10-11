@@ -44,6 +44,8 @@
  * imports:
  * 	- gdk.Pixbuf
  * 	- gdk.Color
+ * 	- gtk.TextIter
+ * 	- gsv.SourceGutter
  * 	- gsv.SourceBuffer
  * 	- gtkc.gtk
  * 	- glib.Str
@@ -51,6 +53,8 @@
  * 	- GdkColor* -> Color
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkSourceBuffer* -> SourceBuffer
+ * 	- GtkSourceGutter* -> SourceGutter
+ * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
  * overrides:
@@ -68,6 +72,8 @@ public  import gtkc.gdktypes;
 
 private import gdk.Pixbuf;
 private import gdk.Color;
+private import gtk.TextIter;
+private import gsv.SourceGutter;
 private import gsv.SourceBuffer;
 private import gtkc.gtk;
 private import glib.Str;
@@ -140,6 +146,35 @@ public class SourceView : TextView
 	/**
 	 */
 	int[char[]] connectedSignals;
+	
+	void delegate(TextIter, gpointer, SourceView)[] onLineMarkActivatedListeners;
+	/**
+	 * Emitted when a line mark has been activated (for instance when there
+	 * was a button press in the line marks gutter). You can use iter to
+	 * determine on which line the activation took place.
+	 */
+	void addOnLineMarkActivated(void delegate(TextIter, gpointer, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("line-mark-activated" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"line-mark-activated",
+			cast(GCallback)&callBackLineMarkActivated,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["line-mark-activated"] = 1;
+		}
+		onLineMarkActivatedListeners ~= dlg;
+	}
+	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, gpointer event, SourceView sourceView)
+	{
+		foreach ( void delegate(TextIter, gpointer, SourceView) dlg ; sourceView.onLineMarkActivatedListeners )
+		{
+			dlg(new TextIter(iter), event, sourceView);
+		}
+	}
 	
 	void delegate(SourceView)[] onRedoListeners;
 	/**
@@ -375,6 +410,8 @@ public class SourceView : TextView
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_view_set_mark_category_pixbuf is deprecated and should not be used in newly-written code. Use gtk_source_view_set_mark_category_icon_from_pixbuf instead
 	 * Associates a given pixbuf with a given mark category.
 	 * If pixbuf is NULL, the pixbuf is unset.
 	 * Since 2.2
@@ -389,6 +426,8 @@ public class SourceView : TextView
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_view_get_mark_category_pixbuf is deprecated and should not be used in newly-written code.
 	 * Gets the pixbuf which is associated with the given mark category.
 	 * Since 2.2
 	 * Params:
@@ -404,6 +443,48 @@ public class SourceView : TextView
 			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Sets the icon to be used for category to pixbuf.
+	 * If pixbuf is NULL, the icon is unset.
+	 * Since 2.8
+	 * Params:
+	 * category =  a mark category.
+	 * pixbuf =  a GdkPixbuf or NULL.
+	 */
+	public void setMarkCategoryIconFromPixbuf(string category, Pixbuf pixbuf)
+	{
+		// void gtk_source_view_set_mark_category_icon_from_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
+		gtk_source_view_set_mark_category_icon_from_pixbuf(gtkSourceView, Str.toStringz(category), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+	}
+	
+	/**
+	 * Sets the icon to be used for category to the stock item stock_id.
+	 * If stock_id is NULL, the icon is unset.
+	 * Since 2.8
+	 * Params:
+	 * category =  a mark category.
+	 * stockId =  the stock id or NULL.
+	 */
+	public void setMarkCategoryIconFromStock(string category, string stockId)
+	{
+		// void gtk_source_view_set_mark_category_icon_from_stock  (GtkSourceView *view,  const gchar *category,  const gchar *stock_id);
+		gtk_source_view_set_mark_category_icon_from_stock(gtkSourceView, Str.toStringz(category), Str.toStringz(stockId));
+	}
+	
+	/**
+	 * Sets the icon to be used for category to the named theme item name.
+	 * If name is NULL, the icon is unset.
+	 * Since 2.8
+	 * Params:
+	 * category =  a mark category.
+	 * name =  the themed icon name or NULL.
+	 */
+	public void setMarkCategoryIconFromIconName(string category, string name)
+	{
+		// void gtk_source_view_set_mark_category_icon_from_icon_name  (GtkSourceView *view,  const gchar *category,  const gchar *name);
+		gtk_source_view_set_mark_category_icon_from_icon_name(gtkSourceView, Str.toStringz(category), Str.toStringz(name));
 	}
 	
 	/**
@@ -432,6 +513,55 @@ public class SourceView : TextView
 	{
 		// void gtk_source_view_set_mark_category_background  (GtkSourceView *view,  const gchar *category,  const GdkColor *color);
 		gtk_source_view_set_mark_category_background(gtkSourceView, Str.toStringz(category), (color is null) ? null : color.getColorStruct());
+	}
+	
+	/**
+	 * Set a GtkSourceViewMarkTooltipFunc used to set tooltip on marks from the
+	 * given mark category.
+	 * If you also specified a function with
+	 * gtk_source_view_set_mark_category_tooltip_markup_func() the markup
+	 * variant takes precedence.
+	 * static gchar *
+	 * tooltip_func (GtkSourceMark *mark,
+	 *  gpointer user_data)
+	 * {
+		 *  gchar *text;
+		 *  text = get_tooltip_for_mark (mark, user_data);
+		 *  return text;
+	 * }
+	 * ...
+	 * GtkSourceView *view;
+	 * gtk_source_view_set_mark_category_tooltip_func (view, "other-mark",
+	 *  tooltip_func,
+	 *  NULL, NULL);
+	 * Since 2.8
+	 * Params:
+	 * category =  a mark category.
+	 * func =  a GtkSourceViewMarkTooltipFunc or NULL.
+	 * userData =  user data which will be passed to func.
+	 * userDataNotify = a function to free the memory allocated for user_data
+	 * or NULL if you do not want to supply such a function.
+	 */
+	public void setMarkCategoryTooltipFunc(string category, GtkSourceViewMarkTooltipFunc func, void* userData, GDestroyNotify userDataNotify)
+	{
+		// void gtk_source_view_set_mark_category_tooltip_func  (GtkSourceView *view,  const gchar *category,  GtkSourceViewMarkTooltipFunc func,  gpointer user_data,  GDestroyNotify user_data_notify);
+		gtk_source_view_set_mark_category_tooltip_func(gtkSourceView, Str.toStringz(category), func, userData, userDataNotify);
+	}
+	
+	/**
+	 * See gtk_source_view_set_mark_category_tooltip_func() for more information.
+	 * Since 2.8
+	 * Params:
+	 * category =  a mark category.
+	 * markupFunc =  a GtkSourceViewMarkTooltipFunc or NULL.
+	 * userData =  user data which will be passed to func.
+	 * userDataNotify = a function to free the memory allocated for user_data
+	 * or NULL if you do not want to supply such a function.
+	 */
+	public void setMarkCategoryTooltipMarkupFunc(string category, GtkSourceViewMarkTooltipFunc markupFunc, void* userData, GDestroyNotify userDataNotify)
+	{
+		// void gtk_source_view_set_mark_category_tooltip_markup_func  (GtkSourceView *view,  const gchar *category,  GtkSourceViewMarkTooltipFunc markup_func,  gpointer user_data,  GDestroyNotify user_data_notify);
+		gtk_source_view_set_mark_category_tooltip_markup_func(gtkSourceView, Str.toStringz(category), markupFunc, userData, userDataNotify);
 	}
 	
 	/**
@@ -584,5 +714,27 @@ public class SourceView : TextView
 	{
 		// GtkSourceDrawSpacesFlags gtk_source_view_get_draw_spaces  (GtkSourceView *view);
 		return gtk_source_view_get_draw_spaces(gtkSourceView);
+	}
+	
+	/**
+	 * Returns the GtkSourceGutter object associated with window_type for view.
+	 * Only GTK_TEXT_WINDOW_LEFT and GTK_TEXT_WINDOW_RIGHT are supported,
+	 * respectively corresponding to the left and right gutter. The line numbers
+	 * and mark category icons are rendered in the gutter corresponding to
+	 * GTK_TEXT_WINDOW_LEFT.
+	 * Since 2.8
+	 * Params:
+	 * windowType =  the gutter window type
+	 * Returns: the GtkSourceGutter.
+	 */
+	public SourceGutter getGutter(GtkTextWindowType windowType)
+	{
+		// GtkSourceGutter * gtk_source_view_get_gutter (GtkSourceView *view,  GtkTextWindowType window_type);
+		auto p = gtk_source_view_get_gutter(gtkSourceView, windowType);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceGutter(cast(GtkSourceGutter*) p);
 	}
 }

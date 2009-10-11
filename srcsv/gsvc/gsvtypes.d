@@ -55,6 +55,13 @@ public enum GtkSourceDrawSpacesFlags
 }
 alias GtkSourceDrawSpacesFlags SourceDrawSpacesFlags;
 
+public enum GtkSourceViewGutterPosition
+{
+	LINES = -30,
+	MARKS = -20
+}
+alias GtkSourceViewGutterPosition SourceViewGutterPosition;
+
 public enum GtkSourceSearchFlags
 {
 	GDC_BUG_WORKAROUND,
@@ -80,11 +87,11 @@ public struct GtkSourceViewClass
 	GtkTextViewClass parentClass;
 	extern(C) void  function(GtkSourceView *view) undo;
 	extern(C) void  function(GtkSourceView *view) redo;
+	extern(C) void  function(GtkSourceView *view, GtkTextIter *iter,GdkEvent *event) lineMarkActivated;
 	/+* Padding for future expansion +/
 	extern(C) void  function() _GtkSourceReserved1;
 	extern(C) void  function() _GtkSourceReserved2;
 	extern(C) void  function() _GtkSourceReserved3;
-	extern(C) void  function() _GtkSourceReserved4;
 }
 
 
@@ -105,6 +112,12 @@ public struct GtkSourceBufferClass
 	extern(C) void  function() _GtkSourceReserved5;
 	extern(C) void  function() _GtkSourceReserved6;
 }
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceGutter{}
 
 
 /**
@@ -153,6 +166,38 @@ public struct GtkSourceStyleScheme{}
 
 /**
  * Main Gtk struct.
+ * GtkSourceStyleSchemeManager structure contains only
+ * private members and should not be accessed directly.
  */
 public struct GtkSourceStyleSchemeManager{}
 
+
+/*
+ * Function type for setting up a tooltip for GtkSourceMark.
+ * mark :
+ * the GtkSourceMark
+ * user_data :
+ * user data pointer which was passed to gtk_source_view_set_mark_category_tooltip_func()
+ * Returns :
+ * a new-allocated text that is going to be shown as tooltip text.
+ */
+// gchar * (*GtkSourceViewMarkTooltipFunc) (GtkSourceMark *mark,  gpointer user_data);
+public typedef extern(C) char *  function (GtkSourceMark*, void*) GtkSourceViewMarkTooltipFunc;
+
+/*
+ * gutter :
+ * cell :
+ * line_number :
+ * current_line :
+ * data :
+ */
+// void (*GtkSourceGutterDataFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gint line_number,  gboolean current_line,  gpointer data);
+public typedef extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, int, int, void*) GtkSourceGutterDataFunc;
+
+/*
+ * gutter :
+ * cell :
+ * data :
+ */
+// void (*GtkSourceGutterSizeFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gpointer data);
+public typedef extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, void*) GtkSourceGutterSizeFunc;

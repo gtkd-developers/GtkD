@@ -74,6 +74,10 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdk.Color
 structWrap: GdkColor* Color
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
+import: gsv.SourceGutter
+structWrap: GtkSourceGutter* SourceGutter
 import: gsv.SourceBuffer
 structWrap: GtkSourceBuffer* SourceBuffer
 import: gtkc.gtk
@@ -119,7 +123,17 @@ import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
 outFile: SourceBuffer
 
-file: gtksourceview-2.0-Searching-in-a-GtkSourceBuffer.html
+file: GtkSourceGutter.html
+struct: GtkSourceGutter
+class: SourceGutter
+prefix:  gtk_source_gutter_
+import: gdk.Window
+structWrap: GdkWindow* Window
+import: gtk.CellRenderer
+structWrap: GtkCellRenderer* CellRenderer
+outFile: SourceGutter
+
+file: gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
 #struct: 
 class: SourceSearch
 prefix: gtk_source_iter_
