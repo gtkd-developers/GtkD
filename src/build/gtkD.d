@@ -555,6 +555,7 @@ private import glgtk.GLCapability;
 
 private import gsv.SourceView;
 private import gsv.SourceBuffer;
+private import gsv.SourceGutter;
 private import gsv.SourceSearch;
 private import gsv.SourceMark;
 private import gsv.SourceLanguage;

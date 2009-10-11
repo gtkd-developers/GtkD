@@ -33,7 +33,6 @@ public import gtkc.gobjecttypes;
 public alias GList GdaValueList;
 public enum GdaBlobMode
 {
-	GDC_BUG_WORKAROUND,
 	MODE_READ = 1,
 	MODE_WRITE = 1 << 1,
 	MODE_RDWR = 0x03
@@ -61,7 +60,6 @@ alias GdaClientEvent daClientEvent;
  */
 public enum GdaCommandOptions
 {
-	GDC_BUG_WORKAROUND,
 	IGNORE_ERRORS = 1,
 	STOP_ON_ERRORS = 1 << 1,
 	BAD_OPTION = 1 << 2
@@ -93,7 +91,6 @@ alias GdaCommandType daCommandType;
 
 public enum GdaConnectionOptions
 {
-	GDC_BUG_WORKAROUND,
 	READ_ONLY = 1 << 0,
 	DONT_SHARE = 2 << 0
 }
@@ -139,7 +136,6 @@ alias GdaConnectionSchema daConnectionSchema;
 
 public enum GdaExportFlags
 {
-	GDC_BUG_WORKAROUND,
 	TABLE_DATA = 1
 }
 alias GdaExportFlags daExportFlags;

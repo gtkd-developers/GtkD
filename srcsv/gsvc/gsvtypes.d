@@ -43,7 +43,6 @@ alias GtkSourceSmartHomeEndType SourceSmartHomeEndType;
  */
 public enum GtkSourceDrawSpacesFlags
 {
-	GDC_BUG_WORKAROUND,
 	SPACE = 1 << 0,
 	TAB = 1 << 1,
 	NEWLINE = 1 << 2,
@@ -64,7 +63,6 @@ alias GtkSourceViewGutterPosition SourceViewGutterPosition;
 
 public enum GtkSourceSearchFlags
 {
-	GDC_BUG_WORKAROUND,
 	VISIBLE_ONLY = 1 << 0,
 	TEXT_ONLY = 1 << 1,
 	CASE_INSENSITIVE = 1 << 2

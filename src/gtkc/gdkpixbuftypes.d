@@ -41,7 +41,6 @@ private import std.stdio;
  */
 public enum GdkPixdataType
 {
-	GDC_BUG_WORKAROUND,
 	/+* colorspace + alpha +/
 	GDK_PIXDATA_COLOR_TYPE_RGB = 0x01,
 	GDK_PIXDATA_COLOR_TYPE_RGBA = 0x02,
@@ -67,7 +66,6 @@ alias GdkPixdataType PixdataType;
  */
 public enum GdkPixdataDumpType
 {
-	GDC_BUG_WORKAROUND,
 	/+* type of source to save +/
 	GDK_PIXDATA_DUMP_PIXDATA_STREAM = 0,
 	GDK_PIXDATA_DUMP_PIXDATA_STRUCT = 1,
@@ -89,7 +87,6 @@ alias GdkPixdataDumpType PixdataDumpType;
  */
 public enum GdkPixbufFormatFlags
 {
-	GDC_BUG_WORKAROUND,
 	WRITABLE = 1 << 0,
 	SCALABLE = 1 << 1,
 	THREADSAFE = 1 << 2

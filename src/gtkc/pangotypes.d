@@ -165,7 +165,6 @@ public enum PangoStyle
  */
 public enum PangoWeight
 {
-	GDC_BUG_WORKAROUND,
 	THIN = 100,
 	ULTRALIGHT = 200,
 	LIGHT = 300,
@@ -244,7 +243,6 @@ public enum PangoStretch
  */
 public enum PangoFontMask
 {
-	GDC_BUG_WORKAROUND,
 	FAMILY = 1 << 0,
 	STYLE = 1 << 1,
 	VARIANT = 1 << 2,
@@ -435,7 +433,6 @@ public enum PangoAlignment
  */
 public enum PangoScript
 {
-	GDC_BUG_WORKAROUND,
 	INVALID_CODE = -1,
 	COMMON = 0, /+* Zyyy +/
 	INHERITED, /+* Qaai +/

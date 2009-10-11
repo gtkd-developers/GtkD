@@ -48,7 +48,6 @@ public alias GSList AtkAttributeSet;
  */
 public enum AtkHyperlinkStateFlags
 {
-	GDC_BUG_WORKAROUND,
 	IS_INLINE = 1 << 0
 }
 /**
@@ -60,7 +59,6 @@ public enum AtkHyperlinkStateFlags
  */
 public enum AtkRole
 {
-	GDC_BUG_WORKAROUND,
 	INVALID = 0,
 	ACCEL_LABEL,
 	ALERT,
@@ -175,7 +173,6 @@ public enum AtkLayer
  */
 public enum AtkRelationType
 {
-	GDC_BUG_WORKAROUND,
 	NULL = 0,
 	CONTROLLED_BY,
 	CONTROLLER_FOR,
@@ -272,7 +269,6 @@ public enum AtkTextClipType
  */
 public enum AtkTextAttribute
 {
-	GDC_BUG_WORKAROUND,
 	INVALID = 0,
 	LEFT_MARGIN,
 	RIGHT_MARGIN,

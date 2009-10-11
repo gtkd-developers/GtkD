@@ -32,7 +32,6 @@ alias void GTypeCValue;
 // G_TYPE_*
 enum GType : size_t
 {
-	GDC_BUG_WORKAROUND,
 	INVALID = 0<<2,
 	NONE = 1<<2,
 	INTERFACE = 2<<2,
@@ -90,7 +89,6 @@ public alias GClosureMarshal GSignalCMarshaller;
  */
 public enum GTypeDebugFlags
 {
-	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	OBJECTS = 1 << 0,
 	SIGNALS = 1 << 1,
@@ -103,7 +101,6 @@ alias GTypeDebugFlags TypeDebugFlags;
  */
 public enum GTypeFlags
 {
-	GDC_BUG_WORKAROUND,
 	ABSTRACT = (1 << 4),
 	VALUE_ABSTRACT = (1 << 5)
 }
@@ -115,7 +112,6 @@ alias GTypeFlags TypeFlags;
  */
 public enum GTypeFundamentalFlags
 {
-	GDC_BUG_WORKAROUND,
 	FLAG_CLASSED = (1 << 0),
 	FLAG_INSTANTIATABLE = (1 << 1),
 	FLAG_DERIVABLE = (1 << 2),
@@ -130,7 +126,6 @@ alias GTypeFundamentalFlags TypeFundamentalFlags;
  */
 public enum GParamFlags
 {
-	GDC_BUG_WORKAROUND,
 	READABLE = 1 << 0,
 	WRITABLE = 1 << 1,
 	CONSTRUCT = 1 << 2,
@@ -151,7 +146,6 @@ alias GParamFlags ParamFlags;
  */
 public enum GSignalFlags
 {
-	GDC_BUG_WORKAROUND,
 	RUN_FIRST = 1 << 0,
 	RUN_LAST = 1 << 1,
 	RUN_CLEANUP = 1 << 2,
@@ -170,7 +164,6 @@ alias GSignalFlags SignalFlags;
  */
 public enum GSignalMatchType
 {
-	GDC_BUG_WORKAROUND,
 	ID = 1 << 0,
 	DETAIL = 1 << 1,
 	CLOSURE = 1 << 2,
@@ -187,7 +180,6 @@ alias GSignalMatchType SignalMatchType;
  */
 public enum GConnectFlags
 {
-	GDC_BUG_WORKAROUND,
 	AFTER = 1 << 0,
 	SWAPPED = 1 << 1
 }

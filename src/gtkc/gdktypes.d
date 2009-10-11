@@ -116,7 +116,6 @@ public alias GdkAtom GdkTarget;
  */
 public enum GdkGrabStatus
 {
-	GDC_BUG_WORKAROUND,
 	SUCCESS = 0,
 	ALREADY_GRABBED = 1,
 	INVALID_TIME = 2,
@@ -201,7 +200,6 @@ alias GdkOverlapType OverlapType;
  */
 public enum GdkGCValuesMask
 {
-	GDC_BUG_WORKAROUND,
 	FOREGROUND = 1 << 0,
 	BACKGROUND = 1 << 1,
 	FONT = 1 << 2,
@@ -312,7 +310,6 @@ alias GdkFill Fill;
  */
 public enum GdkSubwindowMode
 {
-	GDC_BUG_WORKAROUND,
 	CLIP_BY_CHILDREN = 0,
 	INCLUDE_INFERIORS = 1
 }
@@ -485,7 +482,6 @@ alias GdkInterpType InterpType;
  */
 public enum GdkPixbufRotation
 {
-	GDC_BUG_WORKAROUND,
 	ROTATE_NONE = 0,
 	ROTATE_COUNTERCLOCKWISE = 90,
 	ROTATE_UPSIDEDOWN = 180,
@@ -631,7 +627,6 @@ alias GdkFontType FontType;
  */
 public enum GdkCursorType
 {
-	GDC_BUG_WORKAROUND,
 	X_CURSOR = 0,
 	ARROW = 2,
 	BASED_ARROW_DOWN = 4,
@@ -790,7 +785,6 @@ alias GdkWindowClass WindowClass;
  */
 public enum GdkWindowHints
 {
-	GDC_BUG_WORKAROUND,
 	HINT_POS = 1 << 0,
 	HINT_MIN_SIZE = 1 << 1,
 	HINT_MAX_SIZE = 1 << 2,
@@ -832,7 +826,6 @@ alias GdkWindowHints WindowHints;
  */
 public enum GdkGravity
 {
-	GDC_BUG_WORKAROUND,
 	NORTH_WEST = 1,
 	NORTH,
 	NORTH_EAST,
@@ -940,7 +933,6 @@ alias GdkWindowTypeHint WindowTypeHint;
  */
 public enum GdkWindowAttributesType
 {
-	GDC_BUG_WORKAROUND,
 	WA_TITLE = 1 << 1,
 	WA_X = 1 << 2,
 	WA_Y = 1 << 3,
@@ -985,7 +977,6 @@ alias GdkFilterReturn FilterReturn;
  */
 public enum GdkModifierType
 {
-	GDC_BUG_WORKAROUND,
 	SHIFT_MASK = 1 << 0,
 	LOCK_MASK = 1 << 1,
 	CONTROL_MASK = 1 << 2,
@@ -1031,7 +1022,6 @@ alias GdkModifierType ModifierType;
  */
 public enum GdkWMDecoration
 {
-	GDC_BUG_WORKAROUND,
 	DECOR_ALL = 1 << 0,
 	DECOR_BORDER = 1 << 1,
 	DECOR_RESIZEH = 1 << 2,
@@ -1062,7 +1052,6 @@ alias GdkWMDecoration WMDecoration;
  */
 public enum GdkWMFunction
 {
-	GDC_BUG_WORKAROUND,
 	FUNC_ALL = 1 << 0,
 	FUNC_RESIZE = 1 << 1,
 	FUNC_MOVE = 1 << 2,
@@ -1165,7 +1154,6 @@ alias GdkWMFunction WMFunction;
  */
 public enum GdkEventType
 {
-	GDC_BUG_WORKAROUND,
 	NOTHING = -1,
 	DELETE = 0,
 	DESTROY = 1,
@@ -1264,7 +1252,6 @@ alias GdkEventType EventType;
  */
 public enum GdkEventMask
 {
-	GDC_BUG_WORKAROUND,
 	EXPOSURE_MASK = 1 << 1,
 	POINTER_MOTION_MASK = 1 << 2,
 	POINTER_MOTION_HINT_MASK = 1 << 3,
@@ -1362,7 +1349,6 @@ alias GdkCrossingMode CrossingMode;
  */
 public enum GdkNotifyType
 {
-	GDC_BUG_WORKAROUND,
 	ANCESTOR = 0,
 	VIRTUAL = 1,
 	INFERIOR = 2,
@@ -1405,7 +1391,6 @@ alias GdkPropertyState PropertyState;
  */
 public enum GdkWindowState
 {
-	GDC_BUG_WORKAROUND,
 	WITHDRAWN = 1 << 0,
 	ICONIFIED = 1 << 1,
 	MAXIMIZED = 1 << 2,
@@ -1485,7 +1470,6 @@ alias GdkDragProtocol DragProtocol;
  */
 public enum GdkDragAction
 {
-	GDC_BUG_WORKAROUND,
 	ACTION_DEFAULT = 1 << 0,
 	ACTION_COPY = 1 << 1,
 	ACTION_MOVE = 1 << 2,
@@ -1513,7 +1497,6 @@ alias GdkDragAction DragAction;
  */
 public enum GdkInputCondition
 {
-	GDC_BUG_WORKAROUND,
 	READ = 1 << 0,
 	WRITE = 1 << 1,
 	EXCEPTION = 1 << 2
