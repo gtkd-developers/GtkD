@@ -151,7 +151,7 @@ class TestIdle : VBox
 			drawable = getWindow();
 			gc = new GC(drawable);
 			gc.setFunction(GdkFunction.INVERT);
-			return false;
+			//return false;
 		}
 
 		public void onMap(Widget widget)

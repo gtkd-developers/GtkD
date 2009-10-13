@@ -181,12 +181,12 @@ private import glib.ListSG;
 	void onEnter(Widget widget)
 	{
 		printf("TestImage.mouseEnterNotify\n");
-		return true;
+		//return true;
 	}
 	void onLeave(Widget widget)
 	{
 		printf("TestImage.mouseLeaveNotify\n");
-		return true;
+		//return true;
 	}
 
 
