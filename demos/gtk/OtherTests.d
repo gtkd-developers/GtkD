@@ -81,7 +81,7 @@ public class OtherTests : Window
 	void mousePressed(Button widget)
 	{
 		writefln("mousePressed");
-		return false;
+		//return false;
 	}
 
 	bool changeLabel()
