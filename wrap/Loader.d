@@ -245,16 +245,28 @@ public struct Linker
 
 // Platform specific implementation below.
 
-version(linux)
+version(Windows)
 {
-    version = Unix;
-}
-version(darwin)
-{
-    version = Unix;
-}
+	extern(Windows)
+	{
+		void* LoadLibraryA(char*);
+		void* GetProcAddress(void*, char*);
+		void FreeLibrary(void*);
+	}
 
-version(Unix)
+	private void* pLoadLibrary(string libraryName)
+	{
+		return LoadLibraryA(cast(char*)toStringz(libraryName));
+	}
+
+	private void* pGetSymbol(void* handle, string symbol)
+	{
+		return GetProcAddress(handle, cast(char*)toStringz(symbol));
+	}
+
+	private alias FreeLibrary pUnloadLibrary;
+}
+else
 {
 	extern(C)
 	{
@@ -266,6 +278,7 @@ version(Unix)
 
 	enum RTLD
 	{
+	GDC_BUG_WORKAROUND,
 		LAZY     = 0x00001,  // Lazy function call binding
 		NOW      = 0x00002,  // Immediate function call binding
 		NOLOAD   = 0x00004,  // No object load
@@ -308,26 +321,4 @@ version(Unix)
     {
         pragma(link, "dl"); // tell dsss to link libdl
     }
-}
-
-version(Windows)
-{
-	extern(Windows)
-	{
-		void* LoadLibraryA(char*);
-		void* GetProcAddress(void*, char*);
-		void FreeLibrary(void*);
-	}
-
-	private void* pLoadLibrary(string libraryName)
-	{
-		return LoadLibraryA(cast(char*)toStringz(libraryName));
-	}
-
-	private void* pGetSymbol(void* handle, string symbol)
-	{
-		return GetProcAddress(handle, cast(char*)toStringz(symbol));
-	}
-
-	private alias FreeLibrary pUnloadLibrary;
 }
