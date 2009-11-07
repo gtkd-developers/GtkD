@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #Lil' helper script to select which demos get built.
 #May the lord forgive our sins.
