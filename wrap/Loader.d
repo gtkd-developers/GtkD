@@ -319,6 +319,9 @@ else
 
     version(build) 
     {
-        pragma(link, "dl"); // tell dsss to link libdl
+		version(freebsd)
+			pragma(link, "c"); // tell dsss to link libc
+		else
+			pragma(link, "dl"); // tell dsss to link libdl
     }
 }
