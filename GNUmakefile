@@ -31,6 +31,8 @@ endif
 
 ifeq ("$(OS)","Darwin")
     LDFLAGS+=-Wl,-undefined,dynamic_lookup
+else ifeq ("$(findstring BSD, $(OS))","BSD")
+	LDFLAGS+=-L-lc
 else
     LDFLAGS+=-L-ldl
 endif
