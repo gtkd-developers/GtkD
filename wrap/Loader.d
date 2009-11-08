@@ -317,11 +317,8 @@ else
 		return dlclose(libraryHandle);
 	}
 
-    version(build) 
+    version(build) version(linux)
     {
-		version(freebsd)
-			pragma(link, "c"); // tell dsss to link libc
-		else
 			pragma(link, "dl"); // tell dsss to link libdl
     }
 }
