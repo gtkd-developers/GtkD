@@ -230,7 +230,7 @@ version(Windows)
 
 		if ( libPath.length > 0 )
 		{
-			if ( libPath.length > 5 && lipPath[$-5..$] == "\\bin\\" )
+			if ( libPath.length > 5 && libPath[$-5..$] == "\\bin\\" )
 				return libPath;
 			else
 				return libPath ~ "\\bin\\";
