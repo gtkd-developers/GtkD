@@ -165,8 +165,8 @@ template GLCapability()
 	{
 		return height;
 	}
-
-
+	
+	
 	/**
 	 * Sets the GL capabilities for the widget
 	 */
@@ -264,7 +264,7 @@ template GLCapability()
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
-			return false;
+			return;
 		}
 		
 		/*** do user actions ***/
@@ -324,9 +324,9 @@ template GLCapability()
 			width = event.width;
 			height = event.height;
 		}
- 		version(Tango) tango.core.Memory.GC.disable();
+		version(Tango) tango.core.Memory.GC.disable();
 		else version(D_Version2) core.memory.GC.disable();
- 		else std.gc.disable();
+		else std.gc.disable();
 		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
@@ -363,10 +363,10 @@ template GLCapability()
 		//writefln("configureFrame 9");
 		/*** OpenGL END ***/
 		
- 		version(Tango) tango.core.Memory.GC.enable();
+		version(Tango) tango.core.Memory.GC.enable();
 		else version(D_Version2) core.memory.GC.enable();
- 		else std.gc.enable();
-
+		else std.gc.enable();
+		
 		return consumeEvent;
 	}
 	
@@ -379,7 +379,7 @@ template GLCapability()
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
-			return false;
+			return;
 		}
 		
 		/*** do user actions ***/
@@ -410,7 +410,7 @@ template GLCapability()
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
-			return false;
+			return;
 		}
 		
 		/*** do user actions ***/

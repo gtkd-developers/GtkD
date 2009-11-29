@@ -194,7 +194,7 @@ template GLCapability()
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
-			return false;
+			return;
 		}
 		
 		/*** do user actions ***/
@@ -309,7 +309,7 @@ template GLCapability()
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
-			return false;
+			return;
 		}
 		
 		/*** do user actions ***/
@@ -340,7 +340,7 @@ template GLCapability()
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
-			return false;
+			return;
 		}
 		
 		/*** do user actions ***/

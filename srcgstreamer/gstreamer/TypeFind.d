@@ -122,7 +122,7 @@ public class TypeFind
 	 * size =  The number of bytes to return
 	 * Returns: the requested data, or NULL if that data is not available.
 	 */
-	public byte* peek(long offset, uint size)
+	public ubyte* peek(long offset, uint size)
 	{
 		// guint8* gst_type_find_peek (GstTypeFind *find,  gint64 offset,  guint size);
 		return gst_type_find_peek(gstTypeFind, offset, size);
