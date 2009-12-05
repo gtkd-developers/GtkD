@@ -148,7 +148,7 @@ public class Glade : ObjectG
 	public Widget getWidget(string name)
 	{
 		// GtkWidget* glade_xml_get_widget (GladeXML *self,  const char *name);
-		return newFromWidget(cast(void *) glade_xml_get_widget(gladeXML, Str.toStringz(name)) );
+		return newFromWidget( glade_xml_get_widget(gladeXML, Str.toStringz(name)) );
 	}
 	
 	
@@ -198,7 +198,7 @@ public class Glade : ObjectG
 		
 		for (int i=0;i < widgets.length; i++)
 		{
-			ret ~= newFromWidget( cast(void *)widgets.nthData(i) );
+			ret ~= newFromWidget( cast(GtkWidget*)widgets.nthData(i) );
 		}
 		return ret;
 	}
@@ -315,18 +315,14 @@ public class Glade : ObjectG
 	 * Utilitiy method to create objects that are castable.
 	 *
 	 */
-	Widget newFromWidget(void * ptr)
+	Widget newFromWidget(GtkWidget* ptr)
 	{
 		if (ptr is null) {
 			return null;
 		}
 		
-		int* pt =cast(int*)ptr;
-		
-		int* pt2 =cast(int*) (cast(int*)(*pt));
-		uint utype =  cast(uint)(*pt2);
-		
-		string tname = Type.name(cast(GType)utype);
+		GTypeInstance* gTypeInstance = cast(GTypeInstance*)(ptr);
+		string tname = Type.name(gTypeInstance.gClass.gType); 
 		
 		switch(tname) {
 			case "GtkAboutDialog": return new AboutDialog(cast(GtkAboutDialog *)ptr);
