@@ -39,9 +39,11 @@ class ExampleWindow : MainWindow
 		{
 			menu.showAll();
 			menu.popup(event.button, event.time);
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 }
 
