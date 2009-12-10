@@ -600,7 +600,7 @@ public class GtkWrapper : WrapperIF
             switch ( key )
             {
                 case "copy": status = copyFile(apiRoot,std.path.join(srcOut,outPack),defReader.getValue());
-                    buildTextLibs ~= "private import " ~outPack~ "." ~defReader.getValue()~ ";\n";
+                    buildTextLibs ~= "private import " ~outPack~ "." ~defReader.getValue()[0..$-2]~ ";\n";
                     break;
                 case "srcout": srcOut = defReader.getValue(); break;
                 case "struct": convParms.strct = defReader.getValue(); break;

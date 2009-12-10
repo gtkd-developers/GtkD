@@ -2,7 +2,10 @@
 -lib
 -nolink
 -I..
+-I../../srcgl
+-I../../srcsv
+-I../../srcgda 
 -allobj
 -cleanup
 -Xphobos
-duit.d
+gtkD.d

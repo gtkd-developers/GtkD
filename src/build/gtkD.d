@@ -589,8 +589,8 @@ private import gda.Table;
 private import gda.Transaction;
 private import gda.Value;
 
-private import gtkc.paths.d;
-private import gtkc.Loader.d;
+private import gtkc.paths;
+private import gtkc.Loader;
 private import gtkc.glib;
 private import gtkc.gthread;
 private import gtkc.gobject;
