@@ -178,10 +178,21 @@ array: g_type_interfaces Return n_interfaces
 array: g_type_interface_prerequisites Return n_prerequisites
 
 code: start
-public static T* getInstanceClass(T)(ObjectG obj)
-{
-	return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
-}
+	public static T* getInstanceClass(T)(ObjectG obj)
+	{
+		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
+	}
+
+	/**
+	 * Get the unique name that is assigned to the Objects type.
+	 * Returns: Static type name or NULL.
+	 */
+	public static string name(ObjectG obj)
+	{
+		GType type = (cast(GTypeInstance*)obj.getObjectGStruct()).gClass.gType;
+
+		return name(type);
+	}
 code: end
 outFile: Type
 
