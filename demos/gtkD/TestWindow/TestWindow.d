@@ -36,11 +36,15 @@ else version(D_Version2)
 {
 	private import core.thread;
 	private import std.random;
+
+	version = DRuntime;
 }
 else
 {
 	private import std.thread;
 	private import std.random;
+
+	version = DRuntime;
 }
 
 import gdk.Threads;
@@ -247,16 +251,6 @@ class TestWindow : MainWindow
 		version(Win32)
 		{
 			// todo - threads are still broken on windows
-		}
-		else version(Tango)
-		{
-			//For some reason the threads example didn't
-			//compile with Tango.
-			//testThreads(notebook);
-		}
-		else version(D_Version2)
-		{
-			//Ditto
 		}
 		else
 		{
@@ -909,19 +903,11 @@ class TestWindow : MainWindow
 
 	}
 
-	version(Tango)
-	{
-		//For some reason the Tango version didn't compile with
-		//the thread example.
-	}
-	else version(D_Version2)
-	{
-		//Ditto
-	}
+	version(D_Version2)
+		mixin("__gshared Button[] threadTestButtons;");
 	else
-	{
+		Button[] threadTestButtons;
 
-	Button[] threadTestButtons;
 	static T1[] t1s;
 
 	class T1 : Thread
@@ -1021,12 +1007,11 @@ class TestWindow : MainWindow
 		{
 			foreach ( T1 t ; t1s )
 			{
-				version(Tango)
+				version(DRuntime)
 				{
 					if ( !t.isRunning() )
 					{
-						// todo t.go();
-						// just send a interruped - how?
+						t.start();
 					}
 				}
 				else switch( t.getState() )
@@ -1055,8 +1040,6 @@ class TestWindow : MainWindow
 
 		notebook.appendPage(vbox,new Label("Threads"));
 	}
-
-	}//version(Phobos)
 
 	void testViewport(Notebook notebook)
 	{
@@ -1242,10 +1225,6 @@ void main(string[] args)
 	version(Win32)
 	{
 		// todo threads are still broken on windows...
-		Main.init(args);
-	}
-	else version(Tango)
-	{
 		Main.init(args);
 	}
 	else
