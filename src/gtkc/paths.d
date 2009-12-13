@@ -168,7 +168,7 @@ else
 const string[LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:           "libatk-1.0.so",
-	LIBRARY.CAIRO:         "libcairo.so",
+	LIBRARY.CAIRO:         "libcairo.so.2",
 	LIBRARY.GDK:           "libgdk-x11-2.0.so",
 	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0.so",
 	LIBRARY.GLIB:          "libglib-2.0.so",
