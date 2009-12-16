@@ -8473,7 +8473,6 @@ import: glib.ErrorG
 import: glib.GException
 
 #imports for gtk_builder_real_get_type_from_name_override
-import: gtkc.gobject: g_type_from_name
 import: gtkc.paths
 import: glib.Module
 import: gobject.Type

@@ -514,7 +514,7 @@ static this()
 	Linker.link(pango_version_check, "pango_version_check", LIBRARY.PANGO);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// pango.PgContext
@@ -994,7 +994,7 @@ extern(C)
 	int function() c_pango_version;
 	char* function() c_pango_version_string;
 	char* function(int requiredMajor, int requiredMinor, int requiredMicro) c_pango_version_check;
-}
+}");
 
 // pango.PgContext
 

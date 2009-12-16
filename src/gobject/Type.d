@@ -108,7 +108,7 @@ public class Type
 	{
 		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
 	}
-
+	
 	/**
 	 * Get the unique name that is assigned to the Objects type.
 	 * Returns: Static type name or NULL.
@@ -116,7 +116,7 @@ public class Type
 	public static string name(ObjectG obj)
 	{
 		GType type = (cast(GTypeInstance*)obj.getObjectGStruct()).gClass.gType;
-
+		
 		return name(type);
 	}
 	

@@ -386,7 +386,7 @@ static this()
 	Linker.link(g_value_array_sort_with_data, "g_value_array_sort_with_data", LIBRARY.GOBJECT);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gobject.Type
@@ -739,7 +739,7 @@ extern(C)
 	GValueArray* function(GValueArray* valueArray, guint index) c_g_value_array_remove;
 	GValueArray* function(GValueArray* valueArray, GCompareFunc compareFunc) c_g_value_array_sort;
 	GValueArray* function(GValueArray* valueArray, GCompareDataFunc compareFunc, gpointer userData) c_g_value_array_sort_with_data;
-}
+}");
 
 // gobject.Type
 

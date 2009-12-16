@@ -337,7 +337,7 @@ static this()
 
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// cairo.Context
@@ -641,7 +641,7 @@ extern(C)
 	
 	// cairo.
 	
-}
+}");
 
 // cairo.Context
 

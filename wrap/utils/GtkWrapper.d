@@ -938,7 +938,7 @@ public class GtkWrapper : WrapperIF
 			}
 
 			externalText ~= "}\n\n"
-			                "extern(C)\n"
+			                "mixin( gshared ~\"extern(C)\n"
 			                "{\n";
 
 			//Generate the functions.
@@ -963,7 +963,7 @@ public class GtkWrapper : WrapperIF
 				externalText ~= '\n';
 			}
 
-			externalText ~= "}\n";
+			externalText ~= "}\");\n";
 
 			//Generate the aliases.
 			foreach ( char[] declaration; declarations )

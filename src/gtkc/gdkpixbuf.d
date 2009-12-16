@@ -95,7 +95,7 @@ static this()
 	Linker.link(gdk_pixbuf_get_file_info, "gdk_pixbuf_get_file_info", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gdkpixbuf.Pixdata
@@ -157,7 +157,7 @@ extern(C)
 	void function(GdkPixbufFormat* format, gboolean disabled) c_gdk_pixbuf_format_set_disabled;
 	gchar* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_license;
 	GdkPixbufFormat* function(gchar* filename, gint* width, gint* height) c_gdk_pixbuf_get_file_info;
-}
+}");
 
 // gdkpixbuf.Pixdata
 

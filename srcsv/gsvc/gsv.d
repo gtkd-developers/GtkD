@@ -213,7 +213,7 @@ static this()
 	Linker.link(gtk_source_style_scheme_manager_force_rescan, "gtk_source_style_scheme_manager_force_rescan", LIBRARY.GSV);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gsv.SourceView
@@ -393,7 +393,7 @@ extern(C)
 	gchar** function(GtkSourceStyleSchemeManager* manager) c_gtk_source_style_scheme_manager_get_scheme_ids;
 	GtkSourceStyleScheme* function(GtkSourceStyleSchemeManager* manager, gchar* schemeId) c_gtk_source_style_scheme_manager_get_scheme;
 	void function(GtkSourceStyleSchemeManager* manager) c_gtk_source_style_scheme_manager_force_rescan;
-}
+}");
 
 // gsv.SourceView
 

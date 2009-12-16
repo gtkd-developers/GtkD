@@ -140,7 +140,7 @@ static this()
 
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// glgdk.GLdInit
@@ -247,7 +247,7 @@ extern(C)
 	
 	// glgdk.
 	
-}
+}");
 
 // glgdk.GLdInit
 

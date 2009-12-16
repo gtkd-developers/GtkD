@@ -60,6 +60,15 @@ version(Tango)
 	private alias char[] string;
 }
 
+version(D_Version2)
+{
+	//string/enum in version doesn't work with mixin?
+string gshared() { return "__gshared "; }
+}
+else
+{
+char[] gshared() { return ""; }
+}
 
 const uint G_MAXUINT = 4294967295;
 

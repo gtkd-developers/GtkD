@@ -322,7 +322,7 @@ public class Glade : ObjectG
 		}
 		
 		GTypeInstance* gTypeInstance = cast(GTypeInstance*)(ptr);
-		string tname = Type.name(gTypeInstance.gClass.gType); 
+		string tname = Type.name(gTypeInstance.gClass.gType);
 		
 		switch(tname) {
 			case "GtkAboutDialog": return new AboutDialog(cast(GtkAboutDialog *)ptr);

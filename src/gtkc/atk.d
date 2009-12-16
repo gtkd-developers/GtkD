@@ -303,7 +303,7 @@ static this()
 	Linker.link(atk_value_get_minimum_increment, "atk_value_get_minimum_increment", LIBRARY.ATK);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// atk.Action
@@ -573,7 +573,7 @@ extern(C)
 	void function(AtkValue* obj, GValue* value) c_atk_value_get_minimum_value;
 	gboolean function(AtkValue* obj, GValue* value) c_atk_value_set_current_value;
 	void function(AtkValue* obj, GValue* value) c_atk_value_get_minimum_increment;
-}
+}");
 
 // atk.Action
 

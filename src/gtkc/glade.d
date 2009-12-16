@@ -54,7 +54,7 @@ static this()
 	Linker.link(glade_provide, "glade_provide", LIBRARY.GLADE);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// glade.Glade
@@ -75,7 +75,7 @@ extern(C)
 	void function() c_glade_init;
 	void function(gchar* library) c_glade_require;
 	void function(gchar* library) c_glade_provide;
-}
+}");
 
 // glade.Glade
 

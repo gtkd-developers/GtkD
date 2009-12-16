@@ -724,7 +724,7 @@ static this()
 	Linker.link(gdk_cairo_reset_clip, "gdk_cairo_reset_clip", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gdk.Gdk
@@ -1414,7 +1414,7 @@ extern(C)
 	void function(cairo_t* cr, GdkRectangle* rectangle) c_gdk_cairo_rectangle;
 	void function(cairo_t* cr, GdkRegion* region) c_gdk_cairo_region;
 	void function(cairo_t* cr, GdkDrawable* drawable) c_gdk_cairo_reset_clip;
-}
+}");
 
 // gdk.Gdk
 

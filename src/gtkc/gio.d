@@ -1034,7 +1034,7 @@ static this()
 	Linker.link(g_io_extension_point_set_required_type, "g_io_extension_point_set_required_type", LIBRARY.GIO);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gio.File
@@ -2035,7 +2035,7 @@ extern(C)
 	GIOExtensionPoint* function(char* name) c_g_io_extension_point_lookup;
 	GIOExtensionPoint* function(char* name) c_g_io_extension_point_register;
 	void function(GIOExtensionPoint* extensionPoint, GType type) c_g_io_extension_point_set_required_type;
-}
+}");
 
 // gio.File
 

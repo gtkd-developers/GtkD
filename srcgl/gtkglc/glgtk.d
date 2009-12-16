@@ -56,7 +56,7 @@ static this()
 
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// glgtk.GLtInit
@@ -79,7 +79,7 @@ extern(C)
 	
 	// glgtk.
 	
-}
+}");
 
 // glgtk.GLtInit
 

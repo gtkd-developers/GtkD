@@ -111,7 +111,7 @@ static this()
 	Linker.link(g_once_init_leave, "g_once_init_leave", LIBRARY.GTHREAD);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gthread.Mutex
@@ -189,7 +189,7 @@ extern(C)
 	void function(GFunc threadFunc, gpointer userData) c_g_thread_foreach;
 	gboolean function(gsize* valueLocation) c_g_once_init_enter;
 	void function(gsize* valueLocation, gsize initializationValue) c_g_once_init_leave;
-}
+}");
 
 // gthread.Mutex
 

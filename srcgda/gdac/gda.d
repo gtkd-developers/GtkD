@@ -468,7 +468,7 @@ static this()
 	Linker.link(gda_value_to_xml, "gda_value_to_xml", LIBRARY.GDA);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gda.Gda
@@ -903,7 +903,7 @@ extern(C)
 	gint function(GdaValue* value1, GdaValue* value2) c_gda_value_compare;
 	gchar* function(GdaValue* value) c_gda_value_stringify;
 	xmlNodePtr function(GdaValue* value) c_gda_value_to_xml;
-}
+}");
 
 // gda.Gda
 

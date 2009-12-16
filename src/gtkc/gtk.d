@@ -3754,7 +3754,7 @@ static this()
 	Linker.link(gtk_progress_configure, "gtk_progress_configure", LIBRARY.GTK);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// gtk.Main
@@ -7475,7 +7475,7 @@ extern(C)
 	gdouble function(GtkProgress* progress) c_gtk_progress_get_current_percentage;
 	gdouble function(GtkProgress* progress, gdouble value) c_gtk_progress_get_percentage_from_value;
 	void function(GtkProgress* progress, gdouble value, gdouble min, gdouble max) c_gtk_progress_configure;
-}
+}");
 
 // gtk.Main
 

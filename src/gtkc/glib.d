@@ -1330,7 +1330,7 @@ static this()
 	Linker.link(g_allocator_free, "g_allocator_free", LIBRARY.GLIB);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
 	
 	// glib.Version
@@ -2626,7 +2626,7 @@ extern(C)
 	
 	GAllocator* function(gchar* name, guint nPreallocs) c_g_allocator_new;
 	void function(GAllocator* allocator) c_g_allocator_free;
-}
+}");
 
 // glib.Version
 
