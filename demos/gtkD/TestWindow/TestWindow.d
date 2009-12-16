@@ -30,7 +30,11 @@ private import gtk.Table;
 version(Tango)
 {
 	private import tango.text.convert.Layout;
-	private import tango.io.Stdout;//TEMP.//private import tango.core.Thread;
+	private import tango.io.Stdout;
+	private import tango.core.Thread;
+	private import tango.math.random.Kiss;
+
+	version = DRuntime;
 }
 else version(D_Version2)
 {
@@ -43,8 +47,6 @@ else
 {
 	private import std.thread;
 	private import std.random;
-
-	version = DRuntime;
 }
 
 import gdk.Threads;
@@ -920,11 +922,7 @@ class TestWindow : MainWindow
 			this.num = num;
 		}
 
-		version(Tango) override void run()
-		{
-			runCommon();
-		}
-		else version(D_Version2) void run()
+		version(DRuntime) void run()
 		{
 			runCommon();
 		}
@@ -936,12 +934,13 @@ class TestWindow : MainWindow
 
 		int runCommon()
 		{
-			version(Tango) Random random = new Random();
 			while(1)
 			{
-				version(Tango) int buttonNum = random.next(threadTestButtons.length);
+				version(Tango) int buttonNum = Kiss.instance.natural(threadTestButtons.length);
+				else version(D_Version2) int buttonNum = uniform(0, threadTestButtons.length);
 				else int buttonNum = rand()%threadTestButtons.length;
 				Button button = threadTestButtons[buttonNum];
+
 				gdkThreadsEnter();
 				button.removeAll();
 				version(Tango) button.setLabel( (new Layout!(char))("{}", num));
