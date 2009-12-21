@@ -80,6 +80,7 @@ private import gobject.Value;
 private import glib.ListSG;
 private import glib.ErrorG;
 private import glib.GException;
+private import gtkc.gobject;
 private import gtkc.paths;
 private import glib.Module;
 private import gobject.Type;
