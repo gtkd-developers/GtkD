@@ -161,10 +161,9 @@ public class RadioButton : CheckButton
 	}
 	
 	/**
-	 * Creates a new GtkRadioButton with a text label.
+	 * Creates a new RadioButton with a text label.
 	 * Params:
-	 *  group = an existing radio button group, or NULL if you are creating a new
-	 *  group.
+	 *  group = an existing radio button group.
 	 *  label = the text label to display next to the radio button.
 	 *  mnemonic = if true the label will be created using
 	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
@@ -199,10 +198,10 @@ public class RadioButton : CheckButton
 	}
 	
 	/**
-	 * Creates a new GtkRadioButton with a text label, adding it to the same group
+	 * Creates a new RadioButton with a text label, adding it to the same group
 	 * as group.
 	 * Params:
-	 *  group = an existing GtkRadioButton.
+	 *  radioButton = an existing RadioButton.
 	 *  label = a text string to display next to the radio button.
 	 *  mnemonic = if true the label
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
@@ -234,6 +233,21 @@ public class RadioButton : CheckButton
 		}
 		
 		this(p);
+	}
+
+	/**
+	 * Creates a new RadioButton with a text label,
+	 * and creates a new group.
+	 * Params:
+	 *  label = a text string to display next to the radio button.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		this(cast(ListSG)null, string, mnemonic);
 	}
 	
 	/**
