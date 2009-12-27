@@ -194,6 +194,22 @@ public class Value
 		setInt(value);
 	}
 	
+	/** */
+	this(float value)
+	{
+		this();
+		init(GType.FLOAT);
+		setFloat(value);
+	}
+	
+	/** */
+	this(double value)
+	{
+		this();
+		init(GType.DOUBLE);
+		setDouble(value);
+	}
+	
 	/**
 	 * Initializes value with the default value of type.
 	 * Params:

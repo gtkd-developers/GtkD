@@ -51,7 +51,7 @@
  * 	- glib.ListSG
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gtkc.gobject: g_type_from_name
+ * 	- gtkc.gobject
  * 	- gtkc.paths
  * 	- glib.Module
  * 	- gobject.Type

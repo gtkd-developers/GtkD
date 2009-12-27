@@ -2273,7 +2273,7 @@ code: start
 	 */
 	public this (string label, bool mnemonic=true)
 	{
-		this(cast(ListSG)null, string, mnemonic);
+		this(cast(ListSG)null, label, mnemonic);
 	}
 code: end
 outFile: RadioButton

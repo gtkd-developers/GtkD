@@ -234,7 +234,7 @@ public class RadioButton : CheckButton
 		
 		this(p);
 	}
-
+	
 	/**
 	 * Creates a new RadioButton with a text label,
 	 * and creates a new group.
@@ -247,7 +247,7 @@ public class RadioButton : CheckButton
 	 */
 	public this (string label, bool mnemonic=true)
 	{
-		this(cast(ListSG)null, string, mnemonic);
+		this(cast(ListSG)null, label, mnemonic);
 	}
 	
 	/**

@@ -9,8 +9,6 @@ DC = dmd
 CFLAGS += $(PATH_INCLUDE) 
 DFLAGS += 
 
-LDFLAGS += -L/usr/lib -lm -lpthread -ldl -lphobos
-
 default:$(DTARG) 
 
 $(OBJS): $(DSRC)
@@ -18,7 +16,7 @@ $(OBJS): $(DSRC)
 	${DC} ${DFLAGS} $^ -c
 
 $(DTARG): $(OBJS)
-	$(CC) $^ -o $(DTARG) $(LDFLAGS)
+	$(DC) $^ -of$(DTARG) $(LDFLAGS)
 	mkdir obj
 	mv *.o ./obj
 
