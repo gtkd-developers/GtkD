@@ -226,7 +226,7 @@ function PackageExplorer()
                 node = prev.createChild(path[i], (path.length == i + 1) ? moduleIco : packageIco);
                
             if (path.length == i + 1) {
-	    	if ((path[0] == "gtkglc") || (path[0].substring(0,2) == "gl")) {
+	    	if ((path[0] == "gtkglc") || (path[0] == "glgtk") || (path[0] == "glgdk")) {
 	                node.setRef("../../srcgl/" + path[0] + "/" + path[i] + ".html");
 		} else {
 		        node.setRef("../../src/" + path[0] + "/" + path[i] + ".html");
