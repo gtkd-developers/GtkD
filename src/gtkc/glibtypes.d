@@ -3839,7 +3839,7 @@ public typedef extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFun
  * the message to be output.
  */
 // void (*GPrintFunc) (const gchar *string);
-public typedef extern(C) void  function (char[]) GPrintFunc;
+public typedef extern(C) void  function (char*) GPrintFunc;
 
 /*
  * Specifies the prototype of log handler functions.
@@ -3854,7 +3854,7 @@ public typedef extern(C) void  function (char[]) GPrintFunc;
  * user data, set in g_log_set_handler().
  */
 // void (*GLogFunc) (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer user_data);
-public typedef extern(C) void  function (char[], GLogLevelFlags, char[], void*) GLogFunc;
+public typedef extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLogFunc;
 
 /*
  * Declares a type of function which takes no arguments and has no return value.
@@ -3883,7 +3883,7 @@ public typedef extern(C) void  function (void*) GFreeFunc;
  *  signals a warning.
  */
 // void (*GScannerMsgFunc) (GScanner *scanner,  gchar *message,  gboolean error);
-public typedef extern(C) void  function (GScanner*, char[], int) GScannerMsgFunc;
+public typedef extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
 
 /*
  * Specifies the type of the function passed to g_completion_new().
@@ -3912,7 +3912,7 @@ public typedef extern(C) char *  function (void*) GCompletionFunc;
  * or to be greater than the first n bytes of s2.
  */
 // gint (*GCompletionStrncmpFunc) (const gchar *s1,  const gchar *s2,  gsize n);
-public typedef extern(C) int  function (char[], char[], uint) GCompletionStrncmpFunc;
+public typedef extern(C) int  function (char*, char*, uint) GCompletionStrncmpFunc;
 
 /*
  * Specifies the type of the setup function passed to g_spawn_async(),
@@ -3957,7 +3957,7 @@ public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionArgFunc) (const gchar *option_name,  const gchar *value,  gpointer data,  GError **error);
-public typedef extern(C) int  function (char[], char[], void*, GError**) GOptionArgFunc;
+public typedef extern(C) int  function (char*, char*, void*, GError**) GOptionArgFunc;
 
 /*
  * The type of functions which are used to translate user-visible
@@ -3972,7 +3972,7 @@ public typedef extern(C) int  function (char[], char[], void*, GError**) GOption
  *  The returned string is owned by GLib and must not be freed.
  */
 // const gchar * (*GTranslateFunc) (const gchar *str,  gpointer data);
-public typedef extern(C) char *  function (char[], void*) GTranslateFunc;
+public typedef extern(C) char *  function (char*, void*) GTranslateFunc;
 
 /*
  * The type of function that can be called before and after parsing.

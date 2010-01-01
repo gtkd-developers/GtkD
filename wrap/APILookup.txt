@@ -57,7 +57,7 @@ alias: gboolean int
 alias: gpointer void*
 alias: gconstpointer void*
 alias: gchar char
-alias: gchar* char[]
+alias: gchar* char*
 alias: guchar char
 alias: gshort short
 alias: gushort ushort

@@ -5890,7 +5890,7 @@ public typedef extern(C) int  function (GtkAccelKey*, GClosure*, void*) GtkAccel
  * changed :
  */
 // void (*GtkAccelMapForeach) (gpointer data,  const gchar *accel_path,  guint accel_key,  GdkModifierType accel_mods,  gboolean changed);
-public typedef extern(C) void  function (void*, char[], uint, GdkModifierType, int) GtkAccelMapForeach;
+public typedef extern(C) void  function (void*, char*, uint, GdkModifierType, int) GtkAccelMapForeach;
 
 /*
  *  A function to be called when the results of gtk_clipboard_request_contents()
@@ -5919,7 +5919,7 @@ public typedef extern(C) void  function (GtkClipboard*, GtkSelectionData*, void*
  * the user_data supplied to gtk_clipboard_request_text().
  */
 // void (*GtkClipboardTextReceivedFunc) (GtkClipboard *clipboard,  const gchar *text,  gpointer data);
-public typedef extern(C) void  function (GtkClipboard*, char[], void*) GtkClipboardTextReceivedFunc;
+public typedef extern(C) void  function (GtkClipboard*, char*, void*) GtkClipboardTextReceivedFunc;
 
 /*
  *  A function to be called when the results of gtk_clipboard_request_image()
@@ -6085,7 +6085,7 @@ public typedef extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCa
  *  gtk_about_dialog_set_url_hook()
  */
 // void (*GtkAboutDialogActivateLinkFunc) (GtkAboutDialog *about,  const gchar *link_,  gpointer data);
-public typedef extern(C) void  function (GtkAboutDialog*, char[], void*) GtkAboutDialogActivateLinkFunc;
+public typedef extern(C) void  function (GtkAboutDialog*, char*, void*) GtkAboutDialogActivateLinkFunc;
 
 /*
  * A function used by gtk_assistant_set_forward_page_func() to know which
@@ -6114,7 +6114,7 @@ public typedef extern(C) int  function (int, void*) GtkAssistantPageFunc;
  *  with gtk_link_button_set_uri_hook()
  */
 // void (*GtkLinkButtonUriFunc) (GtkLinkButton *button,  const gchar *link_,  gpointer user_data);
-public typedef extern(C) void  function (GtkLinkButton*, char[], void*) GtkLinkButtonUriFunc;
+public typedef extern(C) void  function (GtkLinkButton*, char*, void*) GtkLinkButtonUriFunc;
 
 /*
  * A function which decides whether the row indicated by iter matches a given
@@ -6134,7 +6134,7 @@ public typedef extern(C) void  function (GtkLinkButton*, char[], void*) GtkLinkB
  * %TRUE if iter should be displayed as a possible completion for key
  */
 // gboolean (*GtkEntryCompletionMatchFunc) (GtkEntryCompletion *completion,  const gchar *key,  GtkTreeIter *iter,  gpointer user_data);
-public typedef extern(C) int  function (GtkEntryCompletion*, char[], GtkTreeIter*, void*) GtkEntryCompletionMatchFunc;
+public typedef extern(C) int  function (GtkEntryCompletion*, char*, GtkTreeIter*, void*) GtkEntryCompletionMatchFunc;
 
 /*
  * ch :
@@ -6327,7 +6327,7 @@ public typedef extern(C) void  function (GtkTreeView*, GtkTreePath*, void*) GtkT
  * %FALSE if the row matches, TRUE otherwise.
  */
 // gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel *model,  gint column,  const gchar *key,  GtkTreeIter *iter,  gpointer search_data);
-public typedef extern(C) int  function (GtkTreeModel*, int, char[], GtkTreeIter*, void*) GtkTreeViewSearchEqualFunc;
+public typedef extern(C) int  function (GtkTreeModel*, int, char*, GtkTreeIter*, void*) GtkTreeViewSearchEqualFunc;
 
 /*
  * tree_view :
@@ -6575,7 +6575,7 @@ public typedef extern(C) void  function (GtkPageSetup*, void*) GtkPageSetupDoneF
  * user_data :
  */
 // void (*GtkPrintSettingsFunc) (const gchar *key,  const gchar *value,  gpointer user_data);
-public typedef extern(C) void  function (char[], char[], void*) GtkPrintSettingsFunc;
+public typedef extern(C) void  function (char*, char*, void*) GtkPrintSettingsFunc;
 
 /*
  * The type of function passed to gtk_enumerate_printers().
@@ -6684,7 +6684,7 @@ public typedef extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFi
  * Since 2.12
  */
 // void (*GtkBuilderConnectFunc) (GtkBuilder *builder,  GObject *object,  const gchar *signal_name,  const gchar *handler_name,  GObject *connect_object,  GConnectFlags flags,  gpointer user_data);
-public typedef extern(C) void  function (GtkBuilder*, GObject*, char[], char[], GObject*, GConnectFlags, void*) GtkBuilderConnectFunc;
+public typedef extern(C) void  function (GtkBuilder*, GObject*, char*, char*, GObject*, GConnectFlags, void*) GtkBuilderConnectFunc;
 
 /*
  * Warning
@@ -6693,7 +6693,7 @@ public typedef extern(C) void  function (GtkBuilder*, GObject*, char[], char[], 
  * str :
  */
 // void (*GtkPrintFunc) (gpointer func_data,  const gchar *str);
-public typedef extern(C) void  function (void*, char[]) GtkPrintFunc;
+public typedef extern(C) void  function (void*, char*) GtkPrintFunc;
 
 /*
  * The function used to translate messages in e.g. GtkIconFactory
@@ -6708,7 +6708,7 @@ public typedef extern(C) void  function (void*, char[]) GtkPrintFunc;
  * the translated message
  */
 // gchar * (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
-public typedef extern(C) char *  function (char[], void*) GtkTranslateFunc;
+public typedef extern(C) char *  function (char*, void*) GtkTranslateFunc;
 
 /*
  * Warning
