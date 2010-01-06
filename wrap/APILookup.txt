@@ -100,7 +100,6 @@ alias: instance instanc
 alias: union unio
 alias: version versio
 alias: in inn
-alias: ref doref
 alias: continue continu
 
 alias: GLIB_SYSDEF_POLLIN =1

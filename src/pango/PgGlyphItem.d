@@ -236,7 +236,7 @@ public class PgGlyphItem
 	 *  in Pango units. May be negative, though too large
 	 *  negative values will give ugly results.
 	 */
-	public void letterSpace(string text, inout PangoLogAttr logAttrs, int letterSpacing)
+	public void letterSpace(string text, ref PangoLogAttr logAttrs, int letterSpacing)
 	{
 		// void pango_glyph_item_letter_space (PangoGlyphItem *glyph_item,  const char *text,  PangoLogAttr *log_attrs,  int letter_spacing);
 		pango_glyph_item_letter_space(pangoGlyphItem, Str.toStringz(text), &logAttrs, letterSpacing);

@@ -1820,7 +1820,7 @@ public class Context
 	 * x =  X value of coordinate (in/out parameter)
 	 * y =  Y value of coordinate (in/out parameter)
 	 */
-	public void userToDevice(inout double x, inout double y)
+	public void userToDevice(ref double x, ref double y)
 	{
 		// void cairo_user_to_device (cairo_t *cr,  double *x,  double *y);
 		cairo_user_to_device(cairo, &x, &y);
@@ -1835,7 +1835,7 @@ public class Context
 	 * dx =  X component of a distance vector (in/out parameter)
 	 * dy =  Y component of a distance vector (in/out parameter)
 	 */
-	public void userToDeviceDistance(inout double dx, inout double dy)
+	public void userToDeviceDistance(ref double dx, ref double dy)
 	{
 		// void cairo_user_to_device_distance (cairo_t *cr,  double *dx,  double *dy);
 		cairo_user_to_device_distance(cairo, &dx, &dy);
@@ -1849,7 +1849,7 @@ public class Context
 	 * x =  X value of coordinate (in/out parameter)
 	 * y =  Y value of coordinate (in/out parameter)
 	 */
-	public void deviceToUser(inout double x, inout double y)
+	public void deviceToUser(ref double x, ref double y)
 	{
 		// void cairo_device_to_user (cairo_t *cr,  double *x,  double *y);
 		cairo_device_to_user(cairo, &x, &y);
@@ -1864,7 +1864,7 @@ public class Context
 	 * dx =  X component of a distance vector (in/out parameter)
 	 * dy =  Y component of a distance vector (in/out parameter)
 	 */
-	public void deviceToUserDistance(inout double dx, inout double dy)
+	public void deviceToUserDistance(ref double dx, ref double dy)
 	{
 		// void cairo_device_to_user_distance (cairo_t *cr,  double *dx,  double *dy);
 		cairo_device_to_user_distance(cairo, &dx, &dy);

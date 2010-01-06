@@ -102,7 +102,7 @@ public class Base64
 	 * save =  Saved state between steps, initialize to 0
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static uint encodeStep(char* inn, uint len, int breakLines, string f_out, inout int state, inout int save)
+	public static uint encodeStep(char* inn, uint len, int breakLines, string f_out, ref int state, ref int save)
 	{
 		// gsize g_base64_encode_step (const guchar *in,  gsize len,  gboolean break_lines,  gchar *out,  gint *state,  gint *save);
 		return g_base64_encode_step(inn, len, breakLines, Str.toStringz(f_out), &state, &save);
@@ -118,7 +118,7 @@ public class Base64
 	 * save =  Saved state from g_base64_encode_step()
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static uint encodeClose(int breakLines, string f_out, inout int state, inout int save)
+	public static uint encodeClose(int breakLines, string f_out, ref int state, ref int save)
 	{
 		// gsize g_base64_encode_close (gboolean break_lines,  gchar *out,  gint *state,  gint *save);
 		return g_base64_encode_close(breakLines, Str.toStringz(f_out), &state, &save);
@@ -156,7 +156,7 @@ public class Base64
 	 * save =  Saved state between steps, initialize to 0
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static uint decodeStep(string inn, uint len, char* f_out, inout int state, inout uint save)
+	public static uint decodeStep(string inn, uint len, char* f_out, ref int state, ref uint save)
 	{
 		// gsize g_base64_decode_step (const gchar *in,  gsize len,  guchar *out,  gint *state,  guint *save);
 		return g_base64_decode_step(Str.toStringz(inn), len, f_out, &state, &save);

@@ -90,7 +90,7 @@ public class Gdk
 	 * Params:
 	 * argv = the array of command line arguments.
 	 */
-	public static void init(inout string[] argv)
+	public static void init(ref string[] argv)
 	{
 		// void gdk_init (gint *argc,  gchar ***argv);
 		char** outargv = Str.toStringzArray(argv);
@@ -112,7 +112,7 @@ public class Gdk
 	 * argv = the array of command line arguments.
 	 * Returns:%TRUE if initialization succeeded.
 	 */
-	public static int initCheck(inout string[] argv)
+	public static int initCheck(ref string[] argv)
 	{
 		// gboolean gdk_init_check (gint *argc,  gchar ***argv);
 		char** outargv = Str.toStringzArray(argv);
@@ -135,7 +135,7 @@ public class Gdk
 	 * Params:
 	 * argv =  the array of command line arguments.
 	 */
-	public static void parseArgs(inout string[] argv)
+	public static void parseArgs(ref string[] argv)
 	{
 		// void gdk_parse_args (gint *argc,  gchar ***argv);
 		char** outargv = Str.toStringzArray(argv);

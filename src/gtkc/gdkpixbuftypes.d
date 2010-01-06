@@ -46,6 +46,7 @@ public enum GdkPixdataType
 	GDK_PIXDATA_COLOR_TYPE_RGBA = 0x02,
 	GDK_PIXDATA_COLOR_TYPE_MASK = 0xff,
 	/+* width, support 8bits only currently +/
+	GDC_BUG_WORKAROUND,
 	GDK_PIXDATA_SAMPLE_WIDTH_8 = 0x01 << 16,
 	GDK_PIXDATA_SAMPLE_WIDTH_MASK = 0x0f << 16,
 	/+* encoding +/
@@ -71,6 +72,7 @@ public enum GdkPixdataDumpType
 	GDK_PIXDATA_DUMP_PIXDATA_STRUCT = 1,
 	GDK_PIXDATA_DUMP_MACROS = 2,
 	/+* type of variables to use +/
+	GDC_BUG_WORKAROUND,
 	GDK_PIXDATA_DUMP_GTYPES = 0,
 	GDK_PIXDATA_DUMP_CTYPES = 1 << 8,
 	GDK_PIXDATA_DUMP_STATIC = 1 << 9,
@@ -87,6 +89,7 @@ alias GdkPixdataDumpType PixdataDumpType;
  */
 public enum GdkPixbufFormatFlags
 {
+	GDC_BUG_WORKAROUND,
 	WRITABLE = 1 << 0,
 	SCALABLE = 1 << 1,
 	THREADSAFE = 1 << 2

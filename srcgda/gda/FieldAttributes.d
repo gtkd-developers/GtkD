@@ -358,10 +358,10 @@ public class FieldAttributes
 	 * Params:
 	 * ref =  references.
 	 */
-	public void setReferences(string doref)
+	public void setReferences(string ref)
 	{
 		// void gda_field_attributes_set_references (GdaFieldAttributes *fa,  const gchar *ref);
-		gda_field_attributes_set_references(gdaFieldAttributes, Str.toStringz(doref));
+		gda_field_attributes_set_references(gdaFieldAttributes, Str.toStringz(ref));
 	}
 	
 	/**

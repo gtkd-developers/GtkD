@@ -32,6 +32,7 @@ public import gtkc.gobjecttypes;
  */
 public enum GFileQueryInfoFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	NOFOLLOW_SYMLINKS = (1 << 0) /+*< nick=nofollow-symlinks >+/
 }
@@ -43,6 +44,7 @@ alias GFileQueryInfoFlags FileQueryInfoFlags;
  */
 public enum GFileCreateFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	PRIVATE = (1 << 0),
 	REPLACE_DESTINATION = (1 << 1)
@@ -55,6 +57,7 @@ alias GFileCreateFlags FileCreateFlags;
  */
 public enum GFileCopyFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0, /+*< nick=none >+/
 	OVERWRITE = (1 << 0),
 	BACKUP = (1 << 1),
@@ -71,6 +74,7 @@ alias GFileCopyFlags FileCopyFlags;
  */
 public enum GFileMonitorFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	WATCH_MOUNTS = (1 << 0)
 }
@@ -84,6 +88,7 @@ alias GFileMonitorFlags FileMonitorFlags;
  */
 public enum GFilesystemPreviewType
 {
+	GDC_BUG_WORKAROUND,
 	TYPE_IF_ALWAYS = 0,
 	TYPE_IF_LOCAL,
 	TYPE_NEVER
@@ -96,6 +101,7 @@ alias GFilesystemPreviewType FilesystemPreviewType;
  */
 public enum GFileAttributeType
 {
+	GDC_BUG_WORKAROUND,
 	TYPE_INVALID = 0,
 	TYPE_STRING,
 	TYPE_BYTE_STRING, /+* zero terminated string of non-zero bytes +/
@@ -115,6 +121,7 @@ alias GFileAttributeType FileAttributeType;
  */
 public enum GFileAttributeInfoFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	COPY_WITH_FILE = (1 << 0),
 	COPY_WHEN_MOVED = (1 << 1)
@@ -127,6 +134,7 @@ alias GFileAttributeInfoFlags FileAttributeInfoFlags;
  */
 public enum GFileAttributeStatus
 {
+	GDC_BUG_WORKAROUND,
 	UNSET = 0,
 	SET,
 	ERROR_SETTING
@@ -139,6 +147,7 @@ alias GFileAttributeStatus FileAttributeStatus;
  */
 public enum GFileType
 {
+	GDC_BUG_WORKAROUND,
 	TYPE_UNKNOWN = 0,
 	TYPE_REGULAR,
 	TYPE_DIRECTORY,
@@ -200,6 +209,7 @@ alias GIOErrorEnum IOErrorEnum;
  */
 public enum GAskPasswordFlags
 {
+	GDC_BUG_WORKAROUND,
 	NEED_PASSWORD = (1 << 0),
 	NEED_USERNAME = (1 << 1),
 	NEED_DOMAIN = (1 << 2),
@@ -257,6 +267,7 @@ alias GFileMonitorEvent FileMonitorEvent;
  */
 public enum GOutputStreamSpliceFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	CLOSE_SOURCE = (1 << 0),
 	CLOSE_TARGET = (1 << 1)
@@ -295,6 +306,7 @@ alias GDataStreamNewlineType DataStreamNewlineType;
  */
 public enum GAppInfoCreateFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0, /+*< nick=none >+/
 	NEEDS_TERMINAL = (1 << 0), /+*< nick=needs-terminal >+/
 	SUPPORTS_URIS = (1 << 1) /+*< nick=supports-uris >+/
@@ -307,6 +319,7 @@ alias GAppInfoCreateFlags AppInfoCreateFlags;
  */
 public enum GMountMountFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0
 }
 alias GMountMountFlags MountMountFlags;
@@ -317,6 +330,7 @@ alias GMountMountFlags MountMountFlags;
  */
 public enum GMountUnmountFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	FORCE = (1 << 0)
 }
@@ -328,6 +342,7 @@ alias GMountUnmountFlags MountUnmountFlags;
  */
 public enum GDriveStartFlags
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0
 }
 alias GDriveStartFlags DriveStartFlags;
@@ -385,6 +400,7 @@ alias GSocketType SocketType;
  */
 public enum GSocketProtocol
 {
+	GDC_BUG_WORKAROUND,
 	UNKNOWN = -1,
 	DEFAULT = 0,
 	TCP = 6,

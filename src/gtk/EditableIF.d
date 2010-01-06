@@ -179,7 +179,7 @@ public interface EditableIF
 	 * newTextLength =  the length of the text in bytes, or -1
 	 * position =  location of the position text will be inserted at
 	 */
-	public void insertText(string newText, int newTextLength, inout int position);
+	public void insertText(string newText, int newTextLength, ref int position);
 	
 	/**
 	 * Deletes a sequence of characters. The characters that are deleted are

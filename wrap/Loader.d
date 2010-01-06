@@ -46,7 +46,7 @@ public struct Linker
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
-	public static void link(T)(inout T funct, string symbol, LIBRARY[] libraries ...)
+	public static void link(T)(ref T funct, string symbol, LIBRARY[] libraries ...)
 	{
 		funct = cast(T)getSymbol(symbol, libraries);
 	}

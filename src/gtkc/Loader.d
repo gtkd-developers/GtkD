@@ -46,7 +46,7 @@ public struct Linker
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
-	public static void link(T)(inout T funct, string symbol, LIBRARY[] libraries ...)
+	public static void link(T)(ref T funct, string symbol, LIBRARY[] libraries ...)
 	{
 		funct = cast(T)getSymbol(symbol, libraries);
 	}
@@ -278,7 +278,7 @@ else
 
 	enum RTLD
 	{
-	GDC_BUG_WORKAROUND,
+		GDC_BUG_WORKAROUND,
 		LAZY     = 0x00001,  // Lazy function call binding
 		NOW      = 0x00002,  // Immediate function call binding
 		NOLOAD   = 0x00004,  // No object load

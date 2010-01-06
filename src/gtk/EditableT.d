@@ -270,7 +270,7 @@ public template EditableT(TStruct)
 	 * newTextLength =  the length of the text in bytes, or -1
 	 * position =  location of the position text will be inserted at
 	 */
-	public void insertText(string newText, int newTextLength, inout int position)
+	public void insertText(string newText, int newTextLength, ref int position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
 		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), newTextLength, &position);

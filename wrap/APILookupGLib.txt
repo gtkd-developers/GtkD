@@ -67,8 +67,7 @@ version(Tango)
 
 version(D_Version2)
 {
-	//string/enum in version doesn't work with mixin?
-	string gshared() { return "__gshared "; }
+	enum string gshared = "__gshared ";
 }
 else
 {

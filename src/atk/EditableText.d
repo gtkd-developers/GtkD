@@ -142,7 +142,7 @@ public class EditableText
 	 * the position at which to insert the text. After the call it
 	 * points at the position after the newly inserted text.
 	 */
-	public void insertText(string string, int length, inout int position)
+	public void insertText(string string, int length, ref int position)
 	{
 		// void atk_editable_text_insert_text (AtkEditableText *text,  const gchar *string,  gint length,  gint *position);
 		atk_editable_text_insert_text(atkEditableText, Str.toStringz(string), length, &position);

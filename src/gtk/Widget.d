@@ -2953,7 +2953,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * widget =  a GtkWidget
 	 * widgetPointer =  address of a variable that contains widget
 	 */
-	public void destroyed(inout Widget widgetPointer)
+	public void destroyed(ref Widget widgetPointer)
 	{
 		// void gtk_widget_destroyed (GtkWidget *widget,  GtkWidget **widget_pointer);
 		GtkWidget* outwidgetPointer = (widgetPointer is null) ? null : widgetPointer.getWidgetStruct();
@@ -5332,7 +5332,7 @@ public Pixmap getSnapshot(Rectangle clipRect)
  * Params:
  * allocation =  a pointer to a GtkAllocation to copy from
  */
-public void setAllocation(inout GtkAllocation allocation)
+public void setAllocation(ref GtkAllocation allocation)
 {
 	// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
 	gtk_widget_set_allocation(gtkWidget, &allocation);

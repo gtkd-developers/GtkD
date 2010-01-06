@@ -1460,7 +1460,7 @@ public class TreeView : Container
 	 * cellY =  A pointer where the Y coordinate relative to the cell can be placed, or NULL
 	 * Returns: TRUE if a row exists at that coordinate.
 	 */
-	public int getPathAtPos(int x, int y, inout TreePath path, inout TreeViewColumn column, out int cellX, out int cellY)
+	public int getPathAtPos(int x, int y, ref TreePath path, ref TreeViewColumn column, out int cellX, out int cellY)
 	{
 		// gboolean gtk_tree_view_get_path_at_pos (GtkTreeView *tree_view,  gint x,  gint y,  GtkTreePath **path,  GtkTreeViewColumn **column,  gint *cell_x,  gint *cell_y);
 		GtkTreePath* outpath = (path is null) ? null : path.getTreePathStruct();

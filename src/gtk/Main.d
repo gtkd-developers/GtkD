@@ -243,7 +243,7 @@ public class Main
 	 * argv =  a pointer to the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
-	public static int parseArgs(inout string[] argv)
+	public static int parseArgs(ref string[] argv)
 	{
 		// gboolean gtk_parse_args (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
@@ -301,7 +301,7 @@ public class Main
 	 *  Any parameters understood by gtk_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
-	public static int initCheck(inout string[] argv)
+	public static int initCheck(ref string[] argv)
 	{
 		// gboolean gtk_init_check (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
@@ -333,7 +333,7 @@ public class Main
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
-	public static int initWithArgs(inout string[] argv, string parameterString, GOptionEntry[] entries, string translationDomain)
+	public static int initWithArgs(ref string[] argv, string parameterString, GOptionEntry[] entries, string translationDomain)
 	{
 		// gboolean gtk_init_with_args (int *argc,  char ***argv,  char *parameter_string,  GOptionEntry *entries,  char *translation_domain,  GError **error);
 		char** outargv = Str.toStringzArray(argv);

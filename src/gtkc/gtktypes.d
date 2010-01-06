@@ -121,6 +121,7 @@ public alias GFlagsValue GtkFlagValue;
  */
 public enum GtkDestDefaults
 {
+	GDC_BUG_WORKAROUND,
 	MOTION = 1 << 0, /+* respond to "dragMotion" +/
 	HIGHLIGHT = 1 << 1, /+* auto-highlight +/
 	DROP = 1 << 2, /+* respond to "dragDrop" +/
@@ -135,6 +136,7 @@ alias GtkDestDefaults DestDefaults;
  */
 public enum GtkTargetFlags
 {
+	GDC_BUG_WORKAROUND,
 	SAME_APP = 1 << 0, /+*< nick=same-app >+/
 	SAME_WIDGET = 1 << 1, /+*< nick=same-widget >+/
 	OTHER_APP = 1 << 2, /+*< nick=other-app >+/
@@ -148,6 +150,7 @@ alias GtkTargetFlags TargetFlags;
  */
 public enum GtkIconLookupFlags
 {
+	GDC_BUG_WORKAROUND,
 	NO_SVG = 1 << 0,
 	FORCE_SVG = 1 << 1,
 	USE_BUILTIN = 1 << 2,
@@ -194,6 +197,7 @@ alias GtkIconSize IconSize;
  */
 public enum GtkRcFlags
 {
+	GDC_BUG_WORKAROUND,
 	FG = 1 << 0,
 	BG = 1 << 1,
 	TEXT = 1 << 2,
@@ -209,6 +213,7 @@ alias GtkRcFlags RcFlags;
  */
 public enum GtkRcTokenType
 {
+	GDC_BUG_WORKAROUND,
 	INVALID = TokenType.LAST,
 	INCLUDE,
 	NORMAL,
@@ -254,6 +259,7 @@ alias GtkRcTokenType RcTokenType;
 
 public enum GtkAccelFlags
 {
+	GDC_BUG_WORKAROUND,
 	VISIBLE = 1 << 0, /+* display inn GtkAccelLabel? +/
 	LOCKED = 1 << 1, /+* is it removable? +/
 	MASK = 0x07
@@ -335,6 +341,7 @@ alias GtkArrowType ArrowType;
  */
 public enum GtkAttachOptions
 {
+	GDC_BUG_WORKAROUND,
 	EXPAND = 1 << 0,
 	SHRINK = 1 << 1,
 	FILL = 1 << 2
@@ -560,6 +567,7 @@ alias GtkPackType PackType;
 
 public enum GtkPathPriorityType
 {
+	GDC_BUG_WORKAROUND,
 	LOWEST = 0,
 	GTK = 4,
 	APPLICATION = 8,
@@ -999,6 +1007,7 @@ alias GtkDragResult DragResult;
  */
 public enum GtkSignalRunType
 {
+	GDC_BUG_WORKAROUND,
 	RUN_FIRST = SignalFlags.RUN_FIRST,
 	RUN_LAST = SignalFlags.RUN_LAST,
 	RUN_BOTH = (RUN_FIRST | RUN_LAST),
@@ -1015,6 +1024,7 @@ alias GtkSignalRunType SignalRunType;
  */
 public enum GtkDialogFlags
 {
+	GDC_BUG_WORKAROUND,
 	MODAL = 1 << 0, /+* call windowSetModal (win, TRUE) +/
 	DESTROY_WITH_PARENT = 1 << 1, /+* call windowSetDestroyWithParent () +/
 	NO_SEPARATOR = 1 << 2 /+* no separator bar above buttons +/
@@ -1033,6 +1043,7 @@ public enum GtkResponseType
 	/+* GTK returns this if a response widget has no responseId,
 	 * or if the dialog gets programmatically hidden or destroyed.
 	+/
+	GDC_BUG_WORKAROUND,
 	GTK_RESPONSE_NONE = -1,
 	/+* GTK won't return these unless you pass them inn
 	 * as the response for an action widget. They are
@@ -1259,6 +1270,7 @@ alias GtkSpinType SpinType;
 
 public enum GtkTextSearchFlags
 {
+	GDC_BUG_WORKAROUND,
 	VISIBLE_ONLY = 1 << 0,
 	TEXT_ONLY = 1 << 1
 	/+* Possible future plans: SEARCH_CASE_INSENSITIVE, SEARCH_REGEXP +/
@@ -1267,6 +1279,7 @@ alias GtkTextSearchFlags TextSearchFlags;
 
 public enum GtkTextBufferTargetInfo
 {
+	GDC_BUG_WORKAROUND,
 	BUFFER_CONTENTS = - 1,
 	RICH_TEXT = - 2,
 	TEXT = - 3
@@ -1314,6 +1327,7 @@ alias GtkTextWindowType TextWindowType;
  */
 public enum GtkTreeModelFlags
 {
+	GDC_BUG_WORKAROUND,
 	ITERS_PERSIST = 1 << 0,
 	LIST_ONLY = 1 << 1
 }
@@ -1424,6 +1438,7 @@ alias GtkIconViewDropPosition IconViewDropPosition;
  */
 public enum GtkCellRendererState
 {
+	GDC_BUG_WORKAROUND,
 	SELECTED = 1 << 0,
 	PRELIT = 1 << 1,
 	INSENSITIVE = 1 << 2,
@@ -1542,6 +1557,7 @@ alias GtkToolbarSpaceStyle ToolbarSpaceStyle;
  */
 public enum GtkUIManagerItemType
 {
+	GDC_BUG_WORKAROUND,
 	AUTO = 0,
 	MENUBAR = 1 << 0,
 	MENU = 1 << 1,
@@ -1600,6 +1616,7 @@ alias GtkFileChooserError FileChooserError;
  */
 public enum GtkFileFilterFlags
 {
+	GDC_BUG_WORKAROUND,
 	FILENAME = 1 << 0,
 	URI = 1 << 1,
 	DISPLAY_NAME = 1 << 2,
@@ -1780,6 +1797,7 @@ alias GtkUnit Unit;
  */
 public enum GtkPrintCapabilities
 {
+	GDC_BUG_WORKAROUND,
 	CAPABILITY_PAGE_SET = 1 << 0,
 	CAPABILITY_COPIES = 1 << 1,
 	CAPABILITY_COLLATE = 1 << 2,
@@ -1799,6 +1817,7 @@ alias GtkPrintCapabilities PrintCapabilities;
  */
 public enum GtkCalendarDisplayOptions
 {
+	GDC_BUG_WORKAROUND,
 	SHOW_HEADING = 1 << 0,
 	SHOW_DAY_NAMES = 1 << 1,
 	NO_MONTH_CHANGE = 1 << 2,
@@ -1851,6 +1870,7 @@ alias GtkMenuDirectionType MenuDirectionType;
  */
 public enum GtkObjectFlags
 {
+	GDC_BUG_WORKAROUND,
 	IN_DESTRUCTION = 1 << 0, /+* Used internally during dispose +/
 	FLOATING = 1 << 1,
 	RESERVED_1 = 1 << 2,
@@ -1879,6 +1899,7 @@ alias GtkObjectFlags ObjectFlags;
  */
 public enum GtkArgFlags
 {
+	GDC_BUG_WORKAROUND,
 	READABLE = ParamFlags.READABLE,
 	WRITABLE = ParamFlags.WRITABLE,
 	CONSTRUCT = ParamFlags.CONSTRUCT,
@@ -1907,6 +1928,7 @@ alias GtkSensitivityType SensitivityType;
  */
 public enum GtkWidgetFlags
 {
+	GDC_BUG_WORKAROUND,
 	TOPLEVEL = 1 << 4,
 	NO_WINDOW = 1 << 5,
 	REALIZED = 1 << 6,
@@ -1991,6 +2013,7 @@ alias GtkRecentChooserError RecentChooserError;
  */
 public enum GtkRecentSortType
 {
+	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	MRU,
 	LRU,
@@ -2008,6 +2031,7 @@ alias GtkRecentSortType RecentSortType;
  */
 public enum GtkRecentFilterFlags
 {
+	GDC_BUG_WORKAROUND,
 	URI = 1 << 0,
 	DISPLAY_NAME = 1 << 1,
 	MIME_TYPE = 1 << 2,

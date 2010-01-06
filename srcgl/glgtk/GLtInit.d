@@ -86,7 +86,7 @@ public class GLtInit
 	 *  main(). Any parameters understood by
 	 *  gtk_gl_init() are stripped before return.
 	 */
-	public static void init(inout string[] argv)
+	public static void init(ref string[] argv)
 	{
 		// void gtk_gl_init (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
@@ -109,7 +109,7 @@ public class GLtInit
 	 *  gtk_gl_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
-	public static int initCheck(inout string[] argv)
+	public static int initCheck(ref string[] argv)
 	{
 		// gboolean gtk_gl_init_check (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
@@ -132,7 +132,7 @@ public class GLtInit
 	 * argv =  the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartIII.GtkGLExt API ReferenceOpenGL-Capable Widget>>
 	 */
-	public static int parseArgs(inout string[] argv)
+	public static int parseArgs(ref string[] argv)
 	{
 		// gboolean gtk_gl_parse_args (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);

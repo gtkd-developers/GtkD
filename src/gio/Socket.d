@@ -458,7 +458,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int receiveFrom(inout SocketAddress address, char[] buffer, Cancellable cancellable)
+	public int receiveFrom(ref SocketAddress address, char[] buffer, Cancellable cancellable)
 	{
 		// gssize g_socket_receive_from (GSocket *socket,  GSocketAddress **address,  gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
@@ -532,7 +532,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int receiveMessage(inout SocketAddress address, GInputVector[] vectors, inout SocketControlMessage[] messages, inout int flags, Cancellable cancellable)
+	public int receiveMessage(ref SocketAddress address, GInputVector[] vectors, ref SocketControlMessage[] messages, ref int flags, Cancellable cancellable)
 	{
 		// gssize g_socket_receive_message (GSocket *socket,  GSocketAddress **address,  GInputVector *vectors,  gint num_vectors,  GSocketControlMessage ***messages,  gint *num_messages,  gint *flags,  GCancellable *cancellable,  GError **error);
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
@@ -672,7 +672,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes written (which may be less than size), or -1on error
 	 * Throws: GException on failure.
 	 */
-	public int sendMessage(SocketAddress address, GOutputVector[] vectors, inout GSocketControlMessage[] messages, int flags, Cancellable cancellable)
+	public int sendMessage(SocketAddress address, GOutputVector[] vectors, ref GSocketControlMessage[] messages, int flags, Cancellable cancellable)
 	{
 		// gssize g_socket_send_message (GSocket *socket,  GSocketAddress *address,  GOutputVector *vectors,  gint num_vectors,  GSocketControlMessage **messages,  gint num_messages,  gint flags,  GCancellable *cancellable,  GError **error);
 		GSocketControlMessage* outmessages = messages.ptr;

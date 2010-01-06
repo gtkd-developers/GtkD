@@ -260,7 +260,7 @@ public class PgMatrix
 	 * x =  in/out X position
 	 * y =  in/out Y position
 	 */
-	public void matrixTransformPoint(inout double x, inout double y)
+	public void matrixTransformPoint(ref double x, ref double y)
 	{
 		// void pango_matrix_transform_point (const PangoMatrix *matrix,  double *x,  double *y);
 		pango_matrix_transform_point(pangoMatrix, &x, &y);
@@ -276,7 +276,7 @@ public class PgMatrix
 	 * dx =  in/out X component of a distance vector
 	 * dy =  yn/out Y component of a distance vector
 	 */
-	public void matrixTransformDistance(inout double dx, inout double dy)
+	public void matrixTransformDistance(ref double dx, ref double dy)
 	{
 		// void pango_matrix_transform_distance (const PangoMatrix *matrix,  double *dx,  double *dy);
 		pango_matrix_transform_distance(pangoMatrix, &dx, &dy);

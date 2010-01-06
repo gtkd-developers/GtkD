@@ -84,7 +84,7 @@ public class Testing
 	 * Params:
 	 *  argvp = Address of the argv parameter of main(). Any parameters understood by g_test_init() or gtk_init() are stripped before return.
 	 */
-	public static void testInit(inout string[] argv)
+	public static void testInit(ref string[] argv)
 	{
 		// gboolean gtk_parse_args (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);

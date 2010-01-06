@@ -1807,7 +1807,9 @@ public class GtkDClass
 
 			char[][] splitFunct = std.string.split(funct, "(");
 
-			return splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~" "~ splitFunct[1][1..$-2] ~";"~ comment;
+			char[] name = (splitFunct[1][1..$-2] == "ref") ? "doref" : splitFunct[1][1..$-2];
+
+			return splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~" "~ name ~";"~ comment;
 		}
 
 		bool bitField = false;	// if we are in a bit field

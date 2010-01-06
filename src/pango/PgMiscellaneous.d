@@ -136,7 +136,7 @@ public class PgMiscellaneous
 	 * pos =  in/out string position
 	 * Returns: FALSE if skipping the white space leavesthe position at a '\0' character.
 	 */
-	public static int skipSpace(inout string pos)
+	public static int skipSpace(ref string pos)
 	{
 		// gboolean pango_skip_space (const char **pos);
 		char* outpos = Str.toStringz(pos);
@@ -156,7 +156,7 @@ public class PgMiscellaneous
 	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
-	public static int scanWord(inout string pos, StringG f_out)
+	public static int scanWord(ref string pos, StringG f_out)
 	{
 		// gboolean pango_scan_word (const char **pos,  GString *out);
 		char* outpos = Str.toStringz(pos);
@@ -177,7 +177,7 @@ public class PgMiscellaneous
 	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
-	public static int scanString(inout string pos, StringG f_out)
+	public static int scanString(ref string pos, StringG f_out)
 	{
 		// gboolean pango_scan_string (const char **pos,  GString *out);
 		char* outpos = Str.toStringz(pos);
@@ -196,7 +196,7 @@ public class PgMiscellaneous
 	 * out =  an int into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
-	public static int scanInt(inout string pos, out int f_out)
+	public static int scanInt(ref string pos, out int f_out)
 	{
 		// gboolean pango_scan_int (const char **pos,  int *out);
 		char* outpos = Str.toStringz(pos);
@@ -408,7 +408,7 @@ public class PgMiscellaneous
 	 * thickness =  pointer to the thickness of a line, in Pango units
 	 * position =  corresponding position
 	 */
-	public static void quantizeLineGeometry(inout int thickness, inout int position)
+	public static void quantizeLineGeometry(ref int thickness, ref int position)
 	{
 		// void pango_quantize_line_geometry (int *thickness,  int *position);
 		pango_quantize_line_geometry(&thickness, &position);

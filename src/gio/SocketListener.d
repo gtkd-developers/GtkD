@@ -319,7 +319,7 @@ public class SocketListener : ObjectG
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
-	public SocketConnection acceptFinish(AsyncResultIF result, inout ObjectG sourceObject)
+	public SocketConnection acceptFinish(AsyncResultIF result, ref ObjectG sourceObject)
 	{
 		// GSocketConnection * g_socket_listener_accept_finish (GSocketListener *listener,  GAsyncResult *result,  GObject **source_object,  GError **error);
 		GObject* outsourceObject = (sourceObject is null) ? null : sourceObject.getObjectGStruct();
@@ -406,7 +406,7 @@ public class SocketListener : ObjectG
 	 * Returns: a GSocket on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
-	public Socket acceptSocketFinish(AsyncResultIF result, inout ObjectG sourceObject)
+	public Socket acceptSocketFinish(AsyncResultIF result, ref ObjectG sourceObject)
 	{
 		// GSocket * g_socket_listener_accept_socket_finish  (GSocketListener *listener,  GAsyncResult *result,  GObject **source_object,  GError **error);
 		GObject* outsourceObject = (sourceObject is null) ? null : sourceObject.getObjectGStruct();

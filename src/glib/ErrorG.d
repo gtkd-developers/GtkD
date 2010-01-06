@@ -452,7 +452,7 @@ public class ErrorG
 	 * Params:
 	 * err =  a GError return location
 	 */
-	public static void gClearError(inout ErrorG err)
+	public static void gClearError(ref ErrorG err)
 	{
 		// void g_clear_error (GError **err);
 		GError* outerr = (err is null) ? null : err.getErrorGStruct();

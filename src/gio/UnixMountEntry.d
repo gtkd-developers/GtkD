@@ -266,7 +266,7 @@ public class UnixMountEntry
 	 * timeRead =  guint64 to contain a timestamp.
 	 * Returns: a GList of the UNIX mounts.
 	 */
-	public static ListG mountsGet(inout ulong timeRead)
+	public static ListG mountsGet(ref ulong timeRead)
 	{
 		// GList * g_unix_mounts_get (guint64 *time_read);
 		auto p = g_unix_mounts_get(&timeRead);
@@ -286,7 +286,7 @@ public class UnixMountEntry
 	 * timeRead =  guint64 to contain a timestamp.
 	 * Returns: a GUnixMount.
 	 */
-	public static UnixMountEntry at(string mountPath, inout ulong timeRead)
+	public static UnixMountEntry at(string mountPath, ref ulong timeRead)
 	{
 		// GUnixMountEntry * g_unix_mount_at (const char *mount_path,  guint64 *time_read);
 		auto p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
