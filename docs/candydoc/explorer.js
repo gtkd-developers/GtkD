@@ -206,35 +206,39 @@ function Outline()
 ///////////////////////////////////////////////////////////////////////////////
 function PackageExplorer()
 {
-    this.tree = new TreeView(true);    
-    
-    this.addModule = function(mod)
-    {
-        var moduleIco = "../../candydoc/img/outline/module.gif";
-        var packageIco = "../../candydoc/img/outline/package.gif";
+	this.tree = new TreeView(true);    
 
-        var path = mod.split("\.");
-        var node = this.tree.branch(path[0]);
-        if ( !node )
-            node = this.tree.createBranch(path[0], (path.length == 1) ? moduleIco : packageIco);
-        
-        for (var i = 1; i < path.length; ++i)
-        {
-            var prev = node;
-            node = node.child(path[i]);
-            if (!node)
-                node = prev.createChild(path[i], (path.length == i + 1) ? moduleIco : packageIco);
+	this.addModule = function(mod)
+	{
+		var moduleIco = "../../candydoc/img/outline/module.gif";
+		var packageIco = "../../candydoc/img/outline/package.gif";
+
+		var path = mod.split("\.");
+		var node = this.tree.branch(path[0]);
+		if ( !node )
+			node = this.tree.createBranch(path[0], (path.length == 1) ? moduleIco : packageIco);
+
+		for (var i = 1; i < path.length; ++i)
+		{
+			var prev = node;
+			node = node.child(path[i]);
+			if (!node)
+				node = prev.createChild(path[i], (path.length == i + 1) ? moduleIco : packageIco);
                
-            if (path.length == i + 1) {
-	    	if ((path[0] == "gtkglc") || (path[0] == "glgtk") || (path[0] == "glgdk")) {
-	                node.setRef("../../srcgl/" + path[0] + "/" + path[i] + ".html");
-		} else {
-		        node.setRef("../../src/" + path[0] + "/" + path[i] + ".html");
+			if (path.length == i + 1) {
+				if ((path[0] == "gtkglc") || (path[0] == "glgtk") || (path[0] == "glgdk")) {
+					node.setRef("../../srcgl/" + path[0] + "/" + path[i] + ".html");
+				} else if ((path[0] == "gda") || (path[0] == "gdac")) {
+					node.setRef("../../srcgda/" + path[0] + "/" + path[i] + ".html");
+				} else if ((path[0] == "gstinterfaces") || (path[0] == "gstreamer") || (path[0] == "gstreamerc")) {
+					node.setRef("../../srcgstreamer/" + path[0] + "/" + path[i] + ".html");
+				} else if ((path[0] == "gsv") || (path[0] == "gsvc")) {
+					node.setRef("../../srcsv/" + path[0] + "/" + path[i] + ".html");
+				} else {
+					node.setRef("../../src/" + path[0] + "/" + path[i] + ".html");
+			}
 		}
-	    }
-		
-        }
-    }
+	}
 }
 
 
