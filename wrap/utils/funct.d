@@ -123,6 +123,9 @@ public struct Funct
 			if ( currParmType != "..." )
 			{
 				currParm = GtkDClass.until(p, text, "),");
+
+				if ( currParm == "*ref" )
+					currParm = "*doref";
 			}
 			else
 			{
