@@ -236,6 +236,7 @@ function PackageExplorer()
 					node.setRef("../../srcsv/" + path[0] + "/" + path[i] + ".html");
 				} else {
 					node.setRef("../../src/" + path[0] + "/" + path[i] + ".html");
+				}
 			}
 		}
 	}
