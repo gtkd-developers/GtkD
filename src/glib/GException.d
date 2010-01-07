@@ -74,11 +74,6 @@ class GException : Exception
 		super( Str.toString(error.getErrorGStruct.message) );
 		this.error = error;
 	}
-	
-	string toString()
-	{
-		return msg;
-	}
 }
 
 /**

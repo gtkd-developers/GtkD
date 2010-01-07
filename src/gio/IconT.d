@@ -51,6 +51,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gio.IconT;
@@ -141,7 +142,7 @@ public template IconT(TStruct)
 	 * Since 2.20
 	 * Returns: An allocated NUL-terminated UTF8 string or NULL if icon can'tbe serialized. Use g_free() to free.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar * g_icon_to_string (GIcon *icon);
 		return Str.toString(g_icon_to_string(getIconTStruct()));

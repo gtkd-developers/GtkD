@@ -66,7 +66,7 @@ class ConstructionException : Exception
 		super(message);
 	}
 	
-	string toString()
+	override string toString()
 	{
 		return "Construction failure, " ~ msg;
 	}

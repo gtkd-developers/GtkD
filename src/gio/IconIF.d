@@ -50,6 +50,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gio.IconIF;

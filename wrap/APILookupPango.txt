@@ -570,6 +570,7 @@ prefix: pango_language_
 strictPrefix: Yes
 import: glib.Str
 structWrap: PangoLanguage* PgLanguage
+override: toString
 outFile: PgLanguage
 
 file: pango-Vertical-Text.html

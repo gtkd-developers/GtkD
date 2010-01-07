@@ -919,6 +919,7 @@ prefix: g_icon_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+override: toString
 #Skip this one for now
 nocode: g_icon_new_for_string
 interface: IconIF

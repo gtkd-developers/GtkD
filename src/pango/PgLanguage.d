@@ -48,6 +48,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module pango.PgLanguage;
@@ -133,7 +134,7 @@ public class PgLanguage
 	 * Gets the RFC-3066 format string representing the given language tag.
 	 * Returns: a string representing the language tag. This is owned by Pango and should not be freed.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// const char * pango_language_to_string (PangoLanguage *language);
 		return Str.toString(pango_language_to_string(pangoLanguage));

@@ -489,7 +489,7 @@ public struct Funct
 				convName ~= convParms.outFile;
 			}
 			char[] overr;
-			if (convParms.needsOverride(convName))
+			if (convParms.needsOverride(convName) && !convParms.isInterface )
 			{
 				overr = "override ";
 			}

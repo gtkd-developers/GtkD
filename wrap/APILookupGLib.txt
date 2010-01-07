@@ -696,11 +696,6 @@ class GException : Exception
 		super( Str.toString(error.getErrorGStruct.message) );
 		this.error = error;
 	}
-
-	string toString()
-	{
-		return msg;
-	}
 }
 
 code: end
@@ -716,7 +711,7 @@ class ConstructionException : Exception
 		super(message);
 	}
 
-	string toString()
+	override string toString()
 	{
 		return "Construction failure, " ~ msg;
 	}
