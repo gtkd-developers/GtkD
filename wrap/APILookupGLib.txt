@@ -67,7 +67,7 @@ version(Tango)
 
 version(D_Version2)
 {
-	enum string gshared = "__gshared ";
+	string gshared() { return "__gshared "; }
 }
 else
 {

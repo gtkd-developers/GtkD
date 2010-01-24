@@ -62,11 +62,11 @@ version(Tango)
 
 version(D_Version2)
 {
-	enum string gshared = "__gshared ";
+	string gshared() { return "__gshared "; }
 }
 else
 {
-char[] gshared() { return ""; }
+	char[] gshared() { return ""; }
 }
 
 const uint G_MAXUINT = 4294967295;
