@@ -49,6 +49,8 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- getHasWindow
+ * 	- setHasWindow
  */
 
 module gtk.Fixed;
@@ -184,7 +186,7 @@ public class Fixed : Container
 	 * See gtk_fixed_set_has_window().
 	 * Returns: TRUE if fixed has its own window.
 	 */
-	public int getHasWindow()
+	public override int getHasWindow()
 	{
 		// gboolean gtk_fixed_get_has_window (GtkFixed *fixed);
 		return gtk_fixed_get_has_window(gtkFixed);
@@ -206,7 +208,7 @@ public class Fixed : Container
 	 * X position of child widget.
 	 * Default value: 0
 	 */
-	public void setHasWindow(int hasWindow)
+	public override void setHasWindow(int hasWindow)
 	{
 		// void gtk_fixed_set_has_window (GtkFixed *fixed,  gboolean has_window);
 		gtk_fixed_set_has_window(gtkFixed, hasWindow);

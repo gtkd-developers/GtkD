@@ -6700,6 +6700,8 @@ prefix: gtk_fixed_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+override: getHasWindow
+override: setHasWindow
 outFile: Fixed
 
 file: GtkHPaned.html

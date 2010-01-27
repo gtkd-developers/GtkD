@@ -51,6 +51,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- createContext
  */
 
 module pango.PgCairoFontMap;
@@ -342,7 +343,7 @@ public class PgCairoFontMap : PgFontMap
 	 * Since 1.10
 	 * Returns: the newly created context; free with g_object_unref().
 	 */
-	public PgContext createContext()
+	public override PgContext createContext()
 	{
 		// PangoContext * pango_cairo_font_map_create_context (PangoCairoFontMap *fontmap);
 		auto p = pango_cairo_font_map_create_context(pangoCairoFontMap);

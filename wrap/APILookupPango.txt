@@ -619,6 +619,7 @@ import: pango.PgFontMap
 import: pango.PgContext
 structWrap: PangoFontMap* PgFontMap
 structWrap: PangoContext* PgContext
+override: createContext
 outFile: PgCairoFontMap
 
 class: PgCairo
