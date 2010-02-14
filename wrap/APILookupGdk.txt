@@ -405,6 +405,7 @@ outFile: ImageGdk
 file: gdk-Pixbufs.html
 struct: GdkPixbuf
 class: Pixbuf
+extend: GObject
 prefix: gdk_pixbuf_
 noprefix: gdk_pixbuf_ref
 noprefix: gdk_pixbuf_unref

@@ -335,6 +335,11 @@ code: start
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
+
+	public void unref()
+	{
+		unref(gObject);
+	}
 code: end
 
 outFile: ObjectG

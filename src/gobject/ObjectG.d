@@ -242,6 +242,11 @@ public class ObjectG
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 	
+	public void unref()
+	{
+		unref(gObject);
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

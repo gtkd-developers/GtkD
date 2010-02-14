@@ -33,7 +33,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gdk_pixbuf_
@@ -93,6 +93,7 @@ private import gio.InputStream;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -100,7 +101,7 @@ private import gio.InputStream;
  * client-side images. For details on how to create and manipulate
  * pixbufs, see the GdkPixbuf API documentation.
  */
-public class Pixbuf
+public class Pixbuf : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -114,7 +115,7 @@ public class Pixbuf
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkPixbuf;
 	}
@@ -129,6 +130,14 @@ public class Pixbuf
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkPixbuf);
+		if( ptr !is null )
+		{
+			this = cast(Pixbuf)ptr;
+			return;
+		}
+		super(cast(GObject*)gdkPixbuf);
 		this.gdkPixbuf = gdkPixbuf;
 	}
 	
