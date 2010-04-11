@@ -573,9 +573,7 @@ class: Pixbuf
 
 text: start
 gdk_pixbuf_get_type ()
-
-GType         gdk_pixbuf_get_type           ();
-<hr>
+GType gdk_pixbuf_get_type ();
 text: end
 
 mergeFile: Pixbuf

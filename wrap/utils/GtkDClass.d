@@ -1232,10 +1232,18 @@ public class GtkDClass
 	 */
 	private char[][] getMember(char[][] prefixes)
 	{
-		char[][] lines = convParms.text.dup;
-		convParms.text.length = 0;
-		lines ~= getUntil("<hr>");
+		char[][] lines;
 		char[][] member;
+
+		if ( convParms.text.length > 0 )
+		{
+			lines = convParms.text.dup;
+			convParms.text.length = 0;
+		}
+		else
+		{
+			lines ~= getUntil("<hr>");
+		}
 
 		//debug(structs){
 		//	writefln("lines[1] = %s", lines[1]);

@@ -314,6 +314,7 @@ static this()
 	Linker.link(gdk_pixbuf_get_from_drawable, "gdk_pixbuf_get_from_drawable", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_from_image, "gdk_pixbuf_get_from_image", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_type, "gdk_pixbuf_get_type", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_new, "gdk_pixbuf_new", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_data, "gdk_pixbuf_new_from_data", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_xpm_data, "gdk_pixbuf_new_from_xpm_data", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_inline, "gdk_pixbuf_new_from_inline", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -1006,6 +1007,7 @@ mixin( gshared ~"extern(C)
 	GdkPixbuf* function(GdkPixbuf* dest, GdkDrawable* src, GdkColormap* cmap, int srcX, int srcY, int destX, int destY, int width, int height) c_gdk_pixbuf_get_from_drawable;
 	GdkPixbuf* function(GdkPixbuf* dest, GdkImage* src, GdkColormap* cmap, int srcX, int srcY, int destX, int destY, int width, int height) c_gdk_pixbuf_get_from_image;
 	GType function() c_gdk_pixbuf_get_type;
+	GdkPixbuf* function(GdkColorspace colorspace, gboolean hasAlpha, int bitsPerSample, int width, int height) c_gdk_pixbuf_new;
 	GdkPixbuf* function(guchar* data, GdkColorspace colorspace, gboolean hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, gpointer destroyFnData) c_gdk_pixbuf_new_from_data;
 	GdkPixbuf* function(char** data) c_gdk_pixbuf_new_from_xpm_data;
 	GdkPixbuf* function(gint dataLength, guint8* data, gboolean copyPixels, GError** error) c_gdk_pixbuf_new_from_inline;
@@ -1695,6 +1697,7 @@ alias c_gdk_pixbuf_render_pixmap_and_mask_for_colormap  gdk_pixbuf_render_pixmap
 alias c_gdk_pixbuf_get_from_drawable  gdk_pixbuf_get_from_drawable;
 alias c_gdk_pixbuf_get_from_image  gdk_pixbuf_get_from_image;
 alias c_gdk_pixbuf_get_type  gdk_pixbuf_get_type;
+alias c_gdk_pixbuf_new  gdk_pixbuf_new;
 alias c_gdk_pixbuf_new_from_data  gdk_pixbuf_new_from_data;
 alias c_gdk_pixbuf_new_from_xpm_data  gdk_pixbuf_new_from_xpm_data;
 alias c_gdk_pixbuf_new_from_inline  gdk_pixbuf_new_from_inline;
