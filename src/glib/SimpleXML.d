@@ -146,10 +146,6 @@ public class SimpleXML
 	 * and carriage return. The character references in this range are
 	 * not valid XML 1.0, but they are valid XML 1.1 and will be accepted
 	 * by the GMarkup parser.
-	 * Params:
-	 * text =  some valid UTF-8 text
-	 * length =  length of text in bytes, or -1 if the text is nul-terminated
-	 * Returns: a newly allocated string with the escaped text
 	 */
 	public static string escapeText(string text, int length)
 	{
@@ -162,10 +158,6 @@ public class SimpleXML
 	 * all string and character arguments in the fashion
 	 * of g_markup_escape_text(). See g_markup_printf_escaped().
 	 * Since 2.4
-	 * Params:
-	 * format =  printf() style format string
-	 * args =  variable argument list, similar to vprintf()
-	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
 	public static string vprintfEscaped(string format, void* args)
 	{
@@ -178,7 +170,6 @@ public class SimpleXML
 	 * fed into the parse context with g_markup_parse_context_parse().
 	 * This function reports an error if the document isn't complete,
 	 * for example if elements are still open.
-	 * Returns: TRUE on success, FALSE if an error was set
 	 * Throws: GException on failure.
 	 */
 	public int endParse()
@@ -212,9 +203,6 @@ public class SimpleXML
 	 * that line. Intended for use in error messages; there are no strict
 	 * semantics for what constitutes the "current" line number other than
 	 * "the best number we could come up with for error messages."
-	 * Params:
-	 * lineNumber =  return location for a line number, or NULL
-	 * charNumber =  return location for a char-on-line number, or NULL
 	 */
 	public void getPosition(out int lineNumber, out int charNumber)
 	{
@@ -228,7 +216,6 @@ public class SimpleXML
 	 * give the element_name as passed to those functions. For the parent
 	 * elements, see g_markup_parse_context_get_element_stack().
 	 * Since 2.2
-	 * Returns: the name of the currently open element, or NULL
 	 */
 	public string getElement()
 	{
@@ -247,7 +234,6 @@ public class SimpleXML
 	 * would merely return the name of the element that is being
 	 * processed.
 	 * Since 2.16
-	 * Returns: the element stack, which must not be modified
 	 */
 	public ListSG getElementStack()
 	{
@@ -265,7 +251,6 @@ public class SimpleXML
 	 * be the user_data that was provided to g_markup_parse_context_new()
 	 * or to the most recent call of g_markup_parse_context_push().
 	 * Since 2.18
-	 * Returns: the provided user_data. The returned data belongs to the markup context and will be freed when g_markup_context_free() is called.
 	 */
 	public void* getUserData()
 	{
@@ -279,11 +264,6 @@ public class SimpleXML
 	 * a context, as long as no errors occur; once an error occurs,
 	 * the parse context can't continue to parse text (you have to free it
 	 * and create a new parse context).
-	 * Params:
-	 * parser =  a GMarkupParser
-	 * flags =  one or more GMarkupParseFlags
-	 * userData =  user data to pass to GMarkupParser functions
-	 * userDataDnotify =  user data destroy notifier called when the parse context is freed
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
@@ -306,10 +286,6 @@ public class SimpleXML
 	 * you feed each received chunk of data into this function, aborting
 	 * the process if an error occurs. Once an error is reported, no further
 	 * data may be fed to the GMarkupParseContext; all errors are fatal.
-	 * Params:
-	 * text =  chunk of text to parse
-	 * textLen =  length of text in bytes
-	 * Returns: FALSE if an error occurred, TRUE on success
 	 * Throws: GException on failure.
 	 */
 	public int parse(string text, int textLen)
@@ -385,9 +361,6 @@ public class SimpleXML
 	 * };
 	 * In order to allow this parser to be easily used as a subparser, the
 	 * Since 2.18
-	 * Params:
-	 * parser =  a GMarkupParser
-	 * userData =  user data to pass to GMarkupParser functions
 	 */
 	public void push(GMarkupParser* parser, void* userData)
 	{
@@ -408,7 +381,6 @@ public class SimpleXML
 	 * used by the subparsers themselves to implement a higher-level
 	 * interface.
 	 * Since 2.18
-	 * Returns: the user_data passed to g_markup_parse_context_push().
 	 */
 	public void* pop()
 	{

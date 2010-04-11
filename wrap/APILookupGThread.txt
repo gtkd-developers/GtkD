@@ -167,5 +167,8 @@ import: glib.GException
 
 out: g_once_init_enter value_location
 out: g_once_init_leave value_location
+inout: g_bit_lock address
+inout: g_bit_trylock address
+inout: g_bit_unlock address
 outFile: Thread
 

@@ -168,7 +168,6 @@ public class QueueG
 	
 	/**
 	 * Returns TRUE if the queue is empty.
-	 * Returns: TRUE if the queue is empty.
 	 */
 	public int isEmpty()
 	{
@@ -179,7 +178,6 @@ public class QueueG
 	/**
 	 * Returns the number of items in queue.
 	 * Since 2.4
-	 * Returns: The number of items in queue.
 	 */
 	public uint getLength()
 	{
@@ -202,7 +200,6 @@ public class QueueG
 	 * queue consist of pointers to data, the pointers are copied, but the
 	 * actual data is not.
 	 * Since 2.4
-	 * Returns: A copy of queue
 	 */
 	public QueueG copy()
 	{
@@ -219,9 +216,6 @@ public class QueueG
 	 * Calls func for each element in the queue passing user_data to the
 	 * function.
 	 * Since 2.4
-	 * Params:
-	 * func =  the function to call for each element's data
-	 * userData =  user data to pass to func
 	 */
 	public void foreac(GFunc func, void* userData)
 	{
@@ -232,9 +226,6 @@ public class QueueG
 	/**
 	 * Finds the first link in queue which contains data.
 	 * Since 2.4
-	 * Params:
-	 * data =  data to find
-	 * Returns: The first link in queue which contains data.
 	 */
 	public ListG find(void* data)
 	{
@@ -254,11 +245,6 @@ public class QueueG
 	 * takes two gconstpointer arguments, the GQueue element's data as the
 	 * first argument and the given user data as the second argument.
 	 * Since 2.4
-	 * Params:
-	 * data =  user data passed to func
-	 * func =  a GCompareFunc to call for each element. It should return 0
-	 * when the desired element is found
-	 * Returns: The found link, or NULL if it wasn't found
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
@@ -274,12 +260,6 @@ public class QueueG
 	/**
 	 * Sorts queue using compare_func.
 	 * Since 2.4
-	 * Params:
-	 * compareFunc =  the GCompareDataFunc used to sort queue. This function
-	 *  is passed two elements of the queue and should return 0 if they are
-	 *  equal, a negative value if the first comes before the second, and
-	 *  a positive value if the second comes before the first.
-	 * userData =  user data passed to compare_func
 	 */
 	public void sort(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -289,8 +269,6 @@ public class QueueG
 	
 	/**
 	 * Adds a new element at the head of the queue.
-	 * Params:
-	 * data =  the data for the new element.
 	 */
 	public void pushHead(void* data)
 	{
@@ -300,8 +278,6 @@ public class QueueG
 	
 	/**
 	 * Adds a new element at the tail of the queue.
-	 * Params:
-	 * data =  the data for the new element.
 	 */
 	public void pushTail(void* data)
 	{
@@ -312,11 +288,6 @@ public class QueueG
 	/**
 	 * Inserts a new element into queue at the given position
 	 * Since 2.4
-	 * Params:
-	 * data =  the data for the new element
-	 * n =  the position to insert the new element. If n is negative or
-	 *  larger than the number of elements in the queue, the element is
-	 *  added to the end of the queue.
 	 */
 	public void pushNth(void* data, int n)
 	{
@@ -326,7 +297,6 @@ public class QueueG
 	
 	/**
 	 * Removes the first element of the queue.
-	 * Returns: the data of the first element in the queue, or NULL if the queue is empty.
 	 */
 	public void* popHead()
 	{
@@ -336,7 +306,6 @@ public class QueueG
 	
 	/**
 	 * Removes the last element of the queue.
-	 * Returns: the data of the last element in the queue, or NULL if the queue is empty.
 	 */
 	public void* popTail()
 	{
@@ -347,9 +316,6 @@ public class QueueG
 	/**
 	 * Removes the n'th element of queue.
 	 * Since 2.4
-	 * Params:
-	 * n =  the position of the element.
-	 * Returns: the element's data, or NULL if n is off the end of queue.
 	 */
 	public void* popNth(uint n)
 	{
@@ -359,7 +325,6 @@ public class QueueG
 	
 	/**
 	 * Returns the first element of the queue.
-	 * Returns: the data of the first element in the queue, or NULL if the queue is empty.
 	 */
 	public void* peekHead()
 	{
@@ -369,7 +334,6 @@ public class QueueG
 	
 	/**
 	 * Returns the last element of the queue.
-	 * Returns: the data of the last element in the queue, or NULL if the queue is empty.
 	 */
 	public void* peekTail()
 	{
@@ -380,9 +344,6 @@ public class QueueG
 	/**
 	 * Returns the n'th element of queue.
 	 * Since 2.4
-	 * Params:
-	 * n =  the position of the element.
-	 * Returns: The data for the n'th element of queue, or NULL if n is off the end of queue.
 	 */
 	public void* peekNth(uint n)
 	{
@@ -393,9 +354,6 @@ public class QueueG
 	/**
 	 * Returns the position of the first element in queue which contains data.
 	 * Since 2.4
-	 * Params:
-	 * data =  the data to find.
-	 * Returns: The position of the first element in queue which contains data, or -1 if no element in queue contains data.
 	 */
 	public int index(void* data)
 	{
@@ -406,8 +364,6 @@ public class QueueG
 	/**
 	 * Removes the first element in queue that contains data.
 	 * Since 2.4
-	 * Params:
-	 * data =  data to remove.
 	 */
 	public void remove(void* data)
 	{
@@ -418,8 +374,6 @@ public class QueueG
 	/**
 	 * Remove all elemeents in queue which contains data.
 	 * Since 2.4
-	 * Params:
-	 * data =  data to remove
 	 */
 	public void removeAll(void* data)
 	{
@@ -431,9 +385,6 @@ public class QueueG
 	 * Inserts data into queue before sibling.
 	 * sibling must be part of queue.
 	 * Since 2.4
-	 * Params:
-	 * sibling =  a GList link that must be part of queue
-	 * data =  the data to insert
 	 */
 	public void insertBefore(ListG sibling, void* data)
 	{
@@ -445,9 +396,6 @@ public class QueueG
 	 * Inserts data into queue after sibling
 	 * sibling must be part of queue
 	 * Since 2.4
-	 * Params:
-	 * sibling =  a GList link that must be part of queue
-	 * data =  the data to insert
 	 */
 	public void insertAfter(ListG sibling, void* data)
 	{
@@ -458,14 +406,6 @@ public class QueueG
 	/**
 	 * Inserts data into queue using func to determine the new position.
 	 * Since 2.4
-	 * Params:
-	 * data =  the data to insert
-	 * func =  the GCompareDataFunc used to compare elements in the queue. It is
-	 *  called with two elements of the queue and user_data. It should
-	 *  return 0 if the elements are equal, a negative value if the first
-	 *  element comes before the second, and a positive value if the second
-	 *  element comes before the first.
-	 * userData =  user data passed to func.
 	 */
 	public void insertSorted(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -475,9 +415,6 @@ public class QueueG
 	
 	/**
 	 * Adds a new element at the head of the queue.
-	 * Params:
-	 * link =  a single GList element, not a list with
-	 *  more than one element.
 	 */
 	public void pushHeadLink(ListG link)
 	{
@@ -487,9 +424,6 @@ public class QueueG
 	
 	/**
 	 * Adds a new element at the tail of the queue.
-	 * Params:
-	 * link =  a single GList element, not a list with
-	 *  more than one element.
 	 */
 	public void pushTailLink(ListG link)
 	{
@@ -500,11 +434,6 @@ public class QueueG
 	/**
 	 * Inserts link into queue at the given position.
 	 * Since 2.4
-	 * Params:
-	 * n =  the position to insert the link. If this is negative or larger than
-	 *  the number of elements in queue, the link is added to the end of
-	 *  queue.
-	 * link =  the link to add to queue
 	 */
 	public void pushNthLink(int n, ListG link)
 	{
@@ -514,7 +443,6 @@ public class QueueG
 	
 	/**
 	 * Removes the first element of the queue.
-	 * Returns: the GList element at the head of the queue, or NULL if the queue is empty.
 	 */
 	public ListG popHeadLink()
 	{
@@ -529,7 +457,6 @@ public class QueueG
 	
 	/**
 	 * Removes the last element of the queue.
-	 * Returns: the GList element at the tail of the queue, or NULL if the queue is empty.
 	 */
 	public ListG popTailLink()
 	{
@@ -545,9 +472,6 @@ public class QueueG
 	/**
 	 * Removes and returns the link at the given position.
 	 * Since 2.4
-	 * Params:
-	 * n =  the link's position
-	 * Returns: The n'th link, or NULL if n is off the end of queue.
 	 */
 	public ListG popNthLink(uint n)
 	{
@@ -563,7 +487,6 @@ public class QueueG
 	/**
 	 * Returns the first link in queue
 	 * Since 2.4
-	 * Returns: the first link in queue, or NULL if queue is empty
 	 */
 	public ListG peekHeadLink()
 	{
@@ -579,7 +502,6 @@ public class QueueG
 	/**
 	 * Returns the last link queue.
 	 * Since 2.4
-	 * Returns: the last link in queue, or NULL if queue is empty
 	 */
 	public ListG peekTailLink()
 	{
@@ -595,9 +517,6 @@ public class QueueG
 	/**
 	 * Returns the link at the given position
 	 * Since 2.4
-	 * Params:
-	 * n =  the position of the link
-	 * Returns: The link at the n'th position, or NULL if n is off theend of the list
 	 */
 	public ListG peekNthLink(uint n)
 	{
@@ -613,9 +532,6 @@ public class QueueG
 	/**
 	 * Returns the position of link_ in queue.
 	 * Since 2.4
-	 * Params:
-	 * link =  A GList link
-	 * Returns: The position of link_, or -1 if the link isnot part of queue
 	 */
 	public int linkIndex(ListG link)
 	{
@@ -628,8 +544,6 @@ public class QueueG
 	 * not freed.
 	 * link_ must be part of queue,
 	 * Since 2.4
-	 * Params:
-	 * link =  a GList link that must be part of queue
 	 */
 	public void unlink(ListG link)
 	{
@@ -641,8 +555,6 @@ public class QueueG
 	 * Removes link_ from queue and frees it.
 	 * link_ must be part of queue.
 	 * Since 2.4
-	 * Params:
-	 * link =  a GList link that must be part of queue
 	 */
 	public void deleteLink(ListG link)
 	{

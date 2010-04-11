@@ -135,8 +135,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
- * Figure 1. States of a Main Context
+ *  of a state diagram, as shown in Figure  1, “States of a Main Context”.
+ * Figure  1.  States of a Main Context
  */
 public class MainLoop
 {
@@ -175,11 +175,6 @@ public class MainLoop
 	
 	/**
 	 * Creates a new GMainLoop structure.
-	 * Params:
-	 * context =  a GMainContext (if NULL, the default context will be used).
-	 * isRunning =  set to TRUE to indicate that the loop is running. This
-	 * is not very important since calling g_main_loop_run() will set this to
-	 * TRUE anyway.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (MainContext context, int isRunning)
@@ -195,7 +190,6 @@ public class MainLoop
 	
 	/**
 	 * Increases the reference count on a GMainLoop object by one.
-	 * Returns: loop
 	 */
 	public MainLoop doref()
 	{
@@ -244,7 +238,6 @@ public class MainLoop
 	
 	/**
 	 * Checks to see if the main loop is currently being run via g_main_loop_run().
-	 * Returns: TRUE if the mainloop is currently being run.
 	 */
 	public int isRunning()
 	{
@@ -254,7 +247,6 @@ public class MainLoop
 	
 	/**
 	 * Returns the GMainContext of loop.
-	 * Returns: the GMainContext of loop
 	 */
 	public MainContext getContext()
 	{
@@ -275,7 +267,6 @@ public class MainLoop
 	 * (or g_main_loop_run(), etc.) it returns 1. When called from within
 	 * a callback to a recursive call to g_main_context_iterate(),
 	 * it returns 2. And so forth.
-	 * Returns: The main loop recursion level in the current thread
 	 */
 	public static int mainDepth()
 	{
@@ -286,7 +277,6 @@ public class MainLoop
 	/**
 	 * Returns the currently firing source for this thread.
 	 * Since 2.12
-	 * Returns: The currently firing source or NULL.
 	 */
 	public static Source mainCurrentSource()
 	{
@@ -316,10 +306,6 @@ public class MainLoop
 	 * Windows, the easiest solution is to construct all of your
 	 * GPollFDs with g_io_channel_win32_make_pollfd().
 	 * Since 2.20
-	 * Params:
-	 * fds =  file descriptors to poll
-	 * timeout =  amount of time to wait, in milliseconds, or -1 to wait forever
-	 * Returns: the number of entries in fds whose revents fieldswere filled in, or 0 if the operation timed out, or -1 on error orif the call was interrupted.
 	 */
 	public static int poll(GPollFD[] fds, int timeout)
 	{

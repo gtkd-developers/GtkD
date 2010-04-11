@@ -87,9 +87,6 @@ public class Messages
 	 * The default handler simply outputs the message to stdout.
 	 * By providing your own handler you can redirect the output, to a GTK+
 	 * widget or a log file for example.
-	 * Params:
-	 * func = the new print handler.
-	 * Returns:the old print handler.
 	 */
 	public static GPrintFunc setPrintHandler(GPrintFunc func)
 	{
@@ -103,9 +100,6 @@ public class Messages
 	 * The default handler simply outputs the message to stderr.
 	 * By providing your own handler you can redirect the output, to a GTK+
 	 * widget or a log file for example.
-	 * Params:
-	 * func = the new error message handler.
-	 * Returns:the old error message handler.
 	 */
 	public static GPrintFunc setPrinterrHandler(GPrintFunc func)
 	{
@@ -146,10 +140,6 @@ public class Messages
 		 * The prompt is then shown again.
 		 * If [P]roceed is selected, the function returns.
 		 * This function may cause different actions on non-UNIX platforms.
-		 * Params:
-		 * prgName = the program name, needed by gdb for the [S]tack trace option.
-		 * If prg_name is NULL, g_get_prgname() is called to get the program name
-		 * (which will work correctly if gdk_init() or gtk_init() has been called).
 		 */
 		public static void onErrorQuery(string prgName)
 		{
@@ -161,10 +151,6 @@ public class Messages
 		 * Invokes gdb, which attaches to the current process and shows a stack trace.
 		 * Called by g_on_error_query() when the [S]tack trace option is selected.
 		 * This function may cause different actions on non-UNIX platforms.
-		 * Params:
-		 * prgName = the program name, needed by gdb for the [S]tack trace option.
-		 * If prg_name is NULL, g_get_prgname() is called to get the program name
-		 * (which will work correctly if gdk_init() or gtk_init() has been called).
 		 */
 		public static void onErrorStackTrace(string prgName)
 		{

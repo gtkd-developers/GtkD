@@ -85,7 +85,11 @@ public class HtmlStrip
 					inAmper = true;
 					amper = "&";
 					break;
-					
+				case '\u00A0':
+					if ( stripped[$-1] != ' ' )
+						stripped ~= ' ';
+					break;
+
 				default:
 					if ( inAmper )
 					{
@@ -213,7 +217,7 @@ version (standAlone)
 	{
 
 		HtmlStrip strip = new HtmlStrip();
-		char[] stripped = strip.stripFile("/home/data/down/GTK/API/glib/glib-The-Main-Event-Loop.html");
+		char[] stripped = strip.stripFile("/home/mike/D/gtkD/gtkD-2.20/wrap/gtkdocs/glib-html-2.24.0/glib-Lexical-Scanner.html");
 	
 		writefln("Stripped html:\n%s", stripped);
 	

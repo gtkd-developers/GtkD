@@ -85,7 +85,7 @@ private import glib.ConstructionException;
  * to use the new g_slice API instead of g_malloc() and
  * friends, as long as objects are not resized during their lifetime and the
  * object size used at allocation time is still available when freeing.
- * Example 15. Using the slice allocator
+ * Example  15.  Using the slice allocator
  *  gchar *mem[10000];
  *  gint i;
  *  /+* Allocate 10000 blocks. +/
@@ -101,7 +101,7 @@ private import glib.ConstructionException;
  *  {
 	 *  g_slice_free1 (50, mem[i]);
  *  }
- * Example 16. Using the slice allocator with data structures
+ * Example  16.  Using the slice allocator with data structures
  *  GRealArray *array;
  *  /+* Allocate one block, using the g_slice_new() macro. +/
  *  array = g_slice_new (GRealArray);
@@ -132,9 +132,6 @@ public class MemorySlice
 	 * be changed with the G_SLICE=always-malloc
 	 * environment variable.
 	 * Since 2.10
-	 * Params:
-	 * blockSize = the number of bytes to allocate
-	 * Returns:a pointer to the allocated memory block
 	 */
 	public static void* alloc(uint blockSize)
 	{
@@ -149,9 +146,6 @@ public class MemorySlice
 	 * be changed with the G_SLICE=always-malloc
 	 * environment variable.
 	 * Since 2.10
-	 * Params:
-	 * blockSize = the number of bytes to allocate
-	 * Returns:a pointer to the allocated block
 	 */
 	public static void* alloc0(uint blockSize)
 	{
@@ -163,10 +157,6 @@ public class MemorySlice
 	 * Allocates a block of memory from the slice allocator and copies
 	 * block_size bytes into it from mem_block.
 	 * Since 2.14
-	 * Params:
-	 * blockSize = the number of bytes to allocate
-	 * memBlock = the memory to copy
-	 * Returns:a pointer to the allocated memory block
 	 */
 	public static void* copy(uint blockSize, void* memBlock)
 	{
@@ -182,9 +172,6 @@ public class MemorySlice
 	 * G_DEBUG=gc-friendly environment variable,
 	 * also see G_SLICE for related debugging options.
 	 * Since 2.10
-	 * Params:
-	 * blockSize = the size of the block
-	 * memBlock = a pointer to the block to free
 	 */
 	public static void free1(uint blockSize, void* memBlock)
 	{
@@ -202,10 +189,6 @@ public class MemorySlice
 	 * G_DEBUG=gc-friendly environment variable,
 	 * also see G_SLICE for related debugging options.
 	 * Since 2.10
-	 * Params:
-	 * blockSize = the size of the blocks
-	 * memChain =  a pointer to the first block of the chain
-	 * nextOffset = the offset of the next field in the blocks
 	 */
 	public static void freeChainWithOffset(uint blockSize, void* memChain, uint nextOffset)
 	{

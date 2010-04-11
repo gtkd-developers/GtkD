@@ -249,7 +249,7 @@ private import glib.Str;
  * doesn't make sense to distinguish with specific codes, it should be called
  * <NAMESPACE>_<MODULE>_ERROR_FAILED, for
  * example G_SPAWN_ERROR_FAILED or G_THREAD_ERROR_FAILED.
- * Summary of rules for use of ""
+ * Summary of rules for use of GError:
  *  Do not report programming errors via GError.
  *  The last argument of a function that returns an error should be a
  *  location where a GError can be placed (i.e. "GError** error"). If
@@ -328,10 +328,6 @@ public class ErrorG
 	 * not a printf()-style format string. Use this function if
 	 * message contains text you don't have control over,
 	 * that could include printf() escape sequences.
-	 * Params:
-	 * domain =  error domain
-	 * code =  error code
-	 * message =  error message
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GQuark domain, int code, string message)
@@ -349,11 +345,6 @@ public class ErrorG
 	 * Creates a new GError with the given domain and code,
 	 * and a message formatted with format.
 	 * Since 2.22
-	 * Params:
-	 * domain =  error domain
-	 * code =  error code
-	 * format =  printf()-style format for error message
-	 * args =  va_list of parameters for the message format
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GQuark domain, int code, string format, void* args)
@@ -378,7 +369,6 @@ public class ErrorG
 	
 	/**
 	 * Makes a copy of error.
-	 * Returns: a new GError
 	 */
 	public ErrorG copy()
 	{
@@ -395,10 +385,6 @@ public class ErrorG
 	 * Returns TRUE if error matches domain and code, FALSE
 	 * otherwise. In particular, when error is NULL, FALSE will
 	 * be returned.
-	 * Params:
-	 * domain =  an error domain
-	 * code =  an error code
-	 * Returns: whether error has domain and code
 	 */
 	public int matches(GQuark domain, int code)
 	{
@@ -413,11 +399,6 @@ public class ErrorG
 	 * Use this function if message contains text you don't have control over,
 	 * that could include printf() escape sequences.
 	 * Since 2.18
-	 * Params:
-	 * err =  a return location for a GError, or NULL
-	 * domain =  error domain
-	 * code =  error code
-	 * message =  error message
 	 */
 	public static void gSetErrorLiteral(out ErrorG err, GQuark domain, int code, string message)
 	{
@@ -432,9 +413,6 @@ public class ErrorG
 	/**
 	 * If dest is NULL, free src; otherwise, moves src into *dest.
 	 * The error variable dest points to must be NULL.
-	 * Params:
-	 * dest =  error return location
-	 * src =  error to move into the return location
 	 */
 	public static void gPropagateError(out ErrorG dest, ErrorG src)
 	{
@@ -449,8 +427,6 @@ public class ErrorG
 	/**
 	 * If err is NULL, does nothing. If err is non-NULL,
 	 * calls g_error_free() on *err and sets *err to NULL.
-	 * Params:
-	 * err =  a GError return location
 	 */
 	public static void gClearError(ref ErrorG err)
 	{

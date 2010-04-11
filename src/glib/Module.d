@@ -86,7 +86,7 @@ private import glib.Str;
  * If your module introduces static data to common subsystems in the running
  * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
- * Example 11. Calling a function defined in a GModule
+ * Example  11.  Calling a function defined in a GModule
  * /+* the function signature for 'say_hello' +/
  * typedef void (* SayHelloFunc) (const char *message);
  * gboolean
@@ -160,7 +160,6 @@ public class Module
 	
 	/**
 	 * Checks if modules are supported on the current platform.
-	 * Returns:%TRUE if modules are supported.
 	 */
 	public static int supported()
 	{
@@ -181,12 +180,6 @@ public class Module
 	 * /lib/libmylibrary.so. On a Windows system, using
 	 * \Windows as the directory it will return
 	 * \Windows\mylibrary.dll.
-	 * Params:
-	 * directory = the directory where the module is. This can be NULL or the empty
-	 * string to indicate that the standard platform-specific directories will be
-	 * used, though that is not recommended.
-	 * moduleName = the name of the module.
-	 * Returns:the complete path of the module, including the standard libraryprefix and suffix. This should be freed when no longer needed.
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
@@ -205,12 +198,6 @@ public class Module
 	 * that fails and file_name doesn't have the ".la"-suffix, this suffix is
 	 * appended and g_module_open() tries to open the corresponding module. If
 	 * eventually that fails as well, NULL is returned.
-	 * Params:
-	 * fileName = the name of the file containing the module, or NULL to obtain
-	 *  a GModule representing the main program itself.
-	 * flags = the flags used for opening the module. This can be the logical
-	 * OR of any of the GModuleFlags.
-	 * Returns:a GModule on success, or NULL on failure.
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
@@ -226,10 +213,6 @@ public class Module
 	/**
 	 * Gets a symbol pointer from a module, such as one exported by G_MODULE_EXPORT.
 	 * Note that a valid symbol can be NULL.
-	 * Params:
-	 * symbolName = the name of the symbol to find.
-	 * symbol = returns the pointer to the symbol value.
-	 * Returns:%TRUE on success.
 	 */
 	public int symbol(string symbolName, void** symbol)
 	{
@@ -239,7 +222,6 @@ public class Module
 	
 	/**
 	 * Gets the filename from a GModule.
-	 * Returns:the filename of the module, or "main" if the module is the mainprogram itself.
 	 */
 	public string name()
 	{
@@ -259,7 +241,6 @@ public class Module
 	
 	/**
 	 * Closes a module.
-	 * Returns:%TRUE on success.
 	 */
 	public int close()
 	{
@@ -269,7 +250,6 @@ public class Module
 	
 	/**
 	 * Gets a string describing the last module error.
-	 * Returns:a string describing the last module error.
 	 */
 	public static string error()
 	{

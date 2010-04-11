@@ -1644,7 +1644,7 @@ public class GtkDClass
 		if ( pos < lines.length )
 		{
 			collectedEnums ~= "/**";
-			while ( pos < lines.length && lines[pos][0] > ' ' )
+			while ( pos < lines.length && lines[pos] != "<hr>" )
 			{
 				collectedEnums ~= " * "~lines[pos++].dup;
 			}
@@ -2166,8 +2166,6 @@ public class GtkDClass
 							
 							for(int i; i < comments.length; i++)
 							{
-								comments[i] = replace(comments[i], \u00A0, " "); //White space used in some of the documentation.
-
 								if(find(comments[i], ":") == comments[i].length-1 && find(comments[i], "Returns:") == -1 && find(comments[i], "Returns :") == -1 )
 								{
 									//Get the GtkD name of the param

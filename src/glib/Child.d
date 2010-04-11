@@ -125,8 +125,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
- * Figure 1. States of a Main Context
+ *  of a state diagram, as shown in Figure  1, “States of a Main Context”.
+ * Figure  1.  States of a Main Context
  */
 public class Child
 {
@@ -151,10 +151,6 @@ public class Child
 	 * the application. Calling waitpid() for individual pids will
 	 * still work fine.
 	 * Since 2.4
-	 * Params:
-	 * pid =  process to watch. On POSIX the pid of a child process. On
-	 * Windows a handle for a process (which doesn't have to be a child).
-	 * Returns: the newly-created child watch source
 	 */
 	public static Source watchSourceNew(GPid pid)
 	{
@@ -183,11 +179,6 @@ public class Child
 	 * using g_source_attach(). You can do these steps manually if you
 	 * need greater control.
 	 * Since 2.4
-	 * Params:
-	 * pid =  process id to watch. On POSIX the pid of a child process. On
-	 * Windows a handle for a process (which doesn't have to be a child).
-	 * data =  data to pass to function
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint watchAdd(GPid pid, GChildWatchFunc funct, void* data)
 	{
@@ -211,14 +202,6 @@ public class Child
 	 * using g_source_attach(). You can do these steps manually if you
 	 * need greater control.
 	 * Since 2.4
-	 * Params:
-	 * priority =  the priority of the idle source. Typically this will be in the
-	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * pid =  process to watch. On POSIX the pid of a child process. On
-	 * Windows a handle for a process (which doesn't have to be a child).
-	 * data =  data to pass to function
-	 * notify =  function to call when the idle is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint watchAddFull(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify)
 	{

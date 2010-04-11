@@ -155,8 +155,6 @@ public class TimeVal
 	 * G_USEC_PER_SEC macro). g_usleep() may have limited precision,
 	 * depending on hardware and operating system; don't rely on the exact
 	 * length of the sleep.
-	 * Params:
-	 * microseconds = number of microseconds to pause
 	 */
 	public static void usleep(uint microseconds)
 	{
@@ -167,8 +165,6 @@ public class TimeVal
 	/**
 	 * Adds the given number of microseconds to time_. microseconds can
 	 * also be negative to decrease the value of time_.
-	 * Params:
-	 * microseconds =  number of microseconds to add to time
 	 */
 	public void add(int microseconds)
 	{
@@ -180,10 +176,6 @@ public class TimeVal
 	 * Converts a string containing an ISO 8601 encoded date and time
 	 * to a GTimeVal and puts it into time_.
 	 * Since 2.12
-	 * Params:
-	 * isoDate =  an ISO 8601 encoded date string
-	 * time =  a GTimeVal
-	 * Returns: TRUE if the conversion was successful.
 	 */
 	public static int fromIso8601(string isoDate, GTimeVal* time)
 	{
@@ -195,7 +187,6 @@ public class TimeVal
 	 * Converts time_ into an ISO 8601 encoded string, relative to the
 	 * Coordinated Universal Time (UTC).
 	 * Since 2.12
-	 * Returns: a newly allocated string containing an ISO 8601 date
 	 */
 	public string toIso8601()
 	{

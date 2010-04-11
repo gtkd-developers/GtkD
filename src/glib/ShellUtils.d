@@ -117,9 +117,6 @@ public class ShellUtils
 	 * function. The return value must be freed with g_free(). The
 	 * quoting style used is undefined (single or double quotes may be
 	 * used).
-	 * Params:
-	 * unquotedString =  a literal string
-	 * Returns: quoted string
 	 */
 	public static string quote(string unquotedString)
 	{
@@ -148,9 +145,6 @@ public class ShellUtils
 	 * like 'foo'\''bar'. Double quotes allow $, `, ", \, and newline to
 	 * be escaped with backslash. Otherwise double quotes preserve things
 	 * literally.
-	 * Params:
-	 * quotedString =  shell-quoted string
-	 * Returns: an unquoted string
 	 * Throws: GException on failure.
 	 */
 	public static string unquote(string quotedString)

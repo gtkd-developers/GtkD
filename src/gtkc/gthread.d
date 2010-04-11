@@ -109,6 +109,9 @@ static this()
 	Linker.link(g_thread_foreach, "g_thread_foreach", LIBRARY.GTHREAD);
 	Linker.link(g_once_init_enter, "g_once_init_enter", LIBRARY.GTHREAD);
 	Linker.link(g_once_init_leave, "g_once_init_leave", LIBRARY.GTHREAD);
+	Linker.link(g_bit_lock, "g_bit_lock", LIBRARY.GTHREAD);
+	Linker.link(g_bit_trylock, "g_bit_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_bit_unlock, "g_bit_unlock", LIBRARY.GTHREAD);
 }
 
 mixin( gshared ~"extern(C)
@@ -189,6 +192,9 @@ mixin( gshared ~"extern(C)
 	void function(GFunc threadFunc, gpointer userData) c_g_thread_foreach;
 	gboolean function(gsize* valueLocation) c_g_once_init_enter;
 	void function(gsize* valueLocation, gsize initializationValue) c_g_once_init_leave;
+	void function(gint* address, gint lockBit) c_g_bit_lock;
+	gboolean function(gint* address, gint lockBit) c_g_bit_trylock;
+	void function(gint* address, gint lockBit) c_g_bit_unlock;
 }");
 
 // gthread.Mutex
@@ -266,3 +272,6 @@ alias c_g_thread_exit  g_thread_exit;
 alias c_g_thread_foreach  g_thread_foreach;
 alias c_g_once_init_enter  g_once_init_enter;
 alias c_g_once_init_leave  g_once_init_leave;
+alias c_g_bit_lock  g_bit_lock;
+alias c_g_bit_trylock  g_bit_trylock;
+alias c_g_bit_unlock  g_bit_unlock;

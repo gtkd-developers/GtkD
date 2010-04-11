@@ -125,8 +125,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
- * Figure 1. States of a Main Context
+ *  of a state diagram, as shown in Figure  1, “States of a Main Context”.
+ * Figure  1.  States of a Main Context
  */
 public class Timeout
 {
@@ -305,9 +305,6 @@ public class Timeout
 	 * The source will not initially be associated with any GMainContext
 	 * and must be added to one with g_source_attach() before it will be
 	 * executed.
-	 * Params:
-	 * interval =  the timeout interval in milliseconds.
-	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNew(uint interval)
 	{
@@ -328,9 +325,6 @@ public class Timeout
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
 	 * Since 2.14
-	 * Params:
-	 * interval =  the timeout interval in seconds
-	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNewSeconds(uint interval)
 	{
@@ -361,11 +355,6 @@ public class Timeout
 	 * This internally creates a main loop source using g_timeout_source_new()
 	 * and attaches it to the main loop context using g_source_attach(). You can
 	 * do these steps manually if you need greater control.
-	 * Params:
-	 * interval =  the time between calls to the function, in milliseconds
-	 *  (1/1000ths of a second)
-	 * data =  data to pass to function
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint add(uint interval, GSourceFunc funct, void* data)
 	{
@@ -388,14 +377,6 @@ public class Timeout
 	 * This internally creates a main loop source using g_timeout_source_new()
 	 * and attaches it to the main loop context using g_source_attach(). You can
 	 * do these steps manually if you need greater control.
-	 * Params:
-	 * priority =  the priority of the timeout source. Typically this will be in
-	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
-	 * interval =  the time between calls to the function, in milliseconds
-	 *  (1/1000ths of a second)
-	 * data =  data to pass to function
-	 * notify =  function to call when the timeout is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -413,10 +394,6 @@ public class Timeout
 	 * using g_source_attach(). You can do these steps manually if you need
 	 * greater control. Also see g_timout_add_seconds_full().
 	 * Since 2.14
-	 * Params:
-	 * interval =  the time between calls to the function, in seconds
-	 * data =  data to pass to function
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addSeconds(uint interval, GSourceFunc funct, void* data)
 	{
@@ -451,13 +428,6 @@ public class Timeout
 	 * using g_source_attach(). You can do these steps manually if you need
 	 * greater control.
 	 * Since 2.14
-	 * Params:
-	 * priority =  the priority of the timeout source. Typically this will be in
-	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
-	 * interval =  the time between calls to the function, in seconds
-	 * data =  data to pass to function
-	 * notify =  function to call when the timeout is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{

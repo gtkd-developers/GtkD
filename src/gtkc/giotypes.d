@@ -29,6 +29,9 @@ public import gtkc.gobjecttypes;
 /**
  * Flags used when querying a GFileInfo.
  * G_FILE_QUERY_INFO_NONE
+ *  No flags set.
+ * G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS
+ *  Don't follow symlinks.
  */
 public enum GFileQueryInfoFlags
 {
@@ -41,6 +44,19 @@ alias GFileQueryInfoFlags FileQueryInfoFlags;
 /**
  * Flags used when an operation may create a file.
  * G_FILE_CREATE_NONE
+ *  No flags set.
+ * G_FILE_CREATE_PRIVATE
+ *  Create a file that can only be
+ *  accessed by the current user.
+ * G_FILE_CREATE_REPLACE_DESTINATION
+ *  Replace the destination
+ *  as if it didn't exist before. Don't try to keep any old
+ *  permissions, replace instead of following links. This
+ *  is generally useful if you're doing a "copy over"
+ *  rather than a "save new version of" replace operation.
+ *  You can think of it as "unlink destination" before
+ *  writing to it, although the implementation may not
+ *  be exactly like that. Since 2.20
  */
 public enum GFileCreateFlags
 {
@@ -54,6 +70,19 @@ alias GFileCreateFlags FileCreateFlags;
 /**
  * Flags used when copying or moving files.
  * G_FILE_COPY_NONE
+ *  No flags set.
+ * G_FILE_COPY_OVERWRITE
+ *  Overwrite any existing files
+ * G_FILE_COPY_BACKUP
+ *  Make a backup of any existing files.
+ * G_FILE_COPY_NOFOLLOW_SYMLINKS
+ *  Don't follow symlinks.
+ * G_FILE_COPY_ALL_METADATA
+ *  Copy all file metadata instead of just default set used for copy (see GFileInfo).
+ * G_FILE_COPY_NO_FALLBACK_FOR_MOVE
+ *  Don't use copy and delete fallback if native move not supported.
+ * G_FILE_COPY_TARGET_DEFAULT_PERMS
+ *  Leaves target file with default perms, instead of setting the source file perms.
  */
 public enum GFileCopyFlags
 {
@@ -71,6 +100,9 @@ alias GFileCopyFlags FileCopyFlags;
 /**
  * Flags used to set what a GFileMonitor will watch for.
  * G_FILE_MONITOR_NONE
+ *  No flags set.
+ * G_FILE_MONITOR_WATCH_MOUNTS
+ *  Watch for mount events.
  */
 public enum GFileMonitorFlags
 {
@@ -85,6 +117,11 @@ alias GFileMonitorFlags FileMonitorFlags;
  * previewed in a file manager. Returned as the value of the key
  * G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
  * G_FILESYSTEM_PREVIEW_TYPE_IF_ALWAYS
+ *  Only preview files if user has explicitly requested it.
+ * G_FILESYSTEM_PREVIEW_TYPE_IF_LOCAL
+ *  Preview files if user has requested preview of "local" files.
+ * G_FILESYSTEM_PREVIEW_TYPE_NEVER
+ *  Never preview files.
  */
 public enum GFilesystemPreviewType
 {
@@ -98,6 +135,25 @@ alias GFilesystemPreviewType FilesystemPreviewType;
 /**
  * The data types for file attributes.
  * G_FILE_ATTRIBUTE_TYPE_INVALID
+ *  indicates an invalid or uninitalized type.
+ * G_FILE_ATTRIBUTE_TYPE_STRING
+ *  a null terminated UTF8 string.
+ * G_FILE_ATTRIBUTE_TYPE_BYTE_STRING
+ *  a zero terminated string of non-zero bytes.
+ * G_FILE_ATTRIBUTE_TYPE_BOOLEAN
+ *  a boolean value.
+ * G_FILE_ATTRIBUTE_TYPE_UINT32
+ *  an unsigned 4-byte/32-bit integer.
+ * G_FILE_ATTRIBUTE_TYPE_INT32
+ *  a signed 4-byte/32-bit integer.
+ * G_FILE_ATTRIBUTE_TYPE_UINT64
+ *  an unsigned 8-byte/64-bit integer.
+ * G_FILE_ATTRIBUTE_TYPE_INT64
+ *  a signed 8-byte/64-bit integer.
+ * G_FILE_ATTRIBUTE_TYPE_OBJECT
+ *  a GObject.
+ * G_FILE_ATTRIBUTE_TYPE_STRINGV
+ *  a NULL terminated char **. Since 2.22
  */
 public enum GFileAttributeType
 {
@@ -118,6 +174,11 @@ alias GFileAttributeType FileAttributeType;
 /**
  * Flags specifying the behaviour of an attribute.
  * G_FILE_ATTRIBUTE_INFO_NONE
+ *  no flags set.
+ * G_FILE_ATTRIBUTE_INFO_COPY_WITH_FILE
+ *  copy the attribute values when the file is copied.
+ * G_FILE_ATTRIBUTE_INFO_COPY_WHEN_MOVED
+ *  copy the attribute values when the file is moved.
  */
 public enum GFileAttributeInfoFlags
 {
@@ -131,6 +192,11 @@ alias GFileAttributeInfoFlags FileAttributeInfoFlags;
 /**
  * Used by g_file_set_attributes_from_info() when setting file attributes.
  * G_FILE_ATTRIBUTE_STATUS_UNSET
+ *  Attribute value is unset (empty).
+ * G_FILE_ATTRIBUTE_STATUS_SET
+ *  Attribute value is set.
+ * G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING
+ *  Indicates an error in setting the value.
  */
 public enum GFileAttributeStatus
 {
@@ -144,6 +210,21 @@ alias GFileAttributeStatus FileAttributeStatus;
 /**
  * Indicates the file's on-disk type.
  * G_FILE_TYPE_UNKNOWN
+ *  File's type is unknown.
+ * G_FILE_TYPE_REGULAR
+ *  File handle represents a regular file.
+ * G_FILE_TYPE_DIRECTORY
+ *  File handle represents a directory.
+ * G_FILE_TYPE_SYMBOLIC_LINK
+ *  File handle represents a symbolic link
+ *  (Unix systems).
+ * G_FILE_TYPE_SPECIAL
+ *  File is a "special" file, such as a socket, fifo,
+ *  block device, or character device.
+ * G_FILE_TYPE_SHORTCUT
+ *  File is a shortcut (Windows systems).
+ * G_FILE_TYPE_MOUNTABLE
+ *  File is a mountable location.
  */
 public enum GFileType
 {
@@ -161,6 +242,76 @@ alias GFileType FileType;
 /**
  * Error codes returned by GIO functions.
  * G_IO_ERROR_FAILED
+ *  Generic error condition for when any operation fails.
+ * G_IO_ERROR_NOT_FOUND
+ *  File not found error.
+ * G_IO_ERROR_EXISTS
+ *  File already exists error.
+ * G_IO_ERROR_IS_DIRECTORY
+ *  File is a directory error.
+ * G_IO_ERROR_NOT_DIRECTORY
+ *  File is not a directory.
+ * G_IO_ERROR_NOT_EMPTY
+ *  File is a directory that isn't empty.
+ * G_IO_ERROR_NOT_REGULAR_FILE
+ *  File is not a regular file.
+ * G_IO_ERROR_NOT_SYMBOLIC_LINK
+ *  File is not a symbolic link.
+ * G_IO_ERROR_NOT_MOUNTABLE_FILE
+ *  File cannot be mounted.
+ * G_IO_ERROR_FILENAME_TOO_LONG
+ *  Filename is too many characters.
+ * G_IO_ERROR_INVALID_FILENAME
+ *  Filename is invalid or contains invalid characters.
+ * G_IO_ERROR_TOO_MANY_LINKS
+ *  File contains too many symbolic links.
+ * G_IO_ERROR_NO_SPACE
+ *  No space left on drive.
+ * G_IO_ERROR_INVALID_ARGUMENT
+ *  Invalid argument.
+ * G_IO_ERROR_PERMISSION_DENIED
+ *  Permission denied.
+ * G_IO_ERROR_NOT_SUPPORTED
+ *  Operation not supported for the current backend.
+ * G_IO_ERROR_NOT_MOUNTED
+ *  File isn't mounted.
+ * G_IO_ERROR_ALREADY_MOUNTED
+ *  File is already mounted.
+ * G_IO_ERROR_CLOSED
+ *  File was closed.
+ * G_IO_ERROR_CANCELLED
+ *  Operation was cancelled. See GCancellable.
+ * G_IO_ERROR_PENDING
+ *  Operations are still pending.
+ * G_IO_ERROR_READ_ONLY
+ *  File is read only.
+ * G_IO_ERROR_CANT_CREATE_BACKUP
+ *  Backup couldn't be created.
+ * G_IO_ERROR_WRONG_ETAG
+ *  File's Entity Tag was incorrect.
+ * G_IO_ERROR_TIMED_OUT
+ *  Operation timed out.
+ * G_IO_ERROR_WOULD_RECURSE
+ *  Operation would be recursive.
+ * G_IO_ERROR_BUSY
+ *  File is busy.
+ * G_IO_ERROR_WOULD_BLOCK
+ *  Operation would block.
+ * G_IO_ERROR_HOST_NOT_FOUND
+ *  Host couldn't be found (remote operations).
+ * G_IO_ERROR_WOULD_MERGE
+ *  Operation would merge files.
+ * G_IO_ERROR_FAILED_HANDLED
+ *  Operation failed and a helper program has
+ *  already interacted with the user. Do not display any error dialog.
+ * G_IO_ERROR_TOO_MANY_OPEN_FILES
+ *  The current process has too many files
+ *  open and can't open any more. Duplicate descriptors do count toward
+ *  this limit. Since 2.20
+ * G_IO_ERROR_NOT_INITIALIZED
+ *  The object has not been initialized. Since 2.22
+ * G_IO_ERROR_ADDRESS_IN_USE
+ *  The requested address is already in use. Since 2.22
  */
 public enum GIOErrorEnum
 {
@@ -206,6 +357,15 @@ alias GIOErrorEnum IOErrorEnum;
  * user, or to notify the user of their choices in an authentication
  * situation.
  * G_ASK_PASSWORD_NEED_PASSWORD
+ *  operation requires a password.
+ * G_ASK_PASSWORD_NEED_USERNAME
+ *  operation requires a username.
+ * G_ASK_PASSWORD_NEED_DOMAIN
+ *  operation requires a domain.
+ * G_ASK_PASSWORD_SAVING_SUPPORTED
+ *  operation supports saving settings.
+ * G_ASK_PASSWORD_ANONYMOUS_SUPPORTED
+ *  operation supports anonymous users.
  */
 public enum GAskPasswordFlags
 {
@@ -223,6 +383,11 @@ alias GAskPasswordFlags AskPasswordFlags;
  * Gvfs stores passwords in the Gnome keyring when this flag allows it
  * to, and later retrieves it again from there.
  * G_PASSWORD_SAVE_NEVER
+ *  never save a password.
+ * G_PASSWORD_SAVE_FOR_SESSION
+ *  save a password for the session.
+ * G_PASSWORD_SAVE_PERMANENTLY
+ *  save a password permanently.
  */
 public enum GPasswordSave
 {
@@ -236,6 +401,14 @@ alias GPasswordSave PasswordSave;
  * GMountOperationResult is returned as a result when a request for
  * information is send by the mounting operation.
  * G_MOUNT_OPERATION_HANDLED
+ *  The request was fulfilled and the
+ *  user specified data is now available
+ * G_MOUNT_OPERATION_ABORTED
+ *  The user requested the mount operation
+ *  to be aborted
+ * G_MOUNT_OPERATION_UNHANDLED
+ *  The request was unhandled (i.e. not
+ *  implemented)
  */
 public enum GMountOperationResult
 {
@@ -248,6 +421,19 @@ alias GMountOperationResult MountOperationResult;
 /**
  * Specifies what type of event a monitor event is.
  * G_FILE_MONITOR_EVENT_CHANGED
+ *  a file changed.
+ * G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT
+ *  a hint that this was probably the last change in a set of changes.
+ * G_FILE_MONITOR_EVENT_DELETED
+ *  a file was deleted.
+ * G_FILE_MONITOR_EVENT_CREATED
+ *  a file was created.
+ * G_FILE_MONITOR_EVENT_ATTRIBUTE_CHANGED
+ *  a file attribute was changed.
+ * G_FILE_MONITOR_EVENT_PRE_UNMOUNT
+ *  the file location will soon be unmounted.
+ * G_FILE_MONITOR_EVENT_UNMOUNTED
+ *  the file location was unmounted.
  */
 public enum GFileMonitorEvent
 {
@@ -264,6 +450,13 @@ alias GFileMonitorEvent FileMonitorEvent;
 /**
  * GOutputStreamSpliceFlags determine how streams should be spliced.
  * G_OUTPUT_STREAM_SPLICE_NONE
+ *  Do not close either stream.
+ * G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE
+ *  Close the source stream after
+ *  the splice.
+ * G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET
+ *  Close the target stream after
+ *  the splice.
  */
 public enum GOutputStreamSpliceFlags
 {
@@ -278,6 +471,11 @@ alias GOutputStreamSpliceFlags OutputStreamSpliceFlags;
  * GDataStreamByteOrder is used to ensure proper endianness of streaming data sources
  * across various machine architectures.
  * G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN
+ *  Selects Big Endian byte order.
+ * G_DATA_STREAM_BYTE_ORDER_LITTLE_ENDIAN
+ *  Selects Little Endian byte order.
+ * G_DATA_STREAM_BYTE_ORDER_HOST_ENDIAN
+ *  Selects endianness based on host machine's architecture.
  */
 public enum GDataStreamByteOrder
 {
@@ -290,6 +488,13 @@ alias GDataStreamByteOrder DataStreamByteOrder;
 /**
  * GDataStreamNewlineType is used when checking for or setting the line endings for a given file.
  * G_DATA_STREAM_NEWLINE_TYPE_LF
+ *  Selects "LF" line endings, common on most modern UNIX platforms.
+ * G_DATA_STREAM_NEWLINE_TYPE_CR
+ *  Selects "CR" line endings.
+ * G_DATA_STREAM_NEWLINE_TYPE_CR_LF
+ *  Selects "CR, LF" line ending, common on Microsoft Windows.
+ * G_DATA_STREAM_NEWLINE_TYPE_ANY
+ *  Automatically try to handle any line ending type.
  */
 public enum GDataStreamNewlineType
 {
@@ -303,6 +508,11 @@ alias GDataStreamNewlineType DataStreamNewlineType;
 /**
  * Flags used when creating a GAppInfo.
  * G_APP_INFO_CREATE_NONE
+ *  No flags.
+ * G_APP_INFO_CREATE_NEEDS_TERMINAL
+ *  Application opens in a terminal window.
+ * G_APP_INFO_CREATE_SUPPORTS_URIS
+ *  Application supports URI arguments.
  */
 public enum GAppInfoCreateFlags
 {
@@ -316,6 +526,7 @@ alias GAppInfoCreateFlags AppInfoCreateFlags;
 /**
  * Flags used when mounting a mount.
  * G_MOUNT_MOUNT_NONE
+ *  No flags set.
  */
 public enum GMountMountFlags
 {
@@ -327,6 +538,10 @@ alias GMountMountFlags MountMountFlags;
 /**
  * Flags used when an unmounting a mount.
  * G_MOUNT_UNMOUNT_NONE
+ *  No flags set.
+ * G_MOUNT_UNMOUNT_FORCE
+ *  Unmount even if there are outstanding
+ *  file operations on the mount.
  */
 public enum GMountUnmountFlags
 {
@@ -339,6 +554,8 @@ alias GMountUnmountFlags MountUnmountFlags;
 /**
  * Flags used when starting a drive.
  * G_DRIVE_START_NONE
+ *  No flags set.
+ * Since 2.22
  */
 public enum GDriveStartFlags
 {
@@ -350,6 +567,24 @@ alias GDriveStartFlags DriveStartFlags;
 /**
  * Enumeration describing how a drive can be started/stopped.
  * G_DRIVE_START_STOP_TYPE_UNKNOWN
+ *  Unknown or drive doesn't support
+ *  start/stop.
+ * G_DRIVE_START_STOP_TYPE_SHUTDOWN
+ *  The stop method will physically
+ *  shut down the drive and e.g. power down the port the drive is
+ *  attached to.
+ * G_DRIVE_START_STOP_TYPE_NETWORK
+ *  The start/stop methods are used
+ *  for connecting/disconnect to the drive over the network.
+ * G_DRIVE_START_STOP_TYPE_MULTIDISK
+ *  The start/stop methods will
+ *  assemble/disassemble a virtual drive from several physical
+ *  drives.
+ * G_DRIVE_START_STOP_TYPE_PASSWORD
+ *  The start/stop methods will
+ *  unlock/lock the disk (for example using the ATA “SECURITY
+ *  UNLOCK DEVICE” command)
+ * Since 2.22
  */
 public enum GDriveStartStopType
 {
@@ -365,6 +600,14 @@ alias GDriveStartStopType DriveStartStopType;
  * GEmblemOrigin is used to add information about the origin of the emblem
  * to GEmblem.
  * G_EMBLEM_ORIGIN_UNKNOWN
+ *  Emblem of unknown origin
+ * G_EMBLEM_ORIGIN_DEVICE
+ *  Emblem adds device-specific information
+ * G_EMBLEM_ORIGIN_LIVEMETADATA
+ *  Emblem depicts live metadata, such as "readonly"
+ * G_EMBLEM_ORIGIN_TAG
+ *  Emblem comes from a user-defined tag, e.g. set by nautilus (in the future)
+ * Since 2.18
  */
 public enum GEmblemOrigin
 {
@@ -379,6 +622,16 @@ alias GEmblemOrigin EmblemOrigin;
  * Flags used when creating a GSocket. Some protocols may not implement
  * all the socket types.
  * G_SOCKET_TYPE_INVALID
+ *  Type unknown or wrong
+ * G_SOCKET_TYPE_STREAM
+ *  Reliable connection-based byte streams (e.g. TCP).
+ * G_SOCKET_TYPE_DATAGRAM
+ *  Connectionless, unreliable datagram passing.
+ *  (e.g. UDP)
+ * G_SOCKET_TYPE_SEQPACKET
+ *  Reliable connection-based passing of datagrams
+ *  of fixed maximum length (e.g. SCTP).
+ * Since 2.22
  */
 public enum GSocketType
 {
@@ -397,6 +650,16 @@ alias GSocketType SocketType;
  * can also pass any other identifiers handled by the platform in order to
  * use protocols not listed here.
  * G_SOCKET_PROTOCOL_UNKNOWN
+ *  The protocol type is unknown
+ * G_SOCKET_PROTOCOL_DEFAULT
+ *  The default protocol for the family/type
+ * G_SOCKET_PROTOCOL_TCP
+ *  TCP over IP
+ * G_SOCKET_PROTOCOL_UDP
+ *  UDP over IP
+ * G_SOCKET_PROTOCOL_SCTP
+ *  SCTP over IP
+ * Since 2.22
  */
 public enum GSocketProtocol
 {
@@ -416,6 +679,16 @@ alias GSocketProtocol SocketProtocol;
  * are passed in/out as is. So to use a platform specific flag, just include
  * the right system header and pass in the flag.
  * G_SOCKET_MSG_NONE
+ *  No flags.
+ * G_SOCKET_MSG_OOB
+ *  Request to send/receive out of band data.
+ * G_SOCKET_MSG_PEEK
+ *  Read data from the socket without removing it from
+ *  the queue.
+ * G_SOCKET_MSG_DONTROUTE
+ *  Don't use a gateway to send out the packet,
+ *  only send to hosts on directly connected networks.
+ * Since 2.22
  */
 public enum GSocketMsgFlags
 {
@@ -431,6 +704,14 @@ alias GSocketMsgFlags SocketMsgFlags;
  * identical to the system defines AF_INET, AF_INET6 and AF_UNIX,
  * if available.)
  * G_SOCKET_FAMILY_INVALID
+ *  no address family
+ * G_SOCKET_FAMILY_UNIX
+ *  the UNIX domain family
+ * G_SOCKET_FAMILY_IPV4
+ *  the IPv4 family
+ * G_SOCKET_FAMILY_IPV6
+ *  the IPv6 family
+ * Since 2.22
  */
 public enum GSocketFamily
 {
@@ -445,6 +726,24 @@ alias GSocketFamily SocketFamily;
  * An error code used with G_RESOLVER_ERROR in a GError returned
  * from a GResolver routine.
  * G_RESOLVER_ERROR_NOT_FOUND
+ *  the requested name/address/service was not
+ *  found
+ * G_RESOLVER_ERROR_TEMPORARY_FAILURE
+ *  the requested information could not
+ *  be looked up due to a network error or similar problem
+ * G_RESOLVER_ERROR_INTERNAL
+ *  unknown error
+ * Since 2.22
+ * Signal Details
+ * The "reload" signal
+ * void user_function (GResolver *resolver,
+ *  gpointer user_data) : Run Last
+ * Emitted when the resolver notices that the system resolver
+ * configuration has changed.
+ * resolver  :
+ *  a GResolver
+ * user_data  :
+ * user data set when the signal handler was connected.
  */
 public enum GResolverError
 {
@@ -466,7 +765,7 @@ public struct GFile{}
 
 /**
  * An interface for writing VFS file handles.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GFileIface
 {
@@ -577,7 +876,7 @@ public struct GFileIface
 
 /**
  * Information about a specific attribute.
- * char *name;
+ * char  *name;
  */
 public struct GFileAttributeInfo
 {
@@ -591,7 +890,7 @@ public struct GFileAttributeInfo
  * Main Gtk struct.
  * Acts as a lightweight registry for possible valid file attributes.
  * The registry stores Key-Value pair formats as GFileAttributeInfos.
- * GFileAttributeInfo *infos;
+ * GFileAttributeInfo  *infos;
  */
 public struct GFileAttributeInfoList
 {
@@ -652,7 +951,7 @@ public struct GAsyncResult{}
 
 /**
  * Interface definition for GAsyncResult.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GAsyncResultIface
 {
@@ -686,7 +985,7 @@ public struct GSeekable{}
 
 /**
  * Provides an interface for implementing seekable functionality on I/O Streams.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GSeekableIface
 {
@@ -834,7 +1133,7 @@ public struct GAppInfo{}
 
 /**
  * Application Information interface, for operating system portability.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GAppInfoIface
 {
@@ -902,7 +1201,7 @@ public struct GVolume{}
 
 /**
  * Interface for implementing operations for mountable volumes.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GVolumeIface
 {
@@ -940,7 +1239,7 @@ public struct GMount{}
 
 /**
  * Interface for implementing operations for mounts.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GMountIface
 {
@@ -984,7 +1283,7 @@ public struct GDrive{}
 
 /**
  * Interface for creating GDrive implementations.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GDriveIface
 {
@@ -1062,7 +1361,7 @@ public struct GIcon{}
  * GIconIface is used to implement GIcon types for various
  * different systems. See GThemedIcon and GLoadableIcon for
  * examples of how to implement this interface.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GIconIface
 {
@@ -1092,7 +1391,7 @@ public struct GLoadableIcon{}
 
 /**
  * Interface for icons that can be loaded as a stream.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GLoadableIconIface
 {
@@ -1136,7 +1435,7 @@ public struct GInitable{}
 /**
  * Provides an interface for initializing object such that initialization
  * may fail.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GInitableIface
 {
@@ -1157,7 +1456,7 @@ public struct GAsyncInitable{}
 /**
  * Provides an interface for asynchronous initializing object such that
  * initialization may fail.
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GAsyncInitableIface
 {
@@ -1181,7 +1480,7 @@ public struct GSocket{}
  * You generally pass in an array of GInputVectors
  * and the operation will store the read data starting in the
  * first buffer, switching to the next as needed.
- * gpointer buffer;
+ * gpointer  buffer;
  */
 public struct GInputVector
 {
@@ -1195,7 +1494,7 @@ public struct GInputVector
  * You generally pass in an array of GOutputVectors
  * and the operation will use all the buffers as if they were
  * one buffer.
- * gconstpointer buffer;
+ * gconstpointer  buffer;
  */
 public struct GOutputVector
 {
@@ -1265,7 +1564,7 @@ public struct GSocketConnectable{}
 
 /**
  * Provides an interface for returning a GSocketAddressEnumerator
- * GTypeInterface g_iface;
+ * GTypeInterface  g_iface;
  */
 public struct GSocketConnectableIface
 {
@@ -1390,11 +1689,11 @@ public struct GIOExtensionPoint{}
  * When doing file operations that may take a while, such as moving
  * a file or copying a file, a progress callback is used to pass how
  * far along that operation is to the application.
- * current_num_bytes :
+ * current_num_bytes  :
  *  the current number of bytes in the operation.
- * total_num_bytes :
+ * total_num_bytes  :
  *  the total number of bytes in the operation.
- * user_data :
+ * user_data  :
  *  user data passed to the callback.
  */
 // void (*GFileProgressCallback) (goffset current_num_bytes,  goffset total_num_bytes,  gpointer user_data);
@@ -1405,13 +1704,13 @@ public typedef extern(C) void  function (long, long, void*) GFileProgressCallbac
  * it may become necessary to determine if any more data from the file should be loaded.
  * A GFileReadMoreCallback function facilitates this by returning TRUE if more data
  * should be read, or FALSE otherwise.
- * file_contents :
+ * file_contents  :
  *  the data as currently read.
- * file_size :
+ * file_size  :
  *  the size of the data currently read.
- * callback_data :
+ * callback_data  :
  *  data passed to the callback.
- * Returns :
+ * Returns  :
  *  TRUE if more data should be read back. FALSE otherwise.
  */
 // gboolean (*GFileReadMoreCallback) (const char *file_contents,  goffset file_size,  gpointer callback_data);
@@ -1420,11 +1719,11 @@ public typedef extern(C) int  function (char*, long, void*) GFileReadMoreCallbac
 /*
  * Type definition for a function that will be called back when an asynchronous
  * operation within GIO has been completed.
- * source_object :
+ * source_object  :
  *  the object the asynchronous operation was started with.
- * res :
+ * res  :
  *  a GAsyncResult.
- * user_data :
+ * user_data  :
  *  user data passed to the callback.
  */
 // void (*GAsyncReadyCallback) (GObject *source_object,  GAsyncResult *res,  gpointer user_data);
@@ -1437,13 +1736,13 @@ public typedef extern(C) void  function (GObject*, GAsyncResult*, void*) GAsyncR
  * in the mainloop.
  * Long-running jobs should periodically check the cancellable
  * to see if they have been cancelled.
- * job :
+ * job  :
  *  a GIOSchedulerJob.
- * cancellable :
+ * cancellable  :
  *  optional GCancellable object, NULL to ignore.
- * user_data :
+ * user_data  :
  *  the data to pass to callback function
- * Returns :
+ * Returns  :
  *  TRUE if this function should be called again to
  *  complete the job, FALSE if the job is complete (or cancelled)
  */
@@ -1453,11 +1752,11 @@ public typedef extern(C) int  function (GIOSchedulerJob*, GCancellable*, void*) 
 /*
  * Simple thread function that runs an asynchronous operation and
  * checks for cancellation.
- * res :
+ * res  :
  *  a GSimpleAsyncResult.
- * object :
+ * object  :
  *  a GObject.
- * cancellable :
+ * cancellable  :
  *  optional GCancellable object, NULL to ignore.
  */
 // void (*GSimpleAsyncThreadFunc) (GSimpleAsyncResult *res,  GObject *object,  GCancellable *cancellable);
@@ -1467,11 +1766,11 @@ public typedef extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancell
  * Changes the size of the memory block pointed to by data to
  * size bytes.
  * The function should have the same semantics as realloc().
- * data :
+ * data  :
  *  memory block to reallocate
- * size :
+ * size  :
  *  size to reallocate data to
- * Returns :
+ * Returns  :
  *  a pointer to the reallocated memory
  */
 // gpointer (*GReallocFunc) (gpointer data,  gsize size);
@@ -1480,13 +1779,13 @@ public typedef extern(C) void*  function (void*, uint) GReallocFunc;
 /*
  * This is the function type of the callback used for the GSource
  * returned by g_socket_create_source().
- * socket :
+ * socket  :
  *  the GSocket
- * condition :
+ * condition  :
  *  the current condition at the source fired.
- * user_data :
+ * user_data  :
  *  data passed in by the user.
- * Returns :
+ * Returns  :
  *  it should return FALSE if the source should be removed.
  * Since 2.22
  */

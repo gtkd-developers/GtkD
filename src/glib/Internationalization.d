@@ -97,11 +97,6 @@ public class Internationalization
 	 * textdomain() before gtk_init or its variants.
 	 * This function disables translations if and only if upon its first
 	 * Since 2.18
-	 * Params:
-	 * domain =  the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
-	 * msgid =  message to translate
-	 * Returns: The translated string
 	 */
 	public static string dgettext(string domain, string msgid)
 	{
@@ -116,13 +111,6 @@ public class Internationalization
 	 * See g_dgettext() for details of how this differs from dngettext()
 	 * proper.
 	 * Since 2.18
-	 * Params:
-	 * domain =  the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
-	 * msgid =  message to translate
-	 * msgidPlural =  plural form of the message
-	 * n =  the quantity for which translation is needed
-	 * Returns: The translated string
 	 */
 	public static string dngettext(string domain, string msgid, string msgidPlural, uint n)
 	{
@@ -143,13 +131,6 @@ public class Internationalization
 	 * Applications should normally not use this function directly,
 	 * but use the C_() macro for translations with context.
 	 * Since 2.16
-	 * Params:
-	 * domain =  the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
-	 * msgctxtid =  a combined message context and message id, separated
-	 *  by a \004 character
-	 * msgidoffset =  the offset of the message id in msgctxid
-	 * Returns: The translated string
 	 */
 	public static string dpgettext(string domain, string msgctxtid, uint msgidoffset)
 	{
@@ -167,12 +148,6 @@ public class Internationalization
 	 * This function differs from C_() in that it is not a macro and
 	 * thus you may use non-string-literals as context and msgid arguments.
 	 * Since 2.18
-	 * Params:
-	 * domain =  the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
-	 * context =  the message context
-	 * msgid =  the message
-	 * Returns: The translated string
 	 */
 	public static string dpgettext2(string domain, string context, string msgid)
 	{
@@ -183,10 +158,6 @@ public class Internationalization
 	/**
 	 * An auxiliary function for gettext() support (see Q_()).
 	 * Since 2.4
-	 * Params:
-	 * msgid =  a string
-	 * msgval =  another string
-	 * Returns: msgval, unless msgval is identical to msgid and contains a '|' character, in which case a pointer to the substring of msgid after the first '|' character is returned.
 	 */
 	public static string stripContext(string msgid, string msgval)
 	{
@@ -205,7 +176,6 @@ public class Internationalization
 	 * LC_ALL, LC_MESSAGES and LANG
 	 * to find the list of locales specified by the user.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib  that must not be modified or freed.
 	 */
 	public static string[] getLanguageNames()
 	{

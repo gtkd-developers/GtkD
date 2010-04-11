@@ -113,6 +113,12 @@ public alias GdkAtom GdkTarget;
  * the resource is actively grabbed by another client.
  * GDK_GRAB_INVALID_TIME
  * the resource was grabbed more recently than the
+ *  specified time.
+ * GDK_GRAB_NOT_VIEWABLE
+ * the grab window or the confine_to window are not
+ *  viewable.
+ * GDK_GRAB_FROZEN
+ * the resource is frozen by an active grab of another client.
  */
 public enum GdkGrabStatus
 {
@@ -292,6 +298,14 @@ alias GdkFunction Funct;
  * draw with a tiled pixmap.
  * GDK_STIPPLED
  * draw using the stipple bitmap. Pixels corresponding
+ *  to bits in the stipple bitmap that are set will be drawn in the
+ *  foreground color; pixels corresponding to bits that are
+ *  not set will be left untouched.
+ * GDK_OPAQUE_STIPPLED
+ * draw using the stipple bitmap. Pixels corresponding
+ *  to bits in the stipple bitmap that are set will be drawn in the
+ *  foreground color; pixels corresponding to bits that are
+ *  not set will be drawn with the background color.
  */
 public enum GdkFill
 {
@@ -326,6 +340,8 @@ alias GdkSubwindowMode SubwindowMode;
  * even segments are drawn; odd segments are not drawn.
  * GDK_LINE_DOUBLE_DASH
  * even segments are normally. Odd segments are drawn
+ *  in the background color if the fill style is GDK_SOLID, or in the background
+ *  color masked by the stipple if the fill style is GDK_STIPPLED.
  */
 public enum GdkLineStyle
 {
@@ -339,6 +355,16 @@ alias GdkLineStyle LineStyle;
  * Determines how the end of lines are drawn.
  * GDK_CAP_NOT_LAST
  * the same as GDK_CAP_BUTT for lines of non-zero width.
+ *  for zero width lines, the final point on the line will not be drawn.
+ * GDK_CAP_BUTT
+ * the ends of the lines are drawn squared off and extending
+ *  to the coordinates of the end point.
+ * GDK_CAP_ROUND
+ * the ends of the lines are drawn as semicircles with the
+ *  diameter equal to the line width and centered at the end point.
+ * GDK_CAP_PROJECTING
+ * the ends of the lines are drawn squared off and extending
+ *  half the width of the line beyond the end point.
  */
 public enum GdkCapStyle
 {
@@ -357,6 +383,7 @@ alias GdkCapStyle CapStyle;
  * the sides of the two lines are joined by a circular arc.
  * GDK_JOIN_BEVEL
  * the sides of the two lines are joined by a straight line which
+ *  makes an equal angle with each line.
  */
 public enum GdkJoinStyle
 {
@@ -444,6 +471,10 @@ public enum GdkPixbufError
 alias GdkPixbufError PixbufError;
 
 /**
+ *  This enumeration defines the color spaces that are supported by
+ *  the gdk-pixbuf library. Currently only RGB is supported.
+ * GDK_COLORSPACE_RGB
+ * Indicates a red/green/blue additive color space.
  */
 public enum GdkColorspace
 {
@@ -452,6 +483,22 @@ public enum GdkColorspace
 alias GdkColorspace Colorspace;
 
 /**
+ *  These values can be passed to
+ *  gdk_pixbuf_render_to_drawable_alpha() to control how the alpha
+ *  channel of an image should be handled. This function can create a
+ *  bilevel clipping mask (black and white) and use it while painting
+ *  the image. In the future, when the X Window System gets an alpha
+ *  channel extension, it will be possible to do full alpha
+ *  compositing onto arbitrary drawables. For now both cases fall
+ *  back to a bilevel clipping mask.
+ * GDK_PIXBUF_ALPHA_BILEVEL
+ * A bilevel clipping mask (black and white)
+ * will be created and used to draw the image. Pixels below 0.5 opacity
+ * will be considered fully transparent, and all others will be
+ * considered fully opaque.
+ * GDK_PIXBUF_ALPHA_FULL
+ * For now falls back to GDK_PIXBUF_ALPHA_BILEVEL.
+ * In the future it will do full alpha compositing.
  */
 public enum GdkPixbufAlphaMode
 {
@@ -461,6 +508,36 @@ public enum GdkPixbufAlphaMode
 alias GdkPixbufAlphaMode PixbufAlphaMode;
 
 /**
+ *  This enumeration describes the different interpolation modes that
+ *  can be used with the scaling functions. GDK_INTERP_NEAREST is
+ *  the fastest scaling method, but has horrible quality when
+ *  scaling down. GDK_INTERP_BILINEAR is the best choice if you
+ *  aren't sure what to choose, it has a good speed/quality balance.
+ * Note
+ * 	Cubic filtering is missing from the list; hyperbolic
+ * 	interpolation is just as fast and results in higher quality.
+ * GDK_INTERP_NEAREST
+ * Nearest neighbor sampling; this is the fastest
+ * and lowest quality mode. Quality is normally unacceptable when scaling
+ * down, but may be OK when scaling up.
+ * GDK_INTERP_TILES
+ * This is an accurate simulation of the PostScript
+ * image operator without any interpolation enabled. Each pixel is
+ * rendered as a tiny parallelogram of solid color, the edges of which
+ * are implemented with antialiasing. It resembles nearest neighbor for
+ * enlargement, and bilinear for reduction.
+ * GDK_INTERP_BILINEAR
+ * Best quality/speed balance; use this mode by
+ * default. Bilinear interpolation. For enlargement, it is
+ * equivalent to point-sampling the ideal bilinear-interpolated image.
+ * For reduction, it is equivalent to laying down small tiles and
+ * integrating over the coverage area.
+ * GDK_INTERP_HYPER
+ * This is the slowest and highest quality
+ * reconstruction function. It is derived from the hyperbolic filters in
+ * Wolberg's "Digital Image Warping", and is formally defined as the
+ * hyperbolic-filter sampling the ideal hyperbolic-filter interpolated
+ * image (the filter is designed to be idempotent for 1:1 pixel mapping).
  */
 public enum GdkInterpType
 {
@@ -501,6 +578,23 @@ alias GdkPixbufRotation PixbufRotation;
  * Each pixel value indexes a grayscale value directly.
  * GDK_VISUAL_GRAYSCALE
  * Each pixel is an index into a color map that maps pixel
+ *  values into grayscale values. The color map can be changed by an application.
+ * GDK_VISUAL_STATIC_COLOR
+ * Each pixel value is an index into a predefined,
+ *  unmodifiable color map that maps pixel values into RGB values.
+ * GDK_VISUAL_PSEUDO_COLOR
+ * Each pixel is an index into a color map that maps
+ *  pixel values into rgb values. The color map can be changed by an application.
+ * GDK_VISUAL_TRUE_COLOR
+ * Each pixel value directly contains red, green,
+ *  and blue components. The red_mask,
+ *  green_mask, and
+ *  blue_mask fields of the GdkVisual
+ *  structure describe how the components are assembled into a pixel value.
+ * GDK_VISUAL_DIRECT_COLOR
+ * Each pixel value contains red, green, and blue
+ *  components as for GDK_VISUAL_TRUE_COLOR, but the components are mapped via a
+ *  color table into the final output table instead of being converted directly.
  */
 public enum GdkVisualType
 {
@@ -518,6 +612,12 @@ alias GdkVisualType VisualType;
  * for storing pixel values in memory.
  * GDK_LSB_FIRST
  * The values are stored with the least-significant byte
+ *  first. For instance, the 32-bit value 0xffeecc would be stored
+ *  in memory as 0xcc, 0xee, 0xff, 0x00.
+ * GDK_MSB_FIRST
+ * The values are stored with the most-significant byte
+ * first. For instance, the 32-bit value 0xffeecc would be stored
+ * in memory as 0x00, 0xcc, 0xee, 0xff.
  */
 public enum GdkByteOrder
 {
@@ -628,6 +728,7 @@ alias GdkFontType FontType;
  * Blank cursor. Since 2.16
  * GDK_CURSOR_IS_PIXMAP
  * type of cursors constructed with
+ *  gdk_cursor_new_from_pixmap() or gdk_cursor_new_from_pixbuf()
  */
 public enum GdkCursorType
 {
@@ -829,6 +930,7 @@ alias GdkWindowHints WindowHints;
  * the reference point is at the lower right corner.
  * GDK_GRAVITY_STATIC
  * the reference point is at the top left corner of the
+ *  window itself, ignoring window manager decorations.
  */
 public enum GdkGravity
 {
@@ -892,6 +994,34 @@ alias GdkWindowEdge WindowEdge;
  * Dialog window.
  * GDK_WINDOW_TYPE_HINT_MENU
  * Window used to implement a menu; GTK+ uses
+ *  this hint only for torn-off menus, see GtkTearoffMenuItem.
+ * GDK_WINDOW_TYPE_HINT_TOOLBAR
+ * Window used to implement toolbars.
+ * GDK_WINDOW_TYPE_HINT_SPLASHSCREEN
+ * Window used to display a splash
+ *  screen during application startup.
+ * GDK_WINDOW_TYPE_HINT_UTILITY
+ * Utility windows which are not detached
+ *  toolbars or dialogs.
+ * GDK_WINDOW_TYPE_HINT_DOCK
+ * Used for creating dock or panel windows.
+ * GDK_WINDOW_TYPE_HINT_DESKTOP
+ * Used for creating the desktop background
+ * window.
+ * GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU
+ * A menu that belongs to a menubar.
+ * GDK_WINDOW_TYPE_HINT_POPUP_MENU
+ * A menu that does not belong to a menubar,
+ *  e.g. a context menu.
+ * GDK_WINDOW_TYPE_HINT_TOOLTIP
+ * A tooltip.
+ * GDK_WINDOW_TYPE_HINT_NOTIFICATION
+ * A notification - typically a "bubble"
+ *  that belongs to a status icon.
+ * GDK_WINDOW_TYPE_HINT_COMBO
+ * A popup from a combo box.
+ * GDK_WINDOW_TYPE_HINT_DND
+ * A window that is used to implement a DND cursor.
  */
 public enum GdkWindowTypeHint
 {
@@ -959,6 +1089,9 @@ alias GdkWindowAttributesType WindowAttributesType;
  * event not handled, continue processing.
  * GDK_FILTER_TRANSLATE
  * native event translated into a GDK event and stored
+ *  in the event structure that was passed in.
+ * GDK_FILTER_REMOVE
+ * event handled, terminate processing.
  */
 public enum GdkFilterReturn
 {
@@ -982,6 +1115,46 @@ alias GdkFilterReturn FilterReturn;
  * the Shift key.
  * GDK_LOCK_MASK
  * a Lock key (depending on the modifier mapping of the
+ *  X server this may either be CapsLock or ShiftLock).
+ * GDK_CONTROL_MASK
+ * the Control key.
+ * GDK_MOD1_MASK
+ * the fourth modifier key (it depends on the modifier
+ *  mapping of the X server which key is interpreted as this modifier, but
+ *  normally it is the Alt key).
+ * GDK_MOD2_MASK
+ * the fifth modifier key (it depends on the modifier
+ *  mapping of the X server which key is interpreted as this modifier).
+ * GDK_MOD3_MASK
+ * the sixth modifier key (it depends on the modifier
+ *  mapping of the X server which key is interpreted as this modifier).
+ * GDK_MOD4_MASK
+ * the seventh modifier key (it depends on the modifier
+ *  mapping of the X server which key is interpreted as this modifier).
+ * GDK_MOD5_MASK
+ * the eighth modifier key (it depends on the modifier
+ *  mapping of the X server which key is interpreted as this modifier).
+ * GDK_BUTTON1_MASK
+ * the first mouse button.
+ * GDK_BUTTON2_MASK
+ * the second mouse button.
+ * GDK_BUTTON3_MASK
+ * the third mouse button.
+ * GDK_BUTTON4_MASK
+ * the fourth mouse button.
+ * GDK_BUTTON5_MASK
+ * the fifth mouse button.
+ * GDK_SUPER_MASK
+ * the Super modifier. Since 2.10
+ * GDK_HYPER_MASK
+ * the Hyper modifier. Since 2.10
+ * GDK_META_MASK
+ * the Meta modifier. Since 2.10
+ * GDK_RELEASE_MASK
+ * not used in GDK itself. GTK+ uses it to differentiate
+ *  between (keyval, modifiers) pairs from key press and release events.
+ * GDK_MODIFIER_MASK
+ * a mask covering all modifier types.
  */
 public enum GdkModifierType
 {
@@ -1162,6 +1335,15 @@ alias GdkWMFunction WMFunction;
  * a setting has been modified.
  * GDK_OWNER_CHANGE
  * the owner of a selection has changed. This event type
+ *  was added in 2.6
+ * GDK_GRAB_BROKEN
+ * a pointer or keyboard grab was broken. This event type
+ *  was added in 2.8.
+ * GDK_DAMAGE
+ * the content of the window has been changed. This event type
+ *  was added in 2.14.
+ * GDK_EVENT_LAST
+ * marks the end of the GdkEventType enumeration. Added in 2.18
  */
 public enum GdkEventType
 {
@@ -1261,6 +1443,11 @@ alias GdkEventType EventType;
  * receive proximity out events
  * GDK_SUBSTRUCTURE_MASK
  * receive events about window configuration changes of
+ *  child windows
+ * GDK_SCROLL_MASK
+ * receive scroll events
+ * GDK_ALL_EVENTS_MASK
+ * the combination of all the above event masks.
  */
 public enum GdkEventMask
 {
@@ -1341,6 +1528,7 @@ alias GdkVisibilityState VisibilityState;
  * crossing because a GTK+ grab is deactivated.
  * GDK_CROSSING_STATE_CHANGED
  * crossing because a GTK+ widget changed state (e.g.
+ *  sensitivity).
  */
 public enum GdkCrossingMode
 {
@@ -1359,6 +1547,23 @@ alias GdkCrossingMode CrossingMode;
  * full details of crossing event generation.
  * GDK_NOTIFY_ANCESTOR
  * the window is entered from an ancestor or
+ *  left towards an ancestor.
+ * GDK_NOTIFY_VIRTUAL
+ * the pointer moves between an ancestor and an
+ *  inferior of the window.
+ * GDK_NOTIFY_INFERIOR
+ * the window is entered from an inferior or
+ *  left towards an inferior.
+ * GDK_NOTIFY_NONLINEAR
+ *  the window is entered from or left towards
+ *  a window which is neither an ancestor nor an inferior.
+ * GDK_NOTIFY_NONLINEAR_VIRTUAL
+ * the pointer moves between two windows
+ *  which are not ancestors of each other and the window is part of
+ *  the ancestor chain between one of these windows and their least
+ *  common ancestor.
+ * GDK_NOTIFY_UNKNOWN
+ * an unknown type of enter/leave event occurred.
  */
 public enum GdkNotifyType
 {
@@ -1459,6 +1664,15 @@ alias GdkOwnerChange OwnerChange;
  * The Xdnd protocol.
  * GDK_DRAG_PROTO_ROOTWIN
  * An extension to the Xdnd protocol for
+ *  unclaimed root window drops.
+ * GDK_DRAG_PROTO_NONE
+ * no protocol.
+ * GDK_DRAG_PROTO_WIN32_DROPFILES
+ * The simple WM_DROPFILES protocol.
+ * GDK_DRAG_PROTO_OLE2
+ * The complex OLE2 DND protocol (not implemented).
+ * GDK_DRAG_PROTO_LOCAL
+ * Intra-application DND.
  */
 public enum GdkDragProtocol
 {
@@ -1482,6 +1696,15 @@ alias GdkDragProtocol DragProtocol;
  * Copy the data.
  * GDK_ACTION_MOVE
  * Move the data, i.e. first copy it, then delete
+ *  it from the source using the DELETE target of the X selection protocol.
+ * GDK_ACTION_LINK
+ * Add a link to the data. Note that this is only
+ *  useful if source and destination agree on what it means.
+ * GDK_ACTION_PRIVATE
+ * Special action which tells the source that the
+ *  destination will do something that the source doesn't understand.
+ * GDK_ACTION_ASK
+ * Ask the user what to do with the data.
  */
 public enum GdkDragAction
 {
@@ -1525,6 +1748,14 @@ alias GdkInputCondition InputCondition;
  * in general terms.
  * GDK_SOURCE_MOUSE
  * the device is a mouse. (This will be reported for the core
+ *  pointer, even if it is something else, such as a trackball.)
+ * GDK_SOURCE_PEN
+ * the device is a stylus of a graphics tablet or similar device.
+ * GDK_SOURCE_ERASER
+ * the device is an eraser. Typically, this would be the other end
+ *  of a stylus on a graphics tablet.
+ * GDK_SOURCE_CURSOR
+ * the device is a graphics tablet "puck" or similar device.
  */
 public enum GdkInputSource
 {
@@ -1541,6 +1772,12 @@ alias GdkInputSource InputSource;
  * the device is disabled and will not report any events.
  * GDK_MODE_SCREEN
  * the device is enabled. The device's coordinate space
+ *  maps to the entire screen.
+ * GDK_MODE_WINDOW
+ * the device is enabled. The device's coordinate space
+ *  is mapped to a single window. The manner in which this window
+ *  is chosen is undefined, but it will typically be the same
+ *  way in which the focus window for key events is determined.
  */
 public enum GdkInputMode
 {
@@ -1593,6 +1830,7 @@ alias GdkAxisUse AxisUse;
  * all extension events are desired.
  * GDK_EXTENSION_EVENTS_CURSOR
  * extension events are desired only if a cursor
+ *  will be displayed for the device.
  */
 public enum GdkExtensionMode
 {
@@ -1618,7 +1856,7 @@ public struct GdkDisplay{}
  * which can be set using gdk_display_set_pointer_hooks().
  * This is only useful for such low-level tools as an event recorder.
  * Applications should never have any reason to use this facility
- * get_pointer ()
+ * get_pointer  ()
  * Obtains the current pointer position and modifier state.
  */
 public struct GdkDisplayPointerHooks
@@ -1650,9 +1888,9 @@ public struct GdkScreen{}
 
 /**
  * Defines the x and y coordinates of a point.
- * gint x;
+ * gint  x;
  * the x coordinate of the point.
- * gint y;
+ * gint  y;
  * the y coordinate of the point.
  */
 public struct GdkPoint
@@ -1665,13 +1903,13 @@ public struct GdkPoint
 /**
  * Main Gtk struct.
  * Defines the position and size of a rectangle.
- * gint x;
+ * gint  x;
  * the x coordinate of the left edge of the rectangle.
- * gint y;
+ * gint  y;
  * the y coordinate of the top of the rectangle.
- * gint width;
+ * gint  width;
  * the width of the rectangle.
- * gint height;
+ * gint  height;
  * the height of the rectangle.
  */
 public struct GdkRectangle
@@ -1692,11 +1930,11 @@ public struct GdkRegion{}
 /**
  * A GdkSpan represents a horizontal line of pixels starting
  * at the pixel with coordinates x, y and ending before x + width, y.
- * gint x;
+ * gint  x;
  * x coordinate of the first pixel.
- * gint y;
+ * gint  y;
  * y coordinate of the first pixel.
- * gint width;
+ * gint  width;
  * number of pixels in the span.
  */
 public struct GdkSpan
@@ -1719,7 +1957,7 @@ public struct GdkGC{}
 /**
  * The GdkGCValues structure holds a set of values used
  * to create or modify a graphics context.
- * GdkColor foreground;
+ * GdkColor  foreground;
  * the foreground color. Note that gdk_gc_get_values()
  */
 public struct GdkGCValues
@@ -1757,13 +1995,13 @@ public struct GdkDrawable{}
 /**
  * Specifies the start and end point of a line for use by the gdk_draw_segments()
  * function.
- * gint x1;
+ * gint  x1;
  * the x coordinate of the start point.
- * gint y1;
+ * gint  y1;
  * the y coordinate of the start point.
- * gint x2;
+ * gint  x2;
  * the x coordinate of the end point.
- * gint y2;
+ * gint  y2;
  * the y coordinate of the end point.
  */
 public struct GdkSegment
@@ -1779,17 +2017,17 @@ public struct GdkSegment
  * Specifies a trapezpoid for use by the gdk_draw_trapezoids().
  * The trapezoids used here have parallel, horizontal top and
  * bottom edges.
- * double y1;
+ * double  y1;
  * the y coordinate of the start point.
- * double x11;
+ * double  x11;
  * the x coordinate of the top left corner
- * double x21;
+ * double  x21;
  * the x coordinate of the top right corner
- * double y2;
+ * double  y2;
  * the y coordinate of the end point.
- * double x12;
+ * double  x12;
  * the x coordinate of the bottom left corner
- * double x22;
+ * double  x22;
  * the x coordinate of the bottom right corner
  */
 public struct GdkTrapezoid
@@ -1821,9 +2059,9 @@ public struct GdkBitmap{}
 /**
  * A private data structure which maps color indices to actual RGB
  * colors. This is used only for gdk_draw_indexed_image().
- * guint32 colors[256];
+ * guint32  colors[256];
  * The colors, represented as 0xRRGGBB integer values.
- * gint n_colors;
+ * gint  n_colors;
  * The number of colors in the cmap.
  */
 public struct GdkRgbCmap
@@ -1836,29 +2074,29 @@ public struct GdkRgbCmap
 /**
  * Main Gtk struct.
  * The GdkImage struct contains information on the image and the pixel data.
- * GObject parent_instance;
+ * GObject  parent_instance;
  * the parent instance
- * GdkImageType type;
+ * GdkImageType  type;
  * the type of the image.
- * GdkVisual *visual;
+ * GdkVisual  *visual;
  * the visual.
- * GdkByteOrder byte_order;
+ * GdkByteOrder  byte_order;
  * the byte order.
- * gint width;
+ * gint  width;
  * the width of the image in pixels.
- * gint height;
+ * gint  height;
  * the height of the image in pixels.
- * guint16 depth;
+ * guint16  depth;
  * the depth of the image, i.e. the number of bits per pixel.
- * guint16 bpp;
+ * guint16  bpp;
  * the number of bytes per pixel.
- * guint16 bpl;
+ * guint16  bpl;
  * the number of bytes per line of the image.
- * guint16 bits_per_pixel;
+ * guint16  bits_per_pixel;
  * the number of bits per pixel.
- * gpointer mem;
+ * gpointer  mem;
  * the pixel data.
- * GdkColormap *colormap;
+ * GdkColormap  *colormap;
  * the GdkColormap associated with the image
  */
 public struct GdkImage
@@ -1887,7 +2125,7 @@ public struct GdkPixbuf{}
 /**
  * The GdkColor structure is used to describe an
  * allocated or unallocated color.
- * guint32 pixel;
+ * guint32  pixel;
  * For allocated colors, the value used to
  */
 public struct GdkColor
@@ -1902,7 +2140,7 @@ public struct GdkColor
 /**
  * Main Gtk struct.
  * The colormap structure contains the following public fields.
- * gint size;
+ * gint  size;
  * For pseudo-color colormaps, the number of colors
  */
 public struct GdkColormap
@@ -1916,7 +2154,7 @@ public struct GdkColormap
  * Main Gtk struct.
  * The GdkVisual structure contains information about
  * a particular visual.
- * Example 5. Constructing a pixel value from components
+ * Example  5.  Constructing a pixel value from components
  * guint
  * pixel_from_rgb (GdkVisual *visual,
  */
@@ -1948,7 +2186,7 @@ public struct GdkVisual
  * contains the following public fields. A new GdkFont
  * structure is returned by gdk_font_load() or gdk_fontset_load(),
  * and is reference counted with gdk_font_ref() and gdk_font_unref()
- * GdkFontType type;
+ * GdkFontType  type;
  * a value of type GdkFontType which indicates
  */
 public struct GdkFont
@@ -1962,7 +2200,7 @@ public struct GdkFont
 /**
  * Main Gtk struct.
  * A GdkCursor structure represents a cursor.
- * GdkCursorType type;
+ * GdkCursorType  type;
  * the GdkCursorType of the cursor
  */
 public struct GdkCursor
@@ -2028,35 +2266,35 @@ public struct GdkGeometry
 
 /**
  * Attributes to use for a newly-created window.
- * gchar *title;
+ * gchar  *title;
  * title of the window (for toplevel windows)
- * gint event_mask;
+ * gint  event_mask;
  * event mask (see gdk_window_set_events())
- * gint x;
+ * gint  x;
  * X coordinate relative to parent window (see gdk_window_move())
- * gint y;
+ * gint  y;
  * Y coordinate relative to parent window (see gdk_window_move())
- * gint width;
+ * gint  width;
  * width of window
- * gint height;
+ * gint  height;
  * height of window
- * GdkWindowClass wclass;
+ * GdkWindowClass  wclass;
  * #GDK_INPUT_OUTPUT (normal window) or GDK_INPUT_ONLY (invisible window that receives events)
- * GdkVisual *visual;
+ * GdkVisual  *visual;
  * #GdkVisual for window
- * GdkColormap *colormap;
+ * GdkColormap  *colormap;
  * #GdkColormap for window
- * GdkWindowType window_type;
+ * GdkWindowType  window_type;
  * type of window
- * GdkCursor *cursor;
+ * GdkCursor  *cursor;
  * cursor for the window (see gdk_window_set_cursor())
- * gchar *wmclass_name;
+ * gchar  *wmclass_name;
  * don't use (see gtk_window_set_wmclass())
- * gchar *wmclass_class;
+ * gchar  *wmclass_class;
  * don't use (see gtk_window_set_wmclass())
- * gboolean override_redirect;
+ * gboolean  override_redirect;
  * %TRUE to bypass the window manager
- * GdkWindowTypeHint type_hint;
+ * GdkWindowTypeHint  type_hint;
  * a hint of the function of the window
  */
 public struct GdkWindowAttr
@@ -2084,7 +2322,7 @@ public struct GdkWindowAttr
  * which can be set using gdk_set_pointer_hooks().
  * This is only useful for such low-level tools as an event recorder.
  * Applications should never have any reason to use this facility
- * get_pointer ()
+ * get_pointer  ()
  * Obtains the current pointer position and modifier state.
  */
 public struct GdkPointerHooks
@@ -2098,11 +2336,11 @@ public struct GdkPointerHooks
  * Contains the fields which are common to all event structs.
  * Any event pointer can safely be cast to a pointer to a GdkEventAny to access
  * these fields.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event.
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  */
@@ -2116,25 +2354,25 @@ public struct GdkEventAny
 
 /**
  * Describes a key press or key release event.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_KEY_PRESS or GDK_KEY_RELEASE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * guint state;
+ * guint  state;
  * a bit-mask representing the state of the modifier keys (e.g. Control,
  * Shift and Alt) and the pointer buttons. See GdkModifierType.
- * guint keyval;
+ * guint  keyval;
  * the key that was pressed or released. See the
  * <gdk/gdkkeysyms.h>
  * header file for a complete list of GDK key codes.
- * gint length;
+ * gint  length;
  * the length of string.
- * gchar *string;
+ * gchar  *string;
  * a string containing the an approximation of the text that
  * would result from this keypress. The only correct way to handle text
  * input of text is using input methods (see GtkIMContext), so this
@@ -2146,11 +2384,11 @@ public struct GdkEventAny
  * In some cases, the translation of the key code will be a single
  * NUL byte, in which case looking at length is necessary to distinguish
  * it from the an empty translation.
- * guint16 hardware_keycode;
+ * guint16  hardware_keycode;
  * the raw code of the key that was pressed or released.
- * guint8 group;
+ * guint8  group;
  * the keyboard group.
- * guint is_modifier : 1;
+ * guint  is_modifier  :  1;
  * a flag that indicates if hardware_keycode is mapped to a
  */
 public struct GdkEventKey
@@ -2197,21 +2435,21 @@ public struct GdkEventKey
  * For a double click to occur, the second button press must occur within 1/4 of
  * a second of the first. For a triple click to occur, the third button press
  * must also occur within 1/2 second of the first button press.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_BUTTON_PRESS, GDK_2BUTTON_PRESS,
  * GDK_3BUTTON_PRESS or GDK_BUTTON_RELEASE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * gdouble x;
+ * gdouble  x;
  * the x coordinate of the pointer relative to the window.
- * gdouble y;
+ * gdouble  y;
  * the y coordinate of the pointer relative to the window.
- * gdouble *axes;
+ * gdouble  *axes;
  * @x, y translated to the axes of device, or NULL if device is
  */
 public struct GdkEventButton
@@ -2234,23 +2472,23 @@ public struct GdkEventButton
  * Generated from button presses for the buttons 4 to 7. Wheel mice are
  * usually configured to generate button press events for buttons 4 and 5
  * when the wheel is turned.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_SCROLL).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * gdouble x;
+ * gdouble  x;
  * the x coordinate of the pointer relative to the window.
- * gdouble y;
+ * gdouble  y;
  * the y coordinate of the pointer relative to the window.
- * guint state;
+ * guint  state;
  * a bit-mask representing the state of the modifier keys (e.g. Control,
  * Shift and Alt) and the pointer buttons. See GdkModifierType.
- * GdkScrollDirection direction;
+ * GdkScrollDirection  direction;
  * the direction to scroll to (one of GDK_SCROLL_UP,
  */
 public struct GdkEventScroll
@@ -2270,20 +2508,20 @@ public struct GdkEventScroll
 
 /**
  * Generated when the pointer moves.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event.
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * gdouble x;
+ * gdouble  x;
  * the x coordinate of the pointer relative to the window.
- * gdouble y;
+ * gdouble  y;
  * the y coordinate of the pointer relative to the window.
- * gdouble *axes;
+ * gdouble  *axes;
  * @x, y translated to the axes of device, or NULL if device is
  */
 public struct GdkEventMotion
@@ -2305,18 +2543,18 @@ public struct GdkEventMotion
 /**
  * Generated when all or part of a window becomes visible and needs to be
  * redrawn.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_EXPOSE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkRectangle area;
+ * GdkRectangle  area;
  * bounding box of region.
- * GdkRegion *region;
+ * GdkRegion  *region;
  * the region that needs to be redrawn.
- * gint count;
+ * gint  count;
  * the number of contiguous GDK_EXPOSE events following this one.
  * The only use for this is "exposure compression", i.e. handling all contiguous
  * GDK_EXPOSE events in one go, though GDK performs some exposure compression
@@ -2335,14 +2573,14 @@ public struct GdkEventExpose
 
 /**
  * Generated when the window visibility status has changed.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_VISIBILITY_NOTIFY).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkVisibilityState state;
+ * GdkVisibilityState  state;
  * the new visibility state (GDK_VISIBILITY_FULLY_OBSCURED,
  * GDK_VISIBILITY_PARTIAL or GDK_VISIBILITY_UNOBSCURED).
  */
@@ -2357,26 +2595,26 @@ public struct GdkEventVisibility
 
 /**
  * Generated when the pointer enters or leaves a window.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_ENTER_NOTIFY or GDK_LEAVE_NOTIFY).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkWindow *subwindow;
+ * GdkWindow  *subwindow;
  * the window that was entered or left.
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * gdouble x;
+ * gdouble  x;
  * the x coordinate of the pointer relative to the window.
- * gdouble y;
+ * gdouble  y;
  * the y coordinate of the pointer relative to the window.
- * gdouble x_root;
+ * gdouble  x_root;
  * the x coordinate of the pointer relative to the root of the screen.
- * gdouble y_root;
+ * gdouble  y_root;
  * the y coordinate of the pointer relative to the root of the screen.
- * GdkCrossingMode mode;
+ * GdkCrossingMode  mode;
  * the crossing mode (GDK_CROSSING_NORMAL, GDK_CROSSING_GRAB,
  */
 public struct GdkEventCrossing
@@ -2399,13 +2637,13 @@ public struct GdkEventCrossing
 
 /**
  * Describes a change of keyboard focus.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_FOCUS_CHANGE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * gint16 in;
+ * gint16  in;
  * %TRUE if the window has gained the keyboard focus, FALSE if it has lost
  * the focus.
  */
@@ -2420,19 +2658,19 @@ public struct GdkEventFocus
 
 /**
  * Generated when a window size or position has changed.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_CONFIGURE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * gint x;
+ * gint  x;
  * the new x coordinate of the window, relative to its parent.
- * gint y;
+ * gint  y;
  * the new y coordinate of the window, relative to its parent.
- * gint width;
+ * gint  width;
  * the new width of the window.
- * gint height;
+ * gint  height;
  * the new height of the window.
  */
 public struct GdkEventConfigure
@@ -2448,17 +2686,17 @@ public struct GdkEventConfigure
 
 /**
  * Describes a property change on a window.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_PROPERTY_NOTIFY).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * GdkAtom atom;
+ * GdkAtom  atom;
  * the property that was changed.
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * guint state;
+ * guint  state;
  * whether the property was changed (GDK_PROPERTY_NEW_VALUE) or
  * deleted (GDK_PROPERTY_DELETE).
  */
@@ -2476,22 +2714,22 @@ public struct GdkEventProperty
 /**
  * Generated when a selection is requested or ownership of a selection
  * is taken over by another client application.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_SELECTION_CLEAR, GDK_SELECTION_NOTIFY or
  * GDK_SELECTION_REQUEST).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * GdkAtom selection;
+ * GdkAtom  selection;
  * the selection.
- * GdkAtom target;
+ * GdkAtom  target;
  * the target to which the selection should be converted.
- * GdkAtom property;
+ * GdkAtom  property;
  * the property in which to place the result of the conversion.
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * GdkNativeWindow requestor;
+ * GdkNativeWindow  requestor;
  * the native window on which to place property.
  */
 public struct GdkEventSelection
@@ -2509,7 +2747,7 @@ public struct GdkEventSelection
 
 /**
  * Generated during DND operations.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_DRAG_ENTER, GDK_DRAG_LEAVE,
  */
 public struct GdkEventDND
@@ -2530,15 +2768,15 @@ public struct GdkEventDND
  * A proximity event indicates that the stylus has moved in or out of
  * contact with the tablet, or perhaps that the user's finger has moved
  * in or out of contact with a touch screen.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_PROXIMITY_IN or GDK_PROXIMITY_OUT).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * guint32 time;
+ * guint32  time;
  * the time of the event in milliseconds.
- * GdkDevice *device;
+ * GdkDevice  *device;
  * the device where the event originated.
  */
 public struct GdkEventProximity
@@ -2553,16 +2791,16 @@ public struct GdkEventProximity
 
 /**
  * An event sent by another client application.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_CLIENT_EVENT).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * GdkAtom message_type;
+ * GdkAtom  message_type;
  * the type of the message, which can be defined by the
  * application.
- * gushort data_format;
+ * gushort  data_format;
  * the format of the data, given as the number of bits in each
  * data element, i.e. 8, 16, or 32. 8-bit data uses the b array of the data
  * union, 16-bit data uses the s array, and 32-bit data uses the l array.
@@ -2588,11 +2826,11 @@ public struct GdkEventClient
  * Generated when the area of a GdkDrawable being copied, with gdk_draw_drawable()
  * or gdk_window_copy_area(), was completely available.
  * FIXME: add more here.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_NO_EXPOSE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
  */
 public struct GdkEventNoExpose
@@ -2605,15 +2843,15 @@ public struct GdkEventNoExpose
 
 /**
  * Generated when the state of a toplevel window changes.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_WINDOW_STATE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * GdkWindowState changed_mask;
+ * GdkWindowState  changed_mask;
  * mask specifying what flags have changed.
- * GdkWindowState new_window_state;
+ * GdkWindowState  new_window_state;
  * the new window state, a combination of GdkWindowState bits.
  */
 public struct GdkEventWindowState
@@ -2628,13 +2866,13 @@ public struct GdkEventWindowState
 
 /**
  * Generated when a setting is modified.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_SETTING).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event.
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * GdkSettingAction action;
+ * GdkSettingAction  action;
  * what happened to the setting (GDK_SETTING_ACTION_NEW,
  */
 public struct GdkEventSetting
@@ -2650,21 +2888,21 @@ public struct GdkEventSetting
 /**
  * Generated when the owner of a selection changes. On X11, this information is
  * only available if the X server supports the XFIXES extension.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_OWNER_CHANGE).
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event
- * gint8 send_event;
+ * gint8  send_event;
  * %TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * GdkNativeWindow owner;
+ * GdkNativeWindow  owner;
  * the new owner of the selection
- * GdkOwnerChange reason;
+ * GdkOwnerChange  reason;
  * the reason for the ownership change as a GdkOwnerChange value
- * GdkAtom selection;
+ * GdkAtom  selection;
  * the atom identifying the selection
- * guint32 time;
+ * guint32  time;
  * the timestamp of the event
- * guint32 selection_time;
+ * guint32  selection_time;
  * the time at which the selection ownership was taken over
  * Since 2.6
  */
@@ -2687,9 +2925,9 @@ public struct GdkEventOwnerChange
  * is unmapped), or if the same application grabs the pointer or keyboard
  * again. Note that implicit grabs (which are initiated by button presses)
  * can also cause GdkEventGrabBroken events.
- * GdkEventType type;
+ * GdkEventType  type;
  * the type of the event (GDK_GRAB_BROKEN)
- * GdkWindow *window;
+ * GdkWindow  *window;
  * the window which received the event, i.e. the window
  */
 public struct GdkEventGrabBroken
@@ -2718,7 +2956,7 @@ public struct GdkKeymap{}
 /**
  * A GdkKeymapKey is a hardware key that can
  * be mapped to a keyval.
- * guint keycode;
+ * guint  keycode;
  * the hardware keycode. This is an identifying number for a
  */
 public struct GdkKeymapKey
@@ -2733,19 +2971,19 @@ public struct GdkKeymapKey
  * Main Gtk struct.
  * A GdkDragContext holds information about a
  * drag in progress. It is used on both source and destination sides.
- * GObject parent_instance;
+ * GObject  parent_instance;
  * the parent instance
- * GdkDragProtocol protocol;
+ * GdkDragProtocol  protocol;
  * the DND protocol which governs this drag.
- * gboolean is_source;
+ * gboolean  is_source;
  * %TRUE if the context is used on the source side.
- * GdkWindow *source_window;
+ * GdkWindow  *source_window;
  * the source of this drag.
- * GdkWindow *dest_window;
+ * GdkWindow  *dest_window;
  * the destination window of this drag.
- * GList *targets;
+ * GList  *targets;
  * a list of targets offered by the source.
- * GdkDragAction actions;
+ * GdkDragAction  actions;
  * a bitmask of actions proposed by the source when
  */
 public struct GdkDragContext
@@ -2770,23 +3008,23 @@ public struct GdkDragContext
  * fields are read-only; but you can use gdk_device_set_source(),
  * gdk_device_set_mode(), gdk_device_set_key() and gdk_device_set_axis_use()
  * to configure various aspects of the device.
- * GObject parent_instance;
+ * GObject  parent_instance;
  * the parent instance
- * gchar *name;
+ * gchar  *name;
  * the name of this device.
- * GdkInputSource source;
+ * GdkInputSource  source;
  * the type of this device.
- * GdkInputMode mode;
+ * GdkInputMode  mode;
  * the mode of this device
- * gboolean has_cursor;
+ * gboolean  has_cursor;
  * %TRUE if the pointer follows device motion.
- * gint num_axes;
+ * gint  num_axes;
  * the length of the axes array.
- * GdkDeviceAxis *axes;
+ * GdkDeviceAxis  *axes;
  * an array of GdkDeviceAxis, describing the axes of this device.
- * gint num_keys;
+ * gint  num_keys;
  * the length of the keys array.
- * GdkDeviceKey *keys;
+ * GdkDeviceKey  *keys;
  * an array of GdkDeviceKey, describing the mapped macro buttons
  */
 public struct GdkDevice
@@ -2808,7 +3046,7 @@ public struct GdkDevice
  * The GdkDeviceKey structure contains information
  * about the mapping of one device macro button onto a normal X key event.
  * It has the following fields:
- * guint keyval;
+ * guint  keyval;
  * the keyval to generate when the macro button is pressed.
  */
 public struct GdkDeviceKey
@@ -2821,11 +3059,11 @@ public struct GdkDeviceKey
 /**
  * The GdkDeviceAxis structure contains information
  * about the range and mapping of a device axis.
- * GdkAxisUse use;
+ * GdkAxisUse  use;
  * specifies how the axis is used.
- * gdouble min;
+ * gdouble  min;
  * the minimal value that will be reported by this axis.
- * gdouble max;
+ * gdouble  max;
  * the maximal value that will be reported by this axis.
  */
 public struct GdkDeviceAxis
@@ -2839,9 +3077,9 @@ public struct GdkDeviceAxis
 /**
  * The GdkTimeCoord structure stores a single event in a
  * motion history. It contains the following fields:
- * guint32 time;
+ * guint32  time;
  * The timestamp for this event.
- * gdouble axes[GDK_MAX_TIMECOORD_AXES];
+ * gdouble  axes[GDK_MAX_TIMECOORD_AXES];
  * the values of the device's axes.
  */
 public struct GdkTimeCoord
@@ -2862,9 +3100,9 @@ public struct GdkAppLaunchContext{}
  * Warning
  * gdk_visual_ref is deprecated and should not be used in newly-written code.
  * Deprecated equivalent of g_object_ref().
- * v :
+ * v  :
  * a GdkVisual
- * Returns :
+ * Returns  :
  * the same visual
  */
 // TODO
@@ -2874,7 +3112,7 @@ public struct GdkAppLaunchContext{}
  * Warning
  * gdk_visual_unref is deprecated and should not be used in newly-written code.
  * Deprecated equivalent of g_object_unref().
- * v :
+ * v  :
  * a GdkVisual
  */
 // TODO
@@ -2884,23 +3122,23 @@ public struct GdkAppLaunchContext{}
  * Warning
  * gdk_window_copy_area is deprecated and should not be used in newly-written code.
  * Deprecated equivalent to gdk_draw_drawable(), see that function for docs
- * drawable :
+ * drawable  :
  * a GdkDrawable
- * gc :
+ * gc  :
  * a GdkGC sharing the drawable's visual and colormap
- * x :
+ * x  :
  * X position in drawable where the rectangle should be drawn
- * y :
+ * y  :
  * Y position in drawable where the rectangle should be drawn
- * source_drawable :
+ * source_drawable  :
  * the source GdkDrawable, which may be the same as drawable
- * source_x :
+ * source_x  :
  * X position in src of rectangle to draw
- * source_y :
+ * source_y  :
  * Y position in src of rectangle to draw
- * width :
+ * width  :
  * width of rectangle to draw, or -1 for entire src width
- * height :
+ * height  :
  * height of rectangle to draw, or -1 for entire src height
  */
 // TODO
@@ -2940,7 +3178,7 @@ public struct GdkAppLaunchContext{}
 
 /*
  * The current display.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -2948,9 +3186,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkWindow.
- * win :
+ * win  :
  * a GdkWindow.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -2958,9 +3196,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X window belonging to a GdkWindow.
- * win :
+ * win  :
  * a GdkWindow.
- * Returns :
+ * Returns  :
  * the Xlib Window of win.
  */
 // TODO
@@ -2968,9 +3206,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkPixmap.
- * pix :
+ * pix  :
  * a GdkPixmap.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -2978,9 +3216,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X pixmap belonging to a GdkPixmap.
- * pix :
+ * pix  :
  * a GdkPixmap.
- * Returns :
+ * Returns  :
  * the Xlib XPixmap of win.
  */
 // TODO
@@ -2988,7 +3226,7 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkDisplay.
- * display :
+ * display  :
  * a GdkDisplay.
  */
 // TODO
@@ -2996,9 +3234,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkDrawable.
- * win :
+ * win  :
  * a GdkDrawable.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3006,9 +3244,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X resource (window or pixmap) belonging to a GdkDrawable.
- * win :
+ * win  :
  * a GdkDrawable.
- * Returns :
+ * Returns  :
  * the ID of win's X resource.
  */
 // TODO
@@ -3016,9 +3254,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkImage.
- * image :
+ * image  :
  * a GdkImage.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3026,9 +3264,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X image belonging to a GdkImage.
- * image :
+ * image  :
  * a GdkImage.
- * Returns :
+ * Returns  :
  * an XImage*.
  */
 // TODO
@@ -3036,9 +3274,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkGC.
- * gc :
+ * gc  :
  * a GdkGC.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3046,9 +3284,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkColormap.
- * cmap :
+ * cmap  :
  * a GdkColormap.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3056,9 +3294,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X colormap belonging to a GdkColormap.
- * cmap :
+ * cmap  :
  * a GdkColormap.
- * Returns :
+ * Returns  :
  * an Xlib Colormap.
  */
 // TODO
@@ -3066,9 +3304,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkScreen.
- * screen :
+ * screen  :
  * a GdkScreen.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3076,9 +3314,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the index of a GdkScreen.
- * screen :
+ * screen  :
  * a GdkScreen
- * Returns :
+ * Returns  :
  * the position of screen among the screens of
  *  its display.
  */
@@ -3087,9 +3325,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the screen of a GdkScreen.
- * screen :
+ * screen  :
  * a GdkScreen
- * Returns :
+ * Returns  :
  * an Xlib Screen*.
  */
 // TODO
@@ -3097,9 +3335,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X visual belonging to a GdkVisual.
- * vis :
+ * vis  :
  * a GdkVisual.
- * Returns :
+ * Returns  :
  * an Xlib Visual*.
  */
 // TODO
@@ -3109,9 +3347,9 @@ public struct GdkAppLaunchContext{}
  * Warning
  * GDK_FONT_XDISPLAY is deprecated and should not be used in newly-written code.
  * Returns the display of a GdkFont.
- * font :
+ * font  :
  * a GdkFont.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3121,9 +3359,9 @@ public struct GdkAppLaunchContext{}
  * Warning
  * GDK_FONT_XFONT is deprecated and should not be used in newly-written code.
  * Returns the X font belonging to a GdkFont.
- * font :
+ * font  :
  * a GdkFont.
- * Returns :
+ * Returns  :
  * an Xlib XFontStruct* or an XFontSet.
  */
 // TODO
@@ -3131,9 +3369,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X cursor belonging to a GdkCursor.
- * cursor :
+ * cursor  :
  * a GdkCursor.
- * Returns :
+ * Returns  :
  * an Xlib Cursor.
  */
 // TODO
@@ -3141,9 +3379,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkCursor.
- * cursor :
+ * cursor  :
  * a GdkCursor.
- * Returns :
+ * Returns  :
  * an Xlib Display*.
  */
 // TODO
@@ -3151,9 +3389,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X GC of a GdkGC.
- * gc :
+ * gc  :
  * a GdkGC.
- * Returns :
+ * Returns  :
  * an Xlib GC.
  */
 // TODO
@@ -3161,9 +3399,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X GC of a GdkGC.
- * gc :
+ * gc  :
  * a GdkGC.
- * Returns :
+ * Returns  :
  * an Xlib GC.
  */
 // TODO
@@ -3174,7 +3412,7 @@ public struct GdkAppLaunchContext{}
  * gdk_font_lookup is deprecated and should not be used in newly-written code.
  * Obtains the GdkFont for the given Xlib font ID, or NULL if no GdkFont has
  * been created for xid.
- * xid :
+ * xid  :
  * an Xlib font ID
  */
 // TODO
@@ -3185,9 +3423,9 @@ public struct GdkAppLaunchContext{}
  * gdk_font_lookup_for_display is deprecated and should not be used in newly-written code.
  * Obtains the GdkFont for the given Xlib font ID on display, or NULL if no
  * GdkFont has been created for xid.
- * display :
+ * display  :
  * a GdkDisplay
- * xid :
+ * xid  :
  * an Xlib font ID
  * Since: 2.2
  */
@@ -3197,9 +3435,9 @@ public struct GdkAppLaunchContext{}
 /*
  * This defines the type of the function passed to
  * gdk_region_spans_intersect_foreach().
- * span :
+ * span  :
  * a GdkSpan.
- * data :
+ * data  :
  * the user data passed to gdk_region_spans_intersect_foreach().
  */
 // void (*GdkSpanFunc) (GdkSpan *span,  gpointer data);
@@ -3212,9 +3450,9 @@ public typedef extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
  *  created from it; in this case you will need to pass in a function
  *  of GdkPixbufDestroyNotify so that the pixel data can be freed
  *  when the pixbuf is finalized.
- * pixels :
+ * pixels  :
  * The pixel array of the pixbuf that is being finalized.
- * data :
+ * data  :
  * User closure data.
  * See Also
  *  GdkPixbuf, gdk_pixbuf_new_from_data().
@@ -3229,15 +3467,15 @@ public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * successful it should return TRUE. If an error occurs it should set
  * error and return FALSE, in which case gdk_pixbuf_save_to_callback()
  * will fail with the same error.
- * buf :
+ * buf  :
  * bytes to be written.
- * count :
+ * count  :
  * number of bytes in buf.
- * error :
+ * error  :
  * A location to return an error.
- * data :
+ * data  :
  * user data passed to gdk_pixbuf_save_to_callback().
- * Returns :
+ * Returns  :
  * %TRUE if successful, FALSE (with error set) if failed.
  * Since 2.4
  */
@@ -3252,13 +3490,13 @@ public typedef extern(C) int  function (char*, uint, GError**, void*) GdkPixbufS
  * event to a GDK event and store the result in event, or handle it without
  * translation. If the filter translates the event and processing should
  * continue, it should return GDK_FILTER_TRANSLATE.
- * xevent :
+ * xevent  :
  * the native event to filter.
- * event :
+ * event  :
  * the GDK event to which the X event will be translated.
- * data :
+ * data  :
  * user data set when the filter was installed.
- * Returns :
+ * Returns  :
  * a GdkFilterReturn value.
  */
 // GdkFilterReturn (*GdkFilterFunc) (GdkXEvent *xevent,  GdkEvent *event,  gpointer data);
@@ -3267,9 +3505,9 @@ public typedef extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*
 /*
  * Specifies the type of function passed to gdk_event_handler_set() to handle
  * all GDK events.
- * event :
+ * event  :
  * the GdkEvent to process.
- * data :
+ * data  :
  * user data set when the event handler was installed with
  * gdk_event_handler_set().
  */
@@ -3279,11 +3517,11 @@ public typedef extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
 /*
  * A callback function that will be called when some condition
  * occurs.
- * data :
+ * data  :
  * the user data passed to gdk_input_add() or gdk_input_add_full().
- * source :
+ * source  :
  * the source where the condition occurred.
- * condition :
+ * condition  :
  * the triggering condition.
  */
 // void (*GdkInputFunction) (gpointer data,  gint source,  GdkInputCondition condition);
@@ -3295,7 +3533,7 @@ public typedef extern(C) void  function (void*, int, GdkInputCondition) GdkInput
  * A callback function called when a piece of user data is
  * no longer being stored by GDK. Will typically free the
  * structure or object that data points to.
- * data :
+ * data  :
  * the user data.
  */
 // void (*GdkDestroyNotify) (gpointer data);

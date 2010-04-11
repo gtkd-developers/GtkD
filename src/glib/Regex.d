@@ -92,7 +92,7 @@ private import glib.MatchInfo;
  * Note that, unless you set the G_REGEX_RAW flag, all the strings passed
  * to these functions must be encoded in UTF-8. The lengths and the positions
  * inside the strings are in bytes and not in characters, so, for instance,
- * "\xc3\xa0" (i.e. "à") is two bytes long but it is treated as a single
+ * "\xc3\xa0" (i.e. "  ") is two bytes long but it is treated as a single
  * character. If you set G_REGEX_RAW the strings can be non-valid UTF-8
  * strings and a byte is treated as a character, so "\xc3\xa0" is two bytes
  * and two characters long.
@@ -160,10 +160,6 @@ public class Regex
 	 * Compiles the regular expression to an internal form, and does
 	 * the initial setup of the GRegex structure.
 	 * Since 2.14
-	 * Params:
-	 * pattern =  the regular expression
-	 * compileOptions =  compile options for the regular expression, or 0
-	 * matchOptions =  match options for the regular expression, or 0
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -189,7 +185,6 @@ public class Regex
 	/**
 	 * Increases reference count of regex by 1.
 	 * Since 2.14
-	 * Returns: regex
 	 */
 	public Regex doref()
 	{
@@ -217,7 +212,6 @@ public class Regex
 	 * Gets the pattern string associated with regex, i.e. a copy of
 	 * the string passed to g_regex_new().
 	 * Since 2.14
-	 * Returns: the pattern of regex
 	 */
 	public string getPattern()
 	{
@@ -230,7 +224,6 @@ public class Regex
 	 * in the pattern, or 0 if the pattern does not contain
 	 * back references.
 	 * Since 2.14
-	 * Returns: the number of the highest back reference
 	 */
 	public int getMaxBackref()
 	{
@@ -241,7 +234,6 @@ public class Regex
 	/**
 	 * Returns the number of capturing subpatterns in the pattern.
 	 * Since 2.14
-	 * Returns: the number of capturing subpatterns
 	 */
 	public int getCaptureCount()
 	{
@@ -252,9 +244,6 @@ public class Regex
 	/**
 	 * Retrieves the number of the subexpression named name.
 	 * Since 2.14
-	 * Params:
-	 * name =  name of the subexpression
-	 * Returns: The number of the subexpression or -1 if name  does not exists
 	 */
 	public int getStringNumber(string name)
 	{
@@ -271,9 +260,7 @@ public class Regex
 	 * in length.
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to escape
-	 * length =  the length of string, or -1 if string is nul-terminated
-	 * Returns: a newly-allocated escaped string
+	 * string  =  the string to escape
 	 */
 	public static string escapeString(string string, int length)
 	{
@@ -292,11 +279,7 @@ public class Regex
 	 * g_regex_new() and then use g_regex_match().
 	 * Since 2.14
 	 * Params:
-	 * pattern =  the regular expression
-	 * string =  the string to scan for matches
-	 * compileOptions =  compile options for the regular expression, or 0
-	 * matchOptions =  match options, or 0
-	 * Returns: TRUE if the string matched, FALSE otherwise
+	 * string  =  the string to scan for matches
 	 */
 	public static int matchSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -321,7 +304,6 @@ public class Regex
 		 *  /+* Print all uppercase-only words. +/
 		 *  GRegex *regex;
 		 *  GMatchInfo *match_info;
-		 *
 		 *  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
 		 *  g_regex_match (regex, string, 0, match_info);
 		 *  while (g_match_info_matches (match_info))
@@ -339,11 +321,7 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to scan for matches
-	 * matchOptions =  match options
-	 * matchInfo =  pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
-	 * Returns: TRUE is the string matched, FALSE otherwise
+	 * string  =  the string to scan for matches
 	 */
 	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
@@ -381,7 +359,6 @@ public class Regex
 		 *  GRegex *regex;
 		 *  GMatchInfo *match_info;
 		 *  GError *error = NULL;
-		 *
 		 *  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
 		 *  g_regex_match_full (regex, string, -1, 0, 0, match_info, error);
 		 *  while (g_match_info_matches (match_info))
@@ -401,13 +378,7 @@ public class Regex
 	 * }
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to scan for matches
-	 * stringLen =  the length of string, or -1 if string is nul-terminated
-	 * startPosition =  starting index of the string to match
-	 * matchOptions =  match options
-	 * matchInfo =  pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
-	 * Returns: TRUE is the string matched, FALSE otherwise
+	 * string  =  the string to scan for matches
 	 * Throws: GException on failure.
 	 */
 	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -442,11 +413,7 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to scan for matches
-	 * matchOptions =  match options
-	 * matchInfo =  pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
-	 * Returns: TRUE is the string matched, FALSE otherwise
+	 * string  =  the string to scan for matches
 	 */
 	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
@@ -492,13 +459,7 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to scan for matches
-	 * stringLen =  the length of string, or -1 if string is nul-terminated
-	 * startPosition =  starting index of the string to match
-	 * matchOptions =  match options
-	 * matchInfo =  pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
-	 * Returns: TRUE is the string matched, FALSE otherwise
+	 * string  =  the string to scan for matches
 	 * Throws: GException on failure.
 	 */
 	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -544,11 +505,7 @@ public class Regex
 	 * "\s*", you will get "a", "b" and "c".
 	 * Since 2.14
 	 * Params:
-	 * pattern =  the regular expression
-	 * string =  the string to scan for matches
-	 * compileOptions =  compile options for the regular expression, or 0
-	 * matchOptions =  match options, or 0
-	 * Returns: a NULL-terminated array of strings. Free it using g_strfreev()
+	 * string  =  the string to scan for matches
 	 */
 	public static string[] splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -574,9 +531,7 @@ public class Regex
 	 * "a", "b" and "c".
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to split with the pattern
-	 * matchOptions =  match time option flags
-	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
+	 * string  =  the string to split with the pattern
 	 */
 	public string[] split(string string, GRegexMatchFlags matchOptions)
 	{
@@ -605,13 +560,7 @@ public class Regex
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to split with the pattern
-	 * stringLen =  the length of string, or -1 if string is nul-terminated
-	 * startPosition =  starting index of the string to match
-	 * matchOptions =  match time option flags
-	 * maxTokens =  the maximum number of tokens to split string into.
-	 *  If this is less than 1, the string is split completely
-	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
+	 * string  =  the string to split with the pattern
 	 * Throws: GException on failure.
 	 */
 	public string[] splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
@@ -639,12 +588,7 @@ public class Regex
 	 * of a character. To include a literal '\' in the replacement, write '\\'.
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to perform matches against
-	 * stringLen =  the length of string, or -1 if string is nul-terminated
-	 * startPosition =  starting index of the string to match
-	 * replacement =  text to replace each match with
-	 * matchOptions =  options for the match
-	 * Returns: a newly allocated string containing the replacements
+	 * string  =  the string to perform matches against
 	 * Throws: GException on failure.
 	 */
 	public string replace(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
@@ -672,12 +616,7 @@ public class Regex
 	 * assertion, such as "\b".
 	 * Since 2.14
 	 * Params:
-	 * string =  the string to perform matches against
-	 * stringLen =  the length of string, or -1 if string is nul-terminated
-	 * startPosition =  starting index of the string to match
-	 * replacement =  text to replace each match with
-	 * matchOptions =  options for the match
-	 * Returns: a newly allocated string containing the replacements
+	 * string  =  the string to perform matches against
 	 * Throws: GException on failure.
 	 */
 	public string replaceLiteral(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
@@ -704,13 +643,7 @@ public class Regex
 	 * The following example uses g_regex_replace_eval() to replace multiple
 	 * Since 2.14
 	 * Params:
-	 * string =  string to perform matches against
-	 * stringLen =  the length of string, or -1 if string is nul-terminated
-	 * startPosition =  starting index of the string to match
-	 * matchOptions =  options for the match
-	 * eval =  a function to call for each match
-	 * userData =  user data to pass to the function
-	 * Returns: a newly allocated string containing the replacements
+	 * string  =  string to perform matches against
 	 * Throws: GException on failure.
 	 */
 	public string replaceEval(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
@@ -738,11 +671,6 @@ public class Regex
 	 * about actual match, but '\0\1' (whole match followed by first
 	 * subpattern) requires valid GMatchInfo object.
 	 * Since 2.14
-	 * Params:
-	 * replacement =  the replacement string
-	 * hasReferences =  location to store information about
-	 *  references in replacement or NULL
-	 * Returns: whether replacement is a valid replacement string
 	 * Throws: GException on failure.
 	 */
 	public static int checkReplacement(string replacement, out int hasReferences)

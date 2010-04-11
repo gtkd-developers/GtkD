@@ -441,15 +441,6 @@ public class Spawn
 	 *  Note that the returned child_pid on Windows is a
 	 * handle to the child process and not its identifier. Process handles
 	 * and process identifiers are different concepts on Windows.
-	 * Params:
-	 * workingDirectory =  child's current working directory, or NULL to inherit parent's
-	 * argv =  child's argument vector
-	 * envp =  child's environment, or NULL to inherit parent's
-	 * flags =  flags from GSpawnFlags
-	 * childSetup =  function to run in the child just before exec()
-	 * userData =  user data for child_setup
-	 * childPid =  return location for child process reference, or NULL
-	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
 	public static int async(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid)
@@ -483,17 +474,6 @@ public class Spawn
 	 * This function calls g_spawn_async_with_pipes() internally; see that
 	 * function for full details on the other parameters and details on
 	 * how these functions work on Windows.
-	 * Params:
-	 * workingDirectory =  child's current working directory, or NULL to inherit parent's
-	 * argv =  child's argument vector
-	 * envp =  child's environment, or NULL to inherit parent's
-	 * flags =  flags from GSpawnFlags
-	 * childSetup =  function to run in the child just before exec()
-	 * userData =  user data for child_setup
-	 * standardOutput =  return location for child output, or NULL
-	 * standardError =  return location for child error messages, or NULL
-	 * exitStatus =  return location for child exit status, as returned by waitpid(), or NULL
-	 * Returns: TRUE on success, FALSE if an error was set.
 	 */
 	public static int sync(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out string standardOutput, out string standardError, out int exitStatus)
 	{
@@ -523,9 +503,6 @@ public class Spawn
 	 * consider using g_spawn_async() directly if appropriate. Possible
 	 * errors are those from g_shell_parse_argv() and g_spawn_async().
 	 * The same concerns on Windows apply as for g_spawn_command_line_sync().
-	 * Params:
-	 * commandLine =  a command line
-	 * Returns: TRUE on success, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */
 	public static int commandLineAsync(string commandLine)
@@ -564,12 +541,6 @@ public class Spawn
 	 * the backslashes will be eaten, and the space will act as a
 	 * separator. You need to enclose such paths with single quotes, like
 	 * "'c:\\program files\\app\\app.exe' 'e:\\folder\\argument.txt'".
-	 * Params:
-	 * commandLine =  a command line
-	 * standardOutput =  return location for child output
-	 * standardError =  return location for child errors
-	 * exitStatus =  return location for child exit status, as returned by waitpid()
-	 * Returns: TRUE on success, FALSE if an error was set
 	 */
 	public static int commandLineSync(string commandLine, out string standardOutput, out string standardError, out int exitStatus)
 	{
@@ -595,8 +566,6 @@ public class Spawn
 	 * which must be closed to prevent resource leaking. g_spawn_close_pid()
 	 * is provided for this purpose. It should be used on all platforms, even
 	 * though it doesn't do anything under UNIX.
-	 * Params:
-	 * pid =  The process reference to close
 	 */
 	public static void closePid(GPid pid)
 	{

@@ -66,12 +66,12 @@ private import glib.GException;
 
 /**
  * Description
- * Sometimes you wish to asynchronously fork out the execution of work and
- * continue working in your own thread. If that will happen often, the
- * overhead of starting and destroying a thread each time might be too
- * high. In such cases reusing already started threads seems like a good
- * idea. And it indeed is, but implementing this can be tedious and
- * error-prone.
+ * Sometimes you wish to asynchronously fork out the execution of work
+ * and continue working in your own thread. If that will happen often,
+ * the overhead of starting and destroying a thread each time might be
+ * too high. In such cases reusing already started threads seems like a
+ * good idea. And it indeed is, but implementing this can be tedious
+ * and error-prone.
  * Therefore GLib provides thread pools for your convenience. An added
  * advantage is, that the threads can be shared between the different
  * subsystems of your program, when they are using GLib.
@@ -81,8 +81,8 @@ private import glib.GException;
  * g_thread_pool_push().
  * To get the current number of running threads you call
  * g_thread_pool_get_num_threads(). To get the number of still
- * unprocessed tasks you call g_thread_pool_unprocessed(). To control the
- * maximal number of threads for a thread pool, you use
+ * unprocessed tasks you call g_thread_pool_unprocessed(). To control
+ * the maximal number of threads for a thread pool, you use
  * g_thread_pool_get_max_threads() and g_thread_pool_set_max_threads().
  * Finally you can control the number of unused threads, that are kept
  * alive by GLib for future use. The current number can be fetched with
@@ -146,13 +146,6 @@ public class ThreadPool
 	 * error can be NULL to ignore errors, or non-NULL to report
 	 * errors. An error can only occur when exclusive is set to TRUE and
 	 * not all max_threads threads could be created.
-	 * Params:
-	 * func =  a function to execute in the threads of the new thread pool
-	 * userData =  user data that is handed over to func every time it
-	 *  is called
-	 * maxThreads =  the maximal number of threads to execute concurrently in
-	 *  the new thread pool, -1 means no limit
-	 * exclusive =  should this thread pool be exclusive?
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -186,8 +179,6 @@ public class ThreadPool
 	 * errors. An error can only occur when a new thread couldn't be
 	 * created. In that case data is simply appended to the queue of work
 	 * to do.
-	 * Params:
-	 * data =  a new task for pool
 	 * Throws: GException on failure.
 	 */
 	public void push(void* data)
@@ -218,8 +209,6 @@ public class ThreadPool
 	 * error can be NULL to ignore errors, or non-NULL to report
 	 * errors. An error can only occur when a new thread couldn't be
 	 * created.
-	 * Params:
-	 * maxThreads =  a new maximal number of threads for pool
 	 * Throws: GException on failure.
 	 */
 	public void setMaxThreads(int maxThreads)
@@ -238,7 +227,6 @@ public class ThreadPool
 	
 	/**
 	 * Returns the maximal number of threads for pool.
-	 * Returns: the maximal number of threads
 	 */
 	public int getMaxThreads()
 	{
@@ -248,7 +236,6 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of threads currently running in pool.
-	 * Returns: the number of threads currently running
 	 */
 	public uint getNumThreads()
 	{
@@ -258,7 +245,6 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of tasks still unprocessed in pool.
-	 * Returns: the number of unprocessed tasks
 	 */
 	public uint unprocessed()
 	{
@@ -277,9 +263,6 @@ public class ThreadPool
 	 * to be processed (dependent on immediate, whether all or only the
 	 * currently running) are ready. Otherwise the function returns immediately.
 	 * After calling this function pool must not be used anymore.
-	 * Params:
-	 * immediate =  should pool shut down immediately?
-	 * wait =  should the function wait for all tasks to be finished?
 	 */
 	public void free(int immediate, int wait)
 	{
@@ -291,8 +274,6 @@ public class ThreadPool
 	 * Sets the maximal number of unused threads to max_threads. If
 	 * max_threads is -1, no limit is imposed on the number of unused
 	 * threads.
-	 * Params:
-	 * maxThreads =  maximal number of unused threads
 	 */
 	public static void setMaxUnusedThreads(int maxThreads)
 	{
@@ -302,7 +283,6 @@ public class ThreadPool
 	
 	/**
 	 * Returns the maximal allowed number of unused threads.
-	 * Returns: the maximal number of unused threads
 	 */
 	public static int getMaxUnusedThreads()
 	{
@@ -312,7 +292,6 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of currently unused threads.
-	 * Returns: the number of currently unused threads
 	 */
 	public static uint getNumUnusedThreads()
 	{
@@ -341,14 +320,6 @@ public class ThreadPool
 	 * cannot be assumed that threads are executed in the order they are
 	 * created.
 	 * Since 2.10
-	 * Params:
-	 * func =  the GCompareDataFunc used to sort the list of tasks.
-	 *  This function is passed two tasks. It should return
-	 *  0 if the order in which they are handled does not matter,
-	 *  a negative value if the first task should be processed before
-	 *  the second or a positive value if the second task should be
-	 *  processed first.
-	 * userData =  user data passed to func.
 	 */
 	public void setSortFunction(GCompareDataFunc func, void* userData)
 	{
@@ -366,9 +337,6 @@ public class ThreadPool
 	 * This function makes use of g_async_queue_timed_pop() using
 	 * interval.
 	 * Since 2.10
-	 * Params:
-	 * interval =  the maximum interval (1/1000ths of a second) a thread
-	 *  can be idle.
 	 */
 	public static void setMaxIdleTime(uint interval)
 	{
@@ -382,7 +350,6 @@ public class ThreadPool
 	 * If this function returns 0, threads waiting in the thread pool for
 	 * new work are not stopped.
 	 * Since 2.10
-	 * Returns: the maximum interval to wait for new tasks in the thread pool before stopping the thread (1/1000ths of a second).
 	 */
 	public static uint getMaxIdleTime()
 	{

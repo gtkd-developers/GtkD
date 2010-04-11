@@ -81,9 +81,6 @@ public class WindowsUtils
 	 * language, or US English (see docs for FormatMessage()). The
 	 * returned string is in UTF-8. It should be deallocated with
 	 * g_free().
-	 * Params:
-	 * error =  error code.
-	 * Returns: newly-allocated error message
 	 */
 	public static string errorMessage(int error)
 	{
@@ -99,7 +96,6 @@ public class WindowsUtils
 	 * and returns it as a string of the above form for use in forming
 	 * file names etc. The returned string should be deallocated with
 	 * g_free().
-	 * Returns: newly-allocated locale name.
 	 */
 	public static string getlocale()
 	{
@@ -109,7 +105,8 @@ public class WindowsUtils
 	
 	/**
 	 * Warning
-	 * g_win32_get_package_installation_directory is deprecated and should not be used in newly-written code.
+	 * g_win32_get_package_installation_directory has been deprecated since version 2.18 and should not be used in newly-written code. Pass the HMODULE of a DLL or EXE to
+	 * g_win32_get_package_installation_directory_of_module() instead.
 	 * Try to determine the installation directory for a software package.
 	 * This function is deprecated. Use
 	 * g_win32_get_package_installation_directory_of_module() instead.
@@ -144,9 +141,6 @@ public class WindowsUtils
 	 * If both package and dll_name are NULL, the directory from where
 	 * the main executable of the process was loaded is used instead in
 	 * the same way as above.
-	 * Params:
-	 * dllName =  The name of a DLL that a package provides in UTF-8, or NULL.
-	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding,i.e. UTF-8. The return value should be freed with g_free() when notneeded any longer. If the function fails NULL is returned.Deprecated:2.18: Pass the HMODULE of a DLL or EXE tog_win32_get_package_installation_directory_of_module() instead.
 	 */
 	public static string getPackageInstallationDirectory(string p, string dllName)
 	{
@@ -176,9 +170,6 @@ public class WindowsUtils
 	 * construct names of files in the installation tree it calls this
 	 * function passing the DLL handle.
 	 * Since 2.16
-	 * Params:
-	 * hmodule =  The Win32 handle for a DLL loaded into the current process, or NULL
-	 * Returns: a string containing the guessed installation directory forthe software package hmodule is from. The string is in the GLibfile name encoding, i.e. UTF-8. The return value should be freedwith g_free() when not needed any longer. If the function failsNULL is returned.
 	 */
 	public static string getPackageInstallationDirectoryOfModule(void* hmodule)
 	{
@@ -188,7 +179,9 @@ public class WindowsUtils
 	
 	/**
 	 * Warning
-	 * g_win32_get_package_installation_subdirectory is deprecated and should not be used in newly-written code.
+	 * g_win32_get_package_installation_subdirectory has been deprecated since version 2.18 and should not be used in newly-written code. Pass the HMODULE of a DLL or EXE to
+	 * g_win32_get_package_installation_directory_of_module() instead, and
+	 * then construct a subdirectory pathname with g_build_filename().
 	 * This function is deprecated. Use
 	 * g_win32_get_package_installation_directory_of_module() and
 	 * g_build_filename() instead.
@@ -199,10 +192,6 @@ public class WindowsUtils
 	 * g_win32_get_package_installation_directory() for more details. In
 	 * particular, note that it is deprecated to pass anything except NULL
 	 * as package.
-	 * Params:
-	 * dllName =  The name of a DLL that a package provides, in UTF-8, or NULL.
-	 * subdir =  A subdirectory of the package installation directory, also in UTF-8
-	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8. The return value should befreed with g_free() when no longer needed. If something goes wrong,NULL is returned.Deprecated:2.18: Pass the HMODULE of a DLL or EXE tog_win32_get_package_installation_directory_of_module() instead, andthen construct a subdirectory pathname with g_build_filename().
 	 */
 	public static string getPackageInstallationSubdirectory(string p, string dllName, string subdir)
 	{
@@ -221,7 +210,6 @@ public class WindowsUtils
 	 * detailled version and feature information should use Win32 API like
 	 * GetVersionEx() and VerifyVersionInfo().
 	 * Since 2.6
-	 * Returns: The version information.
 	 */
 	public static uint getWindowsVersion()
 	{
@@ -247,9 +235,6 @@ public class WindowsUtils
 	 * The return value is dynamically allocated and should be freed with
 	 * g_free() when no longer needed.
 	 * Since 2.8
-	 * Params:
-	 * utf8filename =  a UTF-8 encoded filename.
-	 * Returns: The converted filename, or NULL on conversionfailure and lack of short names.
 	 */
 	public static string localeFilenameFromUtf8(string utf8filename)
 	{

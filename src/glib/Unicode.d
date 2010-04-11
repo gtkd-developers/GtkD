@@ -91,9 +91,6 @@ public class Unicode
 	 * Checks whether ch is a valid Unicode character. Some possible
 	 * integer values of ch will not be valid. 0 is considered a valid
 	 * character, though it's normally a string terminator.
-	 * Params:
-	 * ch =  a Unicode character
-	 * Returns: TRUE if ch is a valid Unicode character
 	 */
 	public static int unicharValidate(gunichar ch)
 	{
@@ -106,8 +103,7 @@ public class Unicode
 	 * Given some UTF-8 text, obtain a character value
 	 * with g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is an alphanumeric character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsalnum(gunichar c)
 	{
@@ -120,8 +116,7 @@ public class Unicode
 	 * Given some UTF-8 text, obtain a character value with
 	 * g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is an alphabetic character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsalpha(gunichar c)
 	{
@@ -134,8 +129,7 @@ public class Unicode
 	 * Given some UTF-8 text, obtain a character value with
 	 * g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is a control character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIscntrl(gunichar c)
 	{
@@ -147,8 +141,7 @@ public class Unicode
 	 * Determines if a given character is assigned in the Unicode
 	 * standard.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if the character has an assigned value
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsdefined(gunichar c)
 	{
@@ -161,8 +154,7 @@ public class Unicode
 	 * covers ASCII 0-9 and also digits in other languages/scripts. Given
 	 * some UTF-8 text, obtain a character value with g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is a digit
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsdigit(gunichar c)
 	{
@@ -177,8 +169,7 @@ public class Unicode
 	 * spaces. Given some UTF-8 text, obtain a character value with
 	 * g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is printable unless it's a space
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsgraph(gunichar c)
 	{
@@ -191,8 +182,7 @@ public class Unicode
 	 * Given some UTF-8 text, obtain a character value with
 	 * g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is a lowercase letter
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIslower(gunichar c)
 	{
@@ -211,8 +201,7 @@ public class Unicode
 	 * scripts.
 	 * Since 2.14
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is a mark character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsmark(gunichar c)
 	{
@@ -226,8 +215,7 @@ public class Unicode
 	 * Given some UTF-8 text, obtain a character value with
 	 * g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is printable
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsprint(gunichar c)
 	{
@@ -240,8 +228,7 @@ public class Unicode
 	 * Given some UTF-8 text, obtain a character value with
 	 * g_utf8_get_char().
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is a punctuation or symbol character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIspunct(gunichar c)
 	{
@@ -257,8 +244,7 @@ public class Unicode
 	 * Pango or equivalent to get word breaking right, the algorithm
 	 * is fairly complex.)
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is a space character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsspace(gunichar c)
 	{
@@ -274,8 +260,7 @@ public class Unicode
 	 * first letter is capitalized. The titlecase form of the DZ
 	 * digraph is U+01F2 LATIN CAPITAL LETTTER D WITH SMALL LETTER Z.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if the character is titlecase
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIstitle(gunichar c)
 	{
@@ -286,8 +271,7 @@ public class Unicode
 	/**
 	 * Determines if a character is uppercase.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if c is an uppercase character
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIsupper(gunichar c)
 	{
@@ -298,8 +282,7 @@ public class Unicode
 	/**
 	 * Determines if a character is a hexidecimal digit.
 	 * Params:
-	 * c =  a Unicode character.
-	 * Returns: TRUE if the character is a hexadecimal digit
+	 * c  =  a Unicode character.
 	 */
 	public static int unicharIsxdigit(gunichar c)
 	{
@@ -311,8 +294,7 @@ public class Unicode
 	 * Determines if a character is typically rendered in a double-width
 	 * cell.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if the character is wide
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIswide(gunichar c)
 	{
@@ -332,8 +314,7 @@ public class Unicode
 	 * pas both this test and g_unichar_iszerowidth().
 	 * Since 2.12
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if the character is wide in legacy East Asian locales
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIswideCjk(gunichar c)
 	{
@@ -352,8 +333,7 @@ public class Unicode
 	 * terminals support zero-width rendering of zero-width marks.
 	 * Since 2.14
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: TRUE if the character has zero width
+	 * c  =  a Unicode character
 	 */
 	public static int unicharIszerowidth(gunichar c)
 	{
@@ -364,8 +344,7 @@ public class Unicode
 	/**
 	 * Converts a character to uppercase.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: the result of converting c to uppercase. If c is not an lowercase or titlecase character, or has no upper case equivalent c is returned unchanged.
+	 * c  =  a Unicode character
 	 */
 	public static gunichar unicharToupper(gunichar c)
 	{
@@ -376,8 +355,7 @@ public class Unicode
 	/**
 	 * Converts a character to lower case.
 	 * Params:
-	 * c =  a Unicode character.
-	 * Returns: the result of converting c to lower case. If c is not an upperlower or titlecase character, or has no lowercase equivalent c is returned unchanged.
+	 * c  =  a Unicode character.
 	 */
 	public static gunichar unicharTolower(gunichar c)
 	{
@@ -388,8 +366,7 @@ public class Unicode
 	/**
 	 * Converts a character to the titlecase.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: the result of converting c to titlecase. If c is not an uppercase or lowercase character, c is returned unchanged.
+	 * c  =  a Unicode character
 	 */
 	public static gunichar unicharTotitle(gunichar c)
 	{
@@ -401,8 +378,7 @@ public class Unicode
 	 * Determines the numeric value of a character as a decimal
 	 * digit.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: If c is a decimal digit (according tog_unichar_isdigit()), its numeric value. Otherwise, -1.
+	 * c  =  a Unicode character
 	 */
 	public static int unicharDigitValue(gunichar c)
 	{
@@ -414,8 +390,7 @@ public class Unicode
 	 * Determines the numeric value of a character as a hexidecimal
 	 * digit.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: If c is a hex digit (according tog_unichar_isxdigit()), its numeric value. Otherwise, -1.
+	 * c  =  a Unicode character
 	 */
 	public static int unicharXdigitValue(gunichar c)
 	{
@@ -426,8 +401,7 @@ public class Unicode
 	/**
 	 * Classifies a Unicode character by type.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: the type of the character.
+	 * c  =  a Unicode character
 	 */
 	public static GUnicodeType unicharType(gunichar c)
 	{
@@ -443,8 +417,7 @@ public class Unicode
 	 * resolution algorithms and normally you would use a function such
 	 * as pango_break() instead of caring about break types yourself.
 	 * Params:
-	 * c =  a Unicode character
-	 * Returns: the break type of c
+	 * c  =  a Unicode character
 	 */
 	public static GUnicodeBreakType unicharBreakType(gunichar c)
 	{
@@ -455,9 +428,6 @@ public class Unicode
 	/**
 	 * Determines the canonical combining class of a Unicode character.
 	 * Since 2.14
-	 * Params:
-	 * uc =  a Unicode character
-	 * Returns: the combining class of the character
 	 */
 	public static int unicharCombiningClass(gunichar uc)
 	{
@@ -470,9 +440,6 @@ public class Unicode
 	 * This rearranges decomposed characters in the string
 	 * according to their combining classes. See the Unicode
 	 * manual for more information.
-	 * Params:
-	 * string =  a UCS-4 encoded string.
-	 * len =  the maximum length of string to use.
 	 */
 	public static void unicodeCanonicalOrdering(gunichar* string, uint len)
 	{
@@ -482,10 +449,6 @@ public class Unicode
 	
 	/**
 	 * Computes the canonical decomposition of a Unicode character.
-	 * Params:
-	 * ch =  a Unicode character.
-	 * resultLen =  location to store the length of the return value.
-	 * Returns: a newly allocated string of Unicode characters. result_len is set to the resulting length of the string.
 	 */
 	public static gunichar* unicodeCanonicalDecomposition(gunichar ch, out uint resultLen)
 	{
@@ -503,10 +466,6 @@ public class Unicode
 	 * glyph and mirrored_ch is set, it puts that character in the address
 	 * pointed to by mirrored_ch. Otherwise the original character is put.
 	 * Since 2.4
-	 * Params:
-	 * ch =  a Unicode character
-	 * mirroredCh =  location to store the mirrored character
-	 * Returns: TRUE if ch has a mirrored character, FALSE otherwise
 	 */
 	public static int unicharGetMirrorChar(gunichar ch, gunichar* mirroredCh)
 	{
@@ -522,9 +481,6 @@ public class Unicode
 	 * This function is equivalent to pango_script_for_unichar() and the
 	 * two are interchangeable.
 	 * Since 2.14
-	 * Params:
-	 * ch =  a Unicode character
-	 * Returns: the GUnicodeScript for the character.
 	 */
 	public static GUnicodeScript unicharGetScript(gunichar ch)
 	{
@@ -538,9 +494,6 @@ public class Unicode
 	 * undefined. If you are not sure that the bytes are complete
 	 * valid Unicode characters, you should use g_utf8_get_char_validated()
 	 * instead.
-	 * Params:
-	 * p =  a pointer to Unicode character encoded as UTF-8
-	 * Returns: the resulting character
 	 */
 	public static gunichar utf8_GetChar(string p)
 	{
@@ -553,11 +506,6 @@ public class Unicode
 	 * This function checks for incomplete characters, for invalid characters
 	 * such as characters that are out of the range of Unicode, and for
 	 * overlong encodings of valid characters.
-	 * Params:
-	 * p =  a pointer to Unicode character encoded as UTF-8
-	 * maxLen =  the maximum number of bytes to read, or -1, for no maximum or
-	 *  if p is nul-terminated
-	 * Returns: the resulting character. If p points to a partial sequence at the end of a string that could begin a valid  character (or if max_len is zero), returns (gunichar)-2;  otherwise, if p does not point to a valid UTF-8 encoded  Unicode character, returns (gunichar)-1.
 	 */
 	public static gunichar utf8_GetCharValidated(string p, int maxLen)
 	{
@@ -578,10 +526,6 @@ public class Unicode
 	 * calling that function. Call g_utf8_strlen() when unsure.
 	 * This limitation exists as this function is called frequently during
 	 * text rendering and therefore has to be as fast as possible.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * offset =  a character offset within str
-	 * Returns: the resulting pointer
 	 */
 	public static string utf8_OffsetToPointer(string str, int offset)
 	{
@@ -594,10 +538,6 @@ public class Unicode
 	 * character offset.
 	 * Since 2.10, this function allows pos to be before str, and returns
 	 * a negative offset in this case.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * pos =  a pointer to a position within str
-	 * Returns: the resulting character offset
 	 */
 	public static int utf8_PointerToOffset(string str, string pos)
 	{
@@ -611,9 +551,6 @@ public class Unicode
 	 * is made to see if the character found is actually valid other than
 	 * it starts with an appropriate byte. If p might be the first
 	 * character of the string, you must use g_utf8_find_prev_char() instead.
-	 * Params:
-	 * p =  a pointer to a position within a UTF-8 encoded string
-	 * Returns: a pointer to the found character.
 	 */
 	public static string utf8_PrevChar(string p)
 	{
@@ -626,11 +563,6 @@ public class Unicode
 	 * p does not have to be at the beginning of a UTF-8 character. No check
 	 * is made to see if the character found is actually valid other than
 	 * it starts with an appropriate byte.
-	 * Params:
-	 * p =  a pointer to a position within a UTF-8 encoded string
-	 * end =  a pointer to the byte following the end of the string,
-	 * or NULL to indicate that the string is nul-terminated.
-	 * Returns: a pointer to the found character or NULL
 	 */
 	public static string utf8_FindNextChar(string p, string end)
 	{
@@ -645,10 +577,6 @@ public class Unicode
 	 * p does not have to be at the beginning of a UTF-8 character. No check
 	 * is made to see if the character found is actually valid other than
 	 * it starts with an appropriate byte.
-	 * Params:
-	 * str =  pointer to the beginning of a UTF-8 encoded string
-	 * p =  pointer to some position within str
-	 * Returns: a pointer to the found character or NULL.
 	 */
 	public static string utf8_FindPrevChar(string str, string p)
 	{
@@ -657,14 +585,8 @@ public class Unicode
 	}
 	
 	/**
-	 * Returns the length of the string in characters.
-	 * Params:
-	 * p =  pointer to the start of a UTF-8 encoded string.
-	 * max =  the maximum number of bytes to examine. If max
-	 *  is less than 0, then the string is assumed to be
-	 *  nul-terminated. If max is 0, p will not be examined and
-	 *  may be NULL.
-	 * Returns: the length of the string in characters
+	 * Computes the length of the string in characters, not including
+	 * the terminating nul character.
 	 */
 	public static int utf8_Strlen(string p, int max)
 	{
@@ -678,11 +600,6 @@ public class Unicode
 	 * bytes. The src string must be valid UTF-8 encoded text.
 	 * (Use g_utf8_validate() on all text before trying to use UTF-8
 	 * utility functions with it.)
-	 * Params:
-	 * dest =  buffer to fill with characters from src
-	 * src =  UTF-8 encoded string
-	 * n =  character count
-	 * Returns: dest
 	 */
 	public static string utf8_Strncpy(string dest, string src, uint n)
 	{
@@ -695,10 +612,7 @@ public class Unicode
 	 * in a UTF-8 encoded string, while limiting the search to len bytes.
 	 * If len is -1, allow unbounded search.
 	 * Params:
-	 * p =  a nul-terminated UTF-8 encoded string
-	 * len =  the maximum length of p
-	 * c =  a Unicode character
-	 * Returns: NULL if the string does not contain the character,  otherwise, a pointer to the start of the leftmost occurrence of  the character in the string.
+	 * c  =  a Unicode character
 	 */
 	public static string utf8_Strchr(string p, int len, gunichar c)
 	{
@@ -711,10 +625,7 @@ public class Unicode
 	 * in a UTF-8 encoded string, while limiting the search to len bytes.
 	 * If len is -1, allow unbounded search.
 	 * Params:
-	 * p =  a nul-terminated UTF-8 encoded string
-	 * len =  the maximum length of p
-	 * c =  a Unicode character
-	 * Returns: NULL if the string does not contain the character,  otherwise, a pointer to the start of the rightmost occurrence of the  character in the string.
+	 * c  =  a Unicode character
 	 */
 	public static string utf8_Strrchr(string p, int len, gunichar c)
 	{
@@ -735,11 +646,6 @@ public class Unicode
 	 * newly-allocated memory, which should be freed with g_free() when
 	 * no longer needed.
 	 * Since 2.2
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length of str to use, in bytes. If len < 0,
-	 *  then the string is nul-terminated.
-	 * Returns: a newly-allocated string which is the reverse of str.
 	 */
 	public static string utf8_Strreverse(string str, int len)
 	{
@@ -761,11 +667,6 @@ public class Unicode
 	 * routines require valid UTF-8 as input;
 	 * so data read from a file or the network should be checked
 	 * with g_utf8_validate() before doing anything else with it.
-	 * Params:
-	 * str =  a pointer to character data
-	 * maxLen =  max bytes to validate, or -1 to go until NUL
-	 * end =  return location for end of valid data
-	 * Returns: TRUE if the text was valid UTF-8
 	 */
 	public static int utf8_Validate(string str, int maxLen, out string end)
 	{
@@ -784,10 +685,6 @@ public class Unicode
 	 * on the current locale, and may result in the number of
 	 * characters in the string increasing. (For instance, the
 	 * German ess-zet will be changed to SS.)
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
-	 * Returns: a newly allocated string, with all characters converted to uppercase.
 	 */
 	public static string utf8_Strup(string str, int len)
 	{
@@ -800,10 +697,6 @@ public class Unicode
 	 * to lowercase. The exact manner that this is done depends
 	 * on the current locale, and may result in the number of
 	 * characters in the string changing.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
-	 * Returns: a newly allocated string, with all characters converted to lowercase.
 	 */
 	public static string utf8_Strdown(string str, int len)
 	{
@@ -822,10 +715,6 @@ public class Unicode
 	 * right would require a more sophisticated collation function that
 	 * takes case sensitivity into account. GLib does not currently
 	 * provide such a function.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
-	 * Returns: a newly allocated string, that is a case independent form of str.
 	 */
 	public static string utf8_Casefold(string str, int len)
 	{
@@ -857,11 +746,6 @@ public class Unicode
 	 * useful if you intend to convert the string to
 	 * a legacy encoding or pass it to a system with
 	 * less capable Unicode handling.
-	 * Params:
-	 * str =  a UTF-8 encoded string.
-	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
-	 * mode =  the type of normalization to perform.
-	 * Returns: a newly allocated string, that is the normalized form of str, or NULL if str is not valid UTF-8.
 	 */
 	public static string utf8_Normalize(string str, int len, GNormalizeMode mode)
 	{
@@ -876,10 +760,6 @@ public class Unicode
 	 * faster to obtain collation keys with g_utf8_collate_key() and
 	 * compare the keys with strcmp() when sorting instead of sorting
 	 * the original strings.
-	 * Params:
-	 * str1 =  a UTF-8 encoded string
-	 * str2 =  a UTF-8 encoded string
-	 * Returns: < 0 if str1 compares before str2,  0 if they compare equal, > 0 if str1 compares after str2.
 	 */
 	public static int utf8_Collate(string str1, string str2)
 	{
@@ -896,10 +776,6 @@ public class Unicode
 	 * original keys with g_utf8_collate().
 	 * Note that this function depends on the
 	 * current locale.
-	 * Params:
-	 * str =  a UTF-8 encoded string.
-	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
-	 * Returns: a newly allocated string. This string should be freed with g_free() when you are done with it.
 	 */
 	public static string utf8_CollateKey(string str, int len)
 	{
@@ -919,10 +795,6 @@ public class Unicode
 	 * Note that this function depends on the
 	 * current locale.
 	 * Since 2.8
-	 * Params:
-	 * str =  a UTF-8 encoded string.
-	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
-	 * Returns: a newly allocated string. This string should be freed with g_free() when you are done with it.
 	 */
 	public static string utf8_CollateKeyForFilename(string str, int len)
 	{
@@ -933,19 +805,6 @@ public class Unicode
 	/**
 	 * Convert a string from UTF-8 to UTF-16. A 0 character will be
 	 * added to the result after the converted text.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length (number of bytes) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
-	 * itemsRead =  location to store number of bytes read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
-	 * itemsWritten =  location to store number of gunichar2 written,
-	 *  or NULL.
-	 *  The value stored here does not include the trailing 0.
-	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
 	public static gunichar2* utf8_ToUtf16(string str, int len, out int itemsRead, out int itemsWritten)
@@ -967,19 +826,6 @@ public class Unicode
 	 * Convert a string from UTF-8 to a 32-bit fixed width
 	 * representation as UCS-4. A trailing 0 will be added to the
 	 * string after the converted text.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length of str to use, in bytes. If len < 0,
-	 *  then the string is nul-terminated.
-	 * itemsRead =  location to store number of bytes read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
-	 * itemsWritten =  location to store number of characters written or NULL.
-	 *  The value here stored does not include the trailing 0
-	 *  character.
-	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
 	public static gunichar* utf8_ToUcs4(string str, int len, out int itemsRead, out int itemsWritten)
@@ -1002,13 +848,6 @@ public class Unicode
 	 * representation as UCS-4, assuming valid UTF-8 input.
 	 * This function is roughly twice as fast as g_utf8_to_ucs4()
 	 * but does no error checking on the input.
-	 * Params:
-	 * str =  a UTF-8 encoded string
-	 * len =  the maximum length of str to use, in bytes. If len < 0,
-	 *  then the string is nul-terminated.
-	 * itemsWritten =  location to store the number of characters in the
-	 *  result, or NULL.
-	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free().
 	 */
 	public static gunichar* utf8_ToUcs4_Fast(string str, int len, out int itemsWritten)
 	{
@@ -1019,19 +858,6 @@ public class Unicode
 	/**
 	 * Convert a string from UTF-16 to UCS-4. The result will be
 	 * nul-terminated.
-	 * Params:
-	 * str =  a UTF-16 encoded string
-	 * len =  the maximum length (number of gunichar2) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
-	 * itemsRead =  location to store number of words read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
-	 * itemsWritten =  location to store number of characters written, or NULL.
-	 *  The value stored here does not include the trailing
-	 *  0 character.
-	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
 	public static gunichar* utf16_ToUcs4(gunichar2* str, int len, out int itemsRead, out int itemsWritten)
@@ -1061,19 +887,6 @@ public class Unicode
 	 * validation done by this function is to ensure that the input can
 	 * be correctly interpreted as UTF-16, i.e. it doesn't contain
 	 * things unpaired surrogates.
-	 * Params:
-	 * str =  a UTF-16 encoded string
-	 * len =  the maximum length (number of gunichar2) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
-	 * itemsRead =  location to store number of words read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
-	 * itemsWritten =  location to store number of bytes written, or NULL.
-	 *  The value stored here does not include the trailing
-	 *  0 byte.
-	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
 	public static string utf16_ToUtf8(gunichar2* str, int len, out int itemsRead, out int itemsWritten)
@@ -1094,17 +907,6 @@ public class Unicode
 	/**
 	 * Convert a string from UCS-4 to UTF-16. A 0 character will be
 	 * added to the result after the converted text.
-	 * Params:
-	 * str =  a UCS-4 encoded string
-	 * len =  the maximum length (number of characters) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
-	 * itemsRead =  location to store number of bytes read, or NULL.
-	 *  If an error occurs then the index of the invalid input
-	 *  is stored here.
-	 * itemsWritten =  location to store number of gunichar2
-	 *  written, or NULL. The value stored here does not
-	 *  include the trailing 0.
-	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
 	public static gunichar2* ucs4_ToUtf16(gunichar* str, int len, out int itemsRead, out int itemsWritten)
@@ -1125,15 +927,6 @@ public class Unicode
 	/**
 	 * Convert a string from a 32-bit fixed width representation as UCS-4.
 	 * to UTF-8. The result will be terminated with a 0 byte.
-	 * Params:
-	 * str =  a UCS-4 encoded string
-	 * len =  the maximum length (number of characters) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
-	 * itemsRead =  location to store number of characters read, or NULL.
-	 * itemsWritten =  location to store number of bytes written or NULL.
-	 *  The value here stored does not include the trailing 0
-	 *  byte.
-	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input  character.
 	 * Throws: GException on failure.
 	 */
 	public static string ucs4_ToUtf8(gunichar* str, int len, out int itemsRead, out int itemsWritten)
@@ -1154,11 +947,7 @@ public class Unicode
 	/**
 	 * Converts a single character to UTF-8.
 	 * Params:
-	 * c =  a Unicode character code
-	 * outbuf =  output buffer, must have at least 6 bytes of space.
-	 *  If NULL, the length will be computed and returned
-	 *  and nothing will be written to outbuf.
-	 * Returns: number of bytes written
+	 * c  =  a Unicode character code
 	 */
 	public static int unicharToUtf8(gunichar c, string outbuf)
 	{

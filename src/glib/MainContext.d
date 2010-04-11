@@ -132,8 +132,8 @@ private import gthread.Mutex;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
- * Figure 1. States of a Main Context
+ *  of a state diagram, as shown in Figure  1, “States of a Main Context”.
+ * Figure  1.  States of a Main Context
  */
 public class MainContext
 {
@@ -187,7 +187,6 @@ public class MainContext
 	
 	/**
 	 * Increases the reference count on a GMainContext object by one.
-	 * Returns: the context that was passed in (since 2.6)
 	 */
 	public MainContext doref()
 	{
@@ -215,7 +214,6 @@ public class MainContext
 	 * used for main loop functions when a main loop is not explicitly
 	 * specified, and corresponds to the "main" main loop. See also
 	 * g_main_context_get_thread_default().
-	 * Returns: the global default main context.
 	 */
 	public static MainContext defaulx()
 	{
@@ -240,9 +238,6 @@ public class MainContext
 	 * Note that even when may_block is TRUE, it is still possible for
 	 * g_main_context_iteration() to return FALSE, since the the wait may
 	 * be interrupted for other reasons than an event source becoming ready.
-	 * Params:
-	 * mayBlock =  whether the call may block.
-	 * Returns: TRUE if events were dispatched.
 	 */
 	public int iteration(int mayBlock)
 	{
@@ -252,7 +247,6 @@ public class MainContext
 	
 	/**
 	 * Checks if any sources have pending events for the given context.
-	 * Returns: TRUE if events are pending.
 	 */
 	public int pending()
 	{
@@ -262,9 +256,6 @@ public class MainContext
 	
 	/**
 	 * Finds a GSource given a pair of context and ID.
-	 * Params:
-	 * sourceId =  the source ID, as returned by g_source_get_id().
-	 * Returns: the GSource if found, otherwise, NULL
 	 */
 	public Source findSourceById(uint sourceId)
 	{
@@ -281,9 +272,6 @@ public class MainContext
 	 * Finds a source with the given user data for the callback. If
 	 * multiple sources exist with the same user data, the first
 	 * one found will be returned.
-	 * Params:
-	 * userData =  the user_data for the callback.
-	 * Returns: the source, if one was found, otherwise NULL
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
@@ -300,10 +288,6 @@ public class MainContext
 	 * Finds a source with the given source functions and user data. If
 	 * multiple sources exist with the same source function and user data,
 	 * the first one found will be returned.
-	 * Params:
-	 * funcs =  the source_funcs passed to g_source_new().
-	 * userData =  the user data from the callback.
-	 * Returns: the source, if one was found, otherwise NULL
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -336,7 +320,6 @@ public class MainContext
 	 * You must be the owner of a context before you
 	 * can call g_main_context_prepare(), g_main_context_query(),
 	 * g_main_context_check(), g_main_context_dispatch().
-	 * Returns: TRUE if the operation succeeded, and this thread is now the owner of context.
 	 */
 	public int acquire()
 	{
@@ -362,7 +345,6 @@ public class MainContext
 	 * know before waiting on another thread that may be
 	 * blocking to get ownership of context.
 	 * Since 2.10
-	 * Returns: TRUE if current thread is owner of context.
 	 */
 	public int isOwner()
 	{
@@ -376,10 +358,6 @@ public class MainContext
 	 * is the owner, atomically drop mutex and wait on cond until
 	 * that owner releases ownership or until cond is signaled, then
 	 * try again (once) to become the owner.
-	 * Params:
-	 * cond =  a condition variable
-	 * mutex =  a mutex, currently held
-	 * Returns: TRUE if the operation succeeded, and this thread is now the owner of context.
 	 */
 	public int wait(Cond cond, Mutex mutex)
 	{
@@ -390,10 +368,6 @@ public class MainContext
 	/**
 	 * Prepares to poll sources within a main loop. The resulting information
 	 * for polling is determined by calling g_main_context_query().
-	 * Params:
-	 * priority =  location to store priority of highest priority
-	 *  source already ready.
-	 * Returns: TRUE if some source is ready to be dispatched prior to polling.
 	 */
 	public int prepare(out int priority)
 	{
@@ -403,12 +377,6 @@ public class MainContext
 	
 	/**
 	 * Determines information necessary to poll this main loop.
-	 * Params:
-	 * maxPriority =  maximum priority source to check
-	 * timeout =  location to store timeout to be used in polling
-	 * fds =  location to store GPollFD records that need to be polled.
-	 * nFds =  length of fds.
-	 * Returns: the number of records actually stored in fds, or, if more than n_fds records need to be stored, the number of records that need to be stored.
 	 */
 	public int query(int maxPriority, out int timeout, GPollFD* fds, int nFds)
 	{
@@ -418,12 +386,6 @@ public class MainContext
 	
 	/**
 	 * Passes the results of polling back to the main loop.
-	 * Params:
-	 * maxPriority =  the maximum numerical priority of sources to check
-	 * fds =  array of GPollFD's that was passed to the last call to
-	 *  g_main_context_query()
-	 * nFds =  return value of g_main_context_query()
-	 * Returns: TRUE if some sources are ready to be dispatched.
 	 */
 	public int check(int maxPriority, GPollFD* fds, int nFds)
 	{
@@ -447,8 +409,6 @@ public class MainContext
 	 * poll() isn't available).
 	 * This function could possibly be used to integrate the GLib event
 	 * loop with an external event loop.
-	 * Params:
-	 * func =  the function to call to poll all file descriptors
 	 */
 	public void setPollFunc(GPollFunc func)
 	{
@@ -458,7 +418,6 @@ public class MainContext
 	
 	/**
 	 * Gets the poll function set by g_main_context_set_poll_func().
-	 * Returns: the poll function
 	 */
 	public GPollFunc getPollFunc()
 	{
@@ -470,12 +429,6 @@ public class MainContext
 	 * Adds a file descriptor to the set of file descriptors polled for
 	 * this context. This will very seldomly be used directly. Instead
 	 * a typical event source will use g_source_add_poll() instead.
-	 * Params:
-	 * fd =  a GPollFD structure holding information about a file
-	 *  descriptor to watch.
-	 * priority =  the priority for this file descriptor which should be
-	 *  the same as the priority used for g_source_attach() to ensure that the
-	 *  file descriptor is polled whenever the results may be needed.
 	 */
 	public void addPoll(GPollFD* fd, int priority)
 	{
@@ -486,8 +439,6 @@ public class MainContext
 	/**
 	 * Removes file descriptor from the set of file descriptors to be
 	 * polled for a particular context.
-	 * Params:
-	 * fd =  a GPollFD descriptor previously added with g_main_context_add_poll()
 	 */
 	public void removePoll(GPollFD* fd)
 	{
@@ -504,7 +455,6 @@ public class MainContext
 	 * non-default context, so it is not safe to assume that this will
 	 * always return NULL if threads are not initialized.)
 	 * Since 2.22
-	 * Returns: the thread-default GMainContext, or NULL if thethread-default context is the global default context.
 	 */
 	public static MainContext getThreadDefault()
 	{

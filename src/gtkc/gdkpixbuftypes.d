@@ -38,6 +38,26 @@ private import std.stdio;
  * one for the used colorspace, one for the width of the samples and one
  * for the encoding of the pixel data.
  * GDK_PIXDATA_COLOR_TYPE_RGB
+ *  each pixel has red, green and blue samples.
+ * GDK_PIXDATA_COLOR_TYPE_RGBA
+ *  each pixel has red, green and blue samples
+ *  and an alpha value.
+ * GDK_PIXDATA_COLOR_TYPE_MASK
+ *  mask for the colortype flags of the enum.
+ * GDK_PIXDATA_SAMPLE_WIDTH_8
+ *  each sample has 8 bits.
+ * GDK_PIXDATA_SAMPLE_WIDTH_MASK
+ *  mask for the sample width flags of the enum.
+ * GDK_PIXDATA_ENCODING_RAW
+ *  the pixel data is in raw form.
+ * GDK_PIXDATA_ENCODING_RLE
+ *  the pixel data is run-length encoded. Runs may
+ *  be up to 127 bytes long; their length is stored in a single byte
+ *  preceding the pixel data for the run. If a run is constant, its length
+ *  byte has the high bit set and the pixel data consists of a single pixel
+ *  which must be repeated.
+ * GDK_PIXDATA_ENCODING_MASK
+ *  mask for the encoding flags of the enum.
  */
 public enum GdkPixdataType
 {
@@ -64,6 +84,31 @@ alias GdkPixdataType PixdataType;
  * GDK_PIXBUF_DUMP_GTYPES and GDK_PIXBUF_DUMP_CTYPES. The remaining
  * elements are optional flags that can be freely added.
  * GDK_PIXDATA_DUMP_PIXDATA_STREAM
+ *  Generate pixbuf data stream (a single
+ *  string containing a serialized GdkPixdata structure in network byte
+ *  order).
+ * GDK_PIXDATA_DUMP_PIXDATA_STRUCT
+ *  Generate GdkPixdata structure (needs
+ *  the GdkPixdata structure definition from gdk-pixdata.h).
+ * GDK_PIXDATA_DUMP_MACROS
+ *  Generate *_ROWSTRIDE,
+ *  *_WIDTH, *_HEIGHT,
+ *  *_BYTES_PER_PIXEL and
+ *  *_RLE_PIXEL_DATA or *_PIXEL_DATA
+ *  macro definitions for the image.
+ * GDK_PIXDATA_DUMP_GTYPES
+ *  Generate GLib data types instead of
+ *  standard C data types.
+ * GDK_PIXDATA_DUMP_CTYPES
+ *  Generate standard C data types instead of
+ *  GLib data types.
+ * GDK_PIXDATA_DUMP_STATIC
+ *  Generate static symbols.
+ * GDK_PIXDATA_DUMP_CONST
+ *  Generate const symbols.
+ * GDK_PIXDATA_DUMP_RLE_DECODER
+ *  Provide a *_RUN_LENGTH_DECODE(image_buf, rle_data, size, bpp)
+ *  macro definition to decode run-length encoded image data.
  */
 public enum GdkPixdataDumpType
 {
@@ -101,7 +146,7 @@ alias GdkPixbufFormatFlags PixbufFormatFlags;
  * Main Gtk struct.
  * A GdkPixdata contains pixbuf information in a form suitable for
  * serialization and streaming.
- * guint32 magic;
+ * guint32  magic;
  */
 public struct GdkPixdata
 {
@@ -150,24 +195,24 @@ public struct GdkPixbufLoader{}
  * A GdkPixbufFormat contains information about the image format accepted by a
  * module. Only modules should access the fields directly, applications should
  * use the gdk_pixbuf_format_* functions.
- * gchar *name;
+ * gchar  *name;
  * the name of the image format.
- * GdkPixbufModulePattern *signature;
+ * GdkPixbufModulePattern  *signature;
  * the signature of the module.
- * gchar *domain;
+ * gchar  *domain;
  * the message domain for the description.
- * gchar *description;
+ * gchar  *description;
  * a description of the image format.
- * gchar **mime_types;
+ * gchar  **mime_types;
  * a NULL-terminated array of MIME types for the image format.
- * gchar **extensions;
+ * gchar  **extensions;
  * a NULL-terminated array of typical filename extensions for the
  * image format.
- * guint32 flags;
+ * guint32  flags;
  * a combination of GdkPixbufFormatFlags.
- * gboolean disabled;
+ * gboolean  disabled;
  * a boolean determining whether the loader is disabled.
- * gchar *license;
+ * gchar  *license;
  * a string containing license information, typically set to
  */
 public struct GdkPixbufFormat
@@ -216,7 +261,7 @@ public struct GdkPixbufFormat
 	 * Each loadable module must contain a GdkPixbufModuleFillVtableFunc function
 	 * named fill_vtable, which will get called when the module
 	 * is loaded and must set the function pointers of the GdkPixbufModule.
-	 * char *module_name;
+	 * char  *module_name;
 	 * the name of the module, usually the same as the
 	 */
 	public struct GdkPixbufModule
@@ -243,15 +288,15 @@ public struct GdkPixbufFormat
 	 * Modules supporting animations must derive a type from
 	 * GdkPixbufAnimation, providing suitable implementations of the
 	 * virtual functions.
-	 * GObjectClass parent_class;
+	 * GObjectClass  parent_class;
 	 * the parent class
-	 * is_static_image ()
+	 * is_static_image  ()
 	 * returns whether the given animation is just a static image.
-	 * get_static_image ()
+	 * get_static_image  ()
 	 * returns a static image representing the given animation.
-	 * get_size ()
+	 * get_size  ()
 	 * fills width and height with the frame size of the animation.
-	 * get_iter ()
+	 * get_iter  ()
 	 * returns an iterator for the given animation.
 	 */
 	public struct GdkPixbufAnimationClass
@@ -268,9 +313,9 @@ public struct GdkPixbufFormat
 	 * Modules supporting animations must derive a type from
 	 * GdkPixbufAnimationIter, providing suitable implementations of the
 	 * virtual functions.
-	 * GObjectClass parent_class;
+	 * GObjectClass  parent_class;
 	 * the parent class
-	 * get_delay_time ()
+	 * get_delay_time  ()
 	 * returns the time in milliseconds that the current frame
 	 */
 	public struct GdkPixbufAnimationIterClass
@@ -286,7 +331,7 @@ public struct GdkPixbufFormat
 /*
  * Defines the type of the function used to set the vtable of a
  * GdkPixbufModule when it is loaded.
- * module :
+ * module  :
  * a GdkPixbufModule.
  * Since 2.2
  */
@@ -296,7 +341,7 @@ public typedef extern(C) void  function (GdkPixbufModule*) GdkPixbufModuleFillVt
 /*
  * Defines the type of the function used to fill a
  * GdkPixbufFormat structure with information about a module.
- * info :
+ * info  :
  * a GdkPixbufFormat.
  * Since 2.2
  */
@@ -315,11 +360,11 @@ public typedef extern(C) void  function (GdkPixbufFormat*) GdkPixbufModuleFillIn
  * this as a hint that it will be closed soon and shouldn't allocate further
  * resources. This convention is used to implement gdk_pixbuf_get_file_info()
  * efficiently.
- * width :
+ * width  :
  * pointer to a location containing the current image width
- * height :
+ * height  :
  * pointer to a location containing the current image height
- * user_data :
+ * user_data  :
  * the loader.
  * Since 2.2
  */
@@ -332,11 +377,11 @@ public typedef extern(C) void  function (gint*, gint*, void*) GdkPixbufModuleSiz
  * GdkPixbufLoader uses a function of this type to emit the
  * "area_prepared"
  * signal.
- * pixbuf :
+ * pixbuf  :
  * the GdkPixbuf that is currently being loaded.
- * anim :
+ * anim  :
  * if an animation is being loaded, the GdkPixbufAnimation, else NULL.
- * user_data :
+ * user_data  :
  * the loader.
  * Since 2.2
  */
@@ -349,17 +394,17 @@ public typedef extern(C) void  function (GdkPixbuf*, GdkPixbufAnimation*, void*)
  * GdkPixbufLoader uses a function of this type to emit the
  * "area_updated"
  * signal.
- * pixbuf :
+ * pixbuf  :
  * the GdkPixbuf that is currently being loaded.
- * x :
+ * x  :
  * the X origin of the updated area.
- * y :
+ * y  :
  * the Y origin of the updated area.
- * width :
+ * width  :
  * the width of the updated area.
- * height :
+ * height  :
  * the height of the updated area.
- * user_data :
+ * user_data  :
  * the loader.
  * Since 2.2
  */

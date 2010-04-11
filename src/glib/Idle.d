@@ -125,8 +125,8 @@ private import glib.Source;
  *  are g_main_context_prepare(), g_main_context_query(),
  *  g_main_context_check() and g_main_context_dispatch().
  *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure 1, “States of a Main Context”.
- * Figure 1. States of a Main Context
+ *  of a state diagram, as shown in Figure  1, “States of a Main Context”.
+ * Figure  1.  States of a Main Context
  */
 public class Idle
 {
@@ -258,7 +258,6 @@ public class Idle
 	 * executed. Note that the default priority for idle sources is
 	 * G_PRIORITY_DEFAULT_IDLE, as compared to other sources which
 	 * have a default priority of G_PRIORITY_DEFAULT.
-	 * Returns: the newly-created idle source
 	 */
 	public static Source sourceNew()
 	{
@@ -280,9 +279,6 @@ public class Idle
 	 * This internally creates a main loop source using g_idle_source_new()
 	 * and attaches it to the main loop context using g_source_attach().
 	 * You can do these steps manually if you need greater control.
-	 * Params:
-	 * data =  data to pass to function.
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint add(GSourceFunc funct, void* data)
 	{
@@ -297,12 +293,6 @@ public class Idle
 	 * This internally creates a main loop source using g_idle_source_new()
 	 * and attaches it to the main loop context using g_source_attach().
 	 * You can do these steps manually if you need greater control.
-	 * Params:
-	 * priority =  the priority of the idle source. Typically this will be in the
-	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * data =  data to pass to function
-	 * notify =  function to call when the idle is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -312,9 +302,6 @@ public class Idle
 	
 	/**
 	 * Removes the idle function with the given data.
-	 * Params:
-	 * data =  the data for the idle source's callback.
-	 * Returns: TRUE if an idle source was found and removed.
 	 */
 	public static int removeByData(void* data)
 	{

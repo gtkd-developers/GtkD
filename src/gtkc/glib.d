@@ -37,7 +37,6 @@ static this()
 {
 	// glib.Version
 
-	Linker.link(glib_check_version, "glib_check_version", LIBRARY.GLIB);
 
 	// glib.Atomic
 
@@ -200,6 +199,12 @@ static this()
 	Linker.link(g_try_malloc, "g_try_malloc", LIBRARY.GLIB);
 	Linker.link(g_try_malloc0, "g_try_malloc0", LIBRARY.GLIB);
 	Linker.link(g_try_realloc, "g_try_realloc", LIBRARY.GLIB);
+	Linker.link(g_malloc_n, "g_malloc_n", LIBRARY.GLIB);
+	Linker.link(g_malloc0_n, "g_malloc0_n", LIBRARY.GLIB);
+	Linker.link(g_realloc_n, "g_realloc_n", LIBRARY.GLIB);
+	Linker.link(g_try_malloc_n, "g_try_malloc_n", LIBRARY.GLIB);
+	Linker.link(g_try_malloc0_n, "g_try_malloc0_n", LIBRARY.GLIB);
+	Linker.link(g_try_realloc_n, "g_try_realloc_n", LIBRARY.GLIB);
 	Linker.link(g_free, "g_free", LIBRARY.GLIB);
 	Linker.link(g_memdup, "g_memdup", LIBRARY.GLIB);
 	Linker.link(g_mem_set_vtable, "g_mem_set_vtable", LIBRARY.GLIB);
@@ -1335,7 +1340,6 @@ mixin( gshared ~"extern(C)
 	
 	// glib.Version
 	
-	gchar* function(guint requiredMajor, guint requiredMinor, guint requiredMicro) c_glib_check_version;
 	
 	// glib.Atomic
 	
@@ -1498,6 +1502,12 @@ mixin( gshared ~"extern(C)
 	gpointer function(gsize nBytes) c_g_try_malloc;
 	gpointer function(gsize nBytes) c_g_try_malloc0;
 	gpointer function(gpointer mem, gsize nBytes) c_g_try_realloc;
+	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_malloc_n;
+	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_malloc0_n;
+	gpointer function(gpointer mem, gsize nBlocks, gsize nBlockBytes) c_g_realloc_n;
+	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_try_malloc_n;
+	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_try_malloc0_n;
+	gpointer function(gpointer mem, gsize nBlocks, gsize nBlockBytes) c_g_try_realloc_n;
 	void function(gpointer mem) c_g_free;
 	gpointer function(gconstpointer mem, guint byteSize) c_g_memdup;
 	void function(GMemVTable* vtable) c_g_mem_set_vtable;
@@ -2630,7 +2640,6 @@ mixin( gshared ~"extern(C)
 
 // glib.Version
 
-alias c_glib_check_version  glib_check_version;
 
 // glib.Atomic
 
@@ -2793,6 +2802,12 @@ alias c_g_realloc  g_realloc;
 alias c_g_try_malloc  g_try_malloc;
 alias c_g_try_malloc0  g_try_malloc0;
 alias c_g_try_realloc  g_try_realloc;
+alias c_g_malloc_n  g_malloc_n;
+alias c_g_malloc0_n  g_malloc0_n;
+alias c_g_realloc_n  g_realloc_n;
+alias c_g_try_malloc_n  g_try_malloc_n;
+alias c_g_try_malloc0_n  g_try_malloc0_n;
+alias c_g_try_realloc_n  g_try_realloc_n;
 alias c_g_free  g_free;
 alias c_g_memdup  g_memdup;
 alias c_g_mem_set_vtable  g_mem_set_vtable;
