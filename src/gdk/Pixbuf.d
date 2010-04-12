@@ -734,19 +734,20 @@ public class Pixbuf : ObjectG
 	 * src_pixbuf will not be finalized until the new pixbuf
 	 * is finalized.
 	 * Params:
+	 * srcPixbuf = a GdkPixbuf
 	 * srcX = X coord in src_pixbuf
 	 * srcY = Y coord in src_pixbuf
 	 * width = width of region in src_pixbuf
 	 * height = height of region in src_pixbuf
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int srcX, int srcY, int width, int height)
+	public this (Pixbuf srcPixbuf, int srcX, int srcY, int width, int height)
 	{
 		// GdkPixbuf * gdk_pixbuf_new_subpixbuf (GdkPixbuf *src_pixbuf,  int src_x,  int src_y,  int width,  int height);
-		auto p = gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height);
+		auto p = gdk_pixbuf_new_subpixbuf((srcPixbuf is null) ? null : srcPixbuf.getPixbufStruct(), srcX, srcY, width, height);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height)");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_subpixbuf((srcPixbuf is null) ? null : srcPixbuf.getPixbufStruct(), srcX, srcY, width, height)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}

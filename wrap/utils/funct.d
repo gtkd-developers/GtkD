@@ -513,7 +513,7 @@ public struct Funct
 			if ( i == 0 )
 			{
 				debug(mainStrct)writefln("1st Parm %s ?= %s",parmsType[i], convParms.strct);
-				if ( parmsType[i] == strctPointer )
+				if ( !ctor && parmsType[i] == strctPointer )
 				{
 					debug(mainStrct)writefln("\tSAME <<<<<<------");
 					--parmCount;
@@ -709,7 +709,7 @@ public struct Funct
 			if ( i > 0 )
 				gtkCall ~= ", ";
 
-			if ( i == 0 && parmsType[0] == strctPointer )
+			if ( !ctor && i == 0 && parmsType[0] == strctPointer )
 			{
 				
 				if ( convParms.templ.length == 0 )
