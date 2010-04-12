@@ -162,6 +162,8 @@ public class Util
 	 * The application name will be used in contexts such as error messages,
 	 * or when displaying an application's name in the task list.
 	 * Since 2.2
+	 * Params:
+	 * applicationName = localized name of the application
 	 */
 	public static void setApplicationName(string applicationName)
 	{
@@ -186,6 +188,8 @@ public class Util
 	 * Sets the name of the program. This name should not
 	 * be localized, contrast with g_set_application_name(). Note that for
 	 * thread-safety reasons this function can only be called once.
+	 * Params:
+	 * prgname = the name of the program.
 	 */
 	public static void setPrgname(string prgname)
 	{
@@ -200,6 +204,8 @@ public class Util
 	 * and encoding. On Windows, it is in UTF-8. On Windows, in case the
 	 * environment variable's value contains references to other
 	 * environment variables, they are expanded.
+	 * Params:
+	 * variable = the environment variable to get, in the GLib file name encoding.
 	 */
 	public static string getenv(string variable)
 	{
@@ -215,6 +221,10 @@ public class Util
 	 * Note that on some systems, when variables are overwritten, the memory
 	 * used for the previous variables and its value isn't reclaimed.
 	 * Since 2.4
+	 * Params:
+	 * variable = the environment variable to set, must not contain '='.
+	 * value = the value for to set the variable to.
+	 * overwrite = whether to change the variable if it already exists.
 	 */
 	public static int setenv(string variable, string value, int overwrite)
 	{
@@ -229,6 +239,8 @@ public class Util
 	 * Furthermore, this function can't be guaranteed to operate in a
 	 * threadsafe way.
 	 * Since 2.4
+	 * Params:
+	 * variable = the environment variable to remove, must not contain '='.
 	 */
 	public static void unsetenv(string variable)
 	{
@@ -323,6 +335,8 @@ public class Util
 	 * of the special directory without requiring the session to restart; GLib
 	 * will not reflect any change once the special directories are loaded.
 	 * Since 2.14
+	 * Params:
+	 * directory = the logical id of special directory
 	 */
 	public static string getUserSpecialDir(GUserDirectory directory)
 	{
@@ -466,6 +480,8 @@ public class Util
 	 * this function which returns a pointer into the argument.
 	 * Gets the name of the file without any leading directory components.
 	 * It returns a pointer into the given file name string.
+	 * Params:
+	 * fileName = the name of the file.
 	 */
 	public static string basename(string fileName)
 	{
@@ -477,6 +493,8 @@ public class Util
 	 * Returns TRUE if the given file_name is an absolute file name,
 	 * i.e. it contains a full path from the root directory such as "/usr/local"
 	 * on UNIX or "C:\windows" on Windows systems.
+	 * Params:
+	 * fileName = a file name.
 	 */
 	public static int pathIsAbsolute(string fileName)
 	{
@@ -488,6 +506,8 @@ public class Util
 	 * Returns a pointer into file_name after the root component, i.e. after
 	 * the "/" in UNIX or "C:\" under Windows. If file_name is not an absolute
 	 * path it returns NULL.
+	 * Params:
+	 * fileName = a file name.
 	 */
 	public static string pathSkipRoot(string fileName)
 	{
@@ -501,6 +521,8 @@ public class Util
 	 * file_name consists only of directory separators (and on Windows,
 	 * possibly a drive letter), a single separator is returned. If
 	 * file_name is empty, it gets ".".
+	 * Params:
+	 * fileName = the name of the file.
 	 */
 	public static string pathGetBasename(string fileName)
 	{
@@ -512,6 +534,8 @@ public class Util
 	 * Gets the directory components of a file name. If the file name has no
 	 * directory components "." is returned. The returned string should be
 	 * freed when no longer needed.
+	 * Params:
+	 * fileName = the name of the file.
 	 */
 	public static string pathGetDirname(string fileName)
 	{
@@ -524,6 +548,8 @@ public class Util
 	 * as a string array, instead of varargs. This function is mainly
 	 * meant for language bindings.
 	 * Since 2.8
+	 * Params:
+	 * args = NULL-terminated array of strings containing the path elements.
 	 */
 	public static string buildFilenamev(char** args)
 	{
@@ -536,6 +562,9 @@ public class Util
 	 * as a string array, instead of varargs. This function is mainly
 	 * meant for language bindings.
 	 * Since 2.8
+	 * Params:
+	 * separator = a string used to separator the elements of the path.
+	 * args = NULL-terminated array of strings containing the path elements.
 	 */
 	public static string buildPathv(string separator, char** args)
 	{
@@ -551,6 +580,8 @@ public class Util
 	 * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
 	 * This string should be freed with g_free() when not needed any longer.
 	 * Since 2.16
+	 * Params:
+	 * size = a size in bytes.
 	 */
 	public static string formatSizeForDisplay(long size)
 	{
@@ -574,6 +605,8 @@ public class Util
 	 * finally in the directories in the PATH environment
 	 * variable. If the program is found, the return value contains the
 	 * full name including the type suffix.
+	 * Params:
+	 * program = a program name in the GLib file name encoding
 	 */
 	public static string findProgramInPath(string program)
 	{
@@ -586,6 +619,9 @@ public class Util
 	 * including) nth_bit upwards. Bits are numbered from 0 (least significant)
 	 * to sizeof(gulong) * 8 - 1 (31 or 63, usually). To start searching from the
 	 * 0th bit, set nth_bit to -1.
+	 * Params:
+	 * mask = a gulong containing flags.
+	 * nthBit = the index of the bit to start the search from.
 	 */
 	public static int bitNthLsf(uint mask, int nthBit)
 	{
@@ -598,6 +634,9 @@ public class Util
 	 * including) nth_bit downwards. Bits are numbered from 0 (least significant)
 	 * to sizeof(gulong) * 8 - 1 (31 or 63, usually). To start searching from the
 	 * last bit, set nth_bit to -1 or GLIB_SIZEOF_LONG * 8.
+	 * Params:
+	 * mask = a gulong containing flags.
+	 * nthBit = the index of the bit to start the search from.
 	 */
 	public static int bitNthMsf(uint mask, int nthBit)
 	{
@@ -608,6 +647,8 @@ public class Util
 	/**
 	 * Gets the number of bits used to hold number,
 	 * e.g. if number is 4, 3 bits are needed.
+	 * Params:
+	 * number = a guint.
 	 */
 	public static uint bitStorage(uint number)
 	{
@@ -621,6 +662,8 @@ public class Util
 	 * size of a GHashTable.
 	 * The built-in array of primes ranges from 11 to 13845163 such that
 	 * each prime is approximately 1.5-2 times the previous prime.
+	 * Params:
+	 * num = a guint.
 	 */
 	public static uint spacedPrimesClosest(uint num)
 	{
@@ -653,6 +696,8 @@ public class Util
 	 * As can be seen from the above, for portability it's best to avoid
 	 * calling g_atexit() (or atexit()) except in the main executable of a
 	 * program.
+	 * Params:
+	 * func = the function to call on normal program termination.
 	 */
 	public static void atexit(GVoidFunc func)
 	{
@@ -669,8 +714,11 @@ public class Util
 	 * is equal to "help", all the available keys in keys are printed
 	 * out to standard error.
 	 * Params:
-	 * string  =  a list of debug options separated by colons, spaces, or
+	 * string = a list of debug options separated by colons, spaces, or
 	 * commas, or NULL.
+	 * keys = pointer to an array of GDebugKey which associate
+	 *  strings with bit flags.
+	 * nkeys = the number of GDebugKeys in the array.
 	 */
 	public static uint parseDebugString(string string, GDebugKey* keys, uint nkeys)
 	{
@@ -682,7 +730,11 @@ public class Util
 	 * This is just like the standard C qsort() function, but
 	 * the comparison routine accepts a user data argument.
 	 * Params:
-	 * size  =  size of each element
+	 * pbase = start of array to sort
+	 * totalElems = elements in the array
+	 * size = size of each element
+	 * compareFunc = function to compare elements
+	 * userData = data to pass to compare_func
 	 */
 	public static void qsortWithData(void* pbase, int totalElems, uint size, GCompareDataFunc compareFunc, void* userData)
 	{
@@ -692,6 +744,8 @@ public class Util
 	
 	/**
 	 * Set the pointer at the specified location to NULL.
+	 * Params:
+	 * nullifyLocation = the memory address of the pointer.
 	 */
 	public static void nullifyPointer(void** nullifyLocation)
 	{

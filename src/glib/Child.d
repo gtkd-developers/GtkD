@@ -151,6 +151,9 @@ public class Child
 	 * the application. Calling waitpid() for individual pids will
 	 * still work fine.
 	 * Since 2.4
+	 * Params:
+	 * pid = process to watch. On POSIX the pid of a child process. On
+	 * Windows a handle for a process (which doesn't have to be a child).
 	 */
 	public static Source watchSourceNew(GPid pid)
 	{
@@ -179,6 +182,10 @@ public class Child
 	 * using g_source_attach(). You can do these steps manually if you
 	 * need greater control.
 	 * Since 2.4
+	 * Params:
+	 * pid = process id to watch. On POSIX the pid of a child process. On
+	 * Windows a handle for a process (which doesn't have to be a child).
+	 * data = data to pass to function
 	 */
 	public static uint watchAdd(GPid pid, GChildWatchFunc funct, void* data)
 	{
@@ -202,6 +209,13 @@ public class Child
 	 * using g_source_attach(). You can do these steps manually if you
 	 * need greater control.
 	 * Since 2.4
+	 * Params:
+	 * priority = the priority of the idle source. Typically this will be in the
+	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+	 * pid = process to watch. On POSIX the pid of a child process. On
+	 * Windows a handle for a process (which doesn't have to be a child).
+	 * data = data to pass to function
+	 * notify = function to call when the idle is removed, or NULL
 	 */
 	public static uint watchAddFull(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify)
 	{

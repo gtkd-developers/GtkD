@@ -2177,7 +2177,7 @@ public class GtkDClass
 								if(find(comments[i], ":") == comments[i].length-1 && find(comments[i], "Returns:") == -1 && find(comments[i], "Returns :") == -1 )
 								{
 									//Get the GtkD name of the param
-									char[] param = chomp(idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()), " ");
+									char[] param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
 
 									//If this param is not in the Gtkd Function Skip it.
 									if(find(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
@@ -2198,7 +2198,7 @@ public class GtkDClass
 										i++;
 										if(firstRun)
 										{
-											params ~= param ~" = "~ comments[i];
+											params ~= param ~" = "~ stripl(comments[i]);
 											firstRun = false;
 										}
 										else

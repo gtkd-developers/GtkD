@@ -146,6 +146,9 @@ public class SimpleXML
 	 * and carriage return. The character references in this range are
 	 * not valid XML 1.0, but they are valid XML 1.1 and will be accepted
 	 * by the GMarkup parser.
+	 * Params:
+	 * text = some valid UTF-8 text
+	 * length = length of text in bytes, or -1 if the text is nul-terminated
 	 */
 	public static string escapeText(string text, int length)
 	{
@@ -158,6 +161,9 @@ public class SimpleXML
 	 * all string and character arguments in the fashion
 	 * of g_markup_escape_text(). See g_markup_printf_escaped().
 	 * Since 2.4
+	 * Params:
+	 * format = printf() style format string
+	 * args = variable argument list, similar to vprintf()
 	 */
 	public static string vprintfEscaped(string format, void* args)
 	{
@@ -203,6 +209,9 @@ public class SimpleXML
 	 * that line. Intended for use in error messages; there are no strict
 	 * semantics for what constitutes the "current" line number other than
 	 * "the best number we could come up with for error messages."
+	 * Params:
+	 * lineNumber = return location for a line number, or NULL
+	 * charNumber = return location for a char-on-line number, or NULL
 	 */
 	public void getPosition(out int lineNumber, out int charNumber)
 	{
@@ -264,6 +273,11 @@ public class SimpleXML
 	 * a context, as long as no errors occur; once an error occurs,
 	 * the parse context can't continue to parse text (you have to free it
 	 * and create a new parse context).
+	 * Params:
+	 * parser = a GMarkupParser
+	 * flags = one or more GMarkupParseFlags
+	 * userData = user data to pass to GMarkupParser functions
+	 * userDataDnotify = user data destroy notifier called when the parse context is freed
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
@@ -286,6 +300,9 @@ public class SimpleXML
 	 * you feed each received chunk of data into this function, aborting
 	 * the process if an error occurs. Once an error is reported, no further
 	 * data may be fed to the GMarkupParseContext; all errors are fatal.
+	 * Params:
+	 * text = chunk of text to parse
+	 * textLen = length of text in bytes
 	 * Throws: GException on failure.
 	 */
 	public int parse(string text, int textLen)
@@ -361,6 +378,9 @@ public class SimpleXML
 	 * };
 	 * In order to allow this parser to be easily used as a subparser, the
 	 * Since 2.18
+	 * Params:
+	 * parser = a GMarkupParser
+	 * userData = user data to pass to GMarkupParser functions
 	 */
 	public void push(GMarkupParser* parser, void* userData)
 	{

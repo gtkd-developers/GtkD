@@ -175,6 +175,11 @@ public class MainLoop
 	
 	/**
 	 * Creates a new GMainLoop structure.
+	 * Params:
+	 * context = a GMainContext (if NULL, the default context will be used).
+	 * isRunning = set to TRUE to indicate that the loop is running. This
+	 * is not very important since calling g_main_loop_run() will set this to
+	 * TRUE anyway.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (MainContext context, int isRunning)
@@ -306,6 +311,9 @@ public class MainLoop
 	 * Windows, the easiest solution is to construct all of your
 	 * GPollFDs with g_io_channel_win32_make_pollfd().
 	 * Since 2.20
+	 * Params:
+	 * fds = file descriptors to poll
+	 * timeout = amount of time to wait, in milliseconds, or -1 to wait forever
 	 */
 	public static int poll(GPollFD[] fds, int timeout)
 	{

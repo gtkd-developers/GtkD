@@ -170,6 +170,22 @@ public class CharacterSet
 	 * Converts a string from one character set to another.
 	 * Note that you should use g_iconv() for streaming
 	 * conversions[2].
+	 * Params:
+	 * str = the string to convert
+	 * len = the length of the string, or -1 if the string is
+	 *  nul-terminated[1].
+	 * toCodeset = name of character set into which to convert str
+	 * fromCodeset = character set of str.
+	 * bytesRead = location to store the number of bytes in the
+	 *  input string that were successfully converted, or NULL.
+	 *  Even if the conversion was successful, this may be
+	 *  less than len if there were partial characters
+	 *  at the end of the input. If the error
+	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *  stored will the byte offset after the last valid
+	 *  input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 *  including the terminating nul).
 	 * Throws: GException on failure.
 	 */
 	public static string convert(string str, int len, string toCodeset, string fromCodeset, out uint bytesRead, out uint bytesWritten)
@@ -197,11 +213,29 @@ public class CharacterSet
 	 * in which case GLib will simply return that approximate conversion.
 	 * Note that you should use g_iconv() for streaming
 	 * conversions[2].
+	 * Params:
+	 * str = the string to convert
+	 * len = the length of the string, or -1 if the string is
+	 *  nul-terminated[1].
+	 * toCodeset = name of character set into which to convert str
+	 * fromCodeset = character set of str.
+	 * fallback = UTF-8 string to use in place of character not
+	 *  present in the target encoding. (The string must be
+	 *  representable in the target encoding).
+	 *  If NULL, characters not in the target encoding will
+	 *  be represented as Unicode escapes \uxxxx or \Uxxxxyyyy.
+	 * bytesRead = location to store the number of bytes in the
+	 *  input string that were successfully converted, or NULL.
+	 *  Even if the conversion was successful, this may be
+	 *  less than len if there were partial characters
+	 *  at the end of the input.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 *  including the terminating nul).
 	 * Throws: GException on failure.
 	 */
 	public static string convertWithFallback(string str, int len, string toCodeset, string fromCodeset, string fallback, out uint bytesRead, out uint bytesWritten)
 	{
-		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  const gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), &bytesRead, &bytesWritten, &err));
@@ -219,6 +253,21 @@ public class CharacterSet
 	 * the C runtime (usually the same as that used by the operating
 	 * system) in the current locale into a
 	 * UTF-8 string.
+	 * Params:
+	 * opsysstring = a string in the encoding of the current locale. On Windows
+	 *  this means the system codepage.
+	 * len = the length of the string, or -1 if the string is
+	 *  nul-terminated[1].
+	 * bytesRead = location to store the number of bytes in the
+	 *  input string that were successfully converted, or NULL.
+	 *  Even if the conversion was successful, this may be
+	 *  less than len if there were partial characters
+	 *  at the end of the input. If the error
+	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *  stored will the byte offset after the last valid
+	 *  input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 *  including the terminating nul).
 	 * Throws: GException on failure.
 	 */
 	public static string localeToUtf8(string opsysstring, int len, out uint bytesRead, out uint bytesWritten)
@@ -241,6 +290,20 @@ public class CharacterSet
 	 * filenames into a UTF-8 string. Note that on Windows GLib uses UTF-8
 	 * for filenames; on other platforms, this function indirectly depends on
 	 * the current locale.
+	 * Params:
+	 * opsysstring = a string in the encoding for filenames
+	 * len = the length of the string, or -1 if the string is
+	 *  nul-terminated[1].
+	 * bytesRead = location to store the number of bytes in the
+	 *  input string that were successfully converted, or NULL.
+	 *  Even if the conversion was successful, this may be
+	 *  less than len if there were partial characters
+	 *  at the end of the input. If the error
+	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *  stored will the byte offset after the last valid
+	 *  input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 *  including the terminating nul).
 	 * Throws: GException on failure.
 	 */
 	public static string filenameToUtf8(string opsysstring, int len, out uint bytesRead, out uint bytesWritten)
@@ -263,6 +326,20 @@ public class CharacterSet
 	 * filenames. Note that on Windows GLib uses UTF-8 for filenames;
 	 * on other platforms, this function indirectly depends on the
 	 * current locale.
+	 * Params:
+	 * utf8string = a UTF-8 encoded string.
+	 * len = the length of the string, or -1 if the string is
+	 *  nul-terminated.
+	 * bytesRead = location to store the number of bytes in the
+	 *  input string that were successfully converted, or NULL.
+	 *  Even if the conversion was successful, this may be
+	 *  less than len if there were partial characters
+	 *  at the end of the input. If the error
+	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *  stored will the byte offset after the last valid
+	 *  input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 *  including the terminating nul).
 	 * Throws: GException on failure.
 	 */
 	public static string filenameFromUtf8(string utf8string, int len, out uint bytesRead, out uint bytesWritten)
@@ -283,6 +360,11 @@ public class CharacterSet
 	/**
 	 * Converts an escaped ASCII-encoded URI to a local filename in the
 	 * encoding used for filenames.
+	 * Params:
+	 * uri = a uri describing a filename (escaped, encoded in ASCII).
+	 * hostname = Location to store hostname for the URI, or NULL.
+	 *  If there is no hostname in the URI, NULL will be
+	 *  stored in this location.
 	 * Throws: GException on failure.
 	 */
 	public static string filenameFromUri(string uri, out string hostname)
@@ -305,6 +387,11 @@ public class CharacterSet
 	/**
 	 * Converts an absolute filename to an escaped ASCII-encoded URI, with the path
 	 * component following Section 3.3. of RFC 2396.
+	 * Params:
+	 * filename = an absolute filename specified in the GLib file name encoding,
+	 *  which is the on-disk file name bytes on Unix, and UTF-8 on
+	 *  Windows
+	 * hostname = A UTF-8 encoded hostname, or NULL for none.
 	 * Throws: GException on failure.
 	 */
 	public static string filenameToUri(string filename, string hostname)
@@ -345,6 +432,8 @@ public class CharacterSet
 	 * G_FILENAME_ENCODING value, the actual file names present
 	 * on a system might be in any random encoding or just gibberish.
 	 * Since 2.6
+	 * Params:
+	 * charsets = return location for the NULL-terminated list of encoding names
 	 */
 	public static int getFilenameCharsets(out string[] charsets)
 	{
@@ -372,6 +461,8 @@ public class CharacterSet
 	 * g_filename_display_basename(), since that allows location-based
 	 * translation of filenames.
 	 * Since 2.6
+	 * Params:
+	 * filename = a pathname hopefully in the GLib file name encoding
 	 */
 	public static string filenameDisplayName(string filename)
 	{
@@ -394,6 +485,8 @@ public class CharacterSet
 	 * This function is preferred over g_filename_display_name() if you know the
 	 * whole path, as it allows translation.
 	 * Since 2.6
+	 * Params:
+	 * filename = an absolute pathname in the GLib file name encoding
 	 */
 	public static string filenameDisplayBasename(string filename)
 	{
@@ -406,6 +499,20 @@ public class CharacterSet
 	 * the C runtime (usually the same as that used by the operating
 	 * system) in the current locale. On
 	 * Windows this means the system codepage.
+	 * Params:
+	 * utf8string = a UTF-8 encoded string
+	 * len = the length of the string, or -1 if the string is
+	 *  nul-terminated[1].
+	 * bytesRead = location to store the number of bytes in the
+	 *  input string that were successfully converted, or NULL.
+	 *  Even if the conversion was successful, this may be
+	 *  less than len if there were partial characters
+	 *  at the end of the input. If the error
+	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *  stored will the byte offset after the last valid
+	 *  input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 *  including the terminating nul).
 	 * Throws: GException on failure.
 	 */
 	public static string localeFromUtf8(string utf8string, int len, out uint bytesRead, out uint bytesWritten)
@@ -438,6 +545,8 @@ public class CharacterSet
 	 * case you can perhaps avoid calling g_convert().
 	 * The string returned in charset is not allocated, and should not be
 	 * freed.
+	 * Params:
+	 * charset = return location for character set name
 	 */
 	public static int getCharset(out string charset)
 	{

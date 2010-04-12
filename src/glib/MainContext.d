@@ -238,6 +238,8 @@ public class MainContext
 	 * Note that even when may_block is TRUE, it is still possible for
 	 * g_main_context_iteration() to return FALSE, since the the wait may
 	 * be interrupted for other reasons than an event source becoming ready.
+	 * Params:
+	 * mayBlock = whether the call may block.
 	 */
 	public int iteration(int mayBlock)
 	{
@@ -256,6 +258,8 @@ public class MainContext
 	
 	/**
 	 * Finds a GSource given a pair of context and ID.
+	 * Params:
+	 * sourceId = the source ID, as returned by g_source_get_id().
 	 */
 	public Source findSourceById(uint sourceId)
 	{
@@ -272,6 +276,8 @@ public class MainContext
 	 * Finds a source with the given user data for the callback. If
 	 * multiple sources exist with the same user data, the first
 	 * one found will be returned.
+	 * Params:
+	 * userData = the user_data for the callback.
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
@@ -288,6 +294,9 @@ public class MainContext
 	 * Finds a source with the given source functions and user data. If
 	 * multiple sources exist with the same source function and user data,
 	 * the first one found will be returned.
+	 * Params:
+	 * funcs = the source_funcs passed to g_source_new().
+	 * userData = the user data from the callback.
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -358,6 +367,9 @@ public class MainContext
 	 * is the owner, atomically drop mutex and wait on cond until
 	 * that owner releases ownership or until cond is signaled, then
 	 * try again (once) to become the owner.
+	 * Params:
+	 * cond = a condition variable
+	 * mutex = a mutex, currently held
 	 */
 	public int wait(Cond cond, Mutex mutex)
 	{
@@ -368,6 +380,9 @@ public class MainContext
 	/**
 	 * Prepares to poll sources within a main loop. The resulting information
 	 * for polling is determined by calling g_main_context_query().
+	 * Params:
+	 * priority = location to store priority of highest priority
+	 *  source already ready.
 	 */
 	public int prepare(out int priority)
 	{
@@ -377,6 +392,11 @@ public class MainContext
 	
 	/**
 	 * Determines information necessary to poll this main loop.
+	 * Params:
+	 * maxPriority = maximum priority source to check
+	 * timeout = location to store timeout to be used in polling
+	 * fds = location to store GPollFD records that need to be polled.
+	 * nFds = length of fds.
 	 */
 	public int query(int maxPriority, out int timeout, GPollFD* fds, int nFds)
 	{
@@ -386,6 +406,11 @@ public class MainContext
 	
 	/**
 	 * Passes the results of polling back to the main loop.
+	 * Params:
+	 * maxPriority = the maximum numerical priority of sources to check
+	 * fds = array of GPollFD's that was passed to the last call to
+	 *  g_main_context_query()
+	 * nFds = return value of g_main_context_query()
 	 */
 	public int check(int maxPriority, GPollFD* fds, int nFds)
 	{
@@ -409,6 +434,8 @@ public class MainContext
 	 * poll() isn't available).
 	 * This function could possibly be used to integrate the GLib event
 	 * loop with an external event loop.
+	 * Params:
+	 * func = the function to call to poll all file descriptors
 	 */
 	public void setPollFunc(GPollFunc func)
 	{
@@ -429,6 +456,12 @@ public class MainContext
 	 * Adds a file descriptor to the set of file descriptors polled for
 	 * this context. This will very seldomly be used directly. Instead
 	 * a typical event source will use g_source_add_poll() instead.
+	 * Params:
+	 * fd = a GPollFD structure holding information about a file
+	 *  descriptor to watch.
+	 * priority = the priority for this file descriptor which should be
+	 *  the same as the priority used for g_source_attach() to ensure that the
+	 *  file descriptor is polled whenever the results may be needed.
 	 */
 	public void addPoll(GPollFD* fd, int priority)
 	{
@@ -439,6 +472,8 @@ public class MainContext
 	/**
 	 * Removes file descriptor from the set of file descriptors to be
 	 * polled for a particular context.
+	 * Params:
+	 * fd = a GPollFD descriptor previously added with g_main_context_add_poll()
 	 */
 	public void removePoll(GPollFD* fd)
 	{

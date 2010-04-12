@@ -126,6 +126,10 @@ public class Directory
 	/**
 	 * Opens a directory for reading. The names of the files in the
 	 * directory can then be retrieved using g_dir_read_name().
+	 * Params:
+	 * path = the path to the directory you are interested in. On Unix
+	 *  in the on-disk encoding. On Windows in UTF-8
+	 * flags = Currently must be set to 0. Reserved for future use.
 	 * Throws: GException on failure.
 	 */
 	public static Directory open(string path, uint flags)

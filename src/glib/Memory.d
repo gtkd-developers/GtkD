@@ -82,6 +82,8 @@ public class Memory
 	/**
 	 * Allocates n_bytes bytes of memory.
 	 * If n_bytes is 0 it returns NULL.
+	 * Params:
+	 * nBytes = the number of bytes to allocate
 	 */
 	public static void* malloc(uint nBytes)
 	{
@@ -92,6 +94,8 @@ public class Memory
 	/**
 	 * Allocates n_bytes bytes of memory, initialized to 0's.
 	 * If n_bytes is 0 it returns NULL.
+	 * Params:
+	 * nBytes = the number of bytes to allocate
 	 */
 	public static void* malloc0(uint nBytes)
 	{
@@ -105,6 +109,9 @@ public class Memory
 	 * have been moved. mem may be NULL, in which case it's considered to
 	 * have zero-length. n_bytes may be 0, in which case NULL will be returned
 	 * and mem will be freed unless it is NULL.
+	 * Params:
+	 * mem = the memory to reallocate
+	 * nBytes = new size of the memory in bytes
 	 */
 	public static void* realloc(void* mem, uint nBytes)
 	{
@@ -115,6 +122,8 @@ public class Memory
 	/**
 	 * Attempts to allocate n_bytes, and returns NULL on failure.
 	 * Contrast with g_malloc(), which aborts the program on failure.
+	 * Params:
+	 * nBytes = number of bytes to allocate.
 	 */
 	public static void* tryMalloc(uint nBytes)
 	{
@@ -126,6 +135,8 @@ public class Memory
 	 * Attempts to allocate n_bytes, initialized to 0's, and returns NULL on
 	 * failure. Contrast with g_malloc0(), which aborts the program on failure.
 	 * Since 2.8
+	 * Params:
+	 * nBytes = number of bytes to allocate
 	 */
 	public static void* tryMalloc0(uint nBytes)
 	{
@@ -137,6 +148,9 @@ public class Memory
 	 * Attempts to realloc mem to a new size, n_bytes, and returns NULL
 	 * on failure. Contrast with g_realloc(), which aborts the program
 	 * on failure. If mem is NULL, behaves the same as g_try_malloc().
+	 * Params:
+	 * mem = previously-allocated memory, or NULL.
+	 * nBytes = number of bytes to allocate.
 	 */
 	public static void* tryRealloc(void* mem, uint nBytes)
 	{
@@ -145,74 +159,10 @@ public class Memory
 	}
 	
 	/**
-	 * This function is similar to g_malloc(), allocating (n_blocks * n_block_bytes) bytes,
-	 * but care is taken to detect possible overflow during multiplication.
-	 * Since 2.24
-	 */
-	public static void* mallocN(uint nBlocks, uint nBlockBytes)
-	{
-		// gpointer g_malloc_n (gsize n_blocks,  gsize n_block_bytes);
-		return g_malloc_n(nBlocks, nBlockBytes);
-	}
-	
-	/**
-	 * This function is similar to g_malloc0(), allocating (n_blocks * n_block_bytes) bytes,
-	 * but care is taken to detect possible overflow during multiplication.
-	 * Since 2.24
-	 */
-	public static void* malloc0_N(uint nBlocks, uint nBlockBytes)
-	{
-		// gpointer g_malloc0_n (gsize n_blocks,  gsize n_block_bytes);
-		return g_malloc0_n(nBlocks, nBlockBytes);
-	}
-	
-	/**
-	 * This function is similar to g_realloc(), allocating (n_blocks * n_block_bytes) bytes,
-	 * but care is taken to detect possible overflow during multiplication.
-	 * Since 2.24
-	 */
-	public static void* reallocN(void* mem, uint nBlocks, uint nBlockBytes)
-	{
-		// gpointer g_realloc_n (gpointer mem,  gsize n_blocks,  gsize n_block_bytes);
-		return g_realloc_n(mem, nBlocks, nBlockBytes);
-	}
-	
-	/**
-	 * This function is similar to g_try_malloc(), allocating (n_blocks * n_block_bytes) bytes,
-	 * but care is taken to detect possible overflow during multiplication.
-	 * Since 2.24
-	 */
-	public static void* tryMallocN(uint nBlocks, uint nBlockBytes)
-	{
-		// gpointer g_try_malloc_n (gsize n_blocks,  gsize n_block_bytes);
-		return g_try_malloc_n(nBlocks, nBlockBytes);
-	}
-	
-	/**
-	 * This function is similar to g_try_malloc0(), allocating (n_blocks * n_block_bytes) bytes,
-	 * but care is taken to detect possible overflow during multiplication.
-	 * Since 2.24
-	 */
-	public static void* tryMalloc0_N(uint nBlocks, uint nBlockBytes)
-	{
-		// gpointer g_try_malloc0_n (gsize n_blocks,  gsize n_block_bytes);
-		return g_try_malloc0_n(nBlocks, nBlockBytes);
-	}
-	
-	/**
-	 * This function is similar to g_try_realloc(), allocating (n_blocks * n_block_bytes) bytes,
-	 * but care is taken to detect possible overflow during multiplication.
-	 * Since 2.24
-	 */
-	public static void* tryReallocN(void* mem, uint nBlocks, uint nBlockBytes)
-	{
-		// gpointer g_try_realloc_n (gpointer mem,  gsize n_blocks,  gsize n_block_bytes);
-		return g_try_realloc_n(mem, nBlocks, nBlockBytes);
-	}
-	
-	/**
 	 * Frees the memory pointed to by mem.
 	 * If mem is NULL it simply returns.
+	 * Params:
+	 * mem = the memory to free
 	 */
 	public static void free(void* mem)
 	{
@@ -223,6 +173,9 @@ public class Memory
 	/**
 	 * Allocates byte_size bytes of memory, and copies byte_size bytes into it
 	 * from mem. If mem is NULL it returns NULL.
+	 * Params:
+	 * mem = the memory to copy.
+	 * byteSize = the number of bytes to copy.
 	 */
 	public static void* memdup(void* mem, uint byteSize)
 	{
@@ -238,6 +191,8 @@ public class Memory
 	 * implementations of the others. The malloc() and realloc() implementations
 	 * should return NULL on failure, GLib will handle error-checking for you.
 	 * vtable is copied, so need not persist after this function has been called.
+	 * Params:
+	 * vtable = table of memory allocation routines.
 	 */
 	public static void memSetVtable(GMemVTable* vtable)
 	{

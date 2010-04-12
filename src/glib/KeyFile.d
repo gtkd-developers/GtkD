@@ -231,6 +231,8 @@ public class KeyFile
 	 * values in lists. Typically ';' or ',' are used
 	 * as separators. The default list separator is ';'.
 	 * Since 2.6
+	 * Params:
+	 * separator = the separator
 	 */
 	public void setListSeparator(char separator)
 	{
@@ -243,6 +245,9 @@ public class KeyFile
 	 * If the file could not be loaded then error is set to
 	 * either a GFileError or GKeyFileError.
 	 * Since 2.6
+	 * Params:
+	 * file = the path of a filename to load, in the GLib filename encoding
+	 * flags = flags from GKeyFileFlags
 	 * Throws: GException on failure.
 	 */
 	public int loadFromFile(string file, GKeyFileFlags flags)
@@ -264,6 +269,10 @@ public class KeyFile
 	 * Loads a key file from memory into an empty GKeyFile structure.
 	 * If the object cannot be created then error is set to a GKeyFileError.
 	 * Since 2.6
+	 * Params:
+	 * data = key file loaded in memory
+	 * length = the length of data in bytes
+	 * flags = flags from GKeyFileFlags
 	 * Throws: GException on failure.
 	 */
 	public int loadFromData(string data, uint length, GKeyFileFlags flags)
@@ -288,6 +297,11 @@ public class KeyFile
 	 * full_path. If the file could not be loaded then an error is
 	 * set to either a GFileError or GKeyFileError.
 	 * Since 2.6
+	 * Params:
+	 * file = a relative path to a filename to open and parse
+	 * fullPath = return location for a string containing the full path
+	 *  of the file, or NULL
+	 * flags = flags from GKeyFileFlags
 	 * Throws: GException on failure.
 	 */
 	public int loadFromDataDirs(string file, out string fullPath, GKeyFileFlags flags)
@@ -312,6 +326,9 @@ public class KeyFile
 	 * Note that this function never reports an error,
 	 * so it is safe to pass NULL as error.
 	 * Since 2.6
+	 * Params:
+	 * length = return location for the length of the
+	 *  returned string, or NULL
 	 * Throws: GException on failure.
 	 */
 	public string toData(out uint length)
@@ -344,6 +361,8 @@ public class KeyFile
 	 * The array of returned groups will be NULL-terminated, so
 	 * length may optionally be NULL.
 	 * Since 2.6
+	 * Params:
+	 * length = return location for the number of returned groups, or NULL
 	 */
 	public string[] getGroups(out uint length)
 	{
@@ -358,6 +377,9 @@ public class KeyFile
 	 * be found, NULL is returned and error is set to
 	 * G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * length = return location for the number of keys returned, or NULL
 	 * Throws: GException on failure.
 	 */
 	public string[] getKeys(string groupName, out uint length)
@@ -378,6 +400,8 @@ public class KeyFile
 	/**
 	 * Looks whether the key file has the group group_name.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
 	 */
 	public int hasGroup(string groupName)
 	{
@@ -389,6 +413,9 @@ public class KeyFile
 	 * Looks whether the key file has the key key in the group
 	 * group_name.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key name
 	 * Throws: GException on failure.
 	 */
 	public int hasKey(string groupName, string key)
@@ -414,6 +441,9 @@ public class KeyFile
 	 * event that the group_name cannot be found, NULL is returned
 	 * and error is set to G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public string getValue(string groupName, string key)
@@ -440,6 +470,9 @@ public class KeyFile
 	 * event that the group_name cannot be found, NULL is returned
 	 * and error is set to G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public string getString(string groupName, string key)
@@ -466,6 +499,10 @@ public class KeyFile
 	 * with key cannot be interpreted or no suitable translation can
 	 * be found then the untranslated value is returned.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * locale = a locale identifier or NULL
 	 * Throws: GException on failure.
 	 */
 	public string getLocaleString(string groupName, string key, string locale)
@@ -491,6 +528,9 @@ public class KeyFile
 	 * associated with key cannot be interpreted as a boolean then FALSE
 	 * is returned and error is set to G_KEY_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public int getBoolean(string groupName, string key)
@@ -516,6 +556,9 @@ public class KeyFile
 	 * with key cannot be interpreted as an integer then 0 is returned
 	 * and error is set to G_KEY_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public int getInteger(string groupName, string key)
@@ -541,6 +584,9 @@ public class KeyFile
 	 * with key cannot be interpreted as a double then 0.0 is returned
 	 * and error is set to G_KEY_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.12
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public double getDouble(string groupName, string key)
@@ -565,6 +611,10 @@ public class KeyFile
 	 * event that the group_name cannot be found, NULL is returned
 	 * and error is set to G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * length = return location for the number of returned strings, or NULL
 	 * Throws: GException on failure.
 	 */
 	public string[] getStringList(string groupName, string key, out uint length)
@@ -593,6 +643,11 @@ public class KeyFile
 	 * returned array is NULL-terminated, so length may optionally
 	 * be NULL.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * locale = a locale identifier or NULL
+	 * length = return location for the number of returned strings or NULL
 	 * Throws: GException on failure.
 	 */
 	public string[] getLocaleStringList(string groupName, string key, string locale, out uint length)
@@ -618,6 +673,9 @@ public class KeyFile
 	 * with key cannot be interpreted as booleans then NULL is returned
 	 * and error is set to G_KEY_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public int[] getBooleanList(string groupName, string key)
@@ -644,6 +702,9 @@ public class KeyFile
 	 * with key cannot be interpreted as integers then NULL is returned
 	 * and error is set to G_KEY_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public int[] getIntegerList(string groupName, string key)
@@ -670,6 +731,9 @@ public class KeyFile
 	 * with key cannot be interpreted as doubles then NULL is returned
 	 * and error is set to G_KEY_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.12
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public double[] getDoubleList(string groupName, string key)
@@ -694,6 +758,9 @@ public class KeyFile
 	 * group_name. If both key and group_name are NULL, then
 	 * comment will be read from above the first group in the file.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name, or NULL
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public string getComment(string groupName, string key)
@@ -718,6 +785,10 @@ public class KeyFile
 	 * characters that need escaping (such as newlines or spaces), use
 	 * g_key_file_set_string().
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * value = a string
 	 */
 	public void setValue(string groupName, string key, string value)
 	{
@@ -733,7 +804,9 @@ public class KeyFile
 	 * that need escaping, such as newlines.
 	 * Since 2.6
 	 * Params:
-	 * string  =  a string
+	 * groupName = a group name
+	 * key = a key
+	 * string = a string
 	 */
 	public void setString(string groupName, string key, string string)
 	{
@@ -746,7 +819,10 @@ public class KeyFile
 	 * If the translation for key cannot be found then it is created.
 	 * Since 2.6
 	 * Params:
-	 * string  =  a string
+	 * groupName = a group name
+	 * key = a key
+	 * locale = a locale identifier
+	 * string = a string
 	 */
 	public void setLocaleString(string groupName, string key, string locale, string string)
 	{
@@ -758,6 +834,10 @@ public class KeyFile
 	 * Associates a new boolean value with key under group_name.
 	 * If key cannot be found then it is created.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * value = TRUE or FALSE
 	 */
 	public void setBoolean(string groupName, string key, int value)
 	{
@@ -769,6 +849,10 @@ public class KeyFile
 	 * Associates a new integer value with key under group_name.
 	 * If key cannot be found then it is created.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * value = an integer value
 	 */
 	public void setInteger(string groupName, string key, int value)
 	{
@@ -780,6 +864,10 @@ public class KeyFile
 	 * Associates a new double value with key under group_name.
 	 * If key cannot be found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * value = an double value
 	 */
 	public void setDouble(string groupName, string key, double value)
 	{
@@ -792,6 +880,11 @@ public class KeyFile
 	 * If key cannot be found then it is created.
 	 * If group_name cannot be found then it is created.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * list = an array of string values
+	 * length = number of string values in list
 	 */
 	public void setStringList(string groupName, string key, char*[] list, uint length)
 	{
@@ -804,6 +897,12 @@ public class KeyFile
 	 * group_name. If the translation for key cannot be found then
 	 * it is created.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * locale = a locale identifier
+	 * list = a NULL-terminated array of locale string values
+	 * length = the length of list
 	 */
 	public void setLocaleStringList(string groupName, string key, string locale, char*[] list, uint length)
 	{
@@ -816,6 +915,11 @@ public class KeyFile
 	 * If key cannot be found then it is created.
 	 * If group_name is NULL, the start_group is used.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * list = an array of boolean values
+	 * length = length of list
 	 */
 	public void setBooleanList(string groupName, string key, int[] list, uint length)
 	{
@@ -827,6 +931,11 @@ public class KeyFile
 	 * Associates a list of integer values with key under group_name.
 	 * If key cannot be found then it is created.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * list = an array of integer values
+	 * length = number of integer values in list
 	 */
 	public void setIntegerList(string groupName, string key, int[] list, uint length)
 	{
@@ -838,6 +947,11 @@ public class KeyFile
 	 * Associates a list of double values with key under
 	 * group_name. If key cannot be found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * list = an array of double values
+	 * length = number of double values in list
 	 */
 	public void setDoubleList(string groupName, string key, double[] list, uint length)
 	{
@@ -851,6 +965,10 @@ public class KeyFile
 	 * If both key and group_name are NULL, then comment will be
 	 * written above the first group in the file.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name, or NULL
+	 * key = a key
+	 * comment = a comment
 	 * Throws: GException on failure.
 	 */
 	public int setComment(string groupName, string key, string comment)
@@ -872,6 +990,8 @@ public class KeyFile
 	 * Removes the specified group, group_name,
 	 * from the key file.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
 	 * Throws: GException on failure.
 	 */
 	public int removeGroup(string groupName)
@@ -892,6 +1012,9 @@ public class KeyFile
 	/**
 	 * Removes key in group_name from the key file.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name
+	 * key = a key name to remove
 	 * Throws: GException on failure.
 	 */
 	public int removeKey(string groupName, string key)
@@ -915,6 +1038,9 @@ public class KeyFile
 	 * If both key and group_name are NULL, then comment will
 	 * be removed above the first group in the file.
 	 * Since 2.6
+	 * Params:
+	 * groupName = a group name, or NULL
+	 * key = a key
 	 * Throws: GException on failure.
 	 */
 	public int removeComment(string groupName, string key)

@@ -178,6 +178,18 @@ public class OptionGroup
 	/**
 	 * Creates a new GOptionGroup.
 	 * Since 2.6
+	 * Params:
+	 * name = the name for the option group, this is used to provide
+	 *  help for the options in this group with --help-name
+	 * description = a description for this group to be shown in
+	 *  --help. This string is translated using the translation
+	 *  domain or translation function of the group
+	 * helpDescription = a description for the --help-name option.
+	 *  This string is translated using the translation domain or translation function
+	 *  of the group
+	 * userData = user data that will be passed to the pre- and post-parse hooks,
+	 *  the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
+	 * destroy = a function that will be called to free user_data, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
@@ -205,6 +217,8 @@ public class OptionGroup
 	/**
 	 * Adds the options specified in entries to group.
 	 * Since 2.6
+	 * Params:
+	 * entries = a NULL-terminated array of GOptionEntrys
 	 */
 	public void addEntries(GOptionEntry* entries)
 	{
@@ -220,6 +234,9 @@ public class OptionGroup
 	 * post_parse_func can be specified when constructing the group
 	 * with g_option_group_new().
 	 * Since 2.6
+	 * Params:
+	 * preParseFunc = a function to call before parsing, or NULL
+	 * postParseFunc = a function to call after parsing, or NULL
 	 */
 	public void setParseHooks(GOptionParseFunc preParseFunc, GOptionParseFunc postParseFunc)
 	{
@@ -233,6 +250,8 @@ public class OptionGroup
 	 * Note that the user data to be passed to error_func can be
 	 * specified when constructing the group with g_option_group_new().
 	 * Since 2.6
+	 * Params:
+	 * errorFunc = a function to call when an error occurs
 	 */
 	public void setErrorHook(GOptionErrorFunc errorFunc)
 	{
@@ -248,6 +267,10 @@ public class OptionGroup
 	 * If you are using gettext(), you only need to set the translation
 	 * domain, see g_option_group_set_translation_domain().
 	 * Since 2.6
+	 * Params:
+	 * func = the GTranslateFunc, or NULL
+	 * data = user data to pass to func, or NULL
+	 * destroyNotify = a function which gets called to free data, or NULL
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{
@@ -259,6 +282,8 @@ public class OptionGroup
 	 * A convenience function to use gettext() for translating
 	 * user-visible strings.
 	 * Since 2.6
+	 * Params:
+	 * domain = the domain to use
 	 */
 	public void setTranslationDomain(string domain)
 	{

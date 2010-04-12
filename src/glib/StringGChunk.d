@@ -64,22 +64,21 @@ private import glib.Str;
 
 /**
  * Description
- * String chunks are used to store groups of strings. Memory is
- * allocated in blocks, and as strings are added to the GStringChunk
- * they are copied into the next free position in a block. When a block
- * is full a new block is allocated.
- * When storing a large number of strings, string chunks are more
- * efficient than using g_strdup() since fewer calls to malloc() are
- * needed, and less memory is wasted in memory allocation overheads.
- * By adding strings with g_string_chunk_insert_const() it is also
- * possible to remove duplicates.
+ * String chunks are used to store groups of strings.
+ * Memory is allocated in blocks, and as strings are added to the GStringChunk
+ * they are copied into the next free position in a block. When a block is
+ * full a new block is allocated.
+ * When storing a large number of strings, string chunks are more efficient
+ * than using g_strdup() since fewer calls to malloc() are needed, and less
+ * memory is wasted in memory allocation overheads.
+ * By adding strings with g_string_chunk_insert_const() it is also possible
+ * to remove duplicates.
  * To create a new GStringChunk use g_string_chunk_new().
  * To add strings to a GStringChunk use g_string_chunk_insert().
- * To add strings to a GStringChunk, but without duplicating strings
- * which are already in the GStringChunk, use
- * g_string_chunk_insert_const().
- * To free the entire GStringChunk use g_string_chunk_free(). It is
- * not possible to free individual strings.
+ * To add strings to a GStringChunk, but without duplicating strings which are
+ * already in the GStringChunk, use g_string_chunk_insert_const().
+ * To free the entire GStringChunk use g_string_chunk_free().
+ * It is not possible to free individual strings.
  */
 public class StringGChunk
 {
@@ -119,7 +118,7 @@ public class StringGChunk
 	/**
 	 * Creates a new GStringChunk.
 	 * Params:
-	 * size  =  the default size of the blocks of memory which are
+	 * size = the default size of the blocks of memory which are
 	 *  allocated to store the strings. If a particular string
 	 *  is larger than this default size, a larger block of
 	 *  memory will be allocated for it.
@@ -148,7 +147,7 @@ public class StringGChunk
 	 * by g_string_chunk_insert_const() when looking for
 	 * duplicates.
 	 * Params:
-	 * string  =  the string to add
+	 * string = the string to add
 	 */
 	public string insert(string string)
 	{
@@ -169,7 +168,7 @@ public class StringGChunk
 	 * pointer to a string added with g_string_chunk_insert(), even
 	 * if they do match.
 	 * Params:
-	 * string  =  the string to add
+	 * string = the string to add
 	 */
 	public string insertConst(string string)
 	{
@@ -187,7 +186,9 @@ public class StringGChunk
 	 * though you should not change anything after the end of the string.
 	 * Since 2.4
 	 * Params:
-	 * string  =  bytes to insert
+	 * string = bytes to insert
+	 * len = number of bytes of string to insert, or -1 to insert a
+	 *  nul-terminated string
 	 */
 	public string insertLen(string string, int len)
 	{

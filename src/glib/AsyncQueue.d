@@ -157,6 +157,8 @@ public class AsyncQueue
 	 * sets up a destroy notify function that is used to free any remaining
 	 * queue items when the queue is destroyed after the final unref.
 	 * Since 2.16
+	 * Params:
+	 * itemFreeFunc = function to free queue elements
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify itemFreeFunc)
@@ -200,6 +202,8 @@ public class AsyncQueue
 	
 	/**
 	 * Pushes the data into the queue. data must not be NULL.
+	 * Params:
+	 * data = data to push into the queue.
 	 */
 	public void push(void* data)
 	{
@@ -216,6 +220,14 @@ public class AsyncQueue
 	 * it when it is finished.
 	 * For an example of func see g_async_queue_sort().
 	 * Since 2.10
+	 * Params:
+	 * data = the data to push into the queue
+	 * func = the GCompareDataFunc is used to sort queue. This function
+	 *  is passed two elements of the queue. The function should return
+	 *  0 if they are equal, a negative value if the first element
+	 *  should be higher in the queue or a positive value if the first
+	 *  element should be lower in the queue than the second element.
+	 * userData = user data passed to func.
 	 */
 	public void pushSorted(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -248,6 +260,8 @@ public class AsyncQueue
 	 * NULL is returned.
 	 * To easily calculate end_time a combination of g_get_current_time()
 	 * and g_time_val_add() can be used.
+	 * Params:
+	 * endTime = a GTimeVal, determining the final time.
 	 */
 	public void* timedPop(TimeVal endTime)
 	{
@@ -276,6 +290,14 @@ public class AsyncQueue
 	 * it when it is finished.
 	 * If you were sorting a list of priority numbers to make sure the
 	 * Since 2.10
+	 * Params:
+	 * func = the GCompareDataFunc is used to sort queue. This
+	 *  function is passed two elements of the queue. The function
+	 *  should return 0 if they are equal, a negative value if the
+	 *  first element should be higher in the queue or a positive
+	 *  value if the first element should be lower in the queue than
+	 *  the second element.
+	 * userData = user data passed to func
 	 */
 	public void sort(GCompareDataFunc func, void* userData)
 	{
@@ -337,6 +359,8 @@ public class AsyncQueue
 	/**
 	 * Pushes the data into the queue. data must not be NULL. This
 	 * function must be called while holding the queue's lock.
+	 * Params:
+	 * data = data to push into the queue.
 	 */
 	public void pushUnlocked(void* data)
 	{
@@ -352,6 +376,14 @@ public class AsyncQueue
 	 * This function is called while holding the queue's lock.
 	 * For an example of func see g_async_queue_sort().
 	 * Since 2.10
+	 * Params:
+	 * data = the data to push into the queue
+	 * func = the GCompareDataFunc is used to sort queue. This function
+	 *  is passed two elements of the queue. The function should return
+	 *  0 if they are equal, a negative value if the first element
+	 *  should be higher in the queue or a positive value if the first
+	 *  element should be lower in the queue than the second element.
+	 * userData = user data passed to func.
 	 */
 	public void pushSortedUnlocked(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -387,6 +419,8 @@ public class AsyncQueue
 	 * queue's lock.
 	 * To easily calculate end_time a combination of g_get_current_time()
 	 * and g_time_val_add() can be used.
+	 * Params:
+	 * endTime = a GTimeVal, determining the final time.
 	 */
 	public void* timedPopUnlocked(TimeVal endTime)
 	{
@@ -414,6 +448,14 @@ public class AsyncQueue
 	 * Sorts queue using func.
 	 * This function is called while holding the queue's lock.
 	 * Since 2.10
+	 * Params:
+	 * func = the GCompareDataFunc is used to sort queue. This
+	 *  function is passed two elements of the queue. The function
+	 *  should return 0 if they are equal, a negative value if the
+	 *  first element should be higher in the queue or a positive
+	 *  value if the first element should be lower in the queue than
+	 *  the second element.
+	 * userData = user data passed to func
 	 */
 	public void sortUnlocked(GCompareDataFunc func, void* userData)
 	{

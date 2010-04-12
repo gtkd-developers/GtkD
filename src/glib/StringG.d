@@ -107,6 +107,8 @@ public class StringG
 	
 	/**
 	 * Creates a new GString, initialized with the given string.
+	 * Params:
+	 * init = the initial text to copy into the string
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string init)
@@ -127,6 +129,9 @@ public class StringG
 	 * Since this function does not stop at nul bytes, it is the caller's
 	 * responsibility to ensure that init has at least len addressable
 	 * bytes.
+	 * Params:
+	 * init = initial contents of the string
+	 * len = length of init to use
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string init, int len)
@@ -145,6 +150,9 @@ public class StringG
 	 * bytes. This is useful if you are going to add a lot of
 	 * text to the string and don't want it to be reallocated
 	 * too often.
+	 * Params:
+	 * dflSize = the default size of the space allocated to
+	 *  hold the string
 	 */
 	public static StringG sizedNew(uint dflSize)
 	{
@@ -163,8 +171,9 @@ public class StringG
 	 * the standard strcpy() function, except that you do not
 	 * have to worry about having enough space to copy the string.
 	 * Params:
-	 * string  =  the destination GString. Its current contents
+	 * string = the destination GString. Its current contents
 	 *  are destroyed.
+	 * rval = the string to copy into string
 	 */
 	public StringG assign(string rval)
 	{
@@ -183,7 +192,9 @@ public class StringG
 	 * the arguments to the format string are passed as a va_list.
 	 * Since 2.14
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * format = the string format. See the printf() documentation
+	 * args = the parameters to insert into the format string
 	 */
 	public void vprintf(string format, void* args)
 	{
@@ -198,7 +209,9 @@ public class StringG
 	 * as a va_list.
 	 * Since 2.14
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * format = the string format. See the printf() documentation
+	 * args = the list of arguments to insert in the output
 	 */
 	public void appendVprintf(string format, void* args)
 	{
@@ -210,7 +223,8 @@ public class StringG
 	 * Adds a string onto the end of a GString, expanding
 	 * it if necessary.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * val = the string to append onto the end of string
 	 */
 	public StringG append(string val)
 	{
@@ -227,7 +241,7 @@ public class StringG
 	 * Adds a byte onto the end of a GString, expanding
 	 * it if necessary.
 	 * Params:
-	 * c  =  the byte to append onto the end of string
+	 * c = the byte to append onto the end of string
 	 */
 	public StringG appendC(char c)
 	{
@@ -243,6 +257,8 @@ public class StringG
 	/**
 	 * Converts a Unicode character into UTF-8, and appends it
 	 * to the string.
+	 * Params:
+	 * wc = a Unicode character
 	 */
 	public StringG appendUnichar(gunichar wc)
 	{
@@ -263,7 +279,9 @@ public class StringG
 	 * the caller's responsibility to ensure that val has at
 	 * least len addressable bytes.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * val = bytes to append
+	 * len = number of bytes of val to use
 	 */
 	public StringG appendLen(string val, int len)
 	{
@@ -281,7 +299,10 @@ public class StringG
 	 * are reserved in URIs using URI-style escape sequences.
 	 * Since 2.16
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * unescaped = a string
+	 * reservedCharsAllowed = a string of reserved characters allowed to be used
+	 * allowUtf8 = set TRUE if the escaped string may include UTF8 characters
 	 */
 	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
@@ -298,7 +319,8 @@ public class StringG
 	 * Adds a string on to the start of a GString,
 	 * expanding it if necessary.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * val = the string to prepend on the start of string
 	 */
 	public StringG prepend(string val)
 	{
@@ -315,7 +337,7 @@ public class StringG
 	 * Adds a byte onto the start of a GString,
 	 * expanding it if necessary.
 	 * Params:
-	 * c  =  the byte to prepend on the start of the GString
+	 * c = the byte to prepend on the start of the GString
 	 */
 	public StringG prependC(char c)
 	{
@@ -331,6 +353,8 @@ public class StringG
 	/**
 	 * Converts a Unicode character into UTF-8, and prepends it
 	 * to the string.
+	 * Params:
+	 * wc = a Unicode character
 	 */
 	public StringG prependUnichar(gunichar wc)
 	{
@@ -351,7 +375,9 @@ public class StringG
 	 * it is the caller's responsibility to ensure that
 	 * val has at least len addressable bytes.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * val = bytes to prepend
+	 * len = number of bytes in val to prepend
 	 */
 	public StringG prependLen(string val, int len)
 	{
@@ -368,7 +394,9 @@ public class StringG
 	 * Inserts a copy of a string into a GString,
 	 * expanding it if necessary.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * pos = the position to insert the copy of the string
+	 * val = the string to insert
 	 */
 	public StringG insert(int pos, string val)
 	{
@@ -384,7 +412,8 @@ public class StringG
 	/**
 	 * Inserts a byte into a GString, expanding it if necessary.
 	 * Params:
-	 * c  =  the byte to insert
+	 * pos = the position to insert the byte
+	 * c = the byte to insert
 	 */
 	public StringG insertC(int pos, char c)
 	{
@@ -400,6 +429,10 @@ public class StringG
 	/**
 	 * Converts a Unicode character into UTF-8, and insert it
 	 * into the string at the given position.
+	 * Params:
+	 * pos = the position at which to insert character, or -1 to
+	 *  append at the end of the string
+	 * wc = a Unicode character
 	 */
 	public StringG insertUnichar(int pos, gunichar wc)
 	{
@@ -421,7 +454,11 @@ public class StringG
 	 * the caller's responsibility to ensure that val has at
 	 * least len addressable bytes.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * pos = position in string where insertion should
+	 *  happen, or -1 for at the end
+	 * val = bytes to insert
+	 * len = number of bytes of val to insert
 	 */
 	public StringG insertLen(int pos, string val, int len)
 	{
@@ -438,7 +475,9 @@ public class StringG
 	 * Overwrites part of a string, lengthening it if necessary.
 	 * Since 2.14
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * pos = the position at which to start overwriting
+	 * val = the string that will overwrite the string starting at pos
 	 */
 	public StringG overwrite(uint pos, string val)
 	{
@@ -456,7 +495,10 @@ public class StringG
 	 * This function will work with embedded nuls.
 	 * Since 2.14
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * pos = the position at which to start overwriting
+	 * val = the string that will overwrite the string starting at pos
+	 * len = the number of bytes to write from val
 	 */
 	public StringG overwriteLen(uint pos, string val, int len)
 	{
@@ -472,6 +514,10 @@ public class StringG
 	/**
 	 * Removes len bytes from a GString, starting at position pos.
 	 * The rest of the GString is shifted down to fill the gap.
+	 * Params:
+	 * pos = the position of the content to remove
+	 * len = the number of bytes to remove, or -1 to remove all
+	 *  following bytes
 	 */
 	public StringG erase(int pos, int len)
 	{
@@ -486,6 +532,8 @@ public class StringG
 	
 	/**
 	 * Cuts off the end of the GString, leaving the first len bytes.
+	 * Params:
+	 * len = the new size of string
 	 */
 	public StringG truncate(uint len)
 	{
@@ -504,6 +552,8 @@ public class StringG
 	 * length is greater than the current length, the contents
 	 * of the newly added area are undefined. (However, as
 	 * always, string->str[string->len] will be a nul byte.)
+	 * Params:
+	 * len = the new length
 	 */
 	public StringG setSize(uint len)
 	{
@@ -520,7 +570,8 @@ public class StringG
 	 * Frees the memory allocated for the GString.
 	 * If free_segment is TRUE it also frees the character data.
 	 * Params:
-	 * string  =  a GString
+	 * string = a GString
+	 * freeSegment = if TRUE the actual character data is freed as well
 	 */
 	public string free(int freeSegment)
 	{
@@ -576,6 +627,9 @@ public class StringG
 	/**
 	 * Compares two strings for equality, returning TRUE if they are equal.
 	 * For use with GHashTable.
+	 * Params:
+	 * v = a GString
+	 * v2 = another GString
 	 */
 	public int equal(StringG v2)
 	{

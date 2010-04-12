@@ -160,6 +160,10 @@ public class Regex
 	 * Compiles the regular expression to an internal form, and does
 	 * the initial setup of the GRegex structure.
 	 * Since 2.14
+	 * Params:
+	 * pattern = the regular expression
+	 * compileOptions = compile options for the regular expression, or 0
+	 * matchOptions = match options for the regular expression, or 0
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -244,6 +248,8 @@ public class Regex
 	/**
 	 * Retrieves the number of the subexpression named name.
 	 * Since 2.14
+	 * Params:
+	 * name = name of the subexpression
 	 */
 	public int getStringNumber(string name)
 	{
@@ -260,7 +266,8 @@ public class Regex
 	 * in length.
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to escape
+	 * string = the string to escape
+	 * length = the length of string, or -1 if string is nul-terminated
 	 */
 	public static string escapeString(string string, int length)
 	{
@@ -279,7 +286,10 @@ public class Regex
 	 * g_regex_new() and then use g_regex_match().
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to scan for matches
+	 * pattern = the regular expression
+	 * string = the string to scan for matches
+	 * compileOptions = compile options for the regular expression, or 0
+	 * matchOptions = match options, or 0
 	 */
 	public static int matchSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -321,7 +331,10 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to scan for matches
+	 * string = the string to scan for matches
+	 * matchOptions = match options
+	 * matchInfo = pointer to location where to store the GMatchInfo,
+	 *  or NULL if you do not need it
 	 */
 	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
@@ -378,7 +391,12 @@ public class Regex
 	 * }
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to scan for matches
+	 * string = the string to scan for matches
+	 * stringLen = the length of string, or -1 if string is nul-terminated
+	 * startPosition = starting index of the string to match
+	 * matchOptions = match options
+	 * matchInfo = pointer to location where to store the GMatchInfo,
+	 *  or NULL if you do not need it
 	 * Throws: GException on failure.
 	 */
 	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -413,7 +431,10 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to scan for matches
+	 * string = the string to scan for matches
+	 * matchOptions = match options
+	 * matchInfo = pointer to location where to store the GMatchInfo,
+	 *  or NULL if you do not need it
 	 */
 	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
@@ -459,7 +480,12 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to scan for matches
+	 * string = the string to scan for matches
+	 * stringLen = the length of string, or -1 if string is nul-terminated
+	 * startPosition = starting index of the string to match
+	 * matchOptions = match options
+	 * matchInfo = pointer to location where to store the GMatchInfo,
+	 *  or NULL if you do not need it
 	 * Throws: GException on failure.
 	 */
 	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -505,7 +531,10 @@ public class Regex
 	 * "\s*", you will get "a", "b" and "c".
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to scan for matches
+	 * pattern = the regular expression
+	 * string = the string to scan for matches
+	 * compileOptions = compile options for the regular expression, or 0
+	 * matchOptions = match options, or 0
 	 */
 	public static string[] splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -531,7 +560,8 @@ public class Regex
 	 * "a", "b" and "c".
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to split with the pattern
+	 * string = the string to split with the pattern
+	 * matchOptions = match time option flags
 	 */
 	public string[] split(string string, GRegexMatchFlags matchOptions)
 	{
@@ -560,7 +590,12 @@ public class Regex
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to split with the pattern
+	 * string = the string to split with the pattern
+	 * stringLen = the length of string, or -1 if string is nul-terminated
+	 * startPosition = starting index of the string to match
+	 * matchOptions = match time option flags
+	 * maxTokens = the maximum number of tokens to split string into.
+	 *  If this is less than 1, the string is split completely
 	 * Throws: GException on failure.
 	 */
 	public string[] splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
@@ -588,7 +623,11 @@ public class Regex
 	 * of a character. To include a literal '\' in the replacement, write '\\'.
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to perform matches against
+	 * string = the string to perform matches against
+	 * stringLen = the length of string, or -1 if string is nul-terminated
+	 * startPosition = starting index of the string to match
+	 * replacement = text to replace each match with
+	 * matchOptions = options for the match
 	 * Throws: GException on failure.
 	 */
 	public string replace(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
@@ -616,7 +655,11 @@ public class Regex
 	 * assertion, such as "\b".
 	 * Since 2.14
 	 * Params:
-	 * string  =  the string to perform matches against
+	 * string = the string to perform matches against
+	 * stringLen = the length of string, or -1 if string is nul-terminated
+	 * startPosition = starting index of the string to match
+	 * replacement = text to replace each match with
+	 * matchOptions = options for the match
 	 * Throws: GException on failure.
 	 */
 	public string replaceLiteral(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
@@ -643,7 +686,12 @@ public class Regex
 	 * The following example uses g_regex_replace_eval() to replace multiple
 	 * Since 2.14
 	 * Params:
-	 * string  =  string to perform matches against
+	 * string = string to perform matches against
+	 * stringLen = the length of string, or -1 if string is nul-terminated
+	 * startPosition = starting index of the string to match
+	 * matchOptions = options for the match
+	 * eval = a function to call for each match
+	 * userData = user data to pass to the function
 	 * Throws: GException on failure.
 	 */
 	public string replaceEval(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
@@ -671,6 +719,10 @@ public class Regex
 	 * about actual match, but '\0\1' (whole match followed by first
 	 * subpattern) requires valid GMatchInfo object.
 	 * Since 2.14
+	 * Params:
+	 * replacement = the replacement string
+	 * hasReferences = location to store information about
+	 *  references in replacement or NULL
 	 * Throws: GException on failure.
 	 */
 	public static int checkReplacement(string replacement, out int hasReferences)

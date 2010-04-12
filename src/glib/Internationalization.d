@@ -97,6 +97,10 @@ public class Internationalization
 	 * textdomain() before gtk_init or its variants.
 	 * This function disables translations if and only if upon its first
 	 * Since 2.18
+	 * Params:
+	 * domain = the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * msgid = message to translate
 	 */
 	public static string dgettext(string domain, string msgid)
 	{
@@ -111,6 +115,12 @@ public class Internationalization
 	 * See g_dgettext() for details of how this differs from dngettext()
 	 * proper.
 	 * Since 2.18
+	 * Params:
+	 * domain = the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * msgid = message to translate
+	 * msgidPlural = plural form of the message
+	 * n = the quantity for which translation is needed
 	 */
 	public static string dngettext(string domain, string msgid, string msgidPlural, uint n)
 	{
@@ -131,6 +141,12 @@ public class Internationalization
 	 * Applications should normally not use this function directly,
 	 * but use the C_() macro for translations with context.
 	 * Since 2.16
+	 * Params:
+	 * domain = the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * msgctxtid = a combined message context and message id, separated
+	 *  by a \004 character
+	 * msgidoffset = the offset of the message id in msgctxid
 	 */
 	public static string dpgettext(string domain, string msgctxtid, uint msgidoffset)
 	{
@@ -148,6 +164,11 @@ public class Internationalization
 	 * This function differs from C_() in that it is not a macro and
 	 * thus you may use non-string-literals as context and msgid arguments.
 	 * Since 2.18
+	 * Params:
+	 * domain = the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * context = the message context
+	 * msgid = the message
 	 */
 	public static string dpgettext2(string domain, string context, string msgid)
 	{
@@ -158,6 +179,9 @@ public class Internationalization
 	/**
 	 * An auxiliary function for gettext() support (see Q_()).
 	 * Since 2.4
+	 * Params:
+	 * msgid = a string
+	 * msgval = another string
 	 */
 	public static string stripContext(string msgid, string msgval)
 	{

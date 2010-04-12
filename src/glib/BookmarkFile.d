@@ -210,6 +210,8 @@ public class BookmarkFile
 	 * If the file could not be loaded then error is set to either a GFileError
 	 * or GBookmarkFileError.
 	 * Since 2.12
+	 * Params:
+	 * filename = the path of a filename to load, in the GLib file name encoding
 	 * Throws: GException on failure.
 	 */
 	public int loadFromFile(string filename)
@@ -232,6 +234,9 @@ public class BookmarkFile
 	 * structure. If the object cannot be created then error is set to a
 	 * GBookmarkFileError.
 	 * Since 2.12
+	 * Params:
+	 * data = desktop bookmarks loaded in memory
+	 * length = the length of data in bytes
 	 * Throws: GException on failure.
 	 */
 	public int loadFromData(string data, uint length)
@@ -256,6 +261,10 @@ public class BookmarkFile
 	 * full_path. If the file could not be loaded then an error is
 	 * set to either a GFileError or GBookmarkFileError.
 	 * Since 2.12
+	 * Params:
+	 * file = a relative path to a filename to open and parse
+	 * fullPath = return location for a string containing the full path
+	 *  of the file, or NULL
 	 * Throws: GException on failure.
 	 */
 	public int loadFromDataDirs(string file, out string fullPath)
@@ -278,6 +287,8 @@ public class BookmarkFile
 	/**
 	 * This function outputs bookmark as a string.
 	 * Since 2.12
+	 * Params:
+	 * length = return location for the length of the returned string, or NULL
 	 * Throws: GException on failure.
 	 */
 	public string toData(out uint length)
@@ -299,6 +310,8 @@ public class BookmarkFile
 	 * This function outputs bookmark into a file. The write process is
 	 * guaranteed to be atomic by using g_file_set_contents() internally.
 	 * Since 2.12
+	 * Params:
+	 * filename = path of the output file
 	 * Throws: GException on failure.
 	 */
 	public int toFile(string filename)
@@ -319,6 +332,8 @@ public class BookmarkFile
 	/**
 	 * Looks whether the desktop bookmark has an item with its URI set to uri.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 */
 	public int hasItem(string uri)
 	{
@@ -332,6 +347,9 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, FALSE is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * group = the group name to be searched
 	 * Throws: GException on failure.
 	 */
 	public int hasGroup(string uri, string group)
@@ -355,6 +373,9 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, FALSE is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * name = the name of the application
 	 * Throws: GException on failure.
 	 */
 	public int hasApplication(string uri, string name)
@@ -387,6 +408,8 @@ public class BookmarkFile
 	 * The array of returned URIs will be NULL-terminated, so length may
 	 * optionally be NULL.
 	 * Since 2.12
+	 * Params:
+	 * length = return location for the number of returned URIs, or NULL
 	 */
 	public string[] getUris(out uint length)
 	{
@@ -400,6 +423,8 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, NULL is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI or NULL
 	 * Throws: GException on failure.
 	 */
 	public string getTitle(string uri)
@@ -422,6 +447,8 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, NULL is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public string getDescription(string uri)
@@ -446,6 +473,8 @@ public class BookmarkFile
 	 * event that the MIME type cannot be found, NULL is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public string getMimeType(string uri)
@@ -470,6 +499,8 @@ public class BookmarkFile
 	 * event that the private flag cannot be found, FALSE is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public int getIsPrivate(string uri)
@@ -492,6 +523,10 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, FALSE is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * href = return location for the icon's location or NULL
+	 * mimeType = return location for the icon's MIME type or NULL
 	 * Throws: GException on failure.
 	 */
 	public int getIcon(string uri, out string href, out string mimeType)
@@ -518,6 +553,8 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, -1 is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public uint getAdded(string uri)
@@ -540,6 +577,8 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, -1 is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public uint getModified(string uri)
@@ -562,6 +601,8 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, -1 is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public uint getVisited(string uri)
@@ -586,6 +627,9 @@ public class BookmarkFile
 	 * The returned array is NULL terminated, so length may optionally
 	 * be NULL.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * length = return location for the length of the returned string, or NULL
 	 * Throws: GException on failure.
 	 */
 	public string[] getGroups(string uri, out uint length)
@@ -609,6 +653,9 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, NULL is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * length = return location of the length of the returned list, or NULL
 	 * Throws: GException on failure.
 	 */
 	public string[] getApplications(string uri, out uint length)
@@ -639,6 +686,12 @@ public class BookmarkFile
 	 * the command line fails, an error of the G_SHELL_ERROR domain is
 	 * set and FALSE is returned.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * name = an application's name
+	 * exec = location for the command line of the application, or NULL
+	 * count = return location for the registration count, or NULL
+	 * stamp = return location for the last registration time, or NULL
 	 * Throws: GException on failure.
 	 */
 	public int getAppInfo(string uri, string name, out string exec, out uint count, out uint stamp)
@@ -664,6 +717,9 @@ public class BookmarkFile
 	 * If uri is NULL, the title of bookmark is set.
 	 * If a bookmark for uri cannot be found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI or NULL
+	 * title = a UTF-8 encoded string
 	 */
 	public void setTitle(string uri, string title)
 	{
@@ -676,6 +732,9 @@ public class BookmarkFile
 	 * If uri is NULL, the description of bookmark is set.
 	 * If a bookmark for uri cannot be found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI or NULL
+	 * description = a string
 	 */
 	public void setDescription(string uri, string description)
 	{
@@ -687,6 +746,9 @@ public class BookmarkFile
 	 * Sets mime_type as the MIME type of the bookmark for uri.
 	 * If a bookmark for uri cannot be found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * mimeType = a MIME type
 	 */
 	public void setMimeType(string uri, string mimeType)
 	{
@@ -698,6 +760,9 @@ public class BookmarkFile
 	 * Sets the private flag of the bookmark for uri.
 	 * If a bookmark for uri cannot be found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * isPrivate = TRUE if the bookmark should be marked as private
 	 */
 	public void setIsPrivate(string uri, int isPrivate)
 	{
@@ -711,6 +776,10 @@ public class BookmarkFile
 	 * file or the icon name following the Icon Naming specification.
 	 * If no bookmark for uri is found one is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * href = the URI of the icon for the bookmark, or NULL
+	 * mimeType = the MIME type of the icon for the bookmark
 	 */
 	public void setIcon(string uri, string href, string mimeType)
 	{
@@ -722,6 +791,9 @@ public class BookmarkFile
 	 * Sets the time the bookmark for uri was added into bookmark.
 	 * If no bookmark for uri is found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * added = a timestamp or -1 to use the current time
 	 */
 	public void setAdded(string uri, uint added)
 	{
@@ -737,6 +809,9 @@ public class BookmarkFile
 	 * modifies a bookmark also changes the modification time, except for
 	 * g_bookmark_file_set_visited().
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * modified = a timestamp or -1 to use the current time
 	 */
 	public void setModified(string uri, uint modified)
 	{
@@ -753,6 +828,9 @@ public class BookmarkFile
 	 * using g_bookmark_file_get_mime_type(). Changing the "visited" time
 	 * does not affect the "modified" time.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * visited = a timestamp or -1 to use the current time
 	 */
 	public void setVisited(string uri, uint visited)
 	{
@@ -787,6 +865,12 @@ public class BookmarkFile
 	 * G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. Otherwise, if no bookmark
 	 * for uri is found, one is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * name = an application's name
+	 * exec = an application's command line
+	 * count = the number of registrations done for this application
+	 * stamp = the time of the last registration for this application
 	 * Throws: GException on failure.
 	 */
 	public int setAppInfo(string uri, string name, string exec, int count, uint stamp)
@@ -809,6 +893,9 @@ public class BookmarkFile
 	 * belongs to.
 	 * If no bookmark for uri is found then it is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * group = the group name to be added
 	 */
 	public void addGroup(string uri, string group)
 	{
@@ -836,6 +923,11 @@ public class BookmarkFile
 	 * uri inside bookmark.
 	 * If no bookmark for uri is found, one is created.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * name = the name of the application registering the bookmark
+	 *  or NULL
+	 * exec = command line to be used to launch the bookmark or NULL
 	 */
 	public void addApplication(string uri, string name, string exec)
 	{
@@ -851,6 +943,9 @@ public class BookmarkFile
 	 * In the event no group was defined, FALSE is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * group = the group name to be removed
 	 * Throws: GException on failure.
 	 */
 	public int removeGroup(string uri, string group)
@@ -877,6 +972,9 @@ public class BookmarkFile
 	 * a bookmark for uri, FALSE is returned and error is set to
 	 * G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
+	 * name = the name of the application
 	 * Throws: GException on failure.
 	 */
 	public int removeApplication(string uri, string name)
@@ -897,6 +995,8 @@ public class BookmarkFile
 	/**
 	 * Removes the bookmark for uri from the bookmark file bookmark.
 	 * Since 2.12
+	 * Params:
+	 * uri = a valid URI
 	 * Throws: GException on failure.
 	 */
 	public int removeItem(string uri)
@@ -921,6 +1021,9 @@ public class BookmarkFile
 	 * In the event the URI cannot be found, FALSE is returned and
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
+	 * Params:
+	 * oldUri = a valid URI
+	 * newUri = a valid URI, or NULL
 	 * Throws: GException on failure.
 	 */
 	public int moveItem(string oldUri, string newUri)

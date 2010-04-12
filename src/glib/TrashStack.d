@@ -106,6 +106,9 @@ public class TrashStack
 	
 	/**
 	 * Pushes a piece of memory onto a GTrashStack.
+	 * Params:
+	 * stackP = a pointer to a GTrashStack.
+	 * dataP = the piece of memory to push on the stack.
 	 */
 	public static void push(GTrashStack** stackP, void* dataP)
 	{
@@ -115,6 +118,8 @@ public class TrashStack
 	
 	/**
 	 * Pops a piece of memory off a GTrashStack.
+	 * Params:
+	 * stackP = a pointer to a GTrashStack.
 	 */
 	public static void* pop(GTrashStack** stackP)
 	{
@@ -124,6 +129,8 @@ public class TrashStack
 	
 	/**
 	 * Returns the element at the top of a GTrashStack which may be NULL.
+	 * Params:
+	 * stackP = a pointer to a GTrashStack.
 	 */
 	public static void* peek(GTrashStack** stackP)
 	{
@@ -135,6 +142,8 @@ public class TrashStack
 	 * Returns the height of a GTrashStack.
 	 * Note that execution of this function is of O(N) complexity
 	 * where N denotes the number of items on the stack.
+	 * Params:
+	 * stackP = a pointer to a GTrashStack.
 	 */
 	public static uint height(GTrashStack** stackP)
 	{

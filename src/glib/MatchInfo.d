@@ -296,6 +296,8 @@ public class MatchInfo
 	 * Use g_regex_check_replacement() to find out whether string_to_expand
 	 * contains references.
 	 * Since 2.14
+	 * Params:
+	 * stringToExpand = the string to expand
 	 * Throws: GException on failure.
 	 */
 	public string expandReferences(string stringToExpand)
@@ -328,6 +330,8 @@ public class MatchInfo
 	 * The string is fetched from the string passed to the match function,
 	 * so you cannot call this function after freeing the string.
 	 * Since 2.14
+	 * Params:
+	 * matchNum = number of the sub expression
 	 */
 	public string fetch(int matchNum)
 	{
@@ -348,6 +352,10 @@ public class MatchInfo
 	 * substring. Substrings are matched in reverse order of length, so
 	 * 0 is the longest match.
 	 * Since 2.14
+	 * Params:
+	 * matchNum = number of the sub expression
+	 * startPos = pointer to location where to store the start position
+	 * endPos = pointer to location where to store the end position
 	 */
 	public int fetchPos(int matchNum, out int startPos, out int endPos)
 	{
@@ -363,6 +371,8 @@ public class MatchInfo
 	 * The string is fetched from the string passed to the match function,
 	 * so you cannot call this function after freeing the string.
 	 * Since 2.14
+	 * Params:
+	 * name = name of the subexpression
 	 */
 	public string fetchNamed(string name)
 	{
@@ -376,6 +386,10 @@ public class MatchInfo
 	 * (e.g. sub pattern "X", matching "b" against "(?P<X>a)?b")
 	 * then start_pos and end_pos are set to -1 and TRUE is returned.
 	 * Since 2.14
+	 * Params:
+	 * name = name of the subexpression
+	 * startPos = pointer to location where to store the start position
+	 * endPos = pointer to location where to store the end position
 	 */
 	public int fetchNamedPos(string name, out int startPos, out int endPos)
 	{

@@ -63,17 +63,16 @@ private import glib.ConstructionException;
 
 /**
  * Description
- * The GTree structure and its associated functions provide a sorted
- * collection of key/value pairs optimized for searching and traversing
- * in order.
+ * The GTree structure and its associated functions provide a sorted collection
+ * of key/value pairs optimized for searching and traversing in order.
  * To create a new GTree use g_tree_new().
  * To insert a key/value pair into a GTree use g_tree_insert().
- * To lookup the value corresponding to a given key, use
- * g_tree_lookup() and g_tree_lookup_extended().
- * To find out the number of nodes in a GTree, use g_tree_nnodes(). To
- * get the height of a GTree, use g_tree_height().
- * To traverse a GTree, calling a function for each node visited in
- * the traversal, use g_tree_foreach().
+ * To lookup the value corresponding to a given key, use g_tree_lookup() and
+ * g_tree_lookup_extended().
+ * To find out the number of nodes in a GTree, use g_tree_nnodes().
+ * To get the height of a GTree, use g_tree_height().
+ * To traverse a GTree, calling a function for each node visited in the
+ * traversal, use g_tree_foreach().
  * To remove a key/value pair use g_tree_remove().
  * To destroy a GTree, use g_tree_destroy().
  */
@@ -114,6 +113,12 @@ public class BBTree
 	
 	/**
 	 * Creates a new GTree.
+	 * Params:
+	 * keyCompareFunc = the function used to order the nodes in the GTree.
+	 *  It should return values similar to the standard strcmp() function -
+	 *  0 if the two arguments are equal, a negative value if the first argument
+	 *  comes before the second, or a positive value if the first argument comes
+	 *  after the second.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareFunc keyCompareFunc)
@@ -160,6 +165,9 @@ public class BBTree
 	/**
 	 * Creates a new GTree with a comparison function that accepts user data.
 	 * See g_tree_new() for more details.
+	 * Params:
+	 * keyCompareFunc = qsort()-style comparison function.
+	 * keyCompareData = data to pass to comparison function.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData)
@@ -177,6 +185,15 @@ public class BBTree
 	 * Creates a new GTree like g_tree_new() and allows to specify functions
 	 * to free the memory allocated for the key and value that get called when
 	 * removing the entry from the GTree.
+	 * Params:
+	 * keyCompareFunc = qsort()-style comparison function.
+	 * keyCompareData = data to pass to comparison function.
+	 * keyDestroyFunc = a function to free the memory allocated for the key
+	 *  used when removing the entry from the GTree or NULL if you don't
+	 *  want to supply such a function.
+	 * valueDestroyFunc = a function to free the memory allocated for the
+	 *  value used when removing the entry from the GTree or NULL if you
+	 *  don't want to supply such a function.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
@@ -198,6 +215,9 @@ public class BBTree
 	 * creating the GTree, the passed key is freed using that function.
 	 * The tree is automatically 'balanced' as new key/value pairs are added,
 	 * so that the distance from the root to every leaf is as small as possible.
+	 * Params:
+	 * key = the key to insert.
+	 * value = the value corresponding to the key.
 	 */
 	public void insert(void* key, void* value)
 	{
@@ -214,6 +234,9 @@ public class BBTree
 	 * freed using that function.
 	 * The tree is automatically 'balanced' as new key/value pairs are added,
 	 * so that the distance from the root to every leaf is as small as possible.
+	 * Params:
+	 * key = the key to insert.
+	 * value = the value corresponding to the key.
 	 */
 	public void replace(void* key, void* value)
 	{
@@ -246,6 +269,8 @@ public class BBTree
 	 * Gets the value corresponding to the given key. Since a GTree is
 	 * automatically balanced as key/value pairs are added, key lookup is very
 	 * fast.
+	 * Params:
+	 * key = the key to look up.
 	 */
 	public void* lookup(void* key)
 	{
@@ -258,6 +283,10 @@ public class BBTree
 	 * associated value and a gboolean which is TRUE if the key was found. This
 	 * is useful if you need to free the memory allocated for the original key,
 	 * for example before calling g_tree_remove().
+	 * Params:
+	 * lookupKey = the key to look up.
+	 * origKey = returns the original key.
+	 * value = returns the value associated with the key.
 	 */
 	public int lookupExtended(void* lookupKey, void** origKey, void** value)
 	{
@@ -273,6 +302,10 @@ public class BBTree
 	 * add/remove items). To remove all items matching a predicate, you need
 	 * to add each item to a list in your GTraverseFunc as you walk over
 	 * the tree, then walk the list and remove each item.
+	 * Params:
+	 * func = the function to call for each node visited. If this function
+	 *  returns TRUE, the traversal is stopped.
+	 * userData = user data to pass to the function.
 	 */
 	public void foreac(GTraverseFunc func, void* userData)
 	{
@@ -287,6 +320,12 @@ public class BBTree
 	 * instead. If you really need to visit nodes in a different order, consider
 	 * using an N-ary Tree.
 	 * Calls the given function for each node in the GTree.
+	 * Params:
+	 * traverseFunc = the function to call for each node visited. If this
+	 *  function returns TRUE, the traversal is stopped.
+	 * traverseType = the order in which nodes are visited, one of G_IN_ORDER,
+	 *  G_PRE_ORDER and G_POST_ORDER.
+	 * userData = user data to pass to the function.
 	 */
 	public void traverse(GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData)
 	{
@@ -302,6 +341,10 @@ public class BBTree
 	 * pair. If search_func returns -1, searching will proceed among the
 	 * key/value pairs that have a smaller key; if search_func returns 1,
 	 * searching will proceed among the key/value pairs that have a larger key.
+	 * Params:
+	 * searchFunc = a function used to search the GTree.
+	 * userData = the data passed as the second argument to the search_func
+	 * function.
 	 */
 	public void* search(GCompareFunc searchFunc, void* userData)
 	{
@@ -315,6 +358,8 @@ public class BBTree
 	 * are freed using the supplied destroy functions, otherwise you have to
 	 * make sure that any dynamically allocated values are freed yourself.
 	 * If the key does not exist in the GTree, the function does nothing.
+	 * Params:
+	 * key = the key to remove.
 	 */
 	public int remove(void* key)
 	{
@@ -326,6 +371,8 @@ public class BBTree
 	 * Removes a key and its associated value from a GTree without calling
 	 * the key and value destroy functions.
 	 * If the key does not exist in the GTree, the function does nothing.
+	 * Params:
+	 * key = the key to remove.
 	 */
 	public int steal(void* key)
 	{

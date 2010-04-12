@@ -180,6 +180,11 @@ public class Module
 	 * /lib/libmylibrary.so. On a Windows system, using
 	 * \Windows as the directory it will return
 	 * \Windows\mylibrary.dll.
+	 * Params:
+	 * directory = the directory where the module is. This can be NULL or the empty
+	 * string to indicate that the standard platform-specific directories will be
+	 * used, though that is not recommended.
+	 * moduleName = the name of the module.
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
@@ -198,6 +203,11 @@ public class Module
 	 * that fails and file_name doesn't have the ".la"-suffix, this suffix is
 	 * appended and g_module_open() tries to open the corresponding module. If
 	 * eventually that fails as well, NULL is returned.
+	 * Params:
+	 * fileName = the name of the file containing the module, or NULL to obtain
+	 *  a GModule representing the main program itself.
+	 * flags = the flags used for opening the module. This can be the logical
+	 * OR of any of the GModuleFlags.
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
@@ -213,6 +223,9 @@ public class Module
 	/**
 	 * Gets a symbol pointer from a module, such as one exported by G_MODULE_EXPORT.
 	 * Note that a valid symbol can be NULL.
+	 * Params:
+	 * symbolName = the name of the symbol to find.
+	 * symbol = returns the pointer to the symbol value.
 	 */
 	public int symbol(string symbolName, void** symbol)
 	{

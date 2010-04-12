@@ -279,6 +279,8 @@ public class Idle
 	 * This internally creates a main loop source using g_idle_source_new()
 	 * and attaches it to the main loop context using g_source_attach().
 	 * You can do these steps manually if you need greater control.
+	 * Params:
+	 * data = data to pass to function.
 	 */
 	public static uint add(GSourceFunc funct, void* data)
 	{
@@ -293,6 +295,11 @@ public class Idle
 	 * This internally creates a main loop source using g_idle_source_new()
 	 * and attaches it to the main loop context using g_source_attach().
 	 * You can do these steps manually if you need greater control.
+	 * Params:
+	 * priority = the priority of the idle source. Typically this will be in the
+	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+	 * data = data to pass to function
+	 * notify = function to call when the idle is removed, or NULL
 	 */
 	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -302,6 +309,8 @@ public class Idle
 	
 	/**
 	 * Removes the idle function with the given data.
+	 * Params:
+	 * data = the data for the idle source's callback.
 	 */
 	public static int removeByData(void* data)
 	{

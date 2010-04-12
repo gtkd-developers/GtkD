@@ -163,6 +163,10 @@ public class Date
 	 * Like g_date_new(), but also sets the value of the date. Assuming the
 	 * day-month-year triplet you pass in represents an existing day, the
 	 * returned date will be valid.
+	 * Params:
+	 * day = day of the month
+	 * month = month of the year
+	 * year = year
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDateDay day, GDateMonth month, GDateYear year)
@@ -180,6 +184,8 @@ public class Date
 	 * Like g_date_new(), but also sets the value of the date. Assuming the
 	 * Julian day number you pass in is valid (greater than 0, less than an
 	 * unreasonably large number), the returned date will be valid.
+	 * Params:
+	 * julianDay = days since January 1, Year 1
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint julianDay)
@@ -198,6 +204,8 @@ public class Date
 	 * state. The cleared dates will not represent an existing date, but will
 	 * not contain garbage. Useful to init a date declared on the stack.
 	 * Validity can be tested with g_date_valid().
+	 * Params:
+	 * nDates = number of dates to clear
 	 */
 	public void clear(uint nDates)
 	{
@@ -217,6 +225,8 @@ public class Date
 	/**
 	 * Sets the day of the month for a GDate. If the resulting day-month-year
 	 * triplet is invalid, the date will be invalid.
+	 * Params:
+	 * day = day to set
 	 */
 	public void setDay(GDateDay day)
 	{
@@ -227,6 +237,8 @@ public class Date
 	/**
 	 * Sets the month of the year for a GDate. If the resulting
 	 * day-month-year triplet is invalid, the date will be invalid.
+	 * Params:
+	 * month = month to set
 	 */
 	public void setMonth(GDateMonth month)
 	{
@@ -237,6 +249,8 @@ public class Date
 	/**
 	 * Sets the year for a GDate. If the resulting day-month-year triplet is
 	 * invalid, the date will be invalid.
+	 * Params:
+	 * year = year to set
 	 */
 	public void setYear(GDateYear year)
 	{
@@ -249,7 +263,9 @@ public class Date
 	 * triplet must be valid; if you aren't sure it is, call g_date_valid_dmy() to
 	 * check before you set it.
 	 * Params:
-	 * y  = year
+	 * day = day
+	 * month = month
+	 * y = year
 	 */
 	public void setDmy(GDateDay day, GDateMonth month, GDateYear y)
 	{
@@ -259,6 +275,8 @@ public class Date
 	
 	/**
 	 * Sets the value of a GDate from a Julian day number.
+	 * Params:
+	 * julianDate = Julian day number (days since January 1, Year 1)
 	 */
 	public void setJulian(uint julianDate)
 	{
@@ -268,9 +286,12 @@ public class Date
 	
 	/**
 	 * Warning
-	 * g_date_set_time has been deprecated since version 2.10 and should not be used in newly-written code. Use g_date_set_time_t() instead.
+	 * g_date_set_time is deprecated and should not be used in newly-written code.
 	 * Sets the value of a date from a GTime value.
 	 * The time to date conversion is done using the user's current timezone.
+	 * Deprecated:2.10: Use g_date_set_time_t() instead.
+	 * Params:
+	 * time = GTime value to set.
 	 */
 	public void setTime(GTime time)
 	{
@@ -283,6 +304,8 @@ public class Date
 	 * specified as a time_t. The time to date conversion is done using
 	 * the user's current timezone.
 	 * Since 2.10
+	 * Params:
+	 * timet = time_t value to set
 	 */
 	public void setTimeT(uint timet)
 	{
@@ -295,6 +318,8 @@ public class Date
 	 * tv_usec member is ignored, because GDate can't make use of the
 	 * additional precision.
 	 * Since 2.10
+	 * Params:
+	 * timeval = GTimeVal value to set
 	 */
 	public void setTimeVal(TimeVal timeval)
 	{
@@ -313,6 +338,8 @@ public class Date
 	 * locale. It's intended to be a heuristic routine that guesses what the
 	 * user means by a given string (and it does work pretty well in that
 	 * capacity).
+	 * Params:
+	 * str = string to parse
 	 */
 	public void setParse(string str)
 	{
@@ -323,6 +350,8 @@ public class Date
 	/**
 	 * Increments a date some number of days. To move forward by weeks, add
 	 * weeks*7 days. The date must be valid.
+	 * Params:
+	 * nDays = number of days to move the date forward
 	 */
 	public void addDays(uint nDays)
 	{
@@ -333,6 +362,8 @@ public class Date
 	/**
 	 * Moves a date some number of days into the past. To move by weeks, just
 	 * move by weeks*7 days. The date must be valid.
+	 * Params:
+	 * nDays = number of days to move
 	 */
 	public void subtractDays(uint nDays)
 	{
@@ -345,6 +376,8 @@ public class Date
 	 * greater than 28, this routine may change the day of the month (because
 	 * the destination month may not have the current day in it). The date
 	 * must be valid.
+	 * Params:
+	 * nMonths = number of months to move forward
 	 */
 	public void addMonths(uint nMonths)
 	{
@@ -356,6 +389,8 @@ public class Date
 	 * Moves a date some number of months into the past. If the current day of
 	 * the month doesn't exist in the destination month, the day of the month
 	 * may change. The date must be valid.
+	 * Params:
+	 * nMonths = number of months to move
 	 */
 	public void subtractMonths(uint nMonths)
 	{
@@ -367,6 +402,8 @@ public class Date
 	 * Increments a date by some number of years. If the date is February 29,
 	 * and the destination year is not a leap year, the date will be changed
 	 * to February 28. The date must be valid.
+	 * Params:
+	 * nYears = number of years to move forward
 	 */
 	public void addYears(uint nYears)
 	{
@@ -379,6 +416,8 @@ public class Date
 	 * doesn't exist in the destination year (i.e. it's February 29 and you
 	 * move to a non-leap-year) then the day is changed to February 29. The date
 	 * must be valid.
+	 * Params:
+	 * nYears = number of years to move
 	 */
 	public void subtractYears(uint nYears)
 	{
@@ -390,6 +429,8 @@ public class Date
 	 * Computes the number of days between two dates.
 	 * If date2 is prior to date1, the returned value is negative.
 	 * Both dates must be valid.
+	 * Params:
+	 * date2 = the second date
 	 */
 	public int daysBetween(Date date2)
 	{
@@ -400,6 +441,8 @@ public class Date
 	/**
 	 * qsort()-style comparsion function for dates. Both
 	 * dates must be valid.
+	 * Params:
+	 * rhs = second date to compare
 	 */
 	public int compare(Date rhs)
 	{
@@ -413,6 +456,9 @@ public class Date
 	 * Otherwise, date is unchanged.
 	 * Either of min_date and max_date may be NULL. All non-NULL dates
 	 * must be valid.
+	 * Params:
+	 * minDate = minimum accepted value for date
+	 * maxDate = maximum accepted value for date
 	 */
 	public void clamp(Date minDate, Date maxDate)
 	{
@@ -423,6 +469,8 @@ public class Date
 	/**
 	 * Checks if date1 is less than or equal to date2,
 	 * and swap the values if this is not the case.
+	 * Params:
+	 * date2 = the second date
 	 */
 	public void order(Date date2)
 	{
@@ -490,6 +538,9 @@ public class Date
 	
 	/**
 	 * Returns the number of days in a month, taking leap years into account.
+	 * Params:
+	 * month = month
+	 * year = year
 	 */
 	public static ubyte getDaysInMonth(GDateMonth month, GDateYear year)
 	{
@@ -517,6 +568,8 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the year is a leap year.[4]
+	 * Params:
+	 * year = year to check
 	 */
 	public static int isLeapYear(GDateYear year)
 	{
@@ -542,6 +595,8 @@ public class Date
 	 * year. This function is basically telling you how many Mondays are in
 	 * the year, i.e. there are 53 Mondays if one of the extra days happens
 	 * to be a Monday.)
+	 * Params:
+	 * year = a year
 	 */
 	public static ubyte getMondayWeeksInYear(GDateYear year)
 	{
@@ -567,6 +622,8 @@ public class Date
 	 * year. This function is basically telling you how many Sundays are in
 	 * the year, i.e. there are 53 Sundays if one of the extra days happens
 	 * to be a Sunday.)
+	 * Params:
+	 * year = year to count weeks in
 	 */
 	public static ubyte getSundayWeeksInYear(GDateYear year)
 	{
@@ -596,6 +653,11 @@ public class Date
 	 * to those implemented by the platform's C library. For example, don't
 	 * expect that using g_date_strftime() would make the F provided by the C99
 	 * strftime() work on Windows where the C library only complies to C89.
+	 * Params:
+	 * s = destination buffer
+	 * slen = buffer size
+	 * format = format string
+	 * date = valid GDate
 	 */
 	public static uint strftime(string s, uint slen, string format, Date date)
 	{
@@ -607,6 +669,8 @@ public class Date
 	 * Fills in the date-related bits of a struct tm
 	 * using the date value. Initializes the non-date parts with something
 	 * sane but meaningless.
+	 * Params:
+	 * tm = struct tm to fill.
 	 */
 	public void toStructTm(void* tm)
 	{
@@ -628,6 +692,8 @@ public class Date
 	/**
 	 * Returns TRUE if the day of the month is valid (a day is valid if it's
 	 * between 1 and 31 inclusive).
+	 * Params:
+	 * day = day to check
 	 */
 	public static int validDay(GDateDay day)
 	{
@@ -638,6 +704,8 @@ public class Date
 	/**
 	 * Returns TRUE if the month value is valid. The 12 GDateMonth
 	 * enumeration values are the only valid months.
+	 * Params:
+	 * month = month
 	 */
 	public static int validMonth(GDateMonth month)
 	{
@@ -648,6 +716,8 @@ public class Date
 	/**
 	 * Returns TRUE if the year is valid. Any year greater than 0 is valid,
 	 * though there is a 16-bit limit to what GDate will understand.
+	 * Params:
+	 * year = year
 	 */
 	public static int validYear(GDateYear year)
 	{
@@ -659,6 +729,10 @@ public class Date
 	 * Returns TRUE if the day-month-year triplet forms a valid, existing day
 	 * in the range of days GDate understands (Year 1 or later, no more than
 	 * a few thousand years in the future).
+	 * Params:
+	 * day = day
+	 * month = month
+	 * year = year
 	 */
 	public static int validDmy(GDateDay day, GDateMonth month, GDateYear year)
 	{
@@ -669,6 +743,8 @@ public class Date
 	/**
 	 * Returns TRUE if the Julian day is valid. Anything greater than zero
 	 * is basically a valid Julian, though there is a 32-bit limit.
+	 * Params:
+	 * julianDate = Julian day to check
 	 */
 	public static int validJulian(uint julianDate)
 	{
@@ -679,6 +755,8 @@ public class Date
 	/**
 	 * Returns TRUE if the weekday is valid. The seven GDateWeekday enumeration
 	 * values are the only valid weekdays.
+	 * Params:
+	 * weekday = weekday
 	 */
 	public static int validWeekday(GDateWeekday weekday)
 	{

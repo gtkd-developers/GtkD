@@ -86,6 +86,8 @@ public class Hostname
 	 * string containing no uppercase letters and not ending with a
 	 * trailing dot.
 	 * Since 2.22
+	 * Params:
+	 * hostname = a valid UTF-8 or ASCII hostname
 	 */
 	public static string toAscii(string hostname)
 	{
@@ -101,6 +103,8 @@ public class Hostname
 	 * Of course if hostname is not an internationalized hostname, then
 	 * the canonical presentation form will be entirely ASCII.
 	 * Since 2.22
+	 * Params:
+	 * hostname = a valid UTF-8 or ASCII hostname
 	 */
 	public static string toUnicode(string hostname)
 	{
@@ -116,6 +120,8 @@ public class Hostname
 	 * segments, and so it is possible for g_hostname_is_non_ascii() and
 	 * g_hostname_is_ascii_encoded() to both return TRUE for a name.
 	 * Since 2.22
+	 * Params:
+	 * hostname = a hostname
 	 */
 	public static int isNonAscii(string hostname)
 	{
@@ -132,6 +138,8 @@ public class Hostname
 	 * segments, and so it is possible for g_hostname_is_non_ascii() and
 	 * g_hostname_is_ascii_encoded() to both return TRUE for a name.
 	 * Since 2.22
+	 * Params:
+	 * hostname = a hostname
 	 */
 	public static int isAsciiEncoded(string hostname)
 	{
@@ -143,6 +151,8 @@ public class Hostname
 	 * Tests if hostname is the string form of an IPv4 or IPv6 address.
 	 * (Eg, "192.168.0.1".)
 	 * Since 2.22
+	 * Params:
+	 * hostname = a hostname (or IP address in string form)
 	 */
 	public static int isIpAddress(string hostname)
 	{

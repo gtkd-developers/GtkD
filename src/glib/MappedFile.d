@@ -134,6 +134,9 @@ public class MappedFile
 	 * will not be modified, or if all modifications of the file are done
 	 * atomically (e.g. using g_file_set_contents()).
 	 * Since 2.8
+	 * Params:
+	 * filename = The path of the file to load, in the GLib filename encoding
+	 * writable = whether the mapping should be writable
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -211,7 +214,6 @@ public class MappedFile
 	 * Returns the contents of a GMappedFile.
 	 * Note that the contents may not be zero-terminated,
 	 * even if the GMappedFile is backed by a text file.
-	 * If the file is empty then NULL is returned.
 	 * Since 2.8
 	 */
 	public string getContents()

@@ -336,6 +336,8 @@ public class Str
 	 * Duplicates a string. If str is NULL it returns NULL.
 	 * The returned string should be freed with g_free()
 	 * when no longer needed.
+	 * Params:
+	 * str = the string to duplicate
 	 */
 	public static string strdup(string str)
 	{
@@ -352,6 +354,9 @@ public class Str
 	 * Note
 	 * To copy a number of characters from a UTF-8 encoded string, use
 	 * g_utf8_strncpy() instead.
+	 * Params:
+	 * str = the string to duplicate
+	 * n = the maximum number of bytes to copy from str
 	 */
 	public static string strndup(string str, uint n)
 	{
@@ -364,6 +369,8 @@ public class Str
 	 * the new array should be freed by first freeing each string, then
 	 * the array itself. g_strfreev() does this for you. If called
 	 * on a NULL value, g_strdupv() simply returns NULL.
+	 * Params:
+	 * strArray = NULL-terminated array of strings.
 	 */
 	public static string[] strdupv(string[] strArray)
 	{
@@ -374,6 +381,9 @@ public class Str
 	/**
 	 * Creates a new string length bytes long filled with fill_char.
 	 * The returned string should be freed when no longer needed.
+	 * Params:
+	 * length = the length of the new string
+	 * fillChar = the byte to fill the string with
 	 */
 	public static string strnfill(uint length, char fillChar)
 	{
@@ -386,6 +396,9 @@ public class Str
 	 * trailing nul, and return a pointer to the trailing nul byte.
 	 * This is useful for concatenating multiple strings together
 	 * without having to repeatedly scan for the end.
+	 * Params:
+	 * dest = destination buffer.
+	 * src = source string.
 	 */
 	public static string stpcpy(string dest, string src)
 	{
@@ -397,6 +410,12 @@ public class Str
 	 * Searches the string haystack for the first occurrence
 	 * of the string needle, limiting the length of the search
 	 * to haystack_len.
+	 * Params:
+	 * haystack = a string.
+	 * haystackLen = the maximum length of haystack. Note that -1 is
+	 * a valid length, if haystack is nul-terminated, meaning it will
+	 * search through the whole string.
+	 * needle = the string to search for.
 	 */
 	public static string strstrLen(string haystack, int haystackLen, string needle)
 	{
@@ -407,6 +426,9 @@ public class Str
 	/**
 	 * Searches the string haystack for the last occurrence
 	 * of the string needle.
+	 * Params:
+	 * haystack = a nul-terminated string.
+	 * needle = the nul-terminated string to search for.
 	 */
 	public static string strrstr(string haystack, string needle)
 	{
@@ -418,6 +440,10 @@ public class Str
 	 * Searches the string haystack for the last occurrence
 	 * of the string needle, limiting the length of the search
 	 * to haystack_len.
+	 * Params:
+	 * haystack = a nul-terminated string.
+	 * haystackLen = the maximum length of haystack.
+	 * needle = the nul-terminated string to search for.
 	 */
 	public static string strrstrLen(string haystack, int haystackLen, string needle)
 	{
@@ -428,6 +454,9 @@ public class Str
 	/**
 	 * Looks whether the string str begins with prefix.
 	 * Since 2.2
+	 * Params:
+	 * str = a nul-terminated string.
+	 * prefix = the nul-terminated prefix to look for.
 	 */
 	public static int strHasPrefix(string str, string prefix)
 	{
@@ -438,6 +467,9 @@ public class Str
 	/**
 	 * Looks whether the string str ends with suffix.
 	 * Since 2.2
+	 * Params:
+	 * str = a nul-terminated string.
+	 * suffix = the nul-terminated suffix to look for.
 	 */
 	public static int strHasSuffix(string str, string suffix)
 	{
@@ -449,6 +481,9 @@ public class Str
 	 * Compares str1 and str2 like strcmp(). Handles NULL
 	 * gracefully by sorting it before non-NULL strings.
 	 * Since 2.16
+	 * Params:
+	 * str1 = a C string or NULL
+	 * str2 = another C string or NULL
 	 */
 	public static int strcmp0(string str1, string str2)
 	{
@@ -470,6 +505,10 @@ public class Str
 	 * Caveat: strlcpy() is supposedly more secure than
 	 * strcpy() or strncpy(), but if you really want to avoid screwups,
 	 * g_strdup() is an even better idea.
+	 * Params:
+	 * dest = destination buffer
+	 * src = source buffer
+	 * destSize = length of dest in bytes
 	 */
 	public static uint strlcpy(string dest, string src, uint destSize)
 	{
@@ -487,10 +526,11 @@ public class Str
 	 * This function does NOT allocate memory.
 	 * This always NUL terminates (unless siz == 0 or there were no NUL characters
 	 * in the dest_size characters of dest to start with).
-	 * Note
-	 * Caveat: this is supposedly a more secure alternative to
-	 * strcat() or strncat(), but for real security g_strconcat() is harder
-	 * to mess up.
+	 * Params:
+	 * dest = destination buffer, already containing one nul-terminated string
+	 * src = source buffer
+	 * destSize = length of dest buffer in bytes (not length of existing string
+	 *  inside dest)
 	 */
 	public static uint strlcat(string dest, string src, uint destSize)
 	{
@@ -505,6 +545,10 @@ public class Str
 	 * no longer needed.
 	 * See also g_vasprintf(), which offers the same functionality, but
 	 * additionally returns the length of the allocated string.
+	 * Params:
+	 * format = a standard printf() format string, but notice
+	 *  string precision pitfalls
+	 * args = the list of parameters to insert into the format string
 	 */
 	public static string strdupVprintf(string format, void* args)
 	{
@@ -516,6 +560,10 @@ public class Str
 	 * An implementation of the standard vprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
 	 * Since 2.2
+	 * Params:
+	 * format = a standard printf() format string, but notice
+	 *  string precision pitfalls.
+	 * args = the list of arguments to insert in the output.
 	 */
 	public static int vprintf(string format, void* args)
 	{
@@ -527,6 +575,11 @@ public class Str
 	 * An implementation of the standard fprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
 	 * Since 2.2
+	 * Params:
+	 * file = the stream to write to.
+	 * format = a standard printf() format string, but notice
+	 *  string precision pitfalls.
+	 * args = the list of arguments to insert in the output.
 	 */
 	public static int vfprintf(FILE* file, string format, void* args)
 	{
@@ -539,7 +592,10 @@ public class Str
 	 * positional parameters, as specified in the Single Unix Specification.
 	 * Since 2.2
 	 * Params:
-	 * string  =  the buffer to hold the output.
+	 * string = the buffer to hold the output.
+	 * format = a standard printf() format string, but notice
+	 *  string precision pitfalls.
+	 * args = the list of arguments to insert in the output.
 	 */
 	public static int vsprintf(string string, string format, void* args)
 	{
@@ -562,7 +618,12 @@ public class Str
 	 * The format string may contain positional parameters, as specified in
 	 * the Single Unix Specification.
 	 * Params:
-	 * string  =  the buffer to hold the output.
+	 * string = the buffer to hold the output.
+	 * n = the maximum number of bytes to produce (including the
+	 *  terminating nul character).
+	 * format = a standard printf() format string, but notice
+	 *  string precision pitfalls.
+	 * args = the list of arguments to insert in the output.
 	 */
 	public static int vsnprintf(string string, uint n, string format, void* args)
 	{
@@ -578,7 +639,10 @@ public class Str
 	 * you allocate in advance.
 	 * Since 2.4
 	 * Params:
-	 * string  =  the return location for the newly-allocated string.
+	 * string = the return location for the newly-allocated string.
+	 * format = a standard printf() format string, but notice
+	 *  string precision pitfalls.
+	 * args = the list of arguments to insert in the output.
 	 */
 	public static int vasprintf(out string string, string format, void* args)
 	{
@@ -594,6 +658,9 @@ public class Str
 	/**
 	 * Calculates the maximum space needed to store the output of the sprintf()
 	 * function.
+	 * Params:
+	 * format = the format string. See the printf() documentation.
+	 * args = the parameters to be inserted into the format string.
 	 */
 	public static uint printfStringUpperBound(string format, void* args)
 	{
@@ -610,7 +677,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsalnum(char c)
 	{
@@ -627,7 +694,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsalpha(char c)
 	{
@@ -644,7 +711,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIscntrl(char c)
 	{
@@ -659,7 +726,7 @@ public class Str
 	 * on EOF but no need to cast to guchar before passing a possibly
 	 * non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsdigit(char c)
 	{
@@ -676,7 +743,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsgraph(char c)
 	{
@@ -693,7 +760,7 @@ public class Str
 	 * so don't call it on EOF but no need to worry about casting to guchar
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIslower(char c)
 	{
@@ -710,7 +777,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsprint(char c)
 	{
@@ -727,7 +794,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIspunct(char c)
 	{
@@ -744,7 +811,7 @@ public class Str
 	 * so don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsspace(char c)
 	{
@@ -761,7 +828,7 @@ public class Str
 	 * so don't call it on EOF but no need to worry about casting to guchar
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsupper(char c)
 	{
@@ -776,7 +843,7 @@ public class Str
 	 * don't call it on EOF but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
-	 * c  = any character
+	 * c = any character
 	 */
 	public static int asciiIsxdigit(char c)
 	{
@@ -790,7 +857,7 @@ public class Str
 	 * a char, so there's no worry about sign extension if characters
 	 * are signed.
 	 * Params:
-	 * c  =  an ASCII character.
+	 * c = an ASCII character.
 	 */
 	public static int asciiDigitValue(char c)
 	{
@@ -804,7 +871,7 @@ public class Str
 	 * a char, so there's no worry about sign extension if characters
 	 * are signed.
 	 * Params:
-	 * c  =  an ASCII character.
+	 * c = an ASCII character.
 	 */
 	public static int asciiXdigitValue(char c)
 	{
@@ -824,6 +891,9 @@ public class Str
 	 * Windows Codepage 932, where the trailing bytes of double-byte
 	 * characters include all ASCII letters. If you compare two CP932
 	 * strings using this function, you will get false matches.
+	 * Params:
+	 * s1 = string to compare with s2.
+	 * s2 = string to compare with s1.
 	 */
 	public static int asciiStrcasecmp(string s1, string s2)
 	{
@@ -840,6 +910,10 @@ public class Str
 	 * The same warning as in g_ascii_strcasecmp() applies: Use this
 	 * function only on strings known to be in encodings where bytes
 	 * corresponding to ASCII letters always represent themselves.
+	 * Params:
+	 * s1 = string to compare with s2.
+	 * s2 = string to compare with s1.
+	 * n = number of characters to compare.
 	 */
 	public static int asciiStrncasecmp(string s1, string s2, uint n)
 	{
@@ -849,6 +923,9 @@ public class Str
 	
 	/**
 	 * Converts all lower case ASCII letters to upper case ASCII letters.
+	 * Params:
+	 * str = a string.
+	 * len = length of str in bytes, or -1 if str is nul-terminated.
 	 */
 	public static string asciiStrup(string str, int len)
 	{
@@ -858,6 +935,9 @@ public class Str
 	
 	/**
 	 * Converts all upper case ASCII letters to lower case ASCII letters.
+	 * Params:
+	 * str = a string.
+	 * len = length of str in bytes, or -1 if str is nul-terminated.
 	 */
 	public static string asciiStrdown(string str, int len)
 	{
@@ -875,7 +955,7 @@ public class Str
 	 * don't call it on EOF but no need to worry about casting to guchar
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
-	 * c  =  any character.
+	 * c = any character.
 	 */
 	public static char asciiTolower(char c)
 	{
@@ -893,7 +973,7 @@ public class Str
 	 * don't call it on EOF but no need to worry about casting to guchar
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
-	 * c  =  any character.
+	 * c = any character.
 	 */
 	public static char asciiToupper(char c)
 	{
@@ -903,6 +983,8 @@ public class Str
 	
 	/**
 	 * Converts all lower case ASCII letters to upper case ASCII letters.
+	 * Params:
+	 * string = a GString
 	 */
 	public static StringG stringAsciiUp(StringG string)
 	{
@@ -917,6 +999,8 @@ public class Str
 	
 	/**
 	 * Converts all upper case ASCII letters to lower case ASCII letters.
+	 * Params:
+	 * string = a GString
 	 */
 	public static StringG stringAsciiDown(StringG string)
 	{
@@ -935,7 +1019,7 @@ public class Str
 	 * in the g_strncasecmp() docs - use g_ascii_strup() or g_utf8_strup() instead.
 	 * Converts a string to upper case.
 	 * Params:
-	 * string  =  the string to convert.
+	 * string = the string to convert.
 	 */
 	public static string strup(string string)
 	{
@@ -950,7 +1034,7 @@ public class Str
 	 * instead.
 	 * Converts a string to lower case.
 	 * Params:
-	 * string  =  the string to convert.
+	 * string = the string to convert.
 	 */
 	public static string strdown(string string)
 	{
@@ -964,6 +1048,9 @@ public class Str
 	 *  is deprecated and how to replace it.
 	 * A case-insensitive string comparison, corresponding to the standard
 	 * strcasecmp() function on platforms which support it.
+	 * Params:
+	 * s1 = a string.
+	 * s2 = a string to compare with s1.
 	 */
 	public static int strcasecmp(string s1, string s2)
 	{
@@ -989,6 +1076,10 @@ public class Str
 	 * strncasecmp() function on platforms which support it.
 	 * It is similar to g_strcasecmp() except it only compares the first n
 	 * characters of the strings.
+	 * Params:
+	 * s1 = a string.
+	 * s2 = a string to compare with s1.
+	 * n = the maximum number of characters to compare.
 	 */
 	public static int strncasecmp(string s1, string s2, uint n)
 	{
@@ -1004,7 +1095,7 @@ public class Str
 	 * containing multibyte characters. For that purpose, use
 	 * g_utf8_strreverse().
 	 * Params:
-	 * string  =  the string to reverse
+	 * string = the string to reverse
 	 */
 	public static string strreverse(string string)
 	{
@@ -1028,6 +1119,11 @@ public class Str
 	 * in errno. If the string conversion fails, zero is returned, and
 	 * endptr returns nptr (if endptr is non-NULL).
 	 * Since 2.12
+	 * Params:
+	 * nptr = the string to convert to a numeric value.
+	 * endptr = if non-NULL, it returns the character after
+	 *  the last character used in the conversion.
+	 * base = to be used for the conversion, 2..36 or 0
 	 */
 	public static long asciiStrtoll(string nptr, out string endptr, uint base)
 	{
@@ -1056,6 +1152,11 @@ public class Str
 	 * in errno. If the string conversion fails, zero is returned, and
 	 * endptr returns nptr (if endptr is non-NULL).
 	 * Since 2.2
+	 * Params:
+	 * nptr = the string to convert to a numeric value.
+	 * endptr = if non-NULL, it returns the character after
+	 *  the last character used in the conversion.
+	 * base = to be used for the conversion, 2..36 or 0
 	 */
 	public static ulong asciiStrtoull(string nptr, out string endptr, uint base)
 	{
@@ -1087,6 +1188,10 @@ public class Str
 	 * zero is returned and ERANGE is stored in errno.
 	 * This function resets errno before calling strtod() so that
 	 * you can reliably detect overflow and underflow.
+	 * Params:
+	 * nptr = the string to convert to a numeric value.
+	 * endptr = if non-NULL, it returns the character after
+	 *  the last character used in the conversion.
 	 */
 	public static double asciiStrtod(string nptr, out string endptr)
 	{
@@ -1107,6 +1212,10 @@ public class Str
 	 * (on machines with IEEE compatible 64bit doubles). It is
 	 * guaranteed that the size of the resulting string will never
 	 * be larger than G_ASCII_DTOSTR_BUF_SIZE bytes.
+	 * Params:
+	 * buffer = A buffer to place the resulting string in
+	 * bufLen = The length of the buffer.
+	 * d = The gdouble to convert
 	 */
 	public static string asciiDtostr(string buffer, int bufLen, double d)
 	{
@@ -1121,6 +1230,12 @@ public class Str
 	 * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
 	 * If you just want to want to serialize the value into a
 	 * string, use g_ascii_dtostr().
+	 * Params:
+	 * buffer = A buffer to place the resulting string in
+	 * bufLen = The length of the buffer.
+	 * format = The printf()-style format to use for the
+	 *  code to use for converting.
+	 * d = The gdouble to convert
 	 */
 	public static string asciiFormatd(string buffer, int bufLen, string format, double d)
 	{
@@ -1139,6 +1254,10 @@ public class Str
 	 * should you use this. Make sure that you don't pass strings such as comma
 	 * separated lists of values, since the commas may be interpreted as a decimal
 	 * point in some locales, causing unexpected results.
+	 * Params:
+	 * nptr = the string to convert to a numeric value.
+	 * endptr = if non-NULL, it returns the character after
+	 *  the last character used in the conversion.
 	 */
 	public static double strtod(string nptr, out string endptr)
 	{
@@ -1158,7 +1277,7 @@ public class Str
 	 * in place. The pointer to string is returned to allow the nesting of functions.
 	 * Also see g_strchomp() and g_strstrip().
 	 * Params:
-	 * string  = a string to remove the leading whitespace from.
+	 * string = a string to remove the leading whitespace from.
 	 */
 	public static string strchug(string string)
 	{
@@ -1172,7 +1291,7 @@ public class Str
 	 * place. The pointer to string is returned to allow the nesting of functions.
 	 * Also see g_strchug() and g_strstrip().
 	 * Params:
-	 * string  = a string to remove the trailing whitespace from.
+	 * string = a string to remove the trailing whitespace from.
 	 */
 	public static string strchomp(string string)
 	{
@@ -1187,7 +1306,10 @@ public class Str
 	 * string itself, not a copy. The return value is to allow nesting such as
 	 * g_ascii_strup (g_strdelimit (str, "abc", '?')).
 	 * Params:
-	 * string  = the string to convert.
+	 * string = the string to convert.
+	 * delimiters = a string containing the current delimiters, or NULL to use the
+	 * standard delimiters defined in G_STR_DELIMITERS.
+	 * newDelimiter = the new delimiter character.
 	 */
 	public static string strdelimit(string string, string delimiters, char newDelimiter)
 	{
@@ -1203,6 +1325,9 @@ public class Str
 	 * replaced with a '\' followed by their octal representation. Characters
 	 * supplied in exceptions are not escaped.
 	 * g_strcompress() does the reverse conversion.
+	 * Params:
+	 * source = a string to escape.
+	 * exceptions = a string of characters not to escape in source.
 	 */
 	public static string strescape(string source, string exceptions)
 	{
@@ -1213,6 +1338,8 @@ public class Str
 	/**
 	 * Replaces all escaped characters with their one byte equivalent. It
 	 * does the reverse conversion of g_strescape().
+	 * Params:
+	 * source = a string to compress.
 	 */
 	public static string strcompress(string source)
 	{
@@ -1226,7 +1353,9 @@ public class Str
 	 * and return string itself, not a copy. The return value is to allow
 	 * nesting such as g_ascii_strup (g_strcanon (str, "abc", '?')).
 	 * Params:
-	 * string  = a nul-terminated array of bytes.
+	 * string = a nul-terminated array of bytes.
+	 * validChars = bytes permitted in string.
+	 * substitutor = replacement character for disallowed bytes.
 	 */
 	public static string strcanon(string string, string validChars, char substitutor)
 	{
@@ -1245,7 +1374,12 @@ public class Str
 	 * to represent empty elements, you'll need to check for the empty string
 	 * before calling g_strsplit().
 	 * Params:
-	 * string  =  a string to split.
+	 * string = a string to split.
+	 * delimiter = a string which specifies the places at which to split the string.
+	 *  The delimiter is not included in any of the resulting strings, unless
+	 *  max_tokens is reached.
+	 * maxTokens = the maximum number of pieces to split string into. If this is
+	 *  less than 1, the string is split completely.
 	 */
 	public static string[] strsplit(string string, string delimiter, int maxTokens)
 	{
@@ -1273,7 +1407,11 @@ public class Str
 	 * to delimit UTF-8 strings for anything but ASCII characters.
 	 * Since 2.4
 	 * Params:
-	 * string  =  The string to be tokenized
+	 * string = The string to be tokenized
+	 * delimiters = A nul-terminated string containing bytes that are used
+	 *  to split the string.
+	 * maxTokens = The maximum number of tokens to split string into.
+	 *  If this is less than 1, the string is split completely
 	 */
 	public static string[] strsplitSet(string string, string delimiters, int maxTokens)
 	{
@@ -1284,6 +1422,8 @@ public class Str
 	/**
 	 * Frees a NULL-terminated array of strings, and the array itself.
 	 * If called on a NULL value, g_strfreev() simply returns.
+	 * Params:
+	 * strArray = a NULL-terminated array of strings to free.
 	 */
 	public static void strfreev(string[] strArray)
 	{
@@ -1295,6 +1435,9 @@ public class Str
 	 * Joins a number of strings together to form one long string, with the
 	 * optional separator inserted between each of them. The returned string
 	 * should be freed with g_free().
+	 * Params:
+	 * separator = a string to insert between each of the strings, or NULL
+	 * strArray = a NULL-terminated array of strings to join
 	 */
 	public static string strjoinv(string separator, string[] strArray)
 	{
@@ -1306,6 +1449,8 @@ public class Str
 	 * Returns the length of the given NULL-terminated
 	 * string array str_array.
 	 * Since 2.6
+	 * Params:
+	 * strArray = a NULL-terminated array of strings.
 	 */
 	public static uint strvLength(string[] strArray)
 	{
@@ -1318,6 +1463,9 @@ public class Str
 	 * "no such process". You should use this function in preference to
 	 * strerror(), because it returns a string in UTF-8 encoding, and since
 	 * not all platforms support the strerror() function.
+	 * Params:
+	 * errnum = the system error number. See the standard C errno
+	 *  documentation
 	 */
 	public static string strerror(int errnum)
 	{
@@ -1330,6 +1478,9 @@ public class Str
 	 * You should use this function in preference to strsignal(), because it
 	 * returns a string in UTF-8 encoding, and since not all platforms support
 	 * the strsignal() function.
+	 * Params:
+	 * signum = the signal number. See the signal
+	 *  documentation
 	 */
 	public static string strsignal(int signum)
 	{

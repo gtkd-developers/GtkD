@@ -132,6 +132,8 @@ public class MemorySlice
 	 * be changed with the G_SLICE=always-malloc
 	 * environment variable.
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the number of bytes to allocate
 	 */
 	public static void* alloc(uint blockSize)
 	{
@@ -146,6 +148,8 @@ public class MemorySlice
 	 * be changed with the G_SLICE=always-malloc
 	 * environment variable.
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the number of bytes to allocate
 	 */
 	public static void* alloc0(uint blockSize)
 	{
@@ -157,6 +161,9 @@ public class MemorySlice
 	 * Allocates a block of memory from the slice allocator and copies
 	 * block_size bytes into it from mem_block.
 	 * Since 2.14
+	 * Params:
+	 * blockSize = the number of bytes to allocate
+	 * memBlock = the memory to copy
 	 */
 	public static void* copy(uint blockSize, void* memBlock)
 	{
@@ -172,6 +179,9 @@ public class MemorySlice
 	 * G_DEBUG=gc-friendly environment variable,
 	 * also see G_SLICE for related debugging options.
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the size of the block
+	 * memBlock = a pointer to the block to free
 	 */
 	public static void free1(uint blockSize, void* memBlock)
 	{
@@ -189,6 +199,10 @@ public class MemorySlice
 	 * G_DEBUG=gc-friendly environment variable,
 	 * also see G_SLICE for related debugging options.
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the size of the blocks
+	 * memChain = a pointer to the first block of the chain
+	 * nextOffset = the offset of the next field in the blocks
 	 */
 	public static void freeChainWithOffset(uint blockSize, void* memChain, uint nextOffset)
 	{
