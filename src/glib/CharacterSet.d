@@ -235,7 +235,7 @@ public class CharacterSet
 	 */
 	public static string convertWithFallback(string str, int len, string toCodeset, string fromCodeset, string fallback, out uint bytesRead, out uint bytesWritten)
 	{
-		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  const gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
 		auto p = Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), &bytesRead, &bytesWritten, &err));

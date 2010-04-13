@@ -249,7 +249,7 @@ private import glib.Str;
  * doesn't make sense to distinguish with specific codes, it should be called
  * <NAMESPACE>_<MODULE>_ERROR_FAILED, for
  * example G_SPAWN_ERROR_FAILED or G_THREAD_ERROR_FAILED.
- * Summary of rules for use of ""
+ * Summary of rules for use of GError:
  *  Do not report programming errors via GError.
  *  The last argument of a function that returns an error should be a
  *  location where a GError can be placed (i.e. "GError** error"). If

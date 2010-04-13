@@ -63,34 +63,33 @@ private import glib.ConstructionException;
 
 /**
  * Description
- * The GSList structure and its associated functions provide a standard
- * singly-linked list data structure.
- * Each element in the list contains a piece of data, together with a pointer
- * which links to the next element in the list.
- * Using this pointer it is possible to move through the list in one
- * direction only (unlike the
- * Doubly-Linked Lists
- * which allow movement in both directions).
- * The data contained in each element can be either integer values, by using one
- * of the
- * Type Conversion Macros,
- * or simply pointers to any type of data.
- * List elements are allocated from the slice
- * allocator, which is more efficient than allocating elements
- * individually.
- * Note that most of the GSList functions expect to be passed a pointer to
- * the first element in the list. The functions which insert elements return
- * the new start of the list, which may have changed.
- * There is no function to create a GSList. NULL is considered to be the empty
- * list so you simply set a GSList* to NULL.
- * To add elements, use g_slist_append(), g_slist_prepend(), g_slist_insert()
- * and g_slist_insert_sorted().
+ * The GSList structure and its associated functions provide a
+ * standard singly-linked list data structure.
+ * Each element in the list contains a piece of data, together with a
+ * pointer which links to the next element in the list. Using this
+ * pointer it is possible to move through the list in one direction
+ * only (unlike the Doubly-Linked Lists which
+ * allow movement in both directions).
+ * The data contained in each element can be either integer values, by
+ * using one of the Type
+ * Conversion Macros, or simply pointers to any type of data.
+ * List elements are allocated from the slice allocator, which is more
+ * efficient than allocating elements individually.
+ * Note that most of the GSList functions expect to be passed a
+ * pointer to the first element in the list. The functions which insert
+ * elements return the new start of the list, which may have changed.
+ * There is no function to create a GSList. NULL is considered to be
+ * the empty list so you simply set a GSList* to NULL.
+ * To add elements, use g_slist_append(), g_slist_prepend(),
+ * g_slist_insert() and g_slist_insert_sorted().
  * To remove elements, use g_slist_remove().
  * To find elements in the list use g_slist_last(), g_slist_next(),
  * g_slist_nth(), g_slist_nth_data(), g_slist_find() and
  * g_slist_find_custom().
- * To find the index of an element use g_slist_position() and g_slist_index().
- * To call a function for each element in the list use g_slist_foreach().
+ * To find the index of an element use g_slist_position() and
+ * g_slist_index().
+ * To call a function for each element in the list use
+ * g_slist_foreach().
  * To free the entire list, use g_slist_free().
  */
 public class ListSG
@@ -144,8 +143,8 @@ public class ListSG
 	 */
 	
 	/**
-	 * Allocates space for one GSList element.
-	 * It is called by the g_slist_append(), g_slist_prepend(), g_slist_insert() and
+	 * Allocates space for one GSList element. It is called by the
+	 * g_slist_append(), g_slist_prepend(), g_slist_insert() and
 	 * g_slist_insert_sorted() functions and so is rarely used on its own.
 	 */
 	public static ListSG alloc()
@@ -607,10 +606,11 @@ public class ListSG
 	
 	/**
 	 * Warning
-	 * g_slist_push_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GSList has been
-	 * converted to the slice allocator
-	 * Sets the allocator to use to allocate GSList elements.
-	 * Use g_slist_pop_allocator() to restore the previous allocator.
+	 * g_slist_push_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GSList has been converted
+	 *  to the slice
+	 *  allocator
+	 * Sets the allocator to use to allocate GSList elements. Use
+	 * g_slist_pop_allocator() to restore the previous allocator.
 	 * Note that this function is not available if GLib has been compiled
 	 * with --disable-mem-pools
 	 * Params:
@@ -624,9 +624,11 @@ public class ListSG
 	
 	/**
 	 * Warning
-	 * g_slist_pop_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GSList has been
-	 * converted to the slice allocator
-	 * Restores the previous GAllocator, used when allocating GSList elements.
+	 * g_slist_pop_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GSList has been converted
+	 *  to the slice
+	 *  allocator
+	 * Restores the previous GAllocator, used when allocating GSList
+	 * elements.
 	 * Note that this function is not available if GLib has been compiled
 	 * with --disable-mem-pools
 	 */

@@ -214,6 +214,7 @@ public class MappedFile
 	 * Returns the contents of a GMappedFile.
 	 * Note that the contents may not be zero-terminated,
 	 * even if the GMappedFile is backed by a text file.
+	 * If the file is empty then NULL is returned.
 	 * Since 2.8
 	 */
 	public string getContents()

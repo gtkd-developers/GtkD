@@ -62,22 +62,23 @@ private import glib.ConstructionException;
 
 /**
  * Description
- * Keyed data lists provide lists of arbitrary data elements which can be accessed
- * either with a string or with a GQuark corresponding to the
- * string.
- * The GQuark methods are quicker, since the strings have to be converted to
- * GQuarks anyway.
- * Data lists are used for associating arbitrary data with
- * GObjects, using g_object_set_data() and related functions.
+ * Keyed data lists provide lists of arbitrary data elements which can
+ * be accessed either with a string or with a GQuark corresponding to
+ * the string.
+ * The GQuark methods are quicker, since the strings have to be
+ * converted to GQuarks anyway.
+ * Data lists are used for associating arbitrary data with GObjects,
+ * using g_object_set_data() and related functions.
  * To create a datalist, use g_datalist_init().
  * To add data elements to a datalist use g_datalist_id_set_data(),
- * g_datalist_id_set_data_full(), g_datalist_set_data()
- * and g_datalist_set_data_full().
- * To get data elements from a datalist use g_datalist_id_get_data() and
- * g_datalist_get_data().
- * To iterate over all data elements in a datalist use g_datalist_foreach() (not thread-safe).
- * To remove data elements from a datalist use g_datalist_id_remove_data() and
- * g_datalist_remove_data().
+ * g_datalist_id_set_data_full(), g_datalist_set_data() and
+ * g_datalist_set_data_full().
+ * To get data elements from a datalist use g_datalist_id_get_data()
+ * and g_datalist_get_data().
+ * To iterate over all data elements in a datalist use
+ * g_datalist_foreach() (not thread-safe).
+ * To remove data elements from a datalist use
+ * g_datalist_id_remove_data() and g_datalist_remove_data().
  * To remove all data elements from a datalist, use g_datalist_clear().
  */
 public class DataList
@@ -116,8 +117,8 @@ public class DataList
 	 */
 	
 	/**
-	 * Resets the datalist to NULL.
-	 * It does not free any memory or call any destroy functions.
+	 * Resets the datalist to NULL. It does not free any memory or call
+	 * any destroy functions.
 	 * Params:
 	 * datalist = a pointer to a pointer to a datalist.
 	 */
@@ -128,19 +129,20 @@ public class DataList
 	}
 	
 	/**
-	 * Sets the data corresponding to the given GQuark id, and the function to
-	 * be called when the element is removed from the datalist.
-	 * Any previous data with the same key is removed, and its
-	 * destroy function is called.
+	 * Sets the data corresponding to the given GQuark id, and the
+	 * function to be called when the element is removed from the datalist.
+	 * Any previous data with the same key is removed, and its destroy
+	 * function is called.
 	 * Params:
 	 * datalist = a datalist.
 	 * keyId = the GQuark to identify the data element.
 	 * data = the data element or NULL to remove any previous element
-	 * corresponding to key_id.
-	 * destroyFunc = the function to call when the data element is removed. This
-	 * function will be called with the data element and can be used to free any
-	 * memory allocated for it. If data is NULL, then destroy_func must
-	 * also be NULL.
+	 *  corresponding to key_id.
+	 * destroyFunc = the function to call when the data element is
+	 *  removed. This function will be called with the data
+	 *  element and can be used to free any memory allocated
+	 *  for it. If data is NULL, then destroy_func must
+	 *  also be NULL.
 	 */
 	public static void idSetDataFull(GData** datalist, GQuark keyId, void* data, GDestroyNotify destroyFunc)
 	{
@@ -161,7 +163,8 @@ public class DataList
 	}
 	
 	/**
-	 * Removes an element, without calling its destroy notification function.
+	 * Removes an element, without calling its destroy notification
+	 * function.
 	 * Params:
 	 * datalist = a datalist.
 	 * keyId = the GQuark identifying a data element.
@@ -173,12 +176,12 @@ public class DataList
 	}
 	
 	/**
-	 * Calls the given function for each data element of the datalist.
-	 * The function is called with each data element's GQuark id and data,
-	 * together with the given user_data parameter.
-	 * Note that this function is NOT thread-safe. So unless datalist
-	 * can be protected from any modifications during invocation of this
-	 * function, it should not be called.
+	 * Calls the given function for each data element of the datalist. The
+	 * function is called with each data element's GQuark id and data,
+	 * together with the given user_data parameter. Note that this
+	 * function is NOT thread-safe. So unless datalist can be protected
+	 * from any modifications during invocation of this function, it should
+	 * not be called.
 	 * Params:
 	 * datalist = a datalist.
 	 * func = the function to call for each data element.
@@ -191,8 +194,8 @@ public class DataList
 	}
 	
 	/**
-	 * Frees all the data elements of the datalist.
-	 * The data elements' destroy functions are called if they have been set.
+	 * Frees all the data elements of the datalist. The data elements'
+	 * destroy functions are called if they have been set.
 	 * Params:
 	 * datalist = a datalist.
 	 */

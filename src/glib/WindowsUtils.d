@@ -107,7 +107,8 @@ public class WindowsUtils
 	
 	/**
 	 * Warning
-	 * g_win32_get_package_installation_directory is deprecated and should not be used in newly-written code.
+	 * g_win32_get_package_installation_directory has been deprecated since version 2.18 and should not be used in newly-written code. Pass the HMODULE of a DLL or EXE to
+	 * g_win32_get_package_installation_directory_of_module() instead.
 	 * Try to determine the installation directory for a software package.
 	 * This function is deprecated. Use
 	 * g_win32_get_package_installation_directory_of_module() instead.
@@ -184,7 +185,9 @@ public class WindowsUtils
 	
 	/**
 	 * Warning
-	 * g_win32_get_package_installation_subdirectory is deprecated and should not be used in newly-written code.
+	 * g_win32_get_package_installation_subdirectory has been deprecated since version 2.18 and should not be used in newly-written code. Pass the HMODULE of a DLL or EXE to
+	 * g_win32_get_package_installation_directory_of_module() instead, and
+	 * then construct a subdirectory pathname with g_build_filename().
 	 * This function is deprecated. Use
 	 * g_win32_get_package_installation_directory_of_module() and
 	 * g_build_filename() instead.

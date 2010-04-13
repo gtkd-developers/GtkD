@@ -159,6 +159,92 @@ public class Memory
 	}
 	
 	/**
+	 * This function is similar to g_malloc(), allocating (n_blocks * n_block_bytes) bytes,
+	 * but care is taken to detect possible overflow during multiplication.
+	 * Since 2.24
+	 * Params:
+	 * nBlocks = the number of blocks to allocate
+	 * nBlockBytes = the size of each block in bytes
+	 */
+	public static void* mallocN(uint nBlocks, uint nBlockBytes)
+	{
+		// gpointer g_malloc_n (gsize n_blocks,  gsize n_block_bytes);
+		return g_malloc_n(nBlocks, nBlockBytes);
+	}
+	
+	/**
+	 * This function is similar to g_malloc0(), allocating (n_blocks * n_block_bytes) bytes,
+	 * but care is taken to detect possible overflow during multiplication.
+	 * Since 2.24
+	 * Params:
+	 * nBlocks = the number of blocks to allocate
+	 * nBlockBytes = the size of each block in bytes
+	 */
+	public static void* malloc0_N(uint nBlocks, uint nBlockBytes)
+	{
+		// gpointer g_malloc0_n (gsize n_blocks,  gsize n_block_bytes);
+		return g_malloc0_n(nBlocks, nBlockBytes);
+	}
+	
+	/**
+	 * This function is similar to g_realloc(), allocating (n_blocks * n_block_bytes) bytes,
+	 * but care is taken to detect possible overflow during multiplication.
+	 * Since 2.24
+	 * Params:
+	 * mem = the memory to reallocate
+	 * nBlocks = the number of blocks to allocate
+	 * nBlockBytes = the size of each block in bytes
+	 */
+	public static void* reallocN(void* mem, uint nBlocks, uint nBlockBytes)
+	{
+		// gpointer g_realloc_n (gpointer mem,  gsize n_blocks,  gsize n_block_bytes);
+		return g_realloc_n(mem, nBlocks, nBlockBytes);
+	}
+	
+	/**
+	 * This function is similar to g_try_malloc(), allocating (n_blocks * n_block_bytes) bytes,
+	 * but care is taken to detect possible overflow during multiplication.
+	 * Since 2.24
+	 * Params:
+	 * nBlocks = the number of blocks to allocate
+	 * nBlockBytes = the size of each block in bytes
+	 */
+	public static void* tryMallocN(uint nBlocks, uint nBlockBytes)
+	{
+		// gpointer g_try_malloc_n (gsize n_blocks,  gsize n_block_bytes);
+		return g_try_malloc_n(nBlocks, nBlockBytes);
+	}
+	
+	/**
+	 * This function is similar to g_try_malloc0(), allocating (n_blocks * n_block_bytes) bytes,
+	 * but care is taken to detect possible overflow during multiplication.
+	 * Since 2.24
+	 * Params:
+	 * nBlocks = the number of blocks to allocate
+	 * nBlockBytes = the size of each block in bytes
+	 */
+	public static void* tryMalloc0_N(uint nBlocks, uint nBlockBytes)
+	{
+		// gpointer g_try_malloc0_n (gsize n_blocks,  gsize n_block_bytes);
+		return g_try_malloc0_n(nBlocks, nBlockBytes);
+	}
+	
+	/**
+	 * This function is similar to g_try_realloc(), allocating (n_blocks * n_block_bytes) bytes,
+	 * but care is taken to detect possible overflow during multiplication.
+	 * Since 2.24
+	 * Params:
+	 * mem = previously-allocated memory, or NULL.
+	 * nBlocks = the number of blocks to allocate
+	 * nBlockBytes = the size of each block in bytes
+	 */
+	public static void* tryReallocN(void* mem, uint nBlocks, uint nBlockBytes)
+	{
+		// gpointer g_try_realloc_n (gpointer mem,  gsize n_blocks,  gsize n_block_bytes);
+		return g_try_realloc_n(mem, nBlocks, nBlockBytes);
+	}
+	
+	/**
 	 * Frees the memory pointed to by mem.
 	 * If mem is NULL it simply returns.
 	 * Params:

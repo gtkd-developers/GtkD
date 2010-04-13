@@ -419,7 +419,7 @@ public class FileUtils
 	 */
 	public static int stat(string filename, void* buf)
 	{
-		// int g_stat (const gchar *filename,  struct stat *buf);
+		// int g_stat (const gchar *filename,  struct _g_stat_struct *buf);
 		return g_stat(Str.toStringz(filename), buf);
 	}
 	
@@ -438,7 +438,7 @@ public class FileUtils
 	 */
 	public static int lstat(string filename, void* buf)
 	{
-		// int g_lstat (const gchar *filename,  struct stat *buf);
+		// int g_lstat (const gchar *filename,  struct _g_stat_struct *buf);
 		return g_lstat(Str.toStringz(filename), buf);
 	}
 	

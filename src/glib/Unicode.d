@@ -621,9 +621,10 @@ public class Unicode
 	}
 	
 	/**
-	 * Returns the length of the string in characters.
+	 * Computes the length of the string in characters, not including
+	 * the terminating nul character.
 	 * Params:
-	 * p = pointer to the start of a UTF-8 encoded string.
+	 * p = pointer to the start of a UTF-8 encoded string
 	 * max = the maximum number of bytes to examine. If max
 	 *  is less than 0, then the string is assumed to be
 	 *  nul-terminated. If max is 0, p will not be examined and

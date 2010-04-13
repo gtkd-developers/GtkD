@@ -286,10 +286,9 @@ public class Date
 	
 	/**
 	 * Warning
-	 * g_date_set_time is deprecated and should not be used in newly-written code.
+	 * g_date_set_time has been deprecated since version 2.10 and should not be used in newly-written code. Use g_date_set_time_t() instead.
 	 * Sets the value of a date from a GTime value.
 	 * The time to date conversion is done using the user's current timezone.
-	 * Deprecated:2.10: Use g_date_set_time_t() instead.
 	 * Params:
 	 * time = GTime value to set.
 	 */

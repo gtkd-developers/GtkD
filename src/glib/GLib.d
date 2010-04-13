@@ -73,30 +73,4 @@ public class Version
 	
 	/**
 	 */
-	
-	/**
-	 * Checks that the GLib library in use is compatible with the
-	 * given version. Generally you would pass in the constants
-	 * GLIB_MAJOR_VERSION, GLIB_MINOR_VERSION, GLIB_MICRO_VERSION
-	 * as the three arguments to this function; that produces
-	 * a check that the library in use is compatible with
-	 * the version of GLib the application or module was compiled
-	 * against.
-	 * Compatibility is defined by two things: first the version
-	 * of the running library is newer than the version
-	 * required_major.required_minor.required_micro. Second
-	 * the running library must be binary compatible with the
-	 * version required_major.required_minor.required_micro
-	 * (same major version.)
-	 * Since 2.6
-	 * Params:
-	 * requiredMajor = the required major version.
-	 * requiredMinor = the required minor version.
-	 * requiredMicro = the required micro version.
-	 */
-	public static string checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
-	{
-		// const gchar * glib_check_version (guint required_major,  guint required_minor,  guint required_micro);
-		return Str.toString(glib_check_version(requiredMajor, requiredMinor, requiredMicro));
-	}
 }

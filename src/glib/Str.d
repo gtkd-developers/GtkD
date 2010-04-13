@@ -526,6 +526,10 @@ public class Str
 	 * This function does NOT allocate memory.
 	 * This always NUL terminates (unless siz == 0 or there were no NUL characters
 	 * in the dest_size characters of dest to start with).
+	 * Note
+	 * Caveat: this is supposedly a more secure alternative to
+	 * strcat() or strncat(), but for real security g_strconcat() is harder
+	 * to mess up.
 	 * Params:
 	 * dest = destination buffer, already containing one nul-terminated string
 	 * src = source buffer

@@ -109,6 +109,9 @@ public class Base64
 	
 	/**
 	 * Flush the status from a sequence of calls to g_base64_encode_step().
+	 * The output buffer must be large enough to fit all the data that will
+	 * be written to it. It will need up to 4 bytes, or up to 5 bytes if
+	 * line-breaking is enabled.
 	 * Since 2.12
 	 * Params:
 	 * breakLines = whether to break long lines

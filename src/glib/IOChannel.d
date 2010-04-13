@@ -77,36 +77,36 @@ private import glib.Str;
 
 /**
  * Description
- * The GIOChannel data type aims to provide a portable method for using file
- * descriptors, pipes, and sockets, and integrating them into the
- * main event loop.
- * Currently full support is available on UNIX platforms, support for
- * Windows is only partially complete.
- * To create a new GIOChannel on UNIX systems use g_io_channel_unix_new().
- * This works for plain file descriptors, pipes and sockets.
- * Alternatively, a channel can be created for a file in a system independent
- * manner using g_io_channel_new_file().
- * Once a GIOChannel has been created, it can be used in a generic manner
- * with the functions g_io_channel_read_chars(), g_io_channel_write_chars(),
- * g_io_channel_seek_position(), and g_io_channel_shutdown().
- * To add a GIOChannel to the
- * main event loop
- * use g_io_add_watch() or g_io_add_watch_full(). Here you specify which events
- * you are interested in on the GIOChannel, and provide a function to be
- * called whenever these events occur.
- * GIOChannel instances are created with an initial reference count of 1.
- * g_io_channel_ref() and g_io_channel_unref() can be used to increment or
- * decrement the reference count respectively. When the reference count falls
- * to 0, the GIOChannel is freed. (Though it isn't closed automatically,
- * unless it was created using g_io_channel_new_from_file().)
- * Using g_io_add_watch() or g_io_add_watch_full() increments a channel's
- * reference count.
- * The new functions g_io_channel_read_chars(), g_io_channel_read_line(),
- * g_io_channel_read_line_string(), g_io_channel_read_to_end(),
- * g_io_channel_write_chars(), g_io_channel_seek_position(),
- * and g_io_channel_flush() should not be mixed with the
- * deprecated functions g_io_channel_read(), g_io_channel_write(),
- * and g_io_channel_seek() on the same channel.
+ * The GIOChannel data type aims to provide a portable method for
+ * using file descriptors, pipes, and sockets, and integrating them
+ * into the main event
+ * loop. Currently full support is available on UNIX platforms,
+ * support for Windows is only partially complete.
+ * To create a new GIOChannel on UNIX systems use
+ * g_io_channel_unix_new(). This works for plain file descriptors,
+ * pipes and sockets. Alternatively, a channel can be created for a
+ * file in a system independent manner using g_io_channel_new_file().
+ * Once a GIOChannel has been created, it can be used in a generic
+ * manner with the functions g_io_channel_read_chars(),
+ * g_io_channel_write_chars(), g_io_channel_seek_position(), and
+ * g_io_channel_shutdown().
+ * To add a GIOChannel to the main event loop use
+ * g_io_add_watch() or g_io_add_watch_full(). Here you specify which
+ * events you are interested in on the GIOChannel, and provide a
+ * function to be called whenever these events occur.
+ * GIOChannel instances are created with an initial reference count of
+ * 1. g_io_channel_ref() and g_io_channel_unref() can be used to
+ * increment or decrement the reference count respectively. When the
+ * reference count falls to 0, the GIOChannel is freed. (Though it
+ * isn't closed automatically, unless it was created using
+ * g_io_channel_new_from_file().) Using g_io_add_watch() or
+ * g_io_add_watch_full() increments a channel's reference count.
+ * The new functions g_io_channel_read_chars(),
+ * g_io_channel_read_line(), g_io_channel_read_line_string(),
+ * g_io_channel_read_to_end(), g_io_channel_write_chars(),
+ * g_io_channel_seek_position(), and g_io_channel_flush() should not be
+ * mixed with the deprecated functions g_io_channel_read(),
+ * g_io_channel_write(), and g_io_channel_seek() on the same channel.
  */
 public class IOChannel
 {
@@ -220,22 +220,22 @@ public class IOChannel
 	 */
 	
 	/**
-	 * Creates a new GIOChannel given a file descriptor.
-	 * On UNIX systems this works for plain files, pipes, and sockets.
+	 * Creates a new GIOChannel given a file descriptor. On UNIX systems
+	 * this works for plain files, pipes, and sockets.
 	 * The returned GIOChannel has a reference count of 1.
 	 * The default encoding for GIOChannel is UTF-8. If your application
-	 * is reading output from a command using via pipe, you may need to
-	 * set the encoding to the encoding of the current locale (see
+	 * is reading output from a command using via pipe, you may need to set
+	 * the encoding to the encoding of the current locale (see
 	 * g_get_charset()) with the g_io_channel_set_encoding() function.
 	 * If you want to read raw binary data without interpretation, then
 	 * call the g_io_channel_set_encoding() function with NULL for the
 	 * encoding argument.
 	 * This function is available in GLib on Windows, too, but you should
-	 * avoid using it on Windows. The domain of file descriptors and sockets
-	 * overlap. There is no way for GLib to know which one you mean in case
-	 * the argument you pass to this function happens to be both a valid file
-	 * descriptor and socket. If that happens a warning is issued, and GLib
-	 * assumes that it is the file descriptor you mean.
+	 * avoid using it on Windows. The domain of file descriptors and
+	 * sockets overlap. There is no way for GLib to know which one you mean
+	 * in case the argument you pass to this function happens to be both a
+	 * valid file descriptor and socket. If that happens a warning is
+	 * issued, and GLib assumes that it is the file descriptor you mean.
 	 * Params:
 	 * fd = a file descriptor.
 	 */
@@ -252,7 +252,8 @@ public class IOChannel
 	
 	/**
 	 * Returns the file descriptor of the GIOChannel.
-	 * On Windows this function returns the file descriptor or socket of the GIOChannel.
+	 * On Windows this function returns the file descriptor or socket of
+	 * the GIOChannel.
 	 */
 	public int unixGetFd()
 	{
@@ -261,24 +262,24 @@ public class IOChannel
 	}
 	
 	/**
-	 * Creates a new GIOChannel given a file descriptor on Windows.
-	 * This works for file descriptors from the C runtime.
+	 * Creates a new GIOChannel given a file descriptor on Windows. This
+	 * works for file descriptors from the C runtime.
 	 * This function works for file descriptors as returned by the open(),
 	 * creat(), pipe() and fileno() calls in the Microsoft C runtime. In
-	 * order to meaningfully use this function your code should use the same
-	 * C runtime as GLib uses, which is msvcrt.dll. Note that in current
-	 * Microsoft compilers it is near impossible to convince it to build code
-	 * that would use msvcrt.dll. The last Microsoft compiler version that
-	 * supported using msvcrt.dll as the C runtime was version 6. The GNU
-	 * compiler and toolchain for Windows, also known as Mingw, fully
-	 * supports msvcrt.dll.
+	 * order to meaningfully use this function your code should use the
+	 * same C runtime as GLib uses, which is msvcrt.dll. Note that in
+	 * current Microsoft compilers it is near impossible to convince it to
+	 * build code that would use msvcrt.dll. The last Microsoft compiler
+	 * version that supported using msvcrt.dll as the C runtime was version
+	 * 6. The GNU compiler and toolchain for Windows, also known as Mingw,
+	 * fully supports msvcrt.dll.
 	 * If you have created a GIOChannel for a file descriptor and started
 	 * watching (polling) it, you shouldn't call read() on the file
 	 * descriptor. This is because adding polling for a file descriptor is
-	 * implemented in GLib on Windows by starting a thread that sits blocked
-	 * in a read() from the file descriptor most of the time. All reads from
-	 * the file descriptor should be done by this internal GLib thread. Your
-	 * code should call only g_io_channel_read().
+	 * implemented in GLib on Windows by starting a thread that sits
+	 * blocked in a read() from the file descriptor most of the time. All
+	 * reads from the file descriptor should be done by this internal GLib
+	 * thread. Your code should call only g_io_channel_read().
 	 * This function is available only in GLib on Windows.
 	 * Params:
 	 * fd = a C library file descriptor.
@@ -296,11 +297,11 @@ public class IOChannel
 	
 	/**
 	 * Creates a new GIOChannel given a socket on Windows.
-	 * This function works for sockets created by Winsock.
-	 * It's available only in GLib on Windows.
-	 * Polling a GSource created to watch a channel for a socket
-	 * puts the socket in non-blocking mode. This is a side-effect
-	 * of the implementation and unavoidable.
+	 * This function works for sockets created by Winsock. It's available
+	 * only in GLib on Windows.
+	 * Polling a GSource created to watch a channel for a socket puts the
+	 * socket in non-blocking mode. This is a side-effect of the
+	 * implementation and unavoidable.
 	 * Params:
 	 * socket = a Winsock socket
 	 */

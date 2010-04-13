@@ -67,11 +67,10 @@ private import glib.Sequence;
 /**
  * Description
  * The GSequence data structure has the API of a list, but is
- * implemented internally with a balanced binary tree. This means that it
- * is possible to maintain a sorted list of n elements in time O(n log
- * n). The data contained in each element can be either integer values, by
- * using of the
- * Type Conversion Macros,
+ * implemented internally with a balanced binary tree. This means that
+ * it is possible to maintain a sorted list of n elements in time O(n
+ * log n). The data contained in each element can be either integer
+ * values, by using of the Type Conversion Macros,
  * or simply pointers to any type of data.
  * A GSequence is accessed through iterators,
  * represented by a GSequenceIter. An iterator represents a position
@@ -82,21 +81,21 @@ private import glib.Sequence;
  * after the last element. In an empty sequence, the begin and end
  * iterators are the same.
  * Some methods on GSequence operate on ranges of items. For example
- * g_sequence_foreach_range() will call a user-specified function on each
- * element with the given range. The range is delimited by the gaps
- * represented by the passed-in iterators, so if you pass in the begin
- * and end iterators, the range in question is the entire sequence.
+ * g_sequence_foreach_range() will call a user-specified function on
+ * each element with the given range. The range is delimited by the
+ * gaps represented by the passed-in iterators, so if you pass in the
+ * begin and end iterators, the range in question is the entire
+ * sequence.
  * The function g_sequence_get() is used with an iterator to access the
- * element immediately following the gap that the iterator
- * represents. The iterator is said to point to
- * that element.
+ * element immediately following the gap that the iterator represents.
+ * The iterator is said to point to that element.
  * Iterators are stable across most operations on a GSequence. For
  * example an iterator pointing to some element of a sequence will
- * continue to point to that element even after the sequence is
- * sorted. Even moving an element to another sequence using for example
- * g_sequence_move_range() will not invalidate the iterators pointing to
- * it. The only operation that will invalidate an iterator is when the
- * element it points to is removed from any sequence.
+ * continue to point to that element even after the sequence is sorted.
+ * Even moving an element to another sequence using for example
+ * g_sequence_move_range() will not invalidate the iterators pointing
+ * to it. The only operation that will invalidate an iterator is when
+ * the element it points to is removed from any sequence.
  */
 public class SequenceIter
 {
