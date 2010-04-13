@@ -154,6 +154,7 @@ public class HashTableIter
 	 * Params:
 	 * key = a location to store the key, or NULL.
 	 * value = a location to store the value, or NULL.
+	 * Returns: FALSE if the end of the GHashTable has been reached.
 	 */
 	public int next(void** key, void** value)
 	{
@@ -164,6 +165,7 @@ public class HashTableIter
 	/**
 	 * Returns the GHashTable associated with iter.
 	 * Since 2.16
+	 * Returns: the GHashTable associated with iter.
 	 */
 	public HashTable getHashTable()
 	{

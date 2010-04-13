@@ -120,6 +120,7 @@ public class TrashStack
 	 * Pops a piece of memory off a GTrashStack.
 	 * Params:
 	 * stackP = a pointer to a GTrashStack.
+	 * Returns:the element at the top of the stack.
 	 */
 	public static void* pop(GTrashStack** stackP)
 	{
@@ -131,6 +132,7 @@ public class TrashStack
 	 * Returns the element at the top of a GTrashStack which may be NULL.
 	 * Params:
 	 * stackP = a pointer to a GTrashStack.
+	 * Returns:the element at the top of the stack.
 	 */
 	public static void* peek(GTrashStack** stackP)
 	{
@@ -144,6 +146,7 @@ public class TrashStack
 	 * where N denotes the number of items on the stack.
 	 * Params:
 	 * stackP = a pointer to a GTrashStack.
+	 * Returns:the height of the stack.
 	 */
 	public static uint height(GTrashStack** stackP)
 	{

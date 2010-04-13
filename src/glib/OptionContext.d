@@ -285,6 +285,7 @@ public class OptionContext
 	/**
 	 * Returns the summary. See g_option_context_set_summary().
 	 * Since 2.12
+	 * Returns: the summary
 	 */
 	public string getSummary()
 	{
@@ -312,6 +313,7 @@ public class OptionContext
 	/**
 	 * Returns the description. See g_option_context_set_description().
 	 * Since 2.12
+	 * Returns: the description
 	 */
 	public string getDescription()
 	{
@@ -388,6 +390,7 @@ public class OptionContext
 	 * Returns whether automatic --help generation
 	 * is turned on for context. See g_option_context_set_help_enabled().
 	 * Since 2.6
+	 * Returns: TRUE if automatic help generation is turned on.
 	 */
 	public int getHelpEnabled()
 	{
@@ -417,6 +420,7 @@ public class OptionContext
 	 * Returns whether unknown options are ignored or not. See
 	 * g_option_context_set_ignore_unknown_options().
 	 * Since 2.6
+	 * Returns: TRUE if unknown options are ignored.
 	 */
 	public int getIgnoreUnknownOptions()
 	{
@@ -436,6 +440,7 @@ public class OptionContext
 	 * Params:
 	 * mainHelp = if TRUE, only include the main group
 	 * group = the GOptionGroup to create help for, or NULL
+	 * Returns: A newly allocated string containing the help text
 	 */
 	public string getHelp(int mainHelp, OptionGroup group)
 	{
@@ -493,6 +498,7 @@ public class OptionContext
 	/**
 	 * Returns a pointer to the main group of context.
 	 * Since 2.6
+	 * Returns: the main group of context, or NULL if context doesn't have a main group. Note that group belongs to context and should not be modified or freed.
 	 */
 	public OptionGroup getMainGroup()
 	{

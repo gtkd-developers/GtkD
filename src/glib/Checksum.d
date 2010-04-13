@@ -119,6 +119,7 @@ public class Checksum
 	 * Since 2.16
 	 * Params:
 	 * checksumType = a GChecksumType
+	 * Returns: the checksum length, or -1 if checksum_type isnot supported.
 	 */
 	public static int typeGetLength(GChecksumType checksumType)
 	{
@@ -160,6 +161,7 @@ public class Checksum
 	 * g_checksum_get_string() or g_checksum_get_digest(), the copied
 	 * checksum will be closed as well.
 	 * Since 2.16
+	 * Returns: the copy of the passed GChecksum. Use g_checksum_free() when finished using it.
 	 */
 	public Checksum copy()
 	{
@@ -213,6 +215,7 @@ public class Checksum
 	 * updated with g_checksum_update().
 	 * The hexadecimal characters will be lower case.
 	 * Since 2.16
+	 * Returns: the hexadecimal representation of the checksum. The returned string is owned by the checksum and should not be modified or freed.
 	 */
 	public string getString()
 	{
@@ -247,6 +250,7 @@ public class Checksum
 	 * checksumType = a GChecksumType
 	 * data = binary blob to compute the digest of
 	 * length = length of data
+	 * Returns: the digest of the binary data as a string in hexadecimal. The returned string should be freed with g_free() when done using it.
 	 */
 	public static string gComputeChecksumForData(GChecksumType checksumType, char* data, uint length)
 	{
@@ -262,6 +266,7 @@ public class Checksum
 	 * checksumType = a GChecksumType
 	 * str = the string to compute the checksum of
 	 * length = the length of the string, or -1 if the string is null-terminated.
+	 * Returns: the checksum as a hexadecimal string. The returned string should be freed with g_free() when done using it.
 	 */
 	public static string gComputeChecksumForString(GChecksumType checksumType, string str, int length)
 	{

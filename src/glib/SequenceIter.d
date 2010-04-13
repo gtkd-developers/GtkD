@@ -135,6 +135,7 @@ public class SequenceIter
 	/**
 	 * Returns whether iter is the begin iterator
 	 * Since 2.14
+	 * Returns: whether iter is the begin iterator
 	 */
 	public int isBegin()
 	{
@@ -145,6 +146,7 @@ public class SequenceIter
 	/**
 	 * Returns whether iter is the end iterator
 	 * Since 2.14
+	 * Returns: Whether iter is the end iterator.
 	 */
 	public int isEnd()
 	{
@@ -156,6 +158,7 @@ public class SequenceIter
 	 * Returns an iterator pointing to the next position after iter. If
 	 * iter is the end iterator, the end iterator is returned.
 	 * Since 2.14
+	 * Returns: a GSequenceIter pointing to the next position after iter.
 	 */
 	public SequenceIter next()
 	{
@@ -172,6 +175,7 @@ public class SequenceIter
 	 * Returns an iterator pointing to the previous position before iter. If
 	 * iter is the begin iterator, the begin iterator is returned.
 	 * Since 2.14
+	 * Returns: a GSequenceIter pointing to the previous position beforeiter.
 	 */
 	public SequenceIter prev()
 	{
@@ -187,6 +191,7 @@ public class SequenceIter
 	/**
 	 * Returns the position of iter
 	 * Since 2.14
+	 * Returns: the position of iter
 	 */
 	public int getPosition()
 	{
@@ -203,6 +208,7 @@ public class SequenceIter
 	 * Params:
 	 * delta = A positive or negative number indicating how many positions away
 	 *  from iter the returned GSequenceIter will be.
+	 * Returns: a GSequenceIter which is delta positions away from iter.
 	 */
 	public SequenceIter move(int delta)
 	{
@@ -218,6 +224,7 @@ public class SequenceIter
 	/**
 	 * Returns the GSequence that iter points into.
 	 * Since 2.14
+	 * Returns: the GSequence that iter points into.
 	 */
 	public Sequence getSequence()
 	{
@@ -238,6 +245,7 @@ public class SequenceIter
 	 * Params:
 	 * a = a GSequenceIter
 	 * b = a GSequenceIter
+	 * Returns: A negative number if a comes before b, 0 if they areequal, and a positive number if a comes after b.
 	 */
 	public int compare(SequenceIter b)
 	{

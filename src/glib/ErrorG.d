@@ -378,6 +378,7 @@ public class ErrorG
 	
 	/**
 	 * Makes a copy of error.
+	 * Returns: a new GError
 	 */
 	public ErrorG copy()
 	{
@@ -397,6 +398,7 @@ public class ErrorG
 	 * Params:
 	 * domain = an error domain
 	 * code = an error code
+	 * Returns: whether error has domain and code
 	 */
 	public int matches(GQuark domain, int code)
 	{

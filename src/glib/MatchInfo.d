@@ -159,6 +159,7 @@ public class MatchInfo
 	 * and must not be freed. Use g_regex_ref() if you need to keep it
 	 * after you free match_info object.
 	 * Since 2.14
+	 * Returns: GRegex object used in match_info
 	 */
 	public Regex getRegex()
 	{
@@ -176,6 +177,7 @@ public class MatchInfo
 	 * string passed to g_regex_match() or g_regex_replace() so
 	 * you may not free it before calling this function.
 	 * Since 2.14
+	 * Returns: the string searched with match_info
 	 */
 	public string getString()
 	{
@@ -196,6 +198,7 @@ public class MatchInfo
 	/**
 	 * Returns whether the previous match operation succeeded.
 	 * Since 2.14
+	 * Returns: TRUE if the previous match operation succeeded,  FALSE otherwise
 	 */
 	public int matches()
 	{
@@ -210,6 +213,7 @@ public class MatchInfo
 	 * The match is done on the string passed to the match function, so you
 	 * cannot free it before calling this function.
 	 * Since 2.14
+	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int next()
@@ -236,6 +240,7 @@ public class MatchInfo
 	 * count is not that of the number of capturing parentheses but that of
 	 * the number of matched substrings.
 	 * Since 2.14
+	 * Returns: Number of matched substrings, or -1 if an error occurred
 	 */
 	public int getMatchCount()
 	{
@@ -273,6 +278,7 @@ public class MatchInfo
 	 * for a pattern that does not conform to the restrictions, matching
 	 * functions return an error.
 	 * Since 2.14
+	 * Returns: TRUE if the match was partial, FALSE otherwise
 	 */
 	public int isPartialMatch()
 	{
@@ -298,6 +304,7 @@ public class MatchInfo
 	 * Since 2.14
 	 * Params:
 	 * stringToExpand = the string to expand
+	 * Returns: the expanded string, or NULL if an error occurred
 	 * Throws: GException on failure.
 	 */
 	public string expandReferences(string stringToExpand)
@@ -332,6 +339,7 @@ public class MatchInfo
 	 * Since 2.14
 	 * Params:
 	 * matchNum = number of the sub expression
+	 * Returns: The matched substring, or NULL if an error occurred. You have to free the string yourself
 	 */
 	public string fetch(int matchNum)
 	{
@@ -356,6 +364,7 @@ public class MatchInfo
 	 * matchNum = number of the sub expression
 	 * startPos = pointer to location where to store the start position
 	 * endPos = pointer to location where to store the end position
+	 * Returns: TRUE if the position was fetched, FALSE otherwise. If  the position cannot be fetched, start_pos and end_pos are left  unchanged
 	 */
 	public int fetchPos(int matchNum, out int startPos, out int endPos)
 	{
@@ -373,6 +382,7 @@ public class MatchInfo
 	 * Since 2.14
 	 * Params:
 	 * name = name of the subexpression
+	 * Returns: The matched substring, or NULL if an error occurred. You have to free the string yourself
 	 */
 	public string fetchNamed(string name)
 	{
@@ -390,6 +400,7 @@ public class MatchInfo
 	 * name = name of the subexpression
 	 * startPos = pointer to location where to store the start position
 	 * endPos = pointer to location where to store the end position
+	 * Returns: TRUE if the position was fetched, FALSE otherwise. If  the position cannot be fetched, start_pos and end_pos are left unchanged
 	 */
 	public int fetchNamedPos(string name, out int startPos, out int endPos)
 	{
@@ -412,6 +423,7 @@ public class MatchInfo
 	 * The strings are fetched from the string passed to the match function,
 	 * so you cannot call this function after freeing the string.
 	 * Since 2.14
+	 * Returns: a NULL-terminated array of gchar * pointers. It must be  freed using g_strfreev(). If the previous match failed NULL is returned
 	 */
 	public string[] fetchAll()
 	{

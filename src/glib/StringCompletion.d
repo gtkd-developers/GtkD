@@ -178,6 +178,7 @@ public class StringCompletion
 	 *  common to all items that matched prefix, or NULL if
 	 *  no items matched prefix. This string should be freed
 	 *  when no longer needed.
+	 * Returns: the list of items whose strings begin with prefix. This should not be changed.
 	 */
 	public ListG complete(string prefix, out string newPrefix)
 	{
@@ -208,6 +209,7 @@ public class StringCompletion
 	 * newPrefix = if non-NULL, returns the longest prefix which is common to all
 	 *  items that matched prefix, or NULL if no items matched prefix.
 	 *  This string should be freed when no longer needed.
+	 * Returns: the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
 	public ListG completeUtf8(string prefix, out string newPrefix)
 	{

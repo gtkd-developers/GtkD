@@ -149,6 +149,7 @@ public class SimpleXML
 	 * Params:
 	 * text = some valid UTF-8 text
 	 * length = length of text in bytes, or -1 if the text is nul-terminated
+	 * Returns: a newly allocated string with the escaped text
 	 */
 	public static string escapeText(string text, int length)
 	{
@@ -164,6 +165,7 @@ public class SimpleXML
 	 * Params:
 	 * format = printf() style format string
 	 * args = variable argument list, similar to vprintf()
+	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
 	public static string vprintfEscaped(string format, void* args)
 	{
@@ -176,6 +178,7 @@ public class SimpleXML
 	 * fed into the parse context with g_markup_parse_context_parse().
 	 * This function reports an error if the document isn't complete,
 	 * for example if elements are still open.
+	 * Returns: TRUE on success, FALSE if an error was set
 	 * Throws: GException on failure.
 	 */
 	public int endParse()
@@ -225,6 +228,7 @@ public class SimpleXML
 	 * give the element_name as passed to those functions. For the parent
 	 * elements, see g_markup_parse_context_get_element_stack().
 	 * Since 2.2
+	 * Returns: the name of the currently open element, or NULL
 	 */
 	public string getElement()
 	{
@@ -243,6 +247,7 @@ public class SimpleXML
 	 * would merely return the name of the element that is being
 	 * processed.
 	 * Since 2.16
+	 * Returns: the element stack, which must not be modified
 	 */
 	public ListSG getElementStack()
 	{
@@ -260,6 +265,7 @@ public class SimpleXML
 	 * be the user_data that was provided to g_markup_parse_context_new()
 	 * or to the most recent call of g_markup_parse_context_push().
 	 * Since 2.18
+	 * Returns: the provided user_data. The returned data belongs to the markup context and will be freed when g_markup_context_free() is called.
 	 */
 	public void* getUserData()
 	{
@@ -303,6 +309,7 @@ public class SimpleXML
 	 * Params:
 	 * text = chunk of text to parse
 	 * textLen = length of text in bytes
+	 * Returns: FALSE if an error occurred, TRUE on success
 	 * Throws: GException on failure.
 	 */
 	public int parse(string text, int textLen)
@@ -401,6 +408,7 @@ public class SimpleXML
 	 * used by the subparsers themselves to implement a higher-level
 	 * interface.
 	 * Since 2.18
+	 * Returns: the user_data passed to g_markup_parse_context_push().
 	 */
 	public void* pop()
 	{

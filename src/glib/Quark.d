@@ -122,6 +122,7 @@ public class Quark
 	 * using a copy of the string.
 	 * Params:
 	 * string = a string.
+	 * Returns: the GQuark identifying the string, or 0 if string is NULL.
 	 */
 	public static GQuark fromString(string string)
 	{
@@ -143,6 +144,7 @@ public class Quark
 	 * function in GTK+ theme engines).
 	 * Params:
 	 * string = a string.
+	 * Returns: the GQuark identifying the string, or 0 if string is NULL.
 	 */
 	public static GQuark fromStaticString(string string)
 	{
@@ -154,6 +156,7 @@ public class Quark
 	 * Gets the string associated with the given GQuark.
 	 * Params:
 	 * quark = a GQuark.
+	 * Returns: the string associated with the GQuark.
 	 */
 	public static string toString(GQuark quark)
 	{
@@ -168,6 +171,7 @@ public class Quark
 	 * use g_quark_from_string() or g_quark_from_static_string().
 	 * Params:
 	 * string = a string.
+	 * Returns: the GQuark associated with the string, or 0 if string is NULL or there is no GQuark associated with it.
 	 */
 	public static GQuark tryString(string string)
 	{
@@ -181,6 +185,7 @@ public class Quark
 	 * Since 2.10
 	 * Params:
 	 * string = a string
+	 * Returns: a canonical representation for the string
 	 */
 	public static string gInternString(string string)
 	{
@@ -196,6 +201,7 @@ public class Quark
 	 * Since 2.10
 	 * Params:
 	 * string = a static string
+	 * Returns: a canonical representation for the string
 	 */
 	public static string gInternStaticString(string string)
 	{

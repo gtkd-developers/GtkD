@@ -168,6 +168,7 @@ public class QueueG
 	
 	/**
 	 * Returns TRUE if the queue is empty.
+	 * Returns: TRUE if the queue is empty.
 	 */
 	public int isEmpty()
 	{
@@ -178,6 +179,7 @@ public class QueueG
 	/**
 	 * Returns the number of items in queue.
 	 * Since 2.4
+	 * Returns: The number of items in queue.
 	 */
 	public uint getLength()
 	{
@@ -200,6 +202,7 @@ public class QueueG
 	 * queue consist of pointers to data, the pointers are copied, but the
 	 * actual data is not.
 	 * Since 2.4
+	 * Returns: A copy of queue
 	 */
 	public QueueG copy()
 	{
@@ -231,6 +234,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * data = data to find
+	 * Returns: The first link in queue which contains data.
 	 */
 	public ListG find(void* data)
 	{
@@ -254,6 +258,7 @@ public class QueueG
 	 * data = user data passed to func
 	 * func = a GCompareFunc to call for each element. It should return 0
 	 * when the desired element is found
+	 * Returns: The found link, or NULL if it wasn't found
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
@@ -321,6 +326,7 @@ public class QueueG
 	
 	/**
 	 * Removes the first element of the queue.
+	 * Returns: the data of the first element in the queue, or NULL if the queue is empty.
 	 */
 	public void* popHead()
 	{
@@ -330,6 +336,7 @@ public class QueueG
 	
 	/**
 	 * Removes the last element of the queue.
+	 * Returns: the data of the last element in the queue, or NULL if the queue is empty.
 	 */
 	public void* popTail()
 	{
@@ -342,6 +349,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * n = the position of the element.
+	 * Returns: the element's data, or NULL if n is off the end of queue.
 	 */
 	public void* popNth(uint n)
 	{
@@ -351,6 +359,7 @@ public class QueueG
 	
 	/**
 	 * Returns the first element of the queue.
+	 * Returns: the data of the first element in the queue, or NULL if the queue is empty.
 	 */
 	public void* peekHead()
 	{
@@ -360,6 +369,7 @@ public class QueueG
 	
 	/**
 	 * Returns the last element of the queue.
+	 * Returns: the data of the last element in the queue, or NULL if the queue is empty.
 	 */
 	public void* peekTail()
 	{
@@ -372,6 +382,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * n = the position of the element.
+	 * Returns: The data for the n'th element of queue, or NULL if n is off the end of queue.
 	 */
 	public void* peekNth(uint n)
 	{
@@ -384,6 +395,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * data = the data to find.
+	 * Returns: The position of the first element in queue which contains data, or -1 if no element in queue contains data.
 	 */
 	public int index(void* data)
 	{
@@ -502,6 +514,7 @@ public class QueueG
 	
 	/**
 	 * Removes the first element of the queue.
+	 * Returns: the GList element at the head of the queue, or NULL if the queue is empty.
 	 */
 	public ListG popHeadLink()
 	{
@@ -516,6 +529,7 @@ public class QueueG
 	
 	/**
 	 * Removes the last element of the queue.
+	 * Returns: the GList element at the tail of the queue, or NULL if the queue is empty.
 	 */
 	public ListG popTailLink()
 	{
@@ -533,6 +547,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * n = the link's position
+	 * Returns: The n'th link, or NULL if n is off the end of queue.
 	 */
 	public ListG popNthLink(uint n)
 	{
@@ -548,6 +563,7 @@ public class QueueG
 	/**
 	 * Returns the first link in queue
 	 * Since 2.4
+	 * Returns: the first link in queue, or NULL if queue is empty
 	 */
 	public ListG peekHeadLink()
 	{
@@ -563,6 +579,7 @@ public class QueueG
 	/**
 	 * Returns the last link queue.
 	 * Since 2.4
+	 * Returns: the last link in queue, or NULL if queue is empty
 	 */
 	public ListG peekTailLink()
 	{
@@ -580,6 +597,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * n = the position of the link
+	 * Returns: The link at the n'th position, or NULL if n is off theend of the list
 	 */
 	public ListG peekNthLink(uint n)
 	{
@@ -597,6 +615,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * link = A GList link
+	 * Returns: The position of link_, or -1 if the link isnot part of queue
 	 */
 	public int linkIndex(ListG link)
 	{

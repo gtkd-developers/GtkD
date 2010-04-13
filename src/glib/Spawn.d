@@ -448,6 +448,7 @@ public class Spawn
 	 * childSetup = function to run in the child just before exec()
 	 * userData = user data for child_setup
 	 * childPid = return location for child process reference, or NULL
+	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
 	public static int async(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid)
@@ -491,6 +492,7 @@ public class Spawn
 	 * standardOutput = return location for child output, or NULL
 	 * standardError = return location for child error messages, or NULL
 	 * exitStatus = return location for child exit status, as returned by waitpid(), or NULL
+	 * Returns: TRUE on success, FALSE if an error was set.
 	 */
 	public static int sync(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out string standardOutput, out string standardError, out int exitStatus)
 	{
@@ -522,6 +524,7 @@ public class Spawn
 	 * The same concerns on Windows apply as for g_spawn_command_line_sync().
 	 * Params:
 	 * commandLine = a command line
+	 * Returns: TRUE on success, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */
 	public static int commandLineAsync(string commandLine)
@@ -565,6 +568,7 @@ public class Spawn
 	 * standardOutput = return location for child output
 	 * standardError = return location for child errors
 	 * exitStatus = return location for child exit status, as returned by waitpid()
+	 * Returns: TRUE on success, FALSE if an error was set
 	 */
 	public static int commandLineSync(string commandLine, out string standardOutput, out string standardError, out int exitStatus)
 	{

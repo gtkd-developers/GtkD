@@ -163,6 +163,7 @@ public class MappedFile
 	 * Increments the reference count of file by one. It is safe to call
 	 * this function from any thread.
 	 * Since 2.22
+	 * Returns: the passed in GMappedFile.
 	 */
 	public MappedFile doref()
 	{
@@ -203,6 +204,7 @@ public class MappedFile
 	/**
 	 * Returns the length of the contents of a GMappedFile.
 	 * Since 2.8
+	 * Returns: the length of the contents of file.
 	 */
 	public uint getLength()
 	{
@@ -216,6 +218,7 @@ public class MappedFile
 	 * even if the GMappedFile is backed by a text file.
 	 * If the file is empty then NULL is returned.
 	 * Since 2.8
+	 * Returns: the contents of file, or NULL.
 	 */
 	public string getContents()
 	{

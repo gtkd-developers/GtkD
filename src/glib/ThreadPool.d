@@ -238,6 +238,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the maximal number of threads for pool.
+	 * Returns: the maximal number of threads
 	 */
 	public int getMaxThreads()
 	{
@@ -247,6 +248,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of threads currently running in pool.
+	 * Returns: the number of threads currently running
 	 */
 	public uint getNumThreads()
 	{
@@ -256,6 +258,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of tasks still unprocessed in pool.
+	 * Returns: the number of unprocessed tasks
 	 */
 	public uint unprocessed()
 	{
@@ -299,6 +302,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the maximal allowed number of unused threads.
+	 * Returns: the maximal number of unused threads
 	 */
 	public static int getMaxUnusedThreads()
 	{
@@ -308,6 +312,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of currently unused threads.
+	 * Returns: the number of currently unused threads
 	 */
 	public static uint getNumUnusedThreads()
 	{
@@ -377,6 +382,7 @@ public class ThreadPool
 	 * If this function returns 0, threads waiting in the thread pool for
 	 * new work are not stopped.
 	 * Since 2.10
+	 * Returns: the maximum interval to wait for new tasks in the thread pool before stopping the thread (1/1000ths of a second).
 	 */
 	public static uint getMaxIdleTime()
 	{

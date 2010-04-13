@@ -194,6 +194,7 @@ public class Source
 	
 	/**
 	 * Increases the reference count on a source by one.
+	 * Returns: source
 	 */
 	public Source doref()
 	{
@@ -235,6 +236,7 @@ public class Source
 	 * that context. Remove it by calling g_source_destroy().
 	 * Params:
 	 * context = a GMainContext (if NULL, the default context will be used)
+	 * Returns: the ID (greater than 0) for the source within the  GMainContext.
 	 */
 	public uint attach(MainContext context)
 	{
@@ -299,6 +301,7 @@ public class Source
 		 *  return FALSE;
 	 * }
 	 * Since 2.12
+	 * Returns: TRUE if the source has been destroyed
 	 */
 	public int isDestroyed()
 	{
@@ -321,6 +324,7 @@ public class Source
 	
 	/**
 	 * Gets the priority of a source.
+	 * Returns: the priority of the source
 	 */
 	public int getPriority()
 	{
@@ -345,6 +349,7 @@ public class Source
 	/**
 	 * Checks whether a source is allowed to be called recursively.
 	 * see g_source_set_can_recurse().
+	 * Returns: whether recursion is allowed.
 	 */
 	public int getCanRecurse()
 	{
@@ -357,6 +362,7 @@ public class Source
 	 * is a positive integer which is unique within a particular main loop
 	 * context. The reverse
 	 * mapping from ID to source is done by g_main_context_find_source_by_id().
+	 * Returns: the ID (greater than 0) for the source
 	 */
 	public uint getId()
 	{
@@ -367,6 +373,7 @@ public class Source
 	/**
 	 * Gets the GMainContext with which the source is associated.
 	 * Calling this function on a destroyed source is an error.
+	 * Returns: the GMainContext with which the source is associated, or NULL if the context has not yet been added to a source.
 	 */
 	public MainContext getContext()
 	{
@@ -470,6 +477,7 @@ public class Source
 	 * added to a non-default main context.
 	 * Params:
 	 * tag = the ID of the source to remove.
+	 * Returns: TRUE if the source was found and removed.
 	 */
 	public static int remove(uint tag)
 	{
@@ -484,6 +492,7 @@ public class Source
 	 * Params:
 	 * funcs = The source_funcs passed to g_source_new()
 	 * userData = the user data for the callback
+	 * Returns: TRUE if a source was found and removed.
 	 */
 	public static int removeByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -497,6 +506,7 @@ public class Source
 	 * data, only one will be destroyed.
 	 * Params:
 	 * userData = the user_data for the callback.
+	 * Returns: TRUE if a source was found and removed.
 	 */
 	public static int removeByUserData(void* userData)
 	{

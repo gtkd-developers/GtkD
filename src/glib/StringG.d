@@ -153,6 +153,7 @@ public class StringG
 	 * Params:
 	 * dflSize = the default size of the space allocated to
 	 *  hold the string
+	 * Returns: the new GString
 	 */
 	public static StringG sizedNew(uint dflSize)
 	{
@@ -174,6 +175,7 @@ public class StringG
 	 * string = the destination GString. Its current contents
 	 *  are destroyed.
 	 * rval = the string to copy into string
+	 * Returns: string
 	 */
 	public StringG assign(string rval)
 	{
@@ -225,6 +227,7 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * val = the string to append onto the end of string
+	 * Returns: string
 	 */
 	public StringG append(string val)
 	{
@@ -242,6 +245,7 @@ public class StringG
 	 * it if necessary.
 	 * Params:
 	 * c = the byte to append onto the end of string
+	 * Returns: string
 	 */
 	public StringG appendC(char c)
 	{
@@ -259,6 +263,7 @@ public class StringG
 	 * to the string.
 	 * Params:
 	 * wc = a Unicode character
+	 * Returns: string
 	 */
 	public StringG appendUnichar(gunichar wc)
 	{
@@ -282,6 +287,7 @@ public class StringG
 	 * string = a GString
 	 * val = bytes to append
 	 * len = number of bytes of val to use
+	 * Returns: string
 	 */
 	public StringG appendLen(string val, int len)
 	{
@@ -303,6 +309,7 @@ public class StringG
 	 * unescaped = a string
 	 * reservedCharsAllowed = a string of reserved characters allowed to be used
 	 * allowUtf8 = set TRUE if the escaped string may include UTF8 characters
+	 * Returns: string
 	 */
 	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
@@ -321,6 +328,7 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * val = the string to prepend on the start of string
+	 * Returns: string
 	 */
 	public StringG prepend(string val)
 	{
@@ -338,6 +346,7 @@ public class StringG
 	 * expanding it if necessary.
 	 * Params:
 	 * c = the byte to prepend on the start of the GString
+	 * Returns: string
 	 */
 	public StringG prependC(char c)
 	{
@@ -355,6 +364,7 @@ public class StringG
 	 * to the string.
 	 * Params:
 	 * wc = a Unicode character
+	 * Returns: string
 	 */
 	public StringG prependUnichar(gunichar wc)
 	{
@@ -378,6 +388,7 @@ public class StringG
 	 * string = a GString
 	 * val = bytes to prepend
 	 * len = number of bytes in val to prepend
+	 * Returns: string
 	 */
 	public StringG prependLen(string val, int len)
 	{
@@ -397,6 +408,7 @@ public class StringG
 	 * string = a GString
 	 * pos = the position to insert the copy of the string
 	 * val = the string to insert
+	 * Returns: string
 	 */
 	public StringG insert(int pos, string val)
 	{
@@ -414,6 +426,7 @@ public class StringG
 	 * Params:
 	 * pos = the position to insert the byte
 	 * c = the byte to insert
+	 * Returns: string
 	 */
 	public StringG insertC(int pos, char c)
 	{
@@ -433,6 +446,7 @@ public class StringG
 	 * pos = the position at which to insert character, or -1 to
 	 *  append at the end of the string
 	 * wc = a Unicode character
+	 * Returns: string
 	 */
 	public StringG insertUnichar(int pos, gunichar wc)
 	{
@@ -459,6 +473,7 @@ public class StringG
 	 *  happen, or -1 for at the end
 	 * val = bytes to insert
 	 * len = number of bytes of val to insert
+	 * Returns: string
 	 */
 	public StringG insertLen(int pos, string val, int len)
 	{
@@ -478,6 +493,7 @@ public class StringG
 	 * string = a GString
 	 * pos = the position at which to start overwriting
 	 * val = the string that will overwrite the string starting at pos
+	 * Returns: string
 	 */
 	public StringG overwrite(uint pos, string val)
 	{
@@ -499,6 +515,7 @@ public class StringG
 	 * pos = the position at which to start overwriting
 	 * val = the string that will overwrite the string starting at pos
 	 * len = the number of bytes to write from val
+	 * Returns: string
 	 */
 	public StringG overwriteLen(uint pos, string val, int len)
 	{
@@ -518,6 +535,7 @@ public class StringG
 	 * pos = the position of the content to remove
 	 * len = the number of bytes to remove, or -1 to remove all
 	 *  following bytes
+	 * Returns: string
 	 */
 	public StringG erase(int pos, int len)
 	{
@@ -534,6 +552,7 @@ public class StringG
 	 * Cuts off the end of the GString, leaving the first len bytes.
 	 * Params:
 	 * len = the new size of string
+	 * Returns: string
 	 */
 	public StringG truncate(uint len)
 	{
@@ -554,6 +573,7 @@ public class StringG
 	 * always, string->str[string->len] will be a nul byte.)
 	 * Params:
 	 * len = the new length
+	 * Returns: string
 	 */
 	public StringG setSize(uint len)
 	{
@@ -572,6 +592,7 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * freeSegment = if TRUE the actual character data is freed as well
+	 * Returns: the character data of string  (i.e. NULL if free_segment is TRUE)
 	 */
 	public string free(int freeSegment)
 	{
@@ -585,6 +606,7 @@ public class StringG
 	 *  toupper() function, which is almost never the right thing.
 	 *  Use g_string_ascii_up() or g_utf8_strup() instead.
 	 * Converts a GString to uppercase.
+	 * Returns: string
 	 */
 	public StringG up()
 	{
@@ -603,6 +625,7 @@ public class StringG
 	 *  tolower() function, which is almost never the right thing.
 	 *  Use g_string_ascii_down() or g_utf8_strdown() instead.
 	 * Converts a GString to lowercase.
+	 * Returns: the GString.
 	 */
 	public StringG down()
 	{
@@ -617,6 +640,7 @@ public class StringG
 	
 	/**
 	 * Creates a hash code for str; for use with GHashTable.
+	 * Returns: hash code for str
 	 */
 	public uint hash()
 	{
@@ -630,6 +654,7 @@ public class StringG
 	 * Params:
 	 * v = a GString
 	 * v2 = another GString
+	 * Returns: TRUE if they strings are the same length and contain the  same bytes
 	 */
 	public int equal(StringG v2)
 	{

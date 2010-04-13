@@ -149,6 +149,7 @@ public class StringGChunk
 	 * duplicates.
 	 * Params:
 	 * string = the string to add
+	 * Returns: a pointer to the copy of string within  the GStringChunk
 	 */
 	public string insert(string string)
 	{
@@ -170,6 +171,7 @@ public class StringGChunk
 	 * if they do match.
 	 * Params:
 	 * string = the string to add
+	 * Returns: a pointer to the new or existing copy of string within the GStringChunk
 	 */
 	public string insertConst(string string)
 	{
@@ -190,6 +192,7 @@ public class StringGChunk
 	 * string = bytes to insert
 	 * len = number of bytes of string to insert, or -1 to insert a
 	 *  nul-terminated string
+	 * Returns: a pointer to the copy of string within the GStringChunk
 	 */
 	public string insertLen(string string, int len)
 	{

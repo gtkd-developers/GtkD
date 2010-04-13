@@ -307,6 +307,7 @@ public class Timeout
 	 * executed.
 	 * Params:
 	 * interval = the timeout interval in milliseconds.
+	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNew(uint interval)
 	{
@@ -329,6 +330,7 @@ public class Timeout
 	 * Since 2.14
 	 * Params:
 	 * interval = the timeout interval in seconds
+	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNewSeconds(uint interval)
 	{
@@ -363,6 +365,7 @@ public class Timeout
 	 * interval = the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
 	 * data = data to pass to function
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint add(uint interval, GSourceFunc funct, void* data)
 	{
@@ -392,6 +395,7 @@ public class Timeout
 	 *  (1/1000ths of a second)
 	 * data = data to pass to function
 	 * notify = function to call when the timeout is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -412,6 +416,7 @@ public class Timeout
 	 * Params:
 	 * interval = the time between calls to the function, in seconds
 	 * data = data to pass to function
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addSeconds(uint interval, GSourceFunc funct, void* data)
 	{
@@ -452,6 +457,7 @@ public class Timeout
 	 * interval = the time between calls to the function, in seconds
 	 * data = data to pass to function
 	 * notify = function to call when the timeout is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{

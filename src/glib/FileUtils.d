@@ -112,6 +112,7 @@ public class FileUtils
 	 * g_file_error_from_errno() when constructing a GError.
 	 * Params:
 	 * errNo = an "errno" value
+	 * Returns: GFileError corresponding to the given errno
 	 */
 	public static GFileError fileErrorFromErrno(int errNo)
 	{
@@ -134,6 +135,7 @@ public class FileUtils
 	 * contents = location to store an allocated string, use g_free() to free
 	 *  the returned string
 	 * length = location to store length in bytes of the contents, or NULL
+	 * Returns: TRUE on success, FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
 	public static int fileGetContents(string filename, out string contents, out uint length)
@@ -163,6 +165,7 @@ public class FileUtils
 	 *  encoding
 	 * contents = string to write to the file
 	 * length = length of contents, or -1 if contents is a nul-terminated string
+	 * Returns: TRUE on success, FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
 	public static int fileSetContents(string filename, string contents, int length)
@@ -218,6 +221,7 @@ public class FileUtils
 	 * Params:
 	 * filename = a filename to test in the GLib file name encoding
 	 * test = bitfield of GFileTest flags
+	 * Returns: whether a test was TRUE
 	 */
 	public static int fileTest(string filename, GFileTest test)
 	{
@@ -238,6 +242,7 @@ public class FileUtils
 	 * on Windows it should be in UTF-8.
 	 * Params:
 	 * tmpl = template filename
+	 * Returns: A file handle (as from open()) to the fileopened for reading and writing. The file is opened in binary modeon platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned.
 	 */
 	public static int mkstemp(string tmpl)
 	{
@@ -262,6 +267,7 @@ public class FileUtils
 	 * flags = flags to pass to an open() call in addition to O_EXCL and
 	 *  O_CREAT, which are passed automatically
 	 * mode = permissios to create the temporary file with
+	 * Returns: A file handle (as from open()) to the file opened for reading and writing. The file handle should be closed with close(). In case of errors, -1 is returned.
 	 */
 	public static int mkstempFull(string tmpl, int flags, int mode)
 	{
@@ -286,6 +292,7 @@ public class FileUtils
 	 * tmpl = Template for file name, as in g_mkstemp(), basename only,
 	 *  or NULL, to a default template
 	 * nameUsed = location to store actual name used, or NULL
+	 * Returns: A file handle (as from open()) to the file opened for reading and writing. The file is opened in binary mode on platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned and error will be set.
 	 * Throws: GException on failure.
 	 */
 	public static int fileOpenTmp(string tmpl, out string nameUsed)
@@ -312,6 +319,7 @@ public class FileUtils
 	 * Since 2.4
 	 * Params:
 	 * filename = the symbolic link
+	 * Returns: A newly-allocated string with the contents of the symbolic link,  or NULL if an error occurred.
 	 * Throws: GException on failure.
 	 */
 	public static string fileReadLink(string filename)
@@ -336,6 +344,7 @@ public class FileUtils
 	 * Params:
 	 * pathname = a pathname in the GLib file name encoding
 	 * mode = permissions to use for newly created directories
+	 * Returns: 0 if the directory already exists, or was successfullycreated. Returns -1 if an error occurred, with errno set.
 	 */
 	public static int mkdirWithParents(string pathname, int mode)
 	{
@@ -364,6 +373,7 @@ public class FileUtils
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * flags = as in open()
 	 * mode = as in open()
+	 * Returns: a new file descriptor, or -1 if an error occurred. Thereturn value can be used exactly like the return value from open().
 	 */
 	public static int open(string filename, int flags, int mode)
 	{
@@ -381,6 +391,7 @@ public class FileUtils
 	 * Params:
 	 * oldfilename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * newfilename = a pathname in the GLib file name encoding
+	 * Returns: 0 if the renaming succeeded, -1 if an error occurred
 	 */
 	public static int rename(string oldfilename, string newfilename)
 	{
@@ -397,6 +408,7 @@ public class FileUtils
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * mode = permissions to use for the newly created directory
+	 * Returns: 0 if the directory was successfully created, -1 if an error  occurred
 	 */
 	public static int mkdir(string filename, int mode)
 	{
@@ -416,6 +428,7 @@ public class FileUtils
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * buf = a pointer to a stat struct, which
 	 *  will be filled with the file information
+	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
 	public static int stat(string filename, void* buf)
 	{
@@ -435,6 +448,7 @@ public class FileUtils
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * buf = a pointer to a stat struct, which
 	 *  will be filled with the file information
+	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
 	public static int lstat(string filename, void* buf)
 	{
@@ -453,6 +467,7 @@ public class FileUtils
 	 * Since 2.6
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 if the name was successfully deleted, -1 if an error  occurred
 	 */
 	public static int unlink(string filename)
 	{
@@ -478,6 +493,7 @@ public class FileUtils
 	 * Since 2.6
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 if the file was successfully removed, -1 if an error  occurred
 	 */
 	public static int remove(string filename)
 	{
@@ -493,6 +509,7 @@ public class FileUtils
 	 * Since 2.6
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 if the directory was successfully removed, -1 if an error  occurred
 	 */
 	public static int rmdir(string filename)
 	{
@@ -516,6 +533,7 @@ public class FileUtils
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * mode = a string describing the mode in which the file should be
 	 *  opened
+	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred
 	 */
 	public static FILE* fopen(string filename, string mode)
 	{
@@ -533,6 +551,7 @@ public class FileUtils
 	 * mode = a string describing the mode in which the file should be
 	 *  opened
 	 * stream = an existing stream which will be reused, or NULL
+	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred.
 	 */
 	public static FILE* freopen(string filename, string mode, FILE* stream)
 	{
@@ -553,6 +572,7 @@ public class FileUtils
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * mode = as in chmod()
+	 * Returns: zero if the operation succeeded, -1 on error.
 	 */
 	public static int chmod(string filename, int mode)
 	{
@@ -575,6 +595,7 @@ public class FileUtils
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * mode = as in access()
+	 * Returns: zero if the pathname refers to an existing file systemobject that has all the tested permissions, or -1 otherwise or onerror.
 	 */
 	public static int access(string filename, int mode)
 	{
@@ -603,6 +624,7 @@ public class FileUtils
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * mode = as in creat()
+	 * Returns: a new file descriptor, or -1 if an error occurred. Thereturn value can be used exactly like the return value from creat().
 	 */
 	public static int creat(string filename, int mode)
 	{
@@ -617,6 +639,7 @@ public class FileUtils
 	 * Since 2.8
 	 * Params:
 	 * path = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 on success, -1 if an error occurred.
 	 */
 	public static int chdir(string path)
 	{
@@ -633,6 +656,7 @@ public class FileUtils
 	 * Params:
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * utb = a pointer to a struct utimbuf.
+	 * Returns: 0 if the operation was successful, -1 if an error  occurred
 	 */
 	public static int utime(string filename, void* utb)
 	{

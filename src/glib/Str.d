@@ -338,6 +338,7 @@ public class Str
 	 * when no longer needed.
 	 * Params:
 	 * str = the string to duplicate
+	 * Returns: a newly-allocated copy of str
 	 */
 	public static string strdup(string str)
 	{
@@ -357,6 +358,7 @@ public class Str
 	 * Params:
 	 * str = the string to duplicate
 	 * n = the maximum number of bytes to copy from str
+	 * Returns: a newly-allocated buffer containing the first n bytes  of str, nul-terminated
 	 */
 	public static string strndup(string str, uint n)
 	{
@@ -371,6 +373,7 @@ public class Str
 	 * on a NULL value, g_strdupv() simply returns NULL.
 	 * Params:
 	 * strArray = NULL-terminated array of strings.
+	 * Returns: a new NULL-terminated array of strings.
 	 */
 	public static string[] strdupv(string[] strArray)
 	{
@@ -384,6 +387,7 @@ public class Str
 	 * Params:
 	 * length = the length of the new string
 	 * fillChar = the byte to fill the string with
+	 * Returns: a newly-allocated string filled the fill_char
 	 */
 	public static string strnfill(uint length, char fillChar)
 	{
@@ -399,6 +403,7 @@ public class Str
 	 * Params:
 	 * dest = destination buffer.
 	 * src = source string.
+	 * Returns: a pointer to trailing nul byte.
 	 */
 	public static string stpcpy(string dest, string src)
 	{
@@ -416,6 +421,7 @@ public class Str
 	 * a valid length, if haystack is nul-terminated, meaning it will
 	 * search through the whole string.
 	 * needle = the string to search for.
+	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
 	public static string strstrLen(string haystack, int haystackLen, string needle)
 	{
@@ -429,6 +435,7 @@ public class Str
 	 * Params:
 	 * haystack = a nul-terminated string.
 	 * needle = the nul-terminated string to search for.
+	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
 	public static string strrstr(string haystack, string needle)
 	{
@@ -444,6 +451,7 @@ public class Str
 	 * haystack = a nul-terminated string.
 	 * haystackLen = the maximum length of haystack.
 	 * needle = the nul-terminated string to search for.
+	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
 	public static string strrstrLen(string haystack, int haystackLen, string needle)
 	{
@@ -457,6 +465,7 @@ public class Str
 	 * Params:
 	 * str = a nul-terminated string.
 	 * prefix = the nul-terminated prefix to look for.
+	 * Returns: TRUE if str begins with prefix, FALSE otherwise.
 	 */
 	public static int strHasPrefix(string str, string prefix)
 	{
@@ -470,6 +479,7 @@ public class Str
 	 * Params:
 	 * str = a nul-terminated string.
 	 * suffix = the nul-terminated suffix to look for.
+	 * Returns: TRUE if str end with suffix, FALSE otherwise.
 	 */
 	public static int strHasSuffix(string str, string suffix)
 	{
@@ -484,6 +494,7 @@ public class Str
 	 * Params:
 	 * str1 = a C string or NULL
 	 * str2 = another C string or NULL
+	 * Returns: -1, 0 or 1, if str1 is <, == or > than str2.
 	 */
 	public static int strcmp0(string str1, string str2)
 	{
@@ -509,6 +520,7 @@ public class Str
 	 * dest = destination buffer
 	 * src = source buffer
 	 * destSize = length of dest in bytes
+	 * Returns: length of src
 	 */
 	public static uint strlcpy(string dest, string src, uint destSize)
 	{
@@ -535,6 +547,7 @@ public class Str
 	 * src = source buffer
 	 * destSize = length of dest buffer in bytes (not length of existing string
 	 *  inside dest)
+	 * Returns:size of attempted result, which isMIN (dest_size, strlen (original dest)) + strlen (src),so if retval >= dest_size, truncation occurred.
 	 */
 	public static uint strlcat(string dest, string src, uint destSize)
 	{
@@ -553,6 +566,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls
 	 * args = the list of parameters to insert into the format string
+	 * Returns: a newly-allocated string holding the result
 	 */
 	public static string strdupVprintf(string format, void* args)
 	{
@@ -568,6 +582,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
+	 * Returns: the number of bytes printed.
 	 */
 	public static int vprintf(string format, void* args)
 	{
@@ -584,6 +599,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
+	 * Returns: the number of bytes printed.
 	 */
 	public static int vfprintf(FILE* file, string format, void* args)
 	{
@@ -600,6 +616,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
+	 * Returns: the number of bytes printed.
 	 */
 	public static int vsprintf(string string, string format, void* args)
 	{
@@ -628,6 +645,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
+	 * Returns: the number of bytes which would be produced if the buffer  was large enough.
 	 */
 	public static int vsnprintf(string string, uint n, string format, void* args)
 	{
@@ -647,6 +665,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
+	 * Returns: the number of bytes printed.
 	 */
 	public static int vasprintf(out string string, string format, void* args)
 	{
@@ -665,6 +684,7 @@ public class Str
 	 * Params:
 	 * format = the format string. See the printf() documentation.
 	 * args = the parameters to be inserted into the format string.
+	 * Returns:the maximum space needed to store the formatted string.
 	 */
 	public static uint printfStringUpperBound(string format, void* args)
 	{
@@ -682,6 +702,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII alphanumeric character
 	 */
 	public static int asciiIsalnum(char c)
 	{
@@ -699,6 +720,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII alphabetic character
 	 */
 	public static int asciiIsalpha(char c)
 	{
@@ -716,6 +738,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII control character.
 	 */
 	public static int asciiIscntrl(char c)
 	{
@@ -731,6 +754,7 @@ public class Str
 	 * non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII digit.
 	 */
 	public static int asciiIsdigit(char c)
 	{
@@ -748,6 +772,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII printing character other than space.
 	 */
 	public static int asciiIsgraph(char c)
 	{
@@ -765,6 +790,7 @@ public class Str
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII lower case letter
 	 */
 	public static int asciiIslower(char c)
 	{
@@ -782,6 +808,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII printing character.
 	 */
 	public static int asciiIsprint(char c)
 	{
@@ -799,6 +826,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII punctuation character.
 	 */
 	public static int asciiIspunct(char c)
 	{
@@ -816,6 +844,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII white-space character
 	 */
 	public static int asciiIsspace(char c)
 	{
@@ -833,6 +862,7 @@ public class Str
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII upper case letter
 	 */
 	public static int asciiIsupper(char c)
 	{
@@ -848,6 +878,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
+	 * Returns:TRUE if c is an ASCII hexadecimal-digit character.
 	 */
 	public static int asciiIsxdigit(char c)
 	{
@@ -862,6 +893,7 @@ public class Str
 	 * are signed.
 	 * Params:
 	 * c = an ASCII character.
+	 * Returns: If c is a decimal digit (according tog_ascii_isdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int asciiDigitValue(char c)
 	{
@@ -876,6 +908,7 @@ public class Str
 	 * are signed.
 	 * Params:
 	 * c = an ASCII character.
+	 * Returns: If c is a hex digit (according tog_ascii_isxdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int asciiXdigitValue(char c)
 	{
@@ -898,6 +931,7 @@ public class Str
 	 * Params:
 	 * s1 = string to compare with s2.
 	 * s2 = string to compare with s1.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
 	 */
 	public static int asciiStrcasecmp(string s1, string s2)
 	{
@@ -918,6 +952,7 @@ public class Str
 	 * s1 = string to compare with s2.
 	 * s2 = string to compare with s1.
 	 * n = number of characters to compare.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
 	 */
 	public static int asciiStrncasecmp(string s1, string s2, uint n)
 	{
@@ -930,6 +965,7 @@ public class Str
 	 * Params:
 	 * str = a string.
 	 * len = length of str in bytes, or -1 if str is nul-terminated.
+	 * Returns: a newly allocated string, with all the lower case characters in str converted to upper case, with semantics that exactly match g_ascii_toupper(). (Note that this is unlike the old g_strup(), which modified the string in place.)
 	 */
 	public static string asciiStrup(string str, int len)
 	{
@@ -942,6 +978,7 @@ public class Str
 	 * Params:
 	 * str = a string.
 	 * len = length of str in bytes, or -1 if str is nul-terminated.
+	 * Returns: a newly-allocated string, with all the upper case characters in str converted to lower case, with semantics that exactly match g_ascii_tolower(). (Note that this is unlike the old g_strdown(), which modified the string in place.)
 	 */
 	public static string asciiStrdown(string str, int len)
 	{
@@ -960,6 +997,7 @@ public class Str
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character.
+	 * Returns: the result of converting c to lower case. If c is not an ASCII upper case letter, c is returned unchanged.
 	 */
 	public static char asciiTolower(char c)
 	{
@@ -978,6 +1016,7 @@ public class Str
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character.
+	 * Returns: the result of converting c to upper case. If c is not an ASCII lower case letter, c is returned unchanged.
 	 */
 	public static char asciiToupper(char c)
 	{
@@ -989,6 +1028,7 @@ public class Str
 	 * Converts all lower case ASCII letters to upper case ASCII letters.
 	 * Params:
 	 * string = a GString
+	 * Returns: passed-in string pointer, with all the lower case characters converted to upper case in place, with semantics that exactly match g_ascii_toupper().
 	 */
 	public static StringG stringAsciiUp(StringG string)
 	{
@@ -1005,6 +1045,7 @@ public class Str
 	 * Converts all upper case ASCII letters to lower case ASCII letters.
 	 * Params:
 	 * string = a GString
+	 * Returns: passed-in string pointer, with all the upper case characters converted to lower case in place, with semantics that exactly match g_ascii_tolower().
 	 */
 	public static StringG stringAsciiDown(StringG string)
 	{
@@ -1024,6 +1065,7 @@ public class Str
 	 * Converts a string to upper case.
 	 * Params:
 	 * string = the string to convert.
+	 * Returns: the string
 	 */
 	public static string strup(string string)
 	{
@@ -1039,6 +1081,7 @@ public class Str
 	 * Converts a string to lower case.
 	 * Params:
 	 * string = the string to convert.
+	 * Returns: the string
 	 */
 	public static string strdown(string string)
 	{
@@ -1055,6 +1098,7 @@ public class Str
 	 * Params:
 	 * s1 = a string.
 	 * s2 = a string to compare with s1.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
 	 */
 	public static int strcasecmp(string s1, string s2)
 	{
@@ -1084,6 +1128,7 @@ public class Str
 	 * s1 = a string.
 	 * s2 = a string to compare with s1.
 	 * n = the maximum number of characters to compare.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
 	 */
 	public static int strncasecmp(string s1, string s2, uint n)
 	{
@@ -1100,6 +1145,7 @@ public class Str
 	 * g_utf8_strreverse().
 	 * Params:
 	 * string = the string to reverse
+	 * Returns: the same pointer passed in as string
 	 */
 	public static string strreverse(string string)
 	{
@@ -1128,6 +1174,7 @@ public class Str
 	 * endptr = if non-NULL, it returns the character after
 	 *  the last character used in the conversion.
 	 * base = to be used for the conversion, 2..36 or 0
+	 * Returns: the gint64 value or zero on error.
 	 */
 	public static long asciiStrtoll(string nptr, out string endptr, uint base)
 	{
@@ -1161,6 +1208,7 @@ public class Str
 	 * endptr = if non-NULL, it returns the character after
 	 *  the last character used in the conversion.
 	 * base = to be used for the conversion, 2..36 or 0
+	 * Returns: the guint64 value or zero on error.
 	 */
 	public static ulong asciiStrtoull(string nptr, out string endptr, uint base)
 	{
@@ -1196,6 +1244,7 @@ public class Str
 	 * nptr = the string to convert to a numeric value.
 	 * endptr = if non-NULL, it returns the character after
 	 *  the last character used in the conversion.
+	 * Returns: the gdouble value.
 	 */
 	public static double asciiStrtod(string nptr, out string endptr)
 	{
@@ -1220,6 +1269,7 @@ public class Str
 	 * buffer = A buffer to place the resulting string in
 	 * bufLen = The length of the buffer.
 	 * d = The gdouble to convert
+	 * Returns: The pointer to the buffer with the converted string.
 	 */
 	public static string asciiDtostr(string buffer, int bufLen, double d)
 	{
@@ -1240,6 +1290,7 @@ public class Str
 	 * format = The printf()-style format to use for the
 	 *  code to use for converting.
 	 * d = The gdouble to convert
+	 * Returns: The pointer to the buffer with the converted string.
 	 */
 	public static string asciiFormatd(string buffer, int bufLen, string format, double d)
 	{
@@ -1262,6 +1313,7 @@ public class Str
 	 * nptr = the string to convert to a numeric value.
 	 * endptr = if non-NULL, it returns the character after
 	 *  the last character used in the conversion.
+	 * Returns: the gdouble value.
 	 */
 	public static double strtod(string nptr, out string endptr)
 	{
@@ -1282,6 +1334,7 @@ public class Str
 	 * Also see g_strchomp() and g_strstrip().
 	 * Params:
 	 * string = a string to remove the leading whitespace from.
+	 * Returns:string.
 	 */
 	public static string strchug(string string)
 	{
@@ -1296,6 +1349,7 @@ public class Str
 	 * Also see g_strchug() and g_strstrip().
 	 * Params:
 	 * string = a string to remove the trailing whitespace from.
+	 * Returns:string.
 	 */
 	public static string strchomp(string string)
 	{
@@ -1314,6 +1368,7 @@ public class Str
 	 * delimiters = a string containing the current delimiters, or NULL to use the
 	 * standard delimiters defined in G_STR_DELIMITERS.
 	 * newDelimiter = the new delimiter character.
+	 * Returns:string.
 	 */
 	public static string strdelimit(string string, string delimiters, char newDelimiter)
 	{
@@ -1332,6 +1387,7 @@ public class Str
 	 * Params:
 	 * source = a string to escape.
 	 * exceptions = a string of characters not to escape in source.
+	 * Returns:a newly-allocated copy of source with certaincharacters escaped. See above.
 	 */
 	public static string strescape(string source, string exceptions)
 	{
@@ -1344,6 +1400,7 @@ public class Str
 	 * does the reverse conversion of g_strescape().
 	 * Params:
 	 * source = a string to compress.
+	 * Returns:a newly-allocated copy of source with all escaped character compressed.
 	 */
 	public static string strcompress(string source)
 	{
@@ -1360,6 +1417,7 @@ public class Str
 	 * string = a nul-terminated array of bytes.
 	 * validChars = bytes permitted in string.
 	 * substitutor = replacement character for disallowed bytes.
+	 * Returns:string.
 	 */
 	public static string strcanon(string string, string validChars, char substitutor)
 	{
@@ -1384,6 +1442,7 @@ public class Str
 	 *  max_tokens is reached.
 	 * maxTokens = the maximum number of pieces to split string into. If this is
 	 *  less than 1, the string is split completely.
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use  g_strfreev() to free it.
 	 */
 	public static string[] strsplit(string string, string delimiter, int maxTokens)
 	{
@@ -1416,6 +1475,7 @@ public class Str
 	 *  to split the string.
 	 * maxTokens = The maximum number of tokens to split string into.
 	 *  If this is less than 1, the string is split completely
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use  g_strfreev() to free it.
 	 */
 	public static string[] strsplitSet(string string, string delimiters, int maxTokens)
 	{
@@ -1442,6 +1502,7 @@ public class Str
 	 * Params:
 	 * separator = a string to insert between each of the strings, or NULL
 	 * strArray = a NULL-terminated array of strings to join
+	 * Returns: a newly-allocated string containing all of the strings joined together, with separator between them
 	 */
 	public static string strjoinv(string separator, string[] strArray)
 	{
@@ -1455,6 +1516,7 @@ public class Str
 	 * Since 2.6
 	 * Params:
 	 * strArray = a NULL-terminated array of strings.
+	 * Returns: length of str_array.
 	 */
 	public static uint strvLength(string[] strArray)
 	{
@@ -1470,6 +1532,7 @@ public class Str
 	 * Params:
 	 * errnum = the system error number. See the standard C errno
 	 *  documentation
+	 * Returns: a UTF-8 string describing the error code. If the error code  is unknown, it returns "unknown error (<code>)". The string  can only be used until the next call to g_strerror()
 	 */
 	public static string strerror(int errnum)
 	{
@@ -1485,6 +1548,7 @@ public class Str
 	 * Params:
 	 * signum = the signal number. See the signal
 	 *  documentation
+	 * Returns: a UTF-8 string describing the signal. If the signal is unknown, it returns "unknown signal (<signum>)". The string can only be  used until the next call to g_strsignal()
 	 */
 	public static string strsignal(int signum)
 	{

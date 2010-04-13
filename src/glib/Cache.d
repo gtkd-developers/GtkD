@@ -150,6 +150,7 @@ public class Cache
 	 * are inserted into the GCache.
 	 * Params:
 	 * key = a key describing a GCache object.
+	 * Returns: a pointer to a GCache value.
 	 */
 	public void* insert(void* key)
 	{

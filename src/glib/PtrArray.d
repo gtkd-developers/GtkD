@@ -147,6 +147,7 @@ public class PtrArray
 	 * the size of the array is still 0.
 	 * Params:
 	 * reservedSize = number of pointers preallocated.
+	 * Returns: the new GPtrArray.
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{
@@ -198,6 +199,7 @@ public class PtrArray
 	 * Atomically increments the reference count of array by one. This
 	 * function is MT-safe and may be called from any thread.
 	 * Since 2.22
+	 * Returns: The passed in GPtrArray.
 	 */
 	public PtrArray doref()
 	{
@@ -244,6 +246,7 @@ public class PtrArray
 	 * pointer was not found.
 	 * Params:
 	 * data = the pointer to remove.
+	 * Returns: TRUE if the pointer is removed. FALSE if the pointer is not found in the array.
 	 */
 	public int remove(void* data)
 	{
@@ -258,6 +261,7 @@ public class PtrArray
 	 * element.
 	 * Params:
 	 * index = the index of the pointer to remove.
+	 * Returns: the pointer which was removed.
 	 */
 	public void* removeIndex(uint index)
 	{
@@ -275,6 +279,7 @@ public class PtrArray
 	 * pointer was not found.
 	 * Params:
 	 * data = the pointer to remove.
+	 * Returns: TRUE if the pointer was found in the array.
 	 */
 	public int removeFast(void* data)
 	{
@@ -290,6 +295,7 @@ public class PtrArray
 	 * GDestroyNotify function it is called for the removed element.
 	 * Params:
 	 * index = the index of the pointer to remove.
+	 * Returns: the pointer which was removed.
 	 */
 	public void* removeIndexFast(uint index)
 	{
@@ -377,6 +383,7 @@ public class PtrArray
 	 * GDestroyNotify function has been set for array.
 	 * Params:
 	 * freeSeg = if TRUE the actual pointer array is freed as well.
+	 * Returns: the pointer array if free_seg is FALSE, otherwise NULL. The pointer array should be freed using g_free().
 	 */
 	public void** free(int freeSeg)
 	{

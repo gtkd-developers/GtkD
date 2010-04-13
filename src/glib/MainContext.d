@@ -187,6 +187,7 @@ public class MainContext
 	
 	/**
 	 * Increases the reference count on a GMainContext object by one.
+	 * Returns: the context that was passed in (since 2.6)
 	 */
 	public MainContext doref()
 	{
@@ -214,6 +215,7 @@ public class MainContext
 	 * used for main loop functions when a main loop is not explicitly
 	 * specified, and corresponds to the "main" main loop. See also
 	 * g_main_context_get_thread_default().
+	 * Returns: the global default main context.
 	 */
 	public static MainContext defaulx()
 	{
@@ -240,6 +242,7 @@ public class MainContext
 	 * be interrupted for other reasons than an event source becoming ready.
 	 * Params:
 	 * mayBlock = whether the call may block.
+	 * Returns: TRUE if events were dispatched.
 	 */
 	public int iteration(int mayBlock)
 	{
@@ -249,6 +252,7 @@ public class MainContext
 	
 	/**
 	 * Checks if any sources have pending events for the given context.
+	 * Returns: TRUE if events are pending.
 	 */
 	public int pending()
 	{
@@ -260,6 +264,7 @@ public class MainContext
 	 * Finds a GSource given a pair of context and ID.
 	 * Params:
 	 * sourceId = the source ID, as returned by g_source_get_id().
+	 * Returns: the GSource if found, otherwise, NULL
 	 */
 	public Source findSourceById(uint sourceId)
 	{
@@ -278,6 +283,7 @@ public class MainContext
 	 * one found will be returned.
 	 * Params:
 	 * userData = the user_data for the callback.
+	 * Returns: the source, if one was found, otherwise NULL
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
@@ -297,6 +303,7 @@ public class MainContext
 	 * Params:
 	 * funcs = the source_funcs passed to g_source_new().
 	 * userData = the user data from the callback.
+	 * Returns: the source, if one was found, otherwise NULL
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -329,6 +336,7 @@ public class MainContext
 	 * You must be the owner of a context before you
 	 * can call g_main_context_prepare(), g_main_context_query(),
 	 * g_main_context_check(), g_main_context_dispatch().
+	 * Returns: TRUE if the operation succeeded, and this thread is now the owner of context.
 	 */
 	public int acquire()
 	{
@@ -354,6 +362,7 @@ public class MainContext
 	 * know before waiting on another thread that may be
 	 * blocking to get ownership of context.
 	 * Since 2.10
+	 * Returns: TRUE if current thread is owner of context.
 	 */
 	public int isOwner()
 	{
@@ -370,6 +379,7 @@ public class MainContext
 	 * Params:
 	 * cond = a condition variable
 	 * mutex = a mutex, currently held
+	 * Returns: TRUE if the operation succeeded, and this thread is now the owner of context.
 	 */
 	public int wait(Cond cond, Mutex mutex)
 	{
@@ -383,6 +393,7 @@ public class MainContext
 	 * Params:
 	 * priority = location to store priority of highest priority
 	 *  source already ready.
+	 * Returns: TRUE if some source is ready to be dispatched prior to polling.
 	 */
 	public int prepare(out int priority)
 	{
@@ -397,6 +408,7 @@ public class MainContext
 	 * timeout = location to store timeout to be used in polling
 	 * fds = location to store GPollFD records that need to be polled.
 	 * nFds = length of fds.
+	 * Returns: the number of records actually stored in fds, or, if more than n_fds records need to be stored, the number of records that need to be stored.
 	 */
 	public int query(int maxPriority, out int timeout, GPollFD* fds, int nFds)
 	{
@@ -411,6 +423,7 @@ public class MainContext
 	 * fds = array of GPollFD's that was passed to the last call to
 	 *  g_main_context_query()
 	 * nFds = return value of g_main_context_query()
+	 * Returns: TRUE if some sources are ready to be dispatched.
 	 */
 	public int check(int maxPriority, GPollFD* fds, int nFds)
 	{
@@ -445,6 +458,7 @@ public class MainContext
 	
 	/**
 	 * Gets the poll function set by g_main_context_set_poll_func().
+	 * Returns: the poll function
 	 */
 	public GPollFunc getPollFunc()
 	{
@@ -490,6 +504,7 @@ public class MainContext
 	 * non-default context, so it is not safe to assume that this will
 	 * always return NULL if threads are not initialized.)
 	 * Since 2.22
+	 * Returns: the thread-default GMainContext, or NULL if thethread-default context is the global default context.
 	 */
 	public static MainContext getThreadDefault()
 	{

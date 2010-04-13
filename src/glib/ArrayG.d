@@ -159,6 +159,7 @@ public class ArrayG
 	 *  allocation.
 	 * elementSize = size of each element in the array.
 	 * reservedSize = number of elements preallocated.
+	 * Returns: the new GArray.
 	 */
 	public static ArrayG sizedNew(int zeroTerminated, int clear, uint elementSize, uint reservedSize)
 	{
@@ -175,6 +176,7 @@ public class ArrayG
 	 * Atomically increments the reference count of array by one. This
 	 * function is MT-safe and may be called from any thread.
 	 * Since 2.22
+	 * Returns: The passed in GArray.
 	 */
 	public ArrayG doref()
 	{
@@ -203,6 +205,7 @@ public class ArrayG
 	/**
 	 * Gets the size of the elements in array.
 	 * Since 2.22
+	 * Returns: Size of each element, in bytes.
 	 */
 	public uint getElementSize()
 	{
@@ -215,6 +218,7 @@ public class ArrayG
 	 * Params:
 	 * data = a pointer to the elements to append to the end of the array.
 	 * len = the number of elements to append.
+	 * Returns: the GArray.
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
@@ -236,6 +240,7 @@ public class ArrayG
 	 * data = a pointer to the elements to prepend to the start of the
 	 *  array.
 	 * len = the number of elements to prepend.
+	 * Returns: the GArray.
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
@@ -254,6 +259,7 @@ public class ArrayG
 	 * index = the index to place the elements at.
 	 * data = a pointer to the elements to insert.
 	 * len = the number of elements to insert.
+	 * Returns: the GArray.
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
@@ -271,6 +277,7 @@ public class ArrayG
 	 * elements are moved down one place.
 	 * Params:
 	 * index = the index of the element to remove.
+	 * Returns: the GArray.
 	 */
 	public ArrayG removeIndex(uint index)
 	{
@@ -290,6 +297,7 @@ public class ArrayG
 	 * g_array_remove_index().
 	 * Params:
 	 * index = the index of the element to remove.
+	 * Returns: the GArray.
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
@@ -309,6 +317,7 @@ public class ArrayG
 	 * Params:
 	 * index = the index of the first element to remove.
 	 * length = the number of elements to remove.
+	 * Returns: the GArray.
 	 */
 	public ArrayG removeRange(uint index, uint length)
 	{
@@ -355,6 +364,7 @@ public class ArrayG
 	 * was created with clear_ set to TRUE, the new elements are set to 0.
 	 * Params:
 	 * length = the new size of the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG setSize(uint length)
 	{
@@ -380,6 +390,7 @@ public class ArrayG
 	 * they should be freed separately.
 	 * Params:
 	 * freeSegment = if TRUE the actual element data is freed as well.
+	 * Returns: the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
 	 */
 	public string free(int freeSegment)
 	{

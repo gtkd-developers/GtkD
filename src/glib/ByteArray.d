@@ -142,6 +142,7 @@ public class ByteArray
 	 * 0.
 	 * Params:
 	 * reservedSize = number of bytes preallocated.
+	 * Returns: the new GByteArray.
 	 */
 	public static ByteArray sizedNew(uint reservedSize)
 	{
@@ -158,6 +159,7 @@ public class ByteArray
 	 * Atomically increments the reference count of array by one. This
 	 * function is MT-safe and may be called from any thread.
 	 * Since 2.22
+	 * Returns: The passed in GByteArray.
 	 */
 	public ByteArray doref()
 	{
@@ -188,6 +190,7 @@ public class ByteArray
 	 * grow in size automatically if necessary.
 	 * Params:
 	 * data = the byte data to be added.
+	 * Returns: the GByteArray.
 	 */
 	public ByteArray append(ubyte[] data)
 	{
@@ -205,6 +208,7 @@ public class ByteArray
 	 * grow in size automatically if necessary.
 	 * Params:
 	 * data = the byte data to be added.
+	 * Returns: the GByteArray.
 	 */
 	public ByteArray prepend(ubyte[] data)
 	{
@@ -222,6 +226,7 @@ public class ByteArray
 	 * following bytes are moved down one place.
 	 * Params:
 	 * index = the index of the byte to remove.
+	 * Returns: the GByteArray.
 	 */
 	public ByteArray removeIndex(uint index)
 	{
@@ -241,6 +246,7 @@ public class ByteArray
 	 * than g_byte_array_remove_index().
 	 * Params:
 	 * index = the index of the byte to remove.
+	 * Returns: the GByteArray.
 	 */
 	public ByteArray removeIndexFast(uint index)
 	{
@@ -260,6 +266,7 @@ public class ByteArray
 	 * Params:
 	 * index = the index of the first byte to remove.
 	 * length = the number of bytes to remove.
+	 * Returns: the GByteArray.
 	 */
 	public ByteArray removeRange(uint index, uint length)
 	{
@@ -305,6 +312,7 @@ public class ByteArray
 	 * Sets the size of the GByteArray, expanding it if necessary.
 	 * Params:
 	 * length = the new size of the GByteArray.
+	 * Returns: the GByteArray.
 	 */
 	public ByteArray setSize(uint length)
 	{
@@ -324,6 +332,7 @@ public class ByteArray
 	 * the size of array will be set to zero.
 	 * Params:
 	 * freeSegment = if TRUE the actual byte data is freed as well.
+	 * Returns: the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
 	 */
 	public ubyte* free(int freeSegment)
 	{

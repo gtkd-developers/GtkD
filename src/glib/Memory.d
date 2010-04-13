@@ -84,6 +84,7 @@ public class Memory
 	 * If n_bytes is 0 it returns NULL.
 	 * Params:
 	 * nBytes = the number of bytes to allocate
+	 * Returns:a pointer to the allocated memory
 	 */
 	public static void* malloc(uint nBytes)
 	{
@@ -96,6 +97,7 @@ public class Memory
 	 * If n_bytes is 0 it returns NULL.
 	 * Params:
 	 * nBytes = the number of bytes to allocate
+	 * Returns:a pointer to the allocated memory
 	 */
 	public static void* malloc0(uint nBytes)
 	{
@@ -112,6 +114,7 @@ public class Memory
 	 * Params:
 	 * mem = the memory to reallocate
 	 * nBytes = new size of the memory in bytes
+	 * Returns:the new address of the allocated memory
 	 */
 	public static void* realloc(void* mem, uint nBytes)
 	{
@@ -124,6 +127,7 @@ public class Memory
 	 * Contrast with g_malloc(), which aborts the program on failure.
 	 * Params:
 	 * nBytes = number of bytes to allocate.
+	 * Returns:the allocated memory, or NULL.
 	 */
 	public static void* tryMalloc(uint nBytes)
 	{
@@ -137,6 +141,7 @@ public class Memory
 	 * Since 2.8
 	 * Params:
 	 * nBytes = number of bytes to allocate
+	 * Returns:the allocated memory, or NULL
 	 */
 	public static void* tryMalloc0(uint nBytes)
 	{
@@ -151,6 +156,7 @@ public class Memory
 	 * Params:
 	 * mem = previously-allocated memory, or NULL.
 	 * nBytes = number of bytes to allocate.
+	 * Returns:the allocated memory, or NULL.
 	 */
 	public static void* tryRealloc(void* mem, uint nBytes)
 	{
@@ -165,6 +171,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
+	 * Returns:a pointer to the allocated memory
 	 */
 	public static void* mallocN(uint nBlocks, uint nBlockBytes)
 	{
@@ -179,6 +186,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
+	 * Returns:a pointer to the allocated memory
 	 */
 	public static void* malloc0_N(uint nBlocks, uint nBlockBytes)
 	{
@@ -194,6 +202,7 @@ public class Memory
 	 * mem = the memory to reallocate
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
+	 * Returns:the new address of the allocated memory
 	 */
 	public static void* reallocN(void* mem, uint nBlocks, uint nBlockBytes)
 	{
@@ -208,6 +217,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
+	 * Returns:the allocated memory, or NULL.
 	 */
 	public static void* tryMallocN(uint nBlocks, uint nBlockBytes)
 	{
@@ -222,6 +232,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
+	 * Returns:the allocated memory, or NULL
 	 */
 	public static void* tryMalloc0_N(uint nBlocks, uint nBlockBytes)
 	{
@@ -237,6 +248,7 @@ public class Memory
 	 * mem = previously-allocated memory, or NULL.
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
+	 * Returns:the allocated memory, or NULL.
 	 */
 	public static void* tryReallocN(void* mem, uint nBlocks, uint nBlockBytes)
 	{
@@ -262,6 +274,7 @@ public class Memory
 	 * Params:
 	 * mem = the memory to copy.
 	 * byteSize = the number of bytes to copy.
+	 * Returns:a pointer to the newly-allocated copy of the memory, or NULL if memis NULL.
 	 */
 	public static void* memdup(void* mem, uint byteSize)
 	{
@@ -293,6 +306,7 @@ public class Memory
 	 * This function is useful for avoiding an extra copy of allocated memory returned
 	 * by a non-GLib-based API.
 	 * A different allocator can be set using g_mem_set_vtable().
+	 * Returns: if TRUE, malloc() and g_malloc() can be mixed.
 	 */
 	public static int memIsSystemMalloc()
 	{

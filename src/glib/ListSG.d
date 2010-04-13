@@ -146,6 +146,7 @@ public class ListSG
 	 * Allocates space for one GSList element. It is called by the
 	 * g_slist_append(), g_slist_prepend(), g_slist_insert() and
 	 * g_slist_insert_sorted() functions and so is rarely used on its own.
+	 * Returns: a pointer to the newly-allocated GSList element.
 	 */
 	public static ListSG alloc()
 	{
@@ -178,6 +179,7 @@ public class ListSG
 	 * number_list = g_slist_append (number_list, GINT_TO_POINTER (14));
 	 * Params:
 	 * data = the data for the new element
+	 * Returns: the new start of the GSList
 	 */
 	public ListSG append(void* data)
 	{
@@ -201,6 +203,7 @@ public class ListSG
 	 * list = g_slist_prepend (list, "first");
 	 * Params:
 	 * data = the data for the new element
+	 * Returns: the new start of the GSList
 	 */
 	public ListSG prepend(void* data)
 	{
@@ -221,6 +224,7 @@ public class ListSG
 	 *  If this is negative, or is larger than the number
 	 *  of elements in the list, the new element is added on
 	 *  to the end of the list.
+	 * Returns: the new start of the GSList
 	 */
 	public ListSG insert(void* data, int position)
 	{
@@ -238,6 +242,7 @@ public class ListSG
 	 * Params:
 	 * sibling = node to insert data before
 	 * data = data to put in the newly-inserted node
+	 * Returns: the new head of the list.
 	 */
 	public ListSG insertBefore(ListSG sibling, void* data)
 	{
@@ -258,6 +263,7 @@ public class ListSG
 	 * func = the function to compare elements in the list.
 	 *  It should return a number > 0 if the first parameter
 	 *  comes after the second parameter in the sort order.
+	 * Returns: the new start of the GSList
 	 */
 	public ListSG insertSorted(void* data, GCompareFunc func)
 	{
@@ -276,6 +282,7 @@ public class ListSG
 	 * If none of the elements contain the data, the GSList is unchanged.
 	 * Params:
 	 * data = the data of the element to remove
+	 * Returns: the new start of the GSList
 	 */
 	public ListSG remove(void* data)
 	{
@@ -295,6 +302,7 @@ public class ListSG
 	 * self-contained list with one element.
 	 * Params:
 	 * link = an element in the GSList
+	 * Returns: the new start of the GSList, without the element
 	 */
 	public ListSG removeLink(ListSG link)
 	{
@@ -313,6 +321,7 @@ public class ListSG
 	 * without freeing it.
 	 * Params:
 	 * link = node to delete
+	 * Returns: the new head of list
 	 */
 	public ListSG deleteLink(ListSG link)
 	{
@@ -332,6 +341,7 @@ public class ListSG
 	 * matching the given data.
 	 * Params:
 	 * data = data to remove
+	 * Returns: new head of list
 	 */
 	public ListSG removeAll(void* data)
 	{
@@ -369,6 +379,7 @@ public class ListSG
 	 * Note
 	 * This function iterates over the whole list to
 	 * count its elements.
+	 * Returns: the number of elements in the GSList
 	 */
 	public uint length()
 	{
@@ -382,6 +393,7 @@ public class ListSG
 	 * Note that this is a "shallow" copy. If the list elements
 	 * consist of pointers to data, the pointers are copied but
 	 * the actual data isn't.
+	 * Returns: a copy of list
 	 */
 	public ListSG copy()
 	{
@@ -396,6 +408,7 @@ public class ListSG
 	
 	/**
 	 * Reverses a GSList.
+	 * Returns: the start of the reversed GSList
 	 */
 	public ListSG reverse()
 	{
@@ -418,6 +431,7 @@ public class ListSG
 	 *  It should return a number > 0 if the first parameter
 	 *  comes after the second parameter in the sort order.
 	 * userData = data to pass to comparison function
+	 * Returns: the new start of the GSList
 	 */
 	public ListSG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -438,6 +452,7 @@ public class ListSG
 	 *  and should return 0 if they are equal, a negative value if the
 	 *  first element comes before the second, or a positive value if
 	 *  the first element comes after the second.
+	 * Returns: the start of the sorted GSList
 	 */
 	public ListSG sort(GCompareFunc compareFunc)
 	{
@@ -455,6 +470,7 @@ public class ListSG
 	 * Params:
 	 * compareFunc = comparison function
 	 * userData = data to pass to comparison function
+	 * Returns: new head of the list
 	 */
 	public ListSG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -473,6 +489,7 @@ public class ListSG
 	 * They are used directly.
 	 * Params:
 	 * list2 = the GSList to add to the end of the first GSList
+	 * Returns: the start of the new GSList
 	 */
 	public ListSG concat(ListSG list2)
 	{
@@ -501,6 +518,7 @@ public class ListSG
 	 * Gets the last element in a GSList.
 	 * Note
 	 * This function iterates over the whole list.
+	 * Returns: the last element in the GSList,  or NULL if the GSList has no elements
 	 */
 	public ListSG last()
 	{
@@ -517,6 +535,7 @@ public class ListSG
 	 * Gets the element at the given position in a GSList.
 	 * Params:
 	 * n = the position of the element, counting from 0
+	 * Returns: the element, or NULL if the position is off  the end of the GSList
 	 */
 	public ListSG nth(uint n)
 	{
@@ -533,6 +552,7 @@ public class ListSG
 	 * Gets the data of the element at the given position.
 	 * Params:
 	 * n = the position of the element
+	 * Returns: the element's data, or NULL if the position  is off the end of the GSList
 	 */
 	public void* nthData(uint n)
 	{
@@ -545,6 +565,7 @@ public class ListSG
 	 * contains the given data.
 	 * Params:
 	 * data = the element data to find
+	 * Returns: the found GSList element,  or NULL if it is not found
 	 */
 	public ListSG find(void* data)
 	{
@@ -568,6 +589,7 @@ public class ListSG
 	 * data = user data passed to the function
 	 * func = the function to call for each element.
 	 *  It should return 0 when the desired element is found
+	 * Returns: the found GSList element, or NULL if it is not found
 	 */
 	public ListSG findCustom(void* data, GCompareFunc func)
 	{
@@ -585,6 +607,7 @@ public class ListSG
 	 * in the GSList (starting from 0).
 	 * Params:
 	 * llink = an element in the GSList
+	 * Returns: the position of the element in the GSList,  or -1 if the element is not found
 	 */
 	public int position(ListSG llink)
 	{
@@ -597,6 +620,7 @@ public class ListSG
 	 * the given data (starting from 0).
 	 * Params:
 	 * data = the data to find
+	 * Returns: the index of the element containing the data,  or -1 if the data is not found
 	 */
 	public int index(void* data)
 	{

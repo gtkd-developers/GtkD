@@ -192,6 +192,7 @@ public class RandG
 	 * This way you can take a snapshot of the random number generator for
 	 * replaying later.
 	 * Since 2.4
+	 * Returns: the new GRand.
 	 */
 	public RandG copy()
 	{
@@ -243,6 +244,7 @@ public class RandG
 	/**
 	 * Returns the next random guint32 from rand_ equally distributed over
 	 * the range [0..2^32-1].
+	 * Returns: A random number.
 	 */
 	public uint randInt()
 	{
@@ -256,6 +258,7 @@ public class RandG
 	 * Params:
 	 * begin = lower closed bound of the interval.
 	 * end = upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public int randIntRange(int begin, int end)
 	{
@@ -266,6 +269,7 @@ public class RandG
 	/**
 	 * Returns the next random gdouble from rand_ equally distributed over
 	 * the range [0..1).
+	 * Returns: A random number.
 	 */
 	public double randDouble()
 	{
@@ -279,6 +283,7 @@ public class RandG
 	 * Params:
 	 * begin = lower closed bound of the interval.
 	 * end = upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public double randDoubleRange(double begin, double end)
 	{
@@ -301,6 +306,7 @@ public class RandG
 	/**
 	 * Return a random guint32 equally distributed over the range
 	 * [0..2^32-1].
+	 * Returns: A random number.
 	 */
 	public static uint randomInt()
 	{
@@ -314,6 +320,7 @@ public class RandG
 	 * Params:
 	 * begin = lower closed bound of the interval.
 	 * end = upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public static int randomIntRange(int begin, int end)
 	{
@@ -323,6 +330,7 @@ public class RandG
 	
 	/**
 	 * Returns a random gdouble equally distributed over the range [0..1).
+	 * Returns: A random number.
 	 */
 	public static double randomDouble()
 	{
@@ -335,6 +343,7 @@ public class RandG
 	 * Params:
 	 * begin = lower closed bound of the interval.
 	 * end = upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public static double randomDoubleRange(double begin, double end)
 	{

@@ -189,6 +189,7 @@ public class Regex
 	/**
 	 * Increases reference count of regex by 1.
 	 * Since 2.14
+	 * Returns: regex
 	 */
 	public Regex doref()
 	{
@@ -216,6 +217,7 @@ public class Regex
 	 * Gets the pattern string associated with regex, i.e. a copy of
 	 * the string passed to g_regex_new().
 	 * Since 2.14
+	 * Returns: the pattern of regex
 	 */
 	public string getPattern()
 	{
@@ -228,6 +230,7 @@ public class Regex
 	 * in the pattern, or 0 if the pattern does not contain
 	 * back references.
 	 * Since 2.14
+	 * Returns: the number of the highest back reference
 	 */
 	public int getMaxBackref()
 	{
@@ -238,6 +241,7 @@ public class Regex
 	/**
 	 * Returns the number of capturing subpatterns in the pattern.
 	 * Since 2.14
+	 * Returns: the number of capturing subpatterns
 	 */
 	public int getCaptureCount()
 	{
@@ -250,6 +254,7 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * name = name of the subexpression
+	 * Returns: The number of the subexpression or -1 if name  does not exists
 	 */
 	public int getStringNumber(string name)
 	{
@@ -268,6 +273,7 @@ public class Regex
 	 * Params:
 	 * string = the string to escape
 	 * length = the length of string, or -1 if string is nul-terminated
+	 * Returns: a newly-allocated escaped string
 	 */
 	public static string escapeString(string string, int length)
 	{
@@ -290,6 +296,7 @@ public class Regex
 	 * string = the string to scan for matches
 	 * compileOptions = compile options for the regular expression, or 0
 	 * matchOptions = match options, or 0
+	 * Returns: TRUE if the string matched, FALSE otherwise
 	 */
 	public static int matchSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -335,6 +342,7 @@ public class Regex
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store the GMatchInfo,
 	 *  or NULL if you do not need it
+	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
 	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
@@ -397,6 +405,7 @@ public class Regex
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store the GMatchInfo,
 	 *  or NULL if you do not need it
+	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -435,6 +444,7 @@ public class Regex
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store the GMatchInfo,
 	 *  or NULL if you do not need it
+	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
 	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
@@ -486,6 +496,7 @@ public class Regex
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store the GMatchInfo,
 	 *  or NULL if you do not need it
+	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -535,6 +546,7 @@ public class Regex
 	 * string = the string to scan for matches
 	 * compileOptions = compile options for the regular expression, or 0
 	 * matchOptions = match options, or 0
+	 * Returns: a NULL-terminated array of strings. Free it using g_strfreev()
 	 */
 	public static string[] splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -562,6 +574,7 @@ public class Regex
 	 * Params:
 	 * string = the string to split with the pattern
 	 * matchOptions = match time option flags
+	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 */
 	public string[] split(string string, GRegexMatchFlags matchOptions)
 	{
@@ -596,6 +609,7 @@ public class Regex
 	 * matchOptions = match time option flags
 	 * maxTokens = the maximum number of tokens to split string into.
 	 *  If this is less than 1, the string is split completely
+	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 * Throws: GException on failure.
 	 */
 	public string[] splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
@@ -628,6 +642,7 @@ public class Regex
 	 * startPosition = starting index of the string to match
 	 * replacement = text to replace each match with
 	 * matchOptions = options for the match
+	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
 	public string replace(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
@@ -660,6 +675,7 @@ public class Regex
 	 * startPosition = starting index of the string to match
 	 * replacement = text to replace each match with
 	 * matchOptions = options for the match
+	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
 	public string replaceLiteral(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
@@ -692,6 +708,7 @@ public class Regex
 	 * matchOptions = options for the match
 	 * eval = a function to call for each match
 	 * userData = user data to pass to the function
+	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
 	public string replaceEval(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
@@ -723,6 +740,7 @@ public class Regex
 	 * replacement = the replacement string
 	 * hasReferences = location to store information about
 	 *  references in replacement or NULL
+	 * Returns: whether replacement is a valid replacement string
 	 * Throws: GException on failure.
 	 */
 	public static int checkReplacement(string replacement, out int hasReferences)

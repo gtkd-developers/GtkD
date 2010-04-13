@@ -195,6 +195,7 @@ public class Relation
 	 * Params:
 	 * key = the value to compare with.
 	 * field = the field of each record to match.
+	 * Returns: the number of matches.
 	 */
 	public int count(void* key, int field)
 	{
@@ -209,6 +210,7 @@ public class Relation
 	 * Params:
 	 * key = the value to compare with.
 	 * field = the field of each record to match.
+	 * Returns: the records (tuples) that matched.
 	 */
 	public Tuples select(void* key, int field)
 	{
@@ -227,6 +229,7 @@ public class Relation
 	 * Params:
 	 * key = the value to compare with.
 	 * field = the field of each record to match.
+	 * Returns: the number of records deleted.
 	 */
 	public int delet(void* key, int field)
 	{

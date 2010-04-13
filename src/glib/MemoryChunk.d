@@ -248,6 +248,7 @@ public class MemoryChunk
 	 * Warning
 	 * g_mem_chunk_alloc has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_alloc() instead
 	 * Allocates an atom of memory from a GMemChunk.
+	 * Returns: a pointer to the allocated atom.
 	 */
 	public void* alloc()
 	{
@@ -260,6 +261,7 @@ public class MemoryChunk
 	 * g_mem_chunk_alloc0 has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_alloc0() instead
 	 * Allocates an atom of memory from a GMemChunk, setting the memory to
 	 * 0.
+	 * Returns: a pointer to the allocated atom.
 	 */
 	public void* alloc0()
 	{

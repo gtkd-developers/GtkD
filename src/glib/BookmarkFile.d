@@ -212,6 +212,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * filename = the path of a filename to load, in the GLib file name encoding
+	 * Returns: TRUE if a desktop bookmark file could be loaded
 	 * Throws: GException on failure.
 	 */
 	public int loadFromFile(string filename)
@@ -237,6 +238,7 @@ public class BookmarkFile
 	 * Params:
 	 * data = desktop bookmarks loaded in memory
 	 * length = the length of data in bytes
+	 * Returns: TRUE if a desktop bookmark could be loaded.
 	 * Throws: GException on failure.
 	 */
 	public int loadFromData(string data, uint length)
@@ -265,6 +267,7 @@ public class BookmarkFile
 	 * file = a relative path to a filename to open and parse
 	 * fullPath = return location for a string containing the full path
 	 *  of the file, or NULL
+	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 * Throws: GException on failure.
 	 */
 	public int loadFromDataDirs(string file, out string fullPath)
@@ -289,6 +292,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * length = return location for the length of the returned string, or NULL
+	 * Returns: a newly allocated string holding the contents of the GBookmarkFile
 	 * Throws: GException on failure.
 	 */
 	public string toData(out uint length)
@@ -312,6 +316,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * filename = path of the output file
+	 * Returns: TRUE if the file was successfully written.
 	 * Throws: GException on failure.
 	 */
 	public int toFile(string filename)
@@ -334,6 +339,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: TRUE if uri is inside bookmark, FALSE otherwise
 	 */
 	public int hasItem(string uri)
 	{
@@ -350,6 +356,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * group = the group name to be searched
+	 * Returns: TRUE if group was found.
 	 * Throws: GException on failure.
 	 */
 	public int hasGroup(string uri, string group)
@@ -376,6 +383,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * name = the name of the application
+	 * Returns: TRUE if the application name was found
 	 * Throws: GException on failure.
 	 */
 	public int hasApplication(string uri, string name)
@@ -396,6 +404,7 @@ public class BookmarkFile
 	/**
 	 * Gets the number of bookmarks inside bookmark.
 	 * Since 2.12
+	 * Returns: the number of bookmarks
 	 */
 	public int getSize()
 	{
@@ -410,6 +419,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * length = return location for the number of returned URIs, or NULL
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public string[] getUris(out uint length)
 	{
@@ -425,6 +435,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI or NULL
+	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getTitle(string uri)
@@ -449,6 +460,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getDescription(string uri)
@@ -475,6 +487,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getMimeType(string uri)
@@ -501,6 +514,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: TRUE if the private flag is set, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int getIsPrivate(string uri)
@@ -527,6 +541,7 @@ public class BookmarkFile
 	 * uri = a valid URI
 	 * href = return location for the icon's location or NULL
 	 * mimeType = return location for the icon's MIME type or NULL
+	 * Returns: TRUE if the icon for the bookmark for the URI was found. You should free the returned strings.
 	 * Throws: GException on failure.
 	 */
 	public int getIcon(string uri, out string href, out string mimeType)
@@ -555,6 +570,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: a timestamp
 	 * Throws: GException on failure.
 	 */
 	public uint getAdded(string uri)
@@ -579,6 +595,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: a timestamp
 	 * Throws: GException on failure.
 	 */
 	public uint getModified(string uri)
@@ -603,6 +620,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: a timestamp.
 	 * Throws: GException on failure.
 	 */
 	public uint getVisited(string uri)
@@ -630,6 +648,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * length = return location for the length of the returned string, or NULL
+	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
 	public string[] getGroups(string uri, out uint length)
@@ -656,6 +675,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * length = return location of the length of the returned list, or NULL
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
 	public string[] getApplications(string uri, out uint length)
@@ -692,6 +712,7 @@ public class BookmarkFile
 	 * exec = location for the command line of the application, or NULL
 	 * count = return location for the registration count, or NULL
 	 * stamp = return location for the last registration time, or NULL
+	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */
 	public int getAppInfo(string uri, string name, out string exec, out uint count, out uint stamp)
@@ -871,6 +892,7 @@ public class BookmarkFile
 	 * exec = an application's command line
 	 * count = the number of registrations done for this application
 	 * stamp = the time of the last registration for this application
+	 * Returns: TRUE if the application's meta-data was successfully changed.
 	 * Throws: GException on failure.
 	 */
 	public int setAppInfo(string uri, string name, string exec, int count, uint stamp)
@@ -946,6 +968,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * group = the group name to be removed
+	 * Returns: TRUE if group was successfully removed.
 	 * Throws: GException on failure.
 	 */
 	public int removeGroup(string uri, string group)
@@ -975,6 +998,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * name = the name of the application
+	 * Returns: TRUE if the application was successfully removed.
 	 * Throws: GException on failure.
 	 */
 	public int removeApplication(string uri, string name)
@@ -997,6 +1021,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
+	 * Returns: TRUE if the bookmark was removed successfully.
 	 * Throws: GException on failure.
 	 */
 	public int removeItem(string uri)
@@ -1024,6 +1049,7 @@ public class BookmarkFile
 	 * Params:
 	 * oldUri = a valid URI
 	 * newUri = a valid URI, or NULL
+	 * Returns: TRUE if the URI was successfully changed
 	 * Throws: GException on failure.
 	 */
 	public int moveItem(string oldUri, string newUri)

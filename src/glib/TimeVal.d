@@ -183,6 +183,7 @@ public class TimeVal
 	 * Params:
 	 * isoDate = an ISO 8601 encoded date string
 	 * time = a GTimeVal
+	 * Returns: TRUE if the conversion was successful.
 	 */
 	public static int fromIso8601(string isoDate, GTimeVal* time)
 	{
@@ -194,6 +195,7 @@ public class TimeVal
 	 * Converts time_ into an ISO 8601 encoded string, relative to the
 	 * Coordinated Universal Time (UTC).
 	 * Since 2.12
+	 * Returns: a newly allocated string containing an ISO 8601 date
 	 */
 	public string toIso8601()
 	{

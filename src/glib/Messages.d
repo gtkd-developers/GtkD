@@ -89,6 +89,7 @@ public class Messages
 	 * widget or a log file for example.
 	 * Params:
 	 * func = the new print handler.
+	 * Returns:the old print handler.
 	 */
 	public static GPrintFunc setPrintHandler(GPrintFunc func)
 	{
@@ -104,6 +105,7 @@ public class Messages
 	 * widget or a log file for example.
 	 * Params:
 	 * func = the new error message handler.
+	 * Returns:the old error message handler.
 	 */
 	public static GPrintFunc setPrinterrHandler(GPrintFunc func)
 	{

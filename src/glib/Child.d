@@ -154,6 +154,7 @@ public class Child
 	 * Params:
 	 * pid = process to watch. On POSIX the pid of a child process. On
 	 * Windows a handle for a process (which doesn't have to be a child).
+	 * Returns: the newly-created child watch source
 	 */
 	public static Source watchSourceNew(GPid pid)
 	{
@@ -186,6 +187,7 @@ public class Child
 	 * pid = process id to watch. On POSIX the pid of a child process. On
 	 * Windows a handle for a process (which doesn't have to be a child).
 	 * data = data to pass to function
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint watchAdd(GPid pid, GChildWatchFunc funct, void* data)
 	{
@@ -216,6 +218,7 @@ public class Child
 	 * Windows a handle for a process (which doesn't have to be a child).
 	 * data = data to pass to function
 	 * notify = function to call when the idle is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint watchAddFull(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify)
 	{

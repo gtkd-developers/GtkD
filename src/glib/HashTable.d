@@ -220,6 +220,7 @@ public class HashTable
 	
 	/**
 	 * Returns the number of elements contained in the GHashTable.
+	 * Returns: the number of key/value pairs in the GHashTable.
 	 */
 	public uint size()
 	{
@@ -234,6 +235,7 @@ public class HashTable
 	 * g_hash_table_lookup_extended().
 	 * Params:
 	 * key = the key to look up.
+	 * Returns: the associated value, or NULL if the key is not found.
 	 */
 	public void* lookup(void* key)
 	{
@@ -252,6 +254,7 @@ public class HashTable
 	 * lookupKey = the key to look up
 	 * origKey = return location for the original key, or NULL
 	 * value = return location for the value associated with the key, or NULL
+	 * Returns: TRUE if the key was found in the GHashTable.
 	 */
 	public int lookupExtended(void* lookupKey, void** origKey, void** value)
 	{
@@ -295,6 +298,7 @@ public class HashTable
 	 * Params:
 	 * predicate = function to test the key/value pairs for a certain property.
 	 * userData = user data to pass to the function.
+	 * Returns: The value of the first key/value pair is returned, for whichfunc evaluates to TRUE. If no pair with the requested property is found,NULL is returned.
 	 */
 	public void* find(GHRFunc predicate, void* userData)
 	{
@@ -310,6 +314,7 @@ public class HashTable
 	 * yourself.
 	 * Params:
 	 * key = the key to remove.
+	 * Returns: TRUE if the key was found and removed from the GHashTable.
 	 */
 	public int remove(void* key)
 	{
@@ -322,6 +327,7 @@ public class HashTable
 	 * calling the key and value destroy functions.
 	 * Params:
 	 * key = the key to remove.
+	 * Returns: TRUE if the key was found and removed from the GHashTable.
 	 */
 	public int steal(void* key)
 	{
@@ -340,6 +346,7 @@ public class HashTable
 	 * Params:
 	 * func = the function to call for each key/value pair.
 	 * userData = user data to pass to the function.
+	 * Returns: the number of key/value pairs removed.
 	 */
 	public uint foreachRemove(GHRFunc func, void* userData)
 	{
@@ -356,6 +363,7 @@ public class HashTable
 	 * Params:
 	 * func = the function to call for each key/value pair.
 	 * userData = user data to pass to the function.
+	 * Returns: the number of key/value pairs removed.
 	 */
 	public uint foreachSteal(GHRFunc func, void* userData)
 	{
@@ -392,6 +400,7 @@ public class HashTable
 	 * Retrieves every key inside hash_table. The returned data is valid
 	 * until hash_table is modified.
 	 * Since 2.14
+	 * Returns: a GList containing all the keys inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
 	 */
 	public ListG getKeys()
 	{
@@ -408,6 +417,7 @@ public class HashTable
 	 * Retrieves every value inside hash_table. The returned data is
 	 * valid until hash_table is modified.
 	 * Since 2.14
+	 * Returns: a GList containing all the values inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
 	 */
 	public ListG getValues()
 	{
@@ -438,6 +448,7 @@ public class HashTable
 	 * Atomically increments the reference count of hash_table by one.
 	 * This function is MT-safe and may be called from any thread.
 	 * Since 2.10
+	 * Returns: the passed in GHashTable.
 	 */
 	public HashTable doref()
 	{
@@ -470,6 +481,7 @@ public class HashTable
 	 * Params:
 	 * v1 = a key.
 	 * v2 = a key to compare with v1.
+	 * Returns: TRUE if the two keys match.
 	 */
 	public static int gDirectEqual(void* v1, void* v2)
 	{
@@ -483,6 +495,7 @@ public class HashTable
 	 * when using pointers as keys in a GHashTable.
 	 * Params:
 	 * v = a gpointer key
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint gDirectHash(void* v)
 	{
@@ -498,6 +511,7 @@ public class HashTable
 	 * Params:
 	 * v1 = a pointer to a gint key.
 	 * v2 = a pointer to a gint key to compare with v1.
+	 * Returns: TRUE if the two keys match.
 	 */
 	public static int gIntEqual(void* v1, void* v2)
 	{
@@ -511,6 +525,7 @@ public class HashTable
 	 * when using pointers to integers values as keys in a GHashTable.
 	 * Params:
 	 * v = a pointer to a gint key
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint gIntHash(void* v)
 	{
@@ -527,6 +542,7 @@ public class HashTable
 	 * Params:
 	 * v1 = a pointer to a gint64 key.
 	 * v2 = a pointer to a gint64 key to compare with v1.
+	 * Returns: TRUE if the two keys match.
 	 */
 	public static int gInt64_Equal(void* v1, void* v2)
 	{
@@ -541,6 +557,7 @@ public class HashTable
 	 * Since 2.22
 	 * Params:
 	 * v = a pointer to a gint64 key
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint gInt64_Hash(void* v)
 	{
@@ -557,6 +574,7 @@ public class HashTable
 	 * Params:
 	 * v1 = a pointer to a gdouble key.
 	 * v2 = a pointer to a gdouble key to compare with v1.
+	 * Returns: TRUE if the two keys match.
 	 */
 	public static int gDoubleEqual(void* v1, void* v2)
 	{
@@ -571,6 +589,7 @@ public class HashTable
 	 * Since 2.22
 	 * Params:
 	 * v = a pointer to a gdouble key
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint gDoubleHash(void* v)
 	{
@@ -588,6 +607,7 @@ public class HashTable
 	 * Params:
 	 * v1 = a key
 	 * v2 = a key to compare with v1
+	 * Returns: TRUE if the two keys match
 	 */
 	public static int gStrEqual(void* v1, void* v2)
 	{
@@ -601,6 +621,7 @@ public class HashTable
 	 * parameter, when using strings as keys in a GHashTable.
 	 * Params:
 	 * v = a string key
+	 * Returns: a hash value corresponding to the key
 	 */
 	public static uint gStrHash(void* v)
 	{

@@ -79,6 +79,7 @@ public class URI
 	 * Since 2.16
 	 * Params:
 	 * uri = a valid URI.
+	 * Returns: The "Scheme" component of the URI, or NULL on error. The returned string should be freed when no longer needed.
 	 */
 	public static string parseScheme(string uri)
 	{
@@ -100,6 +101,7 @@ public class URI
 	 * reservedCharsAllowed = a string of reserved characters that are
 	 *  allowed to be used.
 	 * allowUtf8 = TRUE if the result can include UTF-8 characters.
+	 * Returns: an escaped version of unescaped. The returned string should be freed when no longer needed.
 	 */
 	public static string escapeString(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
@@ -118,6 +120,7 @@ public class URI
 	 * Params:
 	 * escapedString = an escaped string to be unescaped.
 	 * illegalCharacters = an optional string of illegal characters not to be allowed.
+	 * Returns: an unescaped version of escaped_string. The returned string should be freed when no longer needed.
 	 */
 	public static string unescapeString(string escapedString, string illegalCharacters)
 	{
@@ -137,6 +140,7 @@ public class URI
 	 * escapedString = a string.
 	 * escapedStringEnd = a string.
 	 * illegalCharacters = an optional string of illegal characters not to be allowed.
+	 * Returns: an unescaped version of escaped_string or NULL on error.The returned string should be freed when no longer needed.
 	 */
 	public static string unescapeSegment(string escapedString, string escapedStringEnd, string illegalCharacters)
 	{
@@ -151,6 +155,7 @@ public class URI
 	 * Since 2.6
 	 * Params:
 	 * uriList = an URI list
+	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev().
 	 */
 	public static string[] listExtractUris(string uriList)
 	{

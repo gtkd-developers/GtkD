@@ -134,6 +134,7 @@ public class MemorySlice
 	 * Since 2.10
 	 * Params:
 	 * blockSize = the number of bytes to allocate
+	 * Returns:a pointer to the allocated memory block
 	 */
 	public static void* alloc(uint blockSize)
 	{
@@ -150,6 +151,7 @@ public class MemorySlice
 	 * Since 2.10
 	 * Params:
 	 * blockSize = the number of bytes to allocate
+	 * Returns:a pointer to the allocated block
 	 */
 	public static void* alloc0(uint blockSize)
 	{
@@ -164,6 +166,7 @@ public class MemorySlice
 	 * Params:
 	 * blockSize = the number of bytes to allocate
 	 * memBlock = the memory to copy
+	 * Returns:a pointer to the allocated memory block
 	 */
 	public static void* copy(uint blockSize, void* memBlock)
 	{

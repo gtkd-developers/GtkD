@@ -137,6 +137,7 @@ public class BBTree
 	 * Increments the reference count of tree by one. It is safe to call
 	 * this function from any thread.
 	 * Since 2.22
+	 * Returns: the passed in GTree.
 	 */
 	public BBTree doref()
 	{
@@ -247,6 +248,7 @@ public class BBTree
 	
 	/**
 	 * Gets the number of nodes in a GTree.
+	 * Returns: the number of nodes in the GTree.
 	 */
 	public int nnodes()
 	{
@@ -259,6 +261,7 @@ public class BBTree
 	 * If the GTree contains no nodes, the height is 0.
 	 * If the GTree contains only one root node the height is 1.
 	 * If the root node has children the height is 2, etc.
+	 * Returns: the height of the GTree.
 	 */
 	public int height()
 	{
@@ -272,6 +275,7 @@ public class BBTree
 	 * fast.
 	 * Params:
 	 * key = the key to look up.
+	 * Returns: the value corresponding to the key, or NULL if the key wasnot found.
 	 */
 	public void* lookup(void* key)
 	{
@@ -288,6 +292,7 @@ public class BBTree
 	 * lookupKey = the key to look up.
 	 * origKey = returns the original key.
 	 * value = returns the value associated with the key.
+	 * Returns: TRUE if the key was found in the GTree.
 	 */
 	public int lookupExtended(void* lookupKey, void** origKey, void** value)
 	{
@@ -346,6 +351,7 @@ public class BBTree
 	 * searchFunc = a function used to search the GTree.
 	 * userData = the data passed as the second argument to the search_func
 	 * function.
+	 * Returns: the value corresponding to the found key, or NULL if the key was not found.
 	 */
 	public void* search(GCompareFunc searchFunc, void* userData)
 	{
@@ -361,6 +367,7 @@ public class BBTree
 	 * If the key does not exist in the GTree, the function does nothing.
 	 * Params:
 	 * key = the key to remove.
+	 * Returns: TRUE if the key was found (prior to 2.8, this function returned  nothing)
 	 */
 	public int remove(void* key)
 	{
@@ -374,6 +381,7 @@ public class BBTree
 	 * If the key does not exist in the GTree, the function does nothing.
 	 * Params:
 	 * key = the key to remove.
+	 * Returns: TRUE if the key was found (prior to 2.8, this function returned  nothing)
 	 */
 	public int steal(void* key)
 	{

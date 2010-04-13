@@ -130,6 +130,7 @@ public class Directory
 	 * path = the path to the directory you are interested in. On Unix
 	 *  in the on-disk encoding. On Windows in UTF-8
 	 * flags = Currently must be set to 0. Reserved for future use.
+	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
 	 * Throws: GException on failure.
 	 */
 	public static Directory open(string path, uint flags)
@@ -155,6 +156,7 @@ public class Directory
 	 * Retrieves the name of the next entry in the directory. The '.' and
 	 * '..' entries are omitted. On Windows, the returned name is in
 	 * UTF-8. On Unix, it is in the on-disk encoding.
+	 * Returns: The entry's name or NULL if there are no  more entries. The return value is owned by GLib and must not be modified or freed.
 	 */
 	public string readName()
 	{

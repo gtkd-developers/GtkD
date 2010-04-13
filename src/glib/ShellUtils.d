@@ -119,6 +119,7 @@ public class ShellUtils
 	 * used).
 	 * Params:
 	 * unquotedString = a literal string
+	 * Returns: quoted string
 	 */
 	public static string quote(string unquotedString)
 	{
@@ -149,6 +150,7 @@ public class ShellUtils
 	 * literally.
 	 * Params:
 	 * quotedString = shell-quoted string
+	 * Returns: an unquoted string
 	 * Throws: GException on failure.
 	 */
 	public static string unquote(string quotedString)

@@ -175,6 +175,7 @@ public class AsyncQueue
 	/**
 	 * Increases the reference count of the asynchronous queue by 1. You
 	 * do not need to hold the lock to call this function.
+	 * Returns: the queue that was passed in (since 2.6)
 	 */
 	public AsyncQueue doref()
 	{
@@ -238,6 +239,7 @@ public class AsyncQueue
 	/**
 	 * Pops data from the queue. This function blocks until data become
 	 * available.
+	 * Returns: data from the queue.
 	 */
 	public void* pop()
 	{
@@ -248,6 +250,7 @@ public class AsyncQueue
 	/**
 	 * Tries to pop data from the queue. If no data is available, NULL is
 	 * returned.
+	 * Returns: data from the queue or NULL, when no data isavailable immediately.
 	 */
 	public void* tryPop()
 	{
@@ -262,6 +265,7 @@ public class AsyncQueue
 	 * and g_time_val_add() can be used.
 	 * Params:
 	 * endTime = a GTimeVal, determining the final time.
+	 * Returns: data from the queue or NULL, when no data isreceived before end_time.
 	 */
 	public void* timedPop(TimeVal endTime)
 	{
@@ -277,6 +281,7 @@ public class AsyncQueue
 	 * of 0 could mean 'n' entries in the queue and 'n' thread waiting.
 	 * That can happen due to locking of the queue or due to
 	 * scheduling.
+	 * Returns: the length of the queue.
 	 */
 	public int length()
 	{
@@ -395,6 +400,7 @@ public class AsyncQueue
 	 * Pops data from the queue. This function blocks until data become
 	 * available. This function must be called while holding the queue's
 	 * lock.
+	 * Returns: data from the queue.
 	 */
 	public void* popUnlocked()
 	{
@@ -406,6 +412,7 @@ public class AsyncQueue
 	 * Tries to pop data from the queue. If no data is available, NULL is
 	 * returned. This function must be called while holding the queue's
 	 * lock.
+	 * Returns: data from the queue or NULL, when no data isavailable immediately.
 	 */
 	public void* tryPopUnlocked()
 	{
@@ -421,6 +428,7 @@ public class AsyncQueue
 	 * and g_time_val_add() can be used.
 	 * Params:
 	 * endTime = a GTimeVal, determining the final time.
+	 * Returns: data from the queue or NULL, when no data isreceived before end_time.
 	 */
 	public void* timedPopUnlocked(TimeVal endTime)
 	{
@@ -437,6 +445,7 @@ public class AsyncQueue
 	 * That can happen due to locking of the queue or due to
 	 * scheduling. This function must be called while holding the queue's
 	 * lock.
+	 * Returns: the length of the queue.
 	 */
 	public int lengthUnlocked()
 	{

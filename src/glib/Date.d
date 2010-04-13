@@ -430,6 +430,7 @@ public class Date
 	 * Both dates must be valid.
 	 * Params:
 	 * date2 = the second date
+	 * Returns:the number of days between date1 and date2
 	 */
 	public int daysBetween(Date date2)
 	{
@@ -442,6 +443,7 @@ public class Date
 	 * dates must be valid.
 	 * Params:
 	 * rhs = second date to compare
+	 * Returns:0 for equal, less than zero if lhs is less than rhs, greater than zero if lhs is greater than rhs
 	 */
 	public int compare(Date rhs)
 	{
@@ -479,6 +481,7 @@ public class Date
 	
 	/**
 	 * Returns the day of the month. The date must be valid.
+	 * Returns:day of the month
 	 */
 	public GDateDay getDay()
 	{
@@ -488,6 +491,7 @@ public class Date
 	
 	/**
 	 * Returns the month of the year. The date must be valid.
+	 * Returns:month of the year as a GDateMonth
 	 */
 	public GDateMonth getMonth()
 	{
@@ -497,6 +501,7 @@ public class Date
 	
 	/**
 	 * Returns the year of a GDate. The date must be valid.
+	 * Returns:year in which the date falls
 	 */
 	public GDateYear getYear()
 	{
@@ -509,6 +514,7 @@ public class Date
 	 * Julian day is simply the number of days since January 1, Year 1; i.e.,
 	 * January 1, Year 1 is Julian day 1; January 2, Year 1 is Julian day 2,
 	 * etc. The date must be valid.
+	 * Returns:Julian day
 	 */
 	public uint getJulian()
 	{
@@ -518,6 +524,7 @@ public class Date
 	
 	/**
 	 * Returns the day of the week for a GDate. The date must be valid.
+	 * Returns:day of the week as a GDateWeekday.
 	 */
 	public GDateWeekday getWeekday()
 	{
@@ -528,6 +535,7 @@ public class Date
 	/**
 	 * Returns the day of the year, where Jan 1 is the first day of the
 	 * year. The date must be valid.
+	 * Returns:day of the year
 	 */
 	public uint getDayOfYear()
 	{
@@ -540,6 +548,7 @@ public class Date
 	 * Params:
 	 * month = month
 	 * year = year
+	 * Returns:number of days in month during the year
 	 */
 	public static ubyte getDaysInMonth(GDateMonth month, GDateYear year)
 	{
@@ -549,6 +558,7 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the date is on the first of a month. The date must be valid.
+	 * Returns:TRUE if the date is the first of the month
 	 */
 	public int isFirstOfMonth()
 	{
@@ -558,6 +568,7 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the date is the last day of the month. The date must be valid.
+	 * Returns:TRUE if the date is the last day of the month
 	 */
 	public int isLastOfMonth()
 	{
@@ -569,6 +580,7 @@ public class Date
 	 * Returns TRUE if the year is a leap year.[4]
 	 * Params:
 	 * year = year to check
+	 * Returns:TRUE if the year is a leap year
 	 */
 	public static int isLeapYear(GDateYear year)
 	{
@@ -580,6 +592,7 @@ public class Date
 	 * Returns the week of the year, where weeks are understood to start on
 	 * Monday. If the date is before the first Monday of the year, return
 	 * 0. The date must be valid.
+	 * Returns:week of the year
 	 */
 	public uint getMondayWeekOfYear()
 	{
@@ -596,6 +609,7 @@ public class Date
 	 * to be a Monday.)
 	 * Params:
 	 * year = a year
+	 * Returns:number of Mondays in the year
 	 */
 	public static ubyte getMondayWeeksInYear(GDateYear year)
 	{
@@ -607,6 +621,7 @@ public class Date
 	 * Returns the week of the year during which this date falls, if weeks
 	 * are understood to being on Sunday. The date must be valid. Can return 0 if
 	 * the day is before the first Sunday of the year.
+	 * Returns:week number
 	 */
 	public uint getSundayWeekOfYear()
 	{
@@ -623,6 +638,7 @@ public class Date
 	 * to be a Sunday.)
 	 * Params:
 	 * year = year to count weeks in
+	 * Returns:number of weeks
 	 */
 	public static ubyte getSundayWeeksInYear(GDateYear year)
 	{
@@ -634,6 +650,7 @@ public class Date
 	 * Returns the week of the year, where weeks are interpreted according
 	 * to ISO 8601.
 	 * Since 2.6
+	 * Returns: ISO 8601 week number of the year.
 	 */
 	public uint getIso8601_WeekOfYear()
 	{
@@ -657,6 +674,7 @@ public class Date
 	 * slen = buffer size
 	 * format = format string
 	 * date = valid GDate
+	 * Returns:number of characters written to the buffer, or 0 the buffer was too small
 	 */
 	public static uint strftime(string s, uint slen, string format, Date date)
 	{
@@ -681,6 +699,7 @@ public class Date
 	 * Returns TRUE if the GDate represents an existing day. The date must not
 	 * contain garbage; it should have been initialized with g_date_clear()
 	 * if it wasn't allocated by one of the g_date_new() variants.
+	 * Returns:Whether the date is valid
 	 */
 	public int valid()
 	{
@@ -693,6 +712,7 @@ public class Date
 	 * between 1 and 31 inclusive).
 	 * Params:
 	 * day = day to check
+	 * Returns:TRUE if the day is valid
 	 */
 	public static int validDay(GDateDay day)
 	{
@@ -705,6 +725,7 @@ public class Date
 	 * enumeration values are the only valid months.
 	 * Params:
 	 * month = month
+	 * Returns:TRUE if the month is valid
 	 */
 	public static int validMonth(GDateMonth month)
 	{
@@ -717,6 +738,7 @@ public class Date
 	 * though there is a 16-bit limit to what GDate will understand.
 	 * Params:
 	 * year = year
+	 * Returns:TRUE if the year is valid
 	 */
 	public static int validYear(GDateYear year)
 	{
@@ -732,6 +754,7 @@ public class Date
 	 * day = day
 	 * month = month
 	 * year = year
+	 * Returns:TRUE if the date is a valid one
 	 */
 	public static int validDmy(GDateDay day, GDateMonth month, GDateYear year)
 	{
@@ -744,6 +767,7 @@ public class Date
 	 * is basically a valid Julian, though there is a 32-bit limit.
 	 * Params:
 	 * julianDate = Julian day to check
+	 * Returns:TRUE if the Julian day is valid
 	 */
 	public static int validJulian(uint julianDate)
 	{
@@ -756,6 +780,7 @@ public class Date
 	 * values are the only valid weekdays.
 	 * Params:
 	 * weekday = weekday
+	 * Returns:TRUE if the weekday is valid[4] For the purposes of this function, leap year is every year divisible by4 unless that year is divisible by 100. If it is divisible by 100 it wouldbe a leap year only if that year is also divisible by 400.
 	 */
 	public static int validWeekday(GDateWeekday weekday)
 	{

@@ -181,6 +181,7 @@ public class ScannerG
 	 * Getting the next token after switching the scope or configuration will
 	 * return whatever was peeked before, regardless of any symbols that may
 	 * have been added or removed in the new scope.
+	 * Returns:the type of the token.
 	 */
 	public GTokenType peekNextToken()
 	{
@@ -196,6 +197,7 @@ public class ScannerG
 	 * value,
 	 * line, and
 	 * position fields of the GScanner structure.
+	 * Returns:the type of the token.
 	 */
 	public GTokenType getNextToken()
 	{
@@ -205,6 +207,7 @@ public class ScannerG
 	
 	/**
 	 * Returns TRUE if the scanner has reached the end of the file or text buffer.
+	 * Returns:TRUE if the scanner has reached the end of the file or text buffer.
 	 */
 	public int eof()
 	{
@@ -215,6 +218,7 @@ public class ScannerG
 	/**
 	 * Returns the current line in the input stream (counting from 1).
 	 * This is the line of the last token parsed via g_scanner_get_next_token().
+	 * Returns:the current line.
 	 */
 	public uint curLine()
 	{
@@ -225,6 +229,7 @@ public class ScannerG
 	/**
 	 * Returns the current position in the current line (counting from 0).
 	 * This is the position of the last token parsed via g_scanner_get_next_token().
+	 * Returns:the current position on the line.
 	 */
 	public uint curPosition()
 	{
@@ -236,6 +241,7 @@ public class ScannerG
 	 * Gets the current token type.
 	 * This is simply the token field in the GScanner
 	 * structure.
+	 * Returns:the current token type.
 	 */
 	public GTokenType curToken()
 	{
@@ -247,6 +253,7 @@ public class ScannerG
 	 * Gets the current token value.
 	 * This is simply the value field in the GScanner
 	 * structure.
+	 * Returns:the current token value.
 	 */
 	public GTokenValue curValue()
 	{
@@ -258,6 +265,7 @@ public class ScannerG
 	 * Sets the current scope.
 	 * Params:
 	 * scopeId = the new scope id.
+	 * Returns:the old scope id.
 	 */
 	public uint setScope(uint scopeId)
 	{
@@ -299,6 +307,7 @@ public class ScannerG
 	 * Params:
 	 * scopeId = the scope id.
 	 * symbol = the symbol to look up.
+	 * Returns:the value of symbol in the given scope, or NULLif symbol is not bound in the given scope.
 	 */
 	public void* scopeLookupSymbol(uint scopeId, string symbol)
 	{
@@ -323,6 +332,7 @@ public class ScannerG
 	 * symbol is not bound in the current scope, NULL is returned.
 	 * Params:
 	 * symbol = the symbol to look up.
+	 * Returns:the value of symbol in the current scope, or NULLif symbol is not bound in the current scope.
 	 */
 	public void* lookupSymbol(string symbol)
 	{

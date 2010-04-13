@@ -604,6 +604,7 @@ public class Pixbuf : ObjectG
 	 * destY = Destination Y coordinate in pixbuf, or 0 if dest is NULL.
 	 * width = Width in pixels of region to get.
 	 * height = Height in pixels of region to get.
+	 * Returns: dest, newly-created pixbuf if dest was NULL, NULL on error
 	 */
 	public Pixbuf getFromImage(ImageGdk src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
@@ -755,6 +756,7 @@ public class Pixbuf : ObjectG
 	/**
 	 * Creates a new GdkPixbuf with a copy of the information in the specified
 	 * pixbuf.
+	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL ifnot enough memory could be allocated.
 	 */
 	public Pixbuf copy()
 	{
@@ -769,6 +771,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries the color space of a pixbuf.
+	 * Returns: Color space.
 	 */
 	public GdkColorspace getColorspace()
 	{
@@ -778,6 +781,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries the number of channels of a pixbuf.
+	 * Returns: Number of channels.
 	 */
 	public int getNChannels()
 	{
@@ -787,6 +791,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries whether a pixbuf has an alpha channel (opacity information).
+	 * Returns: TRUE if it has an alpha channel, FALSE otherwise.
 	 */
 	public int getHasAlpha()
 	{
@@ -796,6 +801,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries the number of bits per color sample in a pixbuf.
+	 * Returns: Number of bits per color sample.
 	 */
 	public int getBitsPerSample()
 	{
@@ -805,6 +811,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
+	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data”for information about how the pixel data is stored inmemory.
 	 */
 	public char* getPixels()
 	{
@@ -814,6 +821,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries the width of a pixbuf.
+	 * Returns: Width in pixels.
 	 */
 	public int getWidth()
 	{
@@ -823,6 +831,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries the height of a pixbuf.
+	 * Returns: Height in pixels.
 	 */
 	public int getHeight()
 	{
@@ -833,6 +842,7 @@ public class Pixbuf : ObjectG
 	/**
 	 * Queries the rowstride of a pixbuf, which is the number of bytes between the start of a row
 	 * and the start of the next row.
+	 * Returns: Distance between row starts.
 	 */
 	public int getRowstride()
 	{
@@ -852,6 +862,7 @@ public class Pixbuf : ObjectG
 	 * TIFF/Exif orientation tag (if present).
 	 * Params:
 	 * key = a nul-terminated string.
+	 * Returns: the value associated with key. This is a nul-terminated string that should not be freed or NULL if key was not found.
 	 */
 	public string getOption(string key)
 	{
@@ -1050,6 +1061,7 @@ public class Pixbuf : ObjectG
 	 * type = name of file format.
 	 * optionKeys = name of options to set, NULL-terminated
 	 * optionValues = values for named options
+	 * Returns: whether an error was set
 	 * Throws: GException on failure.
 	 */
 	public int savev(string filename, string type, string[] optionKeys, string[] optionValues)
@@ -1079,6 +1091,7 @@ public class Pixbuf : ObjectG
 	 * type = name of file format.
 	 * optionKeys = name of options to set, NULL-terminated
 	 * optionValues = values for named options
+	 * Returns: whether an error was set
 	 * Throws: GException on failure.
 	 */
 	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, string[] optionKeys, string[] optionValues)
@@ -1111,6 +1124,7 @@ public class Pixbuf : ObjectG
 	 * destWidth = the width of destination image
 	 * destHeight = the height of destination image
 	 * interpType = the interpolation type for the transformation.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
@@ -1165,6 +1179,7 @@ public class Pixbuf : ObjectG
 	 * checkSize = the size of checks in the checkboard (must be a power of two)
 	 * color1 = the color of check at upper left
 	 * color2 = the color of the other check
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
@@ -1246,6 +1261,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * angle = the angle to rotate by
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
@@ -1264,6 +1280,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * horizontal = TRUE to flip horizontally, FALSE to flip vertically
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf flip(int horizontal)
 	{
@@ -1290,6 +1307,7 @@ public class Pixbuf : ObjectG
 	 * r = Red value to substitute.
 	 * g = Green value to substitute.
 	 * b = Blue value to substitute.
+	 * Returns: A newly-created pixbuf with a reference count of 1.
 	 */
 	public Pixbuf addAlpha(int substituteColor, char r, char g, char b)
 	{
@@ -1353,6 +1371,7 @@ public class Pixbuf : ObjectG
 	 * appropriate transform will be performed so that the pixbuf
 	 * is oriented correctly.
 	 * Since 2.12
+	 * Returns: A newly-created pixbuf, or a reference to theinput pixbuf (with an increased reference count).
 	 */
 	public Pixbuf applyEmbeddedOrientation()
 	{

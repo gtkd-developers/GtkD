@@ -144,6 +144,7 @@ public class Util
 	 * g_get_prgname() (which may be NULL if g_set_prgname() has also not
 	 * been called).
 	 * Since 2.2
+	 * Returns: human-readable application name. may return NULL
 	 */
 	public static string getApplicationName()
 	{
@@ -177,6 +178,7 @@ public class Util
 	 * (If you are using GDK or GTK+ the program name is set in gdk_init(),
 	 * which is called by gtk_init(). The program name is found by taking
 	 * the last component of argv[0].)
+	 * Returns: the name of the program. The returned string belongs to GLib and must not be modified or freed.
 	 */
 	public static string getPrgname()
 	{
@@ -206,6 +208,7 @@ public class Util
 	 * environment variables, they are expanded.
 	 * Params:
 	 * variable = the environment variable to get, in the GLib file name encoding.
+	 * Returns: the value of the environment variable, or NULL ifthe environment variable is not found. The returned string may beoverwritten by the next call to g_getenv(), g_setenv() org_unsetenv().
 	 */
 	public static string getenv(string variable)
 	{
@@ -225,6 +228,7 @@ public class Util
 	 * variable = the environment variable to set, must not contain '='.
 	 * value = the value for to set the variable to.
 	 * overwrite = whether to change the variable if it already exists.
+	 * Returns: FALSE if the environment variable couldn't be set.
 	 */
 	public static int setenv(string variable, string value, int overwrite)
 	{
@@ -251,6 +255,7 @@ public class Util
 	/**
 	 * Gets the names of all variables set in the environment.
 	 * Since 2.8
+	 * Returns: a NULL-terminated list of strings which must be freedwith g_strfreev().Programs that want to be portable to Windows should typically usethis function and g_getenv() instead of using the environ arrayfrom the C library directly. On Windows, the strings in the environarray are in system codepage encoding, while in most of the typicaluse cases for environment variables in GLib-using programs you wantthe UTF-8 encoding that this function and g_getenv() provide.
 	 */
 	public static string[] listenv()
 	{
@@ -263,6 +268,7 @@ public class Util
 	 * string is system-defined. On UNIX, it might be the preferred file name
 	 * encoding, or something else, and there is no guarantee that it is even
 	 * consistent on a machine. On Windows, it is always UTF-8.
+	 * Returns: the user name of the current user.
 	 */
 	public static string getUserName()
 	{
@@ -276,6 +282,7 @@ public class Util
 	 * string is system-defined. (On Windows, it is, however, always UTF-8.)
 	 * If the real user name cannot be determined, the string "Unknown" is
 	 * returned.
+	 * Returns: the user's real name.
 	 */
 	public static string getRealName()
 	{
@@ -290,6 +297,7 @@ public class Util
 	 * the
 	 * XDG Base Directory Specification
 	 * Since 2.6
+	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
 	public static string getUserCacheDir()
 	{
@@ -304,6 +312,7 @@ public class Util
 	 * the
 	 * XDG Base Directory Specification
 	 * Since 2.6
+	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
 	public static string getUserDataDir()
 	{
@@ -318,6 +327,7 @@ public class Util
 	 * the
 	 * XDG Base Directory Specification
 	 * Since 2.6
+	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
 	public static string getUserConfigDir()
 	{
@@ -337,6 +347,7 @@ public class Util
 	 * Since 2.14
 	 * Params:
 	 * directory = the logical id of special directory
+	 * Returns: the path to the specified special directory, or NULL if the logical id was not found. The returned string is owned by GLib and should not be modified or freed.
 	 */
 	public static string getUserSpecialDir(GUserDirectory directory)
 	{
@@ -368,6 +379,7 @@ public class Util
 	 * Note that on Windows the returned list can vary depending on where
 	 * this function is called.
 	 * Since 2.6
+	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
 	public static string[] getSystemDataDirs()
 	{
@@ -382,6 +394,7 @@ public class Util
 	 * the
 	 * XDG Base Directory Specification
 	 * Since 2.6
+	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
 	public static string[] getSystemConfigDirs()
 	{
@@ -418,6 +431,7 @@ public class Util
 	 * name can be determined, a default fixed string "localhost" is
 	 * returned.
 	 * Since 2.8
+	 * Returns: the host name of the machine.
 	 */
 	public static string getHostName()
 	{
@@ -441,6 +455,7 @@ public class Util
 	 * to deal with these situations it was considered better to make
 	 * g_get_home_dir() not pay attention to HOME and to
 	 * return the real home directory for the user. If applications
+	 * Returns: the current user's home directory
 	 */
 	public static string getHomeDir()
 	{
@@ -455,6 +470,7 @@ public class Util
 	 * of those are defined "/tmp" is returned on UNIX and "C:\" on Windows.
 	 * The encoding of the returned string is system-defined. On Windows,
 	 * it is always UTF-8. The return value is never NULL.
+	 * Returns: the directory to use for temporary files.
 	 */
 	public static string getTmpDir()
 	{
@@ -466,6 +482,7 @@ public class Util
 	 * Gets the current directory.
 	 * The returned string should be freed when no longer needed. The encoding
 	 * of the returned string is system defined. On Windows, it is always UTF-8.
+	 * Returns: the current directory.
 	 */
 	public static string getCurrentDir()
 	{
@@ -482,6 +499,7 @@ public class Util
 	 * It returns a pointer into the given file name string.
 	 * Params:
 	 * fileName = the name of the file.
+	 * Returns: the name of the file without any leading directory components.
 	 */
 	public static string basename(string fileName)
 	{
@@ -495,6 +513,7 @@ public class Util
 	 * on UNIX or "C:\windows" on Windows systems.
 	 * Params:
 	 * fileName = a file name.
+	 * Returns: TRUE if file_name is an absolute path.
 	 */
 	public static int pathIsAbsolute(string fileName)
 	{
@@ -508,6 +527,7 @@ public class Util
 	 * path it returns NULL.
 	 * Params:
 	 * fileName = a file name.
+	 * Returns: a pointer into file_name after the root component.
 	 */
 	public static string pathSkipRoot(string fileName)
 	{
@@ -523,6 +543,7 @@ public class Util
 	 * file_name is empty, it gets ".".
 	 * Params:
 	 * fileName = the name of the file.
+	 * Returns: a newly allocated string containing the last component of  the filename.
 	 */
 	public static string pathGetBasename(string fileName)
 	{
@@ -536,6 +557,7 @@ public class Util
 	 * freed when no longer needed.
 	 * Params:
 	 * fileName = the name of the file.
+	 * Returns: the directory components of the file.
 	 */
 	public static string pathGetDirname(string fileName)
 	{
@@ -550,6 +572,7 @@ public class Util
 	 * Since 2.8
 	 * Params:
 	 * args = NULL-terminated array of strings containing the path elements.
+	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static string buildFilenamev(char** args)
 	{
@@ -565,6 +588,7 @@ public class Util
 	 * Params:
 	 * separator = a string used to separator the elements of the path.
 	 * args = NULL-terminated array of strings containing the path elements.
+	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static string buildPathv(string separator, char** args)
 	{
@@ -582,6 +606,7 @@ public class Util
 	 * Since 2.16
 	 * Params:
 	 * size = a size in bytes.
+	 * Returns: a newly-allocated formatted string containing a human readable file size.
 	 */
 	public static string formatSizeForDisplay(long size)
 	{
@@ -607,6 +632,7 @@ public class Util
 	 * full name including the type suffix.
 	 * Params:
 	 * program = a program name in the GLib file name encoding
+	 * Returns: absolute path, or NULL
 	 */
 	public static string findProgramInPath(string program)
 	{
@@ -622,6 +648,7 @@ public class Util
 	 * Params:
 	 * mask = a gulong containing flags.
 	 * nthBit = the index of the bit to start the search from.
+	 * Returns:the index of the first bit set which is higher than nth_bit.
 	 */
 	public static int bitNthLsf(uint mask, int nthBit)
 	{
@@ -637,6 +664,7 @@ public class Util
 	 * Params:
 	 * mask = a gulong containing flags.
 	 * nthBit = the index of the bit to start the search from.
+	 * Returns:the index of the first bit set which is lower than nth_bit.
 	 */
 	public static int bitNthMsf(uint mask, int nthBit)
 	{
@@ -649,6 +677,7 @@ public class Util
 	 * e.g. if number is 4, 3 bits are needed.
 	 * Params:
 	 * number = a guint.
+	 * Returns:the number of bits used to hold number.
 	 */
 	public static uint bitStorage(uint number)
 	{
@@ -664,6 +693,7 @@ public class Util
 	 * each prime is approximately 1.5-2 times the previous prime.
 	 * Params:
 	 * num = a guint.
+	 * Returns:the smallest prime number from a built-in array of primes which islarger than num.
 	 */
 	public static uint spacedPrimesClosest(uint num)
 	{
@@ -719,6 +749,7 @@ public class Util
 	 * keys = pointer to an array of GDebugKey which associate
 	 *  strings with bit flags.
 	 * nkeys = the number of GDebugKeys in the array.
+	 * Returns: the combined set of bit flags.
 	 */
 	public static uint parseDebugString(string string, GDebugKey* keys, uint nkeys)
 	{

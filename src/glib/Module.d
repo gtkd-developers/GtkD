@@ -160,6 +160,7 @@ public class Module
 	
 	/**
 	 * Checks if modules are supported on the current platform.
+	 * Returns:TRUE if modules are supported.
 	 */
 	public static int supported()
 	{
@@ -185,6 +186,7 @@ public class Module
 	 * string to indicate that the standard platform-specific directories will be
 	 * used, though that is not recommended.
 	 * moduleName = the name of the module.
+	 * Returns:the complete path of the module, including the standard libraryprefix and suffix. This should be freed when no longer needed.
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
@@ -208,6 +210,7 @@ public class Module
 	 *  a GModule representing the main program itself.
 	 * flags = the flags used for opening the module. This can be the logical
 	 * OR of any of the GModuleFlags.
+	 * Returns:a GModule on success, or NULL on failure.
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
@@ -226,6 +229,7 @@ public class Module
 	 * Params:
 	 * symbolName = the name of the symbol to find.
 	 * symbol = returns the pointer to the symbol value.
+	 * Returns:TRUE on success.
 	 */
 	public int symbol(string symbolName, void** symbol)
 	{
@@ -235,6 +239,7 @@ public class Module
 	
 	/**
 	 * Gets the filename from a GModule.
+	 * Returns:the filename of the module, or "main" if the module is the mainprogram itself.
 	 */
 	public string name()
 	{
@@ -254,6 +259,7 @@ public class Module
 	
 	/**
 	 * Closes a module.
+	 * Returns:TRUE on success.
 	 */
 	public int close()
 	{
@@ -263,6 +269,7 @@ public class Module
 	
 	/**
 	 * Gets a string describing the last module error.
+	 * Returns:a string describing the last module error.
 	 */
 	public static string error()
 	{

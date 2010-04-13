@@ -168,6 +168,7 @@ public class Sequence
 	/**
 	 * Returns the length of seq
 	 * Since 2.14
+	 * Returns: the length of seq
 	 */
 	public int getLength()
 	{
@@ -242,6 +243,7 @@ public class Sequence
 	/**
 	 * Returns the begin iterator for seq.
 	 * Since 2.14
+	 * Returns: the begin iterator for seq.
 	 */
 	public SequenceIter getBeginIter()
 	{
@@ -257,6 +259,7 @@ public class Sequence
 	/**
 	 * Returns the end iterator for seg
 	 * Since 2.14
+	 * Returns: the end iterator for seq
 	 */
 	public SequenceIter getEndIter()
 	{
@@ -275,6 +278,7 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * pos = a position in seq, or -1 for the end.
+	 * Returns: The GSequenceIter at position pos
 	 */
 	public SequenceIter getIterAtPos(int pos)
 	{
@@ -292,6 +296,7 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * data = the data for the new item
+	 * Returns: an iterator pointing to the new item
 	 */
 	public SequenceIter append(void* data)
 	{
@@ -309,6 +314,7 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * data = the data for the new item
+	 * Returns: an iterator pointing to the new item
 	 */
 	public SequenceIter prepend(void* data)
 	{
@@ -327,6 +333,7 @@ public class Sequence
 	 * Params:
 	 * iter = a GSequenceIter
 	 * data = the data for the new item
+	 * Returns: an iterator pointing to the new item
 	 */
 	public static SequenceIter insertBefore(SequenceIter iter, void* data)
 	{
@@ -383,6 +390,7 @@ public class Sequence
 	 *  item comes before the second, and a positive value if the second
 	 *  item comes before the first.
 	 * cmpData = user data passed to cmp_func.
+	 * Returns: a GSequenceIter pointing to the new item.
 	 */
 	public SequenceIter insertSorted(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
@@ -408,6 +416,7 @@ public class Sequence
 	 *  iterator comes before the second, and a positive value if the second
 	 *  iterator comes before the first.
 	 * cmpData = user data passed to cmp_func
+	 * Returns: a GSequenceIter pointing to the new item
 	 */
 	public SequenceIter insertSortedIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
@@ -523,6 +532,7 @@ public class Sequence
 	 *  item comes before the second, and a positive value if the second
 	 *  item comes before the first.
 	 * cmpData = user data passed to cmp_func.
+	 * Returns: an GSequenceIter pointing to the position where datawould have been inserted according to cmp_func and cmp_data.
 	 */
 	public SequenceIter search(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
@@ -548,6 +558,7 @@ public class Sequence
 	 *  first iterator comes before the second, and a positive value if the
 	 *  second iterator comes before the first.
 	 * cmpData = user data passed to iter_cmp
+	 * Returns: a GSequenceIter pointing to the position in seqwhere data would have been inserted according to iter_cmp and cmp_data.
 	 */
 	public SequenceIter searchIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
@@ -565,6 +576,7 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * iter = a GSequenceIter
+	 * Returns: the data that iter points to
 	 */
 	public static void* get(SequenceIter iter)
 	{
@@ -597,6 +609,7 @@ public class Sequence
 	 * Params:
 	 * begin = a GSequenceIter
 	 * end = a GSequenceIter
+	 * Returns: A GSequenceIter pointing somewhere in the(begin, end) range.
 	 */
 	public static SequenceIter rangeGetMidpoint(SequenceIter begin, SequenceIter end)
 	{

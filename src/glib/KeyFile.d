@@ -248,6 +248,7 @@ public class KeyFile
 	 * Params:
 	 * file = the path of a filename to load, in the GLib filename encoding
 	 * flags = flags from GKeyFileFlags
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int loadFromFile(string file, GKeyFileFlags flags)
@@ -273,6 +274,7 @@ public class KeyFile
 	 * data = key file loaded in memory
 	 * length = the length of data in bytes
 	 * flags = flags from GKeyFileFlags
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int loadFromData(string data, uint length, GKeyFileFlags flags)
@@ -302,6 +304,7 @@ public class KeyFile
 	 * fullPath = return location for a string containing the full path
 	 *  of the file, or NULL
 	 * flags = flags from GKeyFileFlags
+	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 * Throws: GException on failure.
 	 */
 	public int loadFromDataDirs(string file, out string fullPath, GKeyFileFlags flags)
@@ -329,6 +332,7 @@ public class KeyFile
 	 * Params:
 	 * length = return location for the length of the
 	 *  returned string, or NULL
+	 * Returns: a newly allocated string holding the contents of the GKeyFile
 	 * Throws: GException on failure.
 	 */
 	public string toData(out uint length)
@@ -349,6 +353,7 @@ public class KeyFile
 	/**
 	 * Returns the name of the start group of the file.
 	 * Since 2.6
+	 * Returns: The start group of the key file.
 	 */
 	public string getStartGroup()
 	{
@@ -363,6 +368,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * length = return location for the number of returned groups, or NULL
+	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 */
 	public string[] getGroups(out uint length)
 	{
@@ -380,6 +386,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * length = return location for the number of keys returned, or NULL
+	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
 	public string[] getKeys(string groupName, out uint length)
@@ -402,6 +409,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * groupName = a group name
+	 * Returns: TRUE if group_name is a part of key_file, FALSEotherwise.
 	 */
 	public int hasGroup(string groupName)
 	{
@@ -416,6 +424,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key name
+	 * Returns: TRUE if key is a part of group_name, FALSEotherwise.
 	 * Throws: GException on failure.
 	 */
 	public int hasKey(string groupName, string key)
@@ -444,6 +453,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getValue(string groupName, string key)
@@ -473,6 +483,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getString(string groupName, string key)
@@ -503,6 +514,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * locale = a locale identifier or NULL
+	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getLocaleString(string groupName, string key, string locale)
@@ -531,6 +543,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: the value associated with the key as a boolean,  or FALSE if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public int getBoolean(string groupName, string key)
@@ -559,6 +572,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: the value associated with the key as an integer, or 0 if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public int getInteger(string groupName, string key)
@@ -587,6 +601,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: the value associated with the key as a double, or 0.0 if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public double getDouble(string groupName, string key)
@@ -615,6 +630,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * length = return location for the number of returned strings, or NULL
+	 * Returns: a NULL-terminated string array or NULL if the specified  key cannot be found. The array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
 	public string[] getStringList(string groupName, string key, out uint length)
@@ -648,6 +664,7 @@ public class KeyFile
 	 * key = a key
 	 * locale = a locale identifier or NULL
 	 * length = return location for the number of returned strings or NULL
+	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
 	public string[] getLocaleStringList(string groupName, string key, string locale, out uint length)
@@ -676,6 +693,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: the values associated with the key as a list of booleans, or NULL if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public int[] getBooleanList(string groupName, string key)
@@ -705,6 +723,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: the values associated with the key as a list of integers, or NULL if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public int[] getIntegerList(string groupName, string key)
@@ -734,6 +753,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
+	 * Returns: the values associated with the key as a list of doubles, or NULL if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public double[] getDoubleList(string groupName, string key)
@@ -761,6 +781,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name, or NULL
 	 * key = a key
+	 * Returns: a comment that should be freed with g_free()
 	 * Throws: GException on failure.
 	 */
 	public string getComment(string groupName, string key)
@@ -969,6 +990,7 @@ public class KeyFile
 	 * groupName = a group name, or NULL
 	 * key = a key
 	 * comment = a comment
+	 * Returns: TRUE if the comment was written, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int setComment(string groupName, string key, string comment)
@@ -992,6 +1014,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * groupName = a group name
+	 * Returns: TRUE if the group was removed, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int removeGroup(string groupName)
@@ -1015,6 +1038,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key name to remove
+	 * Returns: TRUE if the key was removed, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int removeKey(string groupName, string key)
@@ -1041,6 +1065,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name, or NULL
 	 * key = a key
+	 * Returns: TRUE if the comment was removed, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int removeComment(string groupName, string key)
