@@ -2174,7 +2174,7 @@ public class GtkDClass
 							
 							for(int i; i < comments.length; i++)
 							{
-								if(find(comments[i], ":") == comments[i].length-1 && find(comments[i], "Returns:") == -1 && find(comments[i], "Returns :") == -1 )
+								if(find(comments[i], ":") == comments[i].length-1 && comments[i].chomp(":").strip() != "Returns" )
 								{
 									//Get the GtkD name of the param
 									char[] param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
@@ -2205,7 +2205,7 @@ public class GtkDClass
 											params ~= comments[i];
 									}
 								}
-								else if(find(comments[i], "Returns:") > -1 || find(comments[i], "Returns :") > -1)
+								else if( comments[i].chomp(":").strip() == "Returns" )
 								{
 									//Skip return for Constructors.
 									if(find(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
@@ -2376,7 +2376,7 @@ public class GtkDClass
 	bool stilInParam(char[] comments)
 	{
 		return !(find(comments, ":")  == comments.length-1 ||
-		         ( find(comments, "Returns:") == 0 || find(comments, "Returns"~\u00A0~":") == 0 || find(comments, "Returns :") == 0) ||
+		         comments.chomp(":").strip() == "Returns" ||
 		         ( find(comments, "Since 2.") == 0 || find(comments, "Since 1.") == 0) ||
 		         find(comments, "See Also") == 0 ||
 		         find(comments, "Property Details") == 0 ||
