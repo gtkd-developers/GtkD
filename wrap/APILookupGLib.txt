@@ -2211,6 +2211,17 @@ prefix: g_allocator_
 import: glib.Str
 outFile: Allocator
 
+file: glib-GVariantType.html
+struct: GVariantType
+class: VariantType
+prefix: g_variant_type_
+import: glib.Str
+structWrap: GVariantType* VariantType
+
+out: g_variant_type_string_scan endptr
+array: g_variant_type_new_tuple items length
+outFile: VariantType
+
 ###########################################################
 ### GLib Tools ############################################
 ###########################################################

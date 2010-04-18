@@ -3015,6 +3015,16 @@ public struct GCache{}
 public struct GAllocator{}
 
 
+/**
+ * Main Gtk struct.
+ * A type in the GVariant type system.
+ * Two types may not be compared by value; use g_variant_type_equal() or
+ * g_variant_type_is_subtype(). May be copied using
+ * g_variant_type_copy() and freed using g_variant_type_free().
+ */
+public struct GVariantType{}
+
+
 /*
  * Checks the version of the GLib library.
  * Returns TRUE if the version of the GLib header files is the same
@@ -4256,6 +4266,19 @@ public struct GAllocator{}
  */
 // TODO
 // #define g_dataset_remove_no_notify(l, k)
+
+/*
+ * Converts a string to a const GVariantType. Depending on the
+ * current debugging level, this function may perform a runtime check
+ * to ensure that string is a valid GVariant type string.
+ * It is always a programmer error to use this macro with an invalid
+ * type string.
+ * Since 2.24
+ * type_string  :
+ *  a well-formed GVariantType type string
+ */
+// TODO
+// #define G_VARIANT_TYPE(type_string)
 
 /*
  * Specifies the type of function passed to g_main_context_set_poll_func().

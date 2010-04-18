@@ -1333,6 +1333,38 @@ static this()
 
 	Linker.link(g_allocator_new, "g_allocator_new", LIBRARY.GLIB);
 	Linker.link(g_allocator_free, "g_allocator_free", LIBRARY.GLIB);
+
+	// glib.VariantType
+
+	Linker.link(g_variant_type_free, "g_variant_type_free", LIBRARY.GLIB);
+	Linker.link(g_variant_type_copy, "g_variant_type_copy", LIBRARY.GLIB);
+	Linker.link(g_variant_type_new, "g_variant_type_new", LIBRARY.GLIB);
+	Linker.link(g_variant_type_string_is_valid, "g_variant_type_string_is_valid", LIBRARY.GLIB);
+	Linker.link(g_variant_type_string_scan, "g_variant_type_string_scan", LIBRARY.GLIB);
+	Linker.link(g_variant_type_get_string_length, "g_variant_type_get_string_length", LIBRARY.GLIB);
+	Linker.link(g_variant_type_peek_string, "g_variant_type_peek_string", LIBRARY.GLIB);
+	Linker.link(g_variant_type_dup_string, "g_variant_type_dup_string", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_definite, "g_variant_type_is_definite", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_container, "g_variant_type_is_container", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_basic, "g_variant_type_is_basic", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_maybe, "g_variant_type_is_maybe", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_array, "g_variant_type_is_array", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_tuple, "g_variant_type_is_tuple", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_dict_entry, "g_variant_type_is_dict_entry", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_variant, "g_variant_type_is_variant", LIBRARY.GLIB);
+	Linker.link(g_variant_type_hash, "g_variant_type_hash", LIBRARY.GLIB);
+	Linker.link(g_variant_type_equal, "g_variant_type_equal", LIBRARY.GLIB);
+	Linker.link(g_variant_type_is_subtype_of, "g_variant_type_is_subtype_of", LIBRARY.GLIB);
+	Linker.link(g_variant_type_new_maybe, "g_variant_type_new_maybe", LIBRARY.GLIB);
+	Linker.link(g_variant_type_new_array, "g_variant_type_new_array", LIBRARY.GLIB);
+	Linker.link(g_variant_type_new_tuple, "g_variant_type_new_tuple", LIBRARY.GLIB);
+	Linker.link(g_variant_type_new_dict_entry, "g_variant_type_new_dict_entry", LIBRARY.GLIB);
+	Linker.link(g_variant_type_element, "g_variant_type_element", LIBRARY.GLIB);
+	Linker.link(g_variant_type_n_items, "g_variant_type_n_items", LIBRARY.GLIB);
+	Linker.link(g_variant_type_first, "g_variant_type_first", LIBRARY.GLIB);
+	Linker.link(g_variant_type_next, "g_variant_type_next", LIBRARY.GLIB);
+	Linker.link(g_variant_type_key, "g_variant_type_key", LIBRARY.GLIB);
+	Linker.link(g_variant_type_value, "g_variant_type_value", LIBRARY.GLIB);
 }
 
 mixin( gshared ~"extern(C)
@@ -2636,6 +2668,38 @@ mixin( gshared ~"extern(C)
 	
 	GAllocator* function(gchar* name, guint nPreallocs) c_g_allocator_new;
 	void function(GAllocator* allocator) c_g_allocator_free;
+	
+	// glib.VariantType
+	
+	void function(GVariantType* type) c_g_variant_type_free;
+	GVariantType* function(GVariantType* type) c_g_variant_type_copy;
+	GVariantType* function(gchar* typeString) c_g_variant_type_new;
+	gboolean function(gchar* typeString) c_g_variant_type_string_is_valid;
+	gboolean function(gchar* string, gchar* limit, gchar** endptr) c_g_variant_type_string_scan;
+	gsize function(GVariantType* type) c_g_variant_type_get_string_length;
+	gchar* function(GVariantType* type) c_g_variant_type_peek_string;
+	gchar* function(GVariantType* type) c_g_variant_type_dup_string;
+	gboolean function(GVariantType* type) c_g_variant_type_is_definite;
+	gboolean function(GVariantType* type) c_g_variant_type_is_container;
+	gboolean function(GVariantType* type) c_g_variant_type_is_basic;
+	gboolean function(GVariantType* type) c_g_variant_type_is_maybe;
+	gboolean function(GVariantType* type) c_g_variant_type_is_array;
+	gboolean function(GVariantType* type) c_g_variant_type_is_tuple;
+	gboolean function(GVariantType* type) c_g_variant_type_is_dict_entry;
+	gboolean function(GVariantType* type) c_g_variant_type_is_variant;
+	guint function(gconstpointer type) c_g_variant_type_hash;
+	gboolean function(gconstpointer type1, gconstpointer type2) c_g_variant_type_equal;
+	gboolean function(GVariantType* type, GVariantType* supertype) c_g_variant_type_is_subtype_of;
+	GVariantType* function(GVariantType* element) c_g_variant_type_new_maybe;
+	GVariantType* function(GVariantType* element) c_g_variant_type_new_array;
+	GVariantType* function(GVariantType** items, gint length) c_g_variant_type_new_tuple;
+	GVariantType* function(GVariantType* key, GVariantType* value) c_g_variant_type_new_dict_entry;
+	GVariantType* function(GVariantType* type) c_g_variant_type_element;
+	gsize function(GVariantType* type) c_g_variant_type_n_items;
+	GVariantType* function(GVariantType* type) c_g_variant_type_first;
+	GVariantType* function(GVariantType* type) c_g_variant_type_next;
+	GVariantType* function(GVariantType* type) c_g_variant_type_key;
+	GVariantType* function(GVariantType* type) c_g_variant_type_value;
 }");
 
 // glib.Version
@@ -3936,3 +4000,35 @@ alias c_g_cache_value_foreach  g_cache_value_foreach;
 
 alias c_g_allocator_new  g_allocator_new;
 alias c_g_allocator_free  g_allocator_free;
+
+// glib.VariantType
+
+alias c_g_variant_type_free  g_variant_type_free;
+alias c_g_variant_type_copy  g_variant_type_copy;
+alias c_g_variant_type_new  g_variant_type_new;
+alias c_g_variant_type_string_is_valid  g_variant_type_string_is_valid;
+alias c_g_variant_type_string_scan  g_variant_type_string_scan;
+alias c_g_variant_type_get_string_length  g_variant_type_get_string_length;
+alias c_g_variant_type_peek_string  g_variant_type_peek_string;
+alias c_g_variant_type_dup_string  g_variant_type_dup_string;
+alias c_g_variant_type_is_definite  g_variant_type_is_definite;
+alias c_g_variant_type_is_container  g_variant_type_is_container;
+alias c_g_variant_type_is_basic  g_variant_type_is_basic;
+alias c_g_variant_type_is_maybe  g_variant_type_is_maybe;
+alias c_g_variant_type_is_array  g_variant_type_is_array;
+alias c_g_variant_type_is_tuple  g_variant_type_is_tuple;
+alias c_g_variant_type_is_dict_entry  g_variant_type_is_dict_entry;
+alias c_g_variant_type_is_variant  g_variant_type_is_variant;
+alias c_g_variant_type_hash  g_variant_type_hash;
+alias c_g_variant_type_equal  g_variant_type_equal;
+alias c_g_variant_type_is_subtype_of  g_variant_type_is_subtype_of;
+alias c_g_variant_type_new_maybe  g_variant_type_new_maybe;
+alias c_g_variant_type_new_array  g_variant_type_new_array;
+alias c_g_variant_type_new_tuple  g_variant_type_new_tuple;
+alias c_g_variant_type_new_dict_entry  g_variant_type_new_dict_entry;
+alias c_g_variant_type_element  g_variant_type_element;
+alias c_g_variant_type_n_items  g_variant_type_n_items;
+alias c_g_variant_type_first  g_variant_type_first;
+alias c_g_variant_type_next  g_variant_type_next;
+alias c_g_variant_type_key  g_variant_type_key;
+alias c_g_variant_type_value  g_variant_type_value;
