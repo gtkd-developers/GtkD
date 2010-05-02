@@ -180,7 +180,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	 * among multiple GtkRecentChooser widgets.
 	 * Since 2.10
 	 * Params:
-	 * manager =  a GtkRecentManager
+	 * manager = a GtkRecentManager
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RecentManager manager)
@@ -212,7 +212,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	 * get a number to avoid clashes.
 	 * Since 2.10
 	 * Params:
-	 * showNumbers =  whether to show numbers
+	 * showNumbers = whether to show numbers
 	 */
 	public void setShowNumbers(int showNumbers)
 	{

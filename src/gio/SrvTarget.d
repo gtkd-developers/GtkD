@@ -123,10 +123,10 @@ public class SrvTarget
 	 * created by GResolver.
 	 * Since 2.22
 	 * Params:
-	 * hostname =  the host that the service is running on
-	 * port =  the port that the service is running on
-	 * priority =  the target's priority
-	 * weight =  the target's weight
+	 * hostname = the host that the service is running on
+	 * port = the port that the service is running on
+	 * priority = the target's priority
+	 * weight = the target's weight
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string hostname, ushort port, ushort priority, ushort weight)
@@ -221,7 +221,7 @@ public class SrvTarget
 	 * Sorts targets in place according to the algorithm in RFC 2782.
 	 * Since 2.22
 	 * Params:
-	 * targets =  a GList of GSrvTarget
+	 * targets = a GList of GSrvTarget
 	 * Returns: the head of the sorted list.
 	 */
 	public static ListG listSort(ListG targets)

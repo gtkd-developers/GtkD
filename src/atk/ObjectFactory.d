@@ -122,7 +122,7 @@ public class ObjectFactory : ObjectG
 	 * Provides an AtkObject that implements an accessibility interface
 	 * on behalf of obj
 	 * Params:
-	 * obj =  a GObject
+	 * obj = a GObject
 	 * Returns: an AtkObject that implements an accessibility interfaceon behalf of obj
 	 */
 	public ObjectAtk createAccessible(ObjectG obj)

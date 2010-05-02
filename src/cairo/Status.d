@@ -84,7 +84,7 @@ public class Status
 	/**
 	 * Provides a human-readable description of a cairo_status_t.
 	 * Params:
-	 * status =  a cairo status
+	 * status = a cairo status
 	 * Returns: a string representation of the status
 	 */
 	public static string oString(cairo_status_t status)

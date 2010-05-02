@@ -80,7 +80,7 @@ private import gtk.Dialog;
  * that match a given pattern. This can be used for example, to show only
  * *.txt files, or only files beginning with gtk*.
  * Simple file operations; create directory, delete file, and rename file, are available from buttons at the top of the dialog. These can be hidden using gtk_file_selection_hide_fileop_buttons() and shown again using gtk_file_selection_show_fileop_buttons().
- * Example 61. Getting a filename from the user.
+ * Example  61.  Getting a filename from the user.
  * /+* The file selection widget and the string to store the chosen filename +/
  * void store_filename (GtkWidget *widget, gpointer user_data) {
 	 *  GtkWidget *file_selector = GTK_WIDGET (user_data);
@@ -183,7 +183,7 @@ public class FileSelection : Dialog
 	 * The encoding of filename is preferred GLib file name encoding, which
 	 * may not be UTF-8. See g_filename_from_utf8().
 	 * Params:
-	 * filename =  a string to set as the default file name.
+	 * filename = a string to set as the default file name.
 	 */
 	public void setFilename(string filename)
 	{
@@ -267,7 +267,7 @@ public class FileSelection : Dialog
 	 * Sets whether the user is allowed to select multiple files in the file list.
 	 * Use gtk_file_selection_get_selections() to get the list of selected files.
 	 * Params:
-	 * selectMultiple =  whether or not the user is allowed to select multiple
+	 * selectMultiple = whether or not the user is allowed to select multiple
 	 * files in the file list.
 	 */
 	public void setSelectMultiple(int selectMultiple)

@@ -124,7 +124,7 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Creates a new data output stream for base_stream.
 	 * Params:
-	 * baseStream =  a GOutputStream.
+	 * baseStream = a GOutputStream.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (OutputStream baseStream)
@@ -141,7 +141,7 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Sets the byte order of the data output stream to order.
 	 * Params:
-	 * order =  a GDataStreamByteOrder.
+	 * order = a GDataStreamByteOrder.
 	 */
 	public void setByteOrder(GDataStreamByteOrder order)
 	{
@@ -162,8 +162,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts a byte into the output stream.
 	 * Params:
-	 * data =  a guchar.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a guchar.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -185,8 +185,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts a signed 16-bit integer into the output stream.
 	 * Params:
-	 * data =  a gint16.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a gint16.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -208,8 +208,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts an unsigned 16-bit integer into the output stream.
 	 * Params:
-	 * data =  a guint16.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a guint16.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -231,8 +231,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts a signed 32-bit integer into the output stream.
 	 * Params:
-	 * data =  a gint32.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a gint32.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -254,8 +254,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts an unsigned 32-bit integer into the stream.
 	 * Params:
-	 * data =  a guint32.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a guint32.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -277,8 +277,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts a signed 64-bit integer into the stream.
 	 * Params:
-	 * data =  a gint64.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a gint64.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -300,8 +300,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts an unsigned 64-bit integer into the stream.
 	 * Params:
-	 * data =  a guint64.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * data = a guint64.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if data was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -323,8 +323,8 @@ public class DataOutputStream : FilterOutputStream
 	/**
 	 * Puts a string into the output stream.
 	 * Params:
-	 * str =  a string.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * str = a string.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if string was successfully added to the stream.
 	 * Throws: GException on failure.
 	 */

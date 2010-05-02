@@ -81,7 +81,7 @@ public class Testing
 	 * pipelines, to benchmark windowing system rendering operations.
 	 * Since 2.14
 	 * Params:
-	 * window =  a mapped GdkWindow
+	 * window = a mapped GdkWindow
 	 */
 	public static void renderSync(Window window)
 	{
@@ -103,12 +103,12 @@ public class Testing
 	 * by its accompanying button release event.
 	 * Since 2.14
 	 * Params:
-	 * window =  Gdk window to simulate a button event for.
-	 * x =  x coordinate within window for the button event.
-	 * y =  y coordinate within window for the button event.
-	 * button =  Number of the pointer button for the event, usually 1, 2 or 3.
-	 * modifiers =  Keyboard modifiers the event is setup with.
-	 * buttonPressrelease =  either GDK_BUTTON_PRESS or GDK_BUTTON_RELEASE
+	 * window = Gdk window to simulate a button event for.
+	 * x = x coordinate within window for the button event.
+	 * y = y coordinate within window for the button event.
+	 * button = Number of the pointer button for the event, usually 1, 2 or 3.
+	 * modifiers = Keyboard modifiers the event is setup with.
+	 * buttonPressrelease = either GDK_BUTTON_PRESS or GDK_BUTTON_RELEASE
 	 * Returns: wether all actions neccessary for a button event simulation were carried out successfully.
 	 */
 	public static int simulateButton(Window window, int x, int y, uint button, GdkModifierType modifiers, GdkEventType buttonPressrelease)
@@ -134,12 +134,12 @@ public class Testing
 	 * followed by its accompanying key release event.
 	 * Since 2.14
 	 * Params:
-	 * window =  Gdk window to simulate a key event for.
-	 * x =  x coordinate within window for the key event.
-	 * y =  y coordinate within window for the key event.
-	 * keyval =  A Gdk keyboard value.
-	 * modifiers =  Keyboard modifiers the event is setup with.
-	 * keyPressrelease =  either GDK_KEY_PRESS or GDK_KEY_RELEASE
+	 * window = Gdk window to simulate a key event for.
+	 * x = x coordinate within window for the key event.
+	 * y = y coordinate within window for the key event.
+	 * keyval = A Gdk keyboard value.
+	 * modifiers = Keyboard modifiers the event is setup with.
+	 * keyPressrelease = either GDK_KEY_PRESS or GDK_KEY_RELEASE
 	 * Returns: wether all actions neccessary for a key event simulation were carried out successfully.
 	 */
 	public static int simulateKey(Window window, int x, int y, uint keyval, GdkModifierType modifiers, GdkEventType keyPressrelease)

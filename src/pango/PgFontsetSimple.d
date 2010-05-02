@@ -124,7 +124,7 @@ public class PgFontsetSimple : PgFontset
 	/**
 	 * Creates a new PangoFontsetSimple for the given language.
 	 * Params:
-	 * language =  a PangoLanguage tag
+	 * language = a PangoLanguage tag
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (PgLanguage language)
@@ -141,7 +141,7 @@ public class PgFontsetSimple : PgFontset
 	/**
 	 * Adds a font to the fontset.
 	 * Params:
-	 * font =  a PangoFont.
+	 * font = a PangoFont.
 	 */
 	public void append(PgFont font)
 	{

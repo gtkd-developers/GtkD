@@ -133,8 +133,8 @@ public class Region
 	 * Creates a new GdkRegion using the polygon defined by a
 	 * number of points.
 	 * Params:
-	 * points =  an array of GdkPoint structs
-	 * fillRule =  specifies which pixels are included in the region when the
+	 * points = an array of GdkPoint structs
+	 * fillRule = specifies which pixels are included in the region when the
 	 *  polygon overlaps itself.
 	 * Returns: a new GdkRegion based on the given polygon
 	 */
@@ -167,7 +167,7 @@ public class Region
 	/**
 	 * Creates a new region containing the area rectangle.
 	 * Params:
-	 * rectangle =  a GdkRectangle
+	 * rectangle = a GdkRectangle
 	 * Returns: a new region
 	 */
 	public static Region rectangle(Rectangle rectangle)
@@ -193,7 +193,7 @@ public class Region
 	/**
 	 * Obtains the smallest rectangle which includes the entire GdkRegion.
 	 * Params:
-	 * rectangle =  return location for the clipbox
+	 * rectangle = return location for the clipbox
 	 */
 	public void getClipbox(Rectangle rectangle)
 	{
@@ -205,7 +205,7 @@ public class Region
 	 * Obtains the area covered by the region as a list of rectangles.
 	 * The array returned in rectangles must be freed with g_free().
 	 * Params:
-	 * rectangles =  return location for an array of rectangles
+	 * rectangles = return location for an array of rectangles
 	 */
 	public void getRectangles(out GdkRectangle[] rectangles)
 	{
@@ -231,7 +231,7 @@ public class Region
 	/**
 	 * Finds out if the two regions are the same.
 	 * Params:
-	 * region2 =  a GdkRegion
+	 * region2 = a GdkRegion
 	 * Returns: TRUE if region1 and region2 are equal.
 	 */
 	public int equal(Region region2)
@@ -244,7 +244,7 @@ public class Region
 	 * Finds out if a regions is the same as a rectangle.
 	 * Since 2.18
 	 * Params:
-	 * rectangle =  a GdkRectangle
+	 * rectangle = a GdkRectangle
 	 * Returns: TRUE if region and rectangle are equal.
 	 */
 	public int rectEqual(Rectangle rectangle)
@@ -256,8 +256,8 @@ public class Region
 	/**
 	 * Finds out if a point is in a region.
 	 * Params:
-	 * x =  the x coordinate of a point
-	 * y =  the y coordinate of a point
+	 * x = the x coordinate of a point
+	 * y = the y coordinate of a point
 	 * Returns: TRUE if the point is in region.
 	 */
 	public int pointIn(int x, int y)
@@ -269,7 +269,7 @@ public class Region
 	/**
 	 * Tests whether a rectangle is within a region.
 	 * Params:
-	 * rectangle =  a GdkRectangle.
+	 * rectangle = a GdkRectangle.
 	 * Returns: GDK_OVERLAP_RECTANGLE_IN, GDK_OVERLAP_RECTANGLE_OUT, or GDK_OVERLAP_RECTANGLE_PART, depending on whether the rectangle is inside, outside, or partly inside the GdkRegion, respectively.
 	 */
 	public GdkOverlapType rectIn(Rectangle rectangle)
@@ -281,8 +281,8 @@ public class Region
 	/**
 	 * Moves a region the specified distance.
 	 * Params:
-	 * dx =  the distance to move the region horizontally
-	 * dy =  the distance to move the region vertically
+	 * dx = the distance to move the region horizontally
+	 * dy = the distance to move the region vertically
 	 */
 	public void offset(int dx, int dy)
 	{
@@ -294,8 +294,8 @@ public class Region
 	 * Resizes a region by the specified amount.
 	 * Positive values shrink the region. Negative values expand it.
 	 * Params:
-	 * dx =  the number of pixels to shrink the region horizontally
-	 * dy =  the number of pixels to shrink the region vertically
+	 * dx = the number of pixels to shrink the region horizontally
+	 * dy = the number of pixels to shrink the region vertically
 	 */
 	public void shrink(int dx, int dy)
 	{
@@ -308,7 +308,7 @@ public class Region
 	 * rect. The resulting area is the set of pixels contained in
 	 * either region or rect.
 	 * Params:
-	 * rect =  a GdkRectangle.
+	 * rect = a GdkRectangle.
 	 */
 	public void unionWithRect(Rectangle rect)
 	{
@@ -321,7 +321,7 @@ public class Region
 	 * and source2. The resulting area is the set of pixels contained in
 	 * both source1 and source2.
 	 * Params:
-	 * source2 =  another GdkRegion
+	 * source2 = another GdkRegion
 	 */
 	public void intersect(Region source2)
 	{
@@ -334,7 +334,7 @@ public class Region
 	 * source2. The resulting area is the set of pixels contained in
 	 * either source1 or source2.
 	 * Params:
-	 * source2 =  a GdkRegion
+	 * source2 = a GdkRegion
 	 */
 	public void unio(Region source2)
 	{
@@ -346,7 +346,7 @@ public class Region
 	 * Subtracts the area of source2 from the area source1. The resulting
 	 * area is the set of pixels contained in source1 but not in source2.
 	 * Params:
-	 * source2 =  another GdkRegion
+	 * source2 = another GdkRegion
 	 */
 	public void subtract(Region source2)
 	{
@@ -359,7 +359,7 @@ public class Region
 	 * and source2. The resulting area is the set of pixels contained in one
 	 * or the other of the two sources but not in both.
 	 * Params:
-	 * source2 =  another GdkRegion
+	 * source2 = another GdkRegion
 	 */
 	public void xor(Region source2)
 	{
@@ -370,9 +370,9 @@ public class Region
 	/**
 	 * Calls a function on each span in the intersection of region and spans.
 	 * Params:
-	 * spans =  an array of GdkSpans
-	 * sorted =  TRUE if spans is sorted wrt. the y coordinate
-	 * data =  data to pass to function
+	 * spans = an array of GdkSpans
+	 * sorted = TRUE if spans is sorted wrt. the y coordinate
+	 * data = data to pass to function
 	 */
 	public void spansIntersectForeach(GdkSpan[] spans, int sorted, GdkSpanFunc funct, void* data)
 	{

@@ -117,7 +117,7 @@ private import pango.PgLayoutLine;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
- * Example 1. Using Pango with Cairo
+ * Example  1.  Using Pango with Cairo
  * #include <math.h>
  * #include <pango/pangocairo.h>
  * static void
@@ -187,7 +187,7 @@ private import pango.PgLayoutLine;
 	 *  }
 	 *  return 0;
  * }
- * Figure 2. Output of Example 1, “Using Pango with Cairo”
+ * Figure  2.  Output of Example  1, “Using Pango with Cairo”
  */
 public class PgCairo
 {
@@ -201,7 +201,7 @@ public class PgCairo
 	 * cairo_scaled_font_reference().
 	 * Since 1.18
 	 * Params:
-	 * font =  a PangoFont from a PangoCairoFontMap
+	 * font = a PangoFont from a PangoCairoFontMap
 	 * Returns: the cairo_scaled_font_t used by font, or NULL if font is NULL.
 	 */
 	public static ScaledFont fontGetScaledFont(PangoCairoFont* font)
@@ -222,8 +222,8 @@ public class PgCairo
 	 * units high. (10 * 96. / 72. = 13.3).
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from a pangocairo font map
-	 * dpi =  the resolution in "dots per inch". (Physical inches aren't actually
+	 * context = a PangoContext, from a pangocairo font map
+	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
 	 *  involved; the terminology is conventional.) A 0 or negative value
 	 *  means to use the resolution from the font map.
 	 */
@@ -237,7 +237,7 @@ public class PgCairo
 	 * Gets the resolution for the context. See pango_cairo_context_set_resolution()
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from a pangocairo font map
+	 * context = a PangoContext, from a pangocairo font map
 	 * Returns: the resolution in "dots per inch". A negative value will be returned if no resolution has previously been set.
 	 */
 	public static double contextGetResolution(PgContext context)
@@ -252,8 +252,8 @@ public class PgCairo
 	 * derives from the target surface.
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from a pangocairo font map
-	 * options =  a cairo_font_options_t, or NULL to unset any previously set
+	 * context = a PangoContext, from a pangocairo font map
+	 * options = a cairo_font_options_t, or NULL to unset any previously set
 	 *  options. A copy is made.
 	 */
 	public static void contextSetFontOptions(PgContext context, FontOption options)
@@ -268,7 +268,7 @@ public class PgCairo
 	 * that are derived from the target surface by pango_cairo_update_context()
 	 * Since 1.10
 	 * Params:
-	 * context =  a PangoContext, from a pangocairo font map
+	 * context = a PangoContext, from a pangocairo font map
 	 * Returns: the font options previously set on the context, or NULL if no options have been set. This value is owned by the context and must not be modified or freed.
 	 */
 	public static FontOption contextGetFontOptions(PgContext context)
@@ -288,11 +288,11 @@ public class PgCairo
 	 * details.
 	 * Since 1.18
 	 * Params:
-	 * context =  a PangoContext, from a pangocairo font map
-	 * func =  Callback function for rendering attributes of type
+	 * context = a PangoContext, from a pangocairo font map
+	 * func = Callback function for rendering attributes of type
 	 * PANGO_ATTR_SHAPE, or NULL to disable shape rendering.
-	 * data =  User data that will be passed to func.
-	 * dnotify =  Callback that will be called when the
+	 * data = User data that will be passed to func.
+	 * dnotify = Callback that will be called when the
 	 *  context is freed to release data, or NULL.
 	 */
 	public static void contextSetShapeRenderer(PgContext context, PangoCairoShapeRendererFunc func, void* data, GDestroyNotify dnotify)
@@ -310,8 +310,8 @@ public class PgCairo
 	 * pango_cairo_context_set_shape_renderer(), if any.
 	 * Since 1.18
 	 * Params:
-	 * context =  a PangoContext, from a pangocairo font map
-	 * data =  Pointer to gpointer to return user data
+	 * context = a PangoContext, from a pangocairo font map
+	 * data = Pointer to gpointer to return user data
 	 * Returns: the shape rendering callback previously set on the context, or NULL if no shape rendering callback have been set.
 	 */
 	public static PangoCairoShapeRendererFunc contextGetShapeRenderer(PgContext context, void** data)
@@ -330,7 +330,7 @@ public class PgCairo
 	 * directly, you can use pango_cairo_create_layout() instead.
 	 * Since 1.22
 	 * Params:
-	 * cr =  a Cairo context
+	 * cr = a Cairo context
 	 * Returns: the newly created PangoContext. Free with g_object_unref().
 	 */
 	public static PgContext createContext(Context cr)
@@ -352,8 +352,8 @@ public class PgCairo
 	 * layouts.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * context =  a PangoContext, from a pangocairo font map
+	 * cr = a Cairo context
+	 * context = a PangoContext, from a pangocairo font map
 	 */
 	public static void updateContext(Context cr, PgContext context)
 	{
@@ -374,7 +374,7 @@ public class PgCairo
 	 * application that was laying out large amounts of text.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
+	 * cr = a Cairo context
 	 * Returns: the newly created PangoLayout. Free with g_object_unref().
 	 */
 	public static PgLayout createLayout(Context cr)
@@ -394,8 +394,8 @@ public class PgCairo
 	 * and target surface of a Cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * layout =  a PangoLayout, from pango_cairo_create_layout()
+	 * cr = a Cairo context
+	 * layout = a PangoLayout, from pango_cairo_create_layout()
 	 */
 	public static void updateLayout(Context cr, PgLayout layout)
 	{
@@ -409,9 +409,9 @@ public class PgCairo
 	 * be drawn at the current point of the cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * font =  a PangoFont from a PangoCairoFontMap
-	 * glyphs =  a PangoGlyphString
+	 * cr = a Cairo context
+	 * font = a PangoFont from a PangoCairoFontMap
+	 * glyphs = a PangoGlyphString
 	 */
 	public static void showGlyphString(Context cr, PgFont font, PgGlyphString glyphs)
 	{
@@ -430,9 +430,9 @@ public class PgCairo
 	 * indexed by glyph_item->item->offset.
 	 * Since 1.22
 	 * Params:
-	 * cr =  a Cairo context
-	 * text =  the UTF-8 text that glyph_item refers to
-	 * glyphItem =  a PangoGlyphItem
+	 * cr = a Cairo context
+	 * text = the UTF-8 text that glyph_item refers to
+	 * glyphItem = a PangoGlyphItem
 	 */
 	public static void showGlyphItem(Context cr, string text, PgGlyphItem glyphItem)
 	{
@@ -446,8 +446,8 @@ public class PgCairo
 	 * be drawn at the current point of the cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * line =  a PangoLayoutLine
+	 * cr = a Cairo context
+	 * line = a PangoLayoutLine
 	 */
 	public static void showLayoutLine(Context cr, PgLayoutLine line)
 	{
@@ -461,8 +461,8 @@ public class PgCairo
 	 * at the current point of the cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * layout =  a Pango layout
+	 * cr = a Cairo context
+	 * layout = a Pango layout
 	 */
 	public static void showLayout(Context cr, PgLayout layout)
 	{
@@ -478,11 +478,11 @@ public class PgCairo
 	 * original rectangle)
 	 * Since 1.14
 	 * Params:
-	 * cr =  a Cairo context
-	 * x =  The X coordinate of one corner of the rectangle
-	 * y =  The Y coordinate of one corner of the rectangle
-	 * width =  Non-negative width of the rectangle
-	 * height =  Non-negative height of the rectangle
+	 * cr = a Cairo context
+	 * x = The X coordinate of one corner of the rectangle
+	 * y = The Y coordinate of one corner of the rectangle
+	 * width = Non-negative width of the rectangle
+	 * height = Non-negative height of the rectangle
 	 */
 	public static void showErrorUnderline(Context cr, double x, double y, double width, double height)
 	{
@@ -496,9 +496,9 @@ public class PgCairo
 	 * will be at the current point of the cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * font =  a PangoFont from a PangoCairoFontMap
-	 * glyphs =  a PangoGlyphString
+	 * cr = a Cairo context
+	 * font = a PangoFont from a PangoCairoFontMap
+	 * glyphs = a PangoGlyphString
 	 */
 	public static void glyphStringPath(Context cr, PgFont font, PgGlyphString glyphs)
 	{
@@ -512,8 +512,8 @@ public class PgCairo
 	 * of the line) will be at the current point of the cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * line =  a PangoLayoutLine
+	 * cr = a Cairo context
+	 * line = a PangoLayoutLine
 	 */
 	public static void layoutLinePath(Context cr, PgLayoutLine line)
 	{
@@ -527,8 +527,8 @@ public class PgCairo
 	 * will be at the current point of the cairo context.
 	 * Since 1.10
 	 * Params:
-	 * cr =  a Cairo context
-	 * layout =  a Pango layout
+	 * cr = a Cairo context
+	 * layout = a Pango layout
 	 */
 	public static void layoutPath(Context cr, PgLayout layout)
 	{
@@ -544,11 +544,11 @@ public class PgCairo
 	 * in the original rectangle)
 	 * Since 1.14
 	 * Params:
-	 * cr =  a Cairo context
-	 * x =  The X coordinate of one corner of the rectangle
-	 * y =  The Y coordinate of one corner of the rectangle
-	 * width =  Non-negative width of the rectangle
-	 * height =  Non-negative height of the rectangle
+	 * cr = a Cairo context
+	 * x = The X coordinate of one corner of the rectangle
+	 * y = The Y coordinate of one corner of the rectangle
+	 * width = Non-negative width of the rectangle
+	 * height = Non-negative height of the rectangle
 	 */
 	public static void errorUnderlinePath(Context cr, double x, double y, double width, double height)
 	{

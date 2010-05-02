@@ -51,6 +51,7 @@
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
+ * 	- GtkRadioMenuItem* -> RadioMenuItem
  * module aliases:
  * local aliases:
  * overrides:
@@ -81,7 +82,7 @@ private import gtk.CheckMenuItem;
  * remove itself and its list item when it is destroyed.
  * The correct way to create a group of radio menu items is approximatively
  * this:
- * Example 32. How to create a group of radio menu items.
+ * Example  32.  How to create a group of radio menu items.
  * GSList *group = NULL;
  * GtkWidget *item;
  * gint i;
@@ -261,15 +262,17 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Creates a new GtkRadioMenuItem adding it to the same group as group.
 	 * Since 2.4
+	 * Params:
+	 * group = An existing GtkRadioMenuItem
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this (RadioMenuItem group)
 	{
 		// GtkWidget* gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
-		auto p = gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem);
+		auto p = gtk_radio_menu_item_new_from_widget((group is null) ? null : group.getRadioMenuItemStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem)");
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_from_widget((group is null) ? null : group.getRadioMenuItemStruct())");
 		}
 		this(cast(GtkRadioMenuItem*) p);
 	}

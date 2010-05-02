@@ -73,7 +73,7 @@ public class ErrorGIO
 	/**
 	 * Converts errno.h error codes into GIO error codes.
 	 * Params:
-	 * errNo =  Error number as defined in errno.h.
+	 * errNo = Error number as defined in errno.h.
 	 * Returns: GIOErrorEnum value for the given errno.h error number.
 	 */
 	public static GIOErrorEnum fromErrno(int errNo)

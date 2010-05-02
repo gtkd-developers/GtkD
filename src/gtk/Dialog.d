@@ -119,7 +119,7 @@ private import gtk.Window;
  * For the simple dialog in the following example, in reality you'd probably use
  * GtkMessageDialog to save yourself some effort. But you'd need to create the
  * dialog contents manually if you had more than a simple message in the dialog.
- * Example 6. Simple GtkDialog usage.
+ * Example  6.  Simple GtkDialog usage.
  * /+* Function to open a dialog box displaying the message provided. +/
  * void quick_message (gchar *message) {
 	 *  GtkWidget *dialog, *label, *content_area;
@@ -149,7 +149,7 @@ private import gtk.Window;
  * can contain multiple <action-widget> elements. The "response"
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
- * Example 7. A GtkDialog UI definition fragment.
+ * Example  7.  A GtkDialog UI definition fragment.
  * <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">"
  *  <object class="GtkVBox" id="vbox">
@@ -392,7 +392,7 @@ public class Dialog : Window
 	 * typically either you or gtk_dialog_run() will be monitoring the
 	 * ::response signal and take appropriate action.
 	 * Params:
-	 * responseId =  response ID
+	 * responseId = response ID
 	 */
 	public void response(int responseId)
 	{
@@ -407,8 +407,8 @@ public class Dialog : Window
 	 * appended to the end of the dialog's action area. The button widget is
 	 * returned, but usually you don't need it.
 	 * Params:
-	 * buttonText =  text of button, or stock ID
-	 * responseId =  response ID for the button
+	 * buttonText = text of button, or stock ID
+	 * responseId = response ID for the button
 	 * Returns: the button widget that was added
 	 */
 	public Widget addButton(string buttonText, int responseId)
@@ -430,8 +430,8 @@ public class Dialog : Window
 	 * non-activatable widget, simply pack it into the action_area field
 	 * of the GtkDialog struct.
 	 * Params:
-	 * child =  an activatable widget
-	 * responseId =  response ID for child
+	 * child = an activatable widget
+	 * responseId = response ID for child
 	 */
 	public void addActionWidget(Widget child, int responseId)
 	{
@@ -454,7 +454,7 @@ public class Dialog : Window
 	 * as the default widget for the dialog. Pressing "Enter" normally activates
 	 * the default widget.
 	 * Params:
-	 * responseId =  a response ID
+	 * responseId = a response ID
 	 */
 	public void setDefaultResponse(int responseId)
 	{
@@ -466,7 +466,7 @@ public class Dialog : Window
 	 * Sets whether the dialog has a separator above the buttons.
 	 * TRUE by default.
 	 * Params:
-	 * setting =  TRUE to have a separator
+	 * setting = TRUE to have a separator
 	 */
 	public void setHasSeparator(int setting)
 	{
@@ -479,8 +479,8 @@ public class Dialog : Window
 	 * for each widget in the dialog's action area with the given response_id.
 	 * A convenient way to sensitize/desensitize dialog buttons.
 	 * Params:
-	 * responseId =  a response ID
-	 * setting =  TRUE for sensitive
+	 * responseId = a response ID
+	 * setting = TRUE for sensitive
 	 */
 	public void setResponseSensitive(int responseId, int setting)
 	{
@@ -493,7 +493,7 @@ public class Dialog : Window
 	 * of a dialog.
 	 * Since 2.8
 	 * Params:
-	 * widget =  a widget in the action area of dialog
+	 * widget = a widget in the action area of dialog
 	 * Returns: the response id of widget, or GTK_RESPONSE_NONE if widget doesn't have a response id set.
 	 */
 	public int getResponseForWidget(Widget widget)
@@ -513,7 +513,7 @@ public class Dialog : Window
 	 * notified if the button order setting changes.
 	 * Since 2.6
 	 * Params:
-	 * screen =  a GdkScreen, or NULL to use the default screen
+	 * screen = a GdkScreen, or NULL to use the default screen
 	 * Returns: Whether the alternative button order should be used
 	 */
 	public static int alternativeDialogButtonOrder(Screen screen)
@@ -531,7 +531,7 @@ public class Dialog : Window
 	 * This function is for use by language bindings.
 	 * Since 2.6
 	 * Params:
-	 * newOrder =  an array of response ids of dialog's buttons
+	 * newOrder = an array of response ids of dialog's buttons
 	 */
 	public void setAlternativeButtonOrderFromArray(int[] newOrder)
 	{

@@ -141,7 +141,7 @@ public class PgGlyphString
 	/**
 	 * Resize a glyph string to the given length.
 	 * Params:
-	 * newLen =  the new length of the string.
+	 * newLen = the new length of the string.
 	 */
 	public void setSize(int newLen)
 	{
@@ -163,10 +163,10 @@ public class PgGlyphString
 	 * for pango_font_get_glyph_extents() for details about the interpretation
 	 * of the rectangles.
 	 * Params:
-	 * font =  a PangoFont
-	 * inkRect =  rectangle used to store the extents of the glyph string as drawn
+	 * font = a PangoFont
+	 * inkRect = rectangle used to store the extents of the glyph string as drawn
 	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect =  rectangle used to store the logical extents of the glyph string
+	 * logicalRect = rectangle used to store the logical extents of the glyph string
 	 *  or NULL to indicate that the result is not needed.
 	 */
 	public void extents(PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
@@ -181,13 +181,13 @@ public class PgGlyphString
 	 * coordinate system is at the start of the range, not at the start of the entire
 	 * glyph string).
 	 * Params:
-	 * start =  start index
-	 * end =  end index (the range is the set of bytes with
+	 * start = start index
+	 * end = end index (the range is the set of bytes with
 	 * 	 indices such that start <= index < end)
-	 * font =  a PangoFont
-	 * inkRect =  rectangle used to store the extents of the glyph string range as drawn
+	 * font = a PangoFont
+	 * inkRect = rectangle used to store the extents of the glyph string range as drawn
 	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect =  rectangle used to store the logical extents of the glyph string range
+	 * logicalRect = rectangle used to store the logical extents of the glyph string range
 	 *  or NULL to indicate that the result is not needed.
 	 */
 	public void extentsRange(int start, int end, PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
@@ -215,13 +215,13 @@ public class PgGlyphString
 	 * is measured from the left edge of the run). Character positions
 	 * are computed by dividing up each cluster into equal portions.
 	 * Params:
-	 * text =  the text for the run
-	 * length =  the number of bytes (not characters) in text.
-	 * analysis =  the analysis information return from pango_itemize()
-	 * index =  the byte index within text
-	 * trailing =  whether we should compute the result for the beginning (FALSE)
+	 * text = the text for the run
+	 * length = the number of bytes (not characters) in text.
+	 * analysis = the analysis information return from pango_itemize()
+	 * index = the byte index within text
+	 * trailing = whether we should compute the result for the beginning (FALSE)
 	 *  or end (TRUE) of the character.
-	 * xPos =  location to store result
+	 * xPos = location to store result
 	 */
 	public void indexToX(string text, int length, PangoAnalysis* analysis, int index, int trailing, out int xPos)
 	{
@@ -237,12 +237,12 @@ public class PgGlyphString
 	 * position; the caller must combine the result with the logical
 	 * attributes for the text to compute the valid cursor position.
 	 * Params:
-	 * text =  the text for the run
-	 * length =  the number of bytes (not characters) in text.
-	 * analysis =  the analysis information return from pango_itemize()
-	 * xPos =  the x offset (in Pango units)
-	 * index =  location to store calculated byte index within text
-	 * trailing =  location to store a boolean indicating
+	 * text = the text for the run
+	 * length = the number of bytes (not characters) in text.
+	 * analysis = the analysis information return from pango_itemize()
+	 * xPos = the x offset (in Pango units)
+	 * index = location to store calculated byte index within text
+	 * trailing = location to store a boolean indicating
 	 *  whether the user clicked on the leading or trailing
 	 *  edge of the character.
 	 */
@@ -259,10 +259,10 @@ public class PgGlyphString
 	 * cluster is divided equally among the characters.
 	 * See also pango_glyph_item_get_logical_widths().
 	 * Params:
-	 * text =  the text corresponding to the glyphs
-	 * length =  the length of text, in bytes
-	 * embeddingLevel =  the embedding level of the string
-	 * logicalWidths =  an array whose length is the number of characters in
+	 * text = the text corresponding to the glyphs
+	 * length = the length of text, in bytes
+	 * embeddingLevel = the embedding level of the string
+	 * logicalWidths = an array whose length is the number of characters in
 	 *  text (equal to g_utf8_strlen (text, length) unless
 	 *  text has NUL bytes)
 	 *  to be filled in with the resulting character widths.

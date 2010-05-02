@@ -344,11 +344,11 @@ public template VolumeT(TStruct)
 	 * finished by calling g_volume_mount_finish() with the volume
 	 * and GAsyncResult returned in the callback.
 	 * Params:
-	 * flags =  flags affecting the operation
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data that gets passed to callback
+	 * flags = flags affecting the operation
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data that gets passed to callback
 	 */
 	public void mount(GMountMountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -364,7 +364,7 @@ public template VolumeT(TStruct)
 	 * function; there's no need to listen for the 'mount-added' signal on
 	 * GVolumeMonitor.
 	 * Params:
-	 * result =  a GAsyncResult
+	 * result = a GAsyncResult
 	 * Returns: TRUE, FALSE if operation failed.
 	 * Throws: GException on failure.
 	 */
@@ -400,10 +400,10 @@ public template VolumeT(TStruct)
 	 * finished by calling g_volume_eject_finish() with the volume
 	 * and GAsyncResult returned in the callback.
 	 * Params:
-	 * flags =  flags affecting the unmount if required for eject
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data that gets passed to callback
+	 * flags = flags affecting the unmount if required for eject
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data that gets passed to callback
 	 */
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -417,7 +417,7 @@ public template VolumeT(TStruct)
 	 * Finishes ejecting a volume. If any errors occured during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE, FALSE if operation failed.
 	 * Throws: GException on failure.
 	 */
@@ -442,11 +442,11 @@ public template VolumeT(TStruct)
 	 * and GAsyncResult data returned in the callback.
 	 * Since 2.22
 	 * Params:
-	 * flags =  flags affecting the unmount if required for eject
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * flags = flags affecting the unmount if required for eject
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -459,7 +459,7 @@ public template VolumeT(TStruct)
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the volume was successfully ejected. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -495,7 +495,7 @@ public template VolumeT(TStruct)
 	 * See the introduction
 	 * for more information about volume identifiers.
 	 * Params:
-	 * kind =  the kind of identifier to return
+	 * kind = the kind of identifier to return
 	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GVolume doesn't have this kind of identifierSignal DetailsThe "changed" signalvoid user_function (GVolume *arg0, gpointer user_data) : Run LastEmitted when the volume has been changed.
 	 */
 	public string getIdentifier(string kind)

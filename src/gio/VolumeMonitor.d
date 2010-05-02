@@ -564,7 +564,7 @@ public class VolumeMonitor : ObjectG
 	 * is to return GVolume objects representing entries in the users
 	 * "favorite servers" list or similar.
 	 * Params:
-	 * mount =  a GMount object to find a parent for
+	 * mount = a GMount object to find a parent for
 	 * Returns: the GVolume object that is the parent for mount or NULLif no wants to adopt the GMount.
 	 */
 	public static VolumeIF adoptOrphanMount(MountIF mount)
@@ -581,7 +581,7 @@ public class VolumeMonitor : ObjectG
 	/**
 	 * Finds a GMount object by its UUID (see g_mount_get_uuid())
 	 * Params:
-	 * uuid =  the UUID to look for
+	 * uuid = the UUID to look for
 	 * Returns: a GMount or NULL if no such mount is available. Free the returned object with g_object_unref().
 	 */
 	public MountIF getMountForUuid(string uuid)
@@ -598,7 +598,7 @@ public class VolumeMonitor : ObjectG
 	/**
 	 * Finds a GVolume object by its UUID (see g_volume_get_uuid())
 	 * Params:
-	 * uuid =  the UUID to look for
+	 * uuid = the UUID to look for
 	 * Returns: a GVolume or NULL if no such volume is available. Free the returned object with g_object_unref().Signal DetailsThe "drive-changed" signalvoid user_function (GVolumeMonitor *volume_monitor, GDrive *drive, gpointer user_data) : Run LastEmitted when a drive changes.
 	 */
 	public VolumeIF getVolumeForUuid(string uuid)

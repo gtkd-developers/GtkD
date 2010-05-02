@@ -97,7 +97,7 @@ private import gtk.Bin;
  * custom <accel-groups> element, which supports any number of <group>
  * elements representing the GtkAccelGroup objects you want to add to your
  * window (synonymous with gtk_window_add_accel_group().
- * Example 10. A UI definition fragment with accel groups
+ * Example  10.  A UI definition fragment with accel groups
  * <object class="GtkWindow">
  *  <accel-groups>
  *  <group name="accelgroup1"/>
@@ -329,7 +329,7 @@ public class Window : Bin
 	 * If you simply want an undecorated window (no window borders), use
 	 * gtk_window_set_decorated(), don't use GTK_WINDOW_POPUP.
 	 * Params:
-	 * type =  type of window
+	 * type = type of window
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkWindowType type)
@@ -353,7 +353,7 @@ public class Window : Bin
 	 * open. A good title might include the application name and current
 	 * document filename, for example.
 	 * Params:
-	 * title =  title of the window
+	 * title = title of the window
 	 */
 	public void setTitle(string title)
 	{
@@ -371,8 +371,8 @@ public class Window : Bin
 	 * benefit of the session manager. Setting the role allows the window
 	 * manager to restore window positions when loading a saved session.
 	 * Params:
-	 * wmclassName =  window name hint
-	 * wmclassClass =  window class hint
+	 * wmclassName = window name hint
+	 * wmclassClass = window class hint
 	 */
 	public void setWmclass(string wmclassName, string wmclassClass)
 	{
@@ -400,7 +400,7 @@ public class Window : Bin
 	 * Sets whether the user can resize a window. Windows are user resizable
 	 * by default.
 	 * Params:
-	 * resizable =  TRUE if the user can resize this window
+	 * resizable = TRUE if the user can resize this window
 	 */
 	public void setResizable(int resizable)
 	{
@@ -423,7 +423,7 @@ public class Window : Bin
 	 * gtk_accel_groups_activate() on window will activate accelerators
 	 * in accel_group.
 	 * Params:
-	 * accelGroup =  a GtkAccelGroup
+	 * accelGroup = a GtkAccelGroup
 	 */
 	public void addAccelGroup(AccelGroup accelGroup)
 	{
@@ -434,7 +434,7 @@ public class Window : Bin
 	/**
 	 * Reverses the effects of gtk_window_add_accel_group().
 	 * Params:
-	 * accelGroup =  a GtkAccelGroup
+	 * accelGroup = a GtkAccelGroup
 	 */
 	public void removeAccelGroup(AccelGroup accelGroup)
 	{
@@ -473,7 +473,7 @@ public class Window : Bin
 	 * parent; most window managers
 	 * will then disallow lowering the dialog below the parent.
 	 * Params:
-	 * modal =  whether the window is modal
+	 * modal = whether the window is modal
 	 */
 	public void setModal(int modal)
 	{
@@ -506,8 +506,8 @@ public class Window : Bin
 	 * Windows can't actually be 0x0 in size, they must be at least 1x1, but
 	 * passing 0 for width and height is OK, resulting in a 1x1 default size.
 	 * Params:
-	 * width =  width in pixels, or -1 to unset the default width
-	 * height =  height in pixels, or -1 to unset the default height
+	 * width = width in pixels, or -1 to unset the default width
+	 * height = height in pixels, or -1 to unset the default height
 	 */
 	public void setDefaultSize(int width, int height)
 	{
@@ -521,9 +521,9 @@ public class Window : Bin
 	 * increments (e.g. for xterm, you can only resize by the size of a
 	 * character); aspect ratios; and more. See the GdkGeometry struct.
 	 * Params:
-	 * geometryWidget =  widget the geometry hints will be applied to
-	 * geometry =  struct containing geometry information
-	 * geomMask =  mask indicating which struct fields should be paid attention to
+	 * geometryWidget = widget the geometry hints will be applied to
+	 * geometry = struct containing geometry information
+	 * geomMask = mask indicating which struct fields should be paid attention to
 	 */
 	public void setGeometryHints(Widget geometryWidget, GdkGeometry* geometry, GdkWindowHints geomMask)
 	{
@@ -538,7 +538,7 @@ public class Window : Bin
 	 * The default window gravity is GDK_GRAVITY_NORTH_WEST which will
 	 * typically "do what you mean."
 	 * Params:
-	 * gravity =  window gravity
+	 * gravity = window gravity
 	 */
 	public void setGravity(GdkGravity gravity)
 	{
@@ -561,7 +561,7 @@ public class Window : Bin
 	 * constraint is GTK_WIN_POS_CENTER_ALWAYS, this will also cause
 	 * the window to be repositioned to satisfy the new constraint.
 	 * Params:
-	 * position =  a position constraint.
+	 * position = a position constraint.
 	 */
 	public void setPosition(GtkWindowPosition position)
 	{
@@ -579,7 +579,7 @@ public class Window : Bin
 	 * On Windows, this function puts the child window on top of the parent,
 	 * much as the window manager would have done on X.
 	 * Params:
-	 * parent =  parent window
+	 * parent = parent window
 	 */
 	public void setTransientFor(Window parent)
 	{
@@ -593,7 +593,7 @@ public class Window : Bin
 	 * shouldn't persist beyond the lifetime of the main window they're
 	 * associated with, for example.
 	 * Params:
-	 * setting =  whether to destroy window with its transient parent
+	 * setting = whether to destroy window with its transient parent
 	 */
 	public void setDestroyWithParent(int setting)
 	{
@@ -607,7 +607,7 @@ public class Window : Bin
 	 * then remapped on the new screen.
 	 * Since 2.2
 	 * Params:
-	 * screen =  a GdkScreen.
+	 * screen = a GdkScreen.
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -684,8 +684,8 @@ public class Window : Bin
 	/**
 	 * Adds a mnemonic to this window.
 	 * Params:
-	 * keyval =  the mnemonic
-	 * target =  the widget that gets activated by the mnemonic
+	 * keyval = the mnemonic
+	 * target = the widget that gets activated by the mnemonic
 	 */
 	public void addMnemonic(uint keyval, Widget target)
 	{
@@ -696,8 +696,8 @@ public class Window : Bin
 	/**
 	 * Removes a mnemonic from this window.
 	 * Params:
-	 * keyval =  the mnemonic
-	 * target =  the widget that gets activated by the mnemonic
+	 * keyval = the mnemonic
+	 * target = the widget that gets activated by the mnemonic
 	 */
 	public void removeMnemonic(uint keyval, Widget target)
 	{
@@ -708,8 +708,8 @@ public class Window : Bin
 	/**
 	 * Activates the targets associated with the mnemonic.
 	 * Params:
-	 * keyval =  the mnemonic
-	 * modifier =  the modifiers
+	 * keyval = the mnemonic
+	 * modifier = the modifiers
 	 * Returns: TRUE if the activation is done.
 	 */
 	public int mnemonicActivate(uint keyval, GdkModifierType modifier)
@@ -724,7 +724,7 @@ public class Window : Bin
 	 * however in some cases it may be useful to call this directly when
 	 * overriding the standard key handling for a toplevel window.
 	 * Params:
-	 * event =  a GdkEventKey
+	 * event = a GdkEventKey
 	 * Returns: TRUE if a mnemonic or accelerator was found and activated.
 	 */
 	public int activateKey(GdkEventKey* event)
@@ -741,7 +741,7 @@ public class Window : Bin
 	 * however in some cases it may be useful to call this directly when
 	 * overriding the standard key handling for a toplevel window.
 	 * Params:
-	 * event =  a GdkEventKey
+	 * event = a GdkEventKey
 	 * Returns: TRUE if a widget in the focus chain handled the event.
 	 */
 	public int propagateKeyEvent(GdkEventKey* event)
@@ -776,7 +776,7 @@ public class Window : Bin
 	 * widget in the toplevel, it is usually more convenient to use
 	 * gtk_widget_grab_focus() instead of this function.
 	 * Params:
-	 * focus =  widget to be the new focus widget, or NULL to unset
+	 * focus = widget to be the new focus widget, or NULL to unset
 	 *  any focus widget for the toplevel window.
 	 */
 	public void setFocus(Widget focus)
@@ -811,7 +811,7 @@ public class Window : Bin
 	 * the default widget, you must set the GTK_CAN_DEFAULT flag on the
 	 * widget you'd like to make the default using GTK_WIDGET_SET_FLAGS().
 	 * Params:
-	 * defaultWidget =  widget to be the default, or NULL to unset the
+	 * defaultWidget = widget to be the default, or NULL to unset the
 	 *  default widget for the toplevel.
 	 */
 	public void setDefault(Widget defaultWidget)
@@ -847,7 +847,7 @@ public class Window : Bin
 	 * gtk_window_present(). See gtk_window_present() for details.
 	 * Since 2.8
 	 * Params:
-	 * timestamp =  the timestamp of the user interaction (typically a
+	 * timestamp = the timestamp of the user interaction (typically a
 	 *  button or key press event) which triggered this call
 	 */
 	public void presentWithTime(uint timestamp)
@@ -1009,7 +1009,7 @@ public class Window : Bin
 	 * drawing attention to their dialogs.
 	 * Since 2.4
 	 * Params:
-	 * setting =  whether to keep window above other windows
+	 * setting = whether to keep window above other windows
 	 */
 	public void setKeepAbove(int setting)
 	{
@@ -1035,7 +1035,7 @@ public class Window : Bin
 	 * drawing attention to their dialogs.
 	 * Since 2.4
 	 * Params:
-	 * setting =  whether to keep window below other windows
+	 * setting = whether to keep window below other windows
 	 */
 	public void setKeepBelow(int setting)
 	{
@@ -1050,11 +1050,11 @@ public class Window : Bin
 	 * system. Otherwise, GDK will try to emulate window resizing,
 	 * potentially not all that well, depending on the windowing system.
 	 * Params:
-	 * edge =  position of the resize control
-	 * button =  mouse button that initiated the drag
-	 * rootX =  X position where the user clicked to initiate the drag, in root window coordinates
-	 * rootY =  Y position where the user clicked to initiate the drag
-	 * timestamp =  timestamp from the click event that initiated the drag
+	 * edge = position of the resize control
+	 * button = mouse button that initiated the drag
+	 * rootX = X position where the user clicked to initiate the drag, in root window coordinates
+	 * rootY = Y position where the user clicked to initiate the drag
+	 * timestamp = timestamp from the click event that initiated the drag
 	 */
 	public void beginResizeDrag(GdkWindowEdge edge, int button, int rootX, int rootY, uint timestamp)
 	{
@@ -1069,10 +1069,10 @@ public class Window : Bin
 	 * system. Otherwise, GDK will try to emulate window movement,
 	 * potentially not all that well, depending on the windowing system.
 	 * Params:
-	 * button =  mouse button that initiated the drag
-	 * rootX =  X position where the user clicked to initiate the drag, in root window coordinates
-	 * rootY =  Y position where the user clicked to initiate the drag
-	 * timestamp =  timestamp from the click event that initiated the drag
+	 * button = mouse button that initiated the drag
+	 * rootX = X position where the user clicked to initiate the drag, in root window coordinates
+	 * rootY = Y position where the user clicked to initiate the drag
+	 * timestamp = timestamp from the click event that initiated the drag
 	 */
 	public void beginMoveDrag(int button, int rootX, int rootY, uint timestamp)
 	{
@@ -1092,7 +1092,7 @@ public class Window : Bin
 	 * On Windows, this function always works, since there's no window manager
 	 * policy involved.
 	 * Params:
-	 * setting =  TRUE to decorate the window
+	 * setting = TRUE to decorate the window
 	 */
 	public void setDecorated(int setting)
 	{
@@ -1112,7 +1112,7 @@ public class Window : Bin
 	 * policy involved.
 	 * Since 2.10
 	 * Params:
-	 * setting =  TRUE to decorate the window as deletable
+	 * setting = TRUE to decorate the window as deletable
 	 */
 	public void setDeletable(int setting)
 	{
@@ -1128,10 +1128,10 @@ public class Window : Bin
 	 * For windows with frames (see gtk_window_set_has_frame()) this function
 	 * can be used to change the size of the frame border.
 	 * Params:
-	 * left =  The width of the left border
-	 * top =  The height of the top border
-	 * right =  The width of the right border
-	 * bottom =  The height of the bottom border
+	 * left = The width of the left border
+	 * top = The height of the top border
+	 * right = The width of the right border
+	 * bottom = The height of the bottom border
 	 */
 	public void setFrameDimensions(int left, int top, int right, int bottom)
 	{
@@ -1152,7 +1152,7 @@ public class Window : Bin
 	 * windows, but it could conceivably be used by X-programs that
 	 * want to do their own window decorations.
 	 * Params:
-	 * setting =  a boolean
+	 * setting = a boolean
 	 */
 	public void setHasFrame(int setting)
 	{
@@ -1163,7 +1163,7 @@ public class Window : Bin
 	/**
 	 * Sets the mnemonic modifier for this window.
 	 * Params:
-	 * modifier =  the modifier mask used to activate
+	 * modifier = the modifier mask used to activate
 	 *  mnemonics on this window.
 	 */
 	public void setMnemonicModifier(GdkModifierType modifier)
@@ -1180,7 +1180,7 @@ public class Window : Bin
 	 * gtk_dialog_new_with_buttons() and other convenience functions in GTK+
 	 * will sometimes call gtk_window_set_type_hint() on your behalf.
 	 * Params:
-	 * hint =  the window type
+	 * hint = the window type
 	 */
 	public void setTypeHint(GdkWindowTypeHint hint)
 	{
@@ -1193,7 +1193,7 @@ public class Window : Bin
 	 * the window in the task bar. This function sets this hint.
 	 * Since 2.2
 	 * Params:
-	 * setting =  TRUE to keep this window from appearing in the task bar
+	 * setting = TRUE to keep this window from appearing in the task bar
 	 */
 	public void setSkipTaskbarHint(int setting)
 	{
@@ -1209,7 +1209,7 @@ public class Window : Bin
 	 * on the screen.)
 	 * Since 2.2
 	 * Params:
-	 * setting =  TRUE to keep this window from appearing in the pager
+	 * setting = TRUE to keep this window from appearing in the pager
 	 */
 	public void setSkipPagerHint(int setting)
 	{
@@ -1222,7 +1222,7 @@ public class Window : Bin
 	 * the users attention to the window. This function sets this hint.
 	 * Since 2.8
 	 * Params:
-	 * setting =  TRUE to mark this window as urgent
+	 * setting = TRUE to mark this window as urgent
 	 */
 	public void setUrgencyHint(int setting)
 	{
@@ -1235,7 +1235,7 @@ public class Window : Bin
 	 * the input focus. This function sets this hint.
 	 * Since 2.4
 	 * Params:
-	 * setting =  TRUE to let this window receive input focus
+	 * setting = TRUE to let this window receive input focus
 	 */
 	public void setAcceptFocus(int setting)
 	{
@@ -1249,7 +1249,7 @@ public class Window : Bin
 	 * hint.
 	 * Since 2.6
 	 * Params:
-	 * setting =  TRUE to let this window receive input focus on map
+	 * setting = TRUE to let this window receive input focus on map
 	 */
 	public void setFocusOnMap(int setting)
 	{
@@ -1269,7 +1269,7 @@ public class Window : Bin
 	 * This function is only useful on X11, not with other GTK+ targets.
 	 * Since 2.12
 	 * Params:
-	 * startupId =  a string with startup-notification identifier
+	 * startupId = a string with startup-notification identifier
 	 */
 	public void setStartupId(string startupId)
 	{
@@ -1289,7 +1289,7 @@ public class Window : Bin
 	 * role, since the WM can use the title to identify the window when
 	 * restoring the session.
 	 * Params:
-	 * role =  unique identifier for the window to be used when restoring a session
+	 * role = unique identifier for the window to be used when restoring a session
 	 */
 	public void setRole(string role)
 	{
@@ -1359,8 +1359,8 @@ public class Window : Bin
 	 * for that dimension, so the "natural" size of the window will be
 	 * used.
 	 * Params:
-	 * width =  location to store the default width, or NULL
-	 * height =  location to store the default height, or NULL
+	 * width = location to store the default width, or NULL
+	 * height = location to store the default height, or NULL
 	 */
 	public void getDefaultSize(out int width, out int height)
 	{
@@ -1389,10 +1389,10 @@ public class Window : Bin
 	 * Retrieves the dimensions of the frame window for this toplevel.
 	 * See gtk_window_set_has_frame(), gtk_window_set_frame_dimensions().
 	 * Params:
-	 * left =  location to store the width of the frame at the left, or NULL
-	 * top =  location to store the height of the frame at the top, or NULL
-	 * right =  location to store the width of the frame at the returns, or NULL
-	 * bottom =  location to store the height of the frame at the bottom, or NULL
+	 * left = location to store the width of the frame at the left, or NULL
+	 * top = location to store the height of the frame at the top, or NULL
+	 * right = location to store the width of the frame at the returns, or NULL
+	 * bottom = location to store the height of the frame at the bottom, or NULL
 	 */
 	public void getFrameDimensions(out int left, out int top, out int right, out int bottom)
 	{
@@ -1511,8 +1511,8 @@ public class Window : Bin
 	 * "GnomeClient" object in the GNOME libraries for example) and allow
 	 * the window manager to save your window sizes and positions.
 	 * Params:
-	 * rootX =  return location for X coordinate of gravity-determined reference point
-	 * rootY =  return location for Y coordinate of gravity-determined reference point
+	 * rootX = return location for X coordinate of gravity-determined reference point
+	 * rootY = return location for Y coordinate of gravity-determined reference point
 	 */
 	public void getPosition(out int rootX, out int rootY)
 	{
@@ -1572,8 +1572,8 @@ public class Window : Bin
 	 * doing it yourself - gtk_window_set_position() will frequently
 	 * handle the details for you.
 	 * Params:
-	 * width =  return location for width, or NULL
-	 * height =  return location for height, or NULL
+	 * width = return location for width, or NULL
+	 * height = return location for height, or NULL
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -1698,8 +1698,8 @@ public class Window : Bin
 	 * honor requests after the window has already been shown.
 	 * Note: the position is the position of the gravity-determined
 	 * Params:
-	 * x =  X coordinate to move window to
-	 * y =  Y coordinate to move window to
+	 * x = X coordinate to move window to
+	 * y = Y coordinate to move window to
 	 */
 	public void move(int x, int y)
 	{
@@ -1760,7 +1760,7 @@ public class Window : Bin
 		 *  return 0;
 	 * }
 	 * Params:
-	 * geometry =  geometry string
+	 * geometry = geometry string
 	 * Returns: TRUE if string was parsed successfully
 	 */
 	public int parseGeometry(string geometry)
@@ -1791,8 +1791,8 @@ public class Window : Bin
 	 * gtk_window_set_default_size().
 	 * Windows may not be resized smaller than 1 by 1 pixels.
 	 * Params:
-	 * width =  width in pixels to resize the window to
-	 * height =  height in pixels to resize the window to
+	 * width = width in pixels to resize the window to
+	 * height = height in pixels to resize the window to
 	 */
 	public void resize(int width, int height)
 	{
@@ -1807,7 +1807,7 @@ public class Window : Bin
 	 * icon for all windows in your app at once.
 	 * See gtk_window_set_icon_list() for more details.
 	 * Params:
-	 * list =  a list of GdkPixbuf
+	 * list = a list of GdkPixbuf
 	 */
 	public static void setDefaultIconList(ListG list)
 	{
@@ -1820,7 +1820,7 @@ public class Window : Bin
 	 * had gtk_window_set_icon() called on them from a pixbuf.
 	 * Since 2.4
 	 * Params:
-	 * icon =  the icon
+	 * icon = the icon
 	 */
 	public static void setDefaultIcon(Pixbuf icon)
 	{
@@ -1834,7 +1834,7 @@ public class Window : Bin
 	 * on disk. Warns on failure if err is NULL.
 	 * Since 2.2
 	 * Params:
-	 * filename =  location of icon file
+	 * filename = location of icon file
 	 * Returns: TRUE if setting the icon succeeded.
 	 * Throws: GException on failure.
 	 */
@@ -1859,7 +1859,7 @@ public class Window : Bin
 	 * themed icon, see gtk_window_set_icon_name().
 	 * Since 2.6
 	 * Params:
-	 * name =  the name of the themed icon
+	 * name = the name of the themed icon
 	 */
 	public static void setDefaultIconName(string name)
 	{
@@ -1883,7 +1883,7 @@ public class Window : Bin
 	 * See also gtk_window_set_default_icon_list() to set the icon
 	 * for all windows in your application in one go.
 	 * Params:
-	 * icon =  icon image, or NULL
+	 * icon = icon image, or NULL
 	 */
 	public void setIcon(Pixbuf icon)
 	{
@@ -1912,7 +1912,7 @@ public class Window : Bin
 	 * icon from their transient parent. So there's no need to explicitly
 	 * set the icon on transient windows.
 	 * Params:
-	 * list =  list of GdkPixbuf
+	 * list = list of GdkPixbuf
 	 */
 	public void setIconList(ListG list)
 	{
@@ -1927,7 +1927,7 @@ public class Window : Bin
 	 * with a pixbuf created by loading the image from filename.
 	 * Since 2.2
 	 * Params:
-	 * filename =  location of icon file
+	 * filename = location of icon file
 	 * Returns: TRUE if setting the icon succeeded.
 	 * Throws: GException on failure.
 	 */
@@ -1953,7 +1953,7 @@ public class Window : Bin
 	 * property which is mentioned in the ICCCM.
 	 * Since 2.6
 	 * Params:
-	 * name =  the name of the themed icon
+	 * name = the name of the themed icon
 	 */
 	public void setIconName(string name)
 	{
@@ -1972,7 +1972,7 @@ public class Window : Bin
 	 * showing the main window would automatically result in notification.
 	 * Since 2.2
 	 * Params:
-	 * setting =  TRUE to automatically do startup notification
+	 * setting = TRUE to automatically do startup notification
 	 */
 	public static void setAutoStartupNotification(int setting)
 	{
@@ -2003,7 +2003,7 @@ public class Window : Bin
 	 * shown causes it to flicker once on Windows.
 	 * Since 2.12
 	 * Params:
-	 * opacity =  desired opacity, between 0 and 1
+	 * opacity = desired opacity, between 0 and 1
 	 */
 	public void setOpacity(double opacity)
 	{

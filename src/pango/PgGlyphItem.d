@@ -174,8 +174,8 @@ public class PgGlyphItem
 	 * it internally.)
 	 * Since 1.2
 	 * Params:
-	 * text =  text to which positions in orig apply
-	 * splitIndex =  byte index of position to split item, relative to the start of the item
+	 * text = text to which positions in orig apply
+	 * splitIndex = byte index of position to split item, relative to the start of the item
 	 * Returns: the newly allocated item representing text before split_index, which should be freed with pango_glyph_item_free().
 	 */
 	public PgGlyphItem split(string text, int splitIndex)
@@ -206,8 +206,8 @@ public class PgGlyphItem
 	 * as one of the elements in the list.
 	 * Since 1.2
 	 * Params:
-	 * text =  text that list applies to
-	 * list =  a PangoAttrList
+	 * text = text that list applies to
+	 * list = a PangoAttrList
 	 * Returns: a list of glyph items resulting from splitting glyph_item. Free the elements using pango_glyph_item_free(), the list using g_slist_free().
 	 */
 	public ListSG applyAttrs(string text, PgAttributeList list)
@@ -226,13 +226,13 @@ public class PgGlyphItem
 	 * give the effect of typographic letter spacing.
 	 * Since 1.6
 	 * Params:
-	 * text =  text that glyph_item corresponds to
+	 * text = text that glyph_item corresponds to
 	 *  (glyph_item->item->offset is an offset from the
 	 *  start of text)
-	 * logAttrs =  logical attributes for the item (the
+	 * logAttrs = logical attributes for the item (the
 	 *  first logical attribute refers to the position
 	 *  before the first character in the item)
-	 * letterSpacing =  amount of letter spacing to add
+	 * letterSpacing = amount of letter spacing to add
 	 *  in Pango units. May be negative, though too large
 	 *  negative values will give ugly results.
 	 */

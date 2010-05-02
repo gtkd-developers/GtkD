@@ -304,7 +304,7 @@ public class Range : Widget, OrientableIF
 	 * enabled.
 	 * Since 2.12
 	 * Params:
-	 * fillLevel =  the new position of the fill level indicator
+	 * fillLevel = the new position of the fill level indicator
 	 */
 	public void setFillLevel(double fillLevel)
 	{
@@ -318,7 +318,7 @@ public class Range : Widget, OrientableIF
 	 * level concept.
 	 * Since 2.12
 	 * Params:
-	 * restrictToFillLevel =  Whether the fill level restricts slider movement.
+	 * restrictToFillLevel = Whether the fill level restricts slider movement.
 	 */
 	public void setRestrictToFillLevel(int restrictToFillLevel)
 	{
@@ -332,7 +332,7 @@ public class Range : Widget, OrientableIF
 	 * level concept.
 	 * Since 2.12
 	 * Params:
-	 * showFillLevel =  Whether a fill level indicator graphics is shown.
+	 * showFillLevel = Whether a fill level indicator graphics is shown.
 	 */
 	public void setShowFillLevel(int showFillLevel)
 	{
@@ -368,7 +368,7 @@ public class Range : Widget, OrientableIF
 	 * be updated when the user releases the button and ends the slider
 	 * drag operation.
 	 * Params:
-	 * policy =  update policy
+	 * policy = update policy
 	 */
 	public void setUpdatePolicy(GtkUpdateType policy)
 	{
@@ -385,7 +385,7 @@ public class Range : Widget, OrientableIF
 	 * indicates the size of the visible area of the widget being scrolled.
 	 * The page size affects the size of the scrollbar slider.
 	 * Params:
-	 * adjustment =  a GtkAdjustment
+	 * adjustment = a GtkAdjustment
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -409,7 +409,7 @@ public class Range : Widget, OrientableIF
 	 * ranges have higher values at the top or on the right rather than
 	 * on the bottom or left.
 	 * Params:
-	 * setting =  TRUE to invert the range
+	 * setting = TRUE to invert the range
 	 */
 	public void setInverted(int setting)
 	{
@@ -443,8 +443,8 @@ public class Range : Widget, OrientableIF
 	 * arrows or moves GtkScale via arrow keys. The page size
 	 * is used for example when moving via Page Up or Page Down keys.
 	 * Params:
-	 * step =  step size
-	 * page =  page size
+	 * step = step size
+	 * page = page size
 	 */
 	public void setIncrements(double step, double page)
 	{
@@ -457,8 +457,8 @@ public class Range : Widget, OrientableIF
 	 * value to be between min and max. (If the range has a non-zero
 	 * page size, it is clamped between min and max - page-size.)
 	 * Params:
-	 * min =  minimum range value
-	 * max =  maximum range value
+	 * min = minimum range value
+	 * max = maximum range value
 	 */
 	public void setRange(double min, double max)
 	{
@@ -472,7 +472,7 @@ public class Range : Widget, OrientableIF
 	 * them. The range emits the "value-changed" signal if the
 	 * value changes.
 	 * Params:
-	 * value =  new value of the range
+	 * value = new value of the range
 	 */
 	public void setValue(double value)
 	{
@@ -485,7 +485,7 @@ public class Range : Widget, OrientableIF
 	 * 'lower' end of the GtkRange's adjustment.
 	 * Since 2.10
 	 * Params:
-	 * sensitivity =  the lower stepper's sensitivity policy.
+	 * sensitivity = the lower stepper's sensitivity policy.
 	 */
 	public void setLowerStepperSensitivity(GtkSensitivityType sensitivity)
 	{
@@ -510,7 +510,7 @@ public class Range : Widget, OrientableIF
 	 * 'upper' end of the GtkRange's adjustment.
 	 * Since 2.10
 	 * Params:
-	 * sensitivity =  the upper stepper's sensitivity policy.
+	 * sensitivity = the upper stepper's sensitivity policy.
 	 */
 	public void setUpperStepperSensitivity(GtkSensitivityType sensitivity)
 	{
@@ -547,7 +547,7 @@ public class Range : Widget, OrientableIF
 	 * See gtk_widget_get_direction().
 	 * Since 2.18
 	 * Params:
-	 * flippable =  TRUE to make the range flippable
+	 * flippable = TRUE to make the range flippable
 	 */
 	public void setFlippable(int flippable)
 	{

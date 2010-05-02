@@ -82,7 +82,7 @@ private import gtk.HBox;
  * The user can then use that dialog to change the file associated with
  * that button. This widget does not support setting the "select-multiple"
  * property to TRUE.
- * Example 41. Create a button to let the user select a file in /etc
+ * Example  41.  Create a button to let the user select a file in /etc
  * {
 	 *  GtkWidget *button;
 	 *  button = gtk_file_chooser_button_new (_("Select a file"),
@@ -182,8 +182,8 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * Creates a new file-selecting button widget.
 	 * Since 2.6
 	 * Params:
-	 * title =  the title of the browse dialog.
-	 * action =  the open mode for the widget.
+	 * title = the title of the browse dialog.
+	 * action = the open mode for the widget.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, GtkFileChooserAction action)
@@ -203,9 +203,9 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * Creates a new file-selecting button widget using backend.
 	 * Since 2.6
 	 * Params:
-	 * title =  the title of the browse dialog.
-	 * action =  the open mode for the widget.
-	 * backend =  the name of the GtkFileSystem backend to use.
+	 * title = the title of the browse dialog.
+	 * action = the open mode for the widget.
+	 * backend = the name of the GtkFileSystem backend to use.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, GtkFileChooserAction action, string backend)
@@ -230,7 +230,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * order for the button to take over the file selected in the dialog.
 	 * Since 2.6
 	 * Params:
-	 * dialog =  the widget to use as dialog
+	 * dialog = the widget to use as dialog
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Widget dialog)
@@ -260,7 +260,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * Modifies the title of the browse dialog used by button.
 	 * Since 2.6
 	 * Params:
-	 * title =  the new browse dialog title.
+	 * title = the new browse dialog title.
 	 */
 	public void setTitle(string title)
 	{
@@ -283,7 +283,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * Sets the width (in characters) that button will use to n_chars.
 	 * Since 2.6
 	 * Params:
-	 * nChars =  the new width, in characters.
+	 * nChars = the new width, in characters.
 	 */
 	public void setWidthChars(int nChars)
 	{
@@ -310,7 +310,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	 * application.
 	 * Since 2.10
 	 * Params:
-	 * focusOnClick =  whether the button grabs focus when clicked with the mouse
+	 * focusOnClick = whether the button grabs focus when clicked with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{

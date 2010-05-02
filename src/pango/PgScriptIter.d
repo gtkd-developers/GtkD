@@ -111,8 +111,8 @@ public class PgScriptIter
 	 * the iterator is freed with pango_script_iter_free().
 	 * Since 1.4
 	 * Params:
-	 * text =  a UTF-8 string
-	 * length =  length of text, or -1 if text is nul-terminated.
+	 * text = a UTF-8 string
+	 * length = length of text, or -1 if text is nul-terminated.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string text, int length)
@@ -132,9 +132,9 @@ public class PgScriptIter
 	 * (That is, it doesn't include the character stored at *end)
 	 * Since 1.4
 	 * Params:
-	 * start =  location to store start position of the range, or NULL
-	 * end =  location to store end position of the range, or NULL
-	 * script =  location to store script for range, or NULL
+	 * start = location to store start position of the range, or NULL
+	 * end = location to store end position of the range, or NULL
+	 * script = location to store script for range, or NULL
 	 */
 	public void getRange(out string start, out string end, out PangoScript script)
 	{

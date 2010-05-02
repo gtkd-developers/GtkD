@@ -247,13 +247,13 @@ public class CellRenderer : ObjectGtk
 	 * Please note that the values set in width and height, as well as those
 	 * in x_offset and y_offset are inclusive of the xpad and ypad properties.
 	 * Params:
-	 * cell =  a GtkCellRenderer
-	 * widget =  the widget the renderer is rendering to
-	 * cellArea =  The area a cell will be allocated, or NULL
-	 * xOffset =  location to return x offset of cell relative to cell_area, or NULL
-	 * yOffset =  location to return y offset of cell relative to cell_area, or NULL
-	 * width =  location to return width needed to render a cell, or NULL
-	 * height =  location to return height needed to render a cell, or NULL
+	 * cell = a GtkCellRenderer
+	 * widget = the widget the renderer is rendering to
+	 * cellArea = The area a cell will be allocated, or NULL
+	 * xOffset = location to return x offset of cell relative to cell_area, or NULL
+	 * yOffset = location to return y offset of cell relative to cell_area, or NULL
+	 * width = location to return width needed to render a cell, or NULL
+	 * height = location to return height needed to render a cell, or NULL
 	 */
 	public void getSize(Widget widget, Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
@@ -270,14 +270,14 @@ public class CellRenderer : ObjectGtk
 	 * so the background_area rectangles for all cells tile to cover the entire
 	 * window. expose_area is a clip rectangle.
 	 * Params:
-	 * cell =  a GtkCellRenderer
-	 * window =  a GdkDrawable to draw to
-	 * widget =  the widget owning window
-	 * backgroundArea =  entire cell area (including tree expanders and maybe
+	 * cell = a GtkCellRenderer
+	 * window = a GdkDrawable to draw to
+	 * widget = the widget owning window
+	 * backgroundArea = entire cell area (including tree expanders and maybe
 	 *  padding on the sides)
-	 * cellArea =  area normally rendered by a cell renderer
-	 * exposeArea =  area that actually needs updating
-	 * flags =  flags that affect rendering
+	 * cellArea = area normally rendered by a cell renderer
+	 * exposeArea = area that actually needs updating
+	 * flags = flags that affect rendering
 	 */
 	public void render(Window window, Widget widget, Rectangle backgroundArea, Rectangle cellArea, Rectangle exposeArea, GtkCellRendererState flags)
 	{
@@ -290,14 +290,14 @@ public class CellRenderer : ObjectGtk
 	 * Some cell renderers may use events; for example, GtkCellRendererToggle
 	 * toggles when it gets a mouse click.
 	 * Params:
-	 * cell =  a GtkCellRenderer
-	 * event =  a GdkEvent
-	 * widget =  widget that received the event
-	 * path =  widget-dependent string representation of the event location;
+	 * cell = a GtkCellRenderer
+	 * event = a GdkEvent
+	 * widget = widget that received the event
+	 * path = widget-dependent string representation of the event location;
 	 *  e.g. for GtkTreeView, a string representation of GtkTreePath
-	 * backgroundArea =  background area as passed to gtk_cell_renderer_render()
-	 * cellArea =  cell area as passed to gtk_cell_renderer_render()
-	 * flags =  render flags
+	 * backgroundArea = background area as passed to gtk_cell_renderer_render()
+	 * cellArea = cell area as passed to gtk_cell_renderer_render()
+	 * flags = render flags
 	 * Returns: TRUE if the event was consumed/handled
 	 */
 	public int activate(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
@@ -309,14 +309,14 @@ public class CellRenderer : ObjectGtk
 	/**
 	 * Passes an activate event to the cell renderer for possible processing.
 	 * Params:
-	 * cell =  a GtkCellRenderer
-	 * event =  a GdkEvent
-	 * widget =  widget that received the event
-	 * path =  widget-dependent string representation of the event location;
+	 * cell = a GtkCellRenderer
+	 * event = a GdkEvent
+	 * widget = widget that received the event
+	 * path = widget-dependent string representation of the event location;
 	 *  e.g. for GtkTreeView, a string representation of GtkTreePath
-	 * backgroundArea =  background area as passed to gtk_cell_renderer_render()
-	 * cellArea =  cell area as passed to gtk_cell_renderer_render()
-	 * flags =  render flags
+	 * backgroundArea = background area as passed to gtk_cell_renderer_render()
+	 * cellArea = cell area as passed to gtk_cell_renderer_render()
+	 * flags = render flags
 	 * Returns: A new GtkCellEditable, or NULL
 	 */
 	public CellEditableIF startEditing(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
@@ -355,7 +355,7 @@ public class CellRenderer : ObjectGtk
 	 * GtkCellEditable.
 	 * Since 2.6
 	 * Params:
-	 * canceled =  TRUE if the editing has been canceled
+	 * canceled = TRUE if the editing has been canceled
 	 */
 	public void stopEditing(int canceled)
 	{
@@ -366,8 +366,8 @@ public class CellRenderer : ObjectGtk
 	/**
 	 * Fills in width and height with the appropriate size of cell.
 	 * Params:
-	 * width =  location to fill in with the fixed width of the cell, or NULL
-	 * height =  location to fill in with the fixed height of the cell, or NULL
+	 * width = location to fill in with the fixed width of the cell, or NULL
+	 * height = location to fill in with the fixed height of the cell, or NULL
 	 */
 	public void getFixedSize(out int width, out int height)
 	{
@@ -378,8 +378,8 @@ public class CellRenderer : ObjectGtk
 	/**
 	 * Sets the renderer size to be explicit, independent of the properties set.
 	 * Params:
-	 * width =  the width of the cell renderer, or -1
-	 * height =  the height of the cell renderer, or -1
+	 * width = the width of the cell renderer, or -1
+	 * height = the height of the cell renderer, or -1
 	 */
 	public void setFixedSize(int width, int height)
 	{
@@ -402,7 +402,7 @@ public class CellRenderer : ObjectGtk
 	 * Sets the cell renderer's visibility.
 	 * Since 2.18
 	 * Params:
-	 * visible =  the visibility of the cell
+	 * visible = the visibility of the cell
 	 */
 	public void setVisible(int visible)
 	{
@@ -425,7 +425,7 @@ public class CellRenderer : ObjectGtk
 	 * Sets the cell renderer's sensitivity.
 	 * Since 2.18
 	 * Params:
-	 * sensitive =  the sensitivity of the cell
+	 * sensitive = the sensitivity of the cell
 	 */
 	public void setSensitive(int sensitive)
 	{
@@ -437,8 +437,8 @@ public class CellRenderer : ObjectGtk
 	 * Fills in xalign and yalign with the appropriate values of cell.
 	 * Since 2.18
 	 * Params:
-	 * xalign =  location to fill in with the x alignment of the cell, or NULL
-	 * yalign =  location to fill in with the y alignment of the cell, or NULL
+	 * xalign = location to fill in with the x alignment of the cell, or NULL
+	 * yalign = location to fill in with the y alignment of the cell, or NULL
 	 */
 	public void getAlignment(out float xalign, out float yalign)
 	{
@@ -450,8 +450,8 @@ public class CellRenderer : ObjectGtk
 	 * Sets the renderer's alignment within its available space.
 	 * Since 2.18
 	 * Params:
-	 * xalign =  the x alignment of the cell renderer
-	 * yalign =  the y alignment of the cell renderer
+	 * xalign = the x alignment of the cell renderer
+	 * yalign = the y alignment of the cell renderer
 	 */
 	public void setAlignment(float xalign, float yalign)
 	{
@@ -463,8 +463,8 @@ public class CellRenderer : ObjectGtk
 	 * Fills in xpad and ypad with the appropriate values of cell.
 	 * Since 2.18
 	 * Params:
-	 * xpad =  location to fill in with the x padding of the cell, or NULL
-	 * ypad =  location to fill in with the y padding of the cell, or NULL
+	 * xpad = location to fill in with the x padding of the cell, or NULL
+	 * ypad = location to fill in with the y padding of the cell, or NULL
 	 */
 	public void getPadding(out int xpad, out int ypad)
 	{
@@ -476,8 +476,8 @@ public class CellRenderer : ObjectGtk
 	 * Sets the renderer's padding.
 	 * Since 2.18
 	 * Params:
-	 * xpad =  the x padding of the cell renderer
-	 * ypad =  the y padding of the cell renderer
+	 * xpad = the x padding of the cell renderer
+	 * ypad = the y padding of the cell renderer
 	 */
 	public void setPadding(int xpad, int ypad)
 	{

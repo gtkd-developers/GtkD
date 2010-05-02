@@ -111,7 +111,7 @@ private import gobject.ObjectG;
  * size group are specified by a <widgets> element that may
  * contain multiple <widget> elements, one for each member
  * of the size group. The name attribute gives the id of the widget.
- * Example 51. A UI definition fragment with GtkSizeGroup
+ * Example  51.  A UI definition fragment with GtkSizeGroup
  * <object class="GtkSizeGroup">
  *  <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
  *  <widgets>
@@ -169,7 +169,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Create a new GtkSizeGroup.
 	 * Params:
-	 * mode =  the mode for the new size group.
+	 * mode = the mode for the new size group.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkSizeGroupMode mode)
@@ -191,7 +191,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * or should all have the same requisition in both directions
 	 * (GTK_SIZE_GROUP_MODE_BOTH).
 	 * Params:
-	 * mode =  the mode to set for the size group.
+	 * mode = the mode to set for the size group.
 	 */
 	public void setMode(GtkSizeGroupMode mode)
 	{
@@ -214,7 +214,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * calculating the size.
 	 * Since 2.8
 	 * Params:
-	 * ignoreHidden =  whether unmapped widgets should be ignored
+	 * ignoreHidden = whether unmapped widgets should be ignored
 	 *  when calculating the size
 	 */
 	public void setIgnoreHidden(int ignoreHidden)
@@ -243,7 +243,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * When the widget is destroyed or no longer referenced elsewhere, it will
 	 * be removed from the size group.
 	 * Params:
-	 * widget =  the GtkWidget to add
+	 * widget = the GtkWidget to add
 	 */
 	public void addWidget(Widget widget)
 	{
@@ -254,7 +254,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Removes a widget from a GtkSizeGroup.
 	 * Params:
-	 * widget =  the GtkWidget to remove
+	 * widget = the GtkWidget to remove
 	 */
 	public void removeWidget(Widget widget)
 	{

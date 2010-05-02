@@ -638,7 +638,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Creates a new entry with the specified text buffer.
 	 * Since 2.18
 	 * Params:
-	 * buffer =  The buffer to use for the new GtkEntry.
+	 * buffer = The buffer to use for the new GtkEntry.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (EntryBuffer buffer)
@@ -657,7 +657,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_new_with_max_length is deprecated and should not be used in newly-written code. Use gtk_entry_set_max_length() instead.
 	 * Creates a new GtkEntry widget with the given maximum length.
 	 * Params:
-	 * max =  the maximum length of the entry, or 0 for no maximum.
+	 * max = the maximum length of the entry, or 0 for no maximum.
 	 *  (other than the maximum length of entries.) The value passed in will
 	 *  be clamped to the range 0-65536.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -695,7 +695,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * this widget.
 	 * Since 2.18
 	 * Params:
-	 * buffer =  a GtkEntryBuffer
+	 * buffer = a GtkEntryBuffer
 	 */
 	public void setBuffer(EntryBuffer buffer)
 	{
@@ -708,7 +708,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * value, replacing the current contents.
 	 * See gtk_entry_buffer_set_text().
 	 * Params:
-	 * text =  the new text
+	 * text = the new text
 	 */
 	public void setText(string text)
 	{
@@ -721,7 +721,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_append_text has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_insert_text() instead.
 	 * Appends the given text to the contents of the widget.
 	 * Params:
-	 * text =  the text to append
+	 * text = the text to append
 	 */
 	public void appendText(string text)
 	{
@@ -734,7 +734,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_prepend_text has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_insert_text() instead.
 	 * Prepends the given text to the contents of the widget.
 	 * Params:
-	 * text =  the text to prepend
+	 * text = the text to prepend
 	 */
 	public void prependText(string text)
 	{
@@ -774,7 +774,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * in the current font, but it can be changed with
 	 * gtk_entry_set_invisible_char().
 	 * Params:
-	 * visible =  TRUE if the contents of the entry are displayed
+	 * visible = TRUE if the contents of the entry are displayed
 	 *  as plaintext
 	 */
 	public void setVisibility(int visible)
@@ -792,7 +792,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * set the invisible char to 0, then the user will get no feedback
 	 * at all; there will be no text on the screen as they type.
 	 * Params:
-	 * ch =  a Unicode character
+	 * ch = a Unicode character
 	 */
 	public void setInvisibleChar(gunichar ch)
 	{
@@ -817,7 +817,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * the current contents are longer than the given length, then they
 	 * will be truncated to fit.
 	 * Params:
-	 * max =  the maximum length of the entry, or 0 for no maximum.
+	 * max = the maximum length of the entry, or 0 for no maximum.
 	 *  (other than the maximum length of entries.) The value passed in will
 	 *  be clamped to the range 0-65536.
 	 */
@@ -883,7 +883,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_window_activate_default() on the window containing the entry, in
 	 * the default handler for the "activate" signal.)
 	 * Params:
-	 * setting =  TRUE to activate window's default widget on Enter keypress
+	 * setting = TRUE to activate window's default widget on Enter keypress
 	 */
 	public void setActivatesDefault(int setting)
 	{
@@ -894,7 +894,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	/**
 	 * Sets whether the entry has a beveled frame around it.
 	 * Params:
-	 * setting =  new value
+	 * setting = new value
 	 */
 	public void setHasFrame(int setting)
 	{
@@ -912,7 +912,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * pixel-exact positioning of the entry is important.
 	 * Since 2.10
 	 * Params:
-	 * border =  a GtkBorder, or NULL
+	 * border = a GtkBorder, or NULL
 	 */
 	public void setInnerBorder(Border border)
 	{
@@ -927,7 +927,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * how you pack the widget into containers. If n_chars is -1, the
 	 * size reverts to the default entry size.
 	 * Params:
-	 * nChars =  width in chars
+	 * nChars = width in chars
 	 */
 	public void setWidthChars(int nChars)
 	{
@@ -952,7 +952,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * text is shorter than the width of the entry.
 	 * Since 2.4
 	 * Params:
-	 * xalign =  The horizontal alignment, from 0 (left) to 1 (right).
+	 * xalign = The horizontal alignment, from 0 (left) to 1 (right).
 	 *  Reversed for RTL layouts
 	 */
 	public void setAlignment(float xalign)
@@ -976,7 +976,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Sets whether the text is overwritten when typing in the GtkEntry.
 	 * Since 2.14
 	 * Params:
-	 * overwrite =  new value
+	 * overwrite = new value
 	 */
 	public void setOverwriteMode(int overwrite)
 	{
@@ -1036,8 +1036,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
 	 * Params:
-	 * x =  location to store X offset of layout, or NULL
-	 * y =  location to store Y offset of layout, or NULL
+	 * x = location to store X offset of layout, or NULL
+	 * y = location to store Y offset of layout, or NULL
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -1051,7 +1051,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * entry's PangoLayout (returned by gtk_entry_get_layout(),
 	 * with text retrieved via pango_layout_get_text()).
 	 * Params:
-	 * layoutIndex =  byte index into the entry layout text
+	 * layoutIndex = byte index into the entry layout text
 	 * Returns: byte index into the entry contents
 	 */
 	public int layoutIndexToTextIndex(int layoutIndex)
@@ -1065,7 +1065,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_get_layout()) to a position in the entry contents
 	 * (returned by gtk_entry_get_text()).
 	 * Params:
-	 * textIndex =  byte index into the entry contents
+	 * textIndex = byte index into the entry contents
 	 * Returns: byte index into the entry layout text
 	 */
 	public int textIndexToLayoutIndex(int textIndex)
@@ -1103,7 +1103,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * completion is set to NULL.
 	 * Since 2.4
 	 * Params:
-	 * completion =  The GtkEntryCompletion or NULL
+	 * completion = The GtkEntryCompletion or NULL
 	 */
 	public void setCompletion(EntryCompletion completion)
 	{
@@ -1136,7 +1136,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * as the entry.
 	 * Since 2.12
 	 * Params:
-	 * adjustment =  an adjustment which should be adjusted when the cursor
+	 * adjustment = an adjustment which should be adjusted when the cursor
 	 *  is moved, or NULL
 	 */
 	public void setCursorHadjustment(Adjustment adjustment)
@@ -1168,7 +1168,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * inclusive.
 	 * Since 2.16
 	 * Params:
-	 * fraction =  fraction of the task that's been completed
+	 * fraction = fraction of the task that's been completed
 	 */
 	public void setProgressFraction(double fraction)
 	{
@@ -1193,7 +1193,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * bouncing block for each call to gtk_entry_progress_pulse().
 	 * Since 2.16
 	 * Params:
-	 * fraction =  fraction between 0.0 and 1.0
+	 * fraction = fraction between 0.0 and 1.0
 	 */
 	public void setProgressPulseStep(double fraction)
 	{
@@ -1232,8 +1232,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * If pixbuf is NULL, no icon will be shown in the specified position.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
-	 * pixbuf =  A GdkPixbuf, or NULL
+	 * iconPos = Icon position
+	 * pixbuf = A GdkPixbuf, or NULL
 	 */
 	public void setIconFromPixbuf(GtkEntryIconPosition iconPos, Pixbuf pixbuf)
 	{
@@ -1247,8 +1247,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * If stock_id is NULL, no icon will be shown in the specified position.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
-	 * stockId =  The name of the stock item, or NULL
+	 * iconPos = Icon position
+	 * stockId = The name of the stock item, or NULL
 	 */
 	public void setIconFromStock(GtkEntryIconPosition iconPos, string stockId)
 	{
@@ -1264,8 +1264,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * If icon_name is NULL, no icon will be shown in the specified position.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  The position at which to set the icon
-	 * iconName =  An icon name, or NULL
+	 * iconPos = The position at which to set the icon
+	 * iconName = An icon name, or NULL
 	 */
 	public void setIconFromIconName(GtkEntryIconPosition iconPos, string iconName)
 	{
@@ -1281,8 +1281,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * If icon is NULL, no icon will be shown in the specified position.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  The position at which to set the icon
-	 * icon =  The icon to set, or NULL
+	 * iconPos = The position at which to set the icon
+	 * icon = The icon to set, or NULL
 	 */
 	public void setIconFromGicon(GtkEntryIconPosition iconPos, IconIF icon)
 	{
@@ -1296,7 +1296,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * the return value will be GTK_IMAGE_EMPTY.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: image representation being used
 	 */
 	public GtkImageType getIconStorageType(GtkEntryIconPosition iconPos)
@@ -1312,7 +1312,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * GdkPixbuf, a GIcon, a stock item, or an icon name.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: A GdkPixbuf, or NULL if no icon is set for this position.
 	 */
 	public Pixbuf getIconPixbuf(GtkEntryIconPosition iconPos)
@@ -1332,7 +1332,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * pixbuf, icon name or gicon).
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: A stock id, or NULL if no icon is set or if the icon wasn't set from a stock id
 	 */
 	public string getIconStock(GtkEntryIconPosition iconPos)
@@ -1347,7 +1347,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * pixbuf, stock or gicon).
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: An icon name, or NULL if no icon is set or if the icon wasn't set from an icon name
 	 */
 	public string getIconName(GtkEntryIconPosition iconPos)
@@ -1362,7 +1362,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * stock, pixbuf, or icon name).
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: A GIcon, or NULL if no icon is set or if the icon is not a GIcon
 	 */
 	public IconIF getIconGicon(GtkEntryIconPosition iconPos)
@@ -1380,8 +1380,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Sets whether the icon is activatable.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
-	 * activatable =  TRUE if the icon should be activatable
+	 * iconPos = Icon position
+	 * activatable = TRUE if the icon should be activatable
 	 */
 	public void setIconActivatable(GtkEntryIconPosition iconPos, int activatable)
 	{
@@ -1393,7 +1393,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Returns whether the icon is activatable.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: TRUE if the icon is activatable.
 	 */
 	public int getIconActivatable(GtkEntryIconPosition iconPos)
@@ -1406,8 +1406,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Sets the sensitivity for the specified icon.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
-	 * sensitive =  Specifies whether the icon should appear
+	 * iconPos = Icon position
+	 * sensitive = Specifies whether the icon should appear
 	 *  sensitive or insensitive
 	 */
 	public void setIconSensitive(GtkEntryIconPosition iconPos, int sensitive)
@@ -1420,7 +1420,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Returns whether the icon appears sensitive or insensitive.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  Icon position
+	 * iconPos = Icon position
 	 * Returns: TRUE if the icon is sensitive.
 	 */
 	public int getIconSensitive(GtkEntryIconPosition iconPos)
@@ -1436,8 +1436,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * signal handler.
 	 * Since 2.16
 	 * Params:
-	 * x =  the x coordinate of the position to find
-	 * y =  the y coordinate of the position to find
+	 * x = the x coordinate of the position to find
+	 * y = the y coordinate of the position to find
 	 * Returns: the index of the icon at the given position, or -1
 	 */
 	public int getIconAtPos(int x, int y)
@@ -1454,8 +1454,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_set_icon_tooltip_markup().
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  the icon position
-	 * tooltip =  the contents of the tooltip for the icon, or NULL
+	 * iconPos = the icon position
+	 * tooltip = the contents of the tooltip for the icon, or NULL
 	 */
 	public void setIconTooltipText(GtkEntryIconPosition iconPos, string tooltip)
 	{
@@ -1468,7 +1468,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * position in entry.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  the icon position
+	 * iconPos = the icon position
 	 * Returns: the tooltip text, or NULL. Free the returned string with g_free() when done.
 	 */
 	public string getIconTooltipText(GtkEntryIconPosition iconPos)
@@ -1486,8 +1486,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_enty_set_icon_tooltip_text().
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  the icon position
-	 * tooltip =  the contents of the tooltip for the icon, or NULL
+	 * iconPos = the icon position
+	 * tooltip = the contents of the tooltip for the icon, or NULL
 	 */
 	public void setIconTooltipMarkup(GtkEntryIconPosition iconPos, string tooltip)
 	{
@@ -1500,7 +1500,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * position in entry.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  the icon position
+	 * iconPos = the icon position
 	 * Returns: the tooltip text, or NULL. Free the returned string with g_free() when done.
 	 */
 	public string getIconTooltipMarkup(GtkEntryIconPosition iconPos)
@@ -1523,9 +1523,9 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gets executed after the default handler.
 	 * Since 2.16
 	 * Params:
-	 * iconPos =  icon position
-	 * targetList =  the targets (data formats) in which the data can be provided
-	 * actions =  a bitmask of the allowed drag actions
+	 * iconPos = icon position
+	 * targetList = the targets (data formats) in which the data can be provided
+	 * actions = a bitmask of the allowed drag actions
 	 */
 	public void setIconDragSource(GtkEntryIconPosition iconPos, GtkTargetList* targetList, GdkDragAction actions)
 	{

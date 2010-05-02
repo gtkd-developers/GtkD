@@ -120,8 +120,8 @@ public class Enums
 	/**
 	 * Returns the GEnumValue for a value.
 	 * Params:
-	 * enumClass =  a GEnumClass
-	 * value =  the value to look up
+	 * enumClass = a GEnumClass
+	 * value = the value to look up
 	 * Returns: the GEnumValue for value, or NULL if value is not a member of the enumeration
 	 */
 	public static Enums getValue(GEnumClass* enumClass, int value)
@@ -138,8 +138,8 @@ public class Enums
 	/**
 	 * Looks up a GEnumValue by name.
 	 * Params:
-	 * enumClass =  a GEnumClass
-	 * name =  the name to look up
+	 * enumClass = a GEnumClass
+	 * name = the name to look up
 	 * Returns: the GEnumValue with name name, or NULL if the enumeration doesn't have a member with that name
 	 */
 	public static Enums getValueByName(GEnumClass* enumClass, string name)
@@ -156,8 +156,8 @@ public class Enums
 	/**
 	 * Looks up a GEnumValue by nickname.
 	 * Params:
-	 * enumClass =  a GEnumClass
-	 * nick =  the nickname to look up
+	 * enumClass = a GEnumClass
+	 * nick = the nickname to look up
 	 * Returns: the GEnumValue with nickname nick, or NULL if the enumeration doesn't have a member with that nickname
 	 */
 	public static Enums getValueByNick(GEnumClass* enumClass, string nick)
@@ -177,7 +177,7 @@ public class Enums
 	 * my_enum_get_type() function from a usual C enumeration definition
 	 * than to write one yourself using g_enum_register_static().
 	 * Params:
-	 * name =  A nul-terminated string used as the name of the new type.
+	 * name = A nul-terminated string used as the name of the new type.
 	 * Returns: The new type identifier.
 	 */
 	public static GType registerStatic(string name, Enums _StaticValues)
@@ -190,8 +190,8 @@ public class Enums
 	 * This function is meant to be called from the complete_type_info()
 	 * function of a GTypePlugin implementation, as in the following
 	 * Params:
-	 * type =  the type identifier of the type being completed
-	 * info =  the GTypeInfo struct to be filled in
+	 * type = the type identifier of the type being completed
+	 * info = the GTypeInfo struct to be filled in
 	 */
 	public static void completeTypeInfo(GType type, out GTypeInfo info, Enums _Values)
 	{

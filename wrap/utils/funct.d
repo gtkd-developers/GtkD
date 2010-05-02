@@ -89,7 +89,7 @@ public struct Funct
 			typeWrap = getWrappedType(type.dup[0 .. $-1], convParms) ~ "[]";
 		else
 			typeWrap = getWrappedType(type.dup, convParms);
-		
+
 		GtkDClass.skip(p, text,'(');
 		int countBrace = 0;
 		char[] currParmType;
@@ -455,6 +455,13 @@ public struct Funct
 	char[] declaration(ConvParms* convParms, char[][char[]] aliases)
 	{
 		char[] dec;
+		char[] returnType;
+
+		if ( find(typeWrap, "string") > -1 )
+			returnType = typeWrap;
+		else
+			returnType = GtkDClass.stringToGtkD(typeWrap, convParms, aliases);
+
 		debug(ctor)writefln("declaration ctor strct = %s",convParms.strct);
 		debug(ctor)writefln("declaration ctor realStrct = %s",convParms.realStrct);
 		debug(ctor)writefln("declaration ctor type = %s",type);
@@ -463,6 +470,8 @@ public struct Funct
 		
 		if( convName == "ref" )
 			convName = "doref";
+
+		convName = GtkDClass.stringToGtkD(convName, convParms, aliases);
 
 		debug(declaration)writefln("name=%s convName=%s", name, convName);
 		if ( convParms.strct.length>0 
@@ -498,11 +507,11 @@ public struct Funct
 				&& (parmsType[0] == strctPointer )
 				)
 			{
-				dec = "public "~overr~typeWrap~" "~convName~"(";
+				dec = "public "~overr~returnType~" "~convName~"(";
 			}
 			else
 			{
-				dec = "public static "~overr~typeWrap~" "~convName~"(";
+				dec = "public static "~overr~returnType~" "~convName~"(";
 			}
 			ctor = false;
 		}
@@ -537,7 +546,12 @@ public struct Funct
 				&& (parmsType[i]!="void" || parms[i].length>0)
 				)
 			{
-				dec ~= parmsWrap[i]~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				if ( find(parmsWrap[i], "string") > -1 )
+					dec ~= parmsWrap[i];
+				else
+					dec ~= GtkDClass.stringToGtkD(parmsWrap[i], convParms, aliases);
+
+				dec ~= " "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 			}
 			++i;
 			++parmCount;

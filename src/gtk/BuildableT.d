@@ -108,7 +108,8 @@ public template BuildableT(TStruct)
 	 * Sets the name of the buildable object.
 	 * Since 2.12
 	 * Params:
-	 * name =  name to set
+	 * buildable = a GtkBuildable
+	 * name = name to set
 	 */
 	public void buildableSetName(string name)
 	{
@@ -122,6 +123,8 @@ public template BuildableT(TStruct)
 	 * GtkBuilder UI definition
 	 * used to construct the buildable.
 	 * Since 2.12
+	 * Params:
+	 * buildable = a GtkBuildable
 	 * Returns: the name set with gtk_buildable_set_name()
 	 */
 	public string buildableGetName()
@@ -135,9 +138,9 @@ public template BuildableT(TStruct)
 	 * describing how the child should be added.
 	 * Since 2.12
 	 * Params:
-	 * builder =  a GtkBuilder
-	 * child =  child to add
-	 * type =  kind of child or NULL
+	 * builder = a GtkBuilder
+	 * child = child to add
+	 * type = kind of child or NULL
 	 */
 	public void addChild(Builder builder, ObjectG child, string type)
 	{
@@ -149,9 +152,9 @@ public template BuildableT(TStruct)
 	 * Sets the property name name to value on the buildable object.
 	 * Since 2.12
 	 * Params:
-	 * builder =  a GtkBuilder
-	 * name =  name of property
-	 * value =  value of property
+	 * builder = a GtkBuilder
+	 * name = name of property
+	 * value = value of property
 	 */
 	public void setBuildableProperty(Builder builder, string name, Value value)
 	{
@@ -165,8 +168,8 @@ public template BuildableT(TStruct)
 	 * specified in the UI definition.
 	 * Since 2.12
 	 * Params:
-	 * builder =  GtkBuilder used to construct this object
-	 * name =  name of child to construct
+	 * builder = GtkBuilder used to construct this object
+	 * name = name of child to construct
 	 * Returns: the constructed child
 	 */
 	public ObjectG constructChild(Builder builder, string name)
@@ -184,11 +187,11 @@ public template BuildableT(TStruct)
 	 * This is called for each unknown element under <child>.
 	 * Since 2.12
 	 * Params:
-	 * builder =  a GtkBuilder used to construct this object
-	 * child =  child object or NULL for non-child tags
-	 * tagname =  name of tag
-	 * parser =  a GMarkupParser structure to fill in
-	 * data =  return location for user data that will be passed in
+	 * builder = a GtkBuilder used to construct this object
+	 * child = child object or NULL for non-child tags
+	 * tagname = name of tag
+	 * parser = a GMarkupParser structure to fill in
+	 * data = return location for user data that will be passed in
 	 *  to parser functions
 	 * Returns: TRUE if a object has a custom implementation, FALSE if it doesn't.
 	 */
@@ -203,10 +206,10 @@ public template BuildableT(TStruct)
 	 * the buildable.
 	 * Since 2.12
 	 * Params:
-	 * builder =  GtkBuilder used to construct this object
-	 * child =  child object or NULL for non-child tags
-	 * tagname =  name of tag
-	 * data =  user data that will be passed in to parser functions
+	 * builder = GtkBuilder used to construct this object
+	 * child = child object or NULL for non-child tags
+	 * tagname = name of tag
+	 * data = user data that will be passed in to parser functions
 	 */
 	public void customTagEnd(Builder builder, ObjectG child, string tagname, void** data)
 	{
@@ -219,10 +222,10 @@ public template BuildableT(TStruct)
 	 * called once for each custom tag handled by the buildable.
 	 * Since 2.12
 	 * Params:
-	 * builder =  a GtkBuilder
-	 * child =  child object or NULL for non-child tags
-	 * tagname =  the name of the tag
-	 * data =  user data created in custom_tag_start
+	 * builder = a GtkBuilder
+	 * child = child object or NULL for non-child tags
+	 * tagname = the name of the tag
+	 * data = user data created in custom_tag_start
 	 */
 	public void customFinished(Builder builder, ObjectG child, string tagname, void* data)
 	{
@@ -238,7 +241,7 @@ public template BuildableT(TStruct)
 	 * is called on a builder.
 	 * Since 2.12
 	 * Params:
-	 * builder =  a GtkBuilder
+	 * builder = a GtkBuilder
 	 */
 	public void parserFinished(Builder builder)
 	{
@@ -250,8 +253,8 @@ public template BuildableT(TStruct)
 	 * Get the internal child called childname of the buildable object.
 	 * Since 2.12
 	 * Params:
-	 * builder =  a GtkBuilder
-	 * childname =  name of child
+	 * builder = a GtkBuilder
+	 * childname = name of child
 	 * Returns: the internal child of the buildable object
 	 */
 	public ObjectG getInternalChild(Builder builder, string childname)

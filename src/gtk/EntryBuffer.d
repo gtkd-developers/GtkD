@@ -179,7 +179,7 @@ public class EntryBuffer : ObjectG
 	 * Optionally, specify initial text to set in the buffer.
 	 * Since 2.18
 	 * Params:
-	 * initialChars =  initial buffer text, or NULL
+	 * initialChars = initial buffer text, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (char[] initialChars)
@@ -213,7 +213,7 @@ public class EntryBuffer : ObjectG
 	 * Note that n_chars is in characters, not in bytes.
 	 * Since 2.18
 	 * Params:
-	 * chars =  the new text
+	 * chars = the new text
 	 */
 	public void setText(char[] chars)
 	{
@@ -262,7 +262,7 @@ public class EntryBuffer : ObjectG
 	 * will be truncated to fit.
 	 * Since 2.18
 	 * Params:
-	 * maxLength =  the maximum length of the entry buffer, or 0 for no maximum.
+	 * maxLength = the maximum length of the entry buffer, or 0 for no maximum.
 	 *  (other than the maximum length of entries.) The value passed in will
 	 *  be clamped to the range 0-65536.
 	 */
@@ -282,8 +282,8 @@ public class EntryBuffer : ObjectG
 	 * Note that the position and length are in characters, not in bytes.
 	 * Since 2.18
 	 * Params:
-	 * position =  the position at which to insert text.
-	 * chars =  the text to insert into the buffer.
+	 * position = the position at which to insert text.
+	 * chars = the text to insert into the buffer.
 	 * Returns: The number of characters actually inserted.
 	 */
 	public uint insertText(uint position, char[] chars)
@@ -301,8 +301,8 @@ public class EntryBuffer : ObjectG
 	 * Note that the positions are specified in characters, not bytes.
 	 * Since 2.18
 	 * Params:
-	 * position =  position at which to delete text
-	 * nChars =  number of characters to delete
+	 * position = position at which to delete text
+	 * nChars = number of characters to delete
 	 * Returns: The number of characters deleted.
 	 */
 	public uint deleteText(uint position, int nChars)
@@ -315,8 +315,8 @@ public class EntryBuffer : ObjectG
 	 * Used when subclassing GtkEntryBuffer
 	 * Since 2.18
 	 * Params:
-	 * position =  position at which text was deleted
-	 * nChars =  number of characters deleted
+	 * position = position at which text was deleted
+	 * nChars = number of characters deleted
 	 */
 	public void emitDeletedText(uint position, uint nChars)
 	{
@@ -328,8 +328,8 @@ public class EntryBuffer : ObjectG
 	 * Used when subclassing GtkEntryBuffer
 	 * Since 2.18
 	 * Params:
-	 * position =  position at which text was inserted
-	 * chars =  text that was inserted
+	 * position = position at which text was inserted
+	 * chars = text that was inserted
 	 */
 	public void emitInsertedText(uint position, char[] chars)
 	{

@@ -329,7 +329,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * If model is NULL, then it will unset the model.
 	 * Since 2.4
 	 * Params:
-	 * model =  The GtkTreeModel.
+	 * model = The GtkTreeModel.
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -360,9 +360,9 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * list.
 	 * Since 2.4
 	 * Params:
-	 * func =  The GtkEntryCompletionMatchFunc to use.
-	 * funcData =  The user data for func.
-	 * funcNotify =  Destroy notifier for func_data.
+	 * func = The GtkEntryCompletionMatchFunc to use.
+	 * funcData = The user data for func.
+	 * funcNotify = Destroy notifier for func_data.
 	 */
 	public void setMatchFunc(GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify)
 	{
@@ -377,7 +377,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * (ie, a too large dataset).
 	 * Since 2.4
 	 * Params:
-	 * length =  The minimum length of the key in order to start completing.
+	 * length = The minimum length of the key in order to start completing.
 	 */
 	public void setMinimumKeyLength(int length)
 	{
@@ -436,8 +436,8 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * gtk_entry_completion_insert_action_markup().
 	 * Since 2.4
 	 * Params:
-	 * index =  The index of the item to insert.
-	 * text =  Text of the item to insert.
+	 * index = The index of the item to insert.
+	 * text = Text of the item to insert.
 	 */
 	public void insertActionText(int index, string text)
 	{
@@ -450,8 +450,8 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * with markup markup.
 	 * Since 2.4
 	 * Params:
-	 * index =  The index of the item to insert.
-	 * markup =  Markup of the item to insert.
+	 * index = The index of the item to insert.
+	 * markup = Markup of the item to insert.
 	 */
 	public void insertActionMarkup(int index, string markup)
 	{
@@ -463,7 +463,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Deletes the action at index_ from completion's action list.
 	 * Since 2.4
 	 * Params:
-	 * index =  The index of the item to Delete.
+	 * index = The index of the item to Delete.
 	 */
 	public void deleteAction(int index)
 	{
@@ -481,7 +481,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * renderer, use g_object_set() to set the ::text_column property directly.
 	 * Since 2.4
 	 * Params:
-	 * column =  The column in the model of completion to get strings from.
+	 * column = The column in the model of completion to get strings from.
 	 */
 	public void setTextColumn(int column)
 	{
@@ -505,7 +505,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * be automatically inserted in the entry.
 	 * Since 2.6
 	 * Params:
-	 * inlineCompletion =  TRUE to do inline completion
+	 * inlineCompletion = TRUE to do inline completion
 	 */
 	public void setInlineCompletion(int inlineCompletion)
 	{
@@ -530,7 +530,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * inside the entry.
 	 * Since 2.12
 	 * Params:
-	 * inlineSelection =  TRUE to do inline selection
+	 * inlineSelection = TRUE to do inline selection
 	 */
 	public void setInlineSelection(int inlineSelection)
 	{
@@ -553,7 +553,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Sets whether the completions should be presented in a popup window.
 	 * Since 2.6
 	 * Params:
-	 * popupCompletion =  TRUE to do popup completion
+	 * popupCompletion = TRUE to do popup completion
 	 */
 	public void setPopupCompletion(int popupCompletion)
 	{
@@ -577,7 +577,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * width as the entry.
 	 * Since 2.8
 	 * Params:
-	 * popupSetWidth =  TRUE to make the width of the popup the same as the entry
+	 * popupSetWidth = TRUE to make the width of the popup the same as the entry
 	 */
 	public void setPopupSetWidth(int popupSetWidth)
 	{
@@ -604,7 +604,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * completion.
 	 * Since 2.8
 	 * Params:
-	 * popupSingleMatch =  TRUE if the popup should appear even for a single
+	 * popupSingleMatch = TRUE if the popup should appear even for a single
 	 *  match
 	 */
 	public void setPopupSingleMatch(int popupSingleMatch)

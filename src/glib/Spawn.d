@@ -93,21 +93,7 @@ version(Tango) {
 	private import std.c.string;
 }
 
-//TODO: Put this change in the wrapper.
-version(Tango)
-{
-	version (Windows)
-	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
-	else
-	private import tango.stdc.posix.stdio;
-}
-else version(D_Version2)
-{
-	version (Windows)
-	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
-	else
-	private import core.sys.posix.stdio;
-}
+
 
 /**
  * Description
@@ -214,6 +200,21 @@ public class Spawn
 			return Str.toString(error.message);
 		}
 		return "";
+	}
+	
+	version(Tango)
+	{
+		version (Windows)
+		extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
+		else
+		private import tango.stdc.posix.stdio;
+	}
+	else version(D_Version2)
+	{
+		version (Windows)
+		extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
+		else
+		private import core.sys.posix.stdio;
 	}
 	
 	/**

@@ -81,7 +81,7 @@ private import gtk.Button;
  * gtk_toggle_button_set_active(), and retrieved using
  * gtk_toggle_button_get_active().
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled.
- * Example 16. Creating two GtkToggleButton widgets.
+ * Example  16.  Creating two GtkToggleButton widgets.
  * void make_toggles (void) {
 	 *  GtkWidget *dialog, *toggle1, *toggle2;
 	 *  dialog = gtk_dialog_new ();
@@ -236,7 +236,7 @@ public class ToggleButton : Button
 	 * and GtkRadioButton that derive from GtkToggleButton,
 	 * not instances of GtkToggleButton itself.
 	 * Params:
-	 * drawIndicator =  if TRUE, draw the button as a separate indicator
+	 * drawIndicator = if TRUE, draw the button as a separate indicator
 	 * and label; if FALSE, draw the button like a normal button
 	 */
 	public void setMode(int drawIndicator)
@@ -311,7 +311,7 @@ public class ToggleButton : Button
 	 * done manually, gtk_toggle_button_set_inconsistent() only affects
 	 * visual appearance, it doesn't affect the semantics of the button.
 	 * Params:
-	 * setting =  TRUE if state is inconsistent
+	 * setting = TRUE if state is inconsistent
 	 */
 	public void setInconsistent(int setting)
 	{

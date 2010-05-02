@@ -163,7 +163,7 @@ public class RecentFilter : ObjectGtk
 	 * user interface if there is a selectable list of filters.
 	 * Since 2.10
 	 * Params:
-	 * name =  then human readable name of filter
+	 * name = then human readable name of filter
 	 */
 	public void setName(string name)
 	{
@@ -175,7 +175,7 @@ public class RecentFilter : ObjectGtk
 	 * Adds a rule that allows resources based on their registered MIME type.
 	 * Since 2.10
 	 * Params:
-	 * mimeType =  a MIME type
+	 * mimeType = a MIME type
 	 */
 	public void addMimeType(string mimeType)
 	{
@@ -188,7 +188,7 @@ public class RecentFilter : ObjectGtk
 	 * display name.
 	 * Since 2.10
 	 * Params:
-	 * pattern =  a file pattern
+	 * pattern = a file pattern
 	 */
 	public void addPattern(string pattern)
 	{
@@ -212,7 +212,7 @@ public class RecentFilter : ObjectGtk
 	 * that has registered them.
 	 * Since 2.10
 	 * Params:
-	 * application =  an application name
+	 * application = an application name
 	 */
 	public void addApplication(string application)
 	{
@@ -225,7 +225,7 @@ public class RecentFilter : ObjectGtk
 	 * to which they belong
 	 * Since 2.10
 	 * Params:
-	 * group =  a group name
+	 * group = a group name
 	 */
 	public void addGroup(string group)
 	{
@@ -238,7 +238,7 @@ public class RecentFilter : ObjectGtk
 	 * of days elapsed since they were last modified.
 	 * Since 2.10
 	 * Params:
-	 * days =  number of days
+	 * days = number of days
 	 */
 	public void addAge(int days)
 	{
@@ -254,12 +254,12 @@ public class RecentFilter : ObjectGtk
 	 * it isn't needed by the filter.
 	 * Since 2.10
 	 * Params:
-	 * needed =  bitfield of flags indicating the information that the custom
+	 * needed = bitfield of flags indicating the information that the custom
 	 *  filter function needs.
-	 * func =  callback function; if the function returns TRUE, then
+	 * func = callback function; if the function returns TRUE, then
 	 *  the file will be displayed.
-	 * data =  data to pass to func
-	 * dataDestroy =  function to call to free data when it is no longer needed.
+	 * data = data to pass to func
+	 * dataDestroy = function to call to free data when it is no longer needed.
 	 */
 	public void addCustom(GtkRecentFilterFlags needed, GtkRecentFilterFunc func, void* data, GDestroyNotify dataDestroy)
 	{
@@ -291,8 +291,8 @@ public class RecentFilter : ObjectGtk
 	 * GtkRecentChooser.
 	 * Since 2.10
 	 * Params:
-	 * filter =  a GtkRecentFilter
-	 * filterInfo =  a GtkRecentFilterInfo structure containing information
+	 * filter = a GtkRecentFilter
+	 * filterInfo = a GtkRecentFilterInfo structure containing information
 	 *  about a recently used resource
 	 * Returns: TRUE if the file should be displayed
 	 */

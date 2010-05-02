@@ -309,7 +309,7 @@ public class Context
 	 * call cairo_surface_destroy() on it if you don't need to
 	 * maintain a separate reference to it.
 	 * Params:
-	 * target =  target surface for the context
+	 * target = target surface for the context
 	 * Returns: a newly allocated cairo_t with a reference count of 1. The initial reference count should be released with cairo_destroy() when you are done using the cairo_t. This function never returns NULL. If memory cannot be allocated, a special cairo_t object will be returned on which cairo_status() returns CAIRO_STATUS_NO_MEMORY. You can use this object normally, but no drawing will be done.
 	 */
 	public static Context create(Surface target)
@@ -455,7 +455,7 @@ public class Context
 	 * detailed description of group rendering.
 	 * Since 1.2
 	 * Params:
-	 * content =  a %cairo_content_t indicating the type of group that
+	 * content = a %cairo_content_t indicating the type of group that
 	 *  will be created
 	 */
 	public void pushGroupWithContent(cairo_content_t content)
@@ -534,9 +534,9 @@ public class Context
 	 * The default source pattern is opaque black, (that is, it is
 	 * equivalent to cairo_set_source_rgb(cr, 0.0, 0.0, 0.0)).
 	 * Params:
-	 * red =  red component of color
-	 * green =  green component of color
-	 * blue =  blue component of color
+	 * red = red component of color
+	 * green = green component of color
+	 * blue = blue component of color
 	 */
 	public void setSourceRgb(double red, double green, double blue)
 	{
@@ -554,10 +554,10 @@ public class Context
 	 * The default source pattern is opaque black, (that is, it is
 	 * equivalent to cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 1.0)).
 	 * Params:
-	 * red =  red component of color
-	 * green =  green component of color
-	 * blue =  blue component of color
-	 * alpha =  alpha component of color
+	 * red = red component of color
+	 * green = green component of color
+	 * blue = blue component of color
+	 * alpha = alpha component of color
 	 */
 	public void setSourceRgba(double red, double green, double blue, double alpha)
 	{
@@ -577,7 +577,7 @@ public class Context
 	 * (that is, it is equivalent to cairo_set_source_rgb(cr, 0.0, 0.0,
 	 * 0.0)).
 	 * Params:
-	 * source =  a cairo_pattern_t to be used as the source for
+	 * source = a cairo_pattern_t to be used as the source for
 	 * subsequent drawing operations.
 	 */
 	public void setSource(Pattern source)
@@ -601,9 +601,9 @@ public class Context
 	 * that these attributes can be modified if desired, (eg. to create a
 	 * repeating pattern with cairo_pattern_set_extend()).
 	 * Params:
-	 * surface =  a surface to be used to set the source pattern
-	 * x =  User-space X coordinate for surface origin
-	 * y =  User-space Y coordinate for surface origin
+	 * surface = a surface to be used to set the source pattern
+	 * x = User-space X coordinate for surface origin
+	 * y = User-space Y coordinate for surface origin
 	 */
 	public void setSourceSurface(Surface surface, double x, double y)
 	{
@@ -634,7 +634,7 @@ public class Context
 	 * Note that this option does not affect text rendering, instead see
 	 * cairo_font_options_set_antialias().
 	 * Params:
-	 * antialias =  the new antialiasing mode
+	 * antialias = the new antialiasing mode
 	 */
 	public void setAntialias(cairo_antialias_t antialias)
 	{
@@ -673,8 +673,8 @@ public class Context
 	 * cr will be put into an error state with a status of
 	 * #CAIRO_STATUS_INVALID_DASH.
 	 * Params:
-	 * dashes =  an array specifying alternate lengths of on and off stroke portions
-	 * offset =  an offset into the dash pattern at which the stroke should start
+	 * dashes = an array specifying alternate lengths of on and off stroke portions
+	 * offset = an offset into the dash pattern at which the stroke should start
 	 */
 	public void setDash(double[] dashes, double offset)
 	{
@@ -701,8 +701,8 @@ public class Context
 	 * cairo_get_dash_count().
 	 * Since 1.4
 	 * Params:
-	 * dashes =  return value for the dash array, or NULL
-	 * offset =  return value for the current dash offset, or NULL
+	 * dashes = return value for the dash array, or NULL
+	 * offset = return value for the current dash offset, or NULL
 	 */
 	public void getDash(double* dashes, double* offset)
 	{
@@ -718,7 +718,7 @@ public class Context
 	 * on the semantics of each available fill rule.
 	 * The default fill rule is CAIRO_FILL_RULE_WINDING.
 	 * Params:
-	 * fillRule =  a fill rule, specified as a cairo_fill_rule_t
+	 * fillRule = a fill rule, specified as a cairo_fill_rule_t
 	 */
 	public void setFillRule(cairo_fill_rule_t fillRule)
 	{
@@ -746,7 +746,7 @@ public class Context
 	 * construction.
 	 * The default line cap style is CAIRO_LINE_CAP_BUTT.
 	 * Params:
-	 * lineCap =  a line cap style
+	 * lineCap = a line cap style
 	 */
 	public void setLineCap(cairo_line_cap_t lineCap)
 	{
@@ -774,7 +774,7 @@ public class Context
 	 * construction.
 	 * The default line join style is CAIRO_LINE_JOIN_MITER.
 	 * Params:
-	 * lineJoin =  a line join style
+	 * lineJoin = a line join style
 	 */
 	public void setLineJoin(cairo_line_join_t lineJoin)
 	{
@@ -811,7 +811,7 @@ public class Context
 	 * construction.
 	 * The default line width value is 2.0.
 	 * Params:
-	 * width =  a line width
+	 * width = a line width
 	 */
 	public void setLineWidth(double width)
 	{
@@ -852,7 +852,7 @@ public class Context
 	 * A miter limit for a desired angle can be computed as: miter limit =
 	 * 1/sin(angle/2)
 	 * Params:
-	 * limit =  miter limit to set
+	 * limit = miter limit to set
 	 */
 	public void setMiterLimit(double limit)
 	{
@@ -876,7 +876,7 @@ public class Context
 	 * each available compositing operator.
 	 * The default operator is CAIRO_OPERATOR_OVER.
 	 * Params:
-	 * op =  a compositing operator, specified as a cairo_operator_t
+	 * op = a compositing operator, specified as a cairo_operator_t
 	 */
 	public void setOperator(cairo_operator_t op)
 	{
@@ -903,7 +903,7 @@ public class Context
 	 * appearance. (Reducing the value from the default value of 0.1
 	 * is unlikely to improve appearance significantly.)
 	 * Params:
-	 * tolerance =  the tolerance, in device units (typically pixels)
+	 * tolerance = the tolerance, in device units (typically pixels)
 	 */
 	public void setTolerance(double tolerance)
 	{
@@ -970,10 +970,10 @@ public class Context
 	 * current clip.
 	 * Since 1.4
 	 * Params:
-	 * x1 =  left of the resulting extents
-	 * y1 =  top of the resulting extents
-	 * x2 =  right of the resulting extents
-	 * y2 =  bottom of the resulting extents
+	 * x1 = left of the resulting extents
+	 * y1 = top of the resulting extents
+	 * x2 = right of the resulting extents
+	 * y2 = bottom of the resulting extents
 	 */
 	public void clipExtents(out double x1, out double y1, out double x2, out double y2)
 	{
@@ -1005,7 +1005,7 @@ public class Context
 	 * be dereferenced.
 	 * Since 1.4
 	 * Params:
-	 * rectangleList =  a rectangle list, as obtained from cairo_copy_clip_rectangles()
+	 * rectangleList = a rectangle list, as obtained from cairo_copy_clip_rectangles()
 	 */
 	public static void rectangleListDestroy(cairo_rectangle_list_t* rectangleList)
 	{
@@ -1070,10 +1070,10 @@ public class Context
 	 * if the non-inked path extents are desired.
 	 * See cairo_fill(), cairo_set_fill_rule() and cairo_fill_preserve().
 	 * Params:
-	 * x1 =  left of the resulting extents
-	 * y1 =  top of the resulting extents
-	 * x2 =  right of the resulting extents
-	 * y2 =  bottom of the resulting extents
+	 * x1 = left of the resulting extents
+	 * y1 = top of the resulting extents
+	 * x2 = right of the resulting extents
+	 * y2 = bottom of the resulting extents
 	 */
 	public void fillExtents(out double x1, out double y1, out double x2, out double y2)
 	{
@@ -1088,8 +1088,8 @@ public class Context
 	 * into account.
 	 * See cairo_fill(), cairo_set_fill_rule() and cairo_fill_preserve().
 	 * Params:
-	 * x =  X coordinate of the point to test
-	 * y =  Y coordinate of the point to test
+	 * x = X coordinate of the point to test
+	 * y = Y coordinate of the point to test
 	 * Returns: A non-zero value if the point is inside, or zero ifoutside.
 	 */
 	public cairo_bool_t inFill(double x, double y)
@@ -1104,7 +1104,7 @@ public class Context
 	 * areas of pattern are painted with the source, transparent
 	 * areas are not painted.)
 	 * Params:
-	 * pattern =  a cairo_pattern_t
+	 * pattern = a cairo_pattern_t
 	 */
 	public void mask(Pattern pattern)
 	{
@@ -1118,9 +1118,9 @@ public class Context
 	 * areas of surface are painted with the source, transparent
 	 * areas are not painted.)
 	 * Params:
-	 * surface =  a cairo_surface_t
-	 * surfaceX =  X coordinate at which to place the origin of surface
-	 * surfaceY =  Y coordinate at which to place the origin of surface
+	 * surface = a cairo_surface_t
+	 * surfaceX = X coordinate at which to place the origin of surface
+	 * surfaceY = Y coordinate at which to place the origin of surface
 	 */
 	public void maskSurface(Surface surface, double surfaceX, double surfaceY)
 	{
@@ -1144,7 +1144,7 @@ public class Context
 	 * alpha. The effect is similar to cairo_paint(), but the drawing
 	 * is faded out using the alpha value.
 	 * Params:
-	 * alpha =  alpha value, between 0 (transparent) and 1 (opaque)
+	 * alpha = alpha value, between 0 (transparent) and 1 (opaque)
 	 */
 	public void paintWithAlpha(double alpha)
 	{
@@ -1202,10 +1202,10 @@ public class Context
 	 * cairo_set_line_cap(), cairo_set_dash(), and
 	 * cairo_stroke_preserve().
 	 * Params:
-	 * x1 =  left of the resulting extents
-	 * y1 =  top of the resulting extents
-	 * x2 =  right of the resulting extents
-	 * y2 =  bottom of the resulting extents
+	 * x1 = left of the resulting extents
+	 * y1 = top of the resulting extents
+	 * x2 = right of the resulting extents
+	 * y2 = bottom of the resulting extents
 	 */
 	public void strokeExtents(out double x1, out double y1, out double x2, out double y2)
 	{
@@ -1222,8 +1222,8 @@ public class Context
 	 * cairo_set_line_cap(), cairo_set_dash(), and
 	 * cairo_stroke_preserve().
 	 * Params:
-	 * x =  X coordinate of the point to test
-	 * y =  Y coordinate of the point to test
+	 * x = X coordinate of the point to test
+	 * y = Y coordinate of the point to test
 	 * Returns: A non-zero value if the point is inside, or zero ifoutside.
 	 */
 	public cairo_bool_t inStroke(double x, double y)
@@ -1275,9 +1275,9 @@ public class Context
 	 * for data.
 	 * Since 1.4
 	 * Params:
-	 * key =  the address of a cairo_user_data_key_t to attach the user data to
-	 * userData =  the user data to attach to the cairo_t
-	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * key = the address of a cairo_user_data_key_t to attach the user data to
+	 * userData = the user data to attach to the cairo_t
+	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * cairo_t is destroyed or when new user data is attached using the
 	 * same key.
 	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
@@ -1294,7 +1294,7 @@ public class Context
 	 * function returns NULL.
 	 * Since 1.4
 	 * Params:
-	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * key = the address of the cairo_user_data_key_t the user data was
 	 * attached to
 	 * Returns: the user data previously attached or NULL.
 	 */
@@ -1349,7 +1349,7 @@ public class Context
 	 * that is created manually (ie. outside of cairo) should be destroyed
 	 * manually as well.
 	 * Params:
-	 * path =  a path previously returned by either cairo_copy_path() or
+	 * path = a path previously returned by either cairo_copy_path() or
 	 * cairo_copy_path_flat().
 	 */
 	public static void pathDestroy(cairo_path_t* path)
@@ -1366,7 +1366,7 @@ public class Context
 	 * initialized, and note that path->status must be
 	 * initialized to CAIRO_STATUS_SUCCESS.
 	 * Params:
-	 * path =  path to be appended
+	 * path = path to be appended
 	 */
 	public void appendPath(cairo_path_t* path)
 	{
@@ -1395,8 +1395,8 @@ public class Context
 	 * check this in advance with cairo_has_current_point().
 	 * Most path construction functions alter the current point. See the
 	 * Params:
-	 * x =  return value for X coordinate of the current point
-	 * y =  return value for Y coordinate of the current point
+	 * x = return value for X coordinate of the current point
+	 * y = return value for Y coordinate of the current point
 	 */
 	public void getCurrentPoint(out double x, out double y)
 	{
@@ -1483,11 +1483,11 @@ public class Context
 	 * you can scale the current transformation matrix by different
 	 * amounts in the X and Y directions. For example, to draw an ellipse
 	 * Params:
-	 * xc =  X position of the center of the arc
-	 * yc =  Y position of the center of the arc
-	 * radius =  the radius of the arc
-	 * angle1 =  the start angle, in radians
-	 * angle2 =  the end angle, in radians
+	 * xc = X position of the center of the arc
+	 * yc = Y position of the center of the arc
+	 * radius = the radius of the arc
+	 * angle1 = the start angle, in radians
+	 * angle2 = the end angle, in radians
 	 */
 	public void arc(double xc, double yc, double radius, double angle1, double angle2)
 	{
@@ -1504,11 +1504,11 @@ public class Context
 	 * See cairo_arc() for more details. This function differs only in the
 	 * direction of the arc between the two angles.
 	 * Params:
-	 * xc =  X position of the center of the arc
-	 * yc =  Y position of the center of the arc
-	 * radius =  the radius of the arc
-	 * angle1 =  the start angle, in radians
-	 * angle2 =  the end angle, in radians
+	 * xc = X position of the center of the arc
+	 * yc = Y position of the center of the arc
+	 * radius = the radius of the arc
+	 * angle1 = the start angle, in radians
+	 * angle2 = the end angle, in radians
 	 */
 	public void arcNegative(double xc, double yc, double radius, double angle1, double angle2)
 	{
@@ -1525,12 +1525,12 @@ public class Context
 	 * this function will behave as if preceded by a call to
 	 * cairo_move_to(cr, x1, y1).
 	 * Params:
-	 * x1 =  the X coordinate of the first control point
-	 * y1 =  the Y coordinate of the first control point
-	 * x2 =  the X coordinate of the second control point
-	 * y2 =  the Y coordinate of the second control point
-	 * x3 =  the X coordinate of the end of the curve
-	 * y3 =  the Y coordinate of the end of the curve
+	 * x1 = the X coordinate of the first control point
+	 * y1 = the Y coordinate of the first control point
+	 * x2 = the X coordinate of the second control point
+	 * y2 = the Y coordinate of the second control point
+	 * x3 = the X coordinate of the end of the curve
+	 * y3 = the Y coordinate of the end of the curve
 	 */
 	public void curveTo(double x1, double y1, double x2, double y2, double x3, double y3)
 	{
@@ -1545,8 +1545,8 @@ public class Context
 	 * If there is no current point before the call to cairo_line_to()
 	 * this function will behave as cairo_move_to(cr, x, y).
 	 * Params:
-	 * x =  the X coordinate of the end of the new line
-	 * y =  the Y coordinate of the end of the new line
+	 * x = the X coordinate of the end of the new line
+	 * y = the Y coordinate of the end of the new line
 	 */
 	public void lineTo(double x, double y)
 	{
@@ -1558,8 +1558,8 @@ public class Context
 	 * Begin a new sub-path. After this call the current point will be (x,
 	 * y).
 	 * Params:
-	 * x =  the X coordinate of the new position
-	 * y =  the Y coordinate of the new position
+	 * x = the X coordinate of the new position
+	 * y = the Y coordinate of the new position
 	 */
 	public void moveTo(double x, double y)
 	{
@@ -1571,10 +1571,10 @@ public class Context
 	 * Adds a closed sub-path rectangle of the given size to the current
 	 * path at position (x, y) in user-space coordinates.
 	 * Params:
-	 * x =  the X coordinate of the top left corner of the rectangle
-	 * y =  the Y coordinate to the top left corner of the rectangle
-	 * width =  the width of the rectangle
-	 * height =  the height of the rectangle
+	 * x = the X coordinate of the top left corner of the rectangle
+	 * y = the Y coordinate to the top left corner of the rectangle
+	 * width = the width of the rectangle
+	 * height = the height of the rectangle
 	 */
 	public void rectangle(double x, double y, double width, double height)
 	{
@@ -1587,8 +1587,8 @@ public class Context
 	 * path if filled, achieves an effect similar to that of
 	 * cairo_show_glyphs().
 	 * Params:
-	 * glyphs =  array of glyphs to show
-	 * numGlyphs =  number of glyphs to show
+	 * glyphs = array of glyphs to show
+	 * numGlyphs = number of glyphs to show
 	 */
 	public void glyphPath(cairo_glyph_t* glyphs, int numGlyphs)
 	{
@@ -1613,7 +1613,7 @@ public class Context
 	 * serious text-using applications. See cairo_glyph_path() for the
 	 * "real" text path API in cairo.
 	 * Params:
-	 * utf8 =  a NUL-terminated string of text encoded in UTF-8, or NULL
+	 * utf8 = a NUL-terminated string of text encoded in UTF-8, or NULL
 	 */
 	public void textPath(string utf8)
 	{
@@ -1635,12 +1635,12 @@ public class Context
 	 * so will cause cr to shutdown with a status of
 	 * CAIRO_STATUS_NO_CURRENT_POINT.
 	 * Params:
-	 * dx1 =  the X offset to the first control point
-	 * dy1 =  the Y offset to the first control point
-	 * dx2 =  the X offset to the second control point
-	 * dy2 =  the Y offset to the second control point
-	 * dx3 =  the X offset to the end of the curve
-	 * dy3 =  the Y offset to the end of the curve
+	 * dx1 = the X offset to the first control point
+	 * dy1 = the Y offset to the first control point
+	 * dx2 = the X offset to the second control point
+	 * dy2 = the Y offset to the second control point
+	 * dx3 = the X offset to the end of the curve
+	 * dy3 = the Y offset to the end of the curve
 	 */
 	public void relCurveTo(double dx1, double dy1, double dx2, double dy2, double dx3, double dy3)
 	{
@@ -1659,8 +1659,8 @@ public class Context
 	 * so will cause cr to shutdown with a status of
 	 * CAIRO_STATUS_NO_CURRENT_POINT.
 	 * Params:
-	 * dx =  the X offset to the end of the new line
-	 * dy =  the Y offset to the end of the new line
+	 * dx = the X offset to the end of the new line
+	 * dy = the Y offset to the end of the new line
 	 */
 	public void relLineTo(double dx, double dy)
 	{
@@ -1677,8 +1677,8 @@ public class Context
 	 * so will cause cr to shutdown with a status of
 	 * CAIRO_STATUS_NO_CURRENT_POINT.
 	 * Params:
-	 * dx =  the X offset
-	 * dy =  the Y offset
+	 * dx = the X offset
+	 * dy = the Y offset
 	 */
 	public void relMoveTo(double dx, double dy)
 	{
@@ -1706,10 +1706,10 @@ public class Context
 	 * cairo_path_extents().
 	 * Since 1.6
 	 * Params:
-	 * x1 =  left of the resulting extents
-	 * y1 =  top of the resulting extents
-	 * x2 =  right of the resulting extents
-	 * y2 =  bottom of the resulting extents
+	 * x1 = left of the resulting extents
+	 * y1 = top of the resulting extents
+	 * x2 = right of the resulting extents
+	 * y2 = bottom of the resulting extents
 	 */
 	public void pathExtents(out double x1, out double y1, out double x2, out double y2)
 	{
@@ -1724,8 +1724,8 @@ public class Context
 	 * call to cairo_translate(). In other words, the translation of the
 	 * user-space origin takes place after any existing transformation.
 	 * Params:
-	 * tx =  amount to translate in the X direction
-	 * ty =  amount to translate in the Y direction
+	 * tx = amount to translate in the X direction
+	 * ty = amount to translate in the Y direction
 	 */
 	public void translate(double tx, double ty)
 	{
@@ -1739,8 +1739,8 @@ public class Context
 	 * the axes takes place after any existing transformation of user
 	 * space.
 	 * Params:
-	 * sx =  scale factor for the X dimension
-	 * sy =  scale factor for the Y dimension
+	 * sx = scale factor for the X dimension
+	 * sy = scale factor for the Y dimension
 	 */
 	public void scale(double sx, double sy)
 	{
@@ -1755,7 +1755,7 @@ public class Context
 	 * rotation direction for positive angles is from the positive X axis
 	 * toward the positive Y axis.
 	 * Params:
-	 * angle =  angle (in radians) by which the user-space axes will be
+	 * angle = angle (in radians) by which the user-space axes will be
 	 * rotated
 	 */
 	public void rotate(double angle)
@@ -1769,7 +1769,7 @@ public class Context
 	 * matrix as an additional transformation. The new transformation of
 	 * user space takes place after any existing transformation.
 	 * Params:
-	 * matrix =  a transformation to be applied to the user-space axes
+	 * matrix = a transformation to be applied to the user-space axes
 	 */
 	public void transform(Matrix matrix)
 	{
@@ -1781,7 +1781,7 @@ public class Context
 	 * Modifies the current transformation matrix (CTM) by setting it
 	 * equal to matrix.
 	 * Params:
-	 * matrix =  a transformation matrix from user space to device space
+	 * matrix = a transformation matrix from user space to device space
 	 */
 	public void setMatrix(Matrix matrix)
 	{
@@ -1792,7 +1792,7 @@ public class Context
 	/**
 	 * Stores the current transformation matrix (CTM) into matrix.
 	 * Params:
-	 * matrix =  return value for the matrix
+	 * matrix = return value for the matrix
 	 */
 	public void getMatrix(Matrix matrix)
 	{
@@ -1817,8 +1817,8 @@ public class Context
 	 * multiplying the given point by the current transformation matrix
 	 * (CTM).
 	 * Params:
-	 * x =  X value of coordinate (in/out parameter)
-	 * y =  Y value of coordinate (in/out parameter)
+	 * x = X value of coordinate (in/out parameter)
+	 * y = Y value of coordinate (in/out parameter)
 	 */
 	public void userToDevice(ref double x, ref double y)
 	{
@@ -1832,8 +1832,8 @@ public class Context
 	 * translation components of the CTM will be ignored when transforming
 	 * (dx,dy).
 	 * Params:
-	 * dx =  X component of a distance vector (in/out parameter)
-	 * dy =  Y component of a distance vector (in/out parameter)
+	 * dx = X component of a distance vector (in/out parameter)
+	 * dy = Y component of a distance vector (in/out parameter)
 	 */
 	public void userToDeviceDistance(ref double dx, ref double dy)
 	{
@@ -1846,8 +1846,8 @@ public class Context
 	 * multiplying the given point by the inverse of the current
 	 * transformation matrix (CTM).
 	 * Params:
-	 * x =  X value of coordinate (in/out parameter)
-	 * y =  Y value of coordinate (in/out parameter)
+	 * x = X value of coordinate (in/out parameter)
+	 * y = Y value of coordinate (in/out parameter)
 	 */
 	public void deviceToUser(ref double x, ref double y)
 	{
@@ -1861,8 +1861,8 @@ public class Context
 	 * translation components of the inverse CTM will be ignored when
 	 * transforming (dx,dy).
 	 * Params:
-	 * dx =  X component of a distance vector (in/out parameter)
-	 * dy =  Y component of a distance vector (in/out parameter)
+	 * dx = X component of a distance vector (in/out parameter)
+	 * dy = Y component of a distance vector (in/out parameter)
 	 */
 	public void deviceToUserDistance(ref double dx, ref double dy)
 	{
@@ -1902,9 +1902,9 @@ public class Context
 	 * This function is equivalent to a call to cairo_toy_font_face_create()
 	 * followed by cairo_set_font_face().
 	 * Params:
-	 * family =  a font family name, encoded in UTF-8
-	 * slant =  the slant for the font
-	 * weight =  the weight for the font
+	 * family = a font family name, encoded in UTF-8
+	 * slant = the slant for the font
+	 * weight = the weight for the font
 	 */
 	public void selectFontFace(string family, cairo_font_slant_t slant, cairo_font_weight_t weight)
 	{
@@ -1922,7 +1922,7 @@ public class Context
 	 * cairo_set_font_matrix() nor cairo_set_scaled_font()), the default
 	 * font size is 10.0.
 	 * Params:
-	 * size =  the new font size, in user space units
+	 * size = the new font size, in user space units
 	 */
 	public void setFontSize(double size)
 	{
@@ -1938,7 +1938,7 @@ public class Context
 	 * complex font matrix can be used to shear the font
 	 * or stretch it unequally along the two axes
 	 * Params:
-	 * matrix =  a cairo_matrix_t describing a transform to be applied to
+	 * matrix = a cairo_matrix_t describing a transform to be applied to
 	 * the current font.
 	 */
 	public void setFontMatrix(Matrix matrix)
@@ -1951,7 +1951,7 @@ public class Context
 	 * Stores the current font matrix into matrix. See
 	 * cairo_set_font_matrix().
 	 * Params:
-	 * matrix =  return value for the matrix
+	 * matrix = return value for the matrix
 	 */
 	public void getFontMatrix(Matrix matrix)
 	{
@@ -1966,7 +1966,7 @@ public class Context
 	 * has a default value (like CAIRO_ANTIALIAS_DEFAULT), then the value
 	 * from the surface is used.
 	 * Params:
-	 * options =  font options to use
+	 * options = font options to use
 	 */
 	public void setFontOptions(FontOption options)
 	{
@@ -1980,7 +1980,7 @@ public class Context
 	 * from the underlying surface; they are literally the options
 	 * passed to cairo_set_font_options().
 	 * Params:
-	 * options =  a cairo_font_options_t object into which to store
+	 * options = a cairo_font_options_t object into which to store
 	 *  the retrieved options. All existing values are overwritten
 	 */
 	public void getFontOptions(FontOption options)
@@ -1994,7 +1994,7 @@ public class Context
 	 * font_face. The replaced font face in the cairo_t will be
 	 * destroyed if there are no other references to it.
 	 * Params:
-	 * fontFace =  a cairo_font_face_t, or NULL to restore to the default font
+	 * fontFace = a cairo_font_face_t, or NULL to restore to the default font
 	 */
 	public void setFontFace(FontFace fontFace)
 	{
@@ -2025,7 +2025,7 @@ public class Context
 	 * using cairo_scaled_font_get_ctm().
 	 * Since 1.2
 	 * Params:
-	 * scaledFont =  a cairo_scaled_font_t
+	 * scaledFont = a cairo_scaled_font_t
 	 */
 	public void setScaledFont(ScaledFont scaledFont)
 	{
@@ -2069,7 +2069,7 @@ public class Context
 	 * serious text-using applications. See cairo_show_glyphs() for the
 	 * "real" text display API in cairo.
 	 * Params:
-	 * utf8 =  a NUL-terminated string of text encoded in UTF-8, or NULL
+	 * utf8 = a NUL-terminated string of text encoded in UTF-8, or NULL
 	 */
 	public void showText(string utf8)
 	{
@@ -2082,7 +2082,7 @@ public class Context
 	 * rendered according to the current font face, font size
 	 * (font matrix), and font options.
 	 * Params:
-	 * glyphs =  array of glyphs to show
+	 * glyphs = array of glyphs to show
 	 */
 	public void showGlyphs(cairo_glyph_t[] glyphs)
 	{
@@ -2110,11 +2110,11 @@ public class Context
 	 * See cairo_text_cluster_t for constraints on valid clusters.
 	 * Since 1.8
 	 * Params:
-	 * utf8 =  a string of text encoded in UTF-8
-	 * utf8_Len =  length of utf8 in bytes, or -1 if it is NUL-terminated
-	 * glyphs =  array of glyphs to show
-	 * clusters =  array of cluster mapping information
-	 * clusterFlags =  cluster mapping flags
+	 * utf8 = a string of text encoded in UTF-8
+	 * utf8_Len = length of utf8 in bytes, or -1 if it is NUL-terminated
+	 * glyphs = array of glyphs to show
+	 * clusters = array of cluster mapping information
+	 * clusterFlags = cluster mapping flags
 	 */
 	public void showTextGlyphs(string utf8, int utf8_Len, cairo_glyph_t[] glyphs, cairo_text_cluster_t[] clusters, cairo_text_cluster_flags_t clusterFlags)
 	{
@@ -2125,7 +2125,7 @@ public class Context
 	/**
 	 * Gets the font extents for the currently selected font.
 	 * Params:
-	 * extents =  a cairo_font_extents_t object into which the results
+	 * extents = a cairo_font_extents_t object into which the results
 	 * will be stored.
 	 */
 	public void fontExtents(cairo_font_extents_t* extents)
@@ -2147,8 +2147,8 @@ public class Context
 	 * likely to not affect the size of the rectangle, though they will
 	 * affect the x_advance and y_advance values.
 	 * Params:
-	 * utf8 =  a NUL-terminated string of text encoded in UTF-8, or NULL
-	 * extents =  a cairo_text_extents_t object into which the results
+	 * utf8 = a NUL-terminated string of text encoded in UTF-8, or NULL
+	 * extents = a cairo_text_extents_t object into which the results
 	 * will be stored
 	 */
 	public void textExtents(string utf8, cairo_text_extents_t* extents)
@@ -2167,8 +2167,8 @@ public class Context
 	 * Note that whitespace glyphs do not contribute to the size of the
 	 * rectangle (extents.width and extents.height).
 	 * Params:
-	 * glyphs =  an array of cairo_glyph_t objects
-	 * extents =  a cairo_text_extents_t object into which the results
+	 * glyphs = an array of cairo_glyph_t objects
+	 * extents = a cairo_text_extents_t object into which the results
 	 * will be stored
 	 */
 	public void glyphExtents(cairo_glyph_t[] glyphs, cairo_text_extents_t* extents)
@@ -2188,9 +2188,9 @@ public class Context
 	 * See that function for limitations of toy font faces.
 	 * Since 1.8
 	 * Params:
-	 * family =  a font family name, encoded in UTF-8
-	 * slant =  the slant for the font
-	 * weight =  the weight for the font
+	 * family = a font family name, encoded in UTF-8
+	 * slant = the slant for the font
+	 * weight = the weight for the font
 	 * Returns: a newly created cairo_font_face_t. Free with cairo_font_face_destroy() when you are done using it.
 	 */
 	public static FontFace toyFontFaceCreate(string family, cairo_font_slant_t slant, cairo_font_weight_t weight)
@@ -2208,7 +2208,7 @@ public class Context
 	 * Gets the familly name of a toy font.
 	 * Since 1.8
 	 * Params:
-	 * fontFace =  A toy font face
+	 * fontFace = A toy font face
 	 * Returns: The family name. This string is owned by the font faceand remains valid as long as the font face is alive (referenced).
 	 */
 	public static string toyFontFaceGetFamily(FontFace fontFace)
@@ -2221,7 +2221,7 @@ public class Context
 	 * Gets the slant a toy font.
 	 * Since 1.8
 	 * Params:
-	 * fontFace =  A toy font face
+	 * fontFace = A toy font face
 	 * Returns: The slant value
 	 */
 	public static cairo_font_slant_t toyFontFaceGetSlant(FontFace fontFace)
@@ -2234,7 +2234,7 @@ public class Context
 	 * Gets the weight a toy font.
 	 * Since 1.8
 	 * Params:
-	 * fontFace =  A toy font face
+	 * fontFace = A toy font face
 	 * Returns: The weight value
 	 */
 	public static cairo_font_weight_t toyFontFaceGetWeight(FontFace fontFace)
@@ -2252,7 +2252,7 @@ public class Context
 	 * for glyphs.
 	 * Since 1.8
 	 * Params:
-	 * glyphs =  array of glyphs to free, or NULL
+	 * glyphs = array of glyphs to free, or NULL
 	 */
 	public static void glyphFree(cairo_glyph_t[] glyphs)
 	{
@@ -2269,7 +2269,7 @@ public class Context
 	 * for text clusters.
 	 * Since 1.8
 	 * Params:
-	 * clusters =  array of text clusters to free, or NULL
+	 * clusters = array of text clusters to free, or NULL
 	 */
 	public static void textClusterFree(cairo_text_cluster_t[] clusters)
 	{

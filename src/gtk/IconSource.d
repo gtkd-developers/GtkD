@@ -110,7 +110,7 @@ private import gdk.Pixbuf;
  * state
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
- * Example 5. A GtkIconFactory UI definition fragment.
+ * Example  5.  A GtkIconFactory UI definition fragment.
  * <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>
@@ -341,7 +341,7 @@ public class IconSource
 	 * call gtk_icon_source_set_direction_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
 	 * Params:
-	 * direction =  text direction this source applies to
+	 * direction = text direction this source applies to
 	 */
 	public void setDirection(GtkTextDirection direction)
 	{
@@ -359,7 +359,7 @@ public class IconSource
 	 * GtkIconSet prefers non-wildcarded sources (exact matches) over
 	 * wildcarded sources, and will use an exact match when possible.
 	 * Params:
-	 * setting =  TRUE to wildcard the text direction
+	 * setting = TRUE to wildcard the text direction
 	 */
 	public void setDirectionWildcarded(int setting)
 	{
@@ -371,7 +371,7 @@ public class IconSource
 	 * Sets the name of an image file to use as a base image when creating
 	 * icon variants for GtkIconSet. The filename must be absolute.
 	 * Params:
-	 * filename =  image file to use
+	 * filename = image file to use
 	 */
 	public void setFilename(string filename)
 	{
@@ -383,7 +383,7 @@ public class IconSource
 	 * Sets a pixbuf to use as a base image when creating icon variants
 	 * for GtkIconSet.
 	 * Params:
-	 * pixbuf =  pixbuf to use as a source
+	 * pixbuf = pixbuf to use as a source
 	 */
 	public void setPixbuf(Pixbuf pixbuf)
 	{
@@ -395,7 +395,7 @@ public class IconSource
 	 * Sets the name of an icon to look up in the current icon theme
 	 * to use as a base image when creating icon variants for GtkIconSet.
 	 * Params:
-	 * iconName =  name of icon to use
+	 * iconName = name of icon to use
 	 */
 	public void setIconName(string iconName)
 	{
@@ -411,7 +411,7 @@ public class IconSource
 	 * call gtk_icon_source_set_size_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
 	 * Params:
-	 * size =  icon size this source applies to
+	 * size = icon size this source applies to
 	 */
 	public void setSize(GtkIconSize size)
 	{
@@ -431,7 +431,7 @@ public class IconSource
 	 * an appropriate icon at a given size, but will not change the size
 	 * of source images that match exactly.
 	 * Params:
-	 * setting =  TRUE to wildcard the widget state
+	 * setting = TRUE to wildcard the widget state
 	 */
 	public void setSizeWildcarded(int setting)
 	{
@@ -447,7 +447,7 @@ public class IconSource
 	 * call gtk_icon_source_set_state_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
 	 * Params:
-	 * state =  widget state this source applies to
+	 * state = widget state this source applies to
 	 */
 	public void setState(GtkStateType state)
 	{
@@ -468,7 +468,7 @@ public class IconSource
 	 * lightening an image on prelight, but will not modify source images
 	 * that match exactly.
 	 * Params:
-	 * setting =  TRUE to wildcard the widget state
+	 * setting = TRUE to wildcard the widget state
 	 */
 	public void setStateWildcarded(int setting)
 	{

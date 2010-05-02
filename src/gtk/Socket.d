@@ -81,7 +81,7 @@ private import gtk.Container;
  * gtk_socket_get_id(). Before using this function,
  * the socket must have been realized, and for hence,
  * have been added to its parent.
- * Example 56. Obtaining the window ID of a socket.
+ * Example  56.  Obtaining the window ID of a socket.
  * GtkWidget *socket = gtk_socket_new ();
  * gtk_widget_show (socket);
  * gtk_container_add (GTK_CONTAINER (parent), socket);
@@ -259,7 +259,7 @@ public class Socket : Container
 	 * The GtkSocket must have already be added into a toplevel window
 	 *  before you can make this call.
 	 * Params:
-	 * wid =  the window ID of an existing toplevel window.
+	 * wid = the window ID of an existing toplevel window.
 	 */
 	public void steal(GdkNativeWindow wid)
 	{
@@ -279,7 +279,7 @@ public class Socket : Container
 	 * The GtkSocket must have already be added into a toplevel window
 	 *  before you can make this call.
 	 * Params:
-	 * windowId =  the window ID of a client participating in the XEMBED protocol.
+	 * windowId = the window ID of a client participating in the XEMBED protocol.
 	 */
 	public void addId(GdkNativeWindow windowId)
 	{

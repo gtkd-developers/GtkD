@@ -147,7 +147,7 @@ public class FileEnumerator : ObjectG
 	 * enumerator is at the end, NULL will be returned and error will
 	 * be unset.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: A GFileInfo or NULL on error or end of enumerator. Free the returned object with g_object_unref() when no longer needed.
 	 * Throws: GException on failure.
 	 */
@@ -173,7 +173,7 @@ public class FileEnumerator : ObjectG
 	 * is dropped, but you might want to call this function to make
 	 * sure resources are released as early as possible.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE on success or FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -207,12 +207,12 @@ public class FileEnumerator : ObjectG
 	 * be executed before an outstanding request with lower priority. Default
 	 * priority is G_PRIORITY_DEFAULT.
 	 * Params:
-	 * numFiles =  the number of file info objects to request
-	 * ioPriority =  the io priority
+	 * numFiles = the number of file info objects to request
+	 * ioPriority = the io priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void nextFilesAsync(int numFiles, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -223,7 +223,7 @@ public class FileEnumerator : ObjectG
 	/**
 	 * Finishes the asynchronous operation started with g_file_enumerator_next_files_async().
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a GList of GFileInfos. You must free the list with  g_list_free() and unref the infos with g_object_unref() when you're  done with them.
 	 * Throws: GException on failure.
 	 */
@@ -253,11 +253,11 @@ public class FileEnumerator : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned in
 	 * g_file_enumerator_close_finish().
 	 * Params:
-	 * ioPriority =  the I/O priority
+	 * ioPriority = the I/O priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void closeAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -276,7 +276,7 @@ public class FileEnumerator : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be set, and FALSE will be
 	 * returned.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the close operation has finished successfully.
 	 * Throws: GException on failure.
 	 */
@@ -318,7 +318,7 @@ public class FileEnumerator : ObjectG
 	/**
 	 * Sets the file enumerator as having pending operations.
 	 * Params:
-	 * pending =  a boolean value.
+	 * pending = a boolean value.
 	 */
 	public void setPending(int pending)
 	{

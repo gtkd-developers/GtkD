@@ -130,7 +130,7 @@ public class FontSelectionDialog : Dialog
 	/**
 	 * Creates a new GtkFontSelectionDialog.
 	 * Params:
-	 * title =  the title of the dialog window
+	 * title = the title of the dialog window
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title)
@@ -180,7 +180,7 @@ public class FontSelectionDialog : Dialog
 	/**
 	 * Sets the currently selected font.
 	 * Params:
-	 * fontname =  a font name like "Helvetica 12" or "Times Bold 18"
+	 * fontname = a font name like "Helvetica 12" or "Times Bold 18"
 	 * Returns: TRUE if the font selected in fsd is now the fontname specified, FALSE otherwise.
 	 */
 	public int setFontName(string fontname)
@@ -202,7 +202,7 @@ public class FontSelectionDialog : Dialog
 	/**
 	 * Sets the text displayed in the preview area.
 	 * Params:
-	 * text =  the text to display in the preview area
+	 * text = the text to display in the preview area
 	 */
 	public void setPreviewText(string text)
 	{

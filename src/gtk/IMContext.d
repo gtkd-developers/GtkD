@@ -359,7 +359,7 @@ public class IMContext : ObjectG
 	 * used in order to correctly position status windows, and may
 	 * also be used for purposes internal to the input method.
 	 * Params:
-	 * window =  the client window. This may be NULL to indicate
+	 * window = the client window. This may be NULL to indicate
 	 *  that the previous client window no longer exists.
 	 */
 	public void setClientWindow(Window window)
@@ -374,12 +374,12 @@ public class IMContext : ObjectG
 	 * This string should be displayed inserted at the insertion
 	 * point.
 	 * Params:
-	 * str =  location to store the retrieved string. The
+	 * str = location to store the retrieved string. The
 	 *  string retrieved must be freed with g_free().
-	 * attrs =  location to store the retrieved attribute list.
+	 * attrs = location to store the retrieved attribute list.
 	 *  When you are done with this list, you must
 	 *  unreference it with pango_attr_list_unref().
-	 * cursorPos =  location to store position of cursor (in characters)
+	 * cursorPos = location to store position of cursor (in characters)
 	 *  within the preedit string.
 	 */
 	public void getPreeditString(out string str, out PangoAttrList* attrs, out int cursorPos)
@@ -397,7 +397,7 @@ public class IMContext : ObjectG
 	 * events. If this function returns TRUE, then no further processing
 	 * should be done for this key event.
 	 * Params:
-	 * event =  the key event
+	 * event = the key event
 	 * Returns: TRUE if the input method handled the key event.
 	 */
 	public int filterKeypress(GdkEventKey* event)
@@ -446,7 +446,7 @@ public class IMContext : ObjectG
 	 * position has been made. The location is relative to the client
 	 * window.
 	 * Params:
-	 * area =  new location
+	 * area = new location
 	 */
 	public void setCursorLocation(Rectangle area)
 	{
@@ -460,7 +460,7 @@ public class IMContext : ObjectG
 	 * is TRUE), then the IM context may use some other method to display
 	 * feedback, such as displaying it in a child of the root window.
 	 * Params:
-	 * usePreedit =  whether the IM context should use the preedit string.
+	 * usePreedit = whether the IM context should use the preedit string.
 	 */
 	public void setUsePreedit(int usePreedit)
 	{
@@ -474,11 +474,11 @@ public class IMContext : ObjectG
 	 * GtkIMContext::retrieve_surrounding signal, and will likely have no
 	 * effect if called at other times.
 	 * Params:
-	 * text =  text surrounding the insertion point, as UTF-8.
+	 * text = text surrounding the insertion point, as UTF-8.
 	 *  the preedit string should not be included within
 	 *  text.
-	 * len =  the length of text, or -1 if text is nul-terminated
-	 * cursorIndex =  the byte index of the insertion cursor within text.
+	 * len = the length of text, or -1 if text is nul-terminated
+	 * cursorIndex = the byte index of the insertion cursor within text.
 	 */
 	public void setSurrounding(string text, int len, int cursorIndex)
 	{
@@ -499,11 +499,11 @@ public class IMContext : ObjectG
 	 * for a widget to respond to the ::retrieve_surrounding signal, so input
 	 * methods must be prepared to function without context.
 	 * Params:
-	 * text =  location to store a UTF-8 encoded string of text
+	 * text = location to store a UTF-8 encoded string of text
 	 *  holding context around the insertion point.
 	 *  If the function returns TRUE, then you must free
 	 *  the result stored in this location with g_free().
-	 * cursorIndex =  location to store byte index of the insertion cursor
+	 * cursorIndex = location to store byte index of the insertion cursor
 	 *  within text.
 	 * Returns: TRUE if surrounding text was provided; in this case you must free the result stored in *text.
 	 */
@@ -534,9 +534,9 @@ public class IMContext : ObjectG
 	 * subsitutions in the existing text in response to new input. It is
 	 * not useful for applications.
 	 * Params:
-	 * offset =  offset from cursor position in chars;
+	 * offset = offset from cursor position in chars;
 	 *  a negative value means start before the cursor.
-	 * nChars =  number of characters to delete.
+	 * nChars = number of characters to delete.
 	 * Returns: TRUE if the signal was handled.Signal DetailsThe "commit" signalvoid user_function (GtkIMContext *context, gchar *str, gpointer user_data) : Run LastThe ::commit signal is emitted when a complete input sequencehas been entered by the user. This can be a single characterimmediately after a key press or the final result of preediting.
 	 */
 	public int deleteSurrounding(int offset, int nChars)

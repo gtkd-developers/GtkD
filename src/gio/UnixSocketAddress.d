@@ -116,7 +116,7 @@ public class UnixSocketAddress : SocketAddress
 	 * use g_unix_socket_address_new_abstract().
 	 * Since 2.22
 	 * Params:
-	 * path =  the socket path
+	 * path = the socket path
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string path)
@@ -146,8 +146,8 @@ public class UnixSocketAddress : SocketAddress
 	 * of an abstract unix domain name is filled with zero bytes.
 	 * Since 2.22
 	 * Params:
-	 * path =  the abstract name
-	 * pathLen =  the length of path, or -1
+	 * path = the abstract name
+	 * pathLen = the length of path, or -1
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string path, int pathLen)

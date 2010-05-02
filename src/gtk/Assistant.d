@@ -284,7 +284,7 @@ public class Assistant : Window
 	 * gtk_assistant_set_forward_page_func().
 	 * Since 2.10
 	 * Params:
-	 * pageNum =  index of the page to switch to, starting from 0.
+	 * pageNum = index of the page to switch to, starting from 0.
 	 *  If negative, the last page will be used. If greater
 	 *  than the number of pages in the assistant, nothing
 	 *  will be done.
@@ -310,7 +310,7 @@ public class Assistant : Window
 	 * Returns the child widget contained in page number page_num.
 	 * Since 2.10
 	 * Params:
-	 * pageNum =  The index of a page in the assistant, or -1 to get the last page;
+	 * pageNum = The index of a page in the assistant, or -1 to get the last page;
 	 * Returns: The child widget, or NULL if page_num is out of bounds.
 	 */
 	public Widget getNthPage(int pageNum)
@@ -328,7 +328,7 @@ public class Assistant : Window
 	 * Prepends a page to the assistant.
 	 * Since 2.10
 	 * Params:
-	 * page =  a GtkWidget
+	 * page = a GtkWidget
 	 * Returns: the index (starting at 0) of the inserted page
 	 */
 	public int prependPage(Widget page)
@@ -341,7 +341,7 @@ public class Assistant : Window
 	 * Appends a page to the assistant.
 	 * Since 2.10
 	 * Params:
-	 * page =  a GtkWidget
+	 * page = a GtkWidget
 	 * Returns: the index (starting at 0) of the inserted page
 	 */
 	public int appendPage(Widget page)
@@ -354,8 +354,8 @@ public class Assistant : Window
 	 * Inserts a page in the assistant at a given position.
 	 * Since 2.10
 	 * Params:
-	 * page =  a GtkWidget
-	 * position =  the index (starting at 0) at which to insert the page,
+	 * page = a GtkWidget
+	 * position = the index (starting at 0) at which to insert the page,
 	 *  or -1 to append the page to the assistant
 	 * Returns: the index (starting from 0) of the inserted page
 	 */
@@ -373,9 +373,9 @@ public class Assistant : Window
 	 * page.
 	 * Since 2.10
 	 * Params:
-	 * pageFunc =  the GtkAssistantPageFunc, or NULL to use the default one
-	 * data =  user data for page_func
-	 * destroy =  destroy notifier for data
+	 * pageFunc = the GtkAssistantPageFunc, or NULL to use the default one
+	 * data = user data for page_func
+	 * destroy = destroy notifier for data
 	 */
 	public void setForwardPageFunc(GtkAssistantPageFunc pageFunc, void* data, GDestroyNotify destroy)
 	{
@@ -388,8 +388,8 @@ public class Assistant : Window
 	 * behavior in the assistant.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
-	 * type =  the new type for page
+	 * page = a page of assistant
+	 * type = the new type for page
 	 */
 	public void setPageType(Widget page, GtkAssistantPageType type)
 	{
@@ -401,7 +401,7 @@ public class Assistant : Window
 	 * Gets the page type of page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
+	 * page = a page of assistant
 	 * Returns: the page type of page.
 	 */
 	public GtkAssistantPageType getPageType(Widget page)
@@ -415,8 +415,8 @@ public class Assistant : Window
 	 * area of the assistant when page is the current page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
-	 * title =  the new title for page
+	 * page = a page of assistant
+	 * title = the new title for page
 	 */
 	public void setPageTitle(Widget page, string title)
 	{
@@ -428,7 +428,7 @@ public class Assistant : Window
 	 * Gets the title for page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
+	 * page = a page of assistant
 	 * Returns: the title for page.
 	 */
 	public string getPageTitle(Widget page)
@@ -442,8 +442,8 @@ public class Assistant : Window
 	 * area of the assistant when page is the current page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
-	 * pixbuf =  the new header image page
+	 * page = a page of assistant
+	 * pixbuf = the new header image page
 	 */
 	public void setPageHeaderImage(Widget page, Pixbuf pixbuf)
 	{
@@ -455,7 +455,7 @@ public class Assistant : Window
 	 * Gets the header image for page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
+	 * page = a page of assistant
 	 * Returns: the header image for page, or NULLif there's no header image for the page.
 	 */
 	public Pixbuf getPageHeaderImage(Widget page)
@@ -474,8 +474,8 @@ public class Assistant : Window
 	 * area of the assistant when page is the current page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
-	 * pixbuf =  the new header image page
+	 * page = a page of assistant
+	 * pixbuf = the new header image page
 	 */
 	public void setPageSideImage(Widget page, Pixbuf pixbuf)
 	{
@@ -487,7 +487,7 @@ public class Assistant : Window
 	 * Gets the header image for page.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
+	 * page = a page of assistant
 	 * Returns: the side image for page, or NULLif there's no side image for the page.
 	 */
 	public Pixbuf getPageSideImage(Widget page)
@@ -506,8 +506,8 @@ public class Assistant : Window
 	 * assistant update the buttons state to be able to continue the task.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
-	 * complete =  the completeness status of the page
+	 * page = a page of assistant
+	 * complete = the completeness status of the page
 	 */
 	public void setPageComplete(Widget page, int complete)
 	{
@@ -519,7 +519,7 @@ public class Assistant : Window
 	 * Gets whether page is complete.
 	 * Since 2.10
 	 * Params:
-	 * page =  a page of assistant
+	 * page = a page of assistant
 	 * Returns: TRUE if page is complete.
 	 */
 	public int getPageComplete(Widget page)
@@ -532,7 +532,7 @@ public class Assistant : Window
 	 * Adds a widget to the action area of a GtkAssistant.
 	 * Since 2.10
 	 * Params:
-	 * child =  a GtkWidget
+	 * child = a GtkWidget
 	 */
 	public void addActionWidget(Widget child)
 	{
@@ -544,7 +544,7 @@ public class Assistant : Window
 	 * Removes a widget from the action area of a GtkAssistant.
 	 * Since 2.10
 	 * Params:
-	 * child =  a GtkWidget
+	 * child = a GtkWidget
 	 */
 	public void removeActionWidget(Widget child)
 	{

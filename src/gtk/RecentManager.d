@@ -246,7 +246,7 @@ public class RecentManager : ObjectG
 	 * users.
 	 * Since 2.10
 	 * Params:
-	 * screen =  a GdkScreen
+	 * screen = a GdkScreen
 	 * Returns: A unique GtkRecentManager associated with the given screen. This recent manager is associated to the with the screen and can be used as long as the screen is open. Do not ref or unref it.
 	 */
 	public static RecentManager getForScreen(Screen screen)
@@ -270,7 +270,7 @@ public class RecentManager : ObjectG
 	 * storage.
 	 * Since 2.10
 	 * Params:
-	 * screen =  a GdkScreen
+	 * screen = a GdkScreen
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -288,7 +288,7 @@ public class RecentManager : ObjectG
 	 * define the metadata for the resource pointed by uri.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a valid URI
+	 * uri = a valid URI
 	 * Returns: TRUE if the new item was successfully added to the recently used resources list
 	 */
 	public int addItem(string uri)
@@ -316,8 +316,8 @@ public class RecentManager : ObjectG
 	 * applications that have registered it.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a valid URI
-	 * recentData =  metadata of the resource
+	 * uri = a valid URI
+	 * recentData = metadata of the resource
 	 * Returns: TRUE if the new item was successfully added to therecently used resources list, FALSE otherwise.
 	 */
 	public int addFull(string uri, GtkRecentData* recentData)
@@ -331,7 +331,7 @@ public class RecentManager : ObjectG
 	 * list handled by a recent manager.
 	 * Since 2.10
 	 * Params:
-	 * uri =  the URI of the item you wish to remove
+	 * uri = the URI of the item you wish to remove
 	 * Returns: TRUE if the item pointed by uri has been successfully removed by the recently used resources list, and FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -356,7 +356,7 @@ public class RecentManager : ObjectG
 	 * like its MIME type, or its display name.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a URI
+	 * uri = a URI
 	 * Returns: a GtkRecentInfo structure containing information about the resource pointed by uri, or NULL if the URI was not registered in the recently used resources list. Free with gtk_recent_info_unref().
 	 * Throws: GException on failure.
 	 */
@@ -384,7 +384,7 @@ public class RecentManager : ObjectG
 	 * with uri inside the recent manager.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a URI
+	 * uri = a URI
 	 * Returns: TRUE if the resource was found, FALSE otherwise.
 	 */
 	public int hasItem(string uri)
@@ -399,8 +399,8 @@ public class RecentManager : ObjectG
 	 * by the URIs, but only the URI used in the recently used resources list.
 	 * Since 2.10
 	 * Params:
-	 * uri =  the URI of a recently used resource
-	 * newUri =  the new URI of the recently used resource, or NULL to
+	 * uri = the URI of a recently used resource
+	 * newUri = the new URI of the recently used resource, or NULL to
 	 *  remove the item pointed by uri in the list
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
@@ -438,7 +438,7 @@ public class RecentManager : ObjectG
 	 * items.
 	 * Since 2.10
 	 * Params:
-	 * limit =  the maximum number of items to return, or -1.
+	 * limit = the maximum number of items to return, or -1.
 	 */
 	public void setLimit(int limit)
 	{

@@ -143,8 +143,8 @@ public class PgFont : ObjectG
 	 * Finds the best matching shaper for a font for a particular
 	 * language tag and character point.
 	 * Params:
-	 * language =  the language tag
-	 * ch =  a Unicode character.
+	 * language = the language tag
+	 * ch = a Unicode character.
 	 * Returns: the best matching shaper.
 	 */
 	public PgEngineShape findShaper(PgLanguage language, uint ch)
@@ -196,7 +196,7 @@ public class PgFont : ObjectG
 	/**
 	 * Computes the coverage map for a given font and language tag.
 	 * Params:
-	 * language =  the language tag
+	 * language = the language tag
 	 * Returns: a newly-allocated PangoCoverage object.
 	 */
 	public PgCoverage getCoverage(PgLanguage language)
@@ -221,10 +221,10 @@ public class PgFont : ObjectG
 	 * If font is NULL, this function gracefully sets some sane values in the
 	 * output variables and returns.
 	 * Params:
-	 * glyph =  the glyph index
-	 * inkRect =  rectangle used to store the extents of the glyph as drawn
+	 * glyph = the glyph index
+	 * inkRect = rectangle used to store the extents of the glyph as drawn
 	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect =  rectangle used to store the logical extents of the glyph
+	 * logicalRect = rectangle used to store the logical extents of the glyph
 	 *  or NULL to indicate that the result is not needed.
 	 */
 	public void getGlyphExtents(PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect)
@@ -241,7 +241,7 @@ public class PgFont : ObjectG
 	 * If font is NULL, this function gracefully sets some sane values in the
 	 * output variables and returns.
 	 * Params:
-	 * language =  language tag used to determine which script to get the metrics
+	 * language = language tag used to determine which script to get the metrics
 	 *  for, or NULL to indicate to get the metrics for the entire
 	 *  font.
 	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.

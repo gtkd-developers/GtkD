@@ -228,12 +228,12 @@ public class ScaleButton : Button, OrientableIF
 	 * a stepping of step.
 	 * Since 2.12
 	 * Params:
-	 * size =  a stock icon size
-	 * min =  the minimum value of the scale (usually 0)
-	 * max =  the maximum value of the scale (usually 100)
-	 * step =  the stepping of value when a scroll-wheel event,
+	 * size = a stock icon size
+	 * min = the minimum value of the scale (usually 0)
+	 * max = the maximum value of the scale (usually 100)
+	 * step = the stepping of value when a scroll-wheel event,
 	 *  or up/down arrow event occurs (usually 2)
-	 * icons =  a NULL-terminated array of icon names, or NULL if
+	 * icons = a NULL-terminated array of icon names, or NULL if
 	 *  you want to set the list later with gtk_scale_button_set_icons()
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -254,7 +254,7 @@ public class ScaleButton : Button, OrientableIF
 	 * See gtk_range_set_adjustment() for details.
 	 * Since 2.12
 	 * Params:
-	 * adjustment =  a GtkAdjustment
+	 * adjustment = a GtkAdjustment
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -267,7 +267,7 @@ public class ScaleButton : Button, OrientableIF
 	 * For details, see the "icons" property.
 	 * Since 2.12
 	 * Params:
-	 * icons =  a NULL-terminated array of icon names
+	 * icons = a NULL-terminated array of icon names
 	 */
 	public void setIcons(string[] icons)
 	{
@@ -282,7 +282,7 @@ public class ScaleButton : Button, OrientableIF
 	 * signal if the value changes.
 	 * Since 2.12
 	 * Params:
-	 * value =  new value of the scale button
+	 * value = new value of the scale button
 	 */
 	public void setValue(double value)
 	{
@@ -372,7 +372,7 @@ public class ScaleButton : Button, OrientableIF
 	 * Sets the orientation of the GtkScaleButton's popup window.
 	 * Since 2.14
 	 * Params:
-	 * orientation =  the new orientation
+	 * orientation = the new orientation
 	 */
 	public void setOrientation(GtkOrientation orientation)
 	{

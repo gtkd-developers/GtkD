@@ -80,10 +80,10 @@ public class Input
 	 * Establish a callback when a condition becomes true on
 	 * a file descriptor.
 	 * Params:
-	 * source =  a file descriptor.
-	 * condition =  the condition.
-	 * data =  callback data passed to function.
-	 * destroy =  callback function to call with data when the input
+	 * source = a file descriptor.
+	 * condition = the condition.
+	 * data = callback data passed to function.
+	 * destroy = callback function to call with data when the input
 	 * handler is removed.
 	 * Returns: a tag that can later be used as an argument togdk_input_remove().
 	 */
@@ -99,9 +99,9 @@ public class Input
 	 * Establish a callback when a condition becomes true on
 	 * a file descriptor.
 	 * Params:
-	 * source =  a file descriptor.
-	 * condition =  the condition.
-	 * data =  callback data passed to function.
+	 * source = a file descriptor.
+	 * condition = the condition.
+	 * data = callback data passed to function.
 	 * Returns: a tag that can later be used as an argument togdk_input_remove().
 	 */
 	public static int add(int source, GdkInputCondition condition, GdkInputFunction funct, void* data)

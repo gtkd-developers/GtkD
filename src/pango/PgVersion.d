@@ -125,9 +125,9 @@ public class PgVersion
 	 * For compile-time version checking use PANGO_VERSION_CHECK().
 	 * Since 1.16
 	 * Params:
-	 * requiredMajor =  the required major version.
-	 * requiredMinor =  the required minor version.
-	 * requiredMicro =  the required major version.
+	 * requiredMajor = the required major version.
+	 * requiredMinor = the required minor version.
+	 * requiredMicro = the required major version.
 	 * Returns: NULL if the Pango library is compatible with the given version, or a string describing the version mismatch. The returned string is owned by Pango and should not be modified or freed.
 	 */
 	public static string check(int requiredMajor, int requiredMinor, int requiredMicro)

@@ -145,8 +145,8 @@ public class TextMark : ObjectG
 	 * side of the text you're typing).
 	 * Since 2.12
 	 * Params:
-	 * name =  mark name or NULL
-	 * leftGravity =  whether the mark should have left gravity
+	 * name = mark name or NULL
+	 * leftGravity = whether the mark should have left gravity
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, int leftGravity)
@@ -167,7 +167,7 @@ public class TextMark : ObjectG
 	 * dragging-and-dropping text. Most other marks are not visible.
 	 * Marks are not visible by default.
 	 * Params:
-	 * setting =  visibility of mark
+	 * setting = visibility of mark
 	 */
 	public void setVisible(int setting)
 	{

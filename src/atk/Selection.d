@@ -147,7 +147,7 @@ public class Selection
 	 * Adds the specified accessible child of the object to the
 	 * object's selection.
 	 * Params:
-	 * i =  a gint specifying the child index.
+	 * i = a gint specifying the child index.
 	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public int addSelection(int i)
@@ -175,7 +175,7 @@ public class Selection
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
 	 * Params:
-	 * i =  a gint specifying the index in the selection set. (e.g. the
+	 * i = a gint specifying the index in the selection set. (e.g. the
 	 * ith selection as opposed to the ith child).
 	 * Returns: an AtkObject representing the selected accessible , or NULLif selection does not implement this interface.
 	 */
@@ -211,7 +211,7 @@ public class Selection
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
 	 * Params:
-	 * i =  a gint specifying the child index.
+	 * i = a gint specifying the child index.
 	 * Returns: a gboolean representing the specified child is selected, or 0if selection does not implement this interface.
 	 */
 	public int isChildSelected(int i)
@@ -223,7 +223,7 @@ public class Selection
 	/**
 	 * Removes the specified child of the object from the object's selection.
 	 * Params:
-	 * i =  a gint specifying the index in the selection set. (e.g. the
+	 * i = a gint specifying the index in the selection set. (e.g. the
 	 * ith selection as opposed to the ith child).
 	 * Returns: TRUE if success, FALSE otherwise.
 	 */

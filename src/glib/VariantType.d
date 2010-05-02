@@ -47,6 +47,7 @@
  * 	- GVariantType* -> VariantType
  * module aliases:
  * local aliases:
+ * 	- string -> str
  * overrides:
  */
 
@@ -356,12 +357,12 @@ public class VariantType
 	 * endptr = location to store the end pointer, or NULL
 	 * Returns: TRUE if a valid type string was found
 	 */
-	public static int stringScan(string string, string limit, out string endptr)
+	public static int stringScan(string str, string limit, out string endptr)
 	{
 		// gboolean g_variant_type_string_scan (const gchar *string,  const gchar *limit,  const gchar **endptr);
 		char* outendptr = null;
 		
-		auto p = g_variant_type_string_scan(Str.toStringz(string), Str.toStringz(limit), &outendptr);
+		auto p = g_variant_type_string_scan(Str.toStringz(str), Str.toStringz(limit), &outendptr);
 		
 		endptr = Str.toString(outendptr);
 		return p;

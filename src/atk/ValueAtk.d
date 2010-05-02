@@ -111,7 +111,7 @@ public class ValueAtk
 	/**
 	 * Gets the value of this object.
 	 * Params:
-	 * value =  a GValue representing the current accessible value
+	 * value = a GValue representing the current accessible value
 	 */
 	public void getCurrentValue(Value value)
 	{
@@ -122,7 +122,7 @@ public class ValueAtk
 	/**
 	 * Gets the maximum value of this object.
 	 * Params:
-	 * value =  a GValue representing the maximum accessible value
+	 * value = a GValue representing the maximum accessible value
 	 */
 	public void getMaximumValue(Value value)
 	{
@@ -133,7 +133,7 @@ public class ValueAtk
 	/**
 	 * Gets the minimum value of this object.
 	 * Params:
-	 * value =  a GValue representing the minimum accessible value
+	 * value = a GValue representing the minimum accessible value
 	 */
 	public void getMinimumValue(Value value)
 	{
@@ -144,7 +144,7 @@ public class ValueAtk
 	/**
 	 * Sets the value of this object.
 	 * Params:
-	 * value =  a GValue which is the desired new accessible value.
+	 * value = a GValue which is the desired new accessible value.
 	 * Returns: TRUE if new value is successfully set, FALSE otherwise.
 	 */
 	public int setCurrentValue(Value value)
@@ -159,7 +159,7 @@ public class ValueAtk
 	 * floating point precision of the platform.
 	 * Since 1.12
 	 * Params:
-	 * value =  a GValue representing the minimum increment by which the accessible value may be changed
+	 * value = a GValue representing the minimum increment by which the accessible value may be changed
 	 */
 	public void getMinimumIncrement(Value value)
 	{

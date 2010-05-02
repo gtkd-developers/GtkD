@@ -188,7 +188,7 @@ public class CellRendererToggle : CellRenderer
 	 * up a per-row setting using GtkTreeViewColumn to associate model
 	 * columns with cell renderer properties).
 	 * Params:
-	 * radio =  TRUE to make the toggle look like a radio button
+	 * radio = TRUE to make the toggle look like a radio button
 	 */
 	public void setRadio(int radio)
 	{
@@ -210,7 +210,7 @@ public class CellRendererToggle : CellRenderer
 	/**
 	 * Activates or deactivates a cell renderer.
 	 * Params:
-	 * setting =  the value to set.
+	 * setting = the value to set.
 	 */
 	public void setActive(int setting)
 	{
@@ -234,7 +234,7 @@ public class CellRendererToggle : CellRenderer
 	 * Makes the cell renderer activatable.
 	 * Since 2.18
 	 * Params:
-	 * setting =  the value to set.
+	 * setting = the value to set.
 	 */
 	public void setActivatable(int setting)
 	{

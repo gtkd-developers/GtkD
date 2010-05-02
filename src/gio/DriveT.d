@@ -383,9 +383,9 @@ public template DriveT(TStruct)
 	 * You can then call g_drive_poll_for_media_finish() to obtain the
 	 * result of the operation.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data to pass to callback
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data to pass to callback
 	 */
 	public void pollForMedia(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -396,7 +396,7 @@ public template DriveT(TStruct)
 	/**
 	 * Finishes an operation started with g_drive_poll_for_media() on a drive.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the drive has been poll_for_mediaed successfully, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -455,10 +455,10 @@ public template DriveT(TStruct)
 	 * You can then call g_drive_eject_finish() to obtain the
 	 * result of the operation.
 	 * Params:
-	 * flags =  flags affecting the unmount if required for eject
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data to pass to callback
+	 * flags = flags affecting the unmount if required for eject
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data to pass to callback
 	 */
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -471,7 +471,7 @@ public template DriveT(TStruct)
 	 * g_drive_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_drive_eject_with_operation_finish() instead.
 	 * Finishes ejecting a drive.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the drive has been ejected successfully, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -496,11 +496,11 @@ public template DriveT(TStruct)
 	 * and GAsyncResult data returned in the callback.
 	 * Since 2.22
 	 * Params:
-	 * flags =  flags affecting the unmount if required for eject
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * flags = flags affecting the unmount if required for eject
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -513,7 +513,7 @@ public template DriveT(TStruct)
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the drive was successfully ejected. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -539,11 +539,11 @@ public template DriveT(TStruct)
 	 * result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * flags =  flags affecting the start operation.
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data to pass to callback
+	 * flags = flags affecting the start operation.
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data to pass to callback
 	 */
 	public void start(GDriveStartFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -555,7 +555,7 @@ public template DriveT(TStruct)
 	 * Finishes starting a drive.
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the drive has been started successfully, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -581,11 +581,11 @@ public template DriveT(TStruct)
 	 * result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * flags =  flags affecting the unmount if required for stopping.
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data to pass to callback
+	 * flags = flags affecting the unmount if required for stopping.
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data to pass to callback
 	 */
 	public void stop(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -597,7 +597,7 @@ public template DriveT(TStruct)
 	 * Finishes stopping a drive.
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the drive has been stopped successfully, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -631,7 +631,7 @@ public template DriveT(TStruct)
 	/**
 	 * Gets the identifier of the given kind for drive.
 	 * Params:
-	 * kind =  the kind of identifier to return
+	 * kind = the kind of identifier to return
 	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GDrive doesn't have this kind of identifier.Signal DetailsThe "changed" signalvoid user_function (GDrive *drive, gpointer user_data) : Run LastEmitted when the drive's state has changed.
 	 */
 	public string getIdentifier(string kind)

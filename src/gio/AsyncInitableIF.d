@@ -130,11 +130,11 @@ public interface AsyncInitableIF
 	 * any interface methods.
 	 * Since 2.22
 	 * Params:
-	 * ioPriority =  the I/O priority
+	 * ioPriority = the I/O priority
 	 *  of the operation.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void gAsyncInitableInitAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
@@ -143,7 +143,7 @@ public interface AsyncInitableIF
 	 * See g_async_initable_init_async().
 	 * Since 2.22
 	 * Params:
-	 * res =  a GAsyncResult.
+	 * res = a GAsyncResult.
 	 * Returns: TRUE if successful. If an error has occurred, this functionwill return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
@@ -154,7 +154,7 @@ public interface AsyncInitableIF
 	 * returning the created object or NULL on error.
 	 * Since 2.22
 	 * Params:
-	 * res =  the GAsyncResult.from the callback
+	 * res = the GAsyncResult.from the callback
 	 * Returns: a newly created GObject, or NULL on error. Free with g_object_unref().
 	 * Throws: GException on failure.
 	 */
@@ -169,16 +169,16 @@ public interface AsyncInitableIF
 	 * any errors.
 	 * Since 2.22
 	 * Params:
-	 * objectType =  a GType supporting GAsyncInitable.
-	 * firstPropertyName =  the name of the first property, followed by
+	 * objectType = a GType supporting GAsyncInitable.
+	 * firstPropertyName = the name of the first property, followed by
 	 * the value, and other property value pairs, and ended by NULL.
-	 * varArgs =  The var args list generated from first_property_name.
-	 * ioPriority =  the I/O priority
+	 * varArgs = The var args list generated from first_property_name.
+	 * ioPriority = the I/O priority
 	 *  of the operation.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the initialization is
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the initialization is
 	 *  finished
-	 * userData =  the data to pass to callback function
+	 * userData = the data to pass to callback function
 	 */
 	public static void gAsyncInitableNewValistAsync(GType objectType, string firstPropertyName, void* varArgs, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
@@ -190,14 +190,14 @@ public interface AsyncInitableIF
 	 * any errors.
 	 * Since 2.22
 	 * Params:
-	 * objectType =  a GType supporting GAsyncInitable.
-	 * parameters =  the parameters to use to construct the object
-	 * ioPriority =  the I/O priority
+	 * objectType = a GType supporting GAsyncInitable.
+	 * parameters = the parameters to use to construct the object
+	 * ioPriority = the I/O priority
 	 *  of the operation.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the initialization is
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the initialization is
 	 *  finished
-	 * userData =  the data to pass to callback function
+	 * userData = the data to pass to callback function
 	 */
 	public static void gAsyncInitableNewvAsync(GType objectType, GParameter[] parameters, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 }

@@ -75,7 +75,7 @@ private import glib.Str;
  * As an example of the latter usage, by connecting
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
- * Example 19. Forcing entry to uppercase.
+ * Example  19.  Forcing entry to uppercase.
  * #include <ctype.h>
  * void
  * insert_text_handler (GtkEditable *editable,
@@ -152,8 +152,8 @@ public interface EditableIF
 	 * the end of the text.
 	 * Note that positions are specified in characters, not bytes.
 	 * Params:
-	 * startPos =  start of region
-	 * endPos =  end of region
+	 * startPos = start of region
+	 * endPos = end of region
 	 */
 	public void selectRegion(int startPos, int endPos);
 	
@@ -163,8 +163,8 @@ public interface EditableIF
 	 * selected both will be identical and FALSE will be returned.
 	 * Note that positions are specified in characters, not bytes.
 	 * Params:
-	 * startPos =  location to store the starting position, or NULL
-	 * endPos =  location to store the end position, or NULL
+	 * startPos = location to store the starting position, or NULL
+	 * endPos = location to store the end position, or NULL
 	 * Returns: TRUE if an area is selected, FALSE otherwise
 	 */
 	public int getSelectionBounds(int* startPos, int* endPos);
@@ -175,9 +175,9 @@ public interface EditableIF
 	 * Note that the position is in characters, not in bytes.
 	 * The function updates position to point after the newly inserted text.
 	 * Params:
-	 * newText =  the text to append
-	 * newTextLength =  the length of the text in bytes, or -1
-	 * position =  location of the position text will be inserted at
+	 * newText = the text to append
+	 * newTextLength = the length of the text in bytes, or -1
+	 * position = location of the position text will be inserted at
 	 */
 	public void insertText(string newText, int newTextLength, ref int position);
 	
@@ -188,8 +188,8 @@ public interface EditableIF
 	 * are those from start_pos to the end of the text.
 	 * Note that the positions are specified in characters, not bytes.
 	 * Params:
-	 * startPos =  start position
-	 * endPos =  end position
+	 * startPos = start position
+	 * endPos = end position
 	 */
 	public void deleteText(int startPos, int endPos);
 	
@@ -200,8 +200,8 @@ public interface EditableIF
 	 * retrieved are those characters from start_pos to the end of the text.
 	 * Note that positions are specified in characters, not bytes.
 	 * Params:
-	 * startPos =  start of text
-	 * endPos =  end of text
+	 * startPos = start of text
+	 * endPos = end of text
 	 * Returns: a pointer to the contents of the widget as a string. This string is allocated by the GtkEditable implementation and should be freed by the caller.
 	 */
 	public string getChars(int startPos, int endPos);
@@ -238,7 +238,7 @@ public interface EditableIF
 	 * indicates that the position should be set after the last character
 	 * of the editable. Note that position is in characters, not in bytes.
 	 * Params:
-	 * position =  the position of the cursor
+	 * position = the position of the cursor
 	 */
 	public void setPosition(int position);
 	
@@ -254,7 +254,7 @@ public interface EditableIF
 	 * Determines if the user can edit the text in the editable
 	 * widget or not.
 	 * Params:
-	 * isEditable =  TRUE if the user is allowed to edit the text
+	 * isEditable = TRUE if the user is allowed to edit the text
 	 *  in the widget
 	 */
 	public void setEditable(int isEditable);

@@ -92,7 +92,7 @@ private import gtk.Item;
  * The GtkMenuItem implementation of the GtkBuildable interface
  * supports adding a submenu by specifying "submenu" as the "type"
  * attribute of a <child> element.
- * Example 31. A UI definition fragment with submenus
+ * Example  31.  A UI definition fragment with submenus
  * <object class="GtkMenuItem">
  *  <child type="submenu">
  *  <object class="GtkMenu"/>
@@ -375,7 +375,7 @@ public class MenuItem : Item, ActivatableIF
 	 * layout is reversed for a right-to-left language like Hebrew
 	 * or Arabic, right-justified-menu-items appear at the left.)
 	 * Params:
-	 * rightJustified =  if TRUE the menu item will appear at the
+	 * rightJustified = if TRUE the menu item will appear at the
 	 *  far right if added to a menu bar.
 	 */
 	public void setRightJustified(int rightJustified)
@@ -410,7 +410,7 @@ public class MenuItem : Item, ActivatableIF
 	 * Sets text on the menu_item label
 	 * Since 2.16
 	 * Params:
-	 * label =  the text you want to set
+	 * label = the text you want to set
 	 */
 	public void setLabel(string label)
 	{
@@ -435,7 +435,7 @@ public class MenuItem : Item, ActivatableIF
 	 * used for the mnemonic accelerator key.
 	 * Since 2.16
 	 * Params:
-	 * setting =  TRUE if underlines in the text indicate mnemonics
+	 * setting = TRUE if underlines in the text indicate mnemonics
 	 */
 	public void setUseUnderline(int setting)
 	{
@@ -447,7 +447,7 @@ public class MenuItem : Item, ActivatableIF
 	 * Sets or replaces the menu item's submenu, or removes it when a NULL
 	 * submenu is passed.
 	 * Params:
-	 * submenu =  the submenu, or NULL
+	 * submenu = the submenu, or NULL
 	 */
 	public void setSubmenu(Widget submenu)
 	{
@@ -501,7 +501,7 @@ public class MenuItem : Item, ActivatableIF
 	 * pass a static string, you can save some memory by interning it first with
 	 * g_intern_static_string().
 	 * Params:
-	 * accelPath =  accelerator path, corresponding to this menu item's
+	 * accelPath = accelerator path, corresponding to this menu item's
 	 *  functionality, or NULL to unset the current path.
 	 */
 	public void setAccelPath(string accelPath)

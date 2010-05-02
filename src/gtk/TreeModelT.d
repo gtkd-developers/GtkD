@@ -145,7 +145,7 @@ public import gobject.Value;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 20. Acquiring a GtkTreeIter
+ * Example  20.  Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -170,7 +170,7 @@ public import gobject.Value;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 21. Reading data from a GtkTreeModel
+ * Example  21.  Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -466,7 +466,7 @@ public template TreeModelT(TStruct)
 	/**
 	 * Returns the type of the column.
 	 * Params:
-	 * index =  The column index.
+	 * index = The column index.
 	 * Returns: The type of the column.
 	 */
 	public GType getColumnType(int index)
@@ -479,8 +479,8 @@ public template TreeModelT(TStruct)
 	 * Sets iter to a valid iterator pointing to path_string, if it
 	 * exists. Otherwise, iter is left invalid and FALSE is returned.
 	 * Params:
-	 * iter =  An uninitialized GtkTreeIter.
-	 * pathString =  A string representation of a GtkTreePath.
+	 * iter = An uninitialized GtkTreeIter.
+	 * pathString = A string representation of a GtkTreePath.
 	 * Returns: TRUE, if iter was set.
 	 */
 	public int getIterFromString(TreeIter iter, string pathString)
@@ -493,7 +493,7 @@ public template TreeModelT(TStruct)
 	 * Initializes iter with the first iterator in the tree (the one at the path
 	 * "0") and returns TRUE. Returns FALSE if the tree is empty.
 	 * Params:
-	 * iter =  The uninitialized GtkTreeIter.
+	 * iter = The uninitialized GtkTreeIter.
 	 * Returns: TRUE, if iter was set.
 	 */
 	public int getIterFirst(TreeIter iter)
@@ -506,7 +506,7 @@ public template TreeModelT(TStruct)
 	 * Returns a newly-created GtkTreePath referenced by iter. This path should
 	 * be freed with gtk_tree_path_free().
 	 * Params:
-	 * iter =  The GtkTreeIter.
+	 * iter = The GtkTreeIter.
 	 * Returns: a newly-created GtkTreePath.
 	 */
 	public TreePath getPath(TreeIter iter)
@@ -525,9 +525,9 @@ public template TreeModelT(TStruct)
 	 * When done with value, g_value_unset() needs to be called
 	 * to free any allocated memory.
 	 * Params:
-	 * iter =  The GtkTreeIter.
-	 * column =  The column to lookup the value at.
-	 * value =  An empty GValue to set.
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = An empty GValue to set.
 	 */
 	public void getValue(TreeIter iter, int column, Value value)
 	{
@@ -539,7 +539,7 @@ public template TreeModelT(TStruct)
 	 * Sets iter to point to the node following it at the current level. If there
 	 * is no next iter, FALSE is returned and iter is set to be invalid.
 	 * Params:
-	 * iter =  The GtkTreeIter.
+	 * iter = The GtkTreeIter.
 	 * Returns: TRUE if iter has been changed to the next node.
 	 */
 	public int iterNext(TreeIter iter)
@@ -555,8 +555,8 @@ public template TreeModelT(TStruct)
 	 * If parent is NULL returns the first node, equivalent to
 	 * gtk_tree_model_get_iter_first (tree_model, iter);
 	 * Params:
-	 * iter =  The new GtkTreeIter to be set to the child.
-	 * parent =  The GtkTreeIter, or NULL
+	 * iter = The new GtkTreeIter to be set to the child.
+	 * parent = The GtkTreeIter, or NULL
 	 * Returns: TRUE, if child has been set to the first child.
 	 */
 	public int iterChildren(TreeIter iter, TreeIter parent)
@@ -568,7 +568,7 @@ public template TreeModelT(TStruct)
 	/**
 	 * Returns TRUE if iter has children, FALSE otherwise.
 	 * Params:
-	 * iter =  The GtkTreeIter to test for children.
+	 * iter = The GtkTreeIter to test for children.
 	 * Returns: TRUE if iter has children.
 	 */
 	public int iterHasChild(TreeIter iter)
@@ -581,7 +581,7 @@ public template TreeModelT(TStruct)
 	 * Returns the number of children that iter has. As a special case, if iter
 	 * is NULL, then the number of toplevel nodes is returned.
 	 * Params:
-	 * iter =  The GtkTreeIter, or NULL.
+	 * iter = The GtkTreeIter, or NULL.
 	 * Returns: The number of children of iter.
 	 */
 	public int iterNChildren(TreeIter iter)
@@ -597,9 +597,9 @@ public template TreeModelT(TStruct)
 	 * node after this function has been called. As a special case, if parent is
 	 * NULL, then the nth root node is set.
 	 * Params:
-	 * iter =  The GtkTreeIter to set to the nth child.
-	 * parent =  The GtkTreeIter to get the child from, or NULL.
-	 * n =  Then index of the desired child.
+	 * iter = The GtkTreeIter to set to the nth child.
+	 * parent = The GtkTreeIter to get the child from, or NULL.
+	 * n = Then index of the desired child.
 	 * Returns: TRUE, if parent has an nth child.
 	 */
 	public int iterNthChild(TreeIter iter, TreeIter parent, int n)
@@ -614,8 +614,8 @@ public template TreeModelT(TStruct)
 	 * is returned. child will remain a valid node after this function has been
 	 * called.
 	 * Params:
-	 * iter =  The new GtkTreeIter to set to the parent.
-	 * child =  The GtkTreeIter.
+	 * iter = The new GtkTreeIter to set to the parent.
+	 * child = The GtkTreeIter.
 	 * Returns: TRUE, if iter is set to the parent of child.
 	 */
 	public int iterParent(TreeIter iter, TreeIter child)
@@ -630,7 +630,7 @@ public template TreeModelT(TStruct)
 	 * acceptable return value for this string.
 	 * Since 2.2
 	 * Params:
-	 * iter =  An GtkTreeIter.
+	 * iter = An GtkTreeIter.
 	 * Returns: A newly-allocated string. Must be freed with g_free().
 	 */
 	public string getStringFromIter(TreeIter iter)
@@ -651,7 +651,7 @@ public template TreeModelT(TStruct)
 	 * A model should be expected to be able to get an iter independent of its
 	 * reffed state.
 	 * Params:
-	 * iter =  The GtkTreeIter.
+	 * iter = The GtkTreeIter.
 	 */
 	public void refNode(TreeIter iter)
 	{
@@ -666,7 +666,7 @@ public template TreeModelT(TStruct)
 	 * For more information on what this means, see gtk_tree_model_ref_node().
 	 * Please note that nodes that are deleted are not unreffed.
 	 * Params:
-	 * iter =  The GtkTreeIter.
+	 * iter = The GtkTreeIter.
 	 */
 	public void unrefNode(TreeIter iter)
 	{
@@ -678,8 +678,8 @@ public template TreeModelT(TStruct)
 	 * See gtk_tree_model_get(), this version takes a va_list
 	 * for language bindings to use.
 	 * Params:
-	 * iter =  a row in tree_model
-	 * varArgs =  va_list of column/return location pairs
+	 * iter = a row in tree_model
+	 * varArgs = va_list of column/return location pairs
 	 */
 	public void getValist(TreeIter iter, void* varArgs)
 	{
@@ -692,8 +692,8 @@ public template TreeModelT(TStruct)
 	 * If func returns TRUE, then the tree ceases to be walked, and
 	 * gtk_tree_model_foreach() returns.
 	 * Params:
-	 * func =  A function to be called on each row
-	 * userData =  User data to passed to func.
+	 * func = A function to be called on each row
+	 * userData = User data to passed to func.
 	 */
 	public void foreac(GtkTreeModelForeachFunc func, void* userData)
 	{
@@ -704,8 +704,8 @@ public template TreeModelT(TStruct)
 	/**
 	 * Emits the "row-changed" signal on tree_model.
 	 * Params:
-	 * path =  A GtkTreePath pointing to the changed row
-	 * iter =  A valid GtkTreeIter pointing to the changed row
+	 * path = A GtkTreePath pointing to the changed row
+	 * iter = A valid GtkTreeIter pointing to the changed row
 	 */
 	public void rowChanged(TreePath path, TreeIter iter)
 	{
@@ -716,8 +716,8 @@ public template TreeModelT(TStruct)
 	/**
 	 * Emits the "row-inserted" signal on tree_model
 	 * Params:
-	 * path =  A GtkTreePath pointing to the inserted row
-	 * iter =  A valid GtkTreeIter pointing to the inserted row
+	 * path = A GtkTreePath pointing to the inserted row
+	 * iter = A valid GtkTreeIter pointing to the inserted row
 	 */
 	public void rowInserted(TreePath path, TreeIter iter)
 	{
@@ -729,8 +729,8 @@ public template TreeModelT(TStruct)
 	 * Emits the "row-has-child-toggled" signal on tree_model. This should be
 	 * called by models after the child state of a node changes.
 	 * Params:
-	 * path =  A GtkTreePath pointing to the changed row
-	 * iter =  A valid GtkTreeIter pointing to the changed row
+	 * path = A GtkTreePath pointing to the changed row
+	 * iter = A valid GtkTreeIter pointing to the changed row
 	 */
 	public void rowHasChildToggled(TreePath path, TreeIter iter)
 	{
@@ -744,7 +744,7 @@ public template TreeModelT(TStruct)
 	 * should be the location that the row previously was at. It may not be a
 	 * valid location anymore.
 	 * Params:
-	 * path =  A GtkTreePath pointing to the previous location of the deleted row.
+	 * path = A GtkTreePath pointing to the previous location of the deleted row.
 	 */
 	public void rowDeleted(TreePath path)
 	{
@@ -756,11 +756,11 @@ public template TreeModelT(TStruct)
 	 * Emits the "rows-reordered" signal on tree_model. This should be called by
 	 * models when their rows have been reordered.
 	 * Params:
-	 * path =  A GtkTreePath pointing to the tree node whose children have been
+	 * path = A GtkTreePath pointing to the tree node whose children have been
 	 *  reordered
-	 * iter =  A valid GtkTreeIter pointing to the node whose children have been
+	 * iter = A valid GtkTreeIter pointing to the node whose children have been
 	 *  reordered, or NULL if the depth of path is 0.
-	 * newOrder =  an array of integers mapping the current position of each child
+	 * newOrder = an array of integers mapping the current position of each child
 	 *  to its old position before the re-ordering,
 	 *  i.e. new_order[newpos] = oldpos.
 	 * Signal Details
@@ -770,8 +770,8 @@ public template TreeModelT(TStruct)
 	 *  GtkTreeIter *iter,
 	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when a row in the model has changed.
-	 * path =  a GtkTreePath identifying the changed row
-	 * iter =  a valid GtkTreeIter pointing to the changed row
+	 * path = a GtkTreePath identifying the changed row
+	 * iter = a valid GtkTreeIter pointing to the changed row
 	 */
 	public void rowsReordered(TreePath path, TreeIter iter, int[] newOrder)
 	{

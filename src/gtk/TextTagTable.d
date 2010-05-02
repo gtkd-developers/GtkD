@@ -221,8 +221,8 @@ public class TextTagTable : ObjectG
 	 * tag must not be in a tag table already, and may not have
 	 * the same name as an already-added tag.
 	 * Params:
-	 * table =  a GtkTextTagTable
-	 * tag =  a GtkTextTag
+	 * table = a GtkTextTagTable
+	 * tag = a GtkTextTag
 	 */
 	public void tableAdd(TextTag tag)
 	{
@@ -235,8 +235,8 @@ public class TextTagTable : ObjectG
 	 * reference to the tag, so be careful - the tag will end
 	 * up destroyed if you don't have a reference to it.
 	 * Params:
-	 * table =  a GtkTextTagTable
-	 * tag =  a GtkTextTag
+	 * table = a GtkTextTagTable
+	 * tag = a GtkTextTag
 	 */
 	public void tableRemove(TextTag tag)
 	{
@@ -247,8 +247,8 @@ public class TextTagTable : ObjectG
 	/**
 	 * Look up a named tag.
 	 * Params:
-	 * table =  a GtkTextTagTable
-	 * name =  name of a tag
+	 * table = a GtkTextTagTable
+	 * name = name of a tag
 	 * Returns: The tag, or NULL if none by that name is in the table.
 	 */
 	public TextTag tableLookup(string name)
@@ -267,9 +267,9 @@ public class TextTagTable : ObjectG
 	 * Note that the table may not be modified while iterating
 	 * over it (you can't add/remove tags).
 	 * Params:
-	 * table =  a GtkTextTagTable
-	 * func =  a function to call on each tag
-	 * data =  user data
+	 * table = a GtkTextTagTable
+	 * func = a function to call on each tag
+	 * data = user data
 	 */
 	public void tableForeach(GtkTextTagTableForeach func, void* data)
 	{
@@ -280,7 +280,7 @@ public class TextTagTable : ObjectG
 	/**
 	 * Returns the size of the table (number of tags)
 	 * Params:
-	 * table =  a GtkTextTagTable
+	 * table = a GtkTextTagTable
 	 * Returns: number of tags in tableSignal DetailsThe "tag-added" signalvoid user_function (GtkTextTagTable *texttagtable, GtkTextTag *arg1, gpointer user_data) : Run Last
 	 */
 	public int tableGetSize()

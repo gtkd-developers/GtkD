@@ -170,7 +170,7 @@ public class TextTag : ObjectG
 	 * Creates a GtkTextTag. Configure the tag using object arguments,
 	 * i.e. using g_object_set().
 	 * Params:
-	 * name =  tag name, or NULL
+	 * name = tag name, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -207,7 +207,7 @@ public class TextTag : ObjectG
 	 * gtk_text_buffer_create_tag(), which adds the tag to the buffer's table
 	 * automatically.
 	 * Params:
-	 * priority =  the new priority
+	 * priority = the new priority
 	 */
 	public void setPriority(int priority)
 	{
@@ -218,9 +218,9 @@ public class TextTag : ObjectG
 	/**
 	 * Emits the "event" signal on the GtkTextTag.
 	 * Params:
-	 * eventObject =  object that received the event, such as a widget
-	 * event =  the event
-	 * iter =  location where the event was received
+	 * eventObject = object that received the event, such as a widget
+	 * event = the event
+	 * iter = location where the event was received
 	 * Returns: result of signal emission (whether the event was handled)
 	 */
 	public int event(ObjectG eventObject, Event event, TextIter iter)

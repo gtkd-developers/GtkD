@@ -140,7 +140,7 @@ public class SeparatorToolItem : ToolItem
 	 * to create an item that forces following items to the end of the toolbar.
 	 * Since 2.4
 	 * Params:
-	 * draw =  whether item is drawn as a vertical line
+	 * draw = whether item is drawn as a vertical line
 	 */
 	public void setDraw(int draw)
 	{

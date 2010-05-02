@@ -264,7 +264,7 @@ public class CheckMenuItem : MenuItem
 	 * done manually, gtk_check_menu_item_set_inconsistent() only affects
 	 * visual appearance, it doesn't affect the semantics of the widget.
 	 * Params:
-	 * setting =  TRUE to display an "inconsistent" third state check
+	 * setting = TRUE to display an "inconsistent" third state check
 	 */
 	public void setInconsistent(int setting)
 	{
@@ -276,7 +276,7 @@ public class CheckMenuItem : MenuItem
 	 * Sets whether check_menu_item is drawn like a GtkRadioMenuItem
 	 * Since 2.4
 	 * Params:
-	 * drawAsRadio =  whether check_menu_item is drawn like a GtkRadioMenuItem
+	 * drawAsRadio = whether check_menu_item is drawn like a GtkRadioMenuItem
 	 */
 	public void setDrawAsRadio(int drawAsRadio)
 	{

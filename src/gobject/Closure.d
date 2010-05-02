@@ -149,9 +149,9 @@ public class Closure
 	 * object and the created closure. This function is mainly useful
 	 * when implementing new types of closures.
 	 * Params:
-	 * sizeofClosure =  the size of the structure to allocate, must be at least
+	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 *  sizeof (GClosure)
-	 * object =  a GObject pointer to store in the data field of the newly
+	 * object = a GObject pointer to store in the data field of the newly
 	 *  allocated GClosure
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -211,12 +211,12 @@ public class Closure
 	/**
 	 * Invokes the closure, i.e. executes the callback represented by the closure.
 	 * Params:
-	 * returnValue =  a GValue to store the return value. May be NULL if the
+	 * returnValue = a GValue to store the return value. May be NULL if the
 	 *  callback of closure doesn't return a value.
-	 * nParamValues =  the length of the param_values array
-	 * paramValues =  an array of GValues holding the arguments on
+	 * nParamValues = the length of the param_values array
+	 * paramValues = an array of GValues holding the arguments on
 	 *  which to invoke the callback of closure
-	 * invocationHint =  a context-dependent invocation hint
+	 * invocationHint = a context-dependent invocation hint
 	 */
 	public void invoke(Value returnValue, uint nParamValues, Value paramValues, void* invocationHint)
 	{
@@ -252,8 +252,8 @@ public class Closure
 	 * both invalidated and finalized, then the invalidate notifiers will
 	 * be run before the finalize notifiers.
 	 * Params:
-	 * notifyData =  data to pass to notify_func
-	 * notifyFunc =  the callback function to register
+	 * notifyData = data to pass to notify_func
+	 * notifyFunc = the callback function to register
 	 */
 	public void addFinalizeNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -267,8 +267,8 @@ public class Closure
 	 * notifiers are invoked before finalization notifiers, in an
 	 * unspecified order.
 	 * Params:
-	 * notifyData =  data to pass to notify_func
-	 * notifyFunc =  the callback function to register
+	 * notifyData = data to pass to notify_func
+	 * notifyFunc = the callback function to register
 	 */
 	public void addInvalidateNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -280,9 +280,9 @@ public class Closure
 	 * Removes a finalization notifier.
 	 * Notice that notifiers are automatically removed after they are run.
 	 * Params:
-	 * notifyData =  data which was passed to g_closure_add_finalize_notifier()
+	 * notifyData = data which was passed to g_closure_add_finalize_notifier()
 	 *  when registering notify_func
-	 * notifyFunc =  the callback function to remove
+	 * notifyFunc = the callback function to remove
 	 */
 	public void removeFinalizeNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -294,9 +294,9 @@ public class Closure
 	 * Removes an invalidation notifier.
 	 * Notice that notifiers are automatically removed after they are run.
 	 * Params:
-	 * notifyData =  data which was passed to g_closure_add_invalidate_notifier()
+	 * notifyData = data which was passed to g_closure_add_invalidate_notifier()
 	 *  when registering notify_func
-	 * notifyFunc =  the callback function to remove
+	 * notifyFunc = the callback function to remove
 	 */
 	public void removeInvalidateNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -333,9 +333,9 @@ public class Closure
 		 *  return my_closure;
 	 * }
 	 * Params:
-	 * sizeofClosure =  the size of the structure to allocate, must be at least
+	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 *  sizeof (GClosure)
-	 * data =  data to store in the data field of the newly allocated GClosure
+	 * data = data to store in the data field of the newly allocated GClosure
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint sizeofClosure, void* data)
@@ -357,7 +357,7 @@ public class Closure
 	 * functions), what it provides is a callback function to use instead of
 	 * closure->callback.
 	 * Params:
-	 * marshal =  a GClosureMarshal function
+	 * marshal = a GClosureMarshal function
 	 */
 	public void setMarshal(GClosureMarshal marshal)
 	{
@@ -371,10 +371,10 @@ public class Closure
 	 * the extra arguments for the duration of the callback. See
 	 * g_object_watch_closure() for an example of marshal guards.
 	 * Params:
-	 * preMarshalData =  data to pass to pre_marshal_notify
-	 * preMarshalNotify =  a function to call before the closure callback
-	 * postMarshalData =  data to pass to post_marshal_notify
-	 * postMarshalNotify =  a function to call after the closure callback
+	 * preMarshalData = data to pass to pre_marshal_notify
+	 * preMarshalNotify = a function to call before the closure callback
+	 * postMarshalData = data to pass to post_marshal_notify
+	 * postMarshalNotify = a function to call after the closure callback
 	 */
 	public void addMarshalGuards(void* preMarshalData, GClosureNotify preMarshalNotify, void* postMarshalData, GClosureNotify postMarshalNotify)
 	{
@@ -397,8 +397,8 @@ public class Closure
 	 * the right callback and passes it to the marshaller as the
 	 * marshal_data argument.
 	 * Params:
-	 * marshalData =  context-dependent data to pass to meta_marshal
-	 * metaMarshal =  a GClosureMarshal function
+	 * marshalData = context-dependent data to pass to meta_marshal
+	 * metaMarshal = a GClosureMarshal function
 	 */
 	public void setMetaMarshal(void* marshalData, GClosureMarshal metaMarshal)
 	{
@@ -412,8 +412,8 @@ public class Closure
 	 * and closure_marshal fields of the GSourceFuncs structure must have been
 	 * filled in with pointers to appropriate functions.
 	 * Params:
-	 * source =  the source
-	 * closure =  a GClosure
+	 * source = the source
+	 * closure = a GClosure
 	 */
 	public static void gSourceSetClosure(Source source, Closure closure)
 	{

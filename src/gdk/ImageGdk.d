@@ -152,10 +152,10 @@ public class ImageGdk
 	 * be allocated by malloc() (NOT g_malloc()) and will be freed when the
 	 * image is freed.
 	 * Params:
-	 * visual =  the GdkVisual to use for the image.
-	 * data =  the pixel data.
-	 * width =  the width of the image in pixels.
-	 * height =  the height of the image in pixels.
+	 * visual = the GdkVisual to use for the image.
+	 * data = the pixel data.
+	 * width = the width of the image in pixels.
+	 * height = the height of the image in pixels.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Visual visual, void* data, int width, int height)
@@ -177,11 +177,11 @@ public class ImageGdk
 	 * most cases gdk_pixbuf_get_from_drawable() is the most convenient
 	 * choice.
 	 * Params:
-	 * drawable =  a GdkDrawable
-	 * x =  x coordinate in window
-	 * y =  y coordinate in window
-	 * width =  width of area in window
-	 * height =  height of area in window
+	 * drawable = a GdkDrawable
+	 * x = x coordinate in window
+	 * y = y coordinate in window
+	 * width = width of area in window
+	 * height = height of area in window
 	 * Returns: a new GdkImage or NULL
 	 */
 	public static ImageGdk get(Drawable drawable, int x, int y, int width, int height)
@@ -248,7 +248,7 @@ public class ImageGdk
 	 * create the image from scratch, use the colormap of the drawable you
 	 * intend to render the image to.
 	 * Params:
-	 * colormap =  a GdkColormap
+	 * colormap = a GdkColormap
 	 */
 	public void setColormap(Colormap colormap)
 	{

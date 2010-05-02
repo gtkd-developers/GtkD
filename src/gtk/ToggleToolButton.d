@@ -184,7 +184,7 @@ public class ToggleToolButton : ToolButton
 	 * It is an error if stock_id is not a name of a stock item.
 	 * Since 2.4
 	 * Params:
-	 * stockId =  the name of the stock item
+	 * stockId = the name of the stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string stockId)
@@ -204,7 +204,7 @@ public class ToggleToolButton : ToolButton
 	 * This action causes the toggled signal to be emitted.
 	 * Since 2.4
 	 * Params:
-	 * isActive =  whether button should be active
+	 * isActive = whether button should be active
 	 */
 	public void setActive(int isActive)
 	{

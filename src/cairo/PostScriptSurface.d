@@ -115,9 +115,9 @@ public class PostScriptSurface : Surface
 	 * vary. See cairo_ps_surface_set_size().
 	 * Since 1.2
 	 * Params:
-	 * filename =  a filename for the PS output (must be writable)
-	 * widthInPoints =  width of the surface, in points (1 point == 1/72.0 inch)
-	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
+	 * filename = a filename for the PS output (must be writable)
+	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
+	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static PostScriptSurface create(string filename, double widthInPoints, double heightInPoints)
@@ -140,10 +140,10 @@ public class PostScriptSurface : Surface
 	 * output can vary. See cairo_ps_surface_set_size().
 	 * Since 1.2
 	 * Params:
-	 * writeFunc =  a cairo_write_func_t to accept the output data
-	 * closure =  the closure argument for write_func
-	 * widthInPoints =  width of the surface, in points (1 point == 1/72.0 inch)
-	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
+	 * writeFunc = a cairo_write_func_t to accept the output data
+	 * closure = the closure argument for write_func
+	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
+	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static PostScriptSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
@@ -167,7 +167,7 @@ public class PostScriptSurface : Surface
 	 * surface.
 	 * Since 1.6
 	 * Params:
-	 * level =  PostScript level
+	 * level = PostScript level
 	 */
 	public void restrictToLevel(cairo_ps_level_t level)
 	{
@@ -180,7 +180,7 @@ public class PostScriptSurface : Surface
 	 * cairo_ps_surface_restrict_to_level().
 	 * Since 1.6
 	 * Params:
-	 * levels =  supported level list
+	 * levels = supported level list
 	 */
 	public static void getLevels(out cairo_ps_level_t[] levels)
 	{
@@ -199,7 +199,7 @@ public class PostScriptSurface : Surface
 	 * for a way to get the list of valid level ids.
 	 * Since 1.6
 	 * Params:
-	 * level =  a level id
+	 * level = a level id
 	 * Returns: the string associated to given level.
 	 */
 	public static string levelToString(cairo_ps_level_t level)
@@ -218,7 +218,7 @@ public class PostScriptSurface : Surface
 	 * than one page.
 	 * Since 1.6
 	 * Params:
-	 * eps =  TRUE to output EPS format PostScript
+	 * eps = TRUE to output EPS format PostScript
 	 */
 	public void setEps(cairo_bool_t eps)
 	{
@@ -247,8 +247,8 @@ public class PostScriptSurface : Surface
 	 * cairo_show_page() or cairo_copy_page().
 	 * Since 1.2
 	 * Params:
-	 * widthInPoints =  new surface width, in points (1 point == 1/72.0 inch)
-	 * heightInPoints =  new surface height, in points (1 point == 1/72.0 inch)
+	 * widthInPoints = new surface width, in points (1 point == 1/72.0 inch)
+	 * heightInPoints = new surface height, in points (1 point == 1/72.0 inch)
 	 */
 	public void setSize(double widthInPoints, double heightInPoints)
 	{
@@ -329,7 +329,7 @@ public class PostScriptSurface : Surface
 	 * its own. As such, applications must not manually generate any of
 	 * Since 1.2
 	 * Params:
-	 * comment =  a comment string to be emitted into the PostScript output
+	 * comment = a comment string to be emitted into the PostScript output
 	 */
 	public void dscComment(string comment)
 	{

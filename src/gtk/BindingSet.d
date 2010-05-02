@@ -178,10 +178,10 @@ public class BindingSet
 	 * Override or install a new key binding for keyval with modifiers on
 	 * binding_set.
 	 * Params:
-	 * keyval =  key value
-	 * modifiers =  key modifier
-	 * signalName =  signal name to be bound
-	 * bindingArgs =  list of GtkBindingArg signal arguments
+	 * keyval = key value
+	 * modifiers = key modifier
+	 * signalName = signal name to be bound
+	 * bindingArgs = list of GtkBindingArg signal arguments
 	 */
 	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, string signalName, ListSG bindingArgs)
 	{
@@ -194,8 +194,8 @@ public class BindingSet
 	 * gtk_binding_entry_clear has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_binding_entry_remove() instead.
 	 * Clears a binding entry.
 	 * Params:
-	 * keyval =  key value of binding to clear
-	 * modifiers =  key modifier of binding to clear
+	 * keyval = key value of binding to clear
+	 * modifiers = key modifier of binding to clear
 	 */
 	public void bindingEntryClear(uint keyval, GdkModifierType modifiers)
 	{
@@ -208,7 +208,7 @@ public class BindingSet
 	 * gtk_binding_parse_binding has been deprecated since version 2.12 and should not be used in newly-written code. There should be no need to call this function outside GTK+.
 	 * Parse a binding entry from a gtkrc file.
 	 * Params:
-	 * scanner =  GtkRC scanner
+	 * scanner = GtkRC scanner
 	 * Returns: expected token upon errors, G_TOKEN_NONE on success.
 	 */
 	public static uint bindingParseBinding(ScannerG scanner)
@@ -221,7 +221,7 @@ public class BindingSet
 	 * GTK+ maintains a global list of binding sets. Each binding set has
 	 * a unique name which needs to be specified upon creation.
 	 * Params:
-	 * setName =  unique name of this binding set
+	 * setName = unique name of this binding set
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string setName)
@@ -240,7 +240,7 @@ public class BindingSet
 	 * the passed in class structure. New binding sets are created on
 	 * demand by this function.
 	 * Params:
-	 * objectClass =  a valid GtkObject class
+	 * objectClass = a valid GtkObject class
 	 * Returns: the binding set corresponding to object_class
 	 */
 	public static BindingSet byClass(void* objectClass)
@@ -259,7 +259,7 @@ public class BindingSet
 	 * either be a name used for gtk_binding_set_new() or the type name of
 	 * a class used in gtk_binding_set_by_class().
 	 * Params:
-	 * setName =  unique binding set name
+	 * setName = unique binding set name
 	 * Returns: NULL or the specified binding set
 	 */
 	public static BindingSet find(string setName)
@@ -277,9 +277,9 @@ public class BindingSet
 	 * Find a key binding matching keyval and modifiers and activate the
 	 * binding on object.
 	 * Params:
-	 * object =  object to activate when binding found
-	 * keyval =  key value of the binding
-	 * modifiers =  key modifier of the binding
+	 * object = object to activate when binding found
+	 * keyval = key value of the binding
+	 * modifiers = key modifier of the binding
 	 * Returns: TRUE if a binding was found and activated
 	 */
 	public static int activate(ObjectGtk object, uint keyval, GdkModifierType modifiers)
@@ -292,8 +292,8 @@ public class BindingSet
 	 * Looks up key bindings for object to find one matching
 	 * event, and if one was found, activate it.
 	 * Params:
-	 * object =  a GtkObject (generally must be a widget)
-	 * event =  a GdkEventKey
+	 * object = a GtkObject (generally must be a widget)
+	 * event = a GdkEventKey
 	 * Returns: TRUE if a matching key binding was found
 	 */
 	public static int activateEvent(ObjectGtk object, GdkEventKey* event)
@@ -306,9 +306,9 @@ public class BindingSet
 	 * Find a key binding matching keyval and modifiers within
 	 * binding_set and activate the binding on object.
 	 * Params:
-	 * keyval =  key value of the binding
-	 * modifiers =  key modifier of the binding
-	 * object =  object to activate when binding found
+	 * keyval = key value of the binding
+	 * modifiers = key modifier of the binding
+	 * object = object to activate when binding found
 	 * Returns: TRUE if a binding was found and activated
 	 */
 	public int activate(uint keyval, GdkModifierType modifiers, ObjectGtk object)
@@ -323,8 +323,8 @@ public class BindingSet
 	 * to be activated.
 	 * Since 2.12
 	 * Params:
-	 * keyval =  key value of binding to skip
-	 * modifiers =  key modifier of binding to skip
+	 * keyval = key value of binding to skip
+	 * modifiers = key modifier of binding to skip
 	 */
 	public void bindingEntrySkip(uint keyval, GdkModifierType modifiers)
 	{
@@ -336,8 +336,8 @@ public class BindingSet
 	 * Remove a binding previously installed via
 	 * gtk_binding_entry_add_signal() on binding_set.
 	 * Params:
-	 * keyval =  key value of binding to remove
-	 * modifiers =  key modifier of binding to remove
+	 * keyval = key value of binding to remove
+	 * modifiers = key modifier of binding to remove
 	 */
 	public void bindingEntryRemove(uint keyval, GdkModifierType modifiers)
 	{
@@ -349,9 +349,9 @@ public class BindingSet
 	 * This function is used internally by the GtkRC parsing mechanism to
 	 * assign match patterns to GtkBindingSet structures.
 	 * Params:
-	 * pathType =  path type the pattern applies to
-	 * pathPattern =  the actual match pattern
-	 * priority =  binding priority
+	 * pathType = path type the pattern applies to
+	 * pathPattern = the actual match pattern
+	 * priority = binding priority
 	 */
 	public void addPath(GtkPathType pathType, string pathPattern, GtkPathPriorityType priority)
 	{

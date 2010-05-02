@@ -126,7 +126,7 @@ public class UnixMountPoint
 	/**
 	 * Compares two unix mount points.
 	 * Params:
-	 * mount2 =  a GUnixMount.
+	 * mount2 = a GUnixMount.
 	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to,or less than mount2, respectively.
 	 */
 	public int compare(UnixMountPoint mount2)

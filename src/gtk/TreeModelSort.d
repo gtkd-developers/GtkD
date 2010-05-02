@@ -104,7 +104,7 @@ private import gobject.ObjectG;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
- * Example 23. Using a GtkTreeModelSort
+ * Example  23.  Using a GtkTreeModelSort
  * {
 	 *  GtkTreeView *tree_view1;
 	 *  GtkTreeView *tree_view2;
@@ -130,7 +130,7 @@ private import gobject.ObjectG;
  * "changed" signal. In this callback, we get a string from COLUMN_1 of
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
- * Example 24. Accessing the child model of in a selection changed callback
+ * Example  24.  Accessing the child model of in a selection changed callback
  * void
  * selection_changed (GtkTreeSelection *selection, gpointer data)
  * {
@@ -223,7 +223,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	/**
 	 * Creates a new GtkTreeModel, with child_model as the child model.
 	 * Params:
-	 * childModel =  A GtkTreeModel
+	 * childModel = A GtkTreeModel
 	 * Returns: A new GtkTreeModel.
 	 */
 	public static TreeModelIF newWithModel(TreeModelIF childModel)
@@ -258,7 +258,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * point to the same row in the sorted model. If child_path isn't a valid
 	 * path on the child model, then NULL is returned.
 	 * Params:
-	 * childPath =  A GtkTreePath to convert
+	 * childPath = A GtkTreePath to convert
 	 * Returns: A newly allocated GtkTreePath, or NULL
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
@@ -277,8 +277,8 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * the row pointed at by child_iter. If sort_iter was not set, FALSE
 	 * is returned. Note: a boolean is only returned since 2.14.
 	 * Params:
-	 * sortIter =  An uninitialized GtkTreeIter.
-	 * childIter =  A valid GtkTreeIter pointing to a row on the child model
+	 * sortIter = An uninitialized GtkTreeIter.
+	 * childIter = A valid GtkTreeIter pointing to a row on the child model
 	 * Returns: TRUE, if sort_iter was set, i.e. if sort_iter is avalid iterator pointer to a visible row in the child model.
 	 */
 	public int convertChildIterToIter(TreeIter sortIter, TreeIter childIter)
@@ -294,7 +294,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * sorted. If sorted_path does not point to a location in the child model,
 	 * NULL is returned.
 	 * Params:
-	 * sortedPath =  A GtkTreePath to convert
+	 * sortedPath = A GtkTreePath to convert
 	 * Returns: A newly allocated GtkTreePath, or NULL
 	 */
 	public TreePath convertPathToChildPath(TreePath sortedPath)
@@ -311,8 +311,8 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	/**
 	 * Sets child_iter to point to the row pointed to by sorted_iter.
 	 * Params:
-	 * childIter =  An uninitialized GtkTreeIter
-	 * sortedIter =  A valid GtkTreeIter pointing to a row on tree_model_sort.
+	 * childIter = An uninitialized GtkTreeIter
+	 * sortedIter = A valid GtkTreeIter pointing to a row on tree_model_sort.
 	 */
 	public void convertIterToChildIter(TreeIter childIter, TreeIter sortedIter)
 	{
@@ -352,7 +352,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * Checks if the given iter is a valid iter for this GtkTreeModelSort.
 	 * Since 2.2
 	 * Params:
-	 * iter =  A GtkTreeIter.
+	 * iter = A GtkTreeIter.
 	 * Returns: TRUE if the iter is valid, FALSE if the iter is invalid.
 	 */
 	public int iterIsValid(TreeIter iter)

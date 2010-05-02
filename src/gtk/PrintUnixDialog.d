@@ -102,7 +102,7 @@ private import gtk.Dialog;
  * GtkPrintUnixDialog as GtkBuildable
  * The GtkPrintUnixDialog implementation of the GtkBuildable interface exposes its
  * notebook internal children with the name "notebook".
- * Example 49. A GtkPrintUnixDialog UI definition fragment.
+ * Example  49.  A GtkPrintUnixDialog UI definition fragment.
  * <object class="GtkPrintUnixDialog" id="dialog1">
  *  <child internal-child="notebook">
  *  <object class="GtkNotebook" id="notebook">
@@ -171,8 +171,8 @@ public class PrintUnixDialog : Dialog
 	 * Creates a new GtkPrintUnixDialog.
 	 * Since 2.10
 	 * Params:
-	 * title =  Title of the dialog, or NULL
-	 * parent =  Transient parent of the dialog, or NULL
+	 * title = Title of the dialog, or NULL
+	 * parent = Transient parent of the dialog, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)
@@ -190,7 +190,7 @@ public class PrintUnixDialog : Dialog
 	 * Sets the page setup of the GtkPrintUnixDialog.
 	 * Since 2.10
 	 * Params:
-	 * pageSetup =  a GtkPageSetup
+	 * pageSetup = a GtkPageSetup
 	 */
 	public void setPageSetup(PageSetup pageSetup)
 	{
@@ -219,7 +219,7 @@ public class PrintUnixDialog : Dialog
 	 * the current page choice for the range of pages to print.
 	 * Since 2.10
 	 * Params:
-	 * currentPage =  the current page number.
+	 * currentPage = the current page number.
 	 */
 	public void setCurrentPage(int currentPage)
 	{
@@ -244,7 +244,7 @@ public class PrintUnixDialog : Dialog
 	 * operation before the print dialog is shown.
 	 * Since 2.10
 	 * Params:
-	 * settings =  a GtkPrintSettings, or NULL
+	 * settings = a GtkPrintSettings, or NULL
 	 */
 	public void setPrintSettings(PrintSettings settings)
 	{
@@ -291,8 +291,8 @@ public class PrintUnixDialog : Dialog
 	 * Adds a custom tab to the print dialog.
 	 * Since 2.10
 	 * Params:
-	 * child =  the widget to put in the custom tab
-	 * tabLabel =  the widget to use as tab label
+	 * child = the widget to put in the custom tab
+	 * tabLabel = the widget to use as tab label
 	 */
 	public void addCustomTab(Widget child, Widget tabLabel)
 	{
@@ -304,7 +304,7 @@ public class PrintUnixDialog : Dialog
 	 * Sets whether the print dialog allows user to print a selection.
 	 * Since 2.18
 	 * Params:
-	 * supportSelection =  TRUE to allow print selection
+	 * supportSelection = TRUE to allow print selection
 	 */
 	public void setSupportSelection(int supportSelection)
 	{
@@ -327,7 +327,7 @@ public class PrintUnixDialog : Dialog
 	 * Sets whether a selection exists.
 	 * Since 2.18
 	 * Params:
-	 * hasSelection =  TRUE indicates that a selection exists
+	 * hasSelection = TRUE indicates that a selection exists
 	 */
 	public void setHasSelection(int hasSelection)
 	{
@@ -350,7 +350,7 @@ public class PrintUnixDialog : Dialog
 	 * Embed page size combo box and orientation combo box into page setup page.
 	 * Since 2.18
 	 * Params:
-	 * embed =  embed page setup selection
+	 * embed = embed page setup selection
 	 */
 	public void setEmbedPageSetup(int embed)
 	{
@@ -388,7 +388,7 @@ public class PrintUnixDialog : Dialog
 	 * system automatically handles scaling.
 	 * Since 2.10
 	 * Params:
-	 * capabilities =  the printing capabilities of your application
+	 * capabilities = the printing capabilities of your application
 	 */
 	public void setManualCapabilities(GtkPrintCapabilities capabilities)
 	{

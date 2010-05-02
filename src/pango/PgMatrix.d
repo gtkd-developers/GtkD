@@ -112,7 +112,7 @@ public class PgMatrix
 	 * it by PANGO_SCALE.
 	 * Since 1.16
 	 * Params:
-	 * i =  value in Pango units
+	 * i = value in Pango units
 	 * Returns: the double value.
 	 */
 	public static double unitsToDouble(int i)
@@ -126,7 +126,7 @@ public class PgMatrix
 	 * it by PANGO_SCALE and rounds to nearest integer.
 	 * Since 1.16
 	 * Params:
-	 * d =  double floating-point value
+	 * d = double floating-point value
 	 * Returns: the value in Pango units.
 	 */
 	public static int unitsFromDouble(double d)
@@ -150,8 +150,8 @@ public class PgMatrix
 	 * as nearest.
 	 * Since 1.16
 	 * Params:
-	 * inclusive =  rectangle to round to pixels inclusively, or NULL.
-	 * nearest =  rectangle to round to nearest pixels, or NULL.
+	 * inclusive = rectangle to round to pixels inclusively, or NULL.
+	 * nearest = rectangle to round to nearest pixels, or NULL.
 	 */
 	public static void extentsToPixels(PangoRectangle* inclusive, PangoRectangle* nearest)
 	{
@@ -163,7 +163,7 @@ public class PgMatrix
 	 * Copies a PangoMatrix.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix, may be NULL
+	 * matrix = a PangoMatrix, may be NULL
 	 * Returns: the newly allocated PangoMatrix, which should be freed with pango_matrix_free(), or NULL if matrix was NULL.
 	 */
 	public PgMatrix matrixCopy()
@@ -181,7 +181,7 @@ public class PgMatrix
 	 * Free a PangoMatrix created with pango_matrix_copy().
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix, may be NULL
+	 * matrix = a PangoMatrix, may be NULL
 	 */
 	public void matrixFree()
 	{
@@ -195,9 +195,9 @@ public class PgMatrix
 	 * then applying the original transformation.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix
-	 * tx =  amount to translate in the X direction
-	 * ty =  amount to translate in the Y direction
+	 * matrix = a PangoMatrix
+	 * tx = amount to translate in the X direction
+	 * ty = amount to translate in the Y direction
 	 */
 	public void matrixTranslate(double tx, double ty)
 	{
@@ -212,9 +212,9 @@ public class PgMatrix
 	 * transformation.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix
-	 * scaleX =  amount to scale by in X direction
-	 * scaleY =  amount to scale by in Y direction
+	 * matrix = a PangoMatrix
+	 * scaleX = amount to scale by in X direction
+	 * scaleY = amount to scale by in Y direction
 	 */
 	public void matrixScale(double scaleX, double scaleY)
 	{
@@ -228,8 +228,8 @@ public class PgMatrix
 	 * counter-clockwise then applying the original transformation.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix
-	 * degrees =  degrees to rotate counter-clockwise
+	 * matrix = a PangoMatrix
+	 * degrees = degrees to rotate counter-clockwise
 	 */
 	public void matrixRotate(double degrees)
 	{
@@ -243,8 +243,8 @@ public class PgMatrix
 	 * given by new_matrix then applying the original transformation.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix
-	 * newMatrix =  a PangoMatrix
+	 * matrix = a PangoMatrix
+	 * newMatrix = a PangoMatrix
 	 */
 	public void matrixConcat(PgMatrix newMatrix)
 	{
@@ -256,9 +256,9 @@ public class PgMatrix
 	 * Transforms the point (x, y) by matrix.
 	 * Since 1.16
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * x =  in/out X position
-	 * y =  in/out Y position
+	 * matrix = a PangoMatrix, or NULL
+	 * x = in/out X position
+	 * y = in/out Y position
 	 */
 	public void matrixTransformPoint(ref double x, ref double y)
 	{
@@ -272,9 +272,9 @@ public class PgMatrix
 	 * components of the transformation are ignored. The calculation of
 	 * Since 1.16
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * dx =  in/out X component of a distance vector
-	 * dy =  yn/out Y component of a distance vector
+	 * matrix = a PangoMatrix, or NULL
+	 * dx = in/out X component of a distance vector
+	 * dy = yn/out Y component of a distance vector
 	 */
 	public void matrixTransformDistance(ref double dx, ref double dy)
 	{
@@ -300,8 +300,8 @@ public class PgMatrix
 	 * example).
 	 * Since 1.16
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * rect =  in/out bounding box in Pango units, or NULL
+	 * matrix = a PangoMatrix, or NULL
+	 * rect = in/out bounding box in Pango units, or NULL
 	 */
 	public void matrixTransformRectangle(PangoRectangle* rect)
 	{
@@ -321,8 +321,8 @@ public class PgMatrix
 	 * using pango_extents_to_pixels()'s first argument.
 	 * Since 1.16
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * rect =  in/out bounding box in device units, or NULL
+	 * matrix = a PangoMatrix, or NULL
+	 * rect = in/out bounding box in device units, or NULL
 	 */
 	public void matrixTransformPixelRectangle(PangoRectangle* rect)
 	{
@@ -336,7 +336,7 @@ public class PgMatrix
 	 * vector that the X coordinate is mapped to.
 	 * Since 1.12
 	 * Params:
-	 * matrix =  a PangoMatrix, may be NULL
+	 * matrix = a PangoMatrix, may be NULL
 	 * Returns: the scale factor of matrix on the height of the font,or 1.0 if matrix is NULL.
 	 */
 	public double matrixGetFontScaleFactor()

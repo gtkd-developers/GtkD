@@ -128,7 +128,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Creates a new icon for a file.
 	 * Params:
-	 * file =  a GFile.
+	 * file = a GFile.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GFile* file)

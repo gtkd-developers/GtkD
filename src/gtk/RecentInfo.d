@@ -270,10 +270,10 @@ public class RecentInfo
 	 * storage specification, they will be expanded.
 	 * Since 2.10
 	 * Params:
-	 * appName =  the name of the application that has registered this item
-	 * appExec =  return location for the string containing the command line
-	 * count =  return location for the number of times this item was registered
-	 * time =  return location for the timestamp this item was last registered
+	 * appName = the name of the application that has registered this item
+	 * appExec = return location for the string containing the command line
+	 * count = return location for the number of times this item was registered
+	 * time = return location for the timestamp this item was last registered
 	 *  for this application
 	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. The app_exec string is owned by the GtkRecentInfo and should not be modified or freed
 	 */
@@ -331,7 +331,7 @@ public class RecentInfo
 	 * recently used item info.
 	 * Since 2.10
 	 * Params:
-	 * groupName =  name of a group
+	 * groupName = name of a group
 	 * Returns: TRUE if the group was found.
 	 */
 	public int hasGroup(string groupName)
@@ -344,7 +344,7 @@ public class RecentInfo
 	 * Checks whether an application registered this resource using app_name.
 	 * Since 2.10
 	 * Params:
-	 * appName =  a string containing an application name
+	 * appName = a string containing an application name
 	 * Returns: TRUE if an application with name app_name was found, FALSE otherwise.
 	 */
 	public int hasApplication(string appName)
@@ -357,7 +357,7 @@ public class RecentInfo
 	 * Retrieves the icon of size size associated to the resource MIME type.
 	 * Since 2.10
 	 * Params:
-	 * size =  the size of the icon in pixels
+	 * size = the size of the icon in pixels
 	 * Returns: a GdkPixbuf containing the icon, or NULL. Use g_object_unref() when finished using the icon.
 	 */
 	public Pixbuf getIcon(int size)
@@ -438,7 +438,7 @@ public class RecentInfo
 	 * resource.
 	 * Since 2.10
 	 * Params:
-	 * infoB =  a GtkRecentInfo
+	 * infoB = a GtkRecentInfo
 	 * Returns: TRUE if both GtkRecentInfo structures point to se same resource, FALSE otherwise.
 	 */
 	public int match(RecentInfo infoB)

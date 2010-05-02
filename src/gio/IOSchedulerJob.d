@@ -119,12 +119,12 @@ public class IOSchedulerJob
 	 * by calling g_cancellable_cancel() or by calling
 	 * g_io_scheduler_cancel_all_jobs().
 	 * Params:
-	 * jobFunc =  a GIOSchedulerJobFunc.
-	 * userData =  data to pass to job_func
-	 * notify =  a GDestroyNotify for user_data, or NULL
-	 * ioPriority =  the I/O priority
+	 * jobFunc = a GIOSchedulerJobFunc.
+	 * userData = data to pass to job_func
+	 * notify = a GDestroyNotify for user_data, or NULL
+	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 */
 	public static void pushJob(GIOSchedulerJobFunc jobFunc, void* userData, GDestroyNotify notify, int ioPriority, Cancellable cancellable)
 	{
@@ -148,9 +148,9 @@ public class IOSchedulerJob
 	 * that the job was started from, waiting for the result (and thus
 	 * blocking the I/O job).
 	 * Params:
-	 * func =  a GSourceFunc callback that will be called in the original thread
-	 * userData =  data to pass to func
-	 * notify =  a GDestroyNotify for user_data, or NULL
+	 * func = a GSourceFunc callback that will be called in the original thread
+	 * userData = data to pass to func
+	 * notify = a GDestroyNotify for user_data, or NULL
 	 * Returns: The return value of func
 	 */
 	public int sendToMainloop(GSourceFunc func, void* userData, GDestroyNotify notify)
@@ -169,9 +169,9 @@ public class IOSchedulerJob
 	 * func is called, either by passing NULL as notify to
 	 * g_io_scheduler_push_job() or by using refcounting for user_data.
 	 * Params:
-	 * func =  a GSourceFunc callback that will be called in the original thread
-	 * userData =  data to pass to func
-	 * notify =  a GDestroyNotify for user_data, or NULL
+	 * func = a GSourceFunc callback that will be called in the original thread
+	 * userData = data to pass to func
+	 * notify = a GDestroyNotify for user_data, or NULL
 	 */
 	public void sendToMainloopAsync(GSourceFunc func, void* userData, GDestroyNotify notify)
 	{

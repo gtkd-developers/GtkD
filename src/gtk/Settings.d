@@ -164,7 +164,7 @@ public class Settings : ObjectG
 	 * Gets the GtkSettings object for screen, creating it if necessary.
 	 * Since 2.2
 	 * Params:
-	 * screen =  a GdkScreen.
+	 * screen = a GdkScreen.
 	 * Returns: a GtkSettings object.
 	 */
 	public static Settings getForScreen(Screen screen)
@@ -204,9 +204,9 @@ public class Settings : ObjectG
 	 * blue are integers between 0 and 65535 or floating-point numbers
 	 * between 0 and 1.
 	 * Params:
-	 * pspec =  a GParamSpec
-	 * gstring =  the GString to be parsed
-	 * propertyValue =  a GValue which must hold GdkColor values.
+	 * pspec = a GParamSpec
+	 * gstring = the GString to be parsed
+	 * propertyValue = a GValue which must hold GdkColor values.
 	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GdkColor.
 	 */
 	public static int rcPropertyParseColor(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -223,9 +223,9 @@ public class Settings : ObjectG
 	 * its numeric value. For consistency with flags parsing, the value
 	 * may be surrounded by parentheses.
 	 * Params:
-	 * pspec =  a GParamSpec
-	 * gstring =  the GString to be parsed
-	 * propertyValue =  a GValue which must hold enum values.
+	 * pspec = a GParamSpec
+	 * gstring = the GString to be parsed
+	 * propertyValue = a GValue which must hold enum values.
 	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GEnumValue.
 	 */
 	public static int rcPropertyParseEnum(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -241,9 +241,9 @@ public class Settings : ObjectG
 	 * numerically. Multiple flags can be specified in the form
 	 * "( flag1 | flag2 | ... )".
 	 * Params:
-	 * pspec =  a GParamSpec
-	 * gstring =  the GString to be parsed
-	 * propertyValue =  a GValue which must hold flags values.
+	 * pspec = a GParamSpec
+	 * gstring = the GString to be parsed
+	 * propertyValue = a GValue which must hold flags values.
 	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting flags value.
 	 */
 	public static int rcPropertyParseFlags(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -258,9 +258,9 @@ public class Settings : ObjectG
 	 * requisition in the form
 	 * "{ width, height }" for integers width and height.
 	 * Params:
-	 * pspec =  a GParamSpec
-	 * gstring =  the GString to be parsed
-	 * propertyValue =  a GValue which must hold boxed values.
+	 * pspec = a GParamSpec
+	 * gstring = the GString to be parsed
+	 * propertyValue = a GValue which must hold boxed values.
 	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GtkRequisition.
 	 */
 	public static int rcPropertyParseRequisition(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -276,9 +276,9 @@ public class Settings : ObjectG
 	 * "{ left, right, top, bottom }" for integers
 	 * left, right, top and bottom.
 	 * Params:
-	 * pspec =  a GParamSpec
-	 * gstring =  the GString to be parsed
-	 * propertyValue =  a GValue which must hold boxed values.
+	 * pspec = a GParamSpec
+	 * gstring = the GString to be parsed
+	 * propertyValue = a GValue which must hold boxed values.
 	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GtkBorder.
 	 */
 	public static int rcPropertyParseBorder(ParamSpec pspec, StringG gstring, Value propertyValue)

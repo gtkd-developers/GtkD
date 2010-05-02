@@ -276,12 +276,12 @@ public class Adjustment : ObjectGtk
 	 * of compressing multiple emissions of "changed" into one.
 	 * Since 2.14
 	 * Params:
-	 * value =  the new value
-	 * lower =  the new minimum value
-	 * upper =  the new maximum value
-	 * stepIncrement =  the new step increment
-	 * pageIncrement =  the new page increment
-	 * pageSize =  the new page size
+	 * value = the new value
+	 * lower = the new minimum value
+	 * upper = the new maximum value
+	 * stepIncrement = the new step increment
+	 * pageIncrement = the new page increment
+	 * pageSize = the new page size
 	 */
 	public void configure(double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
@@ -358,7 +358,7 @@ public class Adjustment : ObjectGtk
 	 * of compressing "changed" emissions.
 	 * Since 2.14
 	 * Params:
-	 * lower =  the new minimum value
+	 * lower = the new minimum value
 	 */
 	public void setLower(double lower)
 	{
@@ -373,7 +373,7 @@ public class Adjustment : ObjectGtk
 	 * properties.
 	 * Since 2.14
 	 * Params:
-	 * pageIncrement =  the new page increment
+	 * pageIncrement = the new page increment
 	 */
 	public void setPageIncrement(double pageIncrement)
 	{
@@ -388,7 +388,7 @@ public class Adjustment : ObjectGtk
 	 * properties.
 	 * Since 2.14
 	 * Params:
-	 * pageSize =  the new page size
+	 * pageSize = the new page size
 	 */
 	public void setPageSize(double pageSize)
 	{
@@ -403,7 +403,7 @@ public class Adjustment : ObjectGtk
 	 * properties.
 	 * Since 2.14
 	 * Params:
-	 * stepIncrement =  the new step increment
+	 * stepIncrement = the new step increment
 	 */
 	public void setStepIncrement(double stepIncrement)
 	{
@@ -421,7 +421,7 @@ public class Adjustment : ObjectGtk
 	 * properties.
 	 * Since 2.14
 	 * Params:
-	 * upper =  the new maximum value
+	 * upper = the new maximum value
 	 */
 	public void setUpper(double upper)
 	{

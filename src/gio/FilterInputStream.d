@@ -139,7 +139,7 @@ public class FilterInputStream : InputStream
 	/**
 	 * Sets whether the base stream will be closed when stream is closed.
 	 * Params:
-	 * closeBase =  TRUE to close the base stream.
+	 * closeBase = TRUE to close the base stream.
 	 */
 	public void setCloseBaseStream(int closeBase)
 	{

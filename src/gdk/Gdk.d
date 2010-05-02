@@ -133,7 +133,7 @@ public class Gdk
 	 * gtk_init(), gtk_init_check(), gdk_init(), or gdk_init_check().
 	 * Since 2.2
 	 * Params:
-	 * argv =  the array of command line arguments.
+	 * argv = the array of command line arguments.
 	 */
 	public static void parseArgs(ref string[] argv)
 	{
@@ -180,7 +180,7 @@ public class Gdk
 	 * (ICCCM) for information on the WM_CLIENT_LEADER property.
 	 * (Both documents are part of the X Window System distribution.)
 	 * Params:
-	 * smClientId =  the client id assigned by the session manager when the
+	 * smClientId = the client id assigned by the session manager when the
 	 *  connection was opened, or NULL to remove the property.
 	 */
 	public static void setSmClientId(string smClientId)
@@ -231,7 +231,7 @@ public class Gdk
 	 * that feature.
 	 * Since 2.12
 	 * Params:
-	 * startupId =  a startup-notification identifier, for which notification
+	 * startupId = a startup-notification identifier, for which notification
 	 *  process should be completed
 	 */
 	public static void notifyStartupCompleteWithId(string startupId)
@@ -382,7 +382,7 @@ public class Gdk
 	 * Ungrabs the pointer on the default display, if it is grabbed by this
 	 * application.
 	 * Params:
-	 * time =  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
+	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
 	 *  timestamp is available.
 	 */
 	public static void pointerUngrab(uint time)
@@ -411,7 +411,7 @@ public class Gdk
 	 * Applications should not set this, it is a
 	 * global user-configured setting.
 	 * Params:
-	 * msec =  double click time in milliseconds (thousandths of a second)
+	 * msec = double click time in milliseconds (thousandths of a second)
 	 */
 	public static void setDoubleClickTime(uint msec)
 	{
@@ -447,7 +447,7 @@ public class Gdk
 	 * Ungrabs the keyboard on the default display, if it is grabbed by this
 	 * application.
 	 * Params:
-	 * time =  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
+	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
 	 *  timestamp is available.
 	 */
 	public static void keyboardUngrab(uint time)
@@ -502,7 +502,7 @@ public class Gdk
 	 * This function allows X errors to be trapped instead of the normal behavior
 	 * of exiting the application. It should only be used if it is not possible to
 	 * avoid the X error in any other way.
-	 * Example 1. Trapping an X error
+	 * Example  1.  Trapping an X error
 	 *  gdk_error_trap_push ();
 	 *  /+* ... Call the X function which may cause an error here ... +/
 	 *  /+* Flush the X queue to catch errors now. +/

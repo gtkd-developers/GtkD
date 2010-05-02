@@ -298,7 +298,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * the same width as the widest of the items.
 	 * Since 2.4
 	 * Params:
-	 * homogeneous =  whether tool_item is the same size as other homogeneous items
+	 * homogeneous = whether tool_item is the same size as other homogeneous items
 	 */
 	public void setHomogeneous(int homogeneous)
 	{
@@ -325,7 +325,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * and smaller when the toolbar gets smaller.
 	 * Since 2.4
 	 * Params:
-	 * expand =  Whether tool_item is allocated extra space
+	 * expand = Whether tool_item is allocated extra space
 	 */
 	public void setExpand(int expand)
 	{
@@ -353,9 +353,9 @@ public class ToolItem : Bin, ActivatableIF
 	 * to be used. See gtk_tooltips_set_tip().
 	 * Since 2.4
 	 * Params:
-	 * tooltips =  The GtkTooltips object to be used
-	 * tipText =  text to be used as tooltip text for tool_item
-	 * tipPrivate =  text to be used as private tooltip text
+	 * tooltips = The GtkTooltips object to be used
+	 * tipText = text to be used as tooltip text for tool_item
+	 * tipPrivate = text to be used as private tooltip text
 	 */
 	public void setTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{
@@ -368,7 +368,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * See gtk_widget_set_tooltip_text().
 	 * Since 2.12
 	 * Params:
-	 * text =  text to be used as tooltip for tool_item
+	 * text = text to be used as tooltip for tool_item
 	 */
 	public override void setTooltipText(string text)
 	{
@@ -381,7 +381,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * See gtk_widget_set_tooltip_markup().
 	 * Since 2.12
 	 * Params:
-	 * markup =  markup text to be used as tooltip for tool_item
+	 * markup = markup text to be used as tooltip for tool_item
 	 */
 	public override void setTooltipMarkup(string markup)
 	{
@@ -396,7 +396,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * even those that would otherwise be sent to a child of tool_item.
 	 * Since 2.4
 	 * Params:
-	 * useDragWindow =  Whether tool_item has a drag window.
+	 * useDragWindow = Whether tool_item has a drag window.
 	 */
 	public void setUseDragWindow(int useDragWindow)
 	{
@@ -420,7 +420,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Sets whether tool_item is visible when the toolbar is docked horizontally.
 	 * Since 2.4
 	 * Params:
-	 * visibleHorizontal =  Whether tool_item is visible when in horizontal mode
+	 * visibleHorizontal = Whether tool_item is visible when in horizontal mode
 	 */
 	public void setVisibleHorizontal(int visibleHorizontal)
 	{
@@ -447,7 +447,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * tool_item will not appear on toolbars that are docked vertically.
 	 * Since 2.4
 	 * Params:
-	 * visibleVertical =  whether tool_item is visible when the toolbar
+	 * visibleVertical = whether tool_item is visible when the toolbar
 	 * is in vertical mode
 	 */
 	public void setVisibleVertical(int visibleVertical)
@@ -476,7 +476,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * effect known as "priority text"
 	 * Since 2.4
 	 * Params:
-	 * isImportant =  whether the tool item should be considered important
+	 * isImportant = whether the tool item should be considered important
 	 */
 	public void setIsImportant(int isImportant)
 	{
@@ -577,7 +577,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * inadvertently change a menu item that they did not create.
 	 * Since 2.4
 	 * Params:
-	 * menuItemId =  a string used to identify the menu item
+	 * menuItemId = a string used to identify the menu item
 	 * Returns: The GtkMenuItem passed togtk_tool_item_set_proxy_menu_item(), if the menu_item_ids match.
 	 */
 	public Widget getProxyMenuItem(string menuItemId)
@@ -597,8 +597,8 @@ public class ToolItem : Bin, ActivatableIF
 	 * should also be used with gtk_tool_item_get_proxy_menu_item().
 	 * Since 2.4
 	 * Params:
-	 * menuItemId =  a string used to identify menu_item
-	 * menuItem =  a GtkMenuItem to be used in the overflow menu
+	 * menuItemId = a string used to identify menu_item
+	 * menuItem = a GtkMenuItem to be used in the overflow menu
 	 */
 	public void setProxyMenuItem(string menuItemId, Widget menuItem)
 	{

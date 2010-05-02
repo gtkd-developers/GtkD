@@ -124,7 +124,7 @@ public class BufferedOutputStream : FilterOutputStream
 	/**
 	 * Creates a new buffered output stream for a base stream.
 	 * Params:
-	 * baseStream =  a GOutputStream.
+	 * baseStream = a GOutputStream.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (OutputStream baseStream)
@@ -141,8 +141,8 @@ public class BufferedOutputStream : FilterOutputStream
 	/**
 	 * Creates a new buffered output stream with a given buffer size.
 	 * Params:
-	 * baseStream =  a GOutputStream.
-	 * size =  a gsize.
+	 * baseStream = a GOutputStream.
+	 * size = a gsize.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (OutputStream baseStream, uint size)
@@ -169,7 +169,7 @@ public class BufferedOutputStream : FilterOutputStream
 	/**
 	 * Sets the size of the internal buffer to size.
 	 * Params:
-	 * size =  a gsize.
+	 * size = a gsize.
 	 */
 	public void setBufferSize(uint size)
 	{
@@ -193,7 +193,7 @@ public class BufferedOutputStream : FilterOutputStream
 	 * larger, and you must manually flush the buffer to actually write out
 	 * the data to the underlying stream.
 	 * Params:
-	 * autoGrow =  a gboolean.
+	 * autoGrow = a gboolean.
 	 */
 	public void setAutoGrow(int autoGrow)
 	{

@@ -145,7 +145,7 @@ private import gtk.FileFilter;
  * 	gtk_file_chooser_set_preview_widget_active() with a boolean
  * 	flag that indicates whether your callback could successfully
  * 	generate a preview.
- * Example 37. Sample Usage
+ * Example  37.  Sample Usage
  * {
 	 *  GtkImage *preview;
 	 *  ...
@@ -179,7 +179,7 @@ private import gtk.FileFilter;
  * 	file in read-only mode. You can use
  * 	gtk_file_chooser_set_extra_widget() to insert additional
  * 	widgets in a file chooser.
- * Example 38. Sample Usage
+ * Example  38.  Sample Usage
  * {
 	 *  GtkWidget *toggle;
 	 *  ...
@@ -200,7 +200,7 @@ private import gtk.FileFilter;
  * 	widget has several key
  * 	bindings and their associated signals. This section
  * 	describes the available key binding signals.
- * Example 39. GtkFileChooser key binding example
+ * Example  39.  GtkFileChooser key binding example
  * 	 The default keys that activate the key-binding signals in
  * 	 GtkFileChooserDefaultClass are as
  * 	 follows:
@@ -261,11 +261,11 @@ private import gtk.FileFilter;
  * 	 immediately type a path name. On Unix systems, this is bound to
  * 	 ~ (tilde) with a path string
  * 	 of "~" itself for access to home directories.
- * chooser :
+ * chooser  :
  * 		the object which received the signal.
- * path :
+ * path  :
  * 		default contents for the text entry for the file name
- * user_data :
+ * user_data  :
  * 		user data set when the signal handler was connected.
  * Tip
  * 	 You can create your own bindings for the
@@ -290,9 +290,9 @@ private import gtk.FileFilter;
  * 	 is bound to Backspace and
  * 	 Alt+Up
  * 	 (the Up key in the numeric keypad also works).
- * chooser :
+ * chooser  :
  * 		the object which received the signal.
- * user_data :
+ * user_data  :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::down-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -306,9 +306,9 @@ private import gtk.FileFilter;
  * 	 default this is bound to
  * 	 Alt+Down
  * 	 (the Down key in the numeric keypad also works).
- * chooser :
+ * chooser  :
  * 		the object which received the signal.
- * user_data :
+ * user_data  :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::home-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -317,9 +317,9 @@ private import gtk.FileFilter;
  * 	 folder in the file list. By default this is bound to
  * 	 Alt+Home
  * 	 (the Home key in the numeric keypad also works).
- * chooser :
+ * chooser  :
  * 		the object which received the signal.
- * user_data :
+ * user_data  :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::desktop-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -327,9 +327,9 @@ private import gtk.FileFilter;
  * 	 This is used to make the file chooser show the user's Desktop
  * 	 folder in the file list. By default this is bound to
  * 	 Alt+D.
- * chooser :
+ * chooser  :
  * 		the object which received the signal.
- * user_data :
+ * user_data  :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::quick-bookmark" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -349,11 +349,11 @@ private import gtk.FileFilter;
  * 	 successively;
  * 	 Alt+0 is
  * 	 defined to switch to the bookmark at index 10.
- * chooser :
+ * chooser  :
  * 		the object which received the signal.
- * bookmark_indes :
+ * bookmark_indes  :
  * 		index of the bookmark to switch to; the indices start at 0.
- * user_data :
+ * user_data  :
  * 		user data set when the signal handler was connected.
  */
 public interface FileChooserIF
@@ -396,7 +396,7 @@ public interface FileChooserIF
 	 *  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
 	 *  illustrates this.
 	 *
-	 * Example 40. Custom confirmation
+	 * Example  40.  Custom confirmation
 	 * static GtkFileChooserConfirmation
 	 * confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
 	 * {
@@ -502,7 +502,7 @@ public interface FileChooserIF
 		 * GTK_FILE_CHOOSER_ACTION_OPEN.
 		 * Since 2.4
 		 * Params:
-		 * action =  the action that the file selector is performing
+		 * action = the action that the file selector is performing
 		 */
 		public void setFileChooserAction(GtkFileChooserAction action);
 		
@@ -526,7 +526,7 @@ public interface FileChooserIF
 		 * gtk_file_chooser_get_uri(),
 		 * Since 2.4
 		 * Params:
-		 * localOnly =  TRUE if only local files can be selected
+		 * localOnly = TRUE if only local files can be selected
 		 */
 		public void setLocalOnly(int localOnly);
 		
@@ -544,7 +544,7 @@ public interface FileChooserIF
 		 * GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 		 * Since 2.4
 		 * Params:
-		 * selectMultiple =  TRUE if multiple files can be selected.
+		 * selectMultiple = TRUE if multiple files can be selected.
 		 */
 		public void setSelectMultiple(int selectMultiple);
 		
@@ -560,7 +560,7 @@ public interface FileChooserIF
 		 * Sets whether hidden files and folders are displayed in the file selector.
 		 * Since 2.6
 		 * Params:
-		 * showHidden =  TRUE if hidden files and folders should be displayed.
+		 * showHidden = TRUE if hidden files and folders should be displayed.
 		 */
 		public void setShowHidden(int showHidden);
 		
@@ -584,7 +584,7 @@ public interface FileChooserIF
 		 * details.
 		 * Since 2.8
 		 * Params:
-		 * doOverwriteConfirmation =  whether to confirm overwriting in save mode
+		 * doOverwriteConfirmation = whether to confirm overwriting in save mode
 		 */
 		public void setDoOverwriteConfirmation(int doOverwriteConfirmation);
 		
@@ -602,7 +602,7 @@ public interface FileChooserIF
 		 * GTK_FILE_CHOOSER_ACTION_OPEN.
 		 * Since 2.18
 		 * Params:
-		 * createFolders =  TRUE if the New Folder button should be displayed
+		 * createFolders = TRUE if the New Folder button should be displayed
 		 */
 		public void setCreateFolders(int createFolders);
 		
@@ -625,7 +625,7 @@ public interface FileChooserIF
 		 * gtk_file_chooser_set_current_name() as well.
 		 * Since 2.4
 		 * Params:
-		 * name =  the filename to use, as a UTF-8 string
+		 * name = the filename to use, as a UTF-8 string
 		 */
 		public void setCurrentName(string name);
 		
@@ -659,7 +659,7 @@ public interface FileChooserIF
 		 * file and is saving it for the first time, do not call this function.
 		 * Since 2.4
 		 * Params:
-		 * filename =  the filename to set as current
+		 * filename = the filename to set as current
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 */
 		public int setFilename(string filename);
@@ -670,7 +670,7 @@ public interface FileChooserIF
 		 * be changed to the folder containing filename.
 		 * Since 2.4
 		 * Params:
-		 * filename =  the filename to select
+		 * filename = the filename to select
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 */
 		public int selectFilename(string filename);
@@ -681,7 +681,7 @@ public interface FileChooserIF
 		 * is otherwise not currently selected, does nothing.
 		 * Since 2.4
 		 * Params:
-		 * filename =  the filename to unselect
+		 * filename = the filename to unselect
 		 */
 		public void unselectFilename(string filename);
 		
@@ -713,7 +713,7 @@ public interface FileChooserIF
 		 * plus user interface elements for navigating to other folders.
 		 * Since 2.4
 		 * Params:
-		 * filename =  the full path of the new current folder
+		 * filename = the full path of the new current folder
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 */
 		public int setCurrentFolder(string filename);
@@ -763,7 +763,7 @@ public interface FileChooserIF
 		 * file and is saving it for the first time, do not call this function.
 		 * Since 2.4
 		 * Params:
-		 * uri =  the URI to set as current
+		 * uri = the URI to set as current
 		 * Returns: TRUE if both the folder could be changed and the URI wasselected successfully, FALSE otherwise.
 		 */
 		public int setUri(string uri);
@@ -774,7 +774,7 @@ public interface FileChooserIF
 		 * chooser will be changed to the folder containing filename.
 		 * Since 2.4
 		 * Params:
-		 * uri =  the URI to select
+		 * uri = the URI to select
 		 * Returns: TRUE if both the folder could be changed and the URI wasselected successfully, FALSE otherwise.
 		 */
 		public int selectUri(string uri);
@@ -785,7 +785,7 @@ public interface FileChooserIF
 		 * is otherwise not currently selected, does nothing.
 		 * Since 2.4
 		 * Params:
-		 * uri =  the URI to unselect
+		 * uri = the URI to unselect
 		 */
 		public void unselectUri(string uri);
 		
@@ -803,7 +803,7 @@ public interface FileChooserIF
 		 * plus user interface elements for navigating to other folders.
 		 * Since 2.4
 		 * Params:
-		 * uri =  the URI for the new current folder
+		 * uri = the URI for the new current folder
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 */
 		public int setCurrentFolderUri(string uri);
@@ -838,7 +838,7 @@ public interface FileChooserIF
 		 * it may display no preview at all.
 		 * Since 2.4
 		 * Params:
-		 * previewWidget =  widget for displaying preview.
+		 * previewWidget = widget for displaying preview.
 		 */
 		public void setPreviewWidget(Widget previewWidget);
 		
@@ -859,7 +859,7 @@ public interface FileChooserIF
 		 * gtk_file_chooser_set_preview_widget() for more details.
 		 * Since 2.4
 		 * Params:
-		 * active =  whether to display the user-specified preview widget
+		 * active = whether to display the user-specified preview widget
 		 */
 		public void setPreviewWidgetActive(int active);
 		
@@ -880,7 +880,7 @@ public interface FileChooserIF
 		 * See also: gtk_file_chooser_set_preview_widget()
 		 * Since 2.4
 		 * Params:
-		 * useLabel =  whether to display a stock label with the name of the previewed file
+		 * useLabel = whether to display a stock label with the name of the previewed file
 		 */
 		public void setUsePreviewLabel(int useLabel);
 		
@@ -911,7 +911,7 @@ public interface FileChooserIF
 		 * Sets an application-supplied widget to provide extra options to the user.
 		 * Since 2.4
 		 * Params:
-		 * extraWidget =  widget for extra options
+		 * extraWidget = widget for extra options
 		 */
 		public void setExtraWidget(Widget extraWidget);
 		
@@ -931,7 +931,7 @@ public interface FileChooserIF
 		 * ref and sink it if you want to keep a reference.
 		 * Since 2.4
 		 * Params:
-		 * filter =  a GtkFileFilter
+		 * filter = a GtkFileFilter
 		 */
 		public void addFilter(FileFilter filter);
 		
@@ -939,7 +939,7 @@ public interface FileChooserIF
 		 * Removes filter from the list of filters that the user can select between.
 		 * Since 2.4
 		 * Params:
-		 * filter =  a GtkFileFilter
+		 * filter = a GtkFileFilter
 		 */
 		public void removeFilter(FileFilter filter);
 		
@@ -960,7 +960,7 @@ public interface FileChooserIF
 		 * set of files without letting the user change it.
 		 * Since 2.4
 		 * Params:
-		 * filter =  a GtkFileFilter
+		 * filter = a GtkFileFilter
 		 */
 		public void setFilter(FileFilter filter);
 		
@@ -978,7 +978,7 @@ public interface FileChooserIF
 		 * "/usr/share/mydrawprogram/Clipart" folder to the volume list.
 		 * Since 2.4
 		 * Params:
-		 * folder =  filename of the folder to add
+		 * folder = filename of the folder to add
 		 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
 		 * Throws: GException on failure.
 		 */
@@ -988,7 +988,7 @@ public interface FileChooserIF
 		 * Removes a folder from a file chooser's list of shortcut folders.
 		 * Since 2.4
 		 * Params:
-		 * folder =  filename of the folder to remove
+		 * folder = filename of the folder to remove
 		 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder()
 		 * Throws: GException on failure.
 		 */
@@ -1009,7 +1009,7 @@ public interface FileChooserIF
 		 * "file:///usr/share/mydrawprogram/Clipart" folder to the volume list.
 		 * Since 2.4
 		 * Params:
-		 * uri =  URI of the folder to add
+		 * uri = URI of the folder to add
 		 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
 		 * Throws: GException on failure.
 		 */
@@ -1019,7 +1019,7 @@ public interface FileChooserIF
 		 * Removes a folder URI from a file chooser's list of shortcut folders.
 		 * Since 2.4
 		 * Params:
-		 * uri =  URI of the folder to remove
+		 * uri = URI of the folder to remove
 		 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder_uri()
 		 * Throws: GException on failure.
 		 */
@@ -1073,7 +1073,7 @@ public interface FileChooserIF
 		 * _gtk_file_chooser_select_uri().
 		 * Since 2.14
 		 * Params:
-		 * file =  the file to select
+		 * file = the file to select
 		 * Returns: TRUE if both the folder could be changed and the path wasselected successfully, FALSE otherwise.
 		 * Throws: GException on failure.
 		 */
@@ -1084,7 +1084,7 @@ public interface FileChooserIF
 		 * Internal function, see gtk_file_chooser_set_current_folder_uri().
 		 * Since 2.14
 		 * Params:
-		 * file =  the GFile for the new folder
+		 * file = the GFile for the new folder
 		 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 		 * Throws: GException on failure.
 		 */
@@ -1109,7 +1109,7 @@ public interface FileChooserIF
 		 * file and is saving it for the first time, do not call this function.
 		 * Since 2.14
 		 * Params:
-		 * file =  the GFile to set as current
+		 * file = the GFile to set as current
 		 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 		 * Throws: GException on failure.
 		 */
@@ -1120,7 +1120,7 @@ public interface FileChooserIF
 		 * directory, does not exist, or is otherwise not currently selected, does nothing.
 		 * Since 2.14
 		 * Params:
-		 * file =  a GFile
+		 * file = a GFile
 		 */
 		public void unselectFile(File file);
 }

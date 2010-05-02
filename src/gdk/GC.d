@@ -153,7 +153,7 @@ public class GC : ObjectG
 	/**
 	 * Create a new graphics context with default values.
 	 * Params:
-	 * drawable =  a GdkDrawable. The created GC must always be used
+	 * drawable = a GdkDrawable. The created GC must always be used
 	 *  with drawables of the same depth as this one.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -171,10 +171,10 @@ public class GC : ObjectG
 	/**
 	 * Create a new GC with the given initial values.
 	 * Params:
-	 * drawable =  a GdkDrawable. The created GC must always be used
+	 * drawable = a GdkDrawable. The created GC must always be used
 	 *  with drawables of the same depth as this one.
-	 * values =  a structure containing initial values for the GC.
-	 * valuesMask =  a bit mask indicating which fields in values
+	 * values = a structure containing initial values for the GC.
+	 * valuesMask = a bit mask indicating which fields in values
 	 *  are set.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -240,8 +240,8 @@ public class GC : ObjectG
 	 * on gc, calling individual "setter" functions is likely more
 	 * convenient.
 	 * Params:
-	 * values =  struct containing the new values
-	 * valuesMask =  mask indicating which struct fields are to be used
+	 * values = struct containing the new values
+	 * valuesMask = mask indicating which struct fields are to be used
 	 */
 	public void setValues(GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
@@ -255,7 +255,7 @@ public class GC : ObjectG
 	 * are filled, use gdk_colormap_query_color() to obtain the rgb values
 	 * if you need them.
 	 * Params:
-	 * values =  the GdkGCValues structure in which to store the results.
+	 * values = the GdkGCValues structure in which to store the results.
 	 */
 	public void getValues(GdkGCValues* values)
 	{
@@ -269,7 +269,7 @@ public class GC : ObjectG
 	 * gdk_gc_set_rgb_fg_color() to specify the foreground
 	 * color as red, green, blue components.
 	 * Params:
-	 * color =  the new foreground color.
+	 * color = the new foreground color.
 	 */
 	public void setForeground(Color color)
 	{
@@ -283,7 +283,7 @@ public class GC : ObjectG
 	 * gdk_gc_set_rgb_bg_color() to specify the background
 	 * color as red, green, blue components.
 	 * Params:
-	 * color =  the new background color.
+	 * color = the new background color.
 	 */
 	public void setBackground(Color color)
 	{
@@ -299,7 +299,7 @@ public class GC : ObjectG
 	 * number of colors), a colorcube will be allocated in the colormap.
 	 * Calling this function for a GC without a colormap is an error.
 	 * Params:
-	 * color =  an unallocated GdkColor.
+	 * color = an unallocated GdkColor.
 	 */
 	public void setRgbFgColor(Color color)
 	{
@@ -315,7 +315,7 @@ public class GC : ObjectG
 	 * number of colors), a colorcube will be allocated in the colormap.
 	 * Calling this function for a GC without a colormap is an error.
 	 * Params:
-	 * color =  an unallocated GdkColor.
+	 * color = an unallocated GdkColor.
 	 */
 	public void setRgbBgColor(Color color)
 	{
@@ -331,7 +331,7 @@ public class GC : ObjectG
 	 * argument; the value set here is used when that
 	 * argument is NULL.)
 	 * Params:
-	 * font =  the new font.
+	 * font = the new font.
 	 */
 	public void setFont(Font font)
 	{
@@ -353,7 +353,7 @@ public class GC : ObjectG
 	/**
 	 * Set the fill mode for a graphics context.
 	 * Params:
-	 * fill =  the new fill mode.
+	 * fill = the new fill mode.
 	 */
 	public void setFill(GdkFill fill)
 	{
@@ -366,7 +366,7 @@ public class GC : ObjectG
 	 * This will only be used if the fill mode
 	 * is GDK_TILED.
 	 * Params:
-	 * tile =  the new tile pixmap.
+	 * tile = the new tile pixmap.
 	 */
 	public void setTile(Pixmap tile)
 	{
@@ -379,7 +379,7 @@ public class GC : ObjectG
 	 * stipple will only be used if the fill mode is
 	 * GDK_STIPPLED or GDK_OPAQUE_STIPPLED.
 	 * Params:
-	 * stipple =  the new stipple bitmap.
+	 * stipple = the new stipple bitmap.
 	 */
 	public void setStipple(Pixmap stipple)
 	{
@@ -393,8 +393,8 @@ public class GC : ObjectG
 	 * that the upper left corner of the tile or stipple
 	 * will coincide with this point.
 	 * Params:
-	 * x =  the x-coordinate of the origin.
-	 * y =  the y-coordinate of the origin.
+	 * x = the x-coordinate of the origin.
+	 * y = the y-coordinate of the origin.
 	 */
 	public void setTsOrigin(int x, int y)
 	{
@@ -407,8 +407,8 @@ public class GC : ObjectG
 	 * interpreted relative to the upper-left corner of
 	 * the destination drawable of the current operation.
 	 * Params:
-	 * x =  the x-coordinate of the origin.
-	 * y =  the y-coordinate of the origin.
+	 * x = the x-coordinate of the origin.
+	 * y = the y-coordinate of the origin.
 	 */
 	public void setClipOrigin(int x, int y)
 	{
@@ -421,7 +421,7 @@ public class GC : ObjectG
 	 * The clip mask is interpreted relative to the clip
 	 * origin. (See gdk_gc_set_clip_origin()).
 	 * Params:
-	 * mask =  a bitmap.
+	 * mask = a bitmap.
 	 */
 	public void setClipMask(Bitmap mask)
 	{
@@ -434,7 +434,7 @@ public class GC : ObjectG
 	 * rectangle. The clip mask is interpreted relative to the clip
 	 * origin. (See gdk_gc_set_clip_origin()).
 	 * Params:
-	 * rectangle =  the rectangle to clip to.
+	 * rectangle = the rectangle to clip to.
 	 */
 	public void setClipRectangle(Rectangle rectangle)
 	{
@@ -447,7 +447,7 @@ public class GC : ObjectG
 	 * The clip mask is interpreted relative to the clip origin. (See
 	 * gdk_gc_set_clip_origin()).
 	 * Params:
-	 * region =  the GdkRegion.
+	 * region = the GdkRegion.
 	 */
 	public void setClipRegion(Region region)
 	{
@@ -459,7 +459,7 @@ public class GC : ObjectG
 	 * Sets how drawing with this GC on a window will affect child
 	 * windows of that window.
 	 * Params:
-	 * mode =  the subwindow mode.
+	 * mode = the subwindow mode.
 	 */
 	public void setSubwindow(GdkSubwindowMode mode)
 	{
@@ -473,7 +473,7 @@ public class GC : ObjectG
 	 * for the corresponding regions of the destination
 	 * drawable. (See gdk_draw_drawable()).
 	 * Params:
-	 * exposures =  if TRUE, exposure events will be generated.
+	 * exposures = if TRUE, exposure events will be generated.
 	 */
 	public void setExposures(int exposures)
 	{
@@ -486,10 +486,10 @@ public class GC : ObjectG
 	 * the corresponding members of GdkGCValues for full
 	 * explanations of the arguments.
 	 * Params:
-	 * lineWidth =  the width of lines.
-	 * lineStyle =  the dash-style for lines.
-	 * capStyle =  the manner in which the ends of lines are drawn.
-	 * joinStyle =  the in which lines are joined together.
+	 * lineWidth = the width of lines.
+	 * lineStyle = the dash-style for lines.
+	 * capStyle = the manner in which the ends of lines are drawn.
+	 * joinStyle = the in which lines are joined together.
 	 */
 	public void setLineAttributes(int lineWidth, GdkLineStyle lineStyle, GdkCapStyle capStyle, GdkJoinStyle joinStyle)
 	{
@@ -508,9 +508,9 @@ public class GC : ObjectG
 	 * specifying how many pixels into the dash-list the pattern
 	 * should actually begin.
 	 * Params:
-	 * dashOffset =  the phase of the dash pattern.
-	 * dashList =  an array of dash lengths.
-	 * n =  the number of elements in dash_list.
+	 * dashOffset = the phase of the dash pattern.
+	 * dashList = an array of dash lengths.
+	 * n = the number of elements in dash_list.
 	 */
 	public void setDashes(int dashOffset, byte[] dashList, int n)
 	{
@@ -522,7 +522,7 @@ public class GC : ObjectG
 	 * Copy the set of values from one graphics context
 	 * onto another graphics context.
 	 * Params:
-	 * srcGc =  the source graphics context.
+	 * srcGc = the source graphics context.
 	 */
 	public void copy(GC srcGc)
 	{
@@ -535,7 +535,7 @@ public class GC : ObjectG
 	 * of the colormap's visual must match the depth of the drawable
 	 * for which the GC was created.
 	 * Params:
-	 * colormap =  a GdkColormap
+	 * colormap = a GdkColormap
 	 */
 	public void setColormap(Colormap colormap)
 	{
@@ -567,8 +567,8 @@ public class GC : ObjectG
 	 * the offset GC has the same effect as drawing at x, y with the original
 	 * GC.
 	 * Params:
-	 * xOffset =  amount by which to offset the GC in the X direction
-	 * yOffset =  amount by which to offset the GC in the Y direction
+	 * xOffset = amount by which to offset the GC in the X direction
+	 * yOffset = amount by which to offset the GC in the Y direction
 	 */
 	public void offset(int xOffset, int yOffset)
 	{

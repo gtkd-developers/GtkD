@@ -1,0 +1,1470 @@
+/*
+ * This file is part of gtkD.
+ *
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+ 
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
+
+/*
+ * Conversion parameters:
+ * inFile  = glib-GVariant.html
+ * outPack = glib
+ * outFile = Variant
+ * strct   = GVariant
+ * realStrct=
+ * ctorStrct=
+ * clss    = Variant
+ * interf  = 
+ * class Code: No
+ * interface Code: No
+ * template for:
+ * extend  = 
+ * implements:
+ * prefixes:
+ * 	- g_variant_
+ * omit structs:
+ * omit prefixes:
+ * 	- g_variant_iter_
+ * 	- g_variant_builder_
+ * omit code:
+ * omit signals:
+ * imports:
+ * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
+ * 	- glib.StringG
+ * 	- glib.VariantType
+ * structWrap:
+ * 	- GString* -> StringG
+ * 	- GVariant* -> Variant
+ * 	- GVariantType* -> VariantType
+ * module aliases:
+ * local aliases:
+ * 	- byte -> b
+ * overrides:
+ */
+
+module glib.Variant;
+
+public  import gtkc.glibtypes;
+
+private import gtkc.glib;
+private import glib.ConstructionException;
+
+
+private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
+private import glib.StringG;
+private import glib.VariantType;
+
+
+
+
+/**
+ * Description
+ * GVariant is a variant datatype; it stores a value along with
+ * information about the type of that value. The range of possible
+ * values is determined by the type. The type system used by GVariant
+ * is GVariantType.
+ * GVariant instances always have a type and a value (which are given
+ * at construction time). The type and value of a GVariant instance
+ * can never change other than by the GVariant itself being
+ * destroyed. A GVariant can not contain a pointer.
+ * GVariant is reference counted using g_variant_ref() and
+ * g_variant_unref(). GVariant also has floating reference counts --
+ * see g_variant_ref_sink().
+ * GVariant is completely threadsafe. A GVariant instance can be
+ * concurrently accessed in any way from any number of threads without
+ * problems.
+ * GVariant is heavily optimised for dealing with data in serialised
+ * form. It works particularly well with data located in memory-mapped
+ * files. It can perform nearly all deserialisation operations in a
+ * small constant time, usually touching only a single memory page.
+ * Serialised GVariant data can also be sent over the network.
+ * GVariant is largely compatible with DBus. Almost all types of
+ * GVariant instances can be sent over DBus. See GVariantType for
+ * exceptions.
+ * For convenience to C programmers, GVariant features powerful
+ * varargs-based value construction and destruction. This feature is
+ * designed to be embedded in other libraries.
+ * There is a Python-inspired text language for describing GVariant
+ * values. GVariant includes a printer for this language and a parser
+ * with type inferencing.
+ * Memory Use
+ *  GVariant tries to be quite efficient with respect to memory use.
+ *  This section gives a rough idea of how much memory is used by the
+ *  current implementation. The information here is subject to change
+ *  in the future.
+ *  The memory allocated by GVariant can be grouped into 4 broad
+ *  purposes: memory for serialised data, memory for the type
+ *  information cache, buffer management memory and memory for the
+ *  GVariant structure itself.
+ * Serialised Data Memory
+ *  This is the memory that is used for storing GVariant data in
+ *  serialised form. This is what would be sent over the network or
+ *  what would end up on disk.
+ *  The amount of memory required to store a boolean is 1 byte. 16,
+ *  32 and 64 bit integers and double precision floating point numbers
+ *  use their "natural" size. Strings (including object path and
+ *  signature strings) are stored with a nul terminator, and as such
+ *  use the length of the string plus 1 byte.
+ *  Maybe types use no space at all to represent the null value and
+ *  use the same amount of space (sometimes plus one byte) as the
+ *  equivalent non-maybe-typed value to represent the non-null case.
+ *  Arrays use the amount of space required to store each of their
+ *  members, concatenated. Additionally, if the items stored in an
+ *  array are not of a fixed-size (ie: strings, other arrays, etc)
+ *  then an additional framing offset is stored for each item. The
+ *  size of this offset is either 1, 2 or 4 bytes depending on the
+ *  overall size of the container. Additionally, extra padding bytes
+ *  are added as required for alignment of child values.
+ *  Tuples (including dictionary entries) use the amount of space
+ *  required to store each of their members, concatenated, plus one
+ *  framing offset (as per arrays) for each non-fixed-sized item in
+ *  the tuple, except for the last one. Additionally, extra padding
+ *  bytes are added as required for alignment of child values.
+ *  Variants use the same amount of space as the item inside of the
+ *  variant, plus 1 byte, plus the length of the type string for the
+ *  item inside the variant.
+ *  As an example, consider a dictionary mapping strings to variants.
+ *  In the case that the dictionary is empty, 0 bytes are required for
+ *  the serialisation.
+ *  If we add an item "width" that maps to the int32 value of 500 then
+ *  we will use 4 byte to store the int32 (so 6 for the variant
+ *  containing it) and 6 bytes for the string. The variant must be
+ *  aligned to 8 after the 6 bytes of the string, so that's 2 extra
+ *  bytes. 6 (string) + 2 (padding) + 6 (variant) is 14 bytes used
+ *  for the dictionary entry. An additional 1 byte is added to the
+ *  array as a framing offset making a total of 15 bytes.
+ *  If we add another entry, "title" that maps to a nullable string
+ *  that happens to have a value of null, then we use 0 bytes for the
+ *  null value (and 3 bytes for the variant to contain it along with
+ *  its type string) plus 6 bytes for the string. Again, we need 2
+ *  padding bytes. That makes a total of 6 + 2 + 3 = 11 bytes.
+ *  We now require extra padding between the two items in the array.
+ *  After the 14 bytes of the first item, that's 2 bytes required. We
+ *  now require 2 framing offsets for an extra two bytes. 14 + 2 + 11
+ *  + 2 = 29 bytes to encode the entire two-item dictionary.
+ * Type Information Cache
+ *  For each GVariant type that currently exists in the program a type
+ *  information structure is kept in the type information cache. The
+ *  type information structure is required for rapid deserialisation.
+ *  Continuing with the above example, if a GVariant exists with the
+ *  type "a{sv}" then a type information struct will exist for
+ *  "a{sv}", "{sv}", "s", and "v". Multiple uses of the same type
+ *  will share the same type information. Additionally, all
+ *  single-digit types are stored in read-only static memory and do
+ *  not contribute to the writable memory footprint of a program using
+ *  GVariant.
+ *  Aside from the type information structures stored in read-only
+ *  memory, there are two forms of type information. One is used for
+ *  container types where there is a single element type: arrays and
+ *  maybe types. The other is used for container types where there
+ *  are multiple element types: tuples and dictionary entries.
+ *  Array type info structures are 6 * sizeof (void *), plus the
+ *  memory required to store the type string itself. This means that
+ *  on 32bit systems, the cache entry for "a{sv}" would require 30
+ *  bytes of memory (plus malloc overhead).
+ *  Tuple type info structures are 6 * sizeof (void *), plus 4 *
+ *  sizeof (void *) for each item in the tuple, plus the memory
+ *  required to store the type string itself. A 2-item tuple, for
+ *  example, would have a type information structure that consumed
+ *  writable memory in the size of 14 * sizeof (void *) (plus type
+ *  string) This means that on 32bit systems, the cache entry for
+ *  "{sv}" would require 61 bytes of memory (plus malloc overhead).
+ *  This means that in total, for our "a{sv}" example, 91 bytes of
+ *  type information would be allocated.
+ *  The type information cache, additionally, uses a GHashTable to
+ *  store and lookup the cached items and stores a pointer to this
+ *  hash table in static storage. The hash table is freed when there
+ *  are zero items in the type cache.
+ *  Although these sizes may seem large it is important to remember
+ *  that a program will probably only have a very small number of
+ *  different types of values in it and that only one type information
+ *  structure is required for many different values of the same type.
+ * Buffer Management Memory
+ *  GVariant uses an internal buffer management structure to deal
+ *  with the various different possible sources of serialised data
+ *  that it uses. The buffer is responsible for ensuring that the
+ *  correct call is made when the data is no longer in use by
+ *  GVariant. This may involve a g_free() or a g_slice_free() or
+ *  even g_mapped_file_unref().
+ *  One buffer management structure is used for each chunk of
+ *  serialised data. The size of the buffer management structure is 4
+ *  * (void *). On 32bit systems, that's 16 bytes.
+ * GVariant structure
+ *  The size of a GVariant structure is 6 * (void *). On 32 bit
+ *  systems, that's 24 bytes.
+ *  GVariant structures only exist if they are explicitly created
+ *  with API calls. For example, if a GVariant is constructed out of
+ *  serialised data for the example given above (with the dictionary)
+ *  then although there are 9 individual values that comprise the
+ *  entire dictionary (two keys, two values, two variants containing
+ *  the values, two dictionary entries, plus the dictionary itself),
+ *  only 1 GVariant instance exists -- the one refering to the
+ *  dictionary.
+ *  If calls are made to start accessing the other values then
+ *  GVariant instances will exist for those values only for as long
+ *  as they are in use (ie: until you call g_variant_unref()). The
+ *  type information is shared. The serialised data and the buffer
+ *  management structure for that serialised data is shared by the
+ *  child.
+ * Summary
+ *  To put the entire example together, for our dictionary mapping
+ *  strings to variants (with two entries, as given above), we are
+ *  using 91 bytes of memory for type information, 29 byes of memory
+ *  for the serialised data, 16 bytes for buffer management and 24
+ *  bytes for the GVariant instance, or a total of 160 bytes, plus
+ *  malloc overhead. If we were to use g_variant_get_child_value() to
+ *  access the two dictionary entries, we would use an additional 48
+ *  bytes. If we were to have other dictionaries of the same type, we
+ *  would use more memory for the serialised data and buffer
+ *  management for those dictionaries, but the type information would
+ *  be shared.
+ */
+public class Variant
+{
+	
+	/** the main Gtk struct */
+	protected GVariant* gVariant;
+	
+	
+	public GVariant* getVariantStruct()
+	{
+		return gVariant;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gVariant;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GVariant* gVariant)
+	{
+		if(gVariant is null)
+		{
+			this = null;
+			return;
+		}
+		this.gVariant = gVariant;
+	}
+	
+	/**
+	 */
+	
+	/**
+	 * Decreases the reference count of value. When its reference count
+	 * drops to 0, the memory used by the variant is freed.
+	 * Since 2.24
+	 */
+	public void unref()
+	{
+		// void g_variant_unref (GVariant *value);
+		g_variant_unref(gVariant);
+	}
+	
+	/**
+	 * Increases the reference count of value.
+	 * Since 2.24
+	 * Returns: the same value
+	 */
+	public Variant doref()
+	{
+		// GVariant * g_variant_ref (GVariant *value);
+		auto p = g_variant_ref(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * GVariant uses a floating reference count system. All functions with
+	 * names starting with g_variant_new_ return floating
+	 * references.
+	 * Calling g_variant_ref_sink() on a GVariant with a floating reference
+	 * will convert the floating reference into a full reference. Calling
+	 * g_variant_ref_sink() on a non-floating GVariant results in an
+	 * additional normal reference being added.
+	 * In other words, if the value is floating, then this call "assumes
+	 * ownership" of the floating reference, converting it to a normal
+	 * reference. If the value is not floating, then this call adds a
+	 * new normal reference increasing the reference count by one.
+	 * All calls that result in a GVariant instance being inserted into a
+	 * container will call g_variant_ref_sink() on the instance. This means
+	 * that if the value was just created (and has only its floating
+	 * reference) then the container will assume sole ownership of the value
+	 * at that point and the caller will not need to unreference it. This
+	 * makes certain common styles of programming much easier while still
+	 * maintaining normal refcounting semantics in situations where values
+	 * are not floating.
+	 * Since 2.24
+	 * Returns: the same value
+	 */
+	public Variant refSink()
+	{
+		// GVariant * g_variant_ref_sink (GVariant *value);
+		auto p = g_variant_ref_sink(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Determines the type of value.
+	 * The return value is valid for the lifetime of value and must not
+	 * be freed.
+	 * Since 2.24
+	 * Returns: a GVariantType
+	 */
+	public VariantType getType()
+	{
+		// const GVariantType * g_variant_get_type (GVariant *value);
+		auto p = g_variant_get_type(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VariantType(cast(GVariantType*) p);
+	}
+	
+	/**
+	 * Returns the type string of value. Unlike the result of calling
+	 * g_variant_type_peek_string(), this string is nul-terminated. This
+	 * string belongs to GVariant and must not be freed.
+	 * Since 2.24
+	 * Returns: the type string for the type of value
+	 */
+	public string getTypeString()
+	{
+		// const gchar * g_variant_get_type_string (GVariant *value);
+		return Str.toString(g_variant_get_type_string(gVariant));
+	}
+	
+	/**
+	 * Checks if a value has a type matching the provided type.
+	 * Since 2.24
+	 * Params:
+	 * type = a GVariantType
+	 * Returns: TRUE if the type of value matches type
+	 */
+	public int isOfType(VariantType type)
+	{
+		// gboolean g_variant_is_of_type (GVariant *value,  const GVariantType *type);
+		return g_variant_is_of_type(gVariant, (type is null) ? null : type.getVariantTypeStruct());
+	}
+	
+	/**
+	 * Checks if value is a container.
+	 * Returns: TRUE if value is a container
+	 */
+	public int isContainer()
+	{
+		// gboolean g_variant_is_container (GVariant *value);
+		return g_variant_is_container(gVariant);
+	}
+	
+	/**
+	 * Classifies value according to its top-level type.
+	 * Since 2.24
+	 * Returns: the GVariantClass of value
+	 */
+	public GVariantClass classify()
+	{
+		// GVariantClass g_variant_classify (GVariant *value);
+		return g_variant_classify(gVariant);
+	}
+	
+	/**
+	 * This function is intended to be used by libraries based on GVariant
+	 * that want to provide g_variant_get()-like functionality to their
+	 * users.
+	 * The API is more general than g_variant_get() to allow a wider range
+	 * of possible uses.
+	 * format_string must still point to a valid format string, but it only
+	 * need to be nul-terminated if endptr is NULL. If endptr is
+	 * non-NULL then it is updated to point to the first character past the
+	 * end of the format string.
+	 * app is a pointer to a va_list. The arguments, according to
+	 * format_string, are collected from this va_list and the list is left
+	 * pointing to the argument following the last.
+	 * These two generalisations allow mixing of multiple calls to
+	 * g_variant_new_va() and g_variant_get_va() within a single actual
+	 * varargs call by the user.
+	 * Since 2.24
+	 * Params:
+	 * formatString = a string that is prefixed with a format string
+	 * endptr = location to store the end pointer, or NULL
+	 * app = a pointer to a va_list
+	 */
+	public void getVa(string formatString, out string endptr, void** app)
+	{
+		// void g_variant_get_va (GVariant *value,  const gchar *format_string,  const gchar **endptr,  va_list *app);
+		char* outendptr = null;
+		
+		g_variant_get_va(gVariant, Str.toStringz(formatString), &outendptr, app);
+		
+		endptr = Str.toString(outendptr);
+	}
+	
+	/**
+	 * This function is intended to be used by libraries based on
+	 * GVariant that want to provide g_variant_new()-like functionality
+	 * to their users.
+	 * The API is more general than g_variant_new() to allow a wider range
+	 * of possible uses.
+	 * format_string must still point to a valid format string, but it only
+	 * needs to be nul-terminated if endptr is NULL. If endptr is
+	 * non-NULL then it is updated to point to the first character past the
+	 * end of the format string.
+	 * app is a pointer to a va_list. The arguments, according to
+	 * format_string, are collected from this va_list and the list is left
+	 * pointing to the argument following the last.
+	 * These two generalisations allow mixing of multiple calls to
+	 * g_variant_new_va() and g_variant_get_va() within a single actual
+	 * varargs call by the user.
+	 * The return value will be floating if it was a newly created GVariant
+	 * instance (for example, if the format string was "(ii)"). In the case
+	 * that the format_string was '*', '?', 'r', or a format starting with
+	 * '@' then the collected GVariant pointer will be returned unmodified,
+	 * without adding any additional references.
+	 * In order to behave correctly in all cases it is necessary for the
+	 * calling function to g_variant_ref_sink() the return result before
+	 * returning control to the user that originally provided the pointer.
+	 * At this point, the caller will have their own full reference to the
+	 * result. This can also be done by adding the result to a container,
+	 * or by passing it to another g_variant_new() call.
+	 * Since 2.24
+	 * Params:
+	 * formatString = a string that is prefixed with a format string
+	 * endptr = location to store the end pointer, or NULL
+	 * app = a pointer to a va_list
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string formatString, out string endptr, void** app)
+	{
+		// GVariant * g_variant_new_va (const gchar *format_string,  const gchar **endptr,  va_list *app);
+		char* outendptr = null;
+		
+		auto p = g_variant_new_va(Str.toStringz(formatString), &outendptr, app);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_va(Str.toStringz(formatString), &outendptr, app)");
+		}
+		
+		endptr = Str.toString(outendptr);
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new boolean GVariant instance -- either TRUE or FALSE.
+	 * Since 2.24
+	 * Params:
+	 * boolean = a gboolean value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (int boolean)
+	{
+		// GVariant * g_variant_new_boolean (gboolean boolean);
+		auto p = g_variant_new_boolean(boolean);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_boolean(boolean)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new byte GVariant instance.
+	 * Since 2.24
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (char b)
+	{
+		// GVariant * g_variant_new_byte (guchar byte);
+		auto p = g_variant_new_byte(b);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_byte(b)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new int16 GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * int16 = a gint16 value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (short int16)
+	{
+		// GVariant * g_variant_new_int16 (gint16 int16);
+		auto p = g_variant_new_int16(int16);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_int16(int16)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new uint16 GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * uint16 = a guint16 value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ushort uint16)
+	{
+		// GVariant * g_variant_new_uint16 (guint16 uint16);
+		auto p = g_variant_new_uint16(uint16);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_uint16(uint16)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new int32 GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * int32 = a gint32 value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (int int32)
+	{
+		// GVariant * g_variant_new_int32 (gint32 int32);
+		auto p = g_variant_new_int32(int32);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_int32(int32)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new uint32 GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * uint32 = a guint32 value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (uint uint32)
+	{
+		// GVariant * g_variant_new_uint32 (guint32 uint32);
+		auto p = g_variant_new_uint32(uint32);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_uint32(uint32)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new int64 GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * int64 = a gint64 value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (long int64)
+	{
+		// GVariant * g_variant_new_int64 (gint64 int64);
+		auto p = g_variant_new_int64(int64);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_int64(int64)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new uint64 GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * uint64 = a guint64 value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ulong uint64)
+	{
+		// GVariant * g_variant_new_uint64 (guint64 uint64);
+		auto p = g_variant_new_uint64(uint64);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_uint64(uint64)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new double GVariant instance.
+	 * Since 2.24
+	 * Params:
+	 * floating = a gdouble floating point value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (double floating)
+	{
+		// GVariant * g_variant_new_double (gdouble floating);
+		auto p = g_variant_new_double(floating);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_double(floating)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a string GVariant with the contents of string.
+	 * Since 2.24
+	 * Params:
+	 * string = a normal C nul-terminated string
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string string)
+	{
+		// GVariant * g_variant_new_string (const gchar *string);
+		auto p = g_variant_new_string(Str.toStringz(string));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_string(Str.toStringz(string))");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Determines if a given string is a valid DBus object path. You
+	 * should ensure that a string is a valid DBus object path before
+	 * passing it to g_variant_new_object_path().
+	 * A valid object path starts with '/' followed by zero or more
+	 * sequences of characters separated by '/' characters. Each sequence
+	 * must contain only the characters "[A-Z][a-z][0-9]_". No sequence
+	 * (including the one following the final '/' character) may be empty.
+	 * Since 2.24
+	 * Params:
+	 * string = a normal C nul-terminated string
+	 * Returns: TRUE if string is a DBus object path
+	 */
+	public static int isObjectPath(string string)
+	{
+		// gboolean g_variant_is_object_path (const gchar *string);
+		return g_variant_is_object_path(Str.toStringz(string));
+	}
+	
+	/**
+	 * Determines if a given string is a valid DBus type signature. You
+	 * should ensure that a string is a valid DBus object path before
+	 * passing it to g_variant_new_signature().
+	 * DBus type signatures consist of zero or more definite GVariantType
+	 * strings in sequence.
+	 * Since 2.24
+	 * Params:
+	 * string = a normal C nul-terminated string
+	 * Returns: TRUE if string is a DBus type signature
+	 */
+	public static int isSignature(string string)
+	{
+		// gboolean g_variant_is_signature (const gchar *string);
+		return g_variant_is_signature(Str.toStringz(string));
+	}
+	
+	/**
+	 * Boxes value. The result is a GVariant instance representing a
+	 * variant containing the original value.
+	 * Since 2.24
+	 * Params:
+	 * value = a GVariance instance
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Variant value)
+	{
+		// GVariant * g_variant_new_variant (GVariant *value);
+		auto p = g_variant_new_variant((value is null) ? null : value.getVariantStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_variant((value is null) ? null : value.getVariantStruct())");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Constructs an array of strings GVariant from the given array of
+	 * strings.
+	 * If length is not -1 then it gives the maximum length of strv. In
+	 * any case, a NULL pointer in strv is taken as a terminator.
+	 * Since 2.24
+	 * Params:
+	 * strv = an array of strings
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string[] strv)
+	{
+		// GVariant * g_variant_new_strv (const gchar * const *strv,  gssize length);
+		auto p = g_variant_new_strv(Str.toStringzArray(strv), strv.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_strv(Str.toStringzArray(strv), strv.length)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Returns the boolean value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_BOOLEAN.
+	 * Since 2.24
+	 * Returns: TRUE or FALSE
+	 */
+	public int getBoolean()
+	{
+		// gboolean g_variant_get_boolean (GVariant *value);
+		return g_variant_get_boolean(gVariant);
+	}
+	
+	/**
+	 * Returns the byte value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_BYTE.
+	 * Since 2.24
+	 * Returns: a guchar
+	 */
+	public char getByte()
+	{
+		// guchar g_variant_get_byte (GVariant *value);
+		return g_variant_get_byte(gVariant);
+	}
+	
+	/**
+	 * Returns the 16-bit signed integer value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_INT16.
+	 * Since 2.24
+	 * Returns: a gint16
+	 */
+	public short getInt16()
+	{
+		// gint16 g_variant_get_int16 (GVariant *value);
+		return g_variant_get_int16(gVariant);
+	}
+	
+	/**
+	 * Returns the 16-bit unsigned integer value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_UINT16.
+	 * Since 2.24
+	 * Returns: a guint16
+	 */
+	public ushort getUint16()
+	{
+		// guint16 g_variant_get_uint16 (GVariant *value);
+		return g_variant_get_uint16(gVariant);
+	}
+	
+	/**
+	 * Returns the 32-bit signed integer value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_INT32.
+	 * Since 2.24
+	 * Returns: a gint32
+	 */
+	public int getInt32()
+	{
+		// gint32 g_variant_get_int32 (GVariant *value);
+		return g_variant_get_int32(gVariant);
+	}
+	
+	/**
+	 * Returns the 32-bit unsigned integer value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_UINT32.
+	 * Since 2.24
+	 * Returns: a guint32
+	 */
+	public uint getUint32()
+	{
+		// guint32 g_variant_get_uint32 (GVariant *value);
+		return g_variant_get_uint32(gVariant);
+	}
+	
+	/**
+	 * Returns the 64-bit signed integer value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_INT64.
+	 * Since 2.24
+	 * Returns: a gint64
+	 */
+	public long getInt64()
+	{
+		// gint64 g_variant_get_int64 (GVariant *value);
+		return g_variant_get_int64(gVariant);
+	}
+	
+	/**
+	 * Returns the 64-bit unsigned integer value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_UINT64.
+	 * Since 2.24
+	 * Returns: a guint64
+	 */
+	public ulong getUint64()
+	{
+		// guint64 g_variant_get_uint64 (GVariant *value);
+		return g_variant_get_uint64(gVariant);
+	}
+	
+	/**
+	 * Returns the 32-bit signed integer value of value.
+	 * It is an error to call this function with a value of any type other
+	 * than G_VARIANT_TYPE_HANDLE.
+	 * By convention, handles are indexes into an array of file descriptors
+	 * that are sent alongside a DBus message. If you're not interacting
+	 * with DBus, you probably don't need them.
+	 * Since 2.24
+	 * Returns: a gint32
+	 */
+	public int getHandle()
+	{
+		// gint32 g_variant_get_handle (GVariant *value);
+		return g_variant_get_handle(gVariant);
+	}
+	
+	/**
+	 * Returns the double precision floating point value of value.
+	 * It is an error to call this function with a value of any type
+	 * other than G_VARIANT_TYPE_DOUBLE.
+	 * Since 2.24
+	 * Returns: a gdouble
+	 */
+	public double getDouble()
+	{
+		// gdouble g_variant_get_double (GVariant *value);
+		return g_variant_get_double(gVariant);
+	}
+	
+	/**
+	 * Returns the string value of a GVariant instance with a string
+	 * type. This includes the types G_VARIANT_TYPE_STRING,
+	 * G_VARIANT_TYPE_OBJECT_PATH and G_VARIANT_TYPE_SIGNATURE.
+	 * If length is non-NULL then the length of the string (in bytes) is
+	 * returned there. For trusted values, this information is already
+	 * known. For untrusted values, a strlen() will be performed.
+	 * It is an error to call this function with a value of any type
+	 * other than those three.
+	 * The return value remains valid as long as value exists.
+	 * Since 2.24
+	 * Params:
+	 * length = a pointer to a gsize, to store the length
+	 * Returns: the constant string
+	 */
+	public string getString(out uint length)
+	{
+		// const gchar * g_variant_get_string (GVariant *value,  gsize *length);
+		return Str.toString(g_variant_get_string(gVariant, &length));
+	}
+	
+	/**
+	 * Similar to g_variant_get_string() except that instead of returning
+	 * a constant string, the string is duplicated.
+	 * The return value must be freed using g_free().
+	 * Since 2.24
+	 * Returns: a newly allocated string
+	 */
+	public char[] dupString()
+	{
+		// gchar * g_variant_dup_string (GVariant *value,  gsize *length);
+		uint length;
+		auto p = g_variant_dup_string(gVariant, &length);
+		return p[0 .. length];
+	}
+	
+	/**
+	 * Unboxes value. The result is the GVariant instance that was
+	 * contained in value.
+	 * Since 2.24
+	 * Returns: the item contained in the variant
+	 */
+	public Variant getVariant()
+	{
+		// GVariant * g_variant_get_variant (GVariant *value);
+		auto p = g_variant_get_variant(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Gets the contents of an array of strings GVariant. This call
+	 * makes a shallow copy; the return result should be released with
+	 * g_free(), but the individual strings must not be modified.
+	 * If length is non-NULL then the number of elements in the result
+	 * is stored there. In any case, the resulting array will be
+	 * NULL-terminated.
+	 * For an empty array, length will be set to 0 and a pointer to a
+	 * NULL pointer will be returned.
+	 * Since 2.24
+	 * Returns: an array of constant strings
+	 */
+	public string[] getStrv()
+	{
+		// const gchar ** g_variant_get_strv (GVariant *value,  gsize *length);
+		uint length;
+		return Str.toStringArray(g_variant_get_strv(gVariant, &length));
+	}
+	
+	/**
+	 * Gets the contents of an array of strings GVariant. This call
+	 * makes a deep copy; the return result should be released with
+	 * g_strfreev().
+	 * If length is non-NULL then the number of elements in the result
+	 * is stored there. In any case, the resulting array will be
+	 * NULL-terminated.
+	 * For an empty array, length will be set to 0 and a pointer to a
+	 * NULL pointer will be returned.
+	 * Since 2.24
+	 * Returns: an array of constant strings
+	 */
+	public string[] dupStrv()
+	{
+		// gchar ** g_variant_dup_strv (GVariant *value,  gsize *length);
+		uint length;
+		return Str.toStringArray(g_variant_dup_strv(gVariant, &length));
+	}
+	
+	/**
+	 * Depending on if value is NULL, either wraps value inside of a
+	 * maybe container or creates a Nothing instance for the given type.
+	 * At least one of type and value must be non-NULL. If type is
+	 * non-NULL then it must be a definite type. If they are both
+	 * non-NULL then type must be the type of value.
+	 * Since 2.24
+	 * Params:
+	 * childType = the GVariantType of the child
+	 * child = the child value, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (VariantType childType, Variant child)
+	{
+		// GVariant * g_variant_new_maybe (const GVariantType *child_type,  GVariant *child);
+		auto p = g_variant_new_maybe((childType is null) ? null : childType.getVariantTypeStruct(), (child is null) ? null : child.getVariantStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_maybe((childType is null) ? null : childType.getVariantTypeStruct(), (child is null) ? null : child.getVariantStruct())");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new GVariant array from children.
+	 * child_type must be non-NULL if n_children is zero. Otherwise, the
+	 * child type is determined by inspecting the first element of the
+	 * children array. If child_type is non-NULL then it must be a
+	 * definite type.
+	 * The items of the array are taken from the children array. No entry
+	 * in the children array may be NULL.
+	 * All items in the array must have the same type, which must be the
+	 * same as child_type, if given.
+	 * Since 2.24
+	 * Params:
+	 * childType = the element type of the new array
+	 * children = an array of GVariant pointers, the children
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (VariantType childType, Variant[] children)
+	{
+		// GVariant * g_variant_new_array (const GVariantType *child_type,  GVariant * const *children,  gsize n_children);
+		
+		GVariant*[] childrenArray = new GVariant*[children.length];
+		for ( int i = 0; i < children.length ; i++ )
+		{
+			childrenArray[i] = children[i].getVariantStruct();
+		}
+		
+		auto p = g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, children.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, children.length)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new tuple GVariant out of the items in children. The
+	 * type is determined from the types of children. No entry in the
+	 * children array may be NULL.
+	 * If n_children is 0 then the unit tuple is constructed.
+	 * Since 2.24
+	 * Params:
+	 * children = the items to make the tuple out of
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Variant[] children)
+	{
+		// GVariant * g_variant_new_tuple (GVariant * const *children,  gsize n_children);
+		
+		GVariant*[] childrenArray = new GVariant*[children.length];
+		for ( int i = 0; i < children.length ; i++ )
+		{
+			childrenArray[i] = children[i].getVariantStruct();
+		}
+		
+		auto p = g_variant_new_tuple(childrenArray.ptr, children.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_tuple(childrenArray.ptr, children.length)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a new dictionary entry GVariant. key and value must be
+	 * non-NULL.
+	 * key must be a value of a basic type (ie: not a container).
+	 * Since 2.24
+	 * Params:
+	 * key = a basic GVariant, the key
+	 * value = a GVariant, the value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Variant key, Variant value)
+	{
+		// GVariant * g_variant_new_dict_entry (GVariant *key,  GVariant *value);
+		auto p = g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct())");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Given a maybe-typed GVariant instance, extract its value. If the
+	 * value is Nothing, then this function returns NULL.
+	 * Since 2.24
+	 * Returns: the contents of value, or NULL
+	 */
+	public Variant getMaybe()
+	{
+		// GVariant * g_variant_get_maybe (GVariant *value);
+		auto p = g_variant_get_maybe(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Determines the number of children in a container GVariant instance.
+	 * This includes variants, maybes, arrays, tuples and dictionary
+	 * entries. It is an error to call this function on any other type of
+	 * GVariant.
+	 * For variants, the return value is always 1. For values with maybe
+	 * types, it is always zero or one. For arrays, it is the length of the
+	 * array. For tuples it is the number of tuple items (which depends
+	 * only on the type). For dictionary entries, it is always 2
+	 * This function is O(1).
+	 * Since 2.24
+	 * Returns: the number of children in the container
+	 */
+	public uint nChildren()
+	{
+		// gsize g_variant_n_children (GVariant *value);
+		return g_variant_n_children(gVariant);
+	}
+	
+	/**
+	 * Reads a child item out of a container GVariant instance. This
+	 * includes variants, maybes, arrays, tuples and dictionary
+	 * entries. It is an error to call this function on any other type of
+	 * GVariant.
+	 * It is an error if index_ is greater than the number of child items
+	 * in the container. See g_variant_n_children().
+	 * This function is O(1).
+	 * Since 2.24
+	 * Params:
+	 * index = the index of the child to fetch
+	 * Returns: the child at the specified index
+	 */
+	public Variant getChildValue(uint index)
+	{
+		// GVariant * g_variant_get_child_value (GVariant *value,  gsize index_);
+		auto p = g_variant_get_child_value(gVariant, index);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Provides access to the serialised data for an array of fixed-sized
+	 * items.
+	 * value must be an array with fixed-sized elements. Numeric types are
+	 * fixed-size as are tuples containing only other fixed-sized types.
+	 * element_size must be the size of a single element in the array. For
+	 * example, if calling this function for an array of 32 bit integers,
+	 * you might say sizeof (gint32). This value isn't used
+	 * except for the purpose of a double-check that the form of the
+	 * seralised data matches the caller's expectation.
+	 * n_elements, which must be non-NULL is set equal to the number of
+	 * items in the array.
+	 * Since 2.24
+	 * Params:
+	 * nElements = a pointer to the location to store the number of items
+	 * elementSize = the size of each element
+	 * Returns: a pointer to the fixed array
+	 */
+	public void* getFixedArray(uint* nElements, uint elementSize)
+	{
+		// gconstpointer g_variant_get_fixed_array (GVariant *value,  gsize *n_elements,  gsize element_size);
+		return g_variant_get_fixed_array(gVariant, nElements, elementSize);
+	}
+	
+	/**
+	 * Determines the number of bytes that would be required to store value
+	 * with g_variant_store().
+	 * If value has a fixed-sized type then this function always returned
+	 * that fixed size.
+	 * In the case that value is already in serialised form or the size has
+	 * already been calculated (ie: this function has been called before)
+	 * then this function is O(1). Otherwise, the size is calculated, an
+	 * operation which is approximately O(n) in the number of values
+	 * involved.
+	 * Since 2.24
+	 * Returns: the serialised size of value
+	 */
+	public uint getSize()
+	{
+		// gsize g_variant_get_size (GVariant *value);
+		return g_variant_get_size(gVariant);
+	}
+	
+	/**
+	 * Returns a pointer to the serialised form of a GVariant instance.
+	 * The returned data may not be in fully-normalised form if read from an
+	 * untrusted source. The returned data must not be freed; it remains
+	 * valid for as long as value exists.
+	 * If value is a fixed-sized value that was deserialised from a
+	 * corrupted serialised container then NULL may be returned. In this
+	 * case, the proper thing to do is typically to use the appropriate
+	 * number of nul bytes in place of value. If value is not fixed-sized
+	 * then NULL is never returned.
+	 * In the case that value is already in serialised form, this function
+	 * is O(1). If the value is not already in serialised form,
+	 * serialisation occurs implicitly and is approximately O(n) in the size
+	 * of the result.
+	 * Since 2.24
+	 * Returns: the serialised form of value, or NULL
+	 */
+	public void* getData()
+	{
+		// gconstpointer g_variant_get_data (GVariant *value);
+		return g_variant_get_data(gVariant);
+	}
+	
+	/**
+	 * Stores the serialised form of value at data. data should be
+	 * large enough. See g_variant_get_size().
+	 * The stored data is in machine native byte order but may not be in
+	 * fully-normalised form if read from an untrusted source. See
+	 * g_variant_normalise() for a solution.
+	 * This function is approximately O(n) in the size of data.
+	 * Since 2.24
+	 * Params:
+	 * data = the location to store the serialised data at
+	 */
+	public void store(void* data)
+	{
+		// void g_variant_store (GVariant *value,  gpointer data);
+		g_variant_store(gVariant, data);
+	}
+	
+	/**
+	 * Creates a new GVariant instance from serialised data.
+	 * type is the type of GVariant instance that will be constructed.
+	 * The interpretation of data depends on knowing the type.
+	 * data is not modified by this function and must remain valid with an
+	 * unchanging value until such a time as notify is called with
+	 * user_data. If the contents of data change before that time then
+	 * the result is undefined.
+	 * If data is trusted to be serialised data in normal form then
+	 * trusted should be TRUE. This applies to serialised data created
+	 * within this process or read from a trusted location on the disk (such
+	 * as a file installed in /usr/lib alongside your application). You
+	 * should set trusted to FALSE if data is read from the network, a
+	 * file in the user's home directory, etc.
+	 * notify will be called with user_data when data is no longer
+	 * needed. The exact time of this call is unspecified and might even be
+	 * before this function returns.
+	 * Since 2.24
+	 * Params:
+	 * type = a GVariantType
+	 * data = the serialised data
+	 * size = the size of data
+	 * trusted = TRUE if data is definitely in normal form
+	 * notify = function to call when data is no longer needed
+	 * userData = data for notify
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (VariantType type, void* data, uint size, int trusted, GDestroyNotify notify, void* userData)
+	{
+		// GVariant * g_variant_new_from_data (const GVariantType *type,  gconstpointer data,  gsize size,  gboolean trusted,  GDestroyNotify notify,  gpointer user_data);
+		auto p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data, size, trusted, notify, userData);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data, size, trusted, notify, userData)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Performs a byteswapping operation on the contents of value. The
+	 * result is that all multi-byte numeric data contained in value is
+	 * byteswapped. That includes 16, 32, and 64bit signed and unsigned
+	 * integers as well as file handles and double precision floating point
+	 * values.
+	 * This function is an identity mapping on any value that does not
+	 * contain multi-byte numeric data. That include strings, booleans,
+	 * bytes and containers containing only these things (recursively).
+	 * The returned value is always in normal form and is marked as trusted.
+	 * Since 2.24
+	 * Returns: the byteswapped form of value
+	 */
+	public Variant byteswap()
+	{
+		// GVariant * g_variant_byteswap (GVariant *value);
+		auto p = g_variant_byteswap(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Gets a GVariant instance that has the same value as value and is
+	 * trusted to be in normal form.
+	 * If value is already trusted to be in normal form then a new
+	 * reference to value is returned.
+	 * If value is not already trusted, then it is scanned to check if it
+	 * is in normal form. If it is found to be in normal form then it is
+	 * marked as trusted and a new reference to it is returned.
+	 * If value is found not to be in normal form then a new trusted
+	 * GVariant is created with the same value as value.
+	 * It makes sense to call this function if you've received GVariant
+	 * data from untrusted sources and you want to ensure your serialised
+	 * output is definitely in normal form.
+	 * Since 2.24
+	 * Returns: a trusted GVariant
+	 */
+	public Variant getNormalForm()
+	{
+		// GVariant * g_variant_get_normal_form (GVariant *value);
+		auto p = g_variant_get_normal_form(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Checks if value is in normal form.
+	 * The main reason to do this is to detect if a given chunk of
+	 * serialised data is in normal form: load the data into a GVariant
+	 * using g_variant_create_from_data() and then use this function to
+	 * check.
+	 * If value is found to be in normal form then it will be marked as
+	 * being trusted. If the value was already marked as being trusted then
+	 * this function will immediately return TRUE.
+	 * Since 2.24
+	 * Returns: TRUE if value is in normal form
+	 */
+	public int isNormalForm()
+	{
+		// gboolean g_variant_is_normal_form (GVariant *value);
+		return g_variant_is_normal_form(gVariant);
+	}
+	
+	/**
+	 * Generates a hash value for a GVariant instance.
+	 * The output of this function is guaranteed to be the same for a given
+	 * value only per-process. It may change between different processor
+	 * architectures or even different versions of GLib. Do not use this
+	 * function as a basis for building protocols or file formats.
+	 * The type of value is gconstpointer only to allow use of this
+	 * function with GHashTable. value must be a GVariant.
+	 * Since 2.24
+	 * Params:
+	 * value = a basic GVariant value as a gconstpointer
+	 * Returns: a hash value corresponding to value
+	 */
+	public static uint hash(void* value)
+	{
+		// guint g_variant_hash (gconstpointer value);
+		return g_variant_hash(value);
+	}
+	
+	/**
+	 * Checks if one and two have the same type and value.
+	 * The types of one and two are gconstpointer only to allow use of
+	 * this function with GHashTable. They must each be a GVariant.
+	 * Since 2.24
+	 * Params:
+	 * one = a GVariant instance
+	 * two = a GVariant instance
+	 * Returns: TRUE if one and two are equal
+	 */
+	public static int equal(void* one, void* two)
+	{
+		// gboolean g_variant_equal (gconstpointer one,  gconstpointer two);
+		return g_variant_equal(one, two);
+	}
+	
+	/**
+	 * Pretty-prints value in the format understood by g_variant_parse().
+	 * If type_annotate is TRUE, then type information is included in
+	 * the output.
+	 * Params:
+	 * typeAnnotate = TRUE if type information should be included in
+	 *  the output
+	 * Returns: a newly-allocated string holding the result.
+	 */
+	public string print(int typeAnnotate)
+	{
+		// gchar * g_variant_print (GVariant *value,  gboolean type_annotate);
+		return Str.toString(g_variant_print(gVariant, typeAnnotate));
+	}
+	
+	/**
+	 * Behaves as g_variant_print(), but operates on a GString.
+	 * If string is non-NULL then it is appended to and returned. Else,
+	 * a new empty GString is allocated and it is returned.
+	 * Since 2.24
+	 * Params:
+	 * string = a GString, or NULL
+	 * typeAnnotate = TRUE if type information should be included in
+	 *  the output
+	 * Returns: a GString containing the string
+	 */
+	public StringG printString(StringG string, int typeAnnotate)
+	{
+		// GString * g_variant_print_string (GVariant *value,  GString *string,  gboolean type_annotate);
+		auto p = g_variant_print_string(gVariant, (string is null) ? null : string.getStringGStruct(), typeAnnotate);
+		if(p is null)
+		{
+			return null;
+		}
+		return new StringG(cast(GString*) p);
+	}
+	
+	/**
+	 * Parses a GVariant from a text representation.
+	 * A single GVariant is parsed from the content of text.
+	 * The memory at limit will never be accessed and the parser behaves as
+	 * if the character at limit is the nul terminator. This has the
+	 * effect of bounding text.
+	 * If endptr is non-NULL then text is permitted to contain data
+	 * following the value that this function parses and endptr will be
+	 * updated to point to the first character past the end of the text
+	 * parsed by this function. If endptr is NULL and there is extra data
+	 * then an error is returned.
+	 * If type is non-NULL then the value will be parsed to have that
+	 * type. This may result in additional parse errors (in the case that
+	 * the parsed value doesn't fit the type) but may also result in fewer
+	 * errors (in the case that the type would have been ambiguous, such as
+	 * with empty arrays).
+	 * In the event that the parsing is successful, the resulting GVariant
+	 * is returned.
+	 * In case of any error, NULL will be returned. If error is non-NULL
+	 * then it will be set to reflect the error that occured.
+	 * Officially, the language understood by the parser is "any string
+	 * produced by g_variant_print()".
+	 * Params:
+	 * type = a GVariantType, or NULL
+	 * text = a string containing a GVariant in text form
+	 * limit = a pointer to the end of text, or NULL
+	 * endptr = a location to store the end pointer, or NULL
+	 * Returns: a reference to a GVariant, or NULL
+	 * Throws: GException on failure.
+	 */
+	public static Variant parse(VariantType type, string text, string limit, out string endptr)
+	{
+		// GVariant * g_variant_parse (const GVariantType *type,  const gchar *text,  const gchar *limit,  const gchar **endptr,  GError **error);
+		char* outendptr = null;
+		GError* err = null;
+		
+		auto p = g_variant_parse((type is null) ? null : type.getVariantTypeStruct(), Str.toStringz(text), Str.toStringz(limit), &outendptr, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		endptr = Str.toString(outendptr);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Parses format and returns the result.
+	 * This is the version of g_variant_new_parsed() intended to be used
+	 * from libraries.
+	 * The return value will be floating if it was a newly created GVariant
+	 * instance. In the case that format simply specified the collection
+	 * of a GVariant pointer (eg: format was "%*") then the collected
+	 * GVariant pointer will be returned unmodified, without adding any
+	 * additional references.
+	 * In order to behave correctly in all cases it is necessary for the
+	 * calling function to g_variant_ref_sink() the return result before
+	 * returning control to the user that originally provided the pointer.
+	 * At this point, the caller will have their own full reference to the
+	 * result. This can also be done by adding the result to a container,
+	 * or by passing it to another g_variant_new() call.
+	 * Params:
+	 * format = a text format GVariant
+	 * app = a pointer to a va_list
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string format, void** app)
+	{
+		// GVariant * g_variant_new_parsed_va (const gchar *format,  va_list *app);
+		auto p = g_variant_new_parsed_va(Str.toStringz(format), app);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_parsed_va(Str.toStringz(format), app)");
+		}
+		this(cast(GVariant*) p);
+	}
+}

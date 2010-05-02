@@ -160,9 +160,9 @@ public class Version
 	 * old version of gtk_check_version(), but still get loaded
 	 * into an application using a newer version of GTK+.
 	 * Params:
-	 * requiredMajor =  the required major version.
-	 * requiredMinor =  the required minor version.
-	 * requiredMicro =  the required micro version.
+	 * requiredMajor = the required major version.
+	 * requiredMinor = the required minor version.
+	 * requiredMicro = the required micro version.
 	 * Returns: NULL if the GTK+ library is compatible with the given version, or a string describing the version mismatch. The returned string is owned by GTK+ and should not be modified or freed.
 	 */
 	public static string checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)

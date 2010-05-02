@@ -340,7 +340,7 @@ public class Toolbar : Container, OrientableIF
 	 * It is an error if item is not a child of the toolbar.
 	 * Since 2.4
 	 * Params:
-	 * item =  a GtkToolItem that is a child of toolbar
+	 * item = a GtkToolItem that is a child of toolbar
 	 * Returns: the position of item on the toolbar.
 	 */
 	public int getItemIndex(ToolItem item)
@@ -365,7 +365,7 @@ public class Toolbar : Container, OrientableIF
 	 * toolbar does not contain an n'th item.
 	 * Since 2.4
 	 * Params:
-	 * n =  A position on the toolbar
+	 * n = A position on the toolbar
 	 * Returns: The n'th GtkToolItem on toolbar, or NULL if thereisn't an n'th item.
 	 */
 	public ToolItem getNthItem(int n)
@@ -383,8 +383,8 @@ public class Toolbar : Container, OrientableIF
 	 * Returns the position corresponding to the indicated point on
 	 * Since 2.4
 	 * Params:
-	 * x =  x coordinate of a point on the toolbar
-	 * y =  y coordinate of a point on the toolbar
+	 * x = x coordinate of a point on the toolbar
+	 * y = y coordinate of a point on the toolbar
 	 * Returns: The position corresponding to the point (x, y) on the toolbar.
 	 */
 	public int getDropIndex(int x, int y)
@@ -404,8 +404,8 @@ public class Toolbar : Container, OrientableIF
 	 * toolbar.
 	 * Since 2.4
 	 * Params:
-	 * toolItem =  a GtkToolItem, or NULL to turn of highlighting
-	 * index =  a position on toolbar
+	 * toolItem = a GtkToolItem, or NULL to turn of highlighting
+	 * index = a position on toolbar
 	 */
 	public void setDropHighlightItem(ToolItem toolItem, int index)
 	{
@@ -420,7 +420,7 @@ public class Toolbar : Container, OrientableIF
 	 * overflow menu.
 	 * Since 2.4
 	 * Params:
-	 * showArrow =  Whether to show an overflow menu
+	 * showArrow = Whether to show an overflow menu
 	 */
 	public void setShowArrow(int showArrow)
 	{
@@ -433,7 +433,7 @@ public class Toolbar : Container, OrientableIF
 	 * gtk_toolbar_set_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_set_orientation() instead.
 	 * Sets whether a toolbar should appear horizontally or vertically.
 	 * Params:
-	 * orientation =  a new GtkOrientation.
+	 * orientation = a new GtkOrientation.
 	 */
 	public void setOrientation(GtkOrientation orientation)
 	{
@@ -447,7 +447,7 @@ public class Toolbar : Container, OrientableIF
 	 * is now used instead.
 	 * Sets if the tooltips of a toolbar should be active or not.
 	 * Params:
-	 * enable =  set to FALSE to disable the tooltips, or TRUE to enable them.
+	 * enable = set to FALSE to disable the tooltips, or TRUE to enable them.
 	 */
 	public void setTooltips(int enable)
 	{
@@ -493,6 +493,8 @@ public class Toolbar : Container, OrientableIF
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
+	 * Params:
+	 * toolbar = a GtkToolbar
 	 * Returns: the current style of toolbar
 	 */
 	public GtkToolbarStyle toolbarGetStyle()
@@ -545,12 +547,12 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * text =  give your toolbar button a label.
-	 * tooltipText =  a string that appears when the user holds the mouse over this item.
-	 * tooltipPrivateText =  use with GtkTipsQuery.
-	 * icon =  a GtkWidget that should be used as the button's icon.
-	 * callback =  the function to be executed when the button is pressed.
-	 * userData =  a pointer to any data you wish to be passed to the callback.
+	 * text = give your toolbar button a label.
+	 * tooltipText = a string that appears when the user holds the mouse over this item.
+	 * tooltipPrivateText = use with GtkTipsQuery.
+	 * icon = a GtkWidget that should be used as the button's icon.
+	 * callback = the function to be executed when the button is pressed.
+	 * userData = a pointer to any data you wish to be passed to the callback.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
 	public Widget appendItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
@@ -571,12 +573,12 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * text =  give your toolbar button a label.
-	 * tooltipText =  a string that appears when the user holds the mouse over this item.
-	 * tooltipPrivateText =  use with GtkTipsQuery.
-	 * icon =  a GtkWidget that should be used as the button's icon.
-	 * callback =  the function to be executed when the button is pressed.
-	 * userData =  a pointer to any data you wish to be passed to the callback.
+	 * text = give your toolbar button a label.
+	 * tooltipText = a string that appears when the user holds the mouse over this item.
+	 * tooltipPrivateText = use with GtkTipsQuery.
+	 * icon = a GtkWidget that should be used as the button's icon.
+	 * callback = the function to be executed when the button is pressed.
+	 * userData = a pointer to any data you wish to be passed to the callback.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
 	public Widget prependItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
@@ -598,13 +600,13 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * text =  give your toolbar button a label.
-	 * tooltipText =  a string that appears when the user holds the mouse over this item.
-	 * tooltipPrivateText =  use with GtkTipsQuery.
-	 * icon =  a GtkWidget that should be used as the button's icon.
-	 * callback =  the function to be executed when the button is pressed.
-	 * userData =  a pointer to any data you wish to be passed to the callback.
-	 * position =  the number of widgets to insert this item after.
+	 * text = give your toolbar button a label.
+	 * tooltipText = a string that appears when the user holds the mouse over this item.
+	 * tooltipPrivateText = use with GtkTipsQuery.
+	 * icon = a GtkWidget that should be used as the button's icon.
+	 * callback = the function to be executed when the button is pressed.
+	 * userData = a pointer to any data you wish to be passed to the callback.
+	 * position = the number of widgets to insert this item after.
 	 * Returns: the new toolbar item as a GtkWidget.
 	 */
 	public Widget insertItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData, int position)
@@ -645,7 +647,7 @@ public class Toolbar : Container, OrientableIF
 	 * gtk_toolbar_insert_space has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a new space in the toolbar at the specified position.
 	 * Params:
-	 * position =  the number of widgets after which a space should be inserted.
+	 * position = the number of widgets after which a space should be inserted.
 	 */
 	public void insertSpace(int position)
 	{
@@ -664,14 +666,14 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * type =  a value of type GtkToolbarChildType that determines what widget will be.
-	 * widget =  a GtkWidget, or NULL.
-	 * text =  the element's label.
-	 * tooltipText =  the element's tooltip.
-	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
-	 * icon =  a GtkWidget that provides pictorial representation of the element's function.
-	 * callback =  the function to be executed when the button is pressed.
-	 * userData =  any data you wish to pass to the callback.
+	 * type = a value of type GtkToolbarChildType that determines what widget will be.
+	 * widget = a GtkWidget, or NULL.
+	 * text = the element's label.
+	 * tooltipText = the element's tooltip.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * icon = a GtkWidget that provides pictorial representation of the element's function.
+	 * callback = the function to be executed when the button is pressed.
+	 * userData = any data you wish to pass to the callback.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
 	public Widget appendElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
@@ -696,14 +698,14 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * type =  a value of type GtkToolbarChildType that determines what widget will be.
-	 * widget =  a GtkWidget, or NULL
-	 * text =  the element's label.
-	 * tooltipText =  the element's tooltip.
-	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
-	 * icon =  a GtkWidget that provides pictorial representation of the element's function.
-	 * callback =  the function to be executed when the button is pressed.
-	 * userData =  any data you wish to pass to the callback.
+	 * type = a value of type GtkToolbarChildType that determines what widget will be.
+	 * widget = a GtkWidget, or NULL
+	 * text = the element's label.
+	 * tooltipText = the element's tooltip.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * icon = a GtkWidget that provides pictorial representation of the element's function.
+	 * callback = the function to be executed when the button is pressed.
+	 * userData = any data you wish to pass to the callback.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
 	public Widget prependElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
@@ -728,16 +730,16 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * type =  a value of type GtkToolbarChildType that determines what widget
+	 * type = a value of type GtkToolbarChildType that determines what widget
 	 *  will be.
-	 * widget =  a GtkWidget, or NULL.
-	 * text =  the element's label.
-	 * tooltipText =  the element's tooltip.
-	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
-	 * icon =  a GtkWidget that provides pictorial representation of the element's function.
-	 * callback =  the function to be executed when the button is pressed.
-	 * userData =  any data you wish to pass to the callback.
-	 * position =  the number of widgets to insert this element after.
+	 * widget = a GtkWidget, or NULL.
+	 * text = the element's label.
+	 * tooltipText = the element's tooltip.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * icon = a GtkWidget that provides pictorial representation of the element's function.
+	 * callback = the function to be executed when the button is pressed.
+	 * userData = any data you wish to pass to the callback.
+	 * position = the number of widgets to insert this element after.
 	 * Returns: the new toolbar element as a GtkWidget.
 	 */
 	public Widget insertElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData, int position)
@@ -756,9 +758,9 @@ public class Toolbar : Container, OrientableIF
 	 * gtk_toolbar_append_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a widget to the end of the given toolbar.
 	 * Params:
-	 * widget =  a GtkWidget to add to the toolbar.
-	 * tooltipText =  the element's tooltip.
-	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
+	 * widget = a GtkWidget to add to the toolbar.
+	 * tooltipText = the element's tooltip.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
 	 */
 	public void appendWidget(Widget widget, string tooltipText, string tooltipPrivateText)
 	{
@@ -771,9 +773,9 @@ public class Toolbar : Container, OrientableIF
 	 * gtk_toolbar_prepend_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Adds a widget to the beginning of the given toolbar.
 	 * Params:
-	 * widget =  a GtkWidget to add to the toolbar.
-	 * tooltipText =  the element's tooltip.
-	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
+	 * widget = a GtkWidget to add to the toolbar.
+	 * tooltipText = the element's tooltip.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
 	 */
 	public void prependWidget(Widget widget, string tooltipText, string tooltipPrivateText)
 	{
@@ -786,10 +788,10 @@ public class Toolbar : Container, OrientableIF
 	 * gtk_toolbar_insert_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Inserts a widget in the toolbar at the given position.
 	 * Params:
-	 * widget =  a GtkWidget to add to the toolbar.
-	 * tooltipText =  the element's tooltip.
-	 * tooltipPrivateText =  used for context-sensitive help about this toolbar element.
-	 * position =  the number of widgets to insert this widget after.
+	 * widget = a GtkWidget to add to the toolbar.
+	 * tooltipText = the element's tooltip.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * position = the number of widgets to insert this widget after.
 	 */
 	public void insertWidget(Widget widget, string tooltipText, string tooltipPrivateText, int position)
 	{
@@ -800,7 +802,7 @@ public class Toolbar : Container, OrientableIF
 	/**
 	 * Alters the view of toolbar to display either icons only, text only, or both.
 	 * Params:
-	 * style =  the new style for toolbar.
+	 * style = the new style for toolbar.
 	 */
 	public void setStyle(GtkToolbarStyle style)
 	{
@@ -817,12 +819,12 @@ public class Toolbar : Container, OrientableIF
 	 * callback must be a pointer to a function taking a GtkWidget and a gpointer as
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
-	 * stockId =  The id of the stock item you want to insert
-	 * tooltipText =  The text in the tooltip of the toolbar button
-	 * tooltipPrivateText =  The private text of the tooltip
-	 * callback =  The callback called when the toolbar button is clicked.
-	 * userData =  user data passed to callback
-	 * position =  The position the button shall be inserted at.
+	 * stockId = The id of the stock item you want to insert
+	 * tooltipText = The text in the tooltip of the toolbar button
+	 * tooltipPrivateText = The private text of the tooltip
+	 * callback = The callback called when the toolbar button is clicked.
+	 * userData = user data passed to callback
+	 * position = The position the button shall be inserted at.
 	 *  -1 means at the end.
 	 * Returns: the inserted widget
 	 */
@@ -846,7 +848,7 @@ public class Toolbar : Container, OrientableIF
 	 * application toolbars should respect the user preferences for the
 	 * size of icons.
 	 * Params:
-	 * iconSize =  The GtkIconSize that stock icons in the toolbar shall have.
+	 * iconSize = The GtkIconSize that stock icons in the toolbar shall have.
 	 */
 	public void setIconSize(GtkIconSize iconSize)
 	{
@@ -859,7 +861,7 @@ public class Toolbar : Container, OrientableIF
 	 * gtk_toolbar_remove_space has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_toolbar_insert() instead.
 	 * Removes a space from the specified position.
 	 * Params:
-	 * position =  the index of the space to remove.
+	 * position = the index of the space to remove.
 	 */
 	public void removeSpace(int position)
 	{

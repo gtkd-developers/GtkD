@@ -172,10 +172,10 @@ public class PrintJob : ObjectG
 	 * Creates a new GtkPrintJob.
 	 * Since 2.10
 	 * Params:
-	 * title =  the job title
-	 * printer =  a GtkPrinter
-	 * settings =  a GtkPrintSettings
-	 * pageSetup =  a GtkPageSetup
+	 * title = the job title
+	 * printer = a GtkPrinter
+	 * settings = a GtkPrintSettings
+	 * pageSetup = a GtkPageSetup
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Printer printer, PrintSettings settings, PageSetup pageSetup)
@@ -251,7 +251,7 @@ public class PrintJob : ObjectG
 	 * gtk_printer_accepts_pdf() and gtk_printer_accepts_ps().
 	 * Since 2.10
 	 * Params:
-	 * filename =  the file to be printed
+	 * filename = the file to be printed
 	 * Returns: FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
@@ -300,9 +300,9 @@ public class PrintJob : ObjectG
 	 * Sends the print job off to the printer.
 	 * Since 2.10
 	 * Params:
-	 * callback =  function to call when the job completes or an error occurs
-	 * userData =  user data that gets passed to callback
-	 * dnotify =  destroy notify for user_data
+	 * callback = function to call when the job completes or an error occurs
+	 * userData = user data that gets passed to callback
+	 * dnotify = destroy notify for user_data
 	 */
 	public void send(GtkPrintJobCompleteFunc callback, void* userData, GDestroyNotify dnotify)
 	{
@@ -319,7 +319,7 @@ public class PrintJob : ObjectG
 	 * not be enabled unless needed.
 	 * Since 2.10
 	 * Params:
-	 * trackStatus =  TRUE to track status after printing
+	 * trackStatus = TRUE to track status after printing
 	 */
 	public void setTrackPrintStatus(int trackStatus)
 	{

@@ -105,7 +105,7 @@ private import gdk.Drawable;
  * gdk_window_set_composited() on the child window. For a
  * composited window it is the responsibility of the
  * application to render the window contents at the right spot.
- * Example 7. Composited windows
+ * Example  7.  Composited windows
  * #include <gtk/gtk.h>
  * /+* The expose event handler for the event box.
  *  *
@@ -219,7 +219,7 @@ private import gdk.Drawable;
 	 *  gtk_main ();
 	 *  return 0;
  * }
- * In the example Example 7, “Composited windows”, a button is
+ * In the example Example  7, “Composited windows”, a button is
  * placed inside of an event box inside of a window. The event box is
  * set as composited and therefore is no longer automatically drawn to
  * the screen.
@@ -387,17 +387,19 @@ public class Window : Drawable
 	 * more details. Note: to use this on displays other than the default
 	 * display, parent must be specified.
 	 * Params:
-	 * attributes =  attributes of the new window
-	 * attributesMask =  mask indicating which fields in attributes are valid
+	 * parent = a GdkWindow, or NULL to create the window as a child of
+	 *  the default root window for the default display.
+	 * attributes = attributes of the new window
+	 * attributesMask = mask indicating which fields in attributes are valid
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GdkWindowAttr* attributes, int attributesMask)
+	public this (Window parent, GdkWindowAttr* attributes, int attributesMask)
 	{
 		// GdkWindow* gdk_window_new (GdkWindow *parent,  GdkWindowAttr *attributes,  gint attributes_mask);
-		auto p = gdk_window_new(gdkWindow, attributes, attributesMask);
+		auto p = gdk_window_new((parent is null) ? null : parent.getWindowStruct(), attributes, attributesMask);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_window_new(gdkWindow, attributes, attributesMask)");
+			throw new ConstructionException("null returned by gdk_window_new((parent is null) ? null : parent.getWindowStruct(), attributes, attributesMask)");
 		}
 		this(cast(GdkWindow*) p);
 	}
@@ -434,8 +436,8 @@ public class Window : Drawable
 	 * NOTE: For multihead-aware widgets or applications use
 	 * gdk_display_get_window_at_pointer() instead.
 	 * Params:
-	 * winX =  return location for origin of the window under the pointer
-	 * winY =  return location for origin of the window under the pointer
+	 * winX = return location for origin of the window under the pointer
+	 * winY = return location for origin of the window under the pointer
 	 * Returns: window under the mouse pointer
 	 */
 	public static Window atPointer(out int winX, out int winY)
@@ -680,7 +682,7 @@ public class Window : Drawable
 	 * and GDK makes a best effort to get it to happen.
 	 * Since 2.4
 	 * Params:
-	 * setting =  whether to keep window above other windows
+	 * setting = whether to keep window above other windows
 	 */
 	public void setKeepAbove(int setting)
 	{
@@ -699,7 +701,7 @@ public class Window : Drawable
 	 * and GDK makes a best effort to get it to happen.
 	 * Since 2.4
 	 * Params:
-	 * setting =  whether to keep window below other windows
+	 * setting = whether to keep window below other windows
 	 */
 	public void setKeepBelow(int setting)
 	{
@@ -718,7 +720,7 @@ public class Window : Drawable
 	 * gdk_window_set_composited().
 	 * Since 2.12
 	 * Params:
-	 * opacity =  opacity
+	 * opacity = opacity
 	 */
 	public void setOpacity(double opacity)
 	{
@@ -733,7 +735,7 @@ public class Window : Drawable
 	 * and an expose event is emitted on the parent of the composited
 	 * window. It is the responsibility of the parent's expose handler
 	 * to manually merge the off-screen content onto the screen in
-	 * whatever way it sees fit. See Example 7, “Composited windows”
+	 * whatever way it sees fit. See Example  7, “Composited windows”
 	 * for an example.
 	 * It only makes sense for child windows to be composited; see
 	 * gdk_window_set_opacity() if you need translucent toplevel
@@ -749,7 +751,7 @@ public class Window : Drawable
 	 * attempting to do so.
 	 * Since 2.12
 	 * Params:
-	 * composited =  TRUE to set the window as composited
+	 * composited = TRUE to set the window as composited
 	 */
 	public void setComposited(int composited)
 	{
@@ -766,8 +768,8 @@ public class Window : Drawable
 	 * If you're also planning to resize the window, use gdk_window_move_resize()
 	 * to both move and resize simultaneously, for a nicer visual effect.
 	 * Params:
-	 * x =  X coordinate relative to window's parent
-	 * y =  Y coordinate relative to window's parent
+	 * x = X coordinate relative to window's parent
+	 * y = Y coordinate relative to window's parent
 	 */
 	public void move(int x, int y)
 	{
@@ -783,8 +785,8 @@ public class Window : Drawable
 	 * If you're also planning to move the window, use gdk_window_move_resize()
 	 * to both move and resize simultaneously, for a nicer visual effect.
 	 * Params:
-	 * width =  new width of the window
-	 * height =  new height of the window
+	 * width = new width of the window
+	 * height = new height of the window
 	 */
 	public void resize(int width, int height)
 	{
@@ -798,10 +800,10 @@ public class Window : Drawable
 	 * visual effects. (i.e. the user may be able to see the window first
 	 * move, then resize, if you don't use gdk_window_move_resize().)
 	 * Params:
-	 * x =  new X position relative to window's parent
-	 * y =  new Y position relative to window's parent
-	 * width =  new width
-	 * height =  new height
+	 * x = new X position relative to window's parent
+	 * y = new Y position relative to window's parent
+	 * width = new width
+	 * height = new height
 	 */
 	public void moveResize(int x, int y, int width, int height)
 	{
@@ -814,8 +816,8 @@ public class Window : Drawable
 	 * the given amount. Portions of the window that the scroll operation
 	 * brings in from offscreen areas are invalidated.
 	 * Params:
-	 * dx =  Amount to scroll in the X direction
-	 * dy =  Amount to scroll in the Y direction
+	 * dx = Amount to scroll in the X direction
+	 * dy = Amount to scroll in the Y direction
 	 */
 	public void scroll(int dx, int dy)
 	{
@@ -830,9 +832,9 @@ public class Window : Drawable
 	 * Child windows are not moved.
 	 * Since 2.8
 	 * Params:
-	 * region =  The GdkRegion to move
-	 * dx =  Amount to move in the X direction
-	 * dy =  Amount to move in the Y direction
+	 * region = The GdkRegion to move
+	 * dx = Amount to move in the X direction
+	 * dy = Amount to move in the Y direction
 	 */
 	public void moveRegion(Region region, int dx, int dy)
 	{
@@ -880,9 +882,9 @@ public class Window : Drawable
 	 * Reparents window into the given new_parent. The window being
 	 * reparented will be unmapped as a side effect.
 	 * Params:
-	 * newParent =  new parent to move window into
-	 * x =  X location inside the new parent
-	 * y =  Y location inside the new parent
+	 * newParent = new parent to move window into
+	 * x = X location inside the new parent
+	 * y = Y location inside the new parent
 	 */
 	public void reparent(Window newParent, int x, int y)
 	{
@@ -902,10 +904,10 @@ public class Window : Drawable
 	/**
 	 * Clears an area of window to the background color or background pixmap.
 	 * Params:
-	 * x =  x coordinate of rectangle to clear
-	 * y =  y coordinate of rectangle to clear
-	 * width =  width of rectangle to clear
-	 * height =  height of rectangle to clear
+	 * x = x coordinate of rectangle to clear
+	 * y = y coordinate of rectangle to clear
+	 * width = width of rectangle to clear
+	 * height = height of rectangle to clear
 	 */
 	public void clearArea(int x, int y, int width, int height)
 	{
@@ -919,10 +921,10 @@ public class Window : Drawable
 	 * This function has a stupid name because it dates back to the mists
 	 * time, pre-GDK-1.0.
 	 * Params:
-	 * x =  x coordinate of rectangle to clear
-	 * y =  y coordinate of rectangle to clear
-	 * width =  width of rectangle to clear
-	 * height =  height of rectangle to clear
+	 * x = x coordinate of rectangle to clear
+	 * y = y coordinate of rectangle to clear
+	 * width = width of rectangle to clear
+	 * height = height of rectangle to clear
 	 */
 	public void clearAreaE(int x, int y, int width, int height)
 	{
@@ -971,8 +973,8 @@ public class Window : Drawable
 	 * requests the restack, does not guarantee it.
 	 * Since 2.18
 	 * Params:
-	 * sibling =  a GdkWindow that is a sibling of window, or NULL
-	 * above =  a boolean
+	 * sibling = a GdkWindow that is a sibling of window, or NULL
+	 * above = a boolean
 	 */
 	public void restack(Window sibling, int above)
 	{
@@ -984,7 +986,7 @@ public class Window : Drawable
 	 * Sets keyboard focus to window. In most cases, gtk_window_present()
 	 * should be used on a GtkWindow, rather than calling this function.
 	 * Params:
-	 * timestamp =  timestamp of the event triggering the window focus
+	 * timestamp = timestamp of the event triggering the window focus
 	 */
 	public void focus(uint timestamp)
 	{
@@ -1008,11 +1010,11 @@ public class Window : Drawable
 	 * with window managers that support the Extended Window Manager Hints, but has a
 	 * fallback implementation for other window managers.
 	 * Params:
-	 * edge =  the edge or corner from which the drag is started
-	 * button =  the button being used to drag
-	 * rootX =  root window X coordinate of mouse click that began the drag
-	 * rootY =  root window Y coordinate of mouse click that began the drag
-	 * timestamp =  timestamp of mouse click that began the drag (use gdk_event_get_time())
+	 * edge = the edge or corner from which the drag is started
+	 * button = the button being used to drag
+	 * rootX = root window X coordinate of mouse click that began the drag
+	 * rootY = root window Y coordinate of mouse click that began the drag
+	 * timestamp = timestamp of mouse click that began the drag (use gdk_event_get_time())
 	 */
 	public void beginResizeDrag(GdkWindowEdge edge, int button, int rootX, int rootY, uint timestamp)
 	{
@@ -1028,10 +1030,10 @@ public class Window : Drawable
 	 * Window Manager Hints, but has a fallback implementation for
 	 * other window managers.
 	 * Params:
-	 * button =  the button being used to drag
-	 * rootX =  root window X coordinate of mouse click that began the drag
-	 * rootY =  root window Y coordinate of mouse click that began the drag
-	 * timestamp =  timestamp of mouse click that began the drag
+	 * button = the button being used to drag
+	 * rootX = root window X coordinate of mouse click that began the drag
+	 * rootY = root window Y coordinate of mouse click that began the drag
+	 * timestamp = timestamp of mouse click that began the drag
 	 */
 	public void beginMoveDrag(int button, int rootX, int rootY, uint timestamp)
 	{
@@ -1043,12 +1045,12 @@ public class Window : Drawable
 	 * Constrains a desired width and height according to a
 	 * set of geometry hints (such as minimum and maximum size).
 	 * Params:
-	 * geometry =  a GdkGeometry structure
-	 * flags =  a mask indicating what portions of geometry are set
-	 * width =  desired width of window
-	 * height =  desired height of the window
-	 * newWidth =  location to store resulting width
-	 * newHeight =  location to store resulting height
+	 * geometry = a GdkGeometry structure
+	 * flags = a mask indicating what portions of geometry are set
+	 * width = desired width of window
+	 * height = desired height of the window
+	 * newWidth = location to store resulting width
+	 * newHeight = location to store resulting height
 	 */
 	public static void constrainSize(GdkGeometry* geometry, uint flags, int width, int height, out int newWidth, out int newHeight)
 	{
@@ -1073,7 +1075,7 @@ public class Window : Drawable
 	 * creates a rectangular region for you. See
 	 * gdk_window_begin_paint_region() for details.
 	 * Params:
-	 * rectangle =  rectangle you intend to draw to
+	 * rectangle = rectangle you intend to draw to
 	 */
 	public void beginPaintRect(Rectangle rectangle)
 	{
@@ -1118,7 +1120,7 @@ public class Window : Drawable
 	 * gdk_window_end_paint() is required for each call to
 	 * gdk_window_begin_paint_region().
 	 * Params:
-	 * region =  region you intend to draw to
+	 * region = region you intend to draw to
 	 */
 	public void beginPaintRegion(Region region)
 	{
@@ -1146,9 +1148,9 @@ public class Window : Drawable
 	 * invalidates a rectangular region. See
 	 * gdk_window_invalidate_region() for details.
 	 * Params:
-	 * rect =  rectangle to invalidate or NULL to invalidate the whole
+	 * rect = rectangle to invalidate or NULL to invalidate the whole
 	 *  window
-	 * invalidateChildren =  whether to also invalidate child windows
+	 * invalidateChildren = whether to also invalidate child windows
 	 */
 	public void invalidateRect(Rectangle rect, int invalidateChildren)
 	{
@@ -1173,8 +1175,8 @@ public class Window : Drawable
 	 * unaffected. See gdk_window_invalidate_maybe_recurse if you need
 	 * fine grained control over which children are invalidated.
 	 * Params:
-	 * region =  a GdkRegion
-	 * invalidateChildren =  TRUE to also invalidate child windows
+	 * region = a GdkRegion
+	 * invalidateChildren = TRUE to also invalidate child windows
 	 */
 	public void invalidateRegion(Region region, int invalidateChildren)
 	{
@@ -1244,7 +1246,7 @@ public class Window : Drawable
 	 * case, where GDK delivers them in an idle handler). Occasionally
 	 * this is useful to produce nicer scrolling behavior, for example.
 	 * Params:
-	 * updateChildren =  whether to also process updates for child windows
+	 * updateChildren = whether to also process updates for child windows
 	 */
 	public void processUpdates(int updateChildren)
 	{
@@ -1271,7 +1273,7 @@ public class Window : Drawable
 	 * yourself, though you might want to use this function to enable
 	 * updates sometime after application startup time.
 	 * Params:
-	 * setting =  TRUE to turn on update debugging
+	 * setting = TRUE to turn on update debugging
 	 */
 	public static void setDebugUpdates(int setting)
 	{
@@ -1290,12 +1292,12 @@ public class Window : Drawable
 	 * This function exposes details of the GDK implementation, and is thus
 	 * likely to change in future releases of GDK.
 	 * Params:
-	 * realDrawable =  location to store the drawable to which drawing should be
+	 * realDrawable = location to store the drawable to which drawing should be
 	 *  done.
-	 * xOffset =  location to store the X offset between coordinates in window,
+	 * xOffset = location to store the X offset between coordinates in window,
 	 *  and the underlying window system primitive coordinates for
 	 *  *real_drawable.
-	 * yOffset =  location to store the Y offset between coordinates in window,
+	 * yOffset = location to store the Y offset between coordinates in window,
 	 *  and the underlying window system primitive coordinates for
 	 *  *real_drawable.
 	 */
@@ -1352,7 +1354,7 @@ public class Window : Drawable
 	 * and the user data for the window is non-NULL, GTK+ will assume the
 	 * user data is a GtkWidget, and forward the event to that widget.
 	 * Params:
-	 * userData =  user data
+	 * userData = user data
 	 */
 	public void setUserData(void* userData)
 	{
@@ -1369,7 +1371,7 @@ public class Window : Drawable
 	 * windows, such as popup menus. GtkMenu uses an override redirect
 	 * window in its implementation, for example.
 	 * Params:
-	 * overrideRedirect =  TRUE if window should be override redirect
+	 * overrideRedirect = TRUE if window should be override redirect
 	 */
 	public void setOverrideRedirect(int overrideRedirect)
 	{
@@ -1384,7 +1386,7 @@ public class Window : Drawable
 	 * hint. ICCCM-compliant window manager usually respect it.
 	 * Since 2.4
 	 * Params:
-	 * acceptFocus =  TRUE if the window should receive input focus
+	 * acceptFocus = TRUE if the window should receive input focus
 	 */
 	public void setAcceptFocus(int acceptFocus)
 	{
@@ -1402,7 +1404,7 @@ public class Window : Drawable
 	 * manager extension specification should respect it.
 	 * Since 2.6
 	 * Params:
-	 * focusOnMap =  TRUE if the window should receive input focus when mapped
+	 * focusOnMap = TRUE if the window should receive input focus when mapped
 	 */
 	public void setFocusOnMap(int focusOnMap)
 	{
@@ -1419,7 +1421,7 @@ public class Window : Drawable
 	 * See gdk_display_add_client_message_filter() if you are interested
 	 * in X ClientMessage events.
 	 * Params:
-	 * data =  data to pass to filter callback
+	 * data = data to pass to filter callback
 	 */
 	public void addFilter(GdkFilterFunc funct, void* data)
 	{
@@ -1430,7 +1432,7 @@ public class Window : Drawable
 	/**
 	 * Remove a filter previously added with gdk_window_add_filter().
 	 * Params:
-	 * data =  user data for previously-added filter function
+	 * data = user data for previously-added filter function
 	 */
 	public void removeFilter(GdkFilterFunc funct, void* data)
 	{
@@ -1452,9 +1454,9 @@ public class Window : Drawable
 	 * will do nothing.
 	 * This function works on both toplevel and child windows.
 	 * Params:
-	 * mask =  shape mask
-	 * x =  X position of shape mask with respect to window
-	 * y =  Y position of shape mask with respect to window
+	 * mask = shape mask
+	 * x = X position of shape mask with respect to window
+	 * y = Y position of shape mask with respect to window
 	 */
 	public void shapeCombineMask(Bitmap mask, int x, int y)
 	{
@@ -1476,9 +1478,9 @@ public class Window : Drawable
 	 * will do nothing.
 	 * This function works on both toplevel and child windows.
 	 * Params:
-	 * shapeRegion =  region of window to be non-transparent
-	 * offsetX =  X position of shape_region in window coordinates
-	 * offsetY =  Y position of shape_region in window coordinates
+	 * shapeRegion = region of window to be non-transparent
+	 * offsetX = X position of shape_region in window coordinates
+	 * offsetY = Y position of shape_region in window coordinates
 	 */
 	public void shapeCombineRegion(Region shapeRegion, int offsetX, int offsetY)
 	{
@@ -1529,9 +1531,9 @@ public class Window : Drawable
 	 * function does nothing.
 	 * Since 2.10
 	 * Params:
-	 * mask =  shape mask, or NULL
-	 * x =  X position of shape mask with respect to window
-	 * y =  Y position of shape mask with respect to window
+	 * mask = shape mask, or NULL
+	 * x = X position of shape mask with respect to window
+	 * y = Y position of shape mask with respect to window
 	 */
 	public void inputShapeCombineMask(Bitmap mask, int x, int y)
 	{
@@ -1555,9 +1557,9 @@ public class Window : Drawable
 	 * function does nothing.
 	 * Since 2.10
 	 * Params:
-	 * shapeRegion =  region of window to be non-transparent
-	 * offsetX =  X position of shape_region in window coordinates
-	 * offsetY =  Y position of shape_region in window coordinates
+	 * shapeRegion = region of window to be non-transparent
+	 * offsetX = X position of shape_region in window coordinates
+	 * offsetY = Y position of shape_region in window coordinates
 	 */
 	public void inputShapeCombineRegion(Region shapeRegion, int offsetX, int offsetY)
 	{
@@ -1600,7 +1602,7 @@ public class Window : Drawable
 	 * implementing scary features that involve deep knowledge of the
 	 * windowing system. Don't worry about it unless you have to.
 	 * Params:
-	 * useStatic =  TRUE to turn on static gravity
+	 * useStatic = TRUE to turn on static gravity
 	 * Returns: TRUE if the server supports static gravity
 	 */
 	public int setStaticGravities(int useStatic)
@@ -1618,13 +1620,13 @@ public class Window : Drawable
 	 * depending on what you're trying to do.
 	 * If using GDK directly, use gdk_window_set_geometry_hints().
 	 * Params:
-	 * x =  ignored field, does not matter
-	 * y =  ignored field, does not matter
-	 * minWidth =  minimum width hint
-	 * minHeight =  minimum height hint
-	 * maxWidth =  max width hint
-	 * maxHeight =  max height hint
-	 * flags =  logical OR of GDK_HINT_POS, GDK_HINT_MIN_SIZE, and/or GDK_HINT_MAX_SIZE
+	 * x = ignored field, does not matter
+	 * y = ignored field, does not matter
+	 * minWidth = minimum width hint
+	 * minHeight = minimum height hint
+	 * maxWidth = max width hint
+	 * maxHeight = max height hint
+	 * flags = logical OR of GDK_HINT_POS, GDK_HINT_MIN_SIZE, and/or GDK_HINT_MAX_SIZE
 	 */
 	public void setHints(int x, int y, int minWidth, int minHeight, int maxWidth, int maxHeight, int flags)
 	{
@@ -1639,7 +1641,7 @@ public class Window : Drawable
 	 * title as well. title must be in UTF-8 encoding (as with all
 	 * user-readable strings in GDK/GTK+). title may not be NULL.
 	 * Params:
-	 * title =  title of window
+	 * title = title of window
 	 */
 	public void setTitle(string title)
 	{
@@ -1656,7 +1658,7 @@ public class Window : Drawable
 	 * to allocate a color.
 	 * See also gdk_window_set_back_pixmap().
 	 * Params:
-	 * color =  an allocated GdkColor
+	 * color = an allocated GdkColor
 	 */
 	public void setBackground(Color color)
 	{
@@ -1681,8 +1683,8 @@ public class Window : Drawable
 	 * when the window is obscured then exposed, and when you call
 	 * gdk_window_clear().
 	 * Params:
-	 * pixmap =  a GdkPixmap, or NULL
-	 * parentRelative =  whether the tiling origin is at the origin of
+	 * pixmap = a GdkPixmap, or NULL
+	 * parentRelative = whether the tiling origin is at the origin of
 	 *  window's parent
 	 */
 	public void setBackPixmap(Pixmap pixmap, int parentRelative)
@@ -1698,7 +1700,7 @@ public class Window : Drawable
 	 * to gdk_window_set_cursor() means that window will use the cursor of its
 	 * parent window. Most windows should use this default.
 	 * Params:
-	 * cursor =  a cursor
+	 * cursor = a cursor
 	 */
 	public void setCursor(Cursor cursor)
 	{
@@ -1729,7 +1731,7 @@ public class Window : Drawable
 	 * Retrieves the user data for window, which is normally the widget
 	 * that window belongs to. See gdk_window_set_user_data().
 	 * Params:
-	 * data =  return location for user data
+	 * data = return location for user data
 	 */
 	public void getUserData(void** data)
 	{
@@ -1757,11 +1759,11 @@ public class Window : Drawable
 	 * whereas gdk_window_get_geometry() is restricted to the 16-bit
 	 * coordinates of X11.
 	 * Params:
-	 * x =  return location for X coordinate of window (relative to its parent)
-	 * y =  return location for Y coordinate of window (relative to its parent)
-	 * width =  return location for width of window
-	 * height =  return location for height of window
-	 * depth =  return location for bit depth of window
+	 * x = return location for X coordinate of window (relative to its parent)
+	 * y = return location for Y coordinate of window (relative to its parent)
+	 * width = return location for width of window
+	 * height = return location for height of window
+	 * depth = return location for bit depth of window
 	 */
 	public void getGeometry(out int x, out int y, out int width, out int height, out int depth)
 	{
@@ -1789,8 +1791,8 @@ public class Window : Drawable
 	 * call gdk_window_constrain_size() yourself to determine
 	 * appropriate sizes.
 	 * Params:
-	 * geometry =  geometry hints
-	 * geomMask =  bitmask indicating fields of geometry to pay attention to
+	 * geometry = geometry hints
+	 * geomMask = bitmask indicating fields of geometry to pay attention to
 	 */
 	public void setGeometryHints(GdkGeometry* geometry, GdkWindowHints geomMask)
 	{
@@ -1807,7 +1809,7 @@ public class Window : Drawable
 	 * image quality since the window manager may only need to scale the
 	 * icon by a small amount or not at all.
 	 * Params:
-	 * pixbufs =  A list of pixbufs, of different sizes.
+	 * pixbufs = A list of pixbufs, of different sizes.
 	 */
 	public void setIconList(ListG pixbufs)
 	{
@@ -1823,7 +1825,7 @@ public class Window : Drawable
 	 * You should only use this on windows for which you have
 	 * previously called gdk_window_set_transient_for()
 	 * Params:
-	 * modal =  TRUE if the window is modal, FALSE otherwise.
+	 * modal = TRUE if the window is modal, FALSE otherwise.
 	 */
 	public void setModalHint(int modal)
 	{
@@ -1838,7 +1840,7 @@ public class Window : Drawable
 	 * of the window.
 	 * The hint must be set before the window is mapped.
 	 * Params:
-	 * hint =  A hint of the function this window will have
+	 * hint = A hint of the function this window will have
 	 */
 	public void setTypeHint(GdkWindowTypeHint hint)
 	{
@@ -1866,7 +1868,7 @@ public class Window : Drawable
 	 * standard policy for its semantic type.
 	 * Since 2.2
 	 * Params:
-	 * skipsTaskbar =  TRUE to skip the taskbar
+	 * skipsTaskbar = TRUE to skip the taskbar
 	 */
 	public void setSkipTaskbarHint(int skipsTaskbar)
 	{
@@ -1885,7 +1887,7 @@ public class Window : Drawable
 	 * its semantic type.
 	 * Since 2.2
 	 * Params:
-	 * skipsPager =  TRUE to skip the pager
+	 * skipsPager = TRUE to skip the pager
 	 */
 	public void setSkipPagerHint(int skipsPager)
 	{
@@ -1898,7 +1900,7 @@ public class Window : Drawable
 	 * urgent attention.
 	 * Since 2.8
 	 * Params:
-	 * urgent =  TRUE if the window is urgent
+	 * urgent = TRUE if the window is urgent
 	 */
 	public void setUrgencyHint(int urgent)
 	{
@@ -1914,8 +1916,8 @@ public class Window : Drawable
 	 * received or processed.
 	 * The position coordinates are relative to the window's parent window.
 	 * Params:
-	 * x =  X coordinate of window
-	 * y =  Y coordinate of window
+	 * x = X coordinate of window
+	 * y = Y coordinate of window
 	 */
 	public void getPosition(out int x, out int y)
 	{
@@ -1927,8 +1929,8 @@ public class Window : Drawable
 	 * Obtains the top-left corner of the window manager frame in root
 	 * window coordinates.
 	 * Params:
-	 * x =  return location for X position of window frame
-	 * y =  return location for Y position of window frame
+	 * x = return location for X position of window frame
+	 * y = return location for Y position of window frame
 	 */
 	public void getRootOrigin(out int x, out int y)
 	{
@@ -1942,7 +1944,7 @@ public class Window : Drawable
 	 * coordinates. To get the position of the window itself (rather than
 	 * the frame) in root window coordinates, use gdk_window_get_origin().
 	 * Params:
-	 * rect =  rectangle to fill with bounding box of the window frame
+	 * rect = rectangle to fill with bounding box of the window frame
 	 */
 	public void getFrameExtents(Rectangle rect)
 	{
@@ -1956,8 +1958,8 @@ public class Window : Drawable
 	 * gdk_window_get_geometry() which return the position of a window
 	 * relative to its parent window.)
 	 * Params:
-	 * x =  return location for X coordinate
-	 * y =  return location for Y coordinate
+	 * x = return location for X coordinate
+	 * y = return location for Y coordinate
 	 * Returns: not meaningful, ignore
 	 */
 	public int getOrigin(out int x, out int y)
@@ -1976,8 +1978,8 @@ public class Window : Drawable
 	 * at root window coordinate 0,0) this function is not necessary.
 	 * It's deprecated for that reason.
 	 * Params:
-	 * x =  return location for X coordinate
-	 * y =  return location for Y coordinate
+	 * x = return location for X coordinate
+	 * y = return location for Y coordinate
 	 * Returns: not meaningful
 	 */
 	public int getDeskrelativeOrigin(out int x, out int y)
@@ -1992,10 +1994,10 @@ public class Window : Drawable
 	 * gdk_window_get_origin() but allows you go pass
 	 * in any position in the window, not just the origin.
 	 * Params:
-	 * x =  X coordinate in window
-	 * y =  Y coordinate in window
-	 * rootX =  return location for X coordinate
-	 * rootY =  return location for Y coordinate
+	 * x = X coordinate in window
+	 * y = Y coordinate in window
+	 * rootX = return location for X coordinate
+	 * rootY = return location for Y coordinate
 	 */
 	public void getRootCoords(int x, int y, out int rootX, out int rootY)
 	{
@@ -2008,11 +2010,11 @@ public class Window : Drawable
 	 * The position is given in coordinates relative to the upper left
 	 * corner of window.
 	 * Params:
-	 * x =  return location for X coordinate of pointer or NULL to not
+	 * x = return location for X coordinate of pointer or NULL to not
 	 *  return the X coordinate
-	 * y =  return location for Y coordinate of pointer or NULL to not
+	 * y = return location for Y coordinate of pointer or NULL to not
 	 *  return the Y coordinate
-	 * mask =  return location for modifier mask or NULL to not return the
+	 * mask = return location for modifier mask or NULL to not return the
 	 *  modifier mask
 	 * Returns: the window containing the pointer (as withgdk_window_at_pointer()), or NULL if the window containing thepointer isn't known to GDK
 	 */
@@ -2117,7 +2119,7 @@ public class Window : Drawable
 	 * means the window should report button press events. The event mask
 	 * is the bitwise OR of values from the GdkEventMask enumeration.
 	 * Params:
-	 * eventMask =  event mask for window
+	 * eventMask = event mask for window
 	 */
 	public void setEvents(GdkEventMask eventMask)
 	{
@@ -2132,9 +2134,9 @@ public class Window : Drawable
 	 * gdk_window_set_icon_list(). Only if all those are too high-level do you
 	 * want to fall back to gdk_window_set_icon().
 	 * Params:
-	 * iconWindow =  a GdkWindow to use for the icon, or NULL to unset
-	 * pixmap =  a GdkPixmap to use as the icon, or NULL to unset
-	 * mask =  a 1-bit pixmap (GdkBitmap) to use as mask for pixmap, or NULL to have none
+	 * iconWindow = a GdkWindow to use for the icon, or NULL to unset
+	 * pixmap = a GdkPixmap to use as the icon, or NULL to unset
+	 * mask = a 1-bit pixmap (GdkBitmap) to use as mask for pixmap, or NULL to have none
 	 */
 	public void setIcon(Window iconWindow, Pixmap pixmap, Bitmap mask)
 	{
@@ -2152,7 +2154,7 @@ public class Window : Drawable
 	 * Using NULL for name unsets the icon title; further calls to
 	 * gdk_window_set_title() will again update the icon title as well.
 	 * Params:
-	 * name =  name of window while iconified (minimized)
+	 * name = name of window while iconified (minimized)
 	 */
 	public void setIconName(string name)
 	{
@@ -2168,7 +2170,7 @@ public class Window : Drawable
 	 * See gtk_window_set_transient_for() if you're using GtkWindow or
 	 * GtkDialog.
 	 * Params:
-	 * parent =  another toplevel GdkWindow
+	 * parent = another toplevel GdkWindow
 	 */
 	public void setTransientFor(Window parent)
 	{
@@ -2189,7 +2191,7 @@ public class Window : Drawable
 	 * you use for the role, as long as you have a different role for each
 	 * non-interchangeable kind of window.
 	 * Params:
-	 * role =  a string indicating its role
+	 * role = a string indicating its role
 	 */
 	public void setRole(string role)
 	{
@@ -2202,7 +2204,7 @@ public class Window : Drawable
 	 * instead of this low-level function.
 	 * Since 2.12
 	 * Params:
-	 * startupId =  a string with startup-notification identifier
+	 * startupId = a string with startup-notification identifier
 	 */
 	public void setStartupId(string startupId)
 	{
@@ -2221,7 +2223,7 @@ public class Window : Drawable
 	 * application at once. You should only set a non-default group window
 	 * if your application pretends to be multiple applications.
 	 * Params:
-	 * leader =  group leader window, or NULL to restore the default group leader window
+	 * leader = group leader window, or NULL to restore the default group leader window
 	 */
 	public void setGroup(Window leader)
 	{
@@ -2259,7 +2261,7 @@ public class Window : Drawable
 	 * Most window managers honor a decorations hint of 0 to disable all decorations,
 	 * but very few honor all possible combinations of bits.
 	 * Params:
-	 * decorations =  decoration hint mask
+	 * decorations = decoration hint mask
 	 */
 	public void setDecorations(GdkWMDecoration decorations)
 	{
@@ -2270,7 +2272,7 @@ public class Window : Drawable
 	/**
 	 * Returns the decorations set on the GdkWindow with gdk_window_set_decorations
 	 * Params:
-	 * decorations =  The window decorations will be written here
+	 * decorations = The window decorations will be written here
 	 * Returns: TRUE if the window has decorations set, FALSE otherwise.
 	 */
 	public int getDecorations(out GdkWMDecoration decorations)
@@ -2292,7 +2294,7 @@ public class Window : Drawable
 	 * it doesn't include GDK_FUNC_ALL, it indicates which functions to
 	 * enable.
 	 * Params:
-	 * functions =  bitmask of operations to allow on window
+	 * functions = bitmask of operations to allow on window
 	 */
 	public void setFunctions(GdkWMFunction functions)
 	{
@@ -2347,7 +2349,7 @@ public class Window : Drawable
 	 * This function is not multihead safe. For multihead operation,
 	 * see gdk_display_set_pointer_hooks().
 	 * Params:
-	 * newHooks =  a table of pointers to functions for getting
+	 * newHooks = a table of pointers to functions for getting
 	 *  quantities related to the current pointer position,
 	 *  or NULL to restore the default table.
 	 * Returns: the previous pointer hook table
@@ -2384,7 +2386,7 @@ public class Window : Drawable
 	 * "from-embedder" signals on window.
 	 * Since 2.18
 	 * Params:
-	 * embedder =  the GdkWindow that window gets embedded in
+	 * embedder = the GdkWindow that window gets embedded in
 	 */
 	public void offscreenWindowSetEmbedder(Window embedder)
 	{
@@ -2432,13 +2434,13 @@ public class Window : Drawable
 	 * is called.
 	 * Since 2.14
 	 * Params:
-	 * drawable =  a GdkDrawable
-	 * srcX =  x position in window
-	 * srcY =  y position in window
-	 * destX =  x position in drawable
-	 * destY =  y position in drawable
-	 * width =  width of redirection, or -1 to use the width of window
-	 * height =  height of redirection or -1 to use the height of window
+	 * drawable = a GdkDrawable
+	 * srcX = x position in window
+	 * srcY = y position in window
+	 * destX = x position in drawable
+	 * destY = y position in drawable
+	 * width = width of redirection, or -1 to use the width of window
+	 * height = height of redirection or -1 to use the height of window
 	 */
 	public void redirectToDrawable(Drawable drawable, int srcX, int srcY, int destX, int destY, int width, int height)
 	{

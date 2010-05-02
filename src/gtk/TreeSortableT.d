@@ -138,8 +138,8 @@ public template TreeSortableT(TStruct)
 	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
 	 * GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
 	 * Params:
-	 * sortColumnId =  The sort column id to be filled in
-	 * order =  The GtkSortType to be filled in
+	 * sortColumnId = The sort column id to be filled in
+	 * order = The GtkSortType to be filled in
 	 * Returns: TRUE if the sort column is not one of the special sort column ids.
 	 */
 	public int getSortColumnId(out int sortColumnId, out GtkSortType order)
@@ -153,8 +153,8 @@ public template TreeSortableT(TStruct)
 	 * resort itself to reflect this change, after emitting a
 	 * "sort-column-changed" signal. sortable may either be
 	 * Params:
-	 * sortColumnId =  the sort column id to set
-	 * order =  The sort order of the column
+	 * sortColumnId = the sort column id to set
+	 * order = The sort order of the column
 	 */
 	public void setSortColumnId(int sortColumnId, GtkSortType order)
 	{
@@ -167,10 +167,10 @@ public template TreeSortableT(TStruct)
 	 * current sort column id of sortable is the same as sort_column_id, then
 	 * the model will sort using this function.
 	 * Params:
-	 * sortColumnId =  the sort column id to set the function for
-	 * sortFunc =  The comparison function
-	 * userData =  User data to pass to sort_func, or NULL
-	 * destroy =  Destroy notifier of user_data, or NULL
+	 * sortColumnId = the sort column id to set the function for
+	 * sortFunc = The comparison function
+	 * userData = User data to pass to sort_func, or NULL
+	 * destroy = Destroy notifier of user_data, or NULL
 	 */
 	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy)
 	{
@@ -188,9 +188,9 @@ public template TreeSortableT(TStruct)
 	 * default state. In this case, when the current sort column id of sortable
 	 * is GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
 	 * Params:
-	 * sortFunc =  The comparison function
-	 * userData =  User data to pass to sort_func, or NULL
-	 * destroy =  Destroy notifier of user_data, or NULL
+	 * sortFunc = The comparison function
+	 * userData = User data to pass to sort_func, or NULL
+	 * destroy = Destroy notifier of user_data, or NULL
 	 */
 	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy)
 	{

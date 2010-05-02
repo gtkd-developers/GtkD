@@ -187,7 +187,7 @@ public class ImageMenuItem : MenuItem
 	 * Note that it depends on the show-menu-images setting whether
 	 * the image will be displayed or not.
 	 * Params:
-	 * image =  a widget to set as the image for the menu item.
+	 * image = a widget to set as the image for the menu item.
 	 */
 	public void setImage(Widget image)
 	{
@@ -243,7 +243,7 @@ public class ImageMenuItem : MenuItem
 	 * stock id to select the stock item for the item.
 	 * Since 2.16
 	 * Params:
-	 * useStock =  TRUE if the menuitem should use a stock item
+	 * useStock = TRUE if the menuitem should use a stock item
 	 */
 	public void setUseStock(int useStock)
 	{
@@ -270,7 +270,7 @@ public class ImageMenuItem : MenuItem
 	 * without the image.
 	 * Since 2.16
 	 * Params:
-	 * alwaysShow =  TRUE if the menuitem should always show the image
+	 * alwaysShow = TRUE if the menuitem should always show the image
 	 */
 	public void setAlwaysShowImage(int alwaysShow)
 	{
@@ -287,7 +287,7 @@ public class ImageMenuItem : MenuItem
 	 * you shouldnt need this (see gtk_image_menu_item_new_from_stock()).
 	 * Since 2.16
 	 * Params:
-	 * accelGroup =  the GtkAccelGroup
+	 * accelGroup = the GtkAccelGroup
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{

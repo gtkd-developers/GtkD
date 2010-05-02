@@ -127,7 +127,7 @@ public class Emblem : ObjectG, IconIF
 	 * Creates a new emblem for icon.
 	 * Since 2.18
 	 * Params:
-	 * icon =  a GIcon containing the icon.
+	 * icon = a GIcon containing the icon.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconIF icon)
@@ -145,8 +145,8 @@ public class Emblem : ObjectG, IconIF
 	 * Creates a new emblem for icon.
 	 * Since 2.18
 	 * Params:
-	 * icon =  a GIcon containing the icon.
-	 * origin =  a GEmblemOrigin enum defining the emblem's origin
+	 * icon = a GIcon containing the icon.
+	 * origin = a GEmblemOrigin enum defining the emblem's origin
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconIF icon, GEmblemOrigin origin)

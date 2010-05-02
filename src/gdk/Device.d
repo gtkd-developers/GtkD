@@ -307,9 +307,9 @@ public class Device
 	 * Interprets an array of double as axis values for a given device,
 	 * and locates the value in the array for a given axis use.
 	 * Params:
-	 * axes =  pointer to an array of axes
-	 * use =  the use to look for
-	 * value =  location to store the found value.
+	 * axes = pointer to an array of axes
+	 * use = the use to look for
+	 * value = location to store the found value.
 	 * Returns: TRUE if the given axis use was found, otherwise FALSE
 	 */
 	public int getAxis(double[] axes, GdkAxisUse use, out double value)

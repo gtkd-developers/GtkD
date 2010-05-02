@@ -185,7 +185,7 @@ public class FontSelection : VBox
 	 * for this to work; this can be guaranteed by simply making sure that the
 	 * fontsel is inserted in a toplevel window before you call this function.
 	 * Params:
-	 * fontname =  a font name like "Helvetica 12" or "Times Bold 18"
+	 * fontname = a font name like "Helvetica 12" or "Times Bold 18"
 	 * Returns: TRUE if the font could be set successfully; FALSE if no  such font exists or if the fontsel doesn't belong to a particular  screen yet.
 	 */
 	public int setFontName(string fontname)
@@ -208,7 +208,7 @@ public class FontSelection : VBox
 	 * Sets the text displayed in the preview area.
 	 * The text is used to show how the selected font looks.
 	 * Params:
-	 * text =  the text to display in the preview area
+	 * text = the text to display in the preview area
 	 */
 	public void setPreviewText(string text)
 	{

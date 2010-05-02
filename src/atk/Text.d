@@ -237,8 +237,8 @@ public class Text
 	/**
 	 * Gets the specified text.
 	 * Params:
-	 * startOffset =  start position
-	 * endOffset =  end position
+	 * startOffset = start position
+	 * endOffset = end position
 	 * Returns: the text from start_offset up to, but not including end_offset.
 	 */
 	public string getText(int startOffset, int endOffset)
@@ -250,7 +250,7 @@ public class Text
 	/**
 	 * Gets the specified text.
 	 * Params:
-	 * offset =  position
+	 * offset = position
 	 * Returns: the character at offset.
 	 */
 	public gunichar getCharacterAtOffset(int offset)
@@ -287,10 +287,10 @@ public class Text
 	 * If the boundary_type is ATK_TEXT_BOUNDARY_LINE_END the returned string
 	 * is from the line end at or after the offset to the next line start.
 	 * Params:
-	 * offset =  position
-	 * boundaryType =  An AtkTextBoundary
-	 * startOffset =  the start offset of the returned string
-	 * endOffset =  the offset of the first character after the
+	 * offset = position
+	 * boundaryType = An AtkTextBoundary
+	 * startOffset = the start offset of the returned string
+	 * endOffset = the offset of the first character after the
 	 *  returned substring
 	 * Returns: the text after offset bounded by the specified boundary_type.
 	 */
@@ -335,10 +335,10 @@ public class Text
 	 * is from the line end before the offset to the line end at or after
 	 * the offset.
 	 * Params:
-	 * offset =  position
-	 * boundaryType =  An AtkTextBoundary
-	 * startOffset =  the start offset of the returned string
-	 * endOffset =  the offset of the first character after the
+	 * offset = position
+	 * boundaryType = An AtkTextBoundary
+	 * startOffset = the start offset of the returned string
+	 * endOffset = the offset of the first character after the
 	 *  returned substring
 	 * Returns: the text at offset bounded by the specified boundary_type.
 	 */
@@ -381,10 +381,10 @@ public class Text
 	 * is from the line end before the line end before the offset to the
 	 * line end before the offset.
 	 * Params:
-	 * offset =  position
-	 * boundaryType =  An AtkTextBoundary
-	 * startOffset =  the start offset of the returned string
-	 * endOffset =  the offset of the first character after the
+	 * offset = position
+	 * boundaryType = An AtkTextBoundary
+	 * startOffset = the start offset of the returned string
+	 * endOffset = the offset of the first character after the
 	 *  returned substring
 	 * Returns: the text before offset bounded by the specified boundary_type.
 	 */
@@ -408,12 +408,12 @@ public class Text
 	 * Get the bounding box containing the glyph representing the character at
 	 *  a particular text offset.
 	 * Params:
-	 * offset =  The offset of the text character for which bounding information is required.
-	 * x =  Pointer for the x cordinate of the bounding box
-	 * y =  Pointer for the y cordinate of the bounding box
-	 * width =  Pointer for the width of the bounding box
-	 * height =  Pointer for the height of the bounding box
-	 * coords =  specify whether coordinates are relative to the screen or widget window
+	 * offset = The offset of the text character for which bounding information is required.
+	 * x = Pointer for the x cordinate of the bounding box
+	 * y = Pointer for the y cordinate of the bounding box
+	 * width = Pointer for the width of the bounding box
+	 * height = Pointer for the height of the bounding box
+	 * coords = specify whether coordinates are relative to the screen or widget window
 	 */
 	public void getCharacterExtents(int offset, out int x, out int y, out int width, out int height, AtkCoordType coords)
 	{
@@ -430,10 +430,10 @@ public class Text
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
 	 * Params:
-	 * offset =  the offset at which to get the attributes, -1 means the offset of
+	 * offset = the offset at which to get the attributes, -1 means the offset of
 	 * the character to be inserted at the caret location.
-	 * startOffset =  the address to put the start offset of the range
-	 * endOffset =  the address to put the end offset of the range
+	 * startOffset = the address to put the start offset of the range
+	 * endOffset = the address to put the end offset of the range
 	 * Returns: an AtkAttributeSet which contains the attributes explicitly setat offset. This AtkAttributeSet should be freed by a call toatk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getRunAttributes(int offset, out int startOffset, out int endOffset)
@@ -470,9 +470,9 @@ public class Text
 	 * are interpreted as being relative to the screen or this widget's window
 	 * depending on coords.
 	 * Params:
-	 * x =  screen x-position of character
-	 * y =  screen y-position of character
-	 * coords =  specify whether coordinates are relative to the screen or
+	 * x = screen x-position of character
+	 * y = screen y-position of character
+	 * coords = specify whether coordinates are relative to the screen or
 	 * widget window
 	 * Returns: the offset to the character which is located atthe specified x and y coordinates.
 	 */
@@ -486,10 +486,10 @@ public class Text
 	 * Get the ranges of text in the specified bounding box.
 	 * Since 1.3
 	 * Params:
-	 * rect =  An AtkTextRectagle giving the dimensions of the bounding box.
-	 * coordType =  Specify whether coordinates are relative to the screen or widget window.
-	 * xClipType =  Specify the horizontal clip type.
-	 * yClipType =  Specify the vertical clip type.
+	 * rect = An AtkTextRectagle giving the dimensions of the bounding box.
+	 * coordType = Specify whether coordinates are relative to the screen or widget window.
+	 * xClipType = Specify the horizontal clip type.
+	 * yClipType = Specify the vertical clip type.
 	 * Returns: Array of AtkTextRange. The last element of the array returned  by this function will be NULL.
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
@@ -502,12 +502,12 @@ public class Text
 	 * Get the bounding box for text within the specified range.
 	 * Since 1.3
 	 * Params:
-	 * startOffset =  The offset of the first text character for which boundary
+	 * startOffset = The offset of the first text character for which boundary
 	 *  information is required.
-	 * endOffset =  The offset of the text character after the last character
+	 * endOffset = The offset of the text character after the last character
 	 *  for which boundary information is required.
-	 * coordType =  Specify whether coordinates are relative to the screen or widget window.
-	 * rect =  A pointer to a AtkTextRectangle which is filled in by this function.
+	 * coordType = Specify whether coordinates are relative to the screen or widget window.
+	 * rect = A pointer to a AtkTextRectangle which is filled in by this function.
 	 */
 	public void getRangeExtents(int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect)
 	{
@@ -521,7 +521,7 @@ public class Text
 	 * and is NULL terminated.
 	 * Since 1.3
 	 * Params:
-	 * ranges =  A pointer to an array of AtkTextRange which is to be freed.
+	 * ranges = A pointer to an array of AtkTextRange which is to be freed.
 	 */
 	public static void freeRanges(AtkTextRange** ranges)
 	{
@@ -542,13 +542,13 @@ public class Text
 	/**
 	 * Gets the text from the specified selection.
 	 * Params:
-	 * selectionNum =  The selection number. The selected regions are
+	 * selectionNum = The selection number. The selected regions are
 	 * assigned numbers that correspond to how far the region is from the
 	 * start of the text. The selected region closest to the beginning
 	 * of the text region is assigned the number 0, etc. Note that adding,
 	 * moving or deleting a selected region can change the numbering.
-	 * startOffset =  passes back the start position of the selected region
-	 * endOffset =  passes back the end position of (e.g. offset immediately past)
+	 * startOffset = passes back the start position of the selected region
+	 * endOffset = passes back the end position of (e.g. offset immediately past)
 	 * the selected region
 	 * Returns: the selected text.
 	 */
@@ -561,8 +561,8 @@ public class Text
 	/**
 	 * Adds a selection bounded by the specified offsets.
 	 * Params:
-	 * startOffset =  the start position of the selected region
-	 * endOffset =  the offset of the first character after the selected region.
+	 * startOffset = the start position of the selected region
+	 * endOffset = the offset of the first character after the selected region.
 	 * Returns: TRUE if success, FALSE otherwise
 	 */
 	public int addSelection(int startOffset, int endOffset)
@@ -574,7 +574,7 @@ public class Text
 	/**
 	 * Removes the specified selection.
 	 * Params:
-	 * selectionNum =  The selection number. The selected regions are
+	 * selectionNum = The selection number. The selected regions are
 	 * assigned numbers that correspond to how far the region is from the
 	 * start of the text. The selected region closest to the beginning
 	 * of the text region is assigned the number 0, etc. Note that adding,
@@ -590,13 +590,13 @@ public class Text
 	/**
 	 * Changes the start and end offset of the specified selection.
 	 * Params:
-	 * selectionNum =  The selection number. The selected regions are
+	 * selectionNum = The selection number. The selected regions are
 	 * assigned numbers that correspond to how far the region is from the
 	 * start of the text. The selected region closest to the beginning
 	 * of the text region is assigned the number 0, etc. Note that adding,
 	 * moving or deleting a selected region can change the numbering.
-	 * startOffset =  the new start position of the selection
-	 * endOffset =  the new end position of (e.g. offset immediately past)
+	 * startOffset = the new start position of the selection
+	 * endOffset = the new end position of (e.g. offset immediately past)
 	 * the selection
 	 * Returns: TRUE if success, FALSE otherwise
 	 */
@@ -609,7 +609,7 @@ public class Text
 	/**
 	 * Sets the caret (cursor) position to the specified offset.
 	 * Params:
-	 * offset =  position
+	 * offset = position
 	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public int setCaretOffset(int offset)
@@ -622,7 +622,7 @@ public class Text
 	 * Frees the memory used by an AtkAttributeSet, including all its
 	 * AtkAttributes.
 	 * Params:
-	 * attribSet =  The AtkAttributeSet to free
+	 * attribSet = The AtkAttributeSet to free
 	 */
 	public static void atkAttributeSetFree(AtkAttributeSet* attribSet)
 	{
@@ -633,7 +633,7 @@ public class Text
 	/**
 	 * Associate name with a new AtkTextAttribute
 	 * Params:
-	 * name =  a name string
+	 * name = a name string
 	 * Returns: an AtkTextAttribute associated with name
 	 */
 	public static AtkTextAttribute attributeRegister(string name)
@@ -645,7 +645,7 @@ public class Text
 	/**
 	 * Gets the name corresponding to the AtkTextAttribute
 	 * Params:
-	 * attr =  The AtkTextAttribute whose name is required
+	 * attr = The AtkTextAttribute whose name is required
 	 * Returns: a string containing the name; this string should not be freed
 	 */
 	public static string attributeGetName(AtkTextAttribute attr)
@@ -657,7 +657,7 @@ public class Text
 	/**
 	 * Get the AtkTextAttribute type corresponding to a text attribute name.
 	 * Params:
-	 * name =  a string which is the (non-localized) name of an ATK text attribute.
+	 * name = a string which is the (non-localized) name of an ATK text attribute.
 	 * Returns: the AtkTextAttribute enumerated type corresponding to the specifiedname, or ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
 	 */
 	public static AtkTextAttribute attributeForName(string name)
@@ -669,8 +669,8 @@ public class Text
 	/**
 	 * Gets the value for the index of the AtkTextAttribute
 	 * Params:
-	 * attr =  The AtkTextAttribute for which a value is required
-	 * index =  The index of the required value
+	 * attr = The AtkTextAttribute for which a value is required
+	 * index = The index of the required value
 	 * Returns: a string containing the value; this string should not be freed;NULL is returned if there are no values maintained for the attr value. Signal DetailsThe "text-attributes-changed" signalvoid user_function (AtkText *atktext, gpointer user_data) : Run LastThe "text-attributes-changed" signal is emitted when the text attributes ofthe text of an object which implements AtkText changes.
 	 */
 	public static string attributeGetValue(AtkTextAttribute attr, int index)

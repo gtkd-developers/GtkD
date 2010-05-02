@@ -140,7 +140,7 @@ private import glib.Str;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 20. Acquiring a GtkTreeIter
+ * Example  20.  Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -165,7 +165,7 @@ private import glib.Str;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 21. Reading data from a GtkTreeModel
+ * Example  21.  Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -274,7 +274,7 @@ public class TreePath
 	 * child of that 11th child, and the 1st child of that 5th child. If an invalid
 	 * path string is passed in, NULL is returned.
 	 * Params:
-	 * path =  The string representation of a path.
+	 * path = The string representation of a path.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string path)
@@ -303,7 +303,7 @@ public class TreePath
 	 * Appends a new index to a path. As a result, the depth of the path is
 	 * increased.
 	 * Params:
-	 * index =  The index.
+	 * index = The index.
 	 */
 	public void appendIndex(int index)
 	{
@@ -315,7 +315,7 @@ public class TreePath
 	 * Prepends a new index to a path. As a result, the depth of the path is
 	 * increased.
 	 * Params:
-	 * index =  The index.
+	 * index = The index.
 	 */
 	public void prependIndex(int index)
 	{
@@ -374,8 +374,8 @@ public class TreePath
 	 * If b appears before a, then 1 is returned. If the two nodes are equal,
 	 * then 0 is returned.
 	 * Params:
-	 * a =  A GtkTreePath.
-	 * b =  A GtkTreePath to compare with.
+	 * a = A GtkTreePath.
+	 * b = A GtkTreePath to compare with.
 	 * Returns: The relative positions of a and b
 	 */
 	public int compare(TreePath b)
@@ -426,7 +426,7 @@ public class TreePath
 	/**
 	 * Returns TRUE if descendant is a descendant of path.
 	 * Params:
-	 * descendant =  another GtkTreePath
+	 * descendant = another GtkTreePath
 	 * Returns: TRUE if descendant is contained inside path
 	 */
 	public int isAncestor(TreePath descendant)
@@ -438,7 +438,7 @@ public class TreePath
 	/**
 	 * Returns TRUE if path is a descendant of ancestor.
 	 * Params:
-	 * ancestor =  another GtkTreePath
+	 * ancestor = another GtkTreePath
 	 * Returns: TRUE if ancestor contains path somewhere below it
 	 */
 	public int isDescendant(TreePath ancestor)

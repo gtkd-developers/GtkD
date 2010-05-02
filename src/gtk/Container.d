@@ -158,7 +158,7 @@ private import gtk.Widget;
  * supports a <packing> element for children, which can
  * contain multiple <property> elements that specify
  * child properties for the child.
- * Example 52. Child properties in UI definitions
+ * Example  52.  Child properties in UI definitions
  * <object class="GtkVBox">
  *  <child>
  *  <object class="GtkLabel"/>
@@ -346,7 +346,7 @@ public class Container : Widget
 	 * those cases. A widget may be added to only one container at a time;
 	 * you can't place the same widget inside two different containers.
 	 * Params:
-	 * widget =  a widget to be placed inside container
+	 * widget = a widget to be placed inside container
 	 */
 	public void add(Widget widget)
 	{
@@ -365,7 +365,7 @@ public class Container : Widget
 	 * using gtk_widget_destroy() since this will remove it from the
 	 * container and help break any circular reference count cycles.
 	 * Params:
-	 * widget =  a current child of container
+	 * widget = a current child of container
 	 */
 	public void remove(Widget widget)
 	{
@@ -390,7 +390,7 @@ public class Container : Widget
 	 * will be passed to the container's parent, queued for later execution
 	 * or executed immediately.
 	 * Params:
-	 * resizeMode =  the new resize mode
+	 * resizeMode = the new resize mode
 	 */
 	public void setResizeMode(GtkResizeMode resizeMode)
 	{
@@ -412,8 +412,8 @@ public class Container : Widget
 	 * "internal" child. Most applications should use
 	 * gtk_container_foreach(), rather than gtk_container_forall().
 	 * Params:
-	 * callback =  a callback
-	 * callbackData =  callback user data
+	 * callback = a callback
+	 * callbackData = callback user data
 	 */
 	public void foreac(GtkCallback callback, void* callbackData)
 	{
@@ -453,7 +453,7 @@ public class Container : Widget
 	 * Containers requesting reallocation redraws get automatically
 	 * redrawn if any of their children changed allocation.
 	 * Params:
-	 * needsRedraws =  the new value for the container's reallocate_redraws flag
+	 * needsRedraws = the new value for the container's reallocate_redraws flag
 	 */
 	public void setReallocateRedraws(int needsRedraws)
 	{
@@ -483,7 +483,7 @@ public class Container : Widget
 	 * container. Implementations of GtkContainer can override the
 	 * default behaviour by overriding the class closure of this signal.
 	 * Params:
-	 * child =  a GtkWidget, or NULL
+	 * child = a GtkWidget, or NULL
 	 */
 	public void setFocusChild(Widget child)
 	{
@@ -517,7 +517,7 @@ public class Container : Widget
 	 * The adjustments have to be in pixel units and in the same coordinate
 	 * system as the allocation for immediate children of the container.
 	 * Params:
-	 * adjustment =  an adjustment which should be adjusted when the focus
+	 * adjustment = an adjustment which should be adjusted when the focus
 	 *  is moved among the descendents of container
 	 */
 	public void setFocusVadjustment(Adjustment adjustment)
@@ -552,7 +552,7 @@ public class Container : Widget
 	 * The adjustments have to be in pixel units and in the same coordinate
 	 * system as the allocation for immediate children of the container.
 	 * Params:
-	 * adjustment =  an adjustment which should be adjusted when the focus is
+	 * adjustment = an adjustment which should be adjusted when the focus is
 	 *  moved among the descendents of container
 	 */
 	public void setFocusHadjustment(Adjustment adjustment)
@@ -585,9 +585,9 @@ public class Container : Widget
 	/**
 	 * Gets the value of a child property for child and container.
 	 * Params:
-	 * child =  a widget which is a child of container
-	 * propertyName =  the name of the property to get
-	 * value =  a location to return the value
+	 * child = a widget which is a child of container
+	 * propertyName = the name of the property to get
+	 * value = a location to return the value
 	 */
 	public void childGetProperty(Widget child, string propertyName, Value value)
 	{
@@ -598,9 +598,9 @@ public class Container : Widget
 	/**
 	 * Sets a child property for child and container.
 	 * Params:
-	 * child =  a widget which is a child of container
-	 * propertyName =  the name of the property to set
-	 * value =  the value to set the property to
+	 * child = a widget which is a child of container
+	 * propertyName = the name of the property to set
+	 * value = the value to set the property to
 	 */
 	public void childSetProperty(Widget child, string propertyName, Value value)
 	{
@@ -611,9 +611,9 @@ public class Container : Widget
 	/**
 	 * Gets the values of one or more child properties for child and container.
 	 * Params:
-	 * child =  a widget which is a child of container
-	 * firstPropertyName =  the name of the first property to get
-	 * varArgs =  return location for the first property, followed
+	 * child = a widget which is a child of container
+	 * firstPropertyName = the name of the first property to get
+	 * varArgs = return location for the first property, followed
 	 *  optionally by more name/return location pairs, followed by NULL
 	 */
 	public void childGetValist(Widget child, string firstPropertyName, void* varArgs)
@@ -625,9 +625,9 @@ public class Container : Widget
 	/**
 	 * Sets one or more child properties for child and container.
 	 * Params:
-	 * child =  a widget which is a child of container
-	 * firstPropertyName =  the name of the first property to set
-	 * varArgs =  a NULL-terminated list of property names and values, starting
+	 * child = a widget which is a child of container
+	 * firstPropertyName = the name of the first property to set
+	 * varArgs = a NULL-terminated list of property names and values, starting
 	 *  with first_prop_name
 	 */
 	public void childSetValist(Widget child, string firstPropertyName, void* varArgs)
@@ -644,8 +644,8 @@ public class Container : Widget
 	 * itself. Most applications should use gtk_container_foreach(),
 	 * rather than gtk_container_forall().
 	 * Params:
-	 * callback =  a callback
-	 * callbackData =  callback user data
+	 * callback = a callback
+	 * callbackData = callback user data
 	 */
 	public void forall(GtkCallback callback, void* callbackData)
 	{
@@ -675,7 +675,7 @@ public class Container : Widget
 	 * to give it a size, and place it on the side of the container as
 	 * a spacer.
 	 * Params:
-	 * borderWidth =  amount of blank space to leave outside
+	 * borderWidth = amount of blank space to leave outside
 	 *  the container. Valid values are in the range 0-65535 pixels.
 	 */
 	public void setBorderWidth(uint borderWidth)
@@ -697,8 +697,8 @@ public class Container : Widget
 	 * "expose" implementation from GtkContainer, or, do some drawing
 	 * and then chain to the ::expose implementation from GtkContainer.
 	 * Params:
-	 * child =  a child of container
-	 * event =  a expose event sent to container
+	 * child = a child of container
+	 * event = a expose event sent to container
 	 */
 	public void propagateExpose(Widget child, GdkEventExpose* event)
 	{
@@ -713,7 +713,7 @@ public class Container : Widget
 	 * of the children. In that case, GTK+ stores NULL in
 	 * focusable_widgets and returns FALSE.
 	 * Params:
-	 * focusableWidgets =  location to store the focus chain of the
+	 * focusableWidgets = location to store the focus chain of the
 	 *  container, or NULL. You should free this list
 	 *  using g_list_free() when you are done with it, however
 	 *  no additional reference count is added to the
@@ -739,7 +739,7 @@ public class Container : Widget
 	 * in the chain that isn't always packed. The necessary checks are done
 	 * when the focus chain is actually traversed.
 	 * Params:
-	 * focusableWidgets =  the new focus chain
+	 * focusableWidgets = the new focus chain
 	 */
 	public void setFocusChain(ListG focusableWidgets)
 	{
@@ -759,8 +759,8 @@ public class Container : Widget
 	/**
 	 * Finds a child property of a container class by name.
 	 * Params:
-	 * cclass =  a GtkContainerClass
-	 * propertyName =  the name of the child property to find
+	 * cclass = a GtkContainerClass
+	 * propertyName = the name of the child property to find
 	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name.
 	 */
 	public static ParamSpec classFindChildProperty(GObjectClass* cclass, string propertyName)
@@ -777,9 +777,9 @@ public class Container : Widget
 	/**
 	 * Installs a child property on a container class.
 	 * Params:
-	 * cclass =  a GtkContainerClass
-	 * propertyId =  the id for the property
-	 * pspec =  the GParamSpec for the property
+	 * cclass = a GtkContainerClass
+	 * propertyId = the id for the property
+	 * pspec = the GParamSpec for the property
 	 */
 	public static void classInstallChildProperty(Container cclass, uint propertyId, ParamSpec pspec)
 	{
@@ -790,7 +790,7 @@ public class Container : Widget
 	/**
 	 * Returns all child properties of a container class.
 	 * Params:
-	 * cclass =  a GtkContainerClass
+	 * cclass = a GtkContainerClass
 	 * Returns: a newly allocated NULL-terminated array of GParamSpec*.  The array must be freed with g_free().
 	 */
 	public static ParamSpec[] classListChildProperties(GObjectClass* cclass)

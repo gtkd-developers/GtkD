@@ -100,7 +100,7 @@ public interface IconIF
 	/**
 	 * Gets a hash for an icon.
 	 * Params:
-	 * icon =  gconstpointer to an icon object.
+	 * icon = gconstpointer to an icon object.
 	 * Returns: a guint containing a hash for the icon, suitable for use in a GHashTable or similar data structure.
 	 */
 	public static uint hash(void* icon);
@@ -108,7 +108,7 @@ public interface IconIF
 	/**
 	 * Checks if two icons are equal.
 	 * Params:
-	 * icon2 =  pointer to the second GIcon.
+	 * icon2 = pointer to the second GIcon.
 	 * Returns: TRUE if icon1 is equal to icon2. FALSE otherwise.
 	 */
 	public int equal(GIcon* icon2);

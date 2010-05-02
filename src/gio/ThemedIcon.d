@@ -128,8 +128,8 @@ public class ThemedIcon : ObjectG, IconIF
 	/**
 	 * Creates a new themed icon for iconnames.
 	 * Params:
-	 * iconnames =  an array of strings containing icon names.
-	 * len =  the length of the iconnames array, or -1 if iconnames is
+	 * iconnames = an array of strings containing icon names.
+	 * len = the length of the iconnames array, or -1 if iconnames is
 	 *  NULL-terminated
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -148,7 +148,7 @@ public class ThemedIcon : ObjectG, IconIF
 	 * Creates a new themed icon for iconname, and all the names
 	 * that can be created by shortening iconname at '-' characters.
 	 * Params:
-	 * iconname =  a string containing an icon name
+	 * iconname = a string containing an icon name
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string iconname)
@@ -169,8 +169,8 @@ public class ThemedIcon : ObjectG, IconIF
 	 * to g_icon_hash().
 	 * Since 2.18
 	 * Params:
-	 * icon =  a GThemedIcon
-	 * iconname =  name of icon to prepend to list of icons from within icon.
+	 * icon = a GThemedIcon
+	 * iconname = name of icon to prepend to list of icons from within icon.
 	 */
 	public void prependName(string iconname)
 	{
@@ -184,8 +184,8 @@ public class ThemedIcon : ObjectG, IconIF
 	 * Note that doing so invalidates the hash computed by prior calls
 	 * to g_icon_hash().
 	 * Params:
-	 * icon =  a GThemedIcon
-	 * iconname =  name of icon to append to list of icons from within icon.
+	 * icon = a GThemedIcon
+	 * iconname = name of icon to append to list of icons from within icon.
 	 */
 	public void appendName(string iconname)
 	{

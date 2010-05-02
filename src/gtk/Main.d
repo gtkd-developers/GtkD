@@ -113,7 +113,7 @@ private import gdk.Threads;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example 2. Typical main function for a GTK+ application
+ * Example  2.  Typical main function for a GTK+ application
  * int
  * main (int argc, char **argv)
  * {
@@ -240,7 +240,7 @@ public class Main
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_init(), or gtk_init_check().
 	 * Params:
-	 * argv =  a pointer to the array of command line arguments.
+	 * argv = a pointer to the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
 	public static int parseArgs(ref string[] argv)
@@ -279,9 +279,9 @@ public class Main
 	 * similar things.
 	 * Note
 	 * Params:
-	 * argc =  Address of the argc parameter of your
+	 * argc = Address of the argc parameter of your
 	 *  main() function. Changed if any arguments were handled.
-	 * argv =  Address of the argv parameter of main().
+	 * argv = Address of the argv parameter of main().
 	 *  Any parameters understood by gtk_init() are stripped before return.
 	 */
 	public static void init(int* argc, char*** argv)
@@ -297,7 +297,7 @@ public class Main
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
 	 * Params:
-	 * argv =  Address of the argv parameter of main().
+	 * argv = Address of the argv parameter of main().
 	 *  Any parameters understood by gtk_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
@@ -321,13 +321,13 @@ public class Main
 	 * be terminated after writing out the help output.
 	 * Since 2.6
 	 * Params:
-	 * argv =  a pointer to the array of command line arguments.
-	 * parameterString =  a string which is displayed in
+	 * argv = a pointer to the array of command line arguments.
+	 * parameterString = a string which is displayed in
 	 *  the first line of --help output, after
 	 *  programname [OPTION...]
-	 * entries =  a NULL-terminated array of GOptionEntrys
+	 * entries = a NULL-terminated array of GOptionEntrys
 	 *  describing the options of your program
-	 * translationDomain =  a translation domain to use for translating
+	 * translationDomain = a translation domain to use for translating
 	 *  the --help output for the options in entries
 	 *  with gettext(), or NULL
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
@@ -358,7 +358,7 @@ public class Main
 	 * g_option_context_parse() to parse your commandline arguments.
 	 * Since 2.6
 	 * Params:
-	 * openDefaultDisplay =  whether to open the default display
+	 * openDefaultDisplay = whether to open the default display
 	 *  when parsing the commandline arguments
 	 * Returns: a GOptionGroup for the commandline arguments recognized by GTK+
 	 */
@@ -387,7 +387,7 @@ public class Main
 	/**
 	 * Checks if any events are pending. This can be used to update the GUI
 	 * and invoke timeouts etc. while doing some time intensive computation.
-	 * Example 3. Updating the GUI during a long computation.
+	 * Example  3.  Updating the GUI during a long computation.
 	 * 	/+* computation going on +/
 	 * ...
 	 *  while (gtk_events_pending ())
@@ -695,7 +695,7 @@ public class Main
 	 * that state field in state and return TRUE, otherwise return
 	 * FALSE.
 	 * Params:
-	 * state =  a location to store the state of the current event
+	 * state = a location to store the state of the current event
 	 * Returns: TRUE if there was a current event and it had a state field
 	 */
 	public static int getCurrentEventState(out GdkModifierType state)
@@ -709,7 +709,7 @@ public class Main
 	 * returns NULL, otherwise returns the widget that received the event
 	 * originally.
 	 * Params:
-	 * event =  a GdkEvent
+	 * event = a GdkEvent
 	 * Returns: the widget that originally received event, or NULL
 	 */
 	public static Widget getEventWidget(Event event)
@@ -740,8 +740,8 @@ public class Main
 	 * example, use gdk_window_invalidate_rect() or
 	 * gtk_widget_queue_draw() instead of making up expose events.
 	 * Params:
-	 * widget =  a GtkWidget
-	 * event =  an event
+	 * widget = a GtkWidget
+	 * event = an event
 	 */
 	public static void propagateEvent(Widget widget, Event event)
 	{

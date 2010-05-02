@@ -176,12 +176,12 @@ public class RadioAction : ToggleAction
 	 * call gtk_action_group_add_action_with_accel().
 	 * Since 2.4
 	 * Params:
-	 * name =  A unique name for the action
-	 * label =  The label displayed in menu items and on buttons, or NULL
-	 * tooltip =  A tooltip for this action, or NULL
-	 * stockId =  The stock icon to display in widgets representing this
+	 * name = A unique name for the action
+	 * label = The label displayed in menu items and on buttons, or NULL
+	 * tooltip = A tooltip for this action, or NULL
+	 * stockId = The stock icon to display in widgets representing this
 	 *  action, or NULL
-	 * value =  The value which gtk_radio_action_get_current_value() should
+	 * value = The value which gtk_radio_action_get_current_value() should
 	 *  return if this action is selected.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -218,7 +218,7 @@ public class RadioAction : ToggleAction
 	 * Sets the radio group for the radio action object.
 	 * Since 2.4
 	 * Params:
-	 * group =  a list representing a radio group
+	 * group = a list representing a radio group
 	 */
 	public void setGroup(ListSG group)
 	{
@@ -243,7 +243,7 @@ public class RadioAction : ToggleAction
 	 * property current_value.
 	 * Since 2.10
 	 * Params:
-	 * currentValue =  the new value
+	 * currentValue = the new value
 	 */
 	public void setCurrentValue(int currentValue)
 	{

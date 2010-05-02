@@ -171,7 +171,7 @@ public class FontButton : Button
 	 * Creates a new font picker widget.
 	 * Since 2.4
 	 * Params:
-	 * fontname =  Name of font to display in font selection dialog
+	 * fontname = Name of font to display in font selection dialog
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string fontname)
@@ -189,7 +189,7 @@ public class FontButton : Button
 	 * Sets or updates the currently-displayed font in font picker dialog.
 	 * Since 2.4
 	 * Params:
-	 * fontname =  Name of font to display in font selection dialog
+	 * fontname = Name of font to display in font selection dialog
 	 * Returns: Return value of gtk_font_selection_dialog_set_font_name() if thefont selection dialog exists, otherwise FALSE.
 	 */
 	public int setFontName(string fontname)
@@ -218,7 +218,7 @@ public class FontButton : Button
 	 * If show_style is TRUE, the font style will be displayed along with name of the selected font.
 	 * Since 2.4
 	 * Params:
-	 * showStyle =  TRUE if font style should be displayed in label.
+	 * showStyle = TRUE if font style should be displayed in label.
 	 */
 	public void setShowStyle(int showStyle)
 	{
@@ -241,7 +241,7 @@ public class FontButton : Button
 	 * If show_size is TRUE, the font size will be displayed along with the name of the selected font.
 	 * Since 2.4
 	 * Params:
-	 * showSize =  TRUE if font size should be displayed in dialog.
+	 * showSize = TRUE if font size should be displayed in dialog.
 	 */
 	public void setShowSize(int showSize)
 	{
@@ -264,7 +264,7 @@ public class FontButton : Button
 	 * If use_font is TRUE, the font name will be written using the selected font.
 	 * Since 2.4
 	 * Params:
-	 * useFont =  If TRUE, font name will be written using font chosen.
+	 * useFont = If TRUE, font name will be written using font chosen.
 	 */
 	public void setUseFont(int useFont)
 	{
@@ -287,7 +287,7 @@ public class FontButton : Button
 	 * If use_size is TRUE, the font name will be written using the selected size.
 	 * Since 2.4
 	 * Params:
-	 * useSize =  If TRUE, font name will be written using the selected size.
+	 * useSize = If TRUE, font name will be written using the selected size.
 	 */
 	public void setUseSize(int useSize)
 	{
@@ -310,7 +310,7 @@ public class FontButton : Button
 	 * Sets the title for the font selection dialog.
 	 * Since 2.4
 	 * Params:
-	 * title =  a string containing the font selection dialog title
+	 * title = a string containing the font selection dialog title
 	 */
 	public void setTitle(string title)
 	{

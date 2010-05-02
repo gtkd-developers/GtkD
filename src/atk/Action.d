@@ -124,7 +124,7 @@ public class Action
 	/**
 	 * Perform the specified action on the object.
 	 * Params:
-	 * i =  the action index corresponding to the action to be performed
+	 * i = the action index corresponding to the action to be performed
 	 * Returns: TRUE if success, FALSE otherwise
 	 */
 	public int doAction(int i)
@@ -148,7 +148,7 @@ public class Action
 	/**
 	 * Returns a description of the specified action of the object.
 	 * Params:
-	 * i =  the action index corresponding to the action to be performed
+	 * i = the action index corresponding to the action to be performed
 	 * Returns:a description string, or NULLif action does not implement this interface.
 	 */
 	public string getDescription(int i)
@@ -172,7 +172,7 @@ public class Action
 	 * i.e. the result of some actions via atk_action_do_action() may be
 	 * NIL.
 	 * Params:
-	 * i =  the action index corresponding to the action to be performed
+	 * i = the action index corresponding to the action to be performed
 	 * Returns:a name string, or NULLif action does not implement this interface.
 	 */
 	public string getName(int i)
@@ -184,7 +184,7 @@ public class Action
 	/**
 	 * Returns the localized name of the specified action of the object.
 	 * Params:
-	 * i =  the action index corresponding to the action to be performed
+	 * i = the action index corresponding to the action to be performed
 	 * Returns:a name string, or NULLif action does not implement this interface.
 	 */
 	public string getLocalizedName(int i)
@@ -206,7 +206,7 @@ public class Action
 	 * invokes the same action without posting the component or its
 	 * enclosing menus or dialogs.
 	 * Params:
-	 * i =  the action index corresponding to the action to be performed
+	 * i = the action index corresponding to the action to be performed
 	 * Returns:a string representing the available keybindings, or NULLif there is no keybinding for this action.
 	 */
 	public string getKeybinding(int i)
@@ -218,8 +218,8 @@ public class Action
 	/**
 	 * Sets a description of the specified action of the object.
 	 * Params:
-	 * i =  the action index corresponding to the action to be performed
-	 * desc =  the description to be assigned to this action
+	 * i = the action index corresponding to the action to be performed
+	 * desc = the description to be assigned to this action
 	 * Returns: a gboolean representing if the description was successfully set;
 	 */
 	public int setDescription(int i, string desc)

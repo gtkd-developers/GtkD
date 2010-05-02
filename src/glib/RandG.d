@@ -244,6 +244,8 @@ public class RandG
 	/**
 	 * Returns the next random guint32 from rand_ equally distributed over
 	 * the range [0..2^32-1].
+	 * Params:
+	 * rand = a GRand.
 	 * Returns: A random number.
 	 */
 	public uint randInt()
@@ -256,6 +258,7 @@ public class RandG
 	 * Returns the next random gint32 from rand_ equally distributed over
 	 * the range [begin..end-1].
 	 * Params:
+	 * rand = a GRand.
 	 * begin = lower closed bound of the interval.
 	 * end = upper open bound of the interval.
 	 * Returns: A random number.
@@ -269,6 +272,8 @@ public class RandG
 	/**
 	 * Returns the next random gdouble from rand_ equally distributed over
 	 * the range [0..1).
+	 * Params:
+	 * rand = a GRand.
 	 * Returns: A random number.
 	 */
 	public double randDouble()
@@ -281,6 +286,7 @@ public class RandG
 	 * Returns the next random gdouble from rand_ equally distributed over
 	 * the range [begin..end).
 	 * Params:
+	 * rand = a GRand.
 	 * begin = lower closed bound of the interval.
 	 * end = upper open bound of the interval.
 	 * Returns: A random number.

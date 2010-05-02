@@ -82,7 +82,7 @@ private import glib.Str;
  * install default keys and values for their given file system, architecture,
  * and other possible implementation details (e.g., on a UNIX system, a file
  * attribute key will be registered for the user id for a given file).
- * Table 1. GFileAttributes Default Namespaces
+ * Table  1.  GFileAttributes Default Namespaces
  * Namspace
  * Description
  * "standard"
@@ -156,7 +156,7 @@ private import glib.Str;
  * Please note that these are not all of the possible namespaces.
  * More namespaces can be added from GIO modules or by individual applications.
  * For more information about writing GIO modules, see GIOModule.
- * Table 2. GFileAttributes Built-in Keys and Value Types
+ * Table  2.  GFileAttributes Built-in Keys and Value Types
  * Enum Value
  * Namespace:Key
  * Value Type
@@ -448,7 +448,7 @@ public class FileAttributeInfoList
 	/**
 	 * Gets the file attribute with the name name from list.
 	 * Params:
-	 * name =  the name of the attribute to lookup.
+	 * name = the name of the attribute to lookup.
 	 * Returns: a GFileAttributeInfo for the name, or NULL if anattribute isn't found.
 	 */
 	public GFileAttributeInfo* lookup(string name)
@@ -461,9 +461,9 @@ public class FileAttributeInfoList
 	 * Adds a new attribute with name to the list, setting
 	 * its type and flags.
 	 * Params:
-	 * name =  the name of the attribute to add.
-	 * type =  the GFileAttributeType for the attribute.
-	 * flags =  GFileAttributeInfoFlags for the attribute.
+	 * name = the name of the attribute to add.
+	 * type = the GFileAttributeType for the attribute.
+	 * flags = GFileAttributeInfoFlags for the attribute.
 	 */
 	public void add(string name, GFileAttributeType type, GFileAttributeInfoFlags flags)
 	{

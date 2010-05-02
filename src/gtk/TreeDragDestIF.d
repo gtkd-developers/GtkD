@@ -131,8 +131,8 @@ public interface TreeDragDestIF
 	 * not created for some model-specific reason. Should robustly handle
 	 * a dest no longer found in the model!
 	 * Params:
-	 * dest =  row to drop in front of
-	 * selectionData =  data to drop
+	 * dest = row to drop in front of
+	 * selectionData = data to drop
 	 * Returns: whether a new row was created before position dest
 	 */
 	public int dragDataReceived(TreePath dest, GtkSelectionData* selectionData);
@@ -144,8 +144,8 @@ public interface TreeDragDestIF
 	 * exist; the return value will almost certainly be FALSE if the
 	 * parent of dest_path doesn't exist, though.
 	 * Params:
-	 * destPath =  destination row
-	 * selectionData =  the data being dragged
+	 * destPath = destination row
+	 * selectionData = the data being dragged
 	 * Returns: TRUE if a drop is possible before dest_path
 	 */
 	public int rowDropPossible(TreePath destPath, GtkSelectionData* selectionData);

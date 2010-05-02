@@ -123,7 +123,7 @@ public interface InitableIF
 	 * pattern in the GObject constructor function.
 	 * Since 2.22
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
@@ -135,11 +135,11 @@ public interface InitableIF
 	 * and returns NULL, setting an error on failure.
 	 * Since 2.22
 	 * Params:
-	 * objectType =  a GType supporting GInitable.
-	 * firstPropertyName =  the name of the first property, followed by
+	 * objectType = a GType supporting GInitable.
+	 * firstPropertyName = the name of the first property, followed by
 	 * the value, and other property value pairs, and ended by NULL.
-	 * varArgs =  The var args list generated from first_property_name.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * varArgs = The var args list generated from first_property_name.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a newly allocated GObject, or NULL on error
 	 * Throws: GException on failure.
 	 */
@@ -151,9 +151,9 @@ public interface InitableIF
 	 * and returns NULL, setting an error on failure.
 	 * Since 2.22
 	 * Params:
-	 * objectType =  a GType supporting GInitable.
-	 * parameters =  the parameters to use to construct the object
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * objectType = a GType supporting GInitable.
+	 * parameters = the parameters to use to construct the object
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a newly allocated GObject, or NULL on error
 	 * Throws: GException on failure.
 	 */

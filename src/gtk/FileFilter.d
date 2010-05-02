@@ -149,7 +149,7 @@ public class FileFilter : ObjectGtk
 	 * there is a selectable list of filters.
 	 * Since 2.4
 	 * Params:
-	 * name =  the human-readable-name for the filter, or NULL
+	 * name = the human-readable-name for the filter, or NULL
 	 *  to remove any existing name.
 	 */
 	public void setName(string name)
@@ -173,7 +173,7 @@ public class FileFilter : ObjectGtk
 	 * Adds a rule allowing a given mime type to filter.
 	 * Since 2.4
 	 * Params:
-	 * mimeType =  name of a MIME type
+	 * mimeType = name of a MIME type
 	 */
 	public void addMimeType(string mimeType)
 	{
@@ -185,7 +185,7 @@ public class FileFilter : ObjectGtk
 	 * Adds a rule allowing a shell style glob to a filter.
 	 * Since 2.4
 	 * Params:
-	 * pattern =  a shell style glob
+	 * pattern = a shell style glob
 	 */
 	public void addPattern(string pattern)
 	{
@@ -212,12 +212,12 @@ public class FileFilter : ObjectGtk
 	 * it isn't needed by the filter.
 	 * Since 2.4
 	 * Params:
-	 * needed =  bitfield of flags indicating the information that the custom
+	 * needed = bitfield of flags indicating the information that the custom
 	 *  filter function needs.
-	 * func =  callback function; if the function returns TRUE, then
+	 * func = callback function; if the function returns TRUE, then
 	 *  the file will be displayed.
-	 * data =  data to pass to func
-	 * notify =  function to call to free data when it is no longer needed.
+	 * data = data to pass to func
+	 * notify = function to call to free data when it is no longer needed.
 	 */
 	public void addCustom(GtkFileFilterFlags needed, GtkFileFilterFunc func, void* data, GDestroyNotify notify)
 	{
@@ -249,8 +249,8 @@ public class FileFilter : ObjectGtk
 	 * GtkFileChooser.
 	 * Since 2.4
 	 * Params:
-	 * filter =  a GtkFileFilter
-	 * filterInfo =  a GtkFileFilterInfo structure containing information
+	 * filter = a GtkFileFilter
+	 * filterInfo = a GtkFileFilterInfo structure containing information
 	 *  about a file.
 	 * Returns: TRUE if the file should be displayed
 	 */

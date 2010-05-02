@@ -115,7 +115,7 @@ private import gobject.ObjectG;
  * application writer to call gtk_tree_model_row_changed to emit the
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
- * Example 26. Creating a simple list store.
+ * Example  26.  Creating a simple list store.
  * enum {
 	 *  COLUMN_STRING,
 	 *  COLUMN_INT,
@@ -195,7 +195,7 @@ private import gobject.ObjectG;
  * to specify the content of a list store in a UI definition,
  * data, not presentation,
  * and common wisdom is to separate the two, as far as possible.
- * Example 27. A UI Definition fragment for a list store
+ * Example  27.  A UI Definition fragment for a list store
  * <object class="GtkListStore">
  *  <columns>
  *  <column type="gchararray"/>
@@ -339,7 +339,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
 	 * Params:
-	 * types =  an array of GType types for the columns, from first to last
+	 * types = an array of GType types for the columns, from first to last
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType[] types)
@@ -359,7 +359,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * function after a row has been added, or a method on the GtkTreeModel
 	 * interface is called.
 	 * Params:
-	 * types =  An array length n of GTypes
+	 * types = An array length n of GTypes
 	 */
 	public void setColumnTypes(GType[] types)
 	{
@@ -371,8 +371,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * See gtk_list_store_set(); this version takes a va_list for use by language
 	 * bindings.
 	 * Params:
-	 * iter =  A valid GtkTreeIter for the row being modified
-	 * varArgs =  va_list of column/value pairs
+	 * iter = A valid GtkTreeIter for the row being modified
+	 * varArgs = va_list of column/value pairs
 	 */
 	public void setValist(TreeIter iter, void* varArgs)
 	{
@@ -385,9 +385,9 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * The type of value must be convertible to the type of the
 	 * column.
 	 * Params:
-	 * iter =  A valid GtkTreeIter for the row being modified
-	 * column =  column number to modify
-	 * value =  new value for the cell
+	 * iter = A valid GtkTreeIter for the row being modified
+	 * column = column number to modify
+	 * value = new value for the cell
 	 */
 	public void setValue(TreeIter iter, int column, Value value)
 	{
@@ -403,9 +403,9 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * change is not known until run-time.
 	 * Since 2.12
 	 * Params:
-	 * iter =  A valid GtkTreeIter for the row being modified
-	 * columns =  an array of column numbers
-	 * values =  an array of GValues
+	 * iter = A valid GtkTreeIter for the row being modified
+	 * columns = an array of column numbers
+	 * values = an array of GValues
 	 */
 	public void setValuesv(TreeIter iter, int[] columns, GValue[] values)
 	{
@@ -418,7 +418,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * iter is set to be the next valid row, or invalidated if it pointed
 	 * to the last row in list_store.
 	 * Params:
-	 * iter =  A valid GtkTreeIter
+	 * iter = A valid GtkTreeIter
 	 * Returns: TRUE if iter is valid, FALSE if not.
 	 */
 	public int remove(TreeIter iter)
@@ -434,8 +434,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * function is called. To fill in values, you need to call
 	 * gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the new row
-	 * position =  position to insert the new row
+	 * iter = An unset GtkTreeIter to set to the new row
+	 * position = position to insert the new row
 	 */
 	public void insert(TreeIter iter, int position)
 	{
@@ -449,8 +449,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * new row. The row will be empty after this function is called. To fill in
 	 * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the new row
-	 * sibling =  A valid GtkTreeIter, or NULL
+	 * iter = An unset GtkTreeIter to set to the new row
+	 * sibling = A valid GtkTreeIter, or NULL
 	 */
 	public void insertBefore(TreeIter iter, TreeIter sibling)
 	{
@@ -464,8 +464,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * this new row. The row will be empty after this function is called. To fill
 	 * in values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the new row
-	 * sibling =  A valid GtkTreeIter, or NULL
+	 * iter = An unset GtkTreeIter to set to the new row
+	 * sibling = A valid GtkTreeIter, or NULL
 	 */
 	public void insertAfter(TreeIter iter, TreeIter sibling)
 	{
@@ -480,10 +480,10 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * language-bindings.
 	 * Since 2.6
 	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the new row, or NULL.
-	 * position =  position to insert the new row
-	 * columns =  an array of column numbers
-	 * values =  an array of GValues
+	 * iter = An unset GtkTreeIter to set to the new row, or NULL.
+	 * position = position to insert the new row
+	 * columns = an array of column numbers
+	 * values = an array of GValues
 	 */
 	public void insertWithValuesv(TreeIter iter, int position, int[] columns, GValue[] values)
 	{
@@ -496,7 +496,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * row. The row will be empty after this function is called. To fill in
 	 * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the prepend row
+	 * iter = An unset GtkTreeIter to set to the prepend row
 	 */
 	public void prepend(TreeIter iter)
 	{
@@ -509,7 +509,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * row. The row will be empty after this function is called. To fill in
 	 * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
-	 * iter =  An unset GtkTreeIter to set to the appended row
+	 * iter = An unset GtkTreeIter to set to the appended row
 	 */
 	public void append(TreeIter iter)
 	{
@@ -533,7 +533,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Checks if the given iter is a valid iter for this GtkListStore.
 	 * Since 2.2
 	 * Params:
-	 * iter =  A GtkTreeIter.
+	 * iter = A GtkTreeIter.
 	 * Returns: TRUE if the iter is valid, FALSE if the iter is invalid.
 	 */
 	public int iterIsValid(TreeIter iter)
@@ -547,7 +547,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * this function only works with unsorted stores.
 	 * Since 2.2
 	 * Params:
-	 * newOrder =  an array of integers mapping the new position of each child
+	 * newOrder = an array of integers mapping the new position of each child
 	 *  to its old position before the re-ordering,
 	 *  i.e. new_order[newpos] = oldpos.
 	 */
@@ -562,8 +562,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * unsorted stores.
 	 * Since 2.2
 	 * Params:
-	 * a =  A GtkTreeIter.
-	 * b =  Another GtkTreeIter.
+	 * a = A GtkTreeIter.
+	 * b = Another GtkTreeIter.
 	 */
 	public void swap(TreeIter a, TreeIter b)
 	{
@@ -577,8 +577,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * will be moved to the end of the list.
 	 * Since 2.2
 	 * Params:
-	 * iter =  A GtkTreeIter.
-	 * position =  A GtkTreeIter, or NULL.
+	 * iter = A GtkTreeIter.
+	 * position = A GtkTreeIter, or NULL.
 	 */
 	public void moveBefore(TreeIter iter, TreeIter position)
 	{
@@ -592,8 +592,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * will be moved to the start of the list.
 	 * Since 2.2
 	 * Params:
-	 * iter =  A GtkTreeIter.
-	 * position =  A GtkTreeIter or NULL.
+	 * iter = A GtkTreeIter.
+	 * position = A GtkTreeIter or NULL.
 	 */
 	public void moveAfter(TreeIter iter, TreeIter position)
 	{

@@ -108,7 +108,7 @@ private import gobject.ObjectG;
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
- * Example 35. A GtkDialog UI definition fragment.
+ * Example  35.  A GtkDialog UI definition fragment.
  * <object class="GtkActionGroup" id="actiongroup">
  *  <child>
  *  <object class="GtkAction" id="About">
@@ -304,7 +304,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * with the actions.
 	 * Since 2.4
 	 * Params:
-	 * name =  the name of the action group.
+	 * name = the name of the action group.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -347,7 +347,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Changes the sensitivity of action_group
 	 * Since 2.4
 	 * Params:
-	 * sensitive =  new sensitivity
+	 * sensitive = new sensitivity
 	 */
 	public void setSensitive(int sensitive)
 	{
@@ -373,7 +373,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Changes the visible of action_group.
 	 * Since 2.4
 	 * Params:
-	 * visible =  new visiblity
+	 * visible = new visiblity
 	 */
 	public void setVisible(int visible)
 	{
@@ -385,7 +385,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Looks up an action in the action group by name.
 	 * Since 2.4
 	 * Params:
-	 * actionName =  the name of the action
+	 * actionName = the name of the action
 	 * Returns: the action, or NULL if no action by that name exists
 	 */
 	public Action getAction(string actionName)
@@ -424,7 +424,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * gtk_action_group_add_action_with_accel (..., NULL).
 	 * Since 2.4
 	 * Params:
-	 * action =  an action
+	 * action = an action
 	 */
 	public void addAction(Action action)
 	{
@@ -440,8 +440,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * <Actions>/group-name/action-name.
 	 * Since 2.4
 	 * Params:
-	 * action =  the action to add
-	 * accelerator =  the accelerator for the action, in
+	 * action = the action to add
+	 * accelerator = the accelerator for the action, in
 	 *  the format understood by gtk_accelerator_parse(), or "" for no accelerator, or
 	 *  NULL to use the stock accelerator
 	 */
@@ -455,7 +455,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Removes an action object from the action group.
 	 * Since 2.4
 	 * Params:
-	 * action =  an action
+	 * action = an action
 	 */
 	public void removeAction(Action action)
 	{
@@ -471,8 +471,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * <Actions>/group-name/action-name.
 	 * Since 2.4
 	 * Params:
-	 * entries =  an array of action descriptions
-	 * userData =  data to pass to the action callbacks
+	 * entries = an array of action descriptions
+	 * userData = data to pass to the action callbacks
 	 */
 	public void addActions(GtkActionEntry[] entries, void* userData)
 	{
@@ -485,9 +485,9 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * callback for user_data.
 	 * Since 2.4
 	 * Params:
-	 * entries =  an array of action descriptions
-	 * userData =  data to pass to the action callbacks
-	 * destroy =  destroy notification callback for user_data
+	 * entries = an array of action descriptions
+	 * userData = data to pass to the action callbacks
+	 * destroy = destroy notification callback for user_data
 	 */
 	public void addActionsFull(GtkActionEntry[] entries, void* userData, GDestroyNotify destroy)
 	{
@@ -503,8 +503,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * <Actions>/group-name/action-name.
 	 * Since 2.4
 	 * Params:
-	 * entries =  an array of toggle action descriptions
-	 * userData =  data to pass to the action callbacks
+	 * entries = an array of toggle action descriptions
+	 * userData = data to pass to the action callbacks
 	 */
 	public void addToggleActions(GtkToggleActionEntry[] entries, void* userData)
 	{
@@ -517,9 +517,9 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * GDestroyNotify callback for user_data.
 	 * Since 2.4
 	 * Params:
-	 * entries =  an array of toggle action descriptions
-	 * userData =  data to pass to the action callbacks
-	 * destroy =  destroy notification callback for user_data
+	 * entries = an array of toggle action descriptions
+	 * userData = data to pass to the action callbacks
+	 * destroy = destroy notification callback for user_data
 	 */
 	public void addToggleActionsFull(GtkToggleActionEntry[] entries, void* userData, GDestroyNotify destroy)
 	{
@@ -535,11 +535,11 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * <Actions>/group-name/action-name.
 	 * Since 2.4
 	 * Params:
-	 * entries =  an array of radio action descriptions
-	 * value =  the value of the action to activate initially, or -1 if
+	 * entries = an array of radio action descriptions
+	 * value = the value of the action to activate initially, or -1 if
 	 *  no action should be activated
-	 * onChange =  the callback to connect to the changed signal
-	 * userData =  data to pass to the action callbacks
+	 * onChange = the callback to connect to the changed signal
+	 * userData = data to pass to the action callbacks
 	 */
 	public void addRadioActions(GtkRadioActionEntry[] entries, int value, GCallback onChange, void* userData)
 	{
@@ -552,12 +552,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * GDestroyNotify callback for user_data.
 	 * Since 2.4
 	 * Params:
-	 * entries =  an array of radio action descriptions
-	 * value =  the value of the action to activate initially, or -1 if
+	 * entries = an array of radio action descriptions
+	 * value = the value of the action to activate initially, or -1 if
 	 *  no action should be activated
-	 * onChange =  the callback to connect to the changed signal
-	 * userData =  data to pass to the action callbacks
-	 * destroy =  destroy notification callback for user_data
+	 * onChange = the callback to connect to the changed signal
+	 * userData = data to pass to the action callbacks
+	 * destroy = destroy notification callback for user_data
 	 */
 	public void addRadioActionsFull(GtkRadioActionEntry[] entries, int value, GCallback onChange, void* userData, GDestroyNotify destroy)
 	{
@@ -572,9 +572,9 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * with gtk_action_group_set_translation_domain().
 	 * Since 2.4
 	 * Params:
-	 * func =  a GtkTranslateFunc
-	 * data =  data to be passed to func and notify
-	 * notify =  a GDestroyNotify function to be called when action_group is
+	 * func = a GtkTranslateFunc
+	 * data = data to be passed to func and notify
+	 * notify = a GDestroyNotify function to be called when action_group is
 	 *  destroyed and when the translation function is changed again
 	 */
 	public void setTranslateFunc(GtkTranslateFunc func, void* data, GDestroyNotify notify)
@@ -591,7 +591,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * gtk_action_group_set_translate_func().
 	 * Since 2.4
 	 * Params:
-	 * domain =  the translation domain to use for g_dgettext() calls
+	 * domain = the translation domain to use for g_dgettext() calls
 	 */
 	public void setTranslationDomain(string domain)
 	{
@@ -604,7 +604,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * is mainly intended for language bindings.
 	 * Since 2.6
 	 * Params:
-	 * string =  a string
+	 * string = a string
 	 * Returns: the translation of string
 	 */
 	public string translateString(string string)

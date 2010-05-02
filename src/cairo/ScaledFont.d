@@ -117,15 +117,15 @@ public class ScaledFont
 	 * describe the size of the font and the environment in which it will
 	 * be used.
 	 * Params:
-	 * fontFace =  a cairo_font_face_t
-	 * fontMatrix =  font space to user space transformation matrix for the
+	 * fontFace = a cairo_font_face_t
+	 * fontMatrix = font space to user space transformation matrix for the
 	 *  font. In the simplest case of a N point font, this matrix is
 	 *  just a scale by N, but it can also be used to shear the font
 	 *  or stretch it unequally along the two axes. See
 	 *  cairo_set_font_matrix().
-	 * ctm =  user to device transformation matrix with which the font will
+	 * ctm = user to device transformation matrix with which the font will
 	 *  be used.
-	 * options =  options to use when getting metrics for the font and
+	 * options = options to use when getting metrics for the font and
 	 *  rendering with it. A NULL pointer will be interpreted as
 	 *  meaning the default options.
 	 * Returns: a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
@@ -185,7 +185,7 @@ public class ScaledFont
 	/**
 	 * Gets the metrics for a cairo_scaled_font_t.
 	 * Params:
-	 * extents =  a cairo_font_extents_t which to store the retrieved extents.
+	 * extents = a cairo_font_extents_t which to store the retrieved extents.
 	 */
 	public void extents(cairo_font_extents_t* extents)
 	{
@@ -209,8 +209,8 @@ public class ScaledFont
 	 * affect the x_advance and y_advance values.
 	 * Since 1.2
 	 * Params:
-	 * utf8 =  a NUL-terminated string of text, encoded in UTF-8
-	 * extents =  a cairo_text_extents_t which to store the retrieved extents.
+	 * utf8 = a NUL-terminated string of text, encoded in UTF-8
+	 * extents = a cairo_text_extents_t which to store the retrieved extents.
 	 */
 	public void textExtents(string utf8, cairo_text_extents_t* extents)
 	{
@@ -229,9 +229,9 @@ public class ScaledFont
 	 * Note that whitespace glyphs do not contribute to the size of the
 	 * rectangle (extents.width and extents.height).
 	 * Params:
-	 * glyphs =  an array of glyph IDs with X and Y offsets.
-	 * numGlyphs =  the number of glyphs in the glyphs array
-	 * extents =  a cairo_text_extents_t which to store the retrieved extents.
+	 * glyphs = an array of glyph IDs with X and Y offsets.
+	 * numGlyphs = the number of glyphs in the glyphs array
+	 * extents = a cairo_text_extents_t which to store the retrieved extents.
 	 */
 	public void glyphExtents(cairo_glyph_t* glyphs, int numGlyphs, cairo_text_extents_t* extents)
 	{
@@ -265,13 +265,13 @@ public class ScaledFont
 	 * In the simplest case, glyphs and clusters can point to NULL initially
 	 * Since 1.8
 	 * Params:
-	 * x =  X position to place first glyph
-	 * y =  Y position to place first glyph
-	 * utf8 =  a string of text encoded in UTF-8
-	 * utf8_Len =  length of utf8 in bytes, or -1 if it is NUL-terminated
-	 * glyphs =  pointer to array of glyphs to fill
-	 * clusters =  pointer to array of cluster mapping information to fill, or NULL
-	 * clusterFlags =  pointer to location to store cluster flags corresponding to the
+	 * x = X position to place first glyph
+	 * y = Y position to place first glyph
+	 * utf8 = a string of text encoded in UTF-8
+	 * utf8_Len = length of utf8 in bytes, or -1 if it is NUL-terminated
+	 * glyphs = pointer to array of glyphs to fill
+	 * clusters = pointer to array of cluster mapping information to fill, or NULL
+	 * clusterFlags = pointer to location to store cluster flags corresponding to the
 	 *  output clusters, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS upon success, or an error statusif the input values are wrong or if conversion failed. If the inputvalues are correct but the conversion failed, the error status is alsoset on scaled_font.
 	 */
@@ -311,7 +311,7 @@ public class ScaledFont
 	 * options.
 	 * Since 1.2
 	 * Params:
-	 * options =  return value for the font options
+	 * options = return value for the font options
 	 */
 	public void getFontOptions(FontOption options)
 	{
@@ -324,7 +324,7 @@ public class ScaledFont
 	 * matrix.
 	 * Since 1.2
 	 * Params:
-	 * fontMatrix =  return value for the matrix
+	 * fontMatrix = return value for the matrix
 	 */
 	public void getFontMatrix(Matrix fontMatrix)
 	{
@@ -336,7 +336,7 @@ public class ScaledFont
 	 * Stores the CTM with which scaled_font was created into ctm.
 	 * Since 1.2
 	 * Params:
-	 * ctm =  return value for the CTM
+	 * ctm = return value for the CTM
 	 */
 	public void getCtm(Matrix ctm)
 	{
@@ -351,7 +351,7 @@ public class ScaledFont
 	 * font space to device space.
 	 * Since 1.8
 	 * Params:
-	 * scaleMatrix =  return value for the matrix
+	 * scaleMatrix = return value for the matrix
 	 */
 	public void getScaleMatrix(Matrix scaleMatrix)
 	{
@@ -388,9 +388,9 @@ public class ScaledFont
 	 * for data.
 	 * Since 1.4
 	 * Params:
-	 * key =  the address of a cairo_user_data_key_t to attach the user data to
-	 * userData =  the user data to attach to the cairo_scaled_font_t
-	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * key = the address of a cairo_user_data_key_t to attach the user data to
+	 * userData = the user data to attach to the cairo_scaled_font_t
+	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * cairo_t is destroyed or when new user data is attached using the
 	 * same key.
 	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
@@ -407,7 +407,7 @@ public class ScaledFont
 	 * key this function returns NULL.
 	 * Since 1.4
 	 * Params:
-	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * key = the address of the cairo_user_data_key_t the user data was
 	 * attached to
 	 * Returns: the user data previously attached or NULL.
 	 */

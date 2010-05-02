@@ -2307,8 +2307,8 @@ public class GtkDClass
 						// body
 						if ( !convParms.omitCode(fun.name) && find(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
 						{
-							char[] rawDeclaration = fun.declaration(convParms,wrapper.getAliases());
-							char[] gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
+							char[] gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
+							//char[] gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
 							member ~= gtkDDeclaration~iFaceChar;

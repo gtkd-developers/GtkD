@@ -182,7 +182,7 @@ public class CellRendererText : CellRenderer
 	 * displayed). If number_of_rows is -1, then the fixed height is unset, and
 	 * the height is determined by the properties again.
 	 * Params:
-	 * numberOfRows =  Number of rows of text each cell renderer is allocated, or -1
+	 * numberOfRows = Number of rows of text each cell renderer is allocated, or -1
 	 */
 	public void setFixedHeightFromFont(int numberOfRows)
 	{

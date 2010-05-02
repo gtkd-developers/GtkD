@@ -118,7 +118,7 @@ public class TargetList
 	/**
 	 * Creates a new GtkTargetList from an array of GtkTargetEntry.
 	 * Params:
-	 * targets =  Pointer to an array of GtkTargetEntry
+	 * targets = Pointer to an array of GtkTargetEntry
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkTargetEntry[] targets)
@@ -160,9 +160,9 @@ public class TargetList
 	/**
 	 * Appends another target to a GtkTargetList.
 	 * Params:
-	 * target =  the interned atom representing the target
-	 * flags =  the flags for this target
-	 * info =  an ID that will be passed back to the application
+	 * target = the interned atom representing the target
+	 * flags = the flags for this target
+	 * info = an ID that will be passed back to the application
 	 */
 	public void add(GdkAtom target, uint flags, uint info)
 	{
@@ -173,7 +173,7 @@ public class TargetList
 	/**
 	 * Prepends a table of GtkTargetEntry to a target list.
 	 * Params:
-	 * targets =  the table of GtkTargetEntry
+	 * targets = the table of GtkTargetEntry
 	 */
 	public void addTable(GtkTargetEntry[] targets)
 	{
@@ -186,7 +186,7 @@ public class TargetList
 	 * the target list. All targets are added with the same info.
 	 * Since 2.6
 	 * Params:
-	 * info =  an ID that will be passed back to the application
+	 * info = an ID that will be passed back to the application
 	 */
 	public void addTextTargets(uint info)
 	{
@@ -199,8 +199,8 @@ public class TargetList
 	 * the target list. All targets are added with the same info.
 	 * Since 2.6
 	 * Params:
-	 * info =  an ID that will be passed back to the application
-	 * writable =  whether to add only targets for which GTK+ knows
+	 * info = an ID that will be passed back to the application
+	 * writable = whether to add only targets for which GTK+ knows
 	 *  how to convert a pixbuf into the format
 	 */
 	public void addImageTargets(uint info, int writable)
@@ -214,7 +214,7 @@ public class TargetList
 	 * the target list. All targets are added with the same info.
 	 * Since 2.6
 	 * Params:
-	 * info =  an ID that will be passed back to the application
+	 * info = an ID that will be passed back to the application
 	 */
 	public void addUriTargets(uint info)
 	{
@@ -229,10 +229,10 @@ public class TargetList
 	 * targets are added with the same info.
 	 * Since 2.10
 	 * Params:
-	 * info =  an ID that will be passed back to the application
-	 * deserializable =  if TRUE, then deserializable rich text formats
+	 * info = an ID that will be passed back to the application
+	 * deserializable = if TRUE, then deserializable rich text formats
 	 *  will be added, serializable formats otherwise.
-	 * buffer =  a GtkTextBuffer.
+	 * buffer = a GtkTextBuffer.
 	 */
 	public void addRichTextTargets(uint info, int deserializable, TextBuffer buffer)
 	{
@@ -243,7 +243,7 @@ public class TargetList
 	/**
 	 * Removes a target from a target list.
 	 * Params:
-	 * target =  the interned atom representing the target
+	 * target = the interned atom representing the target
 	 */
 	public void remove(GdkAtom target)
 	{
@@ -254,8 +254,8 @@ public class TargetList
 	/**
 	 * Looks up a given target in a GtkTargetList.
 	 * Params:
-	 * target =  an interned atom representing the target to search for
-	 * info =  a pointer to the location to store application info for target,
+	 * target = an interned atom representing the target to search for
+	 * info = a pointer to the location to store application info for target,
 	 *  or NULL
 	 * Returns: TRUE if the target was found, otherwise FALSE
 	 */
@@ -270,8 +270,8 @@ public class TargetList
 	 * gtk_target_table_new_from_list()
 	 * Since 2.10
 	 * Params:
-	 * targets =  a GtkTargetEntry array
-	 * nTargets =  the number of entries in the array
+	 * targets = a GtkTargetEntry array
+	 * nTargets = the number of entries in the array
 	 */
 	public static void gtkTargetTableFree(GtkTargetEntry[] targets, int nTargets)
 	{
@@ -300,8 +300,8 @@ public class TargetList
 	 * provide a GdkPixbuf.
 	 * Since 2.10
 	 * Params:
-	 * targets =  an array of GdkAtoms
-	 * writable =  whether to accept only targets for which GTK+ knows
+	 * targets = an array of GdkAtoms
+	 * writable = whether to accept only targets for which GTK+ knows
 	 *  how to convert a pixbuf into the format
 	 * Returns: TRUE if targets include a suitable target for images, otherwise FALSE.
 	 */
@@ -316,7 +316,7 @@ public class TargetList
 	 * provide text.
 	 * Since 2.10
 	 * Params:
-	 * targets =  an array of GdkAtoms
+	 * targets = an array of GdkAtoms
 	 * Returns: TRUE if targets include a suitable target for text, otherwise FALSE.
 	 */
 	public static int gtkTargetsIncludeText(GdkAtom[] targets)
@@ -330,7 +330,7 @@ public class TargetList
 	 * provide an uri list.
 	 * Since 2.10
 	 * Params:
-	 * targets =  an array of GdkAtoms
+	 * targets = an array of GdkAtoms
 	 * Returns: TRUE if targets include a suitable target for uri lists, otherwise FALSE.
 	 */
 	public static int gtkTargetsIncludeUri(GdkAtom[] targets)
@@ -344,8 +344,8 @@ public class TargetList
 	 * provide rich text.
 	 * Since 2.10
 	 * Params:
-	 * targets =  an array of GdkAtoms
-	 * buffer =  a GtkTextBuffer
+	 * targets = an array of GdkAtoms
+	 * buffer = a GtkTextBuffer
 	 * Returns: TRUE if targets include a suitable target for rich text, otherwise FALSE.
 	 */
 	public static int gtkTargetsIncludeRichText(GdkAtom[] targets, TextBuffer buffer)

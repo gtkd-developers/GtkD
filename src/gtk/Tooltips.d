@@ -86,7 +86,7 @@ private import gtk.ObjectGtk;
  * widget inside a GtkEventBox and add a tooltip to that instead.
  * The default appearance of all tooltips in a program is determined by the current GTK+ theme that the user has selected.
  * Information about the tooltip (if any) associated with an arbitrary widget can be retrieved using gtk_tooltips_data_get().
- * Example 62. Adding tooltips to buttons.
+ * Example  62.  Adding tooltips to buttons.
  *  GtkWidget *load_button, *save_button, *hbox;
  *  GtkTooltips *button_bar_tips;
  *  button_bar_tips = gtk_tooltips_new ();
@@ -259,10 +259,10 @@ public class Tooltips : ObjectGtk
 	 * applications should have little use for it.
 	 * Since 2.4
 	 * Params:
-	 * tipWindow =  a GtkWindow
-	 * tooltips =  the return location for the tooltips which are displayed
+	 * tipWindow = a GtkWindow
+	 * tooltips = the return location for the tooltips which are displayed
 	 *  in tip_window, or NULL
-	 * currentWidget =  the return location for the widget whose tooltips
+	 * currentWidget = the return location for the widget whose tooltips
 	 *  are displayed, or NULL
 	 * Returns: TRUE if tip_window is displaying tooltips, otherwise FALSE.
 	 */

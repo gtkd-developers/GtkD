@@ -105,7 +105,7 @@ private import gtk.Container;
  * The application can set the position of the slider
  * as if it were set by the user, by calling
  * gtk_paned_set_position().
- * Example 53. Creating a paned widget with minimum sizes.
+ * Example  53.  Creating a paned widget with minimum sizes.
  * GtkWidget *hpaned = gtk_hpaned_new ();
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);
@@ -480,7 +480,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Sets the position of the divider between the two panes.
 	 * Params:
-	 * position =  pixel position of divider, a negative value means that the position
+	 * position = pixel position of divider, a negative value means that the position
 	 *  is unset.
 	 */
 	public void setPosition(int position)

@@ -113,7 +113,7 @@ private import gtk.Bin;
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
- * Example 44. A UI definition fragment with GtkExpander
+ * Example  44.  A UI definition fragment with GtkExpander
  * <object class="GtkExpander">
  *  <child type="label">
  *  <object class="GtkLabel" id="expander-label"/>
@@ -235,7 +235,7 @@ public class Expander : Bin
 	 * child widget to be hidden.
 	 * Since 2.4
 	 * Params:
-	 * expanded =  whether the child widget is revealed
+	 * expanded = whether the child widget is revealed
 	 */
 	public void setExpanded(int expanded)
 	{
@@ -261,7 +261,7 @@ public class Expander : Bin
 	 * place between expander and the child.
 	 * Since 2.4
 	 * Params:
-	 * spacing =  distance between the expander and child in pixels.
+	 * spacing = distance between the expander and child in pixels.
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -285,7 +285,7 @@ public class Expander : Bin
 	 * This will also clear any previously set labels.
 	 * Since 2.4
 	 * Params:
-	 * label =  a string
+	 * label = a string
 	 */
 	public void setLabel(string label)
 	{
@@ -318,7 +318,7 @@ public class Expander : Bin
 	 * the next character should be used for the mnemonic accelerator key.
 	 * Since 2.4
 	 * Params:
-	 * useUnderline =  TRUE if underlines in the text indicate mnemonics
+	 * useUnderline = TRUE if underlines in the text indicate mnemonics
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
@@ -343,7 +343,7 @@ public class Expander : Bin
 	 * language. See gtk_label_set_markup().
 	 * Since 2.4
 	 * Params:
-	 * useMarkup =  TRUE if the label's text should be parsed for markup
+	 * useMarkup = TRUE if the label's text should be parsed for markup
 	 */
 	public void setUseMarkup(int useMarkup)
 	{
@@ -369,7 +369,7 @@ public class Expander : Bin
 	 * that will appear embedded alongside the expander arrow.
 	 * Since 2.4
 	 * Params:
-	 * labelWidget =  the new label widget
+	 * labelWidget = the new label widget
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{

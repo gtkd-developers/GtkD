@@ -161,8 +161,8 @@ public class SocketListener : ObjectG
 	 * different things depending on what address is connected to.
 	 * Since 2.22
 	 * Params:
-	 * socket =  a listening GSocket
-	 * sourceObject =  Optional GObject identifying this source
+	 * socket = a listening GSocket
+	 * sourceObject = Optional GObject identifying this source
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -200,11 +200,11 @@ public class SocketListener : ObjectG
 	 * requested, belongs to the caller and must be freed.
 	 * Since 2.22
 	 * Params:
-	 * address =  a GSocketAddress
-	 * type =  a GSocketType
-	 * protocol =  a GSocketProtocol
-	 * sourceObject =  Optional GObject identifying this source
-	 * effectiveAddress =  location to store the address that was bound to, or NULL.
+	 * address = a GSocketAddress
+	 * type = a GSocketType
+	 * protocol = a GSocketProtocol
+	 * sourceObject = Optional GObject identifying this source
+	 * effectiveAddress = location to store the address that was bound to, or NULL.
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -235,8 +235,8 @@ public class SocketListener : ObjectG
 	 * different things depending on what address is connected to.
 	 * Since 2.22
 	 * Params:
-	 * port =  an IP port number (non-zero)
-	 * sourceObject =  Optional GObject identifying this source
+	 * port = an IP port number (non-zero)
+	 * sourceObject = Optional GObject identifying this source
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -267,8 +267,8 @@ public class SocketListener : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Since 2.22
 	 * Params:
-	 * sourceObject =  location where GObject pointer will be stored, or NULL
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * sourceObject = location where GObject pointer will be stored, or NULL
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -300,9 +300,9 @@ public class SocketListener : ObjectG
 	 * to get the result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  a GAsyncReadyCallback
-	 * userData =  user data for the callback
+	 * cancellable = a GCancellable, or NULL
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data for the callback
 	 */
 	public void acceptAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -314,8 +314,8 @@ public class SocketListener : ObjectG
 	 * Finishes an async accept operation. See g_socket_listener_accept_async()
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
-	 * sourceObject =  Optional GObject identifying this source
+	 * result = a GAsyncResult.
+	 * sourceObject = Optional GObject identifying this source
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -354,8 +354,8 @@ public class SocketListener : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Since 2.22
 	 * Params:
-	 * sourceObject =  location where GObject pointer will be stored, or NULL
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * sourceObject = location where GObject pointer will be stored, or NULL
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GSocket on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -387,9 +387,9 @@ public class SocketListener : ObjectG
 	 * to get the result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  a GAsyncReadyCallback
-	 * userData =  user data for the callback
+	 * cancellable = a GCancellable, or NULL
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data for the callback
 	 */
 	public void acceptSocketAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -401,8 +401,8 @@ public class SocketListener : ObjectG
 	 * Finishes an async accept operation. See g_socket_listener_accept_socket_async()
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
-	 * sourceObject =  Optional GObject identifying this source
+	 * result = a GAsyncResult.
+	 * sourceObject = Optional GObject identifying this source
 	 * Returns: a GSocket on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -442,7 +442,7 @@ public class SocketListener : ObjectG
 	 * See g_socket_set_listen_backlog() for details
 	 * Since 2.22
 	 * Params:
-	 * listenBacklog =  an integer
+	 * listenBacklog = an integer
 	 */
 	public void setBacklog(int listenBacklog)
 	{

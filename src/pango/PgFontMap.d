@@ -158,8 +158,8 @@ public class PgFontMap : ObjectG
 	/**
 	 * Load the font in the fontmap that is the closest match for desc.
 	 * Params:
-	 * context =  the PangoContext the font will be used with
-	 * desc =  a PangoFontDescription describing the font to load
+	 * context = the PangoContext the font will be used with
+	 * desc = a PangoFontDescription describing the font to load
 	 * Returns: the font loaded, or NULL if no font matched.
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
@@ -177,9 +177,9 @@ public class PgFontMap : ObjectG
 	 * Load a set of fonts in the fontmap that can be used to render
 	 * a font matching desc.
 	 * Params:
-	 * context =  the PangoContext the font will be used with
-	 * desc =  a PangoFontDescription describing the font to load
-	 * language =  a PangoLanguage the fonts will be used for
+	 * context = the PangoContext the font will be used with
+	 * desc = a PangoFontDescription describing the font to load
+	 * language = a PangoLanguage the fonts will be used for
 	 * Returns: the fontset, or NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
@@ -196,7 +196,7 @@ public class PgFontMap : ObjectG
 	/**
 	 * List all families for a fontmap.
 	 * Params:
-	 * families =  location to store a pointer to an array of PangoFontFamily *.
+	 * families = location to store a pointer to an array of PangoFontFamily *.
 	 *  This array should be freed with g_free().
 	 */
 	public void listFamilies(out PgFontFamily[] families)

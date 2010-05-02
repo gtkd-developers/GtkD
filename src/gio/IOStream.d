@@ -206,7 +206,7 @@ public class IOStream : ObjectG
 	 * individual input/output streams.
 	 * Since 2.22
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * Returns: TRUE on success, FALSE on failure
 	 * Throws: GException on failure.
 	 */
@@ -236,10 +236,10 @@ public class IOStream : ObjectG
 	 * classes. However, if you override one you must override all.
 	 * Since 2.22
 	 * Params:
-	 * ioPriority =  the io priority of the request
-	 * cancellable =  optional cancellable object
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * ioPriority = the io priority of the request
+	 * cancellable = optional cancellable object
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void closeAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -251,7 +251,7 @@ public class IOStream : ObjectG
 	 * Closes a stream.
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult
+	 * result = a GAsyncResult
 	 * Returns: TRUE if stream was successfully closed, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */

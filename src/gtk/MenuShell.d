@@ -383,7 +383,7 @@ public class MenuShell : Container
 	 * item.
 	 * Since 2.2
 	 * Params:
-	 * searchSensitive =  if TRUE, search for the first selectable
+	 * searchSensitive = if TRUE, search for the first selectable
 	 *  menu item, otherwise select nothing if
 	 *  the first item isn't sensitive. This
 	 *  should be FALSE if the menu is being
@@ -441,7 +441,7 @@ public class MenuShell : Container
 	 * take_focus property of the submenu needs to be set explicitely.
 	 * Since 2.8
 	 * Params:
-	 * takeFocus =  TRUE if the menu shell should take the keyboard focus on popup.
+	 * takeFocus = TRUE if the menu shell should take the keyboard focus on popup.
 	 */
 	public void setTakeFocus(int takeFocus)
 	{

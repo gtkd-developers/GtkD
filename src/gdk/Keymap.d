@@ -278,7 +278,7 @@ public class Keymap : ObjectG
 	 * Returns the GdkKeymap attached to display.
 	 * Since 2.2
 	 * Params:
-	 * display =  the GdkDisplay.
+	 * display = the GdkDisplay.
 	 * Returns: the GdkKeymap attached to display.
 	 */
 	public static Keymap getForDisplay(Display display)
@@ -299,7 +299,7 @@ public class Keymap : ObjectG
 	 * this function, since the effective group/level may not be
 	 * the same as the current keyboard state.
 	 * Params:
-	 * key =  a GdkKeymapKey with keycode, group, and level initialized
+	 * key = a GdkKeymapKey with keycode, group, and level initialized
 	 * Returns: a keyval, or 0 if none was mapped to the given key
 	 */
 	public uint lookupKey(out GdkKeymapKey key)
@@ -337,13 +337,13 @@ public class Keymap : ObjectG
 	 * all modifiers that might affect the translation of the key;
 	 * this allowed accelerators to be stored with irrelevant consumed
 	 * Params:
-	 * hardwareKeycode =  a keycode
-	 * state =  a modifier state
-	 * group =  active keyboard group
-	 * keyval =  return location for keyval, or NULL
-	 * effectiveGroup =  return location for effective group, or NULL
-	 * level =  return location for level, or NULL
-	 * consumedModifiers =  return location for modifiers that were used to
+	 * hardwareKeycode = a keycode
+	 * state = a modifier state
+	 * group = active keyboard group
+	 * keyval = return location for keyval, or NULL
+	 * effectiveGroup = return location for effective group, or NULL
+	 * level = return location for level, or NULL
+	 * consumedModifiers = return location for modifiers that were used to
 	 *  determine the group or level, or NULL
 	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
@@ -366,8 +366,8 @@ public class Keymap : ObjectG
 	 * The returned array should be freed
 	 * with g_free().
 	 * Params:
-	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
-	 * keys =  return location for an array of GdkKeymapKey
+	 * keyval = a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
+	 * keys = return location for an array of GdkKeymapKey
 	 * Returns: TRUE if keys were found and returned
 	 */
 	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
@@ -390,9 +390,9 @@ public class Keymap : ObjectG
 	 * this list of entries is selected by considering the effective
 	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
 	 * Params:
-	 * hardwareKeycode =  a keycode
-	 * keys =  return location for array of GdkKeymapKey, or NULL
-	 * keyvals =  return location for array of keyvals, or NULL
+	 * hardwareKeycode = a keycode
+	 * keys = return location for array of GdkKeymapKey, or NULL
+	 * keyvals = return location for array of keyvals, or NULL
 	 * Returns: TRUE if there were any entries
 	 */
 	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, out uint[] keyvals)
@@ -473,9 +473,9 @@ public class Keymap : ObjectG
 	 * Obtains the upper- and lower-case versions of the keyval symbol.
 	 * Examples of keyvals are GDK_a, GDK_Enter, GDK_F1, etc.
 	 * Params:
-	 * symbol =  a keyval
-	 * lower =  return location for lowercase version of symbol
-	 * upper =  return location for uppercase version of symbol
+	 * symbol = a keyval
+	 * lower = return location for lowercase version of symbol
+	 * upper = return location for uppercase version of symbol
 	 */
 	public static void gdkKeyvalConvertCase(uint symbol, out uint lower, out uint upper)
 	{
@@ -535,7 +535,7 @@ public class Keymap : ObjectG
 	 * Convert from a GDK key symbol to the corresponding ISO10646 (Unicode)
 	 * character.
 	 * Params:
-	 * keyval =  a GDK key symbol
+	 * keyval = a GDK key symbol
 	 * Returns: the corresponding unicode character, or 0 if there is no corresponding character.
 	 */
 	public static uint gdkKeyvalToUnicode(uint keyval)
@@ -548,7 +548,7 @@ public class Keymap : ObjectG
 	 * Convert from a ISO10646 character to a key symbol.
 	 * Since 2.0
 	 * Params:
-	 * wc =  a ISO10646 encoded character
+	 * wc = a ISO10646 encoded character
 	 * Returns: the corresponding GDK key symbol, if one exists. or, if there is no corresponding symbol,  wc | 0x01000000Signal DetailsThe "direction-changed" signalvoid user_function (GdkKeymap *keymap, gpointer user_data) : Run LastThe ::direction-changed signal gets emitted when the direction ofthe keymap changes.
 	 */
 	public static uint gdkUnicodeToKeyval(uint wc)

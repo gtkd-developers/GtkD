@@ -283,7 +283,7 @@ public class TextIter
 	 * text as well, so it is not a reliable indicator that a pixbuf or
 	 * widget is in the buffer.
 	 * Params:
-	 * end =  iterator at end of a range
+	 * end = iterator at end of a range
 	 * Returns: slice of text from the buffer
 	 */
 	public string getSlice(TextIter end)
@@ -299,7 +299,7 @@ public class TextIter
 	 * byte offsets in the buffer. If you want offsets to correspond, see
 	 * gtk_text_iter_get_slice().
 	 * Params:
-	 * end =  iterator at end of a range
+	 * end = iterator at end of a range
 	 * Returns: array of characters from the buffer
 	 */
 	public string getText(TextIter end)
@@ -313,7 +313,7 @@ public class TextIter
 	 * Invisible text is usually invisible because a GtkTextTag with the
 	 * "invisible" attribute turned on has been applied to it.
 	 * Params:
-	 * end =  iterator at end of range
+	 * end = iterator at end of range
 	 * Returns: slice of text from the buffer
 	 */
 	public string getVisibleSlice(TextIter end)
@@ -327,7 +327,7 @@ public class TextIter
 	 * Invisible text is usually invisible because a GtkTextTag with the
 	 * "invisible" attribute turned on has been applied to it.
 	 * Params:
-	 * end =  iterator at end of range
+	 * end = iterator at end of range
 	 * Returns: string containing visible text in the range
 	 */
 	public string getVisibleText(TextIter end)
@@ -380,7 +380,7 @@ public class TextIter
 	 * a tag is toggled off, then some non-empty range following iter
 	 * does not have the tag applied to it.
 	 * Params:
-	 * toggledOn =  TRUE to get toggled-on tags
+	 * toggledOn = TRUE to get toggled-on tags
 	 * Returns: tags toggled at this point
 	 */
 	public ListSG getToggledTags(int toggledOn)
@@ -419,7 +419,7 @@ public class TextIter
 	 * gtk_text_iter_has_tag() tells you whether an iterator is
 	 * within a tagged range.
 	 * Params:
-	 * tag =  a GtkTextTag, or NULL
+	 * tag = a GtkTextTag, or NULL
 	 * Returns: whether iter is the start of a range tagged with tag
 	 */
 	public int beginsTag(TextTag tag)
@@ -436,7 +436,7 @@ public class TextIter
 	 * gtk_text_iter_has_tag() tells you whether an iterator is
 	 * within a tagged range.
 	 * Params:
-	 * tag =  a GtkTextTag, or NULL
+	 * tag = a GtkTextTag, or NULL
 	 * Returns: whether iter is the end of a range tagged with tag
 	 */
 	public int endsTag(TextTag tag)
@@ -450,7 +450,7 @@ public class TextIter
 	 * gtk_text_iter_ends_tag()), i.e. it tells you whether a range with
 	 * tag applied to it begins or ends at iter.
 	 * Params:
-	 * tag =  a GtkTextTag, or NULL
+	 * tag = a GtkTextTag, or NULL
 	 * Returns: whether tag is toggled on or off at iter
 	 */
 	public int togglesTag(TextTag tag)
@@ -462,7 +462,7 @@ public class TextIter
 	/**
 	 * Returns TRUE if iter is within a range tagged with tag.
 	 * Params:
-	 * tag =  a GtkTextTag
+	 * tag = a GtkTextTag
 	 * Returns: whether iter is tagged with tag
 	 */
 	public int hasTag(TextTag tag)
@@ -502,7 +502,7 @@ public class TextIter
 	 * editable range. Use gtk_text_iter_can_insert() to handle this
 	 * case.
 	 * Params:
-	 * defaultSetting =  TRUE if text is editable by default
+	 * defaultSetting = TRUE if text is editable by default
 	 * Returns: whether iter is inside an editable range
 	 */
 	public int editable(int defaultSetting)
@@ -519,7 +519,7 @@ public class TextIter
 	 * gtk_text_buffer_insert_interactive() uses this function to decide
 	 * whether insertions are allowed at a given position.
 	 * Params:
-	 * defaultEditability =  TRUE if text is editable by default
+	 * defaultEditability = TRUE if text is editable by default
 	 * Returns: whether text inserted at iter would be editable
 	 */
 	public int canInsert(int defaultEditability)
@@ -680,7 +680,7 @@ public class TextIter
 	 * effects of any tags present at iter. If any tags affected values,
 	 * the function returns TRUE.
 	 * Params:
-	 * values =  a GtkTextAttributes to be filled in
+	 * values = a GtkTextAttributes to be filled in
 	 * Returns: TRUE if values was modified
 	 */
 	public int getAttributes(TextAttributes values)
@@ -768,7 +768,7 @@ public class TextIter
 	 * (the last iterator in the buffer is not dereferenceable). If count
 	 * is 0, the function does nothing and returns FALSE.
 	 * Params:
-	 * count =  number of characters to move, may be negative
+	 * count = number of characters to move, may be negative
 	 * Returns: whether iter moved and is dereferenceable
 	 */
 	public int forwardChars(int count)
@@ -785,7 +785,7 @@ public class TextIter
 	 * moved onto the end iterator, then FALSE is returned. If count is 0,
 	 * the function does nothing and returns FALSE.
 	 * Params:
-	 * count =  number of characters to move
+	 * count = number of characters to move
 	 * Returns: whether iter moved and is dereferenceable
 	 */
 	public int backwardChars(int count)
@@ -832,7 +832,7 @@ public class TextIter
 	 * the function does nothing and returns FALSE. If count is negative,
 	 * moves backward by 0 - count lines.
 	 * Params:
-	 * count =  number of lines to move forward
+	 * count = number of lines to move forward
 	 * Returns: whether iter moved and is dereferenceable
 	 */
 	public int forwardLines(int count)
@@ -850,7 +850,7 @@ public class TextIter
 	 * the function does nothing and returns FALSE. If count is negative,
 	 * moves forward by 0 - count lines.
 	 * Params:
-	 * count =  number of lines to move backward
+	 * count = number of lines to move backward
 	 * Returns: whether iter moved and is dereferenceable
 	 */
 	public int backwardLines(int count)
@@ -862,7 +862,7 @@ public class TextIter
 	/**
 	 * Calls gtk_text_iter_forward_word_end() up to count times.
 	 * Params:
-	 * count =  number of times to move
+	 * count = number of times to move
 	 * Returns: TRUE if iter moved and is not the end iterator
 	 */
 	public int forwardWordEnds(int count)
@@ -874,7 +874,7 @@ public class TextIter
 	/**
 	 * Calls gtk_text_iter_backward_word_start() up to count times.
 	 * Params:
-	 * count =  number of times to move
+	 * count = number of times to move
 	 * Returns: TRUE if iter moved and is not the end iterator
 	 */
 	public int backwardWordStarts(int count)
@@ -944,7 +944,7 @@ public class TextIter
 	 * Moves up to count cursor positions. See
 	 * gtk_text_iter_forward_cursor_position() for details.
 	 * Params:
-	 * count =  number of positions to move
+	 * count = number of positions to move
 	 * Returns: TRUE if we moved and the new position is dereferenceable
 	 */
 	public int forwardCursorPositions(int count)
@@ -957,7 +957,7 @@ public class TextIter
 	 * Moves up to count cursor positions. See
 	 * gtk_text_iter_forward_cursor_position() for details.
 	 * Params:
-	 * count =  number of positions to move
+	 * count = number of positions to move
 	 * Returns: TRUE if we moved and the new position is dereferenceable
 	 */
 	public int backwardCursorPositions(int count)
@@ -985,7 +985,7 @@ public class TextIter
 	 * or until it returns FALSE. If count is negative, moves forward
 	 * instead of backward.
 	 * Params:
-	 * count =  number of sentences to move
+	 * count = number of sentences to move
 	 * Returns: TRUE if iter moved and is not the end iterator
 	 */
 	public int backwardSentenceStarts(int count)
@@ -1013,7 +1013,7 @@ public class TextIter
 	 * gtk_text_iter_forward_sentence_end() returns FALSE). If count is
 	 * negative, moves backward instead of forward.
 	 * Params:
-	 * count =  number of sentences to move
+	 * count = number of sentences to move
 	 * Returns: TRUE if iter moved and is not the end iterator
 	 */
 	public int forwardSentenceEnds(int count)
@@ -1026,7 +1026,7 @@ public class TextIter
 	 * Calls gtk_text_iter_forward_visible_word_end() up to count times.
 	 * Since 2.4
 	 * Params:
-	 * count =  number of times to move
+	 * count = number of times to move
 	 * Returns: TRUE if iter moved and is not the end iterator
 	 */
 	public int forwardVisibleWordEnds(int count)
@@ -1039,7 +1039,7 @@ public class TextIter
 	 * Calls gtk_text_iter_backward_visible_word_start() up to count times.
 	 * Since 2.4
 	 * Params:
-	 * count =  number of times to move
+	 * count = number of times to move
 	 * Returns: TRUE if iter moved and is not the end iterator
 	 */
 	public int backwardVisibleWordStarts(int count)
@@ -1107,7 +1107,7 @@ public class TextIter
 	 * gtk_text_iter_forward_cursor_position() for details.
 	 * Since 2.4
 	 * Params:
-	 * count =  number of positions to move
+	 * count = number of positions to move
 	 * Returns: TRUE if we moved and the new position is dereferenceable
 	 */
 	public int forwardVisibleCursorPositions(int count)
@@ -1121,7 +1121,7 @@ public class TextIter
 	 * gtk_text_iter_backward_cursor_position() for details.
 	 * Since 2.4
 	 * Params:
-	 * count =  number of positions to move
+	 * count = number of positions to move
 	 * Returns: TRUE if we moved and the new position is dereferenceable
 	 */
 	public int backwardVisibleCursorPositions(int count)
@@ -1171,7 +1171,7 @@ public class TextIter
 	 * moves backward by 0 - count lines.
 	 * Since 2.8
 	 * Params:
-	 * count =  number of lines to move forward
+	 * count = number of lines to move forward
 	 * Returns: whether iter moved and is dereferenceable
 	 */
 	public int forwardVisibleLines(int count)
@@ -1190,7 +1190,7 @@ public class TextIter
 	 * moves forward by 0 - count lines.
 	 * Since 2.8
 	 * Params:
-	 * count =  number of lines to move backward
+	 * count = number of lines to move backward
 	 * Returns: whether iter moved and is dereferenceable
 	 */
 	public int backwardVisibleLines(int count)
@@ -1203,7 +1203,7 @@ public class TextIter
 	 * Sets iter to point to char_offset. char_offset counts from the start
 	 * of the entire text buffer, starting with 0.
 	 * Params:
-	 * charOffset =  a character number
+	 * charOffset = a character number
 	 */
 	public void setOffset(int charOffset)
 	{
@@ -1216,7 +1216,7 @@ public class TextIter
 	 * line_number is negative or larger than the number of lines in the
 	 * buffer, moves iter to the start of the last line in the buffer.
 	 * Params:
-	 * lineNumber =  line number (counted from 0)
+	 * lineNumber = line number (counted from 0)
 	 */
 	public void setLine(int lineNumber)
 	{
@@ -1232,7 +1232,7 @@ public class TextIter
 	 * gtk_text_iter_set_line_index() if you have a byte index rather than
 	 * a character offset.
 	 * Params:
-	 * charOnLine =  a character offset relative to the start of iter's current line
+	 * charOnLine = a character offset relative to the start of iter's current line
 	 */
 	public void setLineOffset(int charOnLine)
 	{
@@ -1246,7 +1246,7 @@ public class TextIter
 	 * the start of a character, it can't be in the middle of a UTF-8
 	 * encoded character.
 	 * Params:
-	 * byteOnLine =  a byte index relative to the start of iter's current line
+	 * byteOnLine = a byte index relative to the start of iter's current line
 	 */
 	public void setLineIndex(int byteOnLine)
 	{
@@ -1259,7 +1259,7 @@ public class TextIter
 	 * bytes, i.e. text with a tag making it invisible is not counted
 	 * in the index.
 	 * Params:
-	 * byteOnLine =  a byte index
+	 * byteOnLine = a byte index
 	 */
 	public void setVisibleLineIndex(int byteOnLine)
 	{
@@ -1272,7 +1272,7 @@ public class TextIter
 	 * characters, i.e. text with a tag making it invisible is not
 	 * counted in the offset.
 	 * Params:
-	 * charOnLine =  a character offset
+	 * charOnLine = a character offset
 	 */
 	public void setVisibleLineOffset(int charOnLine)
 	{
@@ -1317,7 +1317,7 @@ public class TextIter
 	 * the location of the toggle, or to the end of the buffer
 	 * if no toggle is found.
 	 * Params:
-	 * tag =  a GtkTextTag, or NULL
+	 * tag = a GtkTextTag, or NULL
 	 * Returns: whether we found a tag toggle after iter
 	 */
 	public int forwardToTagToggle(TextTag tag)
@@ -1335,7 +1335,7 @@ public class TextIter
 	 * to the location of the toggle, or the start of the buffer
 	 * if no toggle is found.
 	 * Params:
-	 * tag =  a GtkTextTag, or NULL
+	 * tag = a GtkTextTag, or NULL
 	 * Returns: whether we found a tag toggle before iter
 	 */
 	public int backwardToTagToggle(TextTag tag)
@@ -1350,9 +1350,9 @@ public class TextIter
 	 * If pred never returns TRUE, iter is set to limit if
 	 * limit is non-NULL, otherwise to the end iterator.
 	 * Params:
-	 * pred =  a function to be called on each character
-	 * userData =  user data for pred
-	 * limit =  search limit, or NULL for none
+	 * pred = a function to be called on each character
+	 * userData = user data for pred
+	 * limit = search limit, or NULL for none
 	 * Returns: whether a match was found
 	 */
 	public int forwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
@@ -1364,9 +1364,9 @@ public class TextIter
 	/**
 	 * Same as gtk_text_iter_forward_find_char(), but goes backward from iter.
 	 * Params:
-	 * pred =  function to be called on each character
-	 * userData =  user data for pred
-	 * limit =  search limit, or NULL for none
+	 * pred = function to be called on each character
+	 * userData = user data for pred
+	 * limit = search limit, or NULL for none
 	 * Returns: whether a match was found
 	 */
 	public int backwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
@@ -1390,11 +1390,11 @@ public class TextIter
 	 * flags are not given, the match must be exact; the special 0xFFFC
 	 * character in str will match embedded pixbufs or child widgets.
 	 * Params:
-	 * str =  a search string
-	 * flags =  flags affecting how the search is done
-	 * matchStart =  return location for start of match, or NULL
-	 * matchEnd =  return location for end of match, or NULL
-	 * limit =  bound for the search, or NULL for the end of the buffer
+	 * str = a search string
+	 * flags = flags affecting how the search is done
+	 * matchStart = return location for start of match, or NULL
+	 * matchEnd = return location for end of match, or NULL
+	 * limit = bound for the search, or NULL for the end of the buffer
 	 * Returns: whether a match was found
 	 */
 	public int forwardSearch(string str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
@@ -1406,11 +1406,11 @@ public class TextIter
 	/**
 	 * Same as gtk_text_iter_forward_search(), but moves backward.
 	 * Params:
-	 * str =  search string
-	 * flags =  bitmask of flags affecting the search
-	 * matchStart =  return location for start of match, or NULL
-	 * matchEnd =  return location for end of match, or NULL
-	 * limit =  location of last possible match_start, or NULL for start of buffer
+	 * str = search string
+	 * flags = bitmask of flags affecting the search
+	 * matchStart = return location for start of match, or NULL
+	 * matchEnd = return location for end of match, or NULL
+	 * limit = location of last possible match_start, or NULL for start of buffer
 	 * Returns: whether a match was found
 	 */
 	public int backwardSearch(string str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
@@ -1426,7 +1426,7 @@ public class TextIter
 	 * comparing the offsets yourself. Also, it's a bit faster than
 	 * gtk_text_iter_compare().
 	 * Params:
-	 * rhs =  another GtkTextIter
+	 * rhs = another GtkTextIter
 	 * Returns: TRUE if the iterators point to the same place in the buffer
 	 */
 	public int equal(TextIter rhs)
@@ -1441,7 +1441,7 @@ public class TextIter
 	 * Ordering is in character offset order, i.e. the first character in the buffer
 	 * is less than the second character in the buffer.
 	 * Params:
-	 * rhs =  another GtkTextIter
+	 * rhs = another GtkTextIter
 	 * Returns: -1 if lhs is less than rhs, 1 if lhs is greater, 0 if they are equal
 	 */
 	public int compare(TextIter rhs)
@@ -1454,8 +1454,8 @@ public class TextIter
 	 * Checks whether iter falls in the range [start, end).
 	 * start and end must be in ascending order.
 	 * Params:
-	 * start =  start of range
-	 * end =  end of range
+	 * start = start of range
+	 * end = end of range
 	 * Returns: TRUE if iter is in the range
 	 */
 	public int inRange(TextIter start, TextIter end)
@@ -1472,7 +1472,7 @@ public class TextIter
 	 * in those cases. There are some exceptions, such as gtk_text_iter_in_range(),
 	 * that expect a pre-sorted range.
 	 * Params:
-	 * second =  another GtkTextIter
+	 * second = another GtkTextIter
 	 */
 	public void order(TextIter second)
 	{

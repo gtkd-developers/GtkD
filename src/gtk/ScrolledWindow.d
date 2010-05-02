@@ -344,8 +344,8 @@ public class ScrolledWindow : Bin
 	 * if needed (that is, if the slider part of the bar would be smaller
 	 * than the trough - the display is larger than the page size).
 	 * Params:
-	 * hscrollbarPolicy =  policy for horizontal bar
-	 * vscrollbarPolicy =  policy for vertical bar
+	 * hscrollbarPolicy = policy for horizontal bar
+	 * vscrollbarPolicy = policy for vertical bar
 	 */
 	public void setPolicy(GtkPolicyType hscrollbarPolicy, GtkPolicyType vscrollbarPolicy)
 	{
@@ -370,7 +370,7 @@ public class ScrolledWindow : Bin
 	 * set_scroll_adjustments_signal field in GtkWidgetClass is non-zero,
 	 * i.e. has been filled in with a valid signal identifier.
 	 * Params:
-	 * child =  the widget you want to scroll
+	 * child = the widget you want to scroll
 	 */
 	public void addWithViewport(Widget child)
 	{
@@ -388,7 +388,7 @@ public class ScrolledWindow : Bin
 	 * See also gtk_scrolled_window_get_placement() and
 	 * gtk_scrolled_window_unset_placement().
 	 * Params:
-	 * windowPlacement =  position of the child window
+	 * windowPlacement = position of the child window
 	 */
 	public void setPlacement(GtkCornerType windowPlacement)
 	{
@@ -414,7 +414,7 @@ public class ScrolledWindow : Bin
 	 * Changes the type of shadow drawn around the contents of
 	 * scrolled_window.
 	 * Params:
-	 * type =  kind of shadow to draw around scrolled window contents
+	 * type = kind of shadow to draw around scrolled window contents
 	 */
 	public void setShadowType(GtkShadowType type)
 	{
@@ -425,7 +425,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Sets the GtkAdjustment for the horizontal scrollbar.
 	 * Params:
-	 * hadjustment =  horizontal scroll adjustment
+	 * hadjustment = horizontal scroll adjustment
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
@@ -436,7 +436,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Sets the GtkAdjustment for the vertical scrollbar.
 	 * Params:
-	 * vadjustment =  vertical scroll adjustment
+	 * vadjustment = vertical scroll adjustment
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{
@@ -459,9 +459,9 @@ public class ScrolledWindow : Bin
 	 * Retrieves the current policy values for the horizontal and vertical
 	 * scrollbars. See gtk_scrolled_window_set_policy().
 	 * Params:
-	 * hscrollbarPolicy =  location to store the policy for the horizontal
+	 * hscrollbarPolicy = location to store the policy for the horizontal
 	 *  scrollbar, or NULL.
-	 * vscrollbarPolicy =  location to store the policy for the vertical
+	 * vscrollbarPolicy = location to store the policy for the vertical
 	 *  scrollbar, or NULL.
 	 */
 	public void getPolicy(out GtkPolicyType hscrollbarPolicy, out GtkPolicyType vscrollbarPolicy)

@@ -324,7 +324,7 @@ public class Table : Container
 	 * Gets the amount of space between row row, and
 	 * row row + 1. See gtk_table_set_row_spacing().
 	 * Params:
-	 * row =  a row in the table, 0 indicates the first row
+	 * row = a row in the table, 0 indicates the first row
 	 * Returns: the row spacing
 	 */
 	public uint getRowSpacing(uint row)
@@ -337,7 +337,7 @@ public class Table : Container
 	 * Gets the amount of space between column col, and
 	 * column col + 1. See gtk_table_set_col_spacing().
 	 * Params:
-	 * column =  a column in the table, 0 indicates the first column
+	 * column = a column in the table, 0 indicates the first column
 	 * Returns: the column spacing
 	 */
 	public uint getColSpacing(uint column)

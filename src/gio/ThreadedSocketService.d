@@ -165,7 +165,7 @@ public class ThreadedSocketService : SocketService
 	 * must be added with g_socket_service_add_listeners().
 	 * Since 2.22
 	 * Params:
-	 * maxThreads =  the maximal number of threads to execute concurrently
+	 * maxThreads = the maximal number of threads to execute concurrently
 	 *  handling incoming clients, -1 means no limit
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

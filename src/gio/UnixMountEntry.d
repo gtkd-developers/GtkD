@@ -132,7 +132,7 @@ public class UnixMountEntry
 	/**
 	 * Compares two unix mounts.
 	 * Params:
-	 * mount2 =  second GUnixMountEntry to compare.
+	 * mount2 = second GUnixMountEntry to compare.
 	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to,or less than mount2, respectively.
 	 */
 	public int compare(UnixMountEntry mount2)
@@ -243,7 +243,7 @@ public class UnixMountEntry
 	 * allowing for checking if the mounts have changed with
 	 * g_unix_mounts_points_changed_since().
 	 * Params:
-	 * timeRead =  guint64 to contain a timestamp.
+	 * timeRead = guint64 to contain a timestamp.
 	 * Returns: a GList of the UNIX mountpoints.
 	 */
 	public static ListG pointsGet(ulong* timeRead)
@@ -263,7 +263,7 @@ public class UnixMountEntry
 	 * timestamp, allowing for checking if the mounts have changed
 	 * with g_unix_mounts_changed_since().
 	 * Params:
-	 * timeRead =  guint64 to contain a timestamp.
+	 * timeRead = guint64 to contain a timestamp.
 	 * Returns: a GList of the UNIX mounts.
 	 */
 	public static ListG mountsGet(ref ulong timeRead)
@@ -282,8 +282,8 @@ public class UnixMountEntry
 	 * is set, it will be filled with a unix timestamp for checking
 	 * if the mounts have changed since with g_unix_mounts_changed_since().
 	 * Params:
-	 * mountPath =  path for a possible unix mount.
-	 * timeRead =  guint64 to contain a timestamp.
+	 * mountPath = path for a possible unix mount.
+	 * timeRead = guint64 to contain a timestamp.
 	 * Returns: a GUnixMount.
 	 */
 	public static UnixMountEntry at(string mountPath, ref ulong timeRead)
@@ -300,7 +300,7 @@ public class UnixMountEntry
 	/**
 	 * Checks if the unix mounts have changed since a given unix time.
 	 * Params:
-	 * time =  guint64 to contain a timestamp.
+	 * time = guint64 to contain a timestamp.
 	 * Returns: TRUE if the mounts have changed since time.
 	 */
 	public static int mountsChangedSince(ulong time)
@@ -312,7 +312,7 @@ public class UnixMountEntry
 	/**
 	 * Checks if the unix mount points have changed since a given unix time.
 	 * Params:
-	 * time =  guint64 to contain a timestamp.
+	 * time = guint64 to contain a timestamp.
 	 * Returns: TRUE if the mount points have changed since time.
 	 */
 	public static int pointsChangedSince(ulong time)
@@ -327,7 +327,7 @@ public class UnixMountEntry
 	 * that only are used in the OS and has little to no relevance to the
 	 * casual user.
 	 * Params:
-	 * mountPath =  a mount path, e.g. /media/disk
+	 * mountPath = a mount path, e.g. /media/disk
 	 *  or /usr
 	 * Returns: TRUE if mount_path is considered an implementation detail  of the OS.Signal DetailsThe "mountpoints-changed" signalvoid user_function (GUnixMountMonitor *monitor, gpointer user_data) : Run LastEmitted when the unix mount points have changed.
 	 */

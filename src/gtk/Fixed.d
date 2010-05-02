@@ -201,7 +201,7 @@ public class Fixed : Container
 	 * This function was added to provide an easy migration path for
 	 * older applications which may expect GtkFixed to have a separate window.
 	 * Params:
-	 * hasWindow =  TRUE if a separate window should be created
+	 * hasWindow = TRUE if a separate window should be created
 	 * Child Property Details
 	 * The "x" child property
 	 *  "x" gint : Read / Write

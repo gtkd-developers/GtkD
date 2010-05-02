@@ -162,7 +162,7 @@ public class PgCoverage
 	/**
 	 * Determine whether a particular index is covered by coverage
 	 * Params:
-	 * index =  the index to check
+	 * index = the index to check
 	 * Returns: the coverage level of coverage for character index_.
 	 */
 	public PangoCoverageLevel get(int index)
@@ -176,7 +176,7 @@ public class PgCoverage
 	 * value of the current coverage for the index and the coverage for
 	 * the corresponding index in other.
 	 * Params:
-	 * other =  another PangoCoverage
+	 * other = another PangoCoverage
 	 */
 	public void max(PgCoverage other)
 	{
@@ -187,8 +187,8 @@ public class PgCoverage
 	/**
 	 * Modify a particular index within coverage
 	 * Params:
-	 * index =  the index to modify
-	 * level =  the new level for index_
+	 * index = the index to modify
+	 * level = the new level for index_
 	 */
 	public void set(int index, PangoCoverageLevel level)
 	{
@@ -199,7 +199,7 @@ public class PgCoverage
 	/**
 	 * Convert a PangoCoverage structure into a flat binary format
 	 * Params:
-	 * bytes =  location to store result (must be freed with g_free())
+	 * bytes = location to store result (must be freed with g_free())
 	 */
 	public void toBytes(out char[] bytes)
 	{
@@ -216,7 +216,7 @@ public class PgCoverage
 	 * Convert data generated from pango_converage_to_bytes() back
 	 * to a PangoCoverage
 	 * Params:
-	 * bytes =  binary data representing a PangoCoverage
+	 * bytes = binary data representing a PangoCoverage
 	 * Returns: a newly allocated PangoCoverage, or NULL if the data was invalid.
 	 */
 	public static PgCoverage fromBytes(char[] bytes)

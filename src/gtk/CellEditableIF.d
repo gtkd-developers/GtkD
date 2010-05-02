@@ -114,7 +114,7 @@ public interface CellEditableIF
 	 * the editing process. It may be NULL, in the instance that editing was
 	 * initiated through programatic means.
 	 * Params:
-	 * event =  A GdkEvent, or NULL
+	 * event = A GdkEvent, or NULL
 	 */
 	public void startEditing(Event event);
 	

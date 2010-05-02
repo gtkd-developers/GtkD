@@ -76,7 +76,7 @@ public class State
 	/**
 	 * Register a new object state.
 	 * Params:
-	 * name =  a character string describing the new state.
+	 * name = a character string describing the new state.
 	 * Returns: an AtkState value for the new state.
 	 */
 	public static AtkStateType typeRegister(string name)
@@ -88,7 +88,7 @@ public class State
 	/**
 	 * Gets the description string describing the AtkStateType type.
 	 * Params:
-	 * type =  The AtkStateType whose name is required
+	 * type = The AtkStateType whose name is required
 	 * Returns: the string describing the AtkStateType
 	 */
 	public static string typeGetName(AtkStateType type)
@@ -100,7 +100,7 @@ public class State
 	/**
 	 * Gets the AtkStateType corresponding to the description string name.
 	 * Params:
-	 * name =  a character string state name
+	 * name = a character string state name
 	 * Returns: an AtkStateType corresponding to name
 	 */
 	public static AtkStateType typeForName(string name)

@@ -89,8 +89,8 @@ public class ContentType
 	/**
 	 * Compares two content types for equality.
 	 * Params:
-	 * type1 =  a content type string.
-	 * type2 =  a content type string.
+	 * type1 = a content type string.
+	 * type2 = a content type string.
 	 * Returns: TRUE if the two strings are identical or equivalent,FALSE otherwise.
 	 */
 	public static int equals(string type1, string type2)
@@ -102,8 +102,8 @@ public class ContentType
 	/**
 	 * Determines if type is a subset of supertype.
 	 * Params:
-	 * type =  a content type string.
-	 * supertype =  a string.
+	 * type = a content type string.
+	 * supertype = a string.
 	 * Returns: TRUE if type is a kind of supertype,FALSE otherwise.
 	 */
 	public static int isA(string type, string supertype)
@@ -117,7 +117,7 @@ public class ContentType
 	 * On unix this is the "application/octet-stream" mimetype,
 	 * while on win32 it is "*".
 	 * Params:
-	 * type =  a content type string.
+	 * type = a content type string.
 	 * Returns: TRUE if the type is the unknown type.
 	 */
 	public static int isUnknown(string type)
@@ -129,7 +129,7 @@ public class ContentType
 	/**
 	 * Gets the human readable description of the content type.
 	 * Params:
-	 * type =  a content type string.
+	 * type = a content type string.
 	 * Returns: a short description of the content type type.
 	 */
 	public static string getDescription(string type)
@@ -141,7 +141,7 @@ public class ContentType
 	/**
 	 * Gets the mime-type for the content type. If one is registered
 	 * Params:
-	 * type =  a content type string.
+	 * type = a content type string.
 	 * Returns: the registered mime-type for the given type, or NULL if unknown.
 	 */
 	public static string getMimeType(string type)
@@ -153,7 +153,7 @@ public class ContentType
 	/**
 	 * Gets the icon for a content type.
 	 * Params:
-	 * type =  a content type string.
+	 * type = a content type string.
 	 * Returns: GIcon corresponding to the content type.
 	 */
 	public static IconIF getIcon(string type)
@@ -171,7 +171,7 @@ public class ContentType
 	 * Checks if a content type can be executable. Note that for instance
 	 * things like text files can be executables (i.e. scripts and batch files).
 	 * Params:
-	 * type =  a content type string.
+	 * type = a content type string.
 	 * Returns: TRUE if the file type corresponds to a type thatcan be executable, FALSE otherwise.
 	 */
 	public static int canBeExecutable(string type)
@@ -184,7 +184,7 @@ public class ContentType
 	 * Tries to find a content type based on the mime type name.
 	 * Since 2.18
 	 * Params:
-	 * mimeType =  a mime type string.
+	 * mimeType = a mime type string.
 	 * Returns: Newly allocated string with content type or NULL when does not know.
 	 */
 	public static string fromMimeType(string mimeType)
@@ -199,9 +199,9 @@ public class ContentType
 	 * or data may be NULL, in which case the guess will be based solely
 	 * on the other argument.
 	 * Params:
-	 * filename =  a string, or NULL
-	 * data =  a stream of data, or NULL
-	 * resultUncertain =  a flag indicating the certainty of the result
+	 * filename = a string, or NULL
+	 * data = a stream of data, or NULL
+	 * resultUncertain = a flag indicating the certainty of the result
 	 * Returns: a string indicating a guessed content type for the given data.
 	 */
 	public static string guess(string filename, char[] data, out int resultUncertain)
@@ -221,7 +221,7 @@ public class ContentType
 	 * This function is useful in the implementation of g_mount_guess_content_type().
 	 * Since 2.18
 	 * Params:
-	 * root =  the root of the tree to guess a type for
+	 * root = the root of the tree to guess a type for
 	 * Returns: an NULL-terminated array of zero or more content types, or NULL.  Free with g_strfreev()
 	 */
 	public static string[] guessForTree(File root)

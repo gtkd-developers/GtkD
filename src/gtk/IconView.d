@@ -469,7 +469,7 @@ public class IconView : Container, CellLayoutIF
 	 * Creates a new GtkIconView widget with the model model.
 	 * Since 2.6
 	 * Params:
-	 * model =  The model.
+	 * model = The model.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model)
@@ -490,7 +490,7 @@ public class IconView : Container, CellLayoutIF
 	 * it will unset the old model.
 	 * Since 2.6
 	 * Params:
-	 * model =  The model.
+	 * model = The model.
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -520,7 +520,7 @@ public class IconView : Container, CellLayoutIF
 	 * column must be of type G_TYPE_STRING.
 	 * Since 2.6
 	 * Params:
-	 * column =  A column in the currently used model, or -1 to display no text
+	 * column = A column in the currently used model, or -1 to display no text
 	 */
 	public void setTextColumn(int column)
 	{
@@ -546,7 +546,7 @@ public class IconView : Container, CellLayoutIF
 	 * the text column set by gtk_icon_view_set_text_column().
 	 * Since 2.6
 	 * Params:
-	 * column =  A column in the currently used model, or -1 to display no text
+	 * column = A column in the currently used model, or -1 to display no text
 	 */
 	public void setMarkupColumn(int column)
 	{
@@ -570,7 +570,7 @@ public class IconView : Container, CellLayoutIF
 	 * column must be of type GDK_TYPE_PIXBUF
 	 * Since 2.6
 	 * Params:
-	 * column =  A column in the currently used model, or -1 to disable
+	 * column = A column in the currently used model, or -1 to disable
 	 */
 	public void setPixbufColumn(int column)
 	{
@@ -597,8 +597,8 @@ public class IconView : Container, CellLayoutIF
 	 * widget coordinates to bin_window coordinates.
 	 * Since 2.6
 	 * Params:
-	 * x =  The x position to be identified
-	 * y =  The y position to be identified
+	 * x = The x position to be identified
+	 * y = The y position to be identified
 	 * Returns: The GtkTreePath corresponding to the icon or NULLif no icon exists at that position.
 	 */
 	public TreePath getPathAtPos(int x, int y)
@@ -621,10 +621,10 @@ public class IconView : Container, CellLayoutIF
 	 * widget coordinates to bin_window coordinates.
 	 * Since 2.8
 	 * Params:
-	 * x =  The x position to be identified
-	 * y =  The y position to be identified
-	 * path =  Return location for the path, or NULL
-	 * cell =  Return location for the renderer responsible for the cell
+	 * x = The x position to be identified
+	 * y = The y position to be identified
+	 * path = Return location for the path, or NULL
+	 * cell = Return location for the renderer responsible for the cell
 	 *  at (x, y), or NULL
 	 * Returns: TRUE if an item exists at the specified position
 	 */
@@ -646,10 +646,10 @@ public class IconView : Container, CellLayoutIF
 	 * as expected by e.g. gtk_icon_view_get_path_at_pos().
 	 * Since 2.12
 	 * Params:
-	 * wx =  X coordinate relative to the widget
-	 * wy =  Y coordinate relative to the widget
-	 * bx =  return location for bin_window X coordinate
-	 * by =  return location for bin_window Y coordinate
+	 * wx = X coordinate relative to the widget
+	 * wy = Y coordinate relative to the widget
+	 * bx = return location for bin_window X coordinate
+	 * by = return location for bin_window Y coordinate
 	 */
 	public void convertWidgetToBinWindowCoords(int wx, int wy, out int bx, out int by)
 	{
@@ -668,9 +668,9 @@ public class IconView : Container, CellLayoutIF
 	 * Please note that editing can only happen when the widget is realized.
 	 * Since 2.8
 	 * Params:
-	 * path =  A GtkTreePath
-	 * cell =  One of the cell renderers of icon_view, or NULL
-	 * startEditing =  TRUE if the specified cell should start being edited.
+	 * path = A GtkTreePath
+	 * cell = One of the cell renderers of icon_view, or NULL
+	 * startEditing = TRUE if the specified cell should start being edited.
 	 */
 	public void setCursor(TreePath path, CellRenderer cell, int startEditing)
 	{
@@ -685,8 +685,8 @@ public class IconView : Container, CellLayoutIF
 	 * The returned GtkTreePath must be freed with gtk_tree_path_free().
 	 * Since 2.8
 	 * Params:
-	 * path =  Return location for the current cursor path, or NULL
-	 * cell =  Return location the current focus cell, or NULL
+	 * path = Return location for the current cursor path, or NULL
+	 * cell = Return location the current focus cell, or NULL
 	 * Returns: TRUE if the cursor is set.
 	 */
 	public int getCursor(out TreePath path, out CellRenderer cell)
@@ -707,8 +707,8 @@ public class IconView : Container, CellLayoutIF
 	 * selection cannot be modified from within this function.
 	 * Since 2.6
 	 * Params:
-	 * func =  The funcion to call for each selected icon.
-	 * data =  User data to pass to the function.
+	 * func = The funcion to call for each selected icon.
+	 * data = User data to pass to the function.
 	 */
 	public void selectedForeach(GtkIconViewForeachFunc func, void* data)
 	{
@@ -720,7 +720,7 @@ public class IconView : Container, CellLayoutIF
 	 * Sets the selection mode of the icon_view.
 	 * Since 2.6
 	 * Params:
-	 * mode =  The selection mode
+	 * mode = The selection mode
 	 */
 	public void setSelectionMode(GtkSelectionMode mode)
 	{
@@ -744,7 +744,7 @@ public class IconView : Container, CellLayoutIF
 	 * are drawn beside the icons instead of below.
 	 * Since 2.6
 	 * Params:
-	 * orientation =  the relative position of texts and icons
+	 * orientation = the relative position of texts and icons
 	 */
 	public void setOrientation(GtkOrientation orientation)
 	{
@@ -771,7 +771,7 @@ public class IconView : Container, CellLayoutIF
 	 * to fill the available area.
 	 * Since 2.6
 	 * Params:
-	 * columns =  the number of columns
+	 * columns = the number of columns
 	 */
 	public void setColumns(int columns)
 	{
@@ -796,7 +796,7 @@ public class IconView : Container, CellLayoutIF
 	 * automatically determine a suitable item size.
 	 * Since 2.6
 	 * Params:
-	 * itemWidth =  the width for each item
+	 * itemWidth = the width for each item
 	 */
 	public void setItemWidth(int itemWidth)
 	{
@@ -821,7 +821,7 @@ public class IconView : Container, CellLayoutIF
 	 * the text) of an item.
 	 * Since 2.6
 	 * Params:
-	 * spacing =  the spacing
+	 * spacing = the spacing
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -845,7 +845,7 @@ public class IconView : Container, CellLayoutIF
 	 * which is inserted between the rows of the icon view.
 	 * Since 2.6
 	 * Params:
-	 * rowSpacing =  the row spacing
+	 * rowSpacing = the row spacing
 	 */
 	public void setRowSpacing(int rowSpacing)
 	{
@@ -869,7 +869,7 @@ public class IconView : Container, CellLayoutIF
 	 * which is inserted between the columns of the icon view.
 	 * Since 2.6
 	 * Params:
-	 * columnSpacing =  the column spacing
+	 * columnSpacing = the column spacing
 	 */
 	public void setColumnSpacing(int columnSpacing)
 	{
@@ -894,7 +894,7 @@ public class IconView : Container, CellLayoutIF
 	 * of the icon view.
 	 * Since 2.6
 	 * Params:
-	 * margin =  the margin
+	 * margin = the margin
 	 */
 	public void setMargin(int margin)
 	{
@@ -940,7 +940,7 @@ public class IconView : Container, CellLayoutIF
 	 * Selects the row at path.
 	 * Since 2.6
 	 * Params:
-	 * path =  The GtkTreePath to be selected.
+	 * path = The GtkTreePath to be selected.
 	 */
 	public void selectPath(TreePath path)
 	{
@@ -952,7 +952,7 @@ public class IconView : Container, CellLayoutIF
 	 * Unselects the row at path.
 	 * Since 2.6
 	 * Params:
-	 * path =  The GtkTreePath to be unselected.
+	 * path = The GtkTreePath to be unselected.
 	 */
 	public void unselectPath(TreePath path)
 	{
@@ -965,7 +965,7 @@ public class IconView : Container, CellLayoutIF
 	 * selected. If path does not point to a valid location, FALSE is returned.
 	 * Since 2.6
 	 * Params:
-	 * path =  A GtkTreePath to check selection on.
+	 * path = A GtkTreePath to check selection on.
 	 * Returns: TRUE if path is selected.
 	 */
 	public int pathIsSelected(TreePath path)
@@ -1018,7 +1018,7 @@ public class IconView : Container, CellLayoutIF
 	 * Activates the item determined by path.
 	 * Since 2.6
 	 * Params:
-	 * path =  The GtkTreePath to be activated
+	 * path = The GtkTreePath to be activated
 	 */
 	public void itemActivated(TreePath path)
 	{
@@ -1041,10 +1041,10 @@ public class IconView : Container, CellLayoutIF
 	 * centered path will be modified to reflect this change.
 	 * Since 2.8
 	 * Params:
-	 * path =  The path of the item to move to.
-	 * useAlign =  whether to use alignment arguments, or FALSE.
-	 * rowAlign =  The vertical alignment of the item specified by path.
-	 * colAlign =  The horizontal alignment of the item specified by path.
+	 * path = The path of the item to move to.
+	 * useAlign = whether to use alignment arguments, or FALSE.
+	 * rowAlign = The vertical alignment of the item specified by path.
+	 * colAlign = The horizontal alignment of the item specified by path.
 	 */
 	public void scrollToPath(TreePath path, int useAlign, float rowAlign, float colAlign)
 	{
@@ -1058,8 +1058,8 @@ public class IconView : Container, CellLayoutIF
 	 * Both paths should be freed with gtk_tree_path_free() after use.
 	 * Since 2.8
 	 * Params:
-	 * startPath =  Return location for start of region, or NULL
-	 * endPath =  Return location for end of region, or NULL
+	 * startPath = Return location for start of region, or NULL
+	 * endPath = Return location for end of region, or NULL
 	 * Returns: TRUE, if valid paths were placed in start_path and end_path
 	 */
 	public int getVisibleRange(out TreePath startPath, out TreePath endPath)
@@ -1081,8 +1081,8 @@ public class IconView : Container, CellLayoutIF
 	 * See also gtk_tooltip_set_tip_area().
 	 * Since 2.12
 	 * Params:
-	 * tooltip =  a GtkTooltip
-	 * path =  a GtkTreePath
+	 * tooltip = a GtkTooltip
+	 * path = a GtkTreePath
 	 */
 	public void setTooltipItem(Tooltip tooltip, TreePath path)
 	{
@@ -1096,9 +1096,9 @@ public class IconView : Container, CellLayoutIF
 	 * See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
 	 * Since 2.12
 	 * Params:
-	 * tooltip =  a GtkTooltip
-	 * path =  a GtkTreePath
-	 * cell =  a GtkCellRenderer or NULL
+	 * tooltip = a GtkTooltip
+	 * path = a GtkTreePath
+	 * cell = a GtkCellRenderer or NULL
 	 */
 	public void setTooltipCell(Tooltip tooltip, TreePath path, CellRenderer cell)
 	{
@@ -1119,12 +1119,12 @@ public class IconView : Container, CellLayoutIF
 	 * to be relative to icon_view's bin_window if keyboard_tooltip is FALSE.
 	 * Since 2.12
 	 * Params:
-	 * x =  the x coordinate (relative to widget coordinates)
-	 * y =  the y coordinate (relative to widget coordinates)
-	 * keyboardTip =  whether this is a keyboard tooltip or not
-	 * model =  a pointer to receive a GtkTreeModel or NULL
-	 * path =  a pointer to receive a GtkTreePath or NULL
-	 * iter =  a pointer to receive a GtkTreeIter or NULL
+	 * x = the x coordinate (relative to widget coordinates)
+	 * y = the y coordinate (relative to widget coordinates)
+	 * keyboardTip = whether this is a keyboard tooltip or not
+	 * model = a pointer to receive a GtkTreeModel or NULL
+	 * path = a pointer to receive a GtkTreePath or NULL
+	 * iter = a pointer to receive a GtkTreeIter or NULL
 	 * Returns: whether or not the given tooltip context points to a item
 	 */
 	public int getTooltipContext(int* x, int* y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
@@ -1149,7 +1149,7 @@ public class IconView : Container, CellLayoutIF
 	 * icon_view will connect a "query-tooltip" signal handler.
 	 * Since 2.12
 	 * Params:
-	 * column =  an integer, which is a valid column number for icon_view's model
+	 * column = an integer, which is a valid column number for icon_view's model
 	 */
 	public void setTooltipColumn(int column)
 	{
@@ -1174,9 +1174,9 @@ public class IconView : Container, CellLayoutIF
 	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 * Params:
-	 * startButtonMask =  Mask of allowed buttons to start drag
-	 * targets =  the table of targets that the drag will support
-	 * actions =  the bitmask of possible actions for a drag from this
+	 * startButtonMask = Mask of allowed buttons to start drag
+	 * targets = the table of targets that the drag will support
+	 * actions = the bitmask of possible actions for a drag from this
 	 *  widget
 	 */
 	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
@@ -1190,8 +1190,8 @@ public class IconView : Container, CellLayoutIF
 	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 * Params:
-	 * targets =  the table of targets that the drag will support
-	 * actions =  the bitmask of possible actions for a drag to this
+	 * targets = the table of targets that the drag will support
+	 * actions = the bitmask of possible actions for a drag to this
 	 *  widget
 	 */
 	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
@@ -1236,7 +1236,7 @@ public class IconView : Container, CellLayoutIF
 	 * handle drag and drop manually.
 	 * Since 2.8
 	 * Params:
-	 * reorderable =  TRUE, if the list of items can be reordered.
+	 * reorderable = TRUE, if the list of items can be reordered.
 	 */
 	public void setReorderable(int reorderable)
 	{
@@ -1260,8 +1260,8 @@ public class IconView : Container, CellLayoutIF
 	 * Sets the item that is highlighted for feedback.
 	 * Since 2.8
 	 * Params:
-	 * path =  The path of the item to highlight, or NULL.
-	 * pos =  Specifies where to drop, relative to the item
+	 * path = The path of the item to highlight, or NULL.
+	 * pos = Specifies where to drop, relative to the item
 	 */
 	public void setDragDestItem(TreePath path, GtkIconViewDropPosition pos)
 	{
@@ -1273,8 +1273,8 @@ public class IconView : Container, CellLayoutIF
 	 * Gets information about the item that is highlighted for feedback.
 	 * Since 2.8
 	 * Params:
-	 * path =  Return location for the path of the highlighted item, or NULL.
-	 * pos =  Return location for the drop position, or NULL
+	 * path = Return location for the path of the highlighted item, or NULL.
+	 * pos = Return location for the drop position, or NULL
 	 */
 	public void getDragDestItem(out TreePath path, out GtkIconViewDropPosition pos)
 	{
@@ -1290,10 +1290,10 @@ public class IconView : Container, CellLayoutIF
 	 * Determines the destination item for a given position.
 	 * Since 2.8
 	 * Params:
-	 * dragX =  the position to determine the destination item for
-	 * dragY =  the position to determine the destination item for
-	 * path =  Return location for the path of the item, or NULL.
-	 * pos =  Return location for the drop position, or NULL
+	 * dragX = the position to determine the destination item for
+	 * dragY = the position to determine the destination item for
+	 * path = Return location for the path of the item, or NULL.
+	 * pos = Return location for the drop position, or NULL
 	 * Returns: whether there is an item at the given position.
 	 */
 	public int getDestItemAtPos(int dragX, int dragY, out TreePath path, out GtkIconViewDropPosition pos)
@@ -1312,7 +1312,7 @@ public class IconView : Container, CellLayoutIF
 	 * This image is used for a drag icon.
 	 * Since 2.8
 	 * Params:
-	 * path =  a GtkTreePath in icon_view
+	 * path = a GtkTreePath in icon_view
 	 * Returns: a newly-allocated pixmap of the drag icon.
 	 */
 	public Pixmap createDragIcon(TreePath path)

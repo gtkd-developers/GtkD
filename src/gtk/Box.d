@@ -161,16 +161,16 @@ public class Box : Container, OrientableIF
 	 * The child is packed after any other child packed with reference
 	 * to the start of box.
 	 * Params:
-	 * child =  the GtkWidget to be added to box
-	 * expand =  TRUE if the new child is to be given extra space allocated to
+	 * child = the GtkWidget to be added to box
+	 * expand = TRUE if the new child is to be given extra space allocated to
 	 * box. The extra space will be divided evenly between all children of
 	 * box that use this option
-	 * fill =  TRUE if space given to child by the expand option is
+	 * fill = TRUE if space given to child by the expand option is
 	 *  actually allocated to child, rather than just padding it. This
 	 *  parameter has no effect if expand is set to FALSE. A child is
 	 *  always allocated the full height of a GtkHBox and the full width
 	 *  of a GtkVBox. This option affects the other dimension
-	 * padding =  extra space in pixels to put between this child and its
+	 * padding = extra space in pixels to put between this child and its
 	 *  neighbors, over and above the global amount specified by
 	 *  "spacing" property. If child is a widget at one of the
 	 *  reference ends of box, then padding pixels are also put between
@@ -187,16 +187,16 @@ public class Box : Container, OrientableIF
 	 * The child is packed after (away from end of) any other child
 	 * packed with reference to the end of box.
 	 * Params:
-	 * child =  the GtkWidget to be added to box
-	 * expand =  TRUE if the new child is to be given extra space allocated
+	 * child = the GtkWidget to be added to box
+	 * expand = TRUE if the new child is to be given extra space allocated
 	 *  to box. The extra space will be divided evenly between all children
 	 *  of box that use this option
-	 * fill =  TRUE if space given to child by the expand option is
+	 * fill = TRUE if space given to child by the expand option is
 	 *  actually allocated to child, rather than just padding it. This
 	 *  parameter has no effect if expand is set to FALSE. A child is
 	 *  always allocated the full height of a GtkHBox and the full width
 	 *  of a GtkVBox. This option affects the other dimension
-	 * padding =  extra space in pixels to put between this child and its
+	 * padding = extra space in pixels to put between this child and its
 	 *  neighbors, over and above the global amount specified by
 	 *  "spacing" property. If child is a widget at one of the
 	 *  reference ends of box, then padding pixels are also put between
@@ -218,7 +218,7 @@ public class Box : Container, OrientableIF
 	 * "fill" and "padding", are given their default
 	 * values, TRUE, TRUE, and 0, respectively.
 	 * Params:
-	 * widget =  the GtkWidget to be added to box
+	 * widget = the GtkWidget to be added to box
 	 */
 	public void packStartDefaults(Widget widget)
 	{
@@ -236,7 +236,7 @@ public class Box : Container, OrientableIF
 	 * "fill" and "padding", are given their default
 	 * values, TRUE, TRUE, and 0, respectively.
 	 * Params:
-	 * widget =  the GtkWidget to be added to box
+	 * widget = the GtkWidget to be added to box
 	 */
 	public void packEndDefaults(Widget widget)
 	{
@@ -260,7 +260,7 @@ public class Box : Container, OrientableIF
 	 * whether or not all children of box are given equal space
 	 * in the box.
 	 * Params:
-	 * homogeneous =  a boolean value, TRUE to create equal allotments,
+	 * homogeneous = a boolean value, TRUE to create equal allotments,
 	 *  FALSE for variable allotments
 	 */
 	public void setHomogeneous(int homogeneous)
@@ -283,7 +283,7 @@ public class Box : Container, OrientableIF
 	 * Sets the "spacing" property of box, which is the
 	 * number of pixels to place between children of box.
 	 * Params:
-	 * spacing =  the number of pixels to put between children
+	 * spacing = the number of pixels to put between children
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -302,8 +302,8 @@ public class Box : Container, OrientableIF
 	 * in the list will be packed just after all other widgets of the
 	 * same packing type that appear earlier in the list.
 	 * Params:
-	 * child =  the GtkWidget to move
-	 * position =  the new position for child in the list of children
+	 * child = the GtkWidget to move
+	 * position = the new position for child in the list of children
 	 *  of box, starting from 0. If negative, indicates the end of
 	 *  the list
 	 */
@@ -316,11 +316,11 @@ public class Box : Container, OrientableIF
 	/**
 	 * Obtains information about how child is packed into box.
 	 * Params:
-	 * child =  the GtkWidget of the child to query
-	 * expand =  pointer to return location for "expand" child property
-	 * fill =  pointer to return location for "fill" child property
-	 * padding =  pointer to return location for "padding" child property
-	 * packType =  pointer to return location for "pack-type" child property
+	 * child = the GtkWidget of the child to query
+	 * expand = pointer to return location for "expand" child property
+	 * fill = pointer to return location for "fill" child property
+	 * padding = pointer to return location for "padding" child property
+	 * packType = pointer to return location for "pack-type" child property
 	 */
 	public void queryChildPacking(Widget child, out int expand, out int fill, out uint padding, out GtkPackType packType)
 	{
@@ -331,11 +331,11 @@ public class Box : Container, OrientableIF
 	/**
 	 * Sets the way child is packed into box.
 	 * Params:
-	 * child =  the GtkWidget of the child to set
-	 * expand =  the new value of the "expand" child property
-	 * fill =  the new value of the "fill" child property
-	 * padding =  the new value of the "padding" child property
-	 * packType =  the new value of the "pack-type" child property
+	 * child = the GtkWidget of the child to set
+	 * expand = the new value of the "expand" child property
+	 * fill = the new value of the "fill" child property
+	 * padding = the new value of the "padding" child property
+	 * packType = the new value of the "pack-type" child property
 	 */
 	public void setChildPacking(Widget child, int expand, int fill, uint padding, GtkPackType packType)
 	{

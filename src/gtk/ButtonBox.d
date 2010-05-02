@@ -228,7 +228,7 @@ public class ButtonBox : Box
 	 * Returns whether child should appear in a secondary group of children.
 	 * Since 2.4
 	 * Params:
-	 * child =  a child of widget
+	 * child = a child of widget
 	 * Returns: whether child should appear in a secondary group of children.
 	 */
 	public int getChildSecondary(Widget child)
@@ -295,8 +295,8 @@ public class ButtonBox : Box
 	 * the other end of the button box from the main children. For the
 	 * other styles, they appear immediately next to the main children.
 	 * Params:
-	 * child =  a child of widget
-	 * isSecondary =  if TRUE, the child appears in a secondary group of the
+	 * child = a child of widget
+	 * isSecondary = if TRUE, the child appears in a secondary group of the
 	 *  button box.
 	 */
 	public void setChildSecondary(Widget child, int isSecondary)

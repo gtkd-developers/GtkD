@@ -141,9 +141,9 @@ public class HScale : Scale
 	 * is a power of ten. If the resulting precision is not suitable for your
 	 * needs, use gtk_scale_set_digits() to correct it.
 	 * Params:
-	 * min =  minimum value
-	 * max =  maximum value
-	 * step =  step increment (tick size) used with keyboard shortcuts
+	 * min = minimum value
+	 * max = maximum value
+	 * step = step increment (tick size) used with keyboard shortcuts
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double min, double max, double step)

@@ -135,7 +135,7 @@ public class Invisible : Widget
 	 * Creates a new GtkInvisible object for a specified screen
 	 * Since 2.2
 	 * Params:
-	 * screen =  a GdkScreen which identifies on which
+	 * screen = a GdkScreen which identifies on which
 	 *  the new GtkInvisible will be created.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -154,7 +154,7 @@ public class Invisible : Widget
 	 * Sets the GdkScreen where the GtkInvisible object will be displayed.
 	 * Since 2.2
 	 * Params:
-	 * screen =  a GdkScreen.
+	 * screen = a GdkScreen.
 	 */
 	public void setScreen(Screen screen)
 	{

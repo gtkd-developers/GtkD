@@ -135,7 +135,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Creates a new GInputStream from the given base_stream, with
 	 * a buffer set to the default size (4 kilobytes).
 	 * Params:
-	 * baseStream =  a GInputStream.
+	 * baseStream = a GInputStream.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (InputStream baseStream)
@@ -153,8 +153,8 @@ public class BufferedInputStream : FilterInputStream
 	 * Creates a new GBufferedInputStream from the given base_stream,
 	 * with a buffer set to size.
 	 * Params:
-	 * baseStream =  a GInputStream.
-	 * size =  a gsize.
+	 * baseStream = a GInputStream.
+	 * size = a gsize.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (InputStream baseStream, uint size)
@@ -183,7 +183,7 @@ public class BufferedInputStream : FilterInputStream
 	 * size of the contents of the buffer. The buffer can never be resized
 	 * smaller than its current contents.
 	 * Params:
-	 * size =  a gsize.
+	 * size = a gsize.
 	 */
 	public void setBufferSize(uint size)
 	{
@@ -206,7 +206,7 @@ public class BufferedInputStream : FilterInputStream
 	 * buffer must not be modified and will become invalid when reading from
 	 * the stream or filling the buffer.
 	 * Params:
-	 * count =  a gsize to get the number of bytes available in the buffer.
+	 * count = a gsize to get the number of bytes available in the buffer.
 	 * Returns: read-only buffer
 	 */
 	public void* peekBuffer(out uint count)
@@ -219,9 +219,9 @@ public class BufferedInputStream : FilterInputStream
 	 * Peeks in the buffer, copying data of size count into buffer,
 	 * offset offset bytes.
 	 * Params:
-	 * buffer =  a pointer to an allocated chunk of memory.
-	 * offset =  a gsize.
-	 * count =  a gsize.
+	 * buffer = a pointer to an allocated chunk of memory.
+	 * offset = a gsize.
+	 * count = a gsize.
 	 * Returns: a gsize of the number of bytes peeked, or -1 on error.
 	 */
 	public uint peek(void* buffer, uint offset, uint count)
@@ -250,8 +250,8 @@ public class BufferedInputStream : FilterInputStream
 	 * For the asynchronous, non-blocking, version of this function, see
 	 * g_buffered_input_stream_fill_async().
 	 * Params:
-	 * count =  the number of bytes that will be read from the stream.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * count = the number of bytes that will be read from the stream.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: the number of bytes read into stream's buffer, up to count,  or -1 on error.
 	 * Throws: GException on failure.
 	 */
@@ -277,12 +277,12 @@ public class BufferedInputStream : FilterInputStream
 	 * If count is -1 then the attempted read size is equal to the number
 	 * of bytes that are required to fill the buffer.
 	 * Params:
-	 * count =  the number of bytes that will be read from the stream.
-	 * ioPriority =  the I/O priority
+	 * count = the number of bytes that will be read from the stream.
+	 * ioPriority = the I/O priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object
-	 * callback =  a GAsyncReadyCallback.
-	 * userData =  a gpointer.
+	 * cancellable = optional GCancellable object
+	 * callback = a GAsyncReadyCallback.
+	 * userData = a gpointer.
 	 */
 	public void fillAsync(int count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -293,7 +293,7 @@ public class BufferedInputStream : FilterInputStream
 	/**
 	 * Finishes an asynchronous read.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a gssize of the read stream, or -1 on an error.
 	 * Throws: GException on failure.
 	 */
@@ -324,7 +324,7 @@ public class BufferedInputStream : FilterInputStream
 	 * partial result will be returned, without an error.
 	 * On error -1 is returned and error is set accordingly.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: the byte read from the stream, or -1 on end of stream or error.
 	 * Throws: GException on failure.
 	 */

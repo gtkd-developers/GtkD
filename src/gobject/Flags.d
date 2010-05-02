@@ -119,8 +119,8 @@ public class Flags
 	/**
 	 * Returns the first GFlagsValue which is set in value.
 	 * Params:
-	 * flagsClass =  a GFlagsClass
-	 * value =  the value
+	 * flagsClass = a GFlagsClass
+	 * value = the value
 	 * Returns: the first GFlagsValue which is set in value, or NULL if none is set
 	 */
 	public static Flags getFirstValue(GFlagsClass* flagsClass, uint value)
@@ -137,8 +137,8 @@ public class Flags
 	/**
 	 * Looks up a GFlagsValue by name.
 	 * Params:
-	 * flagsClass =  a GFlagsClass
-	 * name =  the name to look up
+	 * flagsClass = a GFlagsClass
+	 * name = the name to look up
 	 * Returns: the GFlagsValue with name name, or NULL if there is no flag with that name
 	 */
 	public static Flags getValueByName(GFlagsClass* flagsClass, string name)
@@ -155,8 +155,8 @@ public class Flags
 	/**
 	 * Looks up a GFlagsValue by nickname.
 	 * Params:
-	 * flagsClass =  a GFlagsClass
-	 * nick =  the nickname to look up
+	 * flagsClass = a GFlagsClass
+	 * nick = the nickname to look up
 	 * Returns: the GFlagsValue with nickname nick, or NULL if there is no flag with that nickname
 	 */
 	public static Flags getValueByNick(GFlagsClass* flagsClass, string nick)
@@ -176,7 +176,7 @@ public class Flags
 	 * my_flags_get_type() function from a usual C enumeration definition
 	 * than to write one yourself using g_flags_register_static().
 	 * Params:
-	 * name =  A nul-terminated string used as the name of the new type.
+	 * name = A nul-terminated string used as the name of the new type.
 	 * Returns: The new type identifier.
 	 */
 	public static GType registerStatic(string name, Flags _StaticValues)
@@ -190,8 +190,8 @@ public class Flags
 	 * function of a GTypePlugin implementation, see the example for
 	 * g_enum_complete_type_info() above.
 	 * Params:
-	 * type =  the type identifier of the type being completed
-	 * info =  the GTypeInfo struct to be filled in
+	 * type = the type identifier of the type being completed
+	 * info = the GTypeInfo struct to be filled in
 	 */
 	public static void completeTypeInfo(GType type, GTypeInfo* info, Flags _Values)
 	{

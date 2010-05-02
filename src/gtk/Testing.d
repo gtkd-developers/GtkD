@@ -105,8 +105,8 @@ public class Testing
 	 * will automatically be destroyed upon test function teardown.
 	 * Since 2.14
 	 * Params:
-	 * windowTitle =  Title of the window to be displayed.
-	 * dialogText =  Text inside the window to be displayed.
+	 * windowTitle = Title of the window to be displayed.
+	 * dialogText = Text inside the window to be displayed.
 	 * Returns: a widget pointer to the newly created GtkWindow.
 	 */
 	public static Widget createSimpleWindow(string windowTitle, string dialogText)
@@ -130,8 +130,8 @@ public class Testing
 	 * predetermined locales, see gtk_test_init() for more details.
 	 * Since 2.14
 	 * Params:
-	 * widget =  Valid label or container widget.
-	 * labelPattern =  Shell-glob pattern to match a label string.
+	 * widget = Valid label or container widget.
+	 * labelPattern = Shell-glob pattern to match a label string.
 	 * Returns: a GtkLabel widget if any is found.
 	 */
 	public static Widget findLabel(Widget widget, string labelPattern)
@@ -155,8 +155,8 @@ public class Testing
 	 * button or text entry widget, given it's corresponding label widget.
 	 * Since 2.14
 	 * Params:
-	 * baseWidget =  Valid widget, part of a widget hierarchy
-	 * widgetType =  Type of a aearched for sibling widget
+	 * baseWidget = Valid widget, part of a widget hierarchy
+	 * widgetType = Type of a aearched for sibling widget
 	 * Returns: a widget of type widget_type if any is found.
 	 */
 	public static Widget findSibling(Widget baseWidget, GType widgetType)
@@ -180,9 +180,9 @@ public class Testing
 	 * such widgets and synthesizing widget events.
 	 * Since 2.14
 	 * Params:
-	 * widget =  Container widget, usually a GtkWindow.
-	 * labelPattern =  Shell-glob pattern to match a label string.
-	 * widgetType =  Type of a aearched for label sibling widget.
+	 * widget = Container widget, usually a GtkWindow.
+	 * labelPattern = Shell-glob pattern to match a label string.
+	 * widgetType = Type of a aearched for label sibling widget.
 	 * Returns: a valid widget if any is found or NULL.
 	 */
 	public static Widget findWidget(Widget widget, string labelPattern, GType widgetType)
@@ -201,7 +201,7 @@ public class Testing
 	 * calling gtk_test_register_all_types().
 	 * Since 2.14
 	 * Params:
-	 * nTypes =  location to store number of types
+	 * nTypes = location to store number of types
 	 * Returns: 0-terminated array of type ids
 	 */
 	public static GType* listAllTypes(uint* nTypes)
@@ -230,7 +230,7 @@ public class Testing
 	 * as passed in to gtk_test_slider_set_perc().
 	 * Since 2.14
 	 * Params:
-	 * widget =  valid widget pointer.
+	 * widget = valid widget pointer.
 	 * Returns: adjustment->value for an adjustment belonging to widget.
 	 */
 	public static double sliderGetValue(Widget widget)
@@ -247,8 +247,8 @@ public class Testing
 	 * percentage argument.
 	 * Since 2.14
 	 * Params:
-	 * widget =  valid widget pointer.
-	 * percentage =  value between 0 and 100.
+	 * widget = valid widget pointer.
+	 * percentage = value between 0 and 100.
 	 */
 	public static void sliderSetPerc(Widget widget, double percentage)
 	{
@@ -262,9 +262,9 @@ public class Testing
 	 * spin button's value.
 	 * Since 2.14
 	 * Params:
-	 * spinner =  valid GtkSpinButton widget.
-	 * button =  Number of the pointer button for the event, usually 1, 2 or 3.
-	 * upwards =  TRUE for upwards arrow click, FALSE for downwards arrow click.
+	 * spinner = valid GtkSpinButton widget.
+	 * button = Number of the pointer button for the event, usually 1, 2 or 3.
+	 * upwards = TRUE for upwards arrow click, FALSE for downwards arrow click.
 	 * Returns: wether all actions neccessary for the button click simulation were carried out successfully.
 	 */
 	public static int spinButtonClick(SpinButton spinner, uint button, int upwards)
@@ -278,7 +278,7 @@ public class Testing
 	 * GtkEditable (entry and text widgets) or GtkTextView.
 	 * Since 2.14
 	 * Params:
-	 * widget =  valid widget pointer.
+	 * widget = valid widget pointer.
 	 * Returns: new 0-terminated C string, needs to be released with g_free().
 	 */
 	public static string textGet(Widget widget)
@@ -292,8 +292,8 @@ public class Testing
 	 * GtkEditable (entry and text widgets) or GtkTextView.
 	 * Since 2.14
 	 * Params:
-	 * widget =  valid widget pointer.
-	 * string =  a 0-terminated C string
+	 * widget = valid widget pointer.
+	 * string = a 0-terminated C string
 	 */
 	public static void textSet(Widget widget, string string)
 	{
@@ -312,9 +312,9 @@ public class Testing
 	 * location, see gdk_test_simulate_button() for details.
 	 * Since 2.14
 	 * Params:
-	 * widget =  Widget to generate a button click on.
-	 * button =  Number of the pointer button for the event, usually 1, 2 or 3.
-	 * modifiers =  Keyboard modifiers the event is setup with.
+	 * widget = Widget to generate a button click on.
+	 * button = Number of the pointer button for the event, usually 1, 2 or 3.
+	 * modifiers = Keyboard modifiers the event is setup with.
 	 * Returns: wether all actions neccessary for the button click simulation were carried out successfully.
 	 */
 	public static int widgetClick(Widget widget, uint button, GdkModifierType modifiers)
@@ -333,9 +333,9 @@ public class Testing
 	 * location, see gdk_test_simulate_key() for details.
 	 * Since 2.14
 	 * Params:
-	 * widget =  Widget to generate a key press and release on.
-	 * keyval =  A Gdk keyboard value.
-	 * modifiers =  Keyboard modifiers the event is setup with.
+	 * widget = Widget to generate a key press and release on.
+	 * keyval = A Gdk keyboard value.
+	 * modifiers = Keyboard modifiers the event is setup with.
 	 * Returns: wether all actions neccessary for the key event simulation were carried out successfully.
 	 */
 	public static int widgetSendKey(Widget widget, uint keyval, GdkModifierType modifiers)

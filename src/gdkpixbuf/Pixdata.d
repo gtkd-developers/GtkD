@@ -121,8 +121,8 @@ public class Pixdata
 	 * pixel data is run-length encoded into newly-allocated memory and a
 	 * pointer to that memory is returned.
 	 * Params:
-	 * pixbuf =  the data to fill pixdata with.
-	 * useRle =  whether to use run-length encoding for the pixel data.
+	 * pixbuf = the data to fill pixdata with.
+	 * useRle = whether to use run-length encoding for the pixel data.
 	 * Returns: If ure_rle is TRUE, a pointer to the newly-allocated memory  for the run-length encoded pixel data, otherwise NULL.
 	 */
 	public void* fromPixbuf(Pixbuf pixbuf, int useRle)
@@ -136,7 +136,7 @@ public class Pixdata
 	 * if the pixel data is run-length-encoded, the pixel data is copied into
 	 * newly-allocated memory; otherwise it is reused.
 	 * Params:
-	 * copyPixels =  whether to copy raw pixel data; run-length encoded
+	 * copyPixels = whether to copy raw pixel data; run-length encoded
 	 *  pixel data is always copied.
 	 * Returns: a new GdkPixbuf.
 	 * Throws: GException on failure.
@@ -184,7 +184,7 @@ public class Pixdata
 	 * for validity. This function may fail with GDK_PIXBUF_CORRUPT_IMAGE
 	 * or GDK_PIXBUF_ERROR_UNKNOWN_TYPE.
 	 * Params:
-	 * stream =  stream of bytes containing a serialized GdkPixdata structure.
+	 * stream = stream of bytes containing a serialized GdkPixdata structure.
 	 * Returns: Upon successful deserialization TRUE is returned,FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -209,8 +209,8 @@ public class Pixdata
 	 * GTK+ ships with a program called gdk-pixbuf-csource
 	 * which offers a command line interface to this function.
 	 * Params:
-	 * name =  used for naming generated data structures or macros.
-	 * dumpType =  a GdkPixdataDumpType determining the kind of C
+	 * name = used for naming generated data structures or macros.
+	 * dumpType = a GdkPixdataDumpType determining the kind of C
 	 *  source to be generated.
 	 * Returns: a newly-allocated string containing the C source form of pixdata.
 	 */

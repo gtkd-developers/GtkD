@@ -130,7 +130,7 @@ public class StockItem
 	 * gtk_stock_add_static() if items is persistent and GTK+ need not
 	 * copy the array.
 	 * Params:
-	 * nItems =  number of GtkStockItem in items
+	 * nItems = number of GtkStockItem in items
 	 */
 	public void add(uint nItems)
 	{
@@ -142,7 +142,7 @@ public class StockItem
 	 * Same as gtk_stock_add(), but doesn't copy items, so
 	 * items must persist until application exit.
 	 * Params:
-	 * nItems =  number of items
+	 * nItems = number of items
 	 */
 	public void addStatic(uint nItems)
 	{
@@ -153,7 +153,7 @@ public class StockItem
 	/**
 	 * Copies a stock item, mostly useful for language bindings and not in applications.
 	 * Params:
-	 * item =  a GtkStockItem
+	 * item = a GtkStockItem
 	 * Returns: a new GtkStockItem
 	 */
 	public StockItem itemCopy()
@@ -172,7 +172,7 @@ public class StockItem
 	 * gtk_stock_item_copy(). Also frees the fields inside the stock item,
 	 * if they are not NULL.
 	 * Params:
-	 * item =  a GtkStockItem
+	 * item = a GtkStockItem
 	 */
 	public void itemFree()
 	{
@@ -201,8 +201,8 @@ public class StockItem
 	 * Fills item with the registered values for stock_id, returning TRUE
 	 * if stock_id was known.
 	 * Params:
-	 * stockId =  a stock item name
-	 * item =  stock item to initialize with values
+	 * stockId = a stock item name
+	 * item = stock item to initialize with values
 	 * Returns: TRUE if item was initialized
 	 */
 	public static int lookup(string stockId, StockItem item)
@@ -223,10 +223,10 @@ public class StockItem
 	 * the correct domain when calling dgettext(). This can be useful, e.g.
 	 * Since 2.8
 	 * Params:
-	 * domain =  the translation domain for which func shall be used
-	 * func =  a GtkTranslateFunc
-	 * data =  data to pass to func
-	 * notify =  a GDestroyNotify that is called when data is
+	 * domain = the translation domain for which func shall be used
+	 * func = a GtkTranslateFunc
+	 * data = data to pass to func
+	 * notify = a GDestroyNotify that is called when data is
 	 *  no longer needed
 	 */
 	public static void setTranslateFunc(string domain, GtkTranslateFunc func, void* data, GDestroyNotify notify)

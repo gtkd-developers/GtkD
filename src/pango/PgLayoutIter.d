@@ -304,7 +304,7 @@ public class PgLayoutIter
 	 * can sensibly be obtained for characters; ink extents make sense only
 	 * down to the level of clusters.
 	 * Params:
-	 * logicalRect =  rectangle to fill with logical extents
+	 * logicalRect = rectangle to fill with logical extents
 	 */
 	public void getCharExtents(PangoRectangle* logicalRect)
 	{
@@ -316,8 +316,8 @@ public class PgLayoutIter
 	 * Gets the extents of the current cluster, in layout coordinates
 	 * (origin is the top left of the entire layout).
 	 * Params:
-	 * inkRect =  rectangle to fill with ink extents, or NULL
-	 * logicalRect =  rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL
+	 * logicalRect = rectangle to fill with logical extents, or NULL
 	 */
 	public void getClusterExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -329,8 +329,8 @@ public class PgLayoutIter
 	 * Gets the extents of the current run in layout coordinates
 	 * (origin is the top left of the entire layout).
 	 * Params:
-	 * inkRect =  rectangle to fill with ink extents, or NULL
-	 * logicalRect =  rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL
+	 * logicalRect = rectangle to fill with logical extents, or NULL
 	 */
 	public void getRunExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -347,8 +347,8 @@ public class PgLayoutIter
 	 * The Y positions are in layout coordinates (origin at top left of the
 	 * entire layout).
 	 * Params:
-	 * y0_ =  start of line
-	 * y1_ =  end of line
+	 * y0_ = start of line
+	 * y1_ = end of line
 	 */
 	public void getLineYrange(out int y0_, out int y1_)
 	{
@@ -364,8 +364,8 @@ public class PgLayoutIter
 	 * the same width/height but not at the same x/y as the extents
 	 * returned from pango_layout_line_get_extents().
 	 * Params:
-	 * inkRect =  rectangle to fill with ink extents, or NULL
-	 * logicalRect =  rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL
+	 * logicalRect = rectangle to fill with logical extents, or NULL
 	 */
 	public void getLineExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -378,8 +378,8 @@ public class PgLayoutIter
 	 * over. ink_rect or logical_rect can be NULL if you
 	 * aren't interested in them.
 	 * Params:
-	 * inkRect =  rectangle to fill with ink extents, or NULL
-	 * logicalRect =  rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL
+	 * logicalRect = rectangle to fill with logical extents, or NULL
 	 */
 	public void getLayoutExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{

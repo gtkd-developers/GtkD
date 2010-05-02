@@ -93,7 +93,7 @@ public import glib.ListG;
  * multiple <attribute> elements. Each <attribute> element has
  * a name attribute which specifies a property of the cell renderer; the
  * content of the element is the attribute value.
- * Example 25. A UI definition fragment specifying attributes
+ * Example  25.  A UI definition fragment specifying attributes
  * <object class="GtkCellView">
  *  <child>
  *  <object class="GtkCellRendererText"/>
@@ -126,8 +126,8 @@ public template CellLayoutT(TStruct)
 	 * Note that reusing the same cell renderer is not supported.
 	 * Since 2.4
 	 * Params:
-	 * cell =  A GtkCellRenderer.
-	 * expand =  TRUE if cell is to be given extra space allocated to cell_layout.
+	 * cell = A GtkCellRenderer.
+	 * expand = TRUE if cell is to be given extra space allocated to cell_layout.
 	 */
 	public void packStart(CellRenderer cell, int expand)
 	{
@@ -142,8 +142,8 @@ public template CellLayoutT(TStruct)
 	 * Note that reusing the same cell renderer is not supported.
 	 * Since 2.4
 	 * Params:
-	 * cell =  A GtkCellRenderer.
-	 * expand =  TRUE if cell is to be given extra space allocated to cell_layout.
+	 * cell = A GtkCellRenderer.
+	 * expand = TRUE if cell is to be given extra space allocated to cell_layout.
 	 */
 	public void packEnd(CellRenderer cell, int expand)
 	{
@@ -172,8 +172,8 @@ public template CellLayoutT(TStruct)
 	 * into cell_layout for this to function properly.
 	 * Since 2.4
 	 * Params:
-	 * cell =  A GtkCellRenderer to reorder.
-	 * position =  New position to insert cell at.
+	 * cell = A GtkCellRenderer to reorder.
+	 * position = New position to insert cell at.
 	 */
 	public void reorder(CellRenderer cell, int position)
 	{
@@ -200,9 +200,9 @@ public template CellLayoutT(TStruct)
 	 * GtkCellRendererText get its values from column 2.
 	 * Since 2.4
 	 * Params:
-	 * cell =  A GtkCellRenderer.
-	 * attribute =  An attribute on the renderer.
-	 * column =  The column position on the model to get the attribute from.
+	 * cell = A GtkCellRenderer.
+	 * attribute = An attribute on the renderer.
+	 * column = The column position on the model to get the attribute from.
 	 */
 	public void addAttribute(CellRenderer cell, string attribute, int column)
 	{
@@ -217,10 +217,10 @@ public template CellLayoutT(TStruct)
 	 * as appropriate. func may be NULL to remove and older one.
 	 * Since 2.4
 	 * Params:
-	 * cell =  A GtkCellRenderer.
-	 * func =  The GtkCellLayoutDataFunc to use.
-	 * funcData =  The user data for func.
-	 * destroy =  The destroy notification for func_data.
+	 * cell = A GtkCellRenderer.
+	 * func = The GtkCellLayoutDataFunc to use.
+	 * funcData = The user data for func.
+	 * destroy = The destroy notification for func_data.
 	 */
 	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
@@ -233,7 +233,7 @@ public template CellLayoutT(TStruct)
 	 * gtk_cell_layout_set_attributes().
 	 * Since 2.4
 	 * Params:
-	 * cell =  A GtkCellRenderer to clear the attribute mapping on.
+	 * cell = A GtkCellRenderer to clear the attribute mapping on.
 	 */
 	public void clearAttributes(CellRenderer cell)
 	{

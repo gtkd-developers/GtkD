@@ -97,9 +97,9 @@ public interface LoadableIconIF
 	 * Loads a loadable icon. For the asynchronous version of this function,
 	 * see g_loadable_icon_load_async().
 	 * Params:
-	 * size =  an integer.
-	 * type =  a location to store the type of the loaded icon, NULL to ignore.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * size = an integer.
+	 * type = a location to store the type of the loaded icon, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GInputStream to read the icon from.
 	 * Throws: GException on failure.
 	 */
@@ -110,18 +110,18 @@ public interface LoadableIconIF
 	 * g_loadable_icon_load_finish(). For the synchronous, blocking
 	 * version of this function, see g_loadable_icon_load().
 	 * Params:
-	 * size =  an integer.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * size = an integer.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void loadAsync(int size, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
 	/**
 	 * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
 	 * Params:
-	 * res =  a GAsyncResult.
-	 * type =  a location to store the type of the loaded icon, NULL to ignore.
+	 * res = a GAsyncResult.
+	 * type = a location to store the type of the loaded icon, NULL to ignore.
 	 * Returns: a GInputStream to read the icon from.
 	 * Throws: GException on failure.
 	 */

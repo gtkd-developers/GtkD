@@ -528,7 +528,7 @@ public class Button : Bin, ActivatableIF
 	 * is used.
 	 * This will also clear any previously set labels.
 	 * Params:
-	 * label =  a string
+	 * label = a string
 	 */
 	public void setLabel(string label)
 	{
@@ -550,7 +550,7 @@ public class Button : Bin, ActivatableIF
 	 * If TRUE, the label set on the button is used as a
 	 * stock id to select the stock item for the button.
 	 * Params:
-	 * useStock =  TRUE if the button should use a stock item
+	 * useStock = TRUE if the button should use a stock item
 	 */
 	public void setUseStock(int useStock)
 	{
@@ -573,7 +573,7 @@ public class Button : Bin, ActivatableIF
 	 * If true, an underline in the text of the button label indicates
 	 * the next character should be used for the mnemonic accelerator key.
 	 * Params:
-	 * useUnderline =  TRUE if underlines in the text indicate mnemonics
+	 * useUnderline = TRUE if underlines in the text indicate mnemonics
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
@@ -588,7 +588,7 @@ public class Button : Bin, ActivatableIF
 	 * application.
 	 * Since 2.4
 	 * Params:
-	 * focusOnClick =  whether the button grabs focus when clicked with the mouse
+	 * focusOnClick = whether the button grabs focus when clicked with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{
@@ -613,9 +613,9 @@ public class Button : Bin, ActivatableIF
 	 * the child is a GtkMisc or a GtkAligment.
 	 * Since 2.4
 	 * Params:
-	 * xalign =  the horizontal position of the child, 0.0 is left aligned,
+	 * xalign = the horizontal position of the child, 0.0 is left aligned,
 	 *  1.0 is right aligned
-	 * yalign =  the vertical position of the child, 0.0 is top aligned,
+	 * yalign = the vertical position of the child, 0.0 is top aligned,
 	 *  1.0 is bottom aligned
 	 */
 	public void setAlignment(float xalign, float yalign)
@@ -628,8 +628,8 @@ public class Button : Bin, ActivatableIF
 	 * Gets the alignment of the child in the button.
 	 * Since 2.4
 	 * Params:
-	 * xalign =  return location for horizontal alignment
-	 * yalign =  return location for vertical alignment
+	 * xalign = return location for horizontal alignment
+	 * yalign = return location for vertical alignment
 	 */
 	public void getAlignment(out float xalign, out float yalign)
 	{
@@ -644,7 +644,7 @@ public class Button : Bin, ActivatableIF
 	 * gtk_widget_show() on image yourself.
 	 * Since 2.6
 	 * Params:
-	 * image =  a widget to set as the image for the button
+	 * image = a widget to set as the image for the button
 	 */
 	public void setImage(Widget image)
 	{
@@ -675,7 +675,7 @@ public class Button : Bin, ActivatableIF
 	 * inside the button.
 	 * Since 2.10
 	 * Params:
-	 * position =  the position
+	 * position = the position
 	 */
 	public void setImagePosition(GtkPositionType position)
 	{

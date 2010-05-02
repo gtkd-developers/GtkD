@@ -186,11 +186,11 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Creates a GSimpleAsyncResult.
 	 * Params:
-	 * sourceObject =  a GObject the asynchronous function was called with,
+	 * sourceObject = a GObject the asynchronous function was called with,
 	 * or NULL.
-	 * callback =  a GAsyncReadyCallback.
-	 * userData =  user data passed to callback.
-	 * sourceTag =  the asynchronous function.
+	 * callback = a GAsyncReadyCallback.
+	 * userData = user data passed to callback.
+	 * sourceTag = the asynchronous function.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, void* sourceTag)
@@ -207,10 +207,10 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Creates a GSimpleAsyncResult from an error condition.
 	 * Params:
-	 * sourceObject =  a GObject, or NULL.
-	 * callback =  a GAsyncReadyCallback.
-	 * userData =  user data passed to callback.
-	 * error =  a GError location.
+	 * sourceObject = a GObject, or NULL.
+	 * callback = a GAsyncReadyCallback.
+	 * userData = user data passed to callback.
+	 * error = a GError location.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, ErrorG error)
@@ -227,8 +227,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Sets the operation result within the asynchronous result to a pointer.
 	 * Params:
-	 * opRes =  a pointer result from an asynchronous function.
-	 * destroyOpRes =  a GDestroyNotify function.
+	 * opRes = a pointer result from an asynchronous function.
+	 * destroyOpRes = a GDestroyNotify function.
 	 */
 	public void setOpResGpointer(void* opRes, GDestroyNotify destroyOpRes)
 	{
@@ -250,7 +250,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Sets the operation result within the asynchronous result to
 	 * the given op_res.
 	 * Params:
-	 * opRes =  a gssize.
+	 * opRes = a gssize.
 	 */
 	public void setOpResGssize(int opRes)
 	{
@@ -271,7 +271,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Sets the operation result to a boolean within the asynchronous result.
 	 * Params:
-	 * opRes =  a gboolean.
+	 * opRes = a gboolean.
 	 */
 	public void setOpResGboolean(int opRes)
 	{
@@ -310,9 +310,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * to the _async function corresponding to the _finish function from
 	 * which this function is called).
 	 * Params:
-	 * result =  the GAsyncResult passed to the _finish function.
-	 * source =  the GObject passed to the _finish function.
-	 * sourceTag =  the asynchronous function.
+	 * result = the GAsyncResult passed to the _finish function.
+	 * source = the GObject passed to the _finish function.
+	 * sourceTag = the asynchronous function.
 	 * Returns: TRUE if all checks passed or FALSE if any failed.
 	 */
 	public static int isValid(GAsyncResult* result, ObjectG source, void* sourceTag)
@@ -324,7 +324,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Sets whether to handle cancellation within the asynchronous operation.
 	 * Params:
-	 * handleCancellation =  a gboolean.
+	 * handleCancellation = a gboolean.
 	 */
 	public void setHandleCancellation(int handleCancellation)
 	{
@@ -359,9 +359,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * g_simple_async_result_complete_in_idle() on simple to return
 	 * the result to the appropriate main loop.
 	 * Params:
-	 * func =  a GSimpleAsyncThreadFunc.
-	 * ioPriority =  the io priority of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * func = a GSimpleAsyncThreadFunc.
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 */
 	public void runInThread(GSimpleAsyncThreadFunc func, int ioPriority, Cancellable cancellable)
 	{
@@ -372,7 +372,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Sets the result from a GError.
 	 * Params:
-	 * error =  GError.
+	 * error = GError.
 	 */
 	public void setFromError(ErrorG error)
 	{
@@ -404,10 +404,10 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Sets an error within the asynchronous result without a GError.
 	 * Unless writing a binding, see g_simple_async_result_set_error().
 	 * Params:
-	 * domain =  a GQuark (usually G_IO_ERROR).
-	 * code =  an error code.
-	 * format =  a formatted error reporting string.
-	 * args =  va_list of arguments.
+	 * domain = a GQuark (usually G_IO_ERROR).
+	 * code = an error code.
+	 * format = a formatted error reporting string.
+	 * args = va_list of arguments.
 	 */
 	public void setErrorVa(GQuark domain, int code, string format, void* args)
 	{
@@ -420,10 +420,10 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * g_simple_async_report_error_in_idle(), but takes a GError rather
 	 * than building a new one.
 	 * Params:
-	 * object =  a GObject.
-	 * callback =  a GAsyncReadyCallback.
-	 * userData =  user data passed to callback.
-	 * error =  the GError to report
+	 * object = a GObject.
+	 * callback = a GAsyncReadyCallback.
+	 * userData = user data passed to callback.
+	 * error = the GError to report
 	 */
 	public static void gSimpleAsyncReportGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{

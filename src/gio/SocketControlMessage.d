@@ -133,10 +133,10 @@ public class SocketControlMessage : ObjectG
 	 * will be returned.
 	 * Since 2.22
 	 * Params:
-	 * level =  a socket level
-	 * type =  a socket control message type for the given level
-	 * size =  the size of the data in bytes
-	 * data =  pointer to the message data
+	 * level = a socket level
+	 * type = a socket control message type for the given level
+	 * size = the size of the data in bytes
+	 * data = pointer to the message data
 	 * Returns: the deserialized message or NULL
 	 */
 	public static SocketControlMessage deserialize(int level, int type, uint size, void* data)
@@ -194,7 +194,7 @@ public class SocketControlMessage : ObjectG
 	 * object.
 	 * Since 2.22
 	 * Params:
-	 * data =  A buffer to write data to
+	 * data = A buffer to write data to
 	 */
 	public void serialize(void* data)
 	{

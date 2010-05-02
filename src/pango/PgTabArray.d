@@ -106,8 +106,8 @@ public class PgTabArray
 	 * pixel units if positions_in_pixels is TRUE, otherwise in Pango
 	 * units. All stops are initially at position 0.
 	 * Params:
-	 * initialSize =  Initial number of tab stops to allocate, can be 0
-	 * positionsInPixels =  whether positions are in pixel units
+	 * initialSize = Initial number of tab stops to allocate, can be 0
+	 * positionsInPixels = whether positions are in pixel units
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int initialSize, int positionsInPixels)
@@ -159,7 +159,7 @@ public class PgTabArray
 	 * Resizes a tab array. You must subsequently initialize any tabs that
 	 * were added as a result of growing the array.
 	 * Params:
-	 * newSize =  new size of the array
+	 * newSize = new size of the array
 	 */
 	public void resize(int newSize)
 	{
@@ -172,9 +172,9 @@ public class PgTabArray
 	 * alignment must always be PANGO_TAB_LEFT in the current
 	 * implementation.
 	 * Params:
-	 * tabIndex =  the index of a tab stop
-	 * alignment =  tab alignment
-	 * location =  tab location in Pango units
+	 * tabIndex = the index of a tab stop
+	 * alignment = tab alignment
+	 * location = tab location in Pango units
 	 */
 	public void setTab(int tabIndex, PangoTabAlign alignment, int location)
 	{
@@ -185,9 +185,9 @@ public class PgTabArray
 	/**
 	 * Gets the alignment and position of a tab stop.
 	 * Params:
-	 * tabIndex =  tab stop index
-	 * alignment =  location to store alignment, or NULL
-	 * location =  location to store tab position, or NULL
+	 * tabIndex = tab stop index
+	 * alignment = location to store alignment, or NULL
+	 * location = location to store tab position, or NULL
 	 */
 	public void getTab(int tabIndex, out PangoTabAlign alignment, out int location)
 	{
@@ -200,8 +200,8 @@ public class PgTabArray
 	 * arrays of length pango_tab_array_get_size(). You must free the
 	 * returned array.
 	 * Params:
-	 * alignments =  location to store an array of tab stop alignments, or NULL
-	 * locations =  location to store an array of tab positions, or NULL
+	 * alignments = location to store an array of tab stop alignments, or NULL
+	 * locations = location to store an array of tab positions, or NULL
 	 */
 	public void getTabs(out PangoTabAlign[] alignments, out int[] locations)
 	{

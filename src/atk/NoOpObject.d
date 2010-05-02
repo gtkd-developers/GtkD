@@ -120,7 +120,7 @@ public class NoOpObject : ObjectAtk
 	 * Provides a default (non-functioning stub) AtkObject.
 	 * Application maintainers should not use this method.
 	 * Params:
-	 * obj =  a GObject
+	 * obj = a GObject
 	 * Returns: a default (non-functioning stub) AtkObject
 	 */
 	public static ObjectAtk newNoOpObject(ObjectG obj)

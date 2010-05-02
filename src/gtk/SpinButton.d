@@ -79,7 +79,7 @@ private import gtk.Entry;
  * that it can be checked to ensure it is in a given range.
  * The main properties of a GtkSpinButton are through a GtkAdjustment. See the
  * GtkAdjustment section for more details about an adjustment's properties.
- * Example 17. Using a GtkSpinButton to get an integer.
+ * Example  17.  Using a GtkSpinButton to get an integer.
  * /+* Provides a function to retrieve an integer value from a GtkSpinButton
  *  * and creates a spin button to model percentage values.
  *  +/
@@ -98,7 +98,7 @@ private import gtk.Entry;
 	 *  gtk_widget_show_all (window);
 	 *  return;
  * }
- * Example 18. Using a GtkSpinButton to get a floating point value.
+ * Example  18.  Using a GtkSpinButton to get a floating point value.
  * /+* Provides a function to retrieve a floating point value from a
  *  * GtkSpinButton, and creates a high precision spin button.
  *  +/
@@ -364,9 +364,9 @@ public class SpinButton : Entry
 	 * is a power of ten. If the resulting precision is not suitable for your
 	 * needs, use gtk_spin_button_set_digits() to correct it.
 	 * Params:
-	 * min =  Minimum allowable value
-	 * max =  Maximum allowable value
-	 * step =  Increment added or subtracted by spinning the widget
+	 * min = Minimum allowable value
+	 * max = Maximum allowable value
+	 * step = Increment added or subtracted by spinning the widget
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double min, double max, double step)
@@ -383,7 +383,7 @@ public class SpinButton : Entry
 	/**
 	 * Replaces the GtkAdjustment associated with spin_button.
 	 * Params:
-	 * adjustment =  a GtkAdjustment to replace the existing adjustment
+	 * adjustment = a GtkAdjustment to replace the existing adjustment
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -410,7 +410,7 @@ public class SpinButton : Entry
 	 * Set the precision to be displayed by spin_button. Up to 20 digit precision
 	 * is allowed.
 	 * Params:
-	 * digits =  the number of digits after the decimal point to be displayed for the spin button's value
+	 * digits = the number of digits after the decimal point to be displayed for the spin button's value
 	 */
 	public void setDigits(uint digits)
 	{
@@ -422,8 +422,8 @@ public class SpinButton : Entry
 	 * Sets the step and page increments for spin_button. This affects how
 	 * quickly the value changes when the spin button's arrows are activated.
 	 * Params:
-	 * step =  increment applied for a button 1 press.
-	 * page =  increment applied for a button 2 press.
+	 * step = increment applied for a button 1 press.
+	 * page = increment applied for a button 2 press.
 	 */
 	public void setIncrements(double step, double page)
 	{
@@ -434,8 +434,8 @@ public class SpinButton : Entry
 	/**
 	 * Sets the minimum and maximum allowable values for spin_button
 	 * Params:
-	 * min =  minimum allowable value
-	 * max =  maximum allowable value
+	 * min = minimum allowable value
+	 * max = maximum allowable value
 	 */
 	public void setRange(double min, double max)
 	{
@@ -456,7 +456,7 @@ public class SpinButton : Entry
 	/**
 	 * Set the value of spin_button.
 	 * Params:
-	 * value =  the new value
+	 * value = the new value
 	 */
 	public void setValue(double value)
 	{
@@ -468,7 +468,7 @@ public class SpinButton : Entry
 	 * Sets the update behavior of a spin button. This determines whether the
 	 * spin button is always updated or only when a valid value is set.
 	 * Params:
-	 * policy =  a GtkSpinButtonUpdatePolicy value
+	 * policy = a GtkSpinButtonUpdatePolicy value
 	 */
 	public void setUpdatePolicy(GtkSpinButtonUpdatePolicy policy)
 	{
@@ -480,7 +480,7 @@ public class SpinButton : Entry
 	 * Sets the flag that determines if non-numeric text can be typed into
 	 * the spin button.
 	 * Params:
-	 * numeric =  flag indicating if only numeric entry is allowed.
+	 * numeric = flag indicating if only numeric entry is allowed.
 	 */
 	public void setNumeric(int numeric)
 	{
@@ -492,8 +492,8 @@ public class SpinButton : Entry
 	 * Increment or decrement a spin button's value in a specified direction
 	 * by a specified amount.
 	 * Params:
-	 * direction =  a GtkSpinType indicating the direction to spin.
-	 * increment =  step increment to apply in the specified direction.
+	 * direction = a GtkSpinType indicating the direction to spin.
+	 * increment = step increment to apply in the specified direction.
 	 */
 	public void spin(GtkSpinType direction, double increment)
 	{
@@ -505,7 +505,7 @@ public class SpinButton : Entry
 	 * Sets the flag that determines if a spin button value wraps around to the
 	 * opposite limit when the upper or lower limit of the range is exceeded.
 	 * Params:
-	 * wrap =  a flag indicating if wrapping behavior is performed.
+	 * wrap = a flag indicating if wrapping behavior is performed.
 	 */
 	public void setWrap(int wrap)
 	{
@@ -517,7 +517,7 @@ public class SpinButton : Entry
 	 * Sets the policy as to whether values are corrected to the nearest step
 	 * increment when a spin button is activated after providing an invalid value.
 	 * Params:
-	 * snapToTicks =  a flag indicating if invalid values should be corrected.
+	 * snapToTicks = a flag indicating if invalid values should be corrected.
 	 */
 	public void setSnapToTicks(int snapToTicks)
 	{
@@ -548,8 +548,8 @@ public class SpinButton : Entry
 	 * Gets the current step and page the increments used by spin_button. See
 	 * gtk_spin_button_set_increments().
 	 * Params:
-	 * step =  location to store step increment, or NULL
-	 * page =  location to store page increment, or NULL
+	 * step = location to store step increment, or NULL
+	 * page = location to store page increment, or NULL
 	 */
 	public void getIncrements(out double step, out double page)
 	{
@@ -572,8 +572,8 @@ public class SpinButton : Entry
 	 * Gets the range allowed for spin_button. See
 	 * gtk_spin_button_set_range().
 	 * Params:
-	 * min =  location to store minimum allowed value, or NULL
-	 * max =  location to store maximum allowed value, or NULL
+	 * min = location to store minimum allowed value, or NULL
+	 * max = location to store maximum allowed value, or NULL
 	 */
 	public void getRange(out double min, out double max)
 	{

@@ -176,9 +176,9 @@ public class FontFace
 	 * call this function with the key that was used to set it and NULL
 	 * for data.
 	 * Params:
-	 * key =  the address of a cairo_user_data_key_t to attach the user data to
-	 * userData =  the user data to attach to the font face
-	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * key = the address of a cairo_user_data_key_t to attach the user data to
+	 * userData = the user data to attach to the font face
+	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * font face is destroyed or when new user data is attached using the
 	 * same key.
 	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
@@ -194,7 +194,7 @@ public class FontFace
 	 * key. If no user data has been attached with the given key this
 	 * function returns NULL.
 	 * Params:
-	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * key = the address of the cairo_user_data_key_t the user data was
 	 * attached to
 	 * Returns: the user data previously attached or NULL.
 	 */

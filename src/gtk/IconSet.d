@@ -116,7 +116,7 @@ private import gtk.Widget;
  * state
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
- * Example 5. A GtkIconFactory UI definition fragment.
+ * Example  5.  A GtkIconFactory UI definition fragment.
  * <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>
@@ -189,7 +189,7 @@ public class IconSet
 	 * gtk_icon_set_new_from_pixbuf() creates a new icon set with a
 	 * default icon source based on the given pixbuf.
 	 * Params:
-	 * source =  a GtkIconSource
+	 * source = a GtkIconSource
 	 */
 	public void addSource(IconSource source)
 	{
@@ -241,7 +241,7 @@ public class IconSet
 	 * using scaling, pixelation, etc. as required to adjust the icon size
 	 * or make the icon look insensitive/prelighted.
 	 * Params:
-	 * pixbuf =  a GdkPixbuf
+	 * pixbuf = a GdkPixbuf
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
@@ -278,15 +278,15 @@ public class IconSet
 	 * (perhaps because an image file fails to load), a default "missing
 	 * image" icon will be returned instead.
 	 * Params:
-	 * style =  a GtkStyle associated with widget, or NULL
-	 * direction =  text direction
-	 * state =  widget state
-	 * size =  icon size. A size of (GtkIconSize)-1
+	 * style = a GtkStyle associated with widget, or NULL
+	 * direction = text direction
+	 * state = widget state
+	 * size = icon size. A size of (GtkIconSize)-1
 	 *  means render at the size of the source and don't scale.
-	 * widget =  widget that will display the icon, or NULL.
+	 * widget = widget that will display the icon, or NULL.
 	 *  The only use that is typically made of this
 	 *  is to determine the appropriate GdkScreen.
-	 * detail =  detail to pass to the theme engine, or NULL.
+	 * detail = detail to pass to the theme engine, or NULL.
 	 *  Note that passing a detail of anything but NULL
 	 *  will disable caching.
 	 * Returns: a GdkPixbuf to be displayed
@@ -316,7 +316,7 @@ public class IconSet
 	 * Obtains a list of icon sizes this icon set can render. The returned
 	 * array must be freed with g_free().
 	 * Params:
-	 * sizes =  return location for array of sizes
+	 * sizes = return location for array of sizes
 	 */
 	public void getSizes(out GtkIconSize[] sizes)
 	{

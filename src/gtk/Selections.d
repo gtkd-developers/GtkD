@@ -101,9 +101,9 @@ public class Selections
 	 * Claims ownership of a given selection for a particular widget,
 	 * or, if widget is NULL, release ownership of the selection.
 	 * Params:
-	 * widget =  a GtkWidget, or NULL.
-	 * selection =  an interned atom representing the selection to claim
-	 * time =  timestamp with which to claim the selection
+	 * widget = a GtkWidget, or NULL.
+	 * selection = an interned atom representing the selection to claim
+	 * time = timestamp with which to claim the selection
 	 * Returns: TRUE if the operation succeeded
 	 */
 	public static int ownerSet(Widget widget, GdkAtom selection, uint time)
@@ -117,10 +117,10 @@ public class Selections
 	 * if widget is NULL, release ownership of the selection.
 	 * Since 2.2
 	 * Params:
-	 * display =  the Gdkdisplay where the selection is set
-	 * widget =  new selection owner (a GdkWidget), or NULL.
-	 * selection =  an interned atom representing the selection to claim.
-	 * time =  timestamp with which to claim the selection
+	 * display = the Gdkdisplay where the selection is set
+	 * widget = new selection owner (a GdkWidget), or NULL.
+	 * selection = an interned atom representing the selection to claim.
+	 * time = timestamp with which to claim the selection
 	 * Returns: TRUE if the operation succeeded
 	 */
 	public static int ownerSetForDisplay(Display display, Widget widget, GdkAtom selection, uint time)
@@ -133,10 +133,10 @@ public class Selections
 	 * Appends a specified target to the list of supported targets for a
 	 * given widget and selection.
 	 * Params:
-	 * widget =  a GtkTarget
-	 * selection =  the selection
-	 * target =  target to add.
-	 * info =  A unsigned integer which will be passed back to the application.
+	 * widget = a GtkTarget
+	 * selection = the selection
+	 * target = target to add.
+	 * info = A unsigned integer which will be passed back to the application.
 	 */
 	public static void addTarget(Widget widget, GdkAtom selection, GdkAtom target, uint info)
 	{
@@ -148,9 +148,9 @@ public class Selections
 	 * Prepends a table of targets to the list of supported targets
 	 * for a given widget and selection.
 	 * Params:
-	 * widget =  a GtkWidget
-	 * selection =  the selection
-	 * targets =  a table of targets to add
+	 * widget = a GtkWidget
+	 * selection = the selection
+	 * targets = a table of targets to add
 	 */
 	public static void addTargets(Widget widget, GdkAtom selection, GtkTargetEntry[] targets)
 	{
@@ -162,8 +162,8 @@ public class Selections
 	 * Remove all targets registered for the given selection for the
 	 * widget.
 	 * Params:
-	 * widget =  a GtkWidget
-	 * selection =  an atom representing a selection
+	 * widget = a GtkWidget
+	 * selection = an atom representing a selection
 	 */
 	public static void clearTargets(Widget widget, GdkAtom selection)
 	{
@@ -175,10 +175,10 @@ public class Selections
 	 * Requests the contents of a selection. When received,
 	 * a "selection-received" signal will be generated.
 	 * Params:
-	 * widget =  The widget which acts as requestor
-	 * selection =  Which selection to get
-	 * target =  Form of information desired (e.g., STRING)
-	 * time =  Time of request (usually of triggering event)
+	 * widget = The widget which acts as requestor
+	 * selection = Which selection to get
+	 * target = Form of information desired (e.g., STRING)
+	 * time = Time of request (usually of triggering event)
 	 *  In emergency, you could use GDK_CURRENT_TIME
 	 * Returns: TRUE if requested succeeded. FALSE if we could not process request. (e.g., there was already a request in process for this widget).
 	 */
@@ -193,10 +193,10 @@ public class Selections
 	 * only be called from a selection handler callback.
 	 * Zero-terminates the stored data.
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
-	 * type =  the type of selection data
-	 * format =  format (number of bits in a unit)
-	 * data =  pointer to the data (will be copied)
+	 * selectionData = a pointer to a GtkSelectionData structure.
+	 * type = the type of selection data
+	 * format = format (number of bits in a unit)
+	 * data = pointer to the data (will be copied)
 	 */
 	public static void dataSet(GtkSelectionData* selectionData, GdkAtom type, int format, char[] data)
 	{
@@ -209,9 +209,9 @@ public class Selections
 	 * The string is converted to the form determined by
 	 * selection_data->target.
 	 * Params:
-	 * selectionData =  a GtkSelectionData
-	 * str =  a UTF-8 string
-	 * len =  the length of str, or -1 if str is nul-terminated.
+	 * selectionData = a GtkSelectionData
+	 * str = a UTF-8 string
+	 * len = the length of str, or -1 if str is nul-terminated.
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
 	 */
 	public static int dataSetText(GtkSelectionData* selectionData, string str, int len)
@@ -223,7 +223,7 @@ public class Selections
 	/**
 	 * Gets the contents of the selection data as a UTF-8 string.
 	 * Params:
-	 * selectionData =  a GtkSelectionData
+	 * selectionData = a GtkSelectionData
 	 * Returns: if the selection data contained a recognized text type and it could be converted to UTF-8, a newly allocated string containing the converted text, otherwise NULL. If the result is non-NULL it must be freed with g_free().
 	 */
 	public static char* dataGetText(GtkSelectionData* selectionData)
@@ -238,8 +238,8 @@ public class Selections
 	 * selection_data->target.
 	 * Since 2.6
 	 * Params:
-	 * selectionData =  a GtkSelectionData
-	 * pixbuf =  a GdkPixbuf
+	 * selectionData = a GtkSelectionData
+	 * pixbuf = a GdkPixbuf
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
 	 */
 	public static int dataSetPixbuf(GtkSelectionData* selectionData, Pixbuf pixbuf)
@@ -252,7 +252,7 @@ public class Selections
 	 * Gets the contents of the selection data as a GdkPixbuf.
 	 * Since 2.6
 	 * Params:
-	 * selectionData =  a GtkSelectionData
+	 * selectionData = a GtkSelectionData
 	 * Returns: if the selection data contained a recognized image type and it could be converted to a GdkPixbuf, a  newly allocated pixbuf is returned, otherwise NULL. If the result is non-NULL it must be freed with g_object_unref().
 	 */
 	public static Pixbuf dataGetPixbuf(GtkSelectionData* selectionData)
@@ -272,8 +272,8 @@ public class Selections
 	 * selection_data->target.
 	 * Since 2.6
 	 * Params:
-	 * selectionData =  a GtkSelectionData
-	 * uris =  a NULL-terminated array of strings holding URIs
+	 * selectionData = a GtkSelectionData
+	 * uris = a NULL-terminated array of strings holding URIs
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
 	 */
 	public static int dataSetUris(GtkSelectionData* selectionData, string[] uris)
@@ -286,7 +286,7 @@ public class Selections
 	 * Gets the contents of the selection data as array of URIs.
 	 * Since 2.6
 	 * Params:
-	 * selectionData =  a GtkSelectionData
+	 * selectionData = a GtkSelectionData
 	 * Returns: if the selection data contains a list of URIs, a newly allocated NULL-terminated string array containing the URIs, otherwise NULL. If the result is  non-NULL it must be freed with g_strfreev().
 	 */
 	public static string[] dataGetUris(GtkSelectionData* selectionData)
@@ -301,8 +301,8 @@ public class Selections
 	 * the standard TARGETS target that is always supplied for
 	 * any selection.
 	 * Params:
-	 * selectionData =  a GtkSelectionData object
-	 * targets =  location to store an array of targets. The result
+	 * selectionData = a GtkSelectionData object
+	 * targets = location to store an array of targets. The result
 	 *  stored here must be freed with g_free().
 	 * Returns: TRUE if selection_data contains a valid array of targets, otherwise FALSE.
 	 */
@@ -324,8 +324,8 @@ public class Selections
 	 * provide a GdkPixbuf.
 	 * Since 2.6
 	 * Params:
-	 * selectionData =  a GtkSelectionData object
-	 * writable =  whether to accept only targets for which GTK+ knows
+	 * selectionData = a GtkSelectionData object
+	 * writable = whether to accept only targets for which GTK+ knows
 	 *  how to convert a pixbuf into the format
 	 * Returns: TRUE if selection_data holds a list of targets, and a suitable target for images is included, otherwise FALSE.
 	 */
@@ -340,7 +340,7 @@ public class Selections
 	 * determines if any of the targets in targets can be used to
 	 * provide text.
 	 * Params:
-	 * selectionData =  a GtkSelectionData object
+	 * selectionData = a GtkSelectionData object
 	 * Returns: TRUE if selection_data holds a list of targets, and a suitable target for text is included, otherwise FALSE.
 	 */
 	public static int dataTargetsIncludeText(GtkSelectionData* selectionData)
@@ -355,7 +355,7 @@ public class Selections
 	 * provide a list or URIs.
 	 * Since 2.10
 	 * Params:
-	 * selectionData =  a GtkSelectionData object
+	 * selectionData = a GtkSelectionData object
 	 * Returns: TRUE if selection_data holds a list of targets, and a suitable target for URI lists is included, otherwise FALSE.
 	 */
 	public static int dataTargetsIncludeUri(GtkSelectionData* selectionData)
@@ -370,8 +370,8 @@ public class Selections
 	 * provide rich text.
 	 * Since 2.10
 	 * Params:
-	 * selectionData =  a GtkSelectionData object
-	 * buffer =  a GtkTextBuffer
+	 * selectionData = a GtkSelectionData object
+	 * buffer = a GtkTextBuffer
 	 * Returns: TRUE if selection_data holds a list of targets, and a suitable target for rich text is included, otherwise FALSE.
 	 */
 	public static int dataTargetsIncludeRichText(GtkSelectionData* selectionData, TextBuffer buffer)
@@ -384,7 +384,7 @@ public class Selections
 	 * Retrieves the selection GdkAtom of the selection data.
 	 * Since 2.16
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the selection GdkAtom of the selection data.
 	 */
 	public static GdkAtom dataGetSelection(GtkSelectionData* selectionData)
@@ -397,7 +397,7 @@ public class Selections
 	 * Retrieves the raw data of the selection.
 	 * Since 2.14
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the raw data of the selection.
 	 */
 	public static char* dataGetData(GtkSelectionData* selectionData)
@@ -410,7 +410,7 @@ public class Selections
 	 * Retrieves the length of the raw data of the selection.
 	 * Since 2.14
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the length of the data of the selection.
 	 */
 	public static int dataGetLength(GtkSelectionData* selectionData)
@@ -423,7 +423,7 @@ public class Selections
 	 * Retrieves the data type of the selection.
 	 * Since 2.14
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the data type of the selection.
 	 */
 	public static GdkAtom dataGetDataType(GtkSelectionData* selectionData)
@@ -436,7 +436,7 @@ public class Selections
 	 * Retrieves the display of the selection.
 	 * Since 2.14
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the display of the selection.
 	 */
 	public static Display dataGetDisplay(GtkSelectionData* selectionData)
@@ -454,7 +454,7 @@ public class Selections
 	 * Retrieves the format of the selection.
 	 * Since 2.14
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the format of the selection.
 	 */
 	public static int dataGetFormat(GtkSelectionData* selectionData)
@@ -467,7 +467,7 @@ public class Selections
 	 * Retrieves the target of the selection.
 	 * Since 2.14
 	 * Params:
-	 * selectionData =  a pointer to a GtkSelectionData structure.
+	 * selectionData = a pointer to a GtkSelectionData structure.
 	 * Returns: the target of the selection.
 	 */
 	public static GdkAtom dataGetTarget(GtkSelectionData* selectionData)
@@ -482,7 +482,7 @@ public class Selections
 	 * destroyed. This function will not generally be
 	 * called by applications.
 	 * Params:
-	 * widget =  a GtkWidget
+	 * widget = a GtkWidget
 	 */
 	public static void removeAll(Widget widget)
 	{
@@ -499,8 +499,8 @@ public class Selections
 	 * signal.
 	 * Since 2.2
 	 * Params:
-	 * widget =  a GtkWidget
-	 * event =  the event
+	 * widget = a GtkWidget
+	 * event = the event
 	 * Returns: TRUE if the event was handled, otherwise false
 	 */
 	public static int clear(Widget widget, GdkEventSelection* event)
@@ -512,7 +512,7 @@ public class Selections
 	/**
 	 * Makes a copy of a GtkSelectionData structure and its data.
 	 * Params:
-	 * data =  a pointer to a GtkSelectionData structure.
+	 * data = a pointer to a GtkSelectionData structure.
 	 * Returns: a pointer to a copy of data.
 	 */
 	public static GtkSelectionData* dataCopy(GtkSelectionData* data)
@@ -525,7 +525,7 @@ public class Selections
 	 * Frees a GtkSelectionData structure returned from
 	 * gtk_selection_data_copy().
 	 * Params:
-	 * data =  a pointer to a GtkSelectionData structure.
+	 * data = a pointer to a GtkSelectionData structure.
 	 */
 	public static void dataFree(GtkSelectionData* data)
 	{

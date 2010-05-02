@@ -89,7 +89,7 @@ private import gtk.Container;
  * of the tab must be created before the tab can be filled.
  * A tab child can be specified without specifying a <child>
  * type attribute.
- * Example 43. A UI definition fragment with GtkNotebook
+ * Example  43.  A UI definition fragment with GtkNotebook
  * <object class="GtkNotebook">
  *  <child>
  *  <object class="GtkLabel" id="notebook-content">
@@ -491,8 +491,8 @@ public class Notebook : Container
 	/**
 	 * Appends a page to notebook.
 	 * Params:
-	 * child =  the GtkWidget to use as the contents of the page.
-	 * tabLabel =  the GtkWidget to be used as the label for the page,
+	 * child = the GtkWidget to use as the contents of the page.
+	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.
 	 * Returns: the index (starting from 0) of the appendedpage in the notebook, or -1 if function fails
 	 */
@@ -506,10 +506,10 @@ public class Notebook : Container
 	 * Appends a page to notebook, specifying the widget to use as the
 	 * label in the popup menu.
 	 * Params:
-	 * child =  the GtkWidget to use as the contents of the page.
-	 * tabLabel =  the GtkWidget to be used as the label for the page,
+	 * child = the GtkWidget to use as the contents of the page.
+	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.
-	 * menuLabel =  the widget to use as a label for the page-switch
+	 * menuLabel = the widget to use as a label for the page-switch
 	 *  menu, if that is enabled. If NULL, and tab_label
 	 *  is a GtkLabel or NULL, then the menu label will be
 	 *  a newly created label with the same text as tab_label;
@@ -526,8 +526,8 @@ public class Notebook : Container
 	/**
 	 * Prepends a page to notebook.
 	 * Params:
-	 * child =  the GtkWidget to use as the contents of the page.
-	 * tabLabel =  the GtkWidget to be used as the label for the page,
+	 * child = the GtkWidget to use as the contents of the page.
+	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.
 	 * Returns: the index (starting from 0) of the prependedpage in the notebook, or -1 if function fails
 	 */
@@ -541,10 +541,10 @@ public class Notebook : Container
 	 * Prepends a page to notebook, specifying the widget to use as the
 	 * label in the popup menu.
 	 * Params:
-	 * child =  the GtkWidget to use as the contents of the page.
-	 * tabLabel =  the GtkWidget to be used as the label for the page,
+	 * child = the GtkWidget to use as the contents of the page.
+	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.
-	 * menuLabel =  the widget to use as a label for the page-switch
+	 * menuLabel = the widget to use as a label for the page-switch
 	 *  menu, if that is enabled. If NULL, and tab_label
 	 *  is a GtkLabel or NULL, then the menu label will be
 	 *  a newly created label with the same text as tab_label;
@@ -561,10 +561,10 @@ public class Notebook : Container
 	/**
 	 * Insert a page into notebook at the given position.
 	 * Params:
-	 * child =  the GtkWidget to use as the contents of the page.
-	 * tabLabel =  the GtkWidget to be used as the label for the page,
+	 * child = the GtkWidget to use as the contents of the page.
+	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.
-	 * position =  the index (starting at 0) at which to insert the page,
+	 * position = the index (starting at 0) at which to insert the page,
 	 *  or -1 to append the page after all other pages.
 	 * Returns: the index (starting from 0) of the insertedpage in the notebook, or -1 if function fails
 	 */
@@ -578,16 +578,16 @@ public class Notebook : Container
 	 * Insert a page into notebook at the given position, specifying
 	 * the widget to use as the label in the popup menu.
 	 * Params:
-	 * child =  the GtkWidget to use as the contents of the page.
-	 * tabLabel =  the GtkWidget to be used as the label for the page,
+	 * child = the GtkWidget to use as the contents of the page.
+	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.
-	 * menuLabel =  the widget to use as a label for the page-switch
+	 * menuLabel = the widget to use as a label for the page-switch
 	 *  menu, if that is enabled. If NULL, and tab_label
 	 *  is a GtkLabel or NULL, then the menu label will be
 	 *  a newly created label with the same text as tab_label;
 	 *  If tab_label is not a GtkLabel, menu_label must be
 	 *  specified if the page-switch menu is to be used.
-	 * position =  the index (starting at 0) at which to insert the page,
+	 * position = the index (starting at 0) at which to insert the page,
 	 *  or -1 to append the page after all other pages.
 	 * Returns: the index (starting from 0) of the insertedpage in the notebook
 	 */
@@ -601,7 +601,7 @@ public class Notebook : Container
 	 * Removes a page from the notebook given its index
 	 * in the notebook.
 	 * Params:
-	 * pageNum =  the index of a notebook page, starting
+	 * pageNum = the index of a notebook page, starting
 	 *  from 0. If -1, the last page will
 	 *  be removed.
 	 */
@@ -615,7 +615,7 @@ public class Notebook : Container
 	 * Finds the index of the page which contains the given child
 	 * widget.
 	 * Params:
-	 * child =  a GtkWidget
+	 * child = a GtkWidget
 	 * Returns: the index of the page containing child, or -1 if child is not in the notebook.
 	 */
 	public int pageNum(Widget child)
@@ -650,8 +650,8 @@ public class Notebook : Container
 	 * children in the list or negative, child will be moved to the end
 	 * of the list.
 	 * Params:
-	 * child =  the child to move
-	 * position =  the new position, or -1 to move to the end
+	 * child = the child to move
+	 * position = the new position, or -1 to move to the end
 	 */
 	public void reorderChild(Widget child, int position)
 	{
@@ -663,7 +663,7 @@ public class Notebook : Container
 	 * Sets the edge at which the tabs for switching pages in the
 	 * notebook are drawn.
 	 * Params:
-	 * pos =  the edge to draw the tabs at.
+	 * pos = the edge to draw the tabs at.
 	 */
 	public void setTabPos(GtkPositionType pos)
 	{
@@ -674,7 +674,7 @@ public class Notebook : Container
 	/**
 	 * Sets whether to show the tabs for the notebook or not.
 	 * Params:
-	 * showTabs =  TRUE if the tabs should be shown.
+	 * showTabs = TRUE if the tabs should be shown.
 	 */
 	public void setShowTabs(int showTabs)
 	{
@@ -687,7 +687,7 @@ public class Notebook : Container
 	 * This only has a visual effect when the tabs are not shown.
 	 * See gtk_notebook_set_show_tabs().
 	 * Params:
-	 * showBorder =  TRUE if a bevel should be drawn around the notebook.
+	 * showBorder = TRUE if a bevel should be drawn around the notebook.
 	 */
 	public void setShowBorder(int showBorder)
 	{
@@ -699,7 +699,7 @@ public class Notebook : Container
 	 * Sets whether the tab label area will have arrows for scrolling if
 	 * there are too many tabs to fit in the area.
 	 * Params:
-	 * scrollable =  TRUE if scroll arrows should be added
+	 * scrollable = TRUE if scroll arrows should be added
 	 */
 	public void setScrollable(int scrollable)
 	{
@@ -715,7 +715,7 @@ public class Notebook : Container
 	 * gtk_notebook_set_tab_hborder (notebook, border_width) followed
 	 * by gtk_notebook_set_tab_vborder (notebook, border_width).
 	 * Params:
-	 * borderWidth =  width of the border around the tab labels.
+	 * borderWidth = width of the border around the tab labels.
 	 */
 	public void setTabBorder(uint borderWidth)
 	{
@@ -755,7 +755,7 @@ public class Notebook : Container
 	/**
 	 * Retrieves the menu label widget of the page containing child.
 	 * Params:
-	 * child =  a widget contained in a page of notebook
+	 * child = a widget contained in a page of notebook
 	 * Returns: the menu label, or NULL if the notebook page does not have a menu label other than the default (the tab label).
 	 */
 	public Widget getMenuLabel(Widget child)
@@ -772,7 +772,7 @@ public class Notebook : Container
 	/**
 	 * Returns the child widget contained in page number page_num.
 	 * Params:
-	 * pageNum =  the index of a page in the notebook, or -1
+	 * pageNum = the index of a page in the notebook, or -1
 	 *  to get the last page.
 	 * Returns: the child widget, or NULL if page_num isout of bounds.
 	 */
@@ -803,7 +803,7 @@ public class Notebook : Container
 	 * if child is not in notebook or if no tab label has specifically
 	 * been set for child.
 	 * Params:
-	 * child =  the page
+	 * child = the page
 	 * Returns: the tab label
 	 */
 	public Widget getTabLabel(Widget child)
@@ -821,10 +821,10 @@ public class Notebook : Container
 	 * Query the packing attributes for the tab label of the page
 	 * containing child.
 	 * Params:
-	 * child =  the page
-	 * expand =  location to store the expand value (or NULL)
-	 * fill =  location to store the fill value (or NULL)
-	 * packType =  location to store the pack_type (or NULL)
+	 * child = the page
+	 * expand = location to store the expand value (or NULL)
+	 * fill = location to store the fill value (or NULL)
+	 * packType = location to store the pack_type (or NULL)
 	 */
 	public void queryTabLabelPacking(Widget child, out int expand, out int fill, out GtkPackType packType)
 	{
@@ -837,7 +837,7 @@ public class Notebook : Container
 	 * gtk_notebook_set_homogeneous_tabs is deprecated and should not be used in newly-written code.
 	 * Sets whether the tabs must have all the same size or not.
 	 * Params:
-	 * homogeneous =  TRUE if all tabs should be the same size.
+	 * homogeneous = TRUE if all tabs should be the same size.
 	 */
 	public void setHomogeneousTabs(int homogeneous)
 	{
@@ -848,8 +848,8 @@ public class Notebook : Container
 	/**
 	 * Changes the menu label for the page containing child.
 	 * Params:
-	 * child =  the child widget
-	 * menuLabel =  the menu label, or NULL for default
+	 * child = the child widget
+	 * menuLabel = the menu label, or NULL for default
 	 */
 	public void setMenuLabel(Widget child, Widget menuLabel)
 	{
@@ -860,8 +860,8 @@ public class Notebook : Container
 	/**
 	 * Creates a new label and sets it as the menu label of child.
 	 * Params:
-	 * child =  the child widget
-	 * menuText =  the label text
+	 * child = the child widget
+	 * menuText = the label text
 	 */
 	public void setMenuLabelText(Widget child, string menuText)
 	{
@@ -874,7 +874,7 @@ public class Notebook : Container
 	 * gtk_notebook_set_tab_hborder is deprecated and should not be used in newly-written code.
 	 * Sets the width of the horizontal border of tab labels.
 	 * Params:
-	 * tabHborder =  width of the horizontal border of tab labels.
+	 * tabHborder = width of the horizontal border of tab labels.
 	 */
 	public void setTabHborder(uint tabHborder)
 	{
@@ -886,8 +886,8 @@ public class Notebook : Container
 	 * Changes the tab label for child. If NULL is specified
 	 * for tab_label, then the page will have the label 'page N'.
 	 * Params:
-	 * child =  the page
-	 * tabLabel =  the tab label widget to use, or NULL for default tab
+	 * child = the page
+	 * tabLabel = the tab label widget to use, or NULL for default tab
 	 *  label.
 	 */
 	public void setTabLabel(Widget child, Widget tabLabel)
@@ -901,10 +901,10 @@ public class Notebook : Container
 	 * containing child. See gtk_box_pack_start() for the exact meaning
 	 * of the parameters.
 	 * Params:
-	 * child =  the child widget
-	 * expand =  whether to expand the bookmark or not
-	 * fill =  whether the bookmark should fill the allocated area or not
-	 * packType =  the position of the bookmark
+	 * child = the child widget
+	 * expand = whether to expand the bookmark or not
+	 * fill = whether the bookmark should fill the allocated area or not
+	 * packType = the position of the bookmark
 	 */
 	public void setTabLabelPacking(Widget child, int expand, int fill, GtkPackType packType)
 	{
@@ -916,8 +916,8 @@ public class Notebook : Container
 	 * Creates a new label and sets it as the tab label for the page
 	 * containing child.
 	 * Params:
-	 * child =  the page
-	 * tabText =  the label text
+	 * child = the page
+	 * tabText = the label text
 	 */
 	public void setTabLabelText(Widget child, string tabText)
 	{
@@ -930,7 +930,7 @@ public class Notebook : Container
 	 * gtk_notebook_set_tab_vborder is deprecated and should not be used in newly-written code.
 	 * Sets the width of the vertical border of tab labels.
 	 * Params:
-	 * tabVborder =  width of the vertical border of tab labels.
+	 * tabVborder = width of the vertical border of tab labels.
 	 */
 	public void setTabVborder(uint tabVborder)
 	{
@@ -943,8 +943,8 @@ public class Notebook : Container
 	 * via drag and drop or not.
 	 * Since 2.10
 	 * Params:
-	 * child =  a child GtkWidget
-	 * reorderable =  whether the tab is reorderable or not.
+	 * child = a child GtkWidget
+	 * reorderable = whether the tab is reorderable or not.
 	 */
 	public void setTabReorderable(Widget child, int reorderable)
 	{
@@ -984,8 +984,8 @@ public class Notebook : Container
 	 * you will have to set your own DnD code to do it.
 	 * Since 2.10
 	 * Params:
-	 * child =  a child GtkWidget
-	 * detachable =  whether the tab is detachable or not
+	 * child = a child GtkWidget
+	 * detachable = whether the tab is detachable or not
 	 */
 	public void setTabDetachable(Widget child, int detachable)
 	{
@@ -997,7 +997,7 @@ public class Notebook : Container
 	 * Retrieves the text of the menu label for the page containing
 	 *  child.
 	 * Params:
-	 * child =  the child widget of a page of the notebook.
+	 * child = the child widget of a page of the notebook.
 	 * Returns: the text of the tab label, or NULL if the widget does not have a menu label other than the default menu label, or the menu label widget is not a GtkLabel. The string is owned by the widget and must not be freed.
 	 */
 	public string getMenuLabelText(Widget child)
@@ -1043,7 +1043,7 @@ public class Notebook : Container
 	 * Retrieves the text of the tab label for the page containing
 	 *  child.
 	 * Params:
-	 * child =  a widget contained in a page of notebook
+	 * child = a widget contained in a page of notebook
 	 * Returns: the text of the tab label, or NULL if the tab label widget is not a GtkLabel. The string is owned by the widget and must not be freed.
 	 */
 	public string getTabLabelText(Widget child)
@@ -1067,7 +1067,7 @@ public class Notebook : Container
 	 * Gets whether the tab can be reordered via drag and drop or not.
 	 * Since 2.10
 	 * Params:
-	 * child =  a child GtkWidget
+	 * child = a child GtkWidget
 	 * Returns: TRUE if the tab is reorderable.
 	 */
 	public int getTabReorderable(Widget child)
@@ -1080,7 +1080,7 @@ public class Notebook : Container
 	 * Returns whether the tab contents can be detached from notebook.
 	 * Since 2.10
 	 * Params:
-	 * child =  a child GtkWidget
+	 * child = a child GtkWidget
 	 * Returns: TRUE if the tab is detachable.
 	 */
 	public int getTabDetachable(Widget child)
@@ -1096,7 +1096,7 @@ public class Notebook : Container
 	 * Therefore, it is recommended to show child widgets before
 	 * adding them to a notebook.
 	 * Params:
-	 * pageNum =  index of the page to switch to, starting from 0.
+	 * pageNum = index of the page to switch to, starting from 0.
 	 *  If negative, the last page will be used. If greater
 	 *  than the number of pages in the notebook, nothing
 	 *  will be done.
@@ -1116,7 +1116,7 @@ public class Notebook : Container
 	 * not be able to exchange tabs with any other notebook.
 	 * Since 2.10
 	 * Params:
-	 * groupId =  a group identificator, or -1 to unset it
+	 * groupId = a group identificator, or -1 to unset it
 	 */
 	public void setGroupId(int groupId)
 	{
@@ -1144,7 +1144,7 @@ public class Notebook : Container
 	 * not be able to exchange tabs with any other notebook.
 	 * Since 2.12
 	 * Params:
-	 * group =  a pointer to identify the notebook group, or NULL to unset it
+	 * group = a pointer to identify the notebook group, or NULL to unset it
 	 */
 	public void setGroup(void* group)
 	{
@@ -1168,9 +1168,9 @@ public class Notebook : Container
 	 * when a detached tab is dropped in an empty area.
 	 * Since 2.10
 	 * Params:
-	 * func =  the GtkNotebookWindowCreationFunc, or NULL
-	 * data =  user data for func
-	 * destroy =  Destroy notifier for data, or NULL
+	 * func = the GtkNotebookWindowCreationFunc, or NULL
+	 * data = user data for func
+	 * destroy = Destroy notifier for data, or NULL
 	 */
 	public static void setWindowCreationHook(GtkNotebookWindowCreationFunc func, void* data, GDestroyNotify destroy)
 	{

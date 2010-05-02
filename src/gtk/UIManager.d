@@ -148,7 +148,7 @@ private import gobject.ObjectG;
  * would mess up path lookup) and must be usable as XML attributes when
  * enclosed in doublequotes, thus they must not '"' characters or references
  * to the quot; entity.
- * Example 33. A UI definition
+ * Example  33.  A UI definition
  * <ui>
  *  <menubar>
  *  <menu name="FileMenu" action="FileMenuAction">
@@ -246,7 +246,7 @@ private import gobject.ObjectG;
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
  * "constructor" attribute. See the example below.
- * Example 34. An embedded GtkUIManager UI definition
+ * Example  34.  An embedded GtkUIManager UI definition
  * <object class="GtkUIManager" id="uiman">
  *  <child>
  *  <object class="GtkActionGroup" id="actiongroup">
@@ -525,7 +525,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * menus never have tearoff menu items.
 	 * Since 2.4
 	 * Params:
-	 * addTearoffs =  whether tearoff menu items are added
+	 * addTearoffs = whether tearoff menu items are added
 	 */
 	public void setAddTearoffs(int addTearoffs)
 	{
@@ -551,8 +551,8 @@ public class UIManager : ObjectG, BuildableIF
 	 * name in later groups.
 	 * Since 2.4
 	 * Params:
-	 * actionGroup =  the action group to be inserted
-	 * pos =  the position at which the group will be inserted.
+	 * actionGroup = the action group to be inserted
+	 * pos = the position at which the group will be inserted.
 	 */
 	public void insertActionGroup(ActionGroup actionGroup, int pos)
 	{
@@ -565,7 +565,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * with self.
 	 * Since 2.4
 	 * Params:
-	 * actionGroup =  the action group to be removed
+	 * actionGroup = the action group to be removed
 	 */
 	public void removeActionGroup(ActionGroup actionGroup)
 	{
@@ -619,7 +619,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * destruction of the ui manager.
 	 * Since 2.4
 	 * Params:
-	 * path =  a path
+	 * path = a path
 	 * Returns: the widget found by following the path, or NULL if no widget was found.
 	 */
 	public Widget getWidget(string path)
@@ -637,7 +637,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Obtains a list of all toplevel widgets of the requested types.
 	 * Since 2.4
 	 * Params:
-	 * types =  specifies the types of toplevel widgets to include. Allowed
+	 * types = specifies the types of toplevel widgets to include. Allowed
 	 *  types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
 	 *  GTK_UI_MANAGER_POPUP.
 	 * Returns: a newly-allocated GSList of all toplevel widgets of therequested types. Free the returned list with g_slist_free().
@@ -658,7 +658,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * for more information about paths.
 	 * Since 2.4
 	 * Params:
-	 * path =  a path
+	 * path = a path
 	 * Returns: the action whose proxy widget is found by following the path,  or NULL if no widget was found.
 	 */
 	public Action getAction(string path)
@@ -678,8 +678,8 @@ public class UIManager : ObjectG, BuildableIF
 	 * element is added if it is missing.
 	 * Since 2.4
 	 * Params:
-	 * buffer =  the string to parse
-	 * length =  the length of buffer (may be -1 if buffer is nul-terminated)
+	 * buffer = the string to parse
+	 * length = the length of buffer (may be -1 if buffer is nul-terminated)
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
 	 * Throws: GException on failure.
 	 */
@@ -703,7 +703,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * merges it with the current contents of self.
 	 * Since 2.4
 	 * Params:
-	 * filename =  the name of the file to parse
+	 * filename = the name of the file to parse
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
 	 * Throws: GException on failure.
 	 */
@@ -744,12 +744,12 @@ public class UIManager : ObjectG, BuildableIF
 	 * before or after this item, depending on top.
 	 * Since 2.4
 	 * Params:
-	 * mergeId =  the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
-	 * path =  a path
-	 * name =  the name for the added UI element
-	 * action =  the name of the action to be proxied, or NULL to add a separator
-	 * type =  the type of UI element to add.
-	 * top =  if TRUE, the UI element is added before its siblings, otherwise it
+	 * mergeId = the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
+	 * path = a path
+	 * name = the name for the added UI element
+	 * action = the name of the action to be proxied, or NULL to add a separator
+	 * type = the type of UI element to add.
+	 * top = if TRUE, the UI element is added before its siblings, otherwise it
 	 *  is added after its siblings.
 	 */
 	public void addUi(uint mergeId, string path, string name, string action, GtkUIManagerItemType type, int top)
@@ -762,7 +762,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Unmerges the part of selfs content identified by merge_id.
 	 * Since 2.4
 	 * Params:
-	 * mergeId =  a merge id as returned by gtk_ui_manager_add_ui_from_string()
+	 * mergeId = a merge id as returned by gtk_ui_manager_add_ui_from_string()
 	 */
 	public void removeUi(uint mergeId)
 	{

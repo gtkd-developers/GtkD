@@ -192,7 +192,7 @@ public class UnixMountMonitor : ObjectG
 	 * consecutive change events to the mount and mount point entry files.
 	 * Since 2.18
 	 * Params:
-	 * limitMsec =  a integer with the limit in milliseconds to
+	 * limitMsec = a integer with the limit in milliseconds to
 	 *  poll for changes.
 	 */
 	public void setRateLimit(int limitMsec)

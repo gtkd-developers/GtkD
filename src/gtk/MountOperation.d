@@ -131,7 +131,7 @@ public class MountOperation : GioMountOperation
 	 * Creates a new GtkMountOperation
 	 * Since 2.14
 	 * Params:
-	 * parent =  transient parent of the window, or NULL
+	 * parent = transient parent of the window, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Window parent)
@@ -162,7 +162,7 @@ public class MountOperation : GioMountOperation
 	 * GtkMountOperation.
 	 * Since 2.14
 	 * Params:
-	 * parent =  transient parent of the window, or NULL
+	 * parent = transient parent of the window, or NULL
 	 */
 	public void setParent(Window parent)
 	{
@@ -190,7 +190,7 @@ public class MountOperation : GioMountOperation
 	 * Sets the screen to show windows of the GtkMountOperation on.
 	 * Since 2.14
 	 * Params:
-	 * screen =  a GdkScreen
+	 * screen = a GdkScreen
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -229,9 +229,9 @@ public class MountOperation : GioMountOperation
 	 * and gnome_url_show().
 	 * Since 2.14
 	 * Params:
-	 * screen =  screen to show the uri on or NULL for the default screen
-	 * uri =  the uri to show
-	 * timestamp =  a timestamp to prevent focus stealing.
+	 * screen = screen to show the uri on or NULL for the default screen
+	 * uri = the uri to show
+	 * timestamp = a timestamp to prevent focus stealing.
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */

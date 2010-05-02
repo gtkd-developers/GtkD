@@ -146,10 +146,10 @@ public class Ruler : Widget, OrientableIF
 	/**
 	 * This sets the range of the ruler.
 	 * Params:
-	 * lower =  the lower limit of the ruler
-	 * upper =  the upper limit of the ruler
-	 * position =  the mark on the ruler
-	 * maxSize =  the maximum size of the ruler used when calculating the space to
+	 * lower = the lower limit of the ruler
+	 * upper = the upper limit of the ruler
+	 * position = the mark on the ruler
+	 * maxSize = the maximum size of the ruler used when calculating the space to
 	 * leave for the text
 	 */
 	public void setRange(double lower, double upper, double position, double maxSize)
@@ -172,10 +172,10 @@ public class Ruler : Widget, OrientableIF
 	 * Retrieves values indicating the range and current position of a GtkRuler.
 	 * See gtk_ruler_set_range().
 	 * Params:
-	 * lower =  location to store lower limit of the ruler, or NULL
-	 * upper =  location to store upper limit of the ruler, or NULL
-	 * position =  location to store the current position of the mark on the ruler, or NULL
-	 * maxSize =  location to store the maximum size of the ruler used when calculating
+	 * lower = location to store lower limit of the ruler, or NULL
+	 * upper = location to store upper limit of the ruler, or NULL
+	 * position = location to store the current position of the mark on the ruler, or NULL
+	 * maxSize = location to store the maximum size of the ruler used when calculating
 	 *  the space to leave for the text, or NULL.
 	 */
 	public void getRange(out double lower, out double upper, out double position, out double maxSize)

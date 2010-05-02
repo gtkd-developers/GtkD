@@ -135,7 +135,7 @@ public class UserFontFace
 	 * is created from it.
 	 * Since 1.8
 	 * Params:
-	 * initFunc =  The init callback, or NULL
+	 * initFunc = The init callback, or NULL
 	 */
 	public void setInitFunc(cairo_user_scaled_font_init_func_t initFunc)
 	{
@@ -166,7 +166,7 @@ public class UserFontFace
 	 * font_face, a CAIRO_STATUS_USER_FONT_ERROR will occur.
 	 * Since 1.8
 	 * Params:
-	 * renderGlyphFunc =  The render_glyph callback, or NULL
+	 * renderGlyphFunc = The render_glyph callback, or NULL
 	 */
 	public void setRenderGlyphFunc(cairo_user_scaled_font_render_glyph_func_t renderGlyphFunc)
 	{
@@ -194,7 +194,7 @@ public class UserFontFace
 	 * is created from it.
 	 * Since 1.8
 	 * Params:
-	 * unicodeToGlyphFunc =  The unicode_to_glyph callback, or NULL
+	 * unicodeToGlyphFunc = The unicode_to_glyph callback, or NULL
 	 */
 	public void setUnicodeToGlyphFunc(cairo_user_scaled_font_unicode_to_glyph_func_t unicodeToGlyphFunc)
 	{
@@ -222,7 +222,7 @@ public class UserFontFace
 	 * is created from it.
 	 * Since 1.8
 	 * Params:
-	 * textToGlyphsFunc =  The text_to_glyphs callback, or NULL
+	 * textToGlyphsFunc = The text_to_glyphs callback, or NULL
 	 */
 	public void setTextToGlyphsFunc(cairo_user_scaled_font_text_to_glyphs_func_t textToGlyphsFunc)
 	{

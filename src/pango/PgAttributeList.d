@@ -172,7 +172,7 @@ public class PgAttributeList
 	 * be inserted after all other attributes with a matching
 	 * start_index.
 	 * Params:
-	 * attr =  the attribute to insert. Ownership of this value is
+	 * attr = the attribute to insert. Ownership of this value is
 	 *  assumed by the list.
 	 */
 	public void insert(PgAttribute attr)
@@ -186,7 +186,7 @@ public class PgAttributeList
 	 * be inserted before all other attributes with a matching
 	 * start_index.
 	 * Params:
-	 * attr =  the attribute to insert. Ownership of this value is
+	 * attr = the attribute to insert. Ownership of this value is
 	 *  assumed by the list.
 	 */
 	public void insertBefore(PgAttribute attr)
@@ -205,7 +205,7 @@ public class PgAttributeList
 	 * suitable for continually changing a set of attributes
 	 * since it never removes or combines existing attributes.
 	 * Params:
-	 * attr =  the attribute to insert. Ownership of this value is
+	 * attr = the attribute to insert. Ownership of this value is
 	 *  assumed by the list.
 	 */
 	public void change(PgAttribute attr)
@@ -224,9 +224,9 @@ public class PgAttributeList
 	 * This operation proves useful for, for instance, inserting
 	 * a pre-edit string in the middle of an edit buffer.
 	 * Params:
-	 * other =  another PangoAttrList
-	 * pos =  the position in list at which to insert other
-	 * len =  the length of the spliced segment. (Note that this
+	 * other = another PangoAttrList
+	 * pos = the position in list at which to insert other
+	 * len = the length of the spliced segment. (Note that this
 	 *  must be specified since the attributes in other
 	 *  may only be present at some subsection of this range)
 	 */
@@ -242,9 +242,9 @@ public class PgAttributeList
 	 * a new list.
 	 * Since 1.2
 	 * Params:
-	 * func =  callback function; returns TRUE if an attribute
+	 * func = callback function; returns TRUE if an attribute
 	 *  should be filtered out.
-	 * data =  Data to be passed to func
+	 * data = Data to be passed to func
 	 * Returns: the new PangoAttrList or NULL if no attributes of the given types were found.
 	 */
 	public PgAttributeList filter(PangoAttrFilterFunc func, void* data)

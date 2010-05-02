@@ -217,8 +217,8 @@ public class Resolver : ObjectG
 	 * GSocketConnectable interface.
 	 * Since 2.22
 	 * Params:
-	 * hostname =  the hostname to look up
-	 * cancellable =  a GCancellable, or NULL
+	 * hostname = the hostname to look up
+	 * cancellable = a GCancellable, or NULL
 	 * Returns: a GList of GInetAddress, or NULL on error. Youmust unref each of the addresses and free the list when you aredone with it. (You can use g_resolver_free_addresses() to do this.)
 	 * Throws: GException on failure.
 	 */
@@ -248,10 +248,10 @@ public class Resolver : ObjectG
 	 * See g_resolver_lookup_by_name() for more details.
 	 * Since 2.22
 	 * Params:
-	 * hostname =  the hostname to look up the address of
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  callback to call after resolution completes
-	 * userData =  data for callback
+	 * hostname = the hostname to look up the address of
+	 * cancellable = a GCancellable, or NULL
+	 * callback = callback to call after resolution completes
+	 * userData = data for callback
 	 */
 	public void lookupByNameAsync(string hostname, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -267,7 +267,7 @@ public class Resolver : ObjectG
 	 * error will be set to G_IO_ERROR_CANCELLED.
 	 * Since 2.22
 	 * Params:
-	 * result =  the result passed to your GAsyncReadyCallback
+	 * result = the result passed to your GAsyncReadyCallback
 	 * Returns: a GList of GInetAddress, or NULL on error. Seeg_resolver_lookup_by_name() for more details.
 	 * Throws: GException on failure.
 	 */
@@ -297,7 +297,7 @@ public class Resolver : ObjectG
 	 * by hand.)
 	 * Since 2.22
 	 * Params:
-	 * addresses =  a GList of GInetAddress
+	 * addresses = a GList of GInetAddress
 	 */
 	public static void freeAddresses(ListG addresses)
 	{
@@ -315,8 +315,8 @@ public class Resolver : ObjectG
 	 * G_IO_ERROR_CANCELLED.
 	 * Since 2.22
 	 * Params:
-	 * address =  the address to reverse-resolve
-	 * cancellable =  a GCancellable, or NULL
+	 * address = the address to reverse-resolve
+	 * cancellable = a GCancellable, or NULL
 	 * Returns: a hostname (either ASCII-only, or in ASCII-encoded form), or NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -341,10 +341,10 @@ public class Resolver : ObjectG
 	 * call g_resolver_lookup_by_address_finish() to get the final result.
 	 * Since 2.22
 	 * Params:
-	 * address =  the address to reverse-resolve
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  callback to call after resolution completes
-	 * userData =  data for callback
+	 * address = the address to reverse-resolve
+	 * cancellable = a GCancellable, or NULL
+	 * callback = callback to call after resolution completes
+	 * userData = data for callback
 	 */
 	public void lookupByAddressAsync(GInetAddress* address, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -360,7 +360,7 @@ public class Resolver : ObjectG
 	 * error will be set to G_IO_ERROR_CANCELLED.
 	 * Since 2.22
 	 * Params:
-	 * result =  the result passed to your GAsyncReadyCallback
+	 * result = the result passed to your GAsyncReadyCallback
 	 * Returns: a hostname (either ASCII-only, or in ASCII-encodedform), or NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -400,10 +400,10 @@ public class Resolver : ObjectG
 	 * interface.
 	 * Since 2.22
 	 * Params:
-	 * service =  the service type to look up (eg, "ldap")
-	 * protocol =  the networking protocol to use for service (eg, "tcp")
-	 * domain =  the DNS domain to look up the service in
-	 * cancellable =  a GCancellable, or NULL
+	 * service = the service type to look up (eg, "ldap")
+	 * protocol = the networking protocol to use for service (eg, "tcp")
+	 * domain = the DNS domain to look up the service in
+	 * cancellable = a GCancellable, or NULL
 	 * Returns: a GList of GSrvTarget, or NULL on error. You mustfree each of the targets and the list when you are done with it.(You can use g_resolver_free_targets() to do this.)
 	 * Throws: GException on failure.
 	 */
@@ -434,12 +434,12 @@ public class Resolver : ObjectG
 	 * details.
 	 * Since 2.22
 	 * Params:
-	 * service =  the service type to look up (eg, "ldap")
-	 * protocol =  the networking protocol to use for service (eg, "tcp")
-	 * domain =  the DNS domain to look up the service in
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  callback to call after resolution completes
-	 * userData =  data for callback
+	 * service = the service type to look up (eg, "ldap")
+	 * protocol = the networking protocol to use for service (eg, "tcp")
+	 * domain = the DNS domain to look up the service in
+	 * cancellable = a GCancellable, or NULL
+	 * callback = callback to call after resolution completes
+	 * userData = data for callback
 	 */
 	public void lookupServiceAsync(string service, string protocol, string domain, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -455,7 +455,7 @@ public class Resolver : ObjectG
 	 * error will be set to G_IO_ERROR_CANCELLED.
 	 * Since 2.22
 	 * Params:
-	 * result =  the result passed to your GAsyncReadyCallback
+	 * result = the result passed to your GAsyncReadyCallback
 	 * Returns: a GList of GSrvTarget, or NULL on error. Seeg_resolver_lookup_service() for more details.
 	 * Throws: GException on failure.
 	 */
@@ -485,7 +485,7 @@ public class Resolver : ObjectG
 	 * results by hand.)
 	 * Since 2.22
 	 * Params:
-	 * targets =  a GList of GSrvTarget
+	 * targets = a GList of GSrvTarget
 	 */
 	public static void freeTargets(ListG targets)
 	{

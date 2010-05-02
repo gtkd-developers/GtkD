@@ -135,7 +135,7 @@ public class EventBox : Bin
 	 * The default is to keep the window below the child.
 	 * Since 2.4
 	 * Params:
-	 * aboveChild =  TRUE if the event box window is above the windows of its child
+	 * aboveChild = TRUE if the event box window is above the windows of its child
 	 */
 	public void setAboveChild(int aboveChild)
 	{
@@ -187,7 +187,7 @@ public class EventBox : Bin
 	 * descendant windows, not just at the same place on the screen.
 	 * Since 2.4
 	 * Params:
-	 * visibleWindow =  boolean value
+	 * visibleWindow = boolean value
 	 */
 	public void setVisibleWindow(int visibleWindow)
 	{

@@ -227,7 +227,7 @@ private import gobject.ObjectG;
  * in a UI definition by specifying the "type" attribute on a <child>
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
- * Example 58. A GtkBuilder UI Definition
+ * Example  58.  A GtkBuilder UI Definition
  * <interface>
  *  <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">
@@ -423,7 +423,7 @@ public class Builder : ObjectG
 	 * UI definition and merges it with the current contents of builder.
 	 * Since 2.12
 	 * Params:
-	 * filename =  the name of the file to parse
+	 * filename = the name of the file to parse
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
@@ -447,8 +447,8 @@ public class Builder : ObjectG
 	 * UI definition and merges it with the current contents of builder.
 	 * Since 2.12
 	 * Params:
-	 * buffer =  the string to parse
-	 * length =  the length of buffer (may be -1 if buffer is nul-terminated)
+	 * buffer = the string to parse
+	 * length = the length of buffer (may be -1 if buffer is nul-terminated)
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
@@ -477,8 +477,8 @@ public class Builder : ObjectG
 	 * GtkTreeModel), you have to explicitely list all of them in object_ids.
 	 * Since 2.14
 	 * Params:
-	 * filename =  the name of the file to parse
-	 * objectIds =  nul-terminated array of objects to build
+	 * filename = the name of the file to parse
+	 * objectIds = nul-terminated array of objects to build
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
@@ -507,9 +507,9 @@ public class Builder : ObjectG
 	 * GtkTreeModel), you have to explicitely list all of them in object_ids.
 	 * Since 2.14
 	 * Params:
-	 * buffer =  the string to parse
-	 * length =  the length of buffer (may be -1 if buffer is nul-terminated)
-	 * objectIds =  nul-terminated array of objects to build
+	 * buffer = the string to parse
+	 * length = the length of buffer (may be -1 if buffer is nul-terminated)
+	 * objectIds = nul-terminated array of objects to build
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
@@ -533,7 +533,7 @@ public class Builder : ObjectG
 	 * increment the reference count of the returned object.
 	 * Since 2.12
 	 * Params:
-	 * name =  name of object to get
+	 * name = name of object to get
 	 * Returns: the object named name or NULL if it could not be  found in the object tree.
 	 */
 	public ObjectG getObject(string name)
@@ -580,7 +580,7 @@ public class Builder : ObjectG
 	 * gmodule-export-2.0.
 	 * Since 2.12
 	 * Params:
-	 * userData =  a pointer to a structure sent in as user data to all signals
+	 * userData = a pointer to a structure sent in as user data to all signals
 	 */
 	public void connectSignals(void* userData)
 	{
@@ -594,8 +594,8 @@ public class Builder : ObjectG
 	 * require GModule to function correctly.
 	 * Since 2.12
 	 * Params:
-	 * func =  the function used to connect the signals
-	 * userData =  arbitrary data that will be passed to the connection function
+	 * func = the function used to connect the signals
+	 * userData = arbitrary data that will be passed to the connection function
 	 */
 	public void connectSignalsFull(GtkBuilderConnectFunc func, void* userData)
 	{
@@ -608,7 +608,7 @@ public class Builder : ObjectG
 	 * See "translation-domain".
 	 * Since 2.12
 	 * Params:
-	 * domain =  the translation domain or NULL
+	 * domain = the translation domain or NULL
 	 */
 	public void setTranslationDomain(string domain)
 	{
@@ -633,7 +633,7 @@ public class Builder : ObjectG
 	 * implementing the GtkBuildable interface on a type.
 	 * Since 2.12
 	 * Params:
-	 * typeName =  type name to lookup
+	 * typeName = type name to lookup
 	 * Returns: the GType found for type_name or G_TYPE_INVALID  if no type was found
 	 */
 	public GType getTypeFromName(string typeName)
@@ -652,9 +652,9 @@ public class Builder : ObjectG
 	 * still to come.
 	 * Since 2.12
 	 * Params:
-	 * pspec =  the GParamSpec for the property
-	 * string =  the string representation of the value
-	 * value =  the GValue to store the result in
+	 * pspec = the GParamSpec for the property
+	 * string = the string representation of the value
+	 * value = the GValue to store the result in
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -680,9 +680,9 @@ public class Builder : ObjectG
 	 * need not be initialised beforehand.
 	 * Since 2.12
 	 * Params:
-	 * type =  the GType of the value
-	 * string =  the string representation of the value
-	 * value =  the GValue to store the result in
+	 * type = the GType of the value
+	 * string = the string representation of the value
+	 * value = the GValue to store the result in
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

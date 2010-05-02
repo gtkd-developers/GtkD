@@ -174,7 +174,7 @@ public class ProgressBar : Progress
 	/**
 	 * Causes the given text to appear superimposed on the progress bar.
 	 * Params:
-	 * text =  a UTF-8 string, or NULL
+	 * text = a UTF-8 string, or NULL
 	 */
 	public void setText(string text)
 	{
@@ -187,7 +187,7 @@ public class ProgressBar : Progress
 	 * of the bar. The fraction should be between 0.0 and 1.0,
 	 * inclusive.
 	 * Params:
-	 * fraction =  fraction of the task that's been completed
+	 * fraction = fraction of the task that's been completed
 	 */
 	public void setFraction(double fraction)
 	{
@@ -199,7 +199,7 @@ public class ProgressBar : Progress
 	 * Sets the fraction of total progress bar length to move the
 	 * bouncing block for each call to gtk_progress_bar_pulse().
 	 * Params:
-	 * fraction =  fraction between 0.0 and 1.0
+	 * fraction = fraction between 0.0 and 1.0
 	 */
 	public void setPulseStep(double fraction)
 	{
@@ -211,7 +211,7 @@ public class ProgressBar : Progress
 	 * Causes the progress bar to switch to a different orientation
 	 * (left-to-right, right-to-left, top-to-bottom, or bottom-to-top).
 	 * Params:
-	 * orientation =  orientation of the progress bar
+	 * orientation = orientation of the progress bar
 	 */
 	public void setOrientation(GtkProgressBarOrientation orientation)
 	{
@@ -224,7 +224,7 @@ public class ProgressBar : Progress
 	 * if there is not enough space to render the entire string.
 	 * Since 2.6
 	 * Params:
-	 * mode =  a PangoEllipsizeMode
+	 * mode = a PangoEllipsizeMode
 	 */
 	public void setEllipsize(PangoEllipsizeMode mode)
 	{

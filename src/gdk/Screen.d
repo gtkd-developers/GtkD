@@ -281,7 +281,7 @@ public class Screen : ObjectG
 	 * Sets the default colormap for screen.
 	 * Since 2.2
 	 * Params:
-	 * colormap =  a GdkColormap
+	 * colormap = a GdkColormap
 	 */
 	public void setDefaultColormap(Colormap colormap)
 	{
@@ -583,8 +583,8 @@ public class Screen : ObjectG
 	 * gdk_screen_get_width() and gdk_screen_get_height().
 	 * Since 2.2
 	 * Params:
-	 * monitorNum =  the monitor number.
-	 * dest =  a GdkRectangle to be filled with the monitor geometry
+	 * monitorNum = the monitor number.
+	 * dest = a GdkRectangle to be filled with the monitor geometry
 	 */
 	public void getMonitorGeometry(int monitorNum, Rectangle dest)
 	{
@@ -596,8 +596,8 @@ public class Screen : ObjectG
 	 * Returns the monitor number in which the point (x,y) is located.
 	 * Since 2.2
 	 * Params:
-	 * x =  the x coordinate in the virtual screen.
-	 * y =  the y coordinate in the virtual screen.
+	 * x = the x coordinate in the virtual screen.
+	 * y = the y coordinate in the virtual screen.
 	 * Returns: the monitor number in which the point (x,y) lies, or a monitor close to (x,y) if the point is not in any monitor.
 	 */
 	public int getMonitorAtPoint(int x, int y)
@@ -611,7 +611,7 @@ public class Screen : ObjectG
 	 * bounding rectangle of window resides.
 	 * Since 2.2
 	 * Params:
-	 * window =  a GdkWindow
+	 * window = a GdkWindow
 	 * Returns: the monitor number in which most of window is located, or if window does not intersect any monitors, a monitor, close to window.
 	 */
 	public int getMonitorAtWindow(Window window)
@@ -624,7 +624,7 @@ public class Screen : ObjectG
 	 * Gets the height in millimeters of the specified monitor.
 	 * Since 2.14
 	 * Params:
-	 * monitorNum =  number of the monitor
+	 * monitorNum = number of the monitor
 	 * Returns: the height of the monitor, or -1 if not available
 	 */
 	public int getMonitorHeightMm(int monitorNum)
@@ -637,7 +637,7 @@ public class Screen : ObjectG
 	 * Gets the width in millimeters of the specified monitor, if available.
 	 * Since 2.14
 	 * Params:
-	 * monitorNum =  number of the monitor
+	 * monitorNum = number of the monitor
 	 * Returns: the width of the monitor, or -1 if not available
 	 */
 	public int getMonitorWidthMm(int monitorNum)
@@ -652,7 +652,7 @@ public class Screen : ObjectG
 	 * product name of the display device.
 	 * Since 2.14
 	 * Params:
-	 * monitorNum =  number of the monitor
+	 * monitorNum = number of the monitor
 	 * Returns: a newly-allocated string containing the name of the monitor, or NULL if the name cannot be determined
 	 */
 	public string getMonitorPlugName(int monitorNum)
@@ -673,7 +673,7 @@ public class Screen : ObjectG
 	 * data is limited to one long, i.e. four bytes.
 	 * Since 2.2
 	 * Params:
-	 * event =  the GdkEvent.
+	 * event = the GdkEvent.
 	 */
 	public void broadcastClientMessage(Event event)
 	{
@@ -688,8 +688,8 @@ public class Screen : ObjectG
 	 * more information.
 	 * Since 2.2
 	 * Params:
-	 * name =  the name of the setting
-	 * value =  location to store the value of the setting
+	 * name = the name of the setting
+	 * value = location to store the value of the setting
 	 * Returns: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
 	 */
 	public int getSetting(string name, Value value)
@@ -722,7 +722,7 @@ public class Screen : ObjectG
 	 * have already been created.
 	 * Since 2.10
 	 * Params:
-	 * options =  a cairo_font_options_t, or NULL to unset any
+	 * options = a cairo_font_options_t, or NULL to unset any
 	 *  previously set default font options.
 	 */
 	public void setFontOptions(FontOption options)
@@ -750,7 +750,7 @@ public class Screen : ObjectG
 	 * font will be 13 units high. (10 * 96. / 72. = 13.3).
 	 * Since 2.10
 	 * Params:
-	 * dpi =  the resolution in "dots per inch". (Physical inches aren't actually
+	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
 	 *  involved; the terminology is conventional.)
 	 */
 	public void setResolution(double dpi)
@@ -818,14 +818,14 @@ public class Screen : ObjectG
 	 * on a specific screen.
 	 * Since 2.4
 	 * Params:
-	 * workingDirectory =  child's current working directory, or NULL to
+	 * workingDirectory = child's current working directory, or NULL to
 	 *  inherit parent's
-	 * argv =  child's argument vector
-	 * envp =  child's environment, or NULL to inherit parent's
-	 * flags =  flags from GSpawnFlags
-	 * childSetup =  function to run in the child just before exec()
-	 * userData =  user data for child_setup
-	 * childPid =  return location for child process ID, or NULL
+	 * argv = child's argument vector
+	 * envp = child's environment, or NULL to inherit parent's
+	 * flags = flags from GSpawnFlags
+	 * childSetup = function to run in the child just before exec()
+	 * userData = user data for child_setup
+	 * childPid = return location for child process ID, or NULL
 	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
@@ -853,19 +853,19 @@ public class Screen : ObjectG
 	 * on a specific screen.
 	 * Since 2.4
 	 * Params:
-	 * workingDirectory =  child's current working directory, or NULL to
+	 * workingDirectory = child's current working directory, or NULL to
 	 *  inherit parent's
-	 * argv =  child's argument vector
-	 * envp =  child's environment, or NULL to inherit parent's
-	 * flags =  flags from GSpawnFlags
-	 * childSetup =  function to run in the child just before exec()
-	 * userData =  user data for child_setup
-	 * childPid =  return location for child process ID, or NULL
-	 * standardInput =  return location for file descriptor to write to
+	 * argv = child's argument vector
+	 * envp = child's environment, or NULL to inherit parent's
+	 * flags = flags from GSpawnFlags
+	 * childSetup = function to run in the child just before exec()
+	 * userData = user data for child_setup
+	 * childPid = return location for child process ID, or NULL
+	 * standardInput = return location for file descriptor to write to
 	 *  child's stdin, or NULL
-	 * standardOutput =  return location for file descriptor to read child's
+	 * standardOutput = return location for file descriptor to read child's
 	 *  stdout, or NULL
-	 * standardError =  return location for file descriptor to read child's
+	 * standardError = return location for file descriptor to read child's
 	 *  stderr, or NULL
 	 * Returns: TRUE on success, FALSE if an error was set
 	 */
@@ -893,7 +893,7 @@ public class Screen : ObjectG
 	 * on a specific screen.
 	 * Since 2.4
 	 * Params:
-	 * commandLine =  a command line
+	 * commandLine = a command line
 	 * Returns: TRUE on success, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */

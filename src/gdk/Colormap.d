@@ -137,8 +137,8 @@ public class Colormap
 	/**
 	 * Creates a new colormap for the given visual.
 	 * Params:
-	 * visual =  a GdkVisual.
-	 * allocate =  if TRUE, the newly created colormap will be
+	 * visual = a GdkVisual.
+	 * allocate = if TRUE, the newly created colormap will be
 	 * a private colormap, and all colors in it will be
 	 * allocated for the applications use.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -220,7 +220,7 @@ public class Colormap
 	 * array in the colormap. This function is obsolete and
 	 * should not be used. See gdk_color_change().
 	 * Params:
-	 * ncolors =  the number of colors to change.
+	 * ncolors = the number of colors to change.
 	 */
 	public void change(int ncolors)
 	{
@@ -231,14 +231,14 @@ public class Colormap
 	/**
 	 * Allocates colors from a colormap.
 	 * Params:
-	 * colors =  The color values to allocate. On return, the pixel
+	 * colors = The color values to allocate. On return, the pixel
 	 *  values for allocated colors will be filled in.
-	 * writeable =  If TRUE, the colors are allocated writeable
+	 * writeable = If TRUE, the colors are allocated writeable
 	 *  (their values can later be changed using gdk_color_change()).
 	 *  Writeable colors cannot be shared between applications.
-	 * bestMatch =  If TRUE, GDK will attempt to do matching against
+	 * bestMatch = If TRUE, GDK will attempt to do matching against
 	 *  existing colors if the colors cannot be allocated as requested.
-	 * success =  An array of length ncolors. On return, this
+	 * success = An array of length ncolors. On return, this
 	 *  indicates whether the corresponding color in colors was
 	 *  successfully allocated or not.
 	 * Returns: The number of colors that were not successfully allocated.
@@ -252,13 +252,13 @@ public class Colormap
 	/**
 	 * Allocates a single color from a colormap.
 	 * Params:
-	 * color =  the color to allocate. On return the
+	 * color = the color to allocate. On return the
 	 *  pixel field will be
 	 *  filled in if allocation succeeds.
-	 * writeable =  If TRUE, the color is allocated writeable
+	 * writeable = If TRUE, the color is allocated writeable
 	 *  (their values can later be changed using gdk_color_change()).
 	 *  Writeable colors cannot be shared between applications.
-	 * bestMatch =  If TRUE, GDK will attempt to do matching against
+	 * bestMatch = If TRUE, GDK will attempt to do matching against
 	 *  existing colors if the color cannot be allocated as requested.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
@@ -271,7 +271,7 @@ public class Colormap
 	/**
 	 * Frees previously allocated colors.
 	 * Params:
-	 * colors =  the colors to free.
+	 * colors = the colors to free.
 	 */
 	public void freeColors(GdkColor[] colors)
 	{
@@ -290,8 +290,8 @@ public class Colormap
 	 * This function is rarely useful; it's used for example to
 	 * implement the eyedropper feature in GtkColorSelection.
 	 * Params:
-	 * pixel =  pixel value in hardware display format
-	 * result =  GdkColor with red, green, blue fields initialized
+	 * pixel = pixel value in hardware display format
+	 * result = GdkColor with red, green, blue fields initialized
 	 */
 	public void queryColor(uint pixel, out GdkColor result)
 	{
@@ -337,7 +337,7 @@ public class Colormap
 	 * a private colormap. This function is obsolete and
 	 * should not be used. See gdk_color_change().
 	 * Params:
-	 * colors =  the new color values.
+	 * colors = the new color values.
 	 */
 	public void colorsStore(GdkColor[] colors)
 	{
@@ -353,10 +353,10 @@ public class Colormap
 	 * For full documentation of the fields, see
 	 * the Xlib documentation for XAllocColorCells().
 	 * Params:
-	 * contiguous =  if TRUE, the colors should be allocated
+	 * contiguous = if TRUE, the colors should be allocated
 	 *  in contiguous color cells.
-	 * planes =  an array in which to store the plane masks.
-	 * pixels =  an array into which to store allocated pixel values.
+	 * planes = an array in which to store the plane masks.
+	 * pixels = an array into which to store allocated pixel values.
 	 * Returns: TRUE if the allocation was successful
 	 */
 	public int colorsAlloc(int contiguous, uint[] planes, uint[] pixels)
@@ -371,8 +371,8 @@ public class Colormap
 	 * Frees colors allocated with gdk_colors_alloc(). This
 	 * function is obsolete. See gdk_colormap_free_colors().
 	 * Params:
-	 * pixels =  the pixel values of the colors to free.
-	 * planes =  the plane masks for all planes to free, OR'd together.
+	 * pixels = the pixel values of the colors to free.
+	 * planes = the plane masks for all planes to free, OR'd together.
 	 */
 	public void colorsFree(uint[] pixels, uint planes)
 	{

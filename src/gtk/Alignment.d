@@ -245,10 +245,10 @@ public class Alignment : Bin
 	 * See gtk_alignment_set_padding().
 	 * Since 2.4
 	 * Params:
-	 * paddingTop =  location to store the padding for the top of the widget, or NULL
-	 * paddingBottom =  location to store the padding for the bottom of the widget, or NULL
-	 * paddingLeft =  location to store the padding for the left of the widget, or NULL
-	 * paddingRight =  location to store the padding for the right of the widget, or NULL
+	 * paddingTop = location to store the padding for the top of the widget, or NULL
+	 * paddingBottom = location to store the padding for the bottom of the widget, or NULL
+	 * paddingLeft = location to store the padding for the left of the widget, or NULL
+	 * paddingRight = location to store the padding for the right of the widget, or NULL
 	 */
 	public void getPadding(out uint paddingTop, out uint paddingBottom, out uint paddingLeft, out uint paddingRight)
 	{
@@ -263,10 +263,10 @@ public class Alignment : Bin
 	 * padding on the left.
 	 * Since 2.4
 	 * Params:
-	 * paddingTop =  the padding at the top of the widget
-	 * paddingBottom =  the padding at the bottom of the widget
-	 * paddingLeft =  the padding at the left of the widget
-	 * paddingRight =  the padding at the right of the widget.
+	 * paddingTop = the padding at the top of the widget
+	 * paddingBottom = the padding at the bottom of the widget
+	 * paddingLeft = the padding at the left of the widget
+	 * paddingRight = the padding at the right of the widget.
 	 */
 	public void setPadding(uint paddingTop, uint paddingBottom, uint paddingLeft, uint paddingRight)
 	{

@@ -188,7 +188,7 @@ public class PgFontDescription
 	 * are all the same. (Two font descriptions may result in identical fonts
 	 * being loaded, but still compare FALSE.)
 	 * Params:
-	 * desc2 =  another PangoFontDescription
+	 * desc2 = another PangoFontDescription
 	 * Returns: TRUE if the two font descriptions are identical,	 FALSE otherwise.
 	 */
 	public int equal(PgFontDescription desc2)
@@ -213,7 +213,7 @@ public class PgFontDescription
 	 * PangoFontDescription, it is also possible to use a comma
 	 * separated list of family names for this field.
 	 * Params:
-	 * family =  a string representing the family name.
+	 * family = a string representing the family name.
 	 */
 	public void setFamily(string family)
 	{
@@ -229,7 +229,7 @@ public class PgFontDescription
 	 * family is a static string such as a C string literal, or
 	 * if desc is only needed temporarily.
 	 * Params:
-	 * family =  a string representing the family name.
+	 * family = a string representing the family name.
 	 */
 	public void setFamilyStatic(string family)
 	{
@@ -258,7 +258,7 @@ public class PgFontDescription
 	 * match italic specifications with oblique fonts and vice-versa
 	 * if an exact match is not found.
 	 * Params:
-	 * style =  the style for the font description
+	 * style = the style for the font description
 	 */
 	public void setStyle(PangoStyle style)
 	{
@@ -281,7 +281,7 @@ public class PgFontDescription
 	 * Sets the variant field of a font description. The PangoVariant
 	 * can either be PANGO_VARIANT_NORMAL or PANGO_VARIANT_SMALL_CAPS.
 	 * Params:
-	 * variant =  the variant type for the font description.
+	 * variant = the variant type for the font description.
 	 */
 	public void setVariant(PangoVariant variant)
 	{
@@ -306,7 +306,7 @@ public class PgFontDescription
 	 * to the values of the PangoWeight enumeration, other intermediate
 	 * numeric values are possible.
 	 * Params:
-	 * weight =  the weight for the font description.
+	 * weight = the weight for the font description.
 	 */
 	public void setWeight(PangoWeight weight)
 	{
@@ -329,7 +329,7 @@ public class PgFontDescription
 	 * Sets the stretch field of a font description. The stretch field
 	 * specifies how narrow or wide the font should be.
 	 * Params:
-	 * stretch =  the stretch for the font description
+	 * stretch = the stretch for the font description
 	 */
 	public void setStretch(PangoStretch stretch)
 	{
@@ -352,7 +352,7 @@ public class PgFontDescription
 	 * Sets the size field of a font description in fractional points. This is mutually
 	 * exclusive with pango_font_description_set_absolute_size().
 	 * Params:
-	 * size =  the size of the font in points, scaled by PANGO_SCALE. (That is,
+	 * size = the size of the font in points, scaled by PANGO_SCALE. (That is,
 	 *  a size value of 10 * PANGO_SCALE is a 10 point font. The conversion
 	 *  factor between points and device units depends on system configuration
 	 *  and the output device. For screen display, a logical DPI of 96 is
@@ -383,7 +383,7 @@ public class PgFontDescription
 	 * in points.
 	 * Since 1.8
 	 * Params:
-	 * size =  the new size, in Pango units. There are PANGO_SCALE Pango units in one
+	 * size = the new size, in Pango units. There are PANGO_SCALE Pango units in one
 	 *  device unit. For an output backend where a device unit is a pixel, a size
 	 *  value of 10 * PANGO_SCALE gives a 10 pixel font.
 	 */
@@ -414,7 +414,7 @@ public class PgFontDescription
 	 * be set on a PangoContext.
 	 * Since 1.16
 	 * Params:
-	 * gravity =  the gravity for the font description.
+	 * gravity = the gravity for the font description.
 	 */
 	public void setGravity(PangoGravity gravity)
 	{
@@ -448,7 +448,7 @@ public class PgFontDescription
 	 * Unsets some of the fields in a PangoFontDescription. The unset
 	 * fields will get back to their default values.
 	 * Params:
-	 * toUnset =  bitmask of fields in the desc to unset.
+	 * toUnset = bitmask of fields in the desc to unset.
 	 */
 	public void unsetFields(PangoFontMask toUnset)
 	{
@@ -463,9 +463,9 @@ public class PgFontDescription
 	 * already set will be replaced as well.
 	 * If desc_to_merge is NULL, this function performs nothing.
 	 * Params:
-	 * desc =  a PangoFontDescription
-	 * descToMerge =  the PangoFontDescription to merge from, or NULL
-	 * replaceExisting =  if TRUE, replace fields in desc with the
+	 * desc = a PangoFontDescription
+	 * descToMerge = the PangoFontDescription to merge from, or NULL
+	 * replaceExisting = if TRUE, replace fields in desc with the
 	 *  corresponding values from desc_to_merge, even if they
 	 *  are already exist.
 	 */
@@ -481,9 +481,9 @@ public class PgFontDescription
 	 * used until desc_to_merge is modified or freed. This is meant
 	 * to be used when the merged font description is only needed temporarily.
 	 * Params:
-	 * desc =  a PangoFontDescription
-	 * descToMerge =  the PangoFontDescription to merge from
-	 * replaceExisting =  if TRUE, replace fields in desc with the
+	 * desc = a PangoFontDescription
+	 * descToMerge = the PangoFontDescription to merge from
+	 * replaceExisting = if TRUE, replace fields in desc with the
 	 *  corresponding values from desc_to_merge, even if they
 	 *  are already exist.
 	 */
@@ -505,8 +505,8 @@ public class PgFontDescription
 	 * styles are equal.
 	 * Note that old_match must match desc.
 	 * Params:
-	 * oldMatch =  a PangoFontDescription, or NULL
-	 * newMatch =  a PangoFontDescription
+	 * oldMatch = a PangoFontDescription, or NULL
+	 * newMatch = a PangoFontDescription
 	 * Returns: TRUE if new_match is a better match
 	 */
 	public int betterMatch(PgFontDescription oldMatch, PgFontDescription newMatch)
@@ -529,7 +529,7 @@ public class PgFontDescription
 	 * default values. If SIZE is missing, the size in the resulting font
 	 * description will be set to 0.
 	 * Params:
-	 * str =  string representation of a font description.
+	 * str = string representation of a font description.
 	 * Returns: a new PangoFontDescription.
 	 */
 	public static PgFontDescription fromString(string str)

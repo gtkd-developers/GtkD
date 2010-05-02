@@ -185,7 +185,7 @@ public template RecentChooserT(TStruct)
 	 * Whether to show recently used resources marked registered as private.
 	 * Since 2.10
 	 * Params:
-	 * showPrivate =  TRUE to show private items, FALSE otherwise
+	 * showPrivate = TRUE to show private items, FALSE otherwise
 	 */
 	public void setShowPrivate(int showPrivate)
 	{
@@ -210,7 +210,7 @@ public template RecentChooserT(TStruct)
 	 * it didn't find. This only applies to local resources.
 	 * Since 2.10
 	 * Params:
-	 * showNotFound =  whether to show the local items we didn't find
+	 * showNotFound = whether to show the local items we didn't find
 	 */
 	public void setShowNotFound(int showNotFound)
 	{
@@ -235,7 +235,7 @@ public template RecentChooserT(TStruct)
 	 * displaying it.
 	 * Since 2.10
 	 * Params:
-	 * showIcons =  whether to show an icon near the resource
+	 * showIcons = whether to show an icon near the resource
 	 */
 	public void setShowIcons(int showIcons)
 	{
@@ -258,7 +258,7 @@ public template RecentChooserT(TStruct)
 	 * Sets whether chooser can select multiple items.
 	 * Since 2.10
 	 * Params:
-	 * selectMultiple =  TRUE if chooser can select more than one item
+	 * selectMultiple = TRUE if chooser can select more than one item
 	 */
 	public void setSelectMultiple(int selectMultiple)
 	{
@@ -284,7 +284,7 @@ public template RecentChooserT(TStruct)
 	 * to be accessible through the operating system native file system.
 	 * Since 2.10
 	 * Params:
-	 * localOnly =  TRUE if only local files can be shown
+	 * localOnly = TRUE if only local files can be shown
 	 */
 	public void setLocalOnly(int localOnly)
 	{
@@ -309,7 +309,7 @@ public template RecentChooserT(TStruct)
 	 * gtk_recent_chooser_get_items() and gtk_recent_chooser_get_uris().
 	 * Since 2.10
 	 * Params:
-	 * limit =  a positive integer, or -1 for all items
+	 * limit = a positive integer, or -1 for all items
 	 */
 	public void setLimit(int limit)
 	{
@@ -334,7 +334,7 @@ public template RecentChooserT(TStruct)
 	 * recently used resource in a GtkRecentChooser widget.
 	 * Since 2.10
 	 * Params:
-	 * showTips =  TRUE if tooltips should be shown
+	 * showTips = TRUE if tooltips should be shown
 	 */
 	public void setShowTips(int showTips)
 	{
@@ -360,7 +360,7 @@ public template RecentChooserT(TStruct)
 	 * Whether to show recently used resources prepended by a unique number.
 	 * Since 2.10
 	 * Params:
-	 * showNumbers =  TRUE to show numbers, FALSE otherwise
+	 * showNumbers = TRUE to show numbers, FALSE otherwise
 	 */
 	public void setShowNumbers(int showNumbers)
 	{
@@ -387,7 +387,7 @@ public template RecentChooserT(TStruct)
 	 * chooser.
 	 * Since 2.10
 	 * Params:
-	 * sortType =  sort order that the chooser should use
+	 * sortType = sort order that the chooser should use
 	 */
 	public void setSortType(GtkRecentSortType sortType)
 	{
@@ -416,9 +416,9 @@ public template RecentChooserT(TStruct)
 	 * a negative integer if the first item comes after the second.
 	 * Since 2.10
 	 * Params:
-	 * sortFunc =  the comparison function
-	 * sortData =  user data to pass to sort_func, or NULL
-	 * dataDestroy =  destroy notifier for sort_data, or NULL
+	 * sortFunc = the comparison function
+	 * sortData = user data to pass to sort_func, or NULL
+	 * dataDestroy = destroy notifier for sort_data, or NULL
 	 */
 	public void setSortFunc(GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy)
 	{
@@ -430,7 +430,7 @@ public template RecentChooserT(TStruct)
 	 * Sets uri as the current URI for chooser.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a URI
+	 * uri = a URI
 	 * Returns: TRUE if the URI was found.
 	 * Throws: GException on failure.
 	 */
@@ -480,7 +480,7 @@ public template RecentChooserT(TStruct)
 	 * Selects uri inside chooser.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a URI
+	 * uri = a URI
 	 * Returns: TRUE if uri was found.
 	 * Throws: GException on failure.
 	 */
@@ -503,7 +503,7 @@ public template RecentChooserT(TStruct)
 	 * Unselects uri inside chooser.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a URI
+	 * uri = a URI
 	 */
 	public void unselectUri(string uri)
 	{
@@ -571,7 +571,7 @@ public template RecentChooserT(TStruct)
 	 * gtk_recent_chooser_set_filter().
 	 * Since 2.10
 	 * Params:
-	 * filter =  a GtkRecentFilter
+	 * filter = a GtkRecentFilter
 	 */
 	public void addFilter(RecentFilter filter)
 	{
@@ -583,7 +583,7 @@ public template RecentChooserT(TStruct)
 	 * Removes filter from the list of GtkRecentFilter objects held by chooser.
 	 * Since 2.10
 	 * Params:
-	 * filter =  a GtkRecentFilter
+	 * filter = a GtkRecentFilter
 	 */
 	public void removeFilter(RecentFilter filter)
 	{
@@ -612,7 +612,7 @@ public template RecentChooserT(TStruct)
 	 * to affect the displayed recently used resources.
 	 * Since 2.10
 	 * Params:
-	 * filter =  a GtkRecentFilter
+	 * filter = a GtkRecentFilter
 	 */
 	public void setFilter(RecentFilter filter)
 	{

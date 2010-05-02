@@ -148,8 +148,8 @@ public class PgAttributeIterator
 	 * oversight, stored return values that wouldn't fit into
 	 * a signed integer are clamped to G_MAXINT.
 	 * Params:
-	 * start =  location to store the start of the range
-	 * end =  location to store the end of the range
+	 * start = location to store the start of the range
+	 * end = location to store the end of the range
 	 */
 	public void range(out int start, out int end)
 	{
@@ -163,7 +163,7 @@ public class PgAttributeIterator
 	 * the attribute whose range starts closest to the current location
 	 * is used.
 	 * Params:
-	 * type =  the type of attribute to find.
+	 * type = the type of attribute to find.
 	 * Returns: the current attribute of the given type, or NULL if no attribute of that type applies to the current location.
 	 */
 	public PgAttribute get(PangoAttrType type)
@@ -180,11 +180,11 @@ public class PgAttributeIterator
 	/**
 	 * Get the font and other attributes at the current iterator position.
 	 * Params:
-	 * desc =  a PangoFontDescription to fill in with the current values.
+	 * desc = a PangoFontDescription to fill in with the current values.
 	 *  The family name in this structure will be set using
 	 *  pango_font_description_set_family_static() using values from
 	 *  an attribute in the PangoAttrList associated with the iterator,
-	 * language =  if non-NULL, location to store language tag for item, or NULL
+	 * language = if non-NULL, location to store language tag for item, or NULL
 	 *  if none is found.
 	 * extraAttrs = element type Pango.Attribute): (transfer full. element type Pango.Attribute): (transfer full.
 	 */

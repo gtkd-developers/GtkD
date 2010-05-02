@@ -147,7 +147,7 @@ public class Component
 	 * when this object receives focus events (in or out). If the handler is
 	 * already added it is not added again
 	 * Params:
-	 * handler =  The AtkFocusHandler to be attached to component
+	 * handler = The AtkFocusHandler to be attached to component
 	 * Returns: a handler id which can be used in atk_component_remove_focus_handleror zero if the handler was already added.
 	 */
 	public uint addFocusHandler(AtkFocusHandler handler)
@@ -159,9 +159,9 @@ public class Component
 	/**
 	 * Checks whether the specified point is within the extent of the component.
 	 * Params:
-	 * x =  x coordinate
-	 * y =  y coordinate
-	 * coordType =  specifies whether the coordinates are relative to the screen
+	 * x = x coordinate
+	 * y = y coordinate
+	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 * Returns: TRUE or FALSE indicating whether the specified point is withinthe extent of the component or not
 	 */
@@ -174,11 +174,11 @@ public class Component
 	/**
 	 * Gets the rectangle which gives the extent of the component.
 	 * Params:
-	 * x =  address of gint to put x coordinate
-	 * y =  address of gint to put y coordinate
-	 * width =  address of gint to put width
-	 * height =  address of gint to put height
-	 * coordType =  specifies whether the coordinates are relative to the screen
+	 * x = address of gint to put x coordinate
+	 * y = address of gint to put y coordinate
+	 * width = address of gint to put width
+	 * height = address of gint to put height
+	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
 	public void getExtents(out int x, out int y, out int width, out int height, AtkCoordType coordType)
@@ -212,9 +212,9 @@ public class Component
 	 * Gets the position of component in the form of
 	 * a point specifying component's top-left corner.
 	 * Params:
-	 * x =  address of gint to put x coordinate position
-	 * y =  address of gint to put y coordinate position
-	 * coordType =  specifies whether the coordinates are relative to the screen
+	 * x = address of gint to put x coordinate position
+	 * y = address of gint to put y coordinate position
+	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
 	public void getPosition(out int x, out int y, AtkCoordType coordType)
@@ -226,8 +226,8 @@ public class Component
 	/**
 	 * Gets the size of the component in terms of width and height.
 	 * Params:
-	 * width =  address of gint to put width of component
-	 * height =  address of gint to put height of component
+	 * width = address of gint to put width of component
+	 * height = address of gint to put height of component
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -249,9 +249,9 @@ public class Component
 	 * Gets a reference to the accessible child, if one exists, at the
 	 * coordinate point specified by x and y.
 	 * Params:
-	 * x =  x coordinate
-	 * y =  y coordinate
-	 * coordType =  specifies whether the coordinates are relative to the screen
+	 * x = x coordinate
+	 * y = y coordinate
+	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 * Returns: a reference to the accessible child, if one exists
 	 */
@@ -271,7 +271,7 @@ public class Component
 	 * functions to be executed when this object receives focus events
 	 * (in or out).
 	 * Params:
-	 * handlerId =  the handler id of the focus handler to be removed
+	 * handlerId = the handler id of the focus handler to be removed
 	 * from component
 	 */
 	public void removeFocusHandler(uint handlerId)
@@ -283,11 +283,11 @@ public class Component
 	/**
 	 * Sets the extents of component.
 	 * Params:
-	 * x =  x coordinate
-	 * y =  y coordinate
-	 * width =  width to set for component
-	 * height =  height to set for component
-	 * coordType =  specifies whether the coordinates are relative to the screen
+	 * x = x coordinate
+	 * y = y coordinate
+	 * width = width to set for component
+	 * height = height to set for component
+	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 * Returns: TRUE or FALSE whether the extents were set or not
 	 */
@@ -300,9 +300,9 @@ public class Component
 	/**
 	 * Sets the postition of component.
 	 * Params:
-	 * x =  x coordinate
-	 * y =  y coordinate
-	 * coordType =  specifies whether the coordinates are relative to the screen
+	 * x = x coordinate
+	 * y = y coordinate
+	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 * Returns: TRUE or FALSE whether or not the position was set or not
 	 */
@@ -315,8 +315,8 @@ public class Component
 	/**
 	 * Set the size of the component in terms of width and height.
 	 * Params:
-	 * width =  width to set for component
-	 * height =  height to set for component
+	 * width = width to set for component
+	 * height = height to set for component
 	 * Returns: TRUE or FALSE whether the size was set or not
 	 */
 	public int setSize(int width, int height)

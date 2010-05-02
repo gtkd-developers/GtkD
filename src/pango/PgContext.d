@@ -190,13 +190,13 @@ public class PgContext : ObjectG
 	 * the range covering the position just after start_index + length.
 	 * (i.e. if itemizing in a loop, just keep passing in the same cached_iter).
 	 * Params:
-	 * text =  the text to itemize.
-	 * startIndex =  first byte in text to process
-	 * length =  the number of bytes (not characters) to process
+	 * text = the text to itemize.
+	 * startIndex = first byte in text to process
+	 * length = the number of bytes (not characters) to process
 	 *  after start_index.
 	 *  This must be >= 0.
-	 * attrs =  the set of attributes that apply to text.
-	 * cachedIter =  Cached attribute iterator, or NULL
+	 * attrs = the set of attributes that apply to text.
+	 * cachedIter = Cached attribute iterator, or NULL
 	 * Returns: a GList of PangoItem structures.
 	 */
 	public ListG itemize(string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
@@ -216,14 +216,14 @@ public class PgContext : ObjectG
 	 * is specified explicitly rather than gotten from the PangoContext.
 	 * Since 1.4
 	 * Params:
-	 * baseDir =  base direction to use for bidirectional processing
-	 * text =  the text to itemize.
-	 * startIndex =  first byte in text to process
-	 * length =  the number of bytes (not characters) to process
+	 * baseDir = base direction to use for bidirectional processing
+	 * text = the text to itemize.
+	 * startIndex = first byte in text to process
+	 * length = the number of bytes (not characters) to process
 	 *  after start_index.
 	 *  This must be >= 0.
-	 * attrs =  the set of attributes that apply to text.
-	 * cachedIter =  Cached attribute iterator, or NULL
+	 * attrs = the set of attributes that apply to text.
+	 * cachedIter = Cached attribute iterator, or NULL
 	 * Returns: a GList of PangoItem structures. The items should befreed using pango_item_free() probably in combination with g_list_foreach(),and the list itself using g_list_free().
 	 */
 	public ListG itemizeWithBaseDir(PangoDirection baseDir, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
@@ -242,7 +242,7 @@ public class PgContext : ObjectG
 	 * directional levels, produce a list in visual order.
 	 * The original list is unmodified.
 	 * Params:
-	 * logicalItems =  a GList of PangoItem in logical order.
+	 * logicalItems = a GList of PangoItem in logical order.
 	 * Returns: a GList of PangoItem structures in visual order.(Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
 	 */
 	public static ListG reorderItems(ListG logicalItems)
@@ -285,7 +285,7 @@ public class PgContext : ObjectG
 	 * This is only for internal use by Pango backends, a PangoContext obtained
 	 * via one of the recommended methods should already have a suitable font map.
 	 * Params:
-	 * fontMap =  the PangoFontMap to set.
+	 * fontMap = the PangoFontMap to set.
 	 */
 	public void setFontMap(PgFontMap fontMap)
 	{
@@ -327,7 +327,7 @@ public class PgContext : ObjectG
 	/**
 	 * Set the default font description for the context
 	 * Params:
-	 * desc =  the new pango font description
+	 * desc = the new pango font description
 	 */
 	public void setFontDescription(PgFontDescription desc)
 	{
@@ -355,7 +355,7 @@ public class PgContext : ObjectG
 	 * for the locale of the running process can be found using
 	 * pango_language_get_default().
 	 * Params:
-	 * language =  the new language tag.
+	 * language = the new language tag.
 	 */
 	public void setLanguage(PgLanguage language)
 	{
@@ -383,7 +383,7 @@ public class PgContext : ObjectG
 	 * PANGO_DIRECTION_WEAK_LTR or PANGO_DIRECTION_WEAK_RTL is used only
 	 * for paragraphs that do not contain any strong characters themselves.
 	 * Params:
-	 * direction =  the new base direction
+	 * direction = the new base direction
 	 */
 	public void setBaseDir(PangoDirection direction)
 	{
@@ -408,7 +408,7 @@ public class PgContext : ObjectG
 	 * The base gravity is used in laying vertical text out.
 	 * Since 1.16
 	 * Params:
-	 * gravity =  the new base gravity
+	 * gravity = the new base gravity
 	 */
 	public void setBaseGravity(PangoGravity gravity)
 	{
@@ -449,7 +449,7 @@ public class PgContext : ObjectG
 	 * is set PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST.
 	 * Since 1.16
 	 * Params:
-	 * hint =  the new gravity hint
+	 * hint = the new gravity hint
 	 */
 	public void setGravityHint(PangoGravityHint hint)
 	{
@@ -483,7 +483,7 @@ public class PgContext : ObjectG
 	 * matrices, depending on how the text is fit to the pixel grid.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL to unset any existing matrix.
+	 * matrix = a PangoMatrix, or NULL to unset any existing matrix.
 	 *  (No matrix set is the same as setting the identity matrix.)
 	 */
 	public void setMatrix(PgMatrix matrix)
@@ -496,7 +496,7 @@ public class PgContext : ObjectG
 	 * Loads the font in one of the fontmaps in the context
 	 * that is the closest match for desc.
 	 * Params:
-	 * desc =  a PangoFontDescription describing the font to load
+	 * desc = a PangoFontDescription describing the font to load
 	 * Returns: the font loaded, or NULL if no font matched.
 	 */
 	public PgFont loadFont(PgFontDescription desc)
@@ -514,8 +514,8 @@ public class PgContext : ObjectG
 	 * Load a set of fonts in the context that can be used to render
 	 * a font matching desc.
 	 * Params:
-	 * desc =  a PangoFontDescription describing the fonts to load
-	 * language =  a PangoLanguage the fonts will be used for
+	 * desc = a PangoFontDescription describing the fonts to load
+	 * language = a PangoLanguage the fonts will be used for
 	 * Returns: the fontset, or NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
@@ -542,9 +542,9 @@ public class PgContext : ObjectG
 	 * be a composite of the metrics for the fonts loaded for the
 	 * individual families.
 	 * Params:
-	 * desc =  a PangoFontDescription structure. NULL means that the font
+	 * desc = a PangoFontDescription structure. NULL means that the font
 	 * 	 description from the context will be used.
-	 * language =  language tag used to determine which script to get the metrics
+	 * language = language tag used to determine which script to get the metrics
 	 *  for. NULL means that the language tag from the context will
 	 *  be used. If no language tag is set on the context, metrics
 	 *  for the default language (as determined by
@@ -565,7 +565,7 @@ public class PgContext : ObjectG
 	/**
 	 * List all families for a context.
 	 * Params:
-	 * families =  location to store a pointer to an array of PangoFontFamily *.
+	 * families = location to store a pointer to an array of PangoFontFamily *.
 	 *  This array should be freed with g_free().
 	 */
 	public void listFamilies(out PgFontFamily[] families)
@@ -593,12 +593,12 @@ public class PgContext : ObjectG
 	 * (for example you need to see spaces on either side of a word to know
 	 * the word is a word).
 	 * Params:
-	 * text =  text to process
-	 * length =  length in bytes of text
-	 * level =  embedding level, or -1 if unknown
-	 * language =  language tag
-	 * logAttrs =  array with one PangoLogAttr per character in text, plus one extra, to be filled in
-	 * attrsLen =  length of log_attrs array
+	 * text = text to process
+	 * length = length in bytes of text
+	 * level = embedding level, or -1 if unknown
+	 * language = language tag
+	 * logAttrs = array with one PangoLogAttr per character in text, plus one extra, to be filled in
+	 * attrsLen = length of log_attrs array
 	 */
 	public static void getLogAttrs(string text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
 	{
@@ -617,10 +617,10 @@ public class PgContext : ObjectG
 	 * next_paragraph_start are filled with the length of text (an index one
 	 * off the end).
 	 * Params:
-	 * text =  UTF-8 text
-	 * length =  length of text in bytes, or -1 if nul-terminated
-	 * paragraphDelimiterIndex =  return location for index of delimiter
-	 * nextParagraphStart =  return location for start of next paragraph
+	 * text = UTF-8 text
+	 * length = length of text in bytes, or -1 if nul-terminated
+	 * paragraphDelimiterIndex = return location for index of delimiter
+	 * nextParagraphStart = return location for start of next paragraph
 	 */
 	public static void findParagraphBoundary(string text, int length, out int paragraphDelimiterIndex, out int nextParagraphStart)
 	{
@@ -637,11 +637,11 @@ public class PgContext : ObjectG
 	 * you need to pango_itemize(). In most cases however you should
 	 * simply use pango_get_log_attrs().
 	 * Params:
-	 * text =  text to break
-	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
-	 * analysis =  a PangoAnalysis for the text
-	 * attrs =  logical attributes to fill in
-	 * attrsLen =  size of the array passed as attrs
+	 * text = text to break
+	 * length = length of text in bytes (may be -1 if text is nul-terminated)
+	 * analysis = a PangoAnalysis for the text
+	 * attrs = logical attributes to fill in
+	 * attrsLen = size of the array passed as attrs
 	 */
 	public static void defaultBreak(string text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
@@ -655,10 +655,10 @@ public class PgContext : ObjectG
 	 * convert the characters into glyphs. You may also pass
 	 * in only a substring of the item from pango_itemize().
 	 * Params:
-	 * text =  the text to process
-	 * length =  the length (in bytes) of text
-	 * analysis =  PangoAnalysis structure from pango_itemize()
-	 * glyphs =  glyph string in which to store results
+	 * text = the text to process
+	 * length = the length (in bytes) of text
+	 * analysis = PangoAnalysis structure from pango_itemize()
+	 * glyphs = glyph string in which to store results
 	 */
 	public static void shape(string text, int length, PangoAnalysis* analysis, PgGlyphString glyphs)
 	{
@@ -675,7 +675,7 @@ public class PgContext : ObjectG
 	 * Unicode bidirectional type of a character is needed,
 	 * pango_bidi_type_for_gunichar() can be used instead.
 	 * Params:
-	 * ch =  a Unicode character
+	 * ch = a Unicode character
 	 * Returns: the direction of the character.
 	 */
 	public static PangoDirection unicharDirection(gunichar ch)
@@ -689,8 +689,8 @@ public class PgContext : ObjectG
 	 * direction, according to the Unicode bidirectional algorithm.
 	 * Since 1.4
 	 * Params:
-	 * text =  the text to process
-	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * text = the text to process
+	 * length = length of text in bytes (may be -1 if text is nul-terminated)
 	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
 	 */
 	public static PangoDirection findBaseDir(string text, int length)
@@ -708,8 +708,8 @@ public class PgContext : ObjectG
 	 * Use g_unichar_get_mirror_char() instead; the docs for that function
 	 * provide full details.
 	 * Params:
-	 * ch =  a Unicode character
-	 * mirroredCh =  location to store the mirrored character
+	 * ch = a Unicode character
+	 * mirroredCh = location to store the mirrored character
 	 * Returns: TRUE if ch has a mirrored character and mirrored_ch isfilled in, FALSE otherwise
 	 */
 	public static int getMirrorChar(gunichar ch, gunichar* mirroredCh)
@@ -725,7 +725,7 @@ public class PgContext : ObjectG
 	 * pango_unichar_get_direction().
 	 * Since 1.22
 	 * Params:
-	 * ch =  a Unicode character
+	 * ch = a Unicode character
 	 * Returns: the bidirectional character type, as used in theUnicode bidirectional algorithm.
 	 */
 	public static PangoBidiType bidiTypeForUnichar(gunichar ch)

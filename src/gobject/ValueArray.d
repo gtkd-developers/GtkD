@@ -109,7 +109,7 @@ public class ValueArray
 	/**
 	 * Return a pointer to the value at index_ containd in value_array.
 	 * Params:
-	 * index =  index of the value of interest
+	 * index = index of the value of interest
 	 * Returns: pointer to a value at index_ in value_array
 	 */
 	public Value getNth(uint index)
@@ -128,7 +128,7 @@ public class ValueArray
 	 * for n_prealloced elements. New arrays always contain 0 elements,
 	 * regardless of the value of n_prealloced.
 	 * Params:
-	 * nPrealloced =  number of values to preallocate space for
+	 * nPrealloced = number of values to preallocate space for
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint nPrealloced)
@@ -170,7 +170,7 @@ public class ValueArray
 	/**
 	 * Insert a copy of value as last element of value_array.
 	 * Params:
-	 * value =  GValue to copy into GValueArray
+	 * value = GValue to copy into GValueArray
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray append(Value value)
@@ -187,7 +187,7 @@ public class ValueArray
 	/**
 	 * Insert a copy of value as first element of value_array.
 	 * Params:
-	 * value =  GValue to copy into GValueArray
+	 * value = GValue to copy into GValueArray
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray prepend(Value value)
@@ -204,8 +204,8 @@ public class ValueArray
 	/**
 	 * Insert a copy of value at specified position into value_array.
 	 * Params:
-	 * index =  insertion position, must be <= value_array->n_values
-	 * value =  GValue to copy into GValueArray
+	 * index = insertion position, must be <= value_array->n_values
+	 * value = GValue to copy into GValueArray
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray insert(uint index, Value value)
@@ -222,7 +222,7 @@ public class ValueArray
 	/**
 	 * Remove the value at position index_ from value_array.
 	 * Params:
-	 * index =  position of value to remove, must be < value_array->n_values
+	 * index = position of value to remove, must be < value_array->n_values
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray remove(uint index)
@@ -241,7 +241,7 @@ public class ValueArray
 	 * the semantics of GCompareFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.
 	 * Params:
-	 * compareFunc =  function to compare elements
+	 * compareFunc = function to compare elements
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray sort(GCompareFunc compareFunc)
@@ -260,8 +260,8 @@ public class ValueArray
 	 * to the semantics of GCompareDataFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.
 	 * Params:
-	 * compareFunc =  function to compare elements
-	 * userData =  extra data argument provided for compare_func
+	 * compareFunc = function to compare elements
+	 * userData = extra data argument provided for compare_func
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray sortWithData(GCompareDataFunc compareFunc, void* userData)

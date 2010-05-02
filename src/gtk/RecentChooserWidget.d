@@ -152,7 +152,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 	 * have a customized instance of a GtkRecentManager object.
 	 * Since 2.10
 	 * Params:
-	 * manager =  a GtkRecentManager
+	 * manager = a GtkRecentManager
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RecentManager manager)

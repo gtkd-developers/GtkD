@@ -279,8 +279,8 @@ public class Color
 	 * Returns the white color for a given colormap. The resulting
 	 * value has already allocated been allocated.
 	 * Params:
-	 * colormap =  a GdkColormap.
-	 * color =  the location to store the color.
+	 * colormap = a GdkColormap.
+	 * color = the location to store the color.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public static int white(Colormap colormap, out GdkColor color)
@@ -295,8 +295,8 @@ public class Color
 	 * Returns the black color for a given colormap. The resulting
 	 * value has already benn allocated.
 	 * Params:
-	 * colormap =  a GdkColormap.
-	 * color =  the location to store the color.
+	 * colormap = a GdkColormap.
+	 * color = the location to store the color.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public static int black(Colormap colormap, out GdkColor color)
@@ -319,8 +319,8 @@ public class Color
 	 * in the four forms is '#fff' '#ffffff' '#fffffffff' and
 	 * '#ffffffffffff')
 	 * Params:
-	 * spec =  the string specifying the color.
-	 * color =  the GdkColor to fill in
+	 * spec = the string specifying the color.
+	 * color = the GdkColor to fill in
 	 * Returns: TRUE if the parsing succeeded.
 	 */
 	public static int parse(string spec, out GdkColor color)
@@ -334,8 +334,8 @@ public class Color
 	 * gdk_color_alloc is deprecated and should not be used in newly-written code. Use gdk_colormap_alloc_color() instead.
 	 * Allocates a single color from a colormap.
 	 * Params:
-	 * colormap =  a GdkColormap.
-	 * color =  The color to allocate. On return, the
+	 * colormap = a GdkColormap.
+	 * color = The color to allocate. On return, the
 	 *  pixel field will be filled in.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
@@ -354,8 +354,8 @@ public class Color
 	 * using gdk_colormap_alloc_colors() with the
 	 * writeable set to TRUE.
 	 * Params:
-	 * colormap =  a GdkColormap.
-	 * color =  a GdkColor, with the color to change
+	 * colormap = a GdkColormap.
+	 * color = a GdkColor, with the color to change
 	 * in the pixel field,
 	 * and the new value in the remaining fields.
 	 * Returns: TRUE if the color was successfully changed.
@@ -369,7 +369,7 @@ public class Color
 	/**
 	 * Compares two colors.
 	 * Params:
-	 * colorb =  another GdkColor.
+	 * colorb = another GdkColor.
 	 * Returns: TRUE if the two colors compare equal
 	 */
 	public int equal(Color colorb)

@@ -133,7 +133,7 @@ public class WindowGroup : ObjectG
 	/**
 	 * Adds a window to a GtkWindowGroup.
 	 * Params:
-	 * window =  the GtkWindow to add
+	 * window = the GtkWindow to add
 	 */
 	public void addWindow(Window window)
 	{
@@ -144,7 +144,7 @@ public class WindowGroup : ObjectG
 	/**
 	 * Removes a window from a GtkWindowGroup.
 	 * Params:
-	 * window =  the GtkWindow to remove
+	 * window = the GtkWindow to remove
 	 */
 	public void removeWindow(Window window)
 	{

@@ -122,7 +122,7 @@ public class InetAddress : ObjectG
 	 * Parses string as an IP address and creates a new GInetAddress.
 	 * Since 2.22
 	 * Params:
-	 * string =  a string representation of an IP address
+	 * string = a string representation of an IP address
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string string)
@@ -142,8 +142,8 @@ public class InetAddress : ObjectG
 	 * G_INET_ADDRESS_IPV6.
 	 * Since 2.22
 	 * Params:
-	 * bytes =  raw address data
-	 * family =  the address family of bytes
+	 * bytes = raw address data
+	 * family = the address family of bytes
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ubyte[] bytes, GSocketFamily family)
@@ -162,7 +162,7 @@ public class InetAddress : ObjectG
 	 * care") for family.
 	 * Since 2.22
 	 * Params:
-	 * family =  the address family
+	 * family = the address family
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GSocketFamily family)

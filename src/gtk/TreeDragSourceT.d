@@ -110,7 +110,7 @@ public template TreeDragSourceT(TStruct)
 	 * some model-specific reason. Should robustly handle a path no
 	 * longer found in the model!
 	 * Params:
-	 * path =  row that was being dragged
+	 * path = row that was being dragged
 	 * Returns: TRUE if the row was successfully deleted
 	 */
 	public int dragDataDelete(TreePath path)
@@ -125,8 +125,8 @@ public template TreeDragSourceT(TStruct)
 	 * the required type of the data. Should robustly handle a path no
 	 * longer found in the model!
 	 * Params:
-	 * path =  row that was dragged
-	 * selectionData =  a GtkSelectionData to fill with data from the dragged row
+	 * path = row that was dragged
+	 * selectionData = a GtkSelectionData to fill with data from the dragged row
 	 * Returns: TRUE if data of the required type was provided
 	 */
 	public int dragDataGet(TreePath path, GtkSelectionData* selectionData)
@@ -140,7 +140,7 @@ public template TreeDragSourceT(TStruct)
 	 * the source of a DND operation. If the source doesn't implement
 	 * this interface, the row is assumed draggable.
 	 * Params:
-	 * path =  row on which user is initiating a drag
+	 * path = row on which user is initiating a drag
 	 * Returns: TRUE if the row can be dragged
 	 */
 	public int rowDraggable(TreePath path)
@@ -153,9 +153,9 @@ public template TreeDragSourceT(TStruct)
 	 * Sets selection data of target type GTK_TREE_MODEL_ROW. Normally used
 	 * in a drag_data_get handler.
 	 * Params:
-	 * selectionData =  some GtkSelectionData
-	 * treeModel =  a GtkTreeModel
-	 * path =  a row in tree_model
+	 * selectionData = some GtkSelectionData
+	 * treeModel = a GtkTreeModel
+	 * path = a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
 	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path)
@@ -175,9 +175,9 @@ public template TreeDragSourceT(TStruct)
 	 * in from the current process. The returned path must be freed with
 	 * gtk_tree_path_free().
 	 * Params:
-	 * selectionData =  a GtkSelectionData
-	 * treeModel =  a GtkTreeModel
-	 * path =  row in tree_model
+	 * selectionData = a GtkSelectionData
+	 * treeModel = a GtkTreeModel
+	 * path = row in tree_model
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
 	public static int getRowDragData(GtkSelectionData* selectionData, out TreeModelIF treeModel, out TreePath path)

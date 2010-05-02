@@ -225,9 +225,9 @@ public class Drawable : ObjectG
 	 * This function is equivalent to g_object_set_data(),
 	 * the GObject variant should be used instead.
 	 * Params:
-	 * key =  name to store the data under
-	 * data =  arbitrary data
-	 * destroyFunc =  function to free data, or NULL
+	 * key = name to store the data under
+	 * data = arbitrary data
+	 * destroyFunc = function to free data, or NULL
 	 */
 	public void setData(string key, void* data, GDestroyNotify destroyFunc)
 	{
@@ -241,7 +241,7 @@ public class Drawable : ObjectG
 	 * Equivalent to g_object_get_data(); the GObject variant should be
 	 * used instead.
 	 * Params:
-	 * key =  name the data was stored under
+	 * key = name the data was stored under
 	 * Returns: the data stored at key
 	 */
 	public override void* getData(string key)
@@ -307,7 +307,7 @@ public class Drawable : ObjectG
 	 * when using a GdkGC to draw to a drawable, or copying one drawable
 	 * to another, the colormaps should match.
 	 * Params:
-	 * colormap =  a GdkColormap
+	 * colormap = a GdkColormap
 	 */
 	public void setColormap(Colormap colormap)
 	{
@@ -350,8 +350,8 @@ public class Drawable : ObjectG
 	 * size is the size reported in the most-recently-processed configure
 	 * event, rather than the current size on the X server.
 	 * Params:
-	 * width =  location to store drawable's width, or NULL
-	 * height =  location to store drawable's height, or NULL
+	 * width = location to store drawable's width, or NULL
+	 * height = location to store drawable's height, or NULL
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -401,9 +401,9 @@ public class Drawable : ObjectG
 	 * Draws a point, using the foreground color and other attributes of
 	 * the GdkGC.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * x =  the x coordinate of the point.
-	 * y =  the y coordinate of the point.
+	 * gc = a GdkGC.
+	 * x = the x coordinate of the point.
+	 * y = the y coordinate of the point.
 	 */
 	public void drawPoint(GC gc, int x, int y)
 	{
@@ -415,8 +415,8 @@ public class Drawable : ObjectG
 	 * Draws a number of points, using the foreground color and other
 	 * attributes of the GdkGC.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * points =  an array of GdkPoint structures.
+	 * gc = a GdkGC.
+	 * points = an array of GdkPoint structures.
 	 */
 	public void drawPoints(GC gc, GdkPoint[] points)
 	{
@@ -428,11 +428,11 @@ public class Drawable : ObjectG
 	 * Draws a line, using the foreground color and other attributes of
 	 * the GdkGC.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * x1_ =  the x coordinate of the start point.
-	 * y1_ =  the y coordinate of the start point.
-	 * x2_ =  the x coordinate of the end point.
-	 * y2_ =  the y coordinate of the end point.
+	 * gc = a GdkGC.
+	 * x1_ = the x coordinate of the start point.
+	 * y1_ = the y coordinate of the start point.
+	 * x2_ = the x coordinate of the end point.
+	 * y2_ = the y coordinate of the end point.
 	 */
 	public void drawLine(GC gc, int x1_, int y1_, int x2_, int y2_)
 	{
@@ -446,8 +446,8 @@ public class Drawable : ObjectG
 	 * GdkCapStyle value in the GdkGC. This can be set with
 	 * gdk_gc_set_line_attributes().
 	 * Params:
-	 * gc =  a GdkGC.
-	 * points =  an array of GdkPoint structures specifying the endpoints of the
+	 * gc = a GdkGC.
+	 * points = an array of GdkPoint structures specifying the endpoints of the
 	 */
 	public void drawLines(GC gc, GdkPoint[] points)
 	{
@@ -470,17 +470,17 @@ public class Drawable : ObjectG
 	 * variable.
 	 * Since 2.2
 	 * Params:
-	 * gc =  a GdkGC, used for clipping, or NULL
-	 * pixbuf =  a GdkPixbuf
-	 * srcX =  Source X coordinate within pixbuf.
-	 * srcY =  Source Y coordinates within pixbuf.
-	 * destX =  Destination X coordinate within drawable.
-	 * destY =  Destination Y coordinate within drawable.
-	 * width =  Width of region to render, in pixels, or -1 to use pixbuf width.
-	 * height =  Height of region to render, in pixels, or -1 to use pixbuf height.
-	 * dither =  Dithering mode for GdkRGB.
-	 * xDither =  X offset for dither.
-	 * yDither =  Y offset for dither.
+	 * gc = a GdkGC, used for clipping, or NULL
+	 * pixbuf = a GdkPixbuf
+	 * srcX = Source X coordinate within pixbuf.
+	 * srcY = Source Y coordinates within pixbuf.
+	 * destX = Destination X coordinate within drawable.
+	 * destY = Destination Y coordinate within drawable.
+	 * width = Width of region to render, in pixels, or -1 to use pixbuf width.
+	 * height = Height of region to render, in pixels, or -1 to use pixbuf height.
+	 * dither = Dithering mode for GdkRGB.
+	 * xDither = X offset for dither.
+	 * yDither = Y offset for dither.
 	 */
 	public void drawPixbuf(GC gc, Pixbuf pixbuf, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
 	{
@@ -491,8 +491,8 @@ public class Drawable : ObjectG
 	/**
 	 * Draws a number of unconnected lines.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * segs =  an array of GdkSegment structures specifying the start and
+	 * gc = a GdkGC.
+	 * segs = an array of GdkSegment structures specifying the start and
 	 *  end points of the lines to be drawn.
 	 */
 	public void drawSegments(GC gc, GdkSegment[] segs)
@@ -513,12 +513,12 @@ public class Drawable : ObjectG
 	 * and (20, 0), which makes it 21 pixels wide and 21 pixels high.
 	 * Note
 	 * Params:
-	 * gc =  a GdkGC.
-	 * filled =  TRUE if the rectangle should be filled.
-	 * x =  the x coordinate of the left edge of the rectangle.
-	 * y =  the y coordinate of the top edge of the rectangle.
-	 * width =  the width of the rectangle.
-	 * height =  the height of the rectangle.
+	 * gc = a GdkGC.
+	 * filled = TRUE if the rectangle should be filled.
+	 * x = the x coordinate of the left edge of the rectangle.
+	 * y = the y coordinate of the top edge of the rectangle.
+	 * width = the width of the rectangle.
+	 * height = the height of the rectangle.
 	 */
 	public void drawRectangle(GC gc, int filled, int x, int y, int width, int height)
 	{
@@ -531,15 +531,15 @@ public class Drawable : ObjectG
 	 * rectangle of the entire ellipse, and the start and end angles of the part
 	 * of the ellipse to be drawn.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * filled =  TRUE if the arc should be filled, producing a 'pie slice'.
-	 * x =  the x coordinate of the left edge of the bounding rectangle.
-	 * y =  the y coordinate of the top edge of the bounding rectangle.
-	 * width =  the width of the bounding rectangle.
-	 * height =  the height of the bounding rectangle.
-	 * angle1 =  the start angle of the arc, relative to the 3 o'clock position,
+	 * gc = a GdkGC.
+	 * filled = TRUE if the arc should be filled, producing a 'pie slice'.
+	 * x = the x coordinate of the left edge of the bounding rectangle.
+	 * y = the y coordinate of the top edge of the bounding rectangle.
+	 * width = the width of the bounding rectangle.
+	 * height = the height of the bounding rectangle.
+	 * angle1 = the start angle of the arc, relative to the 3 o'clock position,
 	 *  counter-clockwise, in 1/64ths of a degree.
-	 * angle2 =  the end angle of the arc, relative to angle1, in 1/64ths
+	 * angle2 = the end angle of the arc, relative to angle1, in 1/64ths
 	 *  of a degree.
 	 */
 	public void drawArc(GC gc, int filled, int x, int y, int width, int height, int angle1, int angle2)
@@ -551,11 +551,11 @@ public class Drawable : ObjectG
 	/**
 	 * Draws an outlined or filled polygon.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * filled =  TRUE if the polygon should be filled. The polygon is closed
+	 * gc = a GdkGC.
+	 * filled = TRUE if the polygon should be filled. The polygon is closed
 	 *  automatically, connecting the last point to the first point if
 	 *  necessary.
-	 * points =  an array of GdkPoint structures specifying the points making
+	 * points = an array of GdkPoint structures specifying the points making
 	 *  up the polygon.
 	 */
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
@@ -572,8 +572,8 @@ public class Drawable : ObjectG
 	 * likely not useful for applications.
 	 * Since 2.6
 	 * Params:
-	 * gc =  a GdkGC
-	 * trapezoids =  an array of GdkTrapezoid structures
+	 * gc = a GdkGC
+	 * trapezoids = an array of GdkTrapezoid structures
 	 */
 	public void drawTrapezoids(GC gc, GdkTrapezoid[] trapezoids)
 	{
@@ -590,11 +590,11 @@ public class Drawable : ObjectG
 	 * understand; thus, use gdk_draw_layout() instead of this function,
 	 * gdk_draw_layout() handles the details.
 	 * Params:
-	 * gc =  a GdkGC
-	 * font =  font to be used
-	 * x =  X coordinate of baseline origin
-	 * y =  Y coordinate of baseline origin
-	 * glyphs =  the glyph string to draw
+	 * gc = a GdkGC
+	 * font = font to be used
+	 * x = X coordinate of baseline origin
+	 * y = Y coordinate of baseline origin
+	 * glyphs = the glyph string to draw
 	 */
 	public void drawGlyphs(GC gc, PgFont font, int x, int y, PgGlyphString glyphs)
 	{
@@ -612,14 +612,14 @@ public class Drawable : ObjectG
 	 * See also gdk_draw_glyphs(), gdk_draw_layout().
 	 * Since 2.6
 	 * Params:
-	 * gc =  a GdkGC
-	 * matrix =  a PangoMatrix, or NULL to use an identity transformation
-	 * font =  the font in which to draw the string
-	 * x =  the x position of the start of the string (in Pango
+	 * gc = a GdkGC
+	 * matrix = a PangoMatrix, or NULL to use an identity transformation
+	 * font = the font in which to draw the string
+	 * x = the x position of the start of the string (in Pango
 	 *  units in user space coordinates)
-	 * y =  the y position of the baseline (in Pango units
+	 * y = the y position of the baseline (in Pango units
 	 *  in user space coordinates)
-	 * glyphs =  the glyph string to draw
+	 * glyphs = the glyph string to draw
 	 */
 	public void drawGlyphsTransformed(GC gc, PgMatrix matrix, PgFont font, int x, int y, PgGlyphString glyphs)
 	{
@@ -634,10 +634,10 @@ public class Drawable : ObjectG
 	 * (left is in before-tranform user coordinates) in after-transform
 	 * device coordinates.
 	 * Params:
-	 * gc =  base graphics to use
-	 * x =  the x position of start of string (in pixels)
-	 * y =  the y position of baseline (in pixels)
-	 * line =  a PangoLayoutLine
+	 * gc = base graphics to use
+	 * x = the x position of start of string (in pixels)
+	 * y = the y position of baseline (in pixels)
+	 * line = a PangoLayoutLine
 	 */
 	public void drawLayoutLine(GC gc, int x, int y, PgLayoutLine line)
 	{
@@ -654,12 +654,12 @@ public class Drawable : ObjectG
 	 * (left is in before-tranform user coordinates) in after-transform
 	 * device coordinates.
 	 * Params:
-	 * gc =  base graphics to use
-	 * x =  the x position of start of string (in pixels)
-	 * y =  the y position of baseline (in pixels)
-	 * line =  a PangoLayoutLine
-	 * foreground =  foreground override color, or NULL for none
-	 * background =  background override color, or NULL for none
+	 * gc = base graphics to use
+	 * x = the x position of start of string (in pixels)
+	 * y = the y position of baseline (in pixels)
+	 * line = a PangoLayoutLine
+	 * foreground = foreground override color, or NULL for none
+	 * background = background override color, or NULL for none
 	 */
 	public void drawLayoutLineWithColors(GC gc, int x, int y, PgLayoutLine line, Color foreground, Color background)
 	{
@@ -675,10 +675,10 @@ public class Drawable : ObjectG
 	 * If you're using GTK+, the usual way to obtain a PangoLayout
 	 * is gtk_widget_create_pango_layout().
 	 * Params:
-	 * gc =  base graphics context to use
-	 * x =  the X position of the left of the layout (in pixels)
-	 * y =  the Y position of the top of the layout (in pixels)
-	 * layout =  a PangoLayout
+	 * gc = base graphics context to use
+	 * x = the X position of the left of the layout (in pixels)
+	 * y = the Y position of the top of the layout (in pixels)
+	 * layout = a PangoLayout
 	 */
 	public void drawLayout(GC gc, int x, int y, PgLayout layout)
 	{
@@ -696,12 +696,12 @@ public class Drawable : ObjectG
 	 * If you're using GTK+, the ususal way to obtain a PangoLayout
 	 * is gtk_widget_create_pango_layout().
 	 * Params:
-	 * gc =  base graphics context to use
-	 * x =  the X position of the left of the layout (in pixels)
-	 * y =  the Y position of the top of the layout (in pixels)
-	 * layout =  a PangoLayout
-	 * foreground =  foreground override color, or NULL for none
-	 * background =  background override color, or NULL for none
+	 * gc = base graphics context to use
+	 * x = the X position of the left of the layout (in pixels)
+	 * y = the Y position of the top of the layout (in pixels)
+	 * layout = a PangoLayout
+	 * foreground = foreground override color, or NULL for none
+	 * background = background override color, or NULL for none
 	 */
 	public void drawLayoutWithColors(GC gc, int x, int y, PgLayout layout, Color foreground, Color background)
 	{
@@ -714,11 +714,11 @@ public class Drawable : ObjectG
 	 * gdk_draw_string is deprecated and should not be used in newly-written code. Use gdk_draw_layout() instead.
 	 * Draws a string of characters in the given font or fontset.
 	 * Params:
-	 * font =  a GdkFont.
-	 * gc =  a GdkGC.
-	 * x =  the x coordinate of the left edge of the text.
-	 * y =  the y coordinate of the baseline of the text.
-	 * string =  the string of characters to draw.
+	 * font = a GdkFont.
+	 * gc = a GdkGC.
+	 * x = the x coordinate of the left edge of the text.
+	 * y = the y coordinate of the baseline of the text.
+	 * string = the string of characters to draw.
 	 */
 	public void drawString(Font font, GC gc, int x, int y, string string)
 	{
@@ -731,12 +731,12 @@ public class Drawable : ObjectG
 	 * gdk_draw_text is deprecated and should not be used in newly-written code. Use gdk_draw_layout() instead.
 	 * Draws a number of characters in the given font or fontset.
 	 * Params:
-	 * font =  a GdkFont.
-	 * gc =  a GdkGC.
-	 * x =  the x coordinate of the left edge of the text.
-	 * y =  the y coordinate of the baseline of the text.
-	 * text =  the characters to draw.
-	 * textLength =  the number of characters of text to draw.
+	 * font = a GdkFont.
+	 * gc = a GdkGC.
+	 * x = the x coordinate of the left edge of the text.
+	 * y = the y coordinate of the baseline of the text.
+	 * text = the characters to draw.
+	 * textLength = the number of characters of text to draw.
 	 */
 	public void drawText(Font font, GC gc, int x, int y, string text, int textLength)
 	{
@@ -751,11 +751,11 @@ public class Drawable : ObjectG
 	 * If the font is a 1-byte font, the string is converted into 1-byte
 	 * characters (discarding the high bytes) before output.
 	 * Params:
-	 * font =  a GdkFont.
-	 * gc =  a GdkGC.
-	 * x =  the x coordinate of the left edge of the text.
-	 * y =  the y coordinate of the baseline of the text.
-	 * text =  the wide characters to draw.
+	 * font = a GdkFont.
+	 * gc = a GdkGC.
+	 * x = the x coordinate of the left edge of the text.
+	 * y = the y coordinate of the baseline of the text.
+	 * text = the wide characters to draw.
 	 */
 	public void drawTextWc(Font font, GC gc, int x, int y, GdkWChar[] text)
 	{
@@ -778,14 +778,14 @@ public class Drawable : ObjectG
 	 * the stipple on the GdkGC, set the fill mode to GDK_STIPPLED, and
 	 * then draw the rectangle.
 	 * Params:
-	 * gc =  a GdkGC sharing the drawable's visual and colormap
-	 * src =  the source GdkDrawable, which may be the same as drawable
-	 * xsrc =  X position in src of rectangle to draw
-	 * ysrc =  Y position in src of rectangle to draw
-	 * xdest =  X position in drawable where the rectangle should be drawn
-	 * ydest =  Y position in drawable where the rectangle should be drawn
-	 * width =  width of rectangle to draw, or -1 for entire src width
-	 * height =  height of rectangle to draw, or -1 for entire src height
+	 * gc = a GdkGC sharing the drawable's visual and colormap
+	 * src = the source GdkDrawable, which may be the same as drawable
+	 * xsrc = X position in src of rectangle to draw
+	 * ysrc = Y position in src of rectangle to draw
+	 * xdest = X position in drawable where the rectangle should be drawn
+	 * ydest = Y position in drawable where the rectangle should be drawn
+	 * width = width of rectangle to draw, or -1 for entire src width
+	 * height = height of rectangle to draw, or -1 for entire src height
 	 */
 	public void drawDrawable(GC gc, Drawable src, int xsrc, int ysrc, int xdest, int ydest, int width, int height)
 	{
@@ -797,15 +797,15 @@ public class Drawable : ObjectG
 	 * Draws a GdkImage onto a drawable.
 	 * The depth of the GdkImage must match the depth of the GdkDrawable.
 	 * Params:
-	 * gc =  a GdkGC.
-	 * image =  the GdkImage to draw.
-	 * xsrc =  the left edge of the source rectangle within image.
-	 * ysrc =  the top of the source rectangle within image.
-	 * xdest =  the x coordinate of the destination within drawable.
-	 * ydest =  the y coordinate of the destination within drawable.
-	 * width =  the width of the area to be copied, or -1 to make the area
+	 * gc = a GdkGC.
+	 * image = the GdkImage to draw.
+	 * xsrc = the left edge of the source rectangle within image.
+	 * ysrc = the top of the source rectangle within image.
+	 * xdest = the x coordinate of the destination within drawable.
+	 * ydest = the y coordinate of the destination within drawable.
+	 * width = the width of the area to be copied, or -1 to make the area
 	 *  extend to the right edge of image.
-	 * height =  the height of the area to be copied, or -1 to make the area
+	 * height = the height of the area to be copied, or -1 to make the area
 	 *  extend to the bottom edge of image.
 	 */
 	public void drawImage(GC gc, ImageGdk image, int xsrc, int ysrc, int xdest, int ydest, int width, int height)
@@ -841,10 +841,10 @@ public class Drawable : ObjectG
 	 * or obscured, then the obscured portions of the returned image
 	 * will contain undefined data.
 	 * Params:
-	 * x =  x coordinate on drawable
-	 * y =  y coordinate on drawable
-	 * width =  width of region to get
-	 * height =  height or region to get
+	 * x = x coordinate on drawable
+	 * y = y coordinate on drawable
+	 * width = width of region to get
+	 * height = height or region to get
 	 * Returns: a GdkImage containing the contents of drawable
 	 */
 	public ImageGdk getImage(int x, int y, int width, int height)
@@ -864,13 +864,13 @@ public class Drawable : ObjectG
 	 * and copies into that. See gdk_drawable_get_image() for further details.
 	 * Since 2.4
 	 * Params:
-	 * image =  a GdkDrawable, or NULL if a new image should be created.
-	 * srcX =  x coordinate on drawable
-	 * srcY =  y coordinate on drawable
-	 * destX =  x coordinate within image. Must be 0 if image is NULL
-	 * destY =  y coordinate within image. Must be 0 if image is NULL
-	 * width =  width of region to get
-	 * height =  height or region to get
+	 * image = a GdkDrawable, or NULL if a new image should be created.
+	 * srcX = x coordinate on drawable
+	 * srcY = y coordinate on drawable
+	 * destX = x coordinate within image. Must be 0 if image is NULL
+	 * destY = y coordinate within image. Must be 0 if image is NULL
+	 * width = width of region to get
+	 * height = height or region to get
 	 * Returns: image, or a new a GdkImage containing the contents of drawable
 	 */
 	public ImageGdk copyToImage(ImageGdk image, int srcX, int srcY, int destX, int destY, int width, int height)

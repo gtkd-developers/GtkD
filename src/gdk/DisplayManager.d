@@ -189,7 +189,7 @@ public class DisplayManager : ObjectG
 	 * Sets display as the default display.
 	 * Since 2.2
 	 * Params:
-	 * display =  a GdkDisplay
+	 * display = a GdkDisplay
 	 */
 	public void setDefaultDisplay(Display display)
 	{
@@ -217,7 +217,7 @@ public class DisplayManager : ObjectG
 	 * Returns the core pointer device for the given display
 	 * Since 2.2
 	 * Params:
-	 * display =  a GdkDisplay
+	 * display = a GdkDisplay
 	 * Returns: the core pointer device; this is owned by the display and should not be freed.
 	 */
 	public static Device gdkDisplayGetCorePointer(Display display)

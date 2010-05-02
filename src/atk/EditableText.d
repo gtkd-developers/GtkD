@@ -111,9 +111,9 @@ public class EditableText
 	 * that can be set. Note that other attributes that do not have corresponding
 	 * ATK_ATTRIBUTE macros may also be set for certain text widgets.
 	 * Params:
-	 * attribSet =  an AtkAttributeSet
-	 * startOffset =  start of range in which to set attributes
-	 * endOffset =  end of range in which to set attributes
+	 * attribSet = an AtkAttributeSet
+	 * startOffset = start of range in which to set attributes
+	 * endOffset = end of range in which to set attributes
 	 * Returns: TRUE if attributes successfully set for the specifiedrange, otherwise FALSE
 	 */
 	public int setRunAttributes(AtkAttributeSet* attribSet, int startOffset, int endOffset)
@@ -125,7 +125,7 @@ public class EditableText
 	/**
 	 * Set text contents of text.
 	 * Params:
-	 * string =  string to set for text contents of text
+	 * string = string to set for text contents of text
 	 */
 	public void setTextContents(string string)
 	{
@@ -136,9 +136,9 @@ public class EditableText
 	/**
 	 * Insert text at a given position.
 	 * Params:
-	 * string =  the text to insert
-	 * length =  the length of text to insert, in bytes
-	 * position =  The caller initializes this to
+	 * string = the text to insert
+	 * length = the length of text to insert, in bytes
+	 * position = The caller initializes this to
 	 * the position at which to insert the text. After the call it
 	 * points at the position after the newly inserted text.
 	 */
@@ -152,8 +152,8 @@ public class EditableText
 	 * Copy text from start_pos up to, but not including end_pos
 	 * to the clipboard.
 	 * Params:
-	 * startPos =  start position
-	 * endPos =  end position
+	 * startPos = start position
+	 * endPos = end position
 	 */
 	public void copyText(int startPos, int endPos)
 	{
@@ -165,8 +165,8 @@ public class EditableText
 	 * Copy text from start_pos up to, but not including end_pos
 	 * to the clipboard and then delete from the widget.
 	 * Params:
-	 * startPos =  start position
-	 * endPos =  end position
+	 * startPos = start position
+	 * endPos = end position
 	 */
 	public void cutText(int startPos, int endPos)
 	{
@@ -177,8 +177,8 @@ public class EditableText
 	/**
 	 * Delete text start_pos up to, but not including end_pos.
 	 * Params:
-	 * startPos =  start position
-	 * endPos =  end position
+	 * startPos = start position
+	 * endPos = end position
 	 */
 	public void deleteText(int startPos, int endPos)
 	{
@@ -189,7 +189,7 @@ public class EditableText
 	/**
 	 * Paste text from clipboard to specified position.
 	 * Params:
-	 * position =  position to paste
+	 * position = position to paste
 	 */
 	public void pasteText(int position)
 	{

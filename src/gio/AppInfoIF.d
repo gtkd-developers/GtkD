@@ -141,9 +141,9 @@ public interface AppInfoIF
 	/**
 	 * Creates a new GAppInfo from the given information.
 	 * Params:
-	 * commandline =  the commandline to use
-	 * applicationName =  the application name, or NULL to use commandline
-	 * flags =  flags that can specify details of the created GAppInfo
+	 * commandline = the commandline to use
+	 * applicationName = the application name, or NULL to use commandline
+	 * flags = flags that can specify details of the created GAppInfo
 	 * Returns: new GAppInfo for given command.
 	 * Throws: GException on failure.
 	 */
@@ -158,7 +158,7 @@ public interface AppInfoIF
 	/**
 	 * Checks if two GAppInfos are equal.
 	 * Params:
-	 * appinfo2 =  the second GAppInfo.
+	 * appinfo2 = the second GAppInfo.
 	 * Returns: TRUE if appinfo1 is equal to appinfo2. FALSE otherwise.
 	 */
 	public int equal(AppInfoIF appinfo2);
@@ -220,8 +220,8 @@ public interface AppInfoIF
 	 * a textual uri you want to pass in as argument, consider using
 	 * g_app_info_launch_uris() instead.
 	 * Params:
-	 * files =  a GList of GFile objects
-	 * launchContext =  a GAppLaunchContext or NULL
+	 * files = a GList of GFile objects
+	 * launchContext = a GAppLaunchContext or NULL
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -249,8 +249,8 @@ public interface AppInfoIF
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
 	 * Params:
-	 * uris =  a GList containing URIs to launch.
-	 * launchContext =  a GAppLaunchContext or NULL
+	 * uris = a GList containing URIs to launch.
+	 * launchContext = a GAppLaunchContext or NULL
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -288,14 +288,14 @@ public interface AppInfoIF
 	 * g_app_info_add_supports_type() or g_app_info_remove_supports_type().
 	 * Since 2.20
 	 * Params:
-	 * contentType =  a content type
+	 * contentType = a content type
 	 */
 	public static void resetTypeAssociations(string contentType);
 	
 	/**
 	 * Sets the application as the default handler for a given type.
 	 * Params:
-	 * contentType =  the content type.
+	 * contentType = the content type.
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -304,7 +304,7 @@ public interface AppInfoIF
 	/**
 	 * Sets the application as the default handler for the given file extension.
 	 * Params:
-	 * extension =  a string containing the file extension (without the dot).
+	 * extension = a string containing the file extension (without the dot).
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -314,7 +314,7 @@ public interface AppInfoIF
 	 * Adds a content type to the application information to indicate the
 	 * application is capable of opening files with the given content type.
 	 * Params:
-	 * contentType =  a string.
+	 * contentType = a string.
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -329,7 +329,7 @@ public interface AppInfoIF
 	/**
 	 * Removes a supported type from an application, if possible.
 	 * Params:
-	 * contentType =  a string.
+	 * contentType = a string.
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -351,7 +351,7 @@ public interface AppInfoIF
 	/**
 	 * Gets a list of all GAppInfos for a given content type.
 	 * Params:
-	 * contentType =  the content type to find a GAppInfo for
+	 * contentType = the content type to find a GAppInfo for
 	 * Returns: GList of GAppInfos for given content_type or NULL on error.
 	 */
 	public static ListG getAllForType(string contentType);
@@ -359,8 +359,8 @@ public interface AppInfoIF
 	/**
 	 * Gets the GAppInfo that corresponds to a given content type.
 	 * Params:
-	 * contentType =  the content type to find a GAppInfo for
-	 * mustSupportUris =  if TRUE, the GAppInfo is expected to
+	 * contentType = the content type to find a GAppInfo for
+	 * mustSupportUris = if TRUE, the GAppInfo is expected to
 	 *  support URIs
 	 * Returns: GAppInfo for given content_type or NULL on error.
 	 */
@@ -372,7 +372,7 @@ public interface AppInfoIF
 	 * of the URI, up to but not including the ':', e.g. "http",
 	 * "ftp" or "sip".
 	 * Params:
-	 * uriScheme =  a string containing a URI scheme.
+	 * uriScheme = a string containing a URI scheme.
 	 * Returns: GAppInfo for given uri_scheme or NULL on error.
 	 */
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme);
@@ -383,8 +383,8 @@ public interface AppInfoIF
 	 * is done on the uri to detect the type of the file if
 	 * required.
 	 * Params:
-	 * uri =  the uri to show
-	 * launchContext =  an optional GAppLaunchContext.
+	 * uri = the uri to show
+	 * launchContext = an optional GAppLaunchContext.
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */

@@ -77,7 +77,7 @@ private import gio.IconIF;
  * handles launching an application in a graphical context. It provides
  * startup notification and allows to launch applications on a specific
  * screen or workspace.
- * Example 9. Launching an application
+ * Example  9.  Launching an application
  * GdkAppLaunchContext *context;
  * context = gdk_app_launch_context_new ();
  * gdk_app_launch_context_set_screen (my_screen);
@@ -142,7 +142,7 @@ public class AppLaunchContext
 	 * using this context. See also gdk_app_launch_context_set_screen().
 	 * Since 2.14
 	 * Params:
-	 * display =  a GdkDisplay
+	 * display = a GdkDisplay
 	 */
 	public void setDisplay(Display display)
 	{
@@ -158,7 +158,7 @@ public class AppLaunchContext
 	 * display are used.
 	 * Since 2.14
 	 * Params:
-	 * screen =  a GdkScreen
+	 * screen = a GdkScreen
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -177,7 +177,7 @@ public class AppLaunchContext
 	 * be the current workspace.
 	 * Since 2.14
 	 * Params:
-	 * desktop =  the number of a workspace, or -1
+	 * desktop = the number of a workspace, or -1
 	 */
 	public void setDesktop(int desktop)
 	{
@@ -194,7 +194,7 @@ public class AppLaunchContext
 	 * prevention'.
 	 * Since 2.14
 	 * Params:
-	 * timestamp =  a timestamp
+	 * timestamp = a timestamp
 	 */
 	public void setTimestamp(uint timestamp)
 	{
@@ -210,7 +210,7 @@ public class AppLaunchContext
 	 * See also gdk_app_launch_context_set_icon_name().
 	 * Since 2.14
 	 * Params:
-	 * icon =  a GIcon, or NULL
+	 * icon = a GIcon, or NULL
 	 */
 	public void setIcon(IconIF icon)
 	{
@@ -228,7 +228,7 @@ public class AppLaunchContext
 	 * for the launched application itself.
 	 * Since 2.14
 	 * Params:
-	 * iconName =  an icon name, or NULL
+	 * iconName = an icon name, or NULL
 	 */
 	public void setIconName(string iconName)
 	{

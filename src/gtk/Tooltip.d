@@ -161,7 +161,7 @@ public class Tooltip : ObjectG
 	 * If markup is NULL, the label will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * markup =  a markup string (see Pango markup format) or NULL
+	 * markup = a markup string (see Pango markup format) or NULL
 	 */
 	public void setMarkup(string markup)
 	{
@@ -174,7 +174,7 @@ public class Tooltip : ObjectG
 	 * will be hidden. See also gtk_tooltip_set_markup().
 	 * Since 2.12
 	 * Params:
-	 * text =  a text string or NULL
+	 * text = a text string or NULL
 	 */
 	public void setText(string text)
 	{
@@ -187,7 +187,7 @@ public class Tooltip : ObjectG
 	 * pixbuf. If pixbuf is NULL, the image will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * pixbuf =  a GdkPixbuf, or NULL
+	 * pixbuf = a GdkPixbuf, or NULL
 	 */
 	public void setIcon(Pixbuf pixbuf)
 	{
@@ -201,8 +201,8 @@ public class Tooltip : ObjectG
 	 * by size. If stock_id is NULL, the image will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * stockId =  a stock id, or NULL
-	 * size =  a stock icon size
+	 * stockId = a stock id, or NULL
+	 * size = a stock icon size
 	 */
 	public void setIconFromStock(string stockId, GtkIconSize size)
 	{
@@ -216,8 +216,8 @@ public class Tooltip : ObjectG
 	 * by size. If icon_name is NULL, the image will be hidden.
 	 * Since 2.14
 	 * Params:
-	 * iconName =  an icon name, or NULL
-	 * size =  a stock icon size
+	 * iconName = an icon name, or NULL
+	 * size = a stock icon size
 	 */
 	public void setIconFromIconName(string iconName, GtkIconSize size)
 	{
@@ -234,7 +234,7 @@ public class Tooltip : ObjectG
 	 * and gtk_tooltip_set_icon().
 	 * Since 2.12
 	 * Params:
-	 * customWidget =  a GtkWidget, or NULL to unset the old custom widget.
+	 * customWidget = a GtkWidget, or NULL to unset the old custom widget.
 	 */
 	public void setCustom(Widget customWidget)
 	{
@@ -249,7 +249,7 @@ public class Tooltip : ObjectG
 	 * key press.
 	 * Since 2.12
 	 * Params:
-	 * display =  a GdkDisplay
+	 * display = a GdkDisplay
 	 */
 	public static void triggerTooltipQuery(Display display)
 	{
@@ -267,7 +267,7 @@ public class Tooltip : ObjectG
 	 * gtk_tree_view_set_tooltip_cell().
 	 * Since 2.12
 	 * Params:
-	 * rect =  a GdkRectangle
+	 * rect = a GdkRectangle
 	 */
 	public void setTipArea(Rectangle rect)
 	{

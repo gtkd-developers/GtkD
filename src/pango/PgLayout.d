@@ -156,7 +156,7 @@ public class PgLayout : ObjectG
 	 * Create a new PangoLayout object with attributes initialized to
 	 * default values for a particular PangoContext.
 	 * Params:
-	 * context =  a PangoContext
+	 * context = a PangoContext
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (PgContext context)
@@ -229,8 +229,8 @@ public class PgLayout : ObjectG
 	 * Same as pango_layout_set_markup_with_accel(), but
 	 * the markup text isn't scanned for accelerators.
 	 * Params:
-	 * markup =  marked-up text
-	 * length =  length of marked-up text in bytes, or -1 if markup is
+	 * markup = marked-up text
+	 * length = length of marked-up text in bytes, or -1 if markup is
 	 * nul-terminated
 	 */
 	public void setMarkup(string markup, int length)
@@ -251,12 +251,12 @@ public class PgLayout : ObjectG
 	 * Two accel_marker characters following each other produce a single
 	 * literal accel_marker character.
 	 * Params:
-	 * markup =  marked-up text
+	 * markup = marked-up text
 	 * (see markup format)
-	 * length =  length of marked-up text in bytes, or -1 if markup is
+	 * length = length of marked-up text in bytes, or -1 if markup is
 	 * nul-terminated
-	 * accelMarker =  marker for accelerators in the text
-	 * accelChar =  return location for first located accelerator, or NULL
+	 * accelMarker = marker for accelerators in the text
+	 * accelChar = return location for first located accelerator, or NULL
 	 */
 	public void setMarkupWithAccel(string markup, int length, gunichar accelMarker, gunichar* accelChar)
 	{
@@ -268,7 +268,7 @@ public class PgLayout : ObjectG
 	 * Sets the text attributes for a layout object.
 	 * References attrs, so the caller can unref its reference.
 	 * Params:
-	 * attrs =  a PangoAttrList, can be NULL
+	 * attrs = a PangoAttrList, can be NULL
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -296,7 +296,7 @@ public class PgLayout : ObjectG
 	 * description is set on the layout, the font description from
 	 * the layout's context is used.
 	 * Params:
-	 * desc =  the new PangoFontDescription, or NULL to unset the
+	 * desc = the new PangoFontDescription, or NULL to unset the
 	 *  current font description
 	 */
 	public void setFontDescription(PgFontDescription desc)
@@ -325,7 +325,7 @@ public class PgLayout : ObjectG
 	 * Sets the width to which the lines of the PangoLayout should wrap or
 	 * ellipsized. The default value is -1: no width set.
 	 * Params:
-	 * width =  the desired width in Pango units, or -1 to indicate that no
+	 * width = the desired width in Pango units, or -1 to indicate that no
 	 *  wrapping or ellipsization should be performed.
 	 */
 	public void setWidth(int width)
@@ -367,7 +367,7 @@ public class PgLayout : ObjectG
 	 * future.
 	 * Since 1.20
 	 * Params:
-	 * height =  the desired height of the layout in Pango units if positive,
+	 * height = the desired height of the layout in Pango units if positive,
 	 *  or desired number of lines if negative.
 	 */
 	public void setHeight(int height)
@@ -393,7 +393,7 @@ public class PgLayout : ObjectG
 	 * is set on the layout with pango_layout_set_width().
 	 * To turn off wrapping, set the width to -1.
 	 * Params:
-	 * wrap =  the wrap mode
+	 * wrap = the wrap mode
 	 */
 	public void setWrap(PangoWrapMode wrap)
 	{
@@ -441,7 +441,7 @@ public class PgLayout : ObjectG
 	 * See pango_layout_set_height() for details.
 	 * Since 1.6
 	 * Params:
-	 * ellipsize =  the new ellipsization mode for layout
+	 * ellipsize = the new ellipsization mode for layout
 	 */
 	public void setEllipsize(PangoEllipsizeMode ellipsize)
 	{
@@ -484,7 +484,7 @@ public class PgLayout : ObjectG
 	 * The indent setting is ignored if layout alignment is set to
 	 * PANGO_ALIGN_CENTER.
 	 * Params:
-	 * indent =  the amount by which to indent.
+	 * indent = the amount by which to indent.
 	 */
 	public void setIndent(int indent)
 	{
@@ -517,7 +517,7 @@ public class PgLayout : ObjectG
 	 * Sets the amount of spacing in Pango unit between the lines of the
 	 * layout.
 	 * Params:
-	 * spacing =  the amount of spacing
+	 * spacing = the amount of spacing
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -534,7 +534,7 @@ public class PgLayout : ObjectG
 	 * Note that this setting is not implemented and so is ignored in Pango
 	 * older than 1.18.
 	 * Params:
-	 * justify =  whether the lines in the layout should be justified.
+	 * justify = whether the lines in the layout should be justified.
 	 */
 	public void setJustify(int justify)
 	{
@@ -570,7 +570,7 @@ public class PgLayout : ObjectG
 	 * PANGO_ALIGN_LEFT and PANGO_ALIGN_RIGHT are swapped.
 	 * Since 1.4
 	 * Params:
-	 * autoDir =  if TRUE, compute the bidirectional base direction
+	 * autoDir = if TRUE, compute the bidirectional base direction
 	 *  from the layout's contents.
 	 */
 	public void setAutoDir(int autoDir)
@@ -596,7 +596,7 @@ public class PgLayout : ObjectG
 	 * Sets the alignment for the layout: how partial lines are
 	 * positioned within the horizontal space available.
 	 * Params:
-	 * alignment =  the alignment
+	 * alignment = the alignment
 	 */
 	public void setAlignment(PangoAlignment alignment)
 	{
@@ -621,7 +621,7 @@ public class PgLayout : ObjectG
 	 * tabs are reinstated. tabs is copied into the layout; you must
 	 * free your copy of tabs yourself.
 	 * Params:
-	 * tabs =  a PangoTabArray, or NULL
+	 * tabs = a PangoTabArray, or NULL
 	 */
 	public void setTabs(PgTabArray tabs)
 	{
@@ -653,7 +653,7 @@ public class PgLayout : ObjectG
 	 * and display a glyph for paragraph separator characters. Used when
 	 * you want to allow editing of newlines on a single text line.
 	 * Params:
-	 * setting =  new setting
+	 * setting = new setting
 	 */
 	public void setSingleParagraphMode(int setting)
 	{
@@ -692,7 +692,7 @@ public class PgLayout : ObjectG
 	 * Retrieves an array of logical attributes for each character in
 	 * the layout.
 	 * Params:
-	 * attrs =  location to store a pointer to an array of logical attributes
+	 * attrs = location to store a pointer to an array of logical attributes
 	 *  This value must be freed with g_free().
 	 */
 	public void getLogAttrs(out PangoLogAttr[] attrs)
@@ -714,8 +714,8 @@ public class PgLayout : ObjectG
 	 * edge of the grapheme. If the directionality of the grapheme is right-to-left,
 	 * then pos->width will be negative.
 	 * Params:
-	 * index =  byte index within layout
-	 * pos =  rectangle in which to store the position of the grapheme
+	 * index = byte index within layout
+	 * pos = rectangle in which to store the position of the grapheme
 	 */
 	public void indexToPos(int index, PangoRectangle* pos)
 	{
@@ -727,13 +727,13 @@ public class PgLayout : ObjectG
 	 * Converts from byte index_ within the layout to line and X position.
 	 * (X position is measured from the left edge of the line)
 	 * Params:
-	 * index =  the byte index of a grapheme within the layout.
-	 * trailing =  an integer indicating the edge of the grapheme to retrieve the
+	 * index = the byte index of a grapheme within the layout.
+	 * trailing = an integer indicating the edge of the grapheme to retrieve the
 	 *  position of. If 0, the trailing edge of the grapheme, if > 0,
 	 *  the leading of the grapheme.
-	 * line =  location to store resulting line index. (which will
+	 * line = location to store resulting line index. (which will
 	 *  between 0 and pango_layout_get_line_count(layout) - 1)
-	 * xPos =  location to store resulting position within line
+	 * xPos = location to store resulting position within line
 	 *  (PANGO_SCALE units per device unit)
 	 */
 	public void indexToLineX(int index, int trailing, out int line, out int xPos)
@@ -752,12 +752,12 @@ public class PgLayout : ObjectG
 	 * If either the X or Y positions were not inside the layout, then the
 	 * function returns FALSE; on an exact hit, it returns TRUE.
 	 * Params:
-	 * x =  the X offset (in Pango units)
+	 * x = the X offset (in Pango units)
 	 *  from the left edge of the layout.
-	 * y =  the Y offset (in Pango units)
+	 * y = the Y offset (in Pango units)
 	 *  from the top edge of the layout
-	 * index =  location to store calculated byte index
-	 * trailing =  location to store a integer indicating where
+	 * index = location to store calculated byte index
+	 * trailing = location to store a integer indicating where
 	 *  in the grapheme the user clicked. It will either
 	 *  be zero, or the number of characters in the
 	 *  grapheme. 0 represents the trailing edge of the grapheme.
@@ -779,9 +779,9 @@ public class PgLayout : ObjectG
 	 * where characters of the directionality opposite to the base
 	 * direction of the layout are inserted.
 	 * Params:
-	 * index =  the byte index of the cursor
-	 * strongPos =  location to store the strong cursor position (may be NULL)
-	 * weakPos =  location to store the weak cursor position (may be NULL)
+	 * index = the byte index of the cursor
+	 * strongPos = location to store the strong cursor position (may be NULL)
+	 * weakPos = location to store the weak cursor position (may be NULL)
 	 */
 	public void getCursorPos(int index, PangoRectangle* strongPos, PangoRectangle* weakPos)
 	{
@@ -805,20 +805,20 @@ public class PgLayout : ObjectG
 	 * cursor over multiple characters when multiple characters combine
 	 * to form a single grapheme.
 	 * Params:
-	 * strong =  whether the moving cursor is the strong cursor or the
+	 * strong = whether the moving cursor is the strong cursor or the
 	 *  weak cursor. The strong cursor is the cursor corresponding
 	 *  to text insertion in the base direction for the layout.
-	 * oldIndex =  the byte index of the grapheme for the old index
-	 * oldTrailing =  if 0, the cursor was at the trailing edge of the
+	 * oldIndex = the byte index of the grapheme for the old index
+	 * oldTrailing = if 0, the cursor was at the trailing edge of the
 	 *  grapheme indicated by old_index, if > 0, the cursor
 	 *  was at the leading edge.
-	 * direction =  direction to move cursor. A negative
+	 * direction = direction to move cursor. A negative
 	 *  value indicates motion to the left.
-	 * newIndex =  location to store the new cursor byte index. A value of -1
+	 * newIndex = location to store the new cursor byte index. A value of -1
 	 *  indicates that the cursor has been moved off the beginning
 	 *  of the layout. A value of G_MAXINT indicates that
 	 *  the cursor has been moved off the end of the layout.
-	 * newTrailing =  number of characters to move forward from the location returned
+	 * newTrailing = number of characters to move forward from the location returned
 	 *  for new_index to get the position where the cursor should
 	 *  be displayed. This allows distinguishing the position at
 	 *  the beginning of one line from the position at the end
@@ -841,9 +841,9 @@ public class PgLayout : ObjectG
 	 * The extents are given in layout coordinates and in Pango units; layout
 	 * coordinates begin at the top left corner of the layout.
 	 * Params:
-	 * inkRect =  rectangle used to store the extents of the layout as drawn
+	 * inkRect = rectangle used to store the extents of the layout as drawn
 	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect =  rectangle used to store the logical extents of the layout
+	 * logicalRect = rectangle used to store the logical extents of the layout
 	 * 		 or NULL to indicate that the result is not needed.
 	 */
 	public void getExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
@@ -859,9 +859,9 @@ public class PgLayout : ObjectG
 	 * such that the rounded rectangles fully contain the unrounded one (that is,
 	 * passes them as first argument to pango_extents_to_pixels()).
 	 * Params:
-	 * inkRect =  rectangle used to store the extents of the layout as drawn
+	 * inkRect = rectangle used to store the extents of the layout as drawn
 	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect =  rectangle used to store the logical extents of the
+	 * logicalRect = rectangle used to store the logical extents of the
 	 *  layout or NULL to indicate that the result is not needed.
 	 */
 	public void getPixelExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
@@ -875,8 +875,8 @@ public class PgLayout : ObjectG
 	 * in Pango units (device units scaled by PANGO_SCALE). This
 	 * is simply a convenience function around pango_layout_get_extents().
 	 * Params:
-	 * width =  location to store the logical width, or NULL
-	 * height =  location to store the logical height, or NULL
+	 * width = location to store the logical width, or NULL
+	 * height = location to store the logical height, or NULL
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -891,8 +891,8 @@ public class PgLayout : ObjectG
 	 * is simply a convenience function around
 	 * pango_layout_get_pixel_extents().
 	 * Params:
-	 * width =  location to store the logical width, or NULL
-	 * height =  location to store the logical height, or NULL
+	 * width = location to store the logical width, or NULL
+	 * height = location to store the logical height, or NULL
 	 */
 	public void getPixelSize(out int width, out int height)
 	{
@@ -926,7 +926,7 @@ public class PgLayout : ObjectG
 	 * Use the faster pango_layout_get_line_readonly() if you do not plan
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * Params:
-	 * line =  the index of a line, which must be between 0 and
+	 * line = the index of a line, which must be between 0 and
 	 *  pango_layout_get_line_count(layout) - 1, inclusive.
 	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout.
 	 */
@@ -948,7 +948,7 @@ public class PgLayout : ObjectG
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * Since 1.16
 	 * Params:
-	 * line =  the index of a line, which must be between 0 and
+	 * line = the index of a line, which must be between 0 and
 	 *  pango_layout_get_line_count(layout) - 1, inclusive.
 	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout. No changes should be made to the line.
 	 */

@@ -143,7 +143,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * system-wide file descriptor limit.
 	 * Since 2.22
 	 * Params:
-	 * fd =  a valid open file descriptor
+	 * fd = a valid open file descriptor
 	 * Returns: TRUE in case of success, else FALSE (and error is set)
 	 * Throws: GException on failure.
 	 */

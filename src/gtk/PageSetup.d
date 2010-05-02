@@ -91,7 +91,7 @@ private import gobject.ObjectG;
  * To obtain a GtkPageSetup use gtk_page_setup_new()
  * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
  * the page setup dialog and receive the resulting page setup.
- * Example 48. A page setup dialog
+ * Example  48.  A page setup dialog
  * static GtkPrintSettings *settings = NULL;
  * static GtkPageSetup *page_setup = NULL;
  * static void
@@ -198,7 +198,7 @@ public class PageSetup : ObjectG
 	 * Sets the page orientation of the GtkPageSetup.
 	 * Since 2.10
 	 * Params:
-	 * orientation =  a GtkPageOrientation value
+	 * orientation = a GtkPageOrientation value
 	 */
 	public void setOrientation(GtkPageOrientation orientation)
 	{
@@ -228,7 +228,7 @@ public class PageSetup : ObjectG
 	 * gtk_page_setup_set_paper_size_and_default_margins().
 	 * Since 2.10
 	 * Params:
-	 * size =  a GtkPaperSize
+	 * size = a GtkPaperSize
 	 */
 	public void setPaperSize(PaperSize size)
 	{
@@ -240,7 +240,7 @@ public class PageSetup : ObjectG
 	 * Gets the top margin in units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the top margin
 	 */
 	public double getTopMargin(GtkUnit unit)
@@ -253,8 +253,8 @@ public class PageSetup : ObjectG
 	 * Sets the top margin of the GtkPageSetup.
 	 * Since 2.10
 	 * Params:
-	 * margin =  the new top margin in units of unit
-	 * unit =  the units for margin
+	 * margin = the new top margin in units of unit
+	 * unit = the units for margin
 	 */
 	public void setTopMargin(double margin, GtkUnit unit)
 	{
@@ -266,7 +266,7 @@ public class PageSetup : ObjectG
 	 * Gets the bottom margin in units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the bottom margin
 	 */
 	public double getBottomMargin(GtkUnit unit)
@@ -279,8 +279,8 @@ public class PageSetup : ObjectG
 	 * Sets the bottom margin of the GtkPageSetup.
 	 * Since 2.10
 	 * Params:
-	 * margin =  the new bottom margin in units of unit
-	 * unit =  the units for margin
+	 * margin = the new bottom margin in units of unit
+	 * unit = the units for margin
 	 */
 	public void setBottomMargin(double margin, GtkUnit unit)
 	{
@@ -292,7 +292,7 @@ public class PageSetup : ObjectG
 	 * Gets the left margin in units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the left margin
 	 */
 	public double getLeftMargin(GtkUnit unit)
@@ -305,8 +305,8 @@ public class PageSetup : ObjectG
 	 * Sets the left margin of the GtkPageSetup.
 	 * Since 2.10
 	 * Params:
-	 * margin =  the new left margin in units of unit
-	 * unit =  the units for margin
+	 * margin = the new left margin in units of unit
+	 * unit = the units for margin
 	 */
 	public void setLeftMargin(double margin, GtkUnit unit)
 	{
@@ -318,7 +318,7 @@ public class PageSetup : ObjectG
 	 * Gets the right margin in units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the right margin
 	 */
 	public double getRightMargin(GtkUnit unit)
@@ -331,8 +331,8 @@ public class PageSetup : ObjectG
 	 * Sets the right margin of the GtkPageSetup.
 	 * Since 2.10
 	 * Params:
-	 * margin =  the new right margin in units of unit
-	 * unit =  the units for margin
+	 * margin = the new right margin in units of unit
+	 * unit = the units for margin
 	 */
 	public void setRightMargin(double margin, GtkUnit unit)
 	{
@@ -345,7 +345,7 @@ public class PageSetup : ObjectG
 	 * the margins according to the new paper size.
 	 * Since 2.10
 	 * Params:
-	 * size =  a GtkPaperSize
+	 * size = a GtkPaperSize
 	 */
 	public void setPaperSizeAndDefaultMargins(PaperSize size)
 	{
@@ -360,7 +360,7 @@ public class PageSetup : ObjectG
 	 * See gtk_page_setup_get_page_width().
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the paper width.
 	 */
 	public double getPaperWidth(GtkUnit unit)
@@ -376,7 +376,7 @@ public class PageSetup : ObjectG
 	 * See gtk_page_setup_get_page_height().
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the paper height.
 	 */
 	public double getPaperHeight(GtkUnit unit)
@@ -392,7 +392,7 @@ public class PageSetup : ObjectG
 	 * See gtk_page_setup_get_paper_width().
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the page width.
 	 */
 	public double getPageWidth(GtkUnit unit)
@@ -408,7 +408,7 @@ public class PageSetup : ObjectG
 	 * See gtk_page_setup_get_paper_height().
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the page height.
 	 */
 	public double getPageHeight(GtkUnit unit)
@@ -423,7 +423,7 @@ public class PageSetup : ObjectG
 	 * or NULL if an error occurred. See gtk_page_setup_to_file().
 	 * Since 2.12
 	 * Params:
-	 * fileName =  the filename to read the page setup from
+	 * fileName = the filename to read the page setup from
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -452,8 +452,8 @@ public class PageSetup : ObjectG
 	 * page setup, or NULL if an error occurred.
 	 * Since 2.12
 	 * Params:
-	 * keyFile =  the GKeyFile to retrieve the page_setup from
-	 * groupName =  the name of the group in the key_file to read, or NULL
+	 * keyFile = the GKeyFile to retrieve the page_setup from
+	 * groupName = the name of the group in the key_file to read, or NULL
 	 *  to use the default name "Page Setup"
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -482,7 +482,7 @@ public class PageSetup : ObjectG
 	 * See gtk_page_setup_to_file().
 	 * Since 2.14
 	 * Params:
-	 * fileName =  the filename to read the page setup from
+	 * fileName = the filename to read the page setup from
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -506,8 +506,8 @@ public class PageSetup : ObjectG
 	 * key_file.
 	 * Since 2.14
 	 * Params:
-	 * keyFile =  the GKeyFile to retrieve the page_setup from
-	 * groupName =  the name of the group in the key_file to read, or NULL
+	 * keyFile = the GKeyFile to retrieve the page_setup from
+	 * groupName = the name of the group in the key_file to read, or NULL
 	 *  to use the default name "Page Setup"
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
@@ -531,7 +531,7 @@ public class PageSetup : ObjectG
 	 * This function saves the information from setup to file_name.
 	 * Since 2.12
 	 * Params:
-	 * fileName =  the file to save to
+	 * fileName = the file to save to
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -554,8 +554,8 @@ public class PageSetup : ObjectG
 	 * This function adds the page setup from setup to key_file.
 	 * Since 2.12
 	 * Params:
-	 * keyFile =  the GKeyFile to save the page setup to
-	 * groupName =  the group to add the settings to in key_file,
+	 * keyFile = the GKeyFile to save the page setup to
+	 * groupName = the group to add the settings to in key_file,
 	 *  or NULL to use the default name "Page Setup"
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)

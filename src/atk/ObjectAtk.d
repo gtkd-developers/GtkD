@@ -314,7 +314,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Registers the role specified by name.
 	 * Params:
-	 * name =  a character string describing the new role.
+	 * name = a character string describing the new role.
 	 * Returns: an AtkRole for the new role.
 	 */
 	public static AtkRole roleRegister(string name)
@@ -327,7 +327,7 @@ public class ObjectAtk : ObjectG
 	 * Gets a reference to an object's AtkObject implementation, if
 	 * the object implements AtkObjectIface
 	 * Params:
-	 * implementor =  The GObject instance which should implement AtkImplementorIface
+	 * implementor = The GObject instance which should implement AtkImplementorIface
 	 * if a non-null return value is required.
 	 * Returns: a reference to an object's AtkObject implementation
 	 */
@@ -392,7 +392,7 @@ public class ObjectAtk : ObjectG
 	 * The accessible children are 0-based so the first accessible child is
 	 * at index 0, the second at index 1 and so on.
 	 * Params:
-	 * i =  a gint representing the position of the child, starting from 0
+	 * i = a gint representing the position of the child, starting from 0
 	 * Returns: an AtkObject representing the specified accessible childof the accessible.
 	 */
 	public ObjectAtk refAccessibleChild(int i)
@@ -486,7 +486,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Sets the accessible name of the accessible.
 	 * Params:
-	 * name =  a character string to be set as the accessible name
+	 * name = a character string to be set as the accessible name
 	 */
 	public void setName(string name)
 	{
@@ -497,7 +497,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Sets the accessible description of the accessible.
 	 * Params:
-	 * description =  a character string to be set as the accessible description
+	 * description = a character string to be set as the accessible description
 	 */
 	public void setDescription(string description)
 	{
@@ -508,7 +508,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Sets the accessible parent of the accessible.
 	 * Params:
-	 * parent =  an AtkObject to be set as the accessible parent
+	 * parent = an AtkObject to be set as the accessible parent
 	 */
 	public void setParent(ObjectAtk parent)
 	{
@@ -519,7 +519,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Sets the role of the accessible.
 	 * Params:
-	 * role =  an AtkRole to be set as the role
+	 * role = an AtkRole to be set as the role
 	 */
 	public void setRole(AtkRole role)
 	{
@@ -530,7 +530,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Specifies a function to be called when a property changes value.
 	 * Params:
-	 * handler =  a function to be called when a property changes its value
+	 * handler = a function to be called when a property changes its value
 	 * Returns: a guint which is the handler id used in atk_object_remove_property_change_handler()
 	 */
 	public uint connectPropertyChangeHandler(AtkPropertyChangeHandler* handler)
@@ -542,7 +542,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Removes a property change handler.
 	 * Params:
-	 * handlerId =  a guint which identifies the handler to be removed.
+	 * handlerId = a guint which identifies the handler to be removed.
 	 */
 	public void removePropertyChangeHandler(uint handlerId)
 	{
@@ -553,8 +553,8 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Emits a state-change signal for the specified state.
 	 * Params:
-	 * state =  an AtkState whose state is changed
-	 * value =  a gboolean which indicates whether the state is being set on or off
+	 * state = an AtkState whose state is changed
+	 * value = a gboolean which indicates whether the state is being set on or off
 	 */
 	public void notifyStateChange(AtkState state, int value)
 	{
@@ -568,7 +568,7 @@ public class ObjectAtk : ObjectG
 	 * that this function should called only in the ..._new() functions used
 	 * to create an instance of a subclass of AtkObject
 	 * Params:
-	 * data =  a gpointer which identifies the object for which the AtkObject was created.
+	 * data = a gpointer which identifies the object for which the AtkObject was created.
 	 */
 	public void initialize(void* data)
 	{
@@ -579,8 +579,8 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Adds a relationship of the specified type with the specified target.
 	 * Params:
-	 * relationship =  The AtkRelationType of the relation
-	 * target =  The AtkObject which is to be the target of the relation.
+	 * relationship = The AtkRelationType of the relation
+	 * target = The AtkObject which is to be the target of the relation.
 	 * Returns:TRUE if the relationship is added.
 	 */
 	public int addRelationship(AtkRelationType relationship, ObjectAtk target)
@@ -592,8 +592,8 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Removes a relationship of the specified type with the specified target.
 	 * Params:
-	 * relationship =  The AtkRelationType of the relation
-	 * target =  The AtkObject which is the target of the relation to be removed.
+	 * relationship = The AtkRelationType of the relation
+	 * target = The AtkObject which is the target of the relation to be removed.
 	 * Returns:TRUE if the relationship is removed.
 	 */
 	public int removeRelationship(AtkRelationType relationship, ObjectAtk target)
@@ -619,7 +619,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the description string describing the AtkRole role.
 	 * Params:
-	 * role =  The AtkRole whose name is required
+	 * role = The AtkRole whose name is required
 	 * Returns: the string describing the AtkRole
 	 */
 	public static string roleGetName(AtkRole role)
@@ -631,7 +631,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the localized description string describing the AtkRole role.
 	 * Params:
-	 * role =  The AtkRole whose localized name is required
+	 * role = The AtkRole whose localized name is required
 	 * Returns: the localized string describing the AtkRole
 	 */
 	public static string roleGetLocalizedName(AtkRole role)
@@ -643,7 +643,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Get the AtkRole type corresponding to a rolew name.
 	 * Params:
-	 * name =  a string which is the (non-localized) name of an ATK role.
+	 * name = a string which is the (non-localized) name of an ATK role.
 	 * Returns: the AtkRole enumerated type corresponding to the specifiedname, or ATK_ROLE_INVALID if no matching role is found.
 	 */
 	public static AtkRole roleForName(string name)

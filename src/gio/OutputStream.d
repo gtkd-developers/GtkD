@@ -143,9 +143,9 @@ public class OutputStream : ObjectG
 	 * partial result will be returned, without an error.
 	 * On error -1 is returned and error is set accordingly.
 	 * Params:
-	 * buffer =  the buffer containing the data to write.
-	 * count =  the number of bytes to write
-	 * cancellable =  optional cancellable object
+	 * buffer = the buffer containing the data to write.
+	 * count = the number of bytes to write
+	 * cancellable = optional cancellable object
 	 * Returns: Number of bytes written, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -175,11 +175,11 @@ public class OutputStream : ObjectG
 	 * is set to indicate the error status, bytes_written is updated to contain
 	 * the number of bytes written into the stream before the error occurred.
 	 * Params:
-	 * buffer =  the buffer containing the data to write.
-	 * count =  the number of bytes to write
-	 * bytesWritten =  location to store the number of bytes that was
+	 * buffer = the buffer containing the data to write.
+	 * count = the number of bytes to write
+	 * bytesWritten = location to store the number of bytes that was
 	 *  written to the stream
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE on success, FALSE if there was an error
 	 * Throws: GException on failure.
 	 */
@@ -201,9 +201,9 @@ public class OutputStream : ObjectG
 	/**
 	 * Splices an input stream into an output stream.
 	 * Params:
-	 * source =  a GInputStream.
-	 * flags =  a set of GOutputStreamSpliceFlags.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * source = a GInputStream.
+	 * flags = a set of GOutputStreamSpliceFlags.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a gssize containing the size of the data spliced, or -1 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -230,7 +230,7 @@ public class OutputStream : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable =  optional cancellable object
+	 * cancellable = optional cancellable object
 	 * Returns: TRUE on success, FALSE on error
 	 * Throws: GException on failure.
 	 */
@@ -274,7 +274,7 @@ public class OutputStream : ObjectG
 	 * cancellation (as with any error) there is no guarantee that all written
 	 * data will reach the target.
 	 * Params:
-	 * cancellable =  optional cancellable object
+	 * cancellable = optional cancellable object
 	 * Returns: TRUE on success, FALSE on failure
 	 * Throws: GException on failure.
 	 */
@@ -315,12 +315,12 @@ public class OutputStream : ObjectG
 	 * For the synchronous, blocking version of this function, see
 	 * g_output_stream_write().
 	 * Params:
-	 * buffer =  the buffer containing the data to write.
-	 * count =  the number of bytes to write
-	 * ioPriority =  the io priority of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * buffer = the buffer containing the data to write.
+	 * count = the number of bytes to write
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void writeAsync(void* buffer, uint count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -331,7 +331,7 @@ public class OutputStream : ObjectG
 	/**
 	 * Finishes a stream write operation.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a gssize containing the number of bytes written to the stream.
 	 * Throws: GException on failure.
 	 */
@@ -358,12 +358,12 @@ public class OutputStream : ObjectG
 	 * For the synchronous, blocking version of this function, see
 	 * g_output_stream_splice().
 	 * Params:
-	 * source =  a GInputStream.
-	 * flags =  a set of GOutputStreamSpliceFlags.
-	 * ioPriority =  the io priority of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback.
-	 * userData =  user data passed to callback.
+	 * source = a GInputStream.
+	 * flags = a set of GOutputStreamSpliceFlags.
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback.
+	 * userData = user data passed to callback.
 	 */
 	public void spliceAsync(InputStream source, GOutputStreamSpliceFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -374,7 +374,7 @@ public class OutputStream : ObjectG
 	/**
 	 * Finishes an asynchronous stream splice operation.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a gssize of the number of bytes spliced.
 	 * Throws: GException on failure.
 	 */
@@ -400,10 +400,10 @@ public class OutputStream : ObjectG
 	 * called. You can then call g_output_stream_flush_finish() to get the
 	 * result of the operation.
 	 * Params:
-	 * ioPriority =  the io priority of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void flushAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -414,7 +414,7 @@ public class OutputStream : ObjectG
 	/**
 	 * Finishes flushing an output stream.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if flush operation suceeded, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -443,10 +443,10 @@ public class OutputStream : ObjectG
 	 * to implement asynchronicity, so they are optional for inheriting
 	 * classes. However, if you override one you must override all.
 	 * Params:
-	 * ioPriority =  the io priority of the request.
-	 * cancellable =  optional cancellable object
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional cancellable object
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void closeAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -457,7 +457,7 @@ public class OutputStream : ObjectG
 	/**
 	 * Closes an output stream.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if stream was successfully closed, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */

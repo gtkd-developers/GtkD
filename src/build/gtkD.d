@@ -87,6 +87,10 @@ private import glib.Relation;
 private import glib.Tuples;
 private import glib.Cache;
 private import glib.Allocator;
+private import glib.VariantType;
+private import glib.Variant;
+private import glib.VariantIter;
+private import glib.VariantBuilder;
 
 private import gthread.Mutex;
 private import gthread.StaticMutex;

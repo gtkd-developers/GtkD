@@ -131,7 +131,7 @@ public class Cursor
 	 * See gdk_cursor_new_for_display().
 	 * To make the cursor invisible, use GDK_BLANK_CURSOR.
 	 * Params:
-	 * cursorType =  cursor to create
+	 * cursorType = cursor to create
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkCursorType cursorType)
@@ -150,7 +150,7 @@ public class Cursor
 	 * must have a depth of 1 (i.e. each pixel has only 2 values - on or off).
 	 * The standard cursor size is 16 by 16 pixels. You can create a bitmap
 	 * from inline data as in the below example.
-	 * Example 6. Creating a custom cursor
+	 * Example  6.  Creating a custom cursor
 	 * /+* This data is in X bitmap format, and can be created with the 'bitmap'
 	 *  utility. +/
 	 * #define cursor1_width 16
@@ -176,15 +176,15 @@ public class Cursor
 	 *  gdk_pixmap_unref (mask);
 	 *  gdk_window_set_cursor (widget->window, cursor);
 	 * Params:
-	 * source =  the pixmap specifying the cursor.
-	 * mask =  the pixmap specifying the mask, which must be the same size as
+	 * source = the pixmap specifying the cursor.
+	 * mask = the pixmap specifying the mask, which must be the same size as
 	 *  source.
-	 * fg =  the foreground color, used for the bits in the source which are 1.
+	 * fg = the foreground color, used for the bits in the source which are 1.
 	 *  The color does not have to be allocated first.
-	 * bg =  the background color, used for the bits in the source which are 0.
+	 * bg = the background color, used for the bits in the source which are 0.
 	 *  The color does not have to be allocated first.
-	 * x =  the horizontal offset of the 'hotspot' of the cursor.
-	 * y =  the vertical offset of the 'hotspot' of the cursor.
+	 * x = the horizontal offset of the 'hotspot' of the cursor.
+	 * y = the vertical offset of the 'hotspot' of the cursor.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
@@ -212,10 +212,10 @@ public class Cursor
 	 * sufficently new version of the X Render extension.
 	 * Since 2.4
 	 * Params:
-	 * display =  the GdkDisplay for which the cursor will be created
-	 * pixbuf =  the GdkPixbuf containing the cursor image
-	 * x =  the horizontal offset of the 'hotspot' of the cursor.
-	 * y =  the vertical offset of the 'hotspot' of the cursor.
+	 * display = the GdkDisplay for which the cursor will be created
+	 * pixbuf = the GdkPixbuf containing the cursor image
+	 * x = the horizontal offset of the 'hotspot' of the cursor.
+	 * y = the vertical offset of the 'hotspot' of the cursor.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, Pixbuf pixbuf, int x, int y)
@@ -234,8 +234,8 @@ public class Cursor
 	 * theme.
 	 * Since 2.8
 	 * Params:
-	 * display =  the GdkDisplay for which the cursor will be created
-	 * name =  the name of the cursor
+	 * display = the GdkDisplay for which the cursor will be created
+	 * name = the name of the cursor
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, string name)
@@ -253,8 +253,8 @@ public class Cursor
 	 * Creates a new cursor from the set of builtin cursors.
 	 * Since 2.2
 	 * Params:
-	 * display =  the GdkDisplay for which the cursor will be created
-	 * cursorType =  cursor to create
+	 * display = the GdkDisplay for which the cursor will be created
+	 * cursorType = cursor to create
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, GdkCursorType cursorType)

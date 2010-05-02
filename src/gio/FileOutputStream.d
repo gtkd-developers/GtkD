@@ -159,8 +159,8 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be set, and NULL will
 	 * be returned.
 	 * Params:
-	 * attributes =  a file attribute query string.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * attributes = a file attribute query string.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GFileInfo for the stream, or NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -190,12 +190,12 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * For the synchronous version of this function, see
 	 * g_file_output_stream_query_info().
 	 * Params:
-	 * attributes =  a file attribute query string.
-	 * ioPriority =  the I/O priority
+	 * attributes = a file attribute query string.
+	 * ioPriority = the I/O priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void queryInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -207,7 +207,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * Finalizes the asynchronous query started
 	 * by g_file_output_stream_query_info_async().
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: A GFileInfo for the finished query.
 	 * Throws: GException on failure.
 	 */

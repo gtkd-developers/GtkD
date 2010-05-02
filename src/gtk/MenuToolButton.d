@@ -263,7 +263,7 @@ public class MenuToolButton : ToolButton
 	 * If menu is NULL, the arrow button becomes insensitive.
 	 * Since 2.6
 	 * Params:
-	 * menu =  the GtkMenu associated with GtkMenuToolButton
+	 * menu = the GtkMenu associated with GtkMenuToolButton
 	 */
 	public void setMenu(Widget menu)
 	{
@@ -280,9 +280,9 @@ public class MenuToolButton : ToolButton
 	 * a tooltip on the whole GtkMenuToolButton.
 	 * Since 2.6
 	 * Params:
-	 * tooltips =  the GtkTooltips object to be used
-	 * tipText =  text to be used as tooltip text for tool_item
-	 * tipPrivate =  text to be used as private tooltip text
+	 * tooltips = the GtkTooltips object to be used
+	 * tipText = text to be used as tooltip text for tool_item
+	 * tipPrivate = text to be used as private tooltip text
 	 */
 	public void setArrowTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{
@@ -296,7 +296,7 @@ public class MenuToolButton : ToolButton
 	 * on the whole GtkMenuToolButton.
 	 * Since 2.12
 	 * Params:
-	 * text =  text to be used as tooltip text for button's arrow button
+	 * text = text to be used as tooltip text for button's arrow button
 	 */
 	public void setArrowTooltipText(string text)
 	{
@@ -310,7 +310,7 @@ public class MenuToolButton : ToolButton
 	 * tooltip on the whole GtkMenuToolButton.
 	 * Since 2.12
 	 * Params:
-	 * markup =  markup text to be used as tooltip text for button's arrow button
+	 * markup = markup text to be used as tooltip text for button's arrow button
 	 */
 	public void setArrowTooltipMarkup(string markup)
 	{

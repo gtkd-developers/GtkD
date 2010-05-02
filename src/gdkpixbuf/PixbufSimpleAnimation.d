@@ -121,9 +121,9 @@ public class PixbufSimpleAnimation : ObjectG
 	 * Creates a new, empty animation.
 	 * Since 2.8
 	 * Params:
-	 * width =  the width of the animation
-	 * height =  the height of the animation
-	 * rate =  the speed of the animation, in frames per second
+	 * width = the width of the animation
+	 * height = the height of the animation
+	 * rate = the speed of the animation, in frames per second
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int width, int height, float rate)
@@ -143,7 +143,7 @@ public class PixbufSimpleAnimation : ObjectG
 	 * was constructed.
 	 * Since 2.8
 	 * Params:
-	 * pixbuf =  the pixbuf to add
+	 * pixbuf = the pixbuf to add
 	 */
 	public void addFrame(Pixbuf pixbuf)
 	{
@@ -155,7 +155,7 @@ public class PixbufSimpleAnimation : ObjectG
 	 * Sets whether animation should loop indefinitely when it reaches the end.
 	 * Since 2.18
 	 * Params:
-	 * loop =  whether to loop the animation
+	 * loop = whether to loop the animation
 	 */
 	public void setLoop(int loop)
 	{

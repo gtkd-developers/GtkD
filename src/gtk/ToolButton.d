@@ -204,8 +204,8 @@ public class ToolButton : ToolItem
 	 * label.
 	 * Since 2.4
 	 * Params:
-	 * iconWidget =  a widget that will be used as icon widget, or NULL
-	 * label =  a string that will be used as label, or NULL
+	 * iconWidget = a widget that will be used as icon widget, or NULL
+	 * label = a string that will be used as label, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Widget iconWidget, string label)
@@ -226,7 +226,7 @@ public class ToolButton : ToolItem
 	 * It is an error if stock_id is not a name of a stock item.
 	 * Since 2.4
 	 * Params:
-	 * stockId =  the name of the stock item
+	 * stockId = the name of the stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string stockId)
@@ -248,7 +248,7 @@ public class ToolButton : ToolItem
 	 * NULL, button will not have a label.
 	 * Since 2.4
 	 * Params:
-	 * label =  a string that will be used as label, or NULL.
+	 * label = a string that will be used as label, or NULL.
 	 */
 	public void setLabel(string label)
 	{
@@ -279,7 +279,7 @@ public class ToolButton : ToolItem
 	 * only affects the menu item on the overflow menu.
 	 * Since 2.4
 	 * Params:
-	 * useUnderline =  whether the button label has the form "_Open"
+	 * useUnderline = whether the button label has the form "_Open"
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
@@ -305,7 +305,7 @@ public class ToolButton : ToolItem
 	 * overridden by non-NULL "label" and "icon_widget" properties.
 	 * Since 2.4
 	 * Params:
-	 * stockId =  a name of a stock item, or NULL
+	 * stockId = a name of a stock item, or NULL
 	 */
 	public void setStockId(string stockId)
 	{
@@ -333,7 +333,7 @@ public class ToolButton : ToolItem
 	 * properties.
 	 * Since 2.8
 	 * Params:
-	 * iconName =  the name of the themed icon
+	 * iconName = the name of the themed icon
 	 */
 	public void setIconName(string iconName)
 	{
@@ -359,7 +359,7 @@ public class ToolButton : ToolItem
 	 * "stock_id" property is also NULL, button will not have an icon.
 	 * Since 2.4
 	 * Params:
-	 * iconWidget =  the widget used as icon, or NULL
+	 * iconWidget = the widget used as icon, or NULL
 	 */
 	public void setIconWidget(Widget iconWidget)
 	{
@@ -392,7 +392,7 @@ public class ToolButton : ToolItem
 	 * "stock_id" is also NULL, button does not have a label.
 	 * Since 2.4
 	 * Params:
-	 * labelWidget =  the widget used as label, or NULL
+	 * labelWidget = the widget used as label, or NULL
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{

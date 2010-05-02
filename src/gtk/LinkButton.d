@@ -128,7 +128,7 @@ public class LinkButton : Button
 	 * Creates a new GtkLinkButton with the URI as its text.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a valid URI
+	 * uri = a valid URI
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string uri)
@@ -146,8 +146,8 @@ public class LinkButton : Button
 	 * Creates a new GtkLinkButton containing a label.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a valid URI
-	 * label =  the text of the button
+	 * uri = a valid URI
+	 * label = the text of the button
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string uri, string label)
@@ -177,7 +177,7 @@ public class LinkButton : Button
 	 * this unsets the 'visited' state of the button.
 	 * Since 2.10
 	 * Params:
-	 * uri =  a valid URI
+	 * uri = a valid URI
 	 */
 	public void setUri(string uri)
 	{
@@ -192,9 +192,9 @@ public class LinkButton : Button
 	 * If no uri hook has been set, GTK+ defaults to calling gtk_show_uri().
 	 * Since 2.10
 	 * Params:
-	 * func =  a function called each time a GtkLinkButton is clicked, or NULL
-	 * data =  user data to be passed to func, or NULL
-	 * destroy =  a GDestroyNotify that gets called when data is no longer needed, or NULL
+	 * func = a function called each time a GtkLinkButton is clicked, or NULL
+	 * data = user data to be passed to func, or NULL
+	 * destroy = a GDestroyNotify that gets called when data is no longer needed, or NULL
 	 * Returns: the previously set hook function.
 	 */
 	public static GtkLinkButtonUriFunc setUriHook(GtkLinkButtonUriFunc func, void* data, GDestroyNotify destroy)
@@ -222,7 +222,7 @@ public class LinkButton : Button
 	 * points. See gtk_link_button_get_visited() for more details.
 	 * Since 2.14
 	 * Params:
-	 * visited =  the new 'visited' state
+	 * visited = the new 'visited' state
 	 */
 	public void setVisited(int visited)
 	{

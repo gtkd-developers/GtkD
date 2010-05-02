@@ -166,10 +166,10 @@ public class ToggleAction : Action
 	 * call gtk_action_group_add_action_with_accel().
 	 * Since 2.4
 	 * Params:
-	 * name =  A unique name for the action
-	 * label =  The label displayed in menu items and on buttons, or NULL
-	 * tooltip =  A tooltip for the action, or NULL
-	 * stockId =  The stock icon to display in widgets representing the
+	 * name = A unique name for the action
+	 * label = The label displayed in menu items and on buttons, or NULL
+	 * tooltip = A tooltip for the action, or NULL
+	 * stockId = The stock icon to display in widgets representing the
 	 *  action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -198,7 +198,7 @@ public class ToggleAction : Action
 	 * Sets the checked state on the toggle action.
 	 * Since 2.4
 	 * Params:
-	 * isActive =  whether the action should be checked or not
+	 * isActive = whether the action should be checked or not
 	 */
 	public void setActive(int isActive)
 	{
@@ -221,7 +221,7 @@ public class ToggleAction : Action
 	 * Sets whether the action should have proxies like a radio action.
 	 * Since 2.4
 	 * Params:
-	 * drawAsRadio =  whether the action should have proxies like a radio
+	 * drawAsRadio = whether the action should have proxies like a radio
 	 *  action
 	 */
 	public void setDrawAsRadio(int drawAsRadio)

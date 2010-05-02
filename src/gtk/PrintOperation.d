@@ -110,7 +110,7 @@ private import gobject.ObjectG;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example 46. The high-level printing API
+ * Example  46.  The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -627,7 +627,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * some platforms may not allow asynchronous operation.
 	 * Since 2.10
 	 * Params:
-	 * allowAsync =  TRUE to allow asynchronous operation
+	 * allowAsync = TRUE to allow asynchronous operation
 	 */
 	public void setAllowAsync(int allowAsync)
 	{
@@ -663,7 +663,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * to the "request-page-setup" signal.
 	 * Since 2.10
 	 * Params:
-	 * defaultPageSetup =  a GtkPageSetup, or NULL
+	 * defaultPageSetup = a GtkPageSetup, or NULL
 	 */
 	public void setDefaultPageSetup(PageSetup defaultPageSetup)
 	{
@@ -694,7 +694,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * see gtk_print_operation_run().
 	 * Since 2.10
 	 * Params:
-	 * printSettings =  GtkPrintSettings, or NULL
+	 * printSettings = GtkPrintSettings, or NULL
 	 */
 	public void setPrintSettings(PrintSettings printSettings)
 	{
@@ -728,7 +728,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * numbering successive print jobs.
 	 * Since 2.10
 	 * Params:
-	 * jobName =  a string that identifies the print job
+	 * jobName = a string that identifies the print job
 	 */
 	public void setJobName(string jobName)
 	{
@@ -748,7 +748,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * will be for page n_pages - 1.
 	 * Since 2.10
 	 * Params:
-	 * nPages =  the number of pages
+	 * nPages = the number of pages
 	 */
 	public void setNPages(int nPages)
 	{
@@ -781,7 +781,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Note that this only makes sense for pre-paginated documents.
 	 * Since 2.10
 	 * Params:
-	 * currentPage =  the current page, 0-based
+	 * currentPage = the current page, 0-based
 	 */
 	public void setCurrentPage(int currentPage)
 	{
@@ -798,7 +798,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * imageable area (i.e. inside the margins).
 	 * Since 2.10
 	 * Params:
-	 * fullPage =  TRUE to set up the GtkPrintContext for the full page
+	 * fullPage = TRUE to set up the GtkPrintContext for the full page
 	 */
 	public void setUseFullPage(int fullPage)
 	{
@@ -812,7 +812,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit to use
+	 * unit = the unit to use
 	 */
 	public void setUnit(GtkUnit unit)
 	{
@@ -830,7 +830,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * of printers in the print dialog.
 	 * Since 2.10
 	 * Params:
-	 * filename =  the filename for the exported file
+	 * filename = the filename for the exported file
 	 */
 	public void setExportFilename(string filename)
 	{
@@ -843,7 +843,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * progress dialog during the print operation.
 	 * Since 2.10
 	 * Params:
-	 * showProgress =  TRUE to show a progress dialog
+	 * showProgress = TRUE to show a progress dialog
 	 */
 	public void setShowProgress(int showProgress)
 	{
@@ -860,7 +860,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * not be enabled unless needed.
 	 * Since 2.10
 	 * Params:
-	 * trackStatus =  TRUE to track status after printing
+	 * trackStatus = TRUE to track status after printing
 	 */
 	public void setTrackPrintStatus(int trackStatus)
 	{
@@ -872,7 +872,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Sets the label for the tab holding custom widgets.
 	 * Since 2.10
 	 * Params:
-	 * label =  the label to use, or NULL to use the default label
+	 * label = the label to use, or NULL to use the default label
 	 */
 	public void setCustomTabLabel(string label)
 	{
@@ -929,8 +929,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * given GtkPrintOperation.
 	 * Since 2.10
 	 * Params:
-	 * action =  the action to start
-	 * parent =  Transient parent of the dialog, or NULL
+	 * action = the action to start
+	 * parent = Transient parent of the dialog, or NULL
 	 * Returns: the result of the print operation. A return value of  GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain  the used print settings with gtk_print_operation_get_print_settings()  and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the "done" signal when  done.
 	 * Throws: GException on failure.
 	 */
@@ -1038,7 +1038,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Sets whether selection is supported by GtkPrintOperation.
 	 * Since 2.18
 	 * Params:
-	 * supportSelection =  TRUE to support selection
+	 * supportSelection = TRUE to support selection
 	 */
 	public void setSupportSelection(int supportSelection)
 	{
@@ -1064,7 +1064,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * "begin-print".
 	 * Since 2.18
 	 * Params:
-	 * hasSelection =  TRUE indicates that a selection exists
+	 * hasSelection = TRUE indicates that a selection exists
 	 */
 	public void setHasSelection(int hasSelection)
 	{
@@ -1088,7 +1088,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Selected page setup is stored as default page setup in GtkPrintOperation.
 	 * Since 2.18
 	 * Params:
-	 * embed =  TRUE to embed page setup selection in the GtkPrintDialog
+	 * embed = TRUE to embed page setup selection in the GtkPrintDialog
 	 */
 	public void setEmbedPageSetup(int embed)
 	{
@@ -1117,9 +1117,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * a problem.
 	 * Since 2.10
 	 * Params:
-	 * parent =  transient parent, or NULL
-	 * pageSetup =  an existing GtkPageSetup, or NULL
-	 * settings =  a GtkPrintSettings
+	 * parent = transient parent, or NULL
+	 * pageSetup = an existing GtkPageSetup, or NULL
+	 * settings = a GtkPrintSettings
 	 * Returns: a new GtkPageSetup
 	 */
 	public static PageSetup gtkPrintRunPageSetupDialog(Window parent, PageSetup pageSetup, PrintSettings settings)
@@ -1140,11 +1140,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * from a signal handler for the ::response signal of the dialog.
 	 * Since 2.10
 	 * Params:
-	 * parent =  transient parent, or NULL
-	 * pageSetup =  an existing GtkPageSetup, or NULL
-	 * settings =  a GtkPrintSettings
-	 * doneCb =  a function to call when the user saves the modified page setup
-	 * data =  user data to pass to done_cb
+	 * parent = transient parent, or NULL
+	 * pageSetup = an existing GtkPageSetup, or NULL
+	 * settings = a GtkPrintSettings
+	 * doneCb = a function to call when the user saves the modified page setup
+	 * data = user data to pass to done_cb
 	 */
 	public static void gtkPrintRunPageSetupDialogAsync(Window parent, PageSetup pageSetup, PrintSettings settings, GtkPageSetupDoneFunc doneCb, void* data)
 	{

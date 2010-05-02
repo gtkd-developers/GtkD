@@ -176,7 +176,7 @@ public class FileMonitor : ObjectG
 	 * Sets the rate limit to which the monitor will report
 	 * consecutive change events to the same file.
 	 * Params:
-	 * limitMsecs =  a integer with the limit in milliseconds to
+	 * limitMsecs = a integer with the limit in milliseconds to
 	 * poll for changes.
 	 */
 	public void setRateLimit(int limitMsecs)
@@ -192,9 +192,9 @@ public class FileMonitor : ObjectG
 	 * The signal will be emitted from an idle handler (in the thread-default main
 	 * context).
 	 * Params:
-	 * child =  a GFile.
-	 * otherFile =  a GFile.
-	 * eventType =  a set of GFileMonitorEvent flags.
+	 * child = a GFile.
+	 * otherFile = a GFile.
+	 * eventType = a set of GFileMonitorEvent flags.
 	 */
 	public void emitEvent(File child, File otherFile, GFileMonitorEvent eventType)
 	{

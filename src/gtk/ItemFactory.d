@@ -125,11 +125,11 @@ public class ItemFactory : ObjectGtk
 	 * Creates a new GtkItemFactory.
 	 * Beware that the returned object does not have a floating reference.
 	 * Params:
-	 * containerType =  the kind of menu to create; can be
+	 * containerType = the kind of menu to create; can be
 	 *  GTK_TYPE_MENU_BAR, GTK_TYPE_MENU or GTK_TYPE_OPTION_MENU
-	 * path =  the factory path of the new item factory, a string of the form
+	 * path = the factory path of the new item factory, a string of the form
 	 *  "<name>"
-	 * accelGroup =  a GtkAccelGroup to which the accelerators for the
+	 * accelGroup = a GtkAccelGroup to which the accelerators for the
 	 *  menu items will be added, or NULL to create a new one
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -149,11 +149,11 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factory_construct has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Initializes an item factory.
 	 * Params:
-	 * containerType =  the kind of menu to create; can be
+	 * containerType = the kind of menu to create; can be
 	 *  GTK_TYPE_MENU_BAR, GTK_TYPE_MENU or GTK_TYPE_OPTION_MENU
-	 * path =  the factory path of ifactory, a string of the form
+	 * path = the factory path of ifactory, a string of the form
 	 *  "<name>"
-	 * accelGroup =  a GtkAccelGroup to which the accelerators for the
+	 * accelGroup = a GtkAccelGroup to which the accelerators for the
 	 *  menu items will be added, or NULL to create a new one
 	 */
 	public void construct(GType containerType, string path, AccelGroup accelGroup)
@@ -175,11 +175,11 @@ public class ItemFactory : ObjectGtk
 	 * gtk_accel_map_load(), even if they haven't been created by an item
 	 * factory.
 	 * Params:
-	 * accelWidget =  widget to install an accelerator on
-	 * fullPath = 	 the full path for the accel_widget
-	 * accelGroup =  the accelerator group to install the accelerator in
-	 * keyval =  key value of the accelerator
-	 * modifiers =  modifier combination of the accelerator
+	 * accelWidget = widget to install an accelerator on
+	 * fullPath = the full path for the accel_widget
+	 * accelGroup = the accelerator group to install the accelerator in
+	 * keyval = key value of the accelerator
+	 * modifiers = modifier combination of the accelerator
 	 */
 	public static void addForeign(Widget accelWidget, string fullPath, AccelGroup accelGroup, uint keyval, GdkModifierType modifiers)
 	{
@@ -192,7 +192,7 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factory_from_widget has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Obtains the item factory from which a widget was created.
 	 * Params:
-	 * widget =  a widget
+	 * widget = a widget
 	 * Returns: the item factory from which widget was created, or NULL
 	 */
 	public static ItemFactory fromWidget(Widget widget)
@@ -214,7 +214,7 @@ public class ItemFactory : ObjectGtk
 	 * path specified in gtk_item_factory_new() with the path specified in the
 	 * GtkItemFactoryEntry from which the widget was created.)
 	 * Params:
-	 * widget =  a widget
+	 * widget = a widget
 	 * Returns: the full path to widget if it has been created by an item factory, NULL otherwise. This value is owned by GTK+ and must not be modified or freed.
 	 */
 	public static string pathFromWidget(Widget widget)
@@ -231,7 +231,7 @@ public class ItemFactory : ObjectGtk
 	 * submenu, then the item is returned. If you are interested in the submenu,
 	 * use gtk_item_factory_get_widget() instead.
 	 * Params:
-	 * path =  the path to the menu item
+	 * path = the path to the menu item
 	 * Returns: the menu item for the given path, or NULL if path doesn't lead to a menu item
 	 */
 	public Widget getItem(string path)
@@ -253,7 +253,7 @@ public class ItemFactory : ObjectGtk
 	 * submenu, then the submenu is returned. If you are interested in the menu
 	 * item, use gtk_item_factory_get_item() instead.
 	 * Params:
-	 * path =  the path to the widget
+	 * path = the path to the widget
 	 * Returns: the widget for the given path, or NULL if path doesn't lead to a widget
 	 */
 	public Widget getWidget(string path)
@@ -275,7 +275,7 @@ public class ItemFactory : ObjectGtk
 	 * If there are multiple items with the same action, the result is
 	 * undefined.
 	 * Params:
-	 * action =  an action as specified in the callback_action field
+	 * action = an action as specified in the callback_action field
 	 *  of GtkItemFactoryEntry
 	 * Returns: the widget which corresponds to the given action, or NULL if no widget was found
 	 */
@@ -296,7 +296,7 @@ public class ItemFactory : ObjectGtk
 	 * Obtains the menu item which was constructed from the first
 	 * GtkItemFactoryEntry with the given action.
 	 * Params:
-	 * action =  an action as specified in the callback_action field
+	 * action = an action as specified in the callback_action field
 	 *  of GtkItemFactoryEntry
 	 * Returns: the menu item which corresponds to the given action, or NULL if no menu item was found
 	 */
@@ -316,9 +316,9 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factory_create_item has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates an item for entry.
 	 * Params:
-	 * entry =  the GtkItemFactoryEntry to create an item for
-	 * callbackData =  data passed to the callback function of entry
-	 * callbackType =  1 if the callback function of entry is of type
+	 * entry = the GtkItemFactoryEntry to create an item for
+	 * callbackData = data passed to the callback function of entry
+	 * callbackType = 1 if the callback function of entry is of type
 	 *  GtkItemFactoryCallback1, 2 if it is of type GtkItemFactoryCallback2
 	 */
 	public void createItem(GtkItemFactoryEntry* entry, void* callbackData, uint callbackType)
@@ -332,10 +332,10 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factory_create_items has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates the menu items from the entries.
 	 * Params:
-	 * nEntries =  the length of entries
-	 * entries =  an array of GtkItemFactoryEntrys whose callback members
+	 * nEntries = the length of entries
+	 * entries = an array of GtkItemFactoryEntrys whose callback members
 	 *  must by of type GtkItemFactoryCallback1
-	 * callbackData =  data passed to the callback functions of all entries
+	 * callbackData = data passed to the callback functions of all entries
 	 */
 	public void createItems(uint nEntries, GtkItemFactoryEntry* entries, void* callbackData)
 	{
@@ -348,10 +348,10 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factory_create_items_ac has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Creates the menu items from the entries.
 	 * Params:
-	 * nEntries =  the length of entries
-	 * entries =  an array of GtkItemFactoryEntrys
-	 * callbackData =  data passed to the callback functions of all entries
-	 * callbackType =  1 if the callback functions in entries are of type
+	 * nEntries = the length of entries
+	 * entries = an array of GtkItemFactoryEntrys
+	 * callbackData = data passed to the callback functions of all entries
+	 * callbackType = 1 if the callback functions in entries are of type
 	 *  GtkItemFactoryCallback1, 2 if they are of type GtkItemFactoryCallback2
 	 */
 	public void createItemsAc(uint nEntries, GtkItemFactoryEntry* entries, void* callbackData, uint callbackType)
@@ -366,7 +366,7 @@ public class ItemFactory : ObjectGtk
 	 * Deletes the menu item which was created for path by the given
 	 * item factory.
 	 * Params:
-	 * path =  a path
+	 * path = a path
 	 */
 	public void deleteItem(string path)
 	{
@@ -380,7 +380,7 @@ public class ItemFactory : ObjectGtk
 	 * Deletes the menu item which was created from entry by the given
 	 * item factory.
 	 * Params:
-	 * entry =  a GtkItemFactoryEntry
+	 * entry = a GtkItemFactoryEntry
 	 */
 	public void deleteEntry(GtkItemFactoryEntry* entry)
 	{
@@ -394,8 +394,8 @@ public class ItemFactory : ObjectGtk
 	 * Deletes the menu items which were created from the entries by the given
 	 * item factory.
 	 * Params:
-	 * nEntries =  the length of entries
-	 * entries =  an array of GtkItemFactoryEntrys
+	 * nEntries = the length of entries
+	 * entries = an array of GtkItemFactoryEntrys
 	 */
 	public void deleteEntries(uint nEntries, GtkItemFactoryEntry* entries)
 	{
@@ -417,10 +417,10 @@ public class ItemFactory : ObjectGtk
 	 * The operation of the mouse_button and the time_ parameter is the same
 	 * as the button and activation_time parameters for gtk_menu_popup().
 	 * Params:
-	 * x =  the x position
-	 * y =  the y position
-	 * mouseButton =  the mouse button which was pressed to initiate the popup
-	 * time =  the time at which the activation event occurred
+	 * x = the x position
+	 * y = the y position
+	 * mouseButton = the mouse button which was pressed to initiate the popup
+	 * time = the time at which the activation event occurred
 	 */
 	public void popup(uint x, uint y, uint mouseButton, uint time)
 	{
@@ -444,13 +444,13 @@ public class ItemFactory : ObjectGtk
 	 * The operation of the mouse_button and the time_ parameters is the same
 	 * as the button and activation_time parameters for gtk_menu_popup().
 	 * Params:
-	 * popupData =  data available for callbacks while the menu is posted
-	 * destroy =  a GDestroyNotify function to be called on popup_data when
+	 * popupData = data available for callbacks while the menu is posted
+	 * destroy = a GDestroyNotify function to be called on popup_data when
 	 *  the menu is unposted
-	 * x =  the x position
-	 * y =  the y position
-	 * mouseButton =  the mouse button which was pressed to initiate the popup
-	 * time =  the time at which the activation event occurred
+	 * x = the x position
+	 * y = the y position
+	 * mouseButton = the mouse button which was pressed to initiate the popup
+	 * time = the time at which the activation event occurred
 	 */
 	public void popupWithData(void* popupData, GDestroyNotify destroy, uint x, uint y, uint mouseButton, uint time)
 	{
@@ -479,7 +479,7 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
 	 * Params:
-	 * widget =  a widget
+	 * widget = a widget
 	 * Returns: popup_data associated with the item factory from which widget was created, or NULL if widget wasn't created by an item factory
 	 */
 	public static void* popupDataFromWidget(Widget widget)
@@ -495,7 +495,7 @@ public class ItemFactory : ObjectGtk
 	 * "<name>" prefix of path as the path argument
 	 * for gtk_item_factory_new().
 	 * Params:
-	 * path =  a string starting with a factory path of the form
+	 * path = a string starting with a factory path of the form
 	 *  "<name>"
 	 * Returns: the GtkItemFactory created for the given factory path, or NULL
 	 */
@@ -515,9 +515,9 @@ public class ItemFactory : ObjectGtk
 	 * gtk_item_factories_path_delete has been deprecated since version 2.4 and should not be used in newly-written code. Use GtkUIManager instead.
 	 * Deletes all widgets constructed from the specified path.
 	 * Params:
-	 * ifactoryPath =  a factory path to prepend to path. May be NULL if path
+	 * ifactoryPath = a factory path to prepend to path. May be NULL if path
 	 *  starts with a factory path
-	 * path =  a path
+	 * path = a path
 	 */
 	public static void itemFactoriesPathDelete(string ifactoryPath, string path)
 	{
@@ -531,9 +531,9 @@ public class ItemFactory : ObjectGtk
 	 * Sets a function to be used for translating the path elements before they
 	 * are displayed.
 	 * Params:
-	 * func =  the GtkTranslateFunc function to be used to translate path elements
-	 * data =  data to pass to func and notify
-	 * notify =  a GDestroyNotify function to be called when ifactory is
+	 * func = the GtkTranslateFunc function to be used to translate path elements
+	 * data = data to pass to func and notify
+	 * notify = a GDestroyNotify function to be called when ifactory is
 	 *  destroyed and when the translation function is changed again
 	 */
 	public void setTranslateFunc(GtkTranslateFunc func, void* data, GDestroyNotify notify)

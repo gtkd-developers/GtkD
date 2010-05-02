@@ -138,7 +138,7 @@ public class PixbufAnimation : ObjectG
 	 * images, then an animation with a single frame will be created. Possible errors
 	 * are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
 	 * Params:
-	 * filename =  Name of file to load, in the GLib file name encoding
+	 * filename = Name of file to load, in the GLib file name encoding
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -239,7 +239,7 @@ public class PixbufAnimation : ObjectG
 	 * area_updated signal.
 	 * A delay time of -1 is possible, indicating "infinite."
 	 * Params:
-	 * startTime =  time when the animation starts playing
+	 * startTime = time when the animation starts playing
 	 * Returns: an iterator to move over the animation
 	 */
 	public PixbufAnimationIter getIter(TimeVal startTime)

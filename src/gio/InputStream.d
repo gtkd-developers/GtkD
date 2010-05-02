@@ -139,9 +139,9 @@ public class InputStream : ObjectG
 	 * partial result will be returned, without an error.
 	 * On error -1 is returned and error is set accordingly.
 	 * Params:
-	 * buffer =  a buffer to read data into (which should be at least count bytes long).
-	 * count =  the number of bytes that will be read from the stream
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * buffer = a buffer to read data into (which should be at least count bytes long).
+	 * count = the number of bytes that will be read from the stream
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -172,10 +172,10 @@ public class InputStream : ObjectG
 	 * is set to indicate the error status, bytes_read is updated to contain
 	 * the number of bytes read into buffer before the error occurred.
 	 * Params:
-	 * buffer =  a buffer to read data into (which should be at least count bytes long).
-	 * count =  the number of bytes that will be read from the stream
-	 * bytesRead =  location to store the number of bytes that was read from the stream
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * buffer = a buffer to read data into (which should be at least count bytes long).
+	 * count = the number of bytes that will be read from the stream
+	 * bytesRead = location to store the number of bytes that was read from the stream
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE on success, FALSE if there was an error
 	 * Throws: GException on failure.
 	 */
@@ -207,8 +207,8 @@ public class InputStream : ObjectG
 	 * operation was partially finished when the operation was cancelled the
 	 * partial result will be returned, without an error.
 	 * Params:
-	 * count =  the number of bytes that will be skipped from the stream
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * count = the number of bytes that will be skipped from the stream
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: Number of bytes skipped, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -247,7 +247,7 @@ public class InputStream : ObjectG
 	 * Cancelling a close will still leave the stream closed, but some streams
 	 * can use a faster close that doesn't block to e.g. check errors.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE on success, FALSE on failure
 	 * Throws: GException on failure.
 	 */
@@ -286,13 +286,13 @@ public class InputStream : ObjectG
 	 * asynchronicity, so they are optional for inheriting classes. However, if you
 	 * override one you must override all.
 	 * Params:
-	 * buffer =  a buffer to read data into (which should be at least count bytes long).
-	 * count =  the number of bytes that will be read from the stream
-	 * ioPriority =  the I/O priority
+	 * buffer = a buffer to read data into (which should be at least count bytes long).
+	 * count = the number of bytes that will be read from the stream
+	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void readAsync(void* buffer, uint count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -303,7 +303,7 @@ public class InputStream : ObjectG
 	/**
 	 * Finishes an asynchronous stream read operation.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: number of bytes read in, or -1 on error.
 	 * Throws: GException on failure.
 	 */
@@ -342,12 +342,12 @@ public class InputStream : ObjectG
 	 * asynchronicity, so they are optional for inheriting classes. However, if you
 	 * override one you must override all.
 	 * Params:
-	 * count =  the number of bytes that will be skipped from the stream
-	 * ioPriority =  the I/O priority
+	 * count = the number of bytes that will be skipped from the stream
+	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void skipAsync(uint count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -358,7 +358,7 @@ public class InputStream : ObjectG
 	/**
 	 * Finishes a stream skip operation.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: the size of the bytes skipped, or -1 on error.
 	 * Throws: GException on failure.
 	 */
@@ -387,11 +387,11 @@ public class InputStream : ObjectG
 	 * asynchronicity, so they are optional for inheriting classes. However, if you
 	 * override one you must override all.
 	 * Params:
-	 * ioPriority =  the I/O priority
+	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable =  optional cancellable object
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional cancellable object
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void closeAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -402,7 +402,7 @@ public class InputStream : ObjectG
 	/**
 	 * Finishes closing a stream asynchronously, started from g_input_stream_close_async().
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the stream was closed successfully.
 	 * Throws: GException on failure.
 	 */

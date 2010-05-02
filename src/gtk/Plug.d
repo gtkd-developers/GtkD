@@ -161,7 +161,7 @@ public class Plug : Window
 	 * Finish the initialization of plug for a given GtkSocket identified by
 	 * socket_id. This function will generally only be used by classes deriving from GtkPlug.
 	 * Params:
-	 * socketId =  the XID of the socket's window.
+	 * socketId = the XID of the socket's window.
 	 */
 	public void construct(GdkNativeWindow socketId)
 	{
@@ -175,9 +175,9 @@ public class Plug : Window
 	 * This function will generally only be used by classes deriving from GtkPlug.
 	 * Since 2.2
 	 * Params:
-	 * display =  the GdkDisplay associated with socket_id's
+	 * display = the GdkDisplay associated with socket_id's
 	 *  GtkSocket.
-	 * socketId =  the XID of the socket's window.
+	 * socketId = the XID of the socket's window.
 	 */
 	public void constructForDisplay(Display display, GdkNativeWindow socketId)
 	{
@@ -190,7 +190,7 @@ public class Plug : Window
 	 * by socket_id. If socket_id is 0, the plug is left "unplugged" and
 	 * can later be plugged into a GtkSocket by gtk_socket_add_id().
 	 * Params:
-	 * socketId =  the window ID of the socket, or 0.
+	 * socketId = the window ID of the socket, or 0.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkNativeWindow socketId)
@@ -208,8 +208,8 @@ public class Plug : Window
 	 * Create a new plug widget inside the GtkSocket identified by socket_id.
 	 * Since 2.2
 	 * Params:
-	 * display =  the GdkDisplay on which socket_id is displayed
-	 * socketId =  the XID of the socket's window.
+	 * display = the GdkDisplay on which socket_id is displayed
+	 * socketId = the XID of the socket's window.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Display display, GdkNativeWindow socketId)

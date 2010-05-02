@@ -254,10 +254,10 @@ public class Action : ObjectG, BuildableIF
 	 * names.
 	 * Since 2.4
 	 * Params:
-	 * name =  A unique name for the action
-	 * label =  the label displayed in menu items and on buttons, or NULL
-	 * tooltip =  a tooltip for the action, or NULL
-	 * stockId =  the stock icon to display in widgets representing the
+	 * name = A unique name for the action
+	 * label = the label displayed in menu items and on buttons, or NULL
+	 * tooltip = a tooltip for the action, or NULL
+	 * stockId = the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -314,7 +314,7 @@ public class Action : ObjectG, BuildableIF
 	 * for that.
 	 * Since 2.6
 	 * Params:
-	 * sensitive =  TRUE to make the action sensitive
+	 * sensitive = TRUE to make the action sensitive
 	 */
 	public void setSensitive(int sensitive)
 	{
@@ -353,7 +353,7 @@ public class Action : ObjectG, BuildableIF
 	 * for that.
 	 * Since 2.6
 	 * Params:
-	 * visible =  TRUE to make the action visible
+	 * visible = TRUE to make the action visible
 	 */
 	public void setVisible(int visible)
 	{
@@ -379,7 +379,7 @@ public class Action : ObjectG, BuildableIF
 	 * create icons displayed in the proxy widgets.
 	 * Since 2.4
 	 * Params:
-	 * iconSize =  the size of the icon that should be created.
+	 * iconSize = the size of the icon that should be created.
 	 * Returns: a widget that displays the icon for this action.
 	 */
 	public Widget createIcon(GtkIconSize iconSize)
@@ -454,7 +454,7 @@ public class Action : ObjectG, BuildableIF
 	 * first.
 	 * Since 2.4
 	 * Params:
-	 * proxy =  the proxy widget
+	 * proxy = the proxy widget
 	 */
 	public void connectProxy(Widget proxy)
 	{
@@ -469,7 +469,7 @@ public class Action : ObjectG, BuildableIF
 	 * Does not destroy the widget, however.
 	 * Since 2.4
 	 * Params:
-	 * proxy =  the proxy widget
+	 * proxy = the proxy widget
 	 */
 	public void disconnectProxy(Widget proxy)
 	{
@@ -554,7 +554,7 @@ public class Action : ObjectG, BuildableIF
 	 * This function is intended for use by action implementations.
 	 * Since 2.4
 	 * Params:
-	 * proxy =  a proxy widget
+	 * proxy = a proxy widget
 	 */
 	public void blockActivateFrom(Widget proxy)
 	{
@@ -572,7 +572,7 @@ public class Action : ObjectG, BuildableIF
 	 * This function is intended for use by action implementations.
 	 * Since 2.4
 	 * Params:
-	 * proxy =  a proxy widget
+	 * proxy = a proxy widget
 	 */
 	public void unblockActivateFrom(Widget proxy)
 	{
@@ -600,7 +600,7 @@ public class Action : ObjectG, BuildableIF
 	 * g_intern_static_string().
 	 * Since 2.4
 	 * Params:
-	 * accelPath =  the accelerator path
+	 * accelPath = the accelerator path
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -629,7 +629,7 @@ public class Action : ObjectG, BuildableIF
 	 * will be installed.
 	 * Since 2.4
 	 * Params:
-	 * accelGroup =  a GtkAccelGroup or NULL
+	 * accelGroup = a GtkAccelGroup or NULL
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{
@@ -641,7 +641,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets the label of action.
 	 * Since 2.16
 	 * Params:
-	 * label =  the label text to set
+	 * label = the label text to set
 	 */
 	public void setLabel(string label)
 	{
@@ -664,7 +664,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets a shorter label text on action.
 	 * Since 2.16
 	 * Params:
-	 * shortLabel =  the label text to set
+	 * shortLabel = the label text to set
 	 */
 	public void setShortLabel(string shortLabel)
 	{
@@ -687,7 +687,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets the tooltip text on action
 	 * Since 2.16
 	 * Params:
-	 * tooltip =  the tooltip text
+	 * tooltip = the tooltip text
 	 */
 	public void setTooltip(string tooltip)
 	{
@@ -710,7 +710,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets the icon of action.
 	 * Since 2.16
 	 * Params:
-	 * icon =  the GIcon to set
+	 * icon = the GIcon to set
 	 */
 	public void setGicon(IconIF icon)
 	{
@@ -738,7 +738,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets the icon name on action
 	 * Since 2.16
 	 * Params:
-	 * iconName =  the icon name to set
+	 * iconName = the icon name to set
 	 */
 	public void setIconName(string iconName)
 	{
@@ -761,7 +761,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets whether action is visible when horizontal
 	 * Since 2.16
 	 * Params:
-	 * visibleHorizontal =  whether the action is visible horizontally
+	 * visibleHorizontal = whether the action is visible horizontally
 	 */
 	public void setVisibleHorizontal(int visibleHorizontal)
 	{
@@ -784,7 +784,7 @@ public class Action : ObjectG, BuildableIF
 	 * Sets whether action is visible when vertical
 	 * Since 2.16
 	 * Params:
-	 * visibleVertical =  whether the action is visible vertically
+	 * visibleVertical = whether the action is visible vertically
 	 */
 	public void setVisibleVertical(int visibleVertical)
 	{
@@ -809,7 +809,7 @@ public class Action : ObjectG, BuildableIF
 	 * or not.
 	 * Since 2.16
 	 * Params:
-	 * isImportant =  TRUE to make the action important
+	 * isImportant = TRUE to make the action important
 	 */
 	public void setIsImportant(int isImportant)
 	{

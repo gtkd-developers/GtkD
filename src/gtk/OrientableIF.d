@@ -94,7 +94,7 @@ public interface OrientableIF
 	 * Sets the orientation of the orientable.
 	 * Since 2.16
 	 * Params:
-	 * orientation =  the orientable's new orientation.
+	 * orientation = the orientable's new orientation.
 	 */
 	public void setOrientation(GtkOrientation orientation);
 }

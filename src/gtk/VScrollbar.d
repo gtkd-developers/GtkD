@@ -120,7 +120,7 @@ public class VScrollbar : Scrollbar
 	/**
 	 * Creates a new vertical scrollbar.
 	 * Params:
-	 * adjustment =  the GtkAdjustment to use, or NULL to create a new adjustment
+	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)

@@ -131,7 +131,7 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements in UI definitions.
- * Example 22. A UI definition fragment with GtkTreeView
+ * Example  22.  A UI definition fragment with GtkTreeView
  * <object class="GtkTreeView" id="treeview">
  *  <property name="model">liststore1</property>
  *  <child>
@@ -807,7 +807,7 @@ public class TreeView : Container
 	 * This does not have any visible effects for lists.
 	 * Since 2.12
 	 * Params:
-	 * indentation =  the amount, in pixels, of extra indentation in tree_view.
+	 * indentation = the amount, in pixels, of extra indentation in tree_view.
 	 */
 	public void setLevelIndentation(int indentation)
 	{
@@ -825,7 +825,7 @@ public class TreeView : Container
 	 * This does not have any visible effects for lists.
 	 * Since 2.12
 	 * Params:
-	 * enabled =  TRUE to enable expander drawing, FALSE otherwise.
+	 * enabled = TRUE to enable expander drawing, FALSE otherwise.
 	 */
 	public void setShowExpanders(int enabled)
 	{
@@ -836,7 +836,7 @@ public class TreeView : Container
 	/**
 	 * Creates a new GtkTreeView widget with the model initialized to model.
 	 * Params:
-	 * model =  the model.
+	 * model = the model.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model)
@@ -871,7 +871,7 @@ public class TreeView : Container
 	 * set, it will remove it before setting the new model. If model is NULL,
 	 * then it will unset the old model.
 	 * Params:
-	 * model =  The model.
+	 * model = The model.
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -912,7 +912,7 @@ public class TreeView : Container
 	/**
 	 * Sets the GtkAdjustment for the current horizontal aspect.
 	 * Params:
-	 * adjustment =  The GtkAdjustment to set, or NULL
+	 * adjustment = The GtkAdjustment to set, or NULL
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -938,7 +938,7 @@ public class TreeView : Container
 	/**
 	 * Sets the GtkAdjustment for the current vertical aspect.
 	 * Params:
-	 * adjustment =  The GtkAdjustment to set, or NULL
+	 * adjustment = The GtkAdjustment to set, or NULL
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{
@@ -959,7 +959,7 @@ public class TreeView : Container
 	/**
 	 * Sets the visibility state of the headers.
 	 * Params:
-	 * headersVisible =  TRUE if the headers are visible
+	 * headersVisible = TRUE if the headers are visible
 	 */
 	public void setHeadersVisible(int headersVisible)
 	{
@@ -991,7 +991,7 @@ public class TreeView : Container
 	/**
 	 * Allow the column title buttons to be clicked.
 	 * Params:
-	 * setting =  TRUE if the columns are clickable.
+	 * setting = TRUE if the columns are clickable.
 	 */
 	public void setHeadersClickable(int setting)
 	{
@@ -1013,7 +1013,7 @@ public class TreeView : Container
 	 * useful from a functional standpoint (since it has lots of columns,
 	 * generally).
 	 * Params:
-	 * setting =  TRUE if the tree requires reading across rows
+	 * setting = TRUE if the tree requires reading across rows
 	 */
 	public void setRulesHint(int setting)
 	{
@@ -1036,7 +1036,7 @@ public class TreeView : Container
 	 * mode enabled, then column must have its "sizing" property set to be
 	 * GTK_TREE_VIEW_COLUMN_FIXED.
 	 * Params:
-	 * column =  The GtkTreeViewColumn to add.
+	 * column = The GtkTreeViewColumn to add.
 	 * Returns: The number of columns in tree_view after appending.
 	 */
 	public int appendColumn(TreeViewColumn column)
@@ -1048,7 +1048,7 @@ public class TreeView : Container
 	/**
 	 * Removes column from tree_view.
 	 * Params:
-	 * column =  The GtkTreeViewColumn to remove.
+	 * column = The GtkTreeViewColumn to remove.
 	 * Returns: The number of columns in tree_view after removing.
 	 */
 	public int removeColumn(TreeViewColumn column)
@@ -1063,8 +1063,8 @@ public class TreeView : Container
 	 * "fixed_height" mode enabled, then column must have its "sizing" property
 	 * set to be GTK_TREE_VIEW_COLUMN_FIXED.
 	 * Params:
-	 * column =  The GtkTreeViewColumn to be inserted.
-	 * position =  The position to insert column in.
+	 * column = The GtkTreeViewColumn to be inserted.
+	 * position = The position to insert column in.
 	 * Returns: The number of columns in tree_view after insertion.
 	 */
 	public int insertColumn(TreeViewColumn column, int position)
@@ -1081,12 +1081,12 @@ public class TreeView : Container
 	 * If tree_view has "fixed_height" mode enabled, then the new column will have its
 	 * "sizing" property set to be GTK_TREE_VIEW_COLUMN_FIXED.
 	 * Params:
-	 * position =  Position to insert, -1 for append
-	 * title =  column title
-	 * cell =  cell renderer for column
-	 * func =  function to set attributes of cell renderer
-	 * data =  data for func
-	 * dnotify =  destroy notifier for data
+	 * position = Position to insert, -1 for append
+	 * title = column title
+	 * cell = cell renderer for column
+	 * func = function to set attributes of cell renderer
+	 * data = data for func
+	 * dnotify = destroy notifier for data
 	 * Returns: number of columns in the tree view post-insert
 	 */
 	public int insertColumnWithDataFunc(int position, string title, CellRenderer cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify)
@@ -1098,7 +1098,7 @@ public class TreeView : Container
 	/**
 	 * Gets the GtkTreeViewColumn at the given position in the tree_view.
 	 * Params:
-	 * n =  The position of the column, counting from 0.
+	 * n = The position of the column, counting from 0.
 	 * Returns: The GtkTreeViewColumn, or NULL if the position is outside therange of columns.
 	 */
 	public TreeViewColumn getColumn(int n)
@@ -1132,8 +1132,8 @@ public class TreeView : Container
 	 * Moves column to be after to base_column. If base_column is NULL, then
 	 * column is placed in the first position.
 	 * Params:
-	 * column =  The GtkTreeViewColumn to be moved.
-	 * baseColumn =  The GtkTreeViewColumn to be moved relative to, or NULL.
+	 * column = The GtkTreeViewColumn to be moved.
+	 * baseColumn = The GtkTreeViewColumn to be moved relative to, or NULL.
 	 */
 	public void moveColumnAfter(TreeViewColumn column, TreeViewColumn baseColumn)
 	{
@@ -1148,7 +1148,7 @@ public class TreeView : Container
 	 * If you do not want expander arrow to appear in your tree, set the
 	 * expander column to a hidden column.
 	 * Params:
-	 * column =  NULL, or the column to draw the expander arrow at.
+	 * column = NULL, or the column to draw the expander arrow at.
 	 */
 	public void setExpanderColumn(TreeViewColumn column)
 	{
@@ -1183,9 +1183,9 @@ public class TreeView : Container
 	 * tree_view reverts to the default behavior of allowing all columns to be
 	 * dropped everywhere.
 	 * Params:
-	 * func =  A function to determine which columns are reorderable, or NULL.
-	 * userData =  User data to be passed to func, or NULL
-	 * destroy =  Destroy notifier for user_data, or NULL
+	 * func = A function to determine which columns are reorderable, or NULL.
+	 * userData = User data to be passed to func, or NULL
+	 * destroy = Destroy notifier for user_data, or NULL
 	 */
 	public void setColumnDragFunction(GtkTreeViewColumnDropFunc func, void* userData, GDestroyNotify destroy)
 	{
@@ -1201,8 +1201,8 @@ public class TreeView : Container
 	 * using gtk_tree_view_scroll_to_cell().
 	 * If either tree_x or tree_y are -1, then that direction isn't scrolled.
 	 * Params:
-	 * treeX =  X coordinate of new top-left pixel of visible area, or -1
-	 * treeY =  Y coordinate of new top-left pixel of visible area, or -1
+	 * treeX = X coordinate of new top-left pixel of visible area, or -1
+	 * treeY = Y coordinate of new top-left pixel of visible area, or -1
 	 */
 	public void scrollToPoint(int treeX, int treeY)
 	{
@@ -1226,11 +1226,11 @@ public class TreeView : Container
 	 * model. If the model changes before the tree_view is realized, the centered
 	 * path will be modified to reflect this change.
 	 * Params:
-	 * path =  The path of the row to move to, or NULL.
-	 * column =  The GtkTreeViewColumn to move horizontally to, or NULL.
-	 * useAlign =  whether to use alignment arguments, or FALSE.
-	 * rowAlign =  The vertical alignment of the row specified by path.
-	 * colAlign =  The horizontal alignment of the column specified by column.
+	 * path = The path of the row to move to, or NULL.
+	 * column = The GtkTreeViewColumn to move horizontally to, or NULL.
+	 * useAlign = whether to use alignment arguments, or FALSE.
+	 * rowAlign = The vertical alignment of the row specified by path.
+	 * colAlign = The horizontal alignment of the column specified by column.
 	 */
 	public void scrollToCell(TreePath path, TreeViewColumn column, int useAlign, float rowAlign, float colAlign)
 	{
@@ -1250,9 +1250,9 @@ public class TreeView : Container
 	 * If path is invalid for model, the current cursor (if any) will be unset
 	 * and the function will return without failing.
 	 * Params:
-	 * path =  A GtkTreePath
-	 * focusColumn =  A GtkTreeViewColumn, or NULL
-	 * startEditing =  TRUE if the specified cell should start being edited.
+	 * path = A GtkTreePath
+	 * focusColumn = A GtkTreeViewColumn, or NULL
+	 * startEditing = TRUE if the specified cell should start being edited.
 	 */
 	public void setCursor(TreePath path, TreeViewColumn focusColumn, int startEditing)
 	{
@@ -1276,10 +1276,10 @@ public class TreeView : Container
 	 * and the function will return without failing.
 	 * Since 2.2
 	 * Params:
-	 * path =  A GtkTreePath
-	 * focusColumn =  A GtkTreeViewColumn, or NULL
-	 * focusCell =  A GtkCellRenderer, or NULL
-	 * startEditing =  TRUE if the specified cell should start being edited.
+	 * path = A GtkTreePath
+	 * focusColumn = A GtkTreeViewColumn, or NULL
+	 * focusCell = A GtkCellRenderer, or NULL
+	 * startEditing = TRUE if the specified cell should start being edited.
 	 */
 	public void setCursorOnCell(TreePath path, TreeViewColumn focusColumn, CellRenderer focusCell, int startEditing)
 	{
@@ -1294,8 +1294,8 @@ public class TreeView : Container
 	 * The returned GtkTreePath must be freed with gtk_tree_path_free() when
 	 * you are done with it.
 	 * Params:
-	 * path =  A pointer to be filled with the current cursor path, or NULL
-	 * focusColumn =  A pointer to be filled with the current focus column, or NULL
+	 * path = A pointer to be filled with the current cursor path, or NULL
+	 * focusColumn = A pointer to be filled with the current focus column, or NULL
 	 */
 	public void getCursor(out TreePath path, out TreeViewColumn focusColumn)
 	{
@@ -1312,8 +1312,8 @@ public class TreeView : Container
 	/**
 	 * Activates the cell determined by path and column.
 	 * Params:
-	 * path =  The GtkTreePath to be activated.
-	 * column =  The GtkTreeViewColumn to be activated.
+	 * path = The GtkTreePath to be activated.
+	 * column = The GtkTreeViewColumn to be activated.
 	 */
 	public void rowActivated(TreePath path, TreeViewColumn column)
 	{
@@ -1344,7 +1344,7 @@ public class TreeView : Container
 	 * path as necessary.
 	 * Since 2.2
 	 * Params:
-	 * path =  path to a row.
+	 * path = path to a row.
 	 */
 	public void expandToPath(TreePath path)
 	{
@@ -1355,8 +1355,8 @@ public class TreeView : Container
 	/**
 	 * Opens the row so its children are visible.
 	 * Params:
-	 * path =  path to a row
-	 * openAll =  whether to recursively expand, or just expand immediate children
+	 * path = path to a row
+	 * openAll = whether to recursively expand, or just expand immediate children
 	 * Returns: TRUE if the row existed and had children
 	 */
 	public int expandRow(TreePath path, int openAll)
@@ -1368,7 +1368,7 @@ public class TreeView : Container
 	/**
 	 * Collapses a row (hides its child rows, if they exist).
 	 * Params:
-	 * path =  path to a row in the tree_view
+	 * path = path to a row in the tree_view
 	 * Returns: TRUE if the row was collapsed.
 	 */
 	public int collapseRow(TreePath path)
@@ -1380,8 +1380,8 @@ public class TreeView : Container
 	/**
 	 * Calls func on all expanded rows.
 	 * Params:
-	 * func =  A function to be called
-	 * data =  User data to be passed to the function.
+	 * func = A function to be called
+	 * data = User data to be passed to the function.
 	 */
 	public void mapExpandedRows(GtkTreeViewMappingFunc func, void* data)
 	{
@@ -1392,7 +1392,7 @@ public class TreeView : Container
 	/**
 	 * Returns TRUE if the node pointed to by path is expanded in tree_view.
 	 * Params:
-	 * path =  A GtkTreePath to test expansion state.
+	 * path = A GtkTreePath to test expansion state.
 	 * Returns: TRUE if path is expanded.
 	 */
 	public int rowExpanded(TreePath path)
@@ -1415,7 +1415,7 @@ public class TreeView : Container
 	 * reordering is allowed. If more control is needed, you should probably
 	 * handle drag and drop manually.
 	 * Params:
-	 * reorderable =  TRUE, if the tree can be reordered.
+	 * reorderable = TRUE, if the tree can be reordered.
 	 */
 	public void setReorderable(int reorderable)
 	{
@@ -1452,12 +1452,12 @@ public class TreeView : Container
 	 * GtkWidget::query-tooltip), please see
 	 * gtk_tree_view_convert_widget_to_bin_window_coords().
 	 * Params:
-	 * x =  The x position to be identified (relative to bin_window).
-	 * y =  The y position to be identified (relative to bin_window).
-	 * path =  A pointer to a GtkTreePath pointer to be filled in, or NULL
-	 * column =  A pointer to a GtkTreeViewColumn pointer to be filled in, or NULL
-	 * cellX =  A pointer where the X coordinate relative to the cell can be placed, or NULL
-	 * cellY =  A pointer where the Y coordinate relative to the cell can be placed, or NULL
+	 * x = The x position to be identified (relative to bin_window).
+	 * y = The y position to be identified (relative to bin_window).
+	 * path = A pointer to a GtkTreePath pointer to be filled in, or NULL
+	 * column = A pointer to a GtkTreeViewColumn pointer to be filled in, or NULL
+	 * cellX = A pointer where the X coordinate relative to the cell can be placed, or NULL
+	 * cellY = A pointer where the Y coordinate relative to the cell can be placed, or NULL
 	 * Returns: TRUE if a row exists at that coordinate.
 	 */
 	public int getPathAtPos(int x, int y, ref TreePath path, ref TreeViewColumn column, out int cellX, out int cellY)
@@ -1484,9 +1484,9 @@ public class TreeView : Container
 	 * gtk_cell_renderer_render(). This function is only valid if tree_view is
 	 * realized.
 	 * Params:
-	 * path =  a GtkTreePath for the row, or NULL to get only horizontal coordinates
-	 * column =  a GtkTreeViewColumn for the column, or NULL to get only vertical coordinates
-	 * rect =  rectangle to fill with cell rect
+	 * path = a GtkTreePath for the row, or NULL to get only horizontal coordinates
+	 * column = a GtkTreeViewColumn for the column, or NULL to get only vertical coordinates
+	 * rect = rectangle to fill with cell rect
 	 */
 	public void getCellArea(TreePath path, TreeViewColumn column, Rectangle rect)
 	{
@@ -1505,9 +1505,9 @@ public class TreeView : Container
 	 * returned by gtk_tree_view_get_cell_area(), which returns only the cell
 	 * itself, excluding surrounding borders and the tree expander area.
 	 * Params:
-	 * path =  a GtkTreePath for the row, or NULL to get only horizontal coordinates
-	 * column =  a GtkTreeViewColumn for the column, or NULL to get only vertical coordiantes
-	 * rect =  rectangle to fill with cell background rect
+	 * path = a GtkTreePath for the row, or NULL to get only horizontal coordinates
+	 * column = a GtkTreeViewColumn for the column, or NULL to get only vertical coordiantes
+	 * rect = rectangle to fill with cell background rect
 	 */
 	public void getBackgroundArea(TreePath path, TreeViewColumn column, Rectangle rect)
 	{
@@ -1522,7 +1522,7 @@ public class TreeView : Container
 	 * Tree coordinates start at 0,0 for row 0 of the tree, and cover the entire
 	 * scrollable area of the tree.
 	 * Params:
-	 * visibleRect =  rectangle to fill
+	 * visibleRect = rectangle to fill
 	 */
 	public void getVisibleRect(Rectangle visibleRect)
 	{
@@ -1536,8 +1536,8 @@ public class TreeView : Container
 	 * The paths should be freed with gtk_tree_path_free() after use.
 	 * Since 2.8
 	 * Params:
-	 * startPath =  Return location for start of region, or NULL.
-	 * endPath =  Return location for end of region, or NULL.
+	 * startPath = Return location for start of region, or NULL.
+	 * endPath = Return location for end of region, or NULL.
 	 * Returns: TRUE, if valid paths were placed in start_path and end_path.
 	 */
 	public int getVisibleRange(out TreePath startPath, out TreePath endPath)
@@ -1579,10 +1579,10 @@ public class TreeView : Container
 	 * Converts bin_window coordinates to coordinates for the
 	 * tree (the full scrollable area of the tree).
 	 * Params:
-	 * wx =  X coordinate relative to bin_window
-	 * wy =  Y coordinate relative to bin_window
-	 * tx =  return location for tree X coordinate
-	 * ty =  return location for tree Y coordinate
+	 * wx = X coordinate relative to bin_window
+	 * wy = Y coordinate relative to bin_window
+	 * tx = return location for tree X coordinate
+	 * ty = return location for tree Y coordinate
 	 */
 	public void widgetToTreeCoords(int wx, int wy, out int tx, out int ty)
 	{
@@ -1599,10 +1599,10 @@ public class TreeView : Container
 	 * Converts tree coordinates (coordinates in full scrollable area of the tree)
 	 * to bin_window coordinates.
 	 * Params:
-	 * tx =  tree X coordinate
-	 * ty =  tree Y coordinate
-	 * wx =  return location for X coordinate relative to bin_window
-	 * wy =  return location for Y coordinate relative to bin_window
+	 * tx = tree X coordinate
+	 * ty = tree Y coordinate
+	 * wx = return location for X coordinate relative to bin_window
+	 * wy = return location for Y coordinate relative to bin_window
 	 */
 	public void treeToWidgetCoords(int tx, int ty, out int wx, out int wy)
 	{
@@ -1615,10 +1615,10 @@ public class TreeView : Container
 	 * tree (the full scrollable area of the tree).
 	 * Since 2.12
 	 * Params:
-	 * bx =  X coordinate relative to bin_window
-	 * by =  Y coordinate relative to bin_window
-	 * tx =  return location for tree X coordinate
-	 * ty =  return location for tree Y coordinate
+	 * bx = X coordinate relative to bin_window
+	 * by = Y coordinate relative to bin_window
+	 * tx = return location for tree X coordinate
+	 * ty = return location for tree Y coordinate
 	 */
 	public void convertBinWindowToTreeCoords(int bx, int by, out int tx, out int ty)
 	{
@@ -1631,10 +1631,10 @@ public class TreeView : Container
 	 * to widget relative coordinates.
 	 * Since 2.12
 	 * Params:
-	 * bx =  bin_window X coordinate
-	 * by =  bin_window Y coordinate
-	 * wx =  return location for widget X coordinate
-	 * wy =  return location for widget Y coordinate
+	 * bx = bin_window X coordinate
+	 * by = bin_window Y coordinate
+	 * wx = return location for widget X coordinate
+	 * wy = return location for widget Y coordinate
 	 */
 	public void convertBinWindowToWidgetCoords(int bx, int by, out int wx, out int wy)
 	{
@@ -1647,10 +1647,10 @@ public class TreeView : Container
 	 * to bin_window coordinates.
 	 * Since 2.12
 	 * Params:
-	 * tx =  tree X coordinate
-	 * ty =  tree Y coordinate
-	 * bx =  return location for X coordinate relative to bin_window
-	 * by =  return location for Y coordinate relative to bin_window
+	 * tx = tree X coordinate
+	 * ty = tree Y coordinate
+	 * bx = return location for X coordinate relative to bin_window
+	 * by = return location for Y coordinate relative to bin_window
 	 */
 	public void convertTreeToBinWindowCoords(int tx, int ty, out int bx, out int by)
 	{
@@ -1663,10 +1663,10 @@ public class TreeView : Container
 	 * to widget coordinates.
 	 * Since 2.12
 	 * Params:
-	 * tx =  X coordinate relative to the tree
-	 * ty =  Y coordinate relative to the tree
-	 * wx =  return location for widget X coordinate
-	 * wy =  return location for widget Y coordinate
+	 * tx = X coordinate relative to the tree
+	 * ty = Y coordinate relative to the tree
+	 * wx = return location for widget X coordinate
+	 * wy = return location for widget Y coordinate
 	 */
 	public void convertTreeToWidgetCoords(int tx, int ty, out int wx, out int wy)
 	{
@@ -1679,10 +1679,10 @@ public class TreeView : Container
 	 * (see gtk_tree_view_get_bin_window()).
 	 * Since 2.12
 	 * Params:
-	 * wx =  X coordinate relative to the widget
-	 * wy =  Y coordinate relative to the widget
-	 * bx =  return location for bin_window X coordinate
-	 * by =  return location for bin_window Y coordinate
+	 * wx = X coordinate relative to the widget
+	 * wy = Y coordinate relative to the widget
+	 * bx = return location for bin_window X coordinate
+	 * by = return location for bin_window Y coordinate
 	 */
 	public void convertWidgetToBinWindowCoords(int wx, int wy, out int bx, out int by)
 	{
@@ -1695,10 +1695,10 @@ public class TreeView : Container
 	 * tree (the full scrollable area of the tree).
 	 * Since 2.12
 	 * Params:
-	 * wx =  X coordinate relative to the widget
-	 * wy =  Y coordinate relative to the widget
-	 * tx =  return location for tree X coordinate
-	 * ty =  return location for tree Y coordinate
+	 * wx = X coordinate relative to the widget
+	 * wy = Y coordinate relative to the widget
+	 * tx = return location for tree X coordinate
+	 * ty = return location for tree Y coordinate
 	 */
 	public void convertWidgetToTreeCoords(int wx, int wy, out int tx, out int ty)
 	{
@@ -1710,8 +1710,8 @@ public class TreeView : Container
 	 * Turns tree_view into a drop destination for automatic DND. Calling
 	 * this method sets "reorderable" to FALSE.
 	 * Params:
-	 * targets =  the table of targets that the drag will support
-	 * actions =  the bitmask of possible actions for a drag from this
+	 * targets = the table of targets that the drag will support
+	 * actions = the bitmask of possible actions for a drag from this
 	 *  widget
 	 */
 	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
@@ -1724,9 +1724,9 @@ public class TreeView : Container
 	 * Turns tree_view into a drag source for automatic DND. Calling this
 	 * method sets "reorderable" to FALSE.
 	 * Params:
-	 * startButtonMask =  Mask of allowed buttons to start drag
-	 * targets =  the table of targets that the drag will support
-	 * actions =  the bitmask of possible actions for a drag from this
+	 * startButtonMask = Mask of allowed buttons to start drag
+	 * targets = the table of targets that the drag will support
+	 * actions = the bitmask of possible actions for a drag from this
 	 *  widget
 	 */
 	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
@@ -1760,8 +1760,8 @@ public class TreeView : Container
 	/**
 	 * Sets the row that is highlighted for feedback.
 	 * Params:
-	 * path =  The path of the row to highlight, or NULL.
-	 * pos =  Specifies whether to drop before, after or into the row
+	 * path = The path of the row to highlight, or NULL.
+	 * pos = Specifies whether to drop before, after or into the row
 	 */
 	public void setDragDestRow(TreePath path, GtkTreeViewDropPosition pos)
 	{
@@ -1772,8 +1772,8 @@ public class TreeView : Container
 	/**
 	 * Gets information about the row that is highlighted for feedback.
 	 * Params:
-	 * path =  Return location for the path of the highlighted row, or NULL.
-	 * pos =  Return location for the drop position, or NULL
+	 * path = Return location for the path of the highlighted row, or NULL.
+	 * pos = Return location for the drop position, or NULL
 	 */
 	public void getDragDestRow(out TreePath path, out GtkTreeViewDropPosition pos)
 	{
@@ -1791,10 +1791,10 @@ public class TreeView : Container
 	 * meaningful if tree_view is realized. Therefore this function will always
 	 * return FALSE if tree_view is not realized or does not have a model.
 	 * Params:
-	 * dragX =  the position to determine the destination row for
-	 * dragY =  the position to determine the destination row for
-	 * path =  Return location for the path of the highlighted row, or NULL.
-	 * pos =  Return location for the drop position, or NULL
+	 * dragX = the position to determine the destination row for
+	 * dragY = the position to determine the destination row for
+	 * path = Return location for the path of the highlighted row, or NULL.
+	 * pos = Return location for the drop position, or NULL
 	 * Returns: whether there is a row at the given position, TRUE if thisis indeed the case.
 	 */
 	public int getDestRowAtPos(int dragX, int dragY, out TreePath path, out GtkTreeViewDropPosition pos)
@@ -1812,7 +1812,7 @@ public class TreeView : Container
 	 * Creates a GdkPixmap representation of the row at path.
 	 * This image is used for a drag icon.
 	 * Params:
-	 * path =  a GtkTreePath in tree_view
+	 * path = a GtkTreePath in tree_view
 	 * Returns: a newly-allocated pixmap of the drag icon.
 	 */
 	public Pixmap createRowDragIcon(TreePath path)
@@ -1832,7 +1832,7 @@ public class TreeView : Container
 	 * Note that even if this is FALSE, the user can still initiate a search
 	 * using the "start-interactive-search" key binding.
 	 * Params:
-	 * enableSearch =  TRUE, if the user can search interactively
+	 * enableSearch = TRUE, if the user can search interactively
 	 */
 	public void setEnableSearch(int enableSearch)
 	{
@@ -1870,7 +1870,7 @@ public class TreeView : Container
 	 * Note that column refers to a column of the current model. The search
 	 * column is reset to -1 when the model is changed.
 	 * Params:
-	 * column =  the column of the model to search in, or -1 to disable searching
+	 * column = the column of the model to search in, or -1 to disable searching
 	 */
 	public void setSearchColumn(int column)
 	{
@@ -1893,9 +1893,9 @@ public class TreeView : Container
 	 * that somewhat like strcmp() returning 0 for equality
 	 * GtkTreeViewSearchEqualFunc returns FALSE on matches.
 	 * Params:
-	 * searchEqualFunc =  the compare function to use during the search
-	 * searchUserData =  user data to pass to search_equal_func, or NULL
-	 * searchDestroy =  Destroy notifier for search_user_data, or NULL
+	 * searchEqualFunc = the compare function to use during the search
+	 * searchUserData = user data to pass to search_equal_func, or NULL
+	 * searchDestroy = Destroy notifier for search_user_data, or NULL
 	 */
 	public void setSearchEqualFunc(GtkTreeViewSearchEqualFunc searchEqualFunc, void* searchUserData, GDestroyNotify searchDestroy)
 	{
@@ -1929,7 +1929,7 @@ public class TreeView : Container
 	 * entry again.
 	 * Since 2.10
 	 * Params:
-	 * entry =  the entry the interactive search code of tree_view should use or NULL
+	 * entry = the entry the interactive search code of tree_view should use or NULL
 	 */
 	public void setSearchEntry(Entry entry)
 	{
@@ -1952,10 +1952,10 @@ public class TreeView : Container
 	 * Sets the function to use when positioning the search dialog.
 	 * Since 2.10
 	 * Params:
-	 * func =  the function to use to position the search dialog, or NULL
+	 * func = the function to use to position the search dialog, or NULL
 	 *  to use the default search position function
-	 * data =  user data to pass to func, or NULL
-	 * destroy =  Destroy notifier for data, or NULL
+	 * data = user data to pass to func, or NULL
+	 * destroy = Destroy notifier for data, or NULL
 	 */
 	public void setSearchPositionFunc(GtkTreeViewSearchPositionFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -1982,7 +1982,7 @@ public class TreeView : Container
 	 * columns are of type GTK_TREE_VIEW_COLUMN_FIXED.
 	 * Since 2.6
 	 * Params:
-	 * enable =  TRUE to enable fixed height mode
+	 * enable = TRUE to enable fixed height mode
 	 */
 	public void setFixedHeightMode(int enable)
 	{
@@ -2008,7 +2008,7 @@ public class TreeView : Container
 	 * GTK_SELECTION_SINGLE and GTK_SELECTION_BROWSE.
 	 * Since 2.6
 	 * Params:
-	 * hover =  TRUE to enable hover selection mode
+	 * hover = TRUE to enable hover selection mode
 	 */
 	public void setHoverSelection(int hover)
 	{
@@ -2033,7 +2033,7 @@ public class TreeView : Container
 	 * moves over them.
 	 * Since 2.6
 	 * Params:
-	 * expand =  TRUE to enable hover selection mode
+	 * expand = TRUE to enable hover selection mode
 	 */
 	public void setHoverExpand(int expand)
 	{
@@ -2046,9 +2046,9 @@ public class TreeView : Container
 	 * ATK for determining the number of visible children that are removed when the
 	 * user collapses a row, or a row is deleted.
 	 * Params:
-	 * func =  Function to be called when a view row is destroyed, or NULL
-	 * data =  User data to be passed to func, or NULL
-	 * destroy =  Destroy notifier for data, or NULL
+	 * func = Function to be called when a view row is destroyed, or NULL
+	 * data = User data to be passed to func, or NULL
+	 * destroy = Destroy notifier for data, or NULL
 	 */
 	public void setDestroyCountFunc(GtkTreeDestroyCountFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -2073,9 +2073,9 @@ public class TreeView : Container
 	 * function is NULL, no separators are drawn. This is the default value.
 	 * Since 2.6
 	 * Params:
-	 * func =  a GtkTreeViewRowSeparatorFunc
-	 * data =  user data to pass to func, or NULL
-	 * destroy =  destroy notifier for data, or NULL
+	 * func = a GtkTreeViewRowSeparatorFunc
+	 * data = user data to pass to func, or NULL
+	 * destroy = destroy notifier for data, or NULL
 	 */
 	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -2102,7 +2102,7 @@ public class TreeView : Container
 	 * multiple rows by dragging the mouse.
 	 * Since 2.10
 	 * Params:
-	 * enable =  TRUE to enable rubber banding
+	 * enable = TRUE to enable rubber banding
 	 */
 	public void setRubberBanding(int enable)
 	{
@@ -2138,7 +2138,7 @@ public class TreeView : Container
 	 * This does not have any visible effects for lists.
 	 * Since 2.10
 	 * Params:
-	 * enabled =  TRUE to enable tree line drawing, FALSE otherwise.
+	 * enabled = TRUE to enable tree line drawing, FALSE otherwise.
 	 */
 	public void setEnableTreeLines(int enabled)
 	{
@@ -2161,7 +2161,7 @@ public class TreeView : Container
 	 * Sets which grid lines to draw in tree_view.
 	 * Since 2.10
 	 * Params:
-	 * gridLines =  a GtkTreeViewGridLines value indicating which grid lines to
+	 * gridLines = a GtkTreeViewGridLines value indicating which grid lines to
 	 * enable.
 	 */
 	public void setGridLines(GtkTreeViewGridLines gridLines)
@@ -2176,8 +2176,8 @@ public class TreeView : Container
 	 * See also gtk_tooltip_set_tip_area().
 	 * Since 2.12
 	 * Params:
-	 * tooltip =  a GtkTooltip
-	 * path =  a GtkTreePath
+	 * tooltip = a GtkTooltip
+	 * path = a GtkTreePath
 	 */
 	public void setTooltipRow(Tooltip tooltip, TreePath path)
 	{
@@ -2197,10 +2197,10 @@ public class TreeView : Container
 	 * See also gtk_tree_view_set_tooltip_column() for a simpler alternative.
 	 * Since 2.12
 	 * Params:
-	 * tooltip =  a GtkTooltip
-	 * path =  a GtkTreePath or NULL
-	 * column =  a GtkTreeViewColumn or NULL
-	 * cell =  a GtkCellRenderer or NULL
+	 * tooltip = a GtkTooltip
+	 * path = a GtkTreePath or NULL
+	 * column = a GtkTreeViewColumn or NULL
+	 * cell = a GtkCellRenderer or NULL
 	 */
 	public void setTooltipCell(Tooltip tooltip, TreePath path, TreeViewColumn column, CellRenderer cell)
 	{
@@ -2221,12 +2221,12 @@ public class TreeView : Container
 	 * to be relative to tree_view's bin_window if keyboard_tooltip is FALSE.
 	 * Since 2.12
 	 * Params:
-	 * x =  the x coordinate (relative to widget coordinates)
-	 * y =  the y coordinate (relative to widget coordinates)
-	 * keyboardTip =  whether this is a keyboard tooltip or not
-	 * model =  a pointer to receive a GtkTreeModel or NULL
-	 * path =  a pointer to receive a GtkTreePath or NULL
-	 * iter =  a pointer to receive a GtkTreeIter or NULL
+	 * x = the x coordinate (relative to widget coordinates)
+	 * y = the y coordinate (relative to widget coordinates)
+	 * keyboardTip = whether this is a keyboard tooltip or not
+	 * model = a pointer to receive a GtkTreeModel or NULL
+	 * path = a pointer to receive a GtkTreePath or NULL
+	 * iter = a pointer to receive a GtkTreeIter or NULL
 	 * Returns: whether or not the given tooltip context points to a row.
 	 */
 	public int getTooltipContext(int* x, int* y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
@@ -2265,7 +2265,7 @@ public class TreeView : Container
 	 * so , <, etc have to be escaped in the text.
 	 * Since 2.12
 	 * Params:
-	 * column =  an integer, which is a valid column number for tree_view's model
+	 * column = an integer, which is a valid column number for tree_view's model
 	 */
 	public void setTooltipColumn(int column)
 	{

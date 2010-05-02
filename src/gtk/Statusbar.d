@@ -211,7 +211,7 @@ public class Statusbar : HBox
 	 * of the actual context. Note that the description is
 	 * not shown in the UI.
 	 * Params:
-	 * contextDescription =  textual description of what context
+	 * contextDescription = textual description of what context
 	 *  the new message is being used in
 	 * Returns: an integer id
 	 */
@@ -224,9 +224,9 @@ public class Statusbar : HBox
 	/**
 	 * Pushes a new message onto a statusbar's stack.
 	 * Params:
-	 * contextId =  the message's context id, as returned by
+	 * contextId = the message's context id, as returned by
 	 *  gtk_statusbar_get_context_id()
-	 * text =  the message to add to the statusbar
+	 * text = the message to add to the statusbar
 	 * Returns: a message id that can be used with  gtk_statusbar_remove().
 	 */
 	public uint push(uint contextId, string text)
@@ -242,7 +242,7 @@ public class Statusbar : HBox
 	 * the message at the top of the stack has a different
 	 * context id.
 	 * Params:
-	 * contextId =  a context identifier
+	 * contextId = a context identifier
 	 */
 	public void pop(uint contextId)
 	{
@@ -254,8 +254,8 @@ public class Statusbar : HBox
 	 * Forces the removal of a message from a statusbar's stack.
 	 * The exact context_id and message_id must be specified.
 	 * Params:
-	 * contextId =  a context identifier
-	 * messageId =  a message identifier, as returned by gtk_statusbar_push()
+	 * contextId = a context identifier
+	 * messageId = a message identifier, as returned by gtk_statusbar_push()
 	 */
 	public void remove(uint contextId, uint messageId)
 	{
@@ -267,7 +267,7 @@ public class Statusbar : HBox
 	 * Sets whether the statusbar has a resize grip.
 	 * TRUE by default.
 	 * Params:
-	 * setting =  TRUE to have a resize grip
+	 * setting = TRUE to have a resize grip
 	 */
 	public void setHasResizeGrip(int setting)
 	{

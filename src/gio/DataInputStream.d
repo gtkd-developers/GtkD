@@ -125,7 +125,7 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Creates a new data input stream for the base_stream.
 	 * Params:
-	 * baseStream =  a GInputStream.
+	 * baseStream = a GInputStream.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (InputStream baseStream)
@@ -143,7 +143,7 @@ public class DataInputStream : BufferedInputStream
 	 * This function sets the byte order for the given stream. All subsequent
 	 * reads from the stream will be read in the given order.
 	 * Params:
-	 * order =  a GDataStreamByteOrder to set.
+	 * order = a GDataStreamByteOrder to set.
 	 */
 	public void setByteOrder(GDataStreamByteOrder order)
 	{
@@ -167,7 +167,7 @@ public class DataInputStream : BufferedInputStream
 	 * chunk ends in "CR" we must read an additional byte to know if this is "CR" or
 	 * "CR LF", and this might block if there is no more data availible.
 	 * Params:
-	 * type =  the type of new line return as GDataStreamNewlineType.
+	 * type = the type of new line return as GDataStreamNewlineType.
 	 */
 	public void setNewlineType(GDataStreamNewlineType type)
 	{
@@ -190,7 +190,7 @@ public class DataInputStream : BufferedInputStream
 	 * In order to get the correct byte order for this read operation,
 	 * see g_data_stream_get_byte_order() and g_data_stream_set_byte_order().
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a signed 16-bit/2-byte value read from stream or 0 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -214,7 +214,7 @@ public class DataInputStream : BufferedInputStream
 	 * In order to get the correct byte order for this read operation,
 	 * see g_data_stream_get_byte_order() and g_data_stream_set_byte_order().
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: an unsigned 16-bit/2-byte value read from the stream or 0 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -241,7 +241,7 @@ public class DataInputStream : BufferedInputStream
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a signed 32-bit/4-byte value read from the stream or 0 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -268,7 +268,7 @@ public class DataInputStream : BufferedInputStream
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: an unsigned 32-bit/4-byte value read from the stream or 0 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -295,7 +295,7 @@ public class DataInputStream : BufferedInputStream
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a signed 64-bit/8-byte value read from stream or 0 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -322,7 +322,7 @@ public class DataInputStream : BufferedInputStream
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: an unsigned 64-bit/8-byte read from stream or 0 if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -347,8 +347,8 @@ public class DataInputStream : BufferedInputStream
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * length =  a gsize to get the length of the data read in.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * length = a gsize to get the length of the data read in.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.
 	 * Throws: GException on failure.
 	 */
@@ -375,11 +375,11 @@ public class DataInputStream : BufferedInputStream
 	 * the result of the operation.
 	 * Since 2.20
 	 * Params:
-	 * ioPriority =  the I/O priority
+	 * ioPriority = the I/O priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied.
-	 * userData =  the data to pass to callback function.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied.
+	 * userData = the data to pass to callback function.
 	 */
 	public void readLineAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -392,8 +392,8 @@ public class DataInputStream : BufferedInputStream
 	 * g_data_input_stream_read_line_async().
 	 * Since 2.20
 	 * Params:
-	 * result =  the GAsyncResult that was provided to the callback.
-	 * length =  a gsize to get the length of the data read in.
+	 * result = the GAsyncResult that was provided to the callback.
+	 * length = a gsize to get the length of the data read in.
 	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.
 	 * Throws: GException on failure.
 	 */
@@ -416,9 +416,9 @@ public class DataInputStream : BufferedInputStream
 	 * Reads a string from the data input stream, up to the first
 	 * occurrence of any of the stop characters.
 	 * Params:
-	 * stopChars =  characters to terminate the read.
-	 * length =  a gsize to get the length of the data read in.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * stopChars = characters to terminate the read.
+	 * length = a gsize to get the length of the data read in.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error.
 	 * Throws: GException on failure.
 	 */
@@ -445,12 +445,12 @@ public class DataInputStream : BufferedInputStream
 	 * the result of the operation.
 	 * Since 2.20
 	 * Params:
-	 * stopChars =  characters to terminate the read.
-	 * ioPriority =  the I/O priority
+	 * stopChars = characters to terminate the read.
+	 * ioPriority = the I/O priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied.
-	 * userData =  the data to pass to callback function.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied.
+	 * userData = the data to pass to callback function.
 	 */
 	public void readUntilAsync(string stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -463,8 +463,8 @@ public class DataInputStream : BufferedInputStream
 	 * g_data_input_stream_read_until_async().
 	 * Since 2.20
 	 * Params:
-	 * result =  the GAsyncResult that was provided to the callback.
-	 * length =  a gsize to get the length of the data read in.
+	 * result = the GAsyncResult that was provided to the callback.
+	 * length = a gsize to get the length of the data read in.
 	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error.
 	 * Throws: GException on failure.
 	 */

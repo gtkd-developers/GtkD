@@ -162,7 +162,7 @@ public class FontOption
 	 * similar to compositing other onto options with the operation
 	 * of CAIRO_OPERATION_OVER.
 	 * Params:
-	 * other =  another cairo_font_options_t
+	 * other = another cairo_font_options_t
 	 */
 	public void merge(FontOption other)
 	{
@@ -185,7 +185,7 @@ public class FontOption
 	/**
 	 * Compares two font options objects for equality.
 	 * Params:
-	 * other =  another cairo_font_options_t
+	 * other = another cairo_font_options_t
 	 * Returns: TRUE if all fields of the two font options objects match.Note that this function will return FALSE if either object is inerror.
 	 */
 	public cairo_bool_t equal(FontOption other)
@@ -198,7 +198,7 @@ public class FontOption
 	 * Sets the antialiasing mode for the font options object. This
 	 * specifies the type of antialiasing to do when rendering text.
 	 * Params:
-	 * antialias =  the new antialiasing mode
+	 * antialias = the new antialiasing mode
 	 */
 	public void setAntialias(cairo_antialias_t antialias)
 	{
@@ -223,7 +223,7 @@ public class FontOption
 	 * CAIRO_ANTIALIAS_SUBPIXEL. See the documentation for
 	 * cairo_subpixel_order_t for full details.
 	 * Params:
-	 * subpixelOrder =  the new subpixel order
+	 * subpixelOrder = the new subpixel order
 	 */
 	public void setSubpixelOrder(cairo_subpixel_order_t subpixelOrder)
 	{
@@ -248,7 +248,7 @@ public class FontOption
 	 * and if so, whether to optimize for fidelity or contrast.
 	 * See the documentation for cairo_hint_style_t for full details.
 	 * Params:
-	 * hintStyle =  the new hint style
+	 * hintStyle = the new hint style
 	 */
 	public void setHintStyle(cairo_hint_style_t hintStyle)
 	{
@@ -273,7 +273,7 @@ public class FontOption
 	 * device units.
 	 * See the documentation for cairo_hint_metrics_t for full details.
 	 * Params:
-	 * hintMetrics =  the new metrics hinting mode
+	 * hintMetrics = the new metrics hinting mode
 	 */
 	public void setHintMetrics(cairo_hint_metrics_t hintMetrics)
 	{

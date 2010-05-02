@@ -129,7 +129,7 @@ public class PaperSize
 	 * see gtk_paper_size_get_default().
 	 * Since 2.10
 	 * Params:
-	 * name =  a paper size name, or NULL
+	 * name = a paper size name, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -151,10 +151,10 @@ public class PaperSize
 	 * construct a custom GtkPaperSize object.
 	 * Since 2.10
 	 * Params:
-	 * ppdName =  a PPD paper name
-	 * ppdDisplayName =  the corresponding human-readable name
-	 * width =  the paper width, in points
-	 * height =  the paper height in points
+	 * ppdName = a PPD paper name
+	 * ppdDisplayName = the corresponding human-readable name
+	 * width = the paper width, in points
+	 * height = the paper height in points
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string ppdName, string ppdDisplayName, double width, double height)
@@ -173,11 +173,11 @@ public class PaperSize
 	 * given parameters.
 	 * Since 2.10
 	 * Params:
-	 * name =  the paper name
-	 * displayName =  the human-readable name
-	 * width =  the paper width, in units of unit
-	 * height =  the paper height, in units of unit
-	 * unit =  the unit for width and height
+	 * name = the paper name
+	 * displayName = the human-readable name
+	 * width = the paper width, in units of unit
+	 * height = the paper height, in units of unit
+	 * unit = the unit for width and height
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string displayName, double width, double height, GtkUnit unit)
@@ -221,7 +221,7 @@ public class PaperSize
 	 * Compares two GtkPaperSize objects.
 	 * Since 2.10
 	 * Params:
-	 * size2 =  another GtkPaperSize object
+	 * size2 = another GtkPaperSize object
 	 * Returns: TRUE, if size1 and size2 represent the same paper size
 	 */
 	public int isEqual(PaperSize size2)
@@ -234,7 +234,7 @@ public class PaperSize
 	 * Creates a list of known paper sizes.
 	 * Since 2.12
 	 * Params:
-	 * includeCustom =  whether to include custom paper sizes
+	 * includeCustom = whether to include custom paper sizes
 	 *  as defined in the page setup dialog
 	 * Returns: a newly allocated list of newly  allocated GtkPaperSize objects
 	 */
@@ -288,7 +288,7 @@ public class PaperSize
 	 * units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the paper width
 	 */
 	public double getWidth(GtkUnit unit)
@@ -302,7 +302,7 @@ public class PaperSize
 	 * units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the paper height
 	 */
 	public double getHeight(GtkUnit unit)
@@ -325,9 +325,9 @@ public class PaperSize
 	 * Changes the dimensions of a size to width x height.
 	 * Since 2.10
 	 * Params:
-	 * width =  the new width in units of unit
-	 * height =  the new height in units of unit
-	 * unit =  the unit for width and height
+	 * width = the new width in units of unit
+	 * height = the new height in units of unit
+	 * unit = the unit for width and height
 	 */
 	public void setSize(double width, double height, GtkUnit unit)
 	{
@@ -339,7 +339,7 @@ public class PaperSize
 	 * Gets the default top margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the default top margin
 	 */
 	public double getDefaultTopMargin(GtkUnit unit)
@@ -352,7 +352,7 @@ public class PaperSize
 	 * Gets the default bottom margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the default bottom margin
 	 */
 	public double getDefaultBottomMargin(GtkUnit unit)
@@ -365,7 +365,7 @@ public class PaperSize
 	 * Gets the default left margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the default left margin
 	 */
 	public double getDefaultLeftMargin(GtkUnit unit)
@@ -378,7 +378,7 @@ public class PaperSize
 	 * Gets the default right margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit =  the unit for the return value
+	 * unit = the unit for the return value
 	 * Returns: the default right margin
 	 */
 	public double getDefaultRightMargin(GtkUnit unit)
@@ -404,8 +404,8 @@ public class PaperSize
 	 * key_file.
 	 * Since 2.12
 	 * Params:
-	 * keyFile =  the GKeyFile to retrieve the papersize from
-	 * groupName =  the name ofthe group in the key file to read,
+	 * keyFile = the GKeyFile to retrieve the papersize from
+	 * groupName = the name ofthe group in the key file to read,
 	 *  or NULL to read the first group
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -433,8 +433,8 @@ public class PaperSize
 	 * This function adds the paper size from size to key_file.
 	 * Since 2.12
 	 * Params:
-	 * keyFile =  the GKeyFile to save the paper size to
-	 * groupName =  the group to add the settings to in key_file
+	 * keyFile = the GKeyFile to save the paper size to
+	 * groupName = the group to add the settings to in key_file
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
 	{

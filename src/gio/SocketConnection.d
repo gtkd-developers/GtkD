@@ -203,7 +203,7 @@ public class SocketConnection : IOStream
 	 * socket.
 	 * Since 2.22
 	 * Params:
-	 * socket =  a GSocket
+	 * socket = a GSocket
 	 * Returns: a GSocketConnection
 	 */
 	public static SocketConnection factoryCreateConnection(Socket socket)
@@ -223,9 +223,9 @@ public class SocketConnection : IOStream
 	 * If no type is registered, the GSocketConnection base type is returned.
 	 * Since 2.22
 	 * Params:
-	 * family =  a GSocketFamily
-	 * type =  a GSocketType
-	 * protocolId =  a protocol id
+	 * family = a GSocketFamily
+	 * type = a GSocketType
+	 * protocolId = a protocol id
 	 * Returns: a GType
 	 */
 	public static GType factoryLookupType(GSocketFamily family, GSocketType type, int protocolId)
@@ -240,10 +240,10 @@ public class SocketConnection : IOStream
 	 * If no type is registered, the GSocketConnection base type is returned.
 	 * Since 2.22
 	 * Params:
-	 * gType =  a GType, inheriting from G_TYPE_SOCKET_CONNECTION
-	 * family =  a GSocketFamily
-	 * type =  a GSocketType
-	 * protocol =  a protocol id
+	 * gType = a GType, inheriting from G_TYPE_SOCKET_CONNECTION
+	 * family = a GSocketFamily
+	 * type = a GSocketType
+	 * protocol = a protocol id
 	 */
 	public static void factoryRegisterType(GType gType, GSocketFamily family, GSocketType type, int protocol)
 	{

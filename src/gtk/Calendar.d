@@ -327,8 +327,8 @@ public class Calendar : Widget
 	/**
 	 * Shifts the calendar to a different month.
 	 * Params:
-	 * month =  a month number between 0 and 11.
-	 * year =  the year the month is in.
+	 * month = a month number between 0 and 11.
+	 * year = the year the month is in.
 	 * Returns: TRUE, always
 	 */
 	public int selectMonth(uint month, uint year)
@@ -340,7 +340,7 @@ public class Calendar : Widget
 	/**
 	 * Selects a day from the current month.
 	 * Params:
-	 * day =  the day number between 1 and 31, or 0 to unselect
+	 * day = the day number between 1 and 31, or 0 to unselect
 	 *  the currently selected day.
 	 */
 	public void selectDay(uint day)
@@ -352,7 +352,7 @@ public class Calendar : Widget
 	/**
 	 * Places a visual marker on a particular day.
 	 * Params:
-	 * day =  the day number to mark between 1 and 31.
+	 * day = the day number to mark between 1 and 31.
 	 * Returns: TRUE, always
 	 */
 	public int markDay(uint day)
@@ -364,7 +364,7 @@ public class Calendar : Widget
 	/**
 	 * Removes the visual marker from a particular day.
 	 * Params:
-	 * day =  the day number to unmark between 1 and 31.
+	 * day = the day number to unmark between 1 and 31.
 	 * Returns: TRUE, always
 	 */
 	public int unmarkDay(uint day)
@@ -398,7 +398,7 @@ public class Calendar : Widget
 	 * headings).
 	 * Since 2.4
 	 * Params:
-	 * flags =  the display options to set
+	 * flags = the display options to set
 	 */
 	public void setDisplayOptions(GtkCalendarDisplayOptions flags)
 	{
@@ -409,9 +409,9 @@ public class Calendar : Widget
 	/**
 	 * Obtains the selected date from a GtkCalendar.
 	 * Params:
-	 * year =  location to store the year number, or NULL
-	 * month =  location to store the month number (between 0 and 11), or NULL
-	 * day =  location to store the day number (between 1 and 31), or NULL
+	 * year = location to store the year number, or NULL
+	 * month = location to store the month number (between 0 and 11), or NULL
+	 * day = location to store the day number (between 1 and 31), or NULL
 	 */
 	public void getDate(out uint year, out uint month, out uint day)
 	{
@@ -431,9 +431,9 @@ public class Calendar : Widget
 	 * properties.
 	 * Since 2.14
 	 * Params:
-	 * func =  a function providing details for each day.
-	 * data =  data to pass to func invokations.
-	 * destroy =  a function for releasing data.
+	 * func = a function providing details for each day.
+	 * data = data to pass to func invokations.
+	 * destroy = a function for releasing data.
 	 */
 	public void setDetailFunc(GtkCalendarDetailFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -458,7 +458,7 @@ public class Calendar : Widget
 	 * See "detail-width-chars".
 	 * Since 2.14
 	 * Params:
-	 * chars =  detail width in characters.
+	 * chars = detail width in characters.
 	 */
 	public void setDetailWidthChars(int chars)
 	{
@@ -483,7 +483,7 @@ public class Calendar : Widget
 	 * See "detail-height-rows".
 	 * Since 2.14
 	 * Params:
-	 * rows =  detail height in rows.
+	 * rows = detail height in rows.
 	 */
 	public void setDetailHeightRows(int rows)
 	{
@@ -496,7 +496,7 @@ public class Calendar : Widget
 	 * gtk_calendar_display_options has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_calendar_set_display_options() instead
 	 * Sets display options (whether to display the heading and the month headings).
 	 * Params:
-	 * flags =  the display options to set.
+	 * flags = the display options to set.
 	 */
 	public void displayOptions(GtkCalendarDisplayOptions flags)
 	{

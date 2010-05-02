@@ -159,9 +159,9 @@ public class PixbufFormat
 	 * ignored and FALSE is returned.
 	 * Since 2.2
 	 * Params:
-	 * pixbuf =  a GdkPixbuf
-	 * key =  a nul-terminated string.
-	 * value =  a nul-terminated string.
+	 * pixbuf = a GdkPixbuf
+	 * key = a nul-terminated string.
+	 * value = a nul-terminated string.
 	 * Returns: TRUE on success.
 	 */
 	public static int gdkPixbufSetOption(Pixbuf pixbuf, string key, string value)
@@ -276,7 +276,7 @@ public class PixbufFormat
 	 * with an inappropriate license, see gdk_pixbuf_format_get_license().
 	 * Since 2.6
 	 * Params:
-	 * disabled =  TRUE to disable the format format
+	 * disabled = TRUE to disable the format format
 	 */
 	public void setDisabled(int disabled)
 	{
@@ -302,9 +302,9 @@ public class PixbufFormat
 	 * Parses an image file far enough to determine its format and size.
 	 * Since 2.4
 	 * Params:
-	 * filename =  The name of the file to identify.
-	 * width =  Return location for the width of the image, or NULL
-	 * height =  Return location for the height of the image, or NULL
+	 * filename = The name of the file to identify.
+	 * width = Return location for the width of the image, or NULL
+	 * height = Return location for the height of the image, or NULL
 	 * Returns: A GdkPixbufFormat describing the image format of the file  or NULL if the image format wasn't recognized. The return value  is owned by GdkPixbuf and should not be freed.
 	 */
 	public static PixbufFormat getFileInfo(string filename, out int width, out int height)

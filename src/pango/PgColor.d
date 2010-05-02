@@ -116,7 +116,7 @@ public class PgColor
 	 * components of the color, respectively. (White in the four
 	 * forms is '#fff' '#ffffff' '#fffffffff' and '#ffffffffffff')
 	 * Params:
-	 * spec =  a string specifying the new color
+	 * spec = a string specifying the new color
 	 * Returns: TRUE if parsing of the specifier succeeded, otherwise false.
 	 */
 	public int parse(string spec)

@@ -136,7 +136,7 @@ public class PgEngine : ObjectG
 	 * Note that script_engine_init() will not be called before this
 	 * function.
 	 * Params:
-	 * engines =  location to store a pointer to an array of engines.
+	 * engines = location to store a pointer to an array of engines.
 	 */
 	public static void list(out PangoEngineInfo[] engines)
 	{
@@ -173,7 +173,7 @@ public class PgEngine : ObjectG
 	 * Function to be provided by the module to create an instance
 	 * of one of the engines implemented by the module.
 	 * Params:
-	 * id =  the ID of an engine as reported by script_engine_list.
+	 * id = the ID of an engine as reported by script_engine_list.
 	 * Returns: a newly created PangoEngine of the specified type, or NULL if an error occurred. (In normal operation, a module should not return NULL. A NULL return is only acceptable in the case where system misconfiguration or bugs in the driver routine are encountered.)
 	 */
 	public static PgEngine create(string id)

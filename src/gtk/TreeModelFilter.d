@@ -151,8 +151,8 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * and root as the virtual root.
 	 * Since 2.4
 	 * Params:
-	 * childModel =  A GtkTreeModel.
-	 * root =  A GtkTreePath or NULL.
+	 * childModel = A GtkTreeModel.
+	 * root = A GtkTreePath or NULL.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF childModel, TreePath root)
@@ -193,9 +193,9 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * }
 	 * Since 2.4
 	 * Params:
-	 * func =  A GtkTreeModelFilterVisibleFunc, the visible function.
-	 * data =  User data to pass to the visible function, or NULL.
-	 * destroy =  Destroy notifier of data, or NULL.
+	 * func = A GtkTreeModelFilterVisibleFunc, the visible function.
+	 * data = User data to pass to the visible function, or NULL.
+	 * destroy = Destroy notifier of data, or NULL.
 	 */
 	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -213,10 +213,10 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * modify function.
 	 * Since 2.4
 	 * Params:
-	 * types =  The GTypes of the columns.
-	 * func =  A GtkTreeModelFilterModifyFunc
-	 * data =  User data to pass to the modify function, or NULL.
-	 * destroy =  Destroy notifier of data, or NULL.
+	 * types = The GTypes of the columns.
+	 * func = A GtkTreeModelFilterModifyFunc
+	 * data = User data to pass to the modify function, or NULL.
+	 * destroy = Destroy notifier of data, or NULL.
 	 */
 	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -231,7 +231,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * if not.
 	 * Since 2.4
 	 * Params:
-	 * column =  A gint which is the column containing the visible information.
+	 * column = A gint which is the column containing the visible information.
 	 */
 	public void setVisibleColumn(int column)
 	{
@@ -261,9 +261,9 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * returned.
 	 * Since 2.4
 	 * Params:
-	 * filter =  A GtkTreeModelFilter.
-	 * filterIter =  An uninitialized GtkTreeIter.
-	 * childIter =  A valid GtkTreeIter pointing to a row on the child model.
+	 * filter = A GtkTreeModelFilter.
+	 * filterIter = An uninitialized GtkTreeIter.
+	 * childIter = A valid GtkTreeIter pointing to a row on the child model.
 	 * Returns: TRUE, if filter_iter was set, i.e. if child_iter is avalid iterator pointing to a visible row in child model.
 	 */
 	public int convertChildIterToIter(TreeIter filterIter, TreeIter childIter)
@@ -276,9 +276,9 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Sets child_iter to point to the row pointed to by filter_iter.
 	 * Since 2.4
 	 * Params:
-	 * filter =  A GtkTreeModelFilter.
-	 * childIter =  An uninitialized GtkTreeIter.
-	 * filterIter =  A valid GtkTreeIter pointing to a row on filter.
+	 * filter = A GtkTreeModelFilter.
+	 * childIter = An uninitialized GtkTreeIter.
+	 * filterIter = A valid GtkTreeIter pointing to a row on filter.
 	 */
 	public void convertIterToChildIter(TreeIter childIter, TreeIter filterIter)
 	{
@@ -294,7 +294,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * is returned.
 	 * Since 2.4
 	 * Params:
-	 * childPath =  A GtkTreePath to convert.
+	 * childPath = A GtkTreePath to convert.
 	 * Returns: A newly allocated GtkTreePath, or NULL.
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
@@ -315,8 +315,8 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * does not point to a location in the child model, NULL is returned.
 	 * Since 2.4
 	 * Params:
-	 * filter =  A GtkTreeModelFilter.
-	 * filterPath =  A GtkTreePath to convert.
+	 * filter = A GtkTreeModelFilter.
+	 * filterPath = A GtkTreePath to convert.
 	 * Returns: A newly allocated GtkTreePath, or NULL.
 	 */
 	public TreePath convertPathToChildPath(TreePath filterPath)
@@ -335,7 +335,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * the filter to re-evaluate whether a row is visible or not.
 	 * Since 2.4
 	 * Params:
-	 * filter =  A GtkTreeModelFilter.
+	 * filter = A GtkTreeModelFilter.
 	 */
 	public void refilter()
 	{

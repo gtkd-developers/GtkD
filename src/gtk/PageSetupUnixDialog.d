@@ -131,8 +131,8 @@ public class PageSetupUnixDialog : Dialog
 	 * Creates a new page setup dialog.
 	 * Since 2.10
 	 * Params:
-	 * title =  the title of the dialog, or NULL
-	 * parent =  transient parent of the dialog, or NULL
+	 * title = the title of the dialog, or NULL
+	 * parent = transient parent of the dialog, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)
@@ -151,7 +151,7 @@ public class PageSetupUnixDialog : Dialog
 	 * dialog takes its values.
 	 * Since 2.10
 	 * Params:
-	 * pageSetup =  a GtkPageSetup
+	 * pageSetup = a GtkPageSetup
 	 */
 	public void setPageSetup(PageSetup pageSetup)
 	{
@@ -180,7 +180,7 @@ public class PageSetupUnixDialog : Dialog
 	 * takes its values.
 	 * Since 2.10
 	 * Params:
-	 * printSettings =  a GtkPrintSettings
+	 * printSettings = a GtkPrintSettings
 	 */
 	public void setPrintSettings(PrintSettings printSettings)
 	{

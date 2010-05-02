@@ -136,7 +136,7 @@ public class X11
 	 * For example in the X backend, a native window handle is an Xlib
 	 * XID.
 	 * Params:
-	 * anid =  a native window handle.
+	 * anid = a native window handle.
 	 * Returns: the newly-created GdkWindow wrapper for the native window or NULL if the window has been destroyed.
 	 */
 	public static Window gdkWindowForeignNew(GdkNativeWindow anid)
@@ -154,7 +154,7 @@ public class X11
 	 * Returns the Gdk object associated with the given X id for the default
 	 * display.
 	 * Params:
-	 * xid =  an X id.
+	 * xid = an X id.
 	 * Returns: the associated Gdk object, which may be a GdkPixmap, a GdkWindow or a GdkFont or NULL if no object is associated with the X id.
 	 */
 	public static void* gdkXidTableLookup(uint xid)
@@ -168,7 +168,7 @@ public class X11
 	 * For example in the X backend, a native window handle is an Xlib
 	 * XID.
 	 * Params:
-	 * anid =  a native window handle.
+	 * anid = a native window handle.
 	 * Returns: the GdkWindow wrapper for the native window,  or NULL if there is none.
 	 */
 	public static Window gdkWindowLookup(GdkNativeWindow anid)
@@ -187,7 +187,7 @@ public class X11
 	 * For example in the X backend, a native pixmap handle is an Xlib
 	 * XID.
 	 * Params:
-	 * anid =  a native pixmap handle.
+	 * anid = a native pixmap handle.
 	 * Returns: the GdkPixmap wrapper for the native pixmap, or NULL if there is none.
 	 */
 	public static Pixmap gdkPixmapLookup(GdkNativeWindow anid)
@@ -204,7 +204,7 @@ public class X11
 	/**
 	 * Routine to get the current X server time stamp.
 	 * Params:
-	 * window =  a GdkWindow, used for communication with the server.
+	 * window = a GdkWindow, used for communication with the server.
 	 *  The window must have GDK_PROPERTY_CHANGE_MASK in its
 	 *  events mask or a hang will result.
 	 * Returns: the time stamp.
@@ -221,8 +221,8 @@ public class X11
 	 * extension, 0 is returned.
 	 * Since 2.14
 	 * Params:
-	 * screen =  a GdkScreen
-	 * monitorNum =  number of the monitor
+	 * screen = a GdkScreen
+	 * monitorNum = number of the monitor
 	 * Returns: the XID of the monitor
 	 */
 	public static uint screenGetMonitorOutput(GdkScreen* screen, int monitorNum)
@@ -245,8 +245,8 @@ public class X11
 	 * events bypassing GDK.
 	 * Since 2.6
 	 * Params:
-	 * window =  A toplevel GdkWindow
-	 * timestamp =  An XServer timestamp to which the property should be set
+	 * window = A toplevel GdkWindow
+	 * timestamp = An XServer timestamp to which the property should be set
 	 */
 	public static void windowSetUserTime(Window window, uint timestamp)
 	{
@@ -262,7 +262,7 @@ public class X11
 	 * window is already on all workspaces.
 	 * Since 2.8
 	 * Params:
-	 * window =  a GdkWindow
+	 * window = a GdkWindow
 	 */
 	public static void windowMoveToCurrentDesktop(Window window)
 	{
@@ -274,7 +274,7 @@ public class X11
 	 * Gets the startup notification ID for a display.
 	 * Since 2.12
 	 * Params:
-	 * display =  a GdkDisplay
+	 * display = a GdkDisplay
 	 * Returns: the startup notification ID for display
 	 */
 	public static string displayGetStartupNotificationId(Display display)
@@ -286,7 +286,7 @@ public class X11
 	/**
 	 * Returns the X resource (window or pixmap) belonging to a GdkDrawable.
 	 * Params:
-	 * drawable =  a GdkDrawable.
+	 * drawable = a GdkDrawable.
 	 * Returns: the ID of drawable's X resource.
 	 */
 	public static uint drawableGetXid(Drawable drawable)
@@ -303,7 +303,7 @@ public class X11
 	 * that was used to load the font. If the same font was loaded
 	 * via multiple names, which name is returned is undefined.
 	 * Params:
-	 * font =  a GdkFont.
+	 * font = a GdkFont.
 	 * Returns: the name of the font. This string is owned by GDK and must not be modified or freed.
 	 */
 	public static string fontGetName(Font font)
@@ -317,7 +317,7 @@ public class X11
 	 * gdk_x11_font_get_xfont is deprecated and should not be used in newly-written code.
 	 * Returns the X font belonging to a GdkFont.
 	 * Params:
-	 * font =  a GdkFont.
+	 * font = a GdkFont.
 	 * Returns: an Xlib XFontStruct* or an XFontSet.
 	 */
 	public static void* fontGetXfont(Font font)

@@ -153,7 +153,7 @@ public class Hyperlink : ObjectG
 	 * by i of link_.
 	 * Multiple anchors are primarily used by client-side image maps.
 	 * Params:
-	 * i =  a (zero-index) integer specifying the desired anchor
+	 * i = a (zero-index) integer specifying the desired anchor
 	 * Returns: a string specifying the URI
 	 */
 	public string getUri(int i)
@@ -169,7 +169,7 @@ public class Hyperlink : ObjectG
 	 * hyperlink etc.
 	 * Multiple anchors are primarily used by client-side image maps.
 	 * Params:
-	 * i =  a (zero-index) integer specifying the desired anchor
+	 * i = a (zero-index) integer specifying the desired anchor
 	 * Returns: an AtkObject associated with this hyperlinks i-th anchor
 	 */
 	public ObjectAtk getObject(int i)

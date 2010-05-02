@@ -120,8 +120,8 @@ public class Registry : ObjectG
 	
 	/**
 	 * Params:
-	 * type =  an AtkObject type
-	 * factoryType =  an AtkObjectFactory type to associate with type. Must
+	 * type = an AtkObject type
+	 * factoryType = an AtkObjectFactory type to associate with type. Must
 	 * implement AtkObject appropriate for type.
 	 */
 	public void setFactoryType(GType type, GType factoryType)
@@ -134,7 +134,7 @@ public class Registry : ObjectG
 	 * Provides a GType indicating the AtkObjectFactory subclass
 	 * associated with type.
 	 * Params:
-	 * type =  a GType with which to look up the associated AtkObjectFactory
+	 * type = a GType with which to look up the associated AtkObjectFactory
 	 * subclass
 	 * Returns: a GType associated with type type
 	 */
@@ -148,7 +148,7 @@ public class Registry : ObjectG
 	 * Gets an AtkObjectFactory appropriate for creating AtkObjects
 	 * appropriate for type.
 	 * Params:
-	 * type =  a GType with which to look up the associated AtkObjectFactory
+	 * type = a GType with which to look up the associated AtkObjectFactory
 	 * Returns: an AtkObjectFactory appropriate for creating AtkObjectsappropriate for type.
 	 */
 	public ObjectFactory getFactory(GType type)

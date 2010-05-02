@@ -136,8 +136,8 @@ public class IMContextSimple : IMContext
 	 * numeric value of the key symbol fields. (Values beyond
 	 * the length of the sequence should be zero.)
 	 * Params:
-	 * data =  the table
-	 * maxSeqLen =  Maximum length of a sequence in the table
+	 * data = the table
+	 * maxSeqLen = Maximum length of a sequence in the table
 	 *  (cannot be greater than GTK_MAX_COMPOSE_LEN)
 	 */
 	public void addTable(ushort[] data, int maxSeqLen)

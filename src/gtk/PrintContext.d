@@ -86,7 +86,7 @@ private import gobject.ObjectG;
  * of the cairo surface.
  * GtkPrintContext objects gets passed to the ::begin-print, ::end-print,
  * ::request-page-setup and ::draw-page signals on the GtkPrintOperation.
- * Example 47. Using GtkPrintContext in a ::draw-page callback
+ * Example  47.  Using GtkPrintContext in a ::draw-page callback
  * static void
  * draw_page (GtkPrintOperation *operation,
  * 	 GtkPrintContext *context,
@@ -197,9 +197,9 @@ public class PrintContext : ObjectG
 	 * case.
 	 * Since 2.10
 	 * Params:
-	 * cr =  the cairo context
-	 * dpiX =  the horizontal resolution to use with cr
-	 * dpiY =  the vertical resolution to use with cr
+	 * cr = the cairo context
+	 * dpiX = the horizontal resolution to use with cr
+	 * dpiY = the vertical resolution to use with cr
 	 */
 	public void setCairoContext(Context cr, double dpiX, double dpiY)
 	{

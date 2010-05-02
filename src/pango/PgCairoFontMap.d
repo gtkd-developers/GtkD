@@ -97,7 +97,7 @@ private import pango.PgFontMap;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
- * Example 1. Using Pango with Cairo
+ * Example  1.  Using Pango with Cairo
  * #include <math.h>
  * #include <pango/pangocairo.h>
  * static void
@@ -167,7 +167,7 @@ private import pango.PgFontMap;
 	 *  }
 	 *  return 0;
  * }
- * Figure 2. Output of Example 1, “Using Pango with Cairo”
+ * Figure  2.  Output of Example  1, “Using Pango with Cairo”
  */
 public class PgCairoFontMap : PgFontMap
 {
@@ -284,7 +284,7 @@ public class PgCairoFontMap : PgFontMap
 	 * @pango_cairo_font_map_get_default().
 	 * Since 1.18
 	 * Params:
-	 * fonttype =  desired cairo_font_type_t
+	 * fonttype = desired cairo_font_type_t
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (cairo_font_type_t fonttype)
@@ -316,7 +316,7 @@ public class PgCairoFontMap : PgFontMap
 	 * units high. (10 * 96. / 72. = 13.3).
 	 * Since 1.10
 	 * Params:
-	 * dpi =  the resolution in "dots per inch". (Physical inches aren't actually
+	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
 	 *  involved; the terminology is conventional.)
 	 */
 	public void setResolution(double dpi)

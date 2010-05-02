@@ -169,8 +169,8 @@ public class SocketClient : ObjectG
 	 * socket will be bound to this address before connecting.
 	 * Since 2.22
 	 * Params:
-	 * connectable =  a GSocketConnectable specifying the remote address.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * connectable = a GSocketConnectable specifying the remote address.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -200,10 +200,10 @@ public class SocketClient : ObjectG
 	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * connectable =  a GSocketConnectable specifying the remote address.
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  a GAsyncReadyCallback
-	 * userData =  user data for the callback
+	 * connectable = a GSocketConnectable specifying the remote address.
+	 * cancellable = a GCancellable, or NULL
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data for the callback
 	 */
 	public void connectAsync(SocketConnectableIF connectable, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -215,7 +215,7 @@ public class SocketClient : ObjectG
 	 * Finishes an async connect operation. See g_socket_client_connect_async()
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -264,9 +264,9 @@ public class SocketClient : ObjectG
 	 * accordingly.
 	 * Since 2.22
 	 * Params:
-	 * hostAndPort =  the name and optionally port of the host to connect to
-	 * defaultPort =  the default port to connect to
-	 * cancellable =  a GCancellable, or NULL
+	 * hostAndPort = the name and optionally port of the host to connect to
+	 * defaultPort = the default port to connect to
+	 * cancellable = a GCancellable, or NULL
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -296,11 +296,11 @@ public class SocketClient : ObjectG
 	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * hostAndPort =  the name and optionally the port of the host to connect to
-	 * defaultPort =  the default port to connect to
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  a GAsyncReadyCallback
-	 * userData =  user data for the callback
+	 * hostAndPort = the name and optionally the port of the host to connect to
+	 * defaultPort = the default port to connect to
+	 * cancellable = a GCancellable, or NULL
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data for the callback
 	 */
 	public void connectToHostAsync(string hostAndPort, ushort defaultPort, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -312,7 +312,7 @@ public class SocketClient : ObjectG
 	 * Finishes an async connect operation. See g_socket_client_connect_to_host_async()
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -348,9 +348,9 @@ public class SocketClient : ObjectG
 	 * connectable) NULL is returned and error (if non-NULL) is set
 	 * accordingly.
 	 * Params:
-	 * domain =  a domain name
-	 * service =  the name of the service to connect to
-	 * cancellable =  a GCancellable, or NULL
+	 * domain = a domain name
+	 * service = the name of the service to connect to
+	 * cancellable = a GCancellable, or NULL
 	 * Returns: a GSocketConnection if successful, or NULL on error
 	 * Throws: GException on failure.
 	 */
@@ -378,11 +378,11 @@ public class SocketClient : ObjectG
 	 * g_socket_client_connect_to_service().
 	 * Since 2.22
 	 * Params:
-	 * domain =  a domain name
-	 * service =  the name of the service to connect to
-	 * cancellable =  a GCancellable, or NULL
-	 * callback =  a GAsyncReadyCallback
-	 * userData =  user data for the callback
+	 * domain = a domain name
+	 * service = the name of the service to connect to
+	 * cancellable = a GCancellable, or NULL
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data for the callback
 	 */
 	public void connectToServiceAsync(string domain, string service, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -394,7 +394,7 @@ public class SocketClient : ObjectG
 	 * Finishes an async connect operation. See g_socket_client_connect_to_service_async()
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -427,7 +427,7 @@ public class SocketClient : ObjectG
 	 * be an ipv6 mapped to ipv4 address.
 	 * Since 2.22
 	 * Params:
-	 * family =  a GSocketFamily
+	 * family = a GSocketFamily
 	 */
 	public void setFamily(GSocketFamily family)
 	{
@@ -444,7 +444,7 @@ public class SocketClient : ObjectG
 	 * a specific interface.
 	 * Since 2.22
 	 * Params:
-	 * address =  a GSocketAddress, or NULL
+	 * address = a GSocketAddress, or NULL
 	 */
 	public void setLocalAddress(SocketAddress address)
 	{
@@ -460,7 +460,7 @@ public class SocketClient : ObjectG
 	 * protocol for the socket family and type.
 	 * Since 2.22
 	 * Params:
-	 * protocol =  a GSocketProtocol
+	 * protocol = a GSocketProtocol
 	 */
 	public void setProtocol(GSocketProtocol protocol)
 	{
@@ -476,7 +476,7 @@ public class SocketClient : ObjectG
 	 * as GSocketClient is used for connection oriented services.
 	 * Since 2.22
 	 * Params:
-	 * type =  a GSocketType
+	 * type = a GSocketType
 	 */
 	public void setSocketType(GSocketType type)
 	{

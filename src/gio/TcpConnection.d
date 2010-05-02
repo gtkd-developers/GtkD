@@ -128,7 +128,7 @@ public class TcpConnection : SocketConnection
 	 * take a while. For this reason it is disabled by default.
 	 * Since 2.22
 	 * Params:
-	 * gracefulDisconnect =  Whether to do graceful disconnects or not
+	 * gracefulDisconnect = Whether to do graceful disconnects or not
 	 */
 	public void setGracefulDisconnect(int gracefulDisconnect)
 	{

@@ -121,7 +121,7 @@ private import gtk.Misc;
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
- * Example 12. Handling button press events on a
+ * Example  12.  Handling button press events on a
  * GtkImage.
  *  static gboolean
  *  button_press_callback (GtkWidget *event_box,
@@ -262,8 +262,8 @@ public class Image : Misc
 	 * The storage type of the image must be GTK_IMAGE_EMPTY or
 	 * GTK_IMAGE_ICON_SET (see gtk_image_get_storage_type()).
 	 * Params:
-	 * iconSet =  location to store a GtkIconSet, or NULL
-	 * size =  location to store a stock icon size, or NULL
+	 * iconSet = location to store a GtkIconSet, or NULL
+	 * size = location to store a stock icon size, or NULL
 	 */
 	public void getIconSet(out IconSet iconSet, out GtkIconSize size)
 	{
@@ -282,8 +282,8 @@ public class Image : Misc
 	 * The caller of this function does not own a reference to the
 	 * returned image and mask.
 	 * Params:
-	 * gdkImage =  return location for a GtkImage, or NULL
-	 * mask =  return location for a GdkBitmap, or NULL
+	 * gdkImage = return location for a GtkImage, or NULL
+	 * mask = return location for a GdkBitmap, or NULL
 	 */
 	public void getImage(out ImageGdk gdkImage, out Bitmap mask)
 	{
@@ -323,8 +323,8 @@ public class Image : Misc
 	 * The caller of this function does not own a reference to the
 	 * returned pixmap and mask.
 	 * Params:
-	 * pixmap =  location to store the pixmap, or NULL
-	 * mask =  location to store the mask, or NULL
+	 * pixmap = location to store the pixmap, or NULL
+	 * mask = location to store the mask, or NULL
 	 */
 	public void getPixmap(out Pixmap pixmap, out Bitmap mask)
 	{
@@ -345,8 +345,8 @@ public class Image : Misc
 	 * The returned string is owned by the GtkImage and should not
 	 * be freed.
 	 * Params:
-	 * stockId =  place to store a stock icon name, or NULL
-	 * size =  place to store a stock icon size, or NULL
+	 * stockId = place to store a stock icon name, or NULL
+	 * size = place to store a stock icon size, or NULL
 	 */
 	public void getStock(out string stockId, out GtkIconSize size)
 	{
@@ -385,8 +385,8 @@ public class Image : Misc
 	 * be freed.
 	 * Since 2.6
 	 * Params:
-	 * iconName =  place to store an icon name, or NULL
-	 * size =  place to store an icon size, or NULL
+	 * iconName = place to store an icon name, or NULL
+	 * size = place to store an icon size, or NULL
 	 */
 	public void getIconName(out string iconName, out GtkIconSize size)
 	{
@@ -406,8 +406,8 @@ public class Image : Misc
 	 * returned GIcon.
 	 * Since 2.14
 	 * Params:
-	 * gicon =  place to store a GIcon, or NULL
-	 * size =  place to store an icon size, or NULL
+	 * gicon = place to store a GIcon, or NULL
+	 * size = place to store an icon size, or NULL
 	 */
 	public void getGicon(out IconIF gicon, out GtkIconSize size)
 	{
@@ -446,7 +446,7 @@ public class Image : Misc
 	 * image is not defined, it will be whatever is appropriate for
 	 * displaying the file.
 	 * Params:
-	 * filename =  a filename
+	 * filename = a filename
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string filename)
@@ -472,8 +472,8 @@ public class Image : Misc
 	 * icon set; you still need to unref it if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
 	 * Params:
-	 * iconSet =  a GtkIconSet
-	 * size =  a stock icon size
+	 * iconSet = a GtkIconSet
+	 * size = a stock icon size
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconSet iconSet, GtkIconSize size)
@@ -494,8 +494,8 @@ public class Image : Misc
 	 * image or mask; you still need to unref them if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
 	 * Params:
-	 * image =  a GdkImage, or NULL
-	 * mask =  a GdkBitmap, or NULL
+	 * image = a GdkImage, or NULL
+	 * mask = a GdkBitmap, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ImageGdk image, Bitmap mask)
@@ -518,7 +518,7 @@ public class Image : Misc
 	 * GtkImage created will not react to state changes. Should you want that,
 	 * you should use gtk_image_new_from_icon_set().
 	 * Params:
-	 * pixbuf =  a GdkPixbuf, or NULL
+	 * pixbuf = a GdkPixbuf, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
@@ -539,8 +539,8 @@ public class Image : Misc
 	 * pixmap or mask; you still need to unref them if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
 	 * Params:
-	 * pixmap =  a GdkPixmap, or NULL
-	 * mask =  a GdkBitmap, or NULL
+	 * pixmap = a GdkPixmap, or NULL
+	 * mask = a GdkBitmap, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixmap pixmap, Bitmap mask)
@@ -564,7 +564,7 @@ public class Image : Misc
 	 * keep in mind that the animation will only be shown if the main loop
 	 * is not busy with something that has a higher priority.
 	 * Params:
-	 * animation =  an animation
+	 * animation = an animation
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (PixbufAnimation animation)
@@ -585,8 +585,8 @@ public class Image : Misc
 	 * will be updated appropriately.
 	 * Since 2.14
 	 * Params:
-	 * icon =  an icon
-	 * size =  a stock icon size
+	 * icon = an icon
+	 * size = a stock icon size
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconIF icon, GtkIconSize size)
@@ -603,7 +603,7 @@ public class Image : Misc
 	/**
 	 * See gtk_image_new_from_file() for details.
 	 * Params:
-	 * filename =  a filename or NULL
+	 * filename = a filename or NULL
 	 */
 	public void setFromFile(string filename)
 	{
@@ -614,8 +614,8 @@ public class Image : Misc
 	/**
 	 * See gtk_image_new_from_icon_set() for details.
 	 * Params:
-	 * iconSet =  a GtkIconSet
-	 * size =  a stock icon size
+	 * iconSet = a GtkIconSet
+	 * size = a stock icon size
 	 */
 	public void setFromIconSet(IconSet iconSet, GtkIconSize size)
 	{
@@ -626,8 +626,8 @@ public class Image : Misc
 	/**
 	 * See gtk_image_new_from_image() for details.
 	 * Params:
-	 * gdkImage =  a GdkImage or NULL
-	 * mask =  a GdkBitmap or NULL
+	 * gdkImage = a GdkImage or NULL
+	 * mask = a GdkBitmap or NULL
 	 */
 	public void setFromImage(ImageGdk gdkImage, Bitmap mask)
 	{
@@ -638,7 +638,7 @@ public class Image : Misc
 	/**
 	 * See gtk_image_new_from_pixbuf() for details.
 	 * Params:
-	 * pixbuf =  a GdkPixbuf or NULL
+	 * pixbuf = a GdkPixbuf or NULL
 	 */
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
@@ -649,8 +649,8 @@ public class Image : Misc
 	/**
 	 * See gtk_image_new_from_pixmap() for details.
 	 * Params:
-	 * pixmap =  a GdkPixmap or NULL
-	 * mask =  a GdkBitmap or NULL
+	 * pixmap = a GdkPixmap or NULL
+	 * mask = a GdkBitmap or NULL
 	 */
 	public void setFromPixmap(Pixmap pixmap, Bitmap mask)
 	{
@@ -661,8 +661,8 @@ public class Image : Misc
 	/**
 	 * See gtk_image_new_from_stock() for details.
 	 * Params:
-	 * stockId =  a stock icon name
-	 * size =  a stock icon size
+	 * stockId = a stock icon name
+	 * size = a stock icon size
 	 */
 	public void setFromStock(string stockId, GtkIconSize size)
 	{
@@ -674,7 +674,7 @@ public class Image : Misc
 	 * Causes the GtkImage to display the given animation (or display
 	 * nothing, if you set the animation to NULL).
 	 * Params:
-	 * animation =  the GdkPixbufAnimation
+	 * animation = the GdkPixbufAnimation
 	 */
 	public void setFromAnimation(PixbufAnimation animation)
 	{
@@ -686,8 +686,8 @@ public class Image : Misc
 	 * See gtk_image_new_from_icon_name() for details.
 	 * Since 2.6
 	 * Params:
-	 * iconName =  an icon name
-	 * size =  an icon size
+	 * iconName = an icon name
+	 * size = an icon size
 	 */
 	public void setFromIconName(string iconName, GtkIconSize size)
 	{
@@ -699,8 +699,8 @@ public class Image : Misc
 	 * See gtk_image_new_from_gicon() for details.
 	 * Since 2.14
 	 * Params:
-	 * icon =  an icon
-	 * size =  an icon size
+	 * icon = an icon
+	 * size = an icon size
 	 */
 	public void setFromGicon(IconIF icon, GtkIconSize size)
 	{
@@ -773,7 +773,7 @@ public class Image : Misc
 	 * gtk_image_set_from_icon_name().
 	 * Since 2.6
 	 * Params:
-	 * pixelSize =  the new pixel size
+	 * pixelSize = the new pixel size
 	 */
 	public void setPixelSize(int pixelSize)
 	{

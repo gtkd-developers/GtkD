@@ -169,7 +169,7 @@ public class TypeModule : ObjectG
 	/**
 	 * Sets the name for a GTypeModule
 	 * Params:
-	 * name =  a human-readable name to use in error messages.
+	 * name = a human-readable name to use in error messages.
 	 */
 	public void setName(string name)
 	{
@@ -188,10 +188,10 @@ public class TypeModule : ObjectG
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
 	 * Params:
-	 * parentType =  the type for the parent class
-	 * typeName =  name for the type
-	 * typeInfo =  type information structure
-	 * flags =  flags field providing details about the type
+	 * parentType = the type for the parent class
+	 * typeName = name for the type
+	 * typeInfo = type information structure
+	 * flags = flags field providing details about the type
 	 * Returns: the new or existing type ID
 	 */
 	public GType registerType(GType parentType, string typeName, GTypeInfo* typeInfo, GTypeFlags flags)
@@ -207,9 +207,9 @@ public class TypeModule : ObjectG
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
 	 * Params:
-	 * instanceType =  type to which to add the interface.
-	 * interfaceType =  interface type to add
-	 * interfaceInfo =  type information structure
+	 * instanceType = type to which to add the interface.
+	 * interfaceType = interface type to add
+	 * interfaceInfo = type information structure
 	 */
 	public void addInterface(GType instanceType, GType interfaceType, GInterfaceInfo* interfaceInfo)
 	{
@@ -226,7 +226,7 @@ public class TypeModule : ObjectG
 	 * not be unloaded.
 	 * Since 2.6
 	 * Params:
-	 * name =  name for the type
+	 * name = name for the type
 	 * Returns: the new or existing type ID
 	 */
 	public GType registerEnum(string name, Enums _StaticValues)
@@ -244,7 +244,7 @@ public class TypeModule : ObjectG
 	 * not be unloaded.
 	 * Since 2.6
 	 * Params:
-	 * name =  name for the type
+	 * name = name for the type
 	 * Returns: the new or existing type ID
 	 */
 	public GType registerFlags(string name, Flags _StaticValues)

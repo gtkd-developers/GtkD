@@ -149,7 +149,7 @@ private import gtk.TreeIter;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example 20. Acquiring a GtkTreeIter
+ * Example  20.  Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -174,7 +174,7 @@ private import gtk.TreeIter;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example 21. Reading data from a GtkTreeModel
+ * Example  21.  Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -253,8 +253,8 @@ public class TreeRowReference
 	 * signals emitted by model, and updates its path appropriately. If path
 	 * isn't a valid path in model, then NULL is returned.
 	 * Params:
-	 * model =  A GtkTreeModel
-	 * path =  A valid GtkTreePath to monitor
+	 * model = A GtkTreeModel
+	 * path = A valid GtkTreePath to monitor
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model, TreePath path)
@@ -288,9 +288,9 @@ public class TreeRowReference
 	 * carefully monitor exactly when a row reference updates itself, and is not
 	 * generally needed by most applications.
 	 * Params:
-	 * proxy =  A proxy GObject
-	 * model =  A GtkTreeModel
-	 * path =  A valid GtkTreePath to monitor
+	 * proxy = A proxy GObject
+	 * model = A GtkTreeModel
+	 * path = A valid GtkTreePath to monitor
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG proxy, TreeModelIF model, TreePath path)
@@ -376,8 +376,8 @@ public class TreeRowReference
 	 * Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
 	 * know that the model emitted the "row_inserted" signal.
 	 * Params:
-	 * proxy =  A GObject
-	 * path =  The row position that was inserted
+	 * proxy = A GObject
+	 * path = The row position that was inserted
 	 */
 	public static void inserted(ObjectG proxy, TreePath path)
 	{
@@ -389,8 +389,8 @@ public class TreeRowReference
 	 * Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
 	 * know that the model emitted the "row_deleted" signal.
 	 * Params:
-	 * proxy =  A GObject
-	 * path =  The path position that was deleted
+	 * proxy = A GObject
+	 * path = The path position that was deleted
 	 */
 	public static void deleted(ObjectG proxy, TreePath path)
 	{
@@ -402,10 +402,10 @@ public class TreeRowReference
 	 * Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
 	 * know that the model emitted the "rows_reordered" signal.
 	 * Params:
-	 * proxy =  A GObject
-	 * path =  The parent path of the reordered signal
-	 * iter =  The iter pointing to the parent of the reordered
-	 * newOrder =  The new order of rows
+	 * proxy = A GObject
+	 * path = The parent path of the reordered signal
+	 * iter = The iter pointing to the parent of the reordered
+	 * newOrder = The new order of rows
 	 */
 	public static void reordered(ObjectG proxy, TreePath path, TreeIter iter, int[] newOrder)
 	{

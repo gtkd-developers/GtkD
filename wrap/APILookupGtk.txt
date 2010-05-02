@@ -2179,6 +2179,7 @@ prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
+structWrap: GtkRadioButton* RadioButton
 
 nocode: gtk_radio_button_new_with_label
 nocode: gtk_radio_button_new_with_mnemonic
@@ -3424,7 +3425,8 @@ code: start
 			long    dataLong;
 			double  dataFloat;
 			double  dataDouble;
-			char[]  dataString;
+			char[]  dataString;
+
 			void*   dataUser;
 		}
 
@@ -5496,6 +5498,7 @@ prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
+structWrap: GtkRadioMenuItem* RadioMenuItem
 
 nocode: gtk_radio_menu_item_new_with_label
 nocode: gtk_radio_menu_item_new_with_mnemonic
@@ -5930,6 +5933,7 @@ import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 import: glib.ListSG
 structWrap: GSList* ListSG
+structWrap: GtkRadioToolButton* RadioToolButton
 outFile: RadioToolButton
 
 ###########################################################

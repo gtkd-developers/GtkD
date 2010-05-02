@@ -83,7 +83,7 @@ private import glib.ConstructionException;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example 2. Typical main function for a GTK+ application
+ * Example  2.  Typical main function for a GTK+ application
  * int
  * main (int argc, char **argv)
  * {

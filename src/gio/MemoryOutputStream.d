@@ -129,11 +129,11 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * data = malloc (200);
 	 * stream2 = g_memory_output_stream_new (data, 200, NULL, free);
 	 * Params:
-	 * data =  pointer to a chunk of memory to use, or NULL
-	 * len =  the size of data
-	 * reallocFn =  a function with realloc() semantics to be called when
+	 * data = pointer to a chunk of memory to use, or NULL
+	 * len = the size of data
+	 * reallocFn = a function with realloc() semantics to be called when
 	 *  data needs to be grown, or NULL
-	 * destroy =  a function to be called on data when the stream is finalized,
+	 * destroy = a function to be called on data when the stream is finalized,
 	 *  or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

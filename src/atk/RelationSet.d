@@ -136,7 +136,7 @@ public class RelationSet : ObjectG
 	 * Determines whether the relation set contains a relation that matches the
 	 * specified type.
 	 * Params:
-	 * relationship =  an AtkRelationType
+	 * relationship = an AtkRelationType
 	 * Returns: TRUE if relationship is the relationship type of a relationin set, FALSE otherwise
 	 */
 	public int atkRelationSetContains(AtkRelationType relationship)
@@ -150,7 +150,7 @@ public class RelationSet : ObjectG
 	 * This function unref's the AtkRelation so it will be deleted unless there
 	 * is another reference to it.
 	 * Params:
-	 * relation =  an AtkRelation
+	 * relation = an AtkRelation
 	 */
 	public void atkRelationSetRemove(Relation relation)
 	{
@@ -165,7 +165,7 @@ public class RelationSet : ObjectG
 	 * should unref it to ensure that it will be destroyed when the AtkRelationSet
 	 * is destroyed.
 	 * Params:
-	 * relation =  an AtkRelation
+	 * relation = an AtkRelation
 	 */
 	public void atkRelationSetAdd(Relation relation)
 	{
@@ -186,7 +186,7 @@ public class RelationSet : ObjectG
 	/**
 	 * Determines the relation at the specified position in the relation set.
 	 * Params:
-	 * i =  a gint representing a position in the set, starting from 0.
+	 * i = a gint representing a position in the set, starting from 0.
 	 * Returns: a AtkRelation, which is the relation at position i in the set.
 	 */
 	public Relation atkRelationSetGetRelation(int i)
@@ -203,7 +203,7 @@ public class RelationSet : ObjectG
 	/**
 	 * Finds a relation that matches the specified type.
 	 * Params:
-	 * relationship =  an AtkRelationType
+	 * relationship = an AtkRelationType
 	 * Returns: an AtkRelation, which is a relation matching the specified type.
 	 */
 	public Relation atkRelationSetGetRelationByType(AtkRelationType relationship)
@@ -224,8 +224,8 @@ public class RelationSet : ObjectG
 	 * is added to the relation.
 	 * Since 1.9
 	 * Params:
-	 * relationship =  an AtkRelationType
-	 * target =  an AtkObject
+	 * relationship = an AtkRelationType
+	 * target = an AtkObject
 	 */
 	public void atkRelationSetAddRelationByType(AtkRelationType relationship, ObjectAtk target)
 	{

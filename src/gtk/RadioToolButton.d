@@ -48,6 +48,7 @@
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
+ * 	- GtkRadioToolButton* -> RadioToolButton
  * 	- GtkToolItem* -> ToolItem
  * module aliases:
  * local aliases:
@@ -130,7 +131,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Creates a new GtkRadioToolButton, adding it to group.
 	 * Since 2.4
 	 * Params:
-	 * group =  An existing radio button group, or NULL if you are creating a new group
+	 * group = An existing radio button group, or NULL if you are creating a new group
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
@@ -150,8 +151,8 @@ public class RadioToolButton : ToggleToolButton
 	 * stock item indicated by stock_id.
 	 * Since 2.4
 	 * Params:
-	 * group =  an existing radio button group, or NULL if you are creating a new group
-	 * stockId =  the name of a stock item
+	 * group = an existing radio button group, or NULL if you are creating a new group
+	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group, string stockId)
@@ -168,15 +169,17 @@ public class RadioToolButton : ToggleToolButton
 	/**
 	 * Creates a new GtkRadioToolButton adding it to the same group as gruup
 	 * Since 2.4
+	 * Params:
+	 * group = An existing GtkRadioToolButton
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this (RadioToolButton group)
 	{
 		// GtkToolItem * gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
-		auto p = gtk_radio_tool_button_new_from_widget(gtkRadioToolButton);
+		auto p = gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_tool_button_new_from_widget(gtkRadioToolButton)");
+			throw new ConstructionException("null returned by gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct())");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -187,16 +190,17 @@ public class RadioToolButton : ToggleToolButton
 	 * stock item indicated by stock_id.
 	 * Since 2.4
 	 * Params:
-	 * stockId =  the name of a stock item
+	 * group = An existing GtkRadioToolButton.
+	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string stockId)
+	public this (RadioToolButton group, string stockId)
 	{
 		// GtkToolItem * gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
-		auto p = gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId));
+		auto p = gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId))");
+			throw new ConstructionException("null returned by gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId))");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -221,7 +225,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Adds button to group, removing it from the group it belonged to before.
 	 * Since 2.4
 	 * Params:
-	 * group =  an existing radio button group
+	 * group = an existing radio button group
 	 */
 	public void setGroup(ListSG group)
 	{

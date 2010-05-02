@@ -182,7 +182,7 @@ public class TextAttributes
 	 * Copies the values from src to dest so that dest has the same values
 	 * as src. Frees existing values in dest.
 	 * Params:
-	 * dest =  another GtkTextAttributes
+	 * dest = another GtkTextAttributes
 	 */
 	public void copyValues(TextAttributes dest)
 	{

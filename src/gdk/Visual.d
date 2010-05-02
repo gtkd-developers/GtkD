@@ -164,7 +164,7 @@ public class Visual
 	 * visual, removing duplicates.
 	 * The array returned by this function should not be freed.
 	 * Params:
-	 * visualTypes =  return location for the available visual types
+	 * visualTypes = return location for the available visual types
 	 */
 	public static void gdkQueryVisualTypes(out GdkVisualType[] visualTypes)
 	{
@@ -258,7 +258,7 @@ public class Visual
 	 * over grayscale or fixed-colormap visuals. The return value should not
 	 * be freed. NULL may be returned if no visual supports depth.
 	 * Params:
-	 * depth =  a bit depth
+	 * depth = a bit depth
 	 * Returns: best visual for the given depth
 	 */
 	public static Visual getBestWithDepth(int depth)
@@ -278,7 +278,7 @@ public class Visual
 	 * should not be freed. NULL may be returned if no visual has type
 	 * visual_type.
 	 * Params:
-	 * visualType =  a visual type
+	 * visualType = a visual type
 	 * Returns: best visual of the given type
 	 */
 	public static Visual getBestWithType(GdkVisualType visualType)
@@ -295,8 +295,8 @@ public class Visual
 	/**
 	 * Combines gdk_visual_get_best_with_depth() and gdk_visual_get_best_with_type().
 	 * Params:
-	 * depth =  a bit depth
-	 * visualType =  a visual type
+	 * depth = a bit depth
+	 * visualType = a visual type
 	 * Returns: best visual with both depth and visual_type, or NULL if none
 	 */
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)

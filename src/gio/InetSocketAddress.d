@@ -116,8 +116,8 @@ public class InetSocketAddress : SocketAddress
 	 * Creates a new GInetSocketAddress for address and port.
 	 * Since 2.22
 	 * Params:
-	 * address =  a GInetAddress
-	 * port =  a port number
+	 * address = a GInetAddress
+	 * port = a port number
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (InetAddress address, ushort port)

@@ -133,7 +133,7 @@ public class UnixConnection : TcpConnection
 	 * implementations.
 	 * Since 2.22
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * Returns: a file descriptor on success, -1 on error.
 	 * Throws: GException on failure.
 	 */
@@ -161,8 +161,8 @@ public class UnixConnection : TcpConnection
 	 * implementations.
 	 * Since 2.22
 	 * Params:
-	 * fd =  a file descriptor
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * fd = a file descriptor
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a TRUE on success, NULL on error.
 	 * Throws: GException on failure.
 	 */

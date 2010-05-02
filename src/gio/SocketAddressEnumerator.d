@@ -181,7 +181,7 @@ public class SocketAddressEnumerator
 	 * internal errors (other than cancellable being triggered) will be
 	 * ignored.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GSocketAddress (owned by the caller), or NULL on error (in which case *error will be set) or if there are no more addresses.
 	 * Throws: GException on failure.
 	 */
@@ -209,9 +209,9 @@ public class SocketAddressEnumerator
 	 * and then calls callback, which must call
 	 * g_socket_address_enumerator_next_finish() to get the result.
 	 * Params:
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void nextAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -225,7 +225,7 @@ public class SocketAddressEnumerator
 	 * g_socket_address_enumerator_next() for more information about
 	 * error handling.
 	 * Params:
-	 * result =  a GAsyncResult
+	 * result = a GAsyncResult
 	 * Returns: a GSocketAddress (owned by the caller), or NULL on error (in which case *error will be set) or if there are no more addresses.
 	 * Throws: GException on failure.
 	 */

@@ -124,7 +124,7 @@ public class PgFontset : ObjectG
 	 * Returns the font in the fontset that contains the best glyph for the
 	 * Unicode character wc.
 	 * Params:
-	 * wc =  a Unicode character
+	 * wc = a Unicode character
 	 * Returns: a PangoFont. The caller must call g_object_unref when finished with the font.
 	 */
 	public PgFont getFont(uint wc)
@@ -158,8 +158,8 @@ public class PgFontset : ObjectG
 	 * each one. If func returns TRUE, that stops the iteration.
 	 * Since 1.4
 	 * Params:
-	 * func =  Callback function
-	 * data =  data to pass to the callback function
+	 * func = Callback function
+	 * data = data to pass to the callback function
 	 */
 	public void foreac(PangoFontsetForeachFunc func, void* data)
 	{

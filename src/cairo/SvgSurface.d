@@ -111,9 +111,9 @@ public class SvgSurface : Surface
 	 * to filename.
 	 * Since 1.2
 	 * Params:
-	 * filename =  a filename for the SVG output (must be writable)
-	 * widthInPoints =  width of the surface, in points (1 point == 1/72.0 inch)
-	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
+	 * filename = a filename for the SVG output (must be writable)
+	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
+	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static SvgSurface create(string filename, double widthInPoints, double heightInPoints)
@@ -132,10 +132,10 @@ public class SvgSurface : Surface
 	 * incrementally to the stream represented by write_func and closure.
 	 * Since 1.2
 	 * Params:
-	 * writeFunc =  a cairo_write_func_t to accept the output data
-	 * closure =  the closure argument for write_func
-	 * widthInPoints =  width of the surface, in points (1 point == 1/72.0 inch)
-	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
+	 * writeFunc = a cairo_write_func_t to accept the output data
+	 * closure = the closure argument for write_func
+	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
+	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static SvgSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
@@ -158,7 +158,7 @@ public class SvgSurface : Surface
 	 * surface.
 	 * Since 1.2
 	 * Params:
-	 * version =  SVG version
+	 * version = SVG version
 	 */
 	public void restrictToVersion(cairo_svg_version_t versio)
 	{
@@ -171,7 +171,7 @@ public class SvgSurface : Surface
 	 * cairo_svg_surface_restrict_to_version().
 	 * Since 1.2
 	 * Params:
-	 * versions =  supported version list
+	 * versions = supported version list
 	 */
 	public static void getVersions(out cairo_svg_version_t[] versions)
 	{
@@ -190,7 +190,7 @@ public class SvgSurface : Surface
 	 * for a way to get the list of valid version ids.
 	 * Since 1.2
 	 * Params:
-	 * version =  a version id
+	 * version = a version id
 	 * Returns: the string associated to given version.
 	 */
 	public static string versionToString(cairo_svg_version_t versio)

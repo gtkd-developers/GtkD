@@ -190,7 +190,7 @@ public class RecentAction : Action
 	 * label. Only the first ten items get a number to avoid clashes.
 	 * Since 2.12
 	 * Params:
-	 * showNumbers =  TRUE if the shown items should be numbered
+	 * showNumbers = TRUE if the shown items should be numbered
 	 */
 	public void setShowNumbers(int showNumbers)
 	{

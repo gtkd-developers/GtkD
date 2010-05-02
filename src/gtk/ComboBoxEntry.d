@@ -180,8 +180,8 @@ public class ComboBoxEntry : ComboBox
 	 * API.
 	 * Since 2.4
 	 * Params:
-	 * model =  A GtkTreeModel.
-	 * textColumn =  A column in model to get the strings from.
+	 * model = A GtkTreeModel.
+	 * textColumn = A column in model to get the strings from.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model, int textColumn)
@@ -200,7 +200,7 @@ public class ComboBoxEntry : ComboBox
 	 * to be text_column.
 	 * Since 2.4
 	 * Params:
-	 * textColumn =  A column in model to get the strings from.
+	 * textColumn = A column in model to get the strings from.
 	 */
 	public void setTextColumn(int textColumn)
 	{

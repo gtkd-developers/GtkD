@@ -174,8 +174,8 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * hostname and port.
 	 * Since 2.22
 	 * Params:
-	 * hostname =  the hostname
-	 * port =  the port
+	 * hostname = the hostname
+	 * port = the port
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string hostname, ushort port)

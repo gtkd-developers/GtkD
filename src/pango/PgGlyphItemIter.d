@@ -140,8 +140,8 @@ public class PgGlyphItemIter
 	 * See PangoGlyphItemIter for details of cluster orders.
 	 * Since 1.22
 	 * Params:
-	 * glyphItem =  the glyph item to iterate over
-	 * text =  text corresponding to the glyph item
+	 * glyphItem = the glyph item to iterate over
+	 * text = text corresponding to the glyph item
 	 * Returns: FALSE if there are no clusters in the glyph item
 	 */
 	public int initStart(PgGlyphItem glyphItem, string text)
@@ -156,8 +156,8 @@ public class PgGlyphItemIter
 	 * See PangoGlyphItemIter for details of cluster orders.
 	 * Since 1.22
 	 * Params:
-	 * glyphItem =  the glyph item to iterate over
-	 * text =  text corresponding to the glyph item
+	 * glyphItem = the glyph item to iterate over
+	 * text = text corresponding to the glyph item
 	 * Returns: FALSE if there are no clusters in the glyph item
 	 */
 	public int initEnd(PgGlyphItem glyphItem, string text)

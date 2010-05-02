@@ -132,7 +132,7 @@ public class FileAttributeMatcher
 	 * The wildcard "*" may be used to match all keys and namespaces, or
 	 * "namespace::*" will match all keys in a given namespace.
 	 * Params:
-	 * attributes =  an attribute string to match.
+	 * attributes = an attribute string to match.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string attributes)
@@ -176,7 +176,7 @@ public class FileAttributeMatcher
 	 * the matcher was created with the "*" matching string, this function
 	 * will always return TRUE.
 	 * Params:
-	 * attribute =  a file attribute key.
+	 * attribute = a file attribute key.
 	 * Returns: TRUE if attribute matches matcher. FALSE otherwise.
 	 */
 	public int matches(string attribute)
@@ -189,7 +189,7 @@ public class FileAttributeMatcher
 	 * Checks if a attribute matcher only matches a given attribute. Always
 	 * returns FALSE if "*" was used when creating the matcher.
 	 * Params:
-	 * attribute =  a file attribute key.
+	 * attribute = a file attribute key.
 	 * Returns: TRUE if the matcher only matches attribute. FALSE otherwise.
 	 */
 	public int matchesOnly(string attribute)
@@ -205,7 +205,7 @@ public class FileAttributeMatcher
 	 * using "*" and namespace is anything.)
 	 * TODO: this is awkwardly worded.
 	 * Params:
-	 * ns =  a string containing a file attribute namespace.
+	 * ns = a string containing a file attribute namespace.
 	 * Returns: TRUE if the matcher matches all of the entriesin the given ns, FALSE otherwise.
 	 */
 	public int enumerateNamespace(string ns)

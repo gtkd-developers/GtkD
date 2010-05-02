@@ -87,7 +87,7 @@ private import gtk.Misc;
  * custom <attributes> element, which supports any number of <attribute>
  * elements. the <attribute> element has attributes named name, value,
  * start and end and allows you to specify PangoAttribute values for this label.
- * Example 13. A UI definition fragment specifying Pango attributes
+ * Example  13.  A UI definition fragment specifying Pango attributes
  * <object class="GtkLabel">
  *  <attributes>
  *  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
@@ -439,7 +439,7 @@ public class Label : Misc
 	 * was there before.
 	 * This will also clear any previously set mnemonic accelerators.
 	 * Params:
-	 * str =  The text you want to set
+	 * str = The text you want to set
 	 */
 	public void setText(string str)
 	{
@@ -458,7 +458,7 @@ public class Label : Misc
 	 * attributes, if you must; know that the attributes will be applied
 	 * to the label after the markup string is parsed.
 	 * Params:
-	 * attrs =  a PangoAttrList
+	 * attrs = a PangoAttrList
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -471,7 +471,7 @@ public class Label : Misc
 	 * label's text and attribute list based on the parse results. If the str is
 	 * external data, you may need to escape it with g_markup_escape_text() or
 	 * Params:
-	 * str =  a markup string (see Pango markup format)
+	 * str = a markup string (see Pango markup format)
 	 */
 	public void setMarkup(string str)
 	{
@@ -487,7 +487,7 @@ public class Label : Misc
 	 * The mnemonic key can be used to activate another widget, chosen
 	 * automatically, or explicitly using gtk_label_set_mnemonic_widget().
 	 * Params:
-	 * str =  a markup string (see Pango markup format)
+	 * str = a markup string (see Pango markup format)
 	 */
 	public void setMarkupWithMnemonic(string str)
 	{
@@ -517,7 +517,7 @@ public class Label : Misc
 	 * gtk_misc_set_alignment() instead. gtk_label_set_justify() has no
 	 * effect on labels containing only a single line.
 	 * Params:
-	 * jtype =  a GtkJustification
+	 * jtype = a GtkJustification
 	 */
 	public void setJustify(GtkJustification jtype)
 	{
@@ -530,7 +530,7 @@ public class Label : Misc
 	 * if there is not enough space to render the entire string.
 	 * Since 2.6
 	 * Params:
-	 * mode =  a PangoEllipsizeMode
+	 * mode = a PangoEllipsizeMode
 	 */
 	public void setEllipsize(PangoEllipsizeMode mode)
 	{
@@ -542,7 +542,7 @@ public class Label : Misc
 	 * Sets the desired width in characters of label to n_chars.
 	 * Since 2.6
 	 * Params:
-	 * nChars =  the new desired width, in characters.
+	 * nChars = the new desired width, in characters.
 	 */
 	public void setWidthChars(int nChars)
 	{
@@ -554,7 +554,7 @@ public class Label : Misc
 	 * Sets the desired maximum width in characters of label to n_chars.
 	 * Since 2.6
 	 * Params:
-	 * nChars =  the new desired maximum width, in characters.
+	 * nChars = the new desired maximum width, in characters.
 	 */
 	public void setMaxWidthChars(int nChars)
 	{
@@ -609,7 +609,7 @@ public class Label : Misc
 	 * container's size. For a label that wraps at a specific position,
 	 * set the label's width using gtk_widget_set_size_request().
 	 * Params:
-	 * wrap =  the setting
+	 * wrap = the setting
 	 */
 	public void setLineWrap(int wrap)
 	{
@@ -623,7 +623,7 @@ public class Label : Misc
 	 * wrap on word boundaries.
 	 * Since 2.10
 	 * Params:
-	 * wrapMode =  the line wrapping mode
+	 * wrapMode = the line wrapping mode
 	 */
 	public void setLineWrapMode(PangoWrapMode wrapMode)
 	{
@@ -641,8 +641,8 @@ public class Label : Misc
 	 * when using the PangoLayout functions you need to convert to
 	 * and from pixels using PANGO_PIXELS() or PANGO_SCALE.
 	 * Params:
-	 * x =  location to store X offset of layout, or NULL
-	 * y =  location to store Y offset of layout, or NULL
+	 * x = location to store X offset of layout, or NULL
+	 * y = location to store Y offset of layout, or NULL
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -690,8 +690,8 @@ public class Label : Misc
 	 * this function has no effect. If start_offset or
 	 * end_offset are -1, then the end of the label will be substituted.
 	 * Params:
-	 * startOffset =  start offset (in characters not bytes)
-	 * endOffset =  end offset (in characters not bytes)
+	 * startOffset = start offset (in characters not bytes)
+	 * endOffset = end offset (in characters not bytes)
 	 */
 	public void selectRegion(int startOffset, int endOffset)
 	{
@@ -714,7 +714,7 @@ public class Label : Misc
 	 * this signal will activate the widget if there are no mnemonic collisions
 	 * and toggle focus between the colliding widgets otherwise.
 	 * Params:
-	 * widget =  the target GtkWidget
+	 * widget = the target GtkWidget
 	 */
 	public void setMnemonicWidget(Widget widget)
 	{
@@ -726,7 +726,7 @@ public class Label : Misc
 	 * Selectable labels allow the user to select text from the label, for
 	 * copy-and-paste.
 	 * Params:
-	 * setting =  TRUE to allow selecting text in the label
+	 * setting = TRUE to allow selecting text in the label
 	 */
 	public void setSelectable(int setting)
 	{
@@ -741,7 +741,7 @@ public class Label : Misc
 	 * The mnemonic key can be used to activate another widget, chosen
 	 * automatically, or explicitly using gtk_label_set_mnemonic_widget().
 	 * Params:
-	 * str =  a string
+	 * str = a string
 	 */
 	public void setTextWithMnemonic(string str)
 	{
@@ -887,8 +887,8 @@ public class Label : Misc
 	 * Gets the selected range of characters in the label, returning TRUE
 	 * if there's a selection.
 	 * Params:
-	 * start =  return location for start of selection, as a character offset
-	 * end =  return location for end of selection, as a character offset
+	 * start = return location for start of selection, as a character offset
+	 * end = return location for end of selection, as a character offset
 	 * Returns: TRUE if selection is non-empty
 	 */
 	public int getSelectionBounds(out int start, out int end)
@@ -949,7 +949,7 @@ public class Label : Misc
 	 * on the values of the "use-underline"" and
 	 * "use-markup" properties.
 	 * Params:
-	 * str =  the new text to set for the label
+	 * str = the new text to set for the label
 	 */
 	public void setLabel(string str)
 	{
@@ -961,7 +961,7 @@ public class Label : Misc
 	 * Sets whether the text of the label contains markup in Pango's text markup
 	 * language. See gtk_label_set_markup().
 	 * Params:
-	 * setting =  TRUE if the label's text should be parsed for markup.
+	 * setting = TRUE if the label's text should be parsed for markup.
 	 */
 	public void setUseMarkup(int setting)
 	{
@@ -973,7 +973,7 @@ public class Label : Misc
 	 * If true, an underline in the text indicates the next character should be
 	 * used for the mnemonic accelerator key.
 	 * Params:
-	 * setting =  TRUE if underlines in the text indicate mnemonics
+	 * setting = TRUE if underlines in the text indicate mnemonics
 	 */
 	public void setUseUnderline(int setting)
 	{
@@ -985,7 +985,7 @@ public class Label : Misc
 	 * Sets whether the label is in single line mode.
 	 * Since 2.6
 	 * Params:
-	 * singleLineMode =  TRUE if the label should be in single line mode
+	 * singleLineMode = TRUE if the label should be in single line mode
 	 */
 	public void setSingleLineMode(int singleLineMode)
 	{
@@ -1000,7 +1000,7 @@ public class Label : Misc
 	 * wrapped, or ellipsized.
 	 * Since 2.6
 	 * Params:
-	 * angle =  the angle that the baseline of the label makes with
+	 * angle = the angle that the baseline of the label makes with
 	 *  the horizontal, in degrees, measured counterclockwise
 	 */
 	public void setAngle(double angle)
@@ -1030,7 +1030,7 @@ public class Label : Misc
 	 * links (and use a different color for them).
 	 * Since 2.18
 	 * Params:
-	 * trackLinks =  TRUE to track visited links
+	 * trackLinks = TRUE to track visited links
 	 */
 	public void setTrackVisitedLinks(int trackLinks)
 	{

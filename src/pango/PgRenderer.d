@@ -139,10 +139,10 @@ public class PgRenderer : ObjectG
 	 * Draws layout with the specified PangoRenderer.
 	 * Since 1.8
 	 * Params:
-	 * layout =  a PangoLayout
-	 * x =  X position of left edge of baseline, in user space coordinates
+	 * layout = a PangoLayout
+	 * x = X position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
-	 * y =  Y position of left edge of baseline, in user space coordinates
+	 * y = Y position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
 	 */
 	public void drawLayout(PgLayout layout, int x, int y)
@@ -155,10 +155,10 @@ public class PgRenderer : ObjectG
 	 * Draws line with the specified PangoRenderer.
 	 * Since 1.8
 	 * Params:
-	 * line =  a PangoLayoutLine
-	 * x =  X position of left edge of baseline, in user space coordinates
+	 * line = a PangoLayoutLine
+	 * x = X position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
-	 * y =  Y position of left edge of baseline, in user space coordinates
+	 * y = Y position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
 	 */
 	public void drawLayoutLine(PgLayoutLine line, int x, int y)
@@ -171,11 +171,11 @@ public class PgRenderer : ObjectG
 	 * Draws the glyphs in glyphs with the specified PangoRenderer.
 	 * Since 1.8
 	 * Params:
-	 * font =  a PangoFont
-	 * glyphs =  a PangoGlyphString
-	 * x =  X position of left edge of baseline, in user space coordinates
+	 * font = a PangoFont
+	 * glyphs = a PangoGlyphString
+	 * x = X position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
-	 * y =  Y position of left edge of baseline, in user space coordinates
+	 * y = Y position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
 	 */
 	public void drawGlyphs(PgFont font, PgGlyphString glyphs, int x, int y)
@@ -195,11 +195,11 @@ public class PgRenderer : ObjectG
 	 * pango_renderer_draw_glyphs().
 	 * Since 1.22
 	 * Params:
-	 * text =  the UTF-8 text that glyph_item refers to, or NULL
-	 * glyphItem =  a PangoGlyphItem
-	 * x =  X position of left edge of baseline, in user space coordinates
+	 * text = the UTF-8 text that glyph_item refers to, or NULL
+	 * glyphItem = a PangoGlyphItem
+	 * x = X position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
-	 * y =  Y position of left edge of baseline, in user space coordinates
+	 * y = Y position of left edge of baseline, in user space coordinates
 	 *  in Pango units.
 	 */
 	public void drawGlyphItem(string text, PgGlyphItem glyphItem, int x, int y)
@@ -215,11 +215,11 @@ public class PgRenderer : ObjectG
 	 * pango_renderer_activate() to activate a renderer.
 	 * Since 1.8
 	 * Params:
-	 * part =  type of object this rectangle is part of
-	 * x =  X position at which to draw rectangle, in user space coordinates in Pango units
-	 * y =  Y position at which to draw rectangle, in user space coordinates in Pango units
-	 * width =  width of rectangle in Pango units in user space coordinates
-	 * height =  height of rectangle in Pango units in user space coordinates
+	 * part = type of object this rectangle is part of
+	 * x = X position at which to draw rectangle, in user space coordinates in Pango units
+	 * y = Y position at which to draw rectangle, in user space coordinates in Pango units
+	 * width = width of rectangle in Pango units in user space coordinates
+	 * height = height of rectangle in Pango units in user space coordinates
 	 */
 	public void drawRectangle(PangoRenderPart part, int x, int y, int width, int height)
 	{
@@ -237,10 +237,10 @@ public class PgRenderer : ObjectG
 	 * pango_renderer_activate() to activate a renderer.
 	 * Since 1.8
 	 * Params:
-	 * x =  X coordinate of underline, in Pango units in user coordinate system
-	 * y =  Y coordinate of underline, in Pango units in user coordinate system
-	 * width =  width of underline, in Pango units in user coordinate system
-	 * height =  height of underline, in Pango units in user coordinate system
+	 * x = X coordinate of underline, in Pango units in user coordinate system
+	 * y = Y coordinate of underline, in Pango units in user coordinate system
+	 * width = width of underline, in Pango units in user coordinate system
+	 * height = height of underline, in Pango units in user coordinate system
 	 */
 	public void drawErrorUnderline(int x, int y, int width, int height)
 	{
@@ -253,13 +253,13 @@ public class PgRenderer : ObjectG
 	 * using the given PangoRenderer; coordinates are in device space.
 	 * Since 1.8
 	 * Params:
-	 * part =  type of object this trapezoid is part of
-	 * y1_ =  Y coordinate of top of trapezoid
-	 * x11 =  X coordinate of left end of top of trapezoid
-	 * x21 =  X coordinate of right end of top of trapezoid
-	 * y2 =  Y coordinate of bottom of trapezoid
-	 * x12 =  X coordinate of left end of bottom of trapezoid
-	 * x22 =  X coordinate of right end of bottom of trapezoid
+	 * part = type of object this trapezoid is part of
+	 * y1_ = Y coordinate of top of trapezoid
+	 * x11 = X coordinate of left end of top of trapezoid
+	 * x21 = X coordinate of right end of top of trapezoid
+	 * y2 = Y coordinate of bottom of trapezoid
+	 * x12 = X coordinate of left end of bottom of trapezoid
+	 * x22 = X coordinate of right end of bottom of trapezoid
 	 */
 	public void drawTrapezoid(PangoRenderPart part, double y1_, double x11, double x21, double y2, double x12, double x22)
 	{
@@ -271,10 +271,10 @@ public class PgRenderer : ObjectG
 	 * Draws a single glyph with coordinates in device space.
 	 * Since 1.8
 	 * Params:
-	 * font =  a PangoFont
-	 * glyph =  the glyph index of a single glyph
-	 * x =  X coordinate of left edge of baseline of glyph
-	 * y =  Y coordinate of left edge of baseline of glyph
+	 * font = a PangoFont
+	 * glyph = the glyph index of a single glyph
+	 * x = X coordinate of left edge of baseline of glyph
+	 * y = Y coordinate of left edge of baseline of glyph
 	 */
 	public void drawGlyph(PgFont font, PangoGlyph glyph, double x, double y)
 	{
@@ -321,7 +321,7 @@ public class PgRenderer : ObjectG
 	 * changes to colors. (See pango_renderer_set_color())
 	 * Since 1.8
 	 * Params:
-	 * part =  the part for which rendering has changed.
+	 * part = the part for which rendering has changed.
 	 */
 	public void partChanged(PangoRenderPart part)
 	{
@@ -333,8 +333,8 @@ public class PgRenderer : ObjectG
 	 * Sets the color for part of the rendering.
 	 * Since 1.8
 	 * Params:
-	 * part =  the part to change the color of
-	 * color =  the new color or NULL to unset the current color
+	 * part = the part to change the color of
+	 * color = the new color or NULL to unset the current color
 	 */
 	public void setColor(PangoRenderPart part, PgColor color)
 	{
@@ -346,7 +346,7 @@ public class PgRenderer : ObjectG
 	 * Gets the current rendering color for the specified part.
 	 * Since 1.8
 	 * Params:
-	 * part =  the part to get the color for
+	 * part = the part to get the color for
 	 * Returns: the color for the specified part, or NULL if it hasn't been set and should be inherited from the environment.
 	 */
 	public PgColor getColor(PangoRenderPart part)
@@ -364,7 +364,7 @@ public class PgRenderer : ObjectG
 	 * Sets the transformation matrix that will be applied when rendering.
 	 * Since 1.8
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL to unset any existing matrix.
+	 * matrix = a PangoMatrix, or NULL to unset any existing matrix.
 	 *  (No matrix set is the same as setting the identity matrix.)
 	 */
 	public void setMatrix(PgMatrix matrix)

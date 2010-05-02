@@ -133,8 +133,8 @@ public class EmblemedIcon : ObjectG, IconIF
 	 * Creates a new emblemed icon for icon with the emblem emblem.
 	 * Since 2.18
 	 * Params:
-	 * icon =  a GIcon
-	 * emblem =  a GEmblem
+	 * icon = a GIcon
+	 * emblem = a GEmblem
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconIF icon, Emblem emblem)
@@ -184,7 +184,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	 * Adds emblem to the GList of GEmblem s.
 	 * Since 2.18
 	 * Params:
-	 * emblem =  a GEmblem
+	 * emblem = a GEmblem
 	 */
 	public void addEmblem(Emblem emblem)
 	{

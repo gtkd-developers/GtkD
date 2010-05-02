@@ -544,7 +544,7 @@ public class RcStyle : ObjectG
 	 * created styles, so a new style may not be
 	 * created.)
 	 * Params:
-	 * widget =  a GtkWidget
+	 * widget = a GtkWidget
 	 * Returns: the resulting style. No refcount is added to the returned style, so if you want to save this style around, you should add a reference yourself.
 	 */
 	public static Style getStyle(Widget widget)
@@ -565,12 +565,12 @@ public class RcStyle : ObjectG
 	 * don't actually have corresponding GTK+ widgets. An example of this
 	 * would be items inside a GNOME canvas widget.
 	 * Params:
-	 * settings =  a GtkSettings object
-	 * widgetPath =  the widget path to use when looking up the style, or NULL
+	 * settings = a GtkSettings object
+	 * widgetPath = the widget path to use when looking up the style, or NULL
 	 *  if no matching against the widget path should be done
-	 * classPath =  the class path to use when looking up the style, or NULL
+	 * classPath = the class path to use when looking up the style, or NULL
 	 *  if no matching against the class path should be done.
-	 * type =  a type that will be used along with parent types of this type
+	 * type = a type that will be used along with parent types of this type
 	 *  when matching against class styles, or G_TYPE_NONE
 	 * Returns: A style created by matching with the supplied paths, or NULL if nothing matching was specified and the default style should be used. The returned value is owned by GTK+ as part of an internal cache, so you must call g_object_ref() on the returned value if you want to keep a reference to it.
 	 */
@@ -664,8 +664,8 @@ public class RcStyle : ObjectG
 	 * for the given GtkSettings has changed, discard all style information
 	 * and then reread all previously read RC files.
 	 * Params:
-	 * settings =  a GtkSettings
-	 * forceLoad =  load whether or not anything changed
+	 * settings = a GtkSettings
+	 * forceLoad = load whether or not anything changed
 	 * Returns: TRUE if the files were reread.
 	 */
 	public static int reparseAllForSettings(Settings settings, int forceLoad)
@@ -687,7 +687,7 @@ public class RcStyle : ObjectG
 	 * with gtk_widget_set_style().
 	 * Since 2.4
 	 * Params:
-	 * settings =  a GtkSettings
+	 * settings = a GtkSettings
 	 */
 	public static void resetStyles(Settings settings)
 	{
@@ -699,7 +699,7 @@ public class RcStyle : ObjectG
 	 * Adds a file to the list of files to be parsed at the
 	 * end of gtk_init().
 	 * Params:
-	 * filename =  the pathname to the file. If filename is not absolute, it
+	 * filename = the pathname to the file. If filename is not absolute, it
 	 *  is searched in the current directory.
 	 */
 	public static void addDefaultFile(string filename)
@@ -723,7 +723,7 @@ public class RcStyle : ObjectG
 	 * Sets the list of files that GTK+ will read at the
 	 * end of gtk_init().
 	 * Params:
-	 * filenames =  A NULL-terminated list of filenames.
+	 * filenames = A NULL-terminated list of filenames.
 	 */
 	public static void setDefaultFiles(string[] filenames)
 	{
@@ -737,8 +737,8 @@ public class RcStyle : ObjectG
 	 * Note that theme engines should use gtk_rc_parse_color_full() in
 	 * order to support symbolic colors.
 	 * Params:
-	 * scanner =  a GScanner
-	 * color =  a pointer to a GdkColor structure in which to store the result
+	 * scanner = a GScanner
+	 * color = a pointer to a GdkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */
 	public static uint parseColor(ScannerG scanner, Color color)
@@ -753,9 +753,9 @@ public class RcStyle : ObjectG
 	 * references to symbolic colors.
 	 * Since 2.12
 	 * Params:
-	 * scanner =  a GScanner
-	 * style =  a GtkRcStyle, or NULL
-	 * color =  a pointer to a GdkColor structure in which to store the result
+	 * scanner = a GScanner
+	 * style = a GtkRcStyle, or NULL
+	 * color = a pointer to a GdkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */
 	public static uint parseColorFull(ScannerG scanner, RcStyle style, Color color)
@@ -798,7 +798,7 @@ public class RcStyle : ObjectG
 	 * Searches for a theme engine in the GTK+ search path. This function
 	 * is not useful for applications and should not be used.
 	 * Params:
-	 * moduleFile =  name of a theme engine
+	 * moduleFile = name of a theme engine
 	 * Returns: The filename, if found (must be freed with g_free()), otherwise NULL.
 	 */
 	public static string findModuleInPath(string moduleFile)
@@ -812,10 +812,10 @@ public class RcStyle : ObjectG
 	 * If the file is not found, it outputs a warning message using
 	 * g_warning() and returns NULL.
 	 * Params:
-	 * settings =  a GtkSettings
-	 * scanner =  Scanner used to get line number information for the
+	 * settings = a GtkSettings
+	 * scanner = Scanner used to get line number information for the
 	 *  warning message, or NULL
-	 * pixmapFile =  name of the pixmap file to locate.
+	 * pixmapFile = name of the pixmap file to locate.
 	 * Returns: the filename.
 	 */
 	public static string findPixmapInPath(Settings settings, ScannerG scanner, string pixmapFile)

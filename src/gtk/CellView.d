@@ -197,7 +197,7 @@ public class CellView : Widget, CellLayoutIF
 	 * to it, and makes its show pixbuf.
 	 * Since 2.6
 	 * Params:
-	 * pixbuf =  the image to display in the cell view
+	 * pixbuf = the image to display in the cell view
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
@@ -217,7 +217,7 @@ public class CellView : Widget, CellLayoutIF
 	 * NULL, then it will unset the old model.
 	 * Since 2.6
 	 * Params:
-	 * model =  a GtkTreeModel
+	 * model = a GtkTreeModel
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -251,7 +251,7 @@ public class CellView : Widget, CellLayoutIF
 	 * the GtkCellView becomes temporarily empty.
 	 * Since 2.6
 	 * Params:
-	 * path =  a GtkTreePath or NULL to unset.
+	 * path = a GtkTreePath or NULL to unset.
 	 */
 	public void setDisplayedRow(TreePath path)
 	{
@@ -282,8 +282,8 @@ public class CellView : Widget, CellLayoutIF
 	 * the model row pointed to by path.
 	 * Since 2.6
 	 * Params:
-	 * path =  a GtkTreePath
-	 * requisition =  return location for the size
+	 * path = a GtkTreePath
+	 * requisition = return location for the size
 	 * Returns: TRUE
 	 */
 	public int getSizeOfRow(TreePath path, out GtkRequisition requisition)
@@ -296,7 +296,7 @@ public class CellView : Widget, CellLayoutIF
 	 * Sets the background color of view.
 	 * Since 2.6
 	 * Params:
-	 * color =  the new background color
+	 * color = the new background color
 	 */
 	public void setBackgroundColor(Color color)
 	{

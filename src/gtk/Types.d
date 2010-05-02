@@ -140,7 +140,7 @@ public class Types
 	 * Returns a pointer pointing to the class of type or NULL if there was
 	 * any trouble identifying type. Initializes the class if necessary.
 	 * Params:
-	 * type =  a GtkType.
+	 * type = a GtkType.
 	 * Returns: pointer to the class.
 	 */
 	public static void* clss(GtkType type)

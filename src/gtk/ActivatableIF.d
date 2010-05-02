@@ -80,7 +80,7 @@ private import gtk.Action;
  * the action pointer and boolean flag on your instance, and calling
  * gtk_activatable_do_set_related_action() and
  * gtk_activatable_sync_action_properties() at the appropriate times.
- * Example 36. A class fragment implementing GtkActivatable
+ * Example  36.  A class fragment implementing GtkActivatable
  * enum {
 	 * ...
 	 * PROP_ACTIVATABLE_RELATED_ACTION,
@@ -273,7 +273,7 @@ public interface ActivatableIF
 	 * gtk_activatable_get_action() to retrieve the previous action
 	 * Since 2.16
 	 * Params:
-	 * action =  the GtkAction to set
+	 * action = the GtkAction to set
 	 */
 	public void doSetRelatedAction(Action action);
 	
@@ -300,7 +300,7 @@ public interface ActivatableIF
 	 * "use-action-appearance" changes.
 	 * Since 2.16
 	 * Params:
-	 * action =  the related GtkAction or NULL
+	 * action = the related GtkAction or NULL
 	 */
 	public void syncActionProperties(Action action);
 	
@@ -311,7 +311,7 @@ public interface ActivatableIF
 	 * property and call gtk_activatable_do_set_related_action() when it changes.
 	 * Since 2.16
 	 * Params:
-	 * action =  the GtkAction to set
+	 * action = the GtkAction to set
 	 */
 	public void setRelatedAction(Action action);
 	
@@ -325,7 +325,7 @@ public interface ActivatableIF
 	 * if needed.
 	 * Since 2.16
 	 * Params:
-	 * useAppearance =  whether to use the actions appearance
+	 * useAppearance = whether to use the actions appearance
 	 */
 	public void setUseActionAppearance(int useAppearance);
 }

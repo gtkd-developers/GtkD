@@ -246,7 +246,7 @@ public class TreeSelection : ObjectG
 	 * GTK_SELECTION_MULTIPLE, then the anchor is kept selected, if it was
 	 * previously selected.
 	 * Params:
-	 * type =  The selection mode
+	 * type = The selection mode
 	 */
 	public void setMode(GtkSelectionMode type)
 	{
@@ -271,9 +271,9 @@ public class TreeSelection : ObjectG
 	 * The select function should return TRUE if the state of the node may be toggled,
 	 * and FALSE if the state of the node should be left unchanged.
 	 * Params:
-	 * func =  The selection function.
-	 * data =  The selection function's data.
-	 * destroy =  The destroy function for user data. May be NULL.
+	 * func = The selection function.
+	 * data = The selection function's data.
+	 * destroy = The destroy function for user data. May be NULL.
 	 */
 	public void setSelectFunction(GtkTreeSelectionFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -324,8 +324,8 @@ public class TreeSelection : ObjectG
 	 * with the current model as a convenience. This function will not work if you
 	 * use selection is GTK_SELECTION_MULTIPLE.
 	 * Params:
-	 * model =  A pointer to set to the GtkTreeModel, or NULL.
-	 * iter =  The GtkTreeIter, or NULL.
+	 * model = A pointer to set to the GtkTreeModel, or NULL.
+	 * iter = The GtkTreeIter, or NULL.
 	 * Returns: TRUE, if there is a selected node.
 	 */
 	public int getSelected(out TreeModelIF model, TreeIter iter)
@@ -344,8 +344,8 @@ public class TreeSelection : ObjectG
 	 * the tree or selection from within this function. As a result,
 	 * gtk_tree_selection_get_selected_rows() might be more useful.
 	 * Params:
-	 * func =  The function to call for each selected node.
-	 * data =  user data to pass to the function.
+	 * func = The function to call for each selected node.
+	 * data = user data to pass to the function.
 	 */
 	public void selectedForeach(GtkTreeSelectionForeachFunc func, void* data)
 	{
@@ -367,7 +367,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Select the row at path.
 	 * Params:
-	 * path =  The GtkTreePath to be selected.
+	 * path = The GtkTreePath to be selected.
 	 */
 	public void selectPath(TreePath path)
 	{
@@ -378,7 +378,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Unselects the row at path.
 	 * Params:
-	 * path =  The GtkTreePath to be unselected.
+	 * path = The GtkTreePath to be unselected.
 	 */
 	public void unselectPath(TreePath path)
 	{
@@ -390,7 +390,7 @@ public class TreeSelection : ObjectG
 	 * Returns TRUE if the row pointed to by path is currently selected. If path
 	 * does not point to a valid location, FALSE is returned
 	 * Params:
-	 * path =  A GtkTreePath to check selection on.
+	 * path = A GtkTreePath to check selection on.
 	 * Returns: TRUE if path is selected.
 	 */
 	public int pathIsSelected(TreePath path)
@@ -402,7 +402,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Selects the specified iterator.
 	 * Params:
-	 * iter =  The GtkTreeIter to be selected.
+	 * iter = The GtkTreeIter to be selected.
 	 */
 	public void selectIter(TreeIter iter)
 	{
@@ -413,7 +413,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Unselects the specified iterator.
 	 * Params:
-	 * iter =  The GtkTreeIter to be unselected.
+	 * iter = The GtkTreeIter to be unselected.
 	 */
 	public void unselectIter(TreeIter iter)
 	{
@@ -424,7 +424,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Returns TRUE if the row at iter is currently selected.
 	 * Params:
-	 * iter =  A valid GtkTreeIter
+	 * iter = A valid GtkTreeIter
 	 * Returns: TRUE, if iter is selected
 	 */
 	public int iterIsSelected(TreeIter iter)
@@ -456,8 +456,8 @@ public class TreeSelection : ObjectG
 	 * Selects a range of nodes, determined by start_path and end_path inclusive.
 	 * selection must be set to GTK_SELECTION_MULTIPLE mode.
 	 * Params:
-	 * startPath =  The initial node of the range.
-	 * endPath =  The final node of the range.
+	 * startPath = The initial node of the range.
+	 * endPath = The final node of the range.
 	 */
 	public void selectRange(TreePath startPath, TreePath endPath)
 	{
@@ -478,8 +478,8 @@ public class TreeSelection : ObjectG
 	 * of rows are selected, and it may occasionally be emitted when nothing
 	 * has happened.
 	 * Params:
-	 * startPath =  The initial node of the range.
-	 * endPath =  The initial node of the range.
+	 * startPath = The initial node of the range.
+	 * endPath = The initial node of the range.
 	 */
 	public void unselectRange(TreePath startPath, TreePath endPath)
 	{

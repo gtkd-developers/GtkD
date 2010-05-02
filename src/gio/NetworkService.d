@@ -131,9 +131,9 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	 * GSocketConnectable interface to resolve it.
 	 * Since 2.22
 	 * Params:
-	 * service =  the service type to look up (eg, "ldap")
-	 * protocol =  the networking protocol to use for service (eg, "tcp")
-	 * domain =  the DNS domain to look up the service in
+	 * service = the service type to look up (eg, "ldap")
+	 * protocol = the networking protocol to use for service (eg, "tcp")
+	 * domain = the DNS domain to look up the service in
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string service, string protocol, string domain)

@@ -131,8 +131,8 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 * struct sockaddr native.
 	 * Since 2.22
 	 * Params:
-	 * native =  a pointer to a struct sockaddr
-	 * len =  the size of the memory location pointed to by native
+	 * native = a pointer to a struct sockaddr
+	 * len = the size of the memory location pointed to by native
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* native, uint len)
@@ -166,9 +166,9 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 * then a G_IO_ERROR_NOT_SUPPORTED error is returned.
 	 * Since 2.22
 	 * Params:
-	 * dest =  a pointer to a memory location that will contain the native
+	 * dest = a pointer to a memory location that will contain the native
 	 * struct sockaddr.
-	 * destlen =  the size of dest. Must be at least as large as
+	 * destlen = the size of dest. Must be at least as large as
 	 * g_socket_address_get_native_size().
 	 * Returns: TRUE if dest was filled in, FALSE on error
 	 * Throws: GException on failure.

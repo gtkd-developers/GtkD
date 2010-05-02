@@ -130,14 +130,14 @@ public class Selection
 	 * Sets the GdkWindow owner as the current owner of the selection selection.
 	 * Since 2.2
 	 * Params:
-	 * display =  the GdkDisplay.
-	 * owner =  a GdkWindow or NULL to indicate that the owner for
+	 * display = the GdkDisplay.
+	 * owner = a GdkWindow or NULL to indicate that the owner for
 	 *  the given should be unset.
-	 * selection =  an atom identifying a selection.
-	 * time =  timestamp to use when setting the selection.
+	 * selection = an atom identifying a selection.
+	 * time = timestamp to use when setting the selection.
 	 *  If this is older than the timestamp given last time the owner was
 	 *  set for the given selection, the request will be ignored.
-	 * sendEvent =  if TRUE, and the new owner is different from the current
+	 * sendEvent = if TRUE, and the new owner is different from the current
 	 *  owner, the current owner will be sent a SelectionClear event.
 	 * Returns: TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
 	 */
@@ -171,8 +171,8 @@ public class Selection
 	 * window, but a new foreign window will never be created by this call.
 	 * Since 2.2
 	 * Params:
-	 * display =  a GdkDisplay.
-	 * selection =  an atom indentifying a selection.
+	 * display = a GdkDisplay.
+	 * selection = an atom indentifying a selection.
 	 * Returns: if there is a selection owner for this window, and it is a  window known to the current process, the GdkWindow that owns the  selection, otherwise NULL.
 	 */
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
@@ -211,16 +211,16 @@ public class Selection
 	 * will not be used by applications, who should use the GtkClipboard
 	 * API instead.
 	 * Params:
-	 * requestor =  the window on which the data is stored
-	 * data =  location to store a pointer to the retrieved data.
+	 * requestor = the window on which the data is stored
+	 * data = location to store a pointer to the retrieved data.
 	 *  If the retrieval failed, NULL we be stored here, otherwise, it
 	 *  will be non-NULL and the returned data should be freed with g_free()
 	 *  when you are finished using it. The length of the
 	 *  allocated memory is one more than the length
 	 *  of the returned data, and the final byte will always
 	 *  be zero, to ensure nul-termination of strings.
-	 * propType =  location to store the type of the property.
-	 * propFormat =  location to store the format of the property.
+	 * propType = location to store the type of the property.
+	 * propFormat = location to store the format of the property.
 	 * Returns: the length of the retrieved data.
 	 */
 	public static int propertyGet(Window requestor, char** data, GdkAtom* propType, int* propFormat)
@@ -250,13 +250,13 @@ public class Selection
 	 * Send a response to SelectionRequest event.
 	 * Since 2.2
 	 * Params:
-	 * display =  the GdkDisplay where requestor is realized
-	 * requestor =  window to which to deliver response.
-	 * selection =  selection that was requested.
-	 * target =  target that was selected.
-	 * property =  property in which the selection owner stored the data,
+	 * display = the GdkDisplay where requestor is realized
+	 * requestor = window to which to deliver response.
+	 * selection = selection that was requested.
+	 * target = target that was selected.
+	 * property = property in which the selection owner stored the data,
 	 *  or GDK_NONE to indicate that the request was rejected.
-	 * time =  timestamp.
+	 * time = timestamp.
 	 */
 	public static void sendNotifyForDisplay(Display display, GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
 	{

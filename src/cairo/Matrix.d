@@ -116,12 +116,12 @@ public class Matrix
 	 * Sets matrix to be the affine transformation given by
 	 * xx, yx, xy, yy, x0, y0. The transformation is given
 	 * Params:
-	 * xx =  xx component of the affine transformation
-	 * yx =  yx component of the affine transformation
-	 * xy =  xy component of the affine transformation
-	 * yy =  yy component of the affine transformation
-	 * x0 =  X translation component of the affine transformation
-	 * y0 =  Y translation component of the affine transformation
+	 * xx = xx component of the affine transformation
+	 * yx = yx component of the affine transformation
+	 * xy = xy component of the affine transformation
+	 * yy = yy component of the affine transformation
+	 * x0 = X translation component of the affine transformation
+	 * y0 = Y translation component of the affine transformation
 	 */
 	public void init(double xx, double yx, double xy, double yy, double x0, double y0)
 	{
@@ -142,8 +142,8 @@ public class Matrix
 	 * Initializes matrix to a transformation that translates by tx and
 	 * ty in the X and Y dimensions, respectively.
 	 * Params:
-	 * tx =  amount to translate in the X direction
-	 * ty =  amount to translate in the Y direction
+	 * tx = amount to translate in the X direction
+	 * ty = amount to translate in the Y direction
 	 */
 	public void initTranslate(double tx, double ty)
 	{
@@ -155,8 +155,8 @@ public class Matrix
 	 * Initializes matrix to a transformation that scales by sx and sy
 	 * in the X and Y dimensions, respectively.
 	 * Params:
-	 * sx =  scale factor in the X direction
-	 * sy =  scale factor in the Y direction
+	 * sx = scale factor in the X direction
+	 * sy = scale factor in the Y direction
 	 */
 	public void initScale(double sx, double sy)
 	{
@@ -167,7 +167,7 @@ public class Matrix
 	/**
 	 * Initialized matrix to a transformation that rotates by radians.
 	 * Params:
-	 * radians =  angle of rotation, in radians. The direction of rotation
+	 * radians = angle of rotation, in radians. The direction of rotation
 	 * is defined such that positive angles rotate in the direction from
 	 * the positive X axis toward the positive Y axis. With the default
 	 * axis orientation of cairo, positive angles rotate in a clockwise
@@ -185,8 +185,8 @@ public class Matrix
 	 * the coordinates by tx and ty, then apply the original transformation
 	 * to the coordinates.
 	 * Params:
-	 * tx =  amount to translate in the X direction
-	 * ty =  amount to translate in the Y direction
+	 * tx = amount to translate in the X direction
+	 * ty = amount to translate in the Y direction
 	 */
 	public void translate(double tx, double ty)
 	{
@@ -199,8 +199,8 @@ public class Matrix
 	 * effect of the new transformation is to first scale the coordinates
 	 * by sx and sy, then apply the original transformation to the coordinates.
 	 * Params:
-	 * sx =  scale factor in the X direction
-	 * sy =  scale factor in the Y direction
+	 * sx = scale factor in the X direction
+	 * sy = scale factor in the Y direction
 	 */
 	public void scale(double sx, double sy)
 	{
@@ -214,7 +214,7 @@ public class Matrix
 	 * coordinates by radians, then apply the original transformation
 	 * to the coordinates.
 	 * Params:
-	 * radians =  angle of rotation, in radians. The direction of rotation
+	 * radians = angle of rotation, in radians. The direction of rotation
 	 * is defined such that positive angles rotate in the direction from
 	 * the positive X axis toward the positive Y axis. With the default
 	 * axis orientation of cairo, positive angles rotate in a clockwise
@@ -247,8 +247,8 @@ public class Matrix
 	 * coordinates.
 	 * It is allowable for result to be identical to either a or b.
 	 * Params:
-	 * a =  a cairo_matrix_t
-	 * b =  a cairo_matrix_t
+	 * a = a cairo_matrix_t
+	 * b = a cairo_matrix_t
 	 */
 	public void multiply(Matrix a, Matrix b)
 	{
@@ -261,8 +261,8 @@ public class Matrix
 	 * similar to cairo_matrix_transform_point() except that the translation
 	 * components of the transformation are ignored. The calculation of
 	 * Params:
-	 * dx =  X component of a distance vector. An in/out parameter
-	 * dy =  Y component of a distance vector. An in/out parameter
+	 * dx = X component of a distance vector. An in/out parameter
+	 * dy = Y component of a distance vector. An in/out parameter
 	 */
 	public void transformDistance(ref double dx, ref double dy)
 	{
@@ -273,8 +273,8 @@ public class Matrix
 	/**
 	 * Transforms the point (x, y) by matrix.
 	 * Params:
-	 * x =  X position. An in/out parameter
-	 * y =  Y position. An in/out parameter
+	 * x = X position. An in/out parameter
+	 * y = Y position. An in/out parameter
 	 */
 	public void transformPoint(ref double x, ref double y)
 	{

@@ -161,7 +161,7 @@ public class FilenameCompleter : ObjectG
 	/**
 	 * Obtains a completion for initial_text from completer.
 	 * Params:
-	 * initialText =  text to be completed.
+	 * initialText = text to be completed.
 	 * Returns: a completed string, or NULL if no completion exists.  This string is not owned by GIO, so remember to g_free() it  when finished.
 	 */
 	public string getCompletionSuffix(string initialText)
@@ -173,7 +173,7 @@ public class FilenameCompleter : ObjectG
 	/**
 	 * Gets an array of completion strings for a given initial text.
 	 * Params:
-	 * initialText =  text to be completed.
+	 * initialText = text to be completed.
 	 * Returns: array of strings with possible completions for initial_text.This array must be freed by g_strfreev() when finished.
 	 */
 	public string[] getCompletions(string initialText)
@@ -186,7 +186,7 @@ public class FilenameCompleter : ObjectG
 	 * If dirs_only is TRUE, completer will only
 	 * complete directory names, and not file names.
 	 * Params:
-	 * dirsOnly =  a gboolean.
+	 * dirsOnly = a gboolean.
 	 * Signal Details
 	 * The "got-completion-data" signal
 	 * void user_function (GFilenameCompleter *arg0,

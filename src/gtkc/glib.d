@@ -1365,6 +1365,100 @@ static this()
 	Linker.link(g_variant_type_next, "g_variant_type_next", LIBRARY.GLIB);
 	Linker.link(g_variant_type_key, "g_variant_type_key", LIBRARY.GLIB);
 	Linker.link(g_variant_type_value, "g_variant_type_value", LIBRARY.GLIB);
+
+	// glib.Variant
+
+	Linker.link(g_variant_unref, "g_variant_unref", LIBRARY.GLIB);
+	Linker.link(g_variant_ref, "g_variant_ref", LIBRARY.GLIB);
+	Linker.link(g_variant_ref_sink, "g_variant_ref_sink", LIBRARY.GLIB);
+	Linker.link(g_variant_get_type, "g_variant_get_type", LIBRARY.GLIB);
+	Linker.link(g_variant_get_type_string, "g_variant_get_type_string", LIBRARY.GLIB);
+	Linker.link(g_variant_is_of_type, "g_variant_is_of_type", LIBRARY.GLIB);
+	Linker.link(g_variant_is_container, "g_variant_is_container", LIBRARY.GLIB);
+	Linker.link(g_variant_classify, "g_variant_classify", LIBRARY.GLIB);
+	Linker.link(g_variant_get, "g_variant_get", LIBRARY.GLIB);
+	Linker.link(g_variant_get_va, "g_variant_get_va", LIBRARY.GLIB);
+	Linker.link(g_variant_new, "g_variant_new", LIBRARY.GLIB);
+	Linker.link(g_variant_new_va, "g_variant_new_va", LIBRARY.GLIB);
+	Linker.link(g_variant_new_boolean, "g_variant_new_boolean", LIBRARY.GLIB);
+	Linker.link(g_variant_new_byte, "g_variant_new_byte", LIBRARY.GLIB);
+	Linker.link(g_variant_new_int16, "g_variant_new_int16", LIBRARY.GLIB);
+	Linker.link(g_variant_new_uint16, "g_variant_new_uint16", LIBRARY.GLIB);
+	Linker.link(g_variant_new_int32, "g_variant_new_int32", LIBRARY.GLIB);
+	Linker.link(g_variant_new_uint32, "g_variant_new_uint32", LIBRARY.GLIB);
+	Linker.link(g_variant_new_int64, "g_variant_new_int64", LIBRARY.GLIB);
+	Linker.link(g_variant_new_uint64, "g_variant_new_uint64", LIBRARY.GLIB);
+	Linker.link(g_variant_new_handle, "g_variant_new_handle", LIBRARY.GLIB);
+	Linker.link(g_variant_new_double, "g_variant_new_double", LIBRARY.GLIB);
+	Linker.link(g_variant_new_string, "g_variant_new_string", LIBRARY.GLIB);
+	Linker.link(g_variant_new_object_path, "g_variant_new_object_path", LIBRARY.GLIB);
+	Linker.link(g_variant_is_object_path, "g_variant_is_object_path", LIBRARY.GLIB);
+	Linker.link(g_variant_new_signature, "g_variant_new_signature", LIBRARY.GLIB);
+	Linker.link(g_variant_is_signature, "g_variant_is_signature", LIBRARY.GLIB);
+	Linker.link(g_variant_new_variant, "g_variant_new_variant", LIBRARY.GLIB);
+	Linker.link(g_variant_new_strv, "g_variant_new_strv", LIBRARY.GLIB);
+	Linker.link(g_variant_get_boolean, "g_variant_get_boolean", LIBRARY.GLIB);
+	Linker.link(g_variant_get_byte, "g_variant_get_byte", LIBRARY.GLIB);
+	Linker.link(g_variant_get_int16, "g_variant_get_int16", LIBRARY.GLIB);
+	Linker.link(g_variant_get_uint16, "g_variant_get_uint16", LIBRARY.GLIB);
+	Linker.link(g_variant_get_int32, "g_variant_get_int32", LIBRARY.GLIB);
+	Linker.link(g_variant_get_uint32, "g_variant_get_uint32", LIBRARY.GLIB);
+	Linker.link(g_variant_get_int64, "g_variant_get_int64", LIBRARY.GLIB);
+	Linker.link(g_variant_get_uint64, "g_variant_get_uint64", LIBRARY.GLIB);
+	Linker.link(g_variant_get_handle, "g_variant_get_handle", LIBRARY.GLIB);
+	Linker.link(g_variant_get_double, "g_variant_get_double", LIBRARY.GLIB);
+	Linker.link(g_variant_get_string, "g_variant_get_string", LIBRARY.GLIB);
+	Linker.link(g_variant_dup_string, "g_variant_dup_string", LIBRARY.GLIB);
+	Linker.link(g_variant_get_variant, "g_variant_get_variant", LIBRARY.GLIB);
+	Linker.link(g_variant_get_strv, "g_variant_get_strv", LIBRARY.GLIB);
+	Linker.link(g_variant_dup_strv, "g_variant_dup_strv", LIBRARY.GLIB);
+	Linker.link(g_variant_new_maybe, "g_variant_new_maybe", LIBRARY.GLIB);
+	Linker.link(g_variant_new_array, "g_variant_new_array", LIBRARY.GLIB);
+	Linker.link(g_variant_new_tuple, "g_variant_new_tuple", LIBRARY.GLIB);
+	Linker.link(g_variant_new_dict_entry, "g_variant_new_dict_entry", LIBRARY.GLIB);
+	Linker.link(g_variant_get_maybe, "g_variant_get_maybe", LIBRARY.GLIB);
+	Linker.link(g_variant_n_children, "g_variant_n_children", LIBRARY.GLIB);
+	Linker.link(g_variant_get_child_value, "g_variant_get_child_value", LIBRARY.GLIB);
+	Linker.link(g_variant_get_child, "g_variant_get_child", LIBRARY.GLIB);
+	Linker.link(g_variant_get_fixed_array, "g_variant_get_fixed_array", LIBRARY.GLIB);
+	Linker.link(g_variant_get_size, "g_variant_get_size", LIBRARY.GLIB);
+	Linker.link(g_variant_get_data, "g_variant_get_data", LIBRARY.GLIB);
+	Linker.link(g_variant_store, "g_variant_store", LIBRARY.GLIB);
+	Linker.link(g_variant_new_from_data, "g_variant_new_from_data", LIBRARY.GLIB);
+	Linker.link(g_variant_byteswap, "g_variant_byteswap", LIBRARY.GLIB);
+	Linker.link(g_variant_get_normal_form, "g_variant_get_normal_form", LIBRARY.GLIB);
+	Linker.link(g_variant_is_normal_form, "g_variant_is_normal_form", LIBRARY.GLIB);
+	Linker.link(g_variant_hash, "g_variant_hash", LIBRARY.GLIB);
+	Linker.link(g_variant_equal, "g_variant_equal", LIBRARY.GLIB);
+	Linker.link(g_variant_print, "g_variant_print", LIBRARY.GLIB);
+	Linker.link(g_variant_print_string, "g_variant_print_string", LIBRARY.GLIB);
+	Linker.link(g_variant_parse, "g_variant_parse", LIBRARY.GLIB);
+	Linker.link(g_variant_new_parsed_va, "g_variant_new_parsed_va", LIBRARY.GLIB);
+	Linker.link(g_variant_new_parsed, "g_variant_new_parsed", LIBRARY.GLIB);
+
+	// glib.VariantIter
+
+	Linker.link(g_variant_iter_copy, "g_variant_iter_copy", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_free, "g_variant_iter_free", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_init, "g_variant_iter_init", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_n_children, "g_variant_iter_n_children", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_new, "g_variant_iter_new", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_next_value, "g_variant_iter_next_value", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_next, "g_variant_iter_next", LIBRARY.GLIB);
+	Linker.link(g_variant_iter_loop, "g_variant_iter_loop", LIBRARY.GLIB);
+
+	// glib.VariantBuilder
+
+	Linker.link(g_variant_builder_unref, "g_variant_builder_unref", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_ref, "g_variant_builder_ref", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_new, "g_variant_builder_new", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_init, "g_variant_builder_init", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_clear, "g_variant_builder_clear", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_add_value, "g_variant_builder_add_value", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_add, "g_variant_builder_add", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_end, "g_variant_builder_end", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_open, "g_variant_builder_open", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_close, "g_variant_builder_close", LIBRARY.GLIB);
 }
 
 mixin( gshared ~"extern(C)
@@ -2675,7 +2769,7 @@ mixin( gshared ~"extern(C)
 	GVariantType* function(GVariantType* type) c_g_variant_type_copy;
 	GVariantType* function(gchar* typeString) c_g_variant_type_new;
 	gboolean function(gchar* typeString) c_g_variant_type_string_is_valid;
-	gboolean function(gchar* string, gchar* limit, gchar** endptr) c_g_variant_type_string_scan;
+	gboolean function(gchar* str, gchar* limit, gchar** endptr) c_g_variant_type_string_scan;
 	gsize function(GVariantType* type) c_g_variant_type_get_string_length;
 	gchar* function(GVariantType* type) c_g_variant_type_peek_string;
 	gchar* function(GVariantType* type) c_g_variant_type_dup_string;
@@ -2700,6 +2794,100 @@ mixin( gshared ~"extern(C)
 	GVariantType* function(GVariantType* type) c_g_variant_type_next;
 	GVariantType* function(GVariantType* type) c_g_variant_type_key;
 	GVariantType* function(GVariantType* type) c_g_variant_type_value;
+	
+	// glib.Variant
+	
+	void function(GVariant* value) c_g_variant_unref;
+	GVariant* function(GVariant* value) c_g_variant_ref;
+	GVariant* function(GVariant* value) c_g_variant_ref_sink;
+	GVariantType* function(GVariant* value) c_g_variant_get_type;
+	gchar* function(GVariant* value) c_g_variant_get_type_string;
+	gboolean function(GVariant* value, GVariantType* type) c_g_variant_is_of_type;
+	gboolean function(GVariant* value) c_g_variant_is_container;
+	GVariantClass function(GVariant* value) c_g_variant_classify;
+	void function(GVariant* value, gchar* formatString, ... ) c_g_variant_get;
+	void function(GVariant* value, gchar* formatString, gchar** endptr, va_list* app) c_g_variant_get_va;
+	GVariant* function(gchar* formatString, ... ) c_g_variant_new;
+	GVariant* function(gchar* formatString, gchar** endptr, va_list* app) c_g_variant_new_va;
+	GVariant* function(gboolean boolean) c_g_variant_new_boolean;
+	GVariant* function(guchar b) c_g_variant_new_byte;
+	GVariant* function(gint16 int16) c_g_variant_new_int16;
+	GVariant* function(guint16 uint16) c_g_variant_new_uint16;
+	GVariant* function(gint32 int32) c_g_variant_new_int32;
+	GVariant* function(guint32 uint32) c_g_variant_new_uint32;
+	GVariant* function(gint64 int64) c_g_variant_new_int64;
+	GVariant* function(guint64 uint64) c_g_variant_new_uint64;
+	GVariant* function(gint32 handle) c_g_variant_new_handle;
+	GVariant* function(gdouble floating) c_g_variant_new_double;
+	GVariant* function(gchar* string) c_g_variant_new_string;
+	GVariant* function(gchar* objectPath) c_g_variant_new_object_path;
+	gboolean function(gchar* string) c_g_variant_is_object_path;
+	GVariant* function(gchar* signature) c_g_variant_new_signature;
+	gboolean function(gchar* string) c_g_variant_is_signature;
+	GVariant* function(GVariant* value) c_g_variant_new_variant;
+	GVariant* function(gchar** strv, gssize length) c_g_variant_new_strv;
+	gboolean function(GVariant* value) c_g_variant_get_boolean;
+	guchar function(GVariant* value) c_g_variant_get_byte;
+	gint16 function(GVariant* value) c_g_variant_get_int16;
+	guint16 function(GVariant* value) c_g_variant_get_uint16;
+	gint32 function(GVariant* value) c_g_variant_get_int32;
+	guint32 function(GVariant* value) c_g_variant_get_uint32;
+	gint64 function(GVariant* value) c_g_variant_get_int64;
+	guint64 function(GVariant* value) c_g_variant_get_uint64;
+	gint32 function(GVariant* value) c_g_variant_get_handle;
+	gdouble function(GVariant* value) c_g_variant_get_double;
+	gchar* function(GVariant* value, gsize* length) c_g_variant_get_string;
+	gchar* function(GVariant* value, gsize* length) c_g_variant_dup_string;
+	GVariant* function(GVariant* value) c_g_variant_get_variant;
+	gchar** function(GVariant* value, gsize* length) c_g_variant_get_strv;
+	gchar** function(GVariant* value, gsize* length) c_g_variant_dup_strv;
+	GVariant* function(GVariantType* childType, GVariant* child) c_g_variant_new_maybe;
+	GVariant* function(GVariantType* childType, GVariant** children, gsize nChildren) c_g_variant_new_array;
+	GVariant* function(GVariant** children, gsize nChildren) c_g_variant_new_tuple;
+	GVariant* function(GVariant* key, GVariant* value) c_g_variant_new_dict_entry;
+	GVariant* function(GVariant* value) c_g_variant_get_maybe;
+	gsize function(GVariant* value) c_g_variant_n_children;
+	GVariant* function(GVariant* value, gsize index) c_g_variant_get_child_value;
+	void function(GVariant* value, gsize index, gchar* formatString, ... ) c_g_variant_get_child;
+	gconstpointer function(GVariant* value, gsize* nElements, gsize elementSize) c_g_variant_get_fixed_array;
+	gsize function(GVariant* value) c_g_variant_get_size;
+	gconstpointer function(GVariant* value) c_g_variant_get_data;
+	void function(GVariant* value, gpointer data) c_g_variant_store;
+	GVariant* function(GVariantType* type, gconstpointer data, gsize size, gboolean trusted, GDestroyNotify notify, gpointer userData) c_g_variant_new_from_data;
+	GVariant* function(GVariant* value) c_g_variant_byteswap;
+	GVariant* function(GVariant* value) c_g_variant_get_normal_form;
+	gboolean function(GVariant* value) c_g_variant_is_normal_form;
+	guint function(gconstpointer value) c_g_variant_hash;
+	gboolean function(gconstpointer one, gconstpointer two) c_g_variant_equal;
+	gchar* function(GVariant* value, gboolean typeAnnotate) c_g_variant_print;
+	GString* function(GVariant* value, GString* string, gboolean typeAnnotate) c_g_variant_print_string;
+	GVariant* function(GVariantType* type, gchar* text, gchar* limit, gchar** endptr, GError** error) c_g_variant_parse;
+	GVariant* function(gchar* format, va_list* app) c_g_variant_new_parsed_va;
+	GVariant* function(gchar* format, ... ) c_g_variant_new_parsed;
+	
+	// glib.VariantIter
+	
+	GVariantIter* function(GVariantIter* iter) c_g_variant_iter_copy;
+	void function(GVariantIter* iter) c_g_variant_iter_free;
+	gsize function(GVariantIter* iter, GVariant* value) c_g_variant_iter_init;
+	gsize function(GVariantIter* iter) c_g_variant_iter_n_children;
+	GVariantIter* function(GVariant* value) c_g_variant_iter_new;
+	GVariant* function(GVariantIter* iter) c_g_variant_iter_next_value;
+	gboolean function(GVariantIter* iter, gchar* formatString, ... ) c_g_variant_iter_next;
+	gboolean function(GVariantIter* iter, gchar* formatString, ... ) c_g_variant_iter_loop;
+	
+	// glib.VariantBuilder
+	
+	void function(GVariantBuilder* builder) c_g_variant_builder_unref;
+	GVariantBuilder* function(GVariantBuilder* builder) c_g_variant_builder_ref;
+	GVariantBuilder* function(GVariantType* type) c_g_variant_builder_new;
+	void function(GVariantBuilder* builder, GVariantType* type) c_g_variant_builder_init;
+	void function(GVariantBuilder* builder) c_g_variant_builder_clear;
+	void function(GVariantBuilder* builder, GVariant* value) c_g_variant_builder_add_value;
+	void function(GVariantBuilder* builder, gchar* formatString, ... ) c_g_variant_builder_add;
+	GVariant* function(GVariantBuilder* builder) c_g_variant_builder_end;
+	void function(GVariantBuilder* builder, GVariantType* type) c_g_variant_builder_open;
+	void function(GVariantBuilder* builder) c_g_variant_builder_close;
 }");
 
 // glib.Version
@@ -4032,3 +4220,97 @@ alias c_g_variant_type_first  g_variant_type_first;
 alias c_g_variant_type_next  g_variant_type_next;
 alias c_g_variant_type_key  g_variant_type_key;
 alias c_g_variant_type_value  g_variant_type_value;
+
+// glib.Variant
+
+alias c_g_variant_unref  g_variant_unref;
+alias c_g_variant_ref  g_variant_ref;
+alias c_g_variant_ref_sink  g_variant_ref_sink;
+alias c_g_variant_get_type  g_variant_get_type;
+alias c_g_variant_get_type_string  g_variant_get_type_string;
+alias c_g_variant_is_of_type  g_variant_is_of_type;
+alias c_g_variant_is_container  g_variant_is_container;
+alias c_g_variant_classify  g_variant_classify;
+alias c_g_variant_get  g_variant_get;
+alias c_g_variant_get_va  g_variant_get_va;
+alias c_g_variant_new  g_variant_new;
+alias c_g_variant_new_va  g_variant_new_va;
+alias c_g_variant_new_boolean  g_variant_new_boolean;
+alias c_g_variant_new_byte  g_variant_new_byte;
+alias c_g_variant_new_int16  g_variant_new_int16;
+alias c_g_variant_new_uint16  g_variant_new_uint16;
+alias c_g_variant_new_int32  g_variant_new_int32;
+alias c_g_variant_new_uint32  g_variant_new_uint32;
+alias c_g_variant_new_int64  g_variant_new_int64;
+alias c_g_variant_new_uint64  g_variant_new_uint64;
+alias c_g_variant_new_handle  g_variant_new_handle;
+alias c_g_variant_new_double  g_variant_new_double;
+alias c_g_variant_new_string  g_variant_new_string;
+alias c_g_variant_new_object_path  g_variant_new_object_path;
+alias c_g_variant_is_object_path  g_variant_is_object_path;
+alias c_g_variant_new_signature  g_variant_new_signature;
+alias c_g_variant_is_signature  g_variant_is_signature;
+alias c_g_variant_new_variant  g_variant_new_variant;
+alias c_g_variant_new_strv  g_variant_new_strv;
+alias c_g_variant_get_boolean  g_variant_get_boolean;
+alias c_g_variant_get_byte  g_variant_get_byte;
+alias c_g_variant_get_int16  g_variant_get_int16;
+alias c_g_variant_get_uint16  g_variant_get_uint16;
+alias c_g_variant_get_int32  g_variant_get_int32;
+alias c_g_variant_get_uint32  g_variant_get_uint32;
+alias c_g_variant_get_int64  g_variant_get_int64;
+alias c_g_variant_get_uint64  g_variant_get_uint64;
+alias c_g_variant_get_handle  g_variant_get_handle;
+alias c_g_variant_get_double  g_variant_get_double;
+alias c_g_variant_get_string  g_variant_get_string;
+alias c_g_variant_dup_string  g_variant_dup_string;
+alias c_g_variant_get_variant  g_variant_get_variant;
+alias c_g_variant_get_strv  g_variant_get_strv;
+alias c_g_variant_dup_strv  g_variant_dup_strv;
+alias c_g_variant_new_maybe  g_variant_new_maybe;
+alias c_g_variant_new_array  g_variant_new_array;
+alias c_g_variant_new_tuple  g_variant_new_tuple;
+alias c_g_variant_new_dict_entry  g_variant_new_dict_entry;
+alias c_g_variant_get_maybe  g_variant_get_maybe;
+alias c_g_variant_n_children  g_variant_n_children;
+alias c_g_variant_get_child_value  g_variant_get_child_value;
+alias c_g_variant_get_child  g_variant_get_child;
+alias c_g_variant_get_fixed_array  g_variant_get_fixed_array;
+alias c_g_variant_get_size  g_variant_get_size;
+alias c_g_variant_get_data  g_variant_get_data;
+alias c_g_variant_store  g_variant_store;
+alias c_g_variant_new_from_data  g_variant_new_from_data;
+alias c_g_variant_byteswap  g_variant_byteswap;
+alias c_g_variant_get_normal_form  g_variant_get_normal_form;
+alias c_g_variant_is_normal_form  g_variant_is_normal_form;
+alias c_g_variant_hash  g_variant_hash;
+alias c_g_variant_equal  g_variant_equal;
+alias c_g_variant_print  g_variant_print;
+alias c_g_variant_print_string  g_variant_print_string;
+alias c_g_variant_parse  g_variant_parse;
+alias c_g_variant_new_parsed_va  g_variant_new_parsed_va;
+alias c_g_variant_new_parsed  g_variant_new_parsed;
+
+// glib.VariantIter
+
+alias c_g_variant_iter_copy  g_variant_iter_copy;
+alias c_g_variant_iter_free  g_variant_iter_free;
+alias c_g_variant_iter_init  g_variant_iter_init;
+alias c_g_variant_iter_n_children  g_variant_iter_n_children;
+alias c_g_variant_iter_new  g_variant_iter_new;
+alias c_g_variant_iter_next_value  g_variant_iter_next_value;
+alias c_g_variant_iter_next  g_variant_iter_next;
+alias c_g_variant_iter_loop  g_variant_iter_loop;
+
+// glib.VariantBuilder
+
+alias c_g_variant_builder_unref  g_variant_builder_unref;
+alias c_g_variant_builder_ref  g_variant_builder_ref;
+alias c_g_variant_builder_new  g_variant_builder_new;
+alias c_g_variant_builder_init  g_variant_builder_init;
+alias c_g_variant_builder_clear  g_variant_builder_clear;
+alias c_g_variant_builder_add_value  g_variant_builder_add_value;
+alias c_g_variant_builder_add  g_variant_builder_add;
+alias c_g_variant_builder_end  g_variant_builder_end;
+alias c_g_variant_builder_open  g_variant_builder_open;
+alias c_g_variant_builder_close  g_variant_builder_close;

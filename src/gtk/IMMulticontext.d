@@ -136,7 +136,7 @@ public class IMMulticontext : IMContext
 	 * the menuitems, when selected, will switch the input method
 	 * for the context and the global default input method.
 	 * Params:
-	 * menushell =  a GtkMenuShell
+	 * menushell = a GtkMenuShell
 	 */
 	public void appendMenuitems(MenuShell menushell)
 	{
@@ -161,8 +161,8 @@ public class IMMulticontext : IMContext
 	 * replaced by the slave corresponding to the new context id.
 	 * Since 2.16
 	 * Params:
-	 * context =  a GtkIMMulticontext
-	 * contextId =  the id to use
+	 * context = a GtkIMMulticontext
+	 * contextId = the id to use
 	 */
 	public void setContextId(string contextId)
 	{

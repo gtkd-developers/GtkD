@@ -165,9 +165,9 @@ public class AccelMap : ObjectG
 	 * accelerator triggers, i.e. for accelerators on menu items, choose the item's menu path,
 	 * e.g. "File/Save As", "Image/View/Zoom" or "Edit/Select All".
 	 * Params:
-	 * accelPath =  valid accelerator path
-	 * accelKey =  the accelerator key
-	 * accelMods =  the accelerator modifiers
+	 * accelPath = valid accelerator path
+	 * accelKey = the accelerator key
+	 * accelMods = the accelerator modifiers
 	 */
 	public static void addEntry(string accelPath, uint accelKey, GdkModifierType accelMods)
 	{
@@ -178,8 +178,8 @@ public class AccelMap : ObjectG
 	/**
 	 * Looks up the accelerator entry for accel_path and fills in key.
 	 * Params:
-	 * accelPath =  a valid accelerator path
-	 * key =  the accelerator key to be filled in (optional)
+	 * accelPath = a valid accelerator path
+	 * key = the accelerator key to be filled in (optional)
 	 * Returns: TRUE if accel_path is known, FALSE otherwise
 	 */
 	public static int lookupEntry(string accelPath, out GtkAccelKey key)
@@ -199,10 +199,10 @@ public class AccelMap : ObjectG
 	 * pass a static string, you can save some memory by interning it first with
 	 * g_intern_static_string().
 	 * Params:
-	 * accelPath =  a valid accelerator path
-	 * accelKey =  the new accelerator key
-	 * accelMods =  the new accelerator modifiers
-	 * replace =  TRUE if other accelerators may be deleted upon conflicts
+	 * accelPath = a valid accelerator path
+	 * accelKey = the new accelerator key
+	 * accelMods = the new accelerator modifiers
+	 * replace = TRUE if other accelerators may be deleted upon conflicts
 	 * Returns: TRUE if the accelerator could be changed, FALSE otherwise
 	 */
 	public static int changeEntry(string accelPath, uint accelKey, GdkModifierType accelMods, int replace)
@@ -215,7 +215,7 @@ public class AccelMap : ObjectG
 	 * Parses a file previously saved with gtk_accel_map_save() for
 	 * accelerator specifications, and propagates them accordingly.
 	 * Params:
-	 * fileName =  a file containing accelerator specifications,
+	 * fileName = a file containing accelerator specifications,
 	 *  in the GLib file name encoding
 	 */
 	public static void load(string fileName)
@@ -230,7 +230,7 @@ public class AccelMap : ObjectG
 	 * The file is written in a format suitable to be read back in by
 	 * gtk_accel_map_load().
 	 * Params:
-	 * fileName =  the name of the file to contain accelerator specifications,
+	 * fileName = the name of the file to contain accelerator specifications,
 	 *  in the GLib file name encoding
 	 */
 	public static void save(string fileName)
@@ -247,8 +247,8 @@ public class AccelMap : ObjectG
 	 * this accelerator was changed during runtime (thus, would need
 	 * saving during an accelerator map dump).
 	 * Params:
-	 * data =  data to be passed into foreach_func
-	 * foreachFunc =  function to be executed for each accel map entry which
+	 * data = data to be passed into foreach_func
+	 * foreachFunc = function to be executed for each accel map entry which
 	 *  is not filtered out
 	 */
 	public static void foreac(void* data, GtkAccelMapForeach foreachFunc)
@@ -261,7 +261,7 @@ public class AccelMap : ObjectG
 	 * Filedescriptor variant of gtk_accel_map_load().
 	 * Note that the file descriptor will not be closed by this function.
 	 * Params:
-	 * fd =  a valid readable file descriptor
+	 * fd = a valid readable file descriptor
 	 */
 	public static void loadFd(int fd)
 	{
@@ -273,7 +273,7 @@ public class AccelMap : ObjectG
 	 * Filedescriptor variant of gtk_accel_map_save().
 	 * Note that the file descriptor will not be closed by this function.
 	 * Params:
-	 * fd =  a valid writable file descriptor
+	 * fd = a valid writable file descriptor
 	 */
 	public static void saveFd(int fd)
 	{
@@ -284,7 +284,7 @@ public class AccelMap : ObjectG
 	/**
 	 * GScanner variant of gtk_accel_map_load().
 	 * Params:
-	 * scanner =  a GScanner which has already been provided with an input file
+	 * scanner = a GScanner which has already been provided with an input file
 	 */
 	public static void loadScanner(ScannerG scanner)
 	{
@@ -300,7 +300,7 @@ public class AccelMap : ObjectG
 	 * menus, but don't want them to be saved into the applications accelerator
 	 * map dump.
 	 * Params:
-	 * filterPattern =  a pattern (see GPatternSpec)
+	 * filterPattern = a pattern (see GPatternSpec)
 	 */
 	public static void addFilter(string filterPattern)
 	{
@@ -315,8 +315,8 @@ public class AccelMap : ObjectG
 	 * this accelerator was changed during runtime (thus, would need
 	 * saving during an accelerator map dump).
 	 * Params:
-	 * data =  data to be passed into foreach_func
-	 * foreachFunc =  function to be executed for each accel map entry
+	 * data = data to be passed into foreach_func
+	 * foreachFunc = function to be executed for each accel map entry
 	 */
 	public static void foreachUnfiltered(void* data, GtkAccelMapForeach foreachFunc)
 	{
@@ -359,7 +359,7 @@ public class AccelMap : ObjectG
 	 * have to be unlocked.
 	 * Since 2.4
 	 * Params:
-	 * accelPath =  a valid accelerator path
+	 * accelPath = a valid accelerator path
 	 */
 	public static void lockPath(string accelPath)
 	{
@@ -384,8 +384,8 @@ public class AccelMap : ObjectG
 	 * changed::accel_path.
 	 * Since 2.4
 	 * Params:
-	 * accelPath =  a valid accelerator path
-	 * accelPath =  the path of the accelerator that changed
+	 * accelPath = a valid accelerator path
+	 * accelPath = the path of the accelerator that changed
 	 */
 	public static void unlockPath(string accelPath)
 	{

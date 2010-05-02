@@ -2217,10 +2217,62 @@ class: VariantType
 prefix: g_variant_type_
 import: glib.Str
 structWrap: GVariantType* VariantType
+alias: string str
 
 out: g_variant_type_string_scan endptr
 array: g_variant_type_new_tuple items length
 outFile: VariantType
+
+file: glib-GVariant.html
+struct: GVariant
+class: Variant
+prefix: g_variant_
+noprefix: g_variant_iter_
+noprefix: g_variant_builder_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.StringG
+import: glib.VariantType
+structWrap: GString* StringG
+structWrap: GVariant* Variant
+structWrap: GVariantType* VariantType
+alias: byte b
+
+array: g_variant_get_strv Return length
+array: g_variant_dup_strv Return length
+#array: g_variant_get_fixed_array value n_elements
+array: g_variant_new_tuple children n_children
+array: g_variant_new_array children n_children
+out: g_variant_get_string length
+array: g_variant_dup_string Return length
+array: g_variant_new_strv strv length
+out: g_variant_new_va endptr
+out: g_variant_get_va endptr
+out: g_variant_parse endptr
+outFile: Variant
+
+struct: GVariantIter
+class: VariantIter
+prefix: g_variant_iter_
+strictPrefix: Yes
+import: glib.Str
+import: glib.Variant
+structWrap: GVariant* Variant
+structWrap: GVariantIter* VariantIter
+outFile: VariantIter
+
+struct: GVariantBuilder
+class: VariantBuilder
+prefix: g_variant_builder_
+strictPrefix: Yes
+import: glib.Str
+import: glib.Variant
+import: glib.VariantType
+structWrap: GVariant* Variant
+structWrap: GVariantBuilder* VariantBuilder
+structWrap: GVariantType* VariantType
+outFile: VariantBuilder
 
 ###########################################################
 ### GLib Tools ############################################

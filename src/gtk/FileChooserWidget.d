@@ -131,7 +131,7 @@ public class FileChooserWidget : VBox
 	 * GtkFileChooserDialog.
 	 * Since 2.4
 	 * Params:
-	 * action =  Open or save mode for the widget
+	 * action = Open or save mode for the widget
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkFileChooserAction action)
@@ -155,8 +155,8 @@ public class FileChooserWidget : VBox
 	 * GtkFileChooserDialog.
 	 * Since 2.4
 	 * Params:
-	 * action =  Open or save mode for the widget
-	 * backend =  The name of the specific filesystem backend to use.
+	 * action = Open or save mode for the widget
+	 * backend = The name of the specific filesystem backend to use.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkFileChooserAction action, string backend)

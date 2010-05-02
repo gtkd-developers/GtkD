@@ -179,7 +179,7 @@ public class ColorButton : Button
 	 * Creates a new color button.
 	 * Since 2.4
 	 * Params:
-	 * color =  A GdkColor to set the current color with.
+	 * color = A GdkColor to set the current color with.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Color color)
@@ -197,7 +197,7 @@ public class ColorButton : Button
 	 * Sets the current color to be color.
 	 * Since 2.4
 	 * Params:
-	 * color =  A GdkColor to set the current color with.
+	 * color = A GdkColor to set the current color with.
 	 */
 	public void setColor(Color color)
 	{
@@ -209,7 +209,7 @@ public class ColorButton : Button
 	 * Sets color to be the current color in the GtkColorButton widget.
 	 * Since 2.4
 	 * Params:
-	 * color =  a GdkColor to fill in with the current color.
+	 * color = a GdkColor to fill in with the current color.
 	 */
 	public void getColor(Color color)
 	{
@@ -221,7 +221,7 @@ public class ColorButton : Button
 	 * Sets the current opacity to be alpha.
 	 * Since 2.4
 	 * Params:
-	 * alpha =  an integer between 0 and 65535.
+	 * alpha = an integer between 0 and 65535.
 	 */
 	public void setAlpha(ushort alpha)
 	{
@@ -244,7 +244,7 @@ public class ColorButton : Button
 	 * Sets whether or not the color button should use the alpha channel.
 	 * Since 2.4
 	 * Params:
-	 * useAlpha =  TRUE if color button should use alpha channel, FALSE if not.
+	 * useAlpha = TRUE if color button should use alpha channel, FALSE if not.
 	 */
 	public void setUseAlpha(int useAlpha)
 	{
@@ -267,7 +267,7 @@ public class ColorButton : Button
 	 * Sets the title for the color selection dialog.
 	 * Since 2.4
 	 * Params:
-	 * title =  String containing new window title.
+	 * title = String containing new window title.
 	 */
 	public void setTitle(string title)
 	{

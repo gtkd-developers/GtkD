@@ -2131,6 +2131,71 @@ public enum GTraverseFlags
 }
 alias GTraverseFlags TraverseFlags;
 
+/**
+ * The range of possible top-level types of GVariant instances.
+ * G_VARIANT_CLASS_BOOLEAN
+ *  The GVariant is a boolean.
+ * G_VARIANT_CLASS_BYTE
+ *  The GVariant is a byte.
+ * G_VARIANT_CLASS_INT16
+ *  The GVariant is a signed 16 bit integer.
+ * G_VARIANT_CLASS_UINT16
+ *  The GVariant is an unsigned 16 bit integer.
+ * G_VARIANT_CLASS_INT32
+ *  The GVariant is a signed 32 bit integer.
+ * G_VARIANT_CLASS_UINT32
+ *  The GVariant is an unsigned 32 bit integer.
+ * G_VARIANT_CLASS_INT64
+ *  The GVariant is a signed 64 bit integer.
+ * G_VARIANT_CLASS_UINT64
+ *  The GVariant is an unsigned 64 bit integer.
+ * G_VARIANT_CLASS_HANDLE
+ *  The GVariant is a file handle index.
+ * G_VARIANT_CLASS_DOUBLE
+ *  The GVariant is a double precision floating
+ *  point value.
+ * G_VARIANT_CLASS_STRING
+ *  The GVariant is a normal string.
+ * G_VARIANT_CLASS_OBJECT_PATH
+ *  The GVariant is a DBus object path
+ *  string.
+ * G_VARIANT_CLASS_SIGNATURE
+ *  The GVariant is a DBus signature string.
+ * G_VARIANT_CLASS_VARIANT
+ *  The GVariant is a variant.
+ * G_VARIANT_CLASS_MAYBE
+ *  The GVariant is a maybe-typed value.
+ * G_VARIANT_CLASS_ARRAY
+ *  The GVariant is an array.
+ * G_VARIANT_CLASS_TUPLE
+ *  The GVariant is a tuple.
+ * G_VARIANT_CLASS_DICT_ENTRY
+ *  The GVariant is a dictionary entry.
+ * Since 2.24
+ */
+public enum GVariantClass
+{
+	BOOLEAN = 'b',
+	BYTE = 'y',
+	INT16 = 'n',
+	UINT16 = 'q',
+	INT32 = 'i',
+	UINT32 = 'u',
+	INT64 = 'x',
+	UINT64 = 't',
+	HANDLE = 'h',
+	DOUBLE = 'd',
+	STRING = 's',
+	OBJECT_PATH = 'o',
+	SIGNATURE = 'g',
+	VARIANT = 'v',
+	MAYBE = 'm',
+	ARRAY = 'a',
+	TUPLE = '(',
+	DICT_ENTRY = '{'
+}
+alias GVariantClass VariantClass;
+
 
 /**
  * Main Gtk struct.
@@ -3023,6 +3088,32 @@ public struct GAllocator{}
  * g_variant_type_copy() and freed using g_variant_type_free().
  */
 public struct GVariantType{}
+
+
+/**
+ * Main Gtk struct.
+ * GVariant is an opaque data structure and can only be accessed
+ * using the following functions.
+ * Since 2.24
+ */
+public struct GVariant{}
+
+
+/**
+ * GVariantIter is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
+public struct GVariantIter{}
+
+
+/**
+ * A utility type for constructing container-type GVariant instances.
+ * This is an opaque structure and may only be accessed using the
+ * following functions.
+ * GVariantBuilder is not threadsafe in any way. Do not attempt to
+ * access it from more than one thread.
+ */
+public struct GVariantBuilder{}
 
 
 /*

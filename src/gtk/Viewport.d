@@ -159,8 +159,8 @@ public class Viewport : Bin
 	/**
 	 * Creates a new GtkViewport with the given adjustments.
 	 * Params:
-	 * hadjustment =  horizontal adjustment.
-	 * vadjustment =  vertical adjustment.
+	 * hadjustment = horizontal adjustment.
+	 * vadjustment = vertical adjustment.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
@@ -207,7 +207,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the horizontal adjustment of the viewport.
 	 * Params:
-	 * adjustment =  a GtkAdjustment.
+	 * adjustment = a GtkAdjustment.
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -218,7 +218,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the vertical adjustment of the viewport.
 	 * Params:
-	 * adjustment =  a GtkAdjustment.
+	 * adjustment = a GtkAdjustment.
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{
@@ -229,7 +229,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the shadow type of the viewport.
 	 * Params:
-	 * type =  the new shadow type.
+	 * type = the new shadow type.
 	 */
 	public void setShadowType(GtkShadowType type)
 	{

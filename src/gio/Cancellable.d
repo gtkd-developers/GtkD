@@ -271,7 +271,7 @@ public class Cancellable : ObjectG
 	 * with g_cancellable_reset().
 	 * Since 2.22
 	 * Params:
-	 * pollfd =  a pointer to a GPollFD
+	 * pollfd = a pointer to a GPollFD
 	 * Returns: TRUE if pollfd was successfully initialized, FALSE on  failure to prepare the cancellable.
 	 */
 	public int makePollfd(GPollFD* pollfd)
@@ -358,9 +358,9 @@ public class Cancellable : ObjectG
 	 * See "cancelled" for details on how to use this.
 	 * Since 2.22
 	 * Params:
-	 * callback =  The GCallback to connect.
-	 * data =  Data to pass to callback.
-	 * dataDestroyFunc =  Free function for data or NULL.
+	 * callback = The GCallback to connect.
+	 * data = Data to pass to callback.
+	 * dataDestroyFunc = Free function for data or NULL.
 	 * Returns: The id of the signal handler or 0 if cancellable has already been cancelled.
 	 */
 	public uint connect(GCallback callback, void* data, GDestroyNotify dataDestroyFunc)
@@ -381,7 +381,7 @@ public class Cancellable : ObjectG
 	 * nothing.
 	 * Since 2.22
 	 * Params:
-	 * handlerId =  Handler id of the handler to be disconnected, or 0.
+	 * handlerId = Handler id of the handler to be disconnected, or 0.
 	 */
 	public void disconnect(uint handlerId)
 	{

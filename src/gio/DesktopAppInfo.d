@@ -138,7 +138,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Creates a new GDesktopAppInfo.
 	 * Since 2.18
 	 * Params:
-	 * keyFile =  an opened GKeyFile
+	 * keyFile = an opened GKeyFile
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (KeyFile keyFile)
@@ -164,7 +164,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * (i.e. a desktop id of kde-foo.desktop will match
 	 * /usr/share/applications/kde/foo.desktop).
 	 * Params:
-	 * desktopId =  the desktop file id
+	 * desktopId = the desktop file id
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string desktopId)
@@ -196,7 +196,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * desktop entry fields.
 	 * The Desktop
 	 * Params:
-	 * desktopEnv =  a string specifying what desktop this is
+	 * desktopEnv = a string specifying what desktop this is
 	 */
 	public static void setDesktopEnv(string desktopEnv)
 	{
@@ -213,8 +213,8 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * in a GIO module. There is no reason for applications to use it
 	 * directly. Applications should use g_app_info_get_default_for_uri_scheme().
 	 * Params:
-	 * lookup =  a GDesktopAppInfoLookup
-	 * uriScheme =  a string containing a URI scheme.
+	 * lookup = a GDesktopAppInfoLookup
+	 * uriScheme = a string containing a URI scheme.
 	 * Returns: GAppInfo for given uri_scheme or NULL on error.
 	 */
 	public static AppInfoIF lookupGetDefaultForUriScheme(GDesktopAppInfoLookup* lookup, string uriScheme)

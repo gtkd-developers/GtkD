@@ -322,7 +322,7 @@ public template MountT(TStruct)
 	/**
 	 * Checks if mount can be mounted.
 	 * Params:
-	 * mount =  a GMount.
+	 * mount = a GMount.
 	 * Returns: TRUE if the mount can be unmounted.
 	 */
 	public int canUnmount()
@@ -338,11 +338,11 @@ public template MountT(TStruct)
 	 * finished by calling g_mount_unmount_finish() with the mount
 	 * and GAsyncResult data returned in the callback.
 	 * Params:
-	 * mount =  a GMount.
-	 * flags =  flags affecting the operation
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * mount = a GMount.
+	 * flags = flags affecting the operation
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void unmount(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -356,8 +356,8 @@ public template MountT(TStruct)
 	 * Finishes unmounting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
-	 * mount =  a GMount.
-	 * result =  a GAsyncResult.
+	 * mount = a GMount.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the mount was successfully unmounted. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -382,12 +382,12 @@ public template MountT(TStruct)
 	 * and GAsyncResult data returned in the callback.
 	 * Since 2.22
 	 * Params:
-	 * mount =  a GMount.
-	 * flags =  flags affecting the operation
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * mount = a GMount.
+	 * flags = flags affecting the operation
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void unmountWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -400,8 +400,8 @@ public template MountT(TStruct)
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Since 2.22
 	 * Params:
-	 * mount =  a GMount.
-	 * result =  a GAsyncResult.
+	 * mount = a GMount.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the mount was successfully unmounted. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -430,12 +430,12 @@ public template MountT(TStruct)
 	 * and then remounting not all backends might need to actually be
 	 * unmounted.
 	 * Params:
-	 * mount =  a GMount.
-	 * flags =  flags affecting the operation
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * mount = a GMount.
+	 * flags = flags affecting the operation
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void remount(GMountMountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -447,8 +447,8 @@ public template MountT(TStruct)
 	 * Finishes remounting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
-	 * mount =  a GMount.
-	 * result =  a GAsyncResult.
+	 * mount = a GMount.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the mount was successfully remounted. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -484,11 +484,11 @@ public template MountT(TStruct)
 	 * finished by calling g_mount_eject_finish() with the mount
 	 * and GAsyncResult data returned in the callback.
 	 * Params:
-	 * mount =  a GMount.
-	 * flags =  flags affecting the unmount if required for eject
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * mount = a GMount.
+	 * flags = flags affecting the unmount if required for eject
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -502,7 +502,7 @@ public template MountT(TStruct)
 	 * Finishes ejecting a mount. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the mount was successfully ejected. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -527,12 +527,12 @@ public template MountT(TStruct)
 	 * and GAsyncResult data returned in the callback.
 	 * Since 2.22
 	 * Params:
-	 * mount =  a GMount.
-	 * flags =  flags affecting the unmount if required for eject
-	 * mountOperation =  a GMountOperation or NULL to avoid user interaction.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  a GAsyncReadyCallback, or NULL.
-	 * userData =  user data passed to callback.
+	 * mount = a GMount.
+	 * flags = flags affecting the unmount if required for eject
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = a GAsyncReadyCallback, or NULL.
+	 * userData = user data passed to callback.
 	 */
 	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -545,7 +545,7 @@ public template MountT(TStruct)
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: TRUE if the mount was successfully ejected. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -576,11 +576,11 @@ public template MountT(TStruct)
 	 * mount and GAsyncResult data returned in the callback.
 	 * Since 2.18
 	 * Params:
-	 * forceRescan =  Whether to force a rescan of the content.
+	 * forceRescan = Whether to force a rescan of the content.
 	 *  Otherwise a cached result will be used if available
-	 * cancellable =  optional GCancellable object, NULL to ignore
-	 * callback =  a GAsyncReadyCallback
-	 * userData =  user data passed to callback
+	 * cancellable = optional GCancellable object, NULL to ignore
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data passed to callback
 	 */
 	public void guessContentType(int forceRescan, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -596,7 +596,7 @@ public template MountT(TStruct)
 	 * guessing.
 	 * Since 2.18
 	 * Params:
-	 * result =  a GAsyncResult
+	 * result = a GAsyncResult
 	 * Returns: a NULL-terminated array of content types or NULL on error.  Caller should free this array with g_strfreev() when done with it.
 	 * Throws: GException on failure.
 	 */
@@ -625,9 +625,9 @@ public template MountT(TStruct)
 	 * see g_mount_guess_content_type() for the asynchronous version.
 	 * Since 2.18
 	 * Params:
-	 * forceRescan =  Whether to force a rescan of the content.
+	 * forceRescan = Whether to force a rescan of the content.
 	 *  Otherwise a cached result will be used if available
-	 * cancellable =  optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * Returns: a NULL-terminated array of content types or NULL on error. Caller should free this array with g_strfreev() when done with it.
 	 * Throws: GException on failure.
 	 */

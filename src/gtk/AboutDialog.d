@@ -193,7 +193,7 @@ public class AboutDialog : Dialog
 	 * If this is not set, it defaults to g_get_application_name().
 	 * Since 2.6
 	 * Params:
-	 * name =  the program name
+	 * name = the program name
 	 */
 	public override void setName(string name)
 	{
@@ -217,7 +217,7 @@ public class AboutDialog : Dialog
 	 * If this is not set, it defaults to g_get_application_name().
 	 * Since 2.12
 	 * Params:
-	 * name =  the program name
+	 * name = the program name
 	 */
 	public void setProgramName(string name)
 	{
@@ -262,7 +262,7 @@ public class AboutDialog : Dialog
 	 * This should be a short string of one or two lines.
 	 * Since 2.6
 	 * Params:
-	 * copyright =  the copyright string
+	 * copyright = the copyright string
 	 */
 	public void setCopyright(string copyright)
 	{
@@ -287,7 +287,7 @@ public class AboutDialog : Dialog
 	 * two lines.
 	 * Since 2.6
 	 * Params:
-	 * comments =  a comments string
+	 * comments = a comments string
 	 */
 	public void setComments(string comments)
 	{
@@ -312,7 +312,7 @@ public class AboutDialog : Dialog
 	 * hidden.
 	 * Since 2.6
 	 * Params:
-	 * license =  the license information or NULL
+	 * license = the license information or NULL
 	 */
 	public void setLicense(string license)
 	{
@@ -337,7 +337,7 @@ public class AboutDialog : Dialog
 	 * automatically wrapped.
 	 * Since 2.8
 	 * Params:
-	 * wrapLicense =  whether to wrap the license
+	 * wrapLicense = whether to wrap the license
 	 */
 	public void setWrapLicense(int wrapLicense)
 	{
@@ -362,7 +362,7 @@ public class AboutDialog : Dialog
 	 * before calling this function.
 	 * Since 2.6
 	 * Params:
-	 * website =  a URL string starting with "http://"
+	 * website = a URL string starting with "http://"
 	 */
 	public void setWebsite(string website)
 	{
@@ -386,7 +386,7 @@ public class AboutDialog : Dialog
 	 * It defaults to the website URL.
 	 * Since 2.6
 	 * Params:
-	 * websiteLabel =  the label used for the website link
+	 * websiteLabel = the label used for the website link
 	 */
 	public void setWebsiteLabel(string websiteLabel)
 	{
@@ -411,7 +411,7 @@ public class AboutDialog : Dialog
 	 * of the secondary credits dialog.
 	 * Since 2.6
 	 * Params:
-	 * authors =  a NULL-terminated array of strings
+	 * authors = a NULL-terminated array of strings
 	 */
 	public void setAuthors(string[] authors)
 	{
@@ -436,7 +436,7 @@ public class AboutDialog : Dialog
 	 * of the secondary credits dialog.
 	 * Since 2.6
 	 * Params:
-	 * artists =  a NULL-terminated array of strings
+	 * artists = a NULL-terminated array of strings
 	 */
 	public void setArtists(string[] artists)
 	{
@@ -461,7 +461,7 @@ public class AboutDialog : Dialog
 	 * of the secondary credits dialog.
 	 * Since 2.6
 	 * Params:
-	 * documenters =  a NULL-terminated array of strings
+	 * documenters = a NULL-terminated array of strings
 	 */
 	public void setDocumenters(string[] documenters)
 	{
@@ -489,7 +489,7 @@ public class AboutDialog : Dialog
 	 * Using gettext(), a simple way to achieve that is to mark the
 	 * Since 2.6
 	 * Params:
-	 * translatorCredits =  the translator credits
+	 * translatorCredits = the translator credits
 	 */
 	public void setTranslatorCredits(string translatorCredits)
 	{
@@ -520,7 +520,7 @@ public class AboutDialog : Dialog
 	 * will be used.
 	 * Since 2.6
 	 * Params:
-	 * logo =  a GdkPixbuf, or NULL
+	 * logo = a GdkPixbuf, or NULL
 	 */
 	public void setLogo(Pixbuf logo)
 	{
@@ -546,7 +546,7 @@ public class AboutDialog : Dialog
 	 * will be used.
 	 * Since 2.6
 	 * Params:
-	 * iconName =  an icon name, or NULL
+	 * iconName = an icon name, or NULL
 	 */
 	public void setLogoIconName(string iconName)
 	{
@@ -561,9 +561,9 @@ public class AboutDialog : Dialog
 	 * deactivate it, you can pass NULL for func.
 	 * Since 2.6
 	 * Params:
-	 * func =  a function to call when an email link is activated.
-	 * data =  data to pass to func
-	 * destroy =  GDestroyNotify for data
+	 * func = a function to call when an email link is activated.
+	 * data = data to pass to func
+	 * destroy = GDestroyNotify for data
 	 * Returns: the previous email hook.
 	 */
 	public static GtkAboutDialogActivateLinkFunc setEmailHook(GtkAboutDialogActivateLinkFunc func, void* data, GDestroyNotify destroy)
@@ -579,9 +579,9 @@ public class AboutDialog : Dialog
 	 * deactivate it, you can pass NULL for func.
 	 * Since 2.6
 	 * Params:
-	 * func =  a function to call when a URL link is activated.
-	 * data =  data to pass to func
-	 * destroy =  GDestroyNotify for data
+	 * func = a function to call when a URL link is activated.
+	 * data = data to pass to func
+	 * destroy = GDestroyNotify for data
 	 * Returns: the previous URL hook.
 	 */
 	public static GtkAboutDialogActivateLinkFunc setUrlHook(GtkAboutDialogActivateLinkFunc func, void* data, GDestroyNotify destroy)

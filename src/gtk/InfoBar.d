@@ -91,7 +91,7 @@ private import gtk.HBox;
  * classified as error message, warning, informational message, etc,
  * by using gtk_info_bar_set_message_type(). GTK+ uses the message type
  * to determine the background color of the message area.
- * Example 14. Simple GtkInfoBar usage.
+ * Example  14.  Simple GtkInfoBar usage.
  * /+* set up info bar +/
  * info_bar = gtk_info_bar_new ();
  * gtk_widget_set_no_show_all (info_bar, TRUE);
@@ -333,8 +333,8 @@ public class InfoBar : HBox
 	 * is appended to the end of the message areas action area.
 	 * Since 2.18
 	 * Params:
-	 * child =  an activatable widget
-	 * responseId =  response ID for child
+	 * child = an activatable widget
+	 * responseId = response ID for child
 	 */
 	public void addActionWidget(Widget child, int responseId)
 	{
@@ -350,8 +350,8 @@ public class InfoBar : HBox
 	 * returned, but usually you don't need it.
 	 * Since 2.18
 	 * Params:
-	 * buttonText =  text of button, or stock ID
-	 * responseId =  response ID for the button
+	 * buttonText = text of button, or stock ID
+	 * responseId = response ID for the button
 	 * Returns: the button widget that was added
 	 */
 	public Widget addButton(string buttonText, int responseId)
@@ -371,8 +371,8 @@ public class InfoBar : HBox
 	 * A convenient way to sensitize/desensitize dialog buttons.
 	 * Since 2.18
 	 * Params:
-	 * responseId =  a response ID
-	 * setting =  TRUE for sensitive
+	 * responseId = a response ID
+	 * setting = TRUE for sensitive
 	 */
 	public void setResponseSensitive(int responseId, int setting)
 	{
@@ -386,7 +386,7 @@ public class InfoBar : HBox
 	 * Pressing "Enter" normally activates the default widget.
 	 * Since 2.18
 	 * Params:
-	 * responseId =  a response ID
+	 * responseId = a response ID
 	 */
 	public void setDefaultResponse(int responseId)
 	{
@@ -398,7 +398,7 @@ public class InfoBar : HBox
 	 * Emits the 'response' signal with the given response_id.
 	 * Since 2.18
 	 * Params:
-	 * responseId =  a response ID
+	 * responseId = a response ID
 	 */
 	public void response(int responseId)
 	{
@@ -412,7 +412,7 @@ public class InfoBar : HBox
 	 * when drawing the message area.
 	 * Since 2.18
 	 * Params:
-	 * messageType =  a GtkMessageType
+	 * messageType = a GtkMessageType
 	 */
 	public void setMessageType(GtkMessageType messageType)
 	{

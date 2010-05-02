@@ -118,8 +118,8 @@ public class UnixInputStream : InputStream
 	 * If close_fd is TRUE, the file descriptor will be closed
 	 * when the stream is closed.
 	 * Params:
-	 * fd =  a UNIX file descriptor
-	 * closeFd =  TRUE to close the file descriptor when done
+	 * fd = a UNIX file descriptor
+	 * closeFd = TRUE to close the file descriptor when done
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int fd, int closeFd)
@@ -138,7 +138,7 @@ public class UnixInputStream : InputStream
 	 * when the stream is closed.
 	 * Since 2.20
 	 * Params:
-	 * closeFd =  TRUE to close the file descriptor when done
+	 * closeFd = TRUE to close the file descriptor when done
 	 */
 	public void setCloseFd(int closeFd)
 	{

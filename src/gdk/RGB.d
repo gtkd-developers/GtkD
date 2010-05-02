@@ -107,7 +107,7 @@ private import gdk.Visual;
  * accelerated using mediaLib, which provides hardware acceleration on Intel,
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
- * Example 4. A simple example program using GdkRGB
+ * Example  4.  A simple example program using GdkRGB
  * #include <gtk/gtk.h>
  * #define IMAGE_WIDTH	256
  * #define IMAGE_HEIGHT	256
@@ -306,17 +306,17 @@ public class RGB
 	 * Like gdk_draw_rgb_32_image(), but allows you to specify the dither
 	 * offsets. See gdk_draw_rgb_image_dithalign() for more details.
 	 * Params:
-	 * drawable =  a GdkDrawable
-	 * gc =  a GdkGC
-	 * x =  X coordinate on drawable where image should go
-	 * y =  Y coordinate on drawable where image should go
-	 * width =  width of area of image to draw
-	 * height =  height of area of image to draw
-	 * dith =  dithering mode
-	 * buf =  RGB image data
-	 * rowstride =  rowstride of RGB image data
-	 * xdith =  X dither offset
-	 * ydith =  Y dither offset
+	 * drawable = a GdkDrawable
+	 * gc = a GdkGC
+	 * x = X coordinate on drawable where image should go
+	 * y = Y coordinate on drawable where image should go
+	 * width = width of area of image to draw
+	 * height = height of area of image to draw
+	 * dith = dithering mode
+	 * buf = RGB image data
+	 * rowstride = rowstride of RGB image data
+	 * xdith = X dither offset
+	 * ydith = Y dither offset
 	 */
 	public static void drawRgb32_ImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, int xdith, int ydith)
 	{
@@ -384,8 +384,8 @@ public class RGB
 	 * do not expect pixel to be initialized in advance. If you use those
 	 * functions, there's no need for gdk_rgb_find_color().
 	 * Params:
-	 * colormap =  a GdkColormap
-	 * color =  a GdkColor
+	 * colormap = a GdkColormap
+	 * color = a GdkColor
 	 */
 	public static void rgbFindColor(Colormap colormap, Color color)
 	{

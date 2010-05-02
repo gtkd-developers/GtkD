@@ -115,9 +115,9 @@ public template SeekableT(TStruct)
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * offset =  a goffset.
-	 * type =  a GSeekType.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * offset = a goffset.
+	 * type = a GSeekType.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
@@ -154,8 +154,8 @@ public template SeekableT(TStruct)
 	 * operation was partially finished when the operation was cancelled the
 	 * partial result will be returned, without an error.
 	 * Params:
-	 * offset =  a goffset.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * offset = a goffset.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */

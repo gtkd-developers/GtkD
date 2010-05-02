@@ -237,8 +237,8 @@ public class IconInfo
 	 * Creates a GtkIconInfo for a GdkPixbuf.
 	 * Since 2.14
 	 * Params:
-	 * iconTheme =  a GtkIconTheme
-	 * pixbuf =  the pixbuf to wrap in a GtkIconInfo
+	 * iconTheme = a GtkIconTheme
+	 * pixbuf = the pixbuf to wrap in a GtkIconInfo
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconTheme iconTheme, Pixbuf pixbuf)
@@ -354,7 +354,7 @@ public class IconInfo
 	 * for older API's, and is not expected to be useful for applications.
 	 * Since 2.4
 	 * Params:
-	 * rawCoordinates =  whether the coordinates of embedded rectangles
+	 * rawCoordinates = whether the coordinates of embedded rectangles
 	 *  and attached points should be returned in their original
 	 *  (unscaled) form.
 	 */
@@ -372,7 +372,7 @@ public class IconInfo
 	 * information about the coordinate system.
 	 * Since 2.4
 	 * Params:
-	 * rectangle =  GdkRectangle in which to store embedded
+	 * rectangle = GdkRectangle in which to store embedded
 	 *  rectangle coordinates; coordinates are only stored
 	 *  when this function returns TRUE.
 	 * Returns: TRUE if the icon has an embedded rectangle
@@ -389,7 +389,7 @@ public class IconInfo
 	 * emblems or overlays to the icon.
 	 * Since 2.4
 	 * Params:
-	 * points =  location to store pointer to an array of points, or NULL
+	 * points = location to store pointer to an array of points, or NULL
 	 *  free the array of points with g_free().
 	 * Returns: TRUE if there are any attach points for the icon.
 	 */

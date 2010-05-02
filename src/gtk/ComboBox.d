@@ -402,7 +402,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Creates a new GtkComboBox with the model initialized to model.
 	 * Since 2.4
 	 * Params:
-	 * model =  A GtkTreeModel.
+	 * model = A GtkTreeModel.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model)
@@ -435,7 +435,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * in a table.
 	 * Since 2.4
 	 * Params:
-	 * width =  Preferred number of columns
+	 * width = Preferred number of columns
 	 */
 	public void setWrapWidth(int width)
 	{
@@ -460,7 +460,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * an item should span.
 	 * Since 2.4
 	 * Params:
-	 * rowSpan =  A column in the model passed during construction.
+	 * rowSpan = A column in the model passed during construction.
 	 */
 	public void setRowSpanColumn(int rowSpan)
 	{
@@ -485,7 +485,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * how many columns an item should span.
 	 * Since 2.4
 	 * Params:
-	 * columnSpan =  A column in the model passed during construction
+	 * columnSpan = A column in the model passed during construction
 	 */
 	public void setColumnSpanColumn(int columnSpan)
 	{
@@ -512,7 +512,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Sets the active item of combo_box to be the item at index.
 	 * Since 2.4
 	 * Params:
-	 * index =  An index in the model passed during construction, or -1 to have
+	 * index = An index in the model passed during construction, or -1 to have
 	 * no active item
 	 */
 	public void setActive(int index)
@@ -525,7 +525,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Sets iter to point to the current active item, if it exists.
 	 * Since 2.4
 	 * Params:
-	 * iter =  The uninitialized GtkTreeIter
+	 * iter = The uninitialized GtkTreeIter
 	 * Returns: TRUE, if iter was set
 	 */
 	public int getActiveIter(TreeIter iter)
@@ -539,7 +539,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * iter must correspond to a path of depth one.
 	 * Since 2.4
 	 * Params:
-	 * iter =  The GtkTreeIter
+	 * iter = The GtkTreeIter
 	 */
 	public void setActiveIter(TreeIter iter)
 	{
@@ -571,7 +571,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * cell renderers for the new model.
 	 * Since 2.4
 	 * Params:
-	 * model =  A GtkTreeModel
+	 * model = A GtkTreeModel
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -585,7 +585,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * gtk_combo_box_new_text().
 	 * Since 2.4
 	 * Params:
-	 * text =  A string
+	 * text = A string
 	 */
 	public void appendText(string text)
 	{
@@ -599,8 +599,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * with gtk_combo_box_new_text().
 	 * Since 2.4
 	 * Params:
-	 * position =  An index to insert text
-	 * text =  A string
+	 * position = An index to insert text
+	 * text = A string
 	 */
 	public void insertText(int position, string text)
 	{
@@ -614,7 +614,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * gtk_combo_box_new_text().
 	 * Since 2.4
 	 * Params:
-	 * text =  A string
+	 * text = A string
 	 */
 	public void prependText(string text)
 	{
@@ -627,7 +627,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * this function with combo boxes constructed with gtk_combo_box_new_text().
 	 * Since 2.4
 	 * Params:
-	 * position =  Index of the item to remove
+	 * position = Index of the item to remove
 	 */
 	public void removeText(int position)
 	{
@@ -708,9 +708,9 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * function is NULL, no separators are drawn. This is the default value.
 	 * Since 2.6
 	 * Params:
-	 * func =  a GtkTreeViewRowSeparatorFunc
-	 * data =  user data to pass to func, or NULL
-	 * destroy =  destroy notifier for data, or NULL
+	 * func = a GtkTreeViewRowSeparatorFunc
+	 * data = user data to pass to func, or NULL
+	 * destroy = destroy notifier for data, or NULL
 	 */
 	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -723,7 +723,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * menu item.
 	 * Since 2.6
 	 * Params:
-	 * addTearoffs =  TRUE to add tearoff menu items
+	 * addTearoffs = TRUE to add tearoff menu items
 	 */
 	public void setAddTearoffs(int addTearoffs)
 	{
@@ -745,7 +745,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Sets the menu's title in tearoff mode.
 	 * Since 2.10
 	 * Params:
-	 * title =  a title for the menu in tearoff mode
+	 * title = a title for the menu in tearoff mode
 	 */
 	public void setTitle(string title)
 	{
@@ -772,7 +772,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * the main area of the application.
 	 * Since 2.6
 	 * Params:
-	 * focusOnClick =  whether the combo box grabs focus when clicked
+	 * focusOnClick = whether the combo box grabs focus when clicked
 	 *  with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
@@ -799,7 +799,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * or only if there is at least one item to display (GTK_SENSITIVITY_AUTO).
 	 * Since 2.14
 	 * Params:
-	 * sensitivity =  specify the sensitivity of the dropdown button
+	 * sensitivity = specify the sensitivity of the dropdown button
 	 */
 	public void setButtonSensitivity(GtkSensitivityType sensitivity)
 	{

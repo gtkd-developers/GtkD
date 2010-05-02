@@ -98,7 +98,7 @@ private import gtk.Label;
  * set (see GtkAccelFlags).
  * A GtkAccelLabel can display multiple accelerators and even signal names,
  * though it is almost always used to display just one accelerator key.
- * Example 11. Creating a simple menu item with an accelerator key.
+ * Example  11.  Creating a simple menu item with an accelerator key.
  *  GtkWidget *save_item;
  *  GtkAccelGroup *accel_group;
  *  /+* Create a GtkAccelGroup and add it to the window. +/
@@ -179,7 +179,7 @@ public class AccelLabel : Label
 	 * Sets the closure to be monitored by this accelerator label. The closure
 	 * must be connected to an accelerator group; see gtk_accel_group_connect().
 	 * Params:
-	 * accelClosure =  the closure to monitor for accelerator changes.
+	 * accelClosure = the closure to monitor for accelerator changes.
 	 */
 	public void setAccelClosure(Closure accelClosure)
 	{
@@ -206,7 +206,7 @@ public class AccelLabel : Label
 	/**
 	 * Sets the widget to be monitored by this accelerator label.
 	 * Params:
-	 * accelWidget =  the widget to be monitored.
+	 * accelWidget = the widget to be monitored.
 	 */
 	public void setAccelWidget(Widget accelWidget)
 	{

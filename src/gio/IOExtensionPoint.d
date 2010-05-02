@@ -137,7 +137,7 @@ public class IOExtensionPoint
 	/**
 	 * Finds a GIOExtension for an extension point by name.
 	 * Params:
-	 * name =  the name of the extension to get
+	 * name = the name of the extension to get
 	 * Returns: the GIOExtension for extension_point that has the given name, or NULL if there is no extension with that name
 	 */
 	public IOExtension getExtensionByName(string name)
@@ -183,10 +183,10 @@ public class IOExtensionPoint
 	 * If type has already been registered as an extension for this
 	 * extension point, the existing GIOExtension object is returned.
 	 * Params:
-	 * extensionPointName =  the name of the extension point
-	 * type =  the GType to register as extension
-	 * extensionName =  the name for the extension
-	 * priority =  the priority for the extension
+	 * extensionPointName = the name of the extension point
+	 * type = the GType to register as extension
+	 * extensionName = the name for the extension
+	 * priority = the priority for the extension
 	 * Returns: a GIOExtension object for GType
 	 */
 	public static IOExtension implement(string extensionPointName, GType type, string extensionName, int priority)
@@ -203,7 +203,7 @@ public class IOExtensionPoint
 	/**
 	 * Looks up an existing extension point.
 	 * Params:
-	 * name =  the name of the extension point
+	 * name = the name of the extension point
 	 * Returns: the GIOExtensionPoint, or NULL if there is no registered extension point with the given name
 	 */
 	public static IOExtensionPoint lookup(string name)
@@ -220,7 +220,7 @@ public class IOExtensionPoint
 	/**
 	 * Registers an extension point.
 	 * Params:
-	 * name =  The name of the extension point
+	 * name = The name of the extension point
 	 * Returns: the new GIOExtensionPoint. This object is owned by GIO and should not be freed
 	 */
 	public static IOExtensionPoint register(string name)
@@ -238,7 +238,7 @@ public class IOExtensionPoint
 	 * Sets the required type for extension_point to type.
 	 * All implementations must henceforth have this type.
 	 * Params:
-	 * type =  the GType to require
+	 * type = the GType to require
 	 */
 	public void setRequiredType(GType type)
 	{

@@ -176,7 +176,7 @@ public class Scale : Range
 	 * Also causes the value of the adjustment to be rounded off to this
 	 * number of digits, so the retrieved value matches the value the user saw.
 	 * Params:
-	 * digits =  the number of decimal places to display,
+	 * digits = the number of decimal places to display,
 	 *  e.g. use 1 to display 1.0, 2 to display 1.00, etc
 	 */
 	public void setDigits(int digits)
@@ -189,7 +189,7 @@ public class Scale : Range
 	 * Specifies whether the current value is displayed as a string next
 	 * to the slider.
 	 * Params:
-	 * drawValue =  TRUE to draw the value
+	 * drawValue = TRUE to draw the value
 	 */
 	public void setDrawValue(int drawValue)
 	{
@@ -200,7 +200,7 @@ public class Scale : Range
 	/**
 	 * Sets the position in which the current value is displayed.
 	 * Params:
-	 * pos =  the position in which the current value is displayed
+	 * pos = the position in which the current value is displayed
 	 */
 	public void setValuePos(GtkPositionType pos)
 	{
@@ -266,8 +266,8 @@ public class Scale : Range
 	 * values are undefined.
 	 * Since 2.4
 	 * Params:
-	 * x =  location to store X offset of layout, or NULL
-	 * y =  location to store Y offset of layout, or NULL
+	 * x = location to store X offset of layout, or NULL
+	 * y = location to store Y offset of layout, or NULL
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -284,13 +284,13 @@ public class Scale : Range
 	 * To remove marks from a scale, use gtk_scale_clear_marks().
 	 * Since 2.16
 	 * Params:
-	 * value =  the value at which the mark is placed, must be between
+	 * value = the value at which the mark is placed, must be between
 	 *  the lower and upper limits of the scales' adjustment
-	 * position =  where to draw the mark. For a horizontal scale, GTK_POS_TOP
+	 * position = where to draw the mark. For a horizontal scale, GTK_POS_TOP
 	 *  is drawn above the scale, anything else below. For a vertical scale,
 	 *  GTK_POS_LEFT is drawn to the left of the scale, anything else to the
 	 *  right.
-	 * markup =  Text to be shown at the mark, using Pango markup, or NULL
+	 * markup = Text to be shown at the mark, using Pango markup, or NULL
 	 */
 	public void addMark(double value, GtkPositionType position, string markup)
 	{

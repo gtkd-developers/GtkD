@@ -177,8 +177,8 @@ public class FileIOStream : IOStream, SeekableIF
 	 * be returned.
 	 * Since 2.22
 	 * Params:
-	 * attributes =  a file attribute query string.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
+	 * attributes = a file attribute query string.
+	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GFileInfo for the stream, or NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -209,12 +209,12 @@ public class FileIOStream : IOStream, SeekableIF
 	 * g_file_io_stream_query_info().
 	 * Since 2.22
 	 * Params:
-	 * attributes =  a file attribute query string.
-	 * ioPriority =  the I/O priority
+	 * attributes = a file attribute query string.
+	 * ioPriority = the I/O priority
 	 *  of the request.
-	 * cancellable =  optional GCancellable object, NULL to ignore.
-	 * callback =  callback to call when the request is satisfied
-	 * userData =  the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * callback = callback to call when the request is satisfied
+	 * userData = the data to pass to callback function
 	 */
 	public void queryInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -227,7 +227,7 @@ public class FileIOStream : IOStream, SeekableIF
 	 * by g_file_io_stream_query_info_async().
 	 * Since 2.22
 	 * Params:
-	 * result =  a GAsyncResult.
+	 * result = a GAsyncResult.
 	 * Returns: A GFileInfo for the finished query.
 	 * Throws: GException on failure.
 	 */

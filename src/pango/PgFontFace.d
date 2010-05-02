@@ -138,7 +138,7 @@ public class PgFontFace : ObjectG
 	 * are in Pango units and are sorted in ascending order.
 	 * Since 1.4
 	 * Params:
-	 * sizes =  location to store a pointer to an array of int. This array
+	 * sizes = location to store a pointer to an array of int. This array
 	 *  should be freed with g_free().
 	 */
 	public void listSizes(out int[] sizes)

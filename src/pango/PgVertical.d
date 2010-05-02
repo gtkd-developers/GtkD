@@ -114,7 +114,7 @@ public class PgVertical
 	 * in a PangoMatrix.
 	 * Since 1.16
 	 * Params:
-	 * matrix =  a PangoMatrix
+	 * matrix = a PangoMatrix
 	 * Returns: the gravity of matrix, which will never bePANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
 	 */
 	public static PangoGravity gravityGetForMatrix(PgMatrix matrix)
@@ -131,9 +131,9 @@ public class PgVertical
 	 * pass PANGO_GRAVITY_AUTO and PANGO_GRAVITY_HINT_STRONG in.
 	 * Since 1.16
 	 * Params:
-	 * script =  PangoScript to query
-	 * baseGravity =  base gravity of the paragraph
-	 * hint =  orientation hint
+	 * script = PangoScript to query
+	 * baseGravity = base gravity of the paragraph
+	 * hint = orientation hint
 	 * Returns: resolved gravity suitable to use for a run of textwith script.
 	 */
 	public static PangoGravity gravityGetForScript(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)
@@ -156,10 +156,10 @@ public class PgVertical
 	 * preferred gravity of script.
 	 * Since 1.26
 	 * Params:
-	 * script =  PangoScript to query
-	 * wide =  TRUE for wide characters as returned by g_unichar_iswide()
-	 * baseGravity =  base gravity of the paragraph
-	 * hint =  orientation hint
+	 * script = PangoScript to query
+	 * wide = TRUE for wide characters as returned by g_unichar_iswide()
+	 * baseGravity = base gravity of the paragraph
+	 * hint = orientation hint
 	 * Returns: resolved gravity suitable to use for a run of textwith script and wide.
 	 */
 	public static PangoGravity gravityGetForScriptAndWidth(PangoScript script, int wide, PangoGravity baseGravity, PangoGravityHint hint)
@@ -176,7 +176,7 @@ public class PgVertical
 	 * you should multiply it by (180. / G_PI).
 	 * Since 1.16
 	 * Params:
-	 * gravity =  gravity to query
+	 * gravity = gravity to query
 	 * Returns: the rotation value corresponding to gravity.
 	 */
 	public static double gravityToRotation(PangoGravity gravity)

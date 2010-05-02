@@ -169,7 +169,7 @@ public class Display : ObjectG
 	 * Opens a display.
 	 * Since 2.2
 	 * Params:
-	 * displayName =  the name of the display to open
+	 * displayName = the name of the display to open
 	 * Returns: a GdkDisplay, or NULL if the display could not be opened.
 	 */
 	public static Display open(string displayName)
@@ -227,7 +227,7 @@ public class Display : ObjectG
 	 * Returns a screen object for one of the screens of the display.
 	 * Since 2.2
 	 * Params:
-	 * screenNum =  the screen number
+	 * screenNum = the screen number
 	 * Returns: the GdkScreen object
 	 */
 	public Screen getScreen(int screenNum)
@@ -261,7 +261,7 @@ public class Display : ObjectG
 	 * Release any pointer grab.
 	 * Since 2.2
 	 * Params:
-	 * time =  a timestap (e.g. GDK_CURRENT_TIME).
+	 * time = a timestap (e.g. GDK_CURRENT_TIME).
 	 */
 	public void pointerUngrab(uint time)
 	{
@@ -273,7 +273,7 @@ public class Display : ObjectG
 	 * Release any keyboard grab
 	 * Since 2.2
 	 * Params:
-	 * time =  a timestap (e.g GDK_CURRENT_TIME).
+	 * time = a timestap (e.g GDK_CURRENT_TIME).
 	 */
 	public void keyboardUngrab(uint time)
 	{
@@ -405,7 +405,7 @@ public class Display : ObjectG
 	 * queue for display.
 	 * Since 2.2
 	 * Params:
-	 * event =  a GdkEvent.
+	 * event = a GdkEvent.
 	 */
 	public void putEvent(Event event)
 	{
@@ -419,11 +419,11 @@ public class Display : ObjectG
 	 * types of events.
 	 * Since 2.2
 	 * Params:
-	 * messageType =  the type of ClientMessage events to receive.
+	 * messageType = the type of ClientMessage events to receive.
 	 *  This will be checked against the message_type field
 	 *  of the XClientMessage event struct.
-	 * func =  the function to call to process the event.
-	 * data =  user data to pass to func.
+	 * func = the function to call to process the event.
+	 * data = user data to pass to func.
 	 */
 	public void addClientMessageFilter(GdkAtom messageType, GdkFilterFunc func, void* data)
 	{
@@ -438,7 +438,7 @@ public class Display : ObjectG
 	 * user-configured setting.
 	 * Since 2.2
 	 * Params:
-	 * msec =  double click time in milliseconds (thousandths of a second)
+	 * msec = double click time in milliseconds (thousandths of a second)
 	 */
 	public void setDoubleClickTime(uint msec)
 	{
@@ -454,7 +454,7 @@ public class Display : ObjectG
 	 * user-configured setting.
 	 * Since 2.4
 	 * Params:
-	 * distance =  distance in pixels
+	 * distance = distance in pixels
 	 */
 	public void setDoubleClickDistance(uint distance)
 	{
@@ -467,11 +467,11 @@ public class Display : ObjectG
 	 * mask for a given display.
 	 * Since 2.2
 	 * Params:
-	 * screen =  location to store the screen that the
+	 * screen = location to store the screen that the
 	 *  cursor is on, or NULL.
-	 * x =  location to store root window X coordinate of pointer, or NULL.
-	 * y =  location to store root window Y coordinate of pointer, or NULL.
-	 * mask =  location to store current modifier mask, or NULL
+	 * x = location to store root window X coordinate of pointer, or NULL.
+	 * y = location to store root window Y coordinate of pointer, or NULL.
+	 * mask = location to store current modifier mask, or NULL
 	 */
 	public void getPointer(out Screen screen, out int x, out int y, out GdkModifierType mask)
 	{
@@ -490,9 +490,9 @@ public class Display : ObjectG
 	 * belongs to another application).
 	 * Since 2.2
 	 * Params:
-	 * winX =  return location for x coordinate of the pointer location relative
+	 * winX = return location for x coordinate of the pointer location relative
 	 *  to the window origin, or NULL
-	 * winY =  return location for y coordinate of the pointer location relative
+	 * winY = return location for y coordinate of the pointer location relative
 	 *   to the window origin, or NULL
 	 * Returns: the window under the mouse pointer, or NULL
 	 */
@@ -515,7 +515,7 @@ public class Display : ObjectG
 	 * reason to use this facility.
 	 * Since 2.2
 	 * Params:
-	 * newHooks =  a table of pointers to functions for getting
+	 * newHooks = a table of pointers to functions for getting
 	 *  quantities related to the current pointer position,
 	 *  or NULL to restore the default table.
 	 * Returns: the previous pointer hook table
@@ -539,9 +539,9 @@ public class Display : ObjectG
 	 * for the color picker in the GtkColorSelectionDialog.
 	 * Since 2.8
 	 * Params:
-	 * screen =  the screen of display to warp the pointer to
-	 * x =  the x coordinate of the destination
-	 * y =  the y coordinate of the destination
+	 * screen = the screen of display to warp the pointer to
+	 * x = the x coordinate of the destination
+	 * y = the y coordinate of the destination
 	 */
 	public void warpPointer(Screen screen, int x, int y)
 	{
@@ -590,8 +590,8 @@ public class Display : ObjectG
 	 * Gets the maximal size to use for cursors on display.
 	 * Since 2.4
 	 * Params:
-	 * width =  the return location for the maximal cursor width
-	 * height =  the return location for the maximal cursor height
+	 * width = the return location for the maximal cursor width
+	 * height = the return location for the maximal cursor height
 	 */
 	public void getMaximalCursorSize(out uint width, out uint height)
 	{
@@ -634,7 +634,7 @@ public class Display : ObjectG
 	 * of the selection named by the given atom.
 	 * Since 2.6
 	 * Params:
-	 * selection =  the GdkAtom naming the selection for which
+	 * selection = the GdkAtom naming the selection for which
 	 *  ownership change notification is requested
 	 * Returns: whether GdkEventOwnerChange events will  be sent.
 	 */
@@ -665,9 +665,9 @@ public class Display : ObjectG
 	 * http://www.freedesktop.org/Standards/clipboard-manager-spec.
 	 * Since 2.6
 	 * Params:
-	 * clipboardWindow =  a GdkWindow belonging to the clipboard owner
-	 * time =  a timestamp
-	 * targets = 	 an array of targets that should be saved, or NULL
+	 * clipboardWindow = a GdkWindow belonging to the clipboard owner
+	 * time = a timestamp
+	 * targets = an array of targets that should be saved, or NULL
 	 *  if all available targets should be saved.
 	 */
 	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)

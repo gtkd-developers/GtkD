@@ -108,7 +108,7 @@ private import gobject.ObjectG;
  * state
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
- * Example 5. A GtkIconFactory UI definition fragment.
+ * Example  5.  A GtkIconFactory UI definition fragment.
  * <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>
@@ -178,8 +178,8 @@ public class IconFactory : ObjectG
 	 * existed in factory for stock_id, it is unreferenced and replaced
 	 * with the new icon_set.
 	 * Params:
-	 * stockId =  icon name
-	 * iconSet =  icon set
+	 * stockId = icon name
+	 * iconSet = icon set
 	 */
 	public void add(string stockId, IconSet iconSet)
 	{
@@ -208,7 +208,7 @@ public class IconFactory : ObjectG
 	 * widget that will display the icon, instead of using this
 	 * function directly, so that themes are taken into account.
 	 * Params:
-	 * stockId =  an icon name
+	 * stockId = an icon name
 	 * Returns: icon set of stock_id.
 	 */
 	public IconSet lookup(string stockId)
@@ -229,7 +229,7 @@ public class IconFactory : ObjectG
 	 * using this function directly, so that themes are taken into
 	 * account.
 	 * Params:
-	 * stockId =  an icon name
+	 * stockId = an icon name
 	 * Returns: a GtkIconSet, or NULL
 	 */
 	public static IconSet lookupDefault(string stockId)

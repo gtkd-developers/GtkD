@@ -481,7 +481,7 @@ public class StatusIcon : ObjectG
 	 * space in the notification area, if necessary.
 	 * Since 2.10
 	 * Params:
-	 * pixbuf =  a GdkPixbuf
+	 * pixbuf = a GdkPixbuf
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixbuf pixbuf)
@@ -500,7 +500,7 @@ public class StatusIcon : ObjectG
 	 * themed icon, it will be updated when the theme changes.
 	 * Since 2.14
 	 * Params:
-	 * icon =  a GIcon
+	 * icon = a GIcon
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconIF icon)
@@ -519,7 +519,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_pixbuf() for details.
 	 * Since 2.10
 	 * Params:
-	 * pixbuf =  a GdkPixbuf or NULL
+	 * pixbuf = a GdkPixbuf or NULL
 	 */
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
@@ -532,7 +532,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_file() for details.
 	 * Since 2.10
 	 * Params:
-	 * filename =  a filename
+	 * filename = a filename
 	 */
 	public void setFromFile(string filename)
 	{
@@ -545,7 +545,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_stock() for details.
 	 * Since 2.10
 	 * Params:
-	 * stockId =  a stock icon id
+	 * stockId = a stock icon id
 	 */
 	public void setFromStock(string stockId)
 	{
@@ -559,7 +559,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_icon_name() for details.
 	 * Since 2.10
 	 * Params:
-	 * iconName =  an icon name
+	 * iconName = an icon name
 	 */
 	public void setFromIconName(string iconName)
 	{
@@ -572,7 +572,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_gicon() for details.
 	 * Since 2.14
 	 * Params:
-	 * icon =  a GIcon
+	 * icon = a GIcon
 	 */
 	public void setFromGicon(IconIF icon)
 	{
@@ -687,7 +687,7 @@ public class StatusIcon : ObjectG
 	 * then remapped on the new screen.
 	 * Since 2.12
 	 * Params:
-	 * screen =  a GdkScreen
+	 * screen = a GdkScreen
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -717,7 +717,7 @@ public class StatusIcon : ObjectG
 	 * Sets the tooltip of the status icon.
 	 * Since 2.10
 	 * Params:
-	 * tooltipText =  the tooltip text, or NULL
+	 * tooltipText = the tooltip text, or NULL
 	 */
 	public void setTooltip(string tooltipText)
 	{
@@ -734,7 +734,7 @@ public class StatusIcon : ObjectG
 	 * gtk_tooltip_set_text().
 	 * Since 2.16
 	 * Params:
-	 * text =  the contents of the tooltip for status_icon
+	 * text = the contents of the tooltip for status_icon
 	 */
 	public void setTooltipText(string text)
 	{
@@ -762,7 +762,7 @@ public class StatusIcon : ObjectG
 	 * gtk_tooltip_set_markup().
 	 * Since 2.16
 	 * Params:
-	 * markup =  the contents of the tooltip for status_icon, or NULL
+	 * markup = the contents of the tooltip for status_icon, or NULL
 	 */
 	public void setTooltipMarkup(string markup)
 	{
@@ -786,7 +786,7 @@ public class StatusIcon : ObjectG
 	 * See "has-tooltip" for more information.
 	 * Since 2.16
 	 * Params:
-	 * hasTooltip =  whether or not status_icon has a tooltip
+	 * hasTooltip = whether or not status_icon has a tooltip
 	 */
 	public void setHasTooltip(int hasTooltip)
 	{
@@ -813,7 +813,7 @@ public class StatusIcon : ObjectG
 	 * readers to render the tray icon.
 	 * Since 2.18
 	 * Params:
-	 * title =  the title
+	 * title = the title
 	 */
 	public void setTitle(string title)
 	{
@@ -836,7 +836,7 @@ public class StatusIcon : ObjectG
 	 * Shows or hides a status icon.
 	 * Since 2.10
 	 * Params:
-	 * visible =  TRUE to show the status icon, FALSE to hide it
+	 * visible = TRUE to show the status icon, FALSE to hide it
 	 */
 	public void setVisible(int visible)
 	{
@@ -865,7 +865,7 @@ public class StatusIcon : ObjectG
 	 * this setting has no effect.
 	 * Since 2.10
 	 * Params:
-	 * blinking =  TRUE to turn blinking on, FALSE to turn it off
+	 * blinking = TRUE to turn blinking on, FALSE to turn it off
 	 */
 	public void setBlinking(int blinking)
 	{
@@ -902,12 +902,12 @@ public class StatusIcon : ObjectG
 	 * to position menu aligned to the status icon user_data.
 	 * Since 2.10
 	 * Params:
-	 * menu =  the GtkMenu
-	 * x =  return location for the x position
-	 * y =  return location for the y position
-	 * pushIn =  whether the first menu item should be offset (pushed in) to be
+	 * menu = the GtkMenu
+	 * x = return location for the x position
+	 * y = return location for the y position
+	 * pushIn = whether the first menu item should be offset (pushed in) to be
 	 *  aligned with the menu popup position (only useful for GtkOptionMenu).
-	 * userData =  the status icon to position the menu on
+	 * userData = the status icon to position the menu on
 	 */
 	public static void positionMenu(Menu menu, out int x, out int y, out int pushIn, void* userData)
 	{
@@ -928,11 +928,11 @@ public class StatusIcon : ObjectG
 	 * gtk_status_icon_is_embedded().
 	 * Since 2.10
 	 * Params:
-	 * screen =  return location for the screen, or NULL if the
+	 * screen = return location for the screen, or NULL if the
 	 *  information is not needed
-	 * area =  return location for the area occupied by the status
+	 * area = return location for the area occupied by the status
 	 *  icon, or NULL
-	 * orientation =  return location for the orientation of the panel
+	 * orientation = return location for the orientation of the panel
 	 *  in which the status icon is embedded, or NULL. A panel
 	 *  at the top or bottom of the screen is horizontal, a panel
 	 *  at the left or right is vertical.

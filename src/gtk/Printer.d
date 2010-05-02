@@ -163,9 +163,9 @@ public class Printer : ObjectG
 	 * Creates a new GtkPrinter.
 	 * Since 2.10
 	 * Params:
-	 * name =  the name of the printer
-	 * backend =  a GtkPrintBackend
-	 * virtual =  whether the printer is virtual
+	 * name = the name of the printer
+	 * backend = a GtkPrintBackend
+	 * virtual = whether the printer is virtual
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, GtkPrintBackend* backend, int virtual)
@@ -363,8 +363,8 @@ public class Printer : ObjectG
 	 * Compares two printers.
 	 * Since 2.10
 	 * Params:
-	 * a =  a GtkPrinter
-	 * b =  another GtkPrinter
+	 * a = a GtkPrinter
+	 * b = another GtkPrinter
 	 * Returns: 0 if the printer match, a negative value if a < b,  or a positive value if a > b
 	 */
 	public int compare(Printer b)
@@ -433,10 +433,10 @@ public class Printer : ObjectG
 	 * If func returns TRUE, the enumeration is stopped.
 	 * Since 2.10
 	 * Params:
-	 * func =  a function to call for each printer
-	 * data =  user data to pass to func
-	 * destroy =  function to call if data is no longer needed
-	 * wait =  if TRUE, wait in a recursive mainloop until
+	 * func = a function to call for each printer
+	 * data = user data to pass to func
+	 * destroy = function to call if data is no longer needed
+	 * wait = if TRUE, wait in a recursive mainloop until
 	 *  all printers are enumerated; otherwise return early
 	 */
 	public static void enumeratePrinters(GtkPrinterFunc func, void* data, GDestroyNotify destroy, int wait)

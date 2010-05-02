@@ -120,9 +120,9 @@ public class Surface
 	 * Initially the surface contents are all 0 (transparent if contents
 	 * have transparency, black otherwise.)
 	 * Params:
-	 * content =  the content for the new surface
-	 * width =  width of the new surface, (in device-space units)
-	 * height =  height of the new surface (in device-space units)
+	 * content = the content for the new surface
+	 * width = width of the new surface, (in device-space units)
+	 * height = height of the new surface (in device-space units)
 	 * Returns: a pointer to the newly allocated surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if other is already in an error stateor any other error occurs.
 	 */
 	public Surface createSimilar(cairo_content_t content, int width, int height)
@@ -219,7 +219,7 @@ public class Surface
 	 * metrics and so forth. The result can then be used with
 	 * cairo_scaled_font_create().
 	 * Params:
-	 * options =  a cairo_font_options_t object into which to store
+	 * options = a cairo_font_options_t object into which to store
 	 *  the retrieved options. All existing values are overwritten
 	 */
 	public void getFontOptions(FontOption options)
@@ -260,10 +260,10 @@ public class Surface
 	 * to make sure that future cairo calls have the clip set that they
 	 * expect.
 	 * Params:
-	 * x =  X coordinate of dirty rectangle
-	 * y =  Y coordinate of dirty rectangle
-	 * width =  width of dirty rectangle
-	 * height =  height of dirty rectangle
+	 * x = X coordinate of dirty rectangle
+	 * y = Y coordinate of dirty rectangle
+	 * width = width of dirty rectangle
+	 * height = height of dirty rectangle
 	 */
 	public void markDirtyRectangle(int x, int y, int width, int height)
 	{
@@ -283,8 +283,8 @@ public class Surface
 	 * Note that the offset affects drawing to the surface as well as
 	 * using the surface in a source pattern.
 	 * Params:
-	 * xOffset =  the offset in the X direction, in device units
-	 * yOffset =  the offset in the Y direction, in device units
+	 * xOffset = the offset in the X direction, in device units
+	 * yOffset = the offset in the Y direction, in device units
 	 */
 	public void setDeviceOffset(double xOffset, double yOffset)
 	{
@@ -297,8 +297,8 @@ public class Surface
 	 * cairo_surface_set_device_offset().
 	 * Since 1.2
 	 * Params:
-	 * xOffset =  the offset in the X direction, in device units
-	 * yOffset =  the offset in the Y direction, in device units
+	 * xOffset = the offset in the X direction, in device units
+	 * yOffset = the offset in the Y direction, in device units
 	 */
 	public void getDeviceOffset(out double xOffset, out double yOffset)
 	{
@@ -328,8 +328,8 @@ public class Surface
 	 * dimensions.
 	 * Since 1.2
 	 * Params:
-	 * xPixelsPerInch =  horizontal setting for pixels per inch
-	 * yPixelsPerInch =  vertical setting for pixels per inch
+	 * xPixelsPerInch = horizontal setting for pixels per inch
+	 * yPixelsPerInch = vertical setting for pixels per inch
 	 */
 	public void setFallbackResolution(double xPixelsPerInch, double yPixelsPerInch)
 	{
@@ -343,8 +343,8 @@ public class Surface
 	 * resolution if never set.
 	 * Since 1.8
 	 * Params:
-	 * xPixelsPerInch =  horizontal pixels per inch
-	 * yPixelsPerInch =  vertical pixels per inch
+	 * xPixelsPerInch = horizontal pixels per inch
+	 * yPixelsPerInch = vertical pixels per inch
 	 */
 	public void getFallbackResolution(out double xPixelsPerInch, out double yPixelsPerInch)
 	{
@@ -357,7 +357,7 @@ public class Surface
 	 * a surface. See cairo_surface_type_t for available types.
 	 * Since 1.2
 	 * Params:
-	 * surface =  a cairo_surface_t
+	 * surface = a cairo_surface_t
 	 * Returns: The type of surface.
 	 */
 	public cairo_surface_type_t getType()
@@ -382,9 +382,9 @@ public class Surface
 	 * call this function with the key that was used to set it and NULL
 	 * for data.
 	 * Params:
-	 * key =  the address of a cairo_user_data_key_t to attach the user data to
-	 * userData =  the user data to attach to the surface
-	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * key = the address of a cairo_user_data_key_t to attach the user data to
+	 * userData = the user data to attach to the surface
+	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * surface is destroyed or when new user data is attached using the
 	 * same key.
 	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
@@ -400,7 +400,7 @@ public class Surface
 	 * key. If no user data has been attached with the given key this
 	 * function returns NULL.
 	 * Params:
-	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * key = the address of the cairo_user_data_key_t the user data was
 	 * attached to
 	 * Returns: the user data previously attached or NULL.
 	 */

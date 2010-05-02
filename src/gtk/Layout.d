@@ -167,8 +167,8 @@ public class Layout : Container
 	 * you'd like the layout to use for scrolling, pass NULL for
 	 * hadjustment and vadjustment.
 	 * Params:
-	 * hadjustment =  horizontal scroll adjustment, or NULL
-	 * vadjustment =  vertical scroll adjustment, or NULL
+	 * hadjustment = horizontal scroll adjustment, or NULL
+	 * vadjustment = vertical scroll adjustment, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
@@ -186,9 +186,9 @@ public class Layout : Container
 	 * Adds child_widget to layout, at position (x,y).
 	 * layout becomes the new parent container of child_widget.
 	 * Params:
-	 * childWidget =  child widget
-	 * x =  X position of child widget
-	 * y =  Y position of child widget
+	 * childWidget = child widget
+	 * x = X position of child widget
+	 * y = Y position of child widget
 	 */
 	public void put(Widget childWidget, int x, int y)
 	{
@@ -199,9 +199,9 @@ public class Layout : Container
 	/**
 	 * Moves a current child of layout to a new position.
 	 * Params:
-	 * childWidget =  a current child of layout
-	 * x =  X position to move to
-	 * y =  Y position to move to
+	 * childWidget = a current child of layout
+	 * x = X position to move to
+	 * y = Y position to move to
 	 */
 	public void move(Widget childWidget, int x, int y)
 	{
@@ -212,8 +212,8 @@ public class Layout : Container
 	/**
 	 * Sets the size of the scrollable area of the layout.
 	 * Params:
-	 * width =  width of entire scrollable area
-	 * height =  height of entire scrollable area
+	 * width = width of entire scrollable area
+	 * height = height of entire scrollable area
 	 */
 	public void setSize(uint width, uint height)
 	{
@@ -226,8 +226,8 @@ public class Layout : Container
 	 * the total extents of the layout's scrollbar area. See
 	 * gtk_layout_set_size().
 	 * Params:
-	 * width =  location to store the width set on layout, or NULL
-	 * height =  location to store the height set on layout, or NULL
+	 * width = location to store the width set on layout, or NULL
+	 * height = location to store the height set on layout, or NULL
 	 */
 	public void getSize(out uint width, out uint height)
 	{
@@ -299,7 +299,7 @@ public class Layout : Container
 	 * Sets the horizontal scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 	 * Params:
-	 * adjustment =  new scroll adjustment
+	 * adjustment = new scroll adjustment
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -311,7 +311,7 @@ public class Layout : Container
 	 * Sets the vertical scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 	 * Params:
-	 * adjustment =  new scroll adjustment
+	 * adjustment = new scroll adjustment
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{

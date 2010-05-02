@@ -138,7 +138,7 @@ public class PixbufAnimationIter : ObjectG
 	 * if TRUE, you need to call gdk_animation_iter_get_pixbuf() and update the
 	 * display with the new pixbuf.
 	 * Params:
-	 * currentTime =  current time
+	 * currentTime = current time
 	 * Returns: TRUE if the image may need updating
 	 */
 	public int advance(TimeVal currentTime)

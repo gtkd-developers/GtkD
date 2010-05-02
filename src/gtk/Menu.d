@@ -93,11 +93,11 @@ private import gtk.MenuShell;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
- * Example 29. Connecting the popup signal handler.
+ * Example  29.  Connecting the popup signal handler.
  *  /+* connect our handler which will popup the menu +/
  *  g_signal_connect_swapped (window, "button_press_event",
  * 	G_CALLBACK (my_popup_handler), menu);
- * Example 30. Signal handler which displays a popup menu.
+ * Example  30.  Signal handler which displays a popup menu.
  * static gint
  * my_popup_handler (GtkWidget *widget, GdkEvent *event)
  * {
@@ -258,7 +258,7 @@ public class Menu : MenuShell
 	 * Sets the GdkScreen on which the menu will be displayed.
 	 * Since 2.2
 	 * Params:
-	 * screen =  a GdkScreen, or NULL if the screen should be
+	 * screen = a GdkScreen, or NULL if the screen should be
 	 *  determined by the widget the menu is attached to.
 	 */
 	public void setScreen(Screen screen)
@@ -289,11 +289,11 @@ public class Menu : MenuShell
 	 * Note that this function is not related to gtk_menu_detach().
 	 * Since 2.4
 	 * Params:
-	 * child =  a GtkMenuItem.
-	 * leftAttach =  The column number to attach the left side of the item to.
-	 * rightAttach =  The column number to attach the right side of the item to.
-	 * topAttach =  The row number to attach the top of the item to.
-	 * bottomAttach =  The row number to attach the bottom of the item to.
+	 * child = a GtkMenuItem.
+	 * leftAttach = The column number to attach the left side of the item to.
+	 * rightAttach = The column number to attach the right side of the item to.
+	 * topAttach = The row number to attach the top of the item to.
+	 * bottomAttach = The row number to attach the bottom of the item to.
 	 */
 	public void attach(Widget child, uint leftAttach, uint rightAttach, uint topAttach, uint bottomAttach)
 	{
@@ -318,12 +318,12 @@ public class Menu : MenuShell
 	 * Only if no such event is available, gtk_get_current_event_time() can
 	 * be used instead.
 	 * Params:
-	 * parentMenuShell =  the menu shell containing the triggering menu item, or NULL
-	 * parentMenuItem =  the menu item whose activation triggered the popup, or NULL
-	 * func =  a user supplied function used to position the menu, or NULL
-	 * data =  user supplied data to be passed to func.
-	 * button =  the mouse button which was pressed to initiate the event.
-	 * activateTime =  the time at which the activation event occurred.
+	 * parentMenuShell = the menu shell containing the triggering menu item, or NULL
+	 * parentMenuItem = the menu item whose activation triggered the popup, or NULL
+	 * func = a user supplied function used to position the menu, or NULL
+	 * data = user supplied data to be passed to func.
+	 * button = the mouse button which was pressed to initiate the event.
+	 * activateTime = the time at which the activation event occurred.
 	 */
 	public void popup(Widget parentMenuShell, Widget parentMenuItem, GtkMenuPositionFunc func, void* data, uint button, uint activateTime)
 	{
@@ -373,7 +373,7 @@ public class Menu : MenuShell
 	 * menu items "New" and "Exit", will, after
 	 * gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File");
 	 * Params:
-	 * accelPath =  a valid accelerator path
+	 * accelPath = a valid accelerator path
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -398,7 +398,7 @@ public class Menu : MenuShell
 	 * attached to a parent menu item, and if so it will try to use the same text as
 	 * that menu item's label.
 	 * Params:
-	 * title =  a string containing the title for the menu.
+	 * title = a string containing the title for the menu.
 	 */
 	public void setTitle(string title)
 	{
@@ -426,7 +426,7 @@ public class Menu : MenuShell
 	 * may extend beyond the monitor boundaries or even the screen boundaries.
 	 * Since 2.4
 	 * Params:
-	 * monitorNum =  the number of the monitor on which the menu should
+	 * monitorNum = the number of the monitor on which the menu should
 	 *  be popped up
 	 */
 	public void setMonitor(int monitorNum)
@@ -462,7 +462,7 @@ public class Menu : MenuShell
 	 * or icons, regardless of their actual presence.
 	 * Since 2.18
 	 * Params:
-	 * reserveToggleSize =  whether to reserve size for toggles
+	 * reserveToggleSize = whether to reserve size for toggles
 	 */
 	public void setReserveToggleSize(int reserveToggleSize)
 	{
@@ -588,7 +588,7 @@ public class Menu : MenuShell
 	 * This list is owned by GTK+ and must not be modified.
 	 * Since 2.6
 	 * Params:
-	 * widget =  a GtkWidget
+	 * widget = a GtkWidget
 	 * Returns: the list of menus attached to his widget.
 	 */
 	public static ListG getForAttachWidget(Widget widget)

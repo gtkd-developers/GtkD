@@ -100,7 +100,7 @@ public import gtk.PrintSettings;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example 46. The high-level printing API
+ * Example  46.  The high-level printing API
  * static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
@@ -269,7 +269,7 @@ public template PrintOperationPreviewT(TStruct)
 	 * have been selected for printing.
 	 * Since 2.10
 	 * Params:
-	 * pageNr =  a page number
+	 * pageNr = a page number
 	 * Returns: TRUE if the page has been selected for printing
 	 */
 	public int isSelected(int pageNr)
@@ -288,7 +288,7 @@ public template PrintOperationPreviewT(TStruct)
 	 * be associated with the print context.
 	 * Since 2.10
 	 * Params:
-	 * pageNr =  the page to render
+	 * pageNr = the page to render
 	 */
 	public void renderPage(int pageNr)
 	{

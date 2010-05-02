@@ -313,7 +313,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Sets the user name within op to username.
 	 * Params:
-	 * username =  input username.
+	 * username = input username.
 	 */
 	public void setUsername(string username)
 	{
@@ -334,7 +334,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Sets the mount operation's password to password.
 	 * Params:
-	 * password =  password to set.
+	 * password = password to set.
 	 */
 	public void setPassword(string password)
 	{
@@ -356,7 +356,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Sets the mount operation to use an anonymous user if anonymous is TRUE.
 	 * Params:
-	 * anonymous =  boolean value.
+	 * anonymous = boolean value.
 	 */
 	public void setAnonymous(int anonymous)
 	{
@@ -377,7 +377,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Sets the mount operation's domain.
 	 * Params:
-	 * domain =  the domain to set.
+	 * domain = the domain to set.
 	 */
 	public void setDomain(string domain)
 	{
@@ -398,7 +398,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Sets the state of saving passwords for the mount operation.
 	 * Params:
-	 * save =  a set of GPasswordSave flags.
+	 * save = a set of GPasswordSave flags.
 	 */
 	public void setPasswordSave(GPasswordSave save)
 	{
@@ -419,7 +419,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Sets a default choice for the mount operation.
 	 * Params:
-	 * choice =  an integer.
+	 * choice = an integer.
 	 */
 	public void setChoice(int choice)
 	{
@@ -430,7 +430,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Emits the "reply" signal.
 	 * Params:
-	 * result =  a GMountOperationResult
+	 * result = a GMountOperationResult
 	 */
 	public void reply(GMountOperationResult result)
 	{

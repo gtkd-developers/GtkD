@@ -117,7 +117,7 @@ public class Vfs : ObjectG
 	/**
 	 * Gets a GFile for path.
 	 * Params:
-	 * path =  a string containing a VFS path.
+	 * path = a string containing a VFS path.
 	 * Returns: a GFile.  Free the returned object with g_object_unref().
 	 */
 	public File getFileForPath(string path)
@@ -137,7 +137,7 @@ public class Vfs : ObjectG
 	 * might not support any I/O operation if the URI
 	 * is malformed or if the URI scheme is not supported.
 	 * Params:
-	 * uri =  a string containing a URI
+	 * uri = a string containing a URI
 	 * Returns: a GFile.  Free the returned object with g_object_unref().
 	 */
 	public File getFileForUri(string uri)
@@ -156,7 +156,7 @@ public class Vfs : ObjectG
 	 * not support any I/O operations if the parse_name cannot
 	 * be parsed by the GVfs module.
 	 * Params:
-	 * parseName =  a string to be parsed by the VFS module.
+	 * parseName = a string to be parsed by the VFS module.
 	 * Returns: a GFile for the given parse_name. Free the returned object with g_object_unref().
 	 */
 	public File parseName(string parseName)

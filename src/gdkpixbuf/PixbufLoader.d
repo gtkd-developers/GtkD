@@ -374,7 +374,7 @@ public class PixbufLoader : ObjectG
 	 * returned, error will be set to an error from the GDK_PIXBUF_ERROR
 	 * or G_FILE_ERROR domains.
 	 * Params:
-	 * buf =  Pointer to image data.
+	 * buf = Pointer to image data.
 	 * Returns: TRUE if the write was successful, or FALSE if the loadercannot parse the buffer.
 	 * Throws: GException on failure.
 	 */
@@ -402,8 +402,8 @@ public class PixbufLoader : ObjectG
 	 * emission of the ::size-prepared signal.
 	 * Since 2.2
 	 * Params:
-	 * width =  The desired width of the image being loaded.
-	 * height =  The desired height of the image being loaded.
+	 * width = The desired width of the image being loaded.
+	 * height = The desired height of the image being loaded.
 	 */
 	public void setSize(int width, int height)
 	{

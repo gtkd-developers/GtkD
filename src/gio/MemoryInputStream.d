@@ -135,9 +135,9 @@ public class MemoryInputStream : InputStream, SeekableIF
 	/**
 	 * Creates a new GMemoryInputStream with data in memory of a given size.
 	 * Params:
-	 * data =  input data
-	 * len =  length of the data, may be -1 if data is a nul-terminated string
-	 * destroy =  function that is called to free data, or NULL
+	 * data = input data
+	 * len = length of the data, may be -1 if data is a nul-terminated string
+	 * destroy = function that is called to free data, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* data, int len, GDestroyNotify destroy)
@@ -154,9 +154,9 @@ public class MemoryInputStream : InputStream, SeekableIF
 	/**
 	 * Appends data to data that can be read from the input stream
 	 * Params:
-	 * data =  input data
-	 * len =  length of the data, may be -1 if data is a nul-terminated string
-	 * destroy =  function that is called to free data, or NULL
+	 * data = input data
+	 * len = length of the data, may be -1 if data is a nul-terminated string
+	 * destroy = function that is called to free data, or NULL
 	 */
 	public void addData(void* data, int len, GDestroyNotify destroy)
 	{

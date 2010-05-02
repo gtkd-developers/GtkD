@@ -141,7 +141,7 @@ public class StateSet : ObjectG
 	 * Add a new state for the specified type to the current state set if
 	 * it is not already present.
 	 * Params:
-	 * type =  an AtkStateType
+	 * type = an AtkStateType
 	 * Returns: TRUE if the state for type is not already in set.
 	 */
 	public int addState(AtkStateType type)
@@ -153,7 +153,7 @@ public class StateSet : ObjectG
 	/**
 	 * Add the states for the specified types to the current state set.
 	 * Params:
-	 * types =  an array of AtkStateType
+	 * types = an array of AtkStateType
 	 */
 	public void addStates(AtkStateType[] types)
 	{
@@ -173,7 +173,7 @@ public class StateSet : ObjectG
 	/**
 	 * Checks whether the state for the specified type is in the specified set.
 	 * Params:
-	 * type =  an AtkStateType
+	 * type = an AtkStateType
 	 * Returns: TRUE if type is the state type is in set.
 	 */
 	public int containsState(AtkStateType type)
@@ -186,7 +186,7 @@ public class StateSet : ObjectG
 	 * Checks whether the states for all the specified types are in the
 	 * specified set.
 	 * Params:
-	 * types =  an array of AtkStateType
+	 * types = an array of AtkStateType
 	 * Returns: TRUE if all the states for type are in set.
 	 */
 	public int containsStates(AtkStateType[] types)
@@ -198,7 +198,7 @@ public class StateSet : ObjectG
 	/**
 	 * Removes the state for the specified type from the state set.
 	 * Params:
-	 * type =  an AtkType
+	 * type = an AtkType
 	 * Returns: TRUE if type was the state type is in set.
 	 */
 	public int removeState(AtkStateType type)
@@ -211,7 +211,7 @@ public class StateSet : ObjectG
 	 * Constructs the intersection of the two sets, returning NULL if the
 	 * intersection is empty.
 	 * Params:
-	 * compareSet =  another AtkStateSet
+	 * compareSet = another AtkStateSet
 	 * Returns: a new AtkStateSet which is the intersection of the two sets.
 	 */
 	public StateSet andSets(StateSet compareSet)
@@ -228,7 +228,7 @@ public class StateSet : ObjectG
 	/**
 	 * Constructs the union of the two sets.
 	 * Params:
-	 * compareSet =  another AtkStateSet
+	 * compareSet = another AtkStateSet
 	 * Returns: a new AtkStateSet which is the union of the two sets,returning NULL is empty.
 	 */
 	public StateSet orSets(StateSet compareSet)
@@ -247,7 +247,7 @@ public class StateSet : ObjectG
 	 * The set returned by this operation contains the states in exactly
 	 * one of the two sets.
 	 * Params:
-	 * compareSet =  another AtkStateSet
+	 * compareSet = another AtkStateSet
 	 * Returns: a new AtkStateSet which contains the states which are in exactly one of the two sets.
 	 */
 	public StateSet xorSets(StateSet compareSet)

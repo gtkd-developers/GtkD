@@ -87,7 +87,7 @@ public class PgScript
 	 * g_unichar_get_script().
 	 * Since 1.4
 	 * Params:
-	 * ch =  a Unicode character
+	 * ch = a Unicode character
 	 * Returns: the PangoScript for the character.
 	 */
 	public static PangoScript scriptForUnichar(gunichar ch)
@@ -101,7 +101,7 @@ public class PgScript
 	 * representative of that script. This will usually be the
 	 * Since 1.4
 	 * Params:
-	 * script =  a PangoScript
+	 * script = a PangoScript
 	 * Returns: a PangoLanguage that is representativeof the script, or NULL if no such language exists.
 	 */
 	public static PgLanguage scriptGetSampleLanguage(PangoScript script)
