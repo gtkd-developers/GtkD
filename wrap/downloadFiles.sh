@@ -13,8 +13,8 @@ wget http://library.gnome.org/devel/glib/2.18/glib-Atomic-Operations.html
 cd ..
 exit
 #GOBJECT
-curl http://library.gnome.org/devel/gobject/gobject-html-2.22.2.tar.gz | tar xvfz -
-ln -s gobject-html-2.22.2 gobject
+curl http://library.gnome.org/devel/gobject/gobject-html-2.24.0.tar.gz | tar xvfz -
+ln -s gobject-html-2.24.0 gobject
 #GIO
 curl http://library.gnome.org/devel/gio/gio-html-2.22.2.tar.gz | tar xvfz -
 ln -s gio-html-2.22.2 gio

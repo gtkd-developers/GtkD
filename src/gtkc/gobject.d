@@ -51,6 +51,7 @@ static this()
 	Linker.link(g_type_class_unref, "g_type_class_unref", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_peek_parent, "g_type_class_peek_parent", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_add_private, "g_type_class_add_private", LIBRARY.GOBJECT);
+	Linker.link(g_type_add_class_private, "g_type_add_class_private", LIBRARY.GOBJECT);
 	Linker.link(g_type_interface_peek, "g_type_interface_peek", LIBRARY.GOBJECT);
 	Linker.link(g_type_interface_peek_parent, "g_type_interface_peek_parent", LIBRARY.GOBJECT);
 	Linker.link(g_type_default_interface_ref, "g_type_default_interface_ref", LIBRARY.GOBJECT);
@@ -406,6 +407,7 @@ mixin( gshared ~"extern(C)
 	void function(gpointer gClass) c_g_type_class_unref;
 	gpointer function(gpointer gClass) c_g_type_class_peek_parent;
 	void function(gpointer gClass, gsize privateSize) c_g_type_class_add_private;
+	void function(GType classType, gsize privateSize) c_g_type_add_class_private;
 	gpointer function(gpointer instanceClass, GType ifaceType) c_g_type_interface_peek;
 	gpointer function(gpointer gIface) c_g_type_interface_peek_parent;
 	gpointer function(GType gType) c_g_type_default_interface_ref;
@@ -758,6 +760,7 @@ alias c_g_type_class_peek_static  g_type_class_peek_static;
 alias c_g_type_class_unref  g_type_class_unref;
 alias c_g_type_class_peek_parent  g_type_class_peek_parent;
 alias c_g_type_class_add_private  g_type_class_add_private;
+alias c_g_type_add_class_private  g_type_add_class_private;
 alias c_g_type_interface_peek  g_type_interface_peek;
 alias c_g_type_interface_peek_parent  g_type_interface_peek_parent;
 alias c_g_type_default_interface_ref  g_type_default_interface_ref;

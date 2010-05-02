@@ -267,7 +267,7 @@ public class ObjectG
 	 * canonical parameter names as
 	 * detail strings for the notify signal.
 	 * See Also
-	 * #GParamSpecObject, g_param_spec_object()
+	 * GParamSpecObject, g_param_spec_object()
 	 */
 	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

@@ -128,6 +128,7 @@ public class Type
 	 * to initialize the type system and assorted other code portions
 	 * (such as the various fundamental type implementations or the signal
 	 * system).
+	 * Since version 2.24 this also initializes the thread system
 	 */
 	public static void init()
 	{
@@ -329,30 +330,10 @@ public class Type
 	 * the type and all of its parent types are allocated
 	 * sequentially in the same memory block as the public
 	 * structures. This function should be called in the
-	 * type's class_init() function. The private structure can
-	 * be retrieved using the G_TYPE_INSTANCE_GET_PRIVATE() macro.
-	 * The following example shows attaching a private structure
-	 * MyObjectPrivate to an object
-	 * MyObject defined in the standard GObject
-	 * fashion.
-	 * typedef struct _MyObjectPrivate MyObjectPrivate;
-	 * struct _MyObjectPrivate {
-		 *  int some_field;
-	 * };
-	 * #define MY_OBJECT_GET_PRIVATE(o) \
-	 *  (G_TYPE_INSTANCE_GET_PRIVATE ((o), MY_TYPE_OBJECT, MyObjectPrivate))
-	 * static void
-	 * my_object_class_init (MyObjectClass *klass)
-	 * {
-		 *  g_type_class_add_private (klass, sizeof (MyObjectPrivate));
-	 * }
-	 * static int
-	 * my_object_get_some_field (MyObject *my_object)
-	 * {
-		 *  MyObjectPrivate *priv = MY_OBJECT_GET_PRIVATE (my_object);
-		 *  return priv->some_field;
-	 * }
-	 * Since 2.4
+	 * type's class_init() function.
+	 * The private structure can be retrieved using the
+	 * G_TYPE_CLASS_GET_PRIVATE() macro.
+	 * Since 2.24
 	 * Params:
 	 * gClass = class structure for an instantiatable type
 	 * privateSize = size of private structure.
@@ -361,6 +342,26 @@ public class Type
 	{
 		// void g_type_class_add_private (gpointer g_class,  gsize private_size);
 		g_type_class_add_private(gClass, privateSize);
+	}
+	
+	/**
+	 * Registers a private class structure for a classed type;
+	 * when the class is allocated, the private structures for
+	 * the class and all of its parent types are allocated
+	 * sequentially in the same memory block as the public
+	 * structures. This function should be called in the
+	 * type's get_type() function after the type is registered.
+	 * The private structure can be retrieved using the
+	 * G_TYPE_CLASS_GET_PRIVATE() macro.
+	 * Since 2.24
+	 * Params:
+	 * classType = GType of an classed type.
+	 * privateSize = size of private structure.
+	 */
+	public static void addClassPrivate(GType classType, uint privateSize)
+	{
+		// void g_type_add_class_private (GType class_type,  gsize private_size);
+		g_type_add_class_private(classType, privateSize);
 	}
 	
 	/**

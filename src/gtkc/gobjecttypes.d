@@ -62,7 +62,7 @@ enum GType : size_t
  * typedef gchar** GStrv;
  * A C representable type name for G_TYPE_STRV.
  * See Also
- * #GParamSpecBoxed, g_param_spec_boxed()
+ * GParamSpecBoxed, g_param_spec_boxed()
  */
 public alias char** GStrv;
 
@@ -87,6 +87,14 @@ public alias GClosureMarshal GSignalCMarshaller;
  * Note that the messages can also be triggered by setting the
  * GOBJECT_DEBUG environment variable to a ':'-separated list of
  * "objects" and "signals".
+ * G_TYPE_DEBUG_NONE
+ *  Print no messages.
+ * G_TYPE_DEBUG_OBJECTS
+ *  Print messages about object bookkeeping.
+ * G_TYPE_DEBUG_SIGNALS
+ *  Print messages about signal emissions.
+ * G_TYPE_DEBUG_MASK
+ *  Mask covering all debug flags.
  */
 public enum GTypeDebugFlags
 {
@@ -100,6 +108,13 @@ alias GTypeDebugFlags TypeDebugFlags;
 
 /**
  * Bit masks used to check or determine characteristics of a type.
+ * G_TYPE_FLAG_ABSTRACT
+ *  Indicates an abstract type. No instances can be
+ *  created for an abstract type.
+ * G_TYPE_FLAG_VALUE_ABSTRACT
+ *  Indicates an abstract value type, i.e. a type
+ *  that introduces a value table, but can't be used for
+ *  g_value_init().
  */
 public enum GTypeFlags
 {
@@ -112,6 +127,14 @@ alias GTypeFlags TypeFlags;
 /**
  * Bit masks used to check or determine specific characteristics of a
  * fundamental type.
+ * G_TYPE_FLAG_CLASSED
+ *  Indicates a classed type.
+ * G_TYPE_FLAG_INSTANTIATABLE
+ *  Indicates an instantiable type (implies classed).
+ * G_TYPE_FLAG_DERIVABLE
+ *  Indicates a flat derivable type.
+ * G_TYPE_FLAG_DEEP_DERIVABLE
+ *  Indicates a deep derivable type (implies derivable).
  */
 public enum GTypeFundamentalFlags
 {
@@ -1011,7 +1034,7 @@ public struct GValueArray
  *  A GType value.
  */
 // TODO
-// #define G_TYPE_FUNDAMENTAL(type)	(g_type_fundamental (type))
+// #define G_TYPE_FUNDAMENTAL(type)  (g_type_fundamental (type))
 
 /*
  * Get the type ID for the fundamental type number x.
@@ -1019,9 +1042,11 @@ public struct GValueArray
  * types.
  * x  :
  *  the fundamental type number.
+ * Returns  :
+ *  the GType
  */
 // TODO
-// #define	G_TYPE_MAKE_FUNDAMENTAL(x)	((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
+// #define  G_TYPE_MAKE_FUNDAMENTAL(x)  ((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
 
 /*
  * Checks if type is an abstract type. An abstract type can not be
@@ -1029,6 +1054,8 @@ public struct GValueArray
  * derived classes.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_ABSTRACT(type) (g_type_test_flags ((type), G_TYPE_FLAG_ABSTRACT))
@@ -1039,6 +1066,8 @@ public struct GValueArray
  * types).
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_DERIVED(type) ((type) > G_TYPE_FUNDAMENTAL_MAX)
@@ -1047,6 +1076,8 @@ public struct GValueArray
  * Checks if type is a fundamental type.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_FUNDAMENTAL(type) ((type) <= G_TYPE_FUNDAMENTAL_MAX)
@@ -1055,6 +1086,8 @@ public struct GValueArray
  * Checks if type is a value type and can be used with g_value_init().
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_VALUE_TYPE(type) (g_type_check_is_value_type (type))
@@ -1063,6 +1096,8 @@ public struct GValueArray
  * Checks if type has a GTypeValueTable.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_HAS_VALUE_TABLE(type) (g_type_value_table_peek (type) != NULL)
@@ -1071,6 +1106,8 @@ public struct GValueArray
  * Checks if type is a classed type.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_CLASSED(type) (g_type_test_flags ((type), G_TYPE_FLAG_CLASSED))
@@ -1080,6 +1117,8 @@ public struct GValueArray
  * process of creating an instance (object) of this type.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_INSTANTIATABLE(type) (g_type_test_flags ((type), G_TYPE_FLAG_INSTANTIATABLE))
@@ -1089,6 +1128,8 @@ public struct GValueArray
  * be used as the base class of a flat (single-level) class hierarchy.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_DERIVABLE(type) (g_type_test_flags ((type), G_TYPE_FLAG_DERIVABLE))
@@ -1098,6 +1139,8 @@ public struct GValueArray
  * can be used as the base class of a deep (multi-level) class hierarchy.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_DEEP_DERIVABLE(type) (g_type_test_flags ((type), G_TYPE_FLAG_DEEP_DERIVABLE))
@@ -1112,6 +1155,8 @@ public struct GValueArray
  * g_type_interface_add_prerequisite() for an alternative).
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_INTERFACE(type) (G_TYPE_FUNDAMENTAL (type) == G_TYPE_INTERFACE)
@@ -1121,6 +1166,8 @@ public struct GValueArray
  * This macro should only be used in type implementations.
  * instance  :
  *  Location of a valid GTypeInstance structure.
+ * Returns  :
+ *  the GType
  */
 // TODO
 // #define G_TYPE_FROM_INSTANCE(instance) (G_TYPE_FROM_CLASS (((GTypeInstance*) (instance))->g_class))
@@ -1130,6 +1177,8 @@ public struct GValueArray
  * This macro should only be used in type implementations.
  * g_class  :
  *  Location of a valid GTypeClass structure.
+ * Returns  :
+ *  the GType
  */
 // TODO
 // #define G_TYPE_FROM_CLASS(g_class) (((GTypeClass*) (g_class))->g_type)
@@ -1139,6 +1188,8 @@ public struct GValueArray
  * This macro should only be used in type implementations.
  * g_iface  :
  *  Location of a valid GTypeInterface structure.
+ * Returns  :
+ *  the GType
  */
 // TODO
 // #define G_TYPE_FROM_INTERFACE(g_iface) (((GTypeInterface*) (g_iface))->g_type)
@@ -1155,6 +1206,8 @@ public struct GValueArray
  *  The GType of the class to be returned.
  * c_type  :
  *  The C type of the class structure.
+ * Returns  :
+ *  a pointer to the class structure
  */
 // TODO
 // #define G_TYPE_INSTANCE_GET_CLASS(instance, g_type, c_type) (_G_TYPE_IGC ((instance), (g_type), c_type))
@@ -1168,6 +1221,8 @@ public struct GValueArray
  *  The GType of the interface to be returned.
  * c_type  :
  *  The C type of the interface structure.
+ * Returns  :
+ *  a pointer to the interface structure
  */
 // TODO
 // #define G_TYPE_INSTANCE_GET_INTERFACE(instance, g_type, c_type) (_G_TYPE_IGI ((instance), (g_type), c_type))
@@ -1183,6 +1238,8 @@ public struct GValueArray
  *  the type identifying which private data to retrieve.
  * c_type  :
  *  The C type for the private structure.
+ * Returns  :
+ *  a pointer to the private data structure.
  * Since 2.4
  */
 // TODO
@@ -1194,6 +1251,8 @@ public struct GValueArray
  * This macro should only be used in type implementations.
  * instance  :
  *  Location of a GTypeInstance structure.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_INSTANCE(instance)				(_G_TYPE_CHI ((GTypeInstance*) (instance)))
@@ -1220,6 +1279,8 @@ public struct GValueArray
  *  Location of a GTypeInstance structure.
  * g_type  :
  *  The type to be checked
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_INSTANCE_TYPE(instance, g_type) (_G_TYPE_CIT ((instance), (g_type)))
@@ -1247,6 +1308,8 @@ public struct GValueArray
  *  Location of a GTypeClass structure.
  * g_type  :
  *  The type to be checked.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_CLASS_TYPE(g_class, g_type) (_G_TYPE_CCT ((g_class), (g_type)))
@@ -1257,6 +1320,8 @@ public struct GValueArray
  * This macro should only be used in type implementations.
  * value  :
  *  a GValue
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_VALUE(value)				(_G_TYPE_CHV ((value)))
@@ -1269,6 +1334,8 @@ public struct GValueArray
  *  a GValue
  * g_type  :
  *  The type to be checked.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_VALUE_TYPE(value, g_type)			(_G_TYPE_CVH ((value), (g_type)))
@@ -1292,7 +1359,7 @@ public struct GValueArray
 
 /*
  * A convenience macro for type implementations.
- * Similar to G_DEFINE_TYPE(), but allows to insert custom code into the
+ * Similar to G_DEFINE_TYPE(), but allows you to insert custom code into the
  * *_get_type() function, e.g. interface implementations via G_IMPLEMENT_INTERFACE().
  * See G_DEFINE_TYPE_EXTENDED() for an example.
  * TN  :
@@ -1326,7 +1393,7 @@ public struct GValueArray
 
 /*
  * A convenience macro for type implementations.
- * Similar to G_DEFINE_TYPE_WITH_CODE(), but defines an abstract type and allows to
+ * Similar to G_DEFINE_TYPE_WITH_CODE(), but defines an abstract type and allows you to
  * insert custom code into the *_get_type() function, e.g. interface implementations
  * via G_IMPLEMENT_INTERFACE(). See G_DEFINE_TYPE_EXTENDED() for an example.
  * TN  :
@@ -1342,6 +1409,46 @@ public struct GValueArray
  */
 // TODO
 // #define G_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+
+/*
+ * A convenience macro for GTypeInterface definitions, which declares
+ * a default vtable initialization function and defines a *_get_type()
+ * function.
+ * The macro expects the interface initialization function to have the
+ * name t_n ## _default_init, and the interface
+ * structure to have the name TN ## Interface.
+ * TN  :
+ *  The name of the new type, in Camel case.
+ * t_n  :
+ *  The name of the new type, in lowercase, with words separated by '_'.
+ * T_P  :
+ *  The GType of the prerequisite type for the interface, or 0
+ * (G_TYPE_INVALID) for no prerequisite type.
+ * Since 2.24
+ */
+// TODO
+// #define G_DEFINE_INTERFACE(TN, t_n, T_P)		 G_DEFINE_INTERFACE_WITH_CODE(TN, t_n, T_P, ;)
+
+/*
+ * A convenience macro for GTypeInterface definitions. Similar to
+ * G_DEFINE_INTERFACE(), but allows you to insert custom code into the
+ * *_get_type() function, e.g. additional interface implementations
+ * via G_IMPLEMENT_INTERFACE(), or additional prerequisite types. See
+ * G_DEFINE_TYPE_EXTENDED() for a similar example using
+ * G_DEFINE_TYPE_WITH_CODE().
+ * TN  :
+ *  The name of the new type, in Camel case.
+ * t_n  :
+ *  The name of the new type, in lowercase, with words separated by '_'.
+ * T_P  :
+ *  The GType of the prerequisite type for the interface, or 0
+ * (G_TYPE_INVALID) for no prerequisite type.
+ * _C_  :
+ *  Custom code that gets inserted in the *_get_type() function.
+ * Since 2.24
+ */
+// TODO
+// #define G_DEFINE_INTERFACE_WITH_CODE(TN, t_n, T_P, _C_) _G_DEFINE_INTERFACE_EXTENDED_BEGIN(TN, t_n, T_P) {_C_;} _G_DEFINE_INTERFACE_EXTENDED_END()
 
 /*
  * A convenience macro to ease interface addition in the _C_ section
@@ -1447,7 +1554,7 @@ public struct GValueArray
  *  gtk_gadget,
  *  GTK_TYPE_THING,
  *  0,
- *  G_IMPLEMENT_INTERFACE (TYPE_GIZMO,
+ *  G_IMPLEMENT_INTERFACE_DYNAMIC (TYPE_GIZMO,
  *  gtk_gadget_gizmo_init));
  * expands to
  * static void gtk_gadget_init (GtkGadget *self);
@@ -1489,7 +1596,7 @@ public struct GValueArray
 		 *  const GInterfaceInfo g_implement_interface_info = {
 			 *  (GInterfaceInitFunc) gtk_gadget_gizmo_init
 		 *  };
-		 *  g_type_add_interface_static (g_define_type_id, TYPE_GIZMO, g_implement_interface_info);
+		 *  g_type_module_add_interface (type_module, g_define_type_id, TYPE_GIZMO, g_implement_interface_info);
 	 *  }
  * }
  * TypeName  :
@@ -1504,6 +1611,22 @@ public struct GValueArray
  * CODE  :
  *  Custom code that gets inserted in the *_get_type() function.
  * Since 2.14
+ */
+// TODO
+// #define G_DEFINE_DYNAMIC_TYPE_EXTENDED(TypeName, type_name, TYPE_PARENT, flags, CODE)
+
+/*
+ * A convenience macro to ease interface addition in the _C_ section
+ * of G_DEFINE_DYNAMIC_TYPE_EXTENDED(). See G_DEFINE_DYNAMIC_TYPE_EXTENDED()
+ * for an example.
+ * Note that this macro can only be used together with the
+ * G_DEFINE_DYNAMIC_TYPE_EXTENDED macros, since it depends on variable
+ * names from that macro.
+ * TYPE_IFACE  :
+ *  The GType of the interface to add
+ * iface_init  :
+ *  The interface init function
+ * Since 2.24
  * See Also
  * GTypePlugin
  * The abstract type loader interface.
@@ -1511,12 +1634,14 @@ public struct GValueArray
  * Portable mechanism for dynamically loaded modules.
  */
 // TODO
-// #define G_DEFINE_DYNAMIC_TYPE_EXTENDED(TypeName, type_name, TYPE_PARENT, flags, CODE)
+// #define G_IMPLEMENT_INTERFACE_DYNAMIC(TYPE_IFACE, iface_init)
 
 /*
  * Check if the passed in type id is a G_TYPE_OBJECT or derived from it.
  * type  :
  *  Type id to check
+ * Returns  :
+ *  FALSE or TRUE, indicating whether type is a G_TYPE_OBJECT.
  */
 // TODO
 // #define G_TYPE_IS_OBJECT(type) (G_TYPE_FUNDAMENTAL (type) == G_TYPE_OBJECT)
@@ -1560,6 +1685,8 @@ public struct GValueArray
  * Get the class structure associated to a GObject instance.
  * object  :
  *  a GObject instance.
+ * Returns  :
+ *  pointer to object class structure.
  */
 // TODO
 // #define G_OBJECT_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), G_TYPE_OBJECT, GObjectClass))
@@ -1568,6 +1695,8 @@ public struct GValueArray
  * Get the type id of an object.
  * object  :
  *  Object to return the type id for.
+ * Returns  :
+ *  Type id of object.
  */
 // TODO
 // #define G_OBJECT_TYPE(object) (G_TYPE_FROM_INSTANCE (object))
@@ -1576,6 +1705,9 @@ public struct GValueArray
  * Get the name of an object's type.
  * object  :
  *  Object to return the type name for.
+ * Returns  :
+ *  Type name of object. The string is owned by the type system and
+ *  should not be freed.
  */
 // TODO
 // #define G_OBJECT_TYPE_NAME(object) (g_type_name (G_OBJECT_TYPE (object)))
@@ -1584,6 +1716,8 @@ public struct GValueArray
  * Get the type id of a class structure.
  * class  :
  *  a valid GObjectClass
+ * Returns  :
+ *  Type id of class.
  */
 // TODO
 // #define G_OBJECT_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
@@ -1592,6 +1726,9 @@ public struct GValueArray
  * Return the name of a class structure's type.
  * class  :
  *  a valid GObjectClass
+ * Returns  :
+ *  Type name of class. The string is owned by the type system and
+ *  should not be freed.
  */
 // TODO
 // #define G_OBJECT_CLASS_NAME(class) (g_type_name (G_OBJECT_CLASS_TYPE (class)))
@@ -1631,7 +1768,7 @@ public struct GValueArray
  * user_data  :
  * user data set when the signal handler was connected.
  * See Also
- * #GParamSpecObject, g_param_spec_object()
+ * GParamSpecObject, g_param_spec_object()
  */
 // TODO
 // #define G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec)
@@ -1640,6 +1777,8 @@ public struct GValueArray
  * Get the type identifier from a given GEnumClass structure.
  * class  :
  *  a GEnumClass
+ * Returns  :
+ *  the GType
  */
 // TODO
 // #define G_ENUM_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
@@ -1648,6 +1787,8 @@ public struct GValueArray
  * Get the static type name from a given GEnumClass structure.
  * class  :
  *  a GEnumClass
+ * Returns  :
+ *  the type name.
  */
 // TODO
 // #define G_ENUM_CLASS_TYPE_NAME(class) (g_type_name (G_ENUM_CLASS_TYPE (class)))
@@ -1656,6 +1797,8 @@ public struct GValueArray
  * Checks whether type "is a" G_TYPE_ENUM.
  * type  :
  *  a GType ID.
+ * Returns  :
+ *  TRUE if type "is a" G_TYPE_ENUM.
  */
 // TODO
 // #define G_TYPE_IS_ENUM(type)	 (G_TYPE_FUNDAMENTAL (type) == G_TYPE_ENUM)
@@ -1681,6 +1824,8 @@ public struct GValueArray
  * Checks whether type "is a" G_TYPE_FLAGS.
  * type  :
  *  a GType ID.
+ * Returns  :
+ *  TRUE if type "is a" G_TYPE_FLAGS.
  */
 // TODO
 // #define G_TYPE_IS_FLAGS(type)	 (G_TYPE_FUNDAMENTAL (type) == G_TYPE_FLAGS)
@@ -1706,6 +1851,8 @@ public struct GValueArray
  * Get the type identifier from a given GFlagsClass structure.
  * class  :
  *  a GFlagsClass
+ * Returns  :
+ *  the GType
  */
 // TODO
 // #define G_FLAGS_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
@@ -1714,6 +1861,8 @@ public struct GValueArray
  * Get the static type name from a given GFlagsClass structure.
  * class  :
  *  a GFlagsClass
+ * Returns  :
+ *  the type name.
  */
 // TODO
 // #define G_FLAGS_CLASS_TYPE_NAME(class) (g_type_name (G_FLAGS_CLASS_TYPE (class)))
@@ -1726,25 +1875,31 @@ public struct GValueArray
  *  A GValue structure.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE if value holds the type.
  */
 // TODO
-// #define G_VALUE_HOLDS(value,type)	(G_TYPE_CHECK_VALUE_TYPE ((value), (type)))
+// #define G_VALUE_HOLDS(value,type)  (G_TYPE_CHECK_VALUE_TYPE ((value), (type)))
 
 /*
  * Get the type identifier of value.
  * value  :
  *  A GValue structure.
+ * Returns  :
+ *  the GType.
  */
 // TODO
-// #define	G_VALUE_TYPE(value)		(((GValue*) (value))->g_type)
+// #define  G_VALUE_TYPE(value)		(((GValue*) (value))->g_type)
 
 /*
  * Gets the the type name of value.
  * value  :
  *  A GValue structure.
+ * Returns  :
+ *  the type name.
  */
 // TODO
-// #define	G_VALUE_TYPE_NAME(value)	(g_type_name (G_VALUE_TYPE (value)))
+// #define  G_VALUE_TYPE_NAME(value)  (g_type_name (G_VALUE_TYPE (value)))
 
 /*
  * Checks whether the passed in type ID can be used for g_value_init().
@@ -1752,9 +1907,11 @@ public struct GValueArray
  * of the GTypeValueTable functions required for a type to create a GValue of.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  Whether type is suitable as a GValue type.
  */
 // TODO
-// #define	G_TYPE_IS_VALUE(type)		(g_type_check_is_value_type (type))
+// #define  G_TYPE_IS_VALUE(type)		(g_type_check_is_value_type (type))
 
 /*
  * Checks if type is an abstract value type. An abstract value type introduces
@@ -1762,6 +1919,8 @@ public struct GValueArray
  * an abstract base type for derived value types.
  * type  :
  *  A GType value.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_VALUE_ABSTRACT(type) (g_type_test_flags ((type), G_TYPE_FLAG_VALUE_ABSTRACT))
@@ -1770,14 +1929,18 @@ public struct GValueArray
  * Checks if value is a valid and initialized GValue structure.
  * value  :
  *  A GValue structure.
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
-// #define	G_IS_VALUE(value)		(G_TYPE_CHECK_VALUE (value))
+// #define  G_IS_VALUE(value)		(G_TYPE_CHECK_VALUE (value))
 
 /*
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_BOOLEAN.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_BOOLEAN(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_BOOLEAN))
@@ -1794,6 +1957,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_BOOLEAN.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_BOOLEAN(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_BOOLEAN))
@@ -1802,6 +1967,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_CHAR.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_CHAR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_CHAR))
@@ -1818,6 +1985,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_CHAR.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_CHAR(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_CHAR))
@@ -1826,6 +1995,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_UCHAR.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UCHAR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UCHAR))
@@ -1842,6 +2013,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_UCHAR.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_UCHAR(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_UCHAR))
@@ -1850,6 +2023,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_INT.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_INT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_INT))
@@ -1866,6 +2041,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_INT.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_INT(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_INT))
@@ -1874,6 +2051,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_UINT.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UINT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UINT))
@@ -1890,6 +2069,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_UINT.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_UINT(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_UINT))
@@ -1898,6 +2079,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_LONG.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_LONG(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_LONG))
@@ -1914,6 +2097,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_LONG.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_LONG(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_LONG))
@@ -1922,6 +2107,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_ULONG.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_ULONG(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_ULONG))
@@ -1938,6 +2125,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_ULONG.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_ULONG(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_ULONG))
@@ -1946,6 +2135,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_INT64.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_INT64(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_INT64))
@@ -1962,6 +2153,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_INT64.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_INT64(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_INT64))
@@ -1970,6 +2163,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_UINT64.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UINT64(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UINT64))
@@ -1986,6 +2181,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_UINT64.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_UINT64(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_UINT64))
@@ -1994,6 +2191,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_FLOAT.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_FLOAT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_FLOAT))
@@ -2010,6 +2209,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_FLOAT.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_FLOAT(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_FLOAT))
@@ -2018,6 +2219,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_DOUBLE.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_DOUBLE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_DOUBLE))
@@ -2034,6 +2237,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_DOUBLE.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_DOUBLE(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_DOUBLE))
@@ -2042,6 +2247,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_ENUM.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_ENUM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_ENUM))
@@ -2058,6 +2265,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values derived from type G_TYPE_ENUM.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_ENUM(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_ENUM))
@@ -2066,6 +2275,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_FLAGS.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_FLAGS(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_FLAGS))
@@ -2082,6 +2293,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values derived from type G_TYPE_FLAGS.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_FLAGS(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_FLAGS))
@@ -2090,6 +2303,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_STRING.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_STRING(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_STRING))
@@ -2106,6 +2321,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_STRING.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_STRING(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_STRING))
@@ -2114,6 +2331,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_PARAM.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_PARAM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_PARAM))
@@ -2130,14 +2349,18 @@ public struct GValueArray
  * Checks whether the given GValue can hold values derived from type G_TYPE_PARAM.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
-// #define G_VALUE_HOLDS_PARAM(value)	(G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_PARAM))
+// #define G_VALUE_HOLDS_PARAM(value)  (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_PARAM))
 
 /*
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_BOXED.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_BOXED(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_BOXED))
@@ -2154,6 +2377,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values derived from type G_TYPE_BOXED.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_BOXED(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_BOXED))
@@ -2162,6 +2387,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_POINTER.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_POINTER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_POINTER))
@@ -2178,6 +2405,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_POINTER.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_POINTER(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_POINTER))
@@ -2186,6 +2415,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_OBJECT.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_OBJECT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_OBJECT))
@@ -2202,6 +2433,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values derived from type G_TYPE_OBJECT.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_OBJECT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_OBJECT))
@@ -2210,6 +2443,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_UNICHAR.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UNICHAR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UNICHAR))
@@ -2226,6 +2461,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_VALUE_ARRAY.
  * pspec  :
  *  a valid GParamSpec instance
+ * Returns  :
+ *  TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_VALUE_ARRAY))
@@ -2242,6 +2479,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_OVERRIDE.
  * pspec  :
  *  a GParamSpec
+ * Returns  :
+ *  TRUE on success.
  * Since 2.4
  */
 // TODO
@@ -2260,6 +2499,8 @@ public struct GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_GTYPE.
  * pspec  :
  *  a GParamSpec
+ * Returns  :
+ *  TRUE on success.
  * Since 2.10
  */
 // TODO
@@ -2278,6 +2519,8 @@ public struct GValueArray
  * Checks whether the given GValue can hold values of type G_TYPE_GTYPE.
  * value  :
  *  a valid GValue structure
+ * Returns  :
+ *  TRUE on success.
  * Since 2.12
  */
 // TODO
@@ -2332,7 +2575,7 @@ public struct GValueArray
  *  a valid GParamSpec
  */
 // TODO
-// #define G_PARAM_SPEC_GET_CLASS(pspec)	(G_TYPE_INSTANCE_GET_CLASS ((pspec), G_TYPE_PARAM, GParamSpecClass))
+// #define G_PARAM_SPEC_GET_CLASS(pspec)  (G_TYPE_INSTANCE_GET_CLASS ((pspec), G_TYPE_PARAM, GParamSpecClass))
 
 /*
  * Retrieves the GType of this pspec.
@@ -2340,7 +2583,7 @@ public struct GValueArray
  *  a valid GParamSpec
  */
 // TODO
-// #define G_PARAM_SPEC_TYPE(pspec)	(G_TYPE_FROM_INSTANCE (pspec))
+// #define G_PARAM_SPEC_TYPE(pspec)  (G_TYPE_FROM_INSTANCE (pspec))
 
 /*
  * Retrieves the GType name of this pspec.
@@ -2348,7 +2591,7 @@ public struct GValueArray
  *  a valid GParamSpec
  */
 // TODO
-// #define G_PARAM_SPEC_TYPE_NAME(pspec)	(g_type_name (G_PARAM_SPEC_TYPE (pspec)))
+// #define G_PARAM_SPEC_TYPE_NAME(pspec)  (g_type_name (G_PARAM_SPEC_TYPE (pspec)))
 
 /*
  * Retrieves the GType to initialize a GValue for this parameter.
@@ -2356,7 +2599,7 @@ public struct GValueArray
  *  a valid GParamSpec
  */
 // TODO
-// #define	G_PARAM_SPEC_VALUE_TYPE(pspec)	(G_PARAM_SPEC (pspec)->value_type)
+// #define  G_PARAM_SPEC_VALUE_TYPE(pspec)  (G_PARAM_SPEC (pspec)->value_type)
 
 /*
  * Connects a GCallback function to a signal for a particular object.
@@ -2369,6 +2612,8 @@ public struct GValueArray
  *  the GCallback to connect.
  * data  :
  *  data to pass to c_handler calls.
+ * Returns  :
+ *  the handler id
  */
 // TODO
 // #define g_signal_connect(instance, detailed_signal, c_handler, data)
@@ -2384,6 +2629,8 @@ public struct GValueArray
  *  the GCallback to connect.
  * data  :
  *  data to pass to c_handler calls.
+ * Returns  :
+ *  the handler id
  */
 // TODO
 // #define g_signal_connect_after(instance, detailed_signal, c_handler, data)
@@ -2400,6 +2647,8 @@ public struct GValueArray
  *  the GCallback to connect.
  * data  :
  *  data to pass to c_handler calls.
+ * Returns  :
+ *  the handler id
  */
 // TODO
 // #define g_signal_connect_swapped(instance, detailed_signal, c_handler, data)
@@ -2412,6 +2661,8 @@ public struct GValueArray
  *  The C closure callback of the handlers (useless for non-C closures).
  * data  :
  *  The closure data of the handlers' closures.
+ * Returns  :
+ *  The number of handlers that matched.
  */
 // TODO
 // #define g_signal_handlers_block_by_func(instance, func, data)
@@ -2424,6 +2675,8 @@ public struct GValueArray
  *  The C closure callback of the handlers (useless for non-C closures).
  * data  :
  *  The closure data of the handlers' closures.
+ * Returns  :
+ *  The number of handlers that matched.
  */
 // TODO
 // #define g_signal_handlers_unblock_by_func(instance, func, data)
@@ -2436,6 +2689,8 @@ public struct GValueArray
  *  The C closure callback of the handlers (useless for non-C closures).
  * data  :
  *  The closure data of the handlers' closures.
+ * Returns  :
+ *  The number of handlers that matched.
  */
 // TODO
 // #define g_signal_handlers_disconnect_by_func(instance, func, data)
@@ -2444,9 +2699,12 @@ public struct GValueArray
  * Check if the closure still needs a marshaller. See g_closure_set_marshal().
  * closure  :
  *  a GClosure
+ * Returns  :
+ *  TRUE if a GClosureMarshal marshaller has not yet been set on
+ * closure.
  */
 // TODO
-// #define	G_CLOSURE_NEEDS_MARSHAL(closure) (((GClosure*) (closure))->marshal == NULL)
+// #define  G_CLOSURE_NEEDS_MARSHAL(closure) (((GClosure*) (closure))->marshal == NULL)
 
 /*
  * Get the total number of notifiers connected with the closure cl.
@@ -2456,6 +2714,8 @@ public struct GValueArray
  * g_closure_add_invalidate_notifier() and g_closure_add_marshal_guards().
  * cl  :
  *  a GClosure
+ * Returns  :
+ *  number of notifiers
  */
 // TODO
 // #define G_CLOSURE_N_NOTIFIERS(cl)
@@ -2465,9 +2725,11 @@ public struct GValueArray
  * first parameter to the callback. See g_cclosure_new_swap().
  * cclosure  :
  *  a GCClosure
+ * Returns  :
+ *  TRUE if data has to be swapped.
  */
 // TODO
-// #define	G_CCLOSURE_SWAP_DATA(cclosure)	 (((GClosure*) (cclosure))->derivative_flag)
+// #define  G_CCLOSURE_SWAP_DATA(cclosure)	 (((GClosure*) (cclosure))->derivative_flag)
 
 /*
  * Cast a function pointer to a GCallback.
@@ -2475,7 +2737,7 @@ public struct GValueArray
  *  a function pointer.
  */
 // TODO
-// #define	G_CALLBACK(f)			 ((GCallback) (f))
+// #define  G_CALLBACK(f)			 ((GCallback) (f))
 
 /*
  * A callback function used by the type system to do base initialization

@@ -65,8 +65,6 @@ private import glib.Str;
 
 /**
  * Description
- * glib-mkenums
- * title: Enumeration and Flag Types
  * The GLib type system provides fundamental types for enumeration and
  * flags types. (Flags types are like enumerations, but allow their
  * values to be combined by bitwise or). A registered enumeration or
