@@ -340,6 +340,11 @@ code: start
 	{
 		unref(gObject);
 	}
+
+	public void doref()
+	{
+		doref(gObject);
+	}
 code: end
 
 outFile: ObjectG

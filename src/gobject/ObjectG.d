@@ -247,6 +247,11 @@ public class ObjectG
 		unref(gObject);
 	}
 	
+	public void doref()
+	{
+		doref(gObject);
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;
