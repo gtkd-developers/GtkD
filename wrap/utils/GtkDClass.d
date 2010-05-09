@@ -2581,6 +2581,9 @@ public class GtkDClass
 		char[][] block = getBlock ("Description", "Details");
 		foreach ( char[] line; block )
 		{
+			if( startsWith(line, "--") && endsWith(line, "--") )
+				line = replace(line, "-", "_");
+
 			desc ~= " * " ~ line;
 		}
 		desc ~= tabs ~ " */";
