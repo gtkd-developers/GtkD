@@ -247,9 +247,11 @@ public class ObjectG
 		unref(gObject);
 	}
 	
-	public void doref()
+	public ObjectG doref()
 	{
 		doref(gObject);
+		
+		return this;
 	}
 	
 	/**
