@@ -123,27 +123,38 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * If realloc_fn is non-NULL, it will be used for resizing the internal
 	 * storage when necessary. To construct a fixed-size output stream,
 	 * pass NULL as realloc_fn.
-	 * /+* a stream that can grow +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 *  /+* a stream that can grow +/
 	 * stream = g_memory_output_stream_new (NULL, 0, realloc, free);
+	 * /+* another stream that can grow +/
+	 * stream2 = g_memory_output_stream_new (NULL, 0, g_realloc, g_free);
 	 * /+* a fixed-size stream +/
 	 * data = malloc (200);
-	 * stream2 = g_memory_output_stream_new (data, 200, NULL, free);
+	 * stream3 = g_memory_output_stream_new (data, 200, NULL, free);
 	 * Params:
 	 * data = pointer to a chunk of memory to use, or NULL
-	 * len = the size of data
-	 * reallocFn = a function with realloc() semantics to be called when
-	 *  data needs to be grown, or NULL
-	 * destroy = a function to be called on data when the stream is finalized,
-	 *  or NULL
+	 * size = the size of data
+	 * reallocFunction = a function with realloc() semantics (like g_realloc())
+	 *  to be called when data needs to be grown, or NULL
+	 * destroyFunction = a function to be called on data when the stream is
+	 *  finalized, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* data, uint len, GReallocFunc reallocFn, GDestroyNotify destroy)
+	public this (void* data, uint size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction)
 	{
-		// GOutputStream * g_memory_output_stream_new (gpointer data,  gsize len,  GReallocFunc realloc_fn,  GDestroyNotify destroy);
-		auto p = g_memory_output_stream_new(data, len, reallocFn, destroy);
+		// GOutputStream * g_memory_output_stream_new (gpointer data,  gsize size,  GReallocFunc realloc_function,  GDestroyNotify destroy_function);
+		auto p = g_memory_output_stream_new(data, size, reallocFunction, destroyFunction);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_memory_output_stream_new(data, len, reallocFn, destroy)");
+			throw new ConstructionException("null returned by g_memory_output_stream_new(data, size, reallocFunction, destroyFunction)");
 		}
 		this(cast(GMemoryOutputStream*) p);
 	}

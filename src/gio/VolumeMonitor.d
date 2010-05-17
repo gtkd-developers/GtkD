@@ -456,7 +456,7 @@ public class VolumeMonitor : ObjectG
 	/**
 	 * Emitted when a mountable volume is removed from the system.
 	 * See Also
-	 * #GFileMonitor
+	 * GFileMonitor
 	 */
 	void addOnVolumeRemoved(void delegate(VolumeIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

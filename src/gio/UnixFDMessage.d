@@ -44,7 +44,9 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.UnixFDList
  * structWrap:
+ * 	- GUnixFDList* -> UnixFDList
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,6 +62,7 @@ private import glib.ConstructionException;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.UnixFDList;
 
 
 
@@ -67,10 +70,11 @@ private import gio.SocketControlMessage;
 
 /**
  * Description
- * This GSocketControlMessage contains a list of file descriptors.
- * It may be sent using g_socket_send_message() and received using
+ * This GSocketControlMessage contains a GUnixFDList. It may be sent
+ * using g_socket_send_message() and received using
  * g_socket_receive_message() over UNIX sockets (ie: sockets in the
- * G_SOCKET_ADDRESS_UNIX family).
+ * G_SOCKET_ADDRESS_UNIX family). The file descriptors are copied
+ * between processes by the kernel.
  * For an easier way to send and receive file descriptors over
  * stream-oriented UNIX sockets, see g_unix_connection_send_fd() and
  * g_unix_connection_receive_fd().
@@ -119,7 +123,26 @@ public class UnixFDMessage : SocketControlMessage
 	 */
 	
 	/**
-	 * Creates a new GUnixFDMessage containing no file descriptors.
+	 * Creates a new GUnixFDMessage containing list.
+	 * Since 2.24
+	 * Params:
+	 * fdList = a GUnixFDList
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (UnixFDList fdList)
+	{
+		// GSocketControlMessage * g_unix_fd_message_new_with_fd_list  (GUnixFDList *fd_list);
+		auto p = g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct())");
+		}
+		this(cast(GUnixFDMessage*) p);
+	}
+	
+	/**
+	 * Creates a new GUnixFDMessage containing an empty file descriptor
+	 * list.
 	 * Since 2.22
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -132,6 +155,24 @@ public class UnixFDMessage : SocketControlMessage
 			throw new ConstructionException("null returned by g_unix_fd_message_new()");
 		}
 		this(cast(GUnixFDMessage*) p);
+	}
+	
+	/**
+	 * Gets the GUnixFDList contained in message. This function does not
+	 * return a reference to the caller, but the returned list is valid for
+	 * the lifetime of message.
+	 * Since 2.24
+	 * Returns: the GUnixFDList from message
+	 */
+	public UnixFDList getFdList()
+	{
+		// GUnixFDList * g_unix_fd_message_get_fd_list (GUnixFDMessage *message);
+		auto p = g_unix_fd_message_get_fd_list(gUnixFDMessage);
+		if(p is null)
+		{
+			return null;
+		}
+		return new UnixFDList(cast(GUnixFDList*) p);
 	}
 	
 	/**

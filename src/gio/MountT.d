@@ -320,6 +320,23 @@ public template MountT(TStruct)
 	}
 	
 	/**
+	 * Gets the default location of mount. The default location of the given
+	 * mount is a path that reflects the main entry point for the user (e.g.
+	 * the home directory, or the root of the volume).
+	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 */
+	public File getDefaultLocation()
+	{
+		// GFile * g_mount_get_default_location (GMount *mount);
+		auto p = g_mount_get_default_location(getMountTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new File(cast(GFile*) p);
+	}
+	
+	/**
 	 * Checks if mount can be mounted.
 	 * Params:
 	 * mount = a GMount.

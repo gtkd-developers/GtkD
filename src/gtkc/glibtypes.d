@@ -62,7 +62,7 @@ version(Tango)
 
 version(D_Version2)
 {
-string gshared() { return "__gshared "; }
+	mixin("enum gshared = \"__gshared \";");
 }
 else
 {

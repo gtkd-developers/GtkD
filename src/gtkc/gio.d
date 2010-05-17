@@ -48,6 +48,7 @@ static this()
 	Linker.link(g_file_get_uri, "g_file_get_uri", LIBRARY.GIO);
 	Linker.link(g_file_get_parse_name, "g_file_get_parse_name", LIBRARY.GIO);
 	Linker.link(g_file_get_parent, "g_file_get_parent", LIBRARY.GIO);
+	Linker.link(g_file_has_parent, "g_file_has_parent", LIBRARY.GIO);
 	Linker.link(g_file_get_child, "g_file_get_child", LIBRARY.GIO);
 	Linker.link(g_file_get_child_for_display_name, "g_file_get_child_for_display_name", LIBRARY.GIO);
 	Linker.link(g_file_has_prefix, "g_file_has_prefix", LIBRARY.GIO);
@@ -326,6 +327,29 @@ static this()
 	Linker.link(g_simple_async_report_error_in_idle, "g_simple_async_report_error_in_idle", LIBRARY.GIO);
 	Linker.link(g_simple_async_report_gerror_in_idle, "g_simple_async_report_gerror_in_idle", LIBRARY.GIO);
 
+	// gio.ConverterT
+
+
+	// gio.ConverterT
+
+	Linker.link(g_converter_convert, "g_converter_convert", LIBRARY.GIO);
+	Linker.link(g_converter_reset, "g_converter_reset", LIBRARY.GIO);
+
+	// gio.CharsetConverter
+
+	Linker.link(g_charset_converter_new, "g_charset_converter_new", LIBRARY.GIO);
+	Linker.link(g_charset_converter_set_use_fallback, "g_charset_converter_set_use_fallback", LIBRARY.GIO);
+	Linker.link(g_charset_converter_get_use_fallback, "g_charset_converter_get_use_fallback", LIBRARY.GIO);
+	Linker.link(g_charset_converter_get_num_fallbacks, "g_charset_converter_get_num_fallbacks", LIBRARY.GIO);
+
+	// gio.ZlibCompressor
+
+	Linker.link(g_zlib_compressor_new, "g_zlib_compressor_new", LIBRARY.GIO);
+
+	// gio.ZlibDecompressor
+
+	Linker.link(g_zlib_decompressor_new, "g_zlib_decompressor_new", LIBRARY.GIO);
+
 	// gio.SeekableT
 
 
@@ -369,6 +393,7 @@ static this()
 	Linker.link(g_output_stream_flush_finish, "g_output_stream_flush_finish", LIBRARY.GIO);
 	Linker.link(g_output_stream_close_async, "g_output_stream_close_async", LIBRARY.GIO);
 	Linker.link(g_output_stream_close_finish, "g_output_stream_close_finish", LIBRARY.GIO);
+	Linker.link(g_output_stream_is_closing, "g_output_stream_is_closing", LIBRARY.GIO);
 	Linker.link(g_output_stream_is_closed, "g_output_stream_is_closed", LIBRARY.GIO);
 	Linker.link(g_output_stream_has_pending, "g_output_stream_has_pending", LIBRARY.GIO);
 	Linker.link(g_output_stream_set_pending, "g_output_stream_set_pending", LIBRARY.GIO);
@@ -405,6 +430,13 @@ static this()
 	Linker.link(g_file_io_stream_query_info, "g_file_io_stream_query_info", LIBRARY.GIO);
 	Linker.link(g_file_io_stream_query_info_async, "g_file_io_stream_query_info_async", LIBRARY.GIO);
 	Linker.link(g_file_io_stream_query_info_finish, "g_file_io_stream_query_info_finish", LIBRARY.GIO);
+
+	// gio.FileDescriptorBasedT
+
+
+	// gio.FileDescriptorBasedT
+
+	Linker.link(g_file_descriptor_based_get_fd, "g_file_descriptor_based_get_fd", LIBRARY.GIO);
 
 	// gio.FilterInputStream
 
@@ -527,6 +559,7 @@ static this()
 	Linker.link(g_app_info_equal, "g_app_info_equal", LIBRARY.GIO);
 	Linker.link(g_app_info_get_id, "g_app_info_get_id", LIBRARY.GIO);
 	Linker.link(g_app_info_get_name, "g_app_info_get_name", LIBRARY.GIO);
+	Linker.link(g_app_info_get_display_name, "g_app_info_get_display_name", LIBRARY.GIO);
 	Linker.link(g_app_info_get_description, "g_app_info_get_description", LIBRARY.GIO);
 	Linker.link(g_app_info_get_executable, "g_app_info_get_executable", LIBRARY.GIO);
 	Linker.link(g_app_info_get_commandline, "g_app_info_get_commandline", LIBRARY.GIO);
@@ -561,6 +594,7 @@ static this()
 	Linker.link(g_desktop_app_info_new_from_filename, "g_desktop_app_info_new_from_filename", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_new_from_keyfile, "g_desktop_app_info_new_from_keyfile", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_new, "g_desktop_app_info_new", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_filename, "g_desktop_app_info_get_filename", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_is_hidden, "g_desktop_app_info_get_is_hidden", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_set_desktop_env, "g_desktop_app_info_set_desktop_env", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_lookup_get_default_for_uri_scheme, "g_desktop_app_info_lookup_get_default_for_uri_scheme", LIBRARY.GIO);
@@ -612,6 +646,7 @@ static this()
 	Linker.link(g_mount_get_drive, "g_mount_get_drive", LIBRARY.GIO);
 	Linker.link(g_mount_get_root, "g_mount_get_root", LIBRARY.GIO);
 	Linker.link(g_mount_get_volume, "g_mount_get_volume", LIBRARY.GIO);
+	Linker.link(g_mount_get_default_location, "g_mount_get_default_location", LIBRARY.GIO);
 	Linker.link(g_mount_can_unmount, "g_mount_can_unmount", LIBRARY.GIO);
 	Linker.link(g_mount_unmount, "g_mount_unmount", LIBRARY.GIO);
 	Linker.link(g_mount_unmount_finish, "g_mount_unmount_finish", LIBRARY.GIO);
@@ -866,9 +901,21 @@ static this()
 	Linker.link(g_socket_control_message_get_size, "g_socket_control_message_get_size", LIBRARY.GIO);
 	Linker.link(g_socket_control_message_serialize, "g_socket_control_message_serialize", LIBRARY.GIO);
 
+	// gio.UnixFDList
+
+	Linker.link(g_unix_fd_list_new_from_array, "g_unix_fd_list_new_from_array", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_new, "g_unix_fd_list_new", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_get_length, "g_unix_fd_list_get_length", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_get, "g_unix_fd_list_get", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_peek_fds, "g_unix_fd_list_peek_fds", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_steal_fds, "g_unix_fd_list_steal_fds", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_append, "g_unix_fd_list_append", LIBRARY.GIO);
+
 	// gio.UnixFDMessage
 
+	Linker.link(g_unix_fd_message_new_with_fd_list, "g_unix_fd_message_new_with_fd_list", LIBRARY.GIO);
 	Linker.link(g_unix_fd_message_new, "g_unix_fd_message_new", LIBRARY.GIO);
+	Linker.link(g_unix_fd_message_get_fd_list, "g_unix_fd_message_get_fd_list", LIBRARY.GIO);
 	Linker.link(g_unix_fd_message_append_fd, "g_unix_fd_message_append_fd", LIBRARY.GIO);
 	Linker.link(g_unix_fd_message_steal_fds, "g_unix_fd_message_steal_fds", LIBRARY.GIO);
 
@@ -972,6 +1019,7 @@ static this()
 	Linker.link(g_socket_listener_add_socket, "g_socket_listener_add_socket", LIBRARY.GIO);
 	Linker.link(g_socket_listener_add_address, "g_socket_listener_add_address", LIBRARY.GIO);
 	Linker.link(g_socket_listener_add_inet_port, "g_socket_listener_add_inet_port", LIBRARY.GIO);
+	Linker.link(g_socket_listener_add_any_inet_port, "g_socket_listener_add_any_inet_port", LIBRARY.GIO);
 	Linker.link(g_socket_listener_accept, "g_socket_listener_accept", LIBRARY.GIO);
 	Linker.link(g_socket_listener_accept_async, "g_socket_listener_accept_async", LIBRARY.GIO);
 	Linker.link(g_socket_listener_accept_finish, "g_socket_listener_accept_finish", LIBRARY.GIO);
@@ -1013,8 +1061,10 @@ static this()
 
 	Linker.link(g_io_module_new, "g_io_module_new", LIBRARY.GIO);
 	Linker.link(g_io_modules_load_all_in_directory, "g_io_modules_load_all_in_directory", LIBRARY.GIO);
+	Linker.link(g_io_modules_scan_all_in_directory, "g_io_modules_scan_all_in_directory", LIBRARY.GIO);
 	Linker.link(g_io_module_load, "g_io_module_load", LIBRARY.GIO);
 	Linker.link(g_io_module_unload, "g_io_module_unload", LIBRARY.GIO);
+	Linker.link(g_io_module_query, "g_io_module_query", LIBRARY.GIO);
 
 	// gio.IOExtension
 
@@ -1051,6 +1101,7 @@ mixin( gshared ~"extern(C)
 	char* function(GFile* file) c_g_file_get_uri;
 	char* function(GFile* file) c_g_file_get_parse_name;
 	GFile* function(GFile* file) c_g_file_get_parent;
+	gboolean function(GFile* file, GFile* parent) c_g_file_has_parent;
 	GFile* function(GFile* file, char* name) c_g_file_get_child;
 	GFile* function(GFile* file, char* displayName, GError** error) c_g_file_get_child_for_display_name;
 	gboolean function(GFile* file, GFile* prefix) c_g_file_has_prefix;
@@ -1329,6 +1380,29 @@ mixin( gshared ~"extern(C)
 	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_report_error_in_idle;
 	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_report_gerror_in_idle;
 	
+	// gio.ConverterT
+	
+	
+	// gio.ConverterT
+	
+	GConverterResult function(GConverter* converter, void* inbuf, gsize inbufSize, void* outbuf, gsize outbufSize, GConverterFlags flags, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_converter_convert;
+	void function(GConverter* converter) c_g_converter_reset;
+	
+	// gio.CharsetConverter
+	
+	GCharsetConverter* function(gchar* toCharset, gchar* fromCharset, GError** error) c_g_charset_converter_new;
+	void function(GCharsetConverter* converter, gboolean useFallback) c_g_charset_converter_set_use_fallback;
+	gboolean function(GCharsetConverter* converter) c_g_charset_converter_get_use_fallback;
+	guint function(GCharsetConverter* converter) c_g_charset_converter_get_num_fallbacks;
+	
+	// gio.ZlibCompressor
+	
+	GZlibCompressor* function(GZlibCompressorFormat format, int level) c_g_zlib_compressor_new;
+	
+	// gio.ZlibDecompressor
+	
+	GZlibDecompressor* function(GZlibCompressorFormat format) c_g_zlib_decompressor_new;
+	
 	// gio.SeekableT
 	
 	
@@ -1372,6 +1446,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_flush_finish;
 	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_close_async;
 	gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_close_finish;
+	gboolean function(GOutputStream* stream) c_g_output_stream_is_closing;
 	gboolean function(GOutputStream* stream) c_g_output_stream_is_closed;
 	gboolean function(GOutputStream* stream) c_g_output_stream_has_pending;
 	gboolean function(GOutputStream* stream, GError** error) c_g_output_stream_set_pending;
@@ -1409,6 +1484,13 @@ mixin( gshared ~"extern(C)
 	void function(GFileIOStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_io_stream_query_info_async;
 	GFileInfo* function(GFileIOStream* stream, GAsyncResult* result, GError** error) c_g_file_io_stream_query_info_finish;
 	
+	// gio.FileDescriptorBasedT
+	
+	
+	// gio.FileDescriptorBasedT
+	
+	int function(GFileDescriptorBased* fdBased) c_g_file_descriptor_based_get_fd;
+	
 	// gio.FilterInputStream
 	
 	GInputStream* function(GFilterInputStream* stream) c_g_filter_input_stream_get_base_stream;
@@ -1429,7 +1511,7 @@ mixin( gshared ~"extern(C)
 	
 	// gio.MemoryOutputStream
 	
-	GOutputStream* function(gpointer data, gsize len, GReallocFunc reallocFn, GDestroyNotify destroy) c_g_memory_output_stream_new;
+	GOutputStream* function(gpointer data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction) c_g_memory_output_stream_new;
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_size;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data_size;
@@ -1530,6 +1612,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GAppInfo* appinfo1, GAppInfo* appinfo2) c_g_app_info_equal;
 	char* function(GAppInfo* appinfo) c_g_app_info_get_id;
 	char* function(GAppInfo* appinfo) c_g_app_info_get_name;
+	char* function(GAppInfo* appinfo) c_g_app_info_get_display_name;
 	char* function(GAppInfo* appinfo) c_g_app_info_get_description;
 	char* function(GAppInfo* appinfo) c_g_app_info_get_executable;
 	char* function(GAppInfo* appinfo) c_g_app_info_get_commandline;
@@ -1564,6 +1647,7 @@ mixin( gshared ~"extern(C)
 	GDesktopAppInfo* function(char* filename) c_g_desktop_app_info_new_from_filename;
 	GDesktopAppInfo* function(GKeyFile* keyFile) c_g_desktop_app_info_new_from_keyfile;
 	GDesktopAppInfo* function(char* desktopId) c_g_desktop_app_info_new;
+	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_filename;
 	gboolean function(GDesktopAppInfo* info) c_g_desktop_app_info_get_is_hidden;
 	void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
 	GAppInfo* function(GDesktopAppInfoLookup* lookup, char* uriScheme) c_g_desktop_app_info_lookup_get_default_for_uri_scheme;
@@ -1615,6 +1699,7 @@ mixin( gshared ~"extern(C)
 	GDrive* function(GMount* mount) c_g_mount_get_drive;
 	GFile* function(GMount* mount) c_g_mount_get_root;
 	GVolume* function(GMount* mount) c_g_mount_get_volume;
+	GFile* function(GMount* mount) c_g_mount_get_default_location;
 	gboolean function(GMount* mount) c_g_mount_can_unmount;
 	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_unmount;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_unmount_finish;
@@ -1869,9 +1954,21 @@ mixin( gshared ~"extern(C)
 	gsize function(GSocketControlMessage* message) c_g_socket_control_message_get_size;
 	void function(GSocketControlMessage* message, gpointer data) c_g_socket_control_message_serialize;
 	
+	// gio.UnixFDList
+	
+	GUnixFDList* function(gint* fds, gint nFds) c_g_unix_fd_list_new_from_array;
+	GUnixFDList* function() c_g_unix_fd_list_new;
+	gint function(GUnixFDList* list) c_g_unix_fd_list_get_length;
+	gint function(GUnixFDList* list, gint index, GError** error) c_g_unix_fd_list_get;
+	gint* function(GUnixFDList* list, gint* length) c_g_unix_fd_list_peek_fds;
+	gint* function(GUnixFDList* list, gint* length) c_g_unix_fd_list_steal_fds;
+	gint function(GUnixFDList* list, gint fd, GError** error) c_g_unix_fd_list_append;
+	
 	// gio.UnixFDMessage
 	
+	GSocketControlMessage* function(GUnixFDList* fdList) c_g_unix_fd_message_new_with_fd_list;
 	GSocketControlMessage* function() c_g_unix_fd_message_new;
+	GUnixFDList* function(GUnixFDMessage* message) c_g_unix_fd_message_get_fd_list;
 	gboolean function(GUnixFDMessage* message, gint fd, GError** error) c_g_unix_fd_message_append_fd;
 	gint* function(GUnixFDMessage* message, gint* length) c_g_unix_fd_message_steal_fds;
 	
@@ -1975,6 +2072,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSocketListener* listener, GSocket* socket, GObject* sourceObject, GError** error) c_g_socket_listener_add_socket;
 	gboolean function(GSocketListener* listener, GSocketAddress* address, GSocketType type, GSocketProtocol protocol, GObject* sourceObject, GSocketAddress** effectiveAddress, GError** error) c_g_socket_listener_add_address;
 	gboolean function(GSocketListener* listener, guint16 port, GObject* sourceObject, GError** error) c_g_socket_listener_add_inet_port;
+	guint16 function(GSocketListener* listener, GObject* sourceObject, GError** error) c_g_socket_listener_add_any_inet_port;
 	GSocketConnection* function(GSocketListener* listener, GObject** sourceObject, GCancellable* cancellable, GError** error) c_g_socket_listener_accept;
 	void function(GSocketListener* listener, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_listener_accept_async;
 	GSocketConnection* function(GSocketListener* listener, GAsyncResult* result, GObject** sourceObject, GError** error) c_g_socket_listener_accept_finish;
@@ -2016,8 +2114,10 @@ mixin( gshared ~"extern(C)
 	
 	GIOModule* function(gchar* filename) c_g_io_module_new;
 	GList* function(gchar* dirname) c_g_io_modules_load_all_in_directory;
+	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
 	void function(GIOModule* modul) c_g_io_module_load;
 	void function(GIOModule* modul) c_g_io_module_unload;
+	char** function() c_g_io_module_query;
 	
 	// gio.IOExtension
 	
@@ -2051,6 +2151,7 @@ alias c_g_file_get_path  g_file_get_path;
 alias c_g_file_get_uri  g_file_get_uri;
 alias c_g_file_get_parse_name  g_file_get_parse_name;
 alias c_g_file_get_parent  g_file_get_parent;
+alias c_g_file_has_parent  g_file_has_parent;
 alias c_g_file_get_child  g_file_get_child;
 alias c_g_file_get_child_for_display_name  g_file_get_child_for_display_name;
 alias c_g_file_has_prefix  g_file_has_prefix;
@@ -2329,6 +2430,29 @@ alias c_g_simple_async_result_set_error_va  g_simple_async_result_set_error_va;
 alias c_g_simple_async_report_error_in_idle  g_simple_async_report_error_in_idle;
 alias c_g_simple_async_report_gerror_in_idle  g_simple_async_report_gerror_in_idle;
 
+// gio.ConverterT
+
+
+// gio.ConverterT
+
+alias c_g_converter_convert  g_converter_convert;
+alias c_g_converter_reset  g_converter_reset;
+
+// gio.CharsetConverter
+
+alias c_g_charset_converter_new  g_charset_converter_new;
+alias c_g_charset_converter_set_use_fallback  g_charset_converter_set_use_fallback;
+alias c_g_charset_converter_get_use_fallback  g_charset_converter_get_use_fallback;
+alias c_g_charset_converter_get_num_fallbacks  g_charset_converter_get_num_fallbacks;
+
+// gio.ZlibCompressor
+
+alias c_g_zlib_compressor_new  g_zlib_compressor_new;
+
+// gio.ZlibDecompressor
+
+alias c_g_zlib_decompressor_new  g_zlib_decompressor_new;
+
 // gio.SeekableT
 
 
@@ -2372,6 +2496,7 @@ alias c_g_output_stream_flush_async  g_output_stream_flush_async;
 alias c_g_output_stream_flush_finish  g_output_stream_flush_finish;
 alias c_g_output_stream_close_async  g_output_stream_close_async;
 alias c_g_output_stream_close_finish  g_output_stream_close_finish;
+alias c_g_output_stream_is_closing  g_output_stream_is_closing;
 alias c_g_output_stream_is_closed  g_output_stream_is_closed;
 alias c_g_output_stream_has_pending  g_output_stream_has_pending;
 alias c_g_output_stream_set_pending  g_output_stream_set_pending;
@@ -2408,6 +2533,13 @@ alias c_g_file_io_stream_get_etag  g_file_io_stream_get_etag;
 alias c_g_file_io_stream_query_info  g_file_io_stream_query_info;
 alias c_g_file_io_stream_query_info_async  g_file_io_stream_query_info_async;
 alias c_g_file_io_stream_query_info_finish  g_file_io_stream_query_info_finish;
+
+// gio.FileDescriptorBasedT
+
+
+// gio.FileDescriptorBasedT
+
+alias c_g_file_descriptor_based_get_fd  g_file_descriptor_based_get_fd;
 
 // gio.FilterInputStream
 
@@ -2530,6 +2662,7 @@ alias c_g_app_info_dup  g_app_info_dup;
 alias c_g_app_info_equal  g_app_info_equal;
 alias c_g_app_info_get_id  g_app_info_get_id;
 alias c_g_app_info_get_name  g_app_info_get_name;
+alias c_g_app_info_get_display_name  g_app_info_get_display_name;
 alias c_g_app_info_get_description  g_app_info_get_description;
 alias c_g_app_info_get_executable  g_app_info_get_executable;
 alias c_g_app_info_get_commandline  g_app_info_get_commandline;
@@ -2564,6 +2697,7 @@ alias c_g_app_info_launch_default_for_uri  g_app_info_launch_default_for_uri;
 alias c_g_desktop_app_info_new_from_filename  g_desktop_app_info_new_from_filename;
 alias c_g_desktop_app_info_new_from_keyfile  g_desktop_app_info_new_from_keyfile;
 alias c_g_desktop_app_info_new  g_desktop_app_info_new;
+alias c_g_desktop_app_info_get_filename  g_desktop_app_info_get_filename;
 alias c_g_desktop_app_info_get_is_hidden  g_desktop_app_info_get_is_hidden;
 alias c_g_desktop_app_info_set_desktop_env  g_desktop_app_info_set_desktop_env;
 alias c_g_desktop_app_info_lookup_get_default_for_uri_scheme  g_desktop_app_info_lookup_get_default_for_uri_scheme;
@@ -2615,6 +2749,7 @@ alias c_g_mount_get_icon  g_mount_get_icon;
 alias c_g_mount_get_drive  g_mount_get_drive;
 alias c_g_mount_get_root  g_mount_get_root;
 alias c_g_mount_get_volume  g_mount_get_volume;
+alias c_g_mount_get_default_location  g_mount_get_default_location;
 alias c_g_mount_can_unmount  g_mount_can_unmount;
 alias c_g_mount_unmount  g_mount_unmount;
 alias c_g_mount_unmount_finish  g_mount_unmount_finish;
@@ -2869,9 +3004,21 @@ alias c_g_socket_control_message_get_msg_type  g_socket_control_message_get_msg_
 alias c_g_socket_control_message_get_size  g_socket_control_message_get_size;
 alias c_g_socket_control_message_serialize  g_socket_control_message_serialize;
 
+// gio.UnixFDList
+
+alias c_g_unix_fd_list_new_from_array  g_unix_fd_list_new_from_array;
+alias c_g_unix_fd_list_new  g_unix_fd_list_new;
+alias c_g_unix_fd_list_get_length  g_unix_fd_list_get_length;
+alias c_g_unix_fd_list_get  g_unix_fd_list_get;
+alias c_g_unix_fd_list_peek_fds  g_unix_fd_list_peek_fds;
+alias c_g_unix_fd_list_steal_fds  g_unix_fd_list_steal_fds;
+alias c_g_unix_fd_list_append  g_unix_fd_list_append;
+
 // gio.UnixFDMessage
 
+alias c_g_unix_fd_message_new_with_fd_list  g_unix_fd_message_new_with_fd_list;
 alias c_g_unix_fd_message_new  g_unix_fd_message_new;
+alias c_g_unix_fd_message_get_fd_list  g_unix_fd_message_get_fd_list;
 alias c_g_unix_fd_message_append_fd  g_unix_fd_message_append_fd;
 alias c_g_unix_fd_message_steal_fds  g_unix_fd_message_steal_fds;
 
@@ -2975,6 +3122,7 @@ alias c_g_socket_listener_new  g_socket_listener_new;
 alias c_g_socket_listener_add_socket  g_socket_listener_add_socket;
 alias c_g_socket_listener_add_address  g_socket_listener_add_address;
 alias c_g_socket_listener_add_inet_port  g_socket_listener_add_inet_port;
+alias c_g_socket_listener_add_any_inet_port  g_socket_listener_add_any_inet_port;
 alias c_g_socket_listener_accept  g_socket_listener_accept;
 alias c_g_socket_listener_accept_async  g_socket_listener_accept_async;
 alias c_g_socket_listener_accept_finish  g_socket_listener_accept_finish;
@@ -3016,8 +3164,10 @@ alias c_g_vfs_get_supported_uri_schemes  g_vfs_get_supported_uri_schemes;
 
 alias c_g_io_module_new  g_io_module_new;
 alias c_g_io_modules_load_all_in_directory  g_io_modules_load_all_in_directory;
+alias c_g_io_modules_scan_all_in_directory  g_io_modules_scan_all_in_directory;
 alias c_g_io_module_load  g_io_module_load;
 alias c_g_io_module_unload  g_io_module_unload;
+alias c_g_io_module_query  g_io_module_query;
 
 // gio.IOExtension
 

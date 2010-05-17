@@ -129,7 +129,7 @@ public class ThreadedSocketService : SocketService
 	 * connection and may perform blocking IO. The signal handler need
 	 * not return until the connection is closed.
 	 * See Also
-	 * #GSocketService.
+	 * GSocketService.
 	 */
 	void addOnRun(bool delegate(GSocketConnection*, GObject*, ThreadedSocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

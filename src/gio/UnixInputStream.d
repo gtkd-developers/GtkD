@@ -30,11 +30,12 @@
  * ctorStrct=GInputStream
  * clss    = UnixInputStream
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- FileDescriptorBasedIF
  * prefixes:
  * 	- g_unix_input_stream_
  * omit structs:
@@ -42,6 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.FileDescriptorBasedT
+ * 	- gio.FileDescriptorBasedIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -56,6 +59,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import gio.FileDescriptorBasedT;
+private import gio.FileDescriptorBasedIF;
 
 
 
@@ -70,7 +75,7 @@ private import gio.InputStream;
  * to the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.
  */
-public class UnixInputStream : InputStream
+public class UnixInputStream : InputStream, FileDescriptorBasedIF
 {
 	
 	/** the main Gtk struct */
@@ -109,6 +114,9 @@ public class UnixInputStream : InputStream
 		super(cast(GInputStream*)gUnixInputStream);
 		this.gUnixInputStream = gUnixInputStream;
 	}
+	
+	// add the FileDescriptorBased capabilities
+	mixin FileDescriptorBasedT!(GUnixInputStream);
 	
 	/**
 	 */

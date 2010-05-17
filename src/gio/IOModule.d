@@ -136,6 +136,9 @@ public class IOModule : TypeModule
 	
 	/**
 	 * Loads all the modules in the specified directory.
+	 * If don't require all modules to be initialized (and thus registering
+	 * all gtypes) then you can use g_io_modules_scan_all_in_directory()
+	 * which allows delayed/lazy loading of modules.
 	 * Params:
 	 * dirname = pathname for a directory containing modules to load.
 	 * Returns: a list of GIOModules loaded from the directory, All the modules are loaded into memory, if you want to unload them (enabling on-demand loading) you must call g_type_module_unuse() on all the modules. Free the list with g_list_free().
@@ -149,6 +152,26 @@ public class IOModule : TypeModule
 			return null;
 		}
 		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Scans all the modules in the specified directory, ensuring that
+	 * any extension point implemented by a module is registered.
+	 * This may not actually load and initialize all the types in each
+	 * module, some modules may be lazily loaded and initialized when
+	 * an extension point it implementes is used with e.g.
+	 * g_io_extension_point_get_extensions() or
+	 * g_io_extension_point_get_extension_by_name().
+	 * If you need to guarantee that all types are loaded in all the modules,
+	 * use g_io_modules_scan_all_in_directory().
+	 * Since 2.24
+	 * Params:
+	 * dirname = pathname for a directory containing modules to scan.
+	 */
+	public static void modulesScanAllInDirectory(string dirname)
+	{
+		// void g_io_modules_scan_all_in_directory (const char *dirname);
+		g_io_modules_scan_all_in_directory(Str.toStringz(dirname));
 	}
 	
 	/**
@@ -171,5 +194,32 @@ public class IOModule : TypeModule
 	{
 		// void g_io_module_unload (GIOModule *module);
 		g_io_module_unload(gIOModule);
+	}
+	
+	/**
+	 * Optional API for GIO modules to implement.
+	 * Should return a list of all the extension points that may be
+	 * implemented in this module.
+	 * This method will not be called in normal use, however it may be
+	 * called when probing existing modules and recording which extension
+	 * points that this modle is used for. This means we won't have to
+	 * load and initialze this module unless its needed.
+	 * If this function is not implemented by the module the module will
+	 * always be loaded, initialized and then unloaded on application startup
+	 * so that it can register its extension points during init.
+	 * Note that a module need not actually implement all the extension points
+	 * that g_io_module_query returns, since the exact list of extension may
+	 * depend on runtime issues. However all extension points actually implemented
+	 * must be returned by g_io_module_query() (if defined).
+	 * When installing a module that implements g_io_module_query you must
+	 * run gio-querymodules in order to build the cache files required for
+	 * lazy loading.
+	 * Since 2.24
+	 * Returns: A NULL-terminated array of strings, listing the supported extension points of the module. The array must be suitable for freeing with g_strfreev().
+	 */
+	public static string[] query()
+	{
+		// char ** g_io_module_query (void);
+		return Str.toStringArray(g_io_module_query());
 	}
 }

@@ -37,6 +37,12 @@ addAliases: start
 addAliases: end
 
 addEnums: start
+public enum GConverterFlags
+{
+  NO_FLAGS     = 0,
+  INPUT_AT_END = 1 << 0,
+  FLUSH        = 1 << 1
+}
 addEnums: end
 
 addStructs: start
@@ -258,6 +264,77 @@ code: end
 outFile: SimpleAsyncResult
 
 ###########################################################
+### Data conversion #######################################
+###########################################################
+
+file: GConverter.html
+struct: GConverter
+class: ConverterT
+template: TStruct
+prefix: g_converter_
+import: glib.ErrorG
+import: glib.GException
+
+array: g_converter_convert inbuf inbuf_size
+array: g_converter_convert outbuf outbuf_size
+out: g_converter_convert bytes_read
+out: g_converter_convert bytes_written
+
+interface: ConverterIF
+outFile: ConverterT
+
+file: GCharsetConverter.html
+struct: GCharsetConverter
+class: CharsetConverter
+implements: ConverterIF
+prefix: g_charset_converter_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+
+#imports for Converter Interface.
+import: gio.ConverterT
+import: gio.ConverterIF
+
+code: start
+	// add the Converter capabilities
+	mixin ConverterT!(GCharsetConverter);
+code: end
+outFile: CharsetConverter
+
+file: GZlibCompressor.html
+struct: GZlibCompressor
+class: ZlibCompressor
+implements: ConverterIF
+prefix: g_zlib_compressor_
+
+#imports for Converter Interface.
+import: gio.ConverterT
+import: gio.ConverterIF
+
+code: start
+	// add the Converter capabilities
+	mixin ConverterT!(GZlibCompressor);
+code: end
+outFile: ZlibCompressor
+
+file: GZlibDecompressor.html
+struct: GZlibDecompressor
+class: ZlibDecompressor
+implements: ConverterIF
+prefix: g_zlib_decompressor_
+
+#imports for Converter Interface.
+import: gio.ConverterT
+import: gio.ConverterIF
+
+code: start
+	// add the Converter capabilities
+	mixin ConverterT!(GZlibDecompressor);
+code: end
+outFile: ZlibDecompressor
+
+###########################################################
 ### Streaming I/O #########################################
 ###########################################################
 
@@ -392,6 +469,14 @@ code: start
 code: end
 outFile: FileIOStream
 
+file: GFileDescriptorBased.html
+struct: GFileDescriptorBased
+class: FileDescriptorBasedT
+template: TStruct
+prefix: g_file_descriptor_based_
+interface: FileDescriptorBasedIF
+outFile: FileDescriptorBasedT
+
 file: GFilterInputStream.html
 struct: GFilterInputStream
 class: FilterInputStream
@@ -503,14 +588,34 @@ file: GUnixInputStream.html
 struct: GUnixInputStream
 ctorStruct: GInputStream
 class: UnixInputStream
+implements: FileDescriptorBasedIF
 prefix: g_unix_input_stream_
+
+#imports for FileDescriptorBased Interface.
+import: gio.FileDescriptorBasedT
+import: gio.FileDescriptorBasedIF
+
+code: start
+	// add the FileDescriptorBased capabilities
+	mixin FileDescriptorBasedT!(GUnixInputStream);
+code: end
 outFile: UnixInputStream
 
 file: GUnixOutputStream.html
 struct: GUnixOutputStream
 ctorStruct: GOutputStream
 class: UnixOutputStream
+implements: FileDescriptorBasedIF
 prefix: g_unix_output_stream_
+
+#imports for FileDescriptorBased Interface.
+import: gio.FileDescriptorBasedT
+import: gio.FileDescriptorBasedIF
+
+code: start
+	// add the FileDescriptorBased capabilities
+	mixin FileDescriptorBasedT!(GUnixOutputStream);
+code: end
 outFile: UnixOutputStream
 
 ###########################################################
@@ -1215,6 +1320,18 @@ prefix: g_socket_control_message_
 structWrap: GSocketControlMessage* SocketControlMessage
 outFile: SocketControlMessage
 
+file: GUnixFDList.html
+struct: GUnixFDList
+class: UnixFDList
+prefix: g_unix_fd_list_
+import: glib.ErrorG
+import: glib.GException
+
+array: g_unix_fd_list_new_from_array fds n_fds
+array: g_unix_fd_list_peek_fds Return length
+array: g_unix_fd_list_steal_fds Return length
+outFile: UnixFDList
+
 file: GUnixFDMessage.html
 struct: GUnixFDMessage
 ctorStruct: GSocketControlMessage
@@ -1222,6 +1339,8 @@ class: UnixFDMessage
 prefix: g_unix_fd_message_
 import: glib.ErrorG
 import: glib.GException
+import: gio.UnixFDList
+structWrap: GUnixFDList* UnixFDList
 array: g_unix_fd_message_steal_fds Return length
 outFile: UnixFDMessage
 

@@ -181,6 +181,14 @@ public interface AppInfoIF
 	public string getName();
 	
 	/**
+	 * Gets the display name of the application. The display name is often more
+	 * descriptive to the user than the name itself.
+	 * Since 2.24
+	 * Returns: the display name of the application for appinfo, or the name ifno display name is available.
+	 */
+	public string getDisplayName();
+	
+	/**
 	 * Gets a human-readable description of an installed application.
 	 * Returns: a string containing a description of the application appinfo, or NULL if none.
 	 */

@@ -1068,7 +1068,7 @@ public class Socket : ObjectG, InitableIF
 	 * information.
 	 * No other types of sockets are currently considered as being capable
 	 * of speaking IPv4.
-	 * Since 2.22.
+	 * Since 2.22
 	 * Returns: TRUE if this socket can be used with IPv4.
 	 */
 	public int speaksIpv4()

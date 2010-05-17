@@ -477,6 +477,20 @@ public class OutputStream : ObjectG
 	}
 	
 	/**
+	 * Checks if an output stream is being closed. This can be
+	 * used inside e.g. a flush implementation to see if the
+	 * flush (or other i/o operation) is called from within
+	 * the closing operation.
+	 * Since 2.24
+	 * Returns: TRUE if stream is being closed. FALSE otherwise.
+	 */
+	public int isClosing()
+	{
+		// gboolean g_output_stream_is_closing (GOutputStream *stream);
+		return g_output_stream_is_closing(gOutputStream);
+	}
+	
+	/**
 	 * Checks if an output stream has already been closed.
 	 * Returns: TRUE if stream is closed. FALSE otherwise.
 	 */

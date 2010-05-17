@@ -382,6 +382,22 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Checks if file has a parent, and optionally, if it is parent.
+	 * If parent is NULL then this function returns TRUE if file has any
+	 * parent at all. If parent is non-NULL then TRUE is only returned
+	 * if file is a child of parent.
+	 * Since 2.24
+	 * Params:
+	 * parent = the parent to check for, or NULL
+	 * Returns: TRUE if file is a child of parent (or any parent in the case that parent is NULL).
+	 */
+	public int hasParent(File parent)
+	{
+		// gboolean g_file_has_parent (GFile *file,  GFile *parent);
+		return g_file_has_parent(gFile, (parent is null) ? null : parent.getFileStruct());
+	}
+	
+	/**
 	 * Gets a child of file with basename equal to name.
 	 * Note that the file with that specific name might not exist, but
 	 * you can still have a GFile that points to it. You can use this

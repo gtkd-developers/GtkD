@@ -179,6 +179,19 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 	
 	/**
+	 * When info was created from a known filename, return it. In some
+	 * situations such as the GDesktopAppInfo returned from
+	 * g_desktop_app_info_new_from_keyfile(), this function will return NULL.
+	 * Since 2.24
+	 * Returns: The full path to the file for info, or NULL if not known.
+	 */
+	public string getFilename()
+	{
+		// const char * g_desktop_app_info_get_filename (GDesktopAppInfo *info);
+		return Str.toString(g_desktop_app_info_get_filename(gDesktopAppInfo));
+	}
+	
+	/**
 	 * A desktop file is hidden if the Hidden key in it is
 	 * set to True.
 	 * Returns: TRUE if hidden, FALSE otherwise.

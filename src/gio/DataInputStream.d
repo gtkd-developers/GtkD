@@ -415,6 +415,8 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Reads a string from the data input stream, up to the first
 	 * occurrence of any of the stop characters.
+	 * Note that, in contrast to g_data_input_stream_read_until_async(),
+	 * this function consumes the stop character that it finds.
 	 * Params:
 	 * stopChars = characters to terminate the read.
 	 * length = a gsize to get the length of the data read in.
@@ -440,6 +442,9 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * The asynchronous version of g_data_input_stream_read_until().
 	 * It is an error to have two outstanding calls to this function.
+	 * Note that, in contrast to g_data_input_stream_read_until(),
+	 * this function does not consume the stop character that it finds. You
+	 * must read it for yourself.
 	 * When the operation is finished, callback will be called. You
 	 * can then call g_data_input_stream_read_until_finish() to get
 	 * the result of the operation.

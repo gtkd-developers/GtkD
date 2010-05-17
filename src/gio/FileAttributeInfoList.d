@@ -247,6 +247,9 @@ private import glib.Str;
  * G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE
  * mountable::unix-device
  * uint32
+ * G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE
+ * mountable::unix-device-file
+ * string
  * G_FILE_ATTRIBUTE_MOUNTABLE_HAL_UDI
  * mountable::hal-udi
  * string

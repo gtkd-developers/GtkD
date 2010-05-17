@@ -109,7 +109,7 @@ private import gobject.ObjectG;
  * but the result still needs to be created for an error condition, use
  * g_simple_async_result_new_error() (or g_simple_async_result_set_error_va()
  * if your application or binding requires passing a variable argument list
- * directly), and the error can then be propegated through the use of
+ * directly), and the error can then be propagated through the use of
  * g_simple_async_result_propagate_error().
  * An asynchronous operation can be made to ignore a cancellation event by
  * calling g_simple_async_result_set_handle_cancellation() with a
@@ -281,7 +281,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	
 	/**
 	 * Gets the operation result boolean from within the asynchronous result.
-	 * Returns: TRUE if the operation's result was TRUE, FALSE  if the operation's result was FALSE.
+	 * Returns: TRUE if the operation's result was TRUE, FALSE if the operation's result was FALSE.
 	 */
 	public int getOpResGboolean()
 	{
@@ -347,6 +347,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Completes an asynchronous function in an idle handler in the thread-default main
 	 * loop of the thread that simple was initially created in.
+	 * Calling this function takes a reference to simple for as long as
+	 * is needed to complete the call.
 	 */
 	public void completeInIdle()
 	{
@@ -358,6 +360,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Runs the asynchronous job in a separate thread and then calls
 	 * g_simple_async_result_complete_in_idle() on simple to return
 	 * the result to the appropriate main loop.
+	 * Calling this function takes a reference to simple for as long as
+	 * is needed to run the job and report its completion.
 	 * Params:
 	 * func = a GSimpleAsyncThreadFunc.
 	 * ioPriority = the io priority of the request.
@@ -383,7 +387,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Propagates an error from within the simple asynchronous result to
 	 * a given destination.
-	 * Returns: TRUE if the error was propegated to dest. FALSE otherwise.
+	 * Returns: TRUE if the error was propagated to dest. FALSE otherwise.
 	 */
 	public int propagateError()
 	{

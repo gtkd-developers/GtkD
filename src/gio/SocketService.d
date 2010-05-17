@@ -138,7 +138,7 @@ public class SocketService : SocketListener
 	 * asynchronous operations must be used.
 	 * Since 2.22
 	 * See Also
-	 * #GThreadedSocketService, GSocketListener.
+	 * GThreadedSocketService, GSocketListener.
 	 */
 	void addOnIncoming(bool delegate(GSocketConnection*, GObject*, SocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

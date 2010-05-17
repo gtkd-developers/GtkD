@@ -140,22 +140,48 @@ public class Cancellable : ObjectG
 	 * are two helper functions: g_cancellable_connect() and
 	 * g_cancellable_disconnect() which protect against problems
 	 * like this.
+	 *
+	 *
+	 *
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
 	 *  /+* Make sure we don't do any unnecessary work if already cancelled +/
-	 *  if (g_cancellable_set_error_if_cancelled (cancellable))
+	 * if (g_cancellable_set_error_if_cancelled (cancellable))
 	 *  return;
-	 *  /+* Set up all the data needed to be able to
+	 * /+* Set up all the data needed to be able to
 	 *  * handle cancellation of the operation +/
-	 *  my_data = my_data_new (...);
-	 *  id = 0;
-	 *  if (cancellable)
+	 * my_data = my_data_new (...);
+	 * id = 0;
+	 * if (cancellable)
 	 *  id = g_cancellable_connect (cancellable,
-	 *  			 G_CALLBACK (cancelled_handler)
-	 *  			 data, NULL);
-	 *  /+* cancellable operation here... +/
-	 *  g_cancellable_disconnect (cancellable, id);
-	 *  /+* cancelled_handler is never called after this, it
+	 * 			 G_CALLBACK (cancelled_handler)
+	 * 			 data, NULL);
+	 * /+* cancellable operation here... +/
+	 * g_cancellable_disconnect (cancellable, id);
+	 * /+* cancelled_handler is never called after this, it
 	 *  * is now safe to free the data +/
-	 *  my_data_free (my_data);
+	 * my_data_free (my_data);
+	 *
+	 *
+	 *
 	 * Note that the cancelled signal is emitted in the thread that
 	 * the user cancelled from, which may be the main thread. So, the
 	 * cancellable signal should not do something that can block.
@@ -370,9 +396,12 @@ public class Cancellable : ObjectG
 	}
 	
 	/**
-	 * Disconnects a handler from an cancellable instance similar to
-	 * g_signal_handler_disconnect() but ensures that once this
-	 * function returns the handler will not run anymore in any thread.
+	 * Disconnects a handler from a cancellable instance similar to
+	 * g_signal_handler_disconnect(). Additionally, in the event that a
+	 * signal handler is currently running, this call will block until the
+	 * handler has finished. Calling this function from a
+	 * "cancelled" signal handler will therefore result in a
+	 * deadlock.
 	 * This avoids a race condition where a thread cancels at the
 	 * same time as the cancellable operation is finished and the
 	 * signal handler is removed. See "cancelled" for

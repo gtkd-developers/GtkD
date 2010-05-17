@@ -223,6 +223,18 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
+	 * Gets the display name of the application. The display name is often more
+	 * descriptive to the user than the name itself.
+	 * Since 2.24
+	 * Returns: the display name of the application for appinfo, or the name ifno display name is available.
+	 */
+	public string getDisplayName()
+	{
+		// const char * g_app_info_get_display_name (GAppInfo *appinfo);
+		return Str.toString(g_app_info_get_display_name(getAppInfoTStruct()));
+	}
+	
+	/**
 	 * Gets a human-readable description of an installed application.
 	 * Returns: a string containing a description of the application appinfo, or NULL if none.
 	 */

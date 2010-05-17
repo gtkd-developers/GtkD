@@ -193,6 +193,14 @@ public interface MountIF
 	public VolumeIF getVolume();
 	
 	/**
+	 * Gets the default location of mount. The default location of the given
+	 * mount is a path that reflects the main entry point for the user (e.g.
+	 * the home directory, or the root of the volume).
+	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 */
+	public File getDefaultLocation();
+	
+	/**
 	 * Checks if mount can be mounted.
 	 * Params:
 	 * mount = a GMount.

@@ -351,7 +351,7 @@ public class SocketClient : ObjectG
 	 * domain = a domain name
 	 * service = the name of the service to connect to
 	 * cancellable = a GCancellable, or NULL
-	 * Returns: a GSocketConnection if successful, or NULL on error
+	 * Returns:a GSocketConnection if successful, or NULL on error
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToService(string domain, string service, Cancellable cancellable)

@@ -256,6 +256,36 @@ public class SocketListener : ObjectG
 	}
 	
 	/**
+	 * Listens for TCP connections on any available port number for both
+	 * IPv6 and IPv4 (if each are available).
+	 * This is useful if you need to have a socket for incoming connections
+	 * but don't care about the specific port number.
+	 * source_object will be passed out in the various calls
+	 * to accept to identify this particular source, which is
+	 * useful if you're listening on multiple addresses and do
+	 * different things depending on what address is connected to.
+	 * Since 2.24
+	 * Params:
+	 * sourceObject = Optional GObject identifying this source
+	 * Returns: the port number, or 0 in case of failure.
+	 * Throws: GException on failure.
+	 */
+	public ushort addAnyInetPort(ObjectG sourceObject)
+	{
+		// guint16 g_socket_listener_add_any_inet_port (GSocketListener *listener,  GObject *source_object,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_listener_add_any_inet_port(gSocketListener, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Blocks waiting for a client to connect to any of the sockets added
 	 * to the listener. Returns a GSocketConnection for the socket that was
 	 * accepted.
