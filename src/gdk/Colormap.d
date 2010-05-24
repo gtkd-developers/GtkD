@@ -156,7 +156,7 @@ public class Colormap
 	
 	/**
 	 * Warning
-	 * gdk_colormap_ref is deprecated and should not be used in newly-written code.
+	 * gdk_colormap_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Deprecated function; use g_object_ref() instead.
 	 * Returns: the colormap
 	 */
@@ -173,8 +173,8 @@ public class Colormap
 	
 	/**
 	 * Warning
-	 * gdk_colormap_unref is deprecated and should not be used in newly-written code.
-	 * Deprecated function; use g_object_ref() instead.
+	 * gdk_colormap_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref() instead.
+	 * Deprecated function; use g_object_unref() instead.
 	 */
 	public void unref()
 	{

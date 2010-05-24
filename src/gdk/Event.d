@@ -177,7 +177,7 @@ public class Event
 	
 	/**
 	 * Warning
-	 * gdk_event_get_graphics_expose is deprecated and should not be used in newly-written code. 2.18
+	 * gdk_event_get_graphics_expose has been deprecated since version 2.18 and should not be used in newly-written code.
 	 * Waits for a GraphicsExpose or NoExpose event from the X server.
 	 * This is used in the GtkText and GtkCList widgets in GTK+ to make sure any
 	 * GraphicsExpose events are handled before the widget is scrolled.

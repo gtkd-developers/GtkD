@@ -197,7 +197,7 @@ public class ImageGdk
 	
 	/**
 	 * Warning
-	 * gdk_image_ref is deprecated and should not be used in newly-written code.
+	 * gdk_image_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Deprecated function; use g_object_ref() instead.
 	 * Returns: the image
 	 */
@@ -214,7 +214,7 @@ public class ImageGdk
 	
 	/**
 	 * Warning
-	 * gdk_image_unref is deprecated and should not be used in newly-written code.
+	 * gdk_image_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Deprecated function; use g_object_unref() instead.
 	 */
 	public void unref()

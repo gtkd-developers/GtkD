@@ -210,7 +210,6 @@ public class PixbufLoader : ObjectG
 	 * pixbuf in the desired size. After this signal is emitted,
 	 * applications can call gdk_pixbuf_loader_get_pixbuf() to fetch
 	 * the partially-loaded pixbuf.
-	 *
 	 */
 	void addOnAreaPrepared(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -242,7 +241,6 @@ public class PixbufLoader : ObjectG
 	 * scanline has been read in, but it could be a different area as
 	 * well. Applications can use this signal to know when to repaint
 	 * areas of an image that is being loaded.
-	 *
 	 */
 	void addOnAreaUpdated(void delegate(gint, gint, gint, gint, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -273,7 +271,6 @@ public class PixbufLoader : ObjectG
 	 * It can be used by different parts of an application to receive
 	 * notification when an image loader is closed by the code that
 	 * drives it.
-	 *
 	 */
 	void addOnClosed(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -305,7 +302,6 @@ public class PixbufLoader : ObjectG
 	 * of the image that it will create. Applications can call
 	 * gdk_pixbuf_loader_set_size() in response to this signal to set
 	 * the desired size to which the image should be scaled.
-	 *
 	 * See Also
 	 *  gdk_pixbuf_new_from_file(), gdk_pixbuf_animation_new_from_file()
 	 *

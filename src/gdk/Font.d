@@ -85,7 +85,8 @@ private import pango.PgFontDescription;
  * consists of a sequence of fields separated (and surrounded by) '-'
  * characters. For example, Adobe Helvetica Bold 12 pt, has the
  * full description:
- * "-adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1"
+ *  1
+ *  "-adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1"
  * The fields in the XLFD are:
  * Foundry
  * the company or organization where the font originated.
@@ -128,7 +129,8 @@ private import pango.PgFontDescription;
  * '*' can be used as a wildcard to match any portion of
  * the XLFD. For instance, the above example could
  * also be specified as
- * "-*-helvetica-bold-r-normal--*-120-*-*-*-*-iso8859-1"
+ *  1
+ *  "-*-helvetica-bold-r-normal--*-120-*-*-*-*-iso8859-1"
  * It is generally a good idea to use wildcards for any
  * portion of the XLFD that your program does not care
  * about specifically, since that will improve the
@@ -279,7 +281,7 @@ public class Font
 	 * Params:
 	 * display = a GdkDisplay
 	 * fontName = a XLFD describing the font to load.
-	 * Returns: a GdkFont, or NULL if the font could not be loaded.
+	 * Returns:a GdkFont, or NULL if the font could not be loaded.
 	 */
 	public static Font loadForDisplay(Display display, string fontName)
 	{
@@ -325,7 +327,7 @@ public class Font
 	 * display = a GdkDisplay
 	 * fontsetName = a comma-separated list of XLFDs describing
 	 *  the component fonts of the fontset to load.
-	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
+	 * Returns:a GdkFont, or NULL if the fontset could not be loaded.
 	 */
 	public static Font fontsetLoadForDisplay(Display display, string fontsetName)
 	{
@@ -566,7 +568,7 @@ public class Font
 	
 	/**
 	 * Warning
-	 * gdk_char_width is deprecated and should not be used in newly-written code. Use gdk_text_extents() instead.
+	 * gdk_char_width has been deprecated since version 2.2 and should not be used in newly-written code. Use gdk_text_extents() instead.
 	 * Determines the width of a given character.
 	 * Params:
 	 * character = the character to measure.
@@ -684,7 +686,7 @@ public class Font
 	
 	/**
 	 * Warning
-	 * gdk_char_height is deprecated and should not be used in newly-written code. Use gdk_text_extents() instead.
+	 * gdk_char_height has been deprecated since version 2.2 and should not be used in newly-written code. Use gdk_text_extents() instead.
 	 * Determines the total height of a given character.
 	 * This value is not generally useful, because you cannot
 	 * determine how this total height will be drawn in

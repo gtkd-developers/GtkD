@@ -76,7 +76,7 @@ public class Input
 	
 	/**
 	 * Warning
-	 * gdk_input_add_full is deprecated and should not be used in newly-written code. Use g_io_add_watch_full() on a GIOChannel
+	 * gdk_input_add_full has been deprecated since version 2.14 and should not be used in newly-written code. Use g_io_add_watch_full() on a GIOChannel
 	 * Establish a callback when a condition becomes true on
 	 * a file descriptor.
 	 * Params:
@@ -95,7 +95,7 @@ public class Input
 	
 	/**
 	 * Warning
-	 * gdk_input_add is deprecated and should not be used in newly-written code. Use g_io_add_watch() on a GIOChannel
+	 * gdk_input_add has been deprecated since version 2.14 and should not be used in newly-written code. Use g_io_add_watch() on a GIOChannel
 	 * Establish a callback when a condition becomes true on
 	 * a file descriptor.
 	 * Params:

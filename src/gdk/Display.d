@@ -139,6 +139,7 @@ public class Display : ObjectG
 	/**
 	 * The ::closed signal is emitted when the connection to the windowing
 	 * system for display is closed.
+	 * TRUE if the display was closed due to an error
 	 * Since 2.2
 	 */
 	void addOnClosed(void delegate(gboolean, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -170,7 +171,7 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * displayName = the name of the display to open
-	 * Returns: a GdkDisplay, or NULL if the display could not be opened.
+	 * Returns:a GdkDisplay, or NULL if the display could not be opened.
 	 */
 	public static Display open(string displayName)
 	{
@@ -188,7 +189,7 @@ public class Display : ObjectG
 	 * function for
 	 * gdk_display_manager_get_default_display (gdk_display_manager_get()).
 	 * Since 2.2
-	 * Returns: a GdkDisplay, or NULL if there is no default display.
+	 * Returns: a GdkDisplay, or NULL if there is no default display.. transfer none.
 	 */
 	public static Display getDefault()
 	{
@@ -468,10 +469,10 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * screen = location to store the screen that the
-	 *  cursor is on, or NULL.
-	 * x = location to store root window X coordinate of pointer, or NULL.
-	 * y = location to store root window Y coordinate of pointer, or NULL.
-	 * mask = location to store current modifier mask, or NULL
+	 *  cursor is on, or NULL.. allow-none.
+	 * x = location to store root window X coordinate of pointer, or NULL.. allow-none.
+	 * y = location to store root window Y coordinate of pointer, or NULL.. allow-none.
+	 * mask = location to store current modifier mask, or NULL. allow-none.
 	 */
 	public void getPointer(out Screen screen, out int x, out int y, out GdkModifierType mask)
 	{
@@ -491,10 +492,10 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * winX = return location for x coordinate of the pointer location relative
-	 *  to the window origin, or NULL
+	 *  to the window origin, or NULL. out. allow-none.
 	 * winY = return location for y coordinate of the pointer location relative
-	 *   to the window origin, or NULL
-	 * Returns: the window under the mouse pointer, or NULL
+	 *   to the window origin, or NULL. out. allow-none.
+	 * Returns: the window under the mouse pointer, or NULL. transfer none.
 	 */
 	public Window getWindowAtPointer(out int winX, out int winY)
 	{

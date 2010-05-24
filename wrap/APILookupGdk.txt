@@ -57,6 +57,40 @@ addFuncts: start
 addFuncts: end
 
 addUnions: start
+/**
+ * The GdkEvent struct contains a union of all of the event structs,
+ * and allows access to the data fields in a number of ways.
+ * The event type is always the first field in all of the event structs, and
+ * can always be accessed with the following code, no matter what type of event
+ * it is:
+ */
+public struct GdkEvent
+{
+	union
+	{
+		GdkEventType type;
+		GdkEventAny any;
+		GdkEventExpose expose;
+		GdkEventNoExpose noExpose;
+		GdkEventVisibility visibility;
+		GdkEventMotion motion;
+		GdkEventButton button;
+		GdkEventScroll scroll;
+		GdkEventKey key;
+		GdkEventCrossing crossing;
+		GdkEventFocus focusChange;
+		GdkEventConfigure configure;
+		GdkEventProperty property;
+		GdkEventSelection selection;
+		GdkEventOwnerChange ownerChange;
+		GdkEventProximity proximity;
+		GdkEventClient client;
+		GdkEventDND dnd;
+		GdkEventWindowState windowState;
+		GdkEventSetting setting;
+		GdkEventGrabBroken grabBroken;
+	}
+}
 addUnions: end
 
 addConstants: start
@@ -975,7 +1009,7 @@ code: end
 outFile: Event
 
 file: gdk-Event-Structures.html
-#struct: 
+nostruct: GdkEvent
 #class: 
 #prefix: 
 outFile: EventStruct
@@ -1008,6 +1042,8 @@ out: gdk_keymap_get_entries_for_keycode keyvals
 array: gdk_keymap_get_entries_for_keycode keyvals n_entries
 out: gdk_keyval_convert_case lower
 out: gdk_keyval_convert_case upper
+inout: gdk_keymap_add_virtual_modifiers state
+inout: gdk_keymap_map_virtual_modifiers state
 
 outFile: Keymap
 

@@ -192,7 +192,7 @@ public class Drawable : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_drawable_ref is deprecated and should not be used in newly-written code.
+	 * gdk_drawable_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Deprecated equivalent of calling g_object_ref() on drawable.
 	 * (Drawables were not objects in previous versions of GDK.)
 	 * Returns: the same drawable passed in
@@ -210,7 +210,7 @@ public class Drawable : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_drawable_unref is deprecated and should not be used in newly-written code.
+	 * gdk_drawable_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Deprecated equivalent of calling g_object_unref() on drawable.
 	 */
 	public void unref()
@@ -227,7 +227,7 @@ public class Drawable : ObjectG
 	 * Params:
 	 * key = name to store the data under
 	 * data = arbitrary data
-	 * destroyFunc = function to free data, or NULL
+	 * destroyFunc = function to free data, or NULL. allow-none.
 	 */
 	public void setData(string key, void* data, GDestroyNotify destroyFunc)
 	{
@@ -350,8 +350,8 @@ public class Drawable : ObjectG
 	 * size is the size reported in the most-recently-processed configure
 	 * event, rather than the current size on the X server.
 	 * Params:
-	 * width = location to store drawable's width, or NULL
-	 * height = location to store drawable's height, or NULL
+	 * width = location to store drawable's width, or NULL. allow-none.
+	 * height = location to store drawable's height, or NULL. allow-none.
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -470,7 +470,7 @@ public class Drawable : ObjectG
 	 * variable.
 	 * Since 2.2
 	 * Params:
-	 * gc = a GdkGC, used for clipping, or NULL
+	 * gc = a GdkGC, used for clipping, or NULL. allow-none.
 	 * pixbuf = a GdkPixbuf
 	 * srcX = Source X coordinate within pixbuf.
 	 * srcY = Source Y coordinates within pixbuf.
@@ -511,7 +511,6 @@ public class Drawable : ObjectG
 	 * gdk_draw_rectangle (window, gc, FALSE, 0, 0, 20, 20)
 	 * results in an outlined rectangle with corners at (0, 0), (0, 20), (20, 20),
 	 * and (20, 0), which makes it 21 pixels wide and 21 pixels high.
-	 * Note
 	 * Params:
 	 * gc = a GdkGC.
 	 * filled = TRUE if the rectangle should be filled.
@@ -613,7 +612,7 @@ public class Drawable : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * gc = a GdkGC
-	 * matrix = a PangoMatrix, or NULL to use an identity transformation
+	 * matrix = a PangoMatrix, or NULL to use an identity transformation. allow-none.
 	 * font = the font in which to draw the string
 	 * x = the x position of the start of the string (in Pango
 	 *  units in user space coordinates)
@@ -658,8 +657,8 @@ public class Drawable : ObjectG
 	 * x = the x position of start of string (in pixels)
 	 * y = the y position of baseline (in pixels)
 	 * line = a PangoLayoutLine
-	 * foreground = foreground override color, or NULL for none
-	 * background = background override color, or NULL for none
+	 * foreground = foreground override color, or NULL for none. allow-none.
+	 * background = background override color, or NULL for none. allow-none.
 	 */
 	public void drawLayoutLineWithColors(GC gc, int x, int y, PgLayoutLine line, Color foreground, Color background)
 	{
@@ -700,8 +699,8 @@ public class Drawable : ObjectG
 	 * x = the X position of the left of the layout (in pixels)
 	 * y = the Y position of the top of the layout (in pixels)
 	 * layout = a PangoLayout
-	 * foreground = foreground override color, or NULL for none
-	 * background = background override color, or NULL for none
+	 * foreground = foreground override color, or NULL for none. allow-none.
+	 * background = background override color, or NULL for none. allow-none.
 	 */
 	public void drawLayoutWithColors(GC gc, int x, int y, PgLayout layout, Color foreground, Color background)
 	{
@@ -711,7 +710,7 @@ public class Drawable : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_draw_string is deprecated and should not be used in newly-written code. Use gdk_draw_layout() instead.
+	 * gdk_draw_string has been deprecated since version 2.4 and should not be used in newly-written code. Use gdk_draw_layout() instead.
 	 * Draws a string of characters in the given font or fontset.
 	 * Params:
 	 * font = a GdkFont.
@@ -728,7 +727,7 @@ public class Drawable : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_draw_text is deprecated and should not be used in newly-written code. Use gdk_draw_layout() instead.
+	 * gdk_draw_text has been deprecated since version 2.4 and should not be used in newly-written code. Use gdk_draw_layout() instead.
 	 * Draws a number of characters in the given font or fontset.
 	 * Params:
 	 * font = a GdkFont.
@@ -746,7 +745,7 @@ public class Drawable : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_draw_text_wc is deprecated and should not be used in newly-written code. Use gdk_draw_layout() instead.
+	 * gdk_draw_text_wc has been deprecated since version 2.4 and should not be used in newly-written code. Use gdk_draw_layout() instead.
 	 * Draws a number of wide characters using the given font of fontset.
 	 * If the font is a 1-byte font, the string is converted into 1-byte
 	 * characters (discarding the high bytes) before output.
@@ -864,7 +863,7 @@ public class Drawable : ObjectG
 	 * and copies into that. See gdk_drawable_get_image() for further details.
 	 * Since 2.4
 	 * Params:
-	 * image = a GdkDrawable, or NULL if a new image should be created.
+	 * image = a GdkDrawable, or NULL if a new image should be created.. allow-none.
 	 * srcX = x coordinate on drawable
 	 * srcY = y coordinate on drawable
 	 * destX = x coordinate within image. Must be 0 if image is NULL

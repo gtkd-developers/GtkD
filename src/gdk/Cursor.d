@@ -151,7 +151,38 @@ public class Cursor
 	 * The standard cursor size is 16 by 16 pixels. You can create a bitmap
 	 * from inline data as in the below example.
 	 * Example  6.  Creating a custom cursor
-	 * /+* This data is in X bitmap format, and can be created with the 'bitmap'
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
+	 * 21
+	 * 22
+	 * 23
+	 * 24
+	 * 25
+	 * 26
+	 * 27
+	 * 28
+	 * 29
+	 * 30
+	 * 31
+	 *  /+* This data is in X bitmap format, and can be created with the 'bitmap'
 	 *  utility. +/
 	 * #define cursor1_width 16
 	 * #define cursor1_height 16
@@ -172,8 +203,8 @@ public class Cursor
 	 *  mask = gdk_bitmap_create_from_data (NULL, cursor1mask_bits,
 	 *  cursor1_width, cursor1_height);
 	 *  cursor = gdk_cursor_new_from_pixmap (source, mask, fg, bg, 8, 8);
-	 *  gdk_pixmap_unref (source);
-	 *  gdk_pixmap_unref (mask);
+	 *  g_object_unref (source);
+	 *  g_object_unref (mask);
 	 *  gdk_window_set_cursor (widget->window, cursor);
 	 * Params:
 	 * source = the pixmap specifying the cursor.

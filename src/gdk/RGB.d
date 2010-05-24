@@ -108,7 +108,52 @@ private import gdk.Visual;
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
  * Example  4.  A simple example program using GdkRGB
- * #include <gtk/gtk.h>
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ * 37
+ * 38
+ * 39
+ * 40
+ * 41
+ * 42
+ * 43
+ * 44
+ * 45
+ *  #include <gtk/gtk.h>
  * #define IMAGE_WIDTH	256
  * #define IMAGE_HEIGHT	256
  * guchar rgbbuf[IMAGE_WIDTH * IMAGE_HEIGHT * 3];
@@ -401,7 +446,7 @@ public class RGB
 	 * A private colormap has more colors, leading to better quality display,
 	 * but also leads to the dreaded "colormap flashing" effect.
 	 * Params:
-	 * install = %TRUE to set install mode.
+	 * install = TRUE to set install mode.
 	 */
 	public static void rgbSetInstall(int install)
 	{
@@ -430,7 +475,7 @@ public class RGB
 	 * it's simply the visual GdkRGB would have chosen as the optimal one
 	 * in those previous versions. GdkRGB can now render to drawables with
 	 * any visual.
-	 * Returns: The GdkVisual chosen by GdkRGB.
+	 * Returns: The GdkVisual chosen by GdkRGB.. transfer none.
 	 */
 	public static Visual rgbGetVisual()
 	{
@@ -449,7 +494,7 @@ public class RGB
 	 * data to one colormap and visual, but in the current version it can
 	 * render to any colormap and visual. So there's no need to call this
 	 * function.
-	 * Returns: the preferred colormap
+	 * Returns: the preferred colormap. transfer none.
 	 */
 	public static Colormap rgbGetColormap()
 	{
@@ -467,7 +512,7 @@ public class RGB
 	 * useful for presenting a user interface choice to the user about which
 	 * dither mode is desired; if the display is not ditherable, it may make
 	 * sense to gray out or hide the corresponding UI widget.
-	 * Returns:%TRUE if the preferred visual is ditherable.
+	 * Returns:TRUE if the preferred visual is ditherable.
 	 */
 	public static int rgbDitherable()
 	{
@@ -482,7 +527,7 @@ public class RGB
 	 * make sense to gray out or hide the corresponding UI widget.
 	 * Params:
 	 * cmap = a GdkColormap
-	 * Returns:%TRUE if the visual associated with cmap is ditherable.
+	 * Returns:TRUE if the visual associated with cmap is ditherable.
 	 */
 	public static int rgbColormapDitherable(Colormap cmap)
 	{
@@ -493,7 +538,7 @@ public class RGB
 	/**
 	 * Sets the "verbose" flag. This is generally only useful for debugging.
 	 * Params:
-	 * verbose = %TRUE if verbose messages are desired.
+	 * verbose = TRUE if verbose messages are desired.
 	 */
 	public static void rgbSetVerbose(int verbose)
 	{

@@ -89,7 +89,52 @@ private import glib.ConstructionException;
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
  * Example  4.  A simple example program using GdkRGB
- * #include <gtk/gtk.h>
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ * 37
+ * 38
+ * 39
+ * 40
+ * 41
+ * 42
+ * 43
+ * 44
+ * 45
+ *  #include <gtk/gtk.h>
  * #define IMAGE_WIDTH	256
  * #define IMAGE_HEIGHT	256
  * guchar rgbbuf[IMAGE_WIDTH * IMAGE_HEIGHT * 3];

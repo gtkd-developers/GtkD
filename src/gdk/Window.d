@@ -106,7 +106,120 @@ private import gdk.Drawable;
  * composited window it is the responsibility of the
  * application to render the window contents at the right spot.
  * Example  7.  Composited windows
- * #include <gtk/gtk.h>
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ * 37
+ * 38
+ * 39
+ * 40
+ * 41
+ * 42
+ * 43
+ * 44
+ * 45
+ * 46
+ * 47
+ * 48
+ * 49
+ * 50
+ * 51
+ * 52
+ * 53
+ * 54
+ * 55
+ * 56
+ * 57
+ * 58
+ * 59
+ * 60
+ * 61
+ * 62
+ * 63
+ * 64
+ * 65
+ * 66
+ * 67
+ * 68
+ * 69
+ * 70
+ * 71
+ * 72
+ * 73
+ * 74
+ * 75
+ * 76
+ * 77
+ * 78
+ * 79
+ * 80
+ * 81
+ * 82
+ * 83
+ * 84
+ * 85
+ * 86
+ * 87
+ * 88
+ * 89
+ * 90
+ * 91
+ * 92
+ * 93
+ * 94
+ * 95
+ * 96
+ * 97
+ * 98
+ * 99
+ * 100
+ * 101
+ * 102
+ * 103
+ * 104
+ * 105
+ * 106
+ * 107
+ * 108
+ * 109
+ * 110
+ * 111
+ * 112
+ * 113
+ *  #include <gtk/gtk.h>
  * /+* The expose event handler for the event box.
  *  *
  *  * This function simply draws a transparency onto a widget on the area
@@ -388,7 +501,7 @@ public class Window : Drawable
 	 * display, parent must be specified.
 	 * Params:
 	 * parent = a GdkWindow, or NULL to create the window as a child of
-	 *  the default root window for the default display.
+	 *  the default root window for the default display.. allow-none.
 	 * attributes = attributes of the new window
 	 * attributesMask = mask indicating which fields in attributes are valid
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -436,9 +549,9 @@ public class Window : Drawable
 	 * NOTE: For multihead-aware widgets or applications use
 	 * gdk_display_get_window_at_pointer() instead.
 	 * Params:
-	 * winX = return location for origin of the window under the pointer
-	 * winY = return location for origin of the window under the pointer
-	 * Returns: window under the mouse pointer
+	 * winX = return location for origin of the window under the pointer. out. allow-none.
+	 * winY = return location for origin of the window under the pointer. out. allow-none.
+	 * Returns: window under the mouse pointer. transfer none.
 	 */
 	public static Window atPointer(out int winX, out int winY)
 	{
@@ -494,6 +607,7 @@ public class Window : Drawable
 	
 	/**
 	 * Check to see if a window is destroyed..
+	 * Since 2.18
 	 * Returns: TRUE if the window is destroyed
 	 */
 	public int isDestroyed()
@@ -973,7 +1087,7 @@ public class Window : Drawable
 	 * requests the restack, does not guarantee it.
 	 * Since 2.18
 	 * Params:
-	 * sibling = a GdkWindow that is a sibling of window, or NULL
+	 * sibling = a GdkWindow that is a sibling of window, or NULL. allow-none.
 	 * above = a boolean
 	 */
 	public void restack(Window sibling, int above)
@@ -1149,7 +1263,7 @@ public class Window : Drawable
 	 * gdk_window_invalidate_region() for details.
 	 * Params:
 	 * rect = rectangle to invalidate or NULL to invalidate the whole
-	 *  window
+	 *  window. allow-none.
 	 * invalidateChildren = whether to also invalidate child windows
 	 */
 	public void invalidateRect(Rectangle rect, int invalidateChildren)
@@ -1293,13 +1407,13 @@ public class Window : Drawable
 	 * likely to change in future releases of GDK.
 	 * Params:
 	 * realDrawable = location to store the drawable to which drawing should be
-	 *  done.
+	 *  done.. out.
 	 * xOffset = location to store the X offset between coordinates in window,
 	 *  and the underlying window system primitive coordinates for
-	 *  *real_drawable.
+	 *  *real_drawable.. out.
 	 * yOffset = location to store the Y offset between coordinates in window,
 	 *  and the underlying window system primitive coordinates for
-	 *  *real_drawable.
+	 *  *real_drawable.. out.
 	 */
 	public void getInternalPaintInfo(out Drawable realDrawable, out int xOffset, out int yOffset)
 	{
@@ -1531,7 +1645,7 @@ public class Window : Drawable
 	 * function does nothing.
 	 * Since 2.10
 	 * Params:
-	 * mask = shape mask, or NULL
+	 * mask = shape mask, or NULL. allow-none.
 	 * x = X position of shape mask with respect to window
 	 * y = Y position of shape mask with respect to window
 	 */
@@ -1683,7 +1797,7 @@ public class Window : Drawable
 	 * when the window is obscured then exposed, and when you call
 	 * gdk_window_clear().
 	 * Params:
-	 * pixmap = a GdkPixmap, or NULL
+	 * pixmap = a GdkPixmap, or NULL. allow-none.
 	 * parentRelative = whether the tiling origin is at the origin of
 	 *  window's parent
 	 */
@@ -1993,6 +2107,7 @@ public class Window : Drawable
 	 * window coordinates. This is similar to
 	 * gdk_window_get_origin() but allows you go pass
 	 * in any position in the window, not just the origin.
+	 * Since 2.18
 	 * Params:
 	 * x = X coordinate in window
 	 * y = Y coordinate in window
@@ -2011,12 +2126,12 @@ public class Window : Drawable
 	 * corner of window.
 	 * Params:
 	 * x = return location for X coordinate of pointer or NULL to not
-	 *  return the X coordinate
+	 *  return the X coordinate. out. allow-none.
 	 * y = return location for Y coordinate of pointer or NULL to not
-	 *  return the Y coordinate
+	 *  return the Y coordinate. out. allow-none.
 	 * mask = return location for modifier mask or NULL to not return the
-	 *  modifier mask
-	 * Returns: the window containing the pointer (as withgdk_window_at_pointer()), or NULL if the window containing thepointer isn't known to GDK
+	 *  modifier mask. out. allow-none.
+	 * Returns: the window containing the pointer (as withgdk_window_at_pointer()), or NULL if the window containing thepointer isn't known to GDK. transfer none.
 	 */
 	public Window getPointer(out int x, out int y, out GdkModifierType mask)
 	{

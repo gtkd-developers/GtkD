@@ -38,26 +38,26 @@ private import std.stdio;
  * one for the used colorspace, one for the width of the samples and one
  * for the encoding of the pixel data.
  * GDK_PIXDATA_COLOR_TYPE_RGB
- *  each pixel has red, green and blue samples.
+ * each pixel has red, green and blue samples.
  * GDK_PIXDATA_COLOR_TYPE_RGBA
- *  each pixel has red, green and blue samples
+ * each pixel has red, green and blue samples
  *  and an alpha value.
  * GDK_PIXDATA_COLOR_TYPE_MASK
- *  mask for the colortype flags of the enum.
+ * mask for the colortype flags of the enum.
  * GDK_PIXDATA_SAMPLE_WIDTH_8
- *  each sample has 8 bits.
+ * each sample has 8 bits.
  * GDK_PIXDATA_SAMPLE_WIDTH_MASK
- *  mask for the sample width flags of the enum.
+ * mask for the sample width flags of the enum.
  * GDK_PIXDATA_ENCODING_RAW
- *  the pixel data is in raw form.
+ * the pixel data is in raw form.
  * GDK_PIXDATA_ENCODING_RLE
- *  the pixel data is run-length encoded. Runs may
+ * the pixel data is run-length encoded. Runs may
  *  be up to 127 bytes long; their length is stored in a single byte
  *  preceding the pixel data for the run. If a run is constant, its length
  *  byte has the high bit set and the pixel data consists of a single pixel
  *  which must be repeated.
  * GDK_PIXDATA_ENCODING_MASK
- *  mask for the encoding flags of the enum.
+ * mask for the encoding flags of the enum.
  */
 public enum GdkPixdataType
 {
@@ -84,30 +84,30 @@ alias GdkPixdataType PixdataType;
  * GDK_PIXBUF_DUMP_GTYPES and GDK_PIXBUF_DUMP_CTYPES. The remaining
  * elements are optional flags that can be freely added.
  * GDK_PIXDATA_DUMP_PIXDATA_STREAM
- *  Generate pixbuf data stream (a single
+ * Generate pixbuf data stream (a single
  *  string containing a serialized GdkPixdata structure in network byte
  *  order).
  * GDK_PIXDATA_DUMP_PIXDATA_STRUCT
- *  Generate GdkPixdata structure (needs
+ * Generate GdkPixdata structure (needs
  *  the GdkPixdata structure definition from gdk-pixdata.h).
  * GDK_PIXDATA_DUMP_MACROS
- *  Generate *_ROWSTRIDE,
+ * Generate *_ROWSTRIDE,
  *  *_WIDTH, *_HEIGHT,
  *  *_BYTES_PER_PIXEL and
  *  *_RLE_PIXEL_DATA or *_PIXEL_DATA
  *  macro definitions for the image.
  * GDK_PIXDATA_DUMP_GTYPES
- *  Generate GLib data types instead of
+ * Generate GLib data types instead of
  *  standard C data types.
  * GDK_PIXDATA_DUMP_CTYPES
- *  Generate standard C data types instead of
+ * Generate standard C data types instead of
  *  GLib data types.
  * GDK_PIXDATA_DUMP_STATIC
- *  Generate static symbols.
+ * Generate static symbols.
  * GDK_PIXDATA_DUMP_CONST
- *  Generate const symbols.
+ * Generate const symbols.
  * GDK_PIXDATA_DUMP_RLE_DECODER
- *  Provide a *_RUN_LENGTH_DECODE(image_buf, rle_data, size, bpp)
+ * Provide a *_RUN_LENGTH_DECODE(image_buf, rle_data, size, bpp)
  *  macro definition to decode run-length encoded image data.
  */
 public enum GdkPixdataDumpType
@@ -130,6 +130,14 @@ alias GdkPixdataDumpType PixdataDumpType;
 /**
  * Flags which allow a module to specify further details about the supported
  * operations.
+ * GDK_PIXBUF_FORMAT_WRITABLE
+ * the module can write out images in the format.
+ * GDK_PIXBUF_FORMAT_SCALABLE
+ * the image format is scalable
+ * GDK_PIXBUF_FORMAT_THREADSAFE
+ * the module is threadsafe. If this flag is not
+ *  set, gdk-pixbuf will use a lock to prevent multiple threads from using
+ *  this module at the same time. (Since 2.6)
  * Since 2.2
  */
 public enum GdkPixbufFormatFlags
@@ -147,6 +155,7 @@ alias GdkPixbufFormatFlags PixbufFormatFlags;
  * A GdkPixdata contains pixbuf information in a form suitable for
  * serialization and streaming.
  * guint32  magic;
+ * magic number. A valid GdkPixdata structure must have
  */
 public struct GdkPixdata
 {

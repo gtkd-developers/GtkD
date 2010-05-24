@@ -421,7 +421,26 @@ public class Pixbuf : ObjectG
 	 *  gdk_pixbuf_composite_color() function has exactly the same effect
 	 *  as calling gdk_pixbuf_scale().
 	 * Example  2.  Handling an expose event.
-	 * gboolean
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 *  gboolean
 	 * expose_cb (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 	 * {
 		 *  GdkPixbuf *dest;
@@ -595,9 +614,9 @@ public class Pixbuf : ObjectG
 	 * Same as gdk_pixbuf_get_from_drawable() but gets the pixbuf from
 	 * an image.
 	 * Params:
-	 * dest = Destination pixbuf, or NULL if a new pixbuf should be created.
+	 * dest = Destination pixbuf, or NULL if a new pixbuf should be created.. allow-none.
 	 * src = Source GdkImage.
-	 * cmap = A colormap, or NULL to use the one for src
+	 * cmap = A colormap, or NULL to use the one for src. allow-none.
 	 * srcX = Source X coordinate within drawable.
 	 * srcY = Source Y coordinate within drawable.
 	 * destX = Destination X coordinate in pixbuf, or 0 if dest is NULL.

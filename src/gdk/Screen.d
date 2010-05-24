@@ -187,8 +187,8 @@ public class Screen : ObjectG
 	/**
 	 * The ::monitors-changed signal is emitted when the number, size
 	 * or position of the monitors attached to the screen change.
-	 * Only for X for now. Future implementations for Win32 and
-	 * OS X may be a possibility.
+	 * Only for X11 and OS X for now. A future implementation for Win32
+	 * may be a possibility.
 	 * Since 2.14
 	 */
 	void addOnMonitorsChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -248,7 +248,7 @@ public class Screen : ObjectG
 	 * Gets the default screen for the default display. (See
 	 * gdk_display_get_default()).
 	 * Since 2.2
-	 * Returns: a GdkScreen, or NULL if there is no default display.
+	 * Returns: a GdkScreen, or NULL if there is no default display.. transfer none.
 	 */
 	public static Screen getDefault()
 	{
@@ -264,7 +264,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the default colormap for screen.
 	 * Since 2.2
-	 * Returns: the default GdkColormap.
+	 * Returns: the default GdkColormap.. transfer none.
 	 */
 	public Colormap getDefaultColormap()
 	{
@@ -292,7 +292,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the system's default colormap for screen
 	 * Since 2.2
-	 * Returns: the default colormap for screen.
+	 * Returns: the default colormap for screen.. transfer none.
 	 */
 	public Colormap getSystemColormap()
 	{
@@ -310,7 +310,7 @@ public class Screen : ObjectG
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
 	 * Since 2.2
-	 * Returns: the system visual
+	 * Returns: the system visual. transfer none.
 	 */
 	public Visual getSystemVisual()
 	{
@@ -330,7 +330,7 @@ public class Screen : ObjectG
 	 * it can render to any colormap and visual. So there's no need to
 	 * call this function.
 	 * Since 2.2
-	 * Returns: the preferred colormap
+	 * Returns: the preferred colormap. transfer none.
 	 */
 	public Colormap getRgbColormap()
 	{
@@ -351,7 +351,7 @@ public class Screen : ObjectG
 	 * the optimal one in those previous versions. GdkRGB can now render to
 	 * drawables with any visual.
 	 * Since 2.2
-	 * Returns: The GdkVisual chosen by GdkRGB.
+	 * Returns: The GdkVisual chosen by GdkRGB.. transfer none.
 	 */
 	public Visual getRgbVisual()
 	{
@@ -377,7 +377,7 @@ public class Screen : ObjectG
 	 * For setting an overall opacity for a top-level window, see
 	 * gdk_window_set_opacity().
 	 * Since 2.8
-	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available.
+	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available.. transfer none.
 	 */
 	public Colormap getRgbaColormap()
 	{
@@ -395,7 +395,7 @@ public class Screen : ObjectG
 	 * alpha channel. See the docs for gdk_screen_get_rgba_colormap()
 	 * for caveats.
 	 * Since 2.8
-	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available.
+	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available.. transfer none.
 	 */
 	public Visual getRgbaVisual()
 	{
@@ -426,7 +426,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the root window of screen.
 	 * Since 2.2
-	 * Returns: the root window
+	 * Returns: the root window. transfer none.
 	 */
 	public Window getRootWindow()
 	{
@@ -568,12 +568,29 @@ public class Screen : ObjectG
 	/**
 	 * Returns the number of monitors which screen consists of.
 	 * Since 2.2
-	 * Returns: number of monitors which screen consists of.
+	 * Returns: number of monitors which screen consists of
 	 */
 	public int getNMonitors()
 	{
 		// gint gdk_screen_get_n_monitors (GdkScreen *screen);
 		return gdk_screen_get_n_monitors(gdkScreen);
+	}
+	
+	/**
+	 * Gets the primary monitor for screen. The primary monitor
+	 * is considered the monitor where the 'main desktop' lives.
+	 * While normal application windows typically allow the window
+	 * manager to place the windows, specialized desktop applications
+	 * such as panels should place themselves on the primary monitor.
+	 * If no primary monitor is configured by the user, the return value
+	 * will be 0, defaulting to the first monitor.
+	 * Since 2.20
+	 * Returns: An integer index for the primary monitor, or 0 if none is configured.
+	 */
+	public int getPrimaryMonitor()
+	{
+		// gint gdk_screen_get_primary_monitor (GdkScreen *screen);
+		return gdk_screen_get_primary_monitor(gdkScreen);
 	}
 	
 	/**
@@ -583,7 +600,7 @@ public class Screen : ObjectG
 	 * gdk_screen_get_width() and gdk_screen_get_height().
 	 * Since 2.2
 	 * Params:
-	 * monitorNum = the monitor number.
+	 * monitorNum = the monitor number, between 0 and gdk_screen_get_n_monitors (screen)
 	 * dest = a GdkRectangle to be filled with the monitor geometry
 	 */
 	public void getMonitorGeometry(int monitorNum, Rectangle dest)
@@ -612,7 +629,7 @@ public class Screen : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * window = a GdkWindow
-	 * Returns: the monitor number in which most of window is located, or if window does not intersect any monitors, a monitor, close to window.
+	 * Returns:the monitor number in which most of window is located, or if window does not intersect any monitors, a monitor, close to window.
 	 */
 	public int getMonitorAtWindow(Window window)
 	{
@@ -624,7 +641,7 @@ public class Screen : ObjectG
 	 * Gets the height in millimeters of the specified monitor.
 	 * Since 2.14
 	 * Params:
-	 * monitorNum = number of the monitor
+	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 * Returns: the height of the monitor, or -1 if not available
 	 */
 	public int getMonitorHeightMm(int monitorNum)
@@ -637,7 +654,7 @@ public class Screen : ObjectG
 	 * Gets the width in millimeters of the specified monitor, if available.
 	 * Since 2.14
 	 * Params:
-	 * monitorNum = number of the monitor
+	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 * Returns: the width of the monitor, or -1 if not available
 	 */
 	public int getMonitorWidthMm(int monitorNum)
@@ -652,7 +669,7 @@ public class Screen : ObjectG
 	 * product name of the display device.
 	 * Since 2.14
 	 * Params:
-	 * monitorNum = number of the monitor
+	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 * Returns: a newly-allocated string containing the name of the monitor, or NULL if the name cannot be determined
 	 */
 	public string getMonitorPlugName(int monitorNum)
@@ -723,7 +740,7 @@ public class Screen : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * options = a cairo_font_options_t, or NULL to unset any
-	 *  previously set default font options.
+	 *  previously set default font options.. allow-none.
 	 */
 	public void setFontOptions(FontOption options)
 	{

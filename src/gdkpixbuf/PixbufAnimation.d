@@ -163,7 +163,7 @@ public class PixbufAnimation : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_pixbuf_animation_ref is deprecated and should not be used in newly-written code. Use g_object_ref().
+	 * gdk_pixbuf_animation_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref().
 	 * Adds a reference to an animation.
 	 * Returns: The same as the animation argument.
 	 */
@@ -180,7 +180,7 @@ public class PixbufAnimation : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_pixbuf_animation_unref is deprecated and should not be used in newly-written code. Use g_object_unref().
+	 * gdk_pixbuf_animation_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref().
 	 * Removes a reference from an animation.
 	 */
 	public void unref()

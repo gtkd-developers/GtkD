@@ -293,7 +293,7 @@ public class Color
 	 * Warning
 	 * gdk_color_black is deprecated and should not be used in newly-written code.
 	 * Returns the black color for a given colormap. The resulting
-	 * value has already benn allocated.
+	 * value has already been allocated.
 	 * Params:
 	 * colormap = a GdkColormap.
 	 * color = the location to store the color.
@@ -320,7 +320,7 @@ public class Color
 	 * '#ffffffffffff')
 	 * Params:
 	 * spec = the string specifying the color.
-	 * color = the GdkColor to fill in
+	 * color = the GdkColor to fill in. out.
 	 * Returns: TRUE if the parsing succeeded.
 	 */
 	public static int parse(string spec, out GdkColor color)
@@ -331,7 +331,7 @@ public class Color
 	
 	/**
 	 * Warning
-	 * gdk_color_alloc is deprecated and should not be used in newly-written code. Use gdk_colormap_alloc_color() instead.
+	 * gdk_color_alloc has been deprecated since version 2.2 and should not be used in newly-written code. Use gdk_colormap_alloc_color() instead.
 	 * Allocates a single color from a colormap.
 	 * Params:
 	 * colormap = a GdkColormap.

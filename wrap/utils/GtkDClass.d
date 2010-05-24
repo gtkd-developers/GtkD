@@ -1688,6 +1688,13 @@ public class GtkDClass
 	private void collectUnions(char[][] lines, ConvParms* convParms)
 	{
 		char[] unionName = lines[0][6..lines[0].length];
+
+		foreach ( name; convParms.noStructs )
+		{
+			if(name == unionName)
+				return;
+		}
+
 		if ( unionName == "cairo_path_data_t" )
 		{
 			collectedUnions ~= "";

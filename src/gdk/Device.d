@@ -113,12 +113,7 @@ private import gdk.Window;
  * applications to (for instance) delete when they detect eraser
  * devices without having to keep track of complicated per-device
  * settings.
- * Various aspects of each device may be configured. The easiest way of
- * creating a GUI to allow the user to configure such a device
- * is to use the GtkInputDialog widget in GTK+.
- * However, even when using this widget, application writers
- * will need to directly query and set the configuration parameters
- * in order to save the state between invocations of the application.
+ * Various aspects of each device may be configured.
  * The configuration of devices is queried using gdk_devices_list().
  * Each device must be activated using gdk_device_set_mode(), which
  * also controls whether the device's range is mapped to the
@@ -229,7 +224,7 @@ public class Device
 	 * entire screen or to a single window.
 	 * Params:
 	 * mode = the input mode.
-	 * Returns:%TRUE if the mode was successfully changed.
+	 * Returns:TRUE if the mode was successfully changed.
 	 */
 	public int setMode(GdkInputMode mode)
 	{
@@ -283,7 +278,7 @@ public class Device
 	 * Params:
 	 * window = a GdkWindow.
 	 * axes = an array of doubles to store the values of the axes of device in,
-	 *  or NULL.
+	 * or NULL.
 	 * mask = location to store the modifiers, or NULL.
 	 */
 	public void getState(Window window, double[] axes, out GdkModifierType mask)
@@ -294,8 +289,9 @@ public class Device
 	
 	/**
 	 * Frees an array of GdkTimeCoord that was returned by gdk_device_get_history().
+	 * Frees an array of GdkTimeCoord that was returned by gdk_device_get_history().
 	 * Params:
-	 * events = an array of GdkTimeCoord.
+	 * events = an array of GdkTimeCoord.. inout. transfer none.
 	 */
 	public static void freeHistory(GdkTimeCoord*[] events)
 	{

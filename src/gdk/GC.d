@@ -207,7 +207,7 @@ public class GC : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_gc_ref is deprecated and should not be used in newly-written code.
+	 * gdk_gc_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Deprecated function; use g_object_ref() instead.
 	 * Returns: the gc.
 	 */
@@ -224,7 +224,7 @@ public class GC : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_gc_unref is deprecated and should not be used in newly-written code. Use g_object_unref() instead.
+	 * gdk_gc_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Decrement the reference count of gc.
 	 */
 	public void unref()

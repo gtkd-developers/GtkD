@@ -261,7 +261,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the GdkKeymap attached to the default display.
-	 * Returns: the GdkKeymap attached to the default display.
+	 * Returns:the GdkKeymap attached to the default display.
 	 */
 	public static Keymap getDefault()
 	{
@@ -279,7 +279,7 @@ public class Keymap : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * display = the GdkDisplay.
-	 * Returns: the GdkKeymap attached to display.
+	 * Returns:the GdkKeymap attached to display.
 	 */
 	public static Keymap getForDisplay(Display display)
 	{
@@ -312,7 +312,7 @@ public class Keymap : ObjectG
 	 * Translates the contents of a GdkEventKey into a keyval, effective
 	 * group, and level. Modifiers that affected the translation and
 	 * are thus unavailable for application use are returned in
-	 * consumed_modifiers. See gdk_keyval_get_keys() for an explanation of
+	 * consumed_modifiers. See the section called “Description” for an explanation of
 	 * groups and levels. The effective_group is the group that was
 	 * actually used for the translation; some keys such as Enter are not
 	 * affected by the active keyboard group. The level is derived from
@@ -325,7 +325,15 @@ public class Keymap : ObjectG
 	 * symbol is shifted, so when comparing a key press to a
 	 * <Control>plus accelerator <Shift> should
 	 * be masked out.
-	 * /+* We want to ignore irrelevant modifiers like ScrollLock +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 *  /+* We want to ignore irrelevant modifiers like ScrollLock +/
 	 * #define ALL_ACCELS_MASK (GDK_CONTROL_MASK | GDK_SHIFT_MASK | GDK_MOD1_MASK)
 	 * gdk_keymap_translate_keyboard_state (keymap, event->hardware_keycode,
 	 *  event->state, event->group,
@@ -340,11 +348,11 @@ public class Keymap : ObjectG
 	 * hardwareKeycode = a keycode
 	 * state = a modifier state
 	 * group = active keyboard group
-	 * keyval = return location for keyval, or NULL
-	 * effectiveGroup = return location for effective group, or NULL
-	 * level = return location for level, or NULL
+	 * keyval = return location for keyval, or NULL. out. allow-none.
+	 * effectiveGroup = return location for effective group, or NULL. out. allow-none.
+	 * level = return location for level, or NULL. out. allow-none.
 	 * consumedModifiers = return location for modifiers that were used to
-	 *  determine the group or level, or NULL
+	 *  determine the group or level, or NULL. out. allow-none.
 	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
 	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumedModifiers)
@@ -444,6 +452,43 @@ public class Keymap : ObjectG
 	}
 	
 	/**
+	 * Adds virtual modifiers (i.e. Super, Hyper and Meta) which correspond
+	 * to the real modifiers (i.e Mod2, Mod3, ...) in modifiers.
+	 * are set in state to their non-virtual counterparts (i.e. Mod2,
+	 * Mod3,...) and set the corresponding bits in state.
+	 * GDK already does this before delivering key events, but for
+	 * compatibility reasons, it only sets the first virtual modifier
+	 * it finds, whereas this function sets all matching virtual modifiers.
+	 * This function is useful when matching key events against
+	 * accelerators.
+	 * Since 2.20
+	 * Params:
+	 * state = pointer to the modifier mask to change
+	 */
+	public void addVirtualModifiers(ref GdkModifierType state)
+	{
+		// void gdk_keymap_add_virtual_modifiers (GdkKeymap *keymap,  GdkModifierType *state);
+		gdk_keymap_add_virtual_modifiers(gdkKeymap, &state);
+	}
+	
+	/**
+	 * Maps the virtual modifiers (i.e. Super, Hyper and Meta) which
+	 * are set in state to their non-virtual counterparts (i.e. Mod2,
+	 * Mod3,...) and set the corresponding bits in state.
+	 * This function is useful when matching key events against
+	 * accelerators.
+	 * Since 2.20
+	 * Params:
+	 * state = pointer to the modifier state to map
+	 * Returns: TRUE if no virtual modifiers were mapped to the same non-virtual modifier. Note that FALSE is also returned if a virtual modifier is mapped to a non-virtual modifier that was already set in state.
+	 */
+	public int mapVirtualModifiers(ref GdkModifierType state)
+	{
+		// gboolean gdk_keymap_map_virtual_modifiers (GdkKeymap *keymap,  GdkModifierType *state);
+		return gdk_keymap_map_virtual_modifiers(gdkKeymap, &state);
+	}
+	
+	/**
 	 * Converts a key value into a symbolic name.
 	 * The names are the same as those in the <gdk/gdkkeysyms.h> header file
 	 * but without the leading "GDK_".
@@ -474,8 +519,8 @@ public class Keymap : ObjectG
 	 * Examples of keyvals are GDK_a, GDK_Enter, GDK_F1, etc.
 	 * Params:
 	 * symbol = a keyval
-	 * lower = return location for lowercase version of symbol
-	 * upper = return location for uppercase version of symbol
+	 * lower = return location for lowercase version of symbol. out.
+	 * upper = return location for uppercase version of symbol. out.
 	 */
 	public static void gdkKeyvalConvertCase(uint symbol, out uint lower, out uint upper)
 	{
@@ -511,7 +556,7 @@ public class Keymap : ObjectG
 	 * Returns TRUE if the given key value is in upper case.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:%TRUE if keyval is in upper case, or if keyval is not subject tocase conversion.
+	 * Returns:TRUE if keyval is in upper case, or if keyval is not subject tocase conversion.
 	 */
 	public static int gdkKeyvalIsUpper(uint keyval)
 	{
@@ -523,7 +568,7 @@ public class Keymap : ObjectG
 	 * Returns TRUE if the given key value is in lower case.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:%TRUE if keyval is in lower case, or if keyval is not subject tocase conversion.
+	 * Returns:TRUE if keyval is in lower case, or if keyval is not subject tocase conversion.
 	 */
 	public static int gdkKeyvalIsLower(uint keyval)
 	{

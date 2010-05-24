@@ -88,7 +88,7 @@ public class Gdk
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
 	 * Params:
-	 * argv = the array of command line arguments.
+	 * argv = . array length=argc. inout length=argc.
 	 */
 	public static void init(ref string[] argv)
 	{
@@ -102,15 +102,10 @@ public class Gdk
 	}
 	
 	/**
-	 * Initializes the GDK library and connects to the X server, returning TRUE on
-	 * success.
-	 * Any arguments used by GDK are removed from the array and argc and argv are
-	 * updated accordingly.
-	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
-	 * by GTK+ applications.
+	 * Initialize the library for use.
 	 * Params:
-	 * argv = the array of command line arguments.
-	 * Returns:%TRUE if initialization succeeded.
+	 * argv = . array length=argc. inout length=argc.
+	 * Returns:TRUE if initialization succeeded.
 	 */
 	public static int initCheck(ref string[] argv)
 	{
@@ -370,7 +365,7 @@ public class Gdk
 	 * time = the timestamp of the event which led to this pointer grab. This usually
 	 * comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used if
 	 * the time isn't known.
-	 * Returns:%GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus pointerGrab(Window window, int ownerEvents, GdkEventMask eventMask, Window confineTo, Cursor cursor, uint time)
 	{
@@ -435,7 +430,7 @@ public class Gdk
 	 * independant of the event mask set by the application.
 	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 	 * available.
-	 * Returns:%GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus keyboardGrab(Window window, int ownerEvents, uint time)
 	{
@@ -474,7 +469,7 @@ public class Gdk
 	 * It enables much faster drawing by communicating with the X server through
 	 * SYSV shared memory calls. However, it can only be used if the X client and
 	 * server are on the same machine and the server supports it.
-	 * Returns:%TRUE if use of the MIT shared memory extension will be attempted.
+	 * Returns:TRUE if use of the MIT shared memory extension will be attempted.
 	 */
 	public static int getUseXshm()
 	{
@@ -490,7 +485,7 @@ public class Gdk
 	 * to set this to FALSE, since if it is set to TRUE and the server does not
 	 * support the extension it may cause warning messages to be output.
 	 * Params:
-	 * useXshm = %TRUE if use of the MIT shared memory extension should be attempted.
+	 * useXshm = TRUE if use of the MIT shared memory extension should be attempted.
 	 */
 	public static void setUseXshm(int useXshm)
 	{
@@ -503,11 +498,19 @@ public class Gdk
 	 * of exiting the application. It should only be used if it is not possible to
 	 * avoid the X error in any other way.
 	 * Example  1.  Trapping an X error
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
 	 *  gdk_error_trap_push ();
-	 *  /+* ... Call the X function which may cause an error here ... +/
-	 *  /+* Flush the X queue to catch errors now. +/
-	 *  gdk_flush ();
-	 *  if (gdk_error_trap_pop ())
+	 * /+* ... Call the X function which may cause an error here ... +/
+	 * /+* Flush the X queue to catch errors now. +/
+	 * gdk_flush ();
+	 * if (gdk_error_trap_pop ())
 	 *  {
 		 *  /+* ... Handle the error here ... +/
 	 *  }

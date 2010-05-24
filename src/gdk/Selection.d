@@ -118,7 +118,7 @@ public class Selection
 	 * sendEvent = if TRUE, and the new owner is different
 	 *  from the current owner, the current owner
 	 *  will be sent a SelectionClear event.
-	 * Returns:%TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
+	 * Returns:TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
 	 */
 	public static int ownerSet(Window owner, GdkAtom selection, uint time, int sendEvent)
 	{

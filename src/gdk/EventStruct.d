@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * omit structs:
+ * 	- GdkEvent
  * omit prefixes:
  * omit code:
  * omit signals:

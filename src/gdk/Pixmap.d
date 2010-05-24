@@ -181,14 +181,14 @@ public class Pixmap : Drawable
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
 	 * for the new pixmap.
-	 * mask = a pointer to a place to store a bitmap representing
+	 * mask = (out) a pointer to a place to store a bitmap representing
 	 * the transparency mask of the XPM file. Can be NULL,
 	 * in which case transparency will be ignored.
 	 * transparentColor = the color to be used for the pixels
 	 * that are transparent in the input file. Can be NULL,
 	 * in which case a default color will be used.
 	 * filename = the filename of a file containing XPM data.
-	 * Returns:the GdkPixmap
+	 * Returns: the GdkPixmap. transfer none.
 	 */
 	public static Pixmap createFromXpm(Drawable drawable, out Bitmap mask, Color transparentColor, string filename)
 	{
@@ -211,7 +211,7 @@ public class Pixmap : Drawable
 	 * drawable = a GdkDrawable, used to determine default values
 	 * for the new pixmap. Can be NULL if colormap is given.
 	 * colormap = the GdkColormap that the new pixmap will be use.
-	 *  If omitted, the colormap for window will be used.
+	 * If omitted, the colormap for window will be used.
 	 * mask = a pointer to a place to store a bitmap representing
 	 * the transparency mask of the XPM file. Can be NULL,
 	 * in which case transparency will be ignored.
@@ -219,7 +219,7 @@ public class Pixmap : Drawable
 	 * that are transparent in the input file. Can be NULL,
 	 * in which case a default color will be used.
 	 * filename = the filename of a file containing XPM data.
-	 * Returns:the GdkPixmap.
+	 * Returns: the GdkPixmap.. transfer none.
 	 */
 	public static Pixmap colormapCreateFromXpm(Drawable drawable, Colormap colormap, out Bitmap mask, Color transparentColor, string filename)
 	{
@@ -240,15 +240,15 @@ public class Pixmap : Drawable
 	 * Create a pixmap from data in XPM format.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
-	 * for the new pixmap.
+	 *  for the new pixmap.
 	 * mask = Pointer to a place to store a bitmap representing
-	 * the transparency mask of the XPM file. Can be NULL,
-	 * in which case transparency will be ignored.
+	 *  the transparency mask of the XPM file. Can be NULL,
+	 *  in which case transparency will be ignored.. out.
 	 * transparentColor = This color will be used for the pixels
-	 * that are transparent in the input file. Can be NULL
-	 * in which case a default color will be used.
+	 *  that are transparent in the input file. Can be NULL
+	 *  in which case a default color will be used.
 	 * data = Pointer to a string containing the XPM data.
-	 * Returns:the GdkPixmap
+	 * Returns: the GdkPixmap.. transfer none.
 	 */
 	public static Pixmap createFromXpmD(Drawable drawable, out Bitmap mask, Color transparentColor, string[] data)
 	{
@@ -270,17 +270,17 @@ public class Pixmap : Drawable
 	 * colormap.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
-	 * for the new pixmap. Can be NULL if colormap is given.
+	 *  for the new pixmap. Can be NULL if colormap is given.
 	 * colormap = the GdkColormap that the new pixmap will be use.
 	 *  If omitted, the colormap for window will be used.
 	 * mask = a pointer to a place to store a bitmap representing
-	 * the transparency mask of the XPM file. Can be NULL,
-	 * in which case transparency will be ignored.
+	 *  the transparency mask of the XPM file. Can be NULL,
+	 *  in which case transparency will be ignored.
 	 * transparentColor = the color to be used for the pixels
-	 * that are transparent in the input file. Can be NULL,
-	 * in which case a default color will be used.
+	 *  that are transparent in the input file. Can be NULL,
+	 *  in which case a default color will be used.
 	 * data = Pointer to a string containing the XPM data.
-	 * Returns:the GdkPixmap.
+	 * Returns: the GdkPixmap.. transfer none.
 	 */
 	public static Pixmap colormapCreateFromXpmD(Drawable drawable, Colormap colormap, out Bitmap mask, Color transparentColor, string[] data)
 	{

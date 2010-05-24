@@ -222,7 +222,7 @@ public class X11
 	 * Since 2.14
 	 * Params:
 	 * screen = a GdkScreen
-	 * monitorNum = number of the monitor
+	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 * Returns: the XID of the monitor
 	 */
 	public static uint screenGetMonitorOutput(GdkScreen* screen, int monitorNum)

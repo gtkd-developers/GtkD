@@ -205,7 +205,7 @@ public class Region
 	 * Obtains the area covered by the region as a list of rectangles.
 	 * The array returned in rectangles must be freed with g_free().
 	 * Params:
-	 * rectangles = return location for an array of rectangles
+	 * rectangles = return location for an array of rectangles. array length=n_rectangles. transfer container length=n_rectangles.
 	 */
 	public void getRectangles(out GdkRectangle[] rectangles)
 	{

@@ -191,8 +191,8 @@ public class DragContext
 	 *  should be ignored, since it is put up by the drag source as an icon.
 	 * xRoot = the x position of the pointer in root coordinates.
 	 * yRoot = the y position of the pointer in root coordinates.
-	 * destWindow = location to store the destination window in.
-	 * protocol = location to store the DND protocol in.
+	 * destWindow = location to store the destination window in.. out.
+	 * protocol = location to store the DND protocol in.. out.
 	 */
 	public void gdkDragFindWindow(Window dragWindow, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
@@ -216,8 +216,8 @@ public class DragContext
 	 * screen = the screen where the destination window is sought.
 	 * xRoot = the x position of the pointer in root coordinates.
 	 * yRoot = the y position of the pointer in root coordinates.
-	 * destWindow = location to store the destination window in.
-	 * protocol = location to store the DND protocol in.
+	 * destWindow = location to store the destination window in.. out.
+	 * protocol = location to store the DND protocol in.. out.
 	 */
 	public void gdkDragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
@@ -231,7 +231,7 @@ public class DragContext
 	
 	/**
 	 * Warning
-	 * gdk_drag_context_ref is deprecated and should not be used in newly-written code.
+	 * gdk_drag_context_ref has been deprecated since version 2.2 and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Deprecated function; use g_object_ref() instead.
 	 */
 	public void gdkDragContextRef()
@@ -245,7 +245,7 @@ public class DragContext
 	 * This function is called by the drag source.
 	 * Params:
 	 * window = the source window for this drag.
-	 * targets = the list of offered targets.
+	 * targets = the offered targets, as list of GdkAtoms
 	 * Returns: a newly created GdkDragContext.
 	 */
 	public static DragContext gdkDragBegin(Window window, ListG targets)
@@ -313,7 +313,7 @@ public class DragContext
 	 * display = the GdkDisplay where the destination window resides
 	 * xid = the windowing system id of the destination window.
 	 * protocol = location where the supported DND protocol is returned.
-	 * Returns: the windowing system id of the window where the drop should happen. This  may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
+	 * Returns:the windowing system id of the window where the drop should happen. This  may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
 	 */
 	public static GdkNativeWindow gdkDragGetProtocolForDisplay(Display display, GdkNativeWindow xid, out GdkDragProtocol protocol)
 	{
@@ -323,7 +323,7 @@ public class DragContext
 	
 	/**
 	 * Warning
-	 * gdk_drag_context_unref is deprecated and should not be used in newly-written code.
+	 * gdk_drag_context_unref has been deprecated since version 2.2 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Deprecated function; use g_object_unref() instead.
 	 */
 	public void gdkDragContextUnref()

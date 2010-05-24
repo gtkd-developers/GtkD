@@ -220,10 +220,10 @@ public class Visual
 	}
 	
 	/**
-	 * Get the system'sdefault visual for the default GDK screen.
+	 * Get the system's default visual for the default GDK screen.
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
-	 * Returns: system visual
+	 * Returns: system visual. transfer none.
 	 */
 	public static Visual getSystem()
 	{
@@ -239,7 +239,7 @@ public class Visual
 	/**
 	 * Get the visual with the most available colors for the default
 	 * GDK screen. The return value should not be freed.
-	 * Returns: best visual
+	 * Returns: best visual. transfer none.
 	 */
 	public static Visual getBest()
 	{
@@ -259,7 +259,7 @@ public class Visual
 	 * be freed. NULL may be returned if no visual supports depth.
 	 * Params:
 	 * depth = a bit depth
-	 * Returns: best visual for the given depth
+	 * Returns: best visual for the given depth. transfer none.
 	 */
 	public static Visual getBestWithDepth(int depth)
 	{
@@ -279,7 +279,7 @@ public class Visual
 	 * visual_type.
 	 * Params:
 	 * visualType = a visual type
-	 * Returns: best visual of the given type
+	 * Returns: best visual of the given type. transfer none.
 	 */
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
@@ -297,7 +297,7 @@ public class Visual
 	 * Params:
 	 * depth = a bit depth
 	 * visualType = a visual type
-	 * Returns: best visual with both depth and visual_type, or NULL if none
+	 * Returns: best visual with both depth and visual_type, or NULL if none. transfer none.
 	 */
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
 	{
@@ -313,7 +313,7 @@ public class Visual
 	/**
 	 * Gets the screen to which this visual belongs
 	 * Since 2.2
-	 * Returns: the screen to which this visual belongs.
+	 * Returns: the screen to which this visual belongs.. transfer none.
 	 */
 	public Screen getScreen()
 	{
