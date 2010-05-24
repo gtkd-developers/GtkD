@@ -410,6 +410,8 @@ public enum AtkLayer
  *  Indicates that another object provides descriptive information about this object; more verbose than ATK_RELATION_LABELLED_BY.
  * ATK_RELATION_DESCRIPTION_FOR
  *  Indicates that an object provides descriptive information about another object; more verbose than ATK_RELATION_LABEL_FOR.
+ * ATK_RELATION_NODE_PARENT_OF
+ *  Indicates an object is a cell in a treetable and is expanded to display other cells in the same column.
  * ATK_RELATION_LAST_DEFINED
  *  Not used, this value indicates the end of the enumeration.
  */
@@ -432,6 +434,7 @@ public enum AtkRelationType
 	PARENT_WINDOW_OF,
 	DESCRIBED_BY,
 	DESCRIPTION_FOR,
+	NODE_PARENT_OF,
 	LAST_DEFINED
 }
 /**
