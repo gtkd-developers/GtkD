@@ -1543,7 +1543,7 @@ public struct PangoLayoutIter{}
  * GSList  *runs;
  * a list containing the runs of the line in visual order
  * guint  is_paragraph_start  :  1;
- * %TRUE if this is the first line of the paragraph
+ * TRUE if this is the first line of the paragraph
  * guint  resolved_dir  :  3;
  * the resolved PangoDirection of the line
  */
@@ -1942,6 +1942,9 @@ public struct PangoEngineShapeClass
  * Whether a PangoGravity represents vertical writing directions.
  * gravity  :
  *  the PangoGravity to check
+ * Returns  :
+ *  TRUE if gravity is PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST,
+ *  FALSE otherwise.
  * Since 1.16
  */
 // TODO
@@ -2055,7 +2058,7 @@ public typedef extern(C) void*  function (void*) PangoAttrDataCopyFunc;
  * data  :
  * callback data passed to pango_attr_list_filter()
  * Returns  :
- * %TRUE if the attribute should be filtered out
+ * TRUE if the attribute should be filtered out
  */
 // gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer data);
 public typedef extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;

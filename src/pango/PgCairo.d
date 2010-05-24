@@ -456,7 +456,7 @@ public class PgCairo
 	}
 	
 	/**
-	 * Draws a PangoLayoutLine in the specified cairo context.
+	 * Draws a PangoLayout in the specified cairo context.
 	 * The top-left corner of the PangoLayout will be drawn
 	 * at the current point of the cairo context.
 	 * Since 1.10

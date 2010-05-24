@@ -186,7 +186,7 @@ public class PgAttributeIterator
 	 *  an attribute in the PangoAttrList associated with the iterator,
 	 * language = if non-NULL, location to store language tag for item, or NULL
 	 *  if none is found.
-	 * extraAttrs = element type Pango.Attribute): (transfer full. element type Pango.Attribute): (transfer full.
+	 * extraAttrs = element type Pango.Attribute): (transfer full. element type Pango.Attribute): (transfer full
 	 */
 	public void getFont(PgFontDescription desc, out PgLanguage language, out ListSG extraAttrs)
 	{

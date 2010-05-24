@@ -226,7 +226,7 @@ public class PgLayoutLine
 	 *  the last range will extend all the way to the trailing
 	 *  edge of the layout. Otherwise, it will end at the
 	 *  trailing edge of the last character.
-	 * ranges = out): (array length=n_ranges): (transfer=full. out): (array length=n_ranges): (transfer=full.
+	 * ranges = out): (array length=n_ranges): (transfer=full. out.
 	 */
 	public void getXRanges(int startIndex, int endIndex, out int[] ranges)
 	{
