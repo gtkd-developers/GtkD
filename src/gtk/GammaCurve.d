@@ -64,14 +64,6 @@ private import gtk.VBox;
 
 /**
  * Description
- * Note
- *  This widget is considered too specialized/little-used for
- *  GTK+, and will in the future be moved to some other package. If
- *  your application needs this widget, feel free to use it, as the
- *  widget does work and is useful in some applications; it's just not
- *  of general interest. However, we are not accepting new features for
- *  the widget, and it will eventually move out of the GTK+
- *  distribution.
  * The GtkGammaCurve widget is a variant of GtkCurve specifically for
  * editing gamma curves, which are used in graphics applications such as the
  * Gimp.
@@ -80,6 +72,7 @@ private import gtk.VBox;
  * 5 buttons, 3 of which change between the 3 curve modes (spline, linear and
  * free), and the other 2 set the curve to a particular gamma value, or reset it
  * to a straight line.
+ * As of GTK+ 2.20, GtkGammaCurve has been deprecated since it is too specialized.
  */
 public class GammaCurve : VBox
 {
@@ -125,6 +118,8 @@ public class GammaCurve : VBox
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_gamma_curve_new has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Creates a new GtkGammaCurve.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

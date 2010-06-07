@@ -154,13 +154,16 @@ public class DragAndDrop
 	 * and invokations of gtk_drag_finish() in "drag-data-received".
 	 * Especially the later is dramatic, when your own "drag-motion"
 	 * handler calls gtk_drag_get_data() to inspect the dragged data.
+	 * There's no way to set a default action here, you can use the
+	 * "drag-motion" callback for that. Here's an example which selects
 	 * Params:
 	 * widget = a GtkWidget
 	 * flags = which types of default drag behavior to use
-	 * targets = a pointer to an array of GtkTargetEntrys indicating
-	 * the drop types that this widget will accept. Later you can access the list
-	 * with gtk_drag_dest_get_target_list() and gtk_drag_dest_find_target().
-	 * nTargets = the number of entries in targets.
+	 * targets = a pointer to an array of GtkTargetEntrys
+	 *  indicating the drop types that this widget will accept, or NULL.
+	 *  Later you can access the list with gtk_drag_dest_get_target_list()
+	 *  and gtk_drag_dest_find_target().. allow-none. array length=n_targets.
+	 * nTargets = the number of entries in targets
 	 * actions = a bitmask of possible actions for a drop onto this widget.
 	 */
 	public static void destSet(Widget widget, GtkDestDefaults flags, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
@@ -211,7 +214,7 @@ public class DragAndDrop
 	 * widget = drag destination widget
 	 * context = drag context
 	 * targetList = list of droppable targets, or NULL to use
-	 *  gtk_drag_dest_get_target_list (widget).
+	 *  gtk_drag_dest_get_target_list (widget).. allow-none.
 	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE
 	 */
 	public static GdkAtom destFindTarget(Widget widget, DragContext context, TargetList targetList)
@@ -244,7 +247,7 @@ public class DragAndDrop
 	 * gtk_drag_dest_set().
 	 * Params:
 	 * widget = a GtkWidget that's a drag destination
-	 * targetList = list of droppable targets, or NULL for none
+	 * targetList = list of droppable targets, or NULL for none. allow-none.
 	 */
 	public static void destSetTargetList(Widget widget, TargetList targetList)
 	{
@@ -533,7 +536,7 @@ public class DragAndDrop
 	 * Params:
 	 * colormap = the colormap of the icon
 	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for an image.
+	 * mask = the transparency mask for an image, or NULL. allow-none.
 	 * hotX = The X offset within widget of the hotspot.
 	 * hotY = The Y offset within widget of the hotspot.
 	 */
@@ -562,16 +565,15 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Sets up a widget so that GTK+ will start a drag
-	 * operation when the user clicks and drags on the
-	 * widget. The widget must have a window.
+	 * Sets up a widget so that GTK+ will start a drag operation when the user
+	 * clicks and drags on the widget. The widget must have a window.
 	 * Params:
 	 * widget = a GtkWidget
 	 * startButtonMask = the bitmask of buttons that can start the drag
-	 * targets = the table of targets that the drag will support
+	 * targets = the table of targets that the drag will support,
+	 *  may be NULL. allow-none. array length=n_targets.
 	 * nTargets = the number of items in targets
-	 * actions = the bitmask of possible actions for a drag from this
-	 *  widget.
+	 * actions = the bitmask of possible actions for a drag from this widget
 	 */
 	public static void sourceSet(Widget widget, GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
 	{
@@ -588,7 +590,7 @@ public class DragAndDrop
 	 * widget = a GtkWidget
 	 * colormap = the colormap of the icon
 	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for an image.
+	 * mask = the transparency mask for an image.. allow-none.
 	 */
 	public static void sourceSetIcon(Widget widget, Colormap colormap, Pixmap pixmap, Bitmap mask)
 	{
@@ -655,7 +657,7 @@ public class DragAndDrop
 	 * Since 2.4
 	 * Params:
 	 * widget = a GtkWidget that's a drag source
-	 * targetList = list of draggable targets, or NULL for none
+	 * targetList = list of draggable targets, or NULL for none. allow-none.
 	 */
 	public static void sourceSetTargetList(Widget widget, TargetList targetList)
 	{

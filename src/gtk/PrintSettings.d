@@ -194,7 +194,7 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * key = a key
-	 * value = a string value, or NULL
+	 * value = a string value, or NULL. allow-none.
 	 */
 	public void set(string key, string value)
 	{
@@ -219,7 +219,7 @@ public class PrintSettings : ObjectG
 	 * Calls func for each key-value pair of settings.
 	 * Since 2.10
 	 * Params:
-	 * func = the function to call
+	 * func = (scope call) the function to call
 	 * userData = user data for func
 	 */
 	public void foreac(GtkPrintSettingsFunc func, void* userData)
@@ -986,8 +986,9 @@ public class PrintSettings : ObjectG
 	
 	/**
 	 * Reads the print settings from file_name. Returns a new GtkPrintSettings
-	 * object with the restored settings, or NULL if an error occurred.
-	 * See gtk_print_settings_to_file().
+	 * object with the restored settings, or NULL if an error occurred. If the
+	 * file could not be loaded then error is set to either a GFileError or
+	 * GKeyFileError. See gtk_print_settings_to_file().
 	 * Since 2.12
 	 * Params:
 	 * fileName = the filename to read the settings from
@@ -1014,14 +1015,15 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
-	 * Reads the print settings from the group group_name in key_file.
-	 * Returns a new GtkPrintSettings object with the restored settings,
-	 * or NULL if an error occurred.
+	 * Reads the print settings from the group group_name in key_file. Returns a
+	 * new GtkPrintSettings object with the restored settings, or NULL if an
+	 * error occurred. If the file could not be loaded then error is set to either
+	 * a GFileError or GKeyFileError.
 	 * Since 2.12
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the settings from
 	 * groupName = the name of the group to use, or NULL to use
-	 *  the default "Print Settings"
+	 *  the default "Print Settings". allow-none.
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -1045,7 +1047,8 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
-	 * Reads the print settings from file_name.
+	 * Reads the print settings from file_name. If the file could not be loaded
+	 * then error is set to either a GFileError or GKeyFileError.
 	 * See gtk_print_settings_to_file().
 	 * Since 2.14
 	 * Params:
@@ -1069,12 +1072,14 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
-	 * Reads the print settings from the group group_name in key_file.
+	 * Reads the print settings from the group group_name in key_file. If the
+	 * file could not be loaded then error is set to either a GFileError or
+	 * GKeyFileError.
 	 * Since 2.14
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the settings from
 	 * groupName = the name of the group to use, or NULL to use the default
-	 *  "Print Settings"
+	 *  "Print Settings". allow-none.
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -1094,7 +1099,9 @@ public class PrintSettings : ObjectG
 	}
 	
 	/**
-	 * This function saves the print settings from settings to file_name.
+	 * This function saves the print settings from settings to file_name. If the
+	 * file could not be loaded then error is set to either a GFileError or
+	 * GKeyFileError.
 	 * Since 2.12
 	 * Params:
 	 * fileName = the file to save to

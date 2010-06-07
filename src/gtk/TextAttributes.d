@@ -74,8 +74,8 @@ private import gtk.TextAttributes;
  * before using them with that buffer.
  * gtk_text_buffer_create_tag() is the best way to create tags.
  * See gtk-demo for numerous examples.
- * The "invisible" property was not implemented for GTK+ 2.0; it's
- * planned to be implemented in future releases.
+ * The "invisible" property was not implemented for GTK+ 2.0.
+ * It is working (with minor issues) since 2.8.
  */
 public class TextAttributes
 {

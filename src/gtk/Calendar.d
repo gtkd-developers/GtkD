@@ -409,9 +409,9 @@ public class Calendar : Widget
 	/**
 	 * Obtains the selected date from a GtkCalendar.
 	 * Params:
-	 * year = location to store the year number, or NULL
-	 * month = location to store the month number (between 0 and 11), or NULL
-	 * day = location to store the day number (between 1 and 31), or NULL
+	 * year = location to store the year number, or NULL. allow-none.
+	 * month = location to store the month number (between 0 and 11), or NULL. allow-none.
+	 * day = location to store the day number (between 1 and 31), or NULL. allow-none.
 	 */
 	public void getDate(out uint year, out uint month, out uint day)
 	{

@@ -133,6 +133,7 @@ public class Printer : ObjectG
 	 * Gets emitted in response to a request for detailed information
 	 * about a printer from the print backend. The success parameter
 	 * indicates if the information was actually obtained.
+	 * TRUE if the details were successfully acquired
 	 * Since 2.10
 	 */
 	void addOnDetailsAcquired(void delegate(gboolean, Printer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -346,7 +347,7 @@ public class Printer : ObjectG
 	 * This will return and empty list unless the printer's details are
 	 * available, see gtk_printer_has_details() and gtk_printer_request_details().
 	 * Since 2.12
-	 * Returns: a newly allocated list of newly allocated GtkPageSetup s.
+	 * Returns: a newly allocated list of newly allocated GtkPageSetup s.. element-type GtkPageSetup. transfer full GtkPageSetup.
 	 */
 	public ListG listPapers()
 	{
@@ -402,7 +403,6 @@ public class Printer : ObjectG
 	 * you must handle yourself.
 	 * This will return 0 unless the printer's details are available, see
 	 * gtk_printer_has_details() and gtk_printer_request_details().
-	 *  *
 	 * Since 2.12
 	 * Returns: the printer's capabilities
 	 */
@@ -414,7 +414,7 @@ public class Printer : ObjectG
 	
 	/**
 	 * Returns default page size of printer.
-	 * Since 2.13
+	 * Since 2.14
 	 * Returns: a newly allocated GtkPageSetup with default page size of the printer.
 	 */
 	public PageSetup getDefaultPageSize()
@@ -426,6 +426,25 @@ public class Printer : ObjectG
 			return null;
 		}
 		return new PageSetup(cast(GtkPageSetup*) p);
+	}
+	
+	/**
+	 * Retrieve the hard margins of printer, i.e. the margins that define
+	 * the area at the borders of the paper that the printer cannot print to.
+	 * Note: This will not succeed unless the printer's details are available,
+	 * see gtk_printer_has_details() and gtk_printer_request_details().
+	 * Since 2.20
+	 * Params:
+	 * top = a location to store the top margin in
+	 * bottom = a location to store the bottom margin in
+	 * left = a location to store the left margin in
+	 * right = a location to store the right margin in
+	 * Returns: TRUE iff the hard margins were retrieved
+	 */
+	public int getHardMargins(out double top, out double bottom, out double left, out double right)
+	{
+		// gboolean gtk_printer_get_hard_margins (GtkPrinter *printer,  gdouble *top,  gdouble *bottom,  gdouble *left,  gdouble *right);
+		return gtk_printer_get_hard_margins(gtkPrinter, &top, &bottom, &left, &right);
 	}
 	
 	/**

@@ -44,10 +44,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gdk.Window
  * 	- gtk.Widget
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
  * structWrap:
+ * 	- GdkWindow* -> Window
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -64,6 +66,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gdk.Window;
 private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
@@ -106,7 +109,17 @@ private import gtk.Container;
  * as if it were set by the user, by calling
  * gtk_paned_set_position().
  * Example  53.  Creating a paned widget with minimum sizes.
- * GtkWidget *hpaned = gtk_hpaned_new ();
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ *  GtkWidget *hpaned = gtk_hpaned_new ();
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);
  * gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
@@ -497,5 +510,24 @@ public class Paned : Container, OrientableIF
 	{
 		// gint gtk_paned_get_position (GtkPaned *paned);
 		return gtk_paned_get_position(gtkPaned);
+	}
+	
+	/**
+	 * Returns the GdkWindow of the handle. This function is
+	 * useful when handling button or motion events because it
+	 * enables the callback to distinguish between the window
+	 * of the paned, a child and the handle.
+	 * Since 2.20
+	 * Returns: the paned's handle window.
+	 */
+	public Window getHandleWindow()
+	{
+		// GdkWindow * gtk_paned_get_handle_window (GtkPaned *paned);
+		auto p = gtk_paned_get_handle_window(gtkPaned);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 }

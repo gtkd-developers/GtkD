@@ -120,7 +120,28 @@ private import gtk.Window;
  * GtkMessageDialog to save yourself some effort. But you'd need to create the
  * dialog contents manually if you had more than a simple message in the dialog.
  * Example  6.  Simple GtkDialog usage.
- * /+* Function to open a dialog box displaying the message provided. +/
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ *  /+* Function to open a dialog box displaying the message provided. +/
  * void quick_message (gchar *message) {
 	 *  GtkWidget *dialog, *label, *content_area;
 	 *  /+* Create the widgets +/
@@ -150,7 +171,27 @@ private import gtk.Window;
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
  * Example  7.  A GtkDialog UI definition fragment.
- * <object class="GtkDialog" id="dialog1">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ *  <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">"
  *  <object class="GtkVBox" id="vbox">
  *  <child internal-child="action_area">
@@ -503,6 +544,25 @@ public class Dialog : Window
 	}
 	
 	/**
+	 * Gets the widget button that uses the given response ID in the action area
+	 * of a dialog.
+	 * Since 2.20
+	 * Params:
+	 * responseId = the response ID used by the dialog widget
+	 * Returns: the widget button that uses the given response_id, or NULL.
+	 */
+	public Widget getWidgetForResponse(int responseId)
+	{
+		// GtkWidget* gtk_dialog_get_widget_for_response (GtkDialog *dialog,  gint response_id);
+		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
 	 * Returns TRUE if dialogs are expected to use an alternative
 	 * button order on the screen screen. See
 	 * gtk_dialog_set_alternative_button_order() for more details
@@ -513,7 +573,7 @@ public class Dialog : Window
 	 * notified if the button order setting changes.
 	 * Since 2.6
 	 * Params:
-	 * screen = a GdkScreen, or NULL to use the default screen
+	 * screen = a GdkScreen, or NULL to use the default screen. allow-none.
 	 * Returns: Whether the alternative button order should be used
 	 */
 	public static int alternativeDialogButtonOrder(Screen screen)

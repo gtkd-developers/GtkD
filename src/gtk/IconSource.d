@@ -111,7 +111,20 @@ private import gdk.Pixbuf;
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
  * Example  5.  A GtkIconFactory UI definition fragment.
- * <object class="GtkIconFactory" id="iconfactory1">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ *  <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>
  *  </sources>
@@ -255,7 +268,7 @@ public class IconSource
 	/**
 	 * Obtains the icon size this source applies to. The return value
 	 * is only useful/meaningful if the icon size is not wildcarded.
-	 * Returns: icon size this source matches.
+	 * Returns: icon size this source matches.. type int
 	 */
 	public GtkIconSize getSize()
 	{
@@ -395,7 +408,7 @@ public class IconSource
 	 * Sets the name of an icon to look up in the current icon theme
 	 * to use as a base image when creating icon variants for GtkIconSet.
 	 * Params:
-	 * iconName = name of icon to use
+	 * iconName = name of icon to use. allow-none.
 	 */
 	public void setIconName(string iconName)
 	{
@@ -411,7 +424,7 @@ public class IconSource
 	 * call gtk_icon_source_set_size_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
 	 * Params:
-	 * size = icon size this source applies to
+	 * size = icon size this source applies to. type int
 	 */
 	public void setSize(GtkIconSize size)
 	{

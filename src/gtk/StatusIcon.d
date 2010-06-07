@@ -359,6 +359,7 @@ public class StatusIcon : ObjectG
 	 * destined function calls.
 	 * Whether this signal is emitted is platform-dependent.
 	 * For plain text tooltips, use "tooltip-text" in preference.
+	 * TRUE if the tooltip was trigged using the keyboard
 	 * Since 2.16
 	 */
 	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -519,7 +520,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_pixbuf() for details.
 	 * Since 2.10
 	 * Params:
-	 * pixbuf = a GdkPixbuf or NULL
+	 * pixbuf = a GdkPixbuf or NULL. allow-none.
 	 */
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
@@ -717,7 +718,7 @@ public class StatusIcon : ObjectG
 	 * Sets the tooltip of the status icon.
 	 * Since 2.10
 	 * Params:
-	 * tooltipText = the tooltip text, or NULL
+	 * tooltipText = the tooltip text, or NULL. allow-none.
 	 */
 	public void setTooltip(string tooltipText)
 	{
@@ -762,7 +763,7 @@ public class StatusIcon : ObjectG
 	 * gtk_tooltip_set_markup().
 	 * Since 2.16
 	 * Params:
-	 * markup = the contents of the tooltip for status_icon, or NULL
+	 * markup = the contents of the tooltip for status_icon, or NULL. allow-none.
 	 */
 	public void setTooltipMarkup(string markup)
 	{
@@ -830,6 +831,21 @@ public class StatusIcon : ObjectG
 	{
 		// const gchar * gtk_status_icon_get_title (GtkStatusIcon *status_icon);
 		return Str.toString(gtk_status_icon_get_title(gtkStatusIcon));
+	}
+	
+	/**
+	 * Sets the name of this tray icon.
+	 * This should be a string identifying this icon. It is may be
+	 * used for sorting the icons in the tray and will not be shown to
+	 * the user.
+	 * Since 2.20
+	 * Params:
+	 * name = the name
+	 */
+	public void setName(string name)
+	{
+		// void gtk_status_icon_set_name (GtkStatusIcon *status_icon,  const gchar *name);
+		gtk_status_icon_set_name(gtkStatusIcon, Str.toStringz(name));
 	}
 	
 	/**
@@ -929,13 +945,13 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * screen = return location for the screen, or NULL if the
-	 *  information is not needed
+	 *  information is not needed. out. transfer none. allow-none.
 	 * area = return location for the area occupied by the status
-	 *  icon, or NULL
+	 *  icon, or NULL. out. allow-none.
 	 * orientation = return location for the orientation of the panel
 	 *  in which the status icon is embedded, or NULL. A panel
 	 *  at the top or bottom of the screen is horizontal, a panel
-	 *  at the left or right is vertical.
+	 *  at the left or right is vertical.. out. allow-none.
 	 * Returns: TRUE if the location information has  been filled in
 	 */
 	public int getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)

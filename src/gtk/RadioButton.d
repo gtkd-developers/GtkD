@@ -98,7 +98,25 @@ private import gtk.CheckButton;
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
  * Example  15.  How to create a group of two radio buttons.
- * void create_radio_buttons (void) {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  void create_radio_buttons (void) {
 	 *  GtkWidget *window, *radio1, *radio2, *box, *entry;
 	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	 *  box = gtk_vbox_new (TRUE, 2);
@@ -346,7 +364,7 @@ public class RadioButton : CheckButton
 	
 	/**
 	 * Retrieves the group assigned to a radio button.
-	 * Returns:a linked list containing all the radio buttons in the same groupas radio_button. The returned list is owned by the radio buttonand must not be modified or freed.
+	 * Returns: a linked listcontaining all the radio buttons in the same groupas radio_button. The returned list is owned by the radio buttonand must not be modified or freed.. element-type GtkRadioButton. transfer none GtkRadioButton.
 	 */
 	public ListSG getGroup()
 	{

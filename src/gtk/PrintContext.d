@@ -87,7 +87,47 @@ private import gobject.ObjectG;
  * GtkPrintContext objects gets passed to the ::begin-print, ::end-print,
  * ::request-page-setup and ::draw-page signals on the GtkPrintOperation.
  * Example  47.  Using GtkPrintContext in a ::draw-page callback
- * static void
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ * 37
+ * 38
+ * 39
+ * 40
+ *  static void
  * draw_page (GtkPrintOperation *operation,
  * 	 GtkPrintContext *context,
  * 	 int page_nr)
@@ -319,5 +359,21 @@ public class PrintContext : ObjectG
 			return null;
 		}
 		return new PgLayout(cast(PangoLayout*) p);
+	}
+	
+	/**
+	 * Obtains the hardware printer margins of the GtkPrintContext, in units.
+	 * Since 2.20
+	 * Params:
+	 * top = top hardware printer margin
+	 * bottom = bottom hardware printer margin
+	 * left = left hardware printer margin
+	 * right = right hardware printer margin
+	 * Returns: TRUE if the hard margins were retrieved
+	 */
+	public int getHardMargins(out double top, out double bottom, out double left, out double right)
+	{
+		// gboolean gtk_print_context_get_hard_margins (GtkPrintContext *context,  gdouble *top,  gdouble *bottom,  gdouble *left,  gdouble *right);
+		return gtk_print_context_get_hard_margins(gtkPrintContext, &top, &bottom, &left, &right);
 	}
 }

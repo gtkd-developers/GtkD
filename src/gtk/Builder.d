@@ -180,6 +180,12 @@ private import gobject.ObjectG;
  * allows the application to retrieve them from the builder with
  * gtk_builder_get_object(). An id is also necessary to use the
  * object as property value in other parts of the UI definition.
+ * Note
+ * Prior to 2.20, GtkBuilder was setting the "name"
+ * property of constructed widgets to the "id" attribute. In GTK+
+ * 2.20 or newer, you have to use gtk_buildable_get_name() instead
+ * of gtk_widget_get_name() to obtain the "id", or set the "name"
+ * property in your UI definition.
  * Setting properties of objects is pretty straightforward with
  * the <property> element: the "name" attribute specifies
  * the name of the property, and the content of the element
@@ -228,7 +234,28 @@ private import gobject.ObjectG;
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
  * Example  58.  A GtkBuilder UI Definition
- * <interface>
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ *  <interface>
  *  <object class="GtkDialog" id="dialog1">
  *  <child internal-child="vbox">
  *  <object class="GtkVBox" id="vbox1">
@@ -421,6 +448,9 @@ public class Builder : ObjectG
 	/**
 	 * Parses a file containing a GtkBuilder
 	 * UI definition and merges it with the current contents of builder.
+	 * Upon errors 0 will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_FILE_ERROR
+	 * domain.
 	 * Since 2.12
 	 * Params:
 	 * filename = the name of the file to parse
@@ -445,6 +475,8 @@ public class Builder : ObjectG
 	/**
 	 * Parses a string containing a GtkBuilder
 	 * UI definition and merges it with the current contents of builder.
+	 * Upon errors 0 will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR or G_MARKUP_ERROR domain.
 	 * Since 2.12
 	 * Params:
 	 * buffer = the string to parse
@@ -471,6 +503,9 @@ public class Builder : ObjectG
 	 * Parses a file containing a GtkBuilder
 	 * UI definition building only the requested objects and merges
 	 * them with the current contents of builder.
+	 * Upon errors 0 will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_FILE_ERROR
+	 * domain.
 	 * Note
 	 * If you are adding an object that depends on an object that is not
 	 * its child (for instance a GtkTreeView that depends on its
@@ -501,6 +536,8 @@ public class Builder : ObjectG
 	 * Parses a string containing a GtkBuilder
 	 * UI definition building only the requested objects and merges
 	 * them with the current contents of builder.
+	 * Upon errors 0 will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR or G_MARKUP_ERROR domain.
 	 * Note
 	 * If you are adding an object that depends on an object that is not
 	 * its child (for instance a GtkTreeView that depends on its
@@ -534,7 +571,7 @@ public class Builder : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * name = name of object to get
-	 * Returns: the object named name or NULL if it could not be  found in the object tree.
+	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
 	 */
 	public ObjectG getObject(string name)
 	{
@@ -552,7 +589,7 @@ public class Builder : ObjectG
 	 * this function does not increment the reference counts of the returned
 	 * objects.
 	 * Since 2.12
-	 * Returns: a newly-allocated GSList containing all the objects constructed by the GtkBuilder instance. It should be freed by g_slist_free()
+	 * Returns: a newly-allocated GSList containing all the objects constructed by the GtkBuilder instance. It should be freed by g_slist_free(). element-type GObject. transfer container GObject.
 	 */
 	public ListSG getObjects()
 	{
@@ -608,7 +645,7 @@ public class Builder : ObjectG
 	 * See "translation-domain".
 	 * Since 2.12
 	 * Params:
-	 * domain = the translation domain or NULL
+	 * domain = the translation domain or NULL. allow-none.
 	 */
 	public void setTranslationDomain(string domain)
 	{
@@ -650,6 +687,8 @@ public class Builder : ObjectG
 	 * ulong, enum, flags, float, double, string, GdkColor and
 	 * GtkAdjustment type values. Support for GtkWidget type values is
 	 * still to come.
+	 * Upon errors FALSE will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR domain.
 	 * Since 2.12
 	 * Params:
 	 * pspec = the GParamSpec for the property
@@ -678,6 +717,8 @@ public class Builder : ObjectG
 	 * a value from a string, but takes a GType instead of GParamSpec.
 	 * This function calls g_value_init() on the value argument, so it
 	 * need not be initialised beforehand.
+	 * Upon errors FALSE will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR domain.
 	 * Since 2.12
 	 * Params:
 	 * type = the GType of the value

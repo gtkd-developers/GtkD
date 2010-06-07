@@ -85,8 +85,8 @@ private import gobject.ObjectG;
  * before using them with that buffer.
  * gtk_text_buffer_create_tag() is the best way to create tags.
  * See gtk-demo for numerous examples.
- * The "invisible" property was not implemented for GTK+ 2.0; it's
- * planned to be implemented in future releases.
+ * The "invisible" property was not implemented for GTK+ 2.0.
+ * It is working (with minor issues) since 2.8.
  */
 public class TextTag : ObjectG
 {
@@ -170,7 +170,7 @@ public class TextTag : ObjectG
 	 * Creates a GtkTextTag. Configure the tag using object arguments,
 	 * i.e. using g_object_set().
 	 * Params:
-	 * name = tag name, or NULL
+	 * name = tag name, or NULL. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)

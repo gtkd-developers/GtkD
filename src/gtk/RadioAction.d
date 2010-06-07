@@ -177,8 +177,8 @@ public class RadioAction : ToggleAction
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = The label displayed in menu items and on buttons, or NULL
-	 * tooltip = A tooltip for this action, or NULL
+	 * label = The label displayed in menu items and on buttons, or NULL. allow-none.
+	 * tooltip = A tooltip for this action, or NULL. allow-none.
 	 * stockId = The stock icon to display in widgets representing this
 	 *  action, or NULL
 	 * value = The value which gtk_radio_action_get_current_value() should
@@ -201,7 +201,7 @@ public class RadioAction : ToggleAction
 	 * Note that the returned list is only valid until the next change
 	 * to the group.
 	 * Since 2.4
-	 * Returns: the list representing the radio group for this object
+	 * Returns: the list representing the radio group for this object. element-type GtkAction. transfer none GtkAction.
 	 */
 	public ListSG getGroup()
 	{

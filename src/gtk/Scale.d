@@ -139,13 +139,26 @@ public class Scale : Range
 	 * value. That string will then be used to display the scale's value.
 	 * Here's an example signal handler which displays a value 1.0 as
 	 * with "-->1.0<--".
-	 * static gchar*
+	 *
+	 *
+	 *
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 *  static gchar*
 	 * format_value_callback (GtkScale *scale,
 	 *  gdouble value)
 	 * {
 		 *  return g_strdup_printf ("-->%0.*g<--",
 		 *  gtk_scale_get_digits (scale), value);
 	 *  }
+	 *
+	 *
+	 *
 	 */
 	void addOnFormatValue(string delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -266,8 +279,8 @@ public class Scale : Range
 	 * values are undefined.
 	 * Since 2.4
 	 * Params:
-	 * x = location to store X offset of layout, or NULL
-	 * y = location to store Y offset of layout, or NULL
+	 * x = location to store X offset of layout, or NULL. allow-none.
+	 * y = location to store Y offset of layout, or NULL. allow-none.
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -290,7 +303,7 @@ public class Scale : Range
 	 *  is drawn above the scale, anything else below. For a vertical scale,
 	 *  GTK_POS_LEFT is drawn to the left of the scale, anything else to the
 	 *  right.
-	 * markup = Text to be shown at the mark, using Pango markup, or NULL
+	 * markup = Text to be shown at the mark, using Pango markup, or NULL. allow-none.
 	 */
 	public void addMark(double value, GtkPositionType position, string markup)
 	{

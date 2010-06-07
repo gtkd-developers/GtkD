@@ -81,7 +81,15 @@ private import gtk.Bin;
  * A normal content child can be specified without specifying
  * a <child> type attribute.
  * Example  45.  A UI definition fragment with GtkFrame
- * <object class="GtkFrame">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ *  <object class="GtkFrame">
  *  <child type="label">
  *  <object class="GtkLabel" id="frame-label"/>
  *  </child>
@@ -164,7 +172,7 @@ public class Frame : Bin
 	 * Sets the text of the label. If label is NULL,
 	 * the current label is removed.
 	 * Params:
-	 * label = the text to use as the label of the frame
+	 * label = the text to use as the label of the frame. allow-none.
 	 */
 	public void setLabel(string label)
 	{
@@ -231,8 +239,8 @@ public class Frame : Bin
 	 * Retrieves the X and Y alignment of the frame's label. See
 	 * gtk_frame_set_label_align().
 	 * Params:
-	 * xalign = location to store X alignment of frame's label, or NULL
-	 * yalign = location to store X alignment of frame's label, or NULL
+	 * xalign = location to store X alignment of frame's label, or NULL. allow-none.
+	 * yalign = location to store X alignment of frame's label, or NULL. allow-none.
 	 */
 	public void getLabelAlign(out float xalign, out float yalign)
 	{

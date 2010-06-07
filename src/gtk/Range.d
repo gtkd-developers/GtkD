@@ -44,10 +44,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gdk.Rectangle
  * 	- gtk.Adjustment
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
  * structWrap:
+ * 	- GdkRectangle* -> Rectangle
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
@@ -64,6 +66,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gdk.Rectangle;
 private import gtk.Adjustment;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
@@ -169,6 +172,8 @@ public class Range : Widget, OrientableIF
 	 * clamps the value based on range->round_digits.
 	 * It is not possible to use delayed update policies in an overridden
 	 * ::change-value handler.
+	 * TRUE to prevent other handlers from being invoked for the
+	 * signal, FALSE to propagate the signal further
 	 * Since 2.6
 	 */
 	void addOnChangeValue(bool delegate(GtkScrollType, gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -553,5 +558,86 @@ public class Range : Widget, OrientableIF
 	{
 		// void gtk_range_set_flippable (GtkRange *range,  gboolean flippable);
 		gtk_range_set_flippable(gtkRange, flippable);
+	}
+	
+	/**
+	 * This function is useful mainly for GtkRange subclasses.
+	 * See gtk_range_set_min_slider_size().
+	 * Since 2.20
+	 * Returns: The minimum size of the range's slider.
+	 */
+	public int getMinSliderSize()
+	{
+		// gint gtk_range_get_min_slider_size (GtkRange *range);
+		return gtk_range_get_min_slider_size(gtkRange);
+	}
+	
+	/**
+	 * This function returns the area that contains the range's trough
+	 * and its steppers, in widget->window coordinates.
+	 * This function is useful mainly for GtkRange subclasses.
+	 * Since 2.20
+	 * Params:
+	 * range = a GtkRange
+	 * rangeRect = return location for the range rectangle
+	 */
+	public void getRangeRect(Rectangle rangeRect)
+	{
+		// void gtk_range_get_range_rect (GtkRange *range,  GdkRectangle *range_rect);
+		gtk_range_get_range_rect(gtkRange, (rangeRect is null) ? null : rangeRect.getRectangleStruct());
+	}
+	
+	/**
+	 * This function returns sliders range along the long dimension,
+	 * in widget->window coordinates.
+	 * This function is useful mainly for GtkRange subclasses.
+	 * Since 2.20
+	 * Params:
+	 * sliderStart = return location for the slider's start, or NULL. allow-none.
+	 * sliderEnd = return location for the slider's end, or NULL. allow-none.
+	 */
+	public void getSliderRange(out int sliderStart, out int sliderEnd)
+	{
+		// void gtk_range_get_slider_range (GtkRange *range,  gint *slider_start,  gint *slider_end);
+		gtk_range_get_slider_range(gtkRange, &sliderStart, &sliderEnd);
+	}
+	
+	/**
+	 * This function is useful mainly for GtkRange subclasses.
+	 * See gtk_range_set_slider_size_fixed().
+	 * Since 2.20
+	 * Returns: whether the range's slider has a fixed size.
+	 */
+	public int getSliderSizeFixed()
+	{
+		// gboolean gtk_range_get_slider_size_fixed (GtkRange *range);
+		return gtk_range_get_slider_size_fixed(gtkRange);
+	}
+	
+	/**
+	 * Sets the minimum size of the range's slider.
+	 * This function is useful mainly for GtkRange subclasses.
+	 * Since 2.20
+	 * Params:
+	 * minSize = The slider's minimum size
+	 */
+	public void setMinSliderSize(int minSize)
+	{
+		// void gtk_range_set_min_slider_size (GtkRange *range,  gboolean min_size);
+		gtk_range_set_min_slider_size(gtkRange, minSize);
+	}
+	
+	/**
+	 * Sets whether the range's slider has a fixed size, or a size that
+	 * depends on it's adjustment's page size.
+	 * This function is useful mainly for GtkRange subclasses.
+	 * Since 2.20
+	 * Params:
+	 * sizeFixed = TRUE to make the slider size constant
+	 */
+	public void setSliderSizeFixed(int sizeFixed)
+	{
+		// void gtk_range_set_slider_size_fixed (GtkRange *range,  gboolean size_fixed);
+		gtk_range_set_slider_size_fixed(gtkRange, sizeFixed);
 	}
 }

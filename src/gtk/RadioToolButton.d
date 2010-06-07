@@ -131,7 +131,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Creates a new GtkRadioToolButton, adding it to group.
 	 * Since 2.4
 	 * Params:
-	 * group = An existing radio button group, or NULL if you are creating a new group
+	 * group = An existing radio button group, or NULL if you are creating a new group. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
@@ -151,7 +151,7 @@ public class RadioToolButton : ToggleToolButton
 	 * stock item indicated by stock_id.
 	 * Since 2.4
 	 * Params:
-	 * group = an existing radio button group, or NULL if you are creating a new group
+	 * group = an existing radio button group, or NULL if you are creating a new group. allow-none.
 	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

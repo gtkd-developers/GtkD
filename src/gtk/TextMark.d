@@ -145,7 +145,7 @@ public class TextMark : ObjectG
 	 * side of the text you're typing).
 	 * Since 2.12
 	 * Params:
-	 * name = mark name or NULL
+	 * name = mark name or NULL. allow-none.
 	 * leftGravity = whether the mark should have left gravity
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -211,7 +211,7 @@ public class TextMark : ObjectG
 	/**
 	 * Gets the buffer this mark is located inside,
 	 * or NULL if the mark is deleted.
-	 * Returns: the mark's GtkTextBuffer
+	 * Returns: the mark's GtkTextBuffer. transfer none.
 	 */
 	public TextBuffer getBuffer()
 	{

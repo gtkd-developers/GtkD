@@ -76,7 +76,25 @@ private import glib.Str;
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
  * Example  19.  Forcing entry to uppercase.
- * #include <ctype.h>
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  #include <ctype.h>
  * void
  * insert_text_handler (GtkEditable *editable,
  *  const gchar *text,
@@ -163,8 +181,8 @@ public interface EditableIF
 	 * selected both will be identical and FALSE will be returned.
 	 * Note that positions are specified in characters, not bytes.
 	 * Params:
-	 * startPos = location to store the starting position, or NULL
-	 * endPos = location to store the end position, or NULL
+	 * startPos = location to store the starting position, or NULL. out. allow-none.
+	 * endPos = location to store the end position, or NULL. out. allow-none.
 	 * Returns: TRUE if an area is selected, FALSE otherwise
 	 */
 	public int getSelectionBounds(int* startPos, int* endPos);
@@ -177,7 +195,7 @@ public interface EditableIF
 	 * Params:
 	 * newText = the text to append
 	 * newTextLength = the length of the text in bytes, or -1
-	 * position = location of the position text will be inserted at
+	 * position = location of the position text will be inserted at. in-out.
 	 */
 	public void insertText(string newText, int newTextLength, ref int position);
 	

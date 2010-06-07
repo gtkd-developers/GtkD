@@ -255,8 +255,8 @@ public class Action : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = the label displayed in menu items and on buttons, or NULL
-	 * tooltip = a tooltip for the action, or NULL
+	 * label = the label displayed in menu items and on buttons, or NULL. allow-none.
+	 * tooltip = a tooltip for the action, or NULL. allow-none.
 	 * stockId = the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -379,7 +379,7 @@ public class Action : ObjectG, BuildableIF
 	 * create icons displayed in the proxy widgets.
 	 * Since 2.4
 	 * Params:
-	 * iconSize = the size of the icon that should be created.
+	 * iconSize = the size of the icon that should be created.. type int
 	 * Returns: a widget that displays the icon for this action.
 	 */
 	public Widget createIcon(GtkIconSize iconSize)
@@ -481,7 +481,7 @@ public class Action : ObjectG, BuildableIF
 	 * Returns the proxy widgets for an action.
 	 * See also gtk_widget_get_action().
 	 * Since 2.4
-	 * Returns: a GSList of proxy widgets. The list is owned by GTK+and must not be modified.
+	 * Returns: a GSList of proxy widgets. The list is owned by GTK+and must not be modified.. element-type GtkWidget. transfer none GtkWidget.
 	 */
 	public ListSG getProxies()
 	{
@@ -581,6 +581,34 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Returns whether action's menu item proxies will ignore the
+	 * "gtk-menu-images" setting and always show their image,
+	 * if available.
+	 * Since 2.20
+	 * Returns: TRUE if the menu item proxies will always show their image
+	 */
+	public int getAlwaysShowImage()
+	{
+		// gboolean gtk_action_get_always_show_image (GtkAction *action);
+		return gtk_action_get_always_show_image(gtkAction);
+	}
+	
+	/**
+	 * Sets whether action's menu item proxies will ignore the
+	 * "gtk-menu-images" setting and always show their image, if available.
+	 * Use this if the menu item would be useless or hard to use
+	 * without their image.
+	 * Since 2.20
+	 * Params:
+	 * alwaysShow = TRUE if menuitem proxies should always show their image
+	 */
+	public void setAlwaysShowImage(int alwaysShow)
+	{
+		// void gtk_action_set_always_show_image (GtkAction *action,  gboolean always_show);
+		gtk_action_set_always_show_image(gtkAction, alwaysShow);
+	}
+	
+	/**
 	 * Returns the accel path for this action.
 	 * Since 2.6
 	 * Returns: the accel path for this action, or NULL if none is set. The returned string is owned by GTK+  and must not be freed or modified.
@@ -629,7 +657,7 @@ public class Action : ObjectG, BuildableIF
 	 * will be installed.
 	 * Since 2.4
 	 * Params:
-	 * accelGroup = a GtkAccelGroup or NULL
+	 * accelGroup = a GtkAccelGroup or NULL. allow-none.
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{

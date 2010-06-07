@@ -146,8 +146,8 @@ public class Misc : Widget
 	 * Gets the X and Y alignment of the widget within its allocation.
 	 * See gtk_misc_set_alignment().
 	 * Params:
-	 * xalign = location to store X alignment of misc, or NULL
-	 * yalign = location to store Y alignment of misc, or NULL
+	 * xalign = location to store X alignment of misc, or NULL. allow-none.
+	 * yalign = location to store Y alignment of misc, or NULL. allow-none.
 	 */
 	public void getAlignment(out float xalign, out float yalign)
 	{
@@ -159,8 +159,8 @@ public class Misc : Widget
 	 * Gets the padding in the X and Y directions of the widget.
 	 * See gtk_misc_set_padding().
 	 * Params:
-	 * xpad = location to store padding in the X direction, or NULL
-	 * ypad = location to store padding in the Y direction, or NULL
+	 * xpad = location to store padding in the X direction, or NULL. allow-none.
+	 * ypad = location to store padding in the Y direction, or NULL. allow-none.
 	 */
 	public void getPadding(out int xpad, out int ypad)
 	{

@@ -103,7 +103,27 @@ private import gtk.Dialog;
  * The GtkPrintUnixDialog implementation of the GtkBuildable interface exposes its
  * notebook internal children with the name "notebook".
  * Example  49.  A GtkPrintUnixDialog UI definition fragment.
- * <object class="GtkPrintUnixDialog" id="dialog1">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ *  <object class="GtkPrintUnixDialog" id="dialog1">
  *  <child internal-child="notebook">
  *  <object class="GtkNotebook" id="notebook">
  *  <child>
@@ -171,8 +191,8 @@ public class PrintUnixDialog : Dialog
 	 * Creates a new GtkPrintUnixDialog.
 	 * Since 2.10
 	 * Params:
-	 * title = Title of the dialog, or NULL
-	 * parent = Transient parent of the dialog, or NULL
+	 * title = Title of the dialog, or NULL. allow-none.
+	 * parent = Transient parent of the dialog, or NULL. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)
@@ -244,7 +264,7 @@ public class PrintUnixDialog : Dialog
 	 * operation before the print dialog is shown.
 	 * Since 2.10
 	 * Params:
-	 * settings = a GtkPrintSettings, or NULL
+	 * settings = a GtkPrintSettings, or NULL. allow-none.
 	 */
 	public void setPrintSettings(PrintSettings settings)
 	{

@@ -111,7 +111,28 @@ private import gobject.ObjectG;
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
  * Example  46.  The high-level printing API
- * static GtkPrintSettings *settings = NULL;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ *  static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
  * {
@@ -328,7 +349,48 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Emitted for every page that is printed. The signal handler
 	 * must render the page_nr's page onto the cairo context obtained
 	 * from context using gtk_print_context_get_cairo_context().
-	 * static void
+	 *
+	 *
+	 *
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
+	 * 21
+	 * 22
+	 * 23
+	 * 24
+	 * 25
+	 * 26
+	 * 27
+	 * 28
+	 * 29
+	 * 30
+	 * 31
+	 * 32
+	 * 33
+	 * 34
+	 * 35
+	 * 36
+	 * 37
+	 * 38
+	 *  static void
 	 * draw_page (GtkPrintOperation *operation,
 	 *  GtkPrintContext *context,
 	 *  gint page_nr,
@@ -366,6 +428,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		 *
 		 *  g_object_unref (layout);
 	 * }
+	 *
+	 *
+	 *
 	 * Use gtk_print_operation_set_use_full_page() and
 	 * gtk_print_operation_set_unit() before starting the print operation
 	 * to set up the transformation of the cairo context according to your
@@ -663,7 +728,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * to the "request-page-setup" signal.
 	 * Since 2.10
 	 * Params:
-	 * defaultPageSetup = a GtkPageSetup, or NULL
+	 * defaultPageSetup = a GtkPageSetup, or NULL. allow-none.
 	 */
 	public void setDefaultPageSetup(PageSetup defaultPageSetup)
 	{
@@ -694,7 +759,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * see gtk_print_operation_run().
 	 * Since 2.10
 	 * Params:
-	 * printSettings = GtkPrintSettings, or NULL
+	 * printSettings = GtkPrintSettings. allow-none.
 	 */
 	public void setPrintSettings(PrintSettings printSettings)
 	{
@@ -872,7 +937,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Sets the label for the tab holding custom widgets.
 	 * Since 2.10
 	 * Params:
-	 * label = the label to use, or NULL to use the default label
+	 * label = the label to use, or NULL to use the default label. allow-none.
 	 */
 	public void setCustomTabLabel(string label)
 	{
@@ -894,7 +959,42 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * "done" signal will be emitted with the result of the
 	 * operation when the it is done (i.e. when the dialog is canceled, or when
 	 * the print succeeds or fails).
-	 * if (settings != NULL)
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
+	 * 21
+	 * 22
+	 * 23
+	 * 24
+	 * 25
+	 * 26
+	 * 27
+	 * 28
+	 * 29
+	 * 30
+	 * 31
+	 * 32
+	 * 33
+	 * 34
+	 * 35
+	 *  if (settings != NULL)
 	 *  gtk_print_operation_set_print_settings (print, settings);
 	 * if (page_setup != NULL)
 	 *  gtk_print_operation_set_default_page_setup (print, page_setup);
@@ -930,7 +1030,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Since 2.10
 	 * Params:
 	 * action = the action to start
-	 * parent = Transient parent of the dialog, or NULL
+	 * parent = Transient parent of the dialog. allow-none.
 	 * Returns: the result of the print operation. A return value of  GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain  the used print settings with gtk_print_operation_get_print_settings()  and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the "done" signal when  done.
 	 * Throws: GException on failure.
 	 */
@@ -1117,8 +1217,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * a problem.
 	 * Since 2.10
 	 * Params:
-	 * parent = transient parent, or NULL
-	 * pageSetup = an existing GtkPageSetup, or NULL
+	 * parent = transient parent. allow-none.
+	 * pageSetup = an existing GtkPageSetup. allow-none.
 	 * settings = a GtkPrintSettings
 	 * Returns: a new GtkPageSetup
 	 */
@@ -1140,8 +1240,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * from a signal handler for the ::response signal of the dialog.
 	 * Since 2.10
 	 * Params:
-	 * parent = transient parent, or NULL
-	 * pageSetup = an existing GtkPageSetup, or NULL
+	 * parent = transient parent, or NULL. allow-none.
+	 * pageSetup = an existing GtkPageSetup, or NULL. allow-none.
 	 * settings = a GtkPrintSettings
 	 * doneCb = a function to call when the user saves the modified page setup
 	 * data = user data to pass to done_cb

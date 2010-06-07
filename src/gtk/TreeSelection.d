@@ -324,8 +324,8 @@ public class TreeSelection : ObjectG
 	 * with the current model as a convenience. This function will not work if you
 	 * use selection is GTK_SELECTION_MULTIPLE.
 	 * Params:
-	 * model = A pointer to set to the GtkTreeModel, or NULL.
-	 * iter = The GtkTreeIter, or NULL.
+	 * model = A pointer to set to the GtkTreeModel, or NULL.. out. allow-none.
+	 * iter = The GtkTreeIter, or NULL.. allow-none.
 	 * Returns: TRUE, if there is a selected node.
 	 */
 	public int getSelected(out TreeModelIF model, TreeIter iter)

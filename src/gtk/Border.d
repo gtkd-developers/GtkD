@@ -183,7 +183,7 @@ public class Border
 	
 	/**
 	 * Copies a GtkBorder structure.
-	 * Returns: a copy of border_.
+	 * Returns:a copy of border_.
 	 */
 	public Border copy()
 	{

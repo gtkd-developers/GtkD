@@ -1563,7 +1563,17 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 outFile: Assistant
 
-
+file: GtkOffscreenWindow.html
+struct: GtkOffscreenWindow
+class: OffscreenWindow
+prefix: gtk_offscreen_window_
+import: gdk.Pixmap
+structWrap: GdkPixmap* Pixmap
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: OffscreenWindow
 
 ###########################################################
 ### Display Widgets #######################################
@@ -1770,6 +1780,8 @@ class: Statusbar
 import: glib.Str
 prefix: gtk_statusbar_
 prefix: gtk_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 outFile: Statusbar
 
 file: GtkInfoBar.html
@@ -1957,6 +1969,13 @@ code: start
 	}
 code: end
 outFile: StatusIcon
+
+file: GtkSpinner.html
+struct: GtkSpinner
+ctorStruct: GtkWidget
+class: Spinner
+prefix: gtk_spinner_
+outFile: Spinner
 
 ###########################################################
 ### Buttons and Toggles ###################################
@@ -2385,6 +2404,8 @@ import: glib.Str
 import: gio.Icon
 import: gio.IconIF
 structWrap: GIcon* IconIF
+import: gdk.Window
+structWrap: GdkWindow* Window
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Adjustment
@@ -4641,6 +4662,12 @@ import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererToggle
 
+file: GtkCellRendererSpinner.html
+struct: GtkCellRendererSpinner
+ctorStruct: GtkCellRenderer
+class: CellRendererSpinner
+prefix: gtk_cell_renderer_spinner_
+outFile: CellRendererSpinner
 
 file:
 code: start
@@ -5580,7 +5607,7 @@ code: start
 code: end
 outFile: RadioMenuItem
 
-file: GtkCheckMenuItem.html
+file: gtk-gtkcheckmenuitem.html
 struct: GtkCheckMenuItem
 class: CheckMenuItem
 prefix: gtk_check_menu_item_
@@ -5640,10 +5667,22 @@ prefix: gtk_tearoff_menu_item_
 prefix: gtk_
 outFile: TearoffMenuItem
 
+file: GtkToolShell.html
+struct: GtkToolShell
+class: ToolShellT
+template: TStruct
+prefix: gtk_tool_shell_
+import: gtk.SizeGroup
+structWrap: GtkSizeGroup* SizeGroup
+alias: getStyle getToolbarStyle
+interface: ToolShellIF
+outFile: ToolShellT
+
 file: GtkToolbar.html
 struct: GtkToolbar
 class: Toolbar
 implements: OrientableIF
+implements: ToolShellIF
 prefix: gtk_toolbar_
 prefix: gtk_
 import: glib.Str
@@ -5657,6 +5696,10 @@ structWrap: GtkWidget* Widget
 import: gtk.OrientableIF
 import: gtk.OrientableT
 
+#imports for ToolShell Interface.
+import: gtk.ToolShellIF
+import: gtk.ToolShellT
+
 alias: getStyle toolbarGetStyle
 
 nocode: gtk_toolbar_insert
@@ -5664,6 +5707,9 @@ nocode: gtk_toolbar_insert
 code: start
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolbar);
+
+	// add the ToolShell capabilities
+	mixin ToolShellT!(GtkToolbar);
 
 	/**
 	 * Insert a GtkToolItem into the toolbar at position pos.
@@ -5723,6 +5769,8 @@ implements: ActivatableIF
 prefix: gtk_tool_item_
 prefix: gtk_
 import: glib.Str
+import: gtk.SizeGroup
+structWrap: GtkSizeGroup* SizeGroup
 import: gtk.Tooltips
 structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
@@ -5755,6 +5803,74 @@ code: start
 code: end
 
 outFile: ToolItem
+
+file: GtkToolPalette.html
+struct: GtkToolPalette
+ctorStruct: GtkWidget
+class: ToolPalette
+implements: BuildableIF
+implements: OrientableIF
+prefix: gtk_tool_palette_
+alias: getStyle getToolbarStyle
+import: glib.Str
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+#import: gtk.TargetEntry
+#structWrap: GtkTargetEntry* TargetEntry
+import: gtk.ToolItem
+structWrap: GtkToolItem* ToolItem
+import: gtk.ToolItemGroup
+structWrap: GtkToolItemGroup* ToolItemGroup
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToolPalette);
+
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkToolPalette);
+code: end
+outFile: ToolPalette
+
+file: GtkToolItemGroup.html
+struct: GtkToolItemGroup
+ctorStruct: GtkWidget
+class: ToolItemGroup
+implements: BuildableIF
+implements: ToolShellIF
+prefix: gtk_tool_item_group_
+alias: getStyle getToolbarStyle
+import: glib.Str
+import: gtk.ToolItem
+structWrap: GtkToolItem* ToolItem
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+#imports for ToolShell Interface.
+import: gtk.ToolShellIF
+import: gtk.ToolShellT
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToolItemGroup);
+
+	// add the ToolShell capabilities
+	mixin ToolShellT!(GtkToolItemGroup);
+code: end
+outFile: ToolItemGroup
 
 file: GtkSeparatorToolItem.html
 struct: GtkSeparatorToolItem
@@ -7163,6 +7279,11 @@ import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 import: gtk.PageSetup
 structWrap: GtkPageSetup* PageSetup
+
+out: gtk_print_context_get_hard_margins top
+out: gtk_print_context_get_hard_margins bottom
+out: gtk_print_context_get_hard_margins left
+out: gtk_print_context_get_hard_margins right
 outFile: PrintContext
 
 file: GtkPrintSettings.html
@@ -7225,6 +7346,11 @@ import: gtk.PageSetup
 structWrap: GtkPageSetup* PageSetup
 import: glib.ListG
 structWrap: GList* ListG
+
+out: gtk_printer_get_hard_margins top
+out: gtk_printer_get_hard_margins bottom
+out: gtk_printer_get_hard_margins left
+out: gtk_printer_get_hard_margins right
 outFile: Printer
 
 file: GtkPrintJob.html
@@ -7400,6 +7526,8 @@ class: Tooltip
 prefix: gtk_tooltip_
 prefix: gtk_
 import: glib.Str
+import: gio.IconIF
+structWrap: GIcon* IconIF
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdk.Display
@@ -7415,6 +7543,8 @@ struct: GtkViewport
 class: Viewport
 prefix: gtk_viewport_
 prefix: gtk_
+import: gdk.Window
+structWrap: GdkWindow* Window
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: Viewport
@@ -7632,6 +7762,8 @@ class: Paned
 implements: OrientableIF
 prefix: gtk_paned_
 prefix: gtk_
+import: gdk.Window
+structWrap: GdkWindow* Window
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
@@ -7658,8 +7790,13 @@ class: Range
 implements: OrientableIF
 prefix: gtk_range_
 prefix: gtk_
+import: gdk.Rectangle
+structWrap: GdkRectangle* Rectangle
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
+
+out: gtk_range_get_slider_range slider_start
+out: gtk_range_get_slider_range slider_end
 
 #imports for Orientable Interface.
 import: gtk.OrientableIF
@@ -7815,6 +7952,7 @@ out: gtk_widget_class_path path_length
 out: gtk_widget_class_path path
 out: gtk_widget_class_path path_reversed
 inout: gtk_widget_set_allocation allocation
+out: gtk_widget_get_requisition requisition
 
 code: start
 	// add the Buildable capabilities

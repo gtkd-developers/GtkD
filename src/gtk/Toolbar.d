@@ -36,6 +36,7 @@
  * extend  = 
  * implements:
  * 	- OrientableIF
+ * 	- ToolShellIF
  * prefixes:
  * 	- gtk_toolbar_
  * 	- gtk_
@@ -51,6 +52,8 @@
  * 	- gtk.ToolItem
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
+ * 	- gtk.ToolShellIF
+ * 	- gtk.ToolShellT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * 	- GtkWidget* -> Widget
@@ -76,6 +79,8 @@ private import gtk.Button;
 private import gtk.ToolItem;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
+private import gtk.ToolShellIF;
+private import gtk.ToolShellT;
 
 
 
@@ -96,7 +101,7 @@ private import gtk.Container;
  * Creating a context menu for the toolbar can be done by connecting to
  * the "popup-context-menu" signal.
  */
-public class Toolbar : Container, OrientableIF
+public class Toolbar : Container, OrientableIF, ToolShellIF
 {
 	
 	/** the main Gtk struct */
@@ -138,6 +143,9 @@ public class Toolbar : Container, OrientableIF
 	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolbar);
+	
+	// add the ToolShell capabilities
+	mixin ToolShellT!(GtkToolbar);
 	
 	/**
 	 * Insert a GtkToolItem into the toolbar at position pos.
@@ -195,6 +203,7 @@ public class Toolbar : Container, OrientableIF
 	/**
 	 * A keybinding signal used internally by GTK+. This signal can't
 	 * be used in application code
+	 * TRUE if the first item should be focused
 	 */
 	void addOnFocusHomeOrEnd(bool delegate(gboolean, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -404,7 +413,7 @@ public class Toolbar : Container, OrientableIF
 	 * toolbar.
 	 * Since 2.4
 	 * Params:
-	 * toolItem = a GtkToolItem, or NULL to turn of highlighting
+	 * toolItem = a GtkToolItem, or NULL to turn of highlighting. allow-none.
 	 * index = a position on toolbar
 	 */
 	public void setDropHighlightItem(ToolItem toolItem, int index)
@@ -505,7 +514,7 @@ public class Toolbar : Container, OrientableIF
 	
 	/**
 	 * Retrieves the icon size for the toolbar. See gtk_toolbar_set_icon_size().
-	 * Returns: the current icon size for the icons on the toolbar.
+	 * Returns: the current icon size for the icons onthe toolbar.. type int
 	 */
 	public GtkIconSize getIconSize()
 	{
@@ -667,7 +676,7 @@ public class Toolbar : Container, OrientableIF
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * type = a value of type GtkToolbarChildType that determines what widget will be.
-	 * widget = a GtkWidget, or NULL.
+	 * widget = a GtkWidget, or NULL.. allow-none.
 	 * text = the element's label.
 	 * tooltipText = the element's tooltip.
 	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
@@ -699,7 +708,7 @@ public class Toolbar : Container, OrientableIF
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * type = a value of type GtkToolbarChildType that determines what widget will be.
-	 * widget = a GtkWidget, or NULL
+	 * widget = a GtkWidget, or NULL. allow-none.
 	 * text = the element's label.
 	 * tooltipText = the element's tooltip.
 	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
@@ -732,7 +741,7 @@ public class Toolbar : Container, OrientableIF
 	 * Params:
 	 * type = a value of type GtkToolbarChildType that determines what widget
 	 *  will be.
-	 * widget = a GtkWidget, or NULL.
+	 * widget = a GtkWidget, or NULL. . allow-none.
 	 * text = the element's label.
 	 * tooltipText = the element's tooltip.
 	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
@@ -759,8 +768,8 @@ public class Toolbar : Container, OrientableIF
 	 * Adds a widget to the end of the given toolbar.
 	 * Params:
 	 * widget = a GtkWidget to add to the toolbar.
-	 * tooltipText = the element's tooltip.
-	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * tooltipText = the element's tooltip.. allow-none.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.. allow-none.
 	 */
 	public void appendWidget(Widget widget, string tooltipText, string tooltipPrivateText)
 	{
@@ -774,8 +783,8 @@ public class Toolbar : Container, OrientableIF
 	 * Adds a widget to the beginning of the given toolbar.
 	 * Params:
 	 * widget = a GtkWidget to add to the toolbar.
-	 * tooltipText = the element's tooltip.
-	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * tooltipText = the element's tooltip.. allow-none.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.. allow-none.
 	 */
 	public void prependWidget(Widget widget, string tooltipText, string tooltipPrivateText)
 	{
@@ -789,8 +798,8 @@ public class Toolbar : Container, OrientableIF
 	 * Inserts a widget in the toolbar at the given position.
 	 * Params:
 	 * widget = a GtkWidget to add to the toolbar.
-	 * tooltipText = the element's tooltip.
-	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.
+	 * tooltipText = the element's tooltip.. allow-none.
+	 * tooltipPrivateText = used for context-sensitive help about this toolbar element.. allow-none.
 	 * position = the number of widgets to insert this widget after.
 	 */
 	public void insertWidget(Widget widget, string tooltipText, string tooltipPrivateText, int position)
@@ -848,7 +857,8 @@ public class Toolbar : Container, OrientableIF
 	 * application toolbars should respect the user preferences for the
 	 * size of icons.
 	 * Params:
-	 * iconSize = The GtkIconSize that stock icons in the toolbar shall have.
+	 * iconSize = The GtkIconSize that stock icons in the
+	 *  toolbar shall have.. type int
 	 */
 	public void setIconSize(GtkIconSize iconSize)
 	{

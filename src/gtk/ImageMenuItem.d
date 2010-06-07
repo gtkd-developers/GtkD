@@ -187,7 +187,7 @@ public class ImageMenuItem : MenuItem
 	 * Note that it depends on the show-menu-images setting whether
 	 * the image will be displayed or not.
 	 * Params:
-	 * image = a widget to set as the image for the menu item.
+	 * image = a widget to set as the image for the menu item.. allow-none.
 	 */
 	public void setImage(Widget image)
 	{
@@ -198,7 +198,7 @@ public class ImageMenuItem : MenuItem
 	/**
 	 * Gets the widget that is currently set as the image of image_menu_item.
 	 * See gtk_image_menu_item_set_image().
-	 * Returns: the widget set as image of image_menu_item.
+	 * Returns:the widget set as image of image_menu_item.
 	 */
 	public Widget getImage()
 	{

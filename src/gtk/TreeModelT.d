@@ -146,7 +146,26 @@ public import gobject.Value;
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
  * Example  20.  Acquiring a GtkTreeIter
- * /+* Three ways of getting the iter pointing to the location
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ *  /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
 	 *  GtkTreePath *path;
@@ -171,7 +190,43 @@ public import gobject.Value;
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
  * Example  21.  Reading data from a GtkTreeModel
- * enum
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ *  enum
  * {
 	 *  STRING_COLUMN,
 	 *  INT_COLUMN,
@@ -432,11 +487,11 @@ public template TreeModelT(TStruct)
 		}
 		_onRowsReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreeModelIF treeModelIF)
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer newOrder, TreeModelIF treeModelIF)
 	{
 		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg ; treeModelIF.onRowsReorderedListeners )
 		{
-			dlg(new TreePath(path), new TreeIter(iter), arg3, treeModelIF);
+			dlg(new TreePath(path), new TreeIter(iter), newOrder, treeModelIF);
 		}
 	}
 	
@@ -527,7 +582,7 @@ public template TreeModelT(TStruct)
 	 * Params:
 	 * iter = The GtkTreeIter.
 	 * column = The column to lookup the value at.
-	 * value = An empty GValue to set.
+	 * value = (inout) (transfer none) An empty GValue to set.
 	 */
 	public void getValue(TreeIter iter, int column, Value value)
 	{
@@ -556,7 +611,7 @@ public template TreeModelT(TStruct)
 	 * gtk_tree_model_get_iter_first (tree_model, iter);
 	 * Params:
 	 * iter = The new GtkTreeIter to be set to the child.
-	 * parent = The GtkTreeIter, or NULL
+	 * parent = The GtkTreeIter, or NULL. allow-none.
 	 * Returns: TRUE, if child has been set to the first child.
 	 */
 	public int iterChildren(TreeIter iter, TreeIter parent)
@@ -581,7 +636,7 @@ public template TreeModelT(TStruct)
 	 * Returns the number of children that iter has. As a special case, if iter
 	 * is NULL, then the number of toplevel nodes is returned.
 	 * Params:
-	 * iter = The GtkTreeIter, or NULL.
+	 * iter = The GtkTreeIter, or NULL.. allow-none.
 	 * Returns: The number of children of iter.
 	 */
 	public int iterNChildren(TreeIter iter)
@@ -598,7 +653,7 @@ public template TreeModelT(TStruct)
 	 * NULL, then the nth root node is set.
 	 * Params:
 	 * iter = The GtkTreeIter to set to the nth child.
-	 * parent = The GtkTreeIter to get the child from, or NULL.
+	 * parent = The GtkTreeIter to get the child from, or NULL.. allow-none.
 	 * n = Then index of the desired child.
 	 * Returns: TRUE, if parent has an nth child.
 	 */

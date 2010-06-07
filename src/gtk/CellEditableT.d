@@ -171,7 +171,7 @@ public template CellEditableT(TStruct)
 	 * the editing process. It may be NULL, in the instance that editing was
 	 * initiated through programatic means.
 	 * Params:
-	 * event = A GdkEvent, or NULL
+	 * event = A GdkEvent, or NULL. allow-none.
 	 */
 	public void startEditing(Event event)
 	{

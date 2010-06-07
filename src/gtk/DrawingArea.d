@@ -85,11 +85,26 @@ private import gtk.Widget;
  * to the background color before sending the expose event, and
  * that drawing is implicitly clipped to the exposed area.
  * Example  50.  Simple GtkDrawingArea usage.
- * gboolean
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ *  gboolean
  * expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
  * {
 	 *  gdk_draw_arc (widget->window,
-	 *  widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+	 *  widget->style->fg_gc[gtk_widget_get_state (widget)],
 	 *  TRUE,
 	 *  0, 0, widget->allocation.width, widget->allocation.height,
 	 *  0, 64 * 360);

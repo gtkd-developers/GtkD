@@ -80,7 +80,25 @@ private import gtk.Entry;
  * The main properties of a GtkSpinButton are through a GtkAdjustment. See the
  * GtkAdjustment section for more details about an adjustment's properties.
  * Example  17.  Using a GtkSpinButton to get an integer.
- * /+* Provides a function to retrieve an integer value from a GtkSpinButton
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  /+* Provides a function to retrieve an integer value from a GtkSpinButton
  *  * and creates a spin button to model percentage values.
  *  +/
  * gint grab_int_value (GtkSpinButton *a_spinner, gpointer user_data) {
@@ -99,7 +117,25 @@ private import gtk.Entry;
 	 *  return;
  * }
  * Example  18.  Using a GtkSpinButton to get a floating point value.
- * /+* Provides a function to retrieve a floating point value from a
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  /+* Provides a function to retrieve a floating point value from a
  *  * GtkSpinButton, and creates a high precision spin button.
  *  +/
  * gfloat grab_int_value (GtkSpinButton *a_spinner, gpointer user_data) {
@@ -218,7 +254,26 @@ public class SpinButton : Entry
 	/**
 	 * The ::output signal can be used to change to formatting
 	 * of the value that is displayed in the spin buttons entry.
-	 * /+* show leading zeros +/
+	 *
+	 *
+	 *
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 *  /+* show leading zeros +/
 	 * static gboolean
 	 * on_output (GtkSpinButton *spin,
 	 *  gpointer data)
@@ -234,6 +289,9 @@ public class SpinButton : Entry
 		 *
 		 *  return TRUE;
 	 * }
+	 *
+	 *
+	 *
 	 */
 	void addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -323,9 +381,10 @@ public class SpinButton : Entry
 	
 	
 	/**
-	 * Changes the properties of an existing spin button. The adjustment, climb rate, and number of decimal places are all changed accordingly, after this function call.
+	 * Changes the properties of an existing spin button. The adjustment, climb rate,
+	 * and number of decimal places are all changed accordingly, after this function call.
 	 * Params:
-	 * adjustment = a GtkAdjustment.
+	 * adjustment = a GtkAdjustment.. allow-none.
 	 * climbRate = the new climb rate.
 	 * digits = the number of decimal places to display in the spin button.
 	 */
@@ -548,8 +607,8 @@ public class SpinButton : Entry
 	 * Gets the current step and page the increments used by spin_button. See
 	 * gtk_spin_button_set_increments().
 	 * Params:
-	 * step = location to store step increment, or NULL
-	 * page = location to store page increment, or NULL
+	 * step = location to store step increment, or NULL. allow-none.
+	 * page = location to store page increment, or NULL. allow-none.
 	 */
 	public void getIncrements(out double step, out double page)
 	{
@@ -572,8 +631,8 @@ public class SpinButton : Entry
 	 * Gets the range allowed for spin_button. See
 	 * gtk_spin_button_set_range().
 	 * Params:
-	 * min = location to store minimum allowed value, or NULL
-	 * max = location to store maximum allowed value, or NULL
+	 * min = location to store minimum allowed value, or NULL. allow-none.
+	 * max = location to store maximum allowed value, or NULL. allow-none.
 	 */
 	public void getRange(out double min, out double max)
 	{

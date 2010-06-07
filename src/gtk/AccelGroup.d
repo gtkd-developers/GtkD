@@ -266,9 +266,11 @@ public class AccelGroup : ObjectG
 	/**
 	 * Removes an accelerator previously installed through
 	 * gtk_accel_group_connect().
+	 * Since 2.20 closure can be NULL.
 	 * Params:
-	 * closure = the closure to remove from this accelerator group
-	 * Returns: TRUE if the closure was found and got disconnected
+	 * closure = the closure to remove from this accelerator group, or NULL
+	 *  to remove all closures. allow-none.
+	 * Returns:TRUE if the closure was found and got disconnected
 	 */
 	public int disconnect(Closure closure)
 	{
@@ -282,7 +284,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
-	 * Returns: TRUE if there was an accelerator which could be  removed, FALSE otherwise
+	 * Returns:TRUE if there was an accelerator which could be  removed, FALSE otherwise
 	 */
 	public int disconnectKey(uint accelKey, GdkModifierType accelMods)
 	{
@@ -296,7 +298,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
-	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed.
+	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed. . allow-none.
 	 */
 	public GtkAccelGroupEntry[] query(uint accelKey, GdkModifierType accelMods)
 	{
@@ -365,7 +367,7 @@ public class AccelGroup : ObjectG
 	 * see gtk_accel_group_connect().
 	 * Params:
 	 * closure = a GClosure
-	 * Returns: the GtkAccelGroup to which closure is connected, or NULL.
+	 * Returns: the GtkAccelGroup to which closure is connected, or NULL.. allow-none.
 	 */
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
@@ -411,7 +413,7 @@ public class AccelGroup : ObjectG
 	 * Gets a list of all accel groups which are attached to object.
 	 * Params:
 	 * object = a GObject, usually a GtkWindow
-	 * Returns: a list of all accel groups which are attached to object
+	 * Returns: a list of all accel groups which are attached to object. element-type GtkAccelGroup. transfer none GtkAccelGroup.
 	 */
 	public static ListSG accelGroupsFromObject(ObjectG object)
 	{
@@ -430,7 +432,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * findFunc = a function to filter the entries of accel_group with
 	 * data = data to pass to find_func
-	 * Returns: the key of the first entry passing find_func. The key is owned by GTK+ and must not be freed.
+	 * Returns:the key of the first entry passing find_func. The key is owned by GTK+ and must not be freed.
 	 */
 	public GtkAccelKey* find(GtkAccelGroupFindFunc findFunc, void* data)
 	{
@@ -447,7 +449,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * keyval = a GDK keyval
 	 * modifiers = modifier mask
-	 * Returns: TRUE if the accelerator is valid
+	 * Returns:TRUE if the accelerator is valid
 	 */
 	public static int acceleratorValid(uint keyval, GdkModifierType modifiers)
 	{
@@ -529,7 +531,7 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 * Gets the value set by gtk_accelerator_set_default_mod_mask().
-	 * Returns: the default accelerator modifier mask
+	 * Returns:the default accelerator modifier mask
 	 */
 	public static uint acceleratorGetDefaultModMask()
 	{

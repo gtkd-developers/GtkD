@@ -82,7 +82,7 @@ private import gdk.Pixbuf;
  * GtkIconTheme provides a facility for looking up icons by name
  * and size. The main reason for using a name rather than simply
  * providing a filename is to allow different icons to be used
- * depending on what icon theme is selecetd
+ * depending on what icon theme is selected
  * by the user. The operation of icon themes on Linux and Unix
  * follows the Icon
  * Theme Specification. There is a default icon theme,
@@ -121,7 +121,26 @@ private import gdk.Pixbuf;
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
  * being used, looking up an icon can be as simple as:
- * GError *error = NULL;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ *  GError *error = NULL;
  * GtkIconTheme *icon_theme;
  * GdkPixbuf *pixbuf;
  * icon_theme = gtk_icon_theme_get_default ();
@@ -291,7 +310,7 @@ public class IconInfo
 	 * GTK_ICON_LOOKUP_USE_BUILTIN to
 	 * gtk_icon_theme_lookup_icon().
 	 * Since 2.4
-	 * Returns: the built-in image pixbuf, or NULL. No extra reference is added to the returned pixbuf, so if you want to keep it around, you must use g_object_ref(). The returned image must not be modified.
+	 * Returns: the built-in image pixbuf, or NULL. No extra reference is added to the returned pixbuf, so if you want to keep it around, you must use g_object_ref(). The returned image must not be modified.. transfer none.
 	 */
 	public Pixbuf getBuiltinPixbuf()
 	{
@@ -390,7 +409,7 @@ public class IconInfo
 	 * Since 2.4
 	 * Params:
 	 * points = location to store pointer to an array of points, or NULL
-	 *  free the array of points with g_free().
+	 *  free the array of points with g_free().. allow-none. out.
 	 * Returns: TRUE if there are any attach points for the icon.
 	 */
 	public int getAttachPoints(out GdkPoint[] points)

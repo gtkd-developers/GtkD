@@ -179,7 +179,7 @@ public class EntryBuffer : ObjectG
 	 * Optionally, specify initial text to set in the buffer.
 	 * Since 2.18
 	 * Params:
-	 * initialChars = initial buffer text, or NULL
+	 * initialChars = initial buffer text, or NULL. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (char[] initialChars)

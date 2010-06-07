@@ -114,7 +114,25 @@ private import gdk.Threads;
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
  * Example  2.  Typical main function for a GTK+ application
- * int
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  int
  * main (int argc, char **argv)
  * {
 	 *  /+* Initialize i18n support +/
@@ -240,7 +258,7 @@ public class Main
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_init(), or gtk_init_check().
 	 * Params:
-	 * argv = a pointer to the array of command line arguments.
+	 * argv = a pointer to the array of command line arguments.. array. inout.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
 	public static int parseArgs(ref string[] argv)
@@ -277,12 +295,11 @@ public class Main
 	 * handle SIGPIPE for some reason, reset the handler after gtk_init(),
 	 * but notice that other libraries (e.g. libdbus or gvfs) might do
 	 * similar things.
-	 * Note
 	 * Params:
 	 * argc = Address of the argc parameter of your
-	 *  main() function. Changed if any arguments were handled.
+	 *  main() function. Changed if any arguments were handled.. inout.
 	 * argv = Address of the argv parameter of main().
-	 *  Any parameters understood by gtk_init() are stripped before return.
+	 *  Any parameters understood by gtk_init() are stripped before return.. array length=argc. inout length=argc. allow-none length=argc.
 	 */
 	public static void init(int* argc, char*** argv)
 	{
@@ -298,7 +315,7 @@ public class Main
 	 * with the user - for example a curses or command line interface.
 	 * Params:
 	 * argv = Address of the argv parameter of main().
-	 *  Any parameters understood by gtk_init() are stripped before return.
+	 *  Any parameters understood by gtk_init() are stripped before return.. array length=argc. inout length=argc. allow-none length=argc.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
 	public static int initCheck(ref string[] argv)
@@ -335,7 +352,7 @@ public class Main
 	 */
 	public static int initWithArgs(ref string[] argv, string parameterString, GOptionEntry[] entries, string translationDomain)
 	{
-		// gboolean gtk_init_with_args (int *argc,  char ***argv,  char *parameter_string,  GOptionEntry *entries,  char *translation_domain,  GError **error);
+		// gboolean gtk_init_with_args (int *argc,  char ***argv,  const char *parameter_string,  GOptionEntry *entries,  const char *translation_domain,  GError **error);
 		char** outargv = Str.toStringzArray(argv);
 		int argc;
 		GError* err = null;
@@ -388,13 +405,19 @@ public class Main
 	 * Checks if any events are pending. This can be used to update the GUI
 	 * and invoke timeouts etc. while doing some time intensive computation.
 	 * Example  3.  Updating the GUI during a long computation.
-	 * 	/+* computation going on +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 *  /+* computation going on +/
 	 * ...
 	 *  while (gtk_events_pending ())
-	 * 	 gtk_main_iteration ();
+	 *  gtk_main_iteration ();
 	 * ...
-	 * 	/+* computation continued +/
-	 * Returns:%TRUE if any events are pending, FALSE otherwise.
+	 * /+* computation continued +/
+	 * Returns:TRUE if any events are pending, FALSE otherwise.
 	 */
 	public static int eventsPending()
 	{
@@ -439,7 +462,7 @@ public class Main
 	 * processed GTK+ will block until the next event is noticed. If you don't
 	 * want to block look at gtk_main_iteration_do() or check if any events are
 	 * pending with gtk_events_pending() first.
-	 * Returns:%TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int iteration()
 	{
@@ -451,8 +474,8 @@ public class Main
 	 * Runs a single iteration of the mainloop. If no events are available either
 	 * return or block dependent on the value of blocking.
 	 * Params:
-	 * blocking = %TRUE if you want GTK+ to block if no events are pending.
-	 * Returns:%TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * blocking = TRUE if you want GTK+ to block if no events are pending.
+	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int iterationDo(int blocking)
 	{

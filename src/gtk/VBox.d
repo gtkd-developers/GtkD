@@ -64,7 +64,7 @@ private import gtk.Box;
 
 /**
  * Description
- * GtkVBox is a container that organizes child widgets into a single column.
+ * A GtkVBox is a container that organizes child widgets into a single column.
  * Use the GtkBox packing interface to determine the arrangement,
  * spacing, height, and alignment of GtkVBox children.
  * All children are allocated the same width.
@@ -115,7 +115,7 @@ public class VBox : Box
 	/**
 	 * Creates a new GtkVBox.
 	 * Params:
-	 * homogeneous = %TRUE if all children are to be given equal space allotments.
+	 * homogeneous = TRUE if all children are to be given equal space allotments.
 	 * spacing = the number of pixels to place by default between children.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

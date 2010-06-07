@@ -120,7 +120,7 @@ public class Bin : Container
 	 * Gets the child of the GtkBin, or NULL if the bin contains
 	 * no child widget. The returned widget does not have a reference
 	 * added, so you do not need to unref it.
-	 * Returns: pointer to child of the GtkBin
+	 * Returns: pointer to child of the GtkBin. transfer none.
 	 */
 	public Widget getChild()
 	{

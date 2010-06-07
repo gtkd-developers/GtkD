@@ -83,7 +83,17 @@ private import gtk.CheckMenuItem;
  * The correct way to create a group of radio menu items is approximatively
  * this:
  * Example  32.  How to create a group of radio menu items.
- * GSList *group = NULL;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ *  GSList *group = NULL;
  * GtkWidget *item;
  * gint i;
  * for (i = 0; i < 5; i++)

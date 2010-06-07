@@ -379,6 +379,7 @@ public class TextView : Container
 	 * Home/End keys move to the ends of the buffer
 	 * PageUp/PageDown keys move vertically by pages
 	 * Ctrl-PageUp/PageDown keys move horizontally by pages
+	 * TRUE if the move should extend the selection
 	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -444,6 +445,7 @@ public class TextView : Container
 	 * This signal should not be used anymore, instead use the
 	 * "move-cursor" signal with the GTK_MOVEMENT_HORIZONTAL_PAGES
 	 * granularity.
+	 * TRUE if the move should extend the selection
 	 */
 	void addOnPageHorizontally(void delegate(gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -530,6 +532,38 @@ public class TextView : Container
 		}
 	}
 	
+	void delegate(string, TextView)[] onPreeditChangedListeners;
+	/**
+	 * If an input method is used, the typed text will not immediately
+	 * be committed to the buffer. So if you are interested in the text,
+	 * connect to this signal.
+	 * This signal is only emitted if the text at the given position
+	 * is actually editable.
+	 * Since 2.20
+	 */
+	void addOnPreeditChanged(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("preedit-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"preedit-changed",
+			cast(GCallback)&callBackPreeditChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["preedit-changed"] = 1;
+		}
+		onPreeditChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextView textView)
+	{
+		foreach ( void delegate(string, TextView) dlg ; textView.onPreeditChangedListeners )
+		{
+			dlg(Str.toString(preedit), textView);
+		}
+	}
+	
 	void delegate(gboolean, TextView)[] onSelectAllListeners;
 	/**
 	 * The ::select-all signal is a
@@ -538,6 +572,7 @@ public class TextView : Container
 	 * contents of the text view.
 	 * The default bindings for this signal are Ctrl-a and Ctrl-/
 	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
+	 * TRUE to select, FALSE to unselect
 	 */
 	void addOnSelectAll(void delegate(gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -733,7 +768,7 @@ public class TextView : Container
 	 * to this function, you must remove that reference yourself; GtkTextView
 	 * will not "adopt" it.
 	 * Params:
-	 * buffer = a GtkTextBuffer
+	 * buffer = a GtkTextBuffer. allow-none.
 	 */
 	public void setBuffer(TextBuffer buffer)
 	{
@@ -745,7 +780,7 @@ public class TextView : Container
 	 * Returns the GtkTextBuffer being displayed by this text view.
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won't own a new reference.
-	 * Returns: a GtkTextBuffer
+	 * Returns: a GtkTextBuffer. transfer none.
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -993,7 +1028,7 @@ public class TextView : Container
 	 * realized.
 	 * Params:
 	 * win = window to get
-	 * Returns: a GdkWindow, or NULL
+	 * Returns: a GdkWindow, or NULL. transfer none.
 	 */
 	public Window getWindow(GtkTextWindowType win)
 	{

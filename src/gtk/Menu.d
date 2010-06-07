@@ -94,11 +94,38 @@ private import gtk.MenuShell;
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
  * Example  29.  Connecting the popup signal handler.
+ *  1
+ * 2
+ * 3
  *  /+* connect our handler which will popup the menu +/
- *  g_signal_connect_swapped (window, "button_press_event",
+ * g_signal_connect_swapped (window, "button_press_event",
  * 	G_CALLBACK (my_popup_handler), menu);
  * Example  30.  Signal handler which displays a popup menu.
- * static gint
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ *  static gint
  * my_popup_handler (GtkWidget *widget, GdkEvent *event)
  * {
 	 *  GtkMenu *menu;
@@ -259,7 +286,7 @@ public class Menu : MenuShell
 	 * Since 2.2
 	 * Params:
 	 * screen = a GdkScreen, or NULL if the screen should be
-	 *  determined by the widget the menu is attached to.
+	 *  determined by the widget the menu is attached to.. allow-none.
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -318,10 +345,10 @@ public class Menu : MenuShell
 	 * Only if no such event is available, gtk_get_current_event_time() can
 	 * be used instead.
 	 * Params:
-	 * parentMenuShell = the menu shell containing the triggering menu item, or NULL
-	 * parentMenuItem = the menu item whose activation triggered the popup, or NULL
-	 * func = a user supplied function used to position the menu, or NULL
-	 * data = user supplied data to be passed to func.
+	 * parentMenuShell = the menu shell containing the triggering menu item, or NULL. allow-none.
+	 * parentMenuItem = the menu item whose activation triggered the popup, or NULL. allow-none.
+	 * func = a user supplied function used to position the menu, or NULL. allow-none.
+	 * data = user supplied data to be passed to func.. allow-none.
 	 * button = the mouse button which was pressed to initiate the event.
 	 * activateTime = the time at which the activation event occurred.
 	 */
@@ -337,7 +364,7 @@ public class Menu : MenuShell
 	 * this menu is being used in with gtk_window_add_accel_group(), in order
 	 * for those windows to support all the accelerators contained in this group.
 	 * Params:
-	 * accelGroup = the GtkAccelGroup to be associated with the menu.
+	 * accelGroup = . allow-none.
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{
@@ -373,7 +400,7 @@ public class Menu : MenuShell
 	 * menu items "New" and "Exit", will, after
 	 * gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File");
 	 * Params:
-	 * accelPath = a valid accelerator path
+	 * accelPath = a valid accelerator path. allow-none.
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -589,7 +616,7 @@ public class Menu : MenuShell
 	 * Since 2.6
 	 * Params:
 	 * widget = a GtkWidget
-	 * Returns: the list of menus attached to his widget.
+	 * Returns: the list of menus attached to his widget.. element-type GtkWidget. transfer none GtkWidget.
 	 */
 	public static ListG getForAttachWidget(Widget widget)
 	{

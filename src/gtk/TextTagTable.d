@@ -249,7 +249,7 @@ public class TextTagTable : ObjectG
 	 * Params:
 	 * table = a GtkTextTagTable
 	 * name = name of a tag
-	 * Returns: The tag, or NULL if none by that name is in the table.
+	 * Returns: The tag, or NULL if none by that name is in the table.. transfer none.
 	 */
 	public TextTag tableLookup(string name)
 	{

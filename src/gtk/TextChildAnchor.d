@@ -288,6 +288,7 @@ public class TextChildAnchor
 	 * Home/End keys move to the ends of the buffer
 	 * PageUp/PageDown keys move vertically by pages
 	 * Ctrl-PageUp/PageDown keys move horizontally by pages
+	 * TRUE if the move should extend the selection
 	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -353,6 +354,7 @@ public class TextChildAnchor
 	 * This signal should not be used anymore, instead use the
 	 * "move-cursor" signal with the GTK_MOVEMENT_HORIZONTAL_PAGES
 	 * granularity.
+	 * TRUE if the move should extend the selection
 	 */
 	void addOnPageHorizontally(void delegate(gint, gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -439,6 +441,38 @@ public class TextChildAnchor
 		}
 	}
 	
+	void delegate(string, TextChildAnchor)[] onPreeditChangedListeners;
+	/**
+	 * If an input method is used, the typed text will not immediately
+	 * be committed to the buffer. So if you are interested in the text,
+	 * connect to this signal.
+	 * This signal is only emitted if the text at the given position
+	 * is actually editable.
+	 * Since 2.20
+	 */
+	void addOnPreeditChanged(void delegate(string, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("preedit-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"preedit-changed",
+			cast(GCallback)&callBackPreeditChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["preedit-changed"] = 1;
+		}
+		onPreeditChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextChildAnchor textChildAnchor)
+	{
+		foreach ( void delegate(string, TextChildAnchor) dlg ; textChildAnchor.onPreeditChangedListeners )
+		{
+			dlg(Str.toString(preedit), textChildAnchor);
+		}
+	}
+	
 	void delegate(gboolean, TextChildAnchor)[] onSelectAllListeners;
 	/**
 	 * The ::select-all signal is a
@@ -447,6 +481,7 @@ public class TextChildAnchor
 	 * contents of the text view.
 	 * The default bindings for this signal are Ctrl-a and Ctrl-/
 	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
+	 * TRUE to select, FALSE to unselect
 	 */
 	void addOnSelectAll(void delegate(gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -616,7 +651,7 @@ public class TextChildAnchor
 	/**
 	 * Gets a list of all widgets anchored at this child anchor.
 	 * The returned list should be freed with g_list_free().
-	 * Returns: list of widgets anchored at anchor
+	 * Returns: list of widgets anchored at anchor. element-type GtkWidget. transfer container GtkWidget.
 	 */
 	public ListG getWidgets()
 	{

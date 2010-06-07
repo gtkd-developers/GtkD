@@ -100,7 +100,28 @@ private import gtk.PrintSettings;
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
  * Example  46.  The high-level printing API
- * static GtkPrintSettings *settings = NULL;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ *  static GtkPrintSettings *settings = NULL;
  * static void
  * do_print (void)
  * {

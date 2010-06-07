@@ -190,13 +190,31 @@ public class CellRenderer : ObjectGtk
 	void delegate(CellEditableIF, string, CellRenderer)[] onEditingStartedListeners;
 	/**
 	 * This signal gets emitted when a cell starts to be edited.
-	 * The indended use of this signal is to do special setup
+	 * The intended use of this signal is to do special setup
 	 * on editable, e.g. adding a GtkEntryCompletion or setting
 	 * up additional columns in a GtkComboBox.
 	 * Note that GTK+ doesn't guarantee that cell renderers will
 	 * continue to use the same kind of widget for editing in future
 	 * releases, therefore you should check the type of editable
-	 * static void
+	 *
+	 *
+	 *
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 *  static void
 	 * text_editing_started (GtkCellRenderer *cell,
 	 *  GtkCellEditable *editable,
 	 *  const gchar *path,
@@ -211,6 +229,9 @@ public class CellRenderer : ObjectGtk
 			 *  gtk_entry_set_completion (entry, completion);
 		 *  }
 	 * }
+	 *
+	 *
+	 *
 	 * Since 2.6
 	 * See Also
 	 * GtkCellRendererText,GtkCellRendererPixbuf,GtkCellRendererToggle
@@ -249,11 +270,11 @@ public class CellRenderer : ObjectGtk
 	 * Params:
 	 * cell = a GtkCellRenderer
 	 * widget = the widget the renderer is rendering to
-	 * cellArea = The area a cell will be allocated, or NULL
-	 * xOffset = location to return x offset of cell relative to cell_area, or NULL
-	 * yOffset = location to return y offset of cell relative to cell_area, or NULL
-	 * width = location to return width needed to render a cell, or NULL
-	 * height = location to return height needed to render a cell, or NULL
+	 * cellArea = The area a cell will be allocated, or NULL. allow-none.
+	 * xOffset = location to return x offset of cell relative to cell_area, or NULL. allow-none.
+	 * yOffset = location to return y offset of cell relative to cell_area, or NULL. allow-none.
+	 * width = location to return width needed to render a cell, or NULL. allow-none.
+	 * height = location to return height needed to render a cell, or NULL. allow-none.
 	 */
 	public void getSize(Widget widget, Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
@@ -366,8 +387,8 @@ public class CellRenderer : ObjectGtk
 	/**
 	 * Fills in width and height with the appropriate size of cell.
 	 * Params:
-	 * width = location to fill in with the fixed width of the cell, or NULL
-	 * height = location to fill in with the fixed height of the cell, or NULL
+	 * width = location to fill in with the fixed width of the cell, or NULL. allow-none.
+	 * height = location to fill in with the fixed height of the cell, or NULL. allow-none.
 	 */
 	public void getFixedSize(out int width, out int height)
 	{
@@ -437,8 +458,8 @@ public class CellRenderer : ObjectGtk
 	 * Fills in xalign and yalign with the appropriate values of cell.
 	 * Since 2.18
 	 * Params:
-	 * xalign = location to fill in with the x alignment of the cell, or NULL
-	 * yalign = location to fill in with the y alignment of the cell, or NULL
+	 * xalign = location to fill in with the x alignment of the cell, or NULL. allow-none.
+	 * yalign = location to fill in with the y alignment of the cell, or NULL. allow-none.
 	 */
 	public void getAlignment(out float xalign, out float yalign)
 	{
@@ -463,8 +484,8 @@ public class CellRenderer : ObjectGtk
 	 * Fills in xpad and ypad with the appropriate values of cell.
 	 * Since 2.18
 	 * Params:
-	 * xpad = location to fill in with the x padding of the cell, or NULL
-	 * ypad = location to fill in with the y padding of the cell, or NULL
+	 * xpad = location to fill in with the x padding of the cell, or NULL. allow-none.
+	 * ypad = location to fill in with the y padding of the cell, or NULL. allow-none.
 	 */
 	public void getPadding(out int xpad, out int ypad)
 	{

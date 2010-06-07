@@ -88,7 +88,13 @@ private import gtk.Misc;
  * elements. the <attribute> element has attributes named name, value,
  * start and end and allows you to specify PangoAttribute values for this label.
  * Example  13.  A UI definition fragment specifying Pango attributes
- * <object class="GtkLabel">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ *  <object class="GtkLabel">
  *  <attributes>
  *  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
  *  <attribute name="background" value="red" start="5" end="10"/>"
@@ -112,28 +118,40 @@ private import gtk.Misc;
  * mnemonic's target widget, you have to tell the label about the target
  * using gtk_label_set_mnemonic_widget(). Here's a simple example where
  * the label is inside a button:
+ *  1
+ * 2
+ * 3
+ * 4
  *  /+* Pressing Alt+H will activate this button +/
- *  button = gtk_button_new ();
- *  label = gtk_label_new_with_mnemonic ("_Hello");
- *  gtk_container_add (GTK_CONTAINER (button), label);
+ * button = gtk_button_new ();
+ * label = gtk_label_new_with_mnemonic ("_Hello");
+ * gtk_container_add (GTK_CONTAINER (button), label);
  * There's a convenience function to create buttons with a mnemonic label
  * already inside:
+ *  1
+ * 2
  *  /+* Pressing Alt+H will activate this button +/
- *  button = gtk_button_new_with_mnemonic ("_Hello");
+ * button = gtk_button_new_with_mnemonic ("_Hello");
  * To create a mnemonic for a widget alongside the label, such as a
  * GtkEntry, you have to point the label at the entry with
  * gtk_label_set_mnemonic_widget():
+ *  1
+ * 2
+ * 3
+ * 4
  *  /+* Pressing Alt+H will focus the entry +/
- *  entry = gtk_entry_new ();
- *  label = gtk_label_new_with_mnemonic ("_Hello");
- *  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+ * entry = gtk_entry_new ();
+ * label = gtk_label_new_with_mnemonic ("_Hello");
+ * gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
  * <hr>
  * Markup (styled text)
  * To make it easy to format text in a label (changing colors, fonts,
  * etc.), label text can be provided in a simple markup format.
  * Here's how to create a label with a small font:
+ *  1
+ * 2
  *  label = gtk_label_new (NULL);
- *  gtk_label_set_markup (GTK_LABEL (label), "<small>Small text</small>");
+ * gtk_label_set_markup (GTK_LABEL (label), "<small>Small text</small>");
  * (See complete documentation of available
  * tags in the Pango manual.)
  * The markup passed to gtk_label_set_markup() must be valid; for example,
@@ -173,7 +191,8 @@ private import gtk.Misc;
  * a with href and title attributes. GTK+ renders links similar to the
  * way they appear in web browsers, with colored, underlined text. The title
  * attribute is displayed as a tooltip on the link. An example looks like this:
- * gtk_label_set_markup (label, "Go to the <a href=\"http://www.gtk.org\" title=\"lt;igt;Our/igt; website\">GTK+ website</a> for more...");
+ *  1
+ *  gtk_label_set_markup (label, "Go to the <a href=\"http://www.gtk.org\" title=\"lt;igt;Our/igt; website\">GTK+ website</a> for more...");
  * It is possible to implement custom handling for links and their tooltips with
  * the "activate-link" signal and the gtk_label_get_current_uri() function.
  */
@@ -378,6 +397,7 @@ public class Label : Misc
 	 * Arrow keys move by individual characters/lines
 	 * Ctrl-arrow key combinations move by words/paragraphs
 	 * Home/End keys move to the ends of the buffer
+	 * TRUE if the move should extend the selection
 	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -641,8 +661,8 @@ public class Label : Misc
 	 * when using the PangoLayout functions you need to convert to
 	 * and from pixels using PANGO_PIXELS() or PANGO_SCALE.
 	 * Params:
-	 * x = location to store X offset of layout, or NULL
-	 * y = location to store Y offset of layout, or NULL
+	 * x = location to store X offset of layout, or NULL. allow-none.
+	 * y = location to store Y offset of layout, or NULL. allow-none.
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -714,7 +734,7 @@ public class Label : Misc
 	 * this signal will activate the widget if there are no mnemonic collisions
 	 * and toggle focus between the colliding widgets otherwise.
 	 * Params:
-	 * widget = the target GtkWidget
+	 * widget = the target GtkWidget. allow-none.
 	 */
 	public void setMnemonicWidget(Widget widget)
 	{
@@ -832,7 +852,7 @@ public class Label : Misc
 	 * pixel positions, in combination with gtk_label_get_layout_offsets().
 	 * The returned layout is owned by the label so need not be
 	 * freed by the caller.
-	 * Returns: the PangoLayout for this label
+	 * Returns: the PangoLayout for this label. transfer none.
 	 */
 	public PgLayout getLayout()
 	{
@@ -1014,7 +1034,7 @@ public class Label : Misc
 	 * The active link is the one under the mouse pointer or, in a
 	 * selectable label, the link in which the text cursor is currently
 	 * positioned.
-	 * This function is intended for use in a "link-activate" handler
+	 * This function is intended for use in a "activate-link" handler
 	 * or for use in a "query-tooltip" handler.
 	 * Since 2.18
 	 * Returns: the currently active URI. The string is owned by GTK+ and must not be freed or modified.

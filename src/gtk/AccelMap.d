@@ -180,7 +180,7 @@ public class AccelMap : ObjectG
 	 * Params:
 	 * accelPath = a valid accelerator path
 	 * key = the accelerator key to be filled in (optional)
-	 * Returns: TRUE if accel_path is known, FALSE otherwise
+	 * Returns:TRUE if accel_path is known, FALSE otherwise
 	 */
 	public static int lookupEntry(string accelPath, out GtkAccelKey key)
 	{
@@ -203,7 +203,7 @@ public class AccelMap : ObjectG
 	 * accelKey = the new accelerator key
 	 * accelMods = the new accelerator modifiers
 	 * replace = TRUE if other accelerators may be deleted upon conflicts
-	 * Returns: TRUE if the accelerator could be changed, FALSE otherwise
+	 * Returns:TRUE if the accelerator could be changed, FALSE otherwise
 	 */
 	public static int changeEntry(string accelPath, uint accelKey, GdkModifierType accelMods, int replace)
 	{

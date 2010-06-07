@@ -51,6 +51,7 @@
  * 	- glib.Str
  * 	- gio.Icon
  * 	- gio.IconIF
+ * 	- gdk.Window
  * 	- gdk.Pixbuf
  * 	- gtk.Adjustment
  * 	- gtk.Border
@@ -64,6 +65,7 @@
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkBorder* -> Border
  * 	- GtkEntryBuffer* -> EntryBuffer
@@ -87,6 +89,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
+private import gdk.Window;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
 private import gtk.Border;
@@ -497,6 +500,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Arrow keys move by individual characters/lines
 	 * Ctrl-arrow key combinations move by words/paragraphs
 	 * Home/End keys move to the ends of the buffer
+	 * TRUE if the move should extend the selection
 	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -583,6 +587,36 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 	}
 	
+	void delegate(string, Entry)[] onPreeditChangedListeners;
+	/**
+	 * If an input method is used, the typed text will not immediately
+	 * be committed to the buffer. So if you are interested in the text,
+	 * connect to this signal.
+	 * Since 2.20
+	 */
+	void addOnPreeditChanged(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("preedit-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"preedit-changed",
+			cast(GCallback)&callBackPreeditChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["preedit-changed"] = 1;
+		}
+		onPreeditChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackPreeditChanged(GtkEntry* entryStruct, gchar* preedit, Entry entry)
+	{
+		foreach ( void delegate(string, Entry) dlg ; entry.onPreeditChangedListeners )
+		{
+			dlg(Str.toString(preedit), entry);
+		}
+	}
+	
 	void delegate(Entry)[] onToggleOverwriteListeners;
 	/**
 	 * The ::toggle-overwrite signal is a
@@ -654,7 +688,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 * Warning
-	 * gtk_entry_new_with_max_length is deprecated and should not be used in newly-written code. Use gtk_entry_set_max_length() instead.
+	 * gtk_entry_new_with_max_length has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_entry_set_max_length() instead.
 	 * Creates a new GtkEntry widget with the given maximum length.
 	 * Params:
 	 * max = the maximum length of the entry, or 0 for no maximum.
@@ -851,7 +885,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * This function returns the entry's "inner-border" property. See
 	 * gtk_entry_set_inner_border() for more information.
 	 * Since 2.10
-	 * Returns: the entry's GtkBorder, or NULL if none was set.
+	 * Returns: the entry's GtkBorder, or NULL if none was set.. transfer none.
 	 */
 	public Border getInnerBorder()
 	{
@@ -912,7 +946,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * pixel-exact positioning of the entry is important.
 	 * Since 2.10
 	 * Params:
-	 * border = a GtkBorder, or NULL
+	 * border = a GtkBorder, or NULL. allow-none.
 	 */
 	public void setInnerBorder(Border border)
 	{
@@ -1005,7 +1039,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_layout_index_to_text_index() and
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
-	 * Returns: the PangoLayout for this entry
+	 * Returns: the PangoLayout for this entry. transfer none.
 	 */
 	public PgLayout getLayout()
 	{
@@ -1036,8 +1070,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
 	 * Params:
-	 * x = location to store X offset of layout, or NULL
-	 * y = location to store Y offset of layout, or NULL
+	 * x = location to store X offset of layout, or NULL. allow-none.
+	 * y = location to store Y offset of layout, or NULL. allow-none.
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -1103,7 +1137,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * completion is set to NULL.
 	 * Since 2.4
 	 * Params:
-	 * completion = The GtkEntryCompletion or NULL
+	 * completion = The GtkEntryCompletion or NULL. allow-none.
 	 */
 	public void setCompletion(EntryCompletion completion)
 	{
@@ -1149,7 +1183,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Retrieves the horizontal cursor adjustment for the entry.
 	 * See gtk_entry_set_cursor_hadjustment().
 	 * Since 2.12
-	 * Returns: the horizontal cursor adjustment, or NULL  if none has been set.
+	 * Returns: the horizontal cursor adjustment, or NULL if none has been set.. transfer none.
 	 */
 	public Adjustment getCursorHadjustment()
 	{
@@ -1233,7 +1267,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = Icon position
-	 * pixbuf = A GdkPixbuf, or NULL
+	 * pixbuf = A GdkPixbuf, or NULL. allow-none.
 	 */
 	public void setIconFromPixbuf(GtkEntryIconPosition iconPos, Pixbuf pixbuf)
 	{
@@ -1248,7 +1282,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = Icon position
-	 * stockId = The name of the stock item, or NULL
+	 * stockId = The name of the stock item, or NULL. allow-none.
 	 */
 	public void setIconFromStock(GtkEntryIconPosition iconPos, string stockId)
 	{
@@ -1265,7 +1299,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = The position at which to set the icon
-	 * iconName = An icon name, or NULL
+	 * iconName = An icon name, or NULL. allow-none.
 	 */
 	public void setIconFromIconName(GtkEntryIconPosition iconPos, string iconName)
 	{
@@ -1282,7 +1316,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = The position at which to set the icon
-	 * icon = The icon to set, or NULL
+	 * icon = The icon to set, or NULL. allow-none.
 	 */
 	public void setIconFromGicon(GtkEntryIconPosition iconPos, IconIF icon)
 	{
@@ -1455,7 +1489,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = the icon position
-	 * tooltip = the contents of the tooltip for the icon, or NULL
+	 * tooltip = the contents of the tooltip for the icon, or NULL. allow-none.
 	 */
 	public void setIconTooltipText(GtkEntryIconPosition iconPos, string tooltip)
 	{
@@ -1487,7 +1521,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = the icon position
-	 * tooltip = the contents of the tooltip for the icon, or NULL
+	 * tooltip = the contents of the tooltip for the icon, or NULL. allow-none.
 	 */
 	public void setIconTooltipMarkup(GtkEntryIconPosition iconPos, string tooltip)
 	{
@@ -1545,5 +1579,47 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// gint gtk_entry_get_current_icon_drag_source  (GtkEntry *entry);
 		return gtk_entry_get_current_icon_drag_source(gtkEntry);
+	}
+	
+	/**
+	 * Returns the GdkWindow which contains the entry's icon at
+	 * icon_pos. This function is useful when drawing something to the
+	 * entry in an expose-event callback because it enables the callback
+	 * to distinguish between the text window and entry's icon windows.
+	 * See also gtk_entry_get_text_window().
+	 * Since 2.20
+	 * Params:
+	 * iconPos = Icon position
+	 * Returns: the entry's icon window at icon_pos.
+	 */
+	public Window getIconWindow(GtkEntryIconPosition iconPos)
+	{
+		// GdkWindow * gtk_entry_get_icon_window (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
+		auto p = gtk_entry_get_icon_window(gtkEntry, iconPos);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
+	}
+	
+	/**
+	 * Returns the GdkWindow which contains the text. This function is
+	 * useful when drawing something to the entry in an expose-event
+	 * callback because it enables the callback to distinguish between
+	 * the text window and entry's icon windows.
+	 * See also gtk_entry_get_icon_window().
+	 * Since 2.20
+	 * Returns: the entry's text window.
+	 */
+	public Window getTextWindow()
+	{
+		// GdkWindow * gtk_entry_get_text_window (GtkEntry *entry);
+		auto p = gtk_entry_get_text_window(gtkEntry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 }

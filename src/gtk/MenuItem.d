@@ -93,7 +93,12 @@ private import gtk.Item;
  * supports adding a submenu by specifying "submenu" as the "type"
  * attribute of a <child> element.
  * Example  31.  A UI definition fragment with submenus
- * <object class="GtkMenuItem">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ *  <object class="GtkMenuItem">
  *  <child type="submenu">
  *  <object class="GtkMenu"/>
  *  </child>
@@ -447,7 +452,7 @@ public class MenuItem : Item, ActivatableIF
 	 * Sets or replaces the menu item's submenu, or removes it when a NULL
 	 * submenu is passed.
 	 * Params:
-	 * submenu = the submenu, or NULL
+	 * submenu = the submenu, or NULL. allow-none.
 	 */
 	public void setSubmenu(Widget submenu)
 	{
@@ -502,7 +507,7 @@ public class MenuItem : Item, ActivatableIF
 	 * g_intern_static_string().
 	 * Params:
 	 * accelPath = accelerator path, corresponding to this menu item's
-	 *  functionality, or NULL to unset the current path.
+	 *  functionality, or NULL to unset the current path.. allow-none.
 	 */
 	public void setAccelPath(string accelPath)
 	{

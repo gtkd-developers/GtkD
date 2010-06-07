@@ -131,7 +131,8 @@ private import gobject.ObjectG;
  *  position (top|bot) num;IMPLIED >
  * <!ATTLIST menuitem name num;IMPLIED
  *  action num;REQUIRED
- *  position (top|bot) num;IMPLIED >
+ *  position (top|bot) num;IMPLIED
+ *  always-show-image (true|false) num;IMPLIED >
  * <!ATTLIST toolitem name num;IMPLIED
  *  action num;REQUIRED
  *  position (top|bot) num;IMPLIED >
@@ -149,7 +150,31 @@ private import gobject.ObjectG;
  * enclosed in doublequotes, thus they must not '"' characters or references
  * to the quot; entity.
  * Example  33.  A UI definition
- * <ui>
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ *  <ui>
  *  <menubar>
  *  <menu name="FileMenu" action="FileMenuAction">
  *  <menuitem name="New" action="New2Action" />
@@ -247,7 +272,29 @@ private import gobject.ObjectG;
  * other parts of the constructed user interface with the help of the
  * "constructor" attribute. See the example below.
  * Example  34.  An embedded GtkUIManager UI definition
- * <object class="GtkUIManager" id="uiman">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ *  <object class="GtkUIManager" id="uiman">
  *  <child>
  *  <object class="GtkActionGroup" id="actiongroup">
  *  <child>
@@ -576,7 +623,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the list of action groups associated with self.
 	 * Since 2.4
-	 * Returns: a GList of action groups. The list is owned by GTK+  and should not be modified.
+	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified.. element-type GtkActionGroup. transfer none GtkActionGroup.
 	 */
 	public ListG getActionGroups()
 	{
@@ -592,7 +639,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the GtkAccelGroup associated with self.
 	 * Since 2.4
-	 * Returns: the GtkAccelGroup.
+	 * Returns: the GtkAccelGroup.. transfer none.
 	 */
 	public AccelGroup getAccelGroup()
 	{
@@ -620,7 +667,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * path = a path
-	 * Returns: the widget found by following the path, or NULL if no widget was found.
+	 * Returns: the widget found by following the path, or NULL if no widget was found.. transfer none.
 	 */
 	public Widget getWidget(string path)
 	{
@@ -640,7 +687,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * types = specifies the types of toplevel widgets to include. Allowed
 	 *  types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
 	 *  GTK_UI_MANAGER_POPUP.
-	 * Returns: a newly-allocated GSList of all toplevel widgets of therequested types. Free the returned list with g_slist_free().
+	 * Returns: a newly-allocated GSList ofall toplevel widgets of the requested types. Free the returned list with g_slist_free().. element-type GtkWidget. transfer container GtkWidget.
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
@@ -747,7 +794,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * mergeId = the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
 	 * path = a path
 	 * name = the name for the added UI element
-	 * action = the name of the action to be proxied, or NULL to add a separator
+	 * action = the name of the action to be proxied, or NULL to add a separator. allow-none.
 	 * type = the type of UI element to add.
 	 * top = if TRUE, the UI element is added before its siblings, otherwise it
 	 *  is added after its siblings.

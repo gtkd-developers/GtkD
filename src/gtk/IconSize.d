@@ -107,7 +107,20 @@ private import gtk.Settings;
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
  * Example  5.  A GtkIconFactory UI definition fragment.
- * <object class="GtkIconFactory" id="iconfactory1">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ *  <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>
  *  </sources>
@@ -140,7 +153,7 @@ public class IconSize
 	 * are free to render the pixbuf however they like, including changing
 	 * the usual size.
 	 * Params:
-	 * size = an icon size
+	 * size = an icon size. type int
 	 * width = location to store icon width
 	 * height = location to store icon height
 	 * Returns: TRUE if size was a valid size
@@ -166,7 +179,7 @@ public class IconSize
 	 * Params:
 	 * settings = a GtkSettings object, used to determine
 	 *  which set of user preferences to used.
-	 * size = an icon size
+	 * size = an icon size. type int
 	 * width = location to store icon width
 	 * height = location to store icon height
 	 * Returns: TRUE if size was a valid size
@@ -184,7 +197,7 @@ public class IconSize
 	 * name = name of the icon size
 	 * width = the icon width
 	 * height = the icon height
-	 * Returns: integer value representing the size
+	 * Returns: integer value representing the size. type int
 	 */
 	public static GtkIconSize register(string name, int width, int height)
 	{
@@ -197,7 +210,7 @@ public class IconSize
 	 * So calling gtk_icon_size_from_name() with alias as argument
 	 * will return target.
 	 * Params:
-	 * target = an existing icon size
+	 * target = an existing icon size. type int
 	 */
 	public static void registerAlias(string alia, GtkIconSize target)
 	{
@@ -209,7 +222,7 @@ public class IconSize
 	 * Looks up the icon size associated with name.
 	 * Params:
 	 * name = the name to look up.
-	 * Returns: the icon size with the given name.
+	 * Returns:the icon size with the given name.
 	 */
 	public static GtkIconSize fromName(string name)
 	{
@@ -221,8 +234,8 @@ public class IconSize
 	 * Gets the canonical name of the given icon size. The returned string
 	 * is statically allocated and should not be freed.
 	 * Params:
-	 * size = a GtkIconSize.
-	 * Returns: the name of the given icon size.
+	 * size = a GtkIconSize.. type int
+	 * Returns:the name of the given icon size.
 	 */
 	public static string getName(GtkIconSize size)
 	{

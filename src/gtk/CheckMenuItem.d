@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = GtkCheckMenuItem.html
+ * inFile  = gtk-gtkcheckmenuitem.html
  * outPack = gtk
  * outFile = CheckMenuItem
  * strct   = GtkCheckMenuItem

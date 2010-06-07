@@ -92,7 +92,7 @@ private import gobject.ObjectG;
  * GtkIconTheme provides a facility for looking up icons by name
  * and size. The main reason for using a name rather than simply
  * providing a filename is to allow different icons to be used
- * depending on what icon theme is selecetd
+ * depending on what icon theme is selected
  * by the user. The operation of icon themes on Linux and Unix
  * follows the Icon
  * Theme Specification. There is a default icon theme,
@@ -131,7 +131,26 @@ private import gobject.ObjectG;
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
  * being used, looking up an icon can be as simple as:
- * GError *error = NULL;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ *  GError *error = NULL;
  * GtkIconTheme *icon_theme;
  * GdkPixbuf *pixbuf;
  * icon_theme = gtk_icon_theme_get_default ();
@@ -249,7 +268,7 @@ public class IconTheme : ObjectG
 	 * Gets the icon theme for the default screen. See
 	 * gtk_icon_theme_get_for_screen().
 	 * Since 2.4
-	 * Returns: A unique GtkIconTheme associated with the default screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it.
+	 * Returns: A unique GtkIconTheme associated with the default screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it.. transfer none.
 	 */
 	public static IconTheme getDefault()
 	{
@@ -274,7 +293,7 @@ public class IconTheme : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * screen = a GdkScreen
-	 * Returns: A unique GtkIconTheme associated with the given screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it.
+	 * Returns: A unique GtkIconTheme associated with the given screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it.. transfer none.
 	 */
 	public static IconTheme getForScreen(Screen screen)
 	{
@@ -331,7 +350,7 @@ public class IconTheme : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * path = location to store a list of icon theme path directories or NULL
-	 *  The stored value should be freed with g_strfreev().
+	 *  The stored value should be freed with g_strfreev().. allow-none. out.
 	 * nElements = location to store number of elements
 	 *  in path, or NULL
 	 */
@@ -515,7 +534,7 @@ public class IconTheme : ObjectG
 	 * Gets the list of contexts available within the current
 	 * hierarchy of icon themes
 	 * Since 2.12
-	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free().
+	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free().. element-type utf8. transfer full utf8.
 	 */
 	public ListG listContexts()
 	{
@@ -538,7 +557,7 @@ public class IconTheme : ObjectG
 	 * Params:
 	 * context = a string identifying a particular type of icon,
 	 *  or NULL to list all icons.
-	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free().
+	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free().. element-type utf8. transfer none utf8.
 	 */
 	public ListG listIcons(string context)
 	{

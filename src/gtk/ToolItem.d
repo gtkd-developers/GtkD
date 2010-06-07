@@ -45,11 +45,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.SizeGroup
  * 	- gtk.Tooltips
  * 	- gtk.Widget
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
+ * 	- GtkSizeGroup* -> SizeGroup
  * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -70,6 +72,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.SizeGroup;
 private import gtk.Tooltips;
 private import gtk.Widget;
 private import gtk.ActivatableT;
@@ -199,6 +202,9 @@ public class ToolItem : Bin, ActivatableIF
 	
 	bool delegate(Tooltips, string, string, ToolItem)[] onSetTooltipListeners;
 	/**
+	 * Warning
+	 * GtkToolItem::set-tooltip has been deprecated since version 2.12 and should not be used in newly-written code. With the new tooltip API, there is no
+	 *  need to use this signal anymore.
 	 * This signal is emitted when the toolitem's tooltip changes.
 	 * Application developers can use gtk_tool_item_set_tooltip() to
 	 * set the item's tooltip.
@@ -354,8 +360,8 @@ public class ToolItem : Bin, ActivatableIF
 	 * Since 2.4
 	 * Params:
 	 * tooltips = The GtkTooltips object to be used
-	 * tipText = text to be used as tooltip text for tool_item
-	 * tipPrivate = text to be used as private tooltip text
+	 * tipText = text to be used as tooltip text for tool_item. allow-none.
+	 * tipPrivate = text to be used as private tooltip text. allow-none.
 	 */
 	public void setTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{
@@ -497,11 +503,24 @@ public class ToolItem : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Returns the ellipsize mode used for tool_item. Custom subclasses of
+	 * GtkToolItem should call this function to find out how text should
+	 * be ellipsized.
+	 * Since 2.20
+	 * Returns: a PangoEllipsizeMode indicating how text in tool_itemshould be ellipsized.
+	 */
+	public PangoEllipsizeMode getEllipsizeMode()
+	{
+		// PangoEllipsizeMode gtk_tool_item_get_ellipsize_mode (GtkToolItem *tool_item);
+		return gtk_tool_item_get_ellipsize_mode(gtkToolItem);
+	}
+	
+	/**
 	 * Returns the icon size used for tool_item. Custom subclasses of
 	 * GtkToolItem should call this function to find out what size icons
 	 * they should use.
 	 * Since 2.4
-	 * Returns: a GtkIconSize indicating the icon size used for tool_item
+	 * Returns: a GtkIconSize indicating the icon sizeused for tool_item. type int
 	 */
 	public GtkIconSize getIconSize()
 	{
@@ -551,11 +570,37 @@ public class ToolItem : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Returns the text alignment used for tool_item. Custom subclasses of
+	 * GtkToolItem should call this function to find out how text should
+	 * be aligned.
+	 * Since 2.20
+	 * Returns: a gfloat indicating the horizontal text alignmentused for tool_item
+	 */
+	public float getTextAlignment()
+	{
+		// gfloat gtk_tool_item_get_text_alignment (GtkToolItem *tool_item);
+		return gtk_tool_item_get_text_alignment(gtkToolItem);
+	}
+	
+	/**
+	 * Returns the text orientation used for tool_item. Custom subclasses of
+	 * GtkToolItem should call this function to find out how text should
+	 * be orientated.
+	 * Since 2.20
+	 * Returns: a GtkOrientation indicating the text orientationused for tool_item
+	 */
+	public GtkOrientation getTextOrientation()
+	{
+		// GtkOrientation gtk_tool_item_get_text_orientation (GtkToolItem *tool_item);
+		return gtk_tool_item_get_text_orientation(gtkToolItem);
+	}
+	
+	/**
 	 * Returns the GtkMenuItem that was last set by
 	 * gtk_tool_item_set_proxy_menu_item(), ie. the GtkMenuItem
 	 * that is going to appear in the overflow menu.
 	 * Since 2.4
-	 * Returns: The GtkMenuItem that is going to appear in theoverflow menu for tool_item.
+	 * Returns: The GtkMenuItem that is going to appear in theoverflow menu for tool_item.. transfer none.
 	 */
 	public Widget retrieveProxyMenuItem()
 	{
@@ -611,9 +656,8 @@ public class ToolItem : Bin, ActivatableIF
 	 * overflow menu item for tool_item has changed. If the
 	 * overflow menu is visible when this function it called,
 	 * the menu will be rebuilt.
-	 * The function must be called when the tool item
-	 * changes what it will do in response to the "create_menu_proxy"
-	 * signal.
+	 * The function must be called when the tool item changes what it
+	 * will do in response to the "create-menu-proxy" signal.
 	 * Since 2.6
 	 */
 	public void rebuildMenu()
@@ -632,5 +676,22 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// void gtk_tool_item_toolbar_reconfigured (GtkToolItem *tool_item);
 		gtk_tool_item_toolbar_reconfigured(gtkToolItem);
+	}
+	
+	/**
+	 * Returns the size group used for labels in tool_item. Custom subclasses of
+	 * GtkToolItem should call this function and use the size group for labels.
+	 * Since 2.20
+	 * Returns: a GtkSizeGroup
+	 */
+	public SizeGroup getTextSizeGroup()
+	{
+		// GtkSizeGroup * gtk_tool_item_get_text_size_group (GtkToolItem *tool_item);
+		auto p = gtk_tool_item_get_text_size_group(gtkToolItem);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SizeGroup(cast(GtkSizeGroup*) p);
 	}
 }

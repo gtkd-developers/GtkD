@@ -105,7 +105,27 @@ private import gobject.ObjectG;
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
  * Example  23.  Using a GtkTreeModelSort
- * {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ *  {
 	 *  GtkTreeView *tree_view1;
 	 *  GtkTreeView *tree_view2;
 	 *  GtkTreeModel *sort_model1;
@@ -131,7 +151,43 @@ private import gobject.ObjectG;
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
  * Example  24.  Accessing the child model of in a selection changed callback
- * void
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ *  void
  * selection_changed (GtkTreeSelection *selection, gpointer data)
  * {
 	 *  GtkTreeModel *sort_model = NULL;

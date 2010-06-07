@@ -98,7 +98,16 @@ private import glib.ScannerG;
  * For example for binding Control and the left or right cursor keys of a
  * GtkEntry widget to the "move-cursor" signal, so movement occurs
  * in 3 letter steps, the following binding can be used:
- * binding "MoveCursor3" {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ *  binding "MoveCursor3" {
 	 *  bind "<Control>Right" {
 		 *  "move-cursor" (visual-positions, 3, 0)
 	 *  }
@@ -113,7 +122,12 @@ private import glib.ScannerG;
  * Installing a key binding
  * works as expected. The same mechanism can not be used to "unbind" existing
  * bindings, however.
- * binding "MoveCursor3" {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ *  binding "MoveCursor3" {
  *  bind "<Control>Right" { }
  *  bind "<Control>Left" { }
  * }
@@ -127,7 +141,12 @@ private import glib.ScannerG;
  * key bindings, and will eventually lookup and find the default GTK+ bindings
  * for entries which implement word movement. To keep GTK+ from activating its
  * default bindings, the "unbind" keyword can be used like this:
- * binding "MoveCursor3" {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ *  binding "MoveCursor3" {
 	 *  unbind "<Control>Right"
 	 *  unbind "<Control>Left"
  * }
@@ -291,6 +310,7 @@ public class BindingSet
 	/**
 	 * Looks up key bindings for object to find one matching
 	 * event, and if one was found, activate it.
+	 * Since 2.4
 	 * Params:
 	 * object = a GtkObject (generally must be a widget)
 	 * event = a GdkEventKey

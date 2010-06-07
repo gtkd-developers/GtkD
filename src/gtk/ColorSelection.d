@@ -406,7 +406,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Warning
-	 * gtk_color_selection_get_color is deprecated and should not be used in newly-written code. Use gtk_color_selection_get_current_color() instead.
+	 * gtk_color_selection_get_color has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_color_selection_get_current_color() instead.
 	 * Sets color to be the current color in the GtkColorSelection widget.
 	 * Params:
 	 * color = an array of 4 gdouble to fill in with the current color.

@@ -83,7 +83,14 @@ private import gtk.HBox;
  * that button. This widget does not support setting the "select-multiple"
  * property to TRUE.
  * Example  41.  Create a button to let the user select a file in /etc
- * {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ *  {
 	 *  GtkWidget *button;
 	 *  button = gtk_file_chooser_button_new (_("Select a file"),
 	 *  GTK_FILE_CHOOSER_ACTION_OPEN);

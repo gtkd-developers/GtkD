@@ -863,7 +863,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Creates a new text buffer.
 	 * Params:
-	 * table = a tag table, or NULL to create a new one
+	 * table = a tag table, or NULL to create a new one. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextTagTable table)
@@ -903,7 +903,7 @@ public class TextBuffer : ObjectG
 	
 	/**
 	 * Get the GtkTextTagTable associated with this buffer.
-	 * Returns: the buffer's tag table
+	 * Returns: the buffer's tag table. transfer none.
 	 */
 	public TextTagTable getTagTable()
 	{
@@ -1206,7 +1206,7 @@ public class TextBuffer : ObjectG
 	 * Emits the "mark-set" signal as notification of the mark's initial
 	 * placement.
 	 * Params:
-	 * markName = name for mark, or NULL
+	 * markName = name for mark, or NULL. allow-none.
 	 * where = location to place mark
 	 * leftGravity = whether the mark has left gravity
 	 * Returns: the new GtkTextMark object
@@ -1301,7 +1301,7 @@ public class TextBuffer : ObjectG
 	 * mark exists in the buffer.
 	 * Params:
 	 * name = a mark name
-	 * Returns: a GtkTextMark, or NULL
+	 * Returns: a GtkTextMark, or NULL. transfer none.
 	 */
 	public TextMark getMark(string name)
 	{
@@ -1319,7 +1319,7 @@ public class TextBuffer : ObjectG
 	 * Equivalent to calling gtk_text_buffer_get_mark() to get the mark
 	 * named "insert", but very slightly more efficient, and involves less
 	 * typing.
-	 * Returns: insertion point mark
+	 * Returns: insertion point mark. transfer none.
 	 */
 	public TextMark getInsert()
 	{
@@ -1343,7 +1343,7 @@ public class TextBuffer : ObjectG
 	 * gtk_text_buffer_get_selection_bounds() is another convenient function
 	 * for handling the selection, if you just want to know whether there's a
 	 * selection and what its bounds are.
-	 * Returns: selection bound mark
+	 * Returns: selection bound mark. transfer none.
 	 */
 	public TextMark getSelectionBound()
 	{
@@ -1654,7 +1654,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 * clipboard = the GtkClipboard to paste from
 	 * overrideLocation = location to insert pasted text, or NULL for
-	 *  at the cursor
+	 *  at the cursor. allow-none.
 	 * defaultEditable = whether the buffer is editable by default
 	 */
 	public void pasteClipboard(Clipboard clipboard, TextIter overrideLocation, int defaultEditable)
@@ -1928,7 +1928,7 @@ public class TextBuffer : ObjectG
 	 * gtk_text_buffer_register_serialize_tagset() for details.
 	 * Since 2.10
 	 * Params:
-	 * tagsetName = an optional tagset name, on NULL
+	 * tagsetName = an optional tagset name, on NULL. allow-none.
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
 	public GdkAtom registerDeserializeTagset(string tagsetName)
@@ -1971,7 +1971,7 @@ public class TextBuffer : ObjectG
 	 * receiving buffer to deal with with pasting of arbitrary tags.
 	 * Since 2.10
 	 * Params:
-	 * tagsetName = an optional tagset name, on NULL
+	 * tagsetName = an optional tagset name, on NULL. allow-none.
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
 	public GdkAtom registerSerializeTagset(string tagsetName)

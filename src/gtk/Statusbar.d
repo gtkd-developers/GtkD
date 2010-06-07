@@ -44,7 +44,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Widget
  * structWrap:
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -61,6 +63,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Widget;
 
 
 
@@ -283,5 +286,21 @@ public class Statusbar : HBox
 	{
 		// gboolean gtk_statusbar_get_has_resize_grip (GtkStatusbar *statusbar);
 		return gtk_statusbar_get_has_resize_grip(gtkStatusbar);
+	}
+	
+	/**
+	 * Retrieves the box containing the label widget.
+	 * Since 2.20
+	 * Returns: a GtkBox
+	 */
+	public Widget getMessageArea()
+	{
+		// GtkWidget* gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
+		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 }

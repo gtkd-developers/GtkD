@@ -147,7 +147,7 @@ public class LinkButton : Button
 	 * Since 2.10
 	 * Params:
 	 * uri = a valid URI
-	 * label = the text of the button
+	 * label = the text of the button. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string uri, string label)
@@ -192,9 +192,9 @@ public class LinkButton : Button
 	 * If no uri hook has been set, GTK+ defaults to calling gtk_show_uri().
 	 * Since 2.10
 	 * Params:
-	 * func = a function called each time a GtkLinkButton is clicked, or NULL
-	 * data = user data to be passed to func, or NULL
-	 * destroy = a GDestroyNotify that gets called when data is no longer needed, or NULL
+	 * func = a function called each time a GtkLinkButton is clicked, or NULL. allow-none.
+	 * data = user data to be passed to func, or NULL. allow-none.
+	 * destroy = a GDestroyNotify that gets called when data is no longer needed, or NULL. allow-none.
 	 * Returns: the previously set hook function.
 	 */
 	public static GtkLinkButtonUriFunc setUriHook(GtkLinkButtonUriFunc func, void* data, GDestroyNotify destroy)

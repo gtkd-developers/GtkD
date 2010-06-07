@@ -117,7 +117,20 @@ private import gtk.Widget;
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
  * Example  5.  A GtkIconFactory UI definition fragment.
- * <object class="GtkIconFactory" id="iconfactory1">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ *  <object class="GtkIconFactory" id="iconfactory1">
  *  <sources>
  *  <source stock-id="apple-red" filename="apple-red.png"/>
  *  </sources>
@@ -278,17 +291,17 @@ public class IconSet
 	 * (perhaps because an image file fails to load), a default "missing
 	 * image" icon will be returned instead.
 	 * Params:
-	 * style = a GtkStyle associated with widget, or NULL
+	 * style = a GtkStyle associated with widget, or NULL. allow-none.
 	 * direction = text direction
 	 * state = widget state
 	 * size = icon size. A size of (GtkIconSize)-1
-	 *  means render at the size of the source and don't scale.
+	 *  means render at the size of the source and don't scale.. type int
 	 * widget = widget that will display the icon, or NULL.
 	 *  The only use that is typically made of this
-	 *  is to determine the appropriate GdkScreen.
+	 *  is to determine the appropriate GdkScreen.. allow-none.
 	 * detail = detail to pass to the theme engine, or NULL.
 	 *  Note that passing a detail of anything but NULL
-	 *  will disable caching.
+	 *  will disable caching.. allow-none.
 	 * Returns: a GdkPixbuf to be displayed
 	 */
 	public Pixbuf renderIcon(Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
@@ -316,7 +329,8 @@ public class IconSet
 	 * Obtains a list of icon sizes this icon set can render. The returned
 	 * array must be freed with g_free().
 	 * Params:
-	 * sizes = return location for array of sizes
+	 * sizes = return location
+	 *  for array of sizes. type int
 	 */
 	public void getSizes(out GtkIconSize[] sizes)
 	{

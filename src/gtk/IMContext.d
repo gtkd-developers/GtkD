@@ -100,14 +100,21 @@ private import gobject.ObjectG;
  * loadable modules. An input method module is a small shared library which
  * implements a subclass of GtkIMContext or GtkIMContextSimple and exports
  * these four functions:
- * void im_module_init(GTypeModule *module);
+ *  1
+ *  void im_module_init(<GTKDOCLINK HREF="GTypeModule">GTypeModule</GTKDOCLINK> *module);
  * This function should register the GType of the GtkIMContext subclass which
  * implements the input method by means of g_type_module_register_type(). Note
  * that g_type_register_static() cannot be used as the type needs to be
  * registered dynamically.
- * void im_module_exit(void);
+ *  1
+ *  void im_module_exit(void);
  * Here goes any cleanup code your input method might require on module unload.
- * void im_module_list(const GtkIMContextInfo ***contexts, int *n_contexts)
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ *  void im_module_list(const <a class="link" href="GtkIMContext.html#GtkIMContextInfo" title="GtkIMContextInfo">GtkIMContextInfo</a> ***contexts, int *n_contexts)
  * {
 	 *  *contexts = info_list;
 	 *  *n_contexts = G_N_ELEMENTS (info_list);
@@ -116,7 +123,8 @@ private import gobject.ObjectG;
  * example implementation above shows a common solution and simply returns a
  * pointer to statically defined array of GtkIMContextInfo items for each
  * provided input method.
- * GtkIMContext * im_module_create(const gchar *context_id);
+ *  1
+ *  <a class="link" href="GtkIMContext.html" title="GtkIMContext">GtkIMContext</a> * im_module_create(const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *context_id);
  * This function should return a pointer to a newly created instance of the
  * GtkIMContext subclass identified by context_id. The context ID is the same
  * as specified in the GtkIMContextInfo array returned by im_module_list().
@@ -360,7 +368,7 @@ public class IMContext : ObjectG
 	 * also be used for purposes internal to the input method.
 	 * Params:
 	 * window = the client window. This may be NULL to indicate
-	 *  that the previous client window no longer exists.
+	 *  that the previous client window no longer exists.. allow-none.
 	 */
 	public void setClientWindow(Window window)
 	{

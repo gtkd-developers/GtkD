@@ -317,6 +317,8 @@ public class Button : Bin, ActivatableIF
 	
 	void delegate(Button)[] onEnterListeners;
 	/**
+	 * Warning
+	 * GtkButton::enter has been deprecated since version 2.8 and should not be used in newly-written code. Use the "enter-notify-event" signal.
 	 * Emitted when the pointer enters the button.
 	 */
 	void addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -344,6 +346,8 @@ public class Button : Bin, ActivatableIF
 	
 	void delegate(Button)[] onLeaveListeners;
 	/**
+	 * Warning
+	 * GtkButton::leave has been deprecated since version 2.8 and should not be used in newly-written code. Use the "leave-notify-event" signal.
 	 * Emitted when the pointer leaves the button.
 	 */
 	void addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -371,6 +375,8 @@ public class Button : Bin, ActivatableIF
 	
 	void delegate(Button)[] onPressedListeners;
 	/**
+	 * Warning
+	 * GtkButton::pressed has been deprecated since version 2.8 and should not be used in newly-written code. Use the "button-press-event" signal.
 	 * Emitted when the button is pressed.
 	 */
 	void addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -398,6 +404,8 @@ public class Button : Bin, ActivatableIF
 	
 	void delegate(Button)[] onReleasedListeners;
 	/**
+	 * Warning
+	 * GtkButton::released has been deprecated since version 2.8 and should not be used in newly-written code. Use the "button-release-event" signal.
 	 * Emitted when the button is released.
 	 */
 	void addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -441,6 +449,8 @@ public class Button : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_button_pressed has been deprecated since version 2.20 and should not be used in newly-written code. Use the "button-press-event" signal.
 	 * Emits a "pressed" signal to the given GtkButton.
 	 */
 	public void pressed()
@@ -450,6 +460,8 @@ public class Button : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_button_released has been deprecated since version 2.20 and should not be used in newly-written code. Use the "button-release-event" signal.
 	 * Emits a "released" signal to the given GtkButton.
 	 */
 	public void released()
@@ -468,6 +480,8 @@ public class Button : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_button_enter has been deprecated since version 2.20 and should not be used in newly-written code. Use the "enter-notify-event" signal.
 	 * Emits a "enter" signal to the given GtkButton.
 	 */
 	public void enter()
@@ -477,6 +491,8 @@ public class Button : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_button_leave has been deprecated since version 2.20 and should not be used in newly-written code. Use the "leave-notify-event" signal.
 	 * Emits a "leave" signal to the given GtkButton.
 	 */
 	public void leave()

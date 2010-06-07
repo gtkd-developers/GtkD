@@ -68,13 +68,6 @@ private import gtk.Dialog;
 
 /**
  * Description
- *  NOTE this widget is considered too specialized/little-used for
- *  GTK+, and will in the future be moved to some other package. If
- *  your application needs this widget, feel free to use it, as the
- *  widget does work and is useful in some applications; it's just not
- *  of general interest. However, we are not accepting new features for
- *  the widget, and it will eventually move out of the GTK+
- *  distribution.
  * GtkInputDialog displays a dialog which allows the user
  * to configure XInput extension devices. For each
  * device, they can control the mode of the device
@@ -88,6 +81,7 @@ private import gtk.Dialog;
  * No actions are bound to these by default.
  * The changes that the user makes take effect
  * immediately.
+ * As of GTK+ 2.20, GtkInputDialog has been deprecated since it is too specialized.
  */
 public class InputDialog : Dialog
 {
@@ -235,6 +229,8 @@ public class InputDialog : Dialog
 	
 	
 	/**
+	 * Warning
+	 * gtk_input_dialog_new has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Creates a new GtkInputDialog.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -535,11 +535,12 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
-	 * Sets the current active item to be the one referenced by iter.
-	 * iter must correspond to a path of depth one.
+	 * Sets the current active item to be the one referenced by iter, or
+	 * unsets the active item if iter is NULL.
+	 * iter must correspond to a path of depth one, or be NULL.
 	 * Since 2.4
 	 * Params:
-	 * iter = The GtkTreeIter
+	 * iter = The GtkTreeIter, or NULL. allow-none.
 	 */
 	public void setActiveIter(TreeIter iter)
 	{
@@ -550,7 +551,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	/**
 	 * Returns the GtkTreeModel which is acting as data source for combo_box.
 	 * Since 2.4
-	 * Returns: A GtkTreeModel which was passed during construction.
+	 * Returns: A GtkTreeModel which was passed during construction.. transfer none.
 	 */
 	public TreeModelIF getModel()
 	{
@@ -571,7 +572,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * cell renderers for the new model.
 	 * Since 2.4
 	 * Params:
-	 * model = A GtkTreeModel
+	 * model = A GtkTreeModel. allow-none.
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -709,8 +710,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Since 2.6
 	 * Params:
 	 * func = a GtkTreeViewRowSeparatorFunc
-	 * data = user data to pass to func, or NULL
-	 * destroy = destroy notifier for data, or NULL
+	 * data = user data to pass to func, or NULL. allow-none.
+	 * destroy = destroy notifier for data, or NULL. allow-none.
 	 */
 	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy)
 	{

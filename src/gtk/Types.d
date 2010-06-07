@@ -172,7 +172,7 @@ public class Types
 	 * If enum_type has values, then return a pointer to all of them.
 	 * Params:
 	 * enumType = a GtkType.
-	 * Returns:#GtkEnumValue*
+	 * Returns:GtkEnumValue*
 	 */
 	public static GtkEnumValue* enumGetValues(GtkType enumType)
 	{
@@ -186,7 +186,7 @@ public class Types
 	 * If flags_type has values, then return a pointer to all of them.
 	 * Params:
 	 * flagsType = a GtkType.
-	 * Returns:#GtkFlagValue*
+	 * Returns:GtkFlagValue*
 	 */
 	public static GtkFlagValue* flagsGetValues(GtkType flagsType)
 	{
@@ -201,7 +201,7 @@ public class Types
 	 * Params:
 	 * enumType = a GtkType.
 	 * valueName = the name to look for.
-	 * Returns:#GtkEnumValue*
+	 * Returns:GtkEnumValue*
 	 */
 	public static GtkEnumValue* enumFindValue(GtkType enumType, string valueName)
 	{
@@ -216,7 +216,7 @@ public class Types
 	 * Params:
 	 * flagsType = a GtkType.
 	 * valueName = the name to look for.
-	 * Returns:#GtkFlagValue*
+	 * Returns:GtkFlagValue*
 	 */
 	public static GtkFlagValue* flagsFindValue(GtkType flagsType, string valueName)
 	{

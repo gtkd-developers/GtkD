@@ -97,11 +97,29 @@ private import gobject.ObjectG;
  * files is shared with other people using them. In case the
  * default screen is being used, adding a new recently used
  * file is as simple as:
- * GtkRecentManager *manager;
+ *  1
+ * 2
+ * 3
+ *  GtkRecentManager *manager;
  * manager = gtk_recent_manager_get_default ();
  * gtk_recent_manager_add_item (manager, file_uri);
  * While looking up a recently used file is as simple as:
- * GtkRecentManager *manager;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ *  GtkRecentManager *manager;
  * GtkRecentInfo *info;
  * GError *error = NULL;
  * manager = gtk_recent_manager_get_default ();
@@ -218,7 +236,7 @@ public class RecentManager : ObjectG
 	 * in your application without caring about memory management. The
 	 * returned instance will be freed when you application terminates.
 	 * Since 2.10
-	 * Returns: A unique GtkRecentManager. Do not ref or unref it.
+	 * Returns: A unique GtkRecentManager. Do not ref or unref it.. transfer none.
 	 */
 	public static RecentManager getDefault()
 	{
@@ -401,7 +419,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 * uri = the URI of a recently used resource
 	 * newUri = the new URI of the recently used resource, or NULL to
-	 *  remove the item pointed by uri in the list
+	 *  remove the item pointed by uri in the list. allow-none.
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */
@@ -449,7 +467,7 @@ public class RecentManager : ObjectG
 	/**
 	 * Gets the list of recently used resources.
 	 * Since 2.10
-	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free().
+	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free().. element-type GtkRecentInfo. transfer full GtkRecentInfo.
 	 */
 	public ListG getItems()
 	{

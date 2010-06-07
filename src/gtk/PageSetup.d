@@ -92,7 +92,21 @@ private import gobject.ObjectG;
  * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
  * the page setup dialog and receive the resulting page setup.
  * Example  48.  A page setup dialog
- * static GtkPrintSettings *settings = NULL;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ *  static GtkPrintSettings *settings = NULL;
  * static GtkPageSetup *page_setup = NULL;
  * static void
  * do_page_setup (void)
@@ -454,7 +468,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the page_setup from
 	 * groupName = the name of the group in the key_file to read, or NULL
-	 *  to use the default name "Page Setup"
+	 *  to use the default name "Page Setup". allow-none.
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -508,7 +522,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the page_setup from
 	 * groupName = the name of the group in the key_file to read, or NULL
-	 *  to use the default name "Page Setup"
+	 *  to use the default name "Page Setup". allow-none.
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

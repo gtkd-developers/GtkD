@@ -88,11 +88,14 @@ private import gtk.Dialog;
  * <user@host>, URLs are
  * recognized by looking for http://url, with
  * url extending to the next space, tab or line break.
- * Since 2.18 GtkAboutDialog provides default website and email hooks that use
- * gtk_show_uri().
- * If you want provide your own hooks overriding the default ones, it is important
- * to do so before setting the website and email URL properties, like this:
- * gtk_about_dialog_set_url_hook (GTK_ABOUT_DIALOG (dialog), launch_url, NULL, NULL);
+ * Since 2.18 GtkAboutDialog provides default website and email hooks that
+ * use gtk_show_uri().
+ * If you want provide your own hooks overriding the default ones, it is
+ * important to do so before setting the website and email URL properties,
+ * like this:
+ *  1
+ * 2
+ *  gtk_about_dialog_set_url_hook (GTK_ABOUT_DIALOG (dialog), launch_url, NULL, NULL);
  * gtk_about_dialog_set_website (GTK_ABOUT_DIALOG (dialog), app_url);
  * To disable the default hooks, you can pass NULL as the hook func. Then,
  * the GtkAboutDialog widget will not display the website or the
@@ -105,7 +108,12 @@ private import gtk.Dialog;
  * application, but in order to ensure proper translation of the title,
  * applications should set the title property explicitly when constructing
  * a GtkAboutDialog, as shown in the following example:
- * gtk_show_about_dialog (NULL,
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ *  gtk_show_about_dialog (NULL,
  *  "program-name", "ExampleCode",
  *  "logo", example_logo,
  *  "title" _("About ExampleCode"),
@@ -193,7 +201,7 @@ public class AboutDialog : Dialog
 	 * If this is not set, it defaults to g_get_application_name().
 	 * Since 2.6
 	 * Params:
-	 * name = the program name
+	 * name = the program name. allow-none.
 	 */
 	public override void setName(string name)
 	{
@@ -262,7 +270,7 @@ public class AboutDialog : Dialog
 	 * This should be a short string of one or two lines.
 	 * Since 2.6
 	 * Params:
-	 * copyright = the copyright string
+	 * copyright = (allow-none) the copyright string
 	 */
 	public void setCopyright(string copyright)
 	{
@@ -282,12 +290,11 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
-	 * Sets the comments string to display in the about
-	 * dialog. This should be a short string of one or
-	 * two lines.
+	 * Sets the comments string to display in the about dialog.
+	 * This should be a short string of one or two lines.
 	 * Since 2.6
 	 * Params:
-	 * comments = a comments string
+	 * comments = a comments string. allow-none.
 	 */
 	public void setComments(string comments)
 	{
@@ -312,7 +319,7 @@ public class AboutDialog : Dialog
 	 * hidden.
 	 * Since 2.6
 	 * Params:
-	 * license = the license information or NULL
+	 * license = the license information or NULL. allow-none.
 	 */
 	public void setLicense(string license)
 	{
@@ -362,7 +369,7 @@ public class AboutDialog : Dialog
 	 * before calling this function.
 	 * Since 2.6
 	 * Params:
-	 * website = a URL string starting with "http://"
+	 * website = a URL string starting with "http://". allow-none.
 	 */
 	public void setWebsite(string website)
 	{
@@ -398,7 +405,7 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the authors tab
 	 * of the secondary credits dialog.
 	 * Since 2.6
-	 * Returns: A NULL-terminated string array containing the authors. The array is owned by the about dialog  and must not be modified.
+	 * Returns: A NULL-terminated string array containing the authors. The array is owned by the about dialog and must not be modified.
 	 */
 	public string[] getAuthors()
 	{
@@ -423,7 +430,7 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the artists tab
 	 * of the secondary credits dialog.
 	 * Since 2.6
-	 * Returns: A NULL-terminated string array containing the artists. The array is owned by the about dialog  and must not be modified.
+	 * Returns: A NULL-terminated string array containing the artists. The array is owned by the about dialog and must not be modified.
 	 */
 	public string[] getArtists()
 	{
@@ -448,7 +455,7 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the documenters
 	 * tab of the secondary credits dialog.
 	 * Since 2.6
-	 * Returns: A NULL-terminated string array containing the documenters. The array is owned by the about dialog  and must not be modified.
+	 * Returns: A NULL-terminated string array containing the documenters. The array is owned by the about dialog and must not be modified.
 	 */
 	public string[] getDocumenters()
 	{
@@ -489,7 +496,7 @@ public class AboutDialog : Dialog
 	 * Using gettext(), a simple way to achieve that is to mark the
 	 * Since 2.6
 	 * Params:
-	 * translatorCredits = the translator credits
+	 * translatorCredits = the translator credits. allow-none.
 	 */
 	public void setTranslatorCredits(string translatorCredits)
 	{
@@ -514,13 +521,12 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
-	 * Sets the pixbuf to be displayed as logo in
-	 * the about dialog. If it is NULL, the default
-	 * window icon set with gtk_window_set_default_icon()
-	 * will be used.
+	 * Sets the pixbuf to be displayed as logo in the about dialog.
+	 * If it is NULL, the default window icon set with
+	 * gtk_window_set_default_icon() will be used.
 	 * Since 2.6
 	 * Params:
-	 * logo = a GdkPixbuf, or NULL
+	 * logo = a GdkPixbuf, or NULL. allow-none.
 	 */
 	public void setLogo(Pixbuf logo)
 	{
@@ -540,13 +546,12 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
-	 * Sets the pixbuf to be displayed as logo in
-	 * the about dialog. If it is NULL, the default
-	 * window icon set with gtk_window_set_default_icon()
-	 * will be used.
+	 * Sets the pixbuf to be displayed as logo in the about dialog.
+	 * If it is NULL, the default window icon set with
+	 * gtk_window_set_default_icon() will be used.
 	 * Since 2.6
 	 * Params:
-	 * iconName = an icon name, or NULL
+	 * iconName = an icon name, or NULL. allow-none.
 	 */
 	public void setLogoIconName(string iconName)
 	{

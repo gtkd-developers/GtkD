@@ -72,11 +72,11 @@ private import gtk.Window;
  * Together with GtkSocket, GtkPlug provides the ability
  * to embed widgets from one process into another process
  * in a fashion that is transparent to the user. One
- * process creates a GtkSocket widget and, passes the
- * ID of that widgets window to the other process,
+ * process creates a GtkSocket widget and passes the
+ * ID of that widget's window to the other process,
  * which then creates a GtkPlug with that window ID.
  * Any widgets contained in the GtkPlug then will appear
- * inside the first applications window.
+ * inside the first application's window.
  * Note
  * The GtkPlug and GtkSocket widgets are currently not available
  * on all platforms supported by GTK+.
@@ -127,11 +127,9 @@ public class Plug : Window
 	
 	void delegate(Plug)[] onEmbeddedListeners;
 	/**
-	 * Gets emitted when the plug becomes embedded in a socket
-	 * and when the embedding ends.
+	 * Gets emitted when the plug becomes embedded in a socket.
 	 * See Also
 	 * GtkSocket
-	 * the widget that a GtkPlug plugs into.
 	 */
 	void addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

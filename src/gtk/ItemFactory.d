@@ -130,7 +130,7 @@ public class ItemFactory : ObjectGtk
 	 * path = the factory path of the new item factory, a string of the form
 	 *  "<name>"
 	 * accelGroup = a GtkAccelGroup to which the accelerators for the
-	 *  menu items will be added, or NULL to create a new one
+	 *  menu items will be added, or NULL to create a new one. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType containerType, string path, AccelGroup accelGroup)
@@ -193,7 +193,7 @@ public class ItemFactory : ObjectGtk
 	 * Obtains the item factory from which a widget was created.
 	 * Params:
 	 * widget = a widget
-	 * Returns: the item factory from which widget was created, or NULL
+	 * Returns: the item factory from which widget was created, or NULL. allow-none.
 	 */
 	public static ItemFactory fromWidget(Widget widget)
 	{
@@ -215,7 +215,7 @@ public class ItemFactory : ObjectGtk
 	 * GtkItemFactoryEntry from which the widget was created.)
 	 * Params:
 	 * widget = a widget
-	 * Returns: the full path to widget if it has been created by an item factory, NULL otherwise. This value is owned by GTK+ and must not be modified or freed.
+	 * Returns:the full path to widget if it has been created by an item factory, NULL otherwise. This value is owned by GTK+ and must not be modified or freed.
 	 */
 	public static string pathFromWidget(Widget widget)
 	{
@@ -232,7 +232,7 @@ public class ItemFactory : ObjectGtk
 	 * use gtk_item_factory_get_widget() instead.
 	 * Params:
 	 * path = the path to the menu item
-	 * Returns: the menu item for the given path, or NULL if path doesn't lead to a menu item
+	 * Returns: the menu item for the given path, or NULL if path doesn't lead to a menu item. allow-none.
 	 */
 	public Widget getItem(string path)
 	{
@@ -254,7 +254,7 @@ public class ItemFactory : ObjectGtk
 	 * item, use gtk_item_factory_get_item() instead.
 	 * Params:
 	 * path = the path to the widget
-	 * Returns: the widget for the given path, or NULL if path doesn't lead to a widget
+	 * Returns: the widget for the given path, or NULL if path doesn't lead to a widget. allow-none.
 	 */
 	public Widget getWidget(string path)
 	{
@@ -277,7 +277,7 @@ public class ItemFactory : ObjectGtk
 	 * Params:
 	 * action = an action as specified in the callback_action field
 	 *  of GtkItemFactoryEntry
-	 * Returns: the widget which corresponds to the given action, or NULL if no widget was found
+	 * Returns: the widget which corresponds to the given action, or NULL if no widget was found. allow-none.
 	 */
 	public Widget getWidgetByAction(uint action)
 	{
@@ -298,7 +298,7 @@ public class ItemFactory : ObjectGtk
 	 * Params:
 	 * action = an action as specified in the callback_action field
 	 *  of GtkItemFactoryEntry
-	 * Returns: the menu item which corresponds to the given action, or NULL if no menu item was found
+	 * Returns: the menu item which corresponds to the given action, or NULL if no menu item was found. allow-none.
 	 */
 	public Widget getItemByAction(uint action)
 	{
@@ -464,7 +464,7 @@ public class ItemFactory : ObjectGtk
 	 * Obtains the popup_data which was passed to
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
-	 * Returns: popup_data associated with ifactory
+	 * Returns:popup_data associated with ifactory
 	 */
 	public void* popupData()
 	{
@@ -480,7 +480,7 @@ public class ItemFactory : ObjectGtk
 	 * is popped down again.
 	 * Params:
 	 * widget = a widget
-	 * Returns: popup_data associated with the item factory from which widget was created, or NULL if widget wasn't created by an item factory
+	 * Returns:popup_data associated with the item factory from which widget was created, or NULL if widget wasn't created by an item factory
 	 */
 	public static void* popupDataFromWidget(Widget widget)
 	{
@@ -497,7 +497,7 @@ public class ItemFactory : ObjectGtk
 	 * Params:
 	 * path = a string starting with a factory path of the form
 	 *  "<name>"
-	 * Returns: the GtkItemFactory created for the given factory path, or NULL
+	 * Returns: the GtkItemFactory created for the given factory path, or NULL . allow-none.
 	 */
 	public static ItemFactory fromPath(string path)
 	{

@@ -373,7 +373,7 @@ public class Assistant : Window
 	 * page.
 	 * Since 2.10
 	 * Params:
-	 * pageFunc = the GtkAssistantPageFunc, or NULL to use the default one
+	 * pageFunc = the GtkAssistantPageFunc, or NULL to use the default one. allow-none.
 	 * data = user data for page_func
 	 * destroy = destroy notifier for data
 	 */
@@ -443,7 +443,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * pixbuf = the new header image page
+	 * pixbuf = the new header image page. allow-none.
 	 */
 	public void setPageHeaderImage(Widget page, Pixbuf pixbuf)
 	{
@@ -475,7 +475,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * pixbuf = the new header image page
+	 * pixbuf = the new header image page. allow-none.
 	 */
 	public void setPageSideImage(Widget page, Pixbuf pixbuf)
 	{

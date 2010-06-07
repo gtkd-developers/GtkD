@@ -172,9 +172,9 @@ public class Ruler : Widget, OrientableIF
 	 * Retrieves values indicating the range and current position of a GtkRuler.
 	 * See gtk_ruler_set_range().
 	 * Params:
-	 * lower = location to store lower limit of the ruler, or NULL
-	 * upper = location to store upper limit of the ruler, or NULL
-	 * position = location to store the current position of the mark on the ruler, or NULL
+	 * lower = location to store lower limit of the ruler, or NULL. allow-none.
+	 * upper = location to store upper limit of the ruler, or NULL. allow-none.
+	 * position = location to store the current position of the mark on the ruler, or NULL. allow-none.
 	 * maxSize = location to store the maximum size of the ruler used when calculating
 	 *  the space to leave for the text, or NULL.
 	 */

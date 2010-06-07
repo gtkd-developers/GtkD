@@ -114,7 +114,15 @@ private import gtk.Bin;
  * A normal content child can be specified without specifying
  * a <child> type attribute.
  * Example  44.  A UI definition fragment with GtkExpander
- * <object class="GtkExpander">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ *  <object class="GtkExpander">
  *  <child type="label">
  *  <object class="GtkLabel" id="expander-label"/>
  *  </child>
@@ -285,7 +293,7 @@ public class Expander : Bin
 	 * This will also clear any previously set labels.
 	 * Since 2.4
 	 * Params:
-	 * label = a string
+	 * label = a string. allow-none.
 	 */
 	public void setLabel(string label)
 	{
@@ -369,7 +377,7 @@ public class Expander : Bin
 	 * that will appear embedded alongside the expander arrow.
 	 * Since 2.4
 	 * Params:
-	 * labelWidget = the new label widget
+	 * labelWidget = the new label widget. allow-none.
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{

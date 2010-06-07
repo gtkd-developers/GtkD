@@ -92,7 +92,31 @@ private import gtk.HBox;
  * by using gtk_info_bar_set_message_type(). GTK+ uses the message type
  * to determine the background color of the message area.
  * Example  14.  Simple GtkInfoBar usage.
- * /+* set up info bar +/
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ *  /+* set up info bar +/
  * info_bar = gtk_info_bar_new ();
  * gtk_widget_set_no_show_all (info_bar, TRUE);
  * message_label = gtk_label_new ("");
@@ -284,7 +308,7 @@ public class InfoBar : HBox
 	 * widget was clicked.
 	 * Since 2.18
 	 * See Also
-	 * #GtkStatusbar, GtkMessageDialog
+	 * GtkStatusbar, GtkMessageDialog
 	 */
 	void addOnResponse(void delegate(gint, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -384,6 +408,8 @@ public class InfoBar : HBox
 	 * Sets the last widget in the info bar's action area with
 	 * the given response_id as the default widget for the dialog.
 	 * Pressing "Enter" normally activates the default widget.
+	 * Note that this function currently requires info_bar to
+	 * be added to a widget hierarchy.
 	 * Since 2.18
 	 * Params:
 	 * responseId = a response ID

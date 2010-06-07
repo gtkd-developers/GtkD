@@ -84,7 +84,25 @@ private import glib.ConstructionException;
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
  * Example  2.  Typical main function for a GTK+ application
- * int
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  int
  * main (int argc, char **argv)
  * {
 	 *  /+* Initialize i18n support +/

@@ -87,15 +87,20 @@ private import gobject.ObjectG;
  * is already sunk (has no floating reference).
  * When you add a widget to its parent container, the parent container
  * will do this:
+ *  1
  *  g_object_ref_sink (G_OBJECT (child_widget));
  * This means that the container now owns a reference to the child widget
  * and the child widget has no floating reference.
  * The purpose of the floating reference is to keep the child widget alive
  * until you add it to a parent container:
+ *  1
+ * 2
+ * 3
+ * 4
  *  button = gtk_button_new ();
- *  /+* button has one floating reference to keep it alive +/
- *  gtk_container_add (GTK_CONTAINER (container), button);
- *  /+* button has one non-floating reference owned by the container +/
+ * /+* button has one floating reference to keep it alive +/
+ * gtk_container_add (GTK_CONTAINER (container), button);
+ * /+* button has one non-floating reference owned by the container +/
  * GtkWindow is a special case, because GTK+ itself will ref/sink it on creation.
  * That is, after calling gtk_window_new(), the GtkWindow will have one
  * reference which is owned by GTK+, and no floating references.
@@ -111,7 +116,7 @@ private import gobject.ObjectG;
  * the "destroy" signal. Freeing memory (referred to as
  * finalization only happens if the reference count reaches
  * zero.
- * Some simple rules for handling ""
+ * Some simple rules for handling GtkObject:
  * Never call g_object_unref() unless you have previously called g_object_ref(),
  * even if you created the GtkObject. (Note: this is not
  * true for GObject; for GObject, the creator of the object owns a reference.)
@@ -220,7 +225,7 @@ public class ObjectGtk : ObjectG
 	 * Warning
 	 * gtk_object_ref is deprecated and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Increases the reference count of the object.
-	 * Returns:@object.
+	 * Returns:object.
 	 */
 	public ObjectGtk doref()
 	{

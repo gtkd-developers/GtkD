@@ -182,6 +182,8 @@ public class Fixed : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_fixed_get_has_window has been deprecated since version 2.20 and should not be used in newly-written code. Use gtk_widget_get_has_window() instead.
 	 * Gets whether the GtkFixed has its own GdkWindow.
 	 * See gtk_fixed_set_has_window().
 	 * Returns: TRUE if fixed has its own window.
@@ -193,6 +195,8 @@ public class Fixed : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_fixed_set_has_window has been deprecated since version 2.20 and should not be used in newly-written code. Use gtk_widget_set_has_window() instead.
 	 * Sets whether a GtkFixed widget is created with a separate
 	 * GdkWindow for widget->window or not. (By default, it will be
 	 * created with no separate GdkWindow). This function must be called

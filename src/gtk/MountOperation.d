@@ -78,8 +78,15 @@ private import gio.MountOperation : GioMountOperation = MountOperation;
 /**
  * Description
  * The functions and objects described here make working with GTK+ and
- * GIO more convenient. GtkMountOperation is needed when mounting volumes
- * and gtk_show_uri() is a convenient way to launch applications for URIs.
+ * GIO more convenient.
+ * GtkMountOperation is needed when mounting volumes:
+ * It is an implementation of GMountOperation that can be used with
+ * GIO functions for mounting volumes such as
+ * g_file_mount_enclosing_volume(), g_file_mount_mountable(),
+ * g_volume_mount(), g_mount_unmount_with_operation() and others.
+ * When necessary, GtkMountOperation shows dialogs to ask for
+ * passwords, questions or show processes blocking unmount.
+ * gtk_show_uri() is a convenient way to launch applications for URIs.
  * Another object that is worth mentioning in this context is
  * GdkAppLaunchContext, which provides visual feedback when lauching
  * applications.
@@ -131,7 +138,7 @@ public class MountOperation : GioMountOperation
 	 * Creates a new GtkMountOperation
 	 * Since 2.14
 	 * Params:
-	 * parent = transient parent of the window, or NULL
+	 * parent = transient parent of the window, or NULL. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Window parent)
@@ -162,7 +169,7 @@ public class MountOperation : GioMountOperation
 	 * GtkMountOperation.
 	 * Since 2.14
 	 * Params:
-	 * parent = transient parent of the window, or NULL
+	 * parent = transient parent of the window, or NULL. allow-none.
 	 */
 	public void setParent(Window parent)
 	{
@@ -229,7 +236,7 @@ public class MountOperation : GioMountOperation
 	 * and gnome_url_show().
 	 * Since 2.14
 	 * Params:
-	 * screen = screen to show the uri on or NULL for the default screen
+	 * screen = screen to show the uri on or NULL for the default screen. allow-none.
 	 * uri = the uri to show
 	 * timestamp = a timestamp to prevent focus stealing.
 	 * Returns: TRUE on success, FALSE on error.

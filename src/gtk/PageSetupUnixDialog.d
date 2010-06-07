@@ -131,8 +131,8 @@ public class PageSetupUnixDialog : Dialog
 	 * Creates a new page setup dialog.
 	 * Since 2.10
 	 * Params:
-	 * title = the title of the dialog, or NULL
-	 * parent = transient parent of the dialog, or NULL
+	 * title = the title of the dialog, or NULL. allow-none.
+	 * parent = transient parent of the dialog, or NULL. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)

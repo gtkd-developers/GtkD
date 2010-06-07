@@ -92,10 +92,14 @@ private import gobject.ObjectG;
  * facility. When doing so, you need to be aware that settings that are specific
  * to individual widgets may not be available before the widget type has been
  * realized at least once. The following example demonstrates a way to do this:
+ *  1
+ * 2
+ * 3
+ * 4
  *  gtk_init (argc, argv);
- *  /+* make sure the type is realized +/
- *  g_type_class_unref (g_type_class_ref (GTK_TYPE_IMAGE_MENU_ITEM));
- *  g_object_set (gtk_settings_get_default (), "gtk-menu-images", FALSE, NULL);
+ * /+* make sure the type is realized +/
+ * g_type_class_unref (g_type_class_ref (GTK_TYPE_IMAGE_MENU_ITEM));
+ * g_object_set (gtk_settings_get_default (), "gtk-menu-images", FALSE, NULL);
  * There is one GtkSettings instance per screen. It can be obtained with
  * gtk_settings_get_for_screen(), but in many cases, it is more convenient
  * to use gtk_widget_get_settings(). gtk_settings_get_default() returns the
@@ -147,7 +151,7 @@ public class Settings : ObjectG
 	/**
 	 * Gets the GtkSettings object for the default GDK screen, creating
 	 * it if necessary. See gtk_settings_get_for_screen().
-	 * Returns: a GtkSettings object. If there is no default screen, then returns NULL.
+	 * Returns: a GtkSettings object. If there is no default screen, then returns NULL.. transfer none.
 	 */
 	public static Settings getDefault()
 	{

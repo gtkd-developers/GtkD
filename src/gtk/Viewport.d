@@ -43,8 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gdk.Window
  * 	- gtk.Adjustment
  * structWrap:
+ * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
@@ -61,6 +63,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gdk.Window;
 private import gtk.Adjustment;
 
 
@@ -207,7 +210,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the horizontal adjustment of the viewport.
 	 * Params:
-	 * adjustment = a GtkAdjustment.
+	 * adjustment = a GtkAdjustment.. allow-none.
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -218,7 +221,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the vertical adjustment of the viewport.
 	 * Params:
-	 * adjustment = a GtkAdjustment.
+	 * adjustment = a GtkAdjustment.. allow-none.
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{
@@ -246,5 +249,21 @@ public class Viewport : Bin
 	{
 		// GtkShadowType gtk_viewport_get_shadow_type (GtkViewport *viewport);
 		return gtk_viewport_get_shadow_type(gtkViewport);
+	}
+	
+	/**
+	 * Gets the bin window of the GtkViewport.
+	 * Since 2.20
+	 * Returns: a GdkWindow
+	 */
+	public Window getBinWindow()
+	{
+		// GdkWindow* gtk_viewport_get_bin_window (GtkViewport *viewport);
+		auto p = gtk_viewport_get_bin_window(gtkViewport);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 }

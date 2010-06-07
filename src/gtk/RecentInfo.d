@@ -86,11 +86,29 @@ private import gdk.Pixbuf;
  * files is shared with other people using them. In case the
  * default screen is being used, adding a new recently used
  * file is as simple as:
- * GtkRecentManager *manager;
+ *  1
+ * 2
+ * 3
+ *  GtkRecentManager *manager;
  * manager = gtk_recent_manager_get_default ();
  * gtk_recent_manager_add_item (manager, file_uri);
  * While looking up a recently used file is as simple as:
- * GtkRecentManager *manager;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ *  GtkRecentManager *manager;
  * GtkRecentInfo *info;
  * GError *error = NULL;
  * manager = gtk_recent_manager_get_default ();
@@ -271,10 +289,10 @@ public class RecentInfo
 	 * Since 2.10
 	 * Params:
 	 * appName = the name of the application that has registered this item
-	 * appExec = return location for the string containing the command line
-	 * count = return location for the number of times this item was registered
+	 * appExec = return location for the string containing the command line. transfer none. out.
+	 * count = return location for the number of times this item was registered. out.
 	 * time = return location for the timestamp this item was last registered
-	 *  for this application
+	 *  for this application. out.
 	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. The app_exec string is owned by the GtkRecentInfo and should not be modified or freed
 	 */
 	public int getApplicationInfo(string appName, out string appExec, out uint count, out uint time)
@@ -291,7 +309,7 @@ public class RecentInfo
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 * Since 2.10
-	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.. array length=length zero-terminated=1.
 	 */
 	public string[] getApplications()
 	{
@@ -317,7 +335,7 @@ public class RecentInfo
 	 * array of returned group names will be NULL terminated, so length might
 	 * optionally be NULL.
 	 * Since 2.10
-	 * Returns: a newly allocated NULL terminated array of strings. Use g_strfreev() to free it.
+	 * Returns: a newly allocatedNULL terminated array of strings. Use g_strfreev() to free it.. array length=length zero-terminated=1.
 	 */
 	public string[] getGroups()
 	{

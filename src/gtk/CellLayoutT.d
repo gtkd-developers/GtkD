@@ -94,7 +94,15 @@ public import glib.ListG;
  * a name attribute which specifies a property of the cell renderer; the
  * content of the element is the attribute value.
  * Example  25.  A UI definition fragment specifying attributes
- * <object class="GtkCellView">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ *  <object class="GtkCellView">
  *  <child>
  *  <object class="GtkCellRendererText"/>
  *  <attributes>
@@ -154,7 +162,7 @@ public template CellLayoutT(TStruct)
 	/**
 	 * Returns the cell renderers which have been added to cell_layout.
 	 * Since 2.12
-	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.
+	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.. element-type GtkCellRenderer. transfer container GtkCellRenderer.
 	 */
 	public ListG getCells()
 	{

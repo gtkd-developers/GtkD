@@ -116,7 +116,48 @@ private import gobject.ObjectG;
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
  * Example  26.  Creating a simple list store.
- * enum {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ * 37
+ * 38
+ * 39
+ * 40
+ * 41
+ *  enum {
 	 *  COLUMN_STRING,
 	 *  COLUMN_INT,
 	 *  COLUMN_BOOLEAN,
@@ -196,7 +237,26 @@ private import gobject.ObjectG;
  * data, not presentation,
  * and common wisdom is to separate the two, as far as possible.
  * Example  27.  A UI Definition fragment for a list store
- * <object class="GtkListStore">
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ *  <object class="GtkListStore">
  *  <columns>
  *  <column type="gchararray"/>
  *  <column type="gchararray"/>
@@ -339,7 +399,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
 	 * Params:
-	 * types = an array of GType types for the columns, from first to last
+	 * types = an array of GType types for the columns, from first to last. array length=n_columns.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType[] types)
@@ -359,7 +419,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * function after a row has been added, or a method on the GtkTreeModel
 	 * interface is called.
 	 * Params:
-	 * types = An array length n of GTypes
+	 * types = An array length n of GTypes. array length=n_columns.
 	 */
 	public void setColumnTypes(GType[] types)
 	{
@@ -404,8 +464,8 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Since 2.12
 	 * Params:
 	 * iter = A valid GtkTreeIter for the row being modified
-	 * columns = an array of column numbers
-	 * values = an array of GValues
+	 * columns = an array of column numbers. array length=n_values.
+	 * values = an array of GValues. array length=n_values.
 	 */
 	public void setValuesv(TreeIter iter, int[] columns, GValue[] values)
 	{
@@ -450,7 +510,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
 	 * iter = An unset GtkTreeIter to set to the new row
-	 * sibling = A valid GtkTreeIter, or NULL
+	 * sibling = A valid GtkTreeIter, or NULL. allow-none.
 	 */
 	public void insertBefore(TreeIter iter, TreeIter sibling)
 	{
@@ -465,7 +525,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * in values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
 	 * iter = An unset GtkTreeIter to set to the new row
-	 * sibling = A valid GtkTreeIter, or NULL
+	 * sibling = A valid GtkTreeIter, or NULL. allow-none.
 	 */
 	public void insertAfter(TreeIter iter, TreeIter sibling)
 	{
@@ -480,7 +540,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * language-bindings.
 	 * Since 2.6
 	 * Params:
-	 * iter = An unset GtkTreeIter to set to the new row, or NULL.
+	 * iter = An unset GtkTreeIter to set to the new row, or NULL.. allow-none.
 	 * position = position to insert the new row
 	 * columns = an array of column numbers
 	 * values = an array of GValues
@@ -578,7 +638,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Since 2.2
 	 * Params:
 	 * iter = A GtkTreeIter.
-	 * position = A GtkTreeIter, or NULL.
+	 * position = A GtkTreeIter, or NULL.. allow-none.
 	 */
 	public void moveBefore(TreeIter iter, TreeIter position)
 	{
@@ -593,7 +653,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Since 2.2
 	 * Params:
 	 * iter = A GtkTreeIter.
-	 * position = A GtkTreeIter or NULL.
+	 * position = A GtkTreeIter or NULL.. allow-none.
 	 */
 	public void moveAfter(TreeIter iter, TreeIter position)
 	{

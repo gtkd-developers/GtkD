@@ -82,7 +82,25 @@ private import gtk.Button;
  * gtk_toggle_button_get_active().
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled.
  * Example  16.  Creating two GtkToggleButton widgets.
- * void make_toggles (void) {
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ *  void make_toggles (void) {
 	 *  GtkWidget *dialog, *toggle1, *toggle2;
 	 *  dialog = gtk_dialog_new ();
 	 *  toggle1 = gtk_toggle_button_new_with_label ("Hi, i'm a toggle button.");
@@ -283,7 +301,7 @@ public class ToggleButton : Button
 	 * GtkToggleButton to be 'pressed in', and FALSE to raise it.
 	 * This action causes the toggled signal to be emitted.
 	 * Params:
-	 * isActive = %TRUE or FALSE.
+	 * isActive = TRUE or FALSE.
 	 */
 	public void setActive(int isActive)
 	{

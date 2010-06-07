@@ -66,14 +66,6 @@ private import gtk.DrawingArea;
 
 /**
  * Description
- * Note
- *  This widget is considered too specialized/little-used for
- *  GTK+, and will in the future be moved to some other package. If
- *  your application needs this widget, feel free to use it, as the
- *  widget does work and is useful in some applications; it's just not
- *  of general interest. However, we are not accepting new features for
- *  the widget, and it will eventually move out of the GTK+
- *  distribution.
  * The GtkCurve widget allows the user to edit a curve covering a range of
  * values. It is typically used to fine-tune color balances in graphics
  * applications like the Gimp.
@@ -82,6 +74,7 @@ private import gtk.DrawingArea;
  * connected together into a smooth curve. In linear mode the user places points
  * on the curve which are connected by straight lines. In free mode the user can
  * draw the points of the curve freely, and they are not connected at all.
+ * As of GTK+ 2.20, GtkCurve has been deprecated since it is too specialized.
  */
 public class Curve : DrawingArea
 {
@@ -162,6 +155,8 @@ public class Curve : DrawingArea
 	
 	
 	/**
+	 * Warning
+	 * gtk_curve_new has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Creates a new GtkCurve.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -177,6 +172,8 @@ public class Curve : DrawingArea
 	}
 	
 	/**
+	 * Warning
+	 * gtk_curve_reset has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Resets the curve to a straight line from the minimum x and y values to the
 	 * maximum x and y values (i.e. from the bottom-left to the top-right corners).
 	 * The curve type is not changed.
@@ -188,6 +185,8 @@ public class Curve : DrawingArea
 	}
 	
 	/**
+	 * Warning
+	 * gtk_curve_set_gamma has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Recomputes the entire curve using the given gamma value.
 	 * A gamma value of 1 results in a straight line. Values greater than 1 result
 	 * in a curve above the straight line. Values less than 1 result in a curve
@@ -203,6 +202,8 @@ public class Curve : DrawingArea
 	}
 	
 	/**
+	 * Warning
+	 * gtk_curve_set_range has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Sets the minimum and maximum x and y values of the curve.
 	 * The curve is also reset with a call to gtk_curve_reset().
 	 * Params:
@@ -218,6 +219,8 @@ public class Curve : DrawingArea
 	}
 	
 	/**
+	 * Warning
+	 * gtk_curve_get_vector has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Returns a vector of points representing the curve.
 	 * Params:
 	 * veclen = the number of points to calculate.
@@ -230,6 +233,8 @@ public class Curve : DrawingArea
 	}
 	
 	/**
+	 * Warning
+	 * gtk_curve_set_vector has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Sets the vector of points on the curve.
 	 * The curve type is set to GTK_CURVE_TYPE_FREE.
 	 * Params:
@@ -243,6 +248,8 @@ public class Curve : DrawingArea
 	}
 	
 	/**
+	 * Warning
+	 * gtk_curve_set_curve_type has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Sets the type of the curve. The curve will remain unchanged except when
 	 * changing from a free curve to a linear or spline curve, in which case the
 	 * curve will be changed as little as possible.

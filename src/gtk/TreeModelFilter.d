@@ -152,7 +152,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Since 2.4
 	 * Params:
 	 * childModel = A GtkTreeModel.
-	 * root = A GtkTreePath or NULL.
+	 * root = A GtkTreePath or NULL.. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF childModel, TreePath root)
@@ -177,7 +177,23 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Note that func is called whenever a row is inserted, when it may still be
 	 * empty. The visible function should therefore take special care of empty
 	 * rows, like in the example below.
-	 * static gboolean
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 *  static gboolean
 	 * visible_func (GtkTreeModel *model,
 	 *  GtkTreeIter *iter,
 	 *  gpointer data)
@@ -194,8 +210,8 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Since 2.4
 	 * Params:
 	 * func = A GtkTreeModelFilterVisibleFunc, the visible function.
-	 * data = User data to pass to the visible function, or NULL.
-	 * destroy = Destroy notifier of data, or NULL.
+	 * data = User data to pass to the visible function, or NULL.. allow-none.
+	 * destroy = Destroy notifier of data, or NULL.. allow-none.
 	 */
 	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -215,8 +231,8 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Params:
 	 * types = The GTypes of the columns.
 	 * func = A GtkTreeModelFilterModifyFunc
-	 * data = User data to pass to the modify function, or NULL.
-	 * destroy = Destroy notifier of data, or NULL.
+	 * data = User data to pass to the modify function, or NULL.. allow-none.
+	 * destroy = Destroy notifier of data, or NULL.. allow-none.
 	 */
 	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy)
 	{
