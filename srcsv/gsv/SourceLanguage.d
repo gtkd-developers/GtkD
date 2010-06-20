@@ -67,8 +67,8 @@ private import gobject.ObjectG;
  * Description
  * GtkSourceLanguage encapsulates syntax and highlighting styles for a
  * particular language. Use GtkSourceLanguageManager to obtain a
- * GtkSourceLanguage instance, and gtk_source_buffer_set_language()
- * to apply it to a GtkSourceBuffer.
+ * GtkSourceLanguage instance, and gtk_source_buffer_set_language() to apply it
+ * to a GtkSourceBuffer.
  */
 public class SourceLanguage : ObjectG
 {
@@ -157,7 +157,7 @@ public class SourceLanguage : ObjectG
 	
 	/**
 	 * Params:
-	 * name =  metadata property name.
+	 * name = metadata property name.
 	 * Returns: value of property name stored in the metadata of languageor NULL if language doesn't contain that metadata property.The returned string is owned by language and should not be freedor modified.
 	 */
 	public string gtkSourceLanguageGetMetadata(string name)
@@ -194,7 +194,7 @@ public class SourceLanguage : ObjectG
 	/**
 	 * Returns the name of the style with ID style_id defined by this language.
 	 * Params:
-	 * styleId =  a style ID
+	 * styleId = a style ID
 	 * Returns: the name of the style with ID style_id defined by this language orNULL if the style has no name or there is no style with ID style_id definedby this language. The returned string is owned by the language and mustnot be modified.
 	 */
 	public string gtkSourceLanguageGetStyleName(string styleId)

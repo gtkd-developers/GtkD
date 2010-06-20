@@ -71,26 +71,26 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * The GtkSourceGutter object represents the left and right gutters of the
- * text view. It is used by GtkSourceView to draw the line numbers and category
+ * The GtkSourceGutter object represents the left and right gutters of the text
+ * view. It is used by GtkSourceView to draw the line numbers and category
  * marks that might be present on a line. By packing additional GtkCellRenderer
- * objects in the gutter, you can extend the gutter by your own custom drawings.
+ * objects in the gutter, you can extend the gutter with your own custom
+ * drawings.
  * The gutter works very much the same way as cells rendered in a GtkTreeView.
  * The concept is similar, with the exception that the gutter does not have an
  * underlying GtkTreeModel. Instead, you should use
- * gtk_source_gutter_set_cell_data_func to set a callback to fill in any
- * of the cell renderers properties, given the line for which the cell is to be
- * rendered. Renderers are inserted into the gutter at a certain position.
- * The builtin line number renderer is at position
+ * gtk_source_gutter_set_cell_data_func to set a callback to fill in any of the
+ * cell renderers properties, given the line for which the cell is to be
+ * rendered. Renderers are inserted into the gutter at a certain position. The
+ * builtin line number renderer is at position
  * GTK_SOURCE_VIEW_GUTTER_POSITION_LINES (-30) and the marks renderer is at
  * GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS (-20). You can use these values to
- * position custom renderers accordingly.
- * The width of a cell renderer can be specified as either fixed (using
+ * position custom renderers accordingly. The width of a cell renderer can be
+ * specified as either fixed (using
  * gtk_cell_renderer_set_fixed_size) or dynamic, in which case you
- * MUST set
- * gtk_source_gutter_set_cell_size_func. This callback is used to set the
- * properties of the renderer such that gtk_cell_renderer_get_size yields the
- * maximum width of the cell.
+ * must set gtk_source_gutter_set_cell_size_func. This
+ * callback is used to set the properties of the renderer such that
+ * gtk_cell_renderer_get_size yields the maximum width of the cell.
  */
 public class SourceGutter : ObjectG
 {
@@ -136,13 +136,13 @@ public class SourceGutter : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(CellRenderer, GtkTextIter*, gpointer, SourceGutter)[] onCellActivatedListeners;
+	void delegate(CellRenderer, GtkTextIter*, GdkEvent*, SourceGutter)[] onCellActivatedListeners;
 	/**
 	 * Emitted when a cell has been activated (for instance when there was
 	 * a button press on the cell). The signal is only emitted for cells
 	 * that have the activatable property set to TRUE.
 	 */
-	void addOnCellActivated(void delegate(CellRenderer, GtkTextIter*, gpointer, SourceGutter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCellActivated(void delegate(CellRenderer, GtkTextIter*, GdkEvent*, SourceGutter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cell-activated" in connectedSignals) )
 		{
@@ -157,9 +157,9 @@ public class SourceGutter : ObjectG
 		}
 		onCellActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackCellActivated(GtkSourceGutter* gutterStruct, GtkCellRenderer* renderer, GtkTextIter* iter, gpointer event, SourceGutter sourceGutter)
+	extern(C) static void callBackCellActivated(GtkSourceGutter* gutterStruct, GtkCellRenderer* renderer, GtkTextIter* iter, GdkEvent* event, SourceGutter sourceGutter)
 	{
-		foreach ( void delegate(CellRenderer, GtkTextIter*, gpointer, SourceGutter) dlg ; sourceGutter.onCellActivatedListeners )
+		foreach ( void delegate(CellRenderer, GtkTextIter*, GdkEvent*, SourceGutter) dlg ; sourceGutter.onCellActivatedListeners )
 		{
 			dlg(new CellRenderer(renderer), iter, event, sourceGutter);
 		}
@@ -169,6 +169,8 @@ public class SourceGutter : ObjectG
 	/**
 	 * Emitted when a tooltip is requested for a specific cell. Signal
 	 * handlers can return TRUE to notify the tooltip has been handled.
+	 * See Also
+	 * GtkSourceView
 	 */
 	void addOnQueryTooltip(bool delegate(CellRenderer, GtkTextIter*, GtkTooltip*, SourceGutter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -220,8 +222,8 @@ public class SourceGutter : ObjectG
 	 * Inserts renderer into gutter at position.
 	 * Since 2.8
 	 * Params:
-	 * renderer =  a GtkCellRenderer
-	 * position =  the renderers position
+	 * renderer = a GtkCellRenderer
+	 * position = the renderers position
 	 */
 	public void insert(CellRenderer renderer, int position)
 	{
@@ -233,8 +235,8 @@ public class SourceGutter : ObjectG
 	 * Reorders renderer in gutter to new position.
 	 * Since 2.8
 	 * Params:
-	 * renderer =  a GtkCellRenderer
-	 * position =  the new renderer position
+	 * renderer = a GtkCellRenderer
+	 * position = the new renderer position
 	 */
 	public void reorder(CellRenderer renderer, int position)
 	{
@@ -246,7 +248,7 @@ public class SourceGutter : ObjectG
 	 * Removes renderer from gutter.
 	 * Since 2.8
 	 * Params:
-	 * renderer =  a GtkCellRenderer
+	 * renderer = a GtkCellRenderer
 	 */
 	public void remove(CellRenderer renderer)
 	{
@@ -259,10 +261,10 @@ public class SourceGutter : ObjectG
 	 * used to setup the cell renderer properties for rendering the current cell.
 	 * Since 2.8
 	 * Params:
-	 * renderer =  a GtkCellRenderer
-	 * func =  the GtkSourceGutterDataFunc to use
-	 * funcData =  the user data for func
-	 * destroy =  the destroy notification for func_data
+	 * renderer = a GtkCellRenderer
+	 * func = the GtkSourceGutterDataFunc to use
+	 * funcData = the user data for func
+	 * destroy = the destroy notification for func_data
 	 */
 	public void setCellDataFunc(CellRenderer renderer, GtkSourceGutterDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
@@ -276,10 +278,10 @@ public class SourceGutter : ObjectG
 	 * of the cell.
 	 * Since 2.8
 	 * Params:
-	 * renderer =  a GtkCellRenderer
-	 * func =  the GtkSourceGutterSizeFunc to use
-	 * funcData =  the user data for func
-	 * destroy =  the destroy notification for func_data
+	 * renderer = a GtkCellRenderer
+	 * func = the GtkSourceGutterSizeFunc to use
+	 * funcData = the user data for func
+	 * destroy = the destroy notification for func_data
 	 */
 	public void setCellSizeFunc(CellRenderer renderer, GtkSourceGutterSizeFunc func, void* funcData, GDestroyNotify destroy)
 	{

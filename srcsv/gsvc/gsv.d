@@ -73,6 +73,7 @@ static this()
 	Linker.link(gtk_source_view_get_tab_width, "gtk_source_view_get_tab_width", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_draw_spaces, "gtk_source_view_set_draw_spaces", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_draw_spaces, "gtk_source_view_get_draw_spaces", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_completion, "gtk_source_view_get_completion", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_gutter, "gtk_source_view_get_gutter", LIBRARY.GSV);
 
 	// gsv.SourceBuffer
@@ -103,6 +104,77 @@ static this()
 	Linker.link(gtk_source_buffer_backward_iter_to_source_mark, "gtk_source_buffer_backward_iter_to_source_mark", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_ensure_highlight, "gtk_source_buffer_ensure_highlight", LIBRARY.GSV);
 
+	// gsv.SourceCompletion
+
+	Linker.link(gtk_source_completion_add_provider, "gtk_source_completion_add_provider", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_remove_provider, "gtk_source_completion_remove_provider", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_get_providers, "gtk_source_completion_get_providers", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_show, "gtk_source_completion_show", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_hide, "gtk_source_completion_hide", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_get_info_window, "gtk_source_completion_get_info_window", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_get_view, "gtk_source_completion_get_view", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_create_context, "gtk_source_completion_create_context", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_move_window, "gtk_source_completion_move_window", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_block_interactive, "gtk_source_completion_block_interactive", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_unblock_interactive, "gtk_source_completion_unblock_interactive", LIBRARY.GSV);
+
+	// gsv.SourceCompletionContext
+
+	Linker.link(gtk_source_completion_context_add_proposals, "gtk_source_completion_context_add_proposals", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_context_get_iter, "gtk_source_completion_context_get_iter", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_context_get_activation, "gtk_source_completion_context_get_activation", LIBRARY.GSV);
+
+	// gsv.SourceCompletionInfo
+
+	Linker.link(gtk_source_completion_info_new, "gtk_source_completion_info_new", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_info_move_to_iter, "gtk_source_completion_info_move_to_iter", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_info_set_sizing, "gtk_source_completion_info_set_sizing", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_info_set_widget, "gtk_source_completion_info_set_widget", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_info_get_widget, "gtk_source_completion_info_get_widget", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_info_process_resize, "gtk_source_completion_info_process_resize", LIBRARY.GSV);
+
+	// gsv.SourceCompletionItem
+
+	Linker.link(gtk_source_completion_item_new, "gtk_source_completion_item_new", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_new_with_markup, "gtk_source_completion_item_new_with_markup", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_new_from_stock, "gtk_source_completion_item_new_from_stock", LIBRARY.GSV);
+
+	// gsv.SourceCompletionProposalT
+
+
+	// gsv.SourceCompletionProposalT
+
+	Linker.link(gtk_source_completion_proposal_get_label, "gtk_source_completion_proposal_get_label", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_get_markup, "gtk_source_completion_proposal_get_markup", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_get_text, "gtk_source_completion_proposal_get_text", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_get_icon, "gtk_source_completion_proposal_get_icon", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_get_info, "gtk_source_completion_proposal_get_info", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_changed, "gtk_source_completion_proposal_changed", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_hash, "gtk_source_completion_proposal_hash", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_equal, "gtk_source_completion_proposal_equal", LIBRARY.GSV);
+
+	// gsv.SourceCompletionProviderT
+
+
+	// gsv.SourceCompletionProviderT
+
+	Linker.link(gtk_source_completion_provider_get_name, "gtk_source_completion_provider_get_name", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_icon, "gtk_source_completion_provider_get_icon", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_populate, "gtk_source_completion_provider_populate", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_activation, "gtk_source_completion_provider_get_activation", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_match, "gtk_source_completion_provider_match", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_info_widget, "gtk_source_completion_provider_get_info_widget", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_update_info, "gtk_source_completion_provider_update_info", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_start_iter, "gtk_source_completion_provider_get_start_iter", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_activate_proposal, "gtk_source_completion_provider_activate_proposal", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_interactive_delay, "gtk_source_completion_provider_get_interactive_delay", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_priority, "gtk_source_completion_provider_get_priority", LIBRARY.GSV);
+
+	// gsv.SourceSearch
+
+	Linker.link(gtk_source_iter_backward_search, "gtk_source_iter_backward_search", LIBRARY.GSV);
+	Linker.link(gtk_source_iter_forward_search, "gtk_source_iter_forward_search", LIBRARY.GSV);
+
 	// gsv.SourceGutter
 
 	Linker.link(gtk_source_gutter_get_window, "gtk_source_gutter_get_window", LIBRARY.GSV);
@@ -112,11 +184,6 @@ static this()
 	Linker.link(gtk_source_gutter_set_cell_data_func, "gtk_source_gutter_set_cell_data_func", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_set_cell_size_func, "gtk_source_gutter_set_cell_size_func", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_queue_draw, "gtk_source_gutter_queue_draw", LIBRARY.GSV);
-
-	// gsv.SourceSearch
-
-	Linker.link(gtk_source_iter_backward_search, "gtk_source_iter_backward_search", LIBRARY.GSV);
-	Linker.link(gtk_source_iter_forward_search, "gtk_source_iter_forward_search", LIBRARY.GSV);
 
 	// gsv.SourceMark
 
@@ -255,6 +322,7 @@ mixin( gshared ~"extern(C)
 	guint function(GtkSourceView* view) c_gtk_source_view_get_tab_width;
 	void function(GtkSourceView* view, GtkSourceDrawSpacesFlags flags) c_gtk_source_view_set_draw_spaces;
 	GtkSourceDrawSpacesFlags function(GtkSourceView* view) c_gtk_source_view_get_draw_spaces;
+	GtkSourceCompletion* function(GtkSourceView* view) c_gtk_source_view_get_completion;
 	GtkSourceGutter* function(GtkSourceView* view, GtkTextWindowType windowType) c_gtk_source_view_get_gutter;
 	
 	// gsv.SourceBuffer
@@ -285,6 +353,77 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_backward_iter_to_source_mark;
 	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
 	
+	// gsv.SourceCompletion
+	
+	gboolean function(GtkSourceCompletion* completion, GtkSourceCompletionProvider* provider, GError** error) c_gtk_source_completion_add_provider;
+	gboolean function(GtkSourceCompletion* completion, GtkSourceCompletionProvider* provider, GError** error) c_gtk_source_completion_remove_provider;
+	GList* function(GtkSourceCompletion* completion) c_gtk_source_completion_get_providers;
+	gboolean function(GtkSourceCompletion* completion, GList* providers, GtkSourceCompletionContext* context) c_gtk_source_completion_show;
+	void function(GtkSourceCompletion* completion) c_gtk_source_completion_hide;
+	GtkSourceCompletionInfo* function(GtkSourceCompletion* completion) c_gtk_source_completion_get_info_window;
+	GtkSourceView* function(GtkSourceCompletion* completion) c_gtk_source_completion_get_view;
+	GtkSourceCompletionContext* function(GtkSourceCompletion* completion, GtkTextIter* position) c_gtk_source_completion_create_context;
+	void function(GtkSourceCompletion* completion, GtkTextIter* iter) c_gtk_source_completion_move_window;
+	void function(GtkSourceCompletion* completion) c_gtk_source_completion_block_interactive;
+	void function(GtkSourceCompletion* completion) c_gtk_source_completion_unblock_interactive;
+	
+	// gsv.SourceCompletionContext
+	
+	void function(GtkSourceCompletionContext* context, void* provider, GList* proposals, gboolean finished) c_gtk_source_completion_context_add_proposals;
+	void function(GtkSourceCompletionContext* context, GtkTextIter* iter) c_gtk_source_completion_context_get_iter;
+	GtkSourceCompletionActivation function(GtkSourceCompletionContext* context) c_gtk_source_completion_context_get_activation;
+	
+	// gsv.SourceCompletionInfo
+	
+	GtkSourceCompletionInfo* function() c_gtk_source_completion_info_new;
+	void function(GtkSourceCompletionInfo* info, GtkTextView* view, GtkTextIter* iter) c_gtk_source_completion_info_move_to_iter;
+	void function(GtkSourceCompletionInfo* info, gint width, gint height, gboolean shrinkWidth, gboolean shrinkHeight) c_gtk_source_completion_info_set_sizing;
+	void function(GtkSourceCompletionInfo* info, GtkWidget* widget) c_gtk_source_completion_info_set_widget;
+	GtkWidget* function(GtkSourceCompletionInfo* info) c_gtk_source_completion_info_get_widget;
+	void function(GtkSourceCompletionInfo* info) c_gtk_source_completion_info_process_resize;
+	
+	// gsv.SourceCompletionItem
+	
+	GtkSourceCompletionItem* function(gchar* label, gchar* text, GdkPixbuf* icon, gchar* info) c_gtk_source_completion_item_new;
+	GtkSourceCompletionItem* function(gchar* markup, gchar* text, GdkPixbuf* icon, gchar* info) c_gtk_source_completion_item_new_with_markup;
+	GtkSourceCompletionItem* function(gchar* label, gchar* text, gchar* stock, gchar* info) c_gtk_source_completion_item_new_from_stock;
+	
+	// gsv.SourceCompletionProposalT
+	
+	
+	// gsv.SourceCompletionProposalT
+	
+	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_label;
+	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_markup;
+	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_text;
+	GdkPixbuf* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_icon;
+	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_info;
+	void function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_changed;
+	guint function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_hash;
+	gboolean function(GtkSourceCompletionProposal* proposal, GtkSourceCompletionProposal* other) c_gtk_source_completion_proposal_equal;
+	
+	// gsv.SourceCompletionProviderT
+	
+	
+	// gsv.SourceCompletionProviderT
+	
+	gchar* function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_name;
+	GdkPixbuf* function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_icon;
+	void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) c_gtk_source_completion_provider_populate;
+	GtkSourceCompletionActivation function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_activation;
+	gboolean function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) c_gtk_source_completion_provider_match;
+	GtkWidget* function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal) c_gtk_source_completion_provider_get_info_widget;
+	void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkSourceCompletionInfo* info) c_gtk_source_completion_provider_update_info;
+	gboolean function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) c_gtk_source_completion_provider_get_start_iter;
+	gboolean function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) c_gtk_source_completion_provider_activate_proposal;
+	gint function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_interactive_delay;
+	gint function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_priority;
+	
+	// gsv.SourceSearch
+	
+	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_backward_search;
+	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_forward_search;
+	
 	// gsv.SourceGutter
 	
 	GdkWindow* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window;
@@ -294,11 +433,6 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_data_func;
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterSizeFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_size_func;
 	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
-	
-	// gsv.SourceSearch
-	
-	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_backward_search;
-	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_forward_search;
 	
 	// gsv.SourceMark
 	
@@ -434,6 +568,7 @@ alias c_gtk_source_view_set_tab_width  gtk_source_view_set_tab_width;
 alias c_gtk_source_view_get_tab_width  gtk_source_view_get_tab_width;
 alias c_gtk_source_view_set_draw_spaces  gtk_source_view_set_draw_spaces;
 alias c_gtk_source_view_get_draw_spaces  gtk_source_view_get_draw_spaces;
+alias c_gtk_source_view_get_completion  gtk_source_view_get_completion;
 alias c_gtk_source_view_get_gutter  gtk_source_view_get_gutter;
 
 // gsv.SourceBuffer
@@ -464,6 +599,77 @@ alias c_gtk_source_buffer_forward_iter_to_source_mark  gtk_source_buffer_forward
 alias c_gtk_source_buffer_backward_iter_to_source_mark  gtk_source_buffer_backward_iter_to_source_mark;
 alias c_gtk_source_buffer_ensure_highlight  gtk_source_buffer_ensure_highlight;
 
+// gsv.SourceCompletion
+
+alias c_gtk_source_completion_add_provider  gtk_source_completion_add_provider;
+alias c_gtk_source_completion_remove_provider  gtk_source_completion_remove_provider;
+alias c_gtk_source_completion_get_providers  gtk_source_completion_get_providers;
+alias c_gtk_source_completion_show  gtk_source_completion_show;
+alias c_gtk_source_completion_hide  gtk_source_completion_hide;
+alias c_gtk_source_completion_get_info_window  gtk_source_completion_get_info_window;
+alias c_gtk_source_completion_get_view  gtk_source_completion_get_view;
+alias c_gtk_source_completion_create_context  gtk_source_completion_create_context;
+alias c_gtk_source_completion_move_window  gtk_source_completion_move_window;
+alias c_gtk_source_completion_block_interactive  gtk_source_completion_block_interactive;
+alias c_gtk_source_completion_unblock_interactive  gtk_source_completion_unblock_interactive;
+
+// gsv.SourceCompletionContext
+
+alias c_gtk_source_completion_context_add_proposals  gtk_source_completion_context_add_proposals;
+alias c_gtk_source_completion_context_get_iter  gtk_source_completion_context_get_iter;
+alias c_gtk_source_completion_context_get_activation  gtk_source_completion_context_get_activation;
+
+// gsv.SourceCompletionInfo
+
+alias c_gtk_source_completion_info_new  gtk_source_completion_info_new;
+alias c_gtk_source_completion_info_move_to_iter  gtk_source_completion_info_move_to_iter;
+alias c_gtk_source_completion_info_set_sizing  gtk_source_completion_info_set_sizing;
+alias c_gtk_source_completion_info_set_widget  gtk_source_completion_info_set_widget;
+alias c_gtk_source_completion_info_get_widget  gtk_source_completion_info_get_widget;
+alias c_gtk_source_completion_info_process_resize  gtk_source_completion_info_process_resize;
+
+// gsv.SourceCompletionItem
+
+alias c_gtk_source_completion_item_new  gtk_source_completion_item_new;
+alias c_gtk_source_completion_item_new_with_markup  gtk_source_completion_item_new_with_markup;
+alias c_gtk_source_completion_item_new_from_stock  gtk_source_completion_item_new_from_stock;
+
+// gsv.SourceCompletionProposalT
+
+
+// gsv.SourceCompletionProposalT
+
+alias c_gtk_source_completion_proposal_get_label  gtk_source_completion_proposal_get_label;
+alias c_gtk_source_completion_proposal_get_markup  gtk_source_completion_proposal_get_markup;
+alias c_gtk_source_completion_proposal_get_text  gtk_source_completion_proposal_get_text;
+alias c_gtk_source_completion_proposal_get_icon  gtk_source_completion_proposal_get_icon;
+alias c_gtk_source_completion_proposal_get_info  gtk_source_completion_proposal_get_info;
+alias c_gtk_source_completion_proposal_changed  gtk_source_completion_proposal_changed;
+alias c_gtk_source_completion_proposal_hash  gtk_source_completion_proposal_hash;
+alias c_gtk_source_completion_proposal_equal  gtk_source_completion_proposal_equal;
+
+// gsv.SourceCompletionProviderT
+
+
+// gsv.SourceCompletionProviderT
+
+alias c_gtk_source_completion_provider_get_name  gtk_source_completion_provider_get_name;
+alias c_gtk_source_completion_provider_get_icon  gtk_source_completion_provider_get_icon;
+alias c_gtk_source_completion_provider_populate  gtk_source_completion_provider_populate;
+alias c_gtk_source_completion_provider_get_activation  gtk_source_completion_provider_get_activation;
+alias c_gtk_source_completion_provider_match  gtk_source_completion_provider_match;
+alias c_gtk_source_completion_provider_get_info_widget  gtk_source_completion_provider_get_info_widget;
+alias c_gtk_source_completion_provider_update_info  gtk_source_completion_provider_update_info;
+alias c_gtk_source_completion_provider_get_start_iter  gtk_source_completion_provider_get_start_iter;
+alias c_gtk_source_completion_provider_activate_proposal  gtk_source_completion_provider_activate_proposal;
+alias c_gtk_source_completion_provider_get_interactive_delay  gtk_source_completion_provider_get_interactive_delay;
+alias c_gtk_source_completion_provider_get_priority  gtk_source_completion_provider_get_priority;
+
+// gsv.SourceSearch
+
+alias c_gtk_source_iter_backward_search  gtk_source_iter_backward_search;
+alias c_gtk_source_iter_forward_search  gtk_source_iter_forward_search;
+
 // gsv.SourceGutter
 
 alias c_gtk_source_gutter_get_window  gtk_source_gutter_get_window;
@@ -473,11 +679,6 @@ alias c_gtk_source_gutter_remove  gtk_source_gutter_remove;
 alias c_gtk_source_gutter_set_cell_data_func  gtk_source_gutter_set_cell_data_func;
 alias c_gtk_source_gutter_set_cell_size_func  gtk_source_gutter_set_cell_size_func;
 alias c_gtk_source_gutter_queue_draw  gtk_source_gutter_queue_draw;
-
-// gsv.SourceSearch
-
-alias c_gtk_source_iter_backward_search  gtk_source_iter_backward_search;
-alias c_gtk_source_iter_forward_search  gtk_source_iter_forward_search;
 
 // gsv.SourceMark
 

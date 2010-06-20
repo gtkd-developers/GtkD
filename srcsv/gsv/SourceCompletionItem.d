@@ -1,0 +1,165 @@
+/*
+ * This file is part of gtkD.
+ *
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+ 
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
+
+/*
+ * Conversion parameters:
+ * inFile  = GtkSourceCompletionItem.html
+ * outPack = gsv
+ * outFile = SourceCompletionItem
+ * strct   = GtkSourceCompletionItem
+ * realStrct=
+ * ctorStrct=
+ * clss    = SourceCompletionItem
+ * interf  = 
+ * class Code: Yes
+ * interface Code: No
+ * template for:
+ * extend  = 
+ * implements:
+ * 	- SourceCompletionProposalIF
+ * prefixes:
+ * 	- gtk_source_completion_item_
+ * omit structs:
+ * omit prefixes:
+ * omit code:
+ * omit signals:
+ * imports:
+ * 	- glib.Str
+ * 	- gdk.Pixbuf
+ * 	- gsv.SourceCompletionProposalIF
+ * 	- gsv.SourceCompletionProposalT
+ * structWrap:
+ * 	- GdkPixbuf* -> Pixbuf
+ * module aliases:
+ * local aliases:
+ * overrides:
+ */
+
+module gsv.SourceCompletionItem;
+
+public  import gsvc.gsvtypes;
+
+private import gsvc.gsv;
+private import glib.ConstructionException;
+
+
+private import glib.Str;
+private import gdk.Pixbuf;
+private import gsv.SourceCompletionProposalIF;
+private import gsv.SourceCompletionProposalT;
+
+
+
+private import gobject.ObjectG;
+
+/**
+ * Description
+ */
+public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
+{
+	
+	/** the main Gtk struct */
+	protected GtkSourceCompletionItem* gtkSourceCompletionItem;
+	
+	
+	public GtkSourceCompletionItem* getSourceCompletionItemStruct()
+	{
+		return gtkSourceCompletionItem;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkSourceCompletionItem;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GtkSourceCompletionItem* gtkSourceCompletionItem)
+	{
+		if(gtkSourceCompletionItem is null)
+		{
+			this = null;
+			return;
+		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkSourceCompletionItem);
+		if( ptr !is null )
+		{
+			this = cast(SourceCompletionItem)ptr;
+			return;
+		}
+		super(cast(GObject*)gtkSourceCompletionItem);
+		this.gtkSourceCompletionItem = gtkSourceCompletionItem;
+	}
+	
+	// add the SourceCompletionProposal capabilities
+	mixin SourceCompletionProposalT!(GtkSourceCompletionItem);
+	
+	/**
+	 */
+	
+	/**
+	 * Create a new GtkSourceCompletionItem with label label, icon icon and
+	 * extra information info. Both icon and info can be NULL in which case
+	 * there will be no icon shown and no extra information available.
+	 * Params:
+	 * label = The item label
+	 * text = The item text
+	 * icon = The item icon
+	 * info = The item extra information
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, string text, Pixbuf icon, string info)
+	{
+		// GtkSourceCompletionItem * gtk_source_completion_item_new  (const gchar *label,  const gchar *text,  GdkPixbuf *icon,  const gchar *info);
+		auto p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
+		}
+		this(cast(GtkSourceCompletionItem*) p);
+	}
+	
+	/**
+	 * Creates a new GtkSourceCompletionItem from a stock item. If label is NULL,
+	 * the stock label will be used.
+	 * Params:
+	 * label = The item label
+	 * text = The item text
+	 * stock = The stock icon
+	 * info = The item extra information
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, string text, string stock, string info)
+	{
+		// GtkSourceCompletionItem * gtk_source_completion_item_new_from_stock  (const gchar *label,  const gchar *text,  const gchar *stock,  const gchar *info);
+		auto p = gtk_source_completion_item_new_from_stock(Str.toStringz(label), Str.toStringz(text), Str.toStringz(stock), Str.toStringz(info));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_source_completion_item_new_from_stock(Str.toStringz(label), Str.toStringz(text), Str.toStringz(stock), Str.toStringz(info))");
+		}
+		this(cast(GtkSourceCompletionItem*) p);
+	}
+}

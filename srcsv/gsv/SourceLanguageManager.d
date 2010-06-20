@@ -75,8 +75,9 @@ private import gobject.ObjectG;
  * files and creates and stores GtkSourceLanguage objects, and provides API to
  * access them.
  * Use gtk_source_language_manager_get_default() to retrieve the default
- * instance of GtkSourceLanguageManager, and gtk_source_language_manager_guess_language()
- * to get a GtkSourceLanguage for given file name and content type.
+ * instance of GtkSourceLanguageManager, and
+ * gtk_source_language_manager_guess_language() to get a GtkSourceLanguage for
+ * given file name and content type.
  */
 public class SourceLanguageManager : ObjectG
 {
@@ -163,7 +164,7 @@ public class SourceLanguageManager : ObjectG
 	 *  to set a custom search path for a GtkSourceLanguageManager,
 	 *  you have to call this function right after creating it.
 	 * Params:
-	 * dirs =  a NULL-terminated array of strings or NULL.
+	 * dirs = a NULL-terminated array of strings or NULL.
 	 */
 	public void setSearchPath(string[] dirs)
 	{
@@ -195,7 +196,7 @@ public class SourceLanguageManager : ObjectG
 	 * Gets the GtkSourceLanguage identified by the given id in the language
 	 * manager.
 	 * Params:
-	 * id =  a language id.
+	 * id = a language id.
 	 * Returns: a GtkSourceLanguage, or NULL if there is no languageidentified by the given id. Return value is owned by lm and should notbe freed.
 	 */
 	public SourceLanguage getLanguage(string id)
@@ -214,8 +215,8 @@ public class SourceLanguageManager : ObjectG
 	 * according to the information in lang files. Either filename or
 	 * Since 2.4
 	 * Params:
-	 * filename =  a filename in Glib filename encoding, or NULL.
-	 * contentType =  a content type (as in GIO API), or NULL.
+	 * filename = a filename in Glib filename encoding, or NULL.
+	 * contentType = a content type (as in GIO API), or NULL.
 	 * Returns: a GtkSourceLanguage, or NULL if there is no suitable languagefor given filename and/or content_type. Return value is owned by lmand should not be freed.
 	 */
 	public SourceLanguage guessLanguage(string filename, string contentType)

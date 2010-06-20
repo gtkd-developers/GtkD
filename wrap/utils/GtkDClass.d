@@ -2969,7 +2969,7 @@ public class GtkDClass
 	 */
 	public static void fixType(inout char[] type, inout int p, inout char[] text)
 	{
-		if ( type == "const" )
+		if ( type == "const" || type == "struct" )
 		{
 			GtkDClass.skipBlank(p, text);
 			type = untilBlank(p, text);
@@ -2978,6 +2978,10 @@ public class GtkDClass
 		{
 			GtkDClass.skipBlank(p, text);
 			type = "u" ~ untilBlank(p, text);
+		}
+		if ( startsWith(type, "_") )
+		{
+			type = type[1..$];
 		}
 //		if ( type == "uchar" )
 //		{

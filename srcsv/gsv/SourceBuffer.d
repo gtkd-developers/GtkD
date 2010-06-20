@@ -86,13 +86,12 @@ private import gtk.TextBuffer;
 /**
  * Description
  * The GtkSourceBuffer object is the model for GtkSourceView widgets.
- * It extends the GtkTextBuffer object by adding features necessary to
- * display and edit source code: syntax highlighting, bracket matching
- * and markers. It also implements support for undo/redo operations.
+ * It extends the GtkTextBuffer object by adding features useful to display
+ * and edit source code as syntax highlighting and bracket matching. It
+ * also implements support for undo/redo operations.
  * To create a GtkSourceBuffer use gtk_source_buffer_new() or
- * gtk_source_buffer_new_with_language(). The second form is just a
- * convenience function which allows you to initially set a
- * GtkSourceLanguage.
+ * gtk_source_buffer_new_with_language(). The second form is just a convenience
+ * function which allows you to initially set a GtkSourceLanguage.
  * By default highlighting is enabled, but you can disable it with
  * gtk_source_buffer_set_highlight_syntax().
  */
@@ -166,16 +165,36 @@ public class SourceBuffer : TextBuffer
 		}
 	}
 	
+	void delegate(SourceBuffer)[] onRedoListeners;
+	/**
+	 */
+	void addOnRedo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("redo" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"redo",
+			cast(GCallback)&callBackRedo,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["redo"] = 1;
+		}
+		onRedoListeners ~= dlg;
+	}
+	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer sourceBuffer)
+	{
+		foreach ( void delegate(SourceBuffer) dlg ; sourceBuffer.onRedoListeners )
+		{
+			dlg(sourceBuffer);
+		}
+	}
+	
 	void delegate(GtkTextMark*, SourceBuffer)[] onSourceMarkUpdatedListeners;
 	/**
 	 * The ::source_mark_updated signal is emitted each time
 	 * a mark is added to, moved or removed from the buffer.
-	 * See Also
-	 * There is an introduction document
-	 * describing the basic concepts of the buffer/view interactions.
-	 * Check GtkTextBuffer for information about the base buffer; and
-	 * GtkSourceView for examples on setting up the buffer to be displayed
-	 * in a view widget.
 	 */
 	void addOnSourceMarkUpdated(void delegate(GtkTextMark*, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -200,11 +219,39 @@ public class SourceBuffer : TextBuffer
 		}
 	}
 	
+	void delegate(SourceBuffer)[] onUndoListeners;
+	/**
+	 * See Also
+	 * GtkTextBuffer,GtkSourceView
+	 */
+	void addOnUndo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("undo" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"undo",
+			cast(GCallback)&callBackUndo,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["undo"] = 1;
+		}
+		onUndoListeners ~= dlg;
+	}
+	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer sourceBuffer)
+	{
+		foreach ( void delegate(SourceBuffer) dlg ; sourceBuffer.onUndoListeners )
+		{
+			dlg(sourceBuffer);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new source buffer.
 	 * Params:
-	 * table =  a GtkTextTagTable, or NULL to create a new one.
+	 * table = a GtkTextTagTable, or NULL to create a new one.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextTagTable table)
@@ -223,7 +270,7 @@ public class SourceBuffer : TextBuffer
 	 * language. This is equivalent to creating a new source buffer with
 	 * a new tag table and then calling gtk_source_buffer_set_language().
 	 * Params:
-	 * language =  a GtkSourceLanguage.
+	 * language = a GtkSourceLanguage.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceLanguage language)
@@ -245,7 +292,7 @@ public class SourceBuffer : TextBuffer
 	 * is disabled and all the GtkTextTag objects that have been added by the
 	 * syntax highlighting engine are removed from the buffer.
 	 * Params:
-	 * highlight =  TRUE to enable syntax highlighting, FALSE to disable it.
+	 * highlight = TRUE to enable syntax highlighting, FALSE to disable it.
 	 */
 	public void setHighlightSyntax(int highlight)
 	{
@@ -272,7 +319,7 @@ public class SourceBuffer : TextBuffer
 	 * buffer is not highlighted.
 	 * The buffer holds a reference to language.
 	 * Params:
-	 * language =  a GtkSourceLanguage to set, or NULL.
+	 * language = a GtkSourceLanguage to set, or NULL.
 	 */
 	public void setLanguage(SourceLanguage language)
 	{
@@ -305,7 +352,7 @@ public class SourceBuffer : TextBuffer
 	 * style with the gtk_source_buffer_set_bracket_match_style()
 	 * function.
 	 * Params:
-	 * highlight =  TRUE if you want matching brackets highlighted.
+	 * highlight = TRUE if you want matching brackets highlighted.
 	 */
 	public void setHighlightMatchingBrackets(int highlight)
 	{
@@ -325,9 +372,10 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Sets style scheme used by the buffer.
+	 * Sets style scheme used by the buffer. If scheme is NULL no
+	 * style scheme is used.
 	 * Params:
-	 * scheme =  style scheme.
+	 * scheme = style scheme.
 	 */
 	public void setStyleScheme(SourceStyleScheme scheme)
 	{
@@ -373,7 +421,7 @@ public class SourceBuffer : TextBuffer
 	 * actions, such as multiple character insertions into one action.
 	 * But, inserting a newline does start a new action.
 	 * Params:
-	 * maxUndoLevels =  the desired maximum number of undo levels.
+	 * maxUndoLevels = the desired maximum number of undo levels.
 	 */
 	public void setMaxUndoLevels(int maxUndoLevels)
 	{
@@ -466,9 +514,9 @@ public class SourceBuffer : TextBuffer
 	 * executing instruction indication in a source file, etc..
 	 * Since 2.2
 	 * Params:
-	 * name =  the name of the mark, or NULL.
-	 * category =  a string defining the mark category.
-	 * where =  location to place the mark.
+	 * name = the name of the mark, or NULL.
+	 * category = a string defining the mark category.
+	 * where = location to place the mark.
 	 * Returns: a new GtkSourceMark, owned by the buffer.
 	 */
 	public SourceMark createSourceMark(string name, string category, TextIter where)
@@ -487,8 +535,8 @@ public class SourceBuffer : TextBuffer
 	 * If category is NULL, all marks at line are returned.
 	 * Since 2.2
 	 * Params:
-	 * line =  a line number.
-	 * category =  category to search for or NULL
+	 * line = a line number.
+	 * category = category to search for or NULL
 	 * Returns: a newly allocated GSList.
 	 */
 	public ListSG getSourceMarksAtLine(int line, string category)
@@ -507,8 +555,8 @@ public class SourceBuffer : TextBuffer
 	 * is NULL it returns all marks at iter.
 	 * Since 2.2
 	 * Params:
-	 * iter =  an iterator.
-	 * category =  category to search for or NULL
+	 * iter = an iterator.
+	 * category = category to search for or NULL
 	 * Returns: a newly allocated GSList.
 	 */
 	public ListSG getSourceMarksAtIter(TextIter iter, string category)
@@ -527,9 +575,9 @@ public class SourceBuffer : TextBuffer
 	 * If category is NULL, all marks in the range will be removed.
 	 * Since 2.2
 	 * Params:
-	 * start =  a GtkTextIter
-	 * end =  a GtkTextIter
-	 * category =  category to search for or NULL
+	 * start = a GtkTextIter
+	 * end = a GtkTextIter
+	 * category = category to search for or NULL
 	 */
 	public void removeSourceMarks(TextIter start, TextIter end, string category)
 	{
@@ -543,8 +591,8 @@ public class SourceBuffer : TextBuffer
 	 * next source mark can be of any category.
 	 * Since 2.2
 	 * Params:
-	 * iter =  an iterator.
-	 * category =  category to search for or NULL
+	 * iter = an iterator.
+	 * category = category to search for or NULL
 	 * Returns: whether iter moved.
 	 */
 	public int forwardIterToSourceMark(TextIter iter, string category)
@@ -559,8 +607,8 @@ public class SourceBuffer : TextBuffer
 	 * previous source mark can be of any category.
 	 * Since 2.2
 	 * Params:
-	 * iter =  an iterator.
-	 * category =  category to search for or NULL
+	 * iter = an iterator.
+	 * category = category to search for or NULL
 	 * Returns: whether iter moved.
 	 */
 	public int backwardIterToSourceMark(TextIter iter, string category)
@@ -576,8 +624,8 @@ public class SourceBuffer : TextBuffer
 	 *  when you need to make sure that some text not currently
 	 *  visible is highlighted, for instance before printing.
 	 * Params:
-	 * start =  start of the area to highlight.
-	 * end =  end of the area to highlight.
+	 * start = start of the area to highlight.
+	 * end = end of the area to highlight.
 	 */
 	public void ensureHighlight(TextIter start, TextIter end)
 	{

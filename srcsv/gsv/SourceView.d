@@ -147,13 +147,13 @@ public class SourceView : TextView
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(TextIter, gpointer, SourceView)[] onLineMarkActivatedListeners;
+	void delegate(TextIter, GdkEvent*, SourceView)[] onLineMarkActivatedListeners;
 	/**
 	 * Emitted when a line mark has been activated (for instance when there
 	 * was a button press in the line marks gutter). You can use iter to
 	 * determine on which line the activation took place.
 	 */
-	void addOnLineMarkActivated(void delegate(TextIter, gpointer, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnLineMarkActivated(void delegate(TextIter, GdkEvent*, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("line-mark-activated" in connectedSignals) )
 		{
@@ -168,11 +168,37 @@ public class SourceView : TextView
 		}
 		onLineMarkActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, gpointer event, SourceView sourceView)
+	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, GdkEvent* event, SourceView sourceView)
 	{
-		foreach ( void delegate(TextIter, gpointer, SourceView) dlg ; sourceView.onLineMarkActivatedListeners )
+		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; sourceView.onLineMarkActivatedListeners )
 		{
 			dlg(new TextIter(iter), event, sourceView);
+		}
+	}
+	
+	void delegate(gboolean, gint, SourceView)[] onMoveLinesListeners;
+	/**
+	 */
+	void addOnMoveLines(void delegate(gboolean, gint, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("move-lines" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"move-lines",
+			cast(GCallback)&callBackMoveLines,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["move-lines"] = 1;
+		}
+		onMoveLinesListeners ~= dlg;
+	}
+	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, gboolean arg1, gint arg2, SourceView sourceView)
+	{
+		foreach ( void delegate(gboolean, gint, SourceView) dlg ; sourceView.onMoveLinesListeners )
+		{
+			dlg(arg1, arg2, sourceView);
 		}
 	}
 	
@@ -202,8 +228,41 @@ public class SourceView : TextView
 		}
 	}
 	
+	void delegate(SourceView)[] onShowCompletionListeners;
+	/**
+	 * The ::show-completion signal is a keybinding signal which gets
+	 * emitted when the user initiates a completion in default mode.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name if they need to control the default mode
+	 * completion activation.
+	 */
+	void addOnShowCompletion(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("show-completion" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"show-completion",
+			cast(GCallback)&callBackShowCompletion,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["show-completion"] = 1;
+		}
+		onShowCompletionListeners ~= dlg;
+	}
+	extern(C) static void callBackShowCompletion(GtkSourceView* viewStruct, SourceView sourceView)
+	{
+		foreach ( void delegate(SourceView) dlg ; sourceView.onShowCompletionListeners )
+		{
+			dlg(sourceView);
+		}
+	}
+	
 	void delegate(SourceView)[] onUndoListeners;
 	/**
+	 * See Also
+	 * GtkTextView,GtkSourceBuffer
 	 */
 	void addOnUndo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -250,7 +309,7 @@ public class SourceView : TextView
 	 * Creates a new GtkSourceView widget displaying the buffer
 	 * buffer. One buffer can be shared among many widgets.
 	 * Params:
-	 * buffer =  a GtkSourceBuffer.
+	 * buffer = a GtkSourceBuffer.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceBuffer buffer)
@@ -267,7 +326,7 @@ public class SourceView : TextView
 	/**
 	 * If TRUE auto indentation of text is enabled.
 	 * Params:
-	 * enable =  whether to enable auto indentation.
+	 * enable = whether to enable auto indentation.
 	 */
 	public void setAutoIndent(int enable)
 	{
@@ -291,7 +350,7 @@ public class SourceView : TextView
 	 * the \t characters. Shift+Tab unindents the selection.
 	 * Since 1.8
 	 * Params:
-	 * enable =  whether to indent a block when tab is pressed.
+	 * enable = whether to indent a block when tab is pressed.
 	 */
 	public void setIndentOnTab(int enable)
 	{
@@ -316,7 +375,7 @@ public class SourceView : TextView
 	 * If width is -1, the value of the GtkSourceView::tab-width property
 	 * will be used.
 	 * Params:
-	 * width =  indent width in characters.
+	 * width = indent width in characters.
 	 */
 	public void setIndentWidth(int width)
 	{
@@ -339,7 +398,7 @@ public class SourceView : TextView
 	 * If TRUE any tabulator character inserted is replaced by a group
 	 * of space characters.
 	 * Params:
-	 * enable =  whether to insert spaces instead of tabs.
+	 * enable = whether to insert spaces instead of tabs.
 	 */
 	public void setInsertSpacesInsteadOfTabs(int enable)
 	{
@@ -362,7 +421,7 @@ public class SourceView : TextView
 	 * Set the desired movement of the cursor when HOME and END keys
 	 * are pressed.
 	 * Params:
-	 * smartHe =  the desired behavior among GtkSourceSmartHomeEndType.
+	 * smartHe = the desired behavior among GtkSourceSmartHomeEndType.
 	 */
 	public void setSmartHomeEnd(GtkSourceSmartHomeEndType smartHe)
 	{
@@ -387,8 +446,8 @@ public class SourceView : TextView
 	 * higher priorities will be drawn on top.
 	 * Since 2.2
 	 * Params:
-	 * category =  a mark category.
-	 * priority =  the priority for the category
+	 * category = a mark category.
+	 * priority = the priority for the category
 	 */
 	public void setMarkCategoryPriority(string category, int priority)
 	{
@@ -400,7 +459,7 @@ public class SourceView : TextView
 	 * Gets the priority which is associated with the given category.
 	 * Since 2.2
 	 * Params:
-	 * category =  a mark category.
+	 * category = a mark category.
 	 * Returns: the priority or if categoryexists but no priority was set, it defaults to 0.
 	 */
 	public int getMarkCategoryPriority(string category)
@@ -416,8 +475,8 @@ public class SourceView : TextView
 	 * If pixbuf is NULL, the pixbuf is unset.
 	 * Since 2.2
 	 * Params:
-	 * category =  a mark category.
-	 * pixbuf =  a GdkPixbuf or NULL.
+	 * category = a mark category.
+	 * pixbuf = a GdkPixbuf or NULL.
 	 */
 	public void setMarkCategoryPixbuf(string category, Pixbuf pixbuf)
 	{
@@ -431,7 +490,7 @@ public class SourceView : TextView
 	 * Gets the pixbuf which is associated with the given mark category.
 	 * Since 2.2
 	 * Params:
-	 * category =  a mark category.
+	 * category = a mark category.
 	 * Returns: the associated GdkPixbuf, or NULL if not found.
 	 */
 	public Pixbuf getMarkCategoryPixbuf(string category)
@@ -450,8 +509,8 @@ public class SourceView : TextView
 	 * If pixbuf is NULL, the icon is unset.
 	 * Since 2.8
 	 * Params:
-	 * category =  a mark category.
-	 * pixbuf =  a GdkPixbuf or NULL.
+	 * category = a mark category.
+	 * pixbuf = a GdkPixbuf or NULL.
 	 */
 	public void setMarkCategoryIconFromPixbuf(string category, Pixbuf pixbuf)
 	{
@@ -464,8 +523,8 @@ public class SourceView : TextView
 	 * If stock_id is NULL, the icon is unset.
 	 * Since 2.8
 	 * Params:
-	 * category =  a mark category.
-	 * stockId =  the stock id or NULL.
+	 * category = a mark category.
+	 * stockId = the stock id or NULL.
 	 */
 	public void setMarkCategoryIconFromStock(string category, string stockId)
 	{
@@ -478,8 +537,8 @@ public class SourceView : TextView
 	 * If name is NULL, the icon is unset.
 	 * Since 2.8
 	 * Params:
-	 * category =  a mark category.
-	 * name =  the themed icon name or NULL.
+	 * category = a mark category.
+	 * name = the themed icon name or NULL.
 	 */
 	public void setMarkCategoryIconFromIconName(string category, string name)
 	{
@@ -491,8 +550,8 @@ public class SourceView : TextView
 	 * Gets the background color associated with given category.
 	 * Since 2.4
 	 * Params:
-	 * category =  a mark category.
-	 * dest =  destination GdkColor structure to fill in.
+	 * category = a mark category.
+	 * dest = destination GdkColor structure to fill in.
 	 * Returns: TRUE if background color for category was setand dest is set to a valid color, or FALSE otherwise.
 	 */
 	public int getMarkCategoryBackground(string category, Color dest)
@@ -506,8 +565,8 @@ public class SourceView : TextView
 	 * If color is NULL, the background color is unset.
 	 * Since 2.4
 	 * Params:
-	 * category =  a mark category.
-	 * color =  background color or NULL to unset it.
+	 * category = a mark category.
+	 * color = background color or NULL to unset it.
 	 */
 	public void setMarkCategoryBackground(string category, Color color)
 	{
@@ -521,7 +580,25 @@ public class SourceView : TextView
 	 * If you also specified a function with
 	 * gtk_source_view_set_mark_category_tooltip_markup_func() the markup
 	 * variant takes precedence.
-	 * static gchar *
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 *  static gchar *
 	 * tooltip_func (GtkSourceMark *mark,
 	 *  gpointer user_data)
 	 * {
@@ -531,14 +608,14 @@ public class SourceView : TextView
 	 * }
 	 * ...
 	 * GtkSourceView *view;
-	 * gtk_source_view_set_mark_category_tooltip_func (view, "other-mark",
+	 * gtk_source_view_set_mark_category_tooltip_func (view, other-mark,
 	 *  tooltip_func,
 	 *  NULL, NULL);
 	 * Since 2.8
 	 * Params:
-	 * category =  a mark category.
-	 * func =  a GtkSourceViewMarkTooltipFunc or NULL.
-	 * userData =  user data which will be passed to func.
+	 * category = a mark category.
+	 * func = a GtkSourceViewMarkTooltipFunc or NULL.
+	 * userData = user data which will be passed to func.
 	 * userDataNotify = a function to free the memory allocated for user_data
 	 * or NULL if you do not want to supply such a function.
 	 */
@@ -552,9 +629,9 @@ public class SourceView : TextView
 	 * See gtk_source_view_set_mark_category_tooltip_func() for more information.
 	 * Since 2.8
 	 * Params:
-	 * category =  a mark category.
-	 * markupFunc =  a GtkSourceViewMarkTooltipFunc or NULL.
-	 * userData =  user data which will be passed to func.
+	 * category = a mark category.
+	 * markupFunc = a GtkSourceViewMarkTooltipFunc or NULL.
+	 * userData = user data which will be passed to func.
 	 * userDataNotify = a function to free the memory allocated for user_data
 	 * or NULL if you do not want to supply such a function.
 	 */
@@ -567,7 +644,7 @@ public class SourceView : TextView
 	/**
 	 * If show is TRUE the current line is highlighted.
 	 * Params:
-	 * show =  whether to highlight the current line
+	 * show = whether to highlight the current line
 	 */
 	public void setHighlightCurrentLine(int show)
 	{
@@ -589,7 +666,7 @@ public class SourceView : TextView
 	 * If TRUE line marks will be displayed beside the text.
 	 * Since 2.2
 	 * Params:
-	 * show =  whether line marks should be displayed.
+	 * show = whether line marks should be displayed.
 	 */
 	public void setShowLineMarks(int show)
 	{
@@ -611,7 +688,7 @@ public class SourceView : TextView
 	/**
 	 * If TRUE line numbers will be displayed beside the text.
 	 * Params:
-	 * show =  whether line numbers should be displayed.
+	 * show = whether line numbers should be displayed.
 	 */
 	public void setShowLineNumbers(int show)
 	{
@@ -632,7 +709,7 @@ public class SourceView : TextView
 	/**
 	 * If TRUE a right margin is displayed
 	 * Params:
-	 * show =  whether to show a right margin.
+	 * show = whether to show a right margin.
 	 */
 	public void setShowRightMargin(int show)
 	{
@@ -653,7 +730,7 @@ public class SourceView : TextView
 	/**
 	 * Sets the position of the right margin in the given view.
 	 * Params:
-	 * pos =  the width in characters where to position the right margin.
+	 * pos = the width in characters where to position the right margin.
 	 */
 	public void setRightMarginPosition(uint pos)
 	{
@@ -674,7 +751,7 @@ public class SourceView : TextView
 	/**
 	 * Sets the width of tabulation in characters.
 	 * Params:
-	 * width =  width of tab in characters.
+	 * width = width of tab in characters.
 	 */
 	public void setTabWidth(uint width)
 	{
@@ -696,7 +773,7 @@ public class SourceView : TextView
 	 * Set if and how the spaces should be visualized. Specifying flags as 0 will
 	 * disable display of spaces.
 	 * Params:
-	 * flags =  GtkSourceDrawSpacesFlags specifing how white spaces should
+	 * flags = GtkSourceDrawSpacesFlags specifing how white spaces should
 	 * be displayed
 	 */
 	public void setDrawSpaces(GtkSourceDrawSpacesFlags flags)
@@ -717,6 +794,16 @@ public class SourceView : TextView
 	}
 	
 	/**
+	 * Gets the GtkSourceCompletion associated with view.
+	 * Returns: the GtkSourceCompletion associated with view.
+	 */
+	public GtkSourceCompletion* getCompletion()
+	{
+		// GtkSourceCompletion * gtk_source_view_get_completion (GtkSourceView *view);
+		return gtk_source_view_get_completion(gtkSourceView);
+	}
+	
+	/**
 	 * Returns the GtkSourceGutter object associated with window_type for view.
 	 * Only GTK_TEXT_WINDOW_LEFT and GTK_TEXT_WINDOW_RIGHT are supported,
 	 * respectively corresponding to the left and right gutter. The line numbers
@@ -724,7 +811,7 @@ public class SourceView : TextView
 	 * GTK_TEXT_WINDOW_LEFT.
 	 * Since 2.8
 	 * Params:
-	 * windowType =  the gutter window type
+	 * windowType = the gutter window type
 	 * Returns: the GtkSourceGutter.
 	 */
 	public SourceGutter getGutter(GtkTextWindowType windowType)

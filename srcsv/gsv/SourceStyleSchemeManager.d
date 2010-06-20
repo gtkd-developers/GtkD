@@ -151,7 +151,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * style scheme files.
 	 * If dirs is NULL, the search path is reset to default.
 	 * Params:
-	 * path =  a NULL-terminated array of strings or NULL.
+	 * path = a NULL-terminated array of strings or NULL.
 	 */
 	public void setSearchPath(string[] path)
 	{
@@ -164,7 +164,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * style scheme files.
 	 * See gtk_source_style_scheme_manager_set_search_path() for details.
 	 * Params:
-	 * path =  a directory or a filename.
+	 * path = a directory or a filename.
 	 */
 	public void appendSearchPath(string path)
 	{
@@ -177,7 +177,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * for style scheme files.
 	 * See gtk_source_style_scheme_manager_set_search_path() for details.
 	 * Params:
-	 * path =  a directory or a filename.
+	 * path = a directory or a filename.
 	 */
 	public void prependSearchPath(string path)
 	{
@@ -209,7 +209,7 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Looks up style scheme by id.
 	 * Params:
-	 * schemeId =  style scheme id to find
+	 * schemeId = style scheme id to find
 	 * Returns: a GtkSourceStyleScheme object. Returned value is owned bymanager and must not be unref'ed.
 	 */
 	public SourceStyleScheme getScheme(string schemeId)

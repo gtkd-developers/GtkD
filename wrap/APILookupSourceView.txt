@@ -123,6 +123,122 @@ import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
 outFile: SourceBuffer
 
+file: GtkSourceCompletion.html
+struct: GtkSourceCompletion
+class: SourceCompletion
+prefix: gtk_source_completion_
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+structWrap: GList* ListG
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
+import: gsv.SourceCompletionInfo
+structWrap: GtkSourceCompletionInfo* SourceCompletionInfo
+import: gsv.SourceView
+structWrap: GtkSourceView* SourceView
+import: gsv.SourceCompletionContext
+structWrap: GtkSourceCompletionContext* SourceCompletionContext
+import: gsv.SourceCompletionProviderIF
+structWrap: GtkSourceCompletionProvider* SourceCompletionProviderIF
+outFile: SourceCompletion
+
+file: gtksourceview-2.0-completioncontext.html
+struct: GtkSourceCompletionContext
+class: SourceCompletionContext
+prefix: gtk_source_completion_context_
+import: glib.Str
+import: glib.ListG
+structWrap: GList* ListG
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
+import: gsv.SourceCompletionProviderIF
+structWrap: GtkSourceCompletionProvider* SourceCompletionProviderIF
+outFile: SourceCompletionContext
+
+file: GtkSourceCompletionInfo.html
+struct: GtkSourceCompletionInfo
+class: SourceCompletionInfo
+implements: BuildableIF
+prefix: gtk_source_completion_info_
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
+import: gtk.TextView
+structWrap: GtkTextView* TextView
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkSourceCompletionInfo);
+code: end
+outFile: SourceCompletionInfo
+
+file: GtkSourceCompletionItem.html
+struct: GtkSourceCompletionItem
+class: SourceCompletionItem
+implements: SourceCompletionProposalIF
+prefix: gtk_source_completion_item_
+import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+
+#imports for SourceCompletionProposal Interface.
+import: gsv.SourceCompletionProposalIF
+import: gsv.SourceCompletionProposalT
+
+code: start
+	// add the SourceCompletionProposal capabilities
+	mixin SourceCompletionProposalT!(GtkSourceCompletionItem);
+code: end
+outFile: SourceCompletionItem
+
+file: GtkSourceCompletionProposal.html
+struct: GtkSourceCompletionProposal
+class: SourceCompletionProposalT
+template: TStruct
+prefix: gtk_source_completion_proposal_
+import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkSourceCompletionProposal* SourceCompletionProposalIF
+interface: SourceCompletionProposalIF
+outFile: SourceCompletionProposalT
+
+file: GtkSourceCompletionProvider.html
+struct: GtkSourceCompletionProvider
+class: SourceCompletionProviderT
+template: TStruct
+prefix: gtk_source_completion_proposal_
+import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gsv.SourceCompletionContext
+structWrap: GtkSourceCompletionContext* SourceCompletionContext
+import: gsv.SourceCompletionInfo
+structWrap: GtkSourceCompletionInfo* SourceCompletionInfo
+import: gsv.SourceCompletionProposalIF
+structWrap: GtkSourceCompletionProposal* SourceCompletionProposalIF
+interface: SourceCompletionProviderIF
+outFile: SourceCompletionProviderT
+
+file: gtksourceview-2.0-Searching-in-a-GtkSourceBuffer.html
+#struct: 
+class: SourceSearch
+prefix: gtk_source_iter_
+structWrap: GtkTextIter* TextIter
+import: gtk.TextIter
+import: glib.Str
+outFile: SourceSearch
+
 file: GtkSourceGutter.html
 struct: GtkSourceGutter
 class: SourceGutter
@@ -132,15 +248,6 @@ structWrap: GdkWindow* Window
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 outFile: SourceGutter
-
-file: gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
-#struct: 
-class: SourceSearch
-prefix: gtk_source_iter_
-structWrap: GtkTextIter* TextIter
-import: gtk.TextIter
-import: glib.Str
-outFile: SourceSearch
 
 file: GtkSourceMark.html
 struct: GtkSourceMark
