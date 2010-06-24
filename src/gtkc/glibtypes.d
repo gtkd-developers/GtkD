@@ -69,6 +69,21 @@ else
 char[] gshared() { return ""; }
 }
 
+version(Tango)
+{
+	version (Windows)
+	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
+	else
+	private import tango.stdc.posix.stdio;
+}
+else version(D_Version2)
+{
+	version (Windows)
+	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
+	else
+	private import core.sys.posix.stdio;
+}
+
 const uint G_MAXUINT = 4294967295;
 
 
