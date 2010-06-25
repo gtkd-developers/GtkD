@@ -101,6 +101,15 @@ version(Tango) {
 public class Spawn
 {
 	
+	//we need fdopen.
+	version(Tango)
+	{
+		private import tango.stdc.posix.stdio;
+	}
+	else version(D_Version2)
+	{
+		private import core.sys.posix.stdio;
+	}
 	
 	version(Tango) alias splitLines splitlines;
 	
