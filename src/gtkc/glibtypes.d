@@ -71,6 +71,12 @@ char[] gshared() { return ""; }
 
 version (Windows)
 {
+	version(Tango) {
+		private import tango.stdc.stdio;
+	} else {
+		private import std.c.stdio;
+	}
+
 	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
 }
 
