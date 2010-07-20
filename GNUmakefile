@@ -19,13 +19,13 @@ ifndef DC
 endif
 
 ifeq ("$(DC)","dmd")
-    DFLAGS=-O
+    DCFLAGS=-O
     output=-of$@
 else ifeq ("$(DC)","ldc")
-    DFLAGS=-O
+    DCFLAGS=-O
     output=-of$@
 else
-    DFLAGS=-O2
+    DCFLAGS=-O2
     output=-o $@
 endif
 
@@ -151,7 +151,7 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO) $(LIBNAME_GTKD)
 #######################################################################
 
 %.o : %.d
-	$(DC) $(DFLAGS) $(IMPORTS) -c $< $(output)
+	$(DC) $(DCFLAGS) $(IMPORTS) -c $< $(output)
 
 #######################################################################
 
