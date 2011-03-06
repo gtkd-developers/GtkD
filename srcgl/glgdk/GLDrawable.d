@@ -108,7 +108,7 @@ public class GLDrawable
 	/**
 	 * Attach an OpenGL rendering context to a gldrawable.
 	 * Params:
-	 * glcontext =  a GdkGLContext.
+	 * glcontext = a GdkGLContext.
 	 * Returns: TRUE if it is successful, FALSE otherwise.
 	 */
 	public int makeCurrent(GLContext glcontext)
@@ -157,7 +157,7 @@ public class GLDrawable
 	/**
 	 * Delimits the begining of the OpenGL execution.
 	 * Params:
-	 * glcontext =  a GdkGLContext.
+	 * glcontext = a GdkGLContext.
 	 * Returns: TRUE if it is successful, FALSE otherwise.
 	 */
 	public int glBegin(GLContext glcontext)
@@ -194,8 +194,8 @@ public class GLDrawable
 	 * Fills *width and *height with the size of GL drawable.
 	 * width or height can be NULL if you only want the other one.
 	 * Params:
-	 * width =  location to store drawable's width, or NULL.
-	 * height =  location to store drawable's height, or NULL.
+	 * width = location to store drawable's width, or NULL.
+	 * height = location to store drawable's height, or NULL.
 	 */
 	public void getSize(out int width, out int height)
 	{

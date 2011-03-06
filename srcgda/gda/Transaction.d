@@ -113,7 +113,7 @@ public class Transaction : ObjectG
 	 * Creates a new GdaTransaction object, which allows a fine-tune and
 	 * full control of transactions to be used with providers.
 	 * Params:
-	 * name =  name for the transaction.
+	 * name = name for the transaction.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -142,7 +142,7 @@ public class Transaction : ObjectG
 	/**
 	 * Sets the isolation level for the given transaction.
 	 * Params:
-	 * level =  the isolation level.
+	 * level = the isolation level.
 	 */
 	public void setIsolationLevel(GdaTransactionIsolation level)
 	{
@@ -170,7 +170,7 @@ public class Transaction : ObjectG
 	 * Sets the name of the given transaction. This is very useful when
 	 * using providers that support named transactions.
 	 * Params:
-	 * name =  new name for the transaction.
+	 * name = new name for the transaction.
 	 */
 	public void setName(string name)
 	{

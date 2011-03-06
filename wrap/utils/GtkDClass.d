@@ -264,12 +264,12 @@ public class GtkDClass
 		druntimeImportConvs["std.thread"] = ["core.thread"];
 		druntimeImportConvs["std.c.string"] = ["core.stdc.string"];
 		druntimeImportConvs["std.gc"] = ["core.memory"];
+		druntimeImportConvs["std.stdarg"] = ["core.vararg"];
 
 		char[][][char[]] phobos2ImportConvs;
 		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
 		phobos2ImportConvs["std.c.stdio"] = ["std.c.stdio"];
 		phobos2ImportConvs["std.string"] = ["std.string"];
-		phobos2ImportConvs["std.stdarg"] = ["std.stdarg"];
 		phobos2ImportConvs["std.conv"] = ["std.conv"];
 		
 		char[] importTango = "\nversion(Tango) {\n";

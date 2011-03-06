@@ -145,7 +145,7 @@ public class ErrorGda : ObjectG
 	 * adds a reference for each error in the list.
 	 * You must free the list using gda_error_list_free.
 	 * Params:
-	 * errors =  a GList holding error objects.
+	 * errors = a GList holding error objects.
 	 * Returns: a list of errors.
 	 */
 	public static ListG listCopy(ListG errors)
@@ -164,7 +164,7 @@ public class ErrorGda : ObjectG
 	 * After this function has been called, the errors parameter doesn't point
 	 * to valid storage any more.
 	 * Params:
-	 * errors =  a GList holding error objects.
+	 * errors = a GList holding error objects.
 	 */
 	public static void listFree(ListG errors)
 	{
@@ -184,7 +184,7 @@ public class ErrorGda : ObjectG
 	/**
 	 * Sets error's description.
 	 * Params:
-	 * description =  a description.
+	 * description = a description.
 	 */
 	public void setDescription(string description)
 	{
@@ -204,7 +204,7 @@ public class ErrorGda : ObjectG
 	/**
 	 * Sets error's number.
 	 * Params:
-	 * number =  a number.
+	 * number = a number.
 	 */
 	public void setNumber(int number)
 	{
@@ -224,7 +224,7 @@ public class ErrorGda : ObjectG
 	/**
 	 * Sets error's source.
 	 * Params:
-	 * source =  a source.
+	 * source = a source.
 	 */
 	public void setSource(string source)
 	{
@@ -244,7 +244,7 @@ public class ErrorGda : ObjectG
 	/**
 	 * Sets error's SQL state.
 	 * Params:
-	 * sqlstate =  SQL state.
+	 * sqlstate = SQL state.
 	 */
 	public void setSqlstate(string sqlstate)
 	{

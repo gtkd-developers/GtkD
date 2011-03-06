@@ -108,13 +108,13 @@ public class GLWidget
 	 * Set the OpenGL-capability to the widget.
 	 * This function prepares the widget for its use with OpenGL.
 	 * Params:
-	 * widget =  the GtkWidget to be used as the rendering area.
-	 * glconfig =  a GdkGLConfig.
-	 * shareList =  the GdkGLContext with which to share display lists and texture
+	 * widget = the GtkWidget to be used as the rendering area.
+	 * glconfig = a GdkGLConfig.
+	 * shareList = the GdkGLContext with which to share display lists and texture
 	 *  objects. NULL indicates that no sharing is to take place.
-	 * direct =  whether rendering is to be done with a direct connection to
+	 * direct = whether rendering is to be done with a direct connection to
 	 *  the graphics system.
-	 * renderType =  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
+	 * renderType = GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
 	 * Returns: TRUE if it is successful, FALSE otherwise.
 	 */
@@ -127,7 +127,7 @@ public class GLWidget
 	/**
 	 * Returns whether the widget is OpenGL-capable.
 	 * Params:
-	 * widget =  a GtkWidget.
+	 * widget = a GtkWidget.
 	 * Returns: TRUE if the widget is OpenGL-capable, FALSE otherwise.
 	 */
 	public static int isGLCapable(Widget widget)
@@ -139,7 +139,7 @@ public class GLWidget
 	/**
 	 * Returns the GdkGLConfig referred by the widget.
 	 * Params:
-	 * widget =  a GtkWidget.
+	 * widget = a GtkWidget.
 	 * Returns: the GdkGLConfig.
 	 */
 	public static GLConfig getGLConfig(Widget widget)
@@ -158,12 +158,12 @@ public class GLWidget
 	 * for this widget. The GL context must be freed when you're
 	 * finished with it. See also gtk_widget_get_gl_context().
 	 * Params:
-	 * widget =  a GtkWidget.
-	 * shareList =  the GdkGLContext with which to share display lists and texture
+	 * widget = a GtkWidget.
+	 * shareList = the GdkGLContext with which to share display lists and texture
 	 *  objects. NULL indicates that no sharing is to take place.
-	 * direct =  whether rendering is to be done with a direct connection to
+	 * direct = whether rendering is to be done with a direct connection to
 	 *  the graphics system.
-	 * renderType =  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
+	 * renderType = GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
 	 * Returns: the new GdkGLContext.
 	 */
@@ -185,7 +185,7 @@ public class GLWidget
 	 * GdkGLContext is needed for the function gdk_gl_drawable_begin,
 	 * or for sharing display lists (see gtk_widget_set_gl_capability()).
 	 * Params:
-	 * widget =  a GtkWidget.
+	 * widget = a GtkWidget.
 	 * Returns: the GdkGLContext.
 	 */
 	public static GLContext getGLContext(Widget widget)
@@ -202,7 +202,7 @@ public class GLWidget
 	/**
 	 * Returns the GdkGLWindow owned by the widget.
 	 * Params:
-	 * widget =  a GtkWidget.
+	 * widget = a GtkWidget.
 	 * Returns: the GdkGLWindow.
 	 */
 	public static GLWindow getGLWindow(Widget widget)

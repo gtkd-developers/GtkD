@@ -123,8 +123,8 @@ public class Parameter
 	 * Creates a new GdaParameter object, which is usually used
 	 * with GdaParameterList.
 	 * Params:
-	 * name =  name for the parameter being created.
-	 * value =  a GdaValue for this parameter.
+	 * name = name for the parameter being created.
+	 * value = a GdaValue for this parameter.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, Value value)
@@ -141,8 +141,8 @@ public class Parameter
 	/**
 	 * Creates a new GdaParameter from a gboolean value.
 	 * Params:
-	 * name =  name for the parameter being created.
-	 * value =  a boolean value.
+	 * name = name for the parameter being created.
+	 * value = a boolean value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, int value)
@@ -159,8 +159,8 @@ public class Parameter
 	/**
 	 * Creates a new GdaParameter from a gdouble value.
 	 * Params:
-	 * name =  name for the parameter being created.
-	 * value =  a gdouble value.
+	 * name = name for the parameter being created.
+	 * value = a gdouble value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, double value)
@@ -177,8 +177,8 @@ public class Parameter
 	/**
 	 * Creates a new GdaParameter from a GObject.
 	 * Params:
-	 * name =  name for the parameter being created.
-	 * value =  a GObject value.
+	 * name = name for the parameter being created.
+	 * value = a GObject value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, ObjectG value)
@@ -195,8 +195,8 @@ public class Parameter
 	/**
 	 * Creates a new GdaParameter from a string.
 	 * Params:
-	 * name =  name for the parameter being created.
-	 * value =  string value.
+	 * name = name for the parameter being created.
+	 * value = string value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string value)
@@ -246,7 +246,7 @@ public class Parameter
 	/**
 	 * Sets the name of the given GdaParameter.
 	 * Params:
-	 * name =  new name for the parameter.
+	 * name = new name for the parameter.
 	 */
 	public void setName(string name)
 	{
@@ -271,7 +271,7 @@ public class Parameter
 	/**
 	 * Stores the given value in the given param.
 	 * Params:
-	 * value =  a GdaValue.
+	 * value = a GdaValue.
 	 */
 	public void setValue(Value value)
 	{

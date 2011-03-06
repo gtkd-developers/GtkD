@@ -120,9 +120,9 @@ public class GLPixmap : Drawable
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None). See GLX 1.3 spec.
 	 * Params:
-	 * glconfig =  a GdkGLConfig.
-	 * pixmap =  the GdkPixmap to be used as the rendering area.
-	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * glconfig = a GdkGLConfig.
+	 * pixmap = the GdkPixmap to be used as the rendering area.
+	 * attribList = this must be set to NULL or empty (first attribute of None).
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GLConfig glconfig, Pixmap pixmap, int* attribList)
@@ -169,9 +169,9 @@ public class GLPixmap : Drawable
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None).
 	 * Params:
-	 * pixmap =  the GdkPixmap to be used as the rendering area.
-	 * glconfig =  a GdkGLConfig.
-	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * pixmap = the GdkPixmap to be used as the rendering area.
+	 * glconfig = a GdkGLConfig.
+	 * attribList = this must be set to NULL or empty (first attribute of None).
 	 * Returns: the GdkGLPixmap used by the pixmap if it is successful, NULL otherwise.
 	 */
 	public static GLPixmap pixmapSetGLCapability(Pixmap pixmap, GLConfig glconfig, int* attribList)
@@ -189,7 +189,7 @@ public class GLPixmap : Drawable
 	 * Unset the OpenGL-capability of the pixmap.
 	 * This function destroys the GdkGLPixmap held by the pixmap.
 	 * Params:
-	 * pixmap =  a GdkPixmap.
+	 * pixmap = a GdkPixmap.
 	 */
 	public static void pixmapUnsetGLCapability(Pixmap pixmap)
 	{
@@ -200,7 +200,7 @@ public class GLPixmap : Drawable
 	/**
 	 * Returns whether the pixmap is OpenGL-capable.
 	 * Params:
-	 * pixmap =  a GdkPixmap.
+	 * pixmap = a GdkPixmap.
 	 * Returns: TRUE if the pixmap is OpenGL-capable, FALSE otherwise.
 	 */
 	public static int pixmapIsGLCapable(Pixmap pixmap)
@@ -212,7 +212,7 @@ public class GLPixmap : Drawable
 	/**
 	 * Returns the GdkGLPixmap held by the pixmap.
 	 * Params:
-	 * pixmap =  a GdkPixmap.
+	 * pixmap = a GdkPixmap.
 	 * Returns: the GdkGLPixmap.
 	 */
 	public static GLPixmap pixmapGetGLPixmap(Pixmap pixmap)

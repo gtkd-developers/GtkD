@@ -119,9 +119,9 @@ public class GLWindow : Drawable
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None). See GLX 1.3 spec.
 	 * Params:
-	 * glconfig =  a GdkGLConfig.
-	 * window =  the GdkWindow to be used as the rendering area.
-	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * glconfig = a GdkGLConfig.
+	 * window = the GdkWindow to be used as the rendering area.
+	 * attribList = this must be set to NULL or empty (first attribute of None).
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GLConfig glconfig, Window window, int* attribList)
@@ -168,9 +168,9 @@ public class GLWindow : Drawable
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None).
 	 * Params:
-	 * window =  the GdkWindow to be used as the rendering area.
-	 * glconfig =  a GdkGLConfig.
-	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * window = the GdkWindow to be used as the rendering area.
+	 * glconfig = a GdkGLConfig.
+	 * attribList = this must be set to NULL or empty (first attribute of None).
 	 * Returns: the GdkGLWindow used by the window if it is successful, NULL otherwise.
 	 */
 	public static GLWindow gdkWindowSetGLCapability(Window window, GLConfig glconfig, int* attribList)
@@ -188,7 +188,7 @@ public class GLWindow : Drawable
 	 * Unset the OpenGL-capability of the window.
 	 * This function destroys the GdkGLWindow held by the window.
 	 * Params:
-	 * window =  a GdkWindow.
+	 * window = a GdkWindow.
 	 */
 	public static void gdkWindowUnsetGLCapability(Window window)
 	{
@@ -199,7 +199,7 @@ public class GLWindow : Drawable
 	/**
 	 * Returns whether the window is OpenGL-capable.
 	 * Params:
-	 * window =  a GdkWindow.
+	 * window = a GdkWindow.
 	 * Returns: TRUE if the window is OpenGL-capable, FALSE otherwise.
 	 */
 	public static int gdkWindowIsGLCapable(Window window)
@@ -211,7 +211,7 @@ public class GLWindow : Drawable
 	/**
 	 * Returns the GdkGLWindow held by the window.
 	 * Params:
-	 * window =  a GdkWindow.
+	 * window = a GdkWindow.
 	 * Returns: the GdkGLWindow.
 	 */
 	public static GLWindow gdkWindowGetGLWindow(Window window)

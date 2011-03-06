@@ -574,8 +574,16 @@ private import glgtk.GLCapability;
 
 private import gsv.SourceView;
 private import gsv.SourceBuffer;
-private import gsv.SourceGutter;
+private import gsv.SourceCompletion;
+private import gsv.SourceCompletionContext;
+private import gsv.SourceCompletionInfo;
+private import gsv.SourceCompletionItem;
+private import gsv.SourceCompletionProposalIF;
+private import gsv.SourceCompletionProposalT;
+private import gsv.SourceCompletionProviderIF;
+private import gsv.SourceCompletionProviderT;
 private import gsv.SourceSearch;
+private import gsv.SourceGutter;
 private import gsv.SourceMark;
 private import gsv.SourceLanguage;
 private import gsv.SourceLanguageManager;

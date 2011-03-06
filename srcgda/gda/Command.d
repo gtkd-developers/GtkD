@@ -135,9 +135,9 @@ public class Command
 	 * If there are conflicting options, this will set options to
 	 * GDA_COMMAND_OPTION_DEFAULT.
 	 * Params:
-	 * text =  the text of the command.
-	 * type =  a GdaCommandType value.
-	 * options =  a GdaCommandOptions value.
+	 * text = the text of the command.
+	 * type = a GdaCommandType value.
+	 * options = a GdaCommandOptions value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string text, GdaCommandType type, GdaCommandOptions options)
@@ -188,7 +188,7 @@ public class Command
 	/**
 	 * Sets the command text of cmd.
 	 * Params:
-	 * text =  the command text.
+	 * text = the command text.
 	 */
 	public void setText(string text)
 	{
@@ -209,7 +209,7 @@ public class Command
 	/**
 	 * Sets the command type of cmd.
 	 * Params:
-	 * type =  the command type.
+	 * type = the command type.
 	 */
 	public void setCommandType(GdaCommandType type)
 	{
@@ -231,7 +231,7 @@ public class Command
 	 * Sets the command options of cmd. If there conflicting options, it will just
 	 * leave the value as before.
 	 * Params:
-	 * options =  the command options.
+	 * options = the command options.
 	 */
 	public void setOptions(GdaCommandOptions options)
 	{
@@ -257,7 +257,7 @@ public class Command
 	/**
 	 * Sets the GdaTransaction associated with the given GdaCommand.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 */
 	public void setTransaction(Transaction xaction)
 	{

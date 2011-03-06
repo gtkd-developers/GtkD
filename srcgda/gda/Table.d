@@ -121,7 +121,7 @@ public class Table : DataModelArray
 	 * but you can also use it in your applications for whatever you may need
 	 * it.
 	 * Params:
-	 * name =  name for the new table.
+	 * name = name for the new table.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -141,9 +141,9 @@ public class Table : DataModelArray
 	 * recordset obtained from a database. This is also used when
 	 * exporting data to a GdaXmlDatabase object.
 	 * Params:
-	 * name =  name for the new table.
-	 * model =  model to create the table from.
-	 * addData =  whether to add model's data or not.
+	 * name = name for the new table.
+	 * model = model to create the table from.
+	 * addData = whether to add model's data or not.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, DataModel model, int addData)
@@ -169,7 +169,7 @@ public class Table : DataModelArray
 	/**
 	 * Sets the name of the given GdaTable.
 	 * Params:
-	 * name =  new name for the table.
+	 * name = new name for the table.
 	 */
 	public void setName(string name)
 	{
@@ -180,7 +180,7 @@ public class Table : DataModelArray
 	/**
 	 * Adds a field to the given GdaTable.
 	 * Params:
-	 * fa =  attributes for the new field.
+	 * fa = attributes for the new field.
 	 */
 	public void addField(FieldAttributes fa)
 	{
@@ -191,7 +191,7 @@ public class Table : DataModelArray
 	/**
 	 * Adds data in the given table from the given model.
 	 * Params:
-	 * model =  a GdaDataModel object.
+	 * model = a GdaDataModel object.
 	 */
 	public void addDataFromModel(DataModel model)
 	{

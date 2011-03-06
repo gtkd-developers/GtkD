@@ -132,7 +132,7 @@ public class DataModelList : DataModel
 	
 	/**
 	 * Params:
-	 * list =  a list of strings.
+	 * list = a list of strings.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListG list)
@@ -149,7 +149,7 @@ public class DataModelList : DataModel
 	/**
 	 * Inserts a row in the model, using value.
 	 * Params:
-	 * value =  a GdaValue which will be used to fill the row.
+	 * value = a GdaValue which will be used to fill the row.
 	 * Returns: the GdaRow which has been inserted, or NULL on failure.
 	 */
 	public Row appendValue(Value value)

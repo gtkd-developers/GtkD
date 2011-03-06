@@ -109,7 +109,7 @@ public class DataModelArray : DataModel
 	
 	/**
 	 * Params:
-	 * cols =  number of columns for rows in this data model.
+	 * cols = number of columns for rows in this data model.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int cols)
@@ -127,7 +127,7 @@ public class DataModelArray : DataModel
 	 * Sets the number of columns for rows inserted in this model.
 	 * cols must be greated than or equal to 0.
 	 * Params:
-	 * cols =  number of columns for rows this data model should use.
+	 * cols = number of columns for rows this data model should use.
 	 */
 	public void setNColumns(int cols)
 	{

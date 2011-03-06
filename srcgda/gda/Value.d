@@ -143,7 +143,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_BIGINT with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (long val)
@@ -160,7 +160,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_BIGUINT with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ulong val)
@@ -177,8 +177,8 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_BINARY with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
-	 * size =  the size of the memory pool pointer to by val.
+	 * val = value to set for the new GdaValue.
+	 * size = the size of the memory pool pointer to by val.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* val, int size)
@@ -210,7 +210,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_DATE with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaDate* val)
@@ -227,7 +227,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_DOUBLE with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double val)
@@ -245,7 +245,7 @@ public class Value
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_GEOMETRIC_POINT with value
 	 * val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaGeometricPoint* val)
@@ -262,7 +262,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_GOBJECT with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG val)
@@ -279,7 +279,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_INTEGER with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int val)
@@ -296,7 +296,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_LIST with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaValueList* val)
@@ -328,7 +328,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_NUMERIC with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaNumeric* val)
@@ -345,7 +345,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_SINGLE with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (float val)
@@ -362,7 +362,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_SMALLINT with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (short val)
@@ -379,7 +379,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_SMALLUINT with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ushort val)
@@ -396,7 +396,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_STRING with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string val)
@@ -413,7 +413,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_TIME with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaTime* val)
@@ -430,7 +430,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_TIMESTAMP with value val.
 	 * Params:
-	 * val =  value to set for the new GdaValue.
+	 * val = value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaTimestamp* val)
@@ -447,7 +447,7 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type GDA_VALUE_TYPE_TYPE with value val.
 	 * Params:
-	 * val =  Value to set for the new GdaValue.
+	 * val = Value to set for the new GdaValue.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdaValueType val)
@@ -464,8 +464,8 @@ public class Value
 	/**
 	 * Makes a new GdaValue of type type from its string representation.
 	 * Params:
-	 * asString =  stringified representation of the value.
-	 * type =  the new value type.
+	 * asString = stringified representation of the value.
+	 * type = the new value type.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string asString, GdaValueType type)
@@ -482,7 +482,7 @@ public class Value
 	/**
 	 * Creates a GdaValue from a XML representation of it. That XML
 	 * Params:
-	 * node =  a XML node representing the value.
+	 * node = a XML node representing the value.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (xmlNodePtr node)
@@ -564,7 +564,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setBigint(long val)
 	{
@@ -584,7 +584,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setBiguint(ulong val)
 	{
@@ -594,7 +594,7 @@ public class Value
 	
 	/**
 	 * Params:
-	 * size =  holder for length of data.
+	 * size = holder for length of data.
 	 * Returns: the value stored in value.
 	 */
 	public void* getBinary(int* size)
@@ -606,8 +606,8 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
-	 * size =  the size of the memory pool pointed to by val.
+	 * val = value to be stored in value.
+	 * size = the size of the memory pool pointed to by val.
 	 */
 	public void setBinary(void* val, int size)
 	{
@@ -627,7 +627,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setBlob(GdaBlob* val)
 	{
@@ -647,7 +647,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setBoolean(int val)
 	{
@@ -667,7 +667,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setDate(GdaDate* val)
 	{
@@ -687,7 +687,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setDouble(double val)
 	{
@@ -707,7 +707,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setGeometricPoint(GdaGeometricPoint* val)
 	{
@@ -732,7 +732,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setGobject(ObjectG val)
 	{
@@ -752,7 +752,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setInteger(int val)
 	{
@@ -772,7 +772,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setList(GdaValueList* val)
 	{
@@ -801,7 +801,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setMoney(GdaMoney* val)
 	{
@@ -821,7 +821,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setNumeric(GdaNumeric* val)
 	{
@@ -841,7 +841,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setSingle(float val)
 	{
@@ -861,7 +861,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setSmallint(short val)
 	{
@@ -881,7 +881,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setSmalluint(ushort val)
 	{
@@ -901,7 +901,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setString(string val)
 	{
@@ -921,7 +921,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setTime(GdaTime* val)
 	{
@@ -941,7 +941,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setTimestamp(GdaTimestamp* val)
 	{
@@ -961,7 +961,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setTinyint(char val)
 	{
@@ -981,7 +981,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setTinyuint(char val)
 	{
@@ -1001,7 +1001,7 @@ public class Value
 	/**
 	 * Stores val into value.
 	 * Params:
-	 * val =  value to be stored in value.
+	 * val = value to be stored in value.
 	 */
 	public void setUinteger(uint val)
 	{
@@ -1021,7 +1021,7 @@ public class Value
 	/**
 	 * Stores type into value.
 	 * Params:
-	 * type =  value to be stored in value.
+	 * type = value to be stored in value.
 	 */
 	public void setVtype(GdaValueType type)
 	{
@@ -1032,8 +1032,8 @@ public class Value
 	/**
 	 * Stores the value data from its string representation as type.
 	 * Params:
-	 * asString =  the stringified representation of the value.
-	 * type =  the type of the value
+	 * asString = the stringified representation of the value.
+	 * type = the type of the value
 	 * Returns: TRUE if the value has been properly converted to type fromits string representation. FALSE otherwise.
 	 */
 	public int setFromString(string asString, GdaValueType type)
@@ -1048,7 +1048,7 @@ public class Value
 	 * gda_value_set_from_value, on the other hand, copies the contents
 	 * of copy into value, which must already be allocated.
 	 * Params:
-	 * from =  the value to copy from.
+	 * from = the value to copy from.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int setFromValue(Value from)
@@ -1060,7 +1060,7 @@ public class Value
 	/**
 	 * Compares two values of the same type.
 	 * Params:
-	 * value2 =  the other GdaValue to be compared to value1.
+	 * value2 = the other GdaValue to be compared to value1.
 	 * Returns: if both values have the same type, returns 0 if both containthe same value, an integer less than 0 if value1 is less than value2 oran integer greater than 0 if value1 is greater than value2.
 	 */
 	public int compare(Value value2)

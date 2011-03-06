@@ -122,7 +122,7 @@ public class DataModelHash : DataModel
 	
 	/**
 	 * Params:
-	 * cols =  number of columns for rows in this data model.
+	 * cols = number of columns for rows in this data model.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int cols)
@@ -139,9 +139,9 @@ public class DataModelHash : DataModel
 	/**
 	 * Retrieves the value at a specified column and row.
 	 * Params:
-	 * model =  the GdaDataModelHash to retrieve the value from.
-	 * col =  column number (starting from 0).
-	 * row =  row number (starting from 0).
+	 * model = the GdaDataModelHash to retrieve the value from.
+	 * col = column number (starting from 0).
+	 * row = row number (starting from 0).
 	 * Returns: a pointer to a GdaValue.
 	 */
 	public static Value getValueAt(DataModel model, int col, int row)
@@ -170,7 +170,7 @@ public class DataModelHash : DataModel
 	 * This function calls gda_data_model_hash_clear to free the
 	 * existing rows if any.
 	 * Params:
-	 * cols =  the number of columns for rows inserted in model.
+	 * cols = the number of columns for rows inserted in model.
 	 */
 	public void setNColumns(int cols)
 	{
@@ -181,8 +181,8 @@ public class DataModelHash : DataModel
 	/**
 	 * Inserts a row in the model.
 	 * Params:
-	 * rownum =  the number of the row.
-	 * row =  the row to insert. The model is responsible of freeing it!
+	 * rownum = the number of the row.
+	 * row = the row to insert. The model is responsible of freeing it!
 	 */
 	public void insertRow(int rownum, Row row)
 	{
@@ -193,8 +193,8 @@ public class DataModelHash : DataModel
 	/**
 	 * Retrieves a row from the underlying hash table.
 	 * Params:
-	 * model =  the GdaDataModelHash
-	 * row =  row number
+	 * model = the GdaDataModelHash
+	 * row = row number
 	 * Returns: a GdaRow or NULL if the requested row is not in the hash table.
 	 */
 	public static Row getRow(DataModel model, int row)

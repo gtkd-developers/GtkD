@@ -178,7 +178,7 @@ public class GLConfig : ObjectG
 	 * GDK_GL_DEPTH_SIZE, GDK_GL_STENCIL_SIZE, GDK_GL_ACCUM_RED_SIZE,
 	 * GDK_GL_ACCUM_GREEN_SIZE, GDK_GL_ACCUM_BLUE_SIZE, GDK_GL_ACCUM_ALPHA_SIZE.
 	 * Params:
-	 * attribList =  a list of attribute/value pairs. The last attribute must
+	 * attribList = a list of attribute/value pairs. The last attribute must
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -197,8 +197,8 @@ public class GLConfig : ObjectG
 	 * Returns an OpenGL frame buffer configuration that match the specified
 	 * attributes.
 	 * Params:
-	 * screen =  target screen.
-	 * attribList =  a list of attribute/value pairs. The last attribute must
+	 * screen = target screen.
+	 * attribList = a list of attribute/value pairs. The last attribute must
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -217,7 +217,7 @@ public class GLConfig : ObjectG
 	 * Returns an OpenGL frame buffer configuration that match the specified
 	 * display mode.
 	 * Params:
-	 * mode =  display mode bit mask.
+	 * mode = display mode bit mask.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GdkGLConfigMode mode)
@@ -235,8 +235,8 @@ public class GLConfig : ObjectG
 	 * Returns an OpenGL frame buffer configuration that match the specified
 	 * display mode.
 	 * Params:
-	 * screen =  target screen.
-	 * mode =  display mode bit mask.
+	 * screen = target screen.
+	 * mode = display mode bit mask.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Screen screen, GdkGLConfigMode mode)
@@ -268,8 +268,8 @@ public class GLConfig : ObjectG
 	/**
 	 * Gets information about a OpenGL frame buffer configuration.
 	 * Params:
-	 * attribute =  the attribute to be returned.
-	 * value =  returns the requested value.
+	 * attribute = the attribute to be returned.
+	 * value = returns the requested value.
 	 * Returns: TRUE if it succeeded, FALSE otherwise.
 	 */
 	public int getAttrib(int attribute, out int value)

@@ -154,7 +154,7 @@ public class FieldAttributes
 	/**
 	 * Tests whether two field attributes are equal.
 	 * Params:
-	 * rhs =  another GdaFieldAttributes
+	 * rhs = another GdaFieldAttributes
 	 * Returns: TRUE if the field attributes contain the same information.
 	 */
 	public int equal(FieldAttributes rhs)
@@ -175,7 +175,7 @@ public class FieldAttributes
 	/**
 	 * Sets the defined size of a GdaFieldAttributes.
 	 * Params:
-	 * size =  the defined size we want to set.
+	 * size = the defined size we want to set.
 	 */
 	public void setDefinedSize(int size)
 	{
@@ -195,7 +195,7 @@ public class FieldAttributes
 	/**
 	 * Sets the name of fa to name.
 	 * Params:
-	 * name =  the new name of fa.
+	 * name = the new name of fa.
 	 */
 	public void setName(string name)
 	{
@@ -215,7 +215,7 @@ public class FieldAttributes
 	/**
 	 * Sets the name of the table to which the given field belongs.
 	 * Params:
-	 * table =  table name.
+	 * table = table name.
 	 */
 	public void setTable(string table)
 	{
@@ -235,7 +235,7 @@ public class FieldAttributes
 	/**
 	 * Sets fa's caption.
 	 * Params:
-	 * caption =  caption.
+	 * caption = caption.
 	 */
 	public void setCaption(string caption)
 	{
@@ -255,7 +255,7 @@ public class FieldAttributes
 	/**
 	 * Sets the scale of fa to scale.
 	 * Params:
-	 * scale =  number of decimals.
+	 * scale = number of decimals.
 	 */
 	public void setScale(int scale)
 	{
@@ -275,7 +275,7 @@ public class FieldAttributes
 	/**
 	 * Sets the type of fa to type.
 	 * Params:
-	 * type =  the new type of fa.
+	 * type = the new type of fa.
 	 */
 	public void setGdatype(GdaValueType type)
 	{
@@ -296,7 +296,7 @@ public class FieldAttributes
 	/**
 	 * Sets the 'allow null' flag of the given field attributes.
 	 * Params:
-	 * allow =  whether the given field should allows null values or not.
+	 * allow = whether the given field should allows null values or not.
 	 */
 	public void setAllowNull(int allow)
 	{
@@ -316,7 +316,7 @@ public class FieldAttributes
 	/**
 	 * Sets the 'primary key' flag of the given field attributes.
 	 * Params:
-	 * pk =  whether if the given field should be a primary key.
+	 * pk = whether if the given field should be a primary key.
 	 */
 	public void setPrimaryKey(int pk)
 	{
@@ -336,7 +336,7 @@ public class FieldAttributes
 	/**
 	 * Sets the 'unique key' flag of the given field attributes.
 	 * Params:
-	 * uk =  whether if the given field should be an unique key.
+	 * uk = whether if the given field should be an unique key.
 	 */
 	public void setUniqueKey(int uk)
 	{
@@ -356,7 +356,7 @@ public class FieldAttributes
 	/**
 	 * Sets fa's references.
 	 * Params:
-	 * ref =  references.
+	 * ref = references.
 	 */
 	public void setReferences(string doref)
 	{
@@ -376,7 +376,7 @@ public class FieldAttributes
 	/**
 	 * Sets the auto increment flag for the given field.
 	 * Params:
-	 * isAuto =  auto increment status.
+	 * isAuto = auto increment status.
 	 */
 	public void setAutoIncrement(int isAuto)
 	{
@@ -397,7 +397,7 @@ public class FieldAttributes
 	 * Sets the position of the field the attributes refer to in the containing
 	 * data model.
 	 * Params:
-	 * position =  the wanted position of the field in the containing data model.
+	 * position = the wanted position of the field in the containing data model.
 	 */
 	public void setPosition(int position)
 	{
@@ -407,7 +407,7 @@ public class FieldAttributes
 	
 	/**
 	 * Params:
-	 * fa =  a GdaFieldAttributes.
+	 * fa = a GdaFieldAttributes.
 	 * Returns: fa's default value, as a GdaValue object.
 	 */
 	public Value getDefaultValue()
@@ -424,8 +424,8 @@ public class FieldAttributes
 	/**
 	 * Sets fa's default GdaValue.
 	 * Params:
-	 * fa =  a GdaFieldAttributes.
-	 * defaultValue =  default GdaValue for the field
+	 * fa = a GdaFieldAttributes.
+	 * defaultValue = default GdaValue for the field
 	 */
 	public void setDefaultValue(Value defaultValue)
 	{

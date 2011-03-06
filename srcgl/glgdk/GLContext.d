@@ -117,12 +117,12 @@ public class GLContext : ObjectG
 	/**
 	 * Creates a new OpenGL rendering context.
 	 * Params:
-	 * gldrawable =  a GdkGLDrawable.
-	 * shareList =  the GdkGLContext with which to share display lists and texture
+	 * gldrawable = a GdkGLDrawable.
+	 * shareList = the GdkGLContext with which to share display lists and texture
 	 *  objects. NULL indicates that no sharing is to take place.
-	 * direct =  whether rendering is to be done with a direct connection to
+	 * direct = whether rendering is to be done with a direct connection to
 	 *  the graphics system.
-	 * renderType =  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
+	 * renderType = GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -153,7 +153,7 @@ public class GLContext : ObjectG
 	 * the glPushAttrib() function. You can use GL_ALL_ATTRIB_BITS to copy all the
 	 * rendering state information.
 	 * Params:
-	 * src =  the source context.
+	 * src = the source context.
 	 * Returns: FALSE if it fails, TRUE otherwise.
 	 */
 	public int copy(GLContext src, ulong mask)

@@ -136,8 +136,8 @@ public class Select : DataModelArray
 	 * the select object is run (via gda_select_run), it will parse the SQL
 	 * and get the required data from the source data models.
 	 * Params:
-	 * name =  name to identify the data model (usually a table name).
-	 * source =  a GdaDataModel from which to get data.
+	 * name = name to identify the data model (usually a table name).
+	 * source = a GdaDataModel from which to get data.
 	 */
 	public void addSource(string name, DataModel source)
 	{
@@ -150,7 +150,7 @@ public class Select : DataModelArray
 	 * for filtering rows from the source data model (which is
 	 * set with gda_select_set_source).
 	 * Params:
-	 * sql =  the SQL command to be used for filtering rows.
+	 * sql = the SQL command to be used for filtering rows.
 	 */
 	public void setSql(string sql)
 	{

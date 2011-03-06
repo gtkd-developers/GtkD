@@ -92,7 +92,7 @@ public class Config
 	 * Gets the value of the specified configuration entry as a string. You
 	 * are then responsible to free the returned string.
 	 * Params:
-	 * path =  path to the configuration entry.
+	 * path = path to the configuration entry.
 	 * Returns: the value stored at the given entry.
 	 */
 	public static string getString(string path)
@@ -104,7 +104,7 @@ public class Config
 	/**
 	 * Gets the value of the specified configuration entry as an integer.
 	 * Params:
-	 * path =  path to the configuration entry.
+	 * path = path to the configuration entry.
 	 * Returns: the value stored at the given entry.
 	 */
 	public static int getInt(string path)
@@ -116,7 +116,7 @@ public class Config
 	/**
 	 * Gets the value of the specified configuration entry as a float.
 	 * Params:
-	 * path =  path to the configuration entry.
+	 * path = path to the configuration entry.
 	 * Returns: the value stored at the given entry.
 	 */
 	public static double getFloat(string path)
@@ -128,7 +128,7 @@ public class Config
 	/**
 	 * Gets the value of the specified configuration entry as a boolean.
 	 * Params:
-	 * path =  path to the configuration entry.
+	 * path = path to the configuration entry.
 	 * Returns: the value stored at the given entry.
 	 */
 	public static int getBoolean(string path)
@@ -140,8 +140,8 @@ public class Config
 	/**
 	 * Sets the given configuration entry to contain a string.
 	 * Params:
-	 * path =  path to the configuration entry.
-	 * newValue =  new value.
+	 * path = path to the configuration entry.
+	 * newValue = new value.
 	 */
 	public static void setString(string path, string newValue)
 	{
@@ -152,8 +152,8 @@ public class Config
 	/**
 	 * Sets the given configuration entry to contain an integer.
 	 * Params:
-	 * path =  path to the configuration entry.
-	 * newValue =  new value.
+	 * path = path to the configuration entry.
+	 * newValue = new value.
 	 */
 	public static void setInt(string path, int newValue)
 	{
@@ -164,8 +164,8 @@ public class Config
 	/**
 	 * Sets the given configuration entry to contain a float.
 	 * Params:
-	 * path =  path to the configuration entry.
-	 * newValue =  new value.
+	 * path = path to the configuration entry.
+	 * newValue = new value.
 	 */
 	public static void setFloat(string path, double newValue)
 	{
@@ -176,8 +176,8 @@ public class Config
 	/**
 	 * Sets the given configuration entry to contain a boolean.
 	 * Params:
-	 * path =  path to the configuration entry.
-	 * newValue =  new value.
+	 * path = path to the configuration entry.
+	 * newValue = new value.
 	 */
 	public static void setBoolean(string path, int newValue)
 	{
@@ -188,7 +188,7 @@ public class Config
 	/**
 	 * Removes the given section from the configuration database.
 	 * Params:
-	 * path =  path to the configuration section.
+	 * path = path to the configuration section.
 	 */
 	public static void removeSection(string path)
 	{
@@ -200,7 +200,7 @@ public class Config
 	 * Removes the given entry from the configuration database.
 	 * If the section is empty, also remove the section.
 	 * Params:
-	 * path =  path to the configuration entry.
+	 * path = path to the configuration entry.
 	 */
 	public static void removeKey(string path)
 	{
@@ -212,7 +212,7 @@ public class Config
 	 * Checks whether the given section exists in the configuration
 	 * system.
 	 * Params:
-	 * path =  path to the configuration section.
+	 * path = path to the configuration section.
 	 * Returns: TRUE if the section exists, FALSE otherwise.
 	 */
 	public static int hasSection(string path)
@@ -224,7 +224,7 @@ public class Config
 	/**
 	 * Checks whether the given key exists in the configuration system.
 	 * Params:
-	 * path =  path to the configuration key.
+	 * path = path to the configuration key.
 	 * Returns: TRUE if the entry exists, FALSE otherwise.
 	 */
 	public static int hasKey(string path)
@@ -238,7 +238,7 @@ public class Config
 	 * under the given root directory.
 	 * To free the returned value, you can use gda_config_free_list.
 	 * Params:
-	 * path =  path for root dir.
+	 * path = path for root dir.
 	 * Returns: a list containing all the section names.
 	 */
 	public static ListG listSections(string path)
@@ -256,7 +256,7 @@ public class Config
 	 * Returns a list of all keys that exist under the given path.
 	 * To free the returned value, you can use gda_config_free_list.
 	 * Params:
-	 * path =  path for root dir.
+	 * path = path for root dir.
 	 * Returns: a list containing all the key names.
 	 */
 	public static ListG listKeys(string path)
@@ -274,7 +274,7 @@ public class Config
 	 * Gets a string representing the type of the value of the given key.
 	 * The caller is responsible of freeing the returned value.
 	 * Params:
-	 * path =  path to the configuration key.
+	 * path = path to the configuration key.
 	 * Returns: NULL if not found. Otherwise: "string", "float", "long", "bool".
 	 */
 	public static string getType(string path)
@@ -287,7 +287,7 @@ public class Config
 	 * Frees all memory used by the given GList, which must be the return value
 	 * from either gda_config_list_sections and gda_config_list_keys.
 	 * Params:
-	 * list =  list to be freed.
+	 * list = list to be freed.
 	 */
 	public static void freeList(ListG list)
 	{
@@ -300,9 +300,9 @@ public class Config
 	 * which will be called every time a change occurs on a given
 	 * configuration entry.
 	 * Params:
-	 * path =  configuration path to listen to.
-	 * func =  callback function.
-	 * userData =  data to be passed to the callback function.
+	 * path = configuration path to listen to.
+	 * func = callback function.
+	 * userData = data to be passed to the callback function.
 	 * Returns: the ID of the listener, which you will need forcalling gda_config_remove_listener. If an error occurs,0 is returned.
 	 */
 	public static uint addListener(string path, GdaConfigListenerFunc func, void* userData)
@@ -315,7 +315,7 @@ public class Config
 	 * Removes a configuration listener previously installed with
 	 * gda_config_add_listener, given its ID.
 	 * Params:
-	 * id =  the ID of the listener to remove.
+	 * id = the ID of the listener to remove.
 	 */
 	public static void removeListener(uint id)
 	{
@@ -344,7 +344,7 @@ public class Config
 	/**
 	 * Frees a list of GdaProviderInfo structures.
 	 * Params:
-	 * list =  the list to be freed.
+	 * list = the list to be freed.
 	 */
 	public static void freeProviderList(ListG list)
 	{
@@ -355,7 +355,7 @@ public class Config
 	/**
 	 * Gets a GdaProviderInfo structure from the provider list given its name.
 	 * Params:
-	 * name =  name of the provider to search for.
+	 * name = name of the provider to search for.
 	 * Returns: a GdaProviderInfo structure, if found, or NULL if not found.
 	 */
 	public static ProviderInfo getProviderByName(string name)
@@ -390,7 +390,7 @@ public class Config
 	/**
 	 * Creates a new GdaDataSourceInfo structure from an existing one.
 	 * Params:
-	 * src =  data source information to get a copy from.
+	 * src = data source information to get a copy from.
 	 * Returns: a newly allocated GdaDataSourceInfo with contains a copy of information in src.
 	 */
 	public static DataSourceInfo copyDataSourceInfo(DataSourceInfo src)
@@ -407,7 +407,7 @@ public class Config
 	/**
 	 * Deallocates all memory associated to the given GdaDataSourceInfo.
 	 * Params:
-	 * info =  data source information to free.
+	 * info = data source information to free.
 	 */
 	public static void freeDataSourceInfo(DataSourceInfo info)
 	{
@@ -437,7 +437,7 @@ public class Config
 	 * Gets a GdaDataSourceInfo structure from the data source list given its
 	 * name.
 	 * Params:
-	 * name =  name of the data source to search for.
+	 * name = name of the data source to search for.
 	 * Returns: a GdaDataSourceInfo structure, if found, or NULL if not found.
 	 */
 	public static DataSourceInfo findDataSource(string name)
@@ -454,7 +454,7 @@ public class Config
 	/**
 	 * Frees a list of GdaDataSourceInfo structures.
 	 * Params:
-	 * list =  the list to be freed.
+	 * list = the list to be freed.
 	 */
 	public static void freeDataSourceList(ListG list)
 	{
@@ -485,12 +485,12 @@ public class Config
 	 * Adds a new data source (or update an existing one) to the GDA
 	 * configuration, based on the parameters given.
 	 * Params:
-	 * name =  name for the data source to be saved.
-	 * provider =  provider ID for the new data source.
-	 * cncString =  connection string for the new data source.
-	 * description =  description for the new data source.
-	 * username =  user name for the new data source.
-	 * password =  password to use when authenticating username.
+	 * name = name for the data source to be saved.
+	 * provider = provider ID for the new data source.
+	 * cncString = connection string for the new data source.
+	 * description = description for the new data source.
+	 * username = user name for the new data source.
+	 * password = password to use when authenticating username.
 	 */
 	public static void saveDataSource(string name, string provider, string cncString, string description, string username, string password)
 	{
@@ -503,7 +503,7 @@ public class Config
 	 * GdaDataSourceInfo structure containing all the information
 	 * about the data source.
 	 * Params:
-	 * dsnInfo =  a GdaDataSourceInfo structure.
+	 * dsnInfo = a GdaDataSourceInfo structure.
 	 */
 	public static void saveDataSourceInfo(DataSourceInfo dsnInfo)
 	{
@@ -514,7 +514,7 @@ public class Config
 	/**
 	 * Removes the given data source from the GDA configuration.
 	 * Params:
-	 * name =  name for the data source to be removed.
+	 * name = name for the data source to be removed.
 	 */
 	public static void removeDataSource(string name)
 	{

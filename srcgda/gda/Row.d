@@ -119,8 +119,8 @@ public class Row
 	/**
 	 * Creates a GdaRow which can hold count GdaValue.
 	 * Params:
-	 * model =  the GdaDataModel this row belongs to.
-	 * count =  number of GdaValue in the new GdaRow.
+	 * model = the GdaDataModel this row belongs to.
+	 * count = number of GdaValue in the new GdaRow.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (DataModel model, int count)
@@ -138,8 +138,8 @@ public class Row
 	 * Creates a GdaRow from a list of GdaValue's. These GdaValue's are
 	 * value-copied and the user are still resposible for freeing them.
 	 * Params:
-	 * model =  a GdaDataModel.
-	 * values =  a list of GdaValue's.
+	 * model = a GdaDataModel.
+	 * values = a list of GdaValue's.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (DataModel model, GList* values)
@@ -206,7 +206,7 @@ public class Row
 	/**
 	 * Sets the row number for the given row.
 	 * Params:
-	 * number =  the new row number.
+	 * number = the new row number.
 	 */
 	public void setNumber(int number)
 	{
@@ -233,7 +233,7 @@ public class Row
 	 * Assigns a new identifier to the given row. This function is
 	 * usually called by providers.
 	 * Params:
-	 * id =  new identifier for the row.
+	 * id = new identifier for the row.
 	 */
 	public void setId(string id)
 	{
@@ -246,7 +246,7 @@ public class Row
 	 * This is a pointer to the internal array of values. Don't try to free
 	 * or modify it!
 	 * Params:
-	 * num =  field index.
+	 * num = field index.
 	 * Returns: a pointer to the GdaValue in the position num of row.
 	 */
 	public Value getValue(int num)

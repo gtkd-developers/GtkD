@@ -118,6 +118,12 @@ private import gtk.TargetList;
 
 version(Tango) {
 	private import tango.core.Vararg;
+
+	version = druntime;
+} else version(D_Version2) {
+	private import core.vararg;
+
+	version = druntime;
 } else {
 	private import std.stdarg;
 }

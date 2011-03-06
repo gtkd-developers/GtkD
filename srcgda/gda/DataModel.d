@@ -142,7 +142,7 @@ public class DataModel : ObjectG
 	/**
 	 * Emits the 'row_inserted' and 'changed' signals on model.
 	 * Params:
-	 * row =  row number.
+	 * row = row number.
 	 */
 	public void rowInserted(int row)
 	{
@@ -153,7 +153,7 @@ public class DataModel : ObjectG
 	/**
 	 * Emits the 'row_updated' and 'changed' signals on model.
 	 * Params:
-	 * row =  row number.
+	 * row = row number.
 	 */
 	public void rowUpdated(int row)
 	{
@@ -164,7 +164,7 @@ public class DataModel : ObjectG
 	/**
 	 * Emits the 'row_removed' and 'changed' signal on model.
 	 * Params:
-	 * row =  row number.
+	 * row = row number.
 	 */
 	public void rowRemoved(int row)
 	{
@@ -175,7 +175,7 @@ public class DataModel : ObjectG
 	/**
 	 * Emits the 'column_inserted' and 'changed' signals on model.
 	 * Params:
-	 * col =  column number.
+	 * col = column number.
 	 */
 	public void columnInserted(int col)
 	{
@@ -186,7 +186,7 @@ public class DataModel : ObjectG
 	/**
 	 * Emits the 'column_updated' and 'changed' signals on model.
 	 * Params:
-	 * col =  column number.
+	 * col = column number.
 	 */
 	public void columnUpdated(int col)
 	{
@@ -197,7 +197,7 @@ public class DataModel : ObjectG
 	/**
 	 * Emits the 'column_removed' and 'changed' signal on model.
 	 * Params:
-	 * col =  column number.
+	 * col = column number.
 	 */
 	public void columnRemoved(int col)
 	{
@@ -249,7 +249,7 @@ public class DataModel : ObjectG
 	 * a GdaFieldAttributes structure, which contains all the information
 	 * about the given column in the data model.
 	 * Params:
-	 * col =  column number.
+	 * col = column number.
 	 * Returns: the description of the column.
 	 */
 	public FieldAttributes describeColumn(int col)
@@ -265,7 +265,7 @@ public class DataModel : ObjectG
 	
 	/**
 	 * Params:
-	 * col =  column number.
+	 * col = column number.
 	 * Returns: the title for the given column in a data model object.
 	 */
 	public string getColumnTitle(int col)
@@ -277,8 +277,8 @@ public class DataModel : ObjectG
 	/**
 	 * Sets the title of the given col in model.
 	 * Params:
-	 * col =  column number
-	 * title =  title for the given column.
+	 * col = column number
+	 * title = title for the given column.
 	 */
 	public void setColumnTitle(int col, string title)
 	{
@@ -290,7 +290,7 @@ public class DataModel : ObjectG
 	 * Gets the position of a column on the data model, based on
 	 * the column's title.
 	 * Params:
-	 * title =  column title.
+	 * title = column title.
 	 * Returns: the position of the column in the data model, or -1if the column could not be found.
 	 */
 	public int getColumnPosition(string title)
@@ -302,7 +302,7 @@ public class DataModel : ObjectG
 	/**
 	 * Retrieves a given row from a data model.
 	 * Params:
-	 * row =  row number.
+	 * row = row number.
 	 * Returns: a GdaRow object.
 	 */
 	public Row getRow(int row)
@@ -321,8 +321,8 @@ public class DataModel : ObjectG
 	 * the col and row parameters) on a data model.
 	 * This is the main function for accessing data in a model.
 	 * Params:
-	 * col =  column number.
-	 * row =  row number.
+	 * col = column number.
+	 * row = row number.
 	 * Returns: a GdaValue containing the value stored in the givenposition, or NULL on error (out-of-bound position, etc).
 	 */
 	public Value getValueAt(int col, int row)
@@ -349,7 +349,7 @@ public class DataModel : ObjectG
 	/**
 	 * Appends a row to the given data model.
 	 * Params:
-	 * values =  GList of GdaValue* representing the row to add. The
+	 * values = GList of GdaValue* representing the row to add. The
 	 *  length must match model's column count. These GdaValue
 	 *  are value-copied. The user is still responsible for freeing them.
 	 * Returns: the added row.
@@ -369,7 +369,7 @@ public class DataModel : ObjectG
 	 * Removes a row from the data model. This results in the underlying
 	 * database row being removed in the database.
 	 * Params:
-	 * row =  the GdaRow to be removed.
+	 * row = the GdaRow to be removed.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int removeRow(Row row)
@@ -382,7 +382,7 @@ public class DataModel : ObjectG
 	 * Updates a row data model. This results in the underlying
 	 * database row's values being changed.
 	 * Params:
-	 * row =  the GdaRow to be updated.
+	 * row = the GdaRow to be updated.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int updateRow(Row row)
@@ -396,7 +396,7 @@ public class DataModel : ObjectG
 	 * the new column in the data model is set on col, and you can grab it using
 	 * gda_field_attributes_get_position.
 	 * Params:
-	 * attrs =  a GdaFieldAttributes describing the column to add.
+	 * attrs = a GdaFieldAttributes describing the column to add.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int appendColumn(FieldAttributes attrs)
@@ -409,8 +409,8 @@ public class DataModel : ObjectG
 	 * Updates a column in the given data model. This results in the underlying
 	 * database row's values being changed.
 	 * Params:
-	 * col =  the column to be updated.
-	 * attrs =  attributes for the column.
+	 * col = the column to be updated.
+	 * attrs = attributes for the column.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int updateColumn(int col, FieldAttributes attrs)
@@ -423,7 +423,7 @@ public class DataModel : ObjectG
 	 * Removes a column from the data model. This means that all values attached to this
 	 * column in the data model will be destroyed in the underlying database.
 	 * Params:
-	 * col =  the column to be removed.
+	 * col = the column to be removed.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int removeColumn(int col)
@@ -437,8 +437,8 @@ public class DataModel : ObjectG
 	 * This will just traverse all rows, and call the given callback
 	 * function for each of them.
 	 * Params:
-	 * func =  callback function.
-	 * userData =  context data for the callback function.
+	 * func = callback function.
+	 * userData = context data for the callback function.
 	 */
 	public void foreac(GdaDataModelForeachFunc func, void* userData)
 	{
@@ -516,7 +516,7 @@ public class DataModel : ObjectG
 	/**
 	 * Converts the given model into a XML representation.
 	 * Params:
-	 * standalone =  whether ...
+	 * standalone = whether ...
 	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
 	 */
 	public string toXml(int standalone)
@@ -528,7 +528,7 @@ public class DataModel : ObjectG
 	/**
 	 * Converts a GdaDataModel into a xmlNodePtr (as used in libxml).
 	 * Params:
-	 * name =  name to use for the XML resulting table.
+	 * name = name to use for the XML resulting table.
 	 * Returns: a xmlNodePtr representing the whole data model.
 	 */
 	public xmlNodePtr toXmlNode(string name)
@@ -540,7 +540,7 @@ public class DataModel : ObjectG
 	/**
 	 * Adds the data from a XML node to the given data model.
 	 * Params:
-	 * node =  a XML node representing a lt;datagt; XML node.
+	 * node = a XML node representing a lt;datagt; XML node.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int addDataFromXmlNode(xmlNodePtr node)
@@ -562,7 +562,7 @@ public class DataModel : ObjectG
 	/**
 	 * Sets the command text of the given model.
 	 * Params:
-	 * txt =  the command text.
+	 * txt = the command text.
 	 */
 	public void setCommandText(string txt)
 	{
@@ -583,7 +583,7 @@ public class DataModel : ObjectG
 	/**
 	 * Sets the type of command that generated this data model.
 	 * Params:
-	 * type =  the type of the command (one of GdaCommandType)
+	 * type = the type of the command (one of GdaCommandType)
 	 */
 	public void setCommandType(GdaCommandType type)
 	{

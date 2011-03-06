@@ -136,7 +136,7 @@ public class QuarkList
 	/**
 	 * Creates a new GdaQuarkList given a connection string.
 	 * Params:
-	 * string =  a connection string.
+	 * string = a connection string.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string string)
@@ -179,8 +179,8 @@ public class QuarkList
 	 * set to TRUE, the previous contents will be discarded before adding
 	 * the new pairs.
 	 * Params:
-	 * string =  a connection string.
-	 * cleanup =  whether to cleanup the previous content or not.
+	 * string = a connection string.
+	 * cleanup = whether to cleanup the previous content or not.
 	 */
 	public void addFromString(string string, int cleanup)
 	{
@@ -191,7 +191,7 @@ public class QuarkList
 	/**
 	 * Searches for the value identified by name in the given GdaQuarkList.
 	 * Params:
-	 * name =  the name of the value to search for.
+	 * name = the name of the value to search for.
 	 * Returns: the value associated with the given key if found, or NULLif not found.
 	 */
 	public string find(string name)
@@ -203,7 +203,7 @@ public class QuarkList
 	/**
 	 * Removes an entry from the GdaQuarkList, given its name.
 	 * Params:
-	 * name =  an entry name.
+	 * name = an entry name.
 	 */
 	public void remove(string name)
 	{

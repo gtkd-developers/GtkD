@@ -163,7 +163,7 @@ public class ParameterList
 	 * caller should just forget about it and not try to free the parameter once
 	 * it's been added to the GdaParameterList.
 	 * Params:
-	 * param =  the GdaParameter to be added to the list.
+	 * param = the GdaParameter to be added to the list.
 	 */
 	public void addParameter(Parameter param)
 	{
@@ -189,7 +189,7 @@ public class ParameterList
 	/**
 	 * Gets a GdaParameter from the parameter list given its name.
 	 * Params:
-	 * name =  name of the parameter to search for.
+	 * name = name of the parameter to search for.
 	 * Returns: the GdaParameter identified by name, if found, or NULLif not found.
 	 */
 	public Parameter find(string name)

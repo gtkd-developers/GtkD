@@ -82,7 +82,7 @@ public class GLdInit
 	 * the library for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gdk_gl_init_check() instead.
 	 * Params:
-	 * argv =  Address of the argv parameter of
+	 * argv = Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
 	 */
@@ -104,7 +104,7 @@ public class GLdInit
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
 	 * Params:
-	 * argv =  Address of the argv parameter of
+	 * argv = Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
 	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
@@ -129,7 +129,7 @@ public class GLdInit
 	 * You shouldn't call this function explicitely if you are using
 	 * gdk_gl_init(), or gdk_gl_init_check().
 	 * Params:
-	 * argv =  the array of command line arguments.
+	 * argv = the array of command line arguments.
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartII.GdkGLExt API ReferenceQuery>>
 	 */
 	public static int parseArgs(ref string[] argv)

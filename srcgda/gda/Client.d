@@ -182,9 +182,9 @@ public class Client : ObjectG
 	 * series of key=value pairs. Do not add extra whitespace after the ;
 	 * separator. The possible keys depend on the provider, but
 	 * Params:
-	 * providerId =  provider ID to connect to.
-	 * cncString =  connection string.
-	 * options =  options for the connection (see GdaConnectionOptions).
+	 * providerId = provider ID to connect to.
+	 * cncString = connection string.
+	 * options = options for the connection (see GdaConnectionOptions).
 	 * Returns: the opened connection if successful, NULL if there isan error.
 	 */
 	public Connection openConnectionFromString(string providerId, string cncString, GdaConnectionOptions options)
@@ -222,9 +222,9 @@ public class Client : ObjectG
 	 * given GdaClient and looks for one that matches the given data source
 	 * name, username and password.
 	 * Params:
-	 * dsn =  data source name.
-	 * username =  user name.
-	 * password =  password for username.
+	 * dsn = data source name.
+	 * username = user name.
+	 * password = password for username.
 	 * Returns: a pointer to the found connection, or NULL if it could notbe found.
 	 */
 	public Connection findConnection(string dsn, string username, string password)
@@ -252,9 +252,9 @@ public class Client : ObjectG
 	 * anything (see GdaClientEvent) ranging from a connection opening
 	 * operation, to changes made to a table in an underlying database.
 	 * Params:
-	 * cnc =  a GdaConnection object where the event has occurred.
-	 * event =  event ID.
-	 * params =  parameters associated with the event.
+	 * cnc = a GdaConnection object where the event has occurred.
+	 * event = event ID.
+	 * params = parameters associated with the event.
 	 */
 	public void notifyEvent(Connection cnc, GdaClientEvent event, ParameterList params)
 	{
@@ -265,8 +265,8 @@ public class Client : ObjectG
 	/**
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_ERROR event.
 	 * Params:
-	 * cnc =  a GdaConnection object.
-	 * error =  the error to be notified.
+	 * cnc = a GdaConnection object.
+	 * error = the error to be notified.
 	 */
 	public void notifyErrorEvent(Connection cnc, ErrorGda error)
 	{
@@ -278,7 +278,7 @@ public class Client : ObjectG
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_CONNECTION_OPENED
 	 * event.
 	 * Params:
-	 * cnc =  a GdaConnection object.
+	 * cnc = a GdaConnection object.
 	 */
 	public void notifyConnectionOpenedEvent(Connection cnc)
 	{
@@ -290,7 +290,7 @@ public class Client : ObjectG
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_CONNECTION_CLOSED
 	 * event.
 	 * Params:
-	 * cnc =  a GdaConnection object.
+	 * cnc = a GdaConnection object.
 	 */
 	public void notifyConnectionClosedEvent(Connection cnc)
 	{
@@ -302,8 +302,8 @@ public class Client : ObjectG
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_TRANSACTION_STARTED
 	 * event.
 	 * Params:
-	 * cnc =  a GdaConnection object.
-	 * xaction =  a GdaTransaction object.
+	 * cnc = a GdaConnection object.
+	 * xaction = a GdaTransaction object.
 	 */
 	public void notifyTransactionStartedEvent(Connection cnc, Transaction xaction)
 	{
@@ -315,8 +315,8 @@ public class Client : ObjectG
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_TRANSACTION_COMMITTED
 	 * event.
 	 * Params:
-	 * cnc =  a GdaConnection object.
-	 * xaction =  a GdaTransaction object.
+	 * cnc = a GdaConnection object.
+	 * xaction = a GdaTransaction object.
 	 */
 	public void notifyTransactionCommittedEvent(Connection cnc, Transaction xaction)
 	{
@@ -328,8 +328,8 @@ public class Client : ObjectG
 	 * Notifies the given GdaClient of the GDA_CLIENT_EVENT_TRANSACTION_CANCELLED
 	 * event.
 	 * Params:
-	 * cnc =  a GdaConnection object.
-	 * xaction =  a GdaTransaction object.
+	 * cnc = a GdaConnection object.
+	 * xaction = a GdaTransaction object.
 	 */
 	public void notifyTransactionCancelledEvent(Connection cnc, Transaction xaction)
 	{
@@ -346,7 +346,7 @@ public class Client : ObjectG
 	 * gda_connection_begin_transaction, gda_connection_commit_transaction
 	 * and gda_connection_rollback_transaction.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 * Returns: TRUE if all transactions could be started successfully,or FALSE if one of them fails.
 	 */
 	public int beginTransaction(Transaction xaction)
@@ -364,7 +364,7 @@ public class Client : ObjectG
 	 * gda_connection_begin_transaction, gda_connection_commit_transaction
 	 * and gda_connection_rollback_transaction.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 * Returns: TRUE if all transactions could be committed successfully,or FALSE if one of them fails.
 	 */
 	public int commitTransaction(Transaction xaction)
@@ -382,7 +382,7 @@ public class Client : ObjectG
 	 * gda_connection_begin_transaction, gda_connection_commit_transaction
 	 * and gda_connection_rollback_transaction.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 * Returns: TRUE if all transactions could be cancelled successfully,or FALSE if one of them fails.
 	 */
 	public int rollbackTransaction(Transaction xaction)

@@ -147,12 +147,12 @@ public class Connection : ObjectG
 	 * intended to be used directly by applications (use
 	 * gda_client_open_connection instead).
 	 * Params:
-	 * client =  a GdaClient object.
-	 * provider =  a GdaServerProvider object.
-	 * dsn =  GDA data source to connect to.
-	 * username =  user name to use to connect.
-	 * password =  password for username.
-	 * options =  options for the connection.
+	 * client = a GdaClient object.
+	 * provider = a GdaServerProvider object.
+	 * dsn = GDA data source to connect to.
+	 * username = user name to use to connect.
+	 * password = password for username.
+	 * options = options for the connection.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Client client, GdaServerProvider* provider, string dsn, string username, string password, GdaConnectionOptions options)
@@ -209,7 +209,7 @@ public class Connection : ObjectG
 	 * Associates a GdaClient with this connection. This function is
 	 * not intended to be called by applications.
 	 * Params:
-	 * client =  a GdaClient object.
+	 * client = a GdaClient object.
 	 */
 	public void setClient(Client client)
 	{
@@ -309,7 +309,7 @@ public class Connection : ObjectG
 	 * emits the "error" signal, to which clients can connect to be
 	 * informed of errors.
 	 * Params:
-	 * error =  is stored internally, so you don't need to unref it.
+	 * error = is stored internally, so you don't need to unref it.
 	 */
 	public void addError(ErrorGda error)
 	{
@@ -327,7 +327,7 @@ public class Connection : ObjectG
 	 * the whole list of errors.
 	 * error_list is copied to an internal list and freed.
 	 * Params:
-	 * errorList =  a list of GdaError.
+	 * errorList = a list of GdaError.
 	 */
 	public void addErrorList(ListG errorList)
 	{
@@ -339,7 +339,7 @@ public class Connection : ObjectG
 	 * Changes the current database for the given connection. This operation
 	 * is not available in all providers.
 	 * Params:
-	 * name =  name of database to switch to.
+	 * name = name of database to switch to.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int changeDatabase(string name)
@@ -351,7 +351,7 @@ public class Connection : ObjectG
 	/**
 	 * Creates a new database named name on the given connection.
 	 * Params:
-	 * name =  database name.
+	 * name = database name.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int createDatabase(string name)
@@ -363,7 +363,7 @@ public class Connection : ObjectG
 	/**
 	 * Drops a database from the given connection.
 	 * Params:
-	 * name =  database name.
+	 * name = database name.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int dropDatabase(string name)
@@ -375,8 +375,8 @@ public class Connection : ObjectG
 	/**
 	 * Creates a table on the given connection from the specified set of fields.
 	 * Params:
-	 * tableName =  name of the table to be created.
-	 * attributes =  description of all fields for the new table.
+	 * tableName = name of the table to be created.
+	 * attributes = description of all fields for the new table.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int createTable(string tableName, GdaFieldAttributes*[] attributes)
@@ -388,7 +388,7 @@ public class Connection : ObjectG
 	/**
 	 * Drops a table from the database.
 	 * Params:
-	 * tableName =  name of the table to be removed
+	 * tableName = name of the table to be removed
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int dropTable(string tableName)
@@ -407,8 +407,8 @@ public class Connection : ObjectG
 	 * The return value is a GList of GdaDataModel's, which you
 	 * are responsible to free when not needed anymore.
 	 * Params:
-	 * cmd =  a GdaCommand.
-	 * params =  parameter list.
+	 * cmd = a GdaCommand.
+	 * params = parameter list.
 	 * Returns: a list of GdaDataModel's, as returned by the underlyingprovider.
 	 */
 	public ListG executeCommand(Command cmd, ParameterList params)
@@ -427,7 +427,7 @@ public class Connection : ObjectG
 	 * A connection must be specified, and, optionally, a result set. If not NULL,
 	 * the underlying provider should try to get the last insert ID for the given result set.
 	 * Params:
-	 * recset =  recordset.
+	 * recset = recordset.
 	 * Returns: a string representing the ID of the last inserted row, or NULLif an error occurred or no row has been inserted. It is the caller'sreponsibility to free the returned string.
 	 */
 	public string getLastInsertId(DataModel recset)
@@ -442,8 +442,8 @@ public class Connection : ObjectG
 	 * the underlying difference, instead of having to retrieve
 	 * a list of them, as is the case with gda_connection_execute_command.
 	 * Params:
-	 * cmd =  a GdaCommand.
-	 * params =  parameter list.
+	 * cmd = a GdaCommand.
+	 * params = parameter list.
 	 * Returns: a GdaDataModel containing the data returned by thedata source, or NULL on error.
 	 */
 	public DataModel executeSingleCommand(Command cmd, ParameterList params)
@@ -461,8 +461,8 @@ public class Connection : ObjectG
 	 * Executes a single command on the underlying database, and gets the
 	 * number of rows affected.
 	 * Params:
-	 * cmd =  a GdaCommand.
-	 * params =  parameter list.
+	 * cmd = a GdaCommand.
+	 * params = parameter list.
 	 * Returns: the number of affected rows by the executed command,or -1 on error.
 	 */
 	public int executeNonQuery(Command cmd, ParameterList params)
@@ -478,7 +478,7 @@ public class Connection : ObjectG
 	 * provider does support transactions or not by using the
 	 * gda_connection_supports function.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 * Returns: TRUE if the transaction was started successfully, FALSEotherwise.
 	 */
 	public int beginTransaction(Transaction xaction)
@@ -491,7 +491,7 @@ public class Connection : ObjectG
 	 * Commits the given transaction to the backend database. You need to do
 	 * gda_connection_begin_transaction() first.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 * Returns: TRUE if the transaction was finished successfully,FALSE otherwise.
 	 */
 	public int commitTransaction(Transaction xaction)
@@ -506,7 +506,7 @@ public class Connection : ObjectG
 	 * gda_connection_begin_transaction or gda_connection_commit_transaction
 	 * will be discarded.
 	 * Params:
-	 * xaction =  a GdaTransaction object.
+	 * xaction = a GdaTransaction object.
 	 * Returns: TRUE if the operation was successful, FALSE otherwise.
 	 */
 	public int rollbackTransaction(Transaction xaction)
@@ -518,7 +518,7 @@ public class Connection : ObjectG
 	/**
 	 * Creates a BLOB (Binary Large OBject) with read/write access.
 	 * Params:
-	 * blob =  a user-allocated GdaBlob structure.
+	 * blob = a user-allocated GdaBlob structure.
 	 * Returns: FALSE if the database does not support BLOBs. TRUE otherwiseand the GdaBlob is created and ready to be used.
 	 */
 	public int createBlob(Blob blob)
@@ -546,7 +546,7 @@ public class Connection : ObjectG
 	/**
 	 * Asks the underlying provider for if a specific feature is supported.
 	 * Params:
-	 * feature =  feature to ask for.
+	 * feature = feature to ask for.
 	 * Returns: TRUE if the provider supports it, FALSE if not.
 	 */
 	public int supports(GdaConnectionFeature feature)
@@ -565,8 +565,8 @@ public class Connection : ObjectG
 	 * be used to give more detail about the objects to be returned.
 	 * The list of parameters is specific to each schema type.
 	 * Params:
-	 * schema =  database schema to get.
-	 * params =  parameter list.
+	 * schema = database schema to get.
+	 * params = parameter list.
 	 * Returns: a GdaDataModel containing the data required. The caller is responsibleof freeing the returned model.
 	 */
 	public DataModel getSchema(GdaConnectionSchema schema, ParameterList params)

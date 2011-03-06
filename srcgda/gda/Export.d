@@ -126,7 +126,7 @@ public class Export : ObjectG
 	 * connecting to the different signals that will let you be
 	 * informed of the export process progress.
 	 * Params:
-	 * cnc =  a GdaConnection object.
+	 * cnc = a GdaConnection object.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Connection cnc)
@@ -179,7 +179,7 @@ public class Export : ObjectG
 	/**
 	 * Adds the given table to the list of selected tables.
 	 * Params:
-	 * table =  name of the table.
+	 * table = name of the table.
 	 */
 	public void selectTable(string table)
 	{
@@ -191,7 +191,7 @@ public class Export : ObjectG
 	 * Adds all the tables contained in the given list to the list of
 	 * selected tables.
 	 * Params:
-	 * list =  list of tables to be selected.
+	 * list = list of tables to be selected.
 	 */
 	public void selectTableList(ListG list)
 	{
@@ -202,7 +202,7 @@ public class Export : ObjectG
 	/**
 	 * Removes the given table name from the list of selected tables.
 	 * Params:
-	 * table =  name of the table.
+	 * table = name of the table.
 	 */
 	public void unselectTable(string table)
 	{
@@ -215,7 +215,7 @@ public class Export : ObjectG
 	 * calling this function, your application will lose control about the export
 	 * process and will only receive notifications via the class signals.
 	 * Params:
-	 * flags =  execution flags.
+	 * flags = execution flags.
 	 */
 	public void run(GdaExportFlags flags)
 	{
@@ -249,7 +249,7 @@ public class Export : ObjectG
 	/**
 	 * Associates the given GdaConnection with the given GdaExport.
 	 * Params:
-	 * cnc =  a GdaConnection object.
+	 * cnc = a GdaConnection object.
 	 */
 	public void setConnection(Connection cnc)
 	{
