@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = SourceCompletionContext
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_source_completion_context_add_proposals
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -118,6 +119,22 @@ public class SourceCompletionContext : ObjectG
 	}
 	
 	/**
+	 * Providers can use this function to add proposals to the completion. They
+	 * can do so asynchronously by means of the finished argument. Providers must
+	 * ensure that they always call this function with finished set to TRUE
+	 * once each population (even if no proposals need to be added).
+	 * Params:
+	 * provider = A GtkSourceCompletionProvider
+	 * proposals = The list of proposals to add
+	 * finished = Whether the provider is finished adding proposals
+	 */
+	public void addProposals(SourceCompletionProviderIF provider, ListG proposals, int finished)
+	{
+		// void gtk_source_completion_context_add_proposals  (GtkSourceCompletionContext *context,  struct _GtkSourceCompletionProvider *provider,  GList *proposals,  gboolean finished);
+		gtk_source_completion_context_add_proposals(gtkSourceCompletionContext, (provider is null) ? null : provider.getSourceCompletionProviderTStruct(), (proposals is null) ? null : proposals.getListGStruct(), finished);
+	}
+	
+	/**
 	 */
 	int[char[]] connectedSignals;
 	
@@ -150,22 +167,6 @@ public class SourceCompletionContext : ObjectG
 		}
 	}
 	
-	
-	/**
-	 * Providers can use this function to add proposals to the completion. They
-	 * can do so asynchronously by means of the finished argument. Providers must
-	 * ensure that they always call this function with finished set to TRUE
-	 * once each population (even if no proposals need to be added).
-	 * Params:
-	 * provider = A GtkSourceCompletionProvider
-	 * proposals = The list of proposals to add
-	 * finished = Whether the provider is finished adding proposals
-	 */
-	public void addProposals(void* provider, ListG proposals, int finished)
-	{
-		// void gtk_source_completion_context_add_proposals  (GtkSourceCompletionContext *context,  struct _GtkSourceCompletionProvider *provider,  GList *proposals,  gboolean finished);
-		gtk_source_completion_context_add_proposals(gtkSourceCompletionContext, provider, (proposals is null) ? null : proposals.getListGStruct(), finished);
-	}
 	
 	/**
 	 * Get the iter at which the completion was invoked. Providers can use this
