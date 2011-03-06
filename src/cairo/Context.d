@@ -153,6 +153,11 @@ public class Context
 		this(gdk_cairo_create(drawable.getDrawableStruct()));
 	}
 	
+	~this ()
+	{
+		cairo_destroy(cairo);
+	}
+	
 	/**
 	 * Sets the specified GdkColor as the source color of cr.
 	 * Since 2.8
