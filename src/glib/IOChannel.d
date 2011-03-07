@@ -140,6 +140,11 @@ public class IOChannel
 		this.gIOChannel = gIOChannel;
 	}
 	
+	~this()
+	{
+		unref();
+	}
+	
 	/**
 	 * Reads a line, including the terminating character(s),
 	 * from a GIOChannel into a newly-allocated string.

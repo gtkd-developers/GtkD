@@ -192,6 +192,13 @@ structWrap: GMainContext* MainContext
 import: glib.Source
 structWrap: GSource* Source
 array: g_poll fds nfds
+
+code: start
+	~this()
+	{
+		unref();
+	}
+code: end
 outFile: MainLoop
 
 struct: GMainContext
@@ -600,7 +607,12 @@ nocode: g_io_channel_read_line
 nocode: g_io_channel_read_to_end
 
 code: start
-/**
+	~this()
+	{
+		unref();
+	}
+
+	/**
 	 * Reads a line, including the terminating character(s),
 	 * from a GIOChannel into a newly-allocated string.
 	 * str_return will contain allocated memory if the return

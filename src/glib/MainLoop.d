@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = MainLoop
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -168,6 +168,11 @@ public class MainLoop
 			return;
 		}
 		this.gMainLoop = gMainLoop;
+	}
+	
+	~this()
+	{
+		unref();
 	}
 	
 	/**
