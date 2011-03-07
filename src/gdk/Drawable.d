@@ -421,7 +421,7 @@ public class Drawable : ObjectG
 	public void drawPoints(GC gc, GdkPoint[] points)
 	{
 		// void gdk_draw_points (GdkDrawable *drawable,  GdkGC *gc,  const GdkPoint *points,  gint n_points);
-		gdk_draw_points(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, points.length);
+		gdk_draw_points(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, cast(int) points.length);
 	}
 	
 	/**
@@ -452,7 +452,7 @@ public class Drawable : ObjectG
 	public void drawLines(GC gc, GdkPoint[] points)
 	{
 		// void gdk_draw_lines (GdkDrawable *drawable,  GdkGC *gc,  const GdkPoint *points,  gint n_points);
-		gdk_draw_lines(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, points.length);
+		gdk_draw_lines(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points.ptr, cast(int) points.length);
 	}
 	
 	/**
@@ -498,7 +498,7 @@ public class Drawable : ObjectG
 	public void drawSegments(GC gc, GdkSegment[] segs)
 	{
 		// void gdk_draw_segments (GdkDrawable *drawable,  GdkGC *gc,  const GdkSegment *segs,  gint n_segs);
-		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs.ptr, segs.length);
+		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs.ptr, cast(int) segs.length);
 	}
 	
 	/**
@@ -560,7 +560,7 @@ public class Drawable : ObjectG
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
 	{
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  const GdkPoint *points,  gint n_points);
-		gdk_draw_polygon(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, points.ptr, points.length);
+		gdk_draw_polygon(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, points.ptr, cast(int) points.length);
 	}
 	
 	/**
@@ -577,7 +577,7 @@ public class Drawable : ObjectG
 	public void drawTrapezoids(GC gc, GdkTrapezoid[] trapezoids)
 	{
 		// void gdk_draw_trapezoids (GdkDrawable *drawable,  GdkGC *gc,  const GdkTrapezoid *trapezoids,  gint n_trapezoids);
-		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids.ptr, trapezoids.length);
+		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids.ptr, cast(int) trapezoids.length);
 	}
 	
 	/**
@@ -759,7 +759,7 @@ public class Drawable : ObjectG
 	public void drawTextWc(Font font, GC gc, int x, int y, GdkWChar[] text)
 	{
 		// void gdk_draw_text_wc (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const GdkWChar *text,  gint text_length);
-		gdk_draw_text_wc(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, text.ptr, text.length);
+		gdk_draw_text_wc(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, text.ptr, cast(int) text.length);
 	}
 	
 	/**

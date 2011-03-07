@@ -94,7 +94,7 @@ public class Gdk
 	{
 		// void gdk_init (gint *argc,  gchar ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		gdk_init(&argc, &outargv);
 		
@@ -111,7 +111,7 @@ public class Gdk
 	{
 		// gboolean gdk_init_check (gint *argc,  gchar ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		auto p = gdk_init_check(&argc, &outargv);
 		
@@ -134,7 +134,7 @@ public class Gdk
 	{
 		// void gdk_parse_args (gint *argc,  gchar ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		gdk_parse_args(&argc, &outargv);
 		

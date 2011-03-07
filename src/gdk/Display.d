@@ -674,7 +674,7 @@ public class Display : ObjectG
 	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)
 	{
 		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  const GdkAtom *targets,  gint n_targets);
-		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets.ptr, targets.length);
+		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets.ptr, cast(int) targets.length);
 	}
 	
 	/**

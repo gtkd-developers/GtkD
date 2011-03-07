@@ -463,7 +463,7 @@ public class Socket : ObjectG, InitableIF
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
 		GError* err = null;
 		
-		auto p = g_socket_receive_from(gSocket, &outaddress, buffer.ptr, buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_receive_from(gSocket, &outaddress, buffer.ptr, cast(int) buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -543,10 +543,10 @@ public class Socket : ObjectG, InitableIF
 		}
 		
 		GSocketControlMessage** outmessages = inoutmessages.ptr;
-		int numMessages = messages.length;
+		int numMessages = cast(int) messages.length;
 		GError* err = null;
 		
-		auto p = g_socket_receive_message(gSocket, &outaddress, vectors.ptr, vectors.length, &outmessages, &numMessages, &flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_receive_message(gSocket, &outaddress, vectors.ptr, cast(int) vectors.length, &outmessages, &numMessages, &flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -675,10 +675,10 @@ public class Socket : ObjectG, InitableIF
 	{
 		// gssize g_socket_send_message (GSocket *socket,  GSocketAddress *address,  GOutputVector *vectors,  gint num_vectors,  GSocketControlMessage **messages,  gint num_messages,  gint flags,  GCancellable *cancellable,  GError **error);
 		GSocketControlMessage* outmessages = messages.ptr;
-		int numMessages = messages.length;
+		int numMessages = cast(int) messages.length;
 		GError* err = null;
 		
-		auto p = g_socket_send_message(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, vectors.length, &outmessages, numMessages, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_send_message(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int) vectors.length, &outmessages, numMessages, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{

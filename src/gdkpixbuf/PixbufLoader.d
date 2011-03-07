@@ -379,7 +379,7 @@ public class PixbufLoader : ObjectG
 		// gboolean gdk_pixbuf_loader_write (GdkPixbufLoader *loader,  const guchar *buf,  gsize count,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, buf.length, &err);
+		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, cast(int) buf.length, &err);
 		
 		if (err !is null)
 		{

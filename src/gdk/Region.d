@@ -141,7 +141,7 @@ public class Region
 	public static Region polygon(GdkPoint[] points, GdkFillRule fillRule)
 	{
 		// GdkRegion * gdk_region_polygon (const GdkPoint *points,  gint n_points,  GdkFillRule fill_rule);
-		auto p = gdk_region_polygon(points.ptr, points.length, fillRule);
+		auto p = gdk_region_polygon(points.ptr, cast(int) points.length, fillRule);
 		if(p is null)
 		{
 			return null;
@@ -377,6 +377,6 @@ public class Region
 	public void spansIntersectForeach(GdkSpan[] spans, int sorted, GdkSpanFunc funct, void* data)
 	{
 		// void gdk_region_spans_intersect_foreach (GdkRegion *region,  const GdkSpan *spans,  int n_spans,  gboolean sorted,  GdkSpanFunc function,  gpointer data);
-		gdk_region_spans_intersect_foreach(gdkRegion, spans.ptr, spans.length, sorted, funct, data);
+		gdk_region_spans_intersect_foreach(gdkRegion, spans.ptr, cast(int) spans.length, sorted, funct, data);
 	}
 }

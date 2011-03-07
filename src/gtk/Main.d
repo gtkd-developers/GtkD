@@ -265,7 +265,7 @@ public class Main
 	{
 		// gboolean gtk_parse_args (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		auto p = gtk_parse_args(&argc, &outargv);
 		
@@ -322,7 +322,7 @@ public class Main
 	{
 		// gboolean gtk_init_check (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		auto p = gtk_init_check(&argc, &outargv);
 		
@@ -354,7 +354,7 @@ public class Main
 	{
 		// gboolean gtk_init_with_args (int *argc,  char ***argv,  const char *parameter_string,  GOptionEntry *entries,  const char *translation_domain,  GError **error);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		GError* err = null;
 		
 		auto p = gtk_init_with_args(&argc, &outargv, Str.toStringz(parameterString), entries.ptr, Str.toStringz(translationDomain), &err);

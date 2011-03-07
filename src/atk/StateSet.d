@@ -158,7 +158,7 @@ public class StateSet : ObjectG
 	public void addStates(AtkStateType[] types)
 	{
 		// void atk_state_set_add_states (AtkStateSet *set,  AtkStateType *types,  gint n_types);
-		atk_state_set_add_states(atkStateSet, types.ptr, types.length);
+		atk_state_set_add_states(atkStateSet, types.ptr, cast(int) types.length);
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public class StateSet : ObjectG
 	public int containsStates(AtkStateType[] types)
 	{
 		// gboolean atk_state_set_contains_states (AtkStateSet *set,  AtkStateType *types,  gint n_types);
-		return atk_state_set_contains_states(atkStateSet, types.ptr, types.length);
+		return atk_state_set_contains_states(atkStateSet, types.ptr, cast(int) types.length);
 	}
 	
 	/**

@@ -1731,7 +1731,7 @@ public class TreeView : Container
 	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_tree_view_enable_model_drag_dest  (GtkTreeView *tree_view,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_tree_view_enable_model_drag_dest(gtkTreeView, targets.ptr, targets.length, actions);
+		gtk_tree_view_enable_model_drag_dest(gtkTreeView, targets.ptr, cast(int) targets.length, actions);
 	}
 	
 	/**
@@ -1746,7 +1746,7 @@ public class TreeView : Container
 	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_tree_view_enable_model_drag_source  (GtkTreeView *tree_view,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, targets.ptr, targets.length, actions);
+		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, targets.ptr, cast(int) targets.length, actions);
 	}
 	
 	/**

@@ -529,7 +529,7 @@ public class Style : ObjectG
 	public void drawPolygon(Window window, GtkStateType stateType, GtkShadowType shadowType, GdkPoint[] points, int fill)
 	{
 		// void gtk_draw_polygon (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  GtkShadowType shadow_type,  GdkPoint *points,  gint npoints,  gboolean fill);
-		gtk_draw_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, points.ptr, points.length, fill);
+		gtk_draw_polygon(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, shadowType, points.ptr, cast(int) points.length, fill);
 	}
 	
 	/**

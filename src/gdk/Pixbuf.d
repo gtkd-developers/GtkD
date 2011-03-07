@@ -732,7 +732,7 @@ public class Pixbuf : ObjectG
 		// GdkPixbuf* gdk_pixbuf_new_from_inline (gint data_length,  const guint8 *data,  gboolean copy_pixels,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_new_from_inline(data.length, data.ptr, copyPixels, &err);
+		auto p = gdk_pixbuf_new_from_inline(cast(int) data.length, data.ptr, copyPixels, &err);
 		
 		if (err !is null)
 		{
@@ -741,7 +741,7 @@ public class Pixbuf : ObjectG
 		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_pixbuf_new_from_inline(data.length, data.ptr, copyPixels, &err)");
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_inline(cast(int) data.length, data.ptr, copyPixels, &err)");
 		}
 		this(cast(GdkPixbuf*) p);
 	}

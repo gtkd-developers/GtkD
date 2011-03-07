@@ -684,7 +684,7 @@ public class Context
 	public void setDash(double[] dashes, double offset)
 	{
 		// void cairo_set_dash (cairo_t *cr,  const double *dashes,  int num_dashes,  double offset);
-		cairo_set_dash(cairo, dashes.ptr, dashes.length, offset);
+		cairo_set_dash(cairo, dashes.ptr, cast(int) dashes.length, offset);
 	}
 	
 	/**
@@ -2092,7 +2092,7 @@ public class Context
 	public void showGlyphs(cairo_glyph_t[] glyphs)
 	{
 		// void cairo_show_glyphs (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs);
-		cairo_show_glyphs(cairo, glyphs.ptr, glyphs.length);
+		cairo_show_glyphs(cairo, glyphs.ptr, cast(int) glyphs.length);
 	}
 	
 	/**
@@ -2124,7 +2124,7 @@ public class Context
 	public void showTextGlyphs(string utf8, int utf8_Len, cairo_glyph_t[] glyphs, cairo_text_cluster_t[] clusters, cairo_text_cluster_flags_t clusterFlags)
 	{
 		// void cairo_show_text_glyphs (cairo_t *cr,  const char *utf8,  int utf8_len,  const cairo_glyph_t *glyphs,  int num_glyphs,  const cairo_text_cluster_t *clusters,  int num_clusters,  cairo_text_cluster_flags_t cluster_flags);
-		cairo_show_text_glyphs(cairo, Str.toStringz(utf8), utf8_Len, glyphs.ptr, glyphs.length, clusters.ptr, clusters.length, clusterFlags);
+		cairo_show_text_glyphs(cairo, Str.toStringz(utf8), utf8_Len, glyphs.ptr, cast(int) glyphs.length, clusters.ptr, cast(int) clusters.length, clusterFlags);
 	}
 	
 	/**
@@ -2179,7 +2179,7 @@ public class Context
 	public void glyphExtents(cairo_glyph_t[] glyphs, cairo_text_extents_t* extents)
 	{
 		// void cairo_glyph_extents (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
-		cairo_glyph_extents(cairo, glyphs.ptr, glyphs.length, extents);
+		cairo_glyph_extents(cairo, glyphs.ptr, cast(int) glyphs.length, extents);
 	}
 	
 	/**

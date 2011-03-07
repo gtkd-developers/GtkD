@@ -244,6 +244,6 @@ public template AsyncInitableT(TStruct)
 	public static void gAsyncInitableNewvAsync(GType objectType, GParameter[] parameters, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_async_initable_newv_async (GType object_type,  guint n_parameters,  GParameter *parameters,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
-		g_async_initable_newv_async(objectType, parameters.length, parameters.ptr, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		g_async_initable_newv_async(objectType, cast(int) parameters.length, parameters.ptr, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 }

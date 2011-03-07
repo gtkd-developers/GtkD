@@ -195,7 +195,7 @@ public class ByteArray
 	public ByteArray append(ubyte[] data)
 	{
 		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
-		auto p = g_byte_array_append(gByteArray, data.ptr, data.length);
+		auto p = g_byte_array_append(gByteArray, data.ptr, cast(int) data.length);
 		if(p is null)
 		{
 			return null;
@@ -213,7 +213,7 @@ public class ByteArray
 	public ByteArray prepend(ubyte[] data)
 	{
 		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
-		auto p = g_byte_array_prepend(gByteArray, data.ptr, data.length);
+		auto p = g_byte_array_prepend(gByteArray, data.ptr, cast(int) data.length);
 		if(p is null)
 		{
 			return null;

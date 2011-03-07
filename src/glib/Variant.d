@@ -726,10 +726,10 @@ public class Variant
 	public this (string[] strv)
 	{
 		// GVariant * g_variant_new_strv (const gchar * const *strv,  gssize length);
-		auto p = g_variant_new_strv(Str.toStringzArray(strv), strv.length);
+		auto p = g_variant_new_strv(Str.toStringzArray(strv), cast(int) strv.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_strv(Str.toStringzArray(strv), strv.length)");
+			throw new ConstructionException("null returned by g_variant_new_strv(Str.toStringzArray(strv), cast(int) strv.length)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -1007,10 +1007,10 @@ public class Variant
 			childrenArray[i] = children[i].getVariantStruct();
 		}
 		
-		auto p = g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, children.length);
+		auto p = g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, cast(int) children.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, children.length)");
+			throw new ConstructionException("null returned by g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, cast(int) children.length)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -1035,10 +1035,10 @@ public class Variant
 			childrenArray[i] = children[i].getVariantStruct();
 		}
 		
-		auto p = g_variant_new_tuple(childrenArray.ptr, children.length);
+		auto p = g_variant_new_tuple(childrenArray.ptr, cast(int) children.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_tuple(childrenArray.ptr, children.length)");
+			throw new ConstructionException("null returned by g_variant_new_tuple(childrenArray.ptr, cast(int) children.length)");
 		}
 		this(cast(GVariant*) p);
 	}

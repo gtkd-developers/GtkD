@@ -517,7 +517,7 @@ public class Font
 	public void textExtentsWc(GdkWChar[] text, out int lbearing, out int rbearing, out int width, out int ascent, out int descent)
 	{
 		// void gdk_text_extents_wc (GdkFont *font,  const GdkWChar *text,  gint text_length,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
-		gdk_text_extents_wc(gdkFont, text.ptr, text.length, &lbearing, &rbearing, &width, &ascent, &descent);
+		gdk_text_extents_wc(gdkFont, text.ptr, cast(int) text.length, &lbearing, &rbearing, &width, &ascent, &descent);
 	}
 	
 	/**
@@ -563,7 +563,7 @@ public class Font
 	public int textWidthWc(GdkWChar[] text)
 	{
 		// gint gdk_text_width_wc (GdkFont *font,  const GdkWChar *text,  gint text_length);
-		return gdk_text_width_wc(gdkFont, text.ptr, text.length);
+		return gdk_text_width_wc(gdkFont, text.ptr, cast(int) text.length);
 	}
 	
 	/**

@@ -246,7 +246,7 @@ public class Colormap
 	public int allocColors(GdkColor[] colors, int writeable, int bestMatch, int[] success)
 	{
 		// gint gdk_colormap_alloc_colors (GdkColormap *colormap,  GdkColor *colors,  gint n_colors,  gboolean writeable,  gboolean best_match,  gboolean *success);
-		return gdk_colormap_alloc_colors(gdkColormap, colors.ptr, colors.length, writeable, bestMatch, success.ptr);
+		return gdk_colormap_alloc_colors(gdkColormap, colors.ptr, cast(int) colors.length, writeable, bestMatch, success.ptr);
 	}
 	
 	/**
@@ -276,7 +276,7 @@ public class Colormap
 	public void freeColors(GdkColor[] colors)
 	{
 		// void gdk_colormap_free_colors (GdkColormap *colormap,  const GdkColor *colors,  gint n_colors);
-		gdk_colormap_free_colors(gdkColormap, colors.ptr, colors.length);
+		gdk_colormap_free_colors(gdkColormap, colors.ptr, cast(int) colors.length);
 	}
 	
 	/**
@@ -342,7 +342,7 @@ public class Colormap
 	public void colorsStore(GdkColor[] colors)
 	{
 		// void gdk_colors_store (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
-		gdk_colors_store(gdkColormap, colors.ptr, colors.length);
+		gdk_colors_store(gdkColormap, colors.ptr, cast(int) colors.length);
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class Colormap
 	public int colorsAlloc(int contiguous, uint[] planes, uint[] pixels)
 	{
 		// gint gdk_colors_alloc (GdkColormap *colormap,  gboolean contiguous,  gulong *planes,  gint nplanes,  gulong *pixels,  gint npixels);
-		return gdk_colors_alloc(gdkColormap, contiguous, planes.ptr, planes.length, pixels.ptr, pixels.length);
+		return gdk_colors_alloc(gdkColormap, contiguous, planes.ptr, cast(int) planes.length, pixels.ptr, cast(int) pixels.length);
 	}
 	
 	/**
@@ -377,6 +377,6 @@ public class Colormap
 	public void colorsFree(uint[] pixels, uint planes)
 	{
 		// void gdk_colors_free (GdkColormap *colormap,  gulong *pixels,  gint npixels,  gulong planes);
-		gdk_colors_free(gdkColormap, pixels.ptr, pixels.length, planes);
+		gdk_colors_free(gdkColormap, pixels.ptr, cast(int) pixels.length, planes);
 	}
 }

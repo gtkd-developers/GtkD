@@ -173,10 +173,10 @@ public class Relation : ObjectG
 			targetsArray[i] = targets[i].getObjectAtkStruct();
 		}
 		
-		auto p = atk_relation_new(targetsArray.ptr, targets.length, relationship);
+		auto p = atk_relation_new(targetsArray.ptr, cast(int) targets.length, relationship);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by atk_relation_new(targetsArray.ptr, targets.length, relationship)");
+			throw new ConstructionException("null returned by atk_relation_new(targetsArray.ptr, cast(int) targets.length, relationship)");
 		}
 		this(cast(AtkRelation*) p);
 	}

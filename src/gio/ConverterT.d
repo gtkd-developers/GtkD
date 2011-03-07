@@ -132,7 +132,7 @@ public template ConverterT(TStruct)
 		// GConverterResult g_converter_convert (GConverter *converter,  const void *inbuf,  gsize inbuf_size,  void *outbuf,  gsize outbuf_size,  GConverterFlags flags,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = g_converter_convert(getConverterTStruct(), inbuf.ptr, inbuf.length, outbuf.ptr, outbuf.length, flags, &bytesRead, &bytesWritten, &err);
+		auto p = g_converter_convert(getConverterTStruct(), inbuf.ptr, cast(int) inbuf.length, outbuf.ptr, cast(int) outbuf.length, flags, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{

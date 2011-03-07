@@ -227,10 +227,10 @@ public class RgbCmap
 	public this (uint[] colors)
 	{
 		// GdkRgbCmap * gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
-		auto p = gdk_rgb_cmap_new(colors.ptr, colors.length);
+		auto p = gdk_rgb_cmap_new(colors.ptr, cast(int) colors.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gdk_rgb_cmap_new(colors.ptr, colors.length)");
+			throw new ConstructionException("null returned by gdk_rgb_cmap_new(colors.ptr, cast(int) colors.length)");
 		}
 		this(cast(GdkRgbCmap*) p);
 	}

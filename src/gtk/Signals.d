@@ -184,7 +184,7 @@ public class Signals
 	public static uint newv(string name, GtkSignalRunType signalFlags, GType objectType, uint functionOffset, GSignalCMarshaller marshaller, GType returnVal, GType[] args)
 	{
 		// guint gtk_signal_newv (const gchar *name,  GtkSignalRunType signal_flags,  GType object_type,  guint function_offset,  GSignalCMarshaller marshaller,  GType return_val,  guint n_args,  GType *args);
-		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, args.length, args.ptr);
+		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, cast(int) args.length, args.ptr);
 	}
 	
 	/**

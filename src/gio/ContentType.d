@@ -207,7 +207,7 @@ public class ContentType
 	public static string guess(string filename, char[] data, out int resultUncertain)
 	{
 		// char * g_content_type_guess (const char *filename,  const guchar *data,  gsize data_size,  gboolean *result_uncertain);
-		return Str.toString(g_content_type_guess(Str.toStringz(filename), data.ptr, data.length, &resultUncertain));
+		return Str.toString(g_content_type_guess(Str.toStringz(filename), data.ptr, cast(int) data.length, &resultUncertain));
 	}
 	
 	/**

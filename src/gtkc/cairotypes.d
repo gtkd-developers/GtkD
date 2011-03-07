@@ -266,7 +266,6 @@ alias cairo_font_weight_t CairoFontWeight;
  */
 public enum cairo_text_cluster_flags_t
 {
-	GDC_BUG_WORKAROUND,
 	BACKWARD = 0x00000001
 }
 alias cairo_text_cluster_flags_t CairoTextClusterFlags;
@@ -515,7 +514,6 @@ alias cairo_hint_metrics_t CairoHintMetrics;
  */
 public enum cairo_content_t
 {
-	GDC_BUG_WORKAROUND,
 	COLOR = 0x1000,
 	ALPHA = 0x2000,
 	COLOR_ALPHA = 0x3000
@@ -730,7 +728,6 @@ alias cairo_svg_version_t CairoSvgVersion;
  */
 public enum cairo_status_t
 {
-	GDC_BUG_WORKAROUND,
 	SUCCESS = 0,
 	NO_MEMORY,
 	INVALID_RESTORE,

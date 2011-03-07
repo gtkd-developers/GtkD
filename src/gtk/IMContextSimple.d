@@ -143,6 +143,6 @@ public class IMContextSimple : IMContext
 	public void addTable(ushort[] data, int maxSeqLen)
 	{
 		// void gtk_im_context_simple_add_table (GtkIMContextSimple *context_simple,  guint16 *data,  gint max_seq_len,  gint n_seqs);
-		gtk_im_context_simple_add_table(gtkIMContextSimple, data.ptr, maxSeqLen, data.length);
+		gtk_im_context_simple_add_table(gtkIMContextSimple, data.ptr, maxSeqLen, cast(int) data.length);
 	}
 }

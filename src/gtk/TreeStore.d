@@ -336,10 +336,10 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	public this (GType[] types)
 	{
 		// GtkTreeStore * gtk_tree_store_newv (gint n_columns,  GType *types);
-		auto p = gtk_tree_store_newv(types.length, types.ptr);
+		auto p = gtk_tree_store_newv(cast(int) types.length, types.ptr);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_tree_store_newv(types.length, types.ptr)");
+			throw new ConstructionException("null returned by gtk_tree_store_newv(cast(int) types.length, types.ptr)");
 		}
 		this(cast(GtkTreeStore*) p);
 	}
@@ -355,7 +355,7 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	public void setColumnTypes(GType[] types)
 	{
 		// void gtk_tree_store_set_column_types (GtkTreeStore *tree_store,  gint n_columns,  GType *types);
-		gtk_tree_store_set_column_types(gtkTreeStore, types.length, types.ptr);
+		gtk_tree_store_set_column_types(gtkTreeStore, cast(int) types.length, types.ptr);
 	}
 	
 	/**
@@ -400,7 +400,7 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	public void setValuesv(TreeIter iter, int[] columns, GValue[] values)
 	{
 		// void gtk_tree_store_set_valuesv (GtkTreeStore *tree_store,  GtkTreeIter *iter,  gint *columns,  GValue *values,  gint n_values);
-		gtk_tree_store_set_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, values.ptr, values.length);
+		gtk_tree_store_set_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, values.ptr, cast(int) values.length);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	public void insertWithValuesv(TreeIter iter, TreeIter parent, int position, int[] columns, GValue[] values)
 	{
 		// void gtk_tree_store_insert_with_valuesv (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  gint *columns,  GValue *values,  gint n_values);
-		gtk_tree_store_insert_with_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position, columns.ptr, values.ptr, values.length);
+		gtk_tree_store_insert_with_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position, columns.ptr, values.ptr, cast(int) values.length);
 	}
 	
 	/**

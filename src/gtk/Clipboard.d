@@ -307,7 +307,7 @@ public class Clipboard : ObjectG
 	public int setWithData(GtkTargetEntry[] targets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, void* userData)
 	{
 		// gboolean gtk_clipboard_set_with_data (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  guint n_targets,  GtkClipboardGetFunc get_func,  GtkClipboardClearFunc clear_func,  gpointer user_data);
-		return gtk_clipboard_set_with_data(gtkClipboard, targets.ptr, targets.length, getFunc, clearFunc, userData);
+		return gtk_clipboard_set_with_data(gtkClipboard, targets.ptr, cast(int) targets.length, getFunc, clearFunc, userData);
 	}
 	
 	/**
@@ -330,7 +330,7 @@ public class Clipboard : ObjectG
 	public int setWithOwner(GtkTargetEntry[] targets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, ObjectG owner)
 	{
 		// gboolean gtk_clipboard_set_with_owner (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  guint n_targets,  GtkClipboardGetFunc get_func,  GtkClipboardClearFunc clear_func,  GObject *owner);
-		return gtk_clipboard_set_with_owner(gtkClipboard, targets.ptr, targets.length, getFunc, clearFunc, (owner is null) ? null : owner.getObjectGStruct());
+		return gtk_clipboard_set_with_owner(gtkClipboard, targets.ptr, cast(int) targets.length, getFunc, clearFunc, (owner is null) ? null : owner.getObjectGStruct());
 	}
 	
 	/**
@@ -722,7 +722,7 @@ public class Clipboard : ObjectG
 	public void setCanStore(GtkTargetEntry[] targets)
 	{
 		// void gtk_clipboard_set_can_store (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  gint n_targets);
-		gtk_clipboard_set_can_store(gtkClipboard, targets.ptr, targets.length);
+		gtk_clipboard_set_can_store(gtkClipboard, targets.ptr, cast(int) targets.length);
 	}
 	
 	/**

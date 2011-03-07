@@ -131,10 +131,10 @@ public class UnixFDList : ObjectG
 	public this (int[] fds)
 	{
 		// GUnixFDList * g_unix_fd_list_new_from_array (const gint *fds,  gint n_fds);
-		auto p = g_unix_fd_list_new_from_array(fds.ptr, fds.length);
+		auto p = g_unix_fd_list_new_from_array(fds.ptr, cast(int) fds.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_unix_fd_list_new_from_array(fds.ptr, fds.length)");
+			throw new ConstructionException("null returned by g_unix_fd_list_new_from_array(fds.ptr, cast(int) fds.length)");
 		}
 		this(cast(GUnixFDList*) p);
 	}

@@ -302,6 +302,7 @@ class TestWindow : MainWindow
 
 
 		menu = menuBar.append("_Edit");
+
 		menu.append(new MenuItem(&onMenuActivate,"_Find","edit.find", true, accelGroup, 'f'));
 		menu.append(new MenuItem(&onMenuActivate,"_Search","edit.search", true, accelGroup, 's'));
 
@@ -936,9 +937,9 @@ class TestWindow : MainWindow
 		{
 			while(1)
 			{
-				version(Tango) int buttonNum = Kiss.instance.natural(threadTestButtons.length);
-				else version(D_Version2) int buttonNum = uniform(0, threadTestButtons.length);
-				else int buttonNum = rand()%threadTestButtons.length;
+				version(Tango) size_t buttonNum = Kiss.instance.natural(threadTestButtons.length);
+				else version(D_Version2) size_t buttonNum = uniform(0, threadTestButtons.length);
+				else size_t buttonNum = rand()%threadTestButtons.length;
 				Button button = threadTestButtons[buttonNum];
 
 				gdkThreadsEnter();

@@ -196,7 +196,7 @@ public template InitableT(TStruct)
 		// gpointer g_initable_newv (GType object_type,  guint n_parameters,  GParameter *parameters,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_initable_newv(objectType, parameters.length, parameters.ptr, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_initable_newv(objectType, cast(int) parameters.length, parameters.ptr, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{

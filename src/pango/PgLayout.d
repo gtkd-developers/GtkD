@@ -145,7 +145,7 @@ public class PgLayout : ObjectG
 	public void setText(string text)
 	{
 		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
-		pango_layout_set_text(pangoLayout, Str.toStringz(text), text.length);
+		pango_layout_set_text(pangoLayout, Str.toStringz(text), cast(int) text.length);
 	}
 	
 	

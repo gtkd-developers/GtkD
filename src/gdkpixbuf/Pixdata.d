@@ -193,7 +193,7 @@ public class Pixdata
 		// gboolean gdk_pixdata_deserialize (GdkPixdata *pixdata,  guint stream_length,  const guint8 *stream,  GError **error);
 		GError* err = null;
 		
-		auto p = gdk_pixdata_deserialize(gdkPixdata, stream.length, stream.ptr, &err);
+		auto p = gdk_pixdata_deserialize(gdkPixdata, cast(int) stream.length, stream.ptr, &err);
 		
 		if (err !is null)
 		{

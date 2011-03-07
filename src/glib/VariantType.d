@@ -624,10 +624,10 @@ public class VariantType
 			itemsArray[i] = items[i].getVariantTypeStruct();
 		}
 		
-		auto p = g_variant_type_new_tuple(itemsArray.ptr, items.length);
+		auto p = g_variant_type_new_tuple(itemsArray.ptr, cast(int) items.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_type_new_tuple(itemsArray.ptr, items.length)");
+			throw new ConstructionException("null returned by g_variant_type_new_tuple(itemsArray.ptr, cast(int) items.length)");
 		}
 		this(cast(GVariantType*) p);
 	}

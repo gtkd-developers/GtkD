@@ -322,7 +322,7 @@ public class Spawn
 		{
 			return "";
 		}
-		int l = strlen(line.ptr);
+		size_t l = strlen(line.ptr);
 		if ( l > 0 ) --l;
 		//printf("\nreadLine\n");
 		//foreach ( char c ; line )

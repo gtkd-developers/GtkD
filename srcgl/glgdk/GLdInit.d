@@ -90,7 +90,7 @@ public class GLdInit
 	{
 		// void gdk_gl_init (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		gdk_gl_init(&argc, &outargv);
 		
@@ -113,7 +113,7 @@ public class GLdInit
 	{
 		// gboolean gdk_gl_init_check (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		auto p = gdk_gl_init_check(&argc, &outargv);
 		
@@ -136,7 +136,7 @@ public class GLdInit
 	{
 		// gboolean gdk_gl_parse_args (int *argc,  char ***argv);
 		char** outargv = Str.toStringzArray(argv);
-		int argc;
+		int argc = cast(int) argv.length;
 		
 		auto p = gdk_gl_parse_args(&argc, &outargv);
 		

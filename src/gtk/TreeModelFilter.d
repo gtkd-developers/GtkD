@@ -237,7 +237,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy)
 	{
 		// void gtk_tree_model_filter_set_modify_func  (GtkTreeModelFilter *filter,  gint n_columns,  GType *types,  GtkTreeModelFilterModifyFunc func,  gpointer data,  GDestroyNotify destroy);
-		gtk_tree_model_filter_set_modify_func(gtkTreeModelFilter, types.length, types.ptr, func, data, destroy);
+		gtk_tree_model_filter_set_modify_func(gtkTreeModelFilter, cast(int) types.length, types.ptr, func, data, destroy);
 	}
 	
 	/**

@@ -76,7 +76,7 @@ version (Windows)
 	} else {
 		private import std.c.stdio;
 	}
-
+	
 	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
 }
 
@@ -167,7 +167,6 @@ public alias uint GQuark;
 
 enum GPriority
 {
-	GDC_BUG_WORKAROUND,
 	HIGH = -100,
 	DEFAULT = 0,
 	HIGH_IDLE = 100,
@@ -191,7 +190,6 @@ enum GPriority
  */
 public enum GModuleFlags
 {
-	GDC_BUG_WORKAROUND,
 	BIND_LAZY = 1 << 0,
 	BIND_LOCAL = 1 << 1,
 	BIND_MASK = 0x03
@@ -334,7 +332,6 @@ alias GIOCondition IOCondition;
  */
 public enum GIOFlags
 {
-	GDC_BUG_WORKAROUND,
 	APPEND = 1 << 0,
 	NONBLOCK = 1 << 1,
 	IS_READABLE = 1 << 2, /+* Read only flag +/
@@ -399,7 +396,6 @@ public enum GLogLevelFlags
 	G_LOG_FLAG_RECURSION = 1 << 0,
 	G_LOG_FLAG_FATAL = 1 << 1,
 	/+* GLib log levels +/
-	GDC_BUG_WORKAROUND,
 	G_LOG_LEVEL_ERROR = 1 << 2, /+* always fatal +/
 	G_LOG_LEVEL_CRITICAL = 1 << 3,
 	G_LOG_LEVEL_WARNING = 1 << 4,
@@ -829,7 +825,6 @@ alias GUnicodeBreakType UnicodeBreakType;
  */
 public enum GUnicodeScript
 {
-	GDC_BUG_WORKAROUND,
 	INVALID_CODE = -1,
 	COMMON = 0, /+* Zyyy +/
 	INHERITED, /+* Qaai +/
@@ -991,7 +986,6 @@ alias GChecksumType ChecksumType;
  */
 public enum GDateDMY
 {
-	GDC_BUG_WORKAROUND,
 	DAY = 0,
 	MONTH = 1,
 	YEAR = 2
@@ -1030,7 +1024,6 @@ alias GDateDMY DateDMY;
  */
 public enum GDateMonth
 {
-	GDC_BUG_WORKAROUND,
 	BAD_MONTH = 0,
 	JANUARY = 1,
 	FEBRUARY = 2,
@@ -1069,7 +1062,6 @@ alias GDateMonth DateMonth;
  */
 public enum GDateWeekday
 {
-	GDC_BUG_WORKAROUND,
 	BAD_WEEKDAY = 0,
 	MONDAY = 1,
 	TUESDAY = 2,
@@ -1135,7 +1127,6 @@ alias GUserDirectory UserDirectory;
  */
 public enum GTokenType
 {
-	GDC_BUG_WORKAROUND,
 	EOF = 0,
 	LEFT_PAREN = '(',
 	RIGHT_PAREN = ')',
@@ -1297,7 +1288,6 @@ alias GSpawnError SpawnError;
  */
 public enum GSpawnFlags
 {
-	GDC_BUG_WORKAROUND,
 	LEAVE_DESCRIPTORS_OPEN = 1 << 0,
 	DO_NOT_REAP_CHILD = 1 << 1,
 	/+* look for argv[0] inn the path i.e. use execvp() +/
@@ -1463,7 +1453,6 @@ alias GFileError FileError;
  */
 public enum GFileTest
 {
-	GDC_BUG_WORKAROUND,
 	IS_REGULAR = 1 << 0,
 	IS_SYMLINK = 1 << 1,
 	IS_DIR = 1 << 2,
@@ -1589,7 +1578,6 @@ alias GOptionArg OptionArg;
  */
 public enum GOptionFlags
 {
-	GDC_BUG_WORKAROUND,
 	HIDDEN = 1 << 0,
 	IN_MAIN = 1 << 1,
 	REVERSE = 1 << 2,
@@ -1810,7 +1798,6 @@ alias GRegexError RegexError;
  */
 public enum GRegexCompileFlags
 {
-	GDC_BUG_WORKAROUND,
 	CASELESS = 1 << 0,
 	MULTILINE = 1 << 1,
 	DOTALL = 1 << 2,
@@ -1875,7 +1862,6 @@ alias GRegexCompileFlags RegexCompileFlags;
  */
 public enum GRegexMatchFlags
 {
-	GDC_BUG_WORKAROUND,
 	ANCHORED = 1 << 4,
 	NOTBOL = 1 << 7,
 	NOTEOL = 1 << 8,
@@ -1939,7 +1925,6 @@ alias GMarkupError MarkupError;
  */
 public enum GMarkupParseFlags
 {
-	GDC_BUG_WORKAROUND,
 	DO_NOT_USE_THIS_UNSUPPORTED_FLAG = 1 << 0,
 	TREAT_CDATA_AS_TEXT = 1 << 1,
 	PREFIX_ERROR_POSITION = 1 << 2
@@ -2041,7 +2026,6 @@ alias GKeyFileError KeyFileError;
  */
 public enum GKeyFileFlags
 {
-	GDC_BUG_WORKAROUND,
 	NONE = 0,
 	KEEP_COMMENTS = 1 << 0,
 	KEEP_TRANSLATIONS = 1 << 1
@@ -2132,7 +2116,6 @@ alias GTraverseType TraverseType;
  */
 public enum GTraverseFlags
 {
-	GDC_BUG_WORKAROUND,
 	LEAVES = 1 << 0,
 	NON_LEAVES = 1 << 1,
 	ALL = LEAVES | NON_LEAVES,

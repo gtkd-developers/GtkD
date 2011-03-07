@@ -162,10 +162,10 @@ public class RandG
 	public this (uint[] seed)
 	{
 		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
-		auto p = g_rand_new_with_seed_array(seed.ptr, seed.length);
+		auto p = g_rand_new_with_seed_array(seed.ptr, cast(int) seed.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed.ptr, seed.length)");
+			throw new ConstructionException("null returned by g_rand_new_with_seed_array(seed.ptr, cast(int) seed.length)");
 		}
 		this(cast(GRand*) p);
 	}
@@ -238,7 +238,7 @@ public class RandG
 	public void setSeedArray(uint[] seed)
 	{
 		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
-		g_rand_set_seed_array(gRand, seed.ptr, seed.length);
+		g_rand_set_seed_array(gRand, seed.ptr, cast(int) seed.length);
 	}
 	
 	/**

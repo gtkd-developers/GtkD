@@ -222,7 +222,7 @@ public class PgCoverage
 	public static PgCoverage fromBytes(char[] bytes)
 	{
 		// PangoCoverage * pango_coverage_from_bytes (guchar *bytes,  int n_bytes);
-		auto p = pango_coverage_from_bytes(bytes.ptr, bytes.length);
+		auto p = pango_coverage_from_bytes(bytes.ptr, cast(int) bytes.length);
 		if(p is null)
 		{
 			return null;

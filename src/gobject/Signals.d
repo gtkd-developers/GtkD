@@ -151,7 +151,7 @@ public class Signals
 	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, GType[] paramTypes)
 	{
 		// guint g_signal_newv (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  GClosure *class_closure,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  GType *param_types);
-		return g_signal_newv(Str.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, paramTypes.length, paramTypes.ptr);
+		return g_signal_newv(Str.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, cast(int) paramTypes.length, paramTypes.ptr);
 	}
 	
 	/**

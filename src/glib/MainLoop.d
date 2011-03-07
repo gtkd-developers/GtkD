@@ -324,6 +324,6 @@ public class MainLoop
 	public static int poll(GPollFD[] fds, int timeout)
 	{
 		// gint g_poll (GPollFD *fds,  guint nfds,  gint timeout);
-		return g_poll(fds.ptr, fds.length, timeout);
+		return g_poll(fds.ptr, cast(int) fds.length, timeout);
 	}
 }

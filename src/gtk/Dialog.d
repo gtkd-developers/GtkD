@@ -596,6 +596,6 @@ public class Dialog : Window
 	public void setAlternativeButtonOrderFromArray(int[] newOrder)
 	{
 		// void gtk_dialog_set_alternative_button_order_from_array  (GtkDialog *dialog,  gint n_params,  gint *new_order);
-		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, newOrder.length, newOrder.ptr);
+		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, cast(int) newOrder.length, newOrder.ptr);
 	}
 }

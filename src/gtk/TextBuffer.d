@@ -186,7 +186,7 @@ public class TextBuffer : ObjectG
 	public void setText(string text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), text.length);
+		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public class TextBuffer : ObjectG
 	public void insert(TextIter iter, string text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class TextBuffer : ObjectG
 	public void insertAtCursor(string text)
 	{
 		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractive(TextIter iter, string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, defaultEditable);
 	}
 	
 	/**
@@ -255,7 +255,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractiveAtCursor(string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length, defaultEditable);
 	}
 	
 	/**
@@ -276,7 +276,7 @@ public class TextBuffer : ObjectG
 		{
 			TextTag tag = va_arg!(TextTag)(_argptr);
 			// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
-			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
+			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
 		}
 	}
 	
@@ -295,7 +295,7 @@ public class TextBuffer : ObjectG
 		{
 			string tagName = va_arg!(string)(_argptr);
 			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
-			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, Str.toStringz(tagName), null);
+			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, Str.toStringz(tagName), null);
 		}
 	}
 	
@@ -1791,7 +1791,7 @@ public class TextBuffer : ObjectG
 		// gboolean gtk_text_buffer_deserialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  GtkTextIter *iter,  const guint8 *data,  gsize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, data.length, &err);
+		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, cast(int) data.length, &err);
 		
 		if (err !is null)
 		{

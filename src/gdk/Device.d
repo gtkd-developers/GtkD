@@ -296,7 +296,7 @@ public class Device
 	public static void freeHistory(GdkTimeCoord*[] events)
 	{
 		// void gdk_device_free_history (GdkTimeCoord **events,  gint n_events);
-		gdk_device_free_history(events.ptr, events.length);
+		gdk_device_free_history(events.ptr, cast(int) events.length);
 	}
 	
 	/**

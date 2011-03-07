@@ -124,10 +124,10 @@ public class TargetList
 	public this (GtkTargetEntry[] targets)
 	{
 		// GtkTargetList * gtk_target_list_new (const GtkTargetEntry *targets,  guint ntargets);
-		auto p = gtk_target_list_new(targets.ptr, targets.length);
+		auto p = gtk_target_list_new(targets.ptr, cast(int) targets.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_target_list_new(targets.ptr, targets.length)");
+			throw new ConstructionException("null returned by gtk_target_list_new(targets.ptr, cast(int) targets.length)");
 		}
 		this(cast(GtkTargetList*) p);
 	}
@@ -178,7 +178,7 @@ public class TargetList
 	public void addTable(GtkTargetEntry[] targets)
 	{
 		// void gtk_target_list_add_table (GtkTargetList *list,  const GtkTargetEntry *targets,  guint ntargets);
-		gtk_target_list_add_table(gtkTargetList, targets.ptr, targets.length);
+		gtk_target_list_add_table(gtkTargetList, targets.ptr, cast(int) targets.length);
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class TargetList
 	public static int gtkTargetsIncludeImage(GdkAtom[] targets, int writable)
 	{
 		// gboolean gtk_targets_include_image (GdkAtom *targets,  gint n_targets,  gboolean writable);
-		return gtk_targets_include_image(targets.ptr, targets.length, writable);
+		return gtk_targets_include_image(targets.ptr, cast(int) targets.length, writable);
 	}
 	
 	/**
@@ -322,7 +322,7 @@ public class TargetList
 	public static int gtkTargetsIncludeText(GdkAtom[] targets)
 	{
 		// gboolean gtk_targets_include_text (GdkAtom *targets,  gint n_targets);
-		return gtk_targets_include_text(targets.ptr, targets.length);
+		return gtk_targets_include_text(targets.ptr, cast(int) targets.length);
 	}
 	
 	/**
@@ -336,7 +336,7 @@ public class TargetList
 	public static int gtkTargetsIncludeUri(GdkAtom[] targets)
 	{
 		// gboolean gtk_targets_include_uri (GdkAtom *targets,  gint n_targets);
-		return gtk_targets_include_uri(targets.ptr, targets.length);
+		return gtk_targets_include_uri(targets.ptr, cast(int) targets.length);
 	}
 	
 	/**
@@ -351,6 +351,6 @@ public class TargetList
 	public static int gtkTargetsIncludeRichText(GdkAtom[] targets, TextBuffer buffer)
 	{
 		// gboolean gtk_targets_include_rich_text (GdkAtom *targets,  gint n_targets,  GtkTextBuffer *buffer);
-		return gtk_targets_include_rich_text(targets.ptr, targets.length, (buffer is null) ? null : buffer.getTextBufferStruct());
+		return gtk_targets_include_rich_text(targets.ptr, cast(int) targets.length, (buffer is null) ? null : buffer.getTextBufferStruct());
 	}
 }

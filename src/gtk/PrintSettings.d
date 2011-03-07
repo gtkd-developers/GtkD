@@ -841,7 +841,7 @@ public class PrintSettings : ObjectG
 	public void setPageRanges(GtkPageRange[] pageRanges)
 	{
 		// void gtk_print_settings_set_page_ranges (GtkPrintSettings *settings,  GtkPageRange *page_ranges,  gint num_ranges);
-		gtk_print_settings_set_page_ranges(gtkPrintSettings, pageRanges.ptr, pageRanges.length);
+		gtk_print_settings_set_page_ranges(gtkPrintSettings, pageRanges.ptr, cast(int) pageRanges.length);
 	}
 	
 	/**

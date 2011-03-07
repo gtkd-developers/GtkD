@@ -155,7 +155,7 @@ public class Selections
 	public static void addTargets(Widget widget, GdkAtom selection, GtkTargetEntry[] targets)
 	{
 		// void gtk_selection_add_targets (GtkWidget *widget,  GdkAtom selection,  const GtkTargetEntry *targets,  guint ntargets);
-		gtk_selection_add_targets((widget is null) ? null : widget.getWidgetStruct(), selection, targets.ptr, targets.length);
+		gtk_selection_add_targets((widget is null) ? null : widget.getWidgetStruct(), selection, targets.ptr, cast(int) targets.length);
 	}
 	
 	/**
@@ -201,7 +201,7 @@ public class Selections
 	public static void dataSet(GtkSelectionData* selectionData, GdkAtom type, int format, char[] data)
 	{
 		// void gtk_selection_data_set (GtkSelectionData *selection_data,  GdkAtom type,  gint format,  const guchar *data,  gint length);
-		gtk_selection_data_set(selectionData, type, format, data.ptr, data.length);
+		gtk_selection_data_set(selectionData, type, format, data.ptr, cast(int) data.length);
 	}
 	
 	/**

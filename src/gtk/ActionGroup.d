@@ -487,7 +487,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	public void addActions(GtkActionEntry[] entries, void* userData)
 	{
 		// void gtk_action_group_add_actions (GtkActionGroup *action_group,  const GtkActionEntry *entries,  guint n_entries,  gpointer user_data);
-		gtk_action_group_add_actions(gtkActionGroup, entries.ptr, entries.length, userData);
+		gtk_action_group_add_actions(gtkActionGroup, entries.ptr, cast(int) entries.length, userData);
 	}
 	
 	/**
@@ -502,7 +502,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	public void addActionsFull(GtkActionEntry[] entries, void* userData, GDestroyNotify destroy)
 	{
 		// void gtk_action_group_add_actions_full (GtkActionGroup *action_group,  const GtkActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
-		gtk_action_group_add_actions_full(gtkActionGroup, entries.ptr, entries.length, userData, destroy);
+		gtk_action_group_add_actions_full(gtkActionGroup, entries.ptr, cast(int) entries.length, userData, destroy);
 	}
 	
 	/**
@@ -519,7 +519,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	public void addToggleActions(GtkToggleActionEntry[] entries, void* userData)
 	{
 		// void gtk_action_group_add_toggle_actions (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data);
-		gtk_action_group_add_toggle_actions(gtkActionGroup, entries.ptr, entries.length, userData);
+		gtk_action_group_add_toggle_actions(gtkActionGroup, entries.ptr, cast(int) entries.length, userData);
 	}
 	
 	/**
@@ -534,7 +534,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	public void addToggleActionsFull(GtkToggleActionEntry[] entries, void* userData, GDestroyNotify destroy)
 	{
 		// void gtk_action_group_add_toggle_actions_full  (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
-		gtk_action_group_add_toggle_actions_full(gtkActionGroup, entries.ptr, entries.length, userData, destroy);
+		gtk_action_group_add_toggle_actions_full(gtkActionGroup, entries.ptr, cast(int) entries.length, userData, destroy);
 	}
 	
 	/**
@@ -554,7 +554,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	public void addRadioActions(GtkRadioActionEntry[] entries, int value, GCallback onChange, void* userData)
 	{
 		// void gtk_action_group_add_radio_actions (GtkActionGroup *action_group,  const GtkRadioActionEntry *entries,  guint n_entries,  gint value,  GCallback on_change,  gpointer user_data);
-		gtk_action_group_add_radio_actions(gtkActionGroup, entries.ptr, entries.length, value, onChange, userData);
+		gtk_action_group_add_radio_actions(gtkActionGroup, entries.ptr, cast(int) entries.length, value, onChange, userData);
 	}
 	
 	/**
@@ -572,7 +572,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	public void addRadioActionsFull(GtkRadioActionEntry[] entries, int value, GCallback onChange, void* userData, GDestroyNotify destroy)
 	{
 		// void gtk_action_group_add_radio_actions_full  (GtkActionGroup *action_group,  const GtkRadioActionEntry *entries,  guint n_entries,  gint value,  GCallback on_change,  gpointer user_data,  GDestroyNotify destroy);
-		gtk_action_group_add_radio_actions_full(gtkActionGroup, entries.ptr, entries.length, value, onChange, userData, destroy);
+		gtk_action_group_add_radio_actions_full(gtkActionGroup, entries.ptr, cast(int) entries.length, value, onChange, userData, destroy);
 	}
 	
 	/**

@@ -1183,7 +1183,7 @@ public class IconView : Container, CellLayoutIF
 	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_icon_view_enable_model_drag_source  (GtkIconView *icon_view,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_icon_view_enable_model_drag_source(gtkIconView, startButtonMask, targets.ptr, targets.length, actions);
+		gtk_icon_view_enable_model_drag_source(gtkIconView, startButtonMask, targets.ptr, cast(int) targets.length, actions);
 	}
 	
 	/**
@@ -1198,7 +1198,7 @@ public class IconView : Container, CellLayoutIF
 	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_icon_view_enable_model_drag_dest  (GtkIconView *icon_view,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_icon_view_enable_model_drag_dest(gtkIconView, targets.ptr, targets.length, actions);
+		gtk_icon_view_enable_model_drag_dest(gtkIconView, targets.ptr, cast(int) targets.length, actions);
 	}
 	
 	/**

@@ -86,9 +86,9 @@ public class Testing
 	 */
 	public static void testInit(ref string[] argv)
 	{
-		// gboolean gtk_parse_args (int *argc,  char ***argv);
+		// void gtk_test_init(int *argcp, char ***argvp, ...);
 		char** outargv = Str.toStringzArray(argv);
-		int argc = argv.length;
+		int argc = cast(int) argv.length;
 		
 		gtk_test_init(&argc, &outargv, null);
 		

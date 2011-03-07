@@ -481,10 +481,10 @@ public class ObjectG
 	public this (GType objectType, GParameter[] parameters)
 	{
 		// gpointer g_object_newv (GType object_type,  guint n_parameters,  GParameter *parameters);
-		auto p = g_object_newv(objectType, parameters.length, parameters.ptr);
+		auto p = g_object_newv(objectType, cast(int) parameters.length, parameters.ptr);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_object_newv(objectType, parameters.length, parameters.ptr)");
+			throw new ConstructionException("null returned by g_object_newv(objectType, cast(int) parameters.length, parameters.ptr)");
 		}
 		this(cast(GObject*) p);
 	}
