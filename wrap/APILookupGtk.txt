@@ -3182,6 +3182,7 @@ import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 import: gobject.Value
 structWrap: GValue* Value
+nocode: gtk_tree_model_get_value
 
 array: gtk_tree_model_rows_reordered new_order
 
@@ -3208,6 +3209,16 @@ interfaceCode: start
 	 */
 	public int getIter(TreeIter iter, TreePath path);
 
+	/**
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 * Params:
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = (inout) (transfer none) An empty GValue to set.
+	 */
+	public Value getValue(TreeIter iter, int column, Value value = null);
 interfaceCode: end
 
 nocode: gtk_tree_model_get_iter
@@ -3253,6 +3264,25 @@ code: start
 				(path is null) ? null : path.getTreePathStruct());
 	}
 
+	/**
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 * Params:
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = (inout) (transfer none) An empty GValue to set.
+	 */
+	public Value getValue(TreeIter iter, int column, Value value = null)
+	{
+		if ( value is null )
+			value = new Value();
+
+		// void gtk_tree_model_get_value (GtkTreeModel *tree_model,  GtkTreeIter *iter,  gint column,  GValue *value);
+		gtk_tree_model_get_value(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
+
+		return value;
+	}
 code: end
 
 interface: TreeModelIF

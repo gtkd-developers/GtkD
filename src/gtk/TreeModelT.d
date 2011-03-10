@@ -44,6 +44,7 @@
  * 	- gtk_tree_path_
  * 	- gtk_tree_iter_
  * omit code:
+ * 	- gtk_tree_model_get_value
  * 	- gtk_tree_model_get_iter
  * omit signals:
  * imports:
@@ -317,6 +318,26 @@ public template TreeModelT(TStruct)
 	}
 	
 	/**
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 * Params:
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = (inout) (transfer none) An empty GValue to set.
+	 */
+	public Value getValue(TreeIter iter, int column, Value value = null)
+	{
+		if ( value is null )
+		value = new Value();
+		
+		// void gtk_tree_model_get_value (GtkTreeModel *tree_model,  GtkTreeIter *iter,  gint column,  GValue *value);
+		gtk_tree_model_get_value(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
+		
+		return value;
+	}
+	
+	/**
 	 */
 	int[char[]] connectedSignals;
 	
@@ -573,21 +594,6 @@ public template TreeModelT(TStruct)
 			return null;
 		}
 		return new TreePath(cast(GtkTreePath*) p);
-	}
-	
-	/**
-	 * Initializes and sets value to that at column.
-	 * When done with value, g_value_unset() needs to be called
-	 * to free any allocated memory.
-	 * Params:
-	 * iter = The GtkTreeIter.
-	 * column = The column to lookup the value at.
-	 * value = (inout) (transfer none) An empty GValue to set.
-	 */
-	public void getValue(TreeIter iter, int column, Value value)
-	{
-		// void gtk_tree_model_get_value (GtkTreeModel *tree_model,  GtkTreeIter *iter,  gint column,  GValue *value);
-		gtk_tree_model_get_value(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**

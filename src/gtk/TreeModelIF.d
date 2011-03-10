@@ -43,6 +43,7 @@
  * 	- gtk_tree_path_
  * 	- gtk_tree_iter_
  * omit code:
+ * 	- gtk_tree_model_get_value
  * 	- gtk_tree_model_get_iter
  * omit signals:
  * imports:
@@ -295,6 +296,17 @@ public interface TreeModelIF
 	public int getIter(TreeIter iter, TreePath path);
 	
 	/**
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 * Params:
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = (inout) (transfer none) An empty GValue to set.
+	 */
+	public Value getValue(TreeIter iter, int column, Value value = null);
+	
+	/**
 	 */
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners();
@@ -392,17 +404,6 @@ public interface TreeModelIF
 	 * Returns: a newly-created GtkTreePath.
 	 */
 	public TreePath getPath(TreeIter iter);
-	
-	/**
-	 * Initializes and sets value to that at column.
-	 * When done with value, g_value_unset() needs to be called
-	 * to free any allocated memory.
-	 * Params:
-	 * iter = The GtkTreeIter.
-	 * column = The column to lookup the value at.
-	 * value = (inout) (transfer none) An empty GValue to set.
-	 */
-	public void getValue(TreeIter iter, int column, Value value);
 	
 	/**
 	 * Sets iter to point to the node following it at the current level. If there
