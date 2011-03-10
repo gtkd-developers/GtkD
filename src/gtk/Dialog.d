@@ -252,6 +252,36 @@ public class Dialog : Window
 		this.gtkDialog = gtkDialog;
 	}
 	
+	/**
+	 * Both title and parent can be null.
+	 */
+	this(string title, Window parent, GtkDialogFlags flags, string[] buttonsText, ResponseType[] responses)
+	{
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(buttonsText[0]), responses[0], null);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
+		}
+		
+		this(cast(GtkDialog*)p);
+		
+		addButtons(buttonsText[1 .. $], responses[1 .. $]);
+	}
+	
+	/** ditto */
+	this(string title, Window parent, GtkDialogFlags flags, StockID[] stockIDs, ResponseType[] responses)
+	{
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(StockDesc[stockIDs[0]]), responses[0], null);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
+		}
+		
+		this(cast(GtkDialog*)p);
+		
+		addButtons(stockIDs[1 .. $], responses[1 .. $]);
+	}
+	
 	/** */
 	public Widget addButton(StockID stockID, int responseId)
 	{
