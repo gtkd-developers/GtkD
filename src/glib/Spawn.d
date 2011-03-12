@@ -106,10 +106,11 @@ public class Spawn
 	{
 		private import tango.stdc.posix.stdio;
 	}
-	else version(D_Version2)
+	else version(Posix) version(D_Version2)
 	{
 		private import core.sys.posix.stdio;
 	}
+	//fdopen for Windows is defined in gtkc.glibtypes.
 	
 	version(Tango) alias splitLines splitlines;
 	
