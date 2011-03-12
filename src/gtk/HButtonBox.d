@@ -123,9 +123,9 @@ public class HButtonBox : ButtonBox
 	/**
 	 * Creates a new HButtonBox and sets comon parameters
 	 */
-	static ButtonBox createActionBox()
+	static HButtonBox createActionBox()
 	{
-		ButtonBox bBox = new HButtonBox();
+		HButtonBox bBox = new HButtonBox();
 		bBox.setLayout(ButtonBoxStyle.END);
 		bBox.setBorderWidth(5);
 		bBox.setSpacing(7);

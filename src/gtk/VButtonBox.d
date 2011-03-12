@@ -124,9 +124,9 @@ public class VButtonBox : ButtonBox
 	 * Creates a new vertical button box and sets standart values for it's comon parameters
 	 * Returns: a new vertical button box
 	 */
-	static ButtonBox createActionBox()
+	static VButtonBox createActionBox()
 	{
-		ButtonBox bBox = new VButtonBox();
+		VButtonBox bBox = new VButtonBox();
 		bBox.setLayout(ButtonBoxStyle.START);
 		bBox.setBorderWidth(5);
 		bBox.setSpacing(7);
