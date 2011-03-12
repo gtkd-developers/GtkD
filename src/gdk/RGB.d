@@ -409,7 +409,7 @@ public class RGB
 	 * rgb = The color, represented as a 0xRRGGBB integer value.
 	 * Returns:The X pixel value.
 	 */
-	public static uint rgbXpixelFromRgb(uint rgb)
+	public static gulong rgbXpixelFromRgb(uint rgb)
 	{
 		// gulong gdk_rgb_xpixel_from_rgb (guint32 rgb);
 		return gdk_rgb_xpixel_from_rgb(rgb);

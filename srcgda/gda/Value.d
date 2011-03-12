@@ -181,7 +181,7 @@ public class Value
 	 * size = the size of the memory pool pointer to by val.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* val, int size)
+	public this (void* val, glong size)
 	{
 		// GdaValue* gda_value_new_binary (gconstpointer val,  glong size);
 		auto p = gda_value_new_binary(val, size);
@@ -597,7 +597,7 @@ public class Value
 	 * size = holder for length of data.
 	 * Returns: the value stored in value.
 	 */
-	public void* getBinary(int* size)
+	public void* getBinary(glong* size)
 	{
 		// const gpointer gda_value_get_binary (GdaValue *value,  glong *size);
 		return gda_value_get_binary(gdaValue, size);
@@ -609,7 +609,7 @@ public class Value
 	 * val = value to be stored in value.
 	 * size = the size of the memory pool pointed to by val.
 	 */
-	public void setBinary(void* val, int size)
+	public void setBinary(void* val, glong size)
 	{
 		// void gda_value_set_binary (GdaValue *value,  gconstpointer val,  glong size);
 		gda_value_set_binary(gdaValue, val, size);

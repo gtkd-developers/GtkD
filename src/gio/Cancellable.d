@@ -389,7 +389,7 @@ public class Cancellable : ObjectG
 	 * dataDestroyFunc = Free function for data or NULL.
 	 * Returns: The id of the signal handler or 0 if cancellable has already been cancelled.
 	 */
-	public uint connect(GCallback callback, void* data, GDestroyNotify dataDestroyFunc)
+	public gulong connect(GCallback callback, void* data, GDestroyNotify dataDestroyFunc)
 	{
 		// gulong g_cancellable_connect (GCancellable *cancellable,  GCallback callback,  gpointer data,  GDestroyNotify data_destroy_func);
 		return g_cancellable_connect(gCancellable, callback, data, dataDestroyFunc);
@@ -412,7 +412,7 @@ public class Cancellable : ObjectG
 	 * Params:
 	 * handlerId = Handler id of the handler to be disconnected, or 0.
 	 */
-	public void disconnect(uint handlerId)
+	public void disconnect(gulong handlerId)
 	{
 		// void g_cancellable_disconnect (GCancellable *cancellable,  gulong handler_id);
 		g_cancellable_disconnect(gCancellable, handlerId);

@@ -61,8 +61,6 @@ alias: gchar* char*
 alias: guchar char
 alias: gshort short
 alias: gushort ushort
-alias: glong int
-alias: gulong uint
 alias: gint8 byte
 alias: guint8 ubyte
 alias: gint16 short

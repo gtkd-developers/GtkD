@@ -32,8 +32,6 @@ public alias char gchar;
 public alias char guchar;
 public alias short gshort;
 public alias ushort gushort;
-public alias int glong;
-public alias uint gulong;
 public alias byte gint8;
 public alias ubyte guint8;
 public alias short gint16;
@@ -58,6 +56,22 @@ version(Tango)
 	//avoid some conflicts with other string aliases.
 	static if( !is(string) )
 	private alias char[] string;
+}
+
+version( Windows )
+{
+	alias int glong;
+	alias uint gulong;
+}
+else version( X86_64 )
+{
+	alias long glong;
+	alias ulong gulong;
+}
+else
+{
+	alias int glong;
+	alias uint gulong;
 }
 
 version(D_Version2)
@@ -2453,8 +2467,8 @@ public struct GChecksum{}
  */
 public struct GTimeVal
 {
-	int tvSec;
-	int tvUsec;
+	glong tvSec;
+	glong tvUsec;
 }
 
 
@@ -4912,12 +4926,12 @@ public struct GTokenValue
 	{
 		void* vSymbol;
 		char *vIdentifier;
-		uint vBinary;
-		uint vOctal;
-		uint vInt;
+		gulong vBinary;
+		gulong vOctal;
+		gulong vInt;
 		ulong vInt64;
 		double vFloat;
-		uint vHex;
+		gulong vHex;
 		char *vString;
 		char *vComment;
 		char vChar;

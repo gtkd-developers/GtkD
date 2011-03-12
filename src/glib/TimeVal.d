@@ -158,7 +158,7 @@ public class TimeVal
 	 * Params:
 	 * microseconds = number of microseconds to pause
 	 */
-	public static void usleep(uint microseconds)
+	public static void usleep(gulong microseconds)
 	{
 		// void g_usleep (gulong microseconds);
 		g_usleep(microseconds);
@@ -170,7 +170,7 @@ public class TimeVal
 	 * Params:
 	 * microseconds = number of microseconds to add to time
 	 */
-	public void add(int microseconds)
+	public void add(glong microseconds)
 	{
 		// void g_time_val_add (GTimeVal *time_,  glong microseconds);
 		g_time_val_add(gTimeVal, microseconds);

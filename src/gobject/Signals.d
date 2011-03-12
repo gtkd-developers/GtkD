@@ -304,7 +304,7 @@ public class Signals
 	 * connectFlags = a combination of GConnnectFlags.
 	 * Returns: the handler id.
 	 */
-	public static uint connectObject(void* instanc, string detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
+	public static gulong connectObject(void* instanc, string detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_object (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer gobject,  GConnectFlags connect_flags);
 		return g_signal_connect_object(instanc, Str.toStringz(detailedSignal), cHandler, gobject, connectFlags);
@@ -324,7 +324,7 @@ public class Signals
 	 * connectFlags = a combination of GConnectFlags.
 	 * Returns: the handler id
 	 */
-	public static uint connectData(void* instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, data, destroyData, connectFlags);
@@ -339,7 +339,7 @@ public class Signals
 	 *  default handler of the signal.
 	 * Returns: the handler id
 	 */
-	public static uint connectClosure(void* instanc, string detailedSignal, Closure closure, int after)
+	public static gulong connectClosure(void* instanc, string detailedSignal, Closure closure, int after)
 	{
 		// gulong g_signal_connect_closure (gpointer instance,  const gchar *detailed_signal,  GClosure *closure,  gboolean after);
 		return g_signal_connect_closure(instanc, Str.toStringz(detailedSignal), (closure is null) ? null : closure.getClosureStruct(), after);
@@ -355,7 +355,7 @@ public class Signals
 	 *  default handler of the signal.
 	 * Returns: the handler id
 	 */
-	public static uint connectClosureById(void* instanc, uint signalId, GQuark detail, Closure closure, int after)
+	public static gulong connectClosureById(void* instanc, uint signalId, GQuark detail, Closure closure, int after)
 	{
 		// gulong g_signal_connect_closure_by_id (gpointer instance,  guint signal_id,  GQuark detail,  GClosure *closure,  gboolean after);
 		return g_signal_connect_closure_by_id(instanc, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), after);
@@ -372,7 +372,7 @@ public class Signals
 	 * Params:
 	 * handlerId = Handler id of the handler to be blocked.
 	 */
-	public static void handlerBlock(void* instanc, uint handlerId)
+	public static void handlerBlock(void* instanc, gulong handlerId)
 	{
 		// void g_signal_handler_block (gpointer instance,  gulong handler_id);
 		g_signal_handler_block(instanc, handlerId);
@@ -394,7 +394,7 @@ public class Signals
 	 * Params:
 	 * handlerId = Handler id of the handler to be unblocked.
 	 */
-	public static void handlerUnblock(void* instanc, uint handlerId)
+	public static void handlerUnblock(void* instanc, gulong handlerId)
 	{
 		// void g_signal_handler_unblock (gpointer instance,  gulong handler_id);
 		g_signal_handler_unblock(instanc, handlerId);
@@ -409,7 +409,7 @@ public class Signals
 	 * Params:
 	 * handlerId = Handler id of the handler to be disconnected.
 	 */
-	public static void handlerDisconnect(void* instanc, uint handlerId)
+	public static void handlerDisconnect(void* instanc, gulong handlerId)
 	{
 		// void g_signal_handler_disconnect (gpointer instance,  gulong handler_id);
 		g_signal_handler_disconnect(instanc, handlerId);
@@ -431,7 +431,7 @@ public class Signals
 	 * data = The closure data of the handler's closure.
 	 * Returns: A valid non-0 signal handler id for a successful match.
 	 */
-	public static uint handlerFind(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
+	public static gulong handlerFind(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
 		// gulong g_signal_handler_find (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
 		return g_signal_handler_find(instanc, mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
@@ -517,7 +517,7 @@ public class Signals
 	 * handlerId = the handler id.
 	 * Returns: whether handler_id identifies a handler connected to instance.
 	 */
-	public static int handlerIsConnected(void* instanc, uint handlerId)
+	public static int handlerIsConnected(void* instanc, gulong handlerId)
 	{
 		// gboolean g_signal_handler_is_connected (gpointer instance,  gulong handler_id);
 		return g_signal_handler_is_connected(instanc, handlerId);
@@ -640,7 +640,7 @@ public class Signals
 	 * dataDestroy = a GDestroyNotify for hook_data.
 	 * Returns: the hook id, for later use with g_signal_remove_emission_hook().
 	 */
-	public static uint addEmissionHook(uint signalId, GQuark detail, GSignalEmissionHook hookFunc, void* hookData, GDestroyNotify dataDestroy)
+	public static gulong addEmissionHook(uint signalId, GQuark detail, GSignalEmissionHook hookFunc, void* hookData, GDestroyNotify dataDestroy)
 	{
 		// gulong g_signal_add_emission_hook (guint signal_id,  GQuark detail,  GSignalEmissionHook hook_func,  gpointer hook_data,  GDestroyNotify data_destroy);
 		return g_signal_add_emission_hook(signalId, detail, hookFunc, hookData, dataDestroy);
@@ -653,7 +653,7 @@ public class Signals
 	 * hookId = the id of the emission hook, as returned by
 	 *  g_signal_add_emission_hook()
 	 */
-	public static void removeEmissionHook(uint signalId, uint hookId)
+	public static void removeEmissionHook(uint signalId, gulong hookId)
 	{
 		// void g_signal_remove_emission_hook (guint signal_id,  gulong hook_id);
 		g_signal_remove_emission_hook(signalId, hookId);

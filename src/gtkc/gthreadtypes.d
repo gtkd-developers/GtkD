@@ -110,7 +110,7 @@ public struct GThreadFunctions
 	extern(C) GPrivate*  function(GDestroyNotify destructor) privateNew;
 	extern(C) void*  function(GPrivate *privateKey) privateGet;
 	extern(C) void  function(GPrivate *privateKey,void* data) privateSet;
-	extern(C) void  function(GThreadFunc func,void* data,uint stackSize,int joinable,int bound,GThreadPriority priority,void* thread,GError **error) threadCreate;
+	extern(C) void  function(GThreadFunc func,void* data,gulong stackSize,int joinable,int bound,GThreadPriority priority,void* thread,GError **error) threadCreate;
 	extern(C) void  function() threadYield;
 	extern(C) void  function(void* thread) threadJoin;
 	extern(C) void  function() threadExit;

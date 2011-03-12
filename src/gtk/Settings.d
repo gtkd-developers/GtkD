@@ -312,7 +312,7 @@ public class Settings : ObjectG
 	/**
 	 * Params:
 	 */
-	public void setLongProperty(string name, int vLong, string origin)
+	public void setLongProperty(string name, glong vLong, string origin)
 	{
 		// void gtk_settings_set_long_property (GtkSettings *settings,  const gchar *name,  glong v_long,  const gchar *origin);
 		gtk_settings_set_long_property(gtkSettings, Str.toStringz(name), vLong, Str.toStringz(origin));

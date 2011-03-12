@@ -195,7 +195,7 @@ public class ErrorGda : ObjectG
 	/**
 	 * Returns: error's number.
 	 */
-	public int getNumber()
+	public glong getNumber()
 	{
 		// glong gda_error_get_number (GdaError *error);
 		return gda_error_get_number(gdaError);
@@ -206,7 +206,7 @@ public class ErrorGda : ObjectG
 	 * Params:
 	 * number = a number.
 	 */
-	public void setNumber(int number)
+	public void setNumber(glong number)
 	{
 		// void gda_error_set_number (GdaError *error,  glong number);
 		gda_error_set_number(gdaError, number);

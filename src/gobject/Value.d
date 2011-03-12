@@ -622,7 +622,7 @@ public class Value
 	 * flags = flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecLong(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecLong(string name, string nick, string blurb, glong minimum, glong maximum, glong defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
 		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -638,7 +638,7 @@ public class Value
 	 * Params:
 	 * vLong = long integer value to be set
 	 */
-	public void setLong(int vLong)
+	public void setLong(glong vLong)
 	{
 		// void g_value_set_long (GValue *value,  glong v_long);
 		g_value_set_long(gValue, vLong);
@@ -648,7 +648,7 @@ public class Value
 	 * Get the contents of a G_TYPE_LONG GValue.
 	 * Returns: long integer contents of value
 	 */
-	public int getLong()
+	public glong getLong()
 	{
 		// glong g_value_get_long (const GValue *value);
 		return g_value_get_long(gValue);
@@ -668,7 +668,7 @@ public class Value
 	 * flags = flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
-	public static ParamSpec gParamSpecUlong(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
+	public static ParamSpec gParamSpecUlong(string name, string nick, string blurb, gulong minimum, gulong maximum, gulong defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
 		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
@@ -684,7 +684,7 @@ public class Value
 	 * Params:
 	 * vUlong = unsigned long integer value to be set
 	 */
-	public void setUlong(uint vUlong)
+	public void setUlong(gulong vUlong)
 	{
 		// void g_value_set_ulong (GValue *value,  gulong v_ulong);
 		g_value_set_ulong(gValue, vUlong);
@@ -694,7 +694,7 @@ public class Value
 	 * Get the contents of a G_TYPE_ULONG GValue.
 	 * Returns: unsigned long integer contents of value
 	 */
-	public uint getUlong()
+	public gulong getUlong()
 	{
 		// gulong g_value_get_ulong (const GValue *value);
 		return g_value_get_ulong(gValue);

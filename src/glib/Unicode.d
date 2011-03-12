@@ -583,7 +583,7 @@ public class Unicode
 	 * offset = a character offset within str
 	 * Returns: the resulting pointer
 	 */
-	public static string utf8_OffsetToPointer(string str, int offset)
+	public static string utf8_OffsetToPointer(string str, glong offset)
 	{
 		// gchar* g_utf8_offset_to_pointer (const gchar *str,  glong offset);
 		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset));
@@ -599,7 +599,7 @@ public class Unicode
 	 * pos = a pointer to a position within str
 	 * Returns: the resulting character offset
 	 */
-	public static int utf8_PointerToOffset(string str, string pos)
+	public static glong utf8_PointerToOffset(string str, string pos)
 	{
 		// glong g_utf8_pointer_to_offset (const gchar *str,  const gchar *pos);
 		return g_utf8_pointer_to_offset(Str.toStringz(str), Str.toStringz(pos));
@@ -667,7 +667,7 @@ public class Unicode
 	 *  may be NULL.
 	 * Returns: the length of the string in characters
 	 */
-	public static int utf8_Strlen(string p, int max)
+	public static glong utf8_Strlen(string p, int max)
 	{
 		// glong g_utf8_strlen (const gchar *p,  gssize max);
 		return g_utf8_strlen(Str.toStringz(p), max);
@@ -949,7 +949,7 @@ public class Unicode
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
-	public static gunichar2* utf8_ToUtf16(string str, int len, out int itemsRead, out int itemsWritten)
+	public static gunichar2* utf8_ToUtf16(string str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		// gunichar2 * g_utf8_to_utf16 (const gchar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
@@ -983,7 +983,7 @@ public class Unicode
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
-	public static gunichar* utf8_ToUcs4(string str, int len, out int itemsRead, out int itemsWritten)
+	public static gunichar* utf8_ToUcs4(string str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		// gunichar * g_utf8_to_ucs4 (const gchar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
@@ -1011,7 +1011,7 @@ public class Unicode
 	 *  result, or NULL.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free().
 	 */
-	public static gunichar* utf8_ToUcs4_Fast(string str, int len, out int itemsWritten)
+	public static gunichar* utf8_ToUcs4_Fast(string str, glong len, out glong itemsWritten)
 	{
 		// gunichar * g_utf8_to_ucs4_fast (const gchar *str,  glong len,  glong *items_written);
 		return g_utf8_to_ucs4_fast(Str.toStringz(str), len, &itemsWritten);
@@ -1035,7 +1035,7 @@ public class Unicode
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
-	public static gunichar* utf16_ToUcs4(gunichar2* str, int len, out int itemsRead, out int itemsWritten)
+	public static gunichar* utf16_ToUcs4(gunichar2* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		// gunichar * g_utf16_to_ucs4 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
@@ -1077,7 +1077,7 @@ public class Unicode
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
-	public static string utf16_ToUtf8(gunichar2* str, int len, out int itemsRead, out int itemsWritten)
+	public static string utf16_ToUtf8(gunichar2* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		// gchar* g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
@@ -1108,7 +1108,7 @@ public class Unicode
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
-	public static gunichar2* ucs4_ToUtf16(gunichar* str, int len, out int itemsRead, out int itemsWritten)
+	public static gunichar2* ucs4_ToUtf16(gunichar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		// gunichar2 * g_ucs4_to_utf16 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
@@ -1137,7 +1137,7 @@ public class Unicode
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input  character.
 	 * Throws: GException on failure.
 	 */
-	public static string ucs4_ToUtf8(gunichar* str, int len, out int itemsRead, out int itemsWritten)
+	public static string ucs4_ToUtf8(gunichar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		// gchar* g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;

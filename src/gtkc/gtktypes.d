@@ -2756,7 +2756,7 @@ public struct GtkBindingArg
 	GType argType;
 	union D
 	{
-		int longData;
+		glong longData;
 		double doubleData;
 		char *stringData;
 	}
@@ -2897,8 +2897,8 @@ public struct GtkArg
 		int boolData;
 		int intData;
 		uint uintData;
-		int longData;
-		uint ulongData;
+		glong longData;
+		gulong ulongData;
 		float floatData;
 		double doubleData;
 		char *stringData;

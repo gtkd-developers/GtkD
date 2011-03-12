@@ -166,7 +166,7 @@ public class FieldAttributes
 	/**
 	 * Returns: the defined size of fa.
 	 */
-	public int getDefinedSize()
+	public glong getDefinedSize()
 	{
 		// glong gda_field_attributes_get_defined_size  (GdaFieldAttributes *fa);
 		return gda_field_attributes_get_defined_size(gdaFieldAttributes);
@@ -177,7 +177,7 @@ public class FieldAttributes
 	 * Params:
 	 * size = the defined size we want to set.
 	 */
-	public void setDefinedSize(int size)
+	public void setDefinedSize(glong size)
 	{
 		// void gda_field_attributes_set_defined_size  (GdaFieldAttributes *fa,  glong size);
 		gda_field_attributes_set_defined_size(gdaFieldAttributes, size);
@@ -246,7 +246,7 @@ public class FieldAttributes
 	/**
 	 * Returns: the number of decimals of fa.
 	 */
-	public int getScale()
+	public glong getScale()
 	{
 		// glong gda_field_attributes_get_scale (GdaFieldAttributes *fa);
 		return gda_field_attributes_get_scale(gdaFieldAttributes);
@@ -257,7 +257,7 @@ public class FieldAttributes
 	 * Params:
 	 * scale = number of decimals.
 	 */
-	public void setScale(int scale)
+	public void setScale(glong scale)
 	{
 		// void gda_field_attributes_set_scale (GdaFieldAttributes *fa,  glong scale);
 		gda_field_attributes_set_scale(gdaFieldAttributes, scale);

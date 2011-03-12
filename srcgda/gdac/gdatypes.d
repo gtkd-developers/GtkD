@@ -306,8 +306,8 @@ public struct GdaFieldAttributes
 	int uniqueKey;
 	char *references;
 	int autoIncrement;
-	int autoIncrementStart;
-	int autoIncrementStep;
+	glong autoIncrementStart;
+	glong autoIncrementStep;
 	int position;
 	GdaValue *defaultValue;
 }
@@ -387,8 +387,8 @@ public struct GdaMoney
 public struct GdaNumeric
 {
 	char *number;
-	int precision;
-	int width;
+	glong precision;
+	glong width;
 }
 
 
@@ -397,7 +397,7 @@ public struct GdaTime
 	ushort hour;
 	ushort minute;
 	ushort second;
-	int timezone; /+* # of seconds to the east UTC +/
+	glong timezone; /+* # of seconds to the east UTC +/
 }
 
 
@@ -409,8 +409,8 @@ public struct GdaTimestamp
 	ushort hour;
 	ushort minute;
 	ushort second;
-	uint fraction;
-	int timezone; /+* # of seconds to the east UTC +/
+	gulong fraction;
+	glong timezone; /+* # of seconds to the east UTC +/
 }
 
 
@@ -447,7 +447,7 @@ public struct GdaValue
 		uint vUinteger;
 	}
 	Value value;
-	int binaryLength;
+	glong binaryLength;
 }
 
 

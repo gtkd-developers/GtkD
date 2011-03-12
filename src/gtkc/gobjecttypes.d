@@ -678,9 +678,9 @@ public struct GParamSpecUInt
 public struct GParamSpecLong
 {
 	GParamSpec parentInstance;
-	int minimum;
-	int maximum;
-	int defaultValue;
+	glong minimum;
+	glong maximum;
+	glong defaultValue;
 }
 
 
@@ -691,9 +691,9 @@ public struct GParamSpecLong
 public struct GParamSpecULong
 {
 	GParamSpec parentInstance;
-	uint minimum;
-	uint maximum;
-	uint defaultValue;
+	gulong minimum;
+	gulong maximum;
+	gulong defaultValue;
 }
 
 

@@ -293,7 +293,7 @@ public class Colormap
 	 * pixel = pixel value in hardware display format
 	 * result = GdkColor with red, green, blue fields initialized
 	 */
-	public void queryColor(uint pixel, out GdkColor result)
+	public void queryColor(gulong pixel, out GdkColor result)
 	{
 		// void gdk_colormap_query_color (GdkColormap *colormap,  gulong pixel,  GdkColor *result);
 		gdk_colormap_query_color(gdkColormap, pixel, &result);
@@ -359,7 +359,7 @@ public class Colormap
 	 * pixels = an array into which to store allocated pixel values.
 	 * Returns: TRUE if the allocation was successful
 	 */
-	public int colorsAlloc(int contiguous, uint[] planes, uint[] pixels)
+	public int colorsAlloc(int contiguous, gulong[] planes, gulong[] pixels)
 	{
 		// gint gdk_colors_alloc (GdkColormap *colormap,  gboolean contiguous,  gulong *planes,  gint nplanes,  gulong *pixels,  gint npixels);
 		return gdk_colors_alloc(gdkColormap, contiguous, planes.ptr, cast(int) planes.length, pixels.ptr, cast(int) pixels.length);
@@ -374,7 +374,7 @@ public class Colormap
 	 * pixels = the pixel values of the colors to free.
 	 * planes = the plane masks for all planes to free, OR'd together.
 	 */
-	public void colorsFree(uint[] pixels, uint planes)
+	public void colorsFree(gulong[] pixels, gulong planes)
 	{
 		// void gdk_colors_free (GdkColormap *colormap,  gulong *pixels,  gint npixels,  gulong planes);
 		gdk_colors_free(gdkColormap, pixels.ptr, cast(int) pixels.length, planes);

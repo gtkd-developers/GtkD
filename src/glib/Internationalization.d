@@ -124,7 +124,7 @@ public class Internationalization
 	 * n = the quantity for which translation is needed
 	 * Returns: The translated string
 	 */
-	public static string dngettext(string domain, string msgid, string msgidPlural, uint n)
+	public static string dngettext(string domain, string msgid, string msgidPlural, gulong n)
 	{
 		// const gchar * g_dngettext (const gchar *domain,  const gchar *msgid,  const gchar *msgid_plural,  gulong n);
 		return Str.toString(g_dngettext(Str.toStringz(domain), Str.toStringz(msgid), Str.toStringz(msgidPlural), n));

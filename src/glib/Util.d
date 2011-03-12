@@ -650,7 +650,7 @@ public class Util
 	 * nthBit = the index of the bit to start the search from.
 	 * Returns:the index of the first bit set which is higher than nth_bit.
 	 */
-	public static int bitNthLsf(uint mask, int nthBit)
+	public static int bitNthLsf(gulong mask, int nthBit)
 	{
 		// gint g_bit_nth_lsf (gulong mask,  gint nth_bit);
 		return g_bit_nth_lsf(mask, nthBit);
@@ -666,7 +666,7 @@ public class Util
 	 * nthBit = the index of the bit to start the search from.
 	 * Returns:the index of the first bit set which is lower than nth_bit.
 	 */
-	public static int bitNthMsf(uint mask, int nthBit)
+	public static int bitNthMsf(gulong mask, int nthBit)
 	{
 		// gint g_bit_nth_msf (gulong mask,  gint nth_bit);
 		return g_bit_nth_msf(mask, nthBit);
@@ -679,7 +679,7 @@ public class Util
 	 * number = a guint.
 	 * Returns:the number of bits used to hold number.
 	 */
-	public static uint bitStorage(uint number)
+	public static uint bitStorage(gulong number)
 	{
 		// guint g_bit_storage (gulong number);
 		return g_bit_storage(number);

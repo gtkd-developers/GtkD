@@ -647,7 +647,7 @@ public class Str
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes which would be produced if the buffer  was large enough.
 	 */
-	public static int vsnprintf(string string, uint n, string format, void* args)
+	public static int vsnprintf(string string, gulong n, string format, void* args)
 	{
 		// gint g_vsnprintf (gchar *string,  gulong n,  gchar const *format,  va_list args);
 		return g_vsnprintf(Str.toStringz(string), n, Str.toStringz(format), args);

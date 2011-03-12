@@ -294,7 +294,7 @@ public class Thread
 	 * Returns: the new GThread on success.
 	 * Throws: GException on failure.
 	 */
-	public static Thread createFull(GThreadFunc func, void* data, uint stackSize, int joinable, int bound, GThreadPriority priority)
+	public static Thread createFull(GThreadFunc func, void* data, gulong stackSize, int joinable, int bound, GThreadPriority priority)
 	{
 		// GThread* g_thread_create_full (GThreadFunc func,  gpointer data,  gulong stack_size,  gboolean joinable,  gboolean bound,  GThreadPriority priority,  GError **error);
 		GError* err = null;
