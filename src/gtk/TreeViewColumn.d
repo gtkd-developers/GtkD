@@ -42,6 +42,11 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tree_view_column_pack_start
+ * 	- gtk_tree_view_column_pack_end
+ * 	- gtk_tree_view_column_clear
+ * 	- gtk_tree_view_column_add_attribute
+ * 	- gtk_tree_view_column_clear_attributes
  * 	- gtk_tree_view_column_new_with_attributes
  * omit signals:
  * imports:
@@ -219,43 +224,6 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	
 	/**
-	 * Packs the cell into the beginning of the column. If expand is FALSE, then
-	 * the cell is allocated no more space than it needs. Any unused space is divided
-	 * evenly between cells for which expand is TRUE.
-	 * Params:
-	 * cell = The GtkCellRenderer.
-	 * expand = TRUE if cell is to be given extra space allocated to tree_column.
-	 */
-	public void packStart(CellRenderer cell, int expand)
-	{
-		// void gtk_tree_view_column_pack_start (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_tree_view_column_pack_start(gtkTreeViewColumn, (cell is null) ? null : cell.getCellRendererStruct(), expand);
-	}
-	
-	/**
-	 * Adds the cell to end of the column. If expand is FALSE, then the cell
-	 * is allocated no more space than it needs. Any unused space is divided
-	 * evenly between cells for which expand is TRUE.
-	 * Params:
-	 * cell = The GtkCellRenderer.
-	 * expand = TRUE if cell is to be given extra space allocated to tree_column.
-	 */
-	public void packEnd(CellRenderer cell, int expand)
-	{
-		// void gtk_tree_view_column_pack_end (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_tree_view_column_pack_end(gtkTreeViewColumn, (cell is null) ? null : cell.getCellRendererStruct(), expand);
-	}
-	
-	/**
-	 * Unsets all the mappings on all renderers on the tree_column.
-	 */
-	public void clear()
-	{
-		// void gtk_tree_view_column_clear (GtkTreeViewColumn *tree_column);
-		gtk_tree_view_column_clear(gtkTreeViewColumn);
-	}
-	
-	/**
 	 * Warning
 	 * gtk_tree_view_column_get_cell_renderers has been deprecated since version 2.18 and should not be used in newly-written code. use gtk_cell_layout_get_cells() instead.
 	 * Returns a newly-allocated GList of all the cell renderers in the column,
@@ -274,24 +242,6 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	
 	/**
-	 * Adds an attribute mapping to the list in tree_column. The column is the
-	 * column of the model to get a value from, and the attribute is the
-	 * parameter on cell_renderer to be set from the value. So for example
-	 * if column 2 of the model contains strings, you could have the
-	 * "text" attribute of a GtkCellRendererText get its values from
-	 * column 2.
-	 * Params:
-	 * cellRenderer = the GtkCellRenderer to set attributes on
-	 * attribute = An attribute on the renderer
-	 * column = The column position on the model to get the attribute from.
-	 */
-	public void addAttribute(CellRenderer cellRenderer, string attribute, int column)
-	{
-		// void gtk_tree_view_column_add_attribute (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  const gchar *attribute,  gint column);
-		gtk_tree_view_column_add_attribute(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), Str.toStringz(attribute), column);
-	}
-	
-	/**
 	 * Sets the GtkTreeViewColumnFunc to use for the column. This
 	 * function is used instead of the standard attributes mapping for
 	 * setting the column value, and should set the value of tree_column's
@@ -307,18 +257,6 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	{
 		// void gtk_tree_view_column_set_cell_data_func  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  GtkTreeCellDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
 		gtk_tree_view_column_set_cell_data_func(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), func, funcData, destroy);
-	}
-	
-	/**
-	 * Clears all existing attributes previously set with
-	 * gtk_tree_view_column_set_attributes().
-	 * Params:
-	 * cellRenderer = a GtkCellRenderer to clear the attribute mapping on.
-	 */
-	public void clearAttributes(CellRenderer cellRenderer)
-	{
-		// void gtk_tree_view_column_clear_attributes  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer);
-		gtk_tree_view_column_clear_attributes(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct());
 	}
 	
 	/**

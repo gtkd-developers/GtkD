@@ -42,6 +42,8 @@
  * 	- gdk_pixbuf_animation_iter_
  * 	- gdk_pixbuf_simple_anim_
  * omit code:
+ * 	- gdk_pixbuf_animation_ref
+ * 	- gdk_pixbuf_animation_unref
  * omit signals:
  * imports:
  * 	- glib.ErrorG
@@ -159,34 +161,6 @@ public class PixbufAnimation : ObjectG
 			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err)");
 		}
 		this(cast(GdkPixbufAnimation*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_pixbuf_animation_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref().
-	 * Adds a reference to an animation.
-	 * Returns: The same as the animation argument.
-	 */
-	public PixbufAnimation doref()
-	{
-		// GdkPixbufAnimation * gdk_pixbuf_animation_ref (GdkPixbufAnimation *animation);
-		auto p = gdk_pixbuf_animation_ref(gdkPixbufAnimation);
-		if(p is null)
-		{
-			return null;
-		}
-		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_pixbuf_animation_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref().
-	 * Removes a reference from an animation.
-	 */
-	public void unref()
-	{
-		// void gdk_pixbuf_animation_unref (GdkPixbufAnimation *animation);
-		gdk_pixbuf_animation_unref(gdkPixbufAnimation);
 	}
 	
 	/**

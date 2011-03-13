@@ -43,6 +43,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_toolbar_set_orientation
+ * 	- gtk_toolbar_get_orientation
+ * 	- gtk_toolbar_get_icon_size
+ * 	- gtk_toolbar_get_relief_style
  * 	- gtk_toolbar_insert
  * omit signals:
  * imports:
@@ -439,19 +443,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_set_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_set_orientation() instead.
-	 * Sets whether a toolbar should appear horizontally or vertically.
-	 * Params:
-	 * orientation = a new GtkOrientation.
-	 */
-	public void setOrientation(GtkOrientation orientation)
-	{
-		// void gtk_toolbar_set_orientation (GtkToolbar *toolbar,  GtkOrientation orientation);
-		gtk_toolbar_set_orientation(gtkToolbar, orientation);
-	}
-	
-	/**
-	 * Warning
 	 * gtk_toolbar_set_tooltips has been deprecated since version 2.14 and should not be used in newly-written code. The toolkit-wide "gtk-enable-tooltips" property
 	 * is now used instead.
 	 * Sets if the tooltips of a toolbar should be active or not.
@@ -487,19 +478,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_toolbar_get_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_get_orientation() instead.
-	 * Retrieves the current orientation of the toolbar. See
-	 * gtk_toolbar_set_orientation().
-	 * Returns: the orientation
-	 */
-	public GtkOrientation getOrientation()
-	{
-		// GtkOrientation gtk_toolbar_get_orientation (GtkToolbar *toolbar);
-		return gtk_toolbar_get_orientation(gtkToolbar);
-	}
-	
-	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
 	 * Params:
@@ -510,16 +488,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
 		return gtk_toolbar_get_style(gtkToolbar);
-	}
-	
-	/**
-	 * Retrieves the icon size for the toolbar. See gtk_toolbar_set_icon_size().
-	 * Returns: the current icon size for the icons onthe toolbar.. type int
-	 */
-	public GtkIconSize getIconSize()
-	{
-		// GtkIconSize gtk_toolbar_get_icon_size (GtkToolbar *toolbar);
-		return gtk_toolbar_get_icon_size(gtkToolbar);
 	}
 	
 	/**
@@ -534,18 +502,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// gboolean gtk_toolbar_get_tooltips (GtkToolbar *toolbar);
 		return gtk_toolbar_get_tooltips(gtkToolbar);
-	}
-	
-	/**
-	 * Returns the relief style of buttons on toolbar. See
-	 * gtk_button_set_relief().
-	 * Since 2.4
-	 * Returns: The relief style of buttons on toolbar.
-	 */
-	public GtkReliefStyle getReliefStyle()
-	{
-		// GtkReliefStyle gtk_toolbar_get_relief_style (GtkToolbar *toolbar);
-		return gtk_toolbar_get_relief_style(gtkToolbar);
 	}
 	
 	/**

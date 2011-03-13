@@ -826,6 +826,8 @@ import: gobject.Value
 structWrap: GValue* Value
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+nocode: gtk_style_ref
+nocode: gtk_style_unref
 
 array: gtk_draw_polygon points npoints
 array: gtk_paint_polygon points npoints
@@ -2399,6 +2401,9 @@ structWrap: GtkAdjustment* Adjustment
 #imports for Orientable Interface.
 import: gtk.OrientableIF
 import: gtk.OrientableT
+
+nocode: gtk_scale_button_set_orientation
+nocode: gtk_scale_button_get_orientation
 
 array: gtk_scale_button_new icons
 array: gtk_scale_button_set_icons icons
@@ -4071,6 +4076,13 @@ out: gtk_tree_view_column_cell_get_size height
 out: gtk_tree_view_column_cell_get_position start_pos
 out: gtk_tree_view_column_cell_get_position width
 
+#These are also implemented in CellLayoutT
+nocode: gtk_tree_view_column_pack_start
+nocode: gtk_tree_view_column_pack_end
+nocode: gtk_tree_view_column_clear
+nocode: gtk_tree_view_column_add_attribute
+nocode: gtk_tree_view_column_clear_attributes
+
 nocode: gtk_tree_view_column_new_with_attributes
 
 code: start
@@ -5734,7 +5746,7 @@ template: TStruct
 prefix: gtk_tool_shell_
 import: gtk.SizeGroup
 structWrap: GtkSizeGroup* SizeGroup
-alias: getStyle getToolbarStyle
+alias: getStyle toolShellGetStyle
 interface: ToolShellIF
 outFile: ToolShellT
 
@@ -5755,10 +5767,14 @@ structWrap: GtkWidget* Widget
 #imports for Orientable Interface.
 import: gtk.OrientableIF
 import: gtk.OrientableT
+nocode: gtk_toolbar_set_orientation
+nocode: gtk_toolbar_get_orientation
 
 #imports for ToolShell Interface.
 import: gtk.ToolShellIF
 import: gtk.ToolShellT
+nocode: gtk_toolbar_get_icon_size
+nocode: gtk_toolbar_get_relief_style
 
 alias: getStyle toolbarGetStyle
 
@@ -5868,7 +5884,6 @@ file: GtkToolPalette.html
 struct: GtkToolPalette
 ctorStruct: GtkWidget
 class: ToolPalette
-implements: BuildableIF
 implements: OrientableIF
 prefix: gtk_tool_palette_
 alias: getStyle getToolbarStyle
@@ -5884,18 +5899,11 @@ structWrap: GtkToolItemGroup* ToolItemGroup
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
-#imports for Buildable Interface.
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 #imports for Orientable Interface.
 import: gtk.OrientableIF
 import: gtk.OrientableT
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolPalette);
-
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolPalette);
 code: end
@@ -5905,7 +5913,6 @@ file: GtkToolItemGroup.html
 struct: GtkToolItemGroup
 ctorStruct: GtkWidget
 class: ToolItemGroup
-implements: BuildableIF
 implements: ToolShellIF
 prefix: gtk_tool_item_group_
 alias: getStyle getToolbarStyle
@@ -5915,18 +5922,11 @@ structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
-#imports for Buildable Interface.
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 #imports for ToolShell Interface.
 import: gtk.ToolShellIF
 import: gtk.ToolShellT
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolItemGroup);
-
 	// add the ToolShell capabilities
 	mixin ToolShellT!(GtkToolItemGroup);
 code: end
@@ -7803,8 +7803,10 @@ import: glib.Str
 import: gtk.ObjectGtk
 structWrap: GtkObject* ObjectGtk
 
-override: setData
-override: getData
+nocode: gtk_object_ref
+nocode: gtk_object_unref
+nocode: gtk_object_set_data
+nocode: gtk_object_get_data
 
 code: star
 	/** */
@@ -8508,6 +8510,8 @@ import: glib.ListG
 structWrap: GList* ListG
 import: glib.ListSG
 structWrap: GSList* ListSG
+alias: setShowNumbers recentChooserSetShowNumbers
+alias: getShowNumbers recentChooserGetShowNumbers
 array: gtk_recent_chooser_get_uris Return length
 interface: RecentChooserIF
 outFile: RecentChooserT

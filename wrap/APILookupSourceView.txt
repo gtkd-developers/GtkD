@@ -178,7 +178,6 @@ outFile: SourceCompletionContext
 file: GtkSourceCompletionInfo.html
 struct: GtkSourceCompletionInfo
 class: SourceCompletionInfo
-implements: BuildableIF
 prefix: gtk_source_completion_info_
 import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
@@ -186,15 +185,6 @@ import: gtk.TextView
 structWrap: GtkTextView* TextView
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSourceCompletionInfo);
-code: end
 outFile: SourceCompletionInfo
 
 file: GtkSourceCompletionItem.html

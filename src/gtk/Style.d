@@ -42,6 +42,8 @@
  * omit prefixes:
  * 	- gtk_border_
  * omit code:
+ * 	- gtk_style_ref
+ * 	- gtk_style_unref
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -273,34 +275,6 @@ public class Style : ObjectG
 	{
 		// void gtk_style_detach (GtkStyle *style);
 		gtk_style_detach(gtkStyle);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_style_ref has been deprecated since version 2.0 and should not be used in newly-written code. use g_object_ref() instead.
-	 * Increase the reference count of style.
-	 * Returns:style.
-	 */
-	public Style doref()
-	{
-		// GtkStyle* gtk_style_ref (GtkStyle *style);
-		auto p = gtk_style_ref(gtkStyle);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Style(cast(GtkStyle*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_style_unref has been deprecated since version 2.0 and should not be used in newly-written code. use g_object_unref() instead.
-	 * Decrease the reference count of style.
-	 */
-	public void unref()
-	{
-		// void gtk_style_unref (GtkStyle *style);
-		gtk_style_unref(gtkStyle);
 	}
 	
 	/**

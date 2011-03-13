@@ -47,6 +47,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gio.InetAddress;
@@ -205,7 +206,7 @@ public class InetAddress : ObjectG
 	 * Since 2.22
 	 * Returns: a representation of address as a string, which should befreed after use.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar * g_inet_address_to_string (GInetAddress *address);
 		return Str.toString(g_inet_address_to_string(gInetAddress));

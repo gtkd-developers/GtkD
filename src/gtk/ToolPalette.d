@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * 	- OrientableIF
  * prefixes:
  * 	- gtk_tool_palette_
@@ -49,8 +48,6 @@
  * 	- gtk.ToolItem
  * 	- gtk.ToolItemGroup
  * 	- gtk.Widget
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
  * structWrap:
@@ -79,8 +76,6 @@ private import gtk.Adjustment;
 private import gtk.ToolItem;
 private import gtk.ToolItemGroup;
 private import gtk.Widget;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 
@@ -182,7 +177,7 @@ private import gtk.Container;
  *  GTK_TOOL_PALETTE_DRAG_ITEMS,
  *  GDK_ACTION_COPY);
  */
-public class ToolPalette : Container, BuildableIF, OrientableIF
+public class ToolPalette : Container, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -221,9 +216,6 @@ public class ToolPalette : Container, BuildableIF, OrientableIF
 		super(cast(GtkContainer*)gtkToolPalette);
 		this.gtkToolPalette = gtkToolPalette;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolPalette);
 	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolPalette);

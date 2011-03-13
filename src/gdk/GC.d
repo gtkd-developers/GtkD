@@ -40,6 +40,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gdk_gc_ref
+ * 	- gdk_gc_unref
  * omit signals:
  * imports:
  * 	- gdk.Drawable
@@ -203,34 +205,6 @@ public class GC : ObjectG
 			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_gc_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref() instead.
-	 * Deprecated function; use g_object_ref() instead.
-	 * Returns: the gc.
-	 */
-	public GC doref()
-	{
-		// GdkGC * gdk_gc_ref (GdkGC *gc);
-		auto p = gdk_gc_ref(gdkGC);
-		if(p is null)
-		{
-			return null;
-		}
-		return new GC(cast(GdkGC*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_gc_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref() instead.
-	 * Decrement the reference count of gc.
-	 */
-	public void unref()
-	{
-		// void gdk_gc_unref (GdkGC *gc);
-		gdk_gc_unref(gdkGC);
 	}
 	
 	/**

@@ -41,6 +41,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_object_ref
+ * 	- gtk_object_unref
+ * 	- gtk_object_set_data
+ * 	- gtk_object_get_data
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -50,8 +54,6 @@
  * module aliases:
  * local aliases:
  * overrides:
- * 	- setData
- * 	- getData
  */
 
 module gtk.ObjectGtk;
@@ -223,35 +225,6 @@ public class ObjectGtk : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_object_ref is deprecated and should not be used in newly-written code. Use g_object_ref() instead.
-	 * Increases the reference count of the object.
-	 * Returns:object.
-	 */
-	public ObjectGtk doref()
-	{
-		// GtkObject* gtk_object_ref (GtkObject *object);
-		auto p = gtk_object_ref(gtkObject);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ObjectGtk(cast(GtkObject*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_object_unref is deprecated and should not be used in newly-written code. Use g_object_unref() instead.
-	 * Decreases the reference count of an object. When its reference count drops
-	 * to 0, the object is finalized (i.e. its memory is freed).
-	 */
-	public void unref()
-	{
-		// void gtk_object_unref (GtkObject *object);
-		gtk_object_unref(gtkObject);
-	}
-	
-	/**
-	 * Warning
 	 * gtk_object_weakref is deprecated and should not be used in newly-written code. Use g_object_weak_ref() instead.
 	 * Adds a weak reference callback to an object. Weak references are used for notification when an object is
 	 * finalized. They are called "weak references" because they allow you to safely
@@ -297,23 +270,6 @@ public class ObjectGtk : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_object_set_data is deprecated and should not be used in newly-written code. Use g_object_set_data() instead.
-	 * Each object carries around a table of associations from
-	 * strings to pointers. This function lets you set an association.
-	 * If the object already had an association with that name,
-	 * the old association will be destroyed.
-	 * Params:
-	 * key = name of the key.
-	 * data = data to associate with that key.
-	 */
-	public override void setData(string key, void* data)
-	{
-		// void gtk_object_set_data (GtkObject *object,  const gchar *key,  gpointer data);
-		gtk_object_set_data(gtkObject, Str.toStringz(key), data);
-	}
-	
-	/**
-	 * Warning
 	 * gtk_object_set_data_full is deprecated and should not be used in newly-written code. Use g_object_set_data_full() instead.
 	 * Like gtk_object_set_data() except it adds notification
 	 * for when the association is destroyed, either by
@@ -343,20 +299,6 @@ public class ObjectGtk : ObjectG
 	{
 		// void gtk_object_remove_data (GtkObject *object,  const gchar *key);
 		gtk_object_remove_data(gtkObject, Str.toStringz(key));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_object_get_data is deprecated and should not be used in newly-written code. Use g_object_get_data() instead.
-	 * Get a named field from the object's table of associations (the object_data).
-	 * Params:
-	 * key = name of the key for that association.
-	 * Returns:the data if found, or NULL if no such data exists.
-	 */
-	public override void* getData(string key)
-	{
-		// gpointer gtk_object_get_data (GtkObject *object,  const gchar *key);
-		return gtk_object_get_data(gtkObject, Str.toStringz(key));
 	}
 	
 	/**

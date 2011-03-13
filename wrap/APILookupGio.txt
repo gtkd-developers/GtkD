@@ -588,34 +588,14 @@ file: GUnixInputStream.html
 struct: GUnixInputStream
 ctorStruct: GInputStream
 class: UnixInputStream
-implements: FileDescriptorBasedIF
 prefix: g_unix_input_stream_
-
-#imports for FileDescriptorBased Interface.
-import: gio.FileDescriptorBasedT
-import: gio.FileDescriptorBasedIF
-
-code: start
-	// add the FileDescriptorBased capabilities
-	mixin FileDescriptorBasedT!(GUnixInputStream);
-code: end
 outFile: UnixInputStream
 
 file: GUnixOutputStream.html
 struct: GUnixOutputStream
 ctorStruct: GOutputStream
 class: UnixOutputStream
-implements: FileDescriptorBasedIF
 prefix: g_unix_output_stream_
-
-#imports for FileDescriptorBased Interface.
-import: gio.FileDescriptorBasedT
-import: gio.FileDescriptorBasedIF
-
-code: start
-	// add the FileDescriptorBased capabilities
-	mixin FileDescriptorBasedT!(GUnixOutputStream);
-code: end
 outFile: UnixOutputStream
 
 ###########################################################
@@ -1270,6 +1250,7 @@ struct: GInetAddress
 class: InetAddress
 prefix: g_inet_address_
 import: glib.Str
+override: toString
 array: g_inet_address_new_from_bytes bytes
 array: g_inet_address_to_bytes Return getNativeSize()
 outFile: InetAddress

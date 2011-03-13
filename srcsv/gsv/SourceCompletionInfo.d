@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = SourceCompletionInfo
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_source_completion_info_
  * omit structs:
@@ -46,8 +45,6 @@
  * 	- gtk.TextIter
  * 	- gtk.TextView
  * 	- gtk.Widget
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextView* -> TextView
@@ -70,8 +67,6 @@ public  import gtkc.gdktypes;
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Widget;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -82,7 +77,7 @@ private import gtk.Window;
  * This object can be used to show a calltip or help for the
  * .* current completion proposal.
  */
-public class SourceCompletionInfo : Window, BuildableIF
+public class SourceCompletionInfo : Window
 {
 	
 	/** the main Gtk struct */
@@ -121,9 +116,6 @@ public class SourceCompletionInfo : Window, BuildableIF
 		super(cast(GtkWindow*)gtkSourceCompletionInfo);
 		this.gtkSourceCompletionInfo = gtkSourceCompletionInfo;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSourceCompletionInfo);
 	
 	/**
 	 */

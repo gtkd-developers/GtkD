@@ -58,6 +58,8 @@
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
  * local aliases:
+ * 	- getShowNumbers -> recentChooserGetShowNumbers
+ * 	- setShowNumbers -> recentChooserSetShowNumbers
  * overrides:
  */
 
@@ -362,7 +364,7 @@ public template RecentChooserT(TStruct)
 	 * Params:
 	 * showNumbers = TRUE to show numbers, FALSE otherwise
 	 */
-	public void setShowNumbers(int showNumbers)
+	public void recentChooserSetShowNumbers(int showNumbers)
 	{
 		// void gtk_recent_chooser_set_show_numbers (GtkRecentChooser *chooser,  gboolean show_numbers);
 		gtk_recent_chooser_set_show_numbers(getRecentChooserTStruct(), showNumbers);
@@ -376,7 +378,7 @@ public template RecentChooserT(TStruct)
 	 * Since 2.10
 	 * Returns: TRUE if the recent chooser should show display numbers, FALSE otherwise.
 	 */
-	public int getShowNumbers()
+	public int recentChooserGetShowNumbers()
 	{
 		// gboolean gtk_recent_chooser_get_show_numbers (GtkRecentChooser *chooser);
 		return gtk_recent_chooser_get_show_numbers(getRecentChooserTStruct());

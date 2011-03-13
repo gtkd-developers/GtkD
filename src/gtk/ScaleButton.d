@@ -42,6 +42,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_scale_button_set_orientation
+ * 	- gtk_scale_button_get_orientation
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -364,32 +366,5 @@ public class ScaleButton : Button, OrientableIF
 			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_scale_button_set_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_set_orientation() instead.
-	 * Sets the orientation of the GtkScaleButton's popup window.
-	 * Since 2.14
-	 * Params:
-	 * orientation = the new orientation
-	 */
-	public void setOrientation(GtkOrientation orientation)
-	{
-		// void gtk_scale_button_set_orientation (GtkScaleButton *button,  GtkOrientation orientation);
-		gtk_scale_button_set_orientation(gtkScaleButton, orientation);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_scale_button_get_orientation has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_orientable_get_orientation() instead.
-	 * Gets the orientation of the GtkScaleButton's popup window.
-	 * Since 2.14
-	 * Returns: the GtkScaleButton's orientation.
-	 */
-	public GtkOrientation getOrientation()
-	{
-		// GtkOrientation gtk_scale_button_get_orientation (GtkScaleButton *button);
-		return gtk_scale_button_get_orientation(gtkScaleButton);
 	}
 }

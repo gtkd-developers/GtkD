@@ -47,7 +47,7 @@
  * 	- GtkSizeGroup* -> SizeGroup
  * module aliases:
  * local aliases:
- * 	- getStyle -> getToolbarStyle
+ * 	- getStyle -> toolShellGetStyle
  * overrides:
  */
 
@@ -124,7 +124,7 @@ public interface ToolShellIF
 	 * Since 2.14
 	 * Returns: the current style of shell
 	 */
-	public GtkToolbarStyle getToolbarStyle();
+	public GtkToolbarStyle toolShellGetStyle();
 	
 	/**
 	 * Retrieves the current text alignment for the tool shell. Tool items must not

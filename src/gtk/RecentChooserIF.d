@@ -57,6 +57,8 @@
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
  * local aliases:
+ * 	- getShowNumbers -> recentChooserGetShowNumbers
+ * 	- setShowNumbers -> recentChooserSetShowNumbers
  * overrides:
  */
 
@@ -249,7 +251,7 @@ public interface RecentChooserIF
 	 * Params:
 	 * showNumbers = TRUE to show numbers, FALSE otherwise
 	 */
-	public void setShowNumbers(int showNumbers);
+	public void recentChooserSetShowNumbers(int showNumbers);
 	
 	/**
 	 * Warning
@@ -259,7 +261,7 @@ public interface RecentChooserIF
 	 * Since 2.10
 	 * Returns: TRUE if the recent chooser should show display numbers, FALSE otherwise.
 	 */
-	public int getShowNumbers();
+	public int recentChooserGetShowNumbers();
 	
 	/**
 	 * Changes the sorting order of the recently used resources list displayed by

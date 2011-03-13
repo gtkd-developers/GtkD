@@ -272,6 +272,8 @@ import: gdk.Region
 structWrap: GdkRegion* Region
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
+nocode: gdk_gc_ref
+nocode: gdk_gc_unref
 outFile: GC
 
 file: gdk-Drawing-Primitives.html
@@ -321,6 +323,8 @@ structWrap: PangoLayout* PgLayout
 import: pango.PgLayoutLine
 structWrap: PangoLayoutLine* PgLayoutLine
 
+nocode: gdk_drawable_ref
+nocode: gdk_drawable_unref
 override: getData
 
 out: gdk_drawable_get_size width

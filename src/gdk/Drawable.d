@@ -41,6 +41,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gdk_drawable_ref
+ * 	- gdk_drawable_unref
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -189,35 +191,6 @@ public class Drawable : ObjectG
 	
 	/**
 	 */
-	
-	/**
-	 * Warning
-	 * gdk_drawable_ref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_ref() instead.
-	 * Deprecated equivalent of calling g_object_ref() on drawable.
-	 * (Drawables were not objects in previous versions of GDK.)
-	 * Returns: the same drawable passed in
-	 */
-	public Drawable doref()
-	{
-		// GdkDrawable* gdk_drawable_ref (GdkDrawable *drawable);
-		auto p = gdk_drawable_ref(gdkDrawable);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Drawable(cast(GdkDrawable*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_drawable_unref has been deprecated since version 2.0 and should not be used in newly-written code. Use g_object_unref() instead.
-	 * Deprecated equivalent of calling g_object_unref() on drawable.
-	 */
-	public void unref()
-	{
-		// void gdk_drawable_unref (GdkDrawable *drawable);
-		gdk_drawable_unref(gdkDrawable);
-	}
 	
 	/**
 	 * Warning

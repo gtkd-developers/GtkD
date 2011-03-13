@@ -160,6 +160,8 @@ structWrap: GTimeVal* TimeVal
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.Str
+nocode: gdk_pixbuf_animation_ref
+nocode: gdk_pixbuf_animation_unref
 outFile: PixbufAnimation
 
 struct: GdkPixbufAnimationIter

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * 	- ToolShellIF
  * prefixes:
  * 	- gtk_tool_item_group_
@@ -47,8 +46,6 @@
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * 	- gtk.ToolShellIF
  * 	- gtk.ToolShellT
  * structWrap:
@@ -71,8 +68,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 private import gtk.ToolShellIF;
 private import gtk.ToolShellT;
 
@@ -86,7 +81,7 @@ private import gtk.Container;
  * GtkToolItems to a palette like container with different
  * categories and drag and drop support.
  */
-public class ToolItemGroup : Container, BuildableIF, ToolShellIF
+public class ToolItemGroup : Container, ToolShellIF
 {
 	
 	/** the main Gtk struct */
@@ -125,9 +120,6 @@ public class ToolItemGroup : Container, BuildableIF, ToolShellIF
 		super(cast(GtkContainer*)gtkToolItemGroup);
 		this.gtkToolItemGroup = gtkToolItemGroup;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolItemGroup);
 	
 	// add the ToolShell capabilities
 	mixin ToolShellT!(GtkToolItemGroup);
