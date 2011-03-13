@@ -811,24 +811,20 @@ class TestWindow : MainWindow
 	void showFileSel(Button button)
 	{
 
-		Dialog dlg = new Dialog("title", this, cast(GtkDialogFlags)0, [StockID.OK], [GtkResponseType.GTK_RESPONSE_CLOSE]);
-
-
-		dlg.run();
-//		if ( fs  is  null )
-//		{
-//			fs = new FileSelection("File Selection");
-//		}
+		if ( fs  is  null )
+		{
+			fs = new FileSelection("File Selection");
+		}
 		//fs.showAll();
 		//fs.setMultiple(true);
-//		fs.run();
+		fs.run();
 		//printf("file selected = %.*s\n",fs.getFileName());
 //		string[] selections = fs.getSelections();
 //		for ( int i=0 ;i<selections.length ; i++)
 //		{
 //			printf("File(s) selected [%d] %.*s\n",i,selections[i]);
 //		}
-//		fs.hide();
+		fs.hide();
 	}
 
 	void showColor(Button button)
