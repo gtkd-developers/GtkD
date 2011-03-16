@@ -8566,6 +8566,7 @@ code: start
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
+		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
 		}
