@@ -316,6 +316,14 @@ public class TreeIter
 	/**
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
+	public this(TreeModelIF treeModel, string treePath)
+	{
+		this(treeModel, new TreePath(treePath));
+	}
+	
+	/**
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
 	public this(TreeModelIF treeModel, TreePath treePath)
 	{
 		this();
