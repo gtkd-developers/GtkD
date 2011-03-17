@@ -143,19 +143,19 @@ class CustomList : TreeModel
 	 * (_get_value is what gtk_tree_model_get uses)
 	 */
 
-	override void getValue(TreeIter iter, int column, Value value)
+	override Value getValue(TreeIter iter, int column, Value value)
 	{
 		CustomRecord  *record;
 
 		if ( iter is null || column >= nColumns )
-			return;
+			return null;
 
 		value.init(columnTypes[column]);
 
 		record = cast(CustomRecord*) iter.userData;
 
 		if ( record is null || record.pos >= numRows )
-			return;
+			return null;
 
 		switch(column)
 		{
@@ -171,6 +171,8 @@ class CustomList : TreeModel
 				value.setUint(record.yearBorn);
 				break;
 		}
+
+		return value;
 	}
 
 
