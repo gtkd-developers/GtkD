@@ -205,12 +205,17 @@ import: glib.MainContext
 structWrap: GMainContext* MainContext
 import: glib.Source
 structWrap: GSource* Source
+import: gtkc.paths;
+import: gtkc.Loader;
 array: g_poll fds nfds
 
 code: start
 	~this()
 	{
-		unref();
+		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		{
+			unref();
+		}
 	}
 code: end
 outFile: MainLoop
@@ -605,6 +610,8 @@ import: glib.GException
 import: glib.StringG
 import: glib.Source
 import: glib.Str
+import: gtkc.paths;
+import: gtkc.Loader;
 structWrap: GString* StringG
 structWrap: GSource* Source
 structWrap: GIOChannel* IOChannel
@@ -623,7 +630,10 @@ nocode: g_io_channel_read_to_end
 code: start
 	~this()
 	{
-		unref();
+		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		{
+			unref();
+		}
 	}
 
 	/**

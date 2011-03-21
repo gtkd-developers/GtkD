@@ -49,6 +49,8 @@
  * 	- glib.StringG
  * 	- glib.Source
  * 	- glib.Str
+ * 	- gtkc.paths;
+ * 	- gtkc.Loader;
  * structWrap:
  * 	- GIOChannel* -> IOChannel
  * 	- GSource* -> Source
@@ -71,6 +73,8 @@ private import glib.GException;
 private import glib.StringG;
 private import glib.Source;
 private import glib.Str;
+private import gtkc.paths;;
+private import gtkc.Loader;;
 
 
 
@@ -142,7 +146,10 @@ public class IOChannel
 	
 	~this()
 	{
-		unref();
+		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		{
+			unref();
+		}
 	}
 	
 	/**

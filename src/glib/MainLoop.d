@@ -50,6 +50,8 @@
  * imports:
  * 	- glib.MainContext
  * 	- glib.Source
+ * 	- gtkc.paths;
+ * 	- gtkc.Loader;
  * structWrap:
  * 	- GMainContext* -> MainContext
  * 	- GMainLoop* -> MainLoop
@@ -69,6 +71,8 @@ private import glib.ConstructionException;
 
 private import glib.MainContext;
 private import glib.Source;
+private import gtkc.paths;;
+private import gtkc.Loader;;
 
 
 
@@ -172,7 +176,10 @@ public class MainLoop
 	
 	~this()
 	{
-		unref();
+		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		{
+			unref();
+		}
 	}
 	
 	/**
