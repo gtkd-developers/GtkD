@@ -55,6 +55,8 @@
  * 	- gdk.Pixmap
  * 	- gdk.Color
  * 	- gtkc.gdk
+ * 	- gtkc.paths;
+ * 	- gtkc.Loader;
  * 	- gdk.Drawable
  * structWrap:
  * 	- cairo_font_face_t* -> FontFace
@@ -90,6 +92,8 @@ private import gdk.Pixbuf;
 private import gdk.Pixmap;
 private import gdk.Color;
 private import gtkc.gdk;
+private import gtkc.paths;;
+private import gtkc.Loader;;
 private import gdk.Drawable;
 
 
@@ -155,7 +159,10 @@ public class Context
 	
 	~this ()
 	{
-		cairo_destroy(cairo);
+		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries )
+		{
+			cairo_destroy(cairo);
+		}
 	}
 	
 	/**

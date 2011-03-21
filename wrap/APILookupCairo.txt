@@ -93,6 +93,8 @@ import: gdk.Pixbuf
 import: gdk.Pixmap
 import: gdk.Color
 import: gtkc.gdk
+import: gtkc.paths;
+import: gtkc.Loader;
 import: gdk.Drawable
 
 array: cairo_set_dash dashes num_dashes
@@ -129,7 +131,10 @@ code: start
 
 	~this ()
 	{
-		cairo_destroy(cairo);
+		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries )
+		{
+			cairo_destroy(cairo);
+		}
 	}
 
 	/**
