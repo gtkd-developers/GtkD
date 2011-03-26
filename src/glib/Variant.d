@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Variant
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,6 +42,7 @@
  * 	- g_variant_iter_
  * 	- g_variant_builder_
  * omit code:
+ * 	- g_variant_new_boolean
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -271,6 +272,24 @@ public class Variant
 	}
 	
 	/**
+	 * Creates a new boolean GVariant instance -- either TRUE or FALSE.
+	 * Since 2.24
+	 * Params:
+	 * boolean = a gboolean value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool boolean)
+	{
+		// GVariant * g_variant_new_boolean (gboolean boolean);
+		auto p = g_variant_new_boolean(boolean);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_boolean(boolean)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -477,24 +496,6 @@ public class Variant
 		}
 		
 		endptr = Str.toString(outendptr);
-		this(cast(GVariant*) p);
-	}
-	
-	/**
-	 * Creates a new boolean GVariant instance -- either TRUE or FALSE.
-	 * Since 2.24
-	 * Params:
-	 * boolean = a gboolean value
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int boolean)
-	{
-		// GVariant * g_variant_new_boolean (gboolean boolean);
-		auto p = g_variant_new_boolean(boolean);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_variant_new_boolean(boolean)");
-		}
 		this(cast(GVariant*) p);
 	}
 	

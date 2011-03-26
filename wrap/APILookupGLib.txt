@@ -2280,6 +2280,7 @@ structWrap: GString* StringG
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
 alias: byte b
+nocode: g_variant_new_boolean
 
 array: g_variant_get_strv Return length
 array: g_variant_dup_strv Return length
@@ -2292,6 +2293,26 @@ array: g_variant_new_strv strv length
 out: g_variant_new_va endptr
 out: g_variant_get_va endptr
 out: g_variant_parse endptr
+
+code: start
+	/**
+	 * Creates a new boolean GVariant instance -- either TRUE or FALSE.
+	 * Since 2.24
+	 * Params:
+	 * boolean = a gboolean value
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool boolean)
+	{
+		// GVariant * g_variant_new_boolean (gboolean boolean);
+		auto p = g_variant_new_boolean(boolean);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_boolean(boolean)");
+		}
+		this(cast(GVariant*) p);
+	}
+code: end
 outFile: Variant
 
 struct: GVariantIter
