@@ -20,19 +20,22 @@ endif
 
 ifeq ("$(DC)","dmd")
     DCFLAGS=-O
+    LINKERFLAG=-L
     output=-of$@
 else ifeq ("$(DC)","ldc")
     DCFLAGS=-O
+    LINKERFLAG=-L
     output=-of$@
 else
     DCFLAGS=-O2
+    LINKERFLAG=-Xlinker 
     output=-o $@
 endif
 
 ifeq ("$(OS)","Darwin")
     LDFLAGS+=-Wl,-undefined,dynamic_lookup
 else ifeq ("$(OS)","Linux")
-    LDFLAGS+=-L-ldl
+    LDFLAGS+=$(LINKERFLAG)-ldl
 endif
 
 AR=ar
@@ -146,7 +149,7 @@ test: $(BINNAME_DEMO)
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
 $(BINNAME_DEMO): $(OBJECTS_DEMO) $(LIBNAME_GTKD)
-	$(DC) $(OBJECTS_DEMO) $(output) $(LDFLAGS) -L-L. -L-lgtkd
+	$(DC) $(OBJECTS_DEMO) $(output) $(LDFLAGS) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd
 
 #######################################################################
 
