@@ -80,7 +80,7 @@ version(D_Version2)
 }
 else
 {
-char[] gshared() { return ""; }
+	const char[] gshared = "";
 }
 
 version (Windows)
