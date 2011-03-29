@@ -102,13 +102,16 @@ public class Spawn
 {
 	
 	//we need fdopen.
-	version(Tango)
+	version(Posix)
 	{
-		private import tango.stdc.posix.stdio;
-	}
-	else version(Posix) version(D_Version2)
-	{
-		private import core.sys.posix.stdio;
+		version(Tango)
+		{
+			private import tango.stdc.posix.stdio;
+		}
+		else version(D_Version2)
+		{
+			private import core.sys.posix.stdio;
+		}
 	}
 	//fdopen for Windows is defined in gtkc.glibtypes.
 	
