@@ -83,15 +83,10 @@ else
 	const char[] gshared = "";
 }
 
-version (Windows)
+version (Windows) version(Tango)
 {
-	version(Tango) {
-		private import tango.stdc.stdio;
-	} else {
-		private import std.c.stdio;
-	}
-	
-	extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
+	//Phobos defines this function in std.c.stdio
+	extern (C) FILE*  fdopen(int, char*);
 }
 
 const uint G_MAXUINT = 4294967295;
