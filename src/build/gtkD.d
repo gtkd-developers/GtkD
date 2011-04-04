@@ -108,6 +108,7 @@ private import gobject.ObjectG;
 private import gobject.Enums;
 private import gobject.Flags;
 private import gobject.Boxed;
+private import gobject.Value;
 private import gobject.ParamSpec;
 private import gobject.ParamSpecPool;
 private import gobject.Signals;
@@ -213,12 +214,14 @@ private import gio.IOModule;
 private import gio.IOExtension;
 private import gio.IOExtensionPoint;
 
+private import cairo.Context;
 private import cairo.Pattern;
 private import cairo.FontFace;
 private import cairo.ScaledFont;
 private import cairo.FontOption;
 private import cairo.UserFontFace;
 private import cairo.Surface;
+private import cairo.ImageSurface;
 private import cairo.PdfSurface;
 private import cairo.PostScriptSurface;
 private import cairo.SvgSurface;
@@ -227,6 +230,7 @@ private import cairo.Status;
 private import cairo.Version;
 private import cairo.Types;
 
+private import pango.PgContext;
 private import pango.PgItem;
 private import pango.PgMatrix;
 private import pango.PgGlyphString;
@@ -291,6 +295,7 @@ private import gdkpixbuf.PixbufAnimation;
 private import gdkpixbuf.PixbufAnimationIter;
 private import gdkpixbuf.PixbufSimpleAnimation;
 private import gdkpixbuf.PixbufLoader;
+private import gdkpixbuf.PixbufFormat;
 
 private import gdk.Gdk;
 private import gdk.Display;
@@ -305,6 +310,7 @@ private import gdk.Bitmap;
 private import gdk.RGB;
 private import gdk.RgbCmap;
 private import gdk.ImageGdk;
+private import gdk.Pixbuf;
 private import gdk.Colormap;
 private import gdk.Color;
 private import gdk.Visual;
@@ -554,6 +560,7 @@ private import gtk.ItemFactory;
 private import gtk.Tooltips;
 private import gtk.Progress;
 
+private import glade.Glade;
 
 private import glgdk.GLdInit;
 private import glgdk.GLQuery;
@@ -592,6 +599,7 @@ private import gsv.SourceStyle;
 private import gsv.SourceStyleScheme;
 private import gsv.SourceStyleSchemeManager;
 
+private import gda.Gda;
 private import gda.Blob;
 private import gda.Client;
 private import gda.Command;

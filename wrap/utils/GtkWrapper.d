@@ -644,6 +644,9 @@ public class GtkWrapper : WrapperIF
                     text.length = 0;
                     break;
                 case "closeFile":
+                    buildText ~= "\nprivate import "
+                            ~convParms.outPack~"."
+                            ~defReader.getValue()~";";
                     closeFile(text, gtkDClass, convParms);
                     text.length = 0;
                     break;
