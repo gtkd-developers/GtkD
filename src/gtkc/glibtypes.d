@@ -88,14 +88,14 @@ version (Windows)
 	version(Tango)
 	{
 		private import tango.stdc.stdio;
-
+		
 		//Phobos defines this function in std.c.stdio
 		extern (C) FILE*  fdopen(int, char*);
 	}
 	version(D_Version2)
 	{
 		private import core.stdc.stdio;
-
+		
 		extern (C) FILE*  fdopen(int, char*);
 	}
 }

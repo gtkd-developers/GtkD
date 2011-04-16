@@ -329,6 +329,20 @@ public struct GObjectClass
 	gpointer dummy[7];
 }
 
+/**
+ * Main Gtk struct.
+ * All the fields in the GObject structure are private
+ * to the GObject implementation and should never be accessed directly.
+ */
+public struct GObject
+{
+	GTypeInstance  gTypeInstance;
+	
+	/*< private >*/
+	uint refCount;
+	GData* qdata;
+}
+
 struct GValue
 {
 	version(Windows)
@@ -503,14 +517,6 @@ public struct GTypeModuleClass
 	extern(C) int  function(GTypeModule *modul)  load;
 	extern(C) void  function(GTypeModule *modul)  unload;
 }
-
-
-/**
- * Main Gtk struct.
- * All the fields in the GObject structure are private
- * to the GObject implementation and should never be accessed directly.
- */
-public struct GObject{}
 
 
 /**

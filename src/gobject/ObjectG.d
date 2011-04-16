@@ -38,10 +38,10 @@
  * prefixes:
  * 	- g_object_
  * omit structs:
+ * 	- GObject
  * 	- GObjectClass
  * omit prefixes:
  * omit code:
- * 	- g_object_set_data_full
  * omit signals:
  * imports:
  * 	- gobject.ParamSpec
@@ -49,6 +49,8 @@
  * 	- gobject.Closure
  * 	- std.gc
  * 	- glib.Str
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GParamSpec* -> ParamSpec
@@ -72,6 +74,8 @@ private import gobject.ParamSpec;
 private import gobject.Value;
 private import gobject.Closure;
 private import glib.Str;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 version(Tango) {
@@ -155,6 +159,8 @@ public class ObjectG
 	}
 	
 	
+	protected bool isGcRoot;
+	
 	/**
 	 * Sets our main struct and passes store it on the gobject.
 	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
@@ -174,34 +180,66 @@ public class ObjectG
 				return;
 			}
 			
-			objectGSetDataFull("GObject",cast(void*)this);
+			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
+			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
+			
+			//If the refCount is largeer then 1 toggleNotify isn't called
+			if (gObject.refCount > 1 && !isGcRoot)
+			{
+				version(druntime) GC.addRoot(cast(void*)this);
+				else std.gc.addRoot(cast(void*)this);
+				
+				isGcRoot = true;
+			}
+			
+			//Remove the floating reference if there is one.
+			if (isFloating(gObject))
+			{
+				refSink(gObject);
+				unref(gObject);
+			}
 		}
-	}
-	
-	/**
-	 * Sets a pointer on this object's has table
-	 * Params:
-	 *  key = the data identifier
-	 *  data = a pointer
-	 */
-	public void objectGSetDataFull(string key, gpointer data)
-	{
-		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		version(druntime) GC.addRoot(data);
-		else std.gc.addRoot(data);
-		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
 	
 	extern(C)
 	{
-		static void destroyNotify(gpointer* data)
+		static void destroyNotify(ObjectG obj)
 		{
-			//writefln("objectg.destroy entry");
-			//writefln("objectg.destroy");
-			//writefln("removing gc.root to %s",data);
-			version(druntime) GC.removeRoot(data);
-			else std.gc.removeRoot(data);
-			//writefln("objectg.destroy exit");
+			if ( obj.isGcRoot )
+			{
+				version(druntime) GC.removeRoot(cast(void*)obj);
+				else std.gc.removeRoot(cast(void*)obj);
+				
+				obj.isGcRoot = false;
+			}
+			
+			obj.gObject = null;
+		}
+		
+		static void toggleNotify(ObjectG obj, GObject* object, int isLastRef)
+		{
+			if ( isLastRef && obj.isGcRoot )
+			{
+				version(druntime) GC.removeRoot(cast(void*)obj);
+				else std.gc.removeRoot(cast(void*)obj);
+				
+				obj.isGcRoot = false;
+			}
+			else if ( !obj.isGcRoot )
+			{
+				version(druntime) GC.addRoot(cast(void*)obj);
+				else std.gc.addRoot(cast(void*)obj);
+				
+				obj.isGcRoot = true;
+			}
+		}
+	}
+	
+	~this()
+	{
+		if ( importLibs[LIBRARY.GOBJECT] in Linker.loadedLibraries && gObject !is null )
+		{
+			unref();
 		}
 	}
 	
@@ -732,6 +770,22 @@ public class ObjectG
 	{
 		// void g_object_set_data (GObject *object,  const gchar *key,  gpointer data);
 		g_object_set_data(gObject, Str.toStringz(key), data);
+	}
+	
+	/**
+	 * Like g_object_set_data() except it adds notification
+	 * for when the association is destroyed, either by setting it
+	 * to a different value or when the object is destroyed.
+	 * Note that the destroy callback is not called if data is NULL.
+	 * Params:
+	 * key = name of the key
+	 * data = data to associate with that key
+	 * destroy = function to call when the association is destroyed
+	 */
+	public void setDataFull(string key, void* data, GDestroyNotify destroy)
+	{
+		// void g_object_set_data_full (GObject *object,  const gchar *key,  gpointer data,  GDestroyNotify destroy);
+		g_object_set_data_full(gObject, Str.toStringz(key), data, destroy);
 	}
 	
 	/**

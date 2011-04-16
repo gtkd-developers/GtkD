@@ -45,6 +45,8 @@
  * 	- gtk_object_unref
  * 	- gtk_object_set_data
  * 	- gtk_object_get_data
+ * 	- gtk_object_set_data_full
+ * 	- gtk_object_remove_data
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -266,39 +268,6 @@ public class ObjectGtk : ObjectG
 	{
 		// void gtk_object_destroy (GtkObject *object);
 		gtk_object_destroy(gtkObject);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_object_set_data_full is deprecated and should not be used in newly-written code. Use g_object_set_data_full() instead.
-	 * Like gtk_object_set_data() except it adds notification
-	 * for when the association is destroyed, either by
-	 * gtk_object_remove_data() or when the object is destroyed.
-	 * Params:
-	 * key = name of the key.
-	 * data = data to associate with that key.
-	 * destroy = function to call when the association is destroyed.
-	 */
-	public void setDataFull(string key, void* data, GDestroyNotify destroy)
-	{
-		// void gtk_object_set_data_full (GtkObject *object,  const gchar *key,  gpointer data,  GDestroyNotify destroy);
-		gtk_object_set_data_full(gtkObject, Str.toStringz(key), data, destroy);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_object_remove_data is deprecated and should not be used in newly-written code. Use g_object_set_data() to set the object data to NULL instead.
-	 * Removes a specified datum from the object's data associations (the object_data).
-	 * Subsequent calls to gtk_object_get_data() will return NULL.
-	 * If you specified a destroy handler with gtk_object_set_data_full(),
-	 * it will be invoked.
-	 * Params:
-	 * key = name of the key for that association.
-	 */
-	public void removeData(string key)
-	{
-		// void gtk_object_remove_data (GtkObject *object,  const gchar *key);
-		gtk_object_remove_data(gtkObject, Str.toStringz(key));
 	}
 	
 	/**

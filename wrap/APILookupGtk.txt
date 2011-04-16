@@ -3756,7 +3756,7 @@ public class TreeModel : ObjectG, TreeModelIF
 		auto p =  super(customTreeModelgetType(), null);
 		gtkTreeModel = cast(GtkTreeModel*) p.getObjectGStruct();
 
-		objectGSetDataFull("customTreeModel", cast(void*)this);
+		setDataFull("customTreeModel", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 	}
 	
 	/**
@@ -7815,6 +7815,8 @@ nocode: gtk_object_ref
 nocode: gtk_object_unref
 nocode: gtk_object_set_data
 nocode: gtk_object_get_data
+nocode: gtk_object_set_data_full
+nocode: gtk_object_remove_data
 
 code: star
 	/** */

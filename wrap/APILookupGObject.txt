@@ -98,6 +98,20 @@ public struct GObjectClass
 	gpointer dummy[7];
 }
 
+/**
+ * Main Gtk struct.
+ * All the fields in the GObject structure are private
+ * to the GObject implementation and should never be accessed directly.
+ */
+public struct GObject
+{
+  GTypeInstance  gTypeInstance;
+  
+  /*< private >*/
+  uint refCount;
+  GData* qdata;
+}
+
 struct GValue
 {
 	version(Windows)
@@ -226,6 +240,7 @@ outFile: TypeModule
 file: gobject-The-Base-Object-Type.html
 struct: GObject
 class: ObjectG
+nostruct: GObject
 nostruct: GObjectClass
 prefix: g_object_
 #import: gobject.ObjectClass
@@ -242,13 +257,16 @@ import: gobject.Closure
 structWrap: GClosure* Closure
 import: std.gc
 import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
 
 array: g_object_class_list_properties Return n_properties
 array: g_object_interface_list_properties Return n_properties_p
 array: g_object_newv parameters n_parameters
-nocode: g_object_set_data_full
 
 code: start
+	protected bool isGcRoot;
+
 	/**
 	* Sets our main struct and passes store it on the gobject.
 	* Add a gabage collector root to the gtk+ struct so it doesn't get collect
@@ -268,34 +286,66 @@ code: start
 				return;
 			}
 
-			objectGSetDataFull("GObject",cast(void*)this);
+			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
+			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
+
+			//If the refCount is largeer then 1 toggleNotify isn't called
+			if (gObject.refCount > 1 && !isGcRoot)
+			{
+				version(druntime) GC.addRoot(cast(void*)this);
+				else std.gc.addRoot(cast(void*)this);
+
+				isGcRoot = true;
+			}
+
+			//Remove the floating reference if there is one.
+			if (isFloating(gObject))
+			{
+				refSink(gObject);
+				unref(gObject);
+			}
 		}
-	}
-	
-	/**
-	 * Sets a pointer on this object's has table
-	 * Params:
-	 *  key = the data identifier
-	 *  data = a pointer
-	 */
-	public void objectGSetDataFull(string key, gpointer data)
-	{
-		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		version(druntime) GC.addRoot(data);
-		else std.gc.addRoot(data);
-		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
 	
 	extern(C)
 	{
-		static void destroyNotify(gpointer* data)
+		static void destroyNotify(ObjectG obj)
 		{
-			//writefln("objectg.destroy entry");
-			//writefln("objectg.destroy");
-			//writefln("removing gc.root to %s",data);
-			version(druntime) GC.removeRoot(data);
-			else std.gc.removeRoot(data);
-			//writefln("objectg.destroy exit");
+			if ( obj.isGcRoot )
+			{
+				version(druntime) GC.removeRoot(cast(void*)obj);
+				else std.gc.removeRoot(cast(void*)obj);
+
+				obj.isGcRoot = false;
+			}
+
+			obj.gObject = null;
+		}
+
+		static void toggleNotify(ObjectG obj, GObject* object, int isLastRef)
+		{
+			if ( isLastRef && obj.isGcRoot )
+			{
+				version(druntime) GC.removeRoot(cast(void*)obj);
+				else std.gc.removeRoot(cast(void*)obj);
+
+				obj.isGcRoot = false;
+			}
+			else if ( !obj.isGcRoot )
+			{
+				version(druntime) GC.addRoot(cast(void*)obj);
+				else std.gc.addRoot(cast(void*)obj);
+
+				obj.isGcRoot = true;
+			}
+		}
+	}
+
+	~this()
+	{
+		if ( importLibs[LIBRARY.GOBJECT] in Linker.loadedLibraries && gObject !is null )
+		{
+			unref();
 		}
 	}
 
