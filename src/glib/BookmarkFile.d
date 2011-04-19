@@ -241,7 +241,7 @@ public class BookmarkFile
 	 * Returns: TRUE if a desktop bookmark could be loaded.
 	 * Throws: GException on failure.
 	 */
-	public int loadFromData(string data, uint length)
+	public int loadFromData(string data, gsize length)
 	{
 		// gboolean g_bookmark_file_load_from_data (GBookmarkFile *bookmark,  const gchar *data,  gsize length,  GError **error);
 		GError* err = null;
@@ -295,7 +295,7 @@ public class BookmarkFile
 	 * Returns: a newly allocated string holding the contents of the GBookmarkFile
 	 * Throws: GException on failure.
 	 */
-	public string toData(out uint length)
+	public string toData(out gsize length)
 	{
 		// gchar * g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
 		GError* err = null;
@@ -421,7 +421,7 @@ public class BookmarkFile
 	 * length = return location for the number of returned URIs, or NULL
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public string[] getUris(out uint length)
+	public string[] getUris(out gsize length)
 	{
 		// gchar ** g_bookmark_file_get_uris (GBookmarkFile *bookmark,  gsize *length);
 		return Str.toStringArray(g_bookmark_file_get_uris(gBookmarkFile, &length));
@@ -651,7 +651,7 @@ public class BookmarkFile
 	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public string[] getGroups(string uri, out uint length)
+	public string[] getGroups(string uri, out gsize length)
 	{
 		// gchar ** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
@@ -678,7 +678,7 @@ public class BookmarkFile
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public string[] getApplications(string uri, out uint length)
+	public string[] getApplications(string uri, out gsize length)
 	{
 		// gchar ** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;

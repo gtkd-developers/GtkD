@@ -309,7 +309,7 @@ public class VariantIter
 	 * value = a container GVariant
 	 * Returns: the number of items in value
 	 */
-	public uint init(Variant value)
+	public gsize init(Variant value)
 	{
 		// gsize g_variant_iter_init (GVariantIter *iter,  GVariant *value);
 		return g_variant_iter_init(gVariantIter, (value is null) ? null : value.getVariantStruct());
@@ -323,7 +323,7 @@ public class VariantIter
 	 * Since 2.24
 	 * Returns: the number of children in the container
 	 */
-	public uint nChildren()
+	public gsize nChildren()
 	{
 		// gsize g_variant_iter_n_children (GVariantIter *iter);
 		return g_variant_iter_n_children(gVariantIter);

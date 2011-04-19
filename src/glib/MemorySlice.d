@@ -136,7 +136,7 @@ public class MemorySlice
 	 * blockSize = the number of bytes to allocate
 	 * Returns:a pointer to the allocated memory block
 	 */
-	public static void* alloc(uint blockSize)
+	public static void* alloc(gsize blockSize)
 	{
 		// gpointer g_slice_alloc (gsize block_size);
 		return g_slice_alloc(blockSize);
@@ -153,7 +153,7 @@ public class MemorySlice
 	 * blockSize = the number of bytes to allocate
 	 * Returns:a pointer to the allocated block
 	 */
-	public static void* alloc0(uint blockSize)
+	public static void* alloc0(gsize blockSize)
 	{
 		// gpointer g_slice_alloc0 (gsize block_size);
 		return g_slice_alloc0(blockSize);
@@ -168,7 +168,7 @@ public class MemorySlice
 	 * memBlock = the memory to copy
 	 * Returns:a pointer to the allocated memory block
 	 */
-	public static void* copy(uint blockSize, void* memBlock)
+	public static void* copy(gsize blockSize, void* memBlock)
 	{
 		// gpointer g_slice_copy (gsize block_size,  gconstpointer mem_block);
 		return g_slice_copy(blockSize, memBlock);
@@ -186,7 +186,7 @@ public class MemorySlice
 	 * blockSize = the size of the block
 	 * memBlock = a pointer to the block to free
 	 */
-	public static void free1(uint blockSize, void* memBlock)
+	public static void free1(gsize blockSize, void* memBlock)
 	{
 		// void g_slice_free1 (gsize block_size,  gpointer mem_block);
 		g_slice_free1(blockSize, memBlock);
@@ -207,7 +207,7 @@ public class MemorySlice
 	 * memChain = a pointer to the first block of the chain
 	 * nextOffset = the offset of the next field in the blocks
 	 */
-	public static void freeChainWithOffset(uint blockSize, void* memChain, uint nextOffset)
+	public static void freeChainWithOffset(gsize blockSize, void* memChain, gsize nextOffset)
 	{
 		// void g_slice_free_chain_with_offset (gsize block_size,  gpointer mem_chain,  gsize next_offset);
 		g_slice_free_chain_with_offset(blockSize, memChain, nextOffset);

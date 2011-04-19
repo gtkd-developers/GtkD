@@ -427,7 +427,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int receive(string buffer, uint size, Cancellable cancellable)
+	public gssize receive(string buffer, gsize size, Cancellable cancellable)
 	{
 		// gssize g_socket_receive (GSocket *socket,  gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -453,11 +453,12 @@ public class Socket : ObjectG, InitableIF
 	 * address = a pointer to a GSocketAddress pointer, or NULL
 	 * buffer = a buffer to read data into (which should be at least size
 	 *  bytes long).
+	 * size = the number of bytes you want to read from the socket
 	 * cancellable = a GCancellable or NULL
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int receiveFrom(ref SocketAddress address, char[] buffer, Cancellable cancellable)
+	public gssize receiveFrom(ref SocketAddress address, char[] buffer, Cancellable cancellable)
 	{
 		// gssize g_socket_receive_from (GSocket *socket,  GSocketAddress **address,  gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
@@ -531,7 +532,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int receiveMessage(ref SocketAddress address, GInputVector[] vectors, ref SocketControlMessage[] messages, ref int flags, Cancellable cancellable)
+	public gssize receiveMessage(ref SocketAddress address, GInputVector[] vectors, ref SocketControlMessage[] messages, ref int flags, Cancellable cancellable)
 	{
 		// gssize g_socket_receive_message (GSocket *socket,  GSocketAddress **address,  GInputVector *vectors,  gint num_vectors,  GSocketControlMessage ***messages,  gint *num_messages,  gint *flags,  GCancellable *cancellable,  GError **error);
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
@@ -584,7 +585,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes written (which may be less than size), or -1on error
 	 * Throws: GException on failure.
 	 */
-	public int send(string buffer, uint size, Cancellable cancellable)
+	public gssize send(string buffer, gsize size, Cancellable cancellable)
 	{
 		// gssize g_socket_send (GSocket *socket,  const gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -613,7 +614,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes written (which may be less than size), or -1on error
 	 * Throws: GException on failure.
 	 */
-	public int sendTo(SocketAddress address, string buffer, uint size, Cancellable cancellable)
+	public gssize sendTo(SocketAddress address, string buffer, gsize size, Cancellable cancellable)
 	{
 		// gssize g_socket_send_to (GSocket *socket,  GSocketAddress *address,  const gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -671,7 +672,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes written (which may be less than size), or -1on error
 	 * Throws: GException on failure.
 	 */
-	public int sendMessage(SocketAddress address, GOutputVector[] vectors, ref GSocketControlMessage[] messages, int flags, Cancellable cancellable)
+	public gssize sendMessage(SocketAddress address, GOutputVector[] vectors, ref GSocketControlMessage[] messages, int flags, Cancellable cancellable)
 	{
 		// gssize g_socket_send_message (GSocket *socket,  GSocketAddress *address,  GOutputVector *vectors,  gint num_vectors,  GSocketControlMessage **messages,  gint num_messages,  gint flags,  GCancellable *cancellable,  GError **error);
 		GSocketControlMessage* outmessages = messages.ptr;

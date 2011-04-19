@@ -138,7 +138,7 @@ public class FileUtils
 	 * Returns: TRUE on success, FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public static int fileGetContents(string filename, out string contents, out uint length)
+	public static int fileGetContents(string filename, out string contents, out gsize length)
 	{
 		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
 		char* outcontents = null;
@@ -168,7 +168,7 @@ public class FileUtils
 	 * Returns: TRUE on success, FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public static int fileSetContents(string filename, string contents, int length)
+	public static int fileSetContents(string filename, string contents, gssize length)
 	{
 		// gboolean g_file_set_contents (const gchar *filename,  const gchar *contents,  gssize length,  GError **error);
 		GError* err = null;

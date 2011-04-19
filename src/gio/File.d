@@ -2606,7 +2606,7 @@ public class File : ObjectG
 	 * Returns: TRUE if the file's contents were successfully loaded.FALSE if there were errors.
 	 * Throws: GException on failure.
 	 */
-	public int loadContents(Cancellable cancellable, out string contents, out uint length, out string etagOut)
+	public int loadContents(Cancellable cancellable, out string contents, out gsize length, out string etagOut)
 	{
 		// gboolean g_file_load_contents (GFile *file,  GCancellable *cancellable,  char **contents,  gsize *length,  char **etag_out,  GError **error);
 		char* outcontents = null;
@@ -2663,7 +2663,7 @@ public class File : ObjectG
 	 * Returns: TRUE if the load was successful. If FALSE and error is present, it will be set appropriately.
 	 * Throws: GException on failure.
 	 */
-	public int loadContentsFinish(AsyncResultIF res, out string contents, out uint length, out string etagOut)
+	public int loadContentsFinish(AsyncResultIF res, out string contents, out gsize length, out string etagOut)
 	{
 		// gboolean g_file_load_contents_finish (GFile *file,  GAsyncResult *res,  char **contents,  gsize *length,  char **etag_out,  GError **error);
 		char* outcontents = null;
@@ -2720,7 +2720,7 @@ public class File : ObjectG
 	 * Returns: TRUE if the load was successful. If FALSE and error is present, it will be set appropriately.
 	 * Throws: GException on failure.
 	 */
-	public int loadPartialContentsFinish(AsyncResultIF res, out string contents, out uint length, out string etagOut)
+	public int loadPartialContentsFinish(AsyncResultIF res, out string contents, out gsize length, out string etagOut)
 	{
 		// gboolean g_file_load_partial_contents_finish (GFile *file,  GAsyncResult *res,  char **contents,  gsize *length,  char **etag_out,  GError **error);
 		char* outcontents = null;
@@ -2763,7 +2763,7 @@ public class File : ObjectG
 	 * Returns: TRUE if successful. If an errorhas occurred, this function will return FALSE and set errorappropriately if present.
 	 * Throws: GException on failure.
 	 */
-	public int replaceContents(string contents, uint length, string etag, int makeBackup, GFileCreateFlags flags, out string newEtag, Cancellable cancellable)
+	public int replaceContents(string contents, gsize length, string etag, int makeBackup, GFileCreateFlags flags, out string newEtag, Cancellable cancellable)
 	{
 		// gboolean g_file_replace_contents (GFile *file,  const char *contents,  gsize length,  const char *etag,  gboolean make_backup,  GFileCreateFlags flags,  char **new_etag,  GCancellable *cancellable,  GError **error);
 		char* outnewEtag = null;
@@ -2802,7 +2802,7 @@ public class File : ObjectG
 	 * callback = a GAsyncReadyCallback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
-	public void replaceContentsAsync(string contents, uint length, string etag, int makeBackup, GFileCreateFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void replaceContentsAsync(string contents, gsize length, string etag, int makeBackup, GFileCreateFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_file_replace_contents_async (GFile *file,  const char *contents,  gsize length,  const char *etag,  gboolean make_backup,  GFileCreateFlags flags,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_file_replace_contents_async(gFile, Str.toStringz(contents), length, Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);

@@ -375,7 +375,7 @@ public class VariantType
 	 * Since 2.24
 	 * Returns: the length of the corresponding type string
 	 */
-	public uint getStringLength()
+	public gsize getStringLength()
 	{
 		// gsize g_variant_type_get_string_length (const GVariantType *type);
 		return g_variant_type_get_string_length(gVariantType);
@@ -681,7 +681,7 @@ public class VariantType
 	 * Since 2.24
 	 * Returns: the number of items in type
 	 */
-	public uint nItems()
+	public gsize nItems()
 	{
 		// gsize g_variant_type_n_items (const GVariantType *type);
 		return g_variant_type_n_items(gVariantType);

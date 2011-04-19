@@ -148,7 +148,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 *  finalized, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* data, uint size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction)
+	public this (void* data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction)
 	{
 		// GOutputStream * g_memory_output_stream_new (gpointer data,  gsize size,  GReallocFunc realloc_function,  GDestroyNotify destroy_function);
 		auto p = g_memory_output_stream_new(data, size, reallocFunction, destroyFunction);
@@ -183,7 +183,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * g_memory_output_stream_get_data_size().
 	 * Returns: the number of bytes allocated for the data buffer
 	 */
-	public uint getSize()
+	public gsize getSize()
 	{
 		// gsize g_memory_output_stream_get_size (GMemoryOutputStream *ostream);
 		return g_memory_output_stream_get_size(gMemoryOutputStream);
@@ -196,7 +196,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * Since 2.18
 	 * Returns: the number of bytes written to the stream
 	 */
-	public uint getDataSize()
+	public gsize getDataSize()
 	{
 		// gsize g_memory_output_stream_get_data_size  (GMemoryOutputStream *ostream);
 		return g_memory_output_stream_get_data_size(gMemoryOutputStream);

@@ -127,7 +127,7 @@ public template ConverterT(TStruct)
 	 * Returns: a GConverterResult, G_CONVERTER_ERROR on error.
 	 * Throws: GException on failure.
 	 */
-	public GConverterResult convert(void[] inbuf, void[] outbuf, GConverterFlags flags, out uint bytesRead, out uint bytesWritten)
+	public GConverterResult convert(void[] inbuf, void[] outbuf, GConverterFlags flags, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// GConverterResult g_converter_convert (GConverter *converter,  const void *inbuf,  gsize inbuf_size,  void *outbuf,  gsize outbuf_size,  GConverterFlags flags,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;

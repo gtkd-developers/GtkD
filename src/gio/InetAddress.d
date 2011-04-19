@@ -195,7 +195,7 @@ public class InetAddress : ObjectG
 	 * Since 2.22
 	 * Returns: the number of bytes used for the native version of address.
 	 */
-	public uint getNativeSize()
+	public gsize getNativeSize()
 	{
 		// gsize g_inet_address_get_native_size (GInetAddress *address);
 		return g_inet_address_get_native_size(gInetAddress);

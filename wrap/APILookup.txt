@@ -71,8 +71,6 @@ alias: guint32 uint
 alias: guint64 ulong
 alias: gfloat float
 alias: gdouble double
-alias: gsize uint
-alias: gssize int
 alias: goffset long
 alias: va_list void*
 alias: unichar dchar
@@ -83,7 +81,6 @@ alias: XID uint
 #alias: gunichar dchar
 #alias: gunichar2 wchar
 
-alias: size_t int
 alias: time_t uint
 alias: tm* void*
 

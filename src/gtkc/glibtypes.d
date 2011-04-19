@@ -42,8 +42,8 @@ public alias uint guint32;
 public alias ulong guint64;
 public alias float gfloat;
 public alias double gdouble;
-public alias uint gsize;
-public alias int gssize;
+public alias size_t gsize;
+public alias ptrdiff_t gssize;
 public alias long goffset;
 public alias void* va_list;
 public alias dchar unichar;
@@ -2387,13 +2387,13 @@ public struct GModule{}
  */
 public struct GMemVTable
 {
-	extern(C) void*  function(uint nBytes) malloc;
-	extern(C) void*  function(void* mem,uint nBytes) realloc;
+	extern(C) void*  function(gsize nBytes) malloc;
+	extern(C) void*  function(void* mem,gsize nBytes) realloc;
 	extern(C) void  function(void* mem) free;
 	/+* optional; set to NULL if not used ! +/
-	extern(C) void*  function(uint nBlocks,uint nBlockBytes) calloc;
-	extern(C) void*  function(uint nBytes) tryMalloc;
-	extern(C) void*  function(void* mem,uint nBytes) tryRealloc;
+	extern(C) void*  function(gsize nBlocks,gsize nBlockBytes) calloc;
+	extern(C) void*  function(gsize nBytes) tryMalloc;
+	extern(C) void*  function(void* mem,gsize nBytes) tryRealloc;
 }
 
 
@@ -2413,8 +2413,8 @@ public struct GIOChannel{}
  */
 public struct GIOFuncs
 {
-	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesRead,GError **err) ioRead;
-	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesWritten,GError **err) ioWrite;
+	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, gsize count,gsize *bytesRead,GError **err) ioRead;
+	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, gsize count,gsize *bytesWritten,GError **err) ioWrite;
 	extern(C) GIOStatus  function(GIOChannel *channel, long offset, GSeekType type,GError **err) ioSeek;
 	extern(C) GIOStatus  function(GIOChannel *channel,GError **err) ioClose;
 	extern(C) GSource*  function(GIOChannel *channel,GIOCondition condition) ioCreateWatch;
@@ -2828,13 +2828,13 @@ public struct GMarkupParser
 	extern(C) void  function(GMarkupParseContext *context,char *elementName,void* userData,GError **error) endElement;
 	/+* Called for character data +/
 	/+* text is not nul-terminated +/
-	extern(C) void  function(GMarkupParseContext *context,char *text,uint textLen, void* userData,GError **error) text;
+	extern(C) void  function(GMarkupParseContext *context,char *text,gsize textLen, void* userData,GError **error) text;
 	/+* Called for strings that should be re-saved verbatim inn this same
 	 * position, but are not otherwise interpretable. At the moment
 	 * this includes comments and processing instructions.
 	+/
 	/+* text is not nul-terminated. +/
-	extern(C) void  function(GMarkupParseContext *context,char *passthroughText,uint textLen, void* userData,GError **error) passthrough;
+	extern(C) void  function(GMarkupParseContext *context,char *passthroughText,gsize textLen, void* userData,GError **error) passthrough;
 	/+* Called on error, including one set by other
 	 * methods inn the vtable. The GError should not be freed.
 	+/
@@ -2970,8 +2970,8 @@ public struct GHashTableIter{}
 public struct GString
 {
 	char *str;
-	uint len;
-	uint allocatedLen;
+	gsize len;
+	gsize allocatedLen;
 }
 
 
@@ -4559,7 +4559,7 @@ public typedef extern(C) char *  function (void*) GCompletionFunc;
  *  bytes of s2.
  */
 // gint (*GCompletionStrncmpFunc) (const gchar *s1,  const gchar *s2,  gsize n);
-public typedef extern(C) int  function (char*, char*, uint) GCompletionStrncmpFunc;
+public typedef extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFunc;
 
 /*
  * Specifies the type of the setup function passed to g_spawn_async(),

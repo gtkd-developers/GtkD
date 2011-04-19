@@ -1260,7 +1260,7 @@ public struct GConverterIface
 {
 	GTypeInterface gIface;
 	/+* Virtual Table +/
-	extern(C) GConverterResult  function(GConverter *converter,void *inbuf,uint inbufSize,void *outbuf,uint outbufSize,GConverterFlags flags,uint *bytesRead,uint *bytesWritten,GError **error)  convert;
+	extern(C) GConverterResult  function(GConverter *converter,void *inbuf,gsize inbufSize,void *outbuf,gsize outbufSize,GConverterFlags flags,gsize *bytesRead,gsize *bytesWritten,GError **error)  convert;
 	extern(C) void  function(GConverter *converter)  reset;
 }
 
@@ -1984,7 +1984,7 @@ public struct GSocket{}
 public struct GInputVector
 {
 	void* buffer;
-	uint size;
+	gsize size;
 }
 
 
@@ -2002,7 +2002,7 @@ public struct GInputVector
 public struct GOutputVector
 {
 	void* buffer;
-	uint size;
+	gsize size;
 }
 
 
@@ -2286,7 +2286,7 @@ public typedef extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancell
  *  a pointer to the reallocated memory
  */
 // gpointer (*GReallocFunc) (gpointer data,  gsize size);
-public typedef extern(C) void*  function (void*, uint) GReallocFunc;
+public typedef extern(C) void*  function (void*, gsize) GReallocFunc;
 
 /*
  * This is the function type of the callback used for the GSource

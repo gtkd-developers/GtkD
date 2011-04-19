@@ -484,7 +484,7 @@ public class Builder : ObjectG
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public uint addFromString(string buffer, uint length)
+	public uint addFromString(string buffer, gsize length)
 	{
 		// guint gtk_builder_add_from_string (GtkBuilder *builder,  const gchar *buffer,  gsize length,  GError **error);
 		GError* err = null;
@@ -550,7 +550,7 @@ public class Builder : ObjectG
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public uint addObjectsFromString(string buffer, uint length, string[] objectIds)
+	public uint addObjectsFromString(string buffer, gsize length, string[] objectIds)
 	{
 		// guint gtk_builder_add_objects_from_string (GtkBuilder *builder,  const gchar *buffer,  gsize length,  gchar **object_ids,  GError **error);
 		GError* err = null;

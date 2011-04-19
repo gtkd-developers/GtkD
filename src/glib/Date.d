@@ -676,7 +676,7 @@ public class Date
 	 * date = valid GDate
 	 * Returns:number of characters written to the buffer, or 0 the buffer was too small
 	 */
-	public static uint strftime(string s, uint slen, string format, Date date)
+	public static gsize strftime(string s, gsize slen, string format, Date date)
 	{
 		// gsize g_date_strftime (gchar *s,  gsize slen,  const gchar *format,  const GDate *date);
 		return g_date_strftime(Str.toStringz(s), slen, Str.toStringz(format), (date is null) ? null : date.getDateStruct());

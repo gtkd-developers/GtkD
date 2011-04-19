@@ -121,7 +121,7 @@ public class Checksum
 	 * checksumType = a GChecksumType
 	 * Returns: the checksum length, or -1 if checksum_type isnot supported.
 	 */
-	public static int typeGetLength(GChecksumType checksumType)
+	public static gssize typeGetLength(GChecksumType checksumType)
 	{
 		// gssize g_checksum_type_get_length (GChecksumType checksum_type);
 		return g_checksum_type_get_length(checksumType);
@@ -203,7 +203,7 @@ public class Checksum
 	 * data = buffer used to compute the checksum
 	 * length = size of the buffer, or -1 if it is a null-terminated string.
 	 */
-	public void update(char* data, int length)
+	public void update(char* data, gssize length)
 	{
 		// void g_checksum_update (GChecksum *checksum,  const guchar *data,  gssize length);
 		g_checksum_update(gChecksum, data, length);
@@ -234,7 +234,7 @@ public class Checksum
 	 * digestLen = an inout parameter. The caller initializes it to the size of buffer.
 	 *  After the call it contains the length of the digest.
 	 */
-	public void getDigest(ubyte* buffer, uint* digestLen)
+	public void getDigest(ubyte* buffer, gsize* digestLen)
 	{
 		// void g_checksum_get_digest (GChecksum *checksum,  guint8 *buffer,  gsize *digest_len);
 		g_checksum_get_digest(gChecksum, buffer, digestLen);
@@ -252,7 +252,7 @@ public class Checksum
 	 * length = length of data
 	 * Returns: the digest of the binary data as a string in hexadecimal. The returned string should be freed with g_free() when done using it.
 	 */
-	public static string gComputeChecksumForData(GChecksumType checksumType, char* data, uint length)
+	public static string gComputeChecksumForData(GChecksumType checksumType, char* data, gsize length)
 	{
 		// gchar * g_compute_checksum_for_data (GChecksumType checksum_type,  const guchar *data,  gsize length);
 		return Str.toString(g_compute_checksum_for_data(checksumType, data, length));
@@ -268,7 +268,7 @@ public class Checksum
 	 * length = the length of the string, or -1 if the string is null-terminated.
 	 * Returns: the checksum as a hexadecimal string. The returned string should be freed with g_free() when done using it.
 	 */
-	public static string gComputeChecksumForString(GChecksumType checksumType, string str, int length)
+	public static string gComputeChecksumForString(GChecksumType checksumType, string str, gssize length)
 	{
 		// gchar * g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
 		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), length));

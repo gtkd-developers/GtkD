@@ -2003,7 +2003,7 @@ public class TextBuffer : ObjectG
 	public ubyte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
 	{
 		// guint8 * gtk_text_buffer_serialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length);
-		uint length;
+		gsize length;
 		auto p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
 		return p[0 .. length];
 	}

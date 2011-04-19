@@ -102,7 +102,7 @@ public class Base64
 	 * save = Saved state between steps, initialize to 0
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static uint encodeStep(char* inn, uint len, int breakLines, string f_out, ref int state, ref int save)
+	public static gsize encodeStep(char* inn, gsize len, int breakLines, string f_out, ref int state, ref int save)
 	{
 		// gsize g_base64_encode_step (const guchar *in,  gsize len,  gboolean break_lines,  gchar *out,  gint *state,  gint *save);
 		return g_base64_encode_step(inn, len, breakLines, Str.toStringz(f_out), &state, &save);
@@ -121,7 +121,7 @@ public class Base64
 	 * save = Saved state from g_base64_encode_step()
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static uint encodeClose(int breakLines, string f_out, ref int state, ref int save)
+	public static gsize encodeClose(int breakLines, string f_out, ref int state, ref int save)
 	{
 		// gsize g_base64_encode_close (gboolean break_lines,  gchar *out,  gint *state,  gint *save);
 		return g_base64_encode_close(breakLines, Str.toStringz(f_out), &state, &save);
@@ -136,7 +136,7 @@ public class Base64
 	 * len = the length of data
 	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must  be freed with g_free().
 	 */
-	public static string encode(char* data, uint len)
+	public static string encode(char* data, gsize len)
 	{
 		// gchar* g_base64_encode (const guchar *data,  gsize len);
 		return Str.toString(g_base64_encode(data, len));
@@ -159,7 +159,7 @@ public class Base64
 	 * save = Saved state between steps, initialize to 0
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static uint decodeStep(string inn, uint len, char* f_out, ref int state, ref uint save)
+	public static gsize decodeStep(string inn, gsize len, char* f_out, ref int state, ref uint save)
 	{
 		// gsize g_base64_decode_step (const gchar *in,  gsize len,  guchar *out,  gint *state,  guint *save);
 		return g_base64_decode_step(Str.toStringz(inn), len, f_out, &state, &save);
@@ -175,7 +175,7 @@ public class Base64
 	public static char[] decode(string text)
 	{
 		// guchar * g_base64_decode (const gchar *text,  gsize *out_len);
-		uint outLen;
+		gsize outLen;
 		auto p = g_base64_decode(Str.toStringz(text), &outLen);
 		return p[0 .. outLen];
 	}
@@ -191,7 +191,7 @@ public class Base64
 	public static char[] decodeInplace(string text)
 	{
 		// guchar * g_base64_decode_inplace (gchar *text,  gsize *out_len);
-		uint outLen;
+		gsize outLen;
 		auto p = g_base64_decode_inplace(Str.toStringz(text), &outLen);
 		return p[0 .. outLen];
 	}

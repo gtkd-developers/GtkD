@@ -576,7 +576,7 @@ public class Clipboard : ObjectG
 	public ubyte[] waitForRichText(TextBuffer buffer, out GdkAtom format)
 	{
 		// guint8 * gtk_clipboard_wait_for_rich_text (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
-		uint length;
+		gsize length;
 		auto p = gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), &format, &length);
 		return p[0 .. length];
 	}

@@ -277,7 +277,7 @@ public class KeyFile
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int loadFromData(string data, uint length, GKeyFileFlags flags)
+	public int loadFromData(string data, gsize length, GKeyFileFlags flags)
 	{
 		// gboolean g_key_file_load_from_data (GKeyFile *key_file,  const gchar *data,  gsize length,  GKeyFileFlags flags,  GError **error);
 		GError* err = null;
@@ -335,7 +335,7 @@ public class KeyFile
 	 * Returns: a newly allocated string holding the contents of the GKeyFile
 	 * Throws: GException on failure.
 	 */
-	public string toData(out uint length)
+	public string toData(out gsize length)
 	{
 		// gchar * g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
 		GError* err = null;
@@ -370,7 +370,7 @@ public class KeyFile
 	 * length = return location for the number of returned groups, or NULL
 	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 */
-	public string[] getGroups(out uint length)
+	public string[] getGroups(out gsize length)
 	{
 		// gchar ** g_key_file_get_groups (GKeyFile *key_file,  gsize *length);
 		return Str.toStringArray(g_key_file_get_groups(gKeyFile, &length));
@@ -389,7 +389,7 @@ public class KeyFile
 	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public string[] getKeys(string groupName, out uint length)
+	public string[] getKeys(string groupName, out gsize length)
 	{
 		// gchar ** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
 		GError* err = null;
@@ -633,7 +633,7 @@ public class KeyFile
 	 * Returns: a NULL-terminated string array or NULL if the specified  key cannot be found. The array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
-	public string[] getStringList(string groupName, string key, out uint length)
+	public string[] getStringList(string groupName, string key, out gsize length)
 	{
 		// gchar ** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		GError* err = null;
@@ -667,7 +667,7 @@ public class KeyFile
 	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
-	public string[] getLocaleStringList(string groupName, string key, string locale, out uint length)
+	public string[] getLocaleStringList(string groupName, string key, string locale, out gsize length)
 	{
 		// gchar ** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
 		GError* err = null;
@@ -699,7 +699,7 @@ public class KeyFile
 	public int[] getBooleanList(string groupName, string key)
 	{
 		// gboolean * g_key_file_get_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
-		uint length;
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -729,7 +729,7 @@ public class KeyFile
 	public int[] getIntegerList(string groupName, string key)
 	{
 		// gint * g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
-		uint length;
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -759,7 +759,7 @@ public class KeyFile
 	public double[] getDoubleList(string groupName, string key)
 	{
 		// gdouble * g_key_file_get_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
-		uint length;
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -907,7 +907,7 @@ public class KeyFile
 	 * list = an array of string values
 	 * length = number of string values in list
 	 */
-	public void setStringList(string groupName, string key, char*[] list, uint length)
+	public void setStringList(string groupName, string key, char*[] list, gsize length)
 	{
 		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar * const list[],  gsize length);
 		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -925,7 +925,7 @@ public class KeyFile
 	 * list = a NULL-terminated array of locale string values
 	 * length = the length of list
 	 */
-	public void setLocaleStringList(string groupName, string key, string locale, char*[] list, uint length)
+	public void setLocaleStringList(string groupName, string key, string locale, char*[] list, gsize length)
 	{
 		// void g_key_file_set_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar * const list[],  gsize length);
 		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), list, length);
@@ -942,7 +942,7 @@ public class KeyFile
 	 * list = an array of boolean values
 	 * length = length of list
 	 */
-	public void setBooleanList(string groupName, string key, int[] list, uint length)
+	public void setBooleanList(string groupName, string key, int[] list, gsize length)
 	{
 		// void g_key_file_set_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gboolean list[],  gsize length);
 		g_key_file_set_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -958,7 +958,7 @@ public class KeyFile
 	 * list = an array of integer values
 	 * length = number of integer values in list
 	 */
-	public void setIntegerList(string groupName, string key, int[] list, uint length)
+	public void setIntegerList(string groupName, string key, int[] list, gsize length)
 	{
 		// void g_key_file_set_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint list[],  gsize length);
 		g_key_file_set_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
@@ -974,7 +974,7 @@ public class KeyFile
 	 * list = an array of double values
 	 * length = number of double values in list
 	 */
-	public void setDoubleList(string groupName, string key, double[] list, uint length)
+	public void setDoubleList(string groupName, string key, double[] list, gsize length)
 	{
 		// void g_key_file_set_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gdouble list[],  gsize length);
 		g_key_file_set_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);

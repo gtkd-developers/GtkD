@@ -145,7 +145,7 @@ public class BufferedOutputStream : FilterOutputStream
 	 * size = a gsize.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (OutputStream baseStream, uint size)
+	public this (OutputStream baseStream, gsize size)
 	{
 		// GOutputStream* g_buffered_output_stream_new_sized (GOutputStream *base_stream,  gsize size);
 		auto p = g_buffered_output_stream_new_sized((baseStream is null) ? null : baseStream.getOutputStreamStruct(), size);
@@ -160,7 +160,7 @@ public class BufferedOutputStream : FilterOutputStream
 	 * Gets the size of the buffer in the stream.
 	 * Returns: the current size of the buffer.
 	 */
-	public uint getBufferSize()
+	public gsize getBufferSize()
 	{
 		// gsize g_buffered_output_stream_get_buffer_size  (GBufferedOutputStream *stream);
 		return g_buffered_output_stream_get_buffer_size(gBufferedOutputStream);
@@ -171,7 +171,7 @@ public class BufferedOutputStream : FilterOutputStream
 	 * Params:
 	 * size = a gsize.
 	 */
-	public void setBufferSize(uint size)
+	public void setBufferSize(gsize size)
 	{
 		// void g_buffered_output_stream_set_buffer_size  (GBufferedOutputStream *stream,  gsize size);
 		g_buffered_output_stream_set_buffer_size(gBufferedOutputStream, size);

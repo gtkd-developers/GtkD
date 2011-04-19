@@ -149,7 +149,7 @@ public class OutputStream : ObjectG
 	 * Returns: Number of bytes written, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int write(void* buffer, uint count, Cancellable cancellable)
+	public gssize write(void* buffer, gsize count, Cancellable cancellable)
 	{
 		// gssize g_output_stream_write (GOutputStream *stream,  const void *buffer,  gsize count,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -183,7 +183,7 @@ public class OutputStream : ObjectG
 	 * Returns: TRUE on success, FALSE if there was an error
 	 * Throws: GException on failure.
 	 */
-	public int writeAll(void* buffer, uint count, uint* bytesWritten, Cancellable cancellable)
+	public int writeAll(void* buffer, gsize count, gsize* bytesWritten, Cancellable cancellable)
 	{
 		// gboolean g_output_stream_write_all (GOutputStream *stream,  const void *buffer,  gsize count,  gsize *bytes_written,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -207,7 +207,7 @@ public class OutputStream : ObjectG
 	 * Returns: a gssize containing the size of the data spliced, or -1 if an error occurred.
 	 * Throws: GException on failure.
 	 */
-	public int splice(InputStream source, GOutputStreamSpliceFlags flags, Cancellable cancellable)
+	public gssize splice(InputStream source, GOutputStreamSpliceFlags flags, Cancellable cancellable)
 	{
 		// gssize g_output_stream_splice (GOutputStream *stream,  GInputStream *source,  GOutputStreamSpliceFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -322,7 +322,7 @@ public class OutputStream : ObjectG
 	 * callback = callback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
-	public void writeAsync(void* buffer, uint count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void writeAsync(void* buffer, gsize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_output_stream_write_async (GOutputStream *stream,  const void *buffer,  gsize count,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_output_stream_write_async(gOutputStream, buffer, count, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
@@ -335,7 +335,7 @@ public class OutputStream : ObjectG
 	 * Returns: a gssize containing the number of bytes written to the stream.
 	 * Throws: GException on failure.
 	 */
-	public int writeFinish(AsyncResultIF result)
+	public gssize writeFinish(AsyncResultIF result)
 	{
 		// gssize g_output_stream_write_finish (GOutputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;
@@ -378,7 +378,7 @@ public class OutputStream : ObjectG
 	 * Returns: a gssize of the number of bytes spliced.
 	 * Throws: GException on failure.
 	 */
-	public int spliceFinish(AsyncResultIF result)
+	public gssize spliceFinish(AsyncResultIF result)
 	{
 		// gssize g_output_stream_splice_finish (GOutputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;

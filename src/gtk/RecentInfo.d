@@ -314,7 +314,7 @@ public class RecentInfo
 	public string[] getApplications()
 	{
 		// gchar ** gtk_recent_info_get_applications (GtkRecentInfo *info,  gsize *length);
-		uint length;
+		gsize length;
 		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, &length));
 	}
 	
@@ -340,7 +340,7 @@ public class RecentInfo
 	public string[] getGroups()
 	{
 		// gchar ** gtk_recent_info_get_groups (GtkRecentInfo *info,  gsize *length);
-		uint length;
+		gsize length;
 		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, &length));
 	}
 	

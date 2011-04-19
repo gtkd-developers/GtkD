@@ -151,7 +151,7 @@ public class Internationalization
 	 * msgidoffset = the offset of the message id in msgctxid
 	 * Returns: The translated string
 	 */
-	public static string dpgettext(string domain, string msgctxtid, uint msgidoffset)
+	public static string dpgettext(string domain, string msgctxtid, gsize msgidoffset)
 	{
 		// const gchar * g_dpgettext (const gchar *domain,  const gchar *msgctxtid,  gsize msgidoffset);
 		return Str.toString(g_dpgettext(Str.toStringz(domain), Str.toStringz(msgctxtid), msgidoffset));

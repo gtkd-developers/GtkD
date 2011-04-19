@@ -338,7 +338,7 @@ public class Type
 	 * gClass = class structure for an instantiatable type
 	 * privateSize = size of private structure.
 	 */
-	public static void classAddPrivate(void* gClass, uint privateSize)
+	public static void classAddPrivate(void* gClass, gsize privateSize)
 	{
 		// void g_type_class_add_private (gpointer g_class,  gsize private_size);
 		g_type_class_add_private(gClass, privateSize);
@@ -358,7 +358,7 @@ public class Type
 	 * classType = GType of an classed type.
 	 * privateSize = size of private structure.
 	 */
-	public static void addClassPrivate(GType classType, uint privateSize)
+	public static void addClassPrivate(GType classType, gsize privateSize)
 	{
 		// void g_type_add_class_private (GType class_type,  gsize private_size);
 		g_type_add_class_private(classType, privateSize);

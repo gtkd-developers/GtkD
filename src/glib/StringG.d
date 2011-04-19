@@ -134,7 +134,7 @@ public class StringG
 	 * len = length of init to use
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string init, int len)
+	public this (string init, gssize len)
 	{
 		// GString* g_string_new_len (const gchar *init,  gssize len);
 		auto p = g_string_new_len(Str.toStringz(init), len);
@@ -155,7 +155,7 @@ public class StringG
 	 *  hold the string
 	 * Returns: the new GString
 	 */
-	public static StringG sizedNew(uint dflSize)
+	public static StringG sizedNew(gsize dflSize)
 	{
 		// GString* g_string_sized_new (gsize dfl_size);
 		auto p = g_string_sized_new(dflSize);
@@ -289,7 +289,7 @@ public class StringG
 	 * len = number of bytes of val to use
 	 * Returns: string
 	 */
-	public StringG appendLen(string val, int len)
+	public StringG appendLen(string val, gssize len)
 	{
 		// GString* g_string_append_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
@@ -390,7 +390,7 @@ public class StringG
 	 * len = number of bytes in val to prepend
 	 * Returns: string
 	 */
-	public StringG prependLen(string val, int len)
+	public StringG prependLen(string val, gssize len)
 	{
 		// GString* g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
@@ -410,7 +410,7 @@ public class StringG
 	 * val = the string to insert
 	 * Returns: string
 	 */
-	public StringG insert(int pos, string val)
+	public StringG insert(gssize pos, string val)
 	{
 		// GString* g_string_insert (GString *string,  gssize pos,  const gchar *val);
 		auto p = g_string_insert(gString, pos, Str.toStringz(val));
@@ -428,7 +428,7 @@ public class StringG
 	 * c = the byte to insert
 	 * Returns: string
 	 */
-	public StringG insertC(int pos, char c)
+	public StringG insertC(gssize pos, char c)
 	{
 		// GString* g_string_insert_c (GString *string,  gssize pos,  gchar c);
 		auto p = g_string_insert_c(gString, pos, c);
@@ -448,7 +448,7 @@ public class StringG
 	 * wc = a Unicode character
 	 * Returns: string
 	 */
-	public StringG insertUnichar(int pos, gunichar wc)
+	public StringG insertUnichar(gssize pos, gunichar wc)
 	{
 		// GString* g_string_insert_unichar (GString *string,  gssize pos,  gunichar wc);
 		auto p = g_string_insert_unichar(gString, pos, wc);
@@ -475,7 +475,7 @@ public class StringG
 	 * len = number of bytes of val to insert
 	 * Returns: string
 	 */
-	public StringG insertLen(int pos, string val, int len)
+	public StringG insertLen(gssize pos, string val, gssize len)
 	{
 		// GString* g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
 		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
@@ -495,7 +495,7 @@ public class StringG
 	 * val = the string that will overwrite the string starting at pos
 	 * Returns: string
 	 */
-	public StringG overwrite(uint pos, string val)
+	public StringG overwrite(gsize pos, string val)
 	{
 		// GString* g_string_overwrite (GString *string,  gsize pos,  const gchar *val);
 		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
@@ -517,7 +517,7 @@ public class StringG
 	 * len = the number of bytes to write from val
 	 * Returns: string
 	 */
-	public StringG overwriteLen(uint pos, string val, int len)
+	public StringG overwriteLen(gsize pos, string val, gssize len)
 	{
 		// GString* g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
 		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
@@ -537,7 +537,7 @@ public class StringG
 	 *  following bytes
 	 * Returns: string
 	 */
-	public StringG erase(int pos, int len)
+	public StringG erase(gssize pos, gssize len)
 	{
 		// GString* g_string_erase (GString *string,  gssize pos,  gssize len);
 		auto p = g_string_erase(gString, pos, len);
@@ -554,7 +554,7 @@ public class StringG
 	 * len = the new size of string
 	 * Returns: string
 	 */
-	public StringG truncate(uint len)
+	public StringG truncate(gsize len)
 	{
 		// GString* g_string_truncate (GString *string,  gsize len);
 		auto p = g_string_truncate(gString, len);
@@ -575,7 +575,7 @@ public class StringG
 	 * len = the new length
 	 * Returns: string
 	 */
-	public StringG setSize(uint len)
+	public StringG setSize(gsize len)
 	{
 		// GString* g_string_set_size (GString *string,  gsize len);
 		auto p = g_string_set_size(gString, len);

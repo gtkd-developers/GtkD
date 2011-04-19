@@ -189,7 +189,7 @@ public class CharacterSet
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 * Throws: GException on failure.
 	 */
-	public static string convert(string str, int len, string toCodeset, string fromCodeset, out uint bytesRead, out uint bytesWritten)
+	public static string convert(string str, gssize len, string toCodeset, string fromCodeset, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
@@ -235,7 +235,7 @@ public class CharacterSet
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 * Throws: GException on failure.
 	 */
-	public static string convertWithFallback(string str, int len, string toCodeset, string fromCodeset, string fallback, out uint bytesRead, out uint bytesWritten)
+	public static string convertWithFallback(string str, gssize len, string toCodeset, string fromCodeset, string fallback, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  const gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
@@ -273,7 +273,7 @@ public class CharacterSet
 	 * Returns: The converted string, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public static string localeToUtf8(string opsysstring, int len, out uint bytesRead, out uint bytesWritten)
+	public static string localeToUtf8(string opsysstring, gssize len, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
@@ -310,7 +310,7 @@ public class CharacterSet
 	 * Returns: The converted string, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public static string filenameToUtf8(string opsysstring, int len, out uint bytesRead, out uint bytesWritten)
+	public static string filenameToUtf8(string opsysstring, gssize len, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
@@ -347,7 +347,7 @@ public class CharacterSet
 	 * Returns: The converted string, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public static string filenameFromUtf8(string utf8string, int len, out uint bytesRead, out uint bytesWritten)
+	public static string filenameFromUtf8(string utf8string, gssize len, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
@@ -526,7 +526,7 @@ public class CharacterSet
 	 * Returns: The converted string, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public static string localeFromUtf8(string utf8string, int len, out uint bytesRead, out uint bytesWritten)
+	public static string localeFromUtf8(string utf8string, gssize len, out gsize bytesRead, out gsize bytesWritten)
 	{
 		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;

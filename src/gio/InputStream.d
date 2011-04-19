@@ -145,7 +145,7 @@ public class InputStream : ObjectG
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int read(void* buffer, uint count, Cancellable cancellable)
+	public gssize read(void* buffer, gsize count, Cancellable cancellable)
 	{
 		// gssize g_input_stream_read (GInputStream *stream,  void *buffer,  gsize count,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -179,7 +179,7 @@ public class InputStream : ObjectG
 	 * Returns: TRUE on success, FALSE if there was an error
 	 * Throws: GException on failure.
 	 */
-	public int readAll(void* buffer, uint count, out uint bytesRead, Cancellable cancellable)
+	public int readAll(void* buffer, gsize count, out gsize bytesRead, Cancellable cancellable)
 	{
 		// gboolean g_input_stream_read_all (GInputStream *stream,  void *buffer,  gsize count,  gsize *bytes_read,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -212,7 +212,7 @@ public class InputStream : ObjectG
 	 * Returns: Number of bytes skipped, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public int skip(uint count, Cancellable cancellable)
+	public gssize skip(gsize count, Cancellable cancellable)
 	{
 		// gssize g_input_stream_skip (GInputStream *stream,  gsize count,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -294,7 +294,7 @@ public class InputStream : ObjectG
 	 * callback = callback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
-	public void readAsync(void* buffer, uint count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void readAsync(void* buffer, gsize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_input_stream_read_async (GInputStream *stream,  void *buffer,  gsize count,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_input_stream_read_async(gInputStream, buffer, count, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
@@ -307,7 +307,7 @@ public class InputStream : ObjectG
 	 * Returns: number of bytes read in, or -1 on error.
 	 * Throws: GException on failure.
 	 */
-	public int readFinish(AsyncResultIF result)
+	public gssize readFinish(AsyncResultIF result)
 	{
 		// gssize g_input_stream_read_finish (GInputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;
@@ -349,7 +349,7 @@ public class InputStream : ObjectG
 	 * callback = callback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
-	public void skipAsync(uint count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void skipAsync(gsize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_input_stream_skip_async (GInputStream *stream,  gsize count,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_input_stream_skip_async(gInputStream, count, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
@@ -362,7 +362,7 @@ public class InputStream : ObjectG
 	 * Returns: the size of the bytes skipped, or -1 on error.
 	 * Throws: GException on failure.
 	 */
-	public int skipFinish(AsyncResultIF result)
+	public gssize skipFinish(AsyncResultIF result)
 	{
 		// gssize g_input_stream_skip_finish (GInputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;

@@ -206,7 +206,7 @@ public class MappedFile
 	 * Since 2.8
 	 * Returns: the length of the contents of file.
 	 */
-	public uint getLength()
+	public gsize getLength()
 	{
 		// gsize g_mapped_file_get_length (GMappedFile *file);
 		return g_mapped_file_get_length(gMappedFile);

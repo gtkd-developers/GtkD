@@ -125,7 +125,7 @@ public class StringGChunk
 	 *  memory will be allocated for it.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (uint size)
+	public this (gsize size)
 	{
 		// GStringChunk* g_string_chunk_new (gsize size);
 		auto p = g_string_chunk_new(size);
@@ -194,7 +194,7 @@ public class StringGChunk
 	 *  nul-terminated string
 	 * Returns: a pointer to the copy of string within the GStringChunk
 	 */
-	public string insertLen(string string, int len)
+	public string insertLen(string string, gssize len)
 	{
 		// gchar* g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
 		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len));

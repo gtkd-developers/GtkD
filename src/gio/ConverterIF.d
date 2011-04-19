@@ -123,7 +123,7 @@ public interface ConverterIF
 	 * Returns: a GConverterResult, G_CONVERTER_ERROR on error.
 	 * Throws: GException on failure.
 	 */
-	public GConverterResult convert(void[] inbuf, void[] outbuf, GConverterFlags flags, out uint bytesRead, out uint bytesWritten);
+	public GConverterResult convert(void[] inbuf, void[] outbuf, GConverterFlags flags, out gsize bytesRead, out gsize bytesWritten);
 	
 	/**
 	 * Resets all internal state in the converter, making it behave

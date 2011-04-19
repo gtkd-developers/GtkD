@@ -408,7 +408,7 @@ public class Regex
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int matchFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public int matchFull(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
 		GMatchInfo* outmatchInfo = null;
@@ -499,7 +499,7 @@ public class Regex
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int matchAllFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public int matchAllFull(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_all_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
 		GMatchInfo* outmatchInfo = null;
@@ -612,7 +612,7 @@ public class Regex
 	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 * Throws: GException on failure.
 	 */
-	public string[] splitFull(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
+	public string[] splitFull(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
 	{
 		// gchar ** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
 		GError* err = null;
@@ -645,7 +645,7 @@ public class Regex
 	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
-	public string replace(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
+	public string replace(string string, gssize stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		// gchar * g_regex_replace (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
@@ -678,7 +678,7 @@ public class Regex
 	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
-	public string replaceLiteral(string string, int stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
+	public string replaceLiteral(string string, gssize stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		// gchar * g_regex_replace_literal (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
@@ -711,7 +711,7 @@ public class Regex
 	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
-	public string replaceEval(string string, int stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
+	public string replaceEval(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
 	{
 		// gchar * g_regex_replace_eval (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GRegexEvalCallback eval,  gpointer user_data,  GError **error);
 		GError* err = null;

@@ -86,7 +86,7 @@ public class Memory
 	 * nBytes = the number of bytes to allocate
 	 * Returns:a pointer to the allocated memory
 	 */
-	public static void* malloc(uint nBytes)
+	public static void* malloc(gsize nBytes)
 	{
 		// gpointer g_malloc (gsize n_bytes);
 		return g_malloc(nBytes);
@@ -99,7 +99,7 @@ public class Memory
 	 * nBytes = the number of bytes to allocate
 	 * Returns:a pointer to the allocated memory
 	 */
-	public static void* malloc0(uint nBytes)
+	public static void* malloc0(gsize nBytes)
 	{
 		// gpointer g_malloc0 (gsize n_bytes);
 		return g_malloc0(nBytes);
@@ -116,7 +116,7 @@ public class Memory
 	 * nBytes = new size of the memory in bytes
 	 * Returns:the new address of the allocated memory
 	 */
-	public static void* realloc(void* mem, uint nBytes)
+	public static void* realloc(void* mem, gsize nBytes)
 	{
 		// gpointer g_realloc (gpointer mem,  gsize n_bytes);
 		return g_realloc(mem, nBytes);
@@ -129,7 +129,7 @@ public class Memory
 	 * nBytes = number of bytes to allocate.
 	 * Returns:the allocated memory, or NULL.
 	 */
-	public static void* tryMalloc(uint nBytes)
+	public static void* tryMalloc(gsize nBytes)
 	{
 		// gpointer g_try_malloc (gsize n_bytes);
 		return g_try_malloc(nBytes);
@@ -143,7 +143,7 @@ public class Memory
 	 * nBytes = number of bytes to allocate
 	 * Returns:the allocated memory, or NULL
 	 */
-	public static void* tryMalloc0(uint nBytes)
+	public static void* tryMalloc0(gsize nBytes)
 	{
 		// gpointer g_try_malloc0 (gsize n_bytes);
 		return g_try_malloc0(nBytes);
@@ -158,7 +158,7 @@ public class Memory
 	 * nBytes = number of bytes to allocate.
 	 * Returns:the allocated memory, or NULL.
 	 */
-	public static void* tryRealloc(void* mem, uint nBytes)
+	public static void* tryRealloc(void* mem, gsize nBytes)
 	{
 		// gpointer g_try_realloc (gpointer mem,  gsize n_bytes);
 		return g_try_realloc(mem, nBytes);
@@ -173,7 +173,7 @@ public class Memory
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns:a pointer to the allocated memory
 	 */
-	public static void* mallocN(uint nBlocks, uint nBlockBytes)
+	public static void* mallocN(gsize nBlocks, gsize nBlockBytes)
 	{
 		// gpointer g_malloc_n (gsize n_blocks,  gsize n_block_bytes);
 		return g_malloc_n(nBlocks, nBlockBytes);
@@ -188,7 +188,7 @@ public class Memory
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns:a pointer to the allocated memory
 	 */
-	public static void* malloc0_N(uint nBlocks, uint nBlockBytes)
+	public static void* malloc0_N(gsize nBlocks, gsize nBlockBytes)
 	{
 		// gpointer g_malloc0_n (gsize n_blocks,  gsize n_block_bytes);
 		return g_malloc0_n(nBlocks, nBlockBytes);
@@ -204,7 +204,7 @@ public class Memory
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns:the new address of the allocated memory
 	 */
-	public static void* reallocN(void* mem, uint nBlocks, uint nBlockBytes)
+	public static void* reallocN(void* mem, gsize nBlocks, gsize nBlockBytes)
 	{
 		// gpointer g_realloc_n (gpointer mem,  gsize n_blocks,  gsize n_block_bytes);
 		return g_realloc_n(mem, nBlocks, nBlockBytes);
@@ -219,7 +219,7 @@ public class Memory
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns:the allocated memory, or NULL.
 	 */
-	public static void* tryMallocN(uint nBlocks, uint nBlockBytes)
+	public static void* tryMallocN(gsize nBlocks, gsize nBlockBytes)
 	{
 		// gpointer g_try_malloc_n (gsize n_blocks,  gsize n_block_bytes);
 		return g_try_malloc_n(nBlocks, nBlockBytes);
@@ -234,7 +234,7 @@ public class Memory
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns:the allocated memory, or NULL
 	 */
-	public static void* tryMalloc0_N(uint nBlocks, uint nBlockBytes)
+	public static void* tryMalloc0_N(gsize nBlocks, gsize nBlockBytes)
 	{
 		// gpointer g_try_malloc0_n (gsize n_blocks,  gsize n_block_bytes);
 		return g_try_malloc0_n(nBlocks, nBlockBytes);
@@ -250,7 +250,7 @@ public class Memory
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns:the allocated memory, or NULL.
 	 */
-	public static void* tryReallocN(void* mem, uint nBlocks, uint nBlockBytes)
+	public static void* tryReallocN(void* mem, gsize nBlocks, gsize nBlockBytes)
 	{
 		// gpointer g_try_realloc_n (gpointer mem,  gsize n_blocks,  gsize n_block_bytes);
 		return g_try_realloc_n(mem, nBlocks, nBlockBytes);

@@ -6502,7 +6502,7 @@ public typedef extern(C) void  function (GtkClipboard*, GdkAtom*, int, void*) Gt
  * data  :
  */
 // void (*GtkClipboardRichTextReceivedFunc) (GtkClipboard *clipboard,  GdkAtom format,  const guint8 *text,  gsize length,  gpointer data);
-public typedef extern(C) void  function (GtkClipboard*, GdkAtom, guint8*, uint, void*) GtkClipboardRichTextReceivedFunc;
+public typedef extern(C) void  function (GtkClipboard*, GdkAtom, guint8*, gsize, void*) GtkClipboardRichTextReceivedFunc;
 
 /*
  * clipboard  :
@@ -6709,7 +6709,7 @@ public typedef extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
  * TRUE on success, FALSE otherwise
  */
 // gboolean (*GtkTextBufferDeserializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GtkTextIter *iter,  const guint8 *data,  gsize length,  gboolean create_tags,  gpointer user_data,  GError **error);
-public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, guint8*, uint, int, void*, GError**) GtkTextBufferDeserializeFunc;
+public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, guint8*, gsize, int, void*, GError**) GtkTextBufferDeserializeFunc;
 
 /*
  * A function that is called to serialize the content of a text buffer.

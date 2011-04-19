@@ -193,7 +193,7 @@ public class UnixSocketAddress : SocketAddress
 	 * Since 2.22
 	 * Returns: the length of the path
 	 */
-	public uint getPathLen()
+	public gsize getPathLen()
 	{
 		// gsize g_unix_socket_address_get_path_len (GUnixSocketAddress *address);
 		return g_unix_socket_address_get_path_len(gUnixSocketAddress);

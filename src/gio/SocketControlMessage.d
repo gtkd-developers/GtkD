@@ -139,7 +139,7 @@ public class SocketControlMessage : ObjectG
 	 * data = pointer to the message data
 	 * Returns: the deserialized message or NULL
 	 */
-	public static SocketControlMessage deserialize(int level, int type, uint size, void* data)
+	public static SocketControlMessage deserialize(int level, int type, gsize size, void* data)
 	{
 		// GSocketControlMessage * g_socket_control_message_deserialize  (int level,  int type,  gsize size,  gpointer data);
 		auto p = g_socket_control_message_deserialize(level, type, size, data);
@@ -180,7 +180,7 @@ public class SocketControlMessage : ObjectG
 	 * Since 2.22
 	 * Returns: The number of bytes required.
 	 */
-	public uint getSize()
+	public gsize getSize()
 	{
 		// gsize g_socket_control_message_get_size (GSocketControlMessage *message);
 		return g_socket_control_message_get_size(gSocketControlMessage);

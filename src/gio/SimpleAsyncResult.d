@@ -252,7 +252,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Params:
 	 * opRes = a gssize.
 	 */
-	public void setOpResGssize(int opRes)
+	public void setOpResGssize(gssize opRes)
 	{
 		// void g_simple_async_result_set_op_res_gssize  (GSimpleAsyncResult *simple,  gssize op_res);
 		g_simple_async_result_set_op_res_gssize(gSimpleAsyncResult, opRes);
@@ -262,7 +262,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Gets a gssize from the asynchronous result.
 	 * Returns: a gssize returned from the asynchronous function.
 	 */
-	public int getOpResGssize()
+	public gssize getOpResGssize()
 	{
 		// gssize g_simple_async_result_get_op_res_gssize  (GSimpleAsyncResult *simple);
 		return g_simple_async_result_get_op_res_gssize(gSimpleAsyncResult);

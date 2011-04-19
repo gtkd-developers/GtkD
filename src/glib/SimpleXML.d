@@ -151,7 +151,7 @@ public class SimpleXML
 	 * length = length of text in bytes, or -1 if the text is nul-terminated
 	 * Returns: a newly allocated string with the escaped text
 	 */
-	public static string escapeText(string text, int length)
+	public static string escapeText(string text, gssize length)
 	{
 		// gchar* g_markup_escape_text (const gchar *text,  gssize length);
 		return Str.toString(g_markup_escape_text(Str.toStringz(text), length));
@@ -312,7 +312,7 @@ public class SimpleXML
 	 * Returns: FALSE if an error occurred, TRUE on success
 	 * Throws: GException on failure.
 	 */
-	public int parse(string text, int textLen)
+	public int parse(string text, gssize textLen)
 	{
 		// gboolean g_markup_parse_context_parse (GMarkupParseContext *context,  const gchar *text,  gssize text_len,  GError **error);
 		GError* err = null;

@@ -360,7 +360,7 @@ public class Str
 	 * n = the maximum number of bytes to copy from str
 	 * Returns: a newly-allocated buffer containing the first n bytes  of str, nul-terminated
 	 */
-	public static string strndup(string str, uint n)
+	public static string strndup(string str, gsize n)
 	{
 		// gchar* g_strndup (const gchar *str,  gsize n);
 		return Str.toString(g_strndup(Str.toStringz(str), n));
@@ -389,7 +389,7 @@ public class Str
 	 * fillChar = the byte to fill the string with
 	 * Returns: a newly-allocated string filled the fill_char
 	 */
-	public static string strnfill(uint length, char fillChar)
+	public static string strnfill(gsize length, char fillChar)
 	{
 		// gchar* g_strnfill (gsize length,  gchar fill_char);
 		return Str.toString(g_strnfill(length, fillChar));
@@ -423,7 +423,7 @@ public class Str
 	 * needle = the string to search for.
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
-	public static string strstrLen(string haystack, int haystackLen, string needle)
+	public static string strstrLen(string haystack, gssize haystackLen, string needle)
 	{
 		// gchar * g_strstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
 		return Str.toString(g_strstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)));
@@ -453,7 +453,7 @@ public class Str
 	 * needle = the nul-terminated string to search for.
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
-	public static string strrstrLen(string haystack, int haystackLen, string needle)
+	public static string strrstrLen(string haystack, gssize haystackLen, string needle)
 	{
 		// gchar * g_strrstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
 		return Str.toString(g_strrstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)));
@@ -522,7 +522,7 @@ public class Str
 	 * destSize = length of dest in bytes
 	 * Returns: length of src
 	 */
-	public static uint strlcpy(string dest, string src, uint destSize)
+	public static gsize strlcpy(string dest, string src, gsize destSize)
 	{
 		// gsize g_strlcpy (gchar *dest,  const gchar *src,  gsize dest_size);
 		return g_strlcpy(Str.toStringz(dest), Str.toStringz(src), destSize);
@@ -549,7 +549,7 @@ public class Str
 	 *  inside dest)
 	 * Returns:size of attempted result, which isMIN (dest_size, strlen (original dest)) + strlen (src),so if retval >= dest_size, truncation occurred.
 	 */
-	public static uint strlcat(string dest, string src, uint destSize)
+	public static gsize strlcat(string dest, string src, gsize destSize)
 	{
 		// gsize g_strlcat (gchar *dest,  const gchar *src,  gsize dest_size);
 		return g_strlcat(Str.toStringz(dest), Str.toStringz(src), destSize);
@@ -686,7 +686,7 @@ public class Str
 	 * args = the parameters to be inserted into the format string.
 	 * Returns:the maximum space needed to store the formatted string.
 	 */
-	public static uint printfStringUpperBound(string format, void* args)
+	public static gsize printfStringUpperBound(string format, void* args)
 	{
 		// gsize g_printf_string_upper_bound (const gchar *format,  va_list args);
 		return g_printf_string_upper_bound(Str.toStringz(format), args);
@@ -954,7 +954,7 @@ public class Str
 	 * n = number of characters to compare.
 	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
 	 */
-	public static int asciiStrncasecmp(string s1, string s2, uint n)
+	public static int asciiStrncasecmp(string s1, string s2, gsize n)
 	{
 		// gint g_ascii_strncasecmp (const gchar *s1,  const gchar *s2,  gsize n);
 		return g_ascii_strncasecmp(Str.toStringz(s1), Str.toStringz(s2), n);
@@ -967,7 +967,7 @@ public class Str
 	 * len = length of str in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string, with all the lower case characters in str converted to upper case, with semantics that exactly match g_ascii_toupper(). (Note that this is unlike the old g_strup(), which modified the string in place.)
 	 */
-	public static string asciiStrup(string str, int len)
+	public static string asciiStrup(string str, gssize len)
 	{
 		// gchar* g_ascii_strup (const gchar *str,  gssize len);
 		return Str.toString(g_ascii_strup(Str.toStringz(str), len));
@@ -980,7 +980,7 @@ public class Str
 	 * len = length of str in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly-allocated string, with all the upper case characters in str converted to lower case, with semantics that exactly match g_ascii_tolower(). (Note that this is unlike the old g_strdown(), which modified the string in place.)
 	 */
-	public static string asciiStrdown(string str, int len)
+	public static string asciiStrdown(string str, gssize len)
 	{
 		// gchar* g_ascii_strdown (const gchar *str,  gssize len);
 		return Str.toString(g_ascii_strdown(Str.toStringz(str), len));

@@ -767,7 +767,7 @@ public class Util
 	 * compareFunc = function to compare elements
 	 * userData = data to pass to compare_func
 	 */
-	public static void qsortWithData(void* pbase, int totalElems, uint size, GCompareDataFunc compareFunc, void* userData)
+	public static void qsortWithData(void* pbase, int totalElems, gsize size, GCompareDataFunc compareFunc, void* userData)
 	{
 		// void g_qsort_with_data (gconstpointer pbase,  gint total_elems,  gsize size,  GCompareDataFunc compare_func,  gpointer user_data);
 		g_qsort_with_data(pbase, totalElems, size, compareFunc, userData);

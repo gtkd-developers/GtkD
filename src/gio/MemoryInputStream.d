@@ -140,7 +140,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	 * destroy = function that is called to free data, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* data, int len, GDestroyNotify destroy)
+	public this (void* data, gssize len, GDestroyNotify destroy)
 	{
 		// GInputStream * g_memory_input_stream_new_from_data (const void *data,  gssize len,  GDestroyNotify destroy);
 		auto p = g_memory_input_stream_new_from_data(data, len, destroy);
@@ -158,7 +158,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	 * len = length of the data, may be -1 if data is a nul-terminated string
 	 * destroy = function that is called to free data, or NULL
 	 */
-	public void addData(void* data, int len, GDestroyNotify destroy)
+	public void addData(void* data, gssize len, GDestroyNotify destroy)
 	{
 		// void g_memory_input_stream_add_data (GMemoryInputStream *stream,  const void *data,  gssize len,  GDestroyNotify destroy);
 		g_memory_input_stream_add_data(gMemoryInputStream, data, len, destroy);

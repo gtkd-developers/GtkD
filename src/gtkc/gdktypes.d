@@ -3421,7 +3421,7 @@ public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * Since 2.4
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
-public typedef extern(C) int  function (char*, uint, GError**, void*) GdkPixbufSaveFunc;
+public typedef extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSaveFunc;
 
 /*
  * Specifies the type of function used to filter native events before they are

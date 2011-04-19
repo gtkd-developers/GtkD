@@ -352,7 +352,7 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.
 	 * Throws: GException on failure.
 	 */
-	public string readLine(out uint length, Cancellable cancellable)
+	public string readLine(out gsize length, Cancellable cancellable)
 	{
 		// char * g_data_input_stream_read_line (GDataInputStream *stream,  gsize *length,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -397,7 +397,7 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. If there's no content to read, it will still return NULL, but error won't be set.
 	 * Throws: GException on failure.
 	 */
-	public string readLineFinish(out GAsyncResult result, uint* length)
+	public string readLineFinish(out GAsyncResult result, gsize* length)
 	{
 		// char * g_data_input_stream_read_line_finish  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
 		GError* err = null;
@@ -424,7 +424,7 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public string readUntil(string stopChars, out uint length, Cancellable cancellable)
+	public string readUntil(string stopChars, out gsize length, Cancellable cancellable)
 	{
 		// char * g_data_input_stream_read_until (GDataInputStream *stream,  const gchar *stop_chars,  gsize *length,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -473,7 +473,7 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public string readUntilFinish(out GAsyncResult result, uint* length)
+	public string readUntilFinish(out GAsyncResult result, gsize* length)
 	{
 		// char * g_data_input_stream_read_until_finish  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
 		GError* err = null;

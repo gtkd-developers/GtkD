@@ -157,7 +157,7 @@ public class BufferedInputStream : FilterInputStream
 	 * size = a gsize.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (InputStream baseStream, uint size)
+	public this (InputStream baseStream, gsize size)
 	{
 		// GInputStream* g_buffered_input_stream_new_sized (GInputStream *base_stream,  gsize size);
 		auto p = g_buffered_input_stream_new_sized((baseStream is null) ? null : baseStream.getInputStreamStruct(), size);
@@ -172,7 +172,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Gets the size of the input buffer.
 	 * Returns: the current buffer size.
 	 */
-	public uint getBufferSize()
+	public gsize getBufferSize()
 	{
 		// gsize g_buffered_input_stream_get_buffer_size  (GBufferedInputStream *stream);
 		return g_buffered_input_stream_get_buffer_size(gBufferedInputStream);
@@ -185,7 +185,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Params:
 	 * size = a gsize.
 	 */
-	public void setBufferSize(uint size)
+	public void setBufferSize(gsize size)
 	{
 		// void g_buffered_input_stream_set_buffer_size  (GBufferedInputStream *stream,  gsize size);
 		g_buffered_input_stream_set_buffer_size(gBufferedInputStream, size);
@@ -195,7 +195,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Gets the size of the available data within the stream.
 	 * Returns: size of the available stream.
 	 */
-	public uint getAvailable()
+	public gsize getAvailable()
 	{
 		// gsize g_buffered_input_stream_get_available  (GBufferedInputStream *stream);
 		return g_buffered_input_stream_get_available(gBufferedInputStream);
@@ -209,7 +209,7 @@ public class BufferedInputStream : FilterInputStream
 	 * count = a gsize to get the number of bytes available in the buffer.
 	 * Returns: read-only buffer
 	 */
-	public void* peekBuffer(out uint count)
+	public void* peekBuffer(out gsize count)
 	{
 		// const void* g_buffered_input_stream_peek_buffer (GBufferedInputStream *stream,  gsize *count);
 		return g_buffered_input_stream_peek_buffer(gBufferedInputStream, &count);
@@ -224,7 +224,7 @@ public class BufferedInputStream : FilterInputStream
 	 * count = a gsize.
 	 * Returns: a gsize of the number of bytes peeked, or -1 on error.
 	 */
-	public uint peek(void* buffer, uint offset, uint count)
+	public gsize peek(void* buffer, gsize offset, gsize count)
 	{
 		// gsize g_buffered_input_stream_peek (GBufferedInputStream *stream,  void *buffer,  gsize offset,  gsize count);
 		return g_buffered_input_stream_peek(gBufferedInputStream, buffer, offset, count);
@@ -255,7 +255,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Returns: the number of bytes read into stream's buffer, up to count,  or -1 on error.
 	 * Throws: GException on failure.
 	 */
-	public int fill(int count, Cancellable cancellable)
+	public gssize fill(gssize count, Cancellable cancellable)
 	{
 		// gssize g_buffered_input_stream_fill (GBufferedInputStream *stream,  gssize count,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -284,7 +284,7 @@ public class BufferedInputStream : FilterInputStream
 	 * callback = a GAsyncReadyCallback.
 	 * userData = a gpointer.
 	 */
-	public void fillAsync(int count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void fillAsync(gssize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_buffered_input_stream_fill_async (GBufferedInputStream *stream,  gssize count,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_buffered_input_stream_fill_async(gBufferedInputStream, count, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
@@ -297,7 +297,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Returns: a gssize of the read stream, or -1 on an error.
 	 * Throws: GException on failure.
 	 */
-	public int fillFinish(AsyncResultIF result)
+	public gssize fillFinish(AsyncResultIF result)
 	{
 		// gssize g_buffered_input_stream_fill_finish (GBufferedInputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;

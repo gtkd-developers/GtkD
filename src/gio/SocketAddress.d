@@ -135,7 +135,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 * len = the size of the memory location pointed to by native
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* native, uint len)
+	public this (void* native, gsize len)
 	{
 		// GSocketAddress * g_socket_address_new_from_native (gpointer native,  gsize len);
 		auto p = g_socket_address_new_from_native(native, len);
@@ -173,7 +173,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 * Returns: TRUE if dest was filled in, FALSE on error
 	 * Throws: GException on failure.
 	 */
-	public int toNative(void* dest, uint destlen)
+	public int toNative(void* dest, gsize destlen)
 	{
 		// gboolean g_socket_address_to_native (GSocketAddress *address,  gpointer dest,  gsize destlen,  GError **error);
 		GError* err = null;
@@ -195,7 +195,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 * Since 2.22
 	 * Returns: the size of the native struct sockaddr that address represents
 	 */
-	public int getNativeSize()
+	public gssize getNativeSize()
 	{
 		// gssize g_socket_address_get_native_size (GSocketAddress *address);
 		return g_socket_address_get_native_size(gSocketAddress);

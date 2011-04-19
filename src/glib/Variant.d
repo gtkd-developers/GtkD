@@ -883,7 +883,7 @@ public class Variant
 	 * length = a pointer to a gsize, to store the length
 	 * Returns: the constant string
 	 */
-	public string getString(out uint length)
+	public string getString(out gsize length)
 	{
 		// const gchar * g_variant_get_string (GVariant *value,  gsize *length);
 		return Str.toString(g_variant_get_string(gVariant, &length));
@@ -899,7 +899,7 @@ public class Variant
 	public char[] dupString()
 	{
 		// gchar * g_variant_dup_string (GVariant *value,  gsize *length);
-		uint length;
+		gsize length;
 		auto p = g_variant_dup_string(gVariant, &length);
 		return p[0 .. length];
 	}
@@ -936,7 +936,7 @@ public class Variant
 	public string[] getStrv()
 	{
 		// const gchar ** g_variant_get_strv (GVariant *value,  gsize *length);
-		uint length;
+		gsize length;
 		return Str.toStringArray(g_variant_get_strv(gVariant, &length));
 	}
 	
@@ -955,7 +955,7 @@ public class Variant
 	public string[] dupStrv()
 	{
 		// gchar ** g_variant_dup_strv (GVariant *value,  gsize *length);
-		uint length;
+		gsize length;
 		return Str.toStringArray(g_variant_dup_strv(gVariant, &length));
 	}
 	
@@ -1095,7 +1095,7 @@ public class Variant
 	 * Since 2.24
 	 * Returns: the number of children in the container
 	 */
-	public uint nChildren()
+	public gsize nChildren()
 	{
 		// gsize g_variant_n_children (GVariant *value);
 		return g_variant_n_children(gVariant);
@@ -1114,7 +1114,7 @@ public class Variant
 	 * index = the index of the child to fetch
 	 * Returns: the child at the specified index
 	 */
-	public Variant getChildValue(uint index)
+	public Variant getChildValue(gsize index)
 	{
 		// GVariant * g_variant_get_child_value (GVariant *value,  gsize index_);
 		auto p = g_variant_get_child_value(gVariant, index);
@@ -1143,7 +1143,7 @@ public class Variant
 	 * elementSize = the size of each element
 	 * Returns: a pointer to the fixed array
 	 */
-	public void* getFixedArray(uint* nElements, uint elementSize)
+	public void* getFixedArray(gsize* nElements, gsize elementSize)
 	{
 		// gconstpointer g_variant_get_fixed_array (GVariant *value,  gsize *n_elements,  gsize element_size);
 		return g_variant_get_fixed_array(gVariant, nElements, elementSize);
@@ -1162,7 +1162,7 @@ public class Variant
 	 * Since 2.24
 	 * Returns: the serialised size of value
 	 */
-	public uint getSize()
+	public gsize getSize()
 	{
 		// gsize g_variant_get_size (GVariant *value);
 		return g_variant_get_size(gVariant);
@@ -1235,7 +1235,7 @@ public class Variant
 	 * userData = data for notify
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (VariantType type, void* data, uint size, int trusted, GDestroyNotify notify, void* userData)
+	public this (VariantType type, void* data, gsize size, int trusted, GDestroyNotify notify, void* userData)
 	{
 		// GVariant * g_variant_new_from_data (const GVariantType *type,  gconstpointer data,  gsize size,  gboolean trusted,  GDestroyNotify notify,  gpointer user_data);
 		auto p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data, size, trusted, notify, userData);

@@ -227,7 +227,7 @@ public class EntryBuffer : ObjectG
 	 * Since 2.18
 	 * Returns: The byte length of the buffer.
 	 */
-	public uint getBytes()
+	public gsize getBytes()
 	{
 		// gsize gtk_entry_buffer_get_bytes (GtkEntryBuffer *buffer);
 		return gtk_entry_buffer_get_bytes(gtkEntryBuffer);

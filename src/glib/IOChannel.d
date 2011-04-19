@@ -340,7 +340,7 @@ public class IOChannel
 	 * hwnd = a window handle.
 	 * Returns: a new GIOChannel.
 	 */
-	public static IOChannel win32_NewMessages(uint hwnd)
+	public static IOChannel win32_NewMessages(gsize hwnd)
 	{
 		// GIOChannel * g_io_channel_win32_new_messages (gsize hwnd);
 		auto p = g_io_channel_win32_new_messages(hwnd);
@@ -410,7 +410,7 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readChars(string buf, uint count, out uint bytesRead)
+	public GIOStatus readChars(string buf, gsize count, out gsize bytesRead)
 	{
 		// GIOStatus g_io_channel_read_chars (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read,  GError **error);
 		GError* err = null;
@@ -458,7 +458,7 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readLineString(StringG buffer, out uint terminatorPos)
+	public GIOStatus readLineString(StringG buffer, out gsize terminatorPos)
 	{
 		// GIOStatus g_io_channel_read_line_string (GIOChannel *channel,  GString *buffer,  gsize *terminator_pos,  GError **error);
 		GError* err = null;
@@ -491,7 +491,7 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus writeChars(string buf, int count, out uint bytesWritten)
+	public GIOStatus writeChars(string buf, gssize count, out gsize bytesWritten)
 	{
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
 		GError* err = null;
@@ -699,7 +699,7 @@ public class IOChannel
 	 * Gets the buffer size.
 	 * Returns: the size of the buffer.
 	 */
-	public uint getBufferSize()
+	public gsize getBufferSize()
 	{
 		// gsize g_io_channel_get_buffer_size (GIOChannel *channel);
 		return g_io_channel_get_buffer_size(gIOChannel);
@@ -710,7 +710,7 @@ public class IOChannel
 	 * Params:
 	 * size = the size of the buffer, or 0 to let GLib pick a good size
 	 */
-	public void setBufferSize(uint size)
+	public void setBufferSize(gsize size)
 	{
 		// void g_io_channel_set_buffer_size (GIOChannel *channel,  gsize size);
 		g_io_channel_set_buffer_size(gIOChannel, size);
@@ -912,7 +912,7 @@ public class IOChannel
 	 * bytesRead = returns the number of bytes actually read
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError read(string buf, uint count, out uint bytesRead)
+	public GIOError read(string buf, gsize count, out gsize bytesRead)
 	{
 		// GIOError g_io_channel_read (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read);
 		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, &bytesRead);
@@ -928,7 +928,7 @@ public class IOChannel
 	 * bytesWritten = the number of bytes actually written
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError write(string buf, uint count, out uint bytesWritten)
+	public GIOError write(string buf, gsize count, out gsize bytesWritten)
 	{
 		// GIOError g_io_channel_write (GIOChannel *channel,  const gchar *buf,  gsize count,  gsize *bytes_written);
 		return g_io_channel_write(gIOChannel, Str.toStringz(buf), count, &bytesWritten);
