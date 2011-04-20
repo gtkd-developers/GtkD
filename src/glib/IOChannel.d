@@ -166,7 +166,7 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readLine(out string strReturn, out uint terminatorPos)
+	public GIOStatus readLine(out string strReturn, out gsize terminatorPos)
 	{
 		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
 		GError* err = null;
@@ -207,7 +207,7 @@ public class IOChannel
 		// GIOStatus g_io_channel_read_to_end (GIOChannel *channel,  gchar **str_return,  gsize *length,  GError **error);
 		GError* err = null;
 		char* str = null;
-		uint len;
+		gsize len;
 		
 		auto p = g_io_channel_read_to_end(gIOChannel, &str, &len, &err);
 		

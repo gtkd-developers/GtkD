@@ -249,7 +249,7 @@ public class Pixbuf : ObjectG
 	public int saveToBufferv(out char[] buffer, string type, string[] optionKeys, string[] optionValues)
 	{
 		gchar* outbuffer = null;
-		uint bufferSize;
+		gsize bufferSize;
 		GError* err = null;
 		
 		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
