@@ -661,7 +661,7 @@ code: start
 		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
 		GError* err = null;
 		char* str = null;
-		uint len;
+		gsize len;
 		
 		auto p = g_io_channel_read_line(gIOChannel, &str, &len, &terminatorPos, &err);
 		
