@@ -160,6 +160,7 @@ public class TreeModel : ObjectG, TreeModelIF
 			/* Some boilerplate type registration stuff */
 			if (customTreeModelType == GType.INVALID)
 			{
+				//TODO: Fix instance size.
 				static GTypeInfo customTreeModelInfo =
 				{
 					CustomTreeModelClass.sizeof,                   /* class size */
@@ -168,7 +169,7 @@ public class TreeModel : ObjectG, TreeModelIF
 					cast(GClassInitFunc) &customTreeModelClassInit,/* class init function */
 					null,                                          /* class finalize */
 					null,                                          /* class_data */
-					CustomTreeModelClass.sizeof + 5,               /* instance size */
+					CustomTreeModelClass.sizeof + 10,               /* instance size */
 					0,                                             /* n_preallocs */
 					cast(GInstanceInitFunc) &customTreeModelInit   /* instance init */
 				};
