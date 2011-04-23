@@ -41,6 +41,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.RandG
  * 	- glib.Str
  * 	- gobject.Type
  * 	- gobject.ObjectG
@@ -67,6 +68,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import glib.RandG;
 private import glib.Str;
 private import gobject.Type;
 private import gobject.ObjectG;
@@ -88,6 +90,13 @@ struct CustomTreeModelClass
 	GObjectClass parentClass;
 }
 
+struct CustomTreeModel
+{
+	GObject parent;
+	
+	int stamp;
+}
+
 //We need this function for the interface implementation.
 extern(C) typedef GType function()c_gtk_tree_model_get_type;
 c_gtk_tree_model_get_type gtk_tree_model_get_type;
@@ -106,16 +115,19 @@ public class TreeModel : ObjectG, TreeModelIF
 	// Minimal implementation.
 	mixin TreeModelT!(GtkTreeModel);
 	
+	/** the main Gtk struct */
+	protected CustomTreeModel* customTreeModel;
+	
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gtkTreeModel;
+		return cast(void*)customTreeModel;
 	}
 	
 	public this ()
 	{
 		auto p =  super(customTreeModelgetType(), null);
-		gtkTreeModel = cast(GtkTreeModel*) p.getObjectGStruct();
+		customTreeModel = cast(CustomTreeModel*) p.getObjectGStruct();
 		
 		setDataFull("customTreeModel", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 	}
@@ -143,7 +155,6 @@ public class TreeModel : ObjectG, TreeModelIF
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	
-	
 	extern(C)
 	{
 		/*
@@ -152,7 +163,6 @@ public class TreeModel : ObjectG, TreeModelIF
 		 *  additional interfaces like GtkTreeSortable, you
 		 *  will need to do it here.
 		 */
-		
 		static GType customTreeModelgetType()
 		{
 			GType customTreeModelType = Type.fromName("CustomTreeModel");
@@ -160,7 +170,6 @@ public class TreeModel : ObjectG, TreeModelIF
 			/* Some boilerplate type registration stuff */
 			if (customTreeModelType == GType.INVALID)
 			{
-				//TODO: Fix instance size.
 				static GTypeInfo customTreeModelInfo =
 				{
 					CustomTreeModelClass.sizeof,                   /* class size */
@@ -169,13 +178,13 @@ public class TreeModel : ObjectG, TreeModelIF
 					cast(GClassInitFunc) &customTreeModelClassInit,/* class init function */
 					null,                                          /* class finalize */
 					null,                                          /* class_data */
-					CustomTreeModelClass.sizeof + 10,               /* instance size */
+					CustomTreeModel.sizeof,                        /* instance size */
 					0,                                             /* n_preallocs */
 					cast(GInstanceInitFunc) &customTreeModelInit   /* instance init */
 				};
 				static GInterfaceInfo treeModelInfo =
 				{
-					cast(GInterfaceInitFunc) &customTreeModelInit,
+					cast(GInterfaceInitFunc) &customTreeModelIfaceInit,
 					null,
 					null
 				};
@@ -196,7 +205,6 @@ public class TreeModel : ObjectG, TreeModelIF
 		 *  Init callback for the type system,
 		 *  called once when our new class is created.
 		 */
-		
 		static void customTreeModelClassInit (void* klass)
 		{
 			GObjectClass* objectClass;
@@ -207,14 +215,18 @@ public class TreeModel : ObjectG, TreeModelIF
 			objectClass.finalize = &customTreeModelFinalize;
 		}
 		
+		static void customTreeModelInit(CustomTreeModel* model)
+		{
+			model.stamp = RandG.randomInt();
+		}
+		
 		/*
 		 *  init callback for the interface registration
 		 *  in customTreeModelGetType. Here we override
 		 *  the GtkTreeModel interface functions that
 		 *  we implement.
 		 */
-		
-		static void customTreeModelInit (GtkTreeModelIface *iface)
+		static void customTreeModelIfaceInit (GtkTreeModelIface *iface)
 		{
 			iface.getFlags      = &customTreeModelGetFlags;
 			iface.getNColumns   = &customTreeModelGetNColumns;
@@ -234,7 +246,6 @@ public class TreeModel : ObjectG, TreeModelIF
 		 *  this is called just before a custom list is
 		 *  destroyed. Free dynamically allocated memory here.
 		 */
-		
 		static void customTreeModelFinalize (GObject *object)
 		{
 			/* must chain up - finalize parent */
@@ -266,12 +277,20 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			auto tm = new TreeModel(tree_model);
 			
+			iter.stamp = (cast(CustomTreeModel*)tree_model).stamp;
+			
 			return tm.getIter(new TreeIter(iter), new TreePath(path));
 		}
 		
 		static GtkTreePath* customTreeModelGetPath(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = new TreeModel(tree_model);
+			
+			if ( iter !is null && iter.stamp != (cast(CustomTreeModel*)tree_model).stamp)
+			{
+				return null;
+			}
+			
 			TreePath path = tm.getPath(new TreeIter(iter));
 			
 			return (path is null) ? null : path.getTreePathStruct();
@@ -281,12 +300,22 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			auto tm = new TreeModel(tree_model);
 			
+			if ( iter !is null && iter.stamp != (cast(CustomTreeModel*)tree_model).stamp)
+			{
+				return;
+			}
+			
 			tm.getValue(new TreeIter(iter), column, new Value(value));
 		}
 		
 		static gboolean customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = new TreeModel(tree_model);
+			
+			if ( iter !is null && iter.stamp != (cast(CustomTreeModel*)tree_model).stamp)
+			{
+				return false;
+			}
 			
 			return tm.iterNext(new TreeIter(iter));
 		}
@@ -295,12 +324,23 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			auto tm = new TreeModel(tree_model);
 			
+			if ( parent !is null && parent.stamp != (cast(CustomTreeModel*)tree_model).stamp )
+			{
+				return false;
+			}
+			iter.stamp = (cast(CustomTreeModel*)tree_model).stamp;
+			
 			return tm.iterChildren(new TreeIter(iter), new TreeIter(parent));
 		}
 		
 		static gboolean customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = new TreeModel(tree_model);
+			
+			if ( iter !is null && iter.stamp != (cast(CustomTreeModel*)tree_model).stamp)
+			{
+				return false;
+			}
 			
 			return tm.iterHasChild(new TreeIter(iter));
 		}
@@ -309,12 +349,22 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			auto tm = new TreeModel(tree_model);
 			
+			if ( iter !is null && iter.stamp != (cast(CustomTreeModel*)tree_model).stamp )
+			{
+				return 0;
+			}
+			
 			return tm.iterNChildren(new TreeIter(iter));
 		}
 		
 		static gboolean customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
 		{
 			auto tm = new TreeModel(tree_model);
+			
+			if ( parent !is null && parent.stamp != (cast(CustomTreeModel*)tree_model).stamp )
+			{
+				return false;
+			}
 			
 			return tm.iterNthChild(new TreeIter(iter), new TreeIter(parent), n);
 		}
@@ -323,8 +373,22 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			auto tm = new TreeModel(tree_model);
 			
+			if ( child !is null && child.stamp != (cast(CustomTreeModel*)tree_model).stamp)
+			{
+				return false;
+			}
+			iter.stamp = (cast(CustomTreeModel*)tree_model).stamp;
+			
 			return tm.iterParent(new TreeIter(iter), new TreeIter(child));
 		}
+	}
+	
+	private void invalidateIters()
+	{
+		if ( customTreeModel is null )
+		return;
+		
+		customTreeModel.stamp++;
 	}
 }
 

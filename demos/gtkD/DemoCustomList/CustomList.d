@@ -1,6 +1,5 @@
 module CustomList;
 
-import glib.RandG;
 import gobject.Value;
 import gtk.TreeIter;
 import gtk.TreePath;
@@ -28,7 +27,6 @@ class CustomList : TreeModel
 {
 	uint numRows;
 	int nColumns;
-	int stamp;
 	GType[3] columnTypes;
 	CustomRecord*[] rows;
 
@@ -38,8 +36,6 @@ class CustomList : TreeModel
 		columnTypes[0] = GType.POINTER;
 		columnTypes[1] = GType.STRING;
 		columnTypes[2] = GType.UINT;
-
-		stamp = RandG.randomInt();
 	}
 
 	/*
@@ -110,7 +106,6 @@ class CustomList : TreeModel
 			throw new Exception("record.pos != TreePath.getIndices()[0]");
 
 		/* We simply store a pointer to our custom record in the iter */
-		iter.stamp     = stamp;
 		iter.userData  = record;
 
 		return true;
@@ -201,7 +196,6 @@ class CustomList : TreeModel
 		if ( nextrecord is null || nextrecord.pos != record.pos + 1 )
 			throw new Exception("Invalid next record");
 
-		iter.stamp     = stamp;
 		iter.userData  = nextrecord;
 
 		return true;
@@ -228,7 +222,6 @@ class CustomList : TreeModel
 			return false;
 
 		/* Set iter to first item in list */
-		iter.stamp     = stamp;
 		iter.userData  = rows[0];
 
 		return true;
@@ -289,7 +282,6 @@ class CustomList : TreeModel
 		if ( record == null || record.pos != n )
 			throw new Exception("Invalid record");
 
-		iter.stamp     = stamp;
 		iter.userData  = record;
 
 		return true;
