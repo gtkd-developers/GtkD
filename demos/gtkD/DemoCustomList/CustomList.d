@@ -143,9 +143,12 @@ class CustomList : TreeModel
 	 * (_get_value is what gtk_tree_model_get uses)
 	 */
 
-	override Value getValue(TreeIter iter, int column, Value value)
+	override Value getValue(TreeIter iter, int column, Value value = null)
 	{
 		CustomRecord  *record;
+
+		if ( value is null )
+			value = new Value();
 
 		if ( iter is null || column >= nColumns )
 			return null;
