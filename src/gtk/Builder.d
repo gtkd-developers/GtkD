@@ -42,17 +42,19 @@
  * omit prefixes:
  * omit code:
  * 	- gtk_builder_get_object
+ * 	- gtk_builder_get_objects
  * 	- gtk_builder_new
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
+ * 	- glib.ListSG
  * 	- glib.Str
  * 	- gobject.ObjectG
  * 	- gobject.ParamSpec
  * 	- gobject.Value
- * 	- glib.ListSG
- * 	- glib.ErrorG
- * 	- glib.GException
  * 	- std.string
+ * 	- gtkc.glib;
  * 	- gtkc.gobject
  * 	- gtkc.paths
  * 	- glib.Module
@@ -75,13 +77,14 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import glib.ErrorG;
+private import glib.GException;
+private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
-private import glib.ListSG;
-private import glib.ErrorG;
-private import glib.GException;
+private import gtkc.glib;;
 private import gtkc.gobject;
 private import gtkc.paths;
 private import glib.Module;
@@ -468,27 +471,57 @@ public class Builder : ObjectG
 	public ObjectG getObject(string name)
 	{
 		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
-		auto cobj = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
+		return newFromObject( gtk_builder_get_object(gtkBuilder, Str.toStringz(name)) );
+	}
+	
+	/**
+	 * Gets all objects that have been constructed by builder. Note that
+	 * this function does not increment the reference counts of the returned
+	 * objects.
+	 * Since 2.12
+	 * Returns: a newly-allocated GSList containing all the objects constructed by the GtkBuilder instance. It should be freed by g_slist_free(). element-type GObject. transfer container GObject.
+	 */
+	public ObjectG[] getObjects()
+	{
+		ObjectG[] objects;
+		
+		// GSList* gtk_builder_get_objects (GtkBuilder *builder);
+		GSList* list = gtk_builder_get_objects(gtkBuilder);
+		
+		while ( list.next !is null )
+		{
+			objects ~= newFromObject( cast(GObject*)list.data );
+			list = list.next;
+		}
+		
+		g_slist_free(list);
+		
+		return objects;
+	}
+	
+	/**
+	 * This function creates an D object corresponding to the Struct pointer passed in.
+	 */
+	public ObjectG newFromObject(GObject* cobj)
+	{
+		//version( !LLVM )
+		version(LLVM) {} else
+		{
+			alias ClassInfo.find findClassInfo;
+		}
+		
 		if(cobj is null)
 		{
 			return null;
 		}
 		
 		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-		ClassInfo ci;
+		ClassInfo ci = findClassInfo(type);
 		
-		version(LLVM)
-		{
-			ci = findClassInfo(type);
-		}
-		else
-		{
-			ci = ClassInfo.find(type);
-		}
-		
+		//Gobject and Gio types both start with g, so try both.
 		if(ci is null && startsWith(type, "gobject"))
 		{
-			ci = ClassInfo.find("gio"~ type[7..$]);
+			ci = findClassInfo("gio"~ type[7..$]);
 		}
 		
 		if(ci is null)
@@ -510,6 +543,11 @@ public class Builder : ObjectG
 		return obj;
 	}
 	
+	/**
+	 * Turn the name of a C Type in to the name of the corresponding D type.
+	 * Note: If the prefix of the type is "G" this always usses "gobject" as
+	 *     the prefix, extra care should be taken for types from GIO.
+	 */
 	private string convertClassName(string gName)
 	{
 		string conv;
@@ -521,14 +559,15 @@ public class Builder : ObjectG
 			alias toLower tolower;
 		}
 		
-		if      ( startsWith(gName, "Gtk") )   prefix = "Gtk";
-		else if ( startsWith(gName, "Gdk") )   prefix = "Gdk";
-		else if ( startsWith(gName, "Gst") )   prefix = "Gst";
-		else if ( startsWith(gName, "Gda") )   prefix = "Gda";
-		else if ( startsWith(gName, "Atk") )   prefix = "Atk";
-		else if ( startsWith(gName, "G") )     prefix = "G";
-		else if ( startsWith(gName, "Pango") ) prefix = "Pg";
-		else if ( startsWith(gName, "cairo") ) prefix = "cairo";
+		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
+		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
+		else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )        prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )        prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )        prefix = "Atk";
+		else if ( startsWith(gName, "G") )          prefix = "G";
+		else if ( startsWith(gName, "Pango") )      prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )      prefix = "cairo";
 		
 		conv = gName[prefix.length..gName.length];
 		
@@ -694,24 +733,6 @@ public class Builder : ObjectG
 		}
 		
 		return p;
-	}
-	
-	/**
-	 * Gets all objects that have been constructed by builder. Note that
-	 * this function does not increment the reference counts of the returned
-	 * objects.
-	 * Since 2.12
-	 * Returns: a newly-allocated GSList containing all the objects constructed by the GtkBuilder instance. It should be freed by g_slist_free(). element-type GObject. transfer container GObject.
-	 */
-	public ListSG getObjects()
-	{
-		// GSList* gtk_builder_get_objects (GtkBuilder *builder);
-		auto p = gtk_builder_get_objects(gtkBuilder);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
