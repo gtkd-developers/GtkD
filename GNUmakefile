@@ -38,6 +38,12 @@ else ifeq ("$(OS)","Linux")
     LDFLAGS+=$(LINKERFLAG)-ldl
 endif
 
+ifeq ("$(ARCH)", "x86_64") 
+    DCFLAGS+=-m64
+	LDFLAGS+=-m64
+endif 
+
+
 AR=ar
 RANLIB=ranlib
 
