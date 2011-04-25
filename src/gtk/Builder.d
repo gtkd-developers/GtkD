@@ -467,45 +467,47 @@ public class Builder : ObjectG
 	 */
 	public ObjectG getObject(string name)
 	{
-		version(LLVM)
+		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
+		auto cobj = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
+		if(cobj is null)
 		{
 			return null;
 		}
+		
+		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
+		ClassInfo ci;
+		
+		version(LLVM)
+		{
+			ci = findClassInfo(type);
+		}
 		else
 		{
-			// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
-			auto cobj = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
-			if(cobj is null)
-			{
-				return null;
-			}
-			
-			string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-			auto ci = ClassInfo.find(type);
-			
-			if(ci is null && startsWith(type, "gobject"))
-			{
-				ci = ClassInfo.find("gio"~ type[7..$]);
-			}
-			
-			if(ci is null)
-			{
-				return null;
-			}
-			
-			ObjectG obj = cast(ObjectG)_d_newclass(ci);
-			
-			version(D_Version2)
-			{
-				obj.__ctor(cobj);
-			}
-			else
-			{
-				obj._ctor(cobj);
-			}
-			
-			return obj;
+			ci = ClassInfo.find(type);
 		}
+		
+		if(ci is null && startsWith(type, "gobject"))
+		{
+			ci = ClassInfo.find("gio"~ type[7..$]);
+		}
+		
+		if(ci is null)
+		{
+			return null;
+		}
+		
+		ObjectG obj = cast(ObjectG)_d_newclass(ci);
+		
+		version(D_Version2)
+		{
+			obj.__ctor(cobj);
+		}
+		else
+		{
+			obj._ctor(cobj);
+		}
+		
+		return obj;
 	}
 	
 	private string convertClassName(string gName)
@@ -546,6 +548,29 @@ public class Builder : ObjectG
 	private bool startsWith(string str, string prefix)
 	{
 		return str.length >= prefix.length && str[0..prefix.length] == prefix;
+	}
+	
+	version(LLVM)
+	{
+		private Object _d_newclass(ClassInfo ci)
+		{
+			void* p = cast(void*)_d_allocclass(ci);
+			(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
+			
+			return cast(Object) p;
+		}
+		
+		private ClassInfo findClassInfo(string classname)
+		{
+			foreach ( m; ModuleInfo )
+			{
+				foreach ( c; m.localClasses )
+				{
+					if ( c.name == classname )
+					return c;
+				}
+			}
+		}
 	}
 	
 	/**
