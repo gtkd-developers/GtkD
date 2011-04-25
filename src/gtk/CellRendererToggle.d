@@ -116,6 +116,12 @@ public class CellRendererToggle : CellRenderer
 		this.gtkCellRendererToggle = gtkCellRendererToggle;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCellRendererToggle = cast(GtkCellRendererToggle*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

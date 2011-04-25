@@ -112,6 +112,12 @@ public class VScale : Scale
 		this.gtkVScale = gtkVScale;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkVScale = cast(GtkVScale*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -241,6 +241,12 @@ public class Image : Misc
 		this.gtkImage = gtkImage;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkImage = cast(GtkImage*)obj;
+	}
+	
 	// this will be an enum
 	/**
 	 * Creates a GtkImage displaying a stock icon. Sample stock icon

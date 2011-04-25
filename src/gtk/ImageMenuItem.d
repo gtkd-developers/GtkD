@@ -119,6 +119,12 @@ public class ImageMenuItem : MenuItem
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkImageMenuItem = cast(GtkImageMenuItem*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.
 	 * If mnemonic it true the label

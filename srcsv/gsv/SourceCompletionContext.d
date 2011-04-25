@@ -118,6 +118,12 @@ public class SourceCompletionContext : ObjectG
 		this.gtkSourceCompletionContext = gtkSourceCompletionContext;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceCompletionContext = cast(GtkSourceCompletionContext*)obj;
+	}
+	
 	/**
 	 * Providers can use this function to add proposals to the completion. They
 	 * can do so asynchronously by means of the finished argument. Providers must

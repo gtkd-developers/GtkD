@@ -252,6 +252,12 @@ public class Dialog : Window
 		this.gtkDialog = gtkDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkDialog = cast(GtkDialog*)obj;
+	}
+	
 	/**
 	 * Both title and parent can be null.
 	 */

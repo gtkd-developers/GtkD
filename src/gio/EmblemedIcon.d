@@ -123,6 +123,12 @@ public class EmblemedIcon : ObjectG, IconIF
 		this.gEmblemedIcon = gEmblemedIcon;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gEmblemedIcon = cast(GEmblemedIcon*)obj;
+	}
+	
 	// add the Icon capabilities
 	mixin IconT!(GEmblemedIcon);
 	

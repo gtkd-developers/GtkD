@@ -316,6 +316,12 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 		this.gtkListStore = gtkListStore;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkListStore = cast(GtkListStore*)obj;
+	}
+	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkListStore);
 	

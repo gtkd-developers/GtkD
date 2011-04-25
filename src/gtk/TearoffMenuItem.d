@@ -115,6 +115,12 @@ public class TearoffMenuItem : MenuItem
 		this.gtkTearoffMenuItem = gtkTearoffMenuItem;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTearoffMenuItem = cast(GtkTearoffMenuItem*)obj;
+	}
+	
 	/**
 	 */
 	

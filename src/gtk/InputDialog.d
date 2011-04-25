@@ -123,6 +123,12 @@ public class InputDialog : Dialog
 		this.gtkInputDialog = gtkInputDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkInputDialog = cast(GtkInputDialog*)obj;
+	}
+	
 	Button getCloseButton()
 	{
 		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,

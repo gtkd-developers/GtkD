@@ -137,6 +137,12 @@ public class ComboBoxEntry : ComboBox
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkComboBoxEntry = cast(GtkComboBoxEntry*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
 	 * construction, you should set a model using gtk_combo_box_set_model() and a

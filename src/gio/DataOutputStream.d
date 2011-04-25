@@ -118,6 +118,12 @@ public class DataOutputStream : FilterOutputStream
 		this.gDataOutputStream = gDataOutputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gDataOutputStream = cast(GDataOutputStream*)obj;
+	}
+	
 	/**
 	 */
 	

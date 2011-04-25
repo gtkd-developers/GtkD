@@ -113,6 +113,12 @@ public class CheckButton : ToggleButton
 		this.gtkCheckButton = gtkCheckButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCheckButton = cast(GtkCheckButton*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.
 	 * If mnemonic is true the label

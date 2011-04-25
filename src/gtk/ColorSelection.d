@@ -117,6 +117,12 @@ public class ColorSelection : VBox
 		this.gtkColorSelection = gtkColorSelection;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkColorSelection = cast(GtkColorSelection*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

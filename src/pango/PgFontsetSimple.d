@@ -118,6 +118,12 @@ public class PgFontsetSimple : PgFontset
 		this.pangoFontsetSimple = pangoFontsetSimple;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoFontsetSimple = cast(PangoFontsetSimple*)obj;
+	}
+	
 	/**
 	 */
 	

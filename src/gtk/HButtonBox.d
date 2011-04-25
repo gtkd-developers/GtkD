@@ -120,6 +120,12 @@ public class HButtonBox : ButtonBox
 		this.gtkHButtonBox = gtkHButtonBox;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkHButtonBox = cast(GtkHButtonBox*)obj;
+	}
+	
 	/**
 	 * Creates a new HButtonBox and sets comon parameters
 	 */

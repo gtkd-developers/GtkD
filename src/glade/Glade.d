@@ -136,6 +136,12 @@ public class Glade : ObjectG
 		this.gladeXML = gladeXML;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gladeXML = cast(GladeXML*)obj;
+	}
+	
 	/**
 	 * This function is used to get a pointer to the GtkWidget corresponding to
 	 * name in the interface description. You would use this if you have to do

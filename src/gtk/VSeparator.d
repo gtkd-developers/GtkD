@@ -108,6 +108,12 @@ public class VSeparator : Separator
 		this.gtkVSeparator = gtkVSeparator;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkVSeparator = cast(GtkVSeparator*)obj;
+	}
+	
 	/**
 	 */
 	

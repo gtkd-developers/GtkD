@@ -114,6 +114,12 @@ public class HScrollbar : Scrollbar
 		this.gtkHScrollbar = gtkHScrollbar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkHScrollbar = cast(GtkHScrollbar*)obj;
+	}
+	
 	/**
 	 */
 	

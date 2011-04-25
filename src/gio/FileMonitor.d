@@ -120,6 +120,12 @@ public class FileMonitor : ObjectG
 		this.gFileMonitor = gFileMonitor;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFileMonitor = cast(GFileMonitor*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

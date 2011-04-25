@@ -131,6 +131,12 @@ public class Display : ObjectG
 		this.gdkDisplay = gdkDisplay;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkDisplay = cast(GdkDisplay*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

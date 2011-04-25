@@ -116,6 +116,12 @@ public class CellRendererAccel : CellRendererText
 		this.gtkCellRendererAccel = gtkCellRendererAccel;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCellRendererAccel = cast(GtkCellRendererAccel*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

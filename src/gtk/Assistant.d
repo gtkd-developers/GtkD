@@ -123,6 +123,12 @@ public class Assistant : Window
 		this.gtkAssistant = gtkAssistant;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAssistant = cast(GtkAssistant*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

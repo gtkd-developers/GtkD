@@ -116,6 +116,12 @@ public class ItemFactory : ObjectGtk
 		this.gtkItemFactory = gtkItemFactory;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkItemFactory = cast(GtkItemFactory*)obj;
+	}
+	
 	/**
 	 */
 	

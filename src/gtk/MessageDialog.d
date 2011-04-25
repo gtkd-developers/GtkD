@@ -162,6 +162,12 @@ public class MessageDialog : Dialog
 		this.gtkMessageDialog = gtkMessageDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkMessageDialog = cast(GtkMessageDialog*)obj;
+	}
+	
 	/**
 	 * Creates a new message dialog, which is a simple dialog with an icon
 	 * indicating the dialog type (error, warning, etc.) and some text the

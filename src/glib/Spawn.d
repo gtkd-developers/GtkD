@@ -76,6 +76,7 @@ version(Tango) {
 	private import tango.core.Thread;
 	private import tango.stdc.stdio;
 	private import tango.text.Util;
+	private import tango.text.Unicode;
 	private import tango.stdc.string;
 
 	version = druntime;

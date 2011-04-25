@@ -130,6 +130,12 @@ public class Client : ObjectG
 		this.gdaClient = gdaClient;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaClient = cast(GdaClient*)obj;
+	}
+	
 	/**
 	 * Establishes a connection to a data source. The connection will be opened
 	 * if no identical connection is available in the GdaClient connection pool,

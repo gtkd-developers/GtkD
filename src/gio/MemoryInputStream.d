@@ -111,6 +111,12 @@ public class MemoryInputStream : InputStream, SeekableIF
 		this.gMemoryInputStream = gMemoryInputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gMemoryInputStream = cast(GMemoryInputStream*)obj;
+	}
+	
 	// add the Seekable capabilities
 	mixin SeekableT!(GMemoryInputStream);
 	

@@ -117,6 +117,12 @@ public class Emblem : ObjectG, IconIF
 		this.gEmblem = gEmblem;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gEmblem = cast(GEmblem*)obj;
+	}
+	
 	// add the Icon capabilities
 	mixin IconT!(GEmblem);
 	

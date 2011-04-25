@@ -137,6 +137,12 @@ public class Fixed : Container
 		this.gtkFixed = gtkFixed;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFixed = cast(GtkFixed*)obj;
+	}
+	
 	/**
 	 */
 	

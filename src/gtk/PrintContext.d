@@ -209,6 +209,12 @@ public class PrintContext : ObjectG
 		this.gtkPrintContext = gtkPrintContext;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkPrintContext = cast(GtkPrintContext*)obj;
+	}
+	
 	/**
 	 */
 	

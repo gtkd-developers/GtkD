@@ -161,6 +161,12 @@ public class PixbufLoader : ObjectG
 		this.gdkPixbufLoader = gdkPixbufLoader;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkPixbufLoader = cast(GdkPixbufLoader*)obj;
+	}
+	
 	/**
 	 * Creates a new pixbuf loader object that always attempts to parse
 	 * image data as if it were an image of type image_type or mime_type, instead of

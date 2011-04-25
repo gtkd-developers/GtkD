@@ -105,6 +105,12 @@ public class Accessible : ObjectAtk
 		this.gtkAccessible = gtkAccessible;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAccessible = cast(GtkAccessible*)obj;
+	}
+	
 	/**
 	 */
 	

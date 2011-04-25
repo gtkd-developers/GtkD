@@ -111,6 +111,12 @@ public class VPaned : Paned
 		this.gtkVPaned = gtkVPaned;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkVPaned = cast(GtkVPaned*)obj;
+	}
+	
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
 	 * Params:

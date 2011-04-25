@@ -117,6 +117,12 @@ public class Alignment : Bin
 		this.gtkAlignment = gtkAlignment;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAlignment = cast(GtkAlignment*)obj;
+	}
+	
 	/** */
 	public static Alignment center(Widget widget)
 	{

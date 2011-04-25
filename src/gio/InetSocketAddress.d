@@ -109,6 +109,12 @@ public class InetSocketAddress : SocketAddress
 		this.gInetSocketAddress = gInetSocketAddress;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gInetSocketAddress = cast(GInetSocketAddress*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -128,6 +128,12 @@ public class Button : Bin, ActivatableIF
 		this.gtkButton = gtkButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkButton = cast(GtkButton*)obj;
+	}
+	
 	private static IconSize currentIconSize = IconSize.BUTTON;
 	
 	/** An arbitrary string to be used by the application */

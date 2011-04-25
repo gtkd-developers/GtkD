@@ -118,6 +118,12 @@ public class BufferedOutputStream : FilterOutputStream
 		this.gBufferedOutputStream = gBufferedOutputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gBufferedOutputStream = cast(GBufferedOutputStream*)obj;
+	}
+	
 	/**
 	 */
 	

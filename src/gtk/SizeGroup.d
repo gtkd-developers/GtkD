@@ -167,6 +167,12 @@ public class SizeGroup : ObjectG, BuildableIF
 		this.gtkSizeGroup = gtkSizeGroup;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSizeGroup = cast(GtkSizeGroup*)obj;
+	}
+	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkSizeGroup);
 	

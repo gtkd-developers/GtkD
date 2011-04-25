@@ -166,6 +166,12 @@ public class Keymap : ObjectG
 		this.gdkKeymap = gdkKeymap;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkKeymap = cast(GdkKeymap*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

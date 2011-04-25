@@ -135,6 +135,12 @@ public class CellView : Widget, CellLayoutIF
 		this.gtkCellView = gtkCellView;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCellView = cast(GtkCellView*)obj;
+	}
+	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkCellView);
 	

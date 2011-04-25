@@ -148,6 +148,12 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 		this.gtkRecentChooserDialog = gtkRecentChooserDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRecentChooserDialog = cast(GtkRecentChooserDialog*)obj;
+	}
+	
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);
 	

@@ -31,6 +31,11 @@ public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
 
+version(LLVM) {} else
+{
+	extern(C) Object _d_newclass(ClassInfo ci);
+}
+
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 

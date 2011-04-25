@@ -166,6 +166,12 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 		this.gtkTreeStore = gtkTreeStore;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTreeStore = cast(GtkTreeStore*)obj;
+	}
+	
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeStore);
 	

@@ -176,6 +176,12 @@ public class FileSelection : Dialog
 		this.gtkFileSelection = gtkFileSelection;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFileSelection = cast(GtkFileSelection*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -115,6 +115,12 @@ public class ObjectFactory : ObjectG
 		this.atkObjectFactory = atkObjectFactory;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		atkObjectFactory = cast(AtkObjectFactory*)obj;
+	}
+	
 	/**
 	 */
 	

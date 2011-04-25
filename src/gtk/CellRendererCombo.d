@@ -127,6 +127,12 @@ public class CellRendererCombo : CellRendererText
 		this.gtkCellRendererCombo = gtkCellRendererCombo;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCellRendererCombo = cast(GtkCellRendererCombo*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

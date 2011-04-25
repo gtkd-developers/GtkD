@@ -109,6 +109,12 @@ public class ErrorGda : ObjectG
 		this.gdaError = gdaError;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaError = cast(GdaError*)obj;
+	}
+	
 	/** */
 	this (ListG glist) {
 		this( cast(GdaError*)glist.data );

@@ -150,6 +150,12 @@ public class PgContext : ObjectG
 		this.pangoContext = pangoContext;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoContext = cast(PangoContext*)obj;
+	}
+	
 	/**
 	 * Determines possible line, word, and character breaks
 	 * for a string of Unicode text with a single analysis. For most

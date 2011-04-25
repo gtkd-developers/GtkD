@@ -152,6 +152,12 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		this.gtkComboBox = gtkComboBox;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkComboBox = cast(GtkComboBox*)obj;
+	}
+	
 	private int count = 0;
 	public int maxCount = 0;
 	

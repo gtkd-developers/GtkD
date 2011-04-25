@@ -124,6 +124,12 @@ public class Range : Widget, OrientableIF
 		this.gtkRange = gtkRange;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRange = cast(GtkRange*)obj;
+	}
+	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkRange);
 	

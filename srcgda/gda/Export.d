@@ -112,6 +112,12 @@ public class Export : ObjectG
 		this.gdaExport = gdaExport;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaExport = cast(GdaExport*)obj;
+	}
+	
 	/**
 	 */
 	

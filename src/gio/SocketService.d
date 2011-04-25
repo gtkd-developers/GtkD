@@ -126,6 +126,12 @@ public class SocketService : SocketListener
 		this.gSocketService = gSocketService;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gSocketService = cast(GSocketService*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

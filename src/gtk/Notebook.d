@@ -158,6 +158,12 @@ public class Notebook : Container
 		this.gtkNotebook = gtkNotebook;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkNotebook = cast(GtkNotebook*)obj;
+	}
+	
 	/** The GtkNotebookTab is not documented */
 	public enum GtkNotebookTab
 	{

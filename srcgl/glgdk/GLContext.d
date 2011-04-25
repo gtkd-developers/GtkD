@@ -111,6 +111,12 @@ public class GLContext : ObjectG
 		this.gdkGLContext = gdkGLContext;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkGLContext = cast(GdkGLContext*)obj;
+	}
+	
 	/**
 	 */
 	

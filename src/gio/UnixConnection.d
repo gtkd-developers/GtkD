@@ -121,6 +121,12 @@ public class UnixConnection : TcpConnection
 		this.gUnixConnection = gUnixConnection;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gUnixConnection = cast(GUnixConnection*)obj;
+	}
+	
 	/**
 	 */
 	

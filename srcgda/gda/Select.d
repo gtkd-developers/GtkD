@@ -110,6 +110,12 @@ public class Select : DataModelArray
 		this.gdaSelect = gdaSelect;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaSelect = cast(GdaSelect*)obj;
+	}
+	
 	/**
 	 */
 	

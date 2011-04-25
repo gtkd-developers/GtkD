@@ -140,6 +140,12 @@ public class ProgressBar : Progress
 		this.gtkProgressBar = gtkProgressBar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkProgressBar = cast(GtkProgressBar*)obj;
+	}
+	
 	/**
 	 */
 	

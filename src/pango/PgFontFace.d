@@ -115,6 +115,12 @@ public class PgFontFace : ObjectG
 		this.pangoFontFace = pangoFontFace;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoFontFace = cast(PangoFontFace*)obj;
+	}
+	
 	/**
 	 */
 	

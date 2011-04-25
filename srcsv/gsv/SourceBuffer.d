@@ -135,6 +135,12 @@ public class SourceBuffer : TextBuffer
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceBuffer = cast(GtkSourceBuffer*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

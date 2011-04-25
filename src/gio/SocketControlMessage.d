@@ -121,6 +121,12 @@ public class SocketControlMessage : ObjectG
 		this.gSocketControlMessage = gSocketControlMessage;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gSocketControlMessage = cast(GSocketControlMessage*)obj;
+	}
+	
 	/**
 	 */
 	

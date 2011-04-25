@@ -128,6 +128,12 @@ public class SourceView : TextView
 		this.gtkSourceView = gtkSourceView;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceView = cast(GtkSourceView*)obj;
+	}
+	
 	/**
 	 * Returns the GtkSourceBuffer being displayed by this source view.
 	 * The reference count on the buffer is not incremented; the caller

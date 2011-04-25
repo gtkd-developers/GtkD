@@ -400,6 +400,12 @@ public class Window : Drawable
 		this.gdkWindow = gdkWindow;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkWindow = cast(GdkWindow*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

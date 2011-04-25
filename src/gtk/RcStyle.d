@@ -560,6 +560,12 @@ public class RcStyle : ObjectG
 		this.gtkRcStyle = gtkRcStyle;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRcStyle = cast(GtkRcStyle*)obj;
+	}
+	
 	/**
 	 */
 	

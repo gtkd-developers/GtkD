@@ -264,6 +264,12 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 		this.gtkTreeModelSort = gtkTreeModelSort;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTreeModelSort = cast(GtkTreeModelSort*)obj;
+	}
+	
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelSort);
 	

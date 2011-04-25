@@ -171,6 +171,12 @@ public class DrawingArea : Widget
 		this.gtkDrawingArea = gtkDrawingArea;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkDrawingArea = cast(GtkDrawingArea*)obj;
+	}
+	
 	/**
 	 * Create a new DrawingArea and sets the SizeRequest
 	 * Params:

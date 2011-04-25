@@ -144,6 +144,12 @@ public class MenuItem : Item, ActivatableIF
 		this.gtkMenuItem = gtkMenuItem;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkMenuItem = cast(GtkMenuItem*)obj;
+	}
+	
 	/** store the action code passed in by the applcation */
 	private string actionLabel;
 	

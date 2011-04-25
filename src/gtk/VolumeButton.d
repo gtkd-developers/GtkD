@@ -113,6 +113,12 @@ public class VolumeButton : ScaleButton
 		this.gtkVolumeButton = gtkVolumeButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkVolumeButton = cast(GtkVolumeButton*)obj;
+	}
+	
 	/**
 	 */
 	

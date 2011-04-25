@@ -119,6 +119,12 @@ public class CellRendererSpin : CellRendererText
 		this.gtkCellRendererSpin = gtkCellRendererSpin;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCellRendererSpin = cast(GtkCellRendererSpin*)obj;
+	}
+	
 	/**
 	 */
 	

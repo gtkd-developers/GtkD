@@ -170,6 +170,12 @@ public class ObjectGtk : ObjectG
 		this.gtkObject = gtkObject;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkObject = cast(GtkObject*)obj;
+	}
+	
 	/** */
 	public static string getId(StockID id)
 	{

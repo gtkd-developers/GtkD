@@ -134,6 +134,12 @@ public class PrintJob : ObjectG
 		this.gtkPrintJob = gtkPrintJob;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkPrintJob = cast(GtkPrintJob*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

@@ -107,6 +107,12 @@ public class PgEngineShape : PgEngine
 		this.pangoEngineShape = pangoEngineShape;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoEngineShape = cast(PangoEngineShape*)obj;
+	}
+	
 	/**
 	 */
 }

@@ -187,6 +187,12 @@ public class InfoBar : HBox
 		this.gtkInfoBar = gtkInfoBar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkInfoBar = cast(GtkInfoBar*)obj;
+	}
+	
 	/** */
 	public this(string[] buttonsText, ResponseType[] responses)
 	{

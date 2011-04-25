@@ -198,6 +198,12 @@ public class ObjectG
 				refSink(gObject);
 				unref(gObject);
 			}
+			
+			//When constructed via GtkBuilder set the structs.
+			if ( getStruct() is null)
+			{
+				setStruct(gObject);
+			}
 		}
 	}
 	
@@ -253,6 +259,11 @@ public class ObjectG
 	{
 		//gpointer g_object_get_data(GObject *object, const gchar *key);
 		return g_object_get_data(obj, Str.toStringz("GObject"));
+	}
+	
+	protected void setStruct(GObject* obj)
+	{
+		gObject = cast(GObject*)obj;
 	}
 	
 	/** */

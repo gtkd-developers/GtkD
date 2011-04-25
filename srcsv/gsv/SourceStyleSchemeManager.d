@@ -112,6 +112,12 @@ public class SourceStyleSchemeManager : ObjectG
 		this.gtkSourceStyleSchemeManager = gtkSourceStyleSchemeManager;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceStyleSchemeManager = cast(GtkSourceStyleSchemeManager*)obj;
+	}
+	
 	/**
 	 */
 	

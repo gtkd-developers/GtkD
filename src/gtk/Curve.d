@@ -116,6 +116,12 @@ public class Curve : DrawingArea
 		this.gtkCurve = gtkCurve;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCurve = cast(GtkCurve*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

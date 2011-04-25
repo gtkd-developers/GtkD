@@ -112,6 +112,12 @@ public class Table : DataModelArray
 		this.gdaTable = gdaTable;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaTable = cast(GdaTable*)obj;
+	}
+	
 	/**
 	 */
 	

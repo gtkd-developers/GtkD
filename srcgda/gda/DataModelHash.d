@@ -117,6 +117,12 @@ public class DataModelHash : DataModel
 		this.gdaDataModelHash = gdaDataModelHash;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaDataModelHash = cast(GdaDataModelHash*)obj;
+	}
+	
 	/**
 	 */
 	

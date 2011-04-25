@@ -194,6 +194,12 @@ public class SpinButton : Entry
 		this.gtkSpinButton = gtkSpinButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSpinButton = cast(GtkSpinButton*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

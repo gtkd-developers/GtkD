@@ -135,6 +135,12 @@ public class AccelGroup : ObjectG
 		this.gtkAccelGroup = gtkAccelGroup;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAccelGroup = cast(GtkAccelGroup*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

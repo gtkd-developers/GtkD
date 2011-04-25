@@ -169,6 +169,12 @@ public class Socket : ObjectG, InitableIF
 		this.gSocket = gSocket;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gSocket = cast(GSocket*)obj;
+	}
+	
 	// add the Initable capabilities
 	mixin InitableT!(GSocket);
 	

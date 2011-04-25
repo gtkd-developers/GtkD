@@ -202,6 +202,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		this.gtkPrintOperation = gtkPrintOperation;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkPrintOperation = cast(GtkPrintOperation*)obj;
+	}
+	
 	// add the PrintOperationPreview capabilities
 	mixin PrintOperationPreviewT!(GtkPrintOperation);
 	

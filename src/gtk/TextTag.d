@@ -128,6 +128,12 @@ public class TextTag : ObjectG
 		this.gtkTextTag = gtkTextTag;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTextTag = cast(GtkTextTag*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

@@ -177,6 +177,12 @@ public class TextBuffer : ObjectG
 		this.gtkTextBuffer = gtkTextBuffer;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTextBuffer = cast(GtkTextBuffer*)obj;
+	}
+	
 	/**
 	 * Deletes current contents of buffer, and inserts text instead. If
 	 * len is -1, text must be nul-terminated. text must be valid UTF-8.

@@ -110,6 +110,12 @@ public class UnixOutputStream : OutputStream
 		this.gUnixOutputStream = gUnixOutputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gUnixOutputStream = cast(GUnixOutputStream*)obj;
+	}
+	
 	/**
 	 */
 	

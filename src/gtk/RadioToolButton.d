@@ -124,6 +124,12 @@ public class RadioToolButton : ToggleToolButton
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRadioToolButton = cast(GtkRadioToolButton*)obj;
+	}
+	
 	/**
 	 */
 	

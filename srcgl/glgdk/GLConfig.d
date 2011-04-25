@@ -122,6 +122,12 @@ public class GLConfig : ObjectG
 		this.gdkGLConfig = gdkGLConfig;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkGLConfig = cast(GdkGLConfig*)obj;
+	}
+	
 	/**
 	 * Creates a mew OpenGL frame buffer configuration that match the specified display mode,
 	 * or the fallback mode.

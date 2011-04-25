@@ -115,6 +115,12 @@ public class Registry : ObjectG
 		this.atkRegistry = atkRegistry;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		atkRegistry = cast(AtkRegistry*)obj;
+	}
+	
 	/**
 	 */
 	

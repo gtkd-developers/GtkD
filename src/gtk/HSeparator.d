@@ -113,6 +113,12 @@ public class HSeparator : Separator
 		this.gtkHSeparator = gtkHSeparator;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkHSeparator = cast(GtkHSeparator*)obj;
+	}
+	
 	/**
 	 */
 	

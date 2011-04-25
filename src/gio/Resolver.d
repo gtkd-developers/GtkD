@@ -129,6 +129,12 @@ public class Resolver : ObjectG
 		this.gResolver = gResolver;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gResolver = cast(GResolver*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

@@ -122,6 +122,12 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 		this.gNetworkAddress = gNetworkAddress;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gNetworkAddress = cast(GNetworkAddress*)obj;
+	}
+	
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GNetworkAddress);
 	

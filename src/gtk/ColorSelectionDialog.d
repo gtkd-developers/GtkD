@@ -118,6 +118,12 @@ public class ColorSelectionDialog : Dialog
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkColorSelectionDialog = cast(GtkColorSelectionDialog*)obj;
+	}
+	
 	/**
 	 */
 	

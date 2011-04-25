@@ -199,6 +199,12 @@ public class FileChooserDialog : Dialog, FileChooserIF
 		this.gtkFileChooserDialog = gtkFileChooserDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFileChooserDialog = cast(GtkFileChooserDialog*)obj;
+	}
+	
 	// add the FileChooser capabilities
 	mixin FileChooserT!(GtkFileChooserDialog);
 	

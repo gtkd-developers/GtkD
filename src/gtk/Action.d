@@ -157,6 +157,12 @@ public class Action : ObjectG, BuildableIF
 		this.gtkAction = gtkAction;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAction = cast(GtkAction*)obj;
+	}
+	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkAction);
 	

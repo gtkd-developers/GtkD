@@ -190,6 +190,12 @@ public class Menu : MenuShell
 		this.gtkMenu = gtkMenu;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkMenu = cast(GtkMenu*)obj;
+	}
+	
 	/**
 	 * Popups up this menu
 	 * Params:

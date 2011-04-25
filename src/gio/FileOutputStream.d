@@ -136,6 +136,12 @@ public class FileOutputStream : OutputStream, SeekableIF
 		this.gFileOutputStream = gFileOutputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFileOutputStream = cast(GFileOutputStream*)obj;
+	}
+	
 	// add the Seekable capabilities
 	mixin SeekableT!(GFileOutputStream);
 	

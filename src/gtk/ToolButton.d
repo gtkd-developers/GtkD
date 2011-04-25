@@ -129,6 +129,12 @@ public class ToolButton : ToolItem
 		this.gtkToolButton = gtkToolButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToolButton = cast(GtkToolButton*)obj;
+	}
+	
 	/** An arbitrary string to be used by the application */
 	private string action;
 	

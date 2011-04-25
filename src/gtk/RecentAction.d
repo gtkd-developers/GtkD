@@ -119,6 +119,12 @@ public class RecentAction : Action
 		this.gtkRecentAction = gtkRecentAction;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRecentAction = cast(GtkRecentAction*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkRecentAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,

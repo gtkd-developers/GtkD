@@ -145,6 +145,12 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		this.gtkToolbar = gtkToolbar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToolbar = cast(GtkToolbar*)obj;
+	}
+	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolbar);
 	

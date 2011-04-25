@@ -171,6 +171,12 @@ public class Expander : Bin
 		this.gtkExpander = gtkExpander;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkExpander = cast(GtkExpander*)obj;
+	}
+	
 	/**
 	 * Creates a new expander using label as the text of the label.
 	 * Since 2.4

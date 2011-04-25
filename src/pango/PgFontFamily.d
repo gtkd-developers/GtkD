@@ -115,6 +115,12 @@ public class PgFontFamily : ObjectG
 		this.pangoFontFamily = pangoFontFamily;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoFontFamily = cast(PangoFontFamily*)obj;
+	}
+	
 	/**
 	 */
 	

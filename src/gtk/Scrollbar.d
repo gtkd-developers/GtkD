@@ -115,6 +115,12 @@ public class Scrollbar : Range
 		this.gtkScrollbar = gtkScrollbar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkScrollbar = cast(GtkScrollbar*)obj;
+	}
+	
 	/**
 	 */
 }

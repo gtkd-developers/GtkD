@@ -144,6 +144,12 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkEntryCompletion = cast(GtkEntryCompletion*)obj;
+	}
+	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkEntryCompletion);
 	

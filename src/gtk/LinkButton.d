@@ -121,6 +121,12 @@ public class LinkButton : Button
 		this.gtkLinkButton = gtkLinkButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkLinkButton = cast(GtkLinkButton*)obj;
+	}
+	
 	/**
 	 */
 	

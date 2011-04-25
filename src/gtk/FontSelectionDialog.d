@@ -124,6 +124,12 @@ public class FontSelectionDialog : Dialog
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFontSelectionDialog = cast(GtkFontSelectionDialog*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -120,6 +120,12 @@ public class VButtonBox : ButtonBox
 		this.gtkVButtonBox = gtkVButtonBox;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkVButtonBox = cast(GtkVButtonBox*)obj;
+	}
+	
 	/**
 	 * Creates a new vertical button box and sets standart values for it's comon parameters
 	 * Returns: a new vertical button box

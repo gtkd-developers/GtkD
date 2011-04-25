@@ -276,6 +276,12 @@ public class Widget : ObjectGtk, BuildableIF
 		this.gtkWidget = gtkWidget;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkWidget = cast(GtkWidget*)obj;
+	}
+	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkWidget);
 	

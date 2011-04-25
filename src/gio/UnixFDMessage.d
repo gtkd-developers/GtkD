@@ -119,6 +119,12 @@ public class UnixFDMessage : SocketControlMessage
 		this.gUnixFDMessage = gUnixFDMessage;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gUnixFDMessage = cast(GUnixFDMessage*)obj;
+	}
+	
 	/**
 	 */
 	

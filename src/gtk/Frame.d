@@ -138,6 +138,12 @@ public class Frame : Bin
 		this.gtkFrame = gtkFrame;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFrame = cast(GtkFrame*)obj;
+	}
+	
 	/**
 	 * Creates frame with label and set it's child widget
 	 */

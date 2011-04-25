@@ -129,6 +129,12 @@ public class ButtonBox : Box
 		this.gtkButtonBox = gtkButtonBox;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkButtonBox = cast(GtkButtonBox*)obj;
+	}
+	
 	/** */
 	static ButtonBox createActionBox(
 	void delegate(Button) onClicked,

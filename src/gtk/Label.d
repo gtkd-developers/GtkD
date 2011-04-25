@@ -236,6 +236,12 @@ public class Label : Misc
 		this.gtkLabel = gtkLabel;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkLabel = cast(GtkLabel*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkLabel, containing the text in str.
 	 * If characters in str are preceded by an underscore, they are

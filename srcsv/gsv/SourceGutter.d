@@ -132,6 +132,12 @@ public class SourceGutter : ObjectG
 		this.gtkSourceGutter = gtkSourceGutter;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceGutter = cast(GtkSourceGutter*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

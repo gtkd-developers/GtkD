@@ -123,6 +123,12 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 		this.gDesktopAppInfo = gDesktopAppInfo;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gDesktopAppInfo = cast(GDesktopAppInfo*)obj;
+	}
+	
 	// add the AppInfo capabilities
 	mixin AppInfoT!(GDesktopAppInfo);
 	

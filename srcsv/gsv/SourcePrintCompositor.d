@@ -126,6 +126,12 @@ public class SourcePrintCompositor : ObjectG
 		this.gtkSourcePrintCompositor = gtkSourcePrintCompositor;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourcePrintCompositor = cast(GtkSourcePrintCompositor*)obj;
+	}
+	
 	/**
 	 */
 	

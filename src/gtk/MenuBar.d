@@ -115,6 +115,12 @@ public class MenuBar : MenuShell
 		this.gtkMenuBar = gtkMenuBar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkMenuBar = cast(GtkMenuBar*)obj;
+	}
+	
 	/** */
 	Menu append(string label, bool rightJustify=false)
 	{

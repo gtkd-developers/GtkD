@@ -117,6 +117,12 @@ public class PgFontset : ObjectG
 		this.pangoFontset = pangoFontset;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoFontset = cast(PangoFontset*)obj;
+	}
+	
 	/**
 	 */
 	

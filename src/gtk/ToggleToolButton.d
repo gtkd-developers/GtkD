@@ -117,6 +117,12 @@ public class ToggleToolButton : ToolButton
 		this.gtkToggleToolButton = gtkToggleToolButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToggleToolButton = cast(GtkToggleToolButton*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

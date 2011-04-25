@@ -210,6 +210,12 @@ public class IconTheme : ObjectG
 		this.gtkIconTheme = gtkIconTheme;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkIconTheme = cast(GtkIconTheme*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

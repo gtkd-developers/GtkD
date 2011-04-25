@@ -107,6 +107,12 @@ public class SourceStyle : ObjectG
 		this.gtkSourceStyle = gtkSourceStyle;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceStyle = cast(GtkSourceStyle*)obj;
+	}
+	
 	/**
 	 */
 	

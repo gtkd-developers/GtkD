@@ -173,6 +173,12 @@ public class IMContext : ObjectG
 		this.gtkIMContext = gtkIMContext;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkIMContext = cast(GtkIMContext*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

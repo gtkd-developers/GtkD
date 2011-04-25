@@ -116,6 +116,12 @@ public class TextTagTable : ObjectG
 		this.gtkTextTagTable = gtkTextTagTable;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTextTagTable = cast(GtkTextTagTable*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

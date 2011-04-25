@@ -144,6 +144,12 @@ public class RadioMenuItem : CheckMenuItem
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRadioMenuItem = cast(GtkRadioMenuItem*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
 	 * The new GtkRadioMenuItem is added to the same group as group.

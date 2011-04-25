@@ -107,6 +107,12 @@ public class PgEngineLang : PgEngine
 		this.pangoEngineLang = pangoEngineLang;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoEngineLang = cast(PangoEngineLang*)obj;
+	}
+	
 	/**
 	 */
 }

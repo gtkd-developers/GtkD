@@ -111,6 +111,12 @@ public class WindowGroup : ObjectG
 		this.gtkWindowGroup = gtkWindowGroup;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkWindowGroup = cast(GtkWindowGroup*)obj;
+	}
+	
 	/**
 	 */
 	

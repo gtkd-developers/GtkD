@@ -132,6 +132,12 @@ public class FileInputStream : InputStream, SeekableIF
 		this.gFileInputStream = gFileInputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFileInputStream = cast(GFileInputStream*)obj;
+	}
+	
 	// add the Seekable capabilities
 	mixin SeekableT!(GFileInputStream);
 	

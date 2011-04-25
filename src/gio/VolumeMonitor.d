@@ -134,6 +134,12 @@ public class VolumeMonitor : ObjectG
 		this.gVolumeMonitor = gVolumeMonitor;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gVolumeMonitor = cast(GVolumeMonitor*)obj;
+	}
+	
 	/**
 	 * Gets the volume monitor used by gio.
 	 * Throws: ConstructionException GTK+ fails to create the object.

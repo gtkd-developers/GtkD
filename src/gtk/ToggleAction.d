@@ -111,6 +111,12 @@ public class ToggleAction : Action
 		this.gtkToggleAction = gtkToggleAction;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToggleAction = cast(GtkToggleAction*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkToggleAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,

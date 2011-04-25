@@ -118,6 +118,12 @@ public class SourceMark : TextMark
 		this.gtkSourceMark = gtkSourceMark;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceMark = cast(GtkSourceMark*)obj;
+	}
+	
 	/**
 	 */
 	

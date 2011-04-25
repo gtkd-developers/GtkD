@@ -111,6 +111,12 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 		this.gZlibDecompressor = gZlibDecompressor;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gZlibDecompressor = cast(GZlibDecompressor*)obj;
+	}
+	
 	// add the Converter capabilities
 	mixin ConverterT!(GZlibDecompressor);
 	

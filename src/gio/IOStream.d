@@ -140,6 +140,12 @@ public class IOStream : ObjectG
 		this.gIOStream = gIOStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gIOStream = cast(GIOStream*)obj;
+	}
+	
 	/**
 	 */
 	

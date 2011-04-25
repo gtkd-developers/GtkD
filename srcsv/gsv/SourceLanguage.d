@@ -110,6 +110,12 @@ public class SourceLanguage : ObjectG
 		this.gtkSourceLanguage = gtkSourceLanguage;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceLanguage = cast(GtkSourceLanguage*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -129,6 +129,12 @@ public class OffscreenWindow : Window
 		this.gtkOffscreenWindow = gtkOffscreenWindow;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkOffscreenWindow = cast(GtkOffscreenWindow*)obj;
+	}
+	
 	/**
 	 */
 	

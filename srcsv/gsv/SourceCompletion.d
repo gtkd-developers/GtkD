@@ -128,6 +128,12 @@ public class SourceCompletion : ObjectGtk
 		this.gtkSourceCompletion = gtkSourceCompletion;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSourceCompletion = cast(GtkSourceCompletion*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

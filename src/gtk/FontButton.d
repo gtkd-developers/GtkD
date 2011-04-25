@@ -111,6 +111,12 @@ public class FontButton : Button
 		this.gtkFontButton = gtkFontButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFontButton = cast(GtkFontButton*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

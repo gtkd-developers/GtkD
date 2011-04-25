@@ -119,6 +119,12 @@ public class DisplayManager : ObjectG
 		this.gdkDisplayManager = gdkDisplayManager;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkDisplayManager = cast(GdkDisplayManager*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

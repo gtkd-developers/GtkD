@@ -112,6 +112,12 @@ public class GLPixmap : Drawable
 		this.gdkGLPixmap = gdkGLPixmap;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkGLPixmap = cast(GdkGLPixmap*)obj;
+	}
+	
 	/**
 	 */
 	

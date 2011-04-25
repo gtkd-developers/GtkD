@@ -116,6 +116,12 @@ public class MenuShell : Container
 		this.gtkMenuShell = gtkMenuShell;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkMenuShell = cast(GtkMenuShell*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

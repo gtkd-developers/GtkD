@@ -129,6 +129,12 @@ public class MenuToolButton : ToolButton
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkMenuToolButton = cast(GtkMenuToolButton*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and
 	 * label as label.

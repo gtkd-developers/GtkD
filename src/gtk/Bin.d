@@ -113,6 +113,12 @@ public class Bin : Container
 		this.gtkBin = gtkBin;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkBin = cast(GtkBin*)obj;
+	}
+	
 	/**
 	 */
 	

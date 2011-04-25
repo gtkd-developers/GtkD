@@ -141,6 +141,12 @@ public class Pixbuf : ObjectG
 		this.gdkPixbuf = gdkPixbuf;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkPixbuf = cast(GdkPixbuf*)obj;
+	}
+	
 	/**
 	 * Transfers image data from a GdkDrawable and converts it to an RGB(A)
 	 * representation inside a GdkPixbuf. In other words, copies

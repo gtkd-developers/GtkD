@@ -179,6 +179,12 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		this.gtkEntry = gtkEntry;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkEntry = cast(GtkEntry*)obj;
+	}
+	
 	// add the Editable capabilities
 	mixin EditableT!(GtkEntry);
 	

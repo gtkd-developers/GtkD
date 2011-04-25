@@ -107,6 +107,12 @@ public class NoOpObjectFactory : ObjectFactory
 		this.atkNoOpObjectFactory = atkNoOpObjectFactory;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		atkNoOpObjectFactory = cast(AtkNoOpObjectFactory*)obj;
+	}
+	
 	/**
 	 */
 	

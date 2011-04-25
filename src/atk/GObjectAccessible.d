@@ -114,6 +114,12 @@ public class GObjectAccessible : ObjectAtk
 		this.atkGObjectAccessible = atkGObjectAccessible;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		atkGObjectAccessible = cast(AtkGObjectAccessible*)obj;
+	}
+	
 	/**
 	 */
 	

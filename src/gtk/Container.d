@@ -219,6 +219,12 @@ public class Container : Widget
 		this.gtkContainer = gtkContainer;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkContainer = cast(GtkContainer*)obj;
+	}
+	
 	/**
 	 * Removes all widgets from the container
 	 */

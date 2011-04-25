@@ -175,6 +175,12 @@ public class Clipboard : ObjectG
 		this.gtkClipboard = gtkClipboard;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkClipboard = cast(GtkClipboard*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

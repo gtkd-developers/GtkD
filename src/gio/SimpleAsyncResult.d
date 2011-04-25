@@ -177,6 +177,12 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 		this.gSimpleAsyncResult = gSimpleAsyncResult;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gSimpleAsyncResult = cast(GSimpleAsyncResult*)obj;
+	}
+	
 	// add the AsyncResult capabilities
 	mixin AsyncResultT!(GSimpleAsyncResult);
 	

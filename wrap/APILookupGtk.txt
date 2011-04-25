@@ -39,6 +39,11 @@ public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
 
+version(LLVM) {} else
+{
+	extern(C) Object _d_newclass(ClassInfo ci);
+}
+
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
@@ -8768,6 +8773,9 @@ import: glib.ListSG
 structWrap: GSList* ListSG
 import: glib.ErrorG
 import: glib.GException
+import: std.string
+
+nocode: gtk_builder_get_object
 
 #imports for gtk_builder_real_get_type_from_name_override
 import: gtkc.gobject
@@ -8874,6 +8882,90 @@ code: start
 		}
 
 		return GType.INVALID;
+	}
+
+	/**
+	 * Gets the object named name. Note that this function does not
+	 * increment the reference count of the returned object.
+	 * Since 2.12
+	 * Params:
+	 * name = name of object to get
+	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
+	 */
+	public ObjectG getObject(string name)
+	{
+		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
+		auto cobj = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
+		if(cobj is null)
+		{
+			return null;
+		}
+
+		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
+		auto ci = ClassInfo.find(type);	
+
+		if(ci is null && startsWith(type, "gobject"))
+		{
+			ci = ClassInfo.find("gio"~ type[7..$]);
+		}
+
+		if(ci is null)
+		{
+			return null;
+		}
+
+		ObjectG obj = cast(ObjectG)_d_newclass(ci);
+
+		version(D_Version2)
+		{
+			obj.__ctor(cobj);
+		}
+		else
+		{
+			obj._ctor(cobj);
+		}
+
+		return obj;
+	}
+
+	private string convertClassName(string gName)
+	{
+		string conv;
+		string prefix;
+
+		version(Tango)
+		{
+			alias toUpper toupper;
+			alias toLower tolower;
+		}
+
+		if      ( startsWith(gName, "Gtk") )   prefix = "Gtk";
+		else if ( startsWith(gName, "Gdk") )   prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )   prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )   prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )   prefix = "Atk";
+		else if ( startsWith(gName, "G") )     prefix = "G";
+		else if ( startsWith(gName, "Pango") ) prefix = "Pg";
+		else if ( startsWith(gName, "cairo") ) prefix = "cairo";
+
+		conv = gName[prefix.length..gName.length];
+
+		if ( conv == "Object" ) conv ~= prefix;
+		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
+		if ( prefix == "cairo") conv = toupper(gName[6..7]) ~ gName[7..gName.length - 2];
+
+		prefix = tolower(prefix);
+
+		if( prefix == "gst") prefix = "gstreamer";
+		if( prefix == "g")   prefix = "gobject";
+		if( prefix == "pg" ) prefix = "pango";
+	
+		return prefix ~"."~ conv ~"."~ conv;
+	}
+
+	private bool startsWith(string str, string prefix)
+	{
+		return str.length >= prefix.length && str[0..prefix.length] == prefix;
 	}
 code: end
 outFile: Builder

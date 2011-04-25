@@ -159,6 +159,12 @@ public class ToggleButton : Button
 		this.gtkToggleButton = gtkToggleButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToggleButton = cast(GtkToggleButton*)obj;
+	}
+	
 	/**
 	 * Creates a new toggle button with a text label.
 	 * Params:

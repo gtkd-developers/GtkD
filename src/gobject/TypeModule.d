@@ -137,6 +137,12 @@ public class TypeModule : ObjectG
 		this.gTypeModule = gTypeModule;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gTypeModule = cast(GTypeModule*)obj;
+	}
+	
 	/**
 	 */
 	

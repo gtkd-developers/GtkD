@@ -126,6 +126,12 @@ public class ScaleButton : Button, OrientableIF
 		this.gtkScaleButton = gtkScaleButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkScaleButton = cast(GtkScaleButton*)obj;
+	}
+	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkScaleButton);
 	

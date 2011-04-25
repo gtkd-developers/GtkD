@@ -121,6 +121,12 @@ public class ToolItemGroup : Container, ToolShellIF
 		this.gtkToolItemGroup = gtkToolItemGroup;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToolItemGroup = cast(GtkToolItemGroup*)obj;
+	}
+	
 	// add the ToolShell capabilities
 	mixin ToolShellT!(GtkToolItemGroup);
 	

@@ -122,6 +122,12 @@ public class Table : Container
 		this.gtkTable = gtkTable;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTable = cast(GtkTable*)obj;
+	}
+	
 	int row;
 	int col;
 	int maxRows;

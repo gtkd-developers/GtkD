@@ -133,6 +133,12 @@ public class ToolItem : Bin, ActivatableIF
 		this.gtkToolItem = gtkToolItem;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkToolItem = cast(GtkToolItem*)obj;
+	}
+	
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkToolItem);
 	

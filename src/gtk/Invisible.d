@@ -113,6 +113,12 @@ public class Invisible : Widget
 		this.gtkInvisible = gtkInvisible;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkInvisible = cast(GtkInvisible*)obj;
+	}
+	
 	/**
 	 */
 	

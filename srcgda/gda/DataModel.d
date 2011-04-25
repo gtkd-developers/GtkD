@@ -118,6 +118,12 @@ public class DataModel : ObjectG
 		this.gdaDataModel = gdaDataModel;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaDataModel = cast(GdaDataModel*)obj;
+	}
+	
 	/** */
 	this (ListG glist) {
 		this( cast(GdaDataModel*)glist.data );

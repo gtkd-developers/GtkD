@@ -171,6 +171,12 @@ public class Socket : Container
 		this.gtkSocket = gtkSocket;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkSocket = cast(GtkSocket*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

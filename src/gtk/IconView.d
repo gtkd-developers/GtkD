@@ -141,6 +141,12 @@ public class IconView : Container, CellLayoutIF
 		this.gtkIconView = gtkIconView;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkIconView = cast(GtkIconView*)obj;
+	}
+	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkIconView);
 	

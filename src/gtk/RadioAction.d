@@ -115,6 +115,12 @@ public class RadioAction : ToggleAction
 		this.gtkRadioAction = gtkRadioAction;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRadioAction = cast(GtkRadioAction*)obj;
+	}
+	
 	/**
 	 * Creates a new GtkRadioAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,

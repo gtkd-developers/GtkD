@@ -150,6 +150,12 @@ public class Box : Container, OrientableIF
 		this.gtkBox = gtkBox;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkBox = cast(GtkBox*)obj;
+	}
+	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkBox);
 	

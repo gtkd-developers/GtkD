@@ -170,6 +170,12 @@ public class ActionGroup : ObjectG, BuildableIF
 		this.gtkActionGroup = gtkActionGroup;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkActionGroup = cast(GtkActionGroup*)obj;
+	}
+	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkActionGroup);
 	

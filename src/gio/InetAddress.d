@@ -116,6 +116,12 @@ public class InetAddress : ObjectG
 		this.gInetAddress = gInetAddress;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gInetAddress = cast(GInetAddress*)obj;
+	}
+	
 	/**
 	 */
 	

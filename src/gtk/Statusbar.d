@@ -135,6 +135,12 @@ public class Statusbar : HBox
 		this.gtkStatusbar = gtkStatusbar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkStatusbar = cast(GtkStatusbar*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

@@ -123,6 +123,12 @@ public class OutputStream : ObjectG
 		this.gOutputStream = gOutputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gOutputStream = cast(GOutputStream*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -119,6 +119,12 @@ public class FileChooserWidget : VBox
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkFileChooserWidget = cast(GtkFileChooserWidget*)obj;
+	}
+	
 	// add the FileChooser capabilities
 	mixin FileChooserT!(FileChooserWidget);
 	

@@ -107,6 +107,12 @@ public class FilterInputStream : InputStream
 		this.gFilterInputStream = gFilterInputStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFilterInputStream = cast(GFilterInputStream*)obj;
+	}
+	
 	/**
 	 */
 	

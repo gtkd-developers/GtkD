@@ -140,6 +140,12 @@ public class FileIOStream : IOStream, SeekableIF
 		this.gFileIOStream = gFileIOStream;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFileIOStream = cast(GFileIOStream*)obj;
+	}
+	
 	// add the Seekable capabilities
 	mixin SeekableT!(GFileIOStream);
 	

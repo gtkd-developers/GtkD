@@ -124,6 +124,12 @@ public class PageSetupUnixDialog : Dialog
 		this.gtkPageSetupUnixDialog = gtkPageSetupUnixDialog;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkPageSetupUnixDialog = cast(GtkPageSetupUnixDialog*)obj;
+	}
+	
 	/**
 	 */
 	

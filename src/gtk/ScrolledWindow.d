@@ -146,6 +146,12 @@ public class ScrolledWindow : Bin
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkScrolledWindow = cast(GtkScrolledWindow*)obj;
+	}
+	
 	/** */
 	public this()
 	{

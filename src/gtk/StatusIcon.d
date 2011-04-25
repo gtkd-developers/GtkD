@@ -146,6 +146,12 @@ public class StatusIcon : ObjectG
 		this.gtkStatusIcon = gtkStatusIcon;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkStatusIcon = cast(GtkStatusIcon*)obj;
+	}
+	
 	/**
 	 * Creates a status icon displaying a stock icon. Sample stock icon
 	 * names are StockID.OPEN, StockID.QUIT. You can register your

@@ -119,6 +119,12 @@ public class ThemedIcon : ObjectG, IconIF
 		this.gThemedIcon = gThemedIcon;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gThemedIcon = cast(GThemedIcon*)obj;
+	}
+	
 	// add the Icon capabilities
 	mixin IconT!(GThemedIcon);
 	

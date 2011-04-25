@@ -119,6 +119,12 @@ public class VRuler : Ruler
 		this.gtkVRuler = gtkVRuler;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkVRuler = cast(GtkVRuler*)obj;
+	}
+	
 	/**
 	 */
 	

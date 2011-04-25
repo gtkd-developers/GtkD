@@ -138,6 +138,12 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 		this.gtkRecentChooserMenu = gtkRecentChooserMenu;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRecentChooserMenu = cast(GtkRecentChooserMenu*)obj;
+	}
+	
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkRecentChooserMenu);
 	

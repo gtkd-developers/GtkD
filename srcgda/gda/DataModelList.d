@@ -113,6 +113,12 @@ public class DataModelList : DataModel
 		this.gdaDataModelList = gdaDataModelList;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdaDataModelList = cast(GdaDataModelList*)obj;
+	}
+	
 	/**
 	 */
 	

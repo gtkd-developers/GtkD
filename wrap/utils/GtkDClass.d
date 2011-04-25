@@ -253,7 +253,7 @@ public class GtkDClass
 		char[][][char[]] tangoImportConvs;
 		tangoImportConvs["std.stdio"] = ["tango.io.Stdout"];
 		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
-		tangoImportConvs["std.string"] = ["tango.text.Util"];
+		tangoImportConvs["std.string"] = ["tango.text.Util", "tango.text.Unicode"];
 		tangoImportConvs["std.c.string"] = ["tango.stdc.string"];
 		tangoImportConvs["std.c.stdio"] = ["tango.stdc.stdio"];
 		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
@@ -646,7 +646,16 @@ public class GtkDClass
 							text ~= "this."~var~" = "~var~";";
 							text ~= "}";
 
-
+							if ( (parentName.length > 0 || convParms.strct == "GObject")
+								&& gtkDParentName != "Surface" )
+							{
+								text ~= "";
+								text ~= "protected void setStruct(GObject* obj)";
+								text ~= "{";
+								text ~= "	super.setStruct(obj);";
+								text ~= "	"~var~" = cast("~gtkStruct~"*)obj;";
+								text ~= "}";
+							}
 						}
 					}
 				}

@@ -170,6 +170,12 @@ public class Drawable : ObjectG
 		this.gdkDrawable = gdkDrawable;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkDrawable = cast(GdkDrawable*)obj;
+	}
+	
 	/** */
 	public void drawPixbuf(Pixbuf pixbuf, int destX, int destY)
 	{

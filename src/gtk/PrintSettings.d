@@ -128,6 +128,12 @@ public class PrintSettings : ObjectG
 		this.gtkPrintSettings = gtkPrintSettings;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkPrintSettings = cast(GtkPrintSettings*)obj;
+	}
+	
 	/**
 	 */
 	

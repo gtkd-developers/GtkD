@@ -209,6 +209,12 @@ public class PgCairoFontMap : PgFontMap
 		this.pangoCairoFontMap = pangoCairoFontMap;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		pangoCairoFontMap = cast(PangoCairoFontMap*)obj;
+	}
+	
 	/**
 	 */
 	

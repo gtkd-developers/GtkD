@@ -119,6 +119,12 @@ public class Calendar : Widget
 		this.gtkCalendar = gtkCalendar;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCalendar = cast(GtkCalendar*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

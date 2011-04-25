@@ -109,6 +109,12 @@ public class HBox : Box
 		this.gtkHBox = gtkHBox;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkHBox = cast(GtkHBox*)obj;
+	}
+	
 	/**
 	 */
 	

@@ -150,6 +150,12 @@ public class Screen : ObjectG
 		this.gdkScreen = gdkScreen;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkScreen = cast(GdkScreen*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

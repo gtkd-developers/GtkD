@@ -114,6 +114,12 @@ public class AspectFrame : Frame
 		this.gtkAspectFrame = gtkAspectFrame;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAspectFrame = cast(GtkAspectFrame*)obj;
+	}
+	
 	/**
 	 */
 	

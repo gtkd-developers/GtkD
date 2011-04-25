@@ -123,6 +123,12 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRecentChooserWidget = cast(GtkRecentChooserWidget*)obj;
+	}
+	
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserWidget);
 	

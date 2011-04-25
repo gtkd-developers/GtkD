@@ -115,6 +115,12 @@ public class AccelMap : ObjectG
 		this.gtkAccelMap = gtkAccelMap;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkAccelMap = cast(GtkAccelMap*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

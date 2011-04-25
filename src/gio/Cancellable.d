@@ -114,6 +114,12 @@ public class Cancellable : ObjectG
 		this.gCancellable = gCancellable;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gCancellable = cast(GCancellable*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;

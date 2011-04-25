@@ -115,6 +115,12 @@ public class Arrow : Misc
 		this.gtkArrow = gtkArrow;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkArrow = cast(GtkArrow*)obj;
+	}
+	
 	/**
 	 */
 	

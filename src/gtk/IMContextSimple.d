@@ -108,6 +108,12 @@ public class IMContextSimple : IMContext
 		this.gtkIMContextSimple = gtkIMContextSimple;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkIMContextSimple = cast(GtkIMContextSimple*)obj;
+	}
+	
 	/**
 	 */
 	

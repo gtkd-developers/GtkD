@@ -117,6 +117,12 @@ public class CharsetConverter : ObjectG, ConverterIF
 		this.gCharsetConverter = gCharsetConverter;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gCharsetConverter = cast(GCharsetConverter*)obj;
+	}
+	
 	// add the Converter capabilities
 	mixin ConverterT!(GCharsetConverter);
 	

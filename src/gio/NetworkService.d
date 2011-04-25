@@ -119,6 +119,12 @@ public class NetworkService : ObjectG, SocketConnectableIF
 		this.gNetworkService = gNetworkService;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gNetworkService = cast(GNetworkService*)obj;
+	}
+	
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GNetworkService);
 	

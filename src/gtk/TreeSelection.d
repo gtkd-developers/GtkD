@@ -150,6 +150,12 @@ public class TreeSelection : ObjectG
 		this.gtkTreeSelection = gtkTreeSelection;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTreeSelection = cast(GtkTreeSelection*)obj;
+	}
+	
 	/**
 	 * Returns an TreeIter set to the currently selected node if selection
 	 * is set to GTK_SELECTION_SINGLE or GTK_SELECTION_BROWSE.

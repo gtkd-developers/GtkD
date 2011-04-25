@@ -201,6 +201,12 @@ public class TreeView : Container
 		this.gtkTreeView = gtkTreeView;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkTreeView = cast(GtkTreeView*)obj;
+	}
+	
 	/**
 	 * Expands the row of the iter.
 	 * Params:

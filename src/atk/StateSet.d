@@ -109,6 +109,12 @@ public class StateSet : ObjectG
 		this.atkStateSet = atkStateSet;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		atkStateSet = cast(AtkStateSet*)obj;
+	}
+	
 	/**
 	 */
 	

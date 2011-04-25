@@ -179,6 +179,12 @@ public class RadioButton : CheckButton
 		this.gtkRadioButton = gtkRadioButton;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkRadioButton = cast(GtkRadioButton*)obj;
+	}
+	
 	/**
 	 * Creates a new RadioButton with a text label.
 	 * Params:
