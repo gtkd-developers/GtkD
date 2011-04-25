@@ -467,38 +467,45 @@ public class Builder : ObjectG
 	 */
 	public ObjectG getObject(string name)
 	{
-		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
-		auto cobj = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
-		if(cobj is null)
+		version(LLVM)
 		{
 			return null;
-		}
-		
-		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-		auto ci = ClassInfo.find(type);
-		
-		if(ci is null && startsWith(type, "gobject"))
-		{
-			ci = ClassInfo.find("gio"~ type[7..$]);
-		}
-		
-		if(ci is null)
-		{
-			return null;
-		}
-		
-		ObjectG obj = cast(ObjectG)_d_newclass(ci);
-		
-		version(D_Version2)
-		{
-			obj.__ctor(cobj);
 		}
 		else
 		{
-			obj._ctor(cobj);
+			// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
+			auto cobj = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
+			if(cobj is null)
+			{
+				return null;
+			}
+			
+			string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
+			auto ci = ClassInfo.find(type);
+			
+			if(ci is null && startsWith(type, "gobject"))
+			{
+				ci = ClassInfo.find("gio"~ type[7..$]);
+			}
+			
+			if(ci is null)
+			{
+				return null;
+			}
+			
+			ObjectG obj = cast(ObjectG)_d_newclass(ci);
+			
+			version(D_Version2)
+			{
+				obj.__ctor(cobj);
+			}
+			else
+			{
+				obj._ctor(cobj);
+			}
+			
+			return obj;
 		}
-		
-		return obj;
 	}
 	
 	private string convertClassName(string gName)
