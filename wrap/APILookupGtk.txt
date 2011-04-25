@@ -8905,11 +8905,9 @@ code: start
 	}
 
 	/**
-	 * Gets all objects that have been constructed by builder. Note that
-	 * this function does not increment the reference counts of the returned
-	 * objects.
+	 * Gets all objects that have been constructed by builder.
 	 * Since 2.12
-	 * Returns: a newly-allocated GSList containing all the objects constructed by the GtkBuilder instance. It should be freed by g_slist_free(). element-type GObject. transfer container GObject.
+	 * Returns: an array containing all the objects constructed by the GtkBuilder instance.
 	 */
 	public ObjectG[] getObjects()
 	{
