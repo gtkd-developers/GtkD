@@ -674,20 +674,11 @@ prefix: gst_
 import: glib.Str
 outFile: GError
 
-#HANDEDIT: For some reason GtkWrapper does the constructor wrong
-#with GstGhostPad. You have to hand edit it to look like this:
-#	/**
-#	 * Sets our main struct and passes it to the parent class
-#	 */
-#	public this (GstGhostPad* gstGhostPad)
-#	{
-#		super(cast(GstPad*)gstGhostPad);
-#		this.gstGhostPad = gstGhostPad;
-#	}
 file: GstGhostPad.html
 struct: GstGhostPad
+ctorStruct: GstPad
 class: GhostPad
-extend: Pad
+extend: GstPad
 prefix: gst_ghost_pad_
 prefix: gst_
 import: glib.Str
@@ -695,24 +686,6 @@ import: gstreamer.Pad
 structWrap: GstGhostPad* GhostPad
 #structWrap: GstProxyPad* ProxyPad
 structWrap: GstPad* Pad
-nocode: gst_ghost_pad_new
-code: start
-	/**
-	 * Create a new ghostpad with target as the target. The direction and
-	 * padtemplate will be taken from the target pad.
-	 * Will ref the target.
-	 * Params:
-	 *  name = the name of the new pad, or NULL to assign a default name.
-	 *  target = the pad to ghost.
-	 * Returns:
-	 *  a new GstPad, or NULL in case of an error.
-	 */
-	public this(string name, Pad target)
-	{
-		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
-		this( cast(GstGhostPad*) gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct()) );
-	}
-code: end
 outFile: GhostPad
 
 file: GstImplementsInterface.html
