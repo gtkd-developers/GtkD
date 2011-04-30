@@ -200,6 +200,12 @@ public class Bin : Element
 		this.gstBin = gstBin;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstBin = cast(GstBin*)obj;
+	}
+	
 	/**
 	 * Creates a new bin with the given name.
 	 * Params:
@@ -286,7 +292,7 @@ public class Bin : Element
 	 * before the element is added to the bin.
 	 * MT safe.
 	 * Params:
-	 * element =  the GstElement to add
+	 * element = the GstElement to add
 	 * Returns: TRUE if the element could be added, FALSE ifthe bin does not want to accept the element.
 	 */
 	public int add(Element element)
@@ -306,7 +312,7 @@ public class Bin : Element
 	 * before the element is removed from the bin.
 	 * MT safe.
 	 * Params:
-	 * element =  the GstElement to remove
+	 * element = the GstElement to remove
 	 * Returns: TRUE if the element could be removed, FALSE ifthe bin does not want to remove the element.
 	 */
 	public int remove(Element element)
@@ -321,7 +327,7 @@ public class Bin : Element
 	 * Returns NULL if no element with the given name is found in the bin.
 	 * MT safe. Caller owns returned reference.
 	 * Params:
-	 * name =  the element name to search for
+	 * name = the element name to search for
 	 * Returns: the GstElement with the given name, or NULL
 	 */
 	public Element getByName(string name)
@@ -339,7 +345,7 @@ public class Bin : Element
 	 * Gets the element with the given name from this bin. If the
 	 * element is not found, a recursion is performed on the parent bin.
 	 * Params:
-	 * name =  the element name to search for
+	 * name = the element name to search for
 	 * Returns: the GstElement with the given name, or NULL
 	 */
 	public Element getByNameRecurseUp(string name)
@@ -361,7 +367,7 @@ public class Bin : Element
 	 * gst_bin_iterate_all_by_interface(). This function recurses into child bins.
 	 * MT safe. Caller owns returned reference.
 	 * Params:
-	 * iface =  the GType of an interface
+	 * iface = the GType of an interface
 	 * Returns: A GstElement inside the bin implementing the interface
 	 */
 	public Element getByInterface(GType iface)
@@ -481,7 +487,7 @@ public class Bin : Element
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
 	 * Params:
-	 * iface =  the GType of an interface
+	 * iface = the GType of an interface
 	 * Returns: a GstIterator of GstElement for all elements in the bin implementing the given interface, or NULL
 	 */
 	public Iterator iterateAllByInterface(GType iface)
@@ -502,7 +508,7 @@ public class Bin : Element
 	 * owns a reference to it and should use gst_object_unref() on the
 	 * pad when it is not needed any longer.
 	 * Params:
-	 * direction =  whether to look for an unconnected source or sink pad
+	 * direction = whether to look for an unconnected source or sink pad
 	 * Returns: unconnected pad of the given direction, or NULL.Since 0.10.3
 	 */
 	public GstPad* findUnconnectedPad(GstPadDirection direction)

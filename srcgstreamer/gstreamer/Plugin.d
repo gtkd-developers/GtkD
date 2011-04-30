@@ -46,6 +46,7 @@
  * 	- glib.Str
  * 	- glib.Module
  * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
@@ -132,6 +133,12 @@ public class Plugin : ObjectGst
 		}
 		super(cast(GstObject*)gstPlugin);
 		this.gstPlugin = gstPlugin;
+	}
+	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstPlugin = cast(GstPlugin*)obj;
 	}
 	
 	/**
@@ -257,7 +264,7 @@ public class Plugin : ObjectGst
 	 * A standard filter that returns TRUE when the plugin is of the
 	 * given name.
 	 * Params:
-	 * name =  the name of the plugin
+	 * name = the name of the plugin
 	 * Returns: TRUE if the plugin is of the given name.
 	 */
 	public int nameFilter(string name)
@@ -269,7 +276,7 @@ public class Plugin : ObjectGst
 	/**
 	 * Loads the given plugin and refs it. Caller needs to unref after use.
 	 * Params:
-	 * filename =  the plugin filename to load
+	 * filename = the plugin filename to load
 	 * Returns: a reference to the existing loaded GstPlugin, a reference to thenewly-loaded GstPlugin, or NULL if an error occurred.
 	 * Throws: GException on failure.
 	 */
@@ -310,7 +317,7 @@ public class Plugin : ObjectGst
 	/**
 	 * Load the named plugin. Refs the plugin.
 	 * Params:
-	 * name =  name of plugin to load
+	 * name = name of plugin to load
 	 * Returns: A reference to a loaded plugin, or NULL on error.
 	 */
 	public static Plugin loadByName(string name)
@@ -327,7 +334,7 @@ public class Plugin : ObjectGst
 	/**
 	 * Unrefs each member of list, then frees the list.
 	 * Params:
-	 * list =  list of GstPlugin
+	 * list = list of GstPlugin
 	 */
 	public static void listFree(ListG list)
 	{

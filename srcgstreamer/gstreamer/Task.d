@@ -131,6 +131,12 @@ public class Task : ObjectGst
 		this.gstTask = gstTask;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstTask = cast(GstTask*)obj;
+	}
+	
 	/**
 	 */
 	
@@ -152,8 +158,8 @@ public class Task : ObjectGst
 	 * The function cannot be changed after the task has been created. You
 	 * must create a new GstTask to change the function.
 	 * Params:
-	 * func =  The GstTaskFunction to use
-	 * data =  User data to pass to func
+	 * func = The GstTaskFunction to use
+	 * data = User data to pass to func
 	 * Returns: A new GstTask.MT safe.
 	 */
 	public static Task create(GstTaskFunction func, void* data)
@@ -212,7 +218,7 @@ public class Task : ObjectGst
 	 * gst_task_start().
 	 * MT safe.
 	 * Params:
-	 * mutex =  The GMutex to use
+	 * mutex = The GMutex to use
 	 */
 	public void setLock(GStaticRecMutex* mutex)
 	{

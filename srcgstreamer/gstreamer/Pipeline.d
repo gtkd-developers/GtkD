@@ -159,6 +159,12 @@ public class Pipeline : Bin
 		this.gstPipeline = gstPipeline;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstPipeline = cast(GstPipeline*)obj;
+	}
+	
 	/** */
 	public this (string name)
 	{
@@ -172,7 +178,7 @@ public class Pipeline : Bin
 	/**
 	 * Create a new pipeline with the given name.
 	 * Params:
-	 * name =  name of new pipeline
+	 * name = name of new pipeline
 	 * Returns: newly created GstPipelineMT safe.
 	 */
 	public static Element newPipeline(string name)
@@ -205,7 +211,7 @@ public class Pipeline : Bin
 	 * Set the clock for pipeline. The clock will be distributed
 	 * to all the elements managed by the pipeline.
 	 * Params:
-	 * clock =  the clock to set
+	 * clock = the clock to set
 	 * Returns: TRUE if the clock could be set on the pipeline. FALSE if some element did not accept the clock.MT safe.
 	 */
 	public int setClock(Clock clock)
@@ -237,7 +243,7 @@ public class Pipeline : Bin
 	 * the pipeline run as fast as possible.
 	 * MT safe.
 	 * Params:
-	 * clock =  the clock to use
+	 * clock = the clock to use
 	 */
 	public void useClock(Clock clock)
 	{
@@ -270,7 +276,7 @@ public class Pipeline : Bin
 	 * pipelines have the same clock.
 	 * MT safe.
 	 * Params:
-	 * time =  the new stream time to set
+	 * time = the new stream time to set
 	 */
 	public void setNewStreamTime(GstClockTime time)
 	{
@@ -307,7 +313,7 @@ public class Pipeline : Bin
 	 * automatic flushing is disabled else memory leaks will be introduced.
 	 * MT safe.
 	 * Params:
-	 * autoFlush =  whether or not to automatically flush the bus when
+	 * autoFlush = whether or not to automatically flush the bus when
 	 * the pipeline goes from READY to NULL state
 	 * Since 0.10.4
 	 */
@@ -338,7 +344,7 @@ public class Pipeline : Bin
 	 * used.
 	 * MT safe.
 	 * Params:
-	 * delay =  the delay
+	 * delay = the delay
 	 * Since 0.10.5
 	 */
 	public void setDelay(GstClockTime delay)

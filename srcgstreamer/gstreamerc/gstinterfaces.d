@@ -32,34 +32,26 @@ private import gstreamerc.gstinterfacestypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-private import gtkc.glibtypes;
-private import gtkc.gobjecttypes;
-private import gtkc.gthreadtypes;
-private import glib.Str;
-
-
 static this()
 {
-
 	// gstinterfaces.XOverlay
 
 	Linker.link(gst_x_overlay_set_xwindow_id, "gst_x_overlay_set_xwindow_id", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_x_overlay_got_xwindow_id, "gst_x_overlay_got_xwindow_id", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_x_overlay_prepare_xwindow_id, "gst_x_overlay_prepare_xwindow_id", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_x_overlay_expose, "gst_x_overlay_expose", LIBRARY.GSTINTERFACES);
-
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
+	
 	// gstinterfaces.XOverlay
 	
 	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_set_xwindow_id;
 	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
 	void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;
 	void function(GstXOverlay* overlay) c_gst_x_overlay_expose;
-	
-}
+}");
 
 // gstinterfaces.XOverlay
 
@@ -67,5 +59,3 @@ alias c_gst_x_overlay_set_xwindow_id  gst_x_overlay_set_xwindow_id;
 alias c_gst_x_overlay_got_xwindow_id  gst_x_overlay_got_xwindow_id;
 alias c_gst_x_overlay_prepare_xwindow_id  gst_x_overlay_prepare_xwindow_id;
 alias c_gst_x_overlay_expose  gst_x_overlay_expose;
-
-

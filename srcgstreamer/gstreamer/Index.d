@@ -115,6 +115,12 @@ public class Index : ObjectGst
 		this.gstIndex = gstIndex;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstIndex = cast(GstIndex*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;
@@ -169,7 +175,7 @@ public class Index : ObjectGst
 	 * with this index and is not going to write any more entries
 	 * to it.
 	 * Params:
-	 * id =  the writer that commited the index
+	 * id = the writer that commited the index
 	 */
 	public void commit(int id)
 	{
@@ -201,7 +207,7 @@ public class Index : ObjectGst
 	/**
 	 * Set the current groupnumber to the given argument.
 	 * Params:
-	 * groupnum =  the groupnumber to set
+	 * groupnum = the groupnumber to set
 	 * Returns: TRUE if the operation succeeded, FALSE if the groupdid not exist.
 	 */
 	public int setGroup(int groupnum)
@@ -213,7 +219,7 @@ public class Index : ObjectGst
 	/**
 	 * Set the certainty of the given index.
 	 * Params:
-	 * certainty =  the certainty to set
+	 * certainty = the certainty to set
 	 */
 	public void setCertainty(GstIndexCertainty certainty)
 	{
@@ -235,8 +241,8 @@ public class Index : ObjectGst
 	 * Lets the app register a custom filter function so that
 	 * it can select what entries should be stored in the index.
 	 * Params:
-	 * filter =  the filter to register
-	 * userData =  data passed to the filter function
+	 * filter = the filter to register
+	 * userData = data passed to the filter function
 	 */
 	public void setFilter(GstIndexFilter filter, void* userData)
 	{
@@ -248,9 +254,9 @@ public class Index : ObjectGst
 	 * Lets the app register a custom filter function so that
 	 * it can select what entries should be stored in the index.
 	 * Params:
-	 * filter =  the filter to register
-	 * userData =  data passed to the filter function
-	 * userDataDestroy =  function to call when user_data is unset
+	 * filter = the filter to register
+	 * userData = data passed to the filter function
+	 * userDataDestroy = function to call when user_data is unset
 	 */
 	public void setFilterFull(GstIndexFilter filter, void* userData, GDestroyNotify userDataDestroy)
 	{
@@ -262,8 +268,8 @@ public class Index : ObjectGst
 	 * Lets the app register a custom function to map index
 	 * ids to writer descriptions.
 	 * Params:
-	 * resolver =  the resolver to register
-	 * userData =  data passed to the resolver function
+	 * resolver = the resolver to register
+	 * userData = data passed to the resolver function
 	 */
 	public void setResolver(GstIndexResolver resolver, void* userData)
 	{
@@ -279,8 +285,8 @@ public class Index : ObjectGst
 	 * to a string. That string will be used to register or look up an id
 	 * in the index.
 	 * Params:
-	 * writer =  the GstObject to allocate an id for
-	 * id =  a pointer to a gint to hold the id
+	 * writer = the GstObject to allocate an id for
+	 * id = a pointer to a gint to hold the id
 	 * Returns: TRUE if the writer would be mapped to an id.
 	 */
 	public int getWriterId(ObjectGst writer, int* id)
@@ -294,8 +300,8 @@ public class Index : ObjectGst
 	 * used to map dynamic GstFormat ids to their original
 	 * format key.
 	 * Params:
-	 * id =  the id of the index writer
-	 * format =  the format to add to the index
+	 * id = the id of the index writer
+	 * format = the format to add to the index
 	 * Returns: a pointer to the newly added entry in the index.
 	 */
 	public GstIndexEntry* addFormat(int id, GstFormat format)
@@ -307,10 +313,10 @@ public class Index : ObjectGst
 	/**
 	 * Associate given format/value pairs with each other.
 	 * Params:
-	 * id =  the id of the index writer
-	 * flags =  optinal flags for this entry
-	 * n =  number of associations
-	 * list =  list of associations
+	 * id = the id of the index writer
+	 * flags = optinal flags for this entry
+	 * n = number of associations
+	 * list = list of associations
 	 * Returns: a pointer to the newly added entry in the index.
 	 */
 	public GstIndexEntry* addAssociationv(int id, GstAssocFlags flags, int n, GstIndexAssociation* list)
@@ -323,10 +329,10 @@ public class Index : ObjectGst
 	 * Add the given object to the index with the given key.
 	 * This function is not yet implemented.
 	 * Params:
-	 * id =  the id of the index writer
-	 * key =  a key for the object
-	 * type =  the GType of the object
-	 * object =  a pointer to the object to add
+	 * id = the id of the index writer
+	 * key = a key for the object
+	 * type = the GType of the object
+	 * object = a pointer to the object to add
 	 * Returns: a pointer to the newly added entry in the index.
 	 */
 	public GstIndexEntry* addObject(int id, string key, GType type, void* object)
@@ -338,8 +344,8 @@ public class Index : ObjectGst
 	/**
 	 * Add an id entry into the index.
 	 * Params:
-	 * id =  the id of the index writer
-	 * description =  the description of the index writer
+	 * id = the id of the index writer
+	 * description = the description of the index writer
 	 * Returns: a pointer to the newly added entry in the index.
 	 */
 	public GstIndexEntry* addId(int id, string description)
@@ -351,11 +357,11 @@ public class Index : ObjectGst
 	/**
 	 * Finds the given format/value in the index
 	 * Params:
-	 * id =  the id of the index writer
-	 * method =  The lookup method to use
-	 * flags =  Flags for the entry
-	 * format =  the format of the value
-	 * value =  the value to find
+	 * id = the id of the index writer
+	 * method = The lookup method to use
+	 * flags = Flags for the entry
+	 * format = the format of the value
+	 * value = the value to find
 	 * Returns: the entry associated with the value or NULL if the value was not found.
 	 */
 	public GstIndexEntry* getAssocEntry(int id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, long value)
@@ -368,13 +374,13 @@ public class Index : ObjectGst
 	 * Finds the given format/value in the index with the given
 	 * compare function and user_data.
 	 * Params:
-	 * id =  the id of the index writer
-	 * method =  The lookup method to use
-	 * flags =  Flags for the entry
-	 * format =  the format of the value
-	 * value =  the value to find
-	 * func =  the function used to compare entries
-	 * userData =  user data passed to the compare function
+	 * id = the id of the index writer
+	 * method = The lookup method to use
+	 * flags = Flags for the entry
+	 * format = the format of the value
+	 * value = the value to find
+	 * func = the function used to compare entries
+	 * userData = user data passed to the compare function
 	 * Returns: the entry associated with the value or NULL if the value was not found.
 	 */
 	public GstIndexEntry* getAssocEntryFull(int id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, long value, GCompareDataFunc func, void* userData)
@@ -386,7 +392,7 @@ public class Index : ObjectGst
 	/**
 	 * Copies an entry and returns the result.
 	 * Params:
-	 * entry =  the entry to copy
+	 * entry = the entry to copy
 	 * Returns: a newly allocated GstIndexEntry.
 	 */
 	public static GstIndexEntry* entryCopy(GstIndexEntry* entry)
@@ -398,7 +404,7 @@ public class Index : ObjectGst
 	/**
 	 * Free the memory used by the given entry.
 	 * Params:
-	 * entry =  the entry to free
+	 * entry = the entry to free
 	 */
 	public static void entryFree(GstIndexEntry* entry)
 	{
@@ -409,9 +415,9 @@ public class Index : ObjectGst
 	/**
 	 * Gets alternative formats associated with the indexentry.
 	 * Params:
-	 * entry =  the index to search
-	 * format =  the format of the value the find
-	 * value =  a pointer to store the value
+	 * entry = the index to search
+	 * format = the format of the value the find
+	 * value = a pointer to store the value
 	 * Returns: TRUE if there was a value associated with the givenformat.
 	 */
 	public static int entryAssocMap(GstIndexEntry* entry, GstFormat format, long* value)

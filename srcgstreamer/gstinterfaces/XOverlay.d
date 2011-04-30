@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = XOverlay
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,7 @@
  * imports:
  * 	- gtkc.glibtypes
  * 	- glib.Str
+ * 	- gstreamer.Element
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,10 +58,10 @@ public  import gstreamerc.gstinterfacestypes;
 private import gstreamerc.gstinterfaces;
 private import glib.ConstructionException;
 
-private import gstreamer.Element;
 
 private import gtkc.glibtypes;
 private import glib.Str;
+private import gstreamer.Element;
 
 
 
@@ -147,10 +148,10 @@ public class XOverlay
 	}
 	
 	/**
-	* The Element parameter should usually be
-	* your videosink that you want to create your
-	* XOverlay with.
-	*/
+	 * The Element parameter should usually be
+	 * your videosink that you want to create your
+	 * XOverlay with.
+	 */
 	public this(Element elem)
 	{
 		this( cast(GstXOverlay*)elem.getElementStruct() );
@@ -165,9 +166,9 @@ public class XOverlay
 	 * specific XWindow. Passing 0 as the xwindow_id will tell the overlay to
 	 * stop using that window and create an internal one.
 	 * Params:
-	 * xwindowId =  a XID referencing the XWindow.
+	 * xwindowId = a XID referencing the XWindow.
 	 */
-	public void setXwindowId(uint xwindowId)
+	public void setXwindowId(gulong xwindowId)
 	{
 		// void gst_x_overlay_set_xwindow_id (GstXOverlay *overlay,  gulong xwindow_id);
 		gst_x_overlay_set_xwindow_id(gstXOverlay, xwindowId);
@@ -177,9 +178,9 @@ public class XOverlay
 	 * This will post a "have-xwindow-id" element message on the bus.
 	 * This function should only be used by video overlay plugin developers.
 	 * Params:
-	 * xwindowId =  a XID referencing the XWindow.
+	 * xwindowId = a XID referencing the XWindow.
 	 */
-	public void gotXwindowId(uint xwindowId)
+	public void gotXwindowId(gulong xwindowId)
 	{
 		// void gst_x_overlay_got_xwindow_id (GstXOverlay *overlay,  gulong xwindow_id);
 		gst_x_overlay_got_xwindow_id(gstXOverlay, xwindowId);

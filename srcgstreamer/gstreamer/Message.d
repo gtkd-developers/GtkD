@@ -362,7 +362,7 @@ public class Message
 	/**
 	 * Get a printable name for the given message type. Do not modify or free.
 	 * Params:
-	 * type =  the message type
+	 * type = the message type
 	 * Returns: a reference to the static name of the message.
 	 */
 	public static string typeGetName(GstMessageType type)
@@ -390,8 +390,8 @@ public class Message
 	 * Create a new application-typed message. GStreamer will never create these
 	 * messages; they are a gift from us to you. Enjoy.
 	 * Params:
-	 * src =  The object originating the message.
-	 * structure =  The structure for the message. The message will take ownership of
+	 * src = The object originating the message.
+	 * structure = The structure for the message. The message will take ownership of
 	 * the structure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -413,9 +413,9 @@ public class Message
 	 * This message is mainly used internally to manage the clock
 	 * selection.
 	 * Params:
-	 * src =  The object originating the message.
-	 * clock =  The clock it provides
-	 * ready =  TRUE if the sender can provide a clock
+	 * src = The object originating the message.
+	 * clock = The clock it provides
+	 * ready = TRUE if the sender can provide a clock
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, Clock clock, int ready)
@@ -436,8 +436,8 @@ public class Message
 	 * select a new clock again when it goes to PLAYING. It might therefore
 	 * be needed to set the pipeline to PAUSED and PLAYING again.
 	 * Params:
-	 * src =  The object originating the message.
-	 * clock =  the clock that was lost
+	 * src = The object originating the message.
+	 * clock = the clock that was lost
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, Clock clock)
@@ -456,9 +456,9 @@ public class Message
 	 * handled by other message-specific functions to pass a message to the
 	 * app. The structure field can be NULL.
 	 * Params:
-	 * type =  The GstMessageType to distinguish messages
-	 * src =  The object originating the message.
-	 * structure =  The structure for the message. The message will take ownership of
+	 * type = The GstMessageType to distinguish messages
+	 * src = The object originating the message.
+	 * structure = The structure for the message. The message will take ownership of
 	 * the structure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -477,10 +477,10 @@ public class Message
 	 * Create a state change message. This message is posted whenever an element
 	 * changed its state.
 	 * Params:
-	 * src =  the object originating the message
-	 * oldstate =  the previous state
-	 * newstate =  the new (current) state
-	 * pending =  the pending (target) state
+	 * src = the object originating the message
+	 * oldstate = the previous state
+	 * newstate = the new (current) state
+	 * pending = the pending (target) state
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, GstState oldstate, GstState newstate, GstState pending)
@@ -498,8 +498,8 @@ public class Message
 	 * Create a new tag message. The message will take ownership of the tag list.
 	 * The message is posted by elements that discovered a new taglist.
 	 * Params:
-	 * src =  The object originating the message.
-	 * tagList =  The tag list for the message.
+	 * src = The object originating the message.
+	 * tagList = The tag list for the message.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, TagList tagList)
@@ -524,8 +524,8 @@ public class Message
 	 * message with percent set to 100, which can happen after the pipeline
 	 * completed prerolling.
 	 * Params:
-	 * src =  The object originating the message.
-	 * percent =  The buffering percent
+	 * src = The object originating the message.
+	 * percent = The buffering percent
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, int percent)
@@ -548,9 +548,9 @@ public class Message
 	 * cached duration should be discarded. The new duration can then be
 	 * retrieved via a query.
 	 * Params:
-	 * src =  The object originating the message.
-	 * format =  The format of the duration
-	 * duration =  The new duration
+	 * src = The object originating the message.
+	 * format = The format of the duration
+	 * duration = The new duration
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src, GstFormat format, long duration)
@@ -568,7 +568,7 @@ public class Message
 	 * This message can be posted by elements when their latency requirements have
 	 * changed.
 	 * Params:
-	 * src =  The object originating the message.
+	 * src = The object originating the message.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src)
@@ -587,7 +587,7 @@ public class Message
 	 * The clock object returned remains valid until the message is freed.
 	 * MT safe.
 	 * Params:
-	 * clock =  A pointer to hold the lost clock
+	 * clock = A pointer to hold the lost clock
 	 */
 	public void parseClockLost(GstClock** clock)
 	{
@@ -600,8 +600,8 @@ public class Message
 	 * The clock object returned remains valid until the message is freed.
 	 * MT safe.
 	 * Params:
-	 * clock =  A pointer to hold a clock object.
-	 * ready =  A pointer to hold the ready flag.
+	 * clock = A pointer to hold a clock object.
+	 * ready = A pointer to hold the ready flag.
 	 */
 	public void parseClockProvide(GstClock** clock, int* ready)
 	{
@@ -614,8 +614,8 @@ public class Message
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
 	 * Params:
-	 * gerror =  Location for the GError
-	 * dbug =  Location for the debug message, or NULL
+	 * gerror = Location for the GError
+	 * dbug = Location for the debug message, or NULL
 	 */
 	public void parseError(out GError* gerror, out string dbug)
 	{
@@ -632,8 +632,8 @@ public class Message
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
 	 * Params:
-	 * gerror =  Location for the GError
-	 * dbug =  Location for the debug message, or NULL
+	 * gerror = Location for the GError
+	 * dbug = Location for the debug message, or NULL
 	 * Since 0.10.12
 	 */
 	public void parseInfo(out GError* gerror, out string dbug)
@@ -651,7 +651,7 @@ public class Message
 	 * The clock object returned remains valid until the message is freed.
 	 * MT safe.
 	 * Params:
-	 * clock =  A pointer to hold the selected new clock
+	 * clock = A pointer to hold the selected new clock
 	 */
 	public void parseNewClock(GstClock** clock)
 	{
@@ -663,8 +663,8 @@ public class Message
 	 * Extracts the position and format from the segment start message.
 	 * MT safe.
 	 * Params:
-	 * format =  Result location for the format, or NULL
-	 * position =  Result location for the position, or NULL
+	 * format = Result location for the format, or NULL
+	 * position = Result location for the position, or NULL
 	 */
 	public void parseSegmentDone(GstFormat* format, long* position)
 	{
@@ -676,8 +676,8 @@ public class Message
 	 * Extracts the position and format from the segment start message.
 	 * MT safe.
 	 * Params:
-	 * format =  Result location for the format, or NULL
-	 * position =  Result location for the position, or NULL
+	 * format = Result location for the format, or NULL
+	 * position = Result location for the position, or NULL
 	 */
 	public void parseSegmentStart(GstFormat* format, long* position)
 	{
@@ -689,9 +689,9 @@ public class Message
 	 * Extracts the old and new states from the GstMessage.
 	 * MT safe.
 	 * Params:
-	 * oldstate =  the previous state, or NULL
-	 * newstate =  the new (current) state, or NULL
-	 * pending =  the pending (target) state, or NULL
+	 * oldstate = the previous state, or NULL
+	 * newstate = the new (current) state, or NULL
+	 * pending = the pending (target) state, or NULL
 	 */
 	public void parseStateChanged(GstState* oldstate, GstState* newstate, GstState* pending)
 	{
@@ -703,7 +703,7 @@ public class Message
 	 * Extracts the buffering percent from the GstMessage. see also
 	 * gst_message_new_buffering().
 	 * Params:
-	 * percent =  Return location for the percent.
+	 * percent = Return location for the percent.
 	 * Since 0.10.11
 	 * MT safe.
 	 */
@@ -718,8 +718,8 @@ public class Message
 	 * in the output arguments are copies; the caller must free them when done.
 	 * MT safe.
 	 * Params:
-	 * gerror =  Location for the GError
-	 * dbug =  Location for the debug message, or NULL
+	 * gerror = Location for the GError
+	 * dbug = Location for the debug message, or NULL
 	 */
 	public void parseWarning(out GError* gerror, out string dbug)
 	{
@@ -738,8 +738,8 @@ public class Message
 	 * of a pipeline.
 	 * MT safe.
 	 * Params:
-	 * format =  Result location for the format, or NULL
-	 * duration =  Result location for the duration, or NULL
+	 * format = Result location for the format, or NULL
+	 * duration = Result location for the duration, or NULL
 	 */
 	public void parseDuration(GstFormat* format, long* duration)
 	{

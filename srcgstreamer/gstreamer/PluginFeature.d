@@ -113,6 +113,12 @@ public class PluginFeature : ObjectGst
 		this.gstPluginFeature = gstPluginFeature;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstPluginFeature = cast(GstPluginFeature*)obj;
+	}
+	
 	/**
 	 * Sets the name of a plugin feature. The name uniquely identifies a feature
 	 * within all features of the same type. Renaming a plugin feature is not
@@ -133,7 +139,7 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Compares type and name of plugin feature. Can be used with gst_filter_run().
 	 * Params:
-	 * data =  the type and name to check against
+	 * data = the type and name to check against
 	 * Returns: TRUE if equal.
 	 */
 	public int typeNameFilter(GstTypeNameData* data)
@@ -146,7 +152,7 @@ public class PluginFeature : ObjectGst
 	 * Specifies a rank for a plugin feature, so that autoplugging uses
 	 * the most appropriate feature.
 	 * Params:
-	 * rank =  rank value - higher number means more priority rank
+	 * rank = rank value - higher number means more priority rank
 	 */
 	public void setRank(uint rank)
 	{
@@ -193,7 +199,7 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Unrefs each member of list, then frees the list.
 	 * Params:
-	 * list =  list of GstPluginFeature
+	 * list = list of GstPluginFeature
 	 */
 	public static void listFree(ListG list)
 	{
@@ -205,9 +211,9 @@ public class PluginFeature : ObjectGst
 	 * Checks whether the given plugin feature is at least
 	 *  the required version
 	 * Params:
-	 * minMajor =  minimum required major version
-	 * minMinor =  minimum required minor version
-	 * minMicro =  minimum required micro version
+	 * minMajor = minimum required major version
+	 * minMinor = minimum required minor version
+	 * minMicro = minimum required micro version
 	 * Returns: TRUE if the plugin feature has at least the required version, otherwise FALSE.
 	 */
 	public int checkVersion(uint minMajor, uint minMinor, uint minMicro)

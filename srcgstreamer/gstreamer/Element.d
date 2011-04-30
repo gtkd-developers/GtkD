@@ -184,6 +184,12 @@ public class Element : ObjectGst
 		this.gstElement = gstElement;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstElement = cast(GstElement*)obj;
+	}
+	
 	/**
 	 * Queries an element for the stream position.
 	 * This is a convenience function for gstreamerD.
@@ -400,8 +406,8 @@ public class Element : ObjectGst
 	 * Adds a padtemplate to an element class. This is mainly used in the _base_init
 	 * functions of classes.
 	 * Params:
-	 * klass =  the GstElementClass to add the pad template to.
-	 * templ =  a GstPadTemplate to add to the element class.
+	 * klass = the GstElementClass to add the pad template to.
+	 * templ = a GstPadTemplate to add to the element class.
 	 */
 	public static void classAddPadTemplate(GstElementClass* klass, GstPadTemplate* templ)
 	{
@@ -416,8 +422,8 @@ public class Element : ObjectGst
 	 * that has subclasses, make sure to pass the g_class parameter of the
 	 * GInstanceInitFunc here.
 	 * Params:
-	 * elementClass =  a GstElementClass to get the pad template of.
-	 * name =  the name of the GstPadTemplate to get.
+	 * elementClass = a GstElementClass to get the pad template of.
+	 * name = the name of the GstPadTemplate to get.
 	 * Returns: the GstPadTemplate with the given name, or NULL if none was found.No unreferencing is necessary.
 	 */
 	public static GstPadTemplate* classGetPadTemplate(GstElementClass* elementClass, string name)
@@ -434,7 +440,7 @@ public class Element : ObjectGst
 	 * that has subclasses, make sure to pass the g_class parameter of the
 	 * GInstanceInitFunc here.
 	 * Params:
-	 * elementClass =  a GstElementClass to get pad templates of.
+	 * elementClass = a GstElementClass to get pad templates of.
 	 * Returns: the GList of padtemplates.
 	 */
 	public static GList* classGetPadTemplateList(GstElementClass* elementClass)
@@ -449,8 +455,8 @@ public class Element : ObjectGst
 	 * This function is for use in _base_init functions only.
 	 * The details are copied.
 	 * Params:
-	 * klass =  class to set details for
-	 * details =  details to set
+	 * klass = class to set details for
+	 * details = details to set
 	 */
 	public static void classSetDetails(GstElementClass* klass, GstElementDetails* details)
 	{
@@ -467,7 +473,7 @@ public class Element : ObjectGst
 	 * The pad and the element should be unlocked when calling this function.
 	 * This function will emit the GstElement::pad-added signal on the element.
 	 * Params:
-	 * pad =  the GstPad to add to the element.
+	 * pad = the GstPad to add to the element.
 	 * Returns: TRUE if the pad could be added. This function can fail whena pad with the same name already existed or the pad already had anotherparent.MT safe.
 	 */
 	public int addPad(Pad pad)
@@ -484,7 +490,7 @@ public class Element : ObjectGst
 	 * to the result pad should be released with gst_object_unref() in case of a static pad
 	 * or gst_element_release_request_pad() in case of a request pad.
 	 * Params:
-	 * name =  the name of the pad to retrieve.
+	 * name = the name of the pad to retrieve.
 	 * Returns: the GstPad if found, otherwise NULL. Unref or Release after usage,depending on the type of the pad.
 	 */
 	public Pad getPad(string name)
@@ -514,8 +520,8 @@ public class Element : ObjectGst
 	 * guaranteed that linking the pads will work, though it should work in most
 	 * cases.
 	 * Params:
-	 * pad =  the GstPad to find a compatible one for.
-	 * caps =  the GstCaps to use as a filter.
+	 * pad = the GstPad to find a compatible one for.
+	 * caps = the GstCaps to use as a filter.
 	 * Returns: the GstPad to which a link can be made, or NULL if one cannot befound.
 	 */
 	public Pad getCompatiblePad(Pad pad, Caps caps)
@@ -533,7 +539,7 @@ public class Element : ObjectGst
 	 * Retrieves a pad template from element that is compatible with compattempl.
 	 * Pads from compatible templates can be linked together.
 	 * Params:
-	 * compattempl =  the GstPadTemplate to find a compatible template for.
+	 * compattempl = the GstPadTemplate to find a compatible template for.
 	 * Returns: a compatible GstPadTemplate, or NULL if none was found. Nounreferencing is necessary.
 	 */
 	public GstPadTemplate* getCompatiblePadTemplate(GstPadTemplate* compattempl)
@@ -547,7 +553,7 @@ public class Element : ObjectGst
 	 * request pads. The pad should be released with
 	 * gst_element_release_request_pad().
 	 * Params:
-	 * name =  the name of the request GstPad to retrieve.
+	 * name = the name of the request GstPad to retrieve.
 	 * Returns: requested GstPad if found, otherwise NULL. Release after usage.
 	 */
 	public Pad getRequestPad(string name)
@@ -565,7 +571,7 @@ public class Element : ObjectGst
 	 * Retrieves a pad from element by name. This version only retrieves
 	 * already-existing (i.e. 'static') pads.
 	 * Params:
-	 * name =  the name of the static GstPad to retrieve.
+	 * name = the name of the static GstPad to retrieve.
 	 * Returns: the requested GstPad if found, otherwise NULL. unref afterusage.MT safe.
 	 */
 	public Pad getStaticPad(string name)
@@ -599,7 +605,7 @@ public class Element : ObjectGst
 	 * with gst_element_get_request_pad().
 	 * MT safe.
 	 * Params:
-	 * pad =  the GstPad to release.
+	 * pad = the GstPad to release.
 	 */
 	public void releaseRequestPad(Pad pad)
 	{
@@ -621,7 +627,7 @@ public class Element : ObjectGst
 	 * The pad and the element should be unlocked when calling this function.
 	 * This function will emit the GstElement::pad-removed signal on the element.
 	 * Params:
-	 * pad =  the GstPad to remove from the element.
+	 * pad = the GstPad to remove from the element.
 	 * Returns: TRUE if the pad could be removed. Can return FALSE if thepad does not belong to the provided element.MT safe.
 	 */
 	public int removePad(Pad pad)
@@ -684,7 +690,7 @@ public class Element : ObjectGst
 	 * Make sure you have added your elements to a bin or pipeline with
 	 * gst_bin_add() before trying to link them.
 	 * Params:
-	 * dest =  the GstElement containing the destination pad.
+	 * dest = the GstElement containing the destination pad.
 	 * Returns: TRUE if the elements could be linked, FALSE otherwise.
 	 */
 	public int link(Element dest)
@@ -697,7 +703,7 @@ public class Element : ObjectGst
 	 * Unlinks all source pads of the source element with all sink pads
 	 * of the sink element to which they are linked.
 	 * Params:
-	 * dest =  the sink GstElement to unlink.
+	 * dest = the sink GstElement to unlink.
 	 */
 	public void unlink(Element dest)
 	{
@@ -711,10 +717,10 @@ public class Element : ObjectGst
 	 * child of the parent of the other element. If they have different
 	 * parents, the link fails.
 	 * Params:
-	 * src =  a GstElement containing the source pad.
-	 * srcpadname =  the name of the GstPad in source element or NULL for any pad.
-	 * dest =  the GstElement containing the destination pad.
-	 * destpadname =  the name of the GstPad in destination element,
+	 * src = a GstElement containing the source pad.
+	 * srcpadname = the name of the GstPad in source element or NULL for any pad.
+	 * dest = the GstElement containing the destination pad.
+	 * destpadname = the name of the GstPad in destination element,
 	 * or NULL for any pad.
 	 * Returns: TRUE if the pads could be linked, FALSE otherwise.
 	 */
@@ -727,10 +733,10 @@ public class Element : ObjectGst
 	/**
 	 * Unlinks the two named pads of the source and destination elements.
 	 * Params:
-	 * src =  a GstElement containing the source pad.
-	 * srcpadname =  the name of the GstPad in source element.
-	 * dest =  a GstElement containing the destination pad.
-	 * destpadname =  the name of the GstPad in destination element.
+	 * src = a GstElement containing the source pad.
+	 * srcpadname = the name of the GstPad in source element.
+	 * dest = a GstElement containing the destination pad.
+	 * destpadname = the name of the GstPad in destination element.
 	 */
 	public void unlinkPads(string srcpadname, Element dest, string destpadname)
 	{
@@ -744,11 +750,11 @@ public class Element : ObjectGst
 	 * the other element. If they have different parents, the link fails. If caps
 	 * is not NULL, makes sure that the caps of the link is a subset of caps.
 	 * Params:
-	 * src =  a GstElement containing the source pad.
-	 * srcpadname =  the name of the GstPad in source element or NULL for any pad.
-	 * dest =  the GstElement containing the destination pad.
-	 * destpadname =  the name of the GstPad in destination element or NULL for any pad.
-	 * filter =  the GstCaps to filter the link, or NULL for no filter.
+	 * src = a GstElement containing the source pad.
+	 * srcpadname = the name of the GstPad in source element or NULL for any pad.
+	 * dest = the GstElement containing the destination pad.
+	 * destpadname = the name of the GstPad in destination element or NULL for any pad.
+	 * filter = the GstCaps to filter the link, or NULL for no filter.
 	 * Returns: TRUE if the pads could be linked, FALSE otherwise.
 	 */
 	public int linkPadsFiltered(string srcpadname, Element dest, string destpadname, Caps filter)
@@ -766,8 +772,8 @@ public class Element : ObjectGst
 	 * Make sure you have added your elements to a bin or pipeline with
 	 * gst_bin_add() before trying to link them.
 	 * Params:
-	 * dest =  the GstElement containing the destination pad.
-	 * filter =  the GstCaps to filter the link, or NULL for no filter.
+	 * dest = the GstElement containing the destination pad.
+	 * filter = the GstCaps to filter the link, or NULL for no filter.
 	 * Returns: TRUE if the pads could be linked, FALSE otherwise.
 	 */
 	public int linkFiltered(Element dest, Caps filter)
@@ -780,7 +786,7 @@ public class Element : ObjectGst
 	 * Set the base time of an element. See gst_element_get_base_time().
 	 * MT safe.
 	 * Params:
-	 * time =  the base time to set.
+	 * time = the base time to set.
 	 */
 	public void setBaseTime(GstClockTime time)
 	{
@@ -806,7 +812,7 @@ public class Element : ObjectGst
 	 * For internal use only, unless you're testing elements.
 	 * MT safe.
 	 * Params:
-	 * bus =  the GstBus to set.
+	 * bus = the GstBus to set.
 	 */
 	public void setBus(Bus bus)
 	{
@@ -844,7 +850,7 @@ public class Element : ObjectGst
 	 * will be increased, any previously set index is unreffed.
 	 * MT safe.
 	 * Params:
-	 * index =  a GstIndex.
+	 * index = a GstIndex.
 	 */
 	public void setIndex(Index index)
 	{
@@ -892,7 +898,7 @@ public class Element : ObjectGst
 	 * refcount on the clock. Any previously set clock on the object
 	 * is unreffed.
 	 * Params:
-	 * clock =  the GstClock to set for the element.
+	 * clock = the GstClock to set for the element.
 	 * Returns: TRUE if the element accepted the clock. An element can refuse aclock when it, for example, is not able to slave its internal clock to theclock or when it requires a specific clock to operate.MT safe.
 	 */
 	public int setClock(Clock clock)
@@ -959,7 +965,7 @@ public class Element : ObjectGst
 	 * An application can use gst_element_get_state() to wait for the completion
 	 * of the state change or it can wait for a state change message on the bus.
 	 * Params:
-	 * state =  the element's new GstState.
+	 * state = the element's new GstState.
 	 * Returns: Result of the state change using GstStateChangeReturn.MT safe.
 	 */
 	public GstStateChangeReturn setState(GstState state)
@@ -987,10 +993,10 @@ public class Element : ObjectGst
 	 * an element is not producing data to complete the preroll. When setting the
 	 * element to playing, the preroll will complete and playback will start.
 	 * Params:
-	 * state =  a pointer to GstState to hold the state. Can be NULL.
-	 * pending =  a pointer to GstState to hold the pending state.
+	 * state = a pointer to GstState to hold the state. Can be NULL.
+	 * pending = a pointer to GstState to hold the pending state.
 	 *  Can be NULL.
-	 * timeout =  a GstClockTime to specify the timeout for an async
+	 * timeout = a GstClockTime to specify the timeout for an async
 	 *  state change or GST_CLOCK_TIME_NONE for infinite timeout.
 	 * Returns: GST_STATE_CHANGE_SUCCESS if the element has no more pending state and the last state change succeeded, GST_STATE_CHANGE_ASYNC if the element is still performing a state change or GST_STATE_CHANGE_FAILURE if the last state change failed.MT safe.
 	 */
@@ -1005,7 +1011,7 @@ public class Element : ObjectGst
 	 * this element anymore.
 	 * MT safe.
 	 * Params:
-	 * lockedState =  TRUE to lock the element's state
+	 * lockedState = TRUE to lock the element's state
 	 * Returns: TRUE if the state was changed, FALSE if bad parameters were givenor the elements state-locking needed no change.
 	 */
 	public int setLockedState(int lockedState)
@@ -1053,7 +1059,7 @@ public class Element : ObjectGst
 	 * This method is used internally and should normally not be called by plugins
 	 * or applications.
 	 * Params:
-	 * ret =  The previous state return value
+	 * ret = The previous state return value
 	 * Returns: The result of the commit state change. MT safe.
 	 */
 	public GstStateChangeReturn continueState(GstStateChangeReturn ret)
@@ -1084,7 +1090,7 @@ public class Element : ObjectGst
 	/**
 	 * Gets a string representing the given state.
 	 * Params:
-	 * state =  a GstState to get the name of.
+	 * state = a GstState to get the name of.
 	 * Returns: a string with the name of the state.
 	 */
 	public static string stateGetName(GstState state)
@@ -1096,7 +1102,7 @@ public class Element : ObjectGst
 	/**
 	 * Gets a string representing the given state change result.
 	 * Params:
-	 * stateRet =  a GstStateChangeReturn to get the name of.
+	 * stateRet = a GstStateChangeReturn to get the name of.
 	 * Returns: a string with the name of the state change result.
 	 */
 	public static string stateChangeReturnGetName(GstStateChangeReturn stateRet)
@@ -1122,7 +1128,7 @@ public class Element : ObjectGst
 	 * This is a utility method for elements. Applications should use the
 	 * GstTagSetter interface.
 	 * Params:
-	 * list =  list of tags.
+	 * list = list of tags.
 	 */
 	public void foundTags(TagList list)
 	{
@@ -1136,8 +1142,8 @@ public class Element : ObjectGst
 	 * This is a utility method for elements. Applications should use the
 	 * GstTagSetter interface.
 	 * Params:
-	 * pad =  pad on which to push tag-event.
-	 * list =  the taglist to post on the bus and create event from.
+	 * pad = pad on which to push tag-event.
+	 * list = the taglist to post on the bus and create event from.
 	 */
 	public void foundTagsForPad(Pad pad, TagList list)
 	{
@@ -1151,16 +1157,16 @@ public class Element : ObjectGst
 	 * GST_MESSAGE_INFO.
 	 * MT safe.
 	 * Params:
-	 * type =  the GstMessageType
-	 * domain =  the GStreamer GError domain this message belongs to
-	 * code =  the GError code belonging to the domain
-	 * text =  an allocated text string to be used as a replacement for the
+	 * type = the GstMessageType
+	 * domain = the GStreamer GError domain this message belongs to
+	 * code = the GError code belonging to the domain
+	 * text = an allocated text string to be used as a replacement for the
 	 *  default message connected to code, or NULL
-	 * dbug =  an allocated debug message to be used as a replacement for the
+	 * dbug = an allocated debug message to be used as a replacement for the
 	 *  default debugging information, or NULL
-	 * file =  the source code file where the error was generated
-	 * funct =  the source code function where the error was generated
-	 * line =  the source code line where the error was generated
+	 * file = the source code file where the error was generated
+	 * funct = the source code function where the error was generated
+	 * line = the source code line where the error was generated
 	 */
 	public void messageFull(GstMessageType type, GQuark domain, int code, string text, string dbug, string file, string funct, int line)
 	{
@@ -1173,7 +1179,7 @@ public class Element : ObjectGst
 	 * message; if you want to access the message after this call, you should add an
 	 * additional reference before calling.
 	 * Params:
-	 * message =  a GstMessage to post
+	 * message = a GstMessage to post
 	 * Returns: TRUE if the message was successfully posted. The function returnsFALSE if the element did not have a bus.MT safe.
 	 */
 	public int postMessage(Message message)
@@ -1200,7 +1206,7 @@ public class Element : ObjectGst
 	 * forwards the query to a random srcpad or to the peer of a
 	 * random linked sinkpad of this element.
 	 * Params:
-	 * query =  the GstQuery.
+	 * query = the GstQuery.
 	 * Returns: TRUE if the query could be performed.MT safe.
 	 */
 	public int query(Query query)
@@ -1212,10 +1218,10 @@ public class Element : ObjectGst
 	/**
 	 * Queries an element to convert src_val in src_format to dest_format.
 	 * Params:
-	 * srcFormat =  a GstFormat to convert from.
-	 * srcVal =  a value to convert.
-	 * destFormat =  a pointer to the GstFormat to convert to.
-	 * destVal =  a pointer to the result.
+	 * srcFormat = a GstFormat to convert from.
+	 * srcVal = a value to convert.
+	 * destFormat = a pointer to the GstFormat to convert to.
+	 * destVal = a pointer to the result.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryConvert(GstFormat srcFormat, long srcVal, GstFormat* destFormat, long* destVal)
@@ -1227,9 +1233,9 @@ public class Element : ObjectGst
 	/**
 	 * Queries an element for the stream position.
 	 * Params:
-	 * format =  a pointer to the GstFormat asked for.
+	 * format = a pointer to the GstFormat asked for.
 	 *  On return contains the GstFormat used.
-	 * cur =  A location in which to store the current position, or NULL.
+	 * cur = A location in which to store the current position, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryPosition(GstFormat* format, long* cur)
@@ -1241,9 +1247,9 @@ public class Element : ObjectGst
 	/**
 	 * Queries an element for the total stream duration.
 	 * Params:
-	 * format =  a pointer to the GstFormat asked for.
+	 * format = a pointer to the GstFormat asked for.
 	 *  On return contains the GstFormat used.
-	 * duration =  A location in which to store the total duration, or NULL.
+	 * duration = A location in which to store the total duration, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryDuration(GstFormat* format, long* duration)
@@ -1259,7 +1265,7 @@ public class Element : ObjectGst
 	 * This function takes owership of the provided event so you should
 	 * gst_event_ref() it if you want to reuse the event after this call.
 	 * Params:
-	 * event =  the GstEvent to send to the element.
+	 * event = the GstEvent to send to the element.
 	 * Returns: TRUE if the event was handled.MT safe.
 	 */
 	public int sendEvent(Event event)
@@ -1282,9 +1288,9 @@ public class Element : ObjectGst
 	 * PAUSED. If the element supports seek in READY, it will always return TRUE when
 	 * it receives the event in the READY state.
 	 * Params:
-	 * format =  a GstFormat to execute the seek in, such as GST_FORMAT_TIME
-	 * seekFlags =  seek options
-	 * seekPos =  position to seek to (relative to the start); if you are doing
+	 * format = a GstFormat to execute the seek in, such as GST_FORMAT_TIME
+	 * seekFlags = seek options
+	 * seekPos = position to seek to (relative to the start); if you are doing
 	 *  a seek in GST_FORMAT_TIME this value is in nanoseconds -
 	 *  multiply with GST_SECOND to convert seconds to nanoseconds or
 	 *  with GST_MSECOND to convert milliseconds to nanoseconds.
@@ -1301,13 +1307,13 @@ public class Element : ObjectGst
 	 * the parameters. The seek event is sent to the element using
 	 * gst_element_send_event().
 	 * Params:
-	 * rate =  The new playback rate
-	 * format =  The format of the seek values
-	 * flags =  The optional seek flags.
-	 * curType =  The type and flags for the new current position
-	 * cur =  The value of the new current position
-	 * stopType =  The type and flags for the new stop position
-	 * stop =  The value of the new stop position
+	 * rate = The new playback rate
+	 * format = The format of the seek values
+	 * flags = The optional seek flags.
+	 * curType = The type and flags for the new current position
+	 * cur = The value of the new current position
+	 * stopType = The type and flags for the new stop position
+	 * stop = The value of the new stop position
 	 * Returns: TRUE if the event was handled.MT safe.Signal DetailsThe "no-more-pads" signalvoid user_function (GstElement *gstelement, gpointer user_data) : Run lastThis signals that the element will not generate more dynamic pads.
 	 */
 	public int seek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType curType, long cur, GstSeekType stopType, long stop)

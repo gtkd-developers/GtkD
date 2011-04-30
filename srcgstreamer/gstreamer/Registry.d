@@ -160,6 +160,12 @@ public class Registry : ObjectGst
 		this.gstRegistry = gstRegistry;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstRegistry = cast(GstRegistry*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;
@@ -242,7 +248,7 @@ public class Registry : ObjectGst
 	/**
 	 * Retrieves a GList of GstPluginFeature of type.
 	 * Params:
-	 * type =  a GType.
+	 * type = a GType.
 	 * Returns: a GList of GstPluginFeature of type. gst_plugin_feature_list_freeafter usage.MT safe.
 	 */
 	public ListG getFeatureList(GType type)
@@ -259,7 +265,7 @@ public class Registry : ObjectGst
 	/**
 	 * Retrieves a GList of features of the plugin with name name.
 	 * Params:
-	 * name =  a plugin name.
+	 * name = a plugin name.
 	 * Returns: a GList of GstPluginFeature. gst_plugin_feature_list_free() after usage.
 	 */
 	public ListG getFeatureListByPlugin(string name)
@@ -308,7 +314,7 @@ public class Registry : ObjectGst
 	 * Add the plugin to the registry. The plugin-added signal will be emitted.
 	 * This function will sink plugin.
 	 * Params:
-	 * plugin =  the plugin to add
+	 * plugin = the plugin to add
 	 * Returns: TRUE on success.MT safe.
 	 */
 	public int addPlugin(Plugin plugin)
@@ -321,7 +327,7 @@ public class Registry : ObjectGst
 	 * Remove the plugin from the registry.
 	 * MT safe.
 	 * Params:
-	 * plugin =  the plugin to remove
+	 * plugin = the plugin to remove
 	 */
 	public void removePlugin(Plugin plugin)
 	{
@@ -336,9 +342,9 @@ public class Registry : ObjectGst
 	 * Every plugin is reffed; use gst_plugin_list_free() after use, which
 	 * will unref again.
 	 * Params:
-	 * filter =  the filter to use
-	 * first =  only return first match
-	 * userData =  user data passed to the filter function
+	 * filter = the filter to use
+	 * first = only return first match
+	 * userData = user data passed to the filter function
 	 * Returns: a GList of GstPlugin. Use gst_plugin_list_free() after usage.MT safe.
 	 */
 	public ListG pluginFilter(GstPluginFilter filter, int first, void* userData)
@@ -358,9 +364,9 @@ public class Registry : ObjectGst
 	 * If the first flag is set, only the first match is
 	 * returned (as a list with a single object).
 	 * Params:
-	 * filter =  the filter to use
-	 * first =  only return first match
-	 * userData =  user data passed to the filter function
+	 * filter = the filter to use
+	 * first = only return first match
+	 * userData = user data passed to the filter function
 	 * Returns: a GList of plugin features, gst_plugin_feature_list_free after use.MT safe.
 	 */
 	public ListG featureFilter(GstPluginFeatureFilter filter, int first, void* userData)
@@ -378,7 +384,7 @@ public class Registry : ObjectGst
 	 * Find the plugin with the given name in the registry.
 	 * The plugin will be reffed; caller is responsible for unreffing.
 	 * Params:
-	 * name =  the plugin name to find
+	 * name = the plugin name to find
 	 * Returns: The plugin with the given name or NULL if the plugin was not found.gst_object_unref() after usage.MT safe.
 	 */
 	public Plugin findPlugin(string name)
@@ -395,8 +401,8 @@ public class Registry : ObjectGst
 	/**
 	 * Find the pluginfeature with the given name and type in the registry.
 	 * Params:
-	 * name =  the pluginfeature name to find
-	 * type =  the pluginfeature type to find
+	 * name = the pluginfeature name to find
+	 * type = the pluginfeature type to find
 	 * Returns: The pluginfeature with the given name and type or NULLif the plugin was not found. gst_object_unref() after usage.MT safe.
 	 */
 	public PluginFeature findFeature(string name, GType type)
@@ -413,7 +419,7 @@ public class Registry : ObjectGst
 	/**
 	 * Find a GstPluginFeature with name in registry.
 	 * Params:
-	 * name =  a GstPluginFeature name
+	 * name = a GstPluginFeature name
 	 * Returns: a GstPluginFeature with its refcount incremented, usegst_object_unref() after usage.MT safe.
 	 */
 	public PluginFeature lookupFeature(string name)
@@ -432,7 +438,7 @@ public class Registry : ObjectGst
 	 * path is specific to the registry. If the path has already been
 	 * added, do nothing.
 	 * Params:
-	 * path =  the path to add to the registry
+	 * path = the path to add to the registry
 	 * Returns: TRUE if registry changed
 	 */
 	public int scanPath(string path)
@@ -444,7 +450,7 @@ public class Registry : ObjectGst
 	/**
 	 * Read the contents of the binary cache file at location into registry.
 	 * Params:
-	 * location =  a filename
+	 * location = a filename
 	 * Returns: TRUE on success.
 	 */
 	public int binaryReadCache(string location)
@@ -467,7 +473,7 @@ public class Registry : ObjectGst
 	/**
 	 * Read the contents of the XML cache file at location into registry.
 	 * Params:
-	 * location =  a filename
+	 * location = a filename
 	 * Returns: TRUE on success.
 	 */
 	public int xmlReadCache(string location)
@@ -480,7 +486,7 @@ public class Registry : ObjectGst
 	 * Write registry in an XML format at the location given by
 	 * location. Directories are automatically created.
 	 * Params:
-	 * location =  a filename
+	 * location = a filename
 	 * Returns: TRUE on success.
 	 */
 	public int xmlWriteCache(string location)
@@ -493,7 +499,7 @@ public class Registry : ObjectGst
 	 * Look up a plugin in the given registry with the given filename.
 	 * If found, plugin is reffed.
 	 * Params:
-	 * filename =  the name of the file to look up
+	 * filename = the name of the file to look up
 	 * Returns: the GstPlugin if found, or NULL if not. gst_object_unref()after usage.
 	 */
 	public Plugin lookup(string filename)
@@ -511,7 +517,7 @@ public class Registry : ObjectGst
 	 * Remove the feature from the registry.
 	 * MT safe.
 	 * Params:
-	 * feature =  the feature to remove
+	 * feature = the feature to remove
 	 */
 	public void removeFeature(PluginFeature feature)
 	{
@@ -523,7 +529,7 @@ public class Registry : ObjectGst
 	 * Add the feature to the registry. The feature-added signal will be emitted.
 	 * This function sinks feature.
 	 * Params:
-	 * feature =  the feature to add
+	 * feature = the feature to add
 	 * Returns: TRUE on success.MT safe.
 	 */
 	public int addFeature(PluginFeature feature)
@@ -537,10 +543,10 @@ public class Registry : ObjectGst
 	 * default registry and whether its version is at least the
 	 * version required.
 	 * Params:
-	 * featureName =  the name of the feature (e.g. "oggdemux")
-	 * minMajor =  the minimum major version number
-	 * minMinor =  the minimum minor version number
-	 * minMicro =  the minimum micro version number
+	 * featureName = the name of the feature (e.g. "oggdemux")
+	 * minMajor = the minimum major version number
+	 * minMinor = the minimum minor version number
+	 * minMicro = the minimum micro version number
 	 * Returns: TRUE if the feature could be found and the version isthe same as the required version or newer, and FALSE otherwise.
 	 */
 	public static int defaultRegistryCheckFeatureVersion(string featureName, uint minMajor, uint minMinor, uint minMicro)

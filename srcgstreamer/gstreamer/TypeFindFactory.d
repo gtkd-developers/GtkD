@@ -165,6 +165,12 @@ public class TypeFindFactory : PluginFeature
 		this.gstTypeFindFactory = gstTypeFindFactory;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstTypeFindFactory = cast(GstTypeFindFactory*)obj;
+	}
+	
 	/**
 	 */
 	
@@ -215,7 +221,7 @@ public class TypeFindFactory : PluginFeature
 	/**
 	 * Calls the GstTypeFindFunction associated with this factory.
 	 * Params:
-	 * find =  A properly setup GstTypeFind entry. The get_data and suggest_type
+	 * find = A properly setup GstTypeFind entry. The get_data and suggest_type
 	 *  members must be set.
 	 */
 	public void callFunction(TypeFind find)

@@ -112,15 +112,21 @@ public class IndexFactory : PluginFeature
 		this.gstIndexFactory = gstIndexFactory;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstIndexFactory = cast(GstIndexFactory*)obj;
+	}
+	
 	/**
 	 */
 	
 	/**
 	 * Create a new indexfactory with the given parameters
 	 * Params:
-	 * name =  name of indexfactory to create
-	 * longdesc =  long description of indexfactory to create
-	 * type =  the GType of the GstIndex element of this factory
+	 * name = name of indexfactory to create
+	 * longdesc = long description of indexfactory to create
+	 * type = the GType of the GstIndex element of this factory
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string longdesc, GType type)
@@ -146,7 +152,7 @@ public class IndexFactory : PluginFeature
 	/**
 	 * Search for an indexfactory of the given name.
 	 * Params:
-	 * name =  name of indexfactory to find
+	 * name = name of indexfactory to find
 	 * Returns: GstIndexFactory if found, NULL otherwise
 	 */
 	public static IndexFactory find(string name)
@@ -180,7 +186,7 @@ public class IndexFactory : PluginFeature
 	 * Create a new GstIndex instance from the
 	 * indexfactory with the given name.
 	 * Params:
-	 * name =  the name of the factory used to create the instance
+	 * name = the name of the factory used to create the instance
 	 * Returns: A new GstIndex instance.
 	 */
 	public static Index make(string name)

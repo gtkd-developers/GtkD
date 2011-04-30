@@ -43,6 +43,8 @@
  * 	- gst_init
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.Str
  * structWrap:
  * module aliases:
@@ -57,9 +59,9 @@ public  import gstreamerc.gstreamertypes;
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 
+
 private import glib.ErrorG;
 private import glib.GException;
-
 private import glib.Str;
 
 
@@ -156,8 +158,8 @@ public class GStreamer
 	 * this is not an option, your program must initialise the GLib thread system
 	 * using g_thread_init() before any other GLib functions are called.
 	 * Params:
-	 * argc =  pointer to application's argc
-	 * argv =  pointer to application's argv
+	 * argc = pointer to application's argc
+	 * argv = pointer to application's argv
 	 * Returns: TRUE if GStreamer could be initialized.
 	 * Throws: GException on failure.
 	 */
@@ -211,10 +213,10 @@ public class GStreamer
 	/**
 	 * Gets the version number of the GStreamer library.
 	 * Params:
-	 * major =  pointer to a guint to store the major version number
-	 * minor =  pointer to a guint to store the minor version number
-	 * micro =  pointer to a guint to store the micro version number
-	 * nano =  pointer to a guint to store the nano version number
+	 * major = pointer to a guint to store the major version number
+	 * minor = pointer to a guint to store the minor version number
+	 * micro = pointer to a guint to store the micro version number
+	 * nano = pointer to a guint to store the nano version number
 	 */
 	public static void versio(uint* major, uint* minor, uint* micro, uint* nano)
 	{
@@ -252,7 +254,7 @@ public class GStreamer
 	 * Applications might want to disable/enable the SIGSEGV handling of
 	 * the GStreamer core. See gst_segtrap_is_enabled() for more information.
 	 * Params:
-	 * enabled =  whether a custom SIGSEGV handler should be installed.
+	 * enabled = whether a custom SIGSEGV handler should be installed.
 	 * Since 0.10.10
 	 */
 	public static void segtrapSetEnabled(int enabled)
@@ -280,7 +282,7 @@ public class GStreamer
 	 * On platforms without fork(), this function will have no effect on the return
 	 * value of gst_registry_fork_is_enabled().
 	 * Params:
-	 * enabled =  whether rebuilding the registry may fork
+	 * enabled = whether rebuilding the registry may fork
 	 * Since 0.10.10
 	 */
 	public static void registryForkSetEnabled(int enabled)

@@ -169,8 +169,8 @@ public class Caps
 	 * arguments. The list must be NULL-terminated. The structures
 	 * are not copied; the returned GstCaps owns the structures.
 	 * Params:
-	 * structure =  the first structure to add
-	 * varArgs =  additional structures to add
+	 * structure = the first structure to add
+	 * varArgs = additional structures to add
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Structure structure, void* varArgs)
@@ -208,7 +208,7 @@ public class Caps
 	 * Creates a new GstCaps and appends a copy of the nth structure
 	 * contained in caps.
 	 * Params:
-	 * nth =  the nth structure to copy
+	 * nth = the nth structure to copy
 	 * Returns: the new GstCaps
 	 */
 	public Caps copyNth(uint nth)
@@ -225,7 +225,7 @@ public class Caps
 	/**
 	 * Converts a GstStaticCaps to a GstCaps.
 	 * Params:
-	 * staticCaps =  the GstStaticCaps to convert
+	 * staticCaps = the GstStaticCaps to convert
 	 * Returns: A pointer to the GstCaps. Unref after usage. Since thecore holds an additional ref to the returned caps,use gst_caps_make_writable() on the returned caps to modify it.
 	 */
 	public static Caps staticCapsGet(GstStaticCaps* staticCaps)
@@ -244,7 +244,7 @@ public class Caps
 	 * caps2 are not copied -- they are transferred to caps1, and then caps2 is
 	 * freed. If either caps is ANY, the resulting caps will be ANY.
 	 * Params:
-	 * caps2 =  the GstCaps to append
+	 * caps2 = the GstCaps to append
 	 */
 	public void append(Caps caps2)
 	{
@@ -258,7 +258,7 @@ public class Caps
 	 * transferred to caps1, and then caps2 is freed.
 	 * If either caps is ANY, the resulting caps will be ANY.
 	 * Params:
-	 * caps2 =  the GstCaps to merge in
+	 * caps2 = the GstCaps to merge in
 	 * Since 0.10.10
 	 */
 	public void merge(Caps caps2)
@@ -271,7 +271,7 @@ public class Caps
 	 * Appends structure to caps. The structure is not copied; caps
 	 * becomes the owner of structure.
 	 * Params:
-	 * structure =  the GstStructure to append
+	 * structure = the GstStructure to append
 	 */
 	public void appendStructure(Structure structure)
 	{
@@ -283,7 +283,7 @@ public class Caps
 	 * removes the stucture with the given index from the list of structures
 	 * contained in caps.
 	 * Params:
-	 * idx =  Index of the structure to remove
+	 * idx = Index of the structure to remove
 	 */
 	public void removeStructure(uint idx)
 	{
@@ -295,7 +295,7 @@ public class Caps
 	 * Appends structure to caps if its not already expressed by caps. The
 	 * structure is not copied; caps becomes the owner of structure.
 	 * Params:
-	 * structure =  the GstStructure to merge
+	 * structure = the GstStructure to merge
 	 */
 	public void mergeStructure(Structure structure)
 	{
@@ -321,7 +321,7 @@ public class Caps
 	 * the caller should be aware that structures inside a constant
 	 * GstCaps should not be modified.
 	 * Params:
-	 * index =  the index of the structure
+	 * index = the index of the structure
 	 * Returns: a pointer to the GstStructure corresponding to index
 	 */
 	public Structure getStructure(uint index)
@@ -340,8 +340,8 @@ public class Caps
 	 * only has one structure. The arguments must be passed in the same
 	 * manner as gst_structure_set(), and be NULL-terminated.
 	 * Params:
-	 * field =  first field to set
-	 * varargs =  additional parameters
+	 * field = first field to set
+	 * varargs = additional parameters
 	 */
 	public void setSimpleValist(string field, void* varargs)
 	{
@@ -388,7 +388,7 @@ public class Caps
 	 * are included on one caps and omitted on the other.
 	 * This function deals correctly with passing NULL for any of the caps.
 	 * Params:
-	 * caps2 =  another GstCaps
+	 * caps2 = another GstCaps
 	 * Returns: TRUE if both caps are equal.
 	 */
 	public int isEqual(Caps caps2)
@@ -401,7 +401,7 @@ public class Caps
 	 * Tests if two GstCaps are equal. This function only works on fixed
 	 * GstCaps.
 	 * Params:
-	 * caps2 =  the GstCaps to test
+	 * caps2 = the GstCaps to test
 	 * Returns: TRUE if the arguments represent the same format
 	 */
 	public int isEqualFixed(Caps caps2)
@@ -415,7 +415,7 @@ public class Caps
 	 * every media format that is in the first is also contained in the
 	 * second. That is, caps1 is a subset of caps2.
 	 * Params:
-	 * caps2 =  the GstCaps to test
+	 * caps2 = the GstCaps to test
 	 * Returns: TRUE if caps1 is a subset of caps2.
 	 */
 	public int isAlwaysCompatible(Caps caps2)
@@ -430,7 +430,7 @@ public class Caps
 	 * This function does not work reliably if optional properties for caps
 	 * are included on one caps and omitted on the other.
 	 * Params:
-	 * superset =  a potentially greater GstCaps
+	 * superset = a potentially greater GstCaps
 	 * Returns: TRUE if subset is a subset of superset
 	 */
 	public int isSubset(Caps superset)
@@ -443,7 +443,7 @@ public class Caps
 	 * Creates a new GstCaps that contains all the formats that are common
 	 * to both caps1 and caps2.
 	 * Params:
-	 * caps2 =  a GstCaps to intersect
+	 * caps2 = a GstCaps to intersect
 	 * Returns: the new GstCaps
 	 */
 	public Caps intersect(Caps caps2)
@@ -461,7 +461,7 @@ public class Caps
 	 * Creates a new GstCaps that contains all the formats that are in
 	 * either caps1 and caps2.
 	 * Params:
-	 * caps2 =  a GstCaps to union
+	 * caps2 = a GstCaps to union
 	 * Returns: the new GstCaps
 	 */
 	public Caps unio(Caps caps2)
@@ -512,8 +512,8 @@ public class Caps
 	 * This function does not take any locks so you might want to lock
 	 * the object owning caps pointer.
 	 * Params:
-	 * caps =  a pointer to GstCaps
-	 * newcaps =  a GstCaps to replace *caps
+	 * caps = a pointer to GstCaps
+	 * newcaps = a GstCaps to replace *caps
 	 */
 	public static void replace(GstCaps** caps, Caps newcaps)
 	{
@@ -535,7 +535,7 @@ public class Caps
 	/**
 	 * Converts caps from a string representation.
 	 * Params:
-	 * string =  a string to convert to GstCaps
+	 * string = a string to convert to GstCaps
 	 * Returns: a newly allocated GstCaps
 	 */
 	public static Caps fromString(string string)
@@ -555,7 +555,7 @@ public class Caps
 	 * This function does not work reliably if optional properties for caps
 	 * are included on one caps and omitted on the other.
 	 * Params:
-	 * subtrahend =  GstCaps to substract
+	 * subtrahend = GstCaps to substract
 	 * Returns: the resulting caps
 	 */
 	public Caps subtract(Caps subtrahend)

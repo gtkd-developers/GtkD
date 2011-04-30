@@ -164,6 +164,12 @@ public class ObjectGst : ObjectG
 		this.gstObject = gstObject;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstObject = cast(GstObject*)obj;
+	}
+	
 	/**
 	 * Increments the refence count on object. This function
 	 * does not take the lock on object because it relies on
@@ -307,7 +313,7 @@ public class ObjectGst : ObjectG
 	 * This function makes a copy of the provided name, so the caller
 	 * retains ownership of the name it sent.
 	 * Params:
-	 * name =  new name of object
+	 * name = new name of object
 	 * Returns: TRUE if the name could be set. Since Objects that havea parent cannot be renamed, this function returns FALSE in thosecases.MT safe. This function grabs and releases object's LOCK.
 	 */
 	public int setName(string name)
@@ -335,7 +341,7 @@ public class ObjectGst : ObjectG
 	 * This function causes the parent-set signal to be emitted when the parent
 	 * was successfully set.
 	 * Params:
-	 * parent =  new parent of object
+	 * parent = new parent of object
 	 * Returns: TRUE if parent could be set or FALSE when objectalready had a parent or object and parent are the same.MT safe. Grabs and releases object's LOCK.
 	 */
 	public int setParent(ObjectGst parent)
@@ -390,7 +396,7 @@ public class ObjectGst : ObjectG
 	 * retains ownership of the name prefix it sent.
 	 * MT safe. This function grabs and releases object's LOCK.
 	 * Params:
-	 * namePrefix =  new name prefix of object
+	 * namePrefix = new name prefix of object
 	 */
 	public void setNamePrefix(string namePrefix)
 	{
@@ -406,10 +412,10 @@ public class ObjectGst : ObjectG
 	 * MT safe. This function grabs and releases object's LOCK for getting its
 	 *  path string.
 	 * Params:
-	 * object =  the GObject that signalled the notify.
-	 * orig =  a GstObject that initiated the notify.
-	 * pspec =  a GParamSpec of the property.
-	 * excludedProps =  a set of user-specified properties to exclude or
+	 * object = the GObject that signalled the notify.
+	 * orig = a GstObject that initiated the notify.
+	 * pspec = a GParamSpec of the property.
+	 * excludedProps = a set of user-specified properties to exclude or
 	 *  NULL to show all changes.
 	 */
 	public static void defaultDeepNotify(ObjectG object, ObjectGst orig, GParamSpec* pspec, char** excludedProps)
@@ -422,8 +428,8 @@ public class ObjectGst : ObjectG
 	 * A default error function.
 	 * The default handler will simply print the error string using g_print.
 	 * Params:
-	 * error =  the GError.
-	 * dbug =  an additional debug information string, or NULL.
+	 * error = the GError.
+	 * dbug = an additional debug information string, or NULL.
 	 */
 	public void defaultError(ErrorG error, string dbug)
 	{
@@ -438,8 +444,8 @@ public class ObjectGst : ObjectG
 	 * will lock each GstObject in the list to compare the name, so be
 	 * carefull when passing a list with a locked object.
 	 * Params:
-	 * list =  a list of GstObject to check through
-	 * name =  the name to search for
+	 * list = a list of GstObject to check through
+	 * name = the name to search for
 	 * Returns: TRUE if a GstObject named name does not appear in list, FALSE if it does.MT safe. Grabs and releases the LOCK of each object in the list.
 	 */
 	public static int checkUniqueness(ListG list, string name)
@@ -452,7 +458,7 @@ public class ObjectGst : ObjectG
 	 * Check if object has an ancestor ancestor somewhere up in
 	 * the hierarchy.
 	 * Params:
-	 * ancestor =  a GstObject to check as ancestor
+	 * ancestor = a GstObject to check as ancestor
 	 * Returns: TRUE if ancestor is an ancestor of object.MT safe. Grabs and releases object's locks.
 	 */
 	public int hasAncestor(ObjectGst ancestor)
@@ -468,7 +474,7 @@ public class ObjectGst : ObjectG
 	 * The unref method should never be called with the LOCK held since
 	 * this might deadlock the dispose function.
 	 * Params:
-	 * object =  a GstObject to unreference
+	 * object = a GstObject to unreference
 	 */
 	public static void unref(void* object)
 	{
@@ -488,7 +494,7 @@ public class ObjectGst : ObjectG
 	 * Use gst_object_set_parent() to have this done for you.
 	 * MT safe. This function grabs and releases object lock.
 	 * Params:
-	 * object =  a GstObject to sink
+	 * object = a GstObject to sink
 	 */
 	public static void sink(void* object)
 	{
@@ -505,8 +511,8 @@ public class ObjectGst : ObjectG
 	 * Make sure not to LOCK oldobj because it might be unreffed
 	 * which could cause a deadlock when it is disposed.
 	 * Params:
-	 * oldobj =  pointer to a place of a GstObject to replace
-	 * newobj =  a new GstObject
+	 * oldobj = pointer to a place of a GstObject to replace
+	 * newobj = a new GstObject
 	 */
 	public static void replace(GstObject** oldobj, ObjectGst newobj)
 	{

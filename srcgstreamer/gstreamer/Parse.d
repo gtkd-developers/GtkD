@@ -46,6 +46,7 @@
  * 	- glib.Str
  * 	- glib.Quark
  * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gstreamer.Element
  * structWrap:
  * 	- GError* -> ErrorG
@@ -101,7 +102,7 @@ public class Parse
 	 * the error is set. In this case there was a recoverable parsing error and you
 	 * can try to play the pipeline.
 	 * Params:
-	 * pipelineDescription =  the command line describing the pipeline
+	 * pipelineDescription = the command line describing the pipeline
 	 * Returns: a new element on success, NULL on failure. If more than one toplevelelement is specified by the pipeline_description, all elements are put intoa GstPipeline, which than is returned.
 	 * Throws: GException on failure.
 	 */
@@ -129,7 +130,7 @@ public class Parse
 	 * error will contain an error message if an erroneuos pipeline is specified.
 	 * An error does not mean that the pipeline could not be constructed.
 	 * Params:
-	 * argv =  null-terminated array of arguments
+	 * argv = null-terminated array of arguments
 	 * Returns: a new element on success and NULL on failure.
 	 * Throws: GException on failure.
 	 */
@@ -163,8 +164,8 @@ public class Parse
 	 * and want them all ghosted, you will have to create the ghost pads
 	 * yourself).
 	 * Params:
-	 * binDescription =  command line describing the bin
-	 * ghostUnconnectedPads =  whether to automatically create ghost pads
+	 * binDescription = command line describing the bin
+	 * ghostUnconnectedPads = whether to automatically create ghost pads
 	 *  for unconnected source or sink pads within
 	 *  the bin
 	 * Returns: a newly-created bin, or NULL if an error occurred.Since 0.10.3

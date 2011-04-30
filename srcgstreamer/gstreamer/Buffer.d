@@ -194,7 +194,7 @@ public class Buffer
 	 * Note that when size == 0, the buffer data pointer will be NULL.
 	 * MT safe.
 	 * Params:
-	 * size =  the size of the new buffer's data.
+	 * size = the size of the new buffer's data.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint size)
@@ -264,7 +264,8 @@ public class Buffer
 	/**
 	 * Gets the media type of the buffer. This can be NULL if there
 	 * is no media type attached to this buffer.
-	 * Returns:Returns:NULL if there were no caps on this buffer.
+	 * Returns: a reference to the GstCaps. unref after usage.
+	 * Returns:NULL if there were no caps on this buffer.
 	 */
 	public Caps getCaps()
 	{
@@ -282,7 +283,7 @@ public class Buffer
 	 * be increased and any previous caps on the buffer will be
 	 * unreffed.
 	 * Params:
-	 * caps =  a GstCaps.
+	 * caps = a GstCaps.
 	 */
 	public void setCaps(Caps caps)
 	{
@@ -300,11 +301,12 @@ public class Buffer
 	 * duration and offset end fields are also copied. If not they will be set
 	 * to GST_CLOCK_TIME_NONE and GST_BUFFER_OFFSET_NONE.
 	 * MT safe.
+	 * Returns: the new GstBuffer.
 	 * Params:
-	 * offset =  the offset into parent GstBuffer at which the new sub-buffer
+	 * offset = the offset into parent GstBuffer at which the new sub-buffer
 	 *  begins.
-	 * size =  the size of the new GstBuffer sub-buffer, in bytes.
-	 * Returns:Returns:NULL if the arguments were invalid.
+	 * size = the size of the new GstBuffer sub-buffer, in bytes.
+	 * Returns:NULL if the arguments were invalid.
 	 */
 	public Buffer createSub(uint offset, uint size)
 	{
@@ -323,7 +325,7 @@ public class Buffer
 	 * the same buffer.
 	 * MT safe.
 	 * Params:
-	 * buf2 =  the second GstBuffer.
+	 * buf2 = the second GstBuffer.
 	 * Returns: TRUE if the buffers are contiguous,FALSE if a copy would be required.
 	 */
 	public int isSpanFast(Buffer buf2)
@@ -342,12 +344,13 @@ public class Buffer
 	 * parent, and thus no copying is necessary. you can use
 	 * gst_buffer_is_span_fast() to determine if a memcpy will be needed.
 	 * MT safe.
+	 * Returns: the new GstBuffer that spans the two source buffers.
 	 * Params:
-	 * offset =  the offset in the first buffer from where the new
+	 * offset = the offset in the first buffer from where the new
 	 * buffer should start.
-	 * buf2 =  the second source GstBuffer to merge.
-	 * len =  the total length of the new buffer.
-	 * Returns:Returns:NULL if the arguments are invalid.
+	 * buf2 = the second source GstBuffer to merge.
+	 * len = the total length of the new buffer.
+	 * Returns:NULL if the arguments are invalid.
 	 */
 	public Buffer span(uint offset, Buffer buf2, uint len)
 	{
@@ -365,7 +368,7 @@ public class Buffer
 	 * and end) from one buffer to the other.
 	 * This function does not copy any buffer flags or caps.
 	 * Params:
-	 * src =  buffer to stamp from
+	 * src = buffer to stamp from
 	 */
 	public void stamp(Buffer src)
 	{
@@ -379,7 +382,7 @@ public class Buffer
 	 * If the buffers point to contiguous areas of memory, the buffer
 	 * is created without copying the data.
 	 * Params:
-	 * buf2 =  the second source GstBuffer.
+	 * buf2 = the second source GstBuffer.
 	 * Returns: the new GstBuffer which is the concatenation of the source buffers.
 	 */
 	public Buffer join(Buffer buf2)
@@ -401,7 +404,7 @@ public class Buffer
 	 * If the buffers point to contiguous areas of memory, the buffer
 	 * is created without copying the data.
 	 * Params:
-	 * buf2 =  the second source GstBuffer to merge.
+	 * buf2 = the second source GstBuffer to merge.
 	 * Returns: the new GstBuffer which is the concatenation of the source buffers.
 	 */
 	public Buffer merge(Buffer buf2)

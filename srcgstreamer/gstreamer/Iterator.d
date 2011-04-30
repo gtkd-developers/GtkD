@@ -137,14 +137,14 @@ public class Iterator
 	 * For each item retrieved, the item function is called with the lock
 	 * held. The free function is called when the iterator is freed.
 	 * Params:
-	 * size =  the size of the iterator structure
-	 * type =  GType of children
-	 * lock =  pointer to a GMutex.
-	 * masterCookie =  pointer to a guint32 to protect the iterated object.
-	 * next =  function to get next item
-	 * item =  function to call on each item retrieved
-	 * resync =  function to resync the iterator
-	 * free =  function to free the iterator
+	 * size = the size of the iterator structure
+	 * type = GType of children
+	 * lock = pointer to a GMutex.
+	 * masterCookie = pointer to a guint32 to protect the iterated object.
+	 * next = function to get next item
+	 * item = function to call on each item retrieved
+	 * resync = function to resync the iterator
+	 * free = function to free the iterator
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint size, GType type, GMutex* lock, uint* masterCookie, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free)
@@ -161,13 +161,13 @@ public class Iterator
 	/**
 	 * Create a new iterator designed for iterating list.
 	 * Params:
-	 * type =  GType of elements
-	 * lock =  pointer to a GMutex protecting the list.
-	 * masterCookie =  pointer to a guint32 to protect the list.
-	 * list =  pointer to the list
-	 * owner =  object owning the list
-	 * item =  function to call for each item
-	 * free =  function to call when the iterator is freed
+	 * type = GType of elements
+	 * lock = pointer to a GMutex protecting the list.
+	 * masterCookie = pointer to a guint32 to protect the list.
+	 * list = pointer to the list
+	 * owner = object owning the list
+	 * item = function to call for each item
+	 * free = function to call when the iterator is freed
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType type, GMutex* lock, uint* masterCookie, GList** list, void* owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free)
@@ -186,7 +186,7 @@ public class Iterator
 	 * refcounted objects, the returned object will have its refcount
 	 * increased and should therefore be unreffed after usage.
 	 * Params:
-	 * elem =  pointer to hold next element
+	 * elem = pointer to hold next element
 	 * Returns: The result of the iteration. Unref after usage if this isa refcounted object.MT safe.
 	 */
 	public GstIteratorResult next(void** elem)
@@ -224,7 +224,7 @@ public class Iterator
 	 * next function to recurse into substructures.
 	 * MT safe.
 	 * Params:
-	 * other =  The GstIterator to push
+	 * other = The GstIterator to push
 	 */
 	public void push(Iterator other)
 	{
@@ -239,8 +239,8 @@ public class Iterator
 	 * in the iterator.
 	 * When this iterator is freed, it will also be freed.
 	 * Params:
-	 * func =  the compare function to select elements
-	 * userData =  user data passed to the compare function
+	 * func = the compare function to select elements
+	 * userData = user data passed to the compare function
 	 * Returns: a new GstIterator.MT safe.
 	 */
 	public Iterator filter(GCompareFunc func, void* userData)
@@ -268,9 +268,9 @@ public class Iterator
 	 * appropriate.
 	 * The iterator will not be freed.
 	 * Params:
-	 * func =  the fold function
-	 * ret =  the seed value passed to the fold function
-	 * userData =  user data passed to the fold function
+	 * func = the fold function
+	 * ret = the seed value passed to the fold function
+	 * userData = user data passed to the fold function
 	 * Returns: A GstIteratorResult, as described above.MT safe.
 	 */
 	public GstIteratorResult fold(GstIteratorFoldFunction func, GValue* ret, void* userData)
@@ -283,8 +283,8 @@ public class Iterator
 	 * Iterate over all element of it and call the given function func for
 	 * each element.
 	 * Params:
-	 * func =  the function to call for each element.
-	 * userData =  user data passed to the function
+	 * func = the function to call for each element.
+	 * userData = user data passed to the function
 	 * Returns: the result call to gst_iterator_fold(). The iterator will not befreed.MT safe.
 	 */
 	public GstIteratorResult foreac(GFunc func, void* userData)
@@ -300,8 +300,8 @@ public class Iterator
 	 * This function will return NULL if an error or resync happened to
 	 * the iterator.
 	 * Params:
-	 * func =  the compare function to use
-	 * userData =  user data passed to the compare function
+	 * func = the compare function to use
+	 * userData = user data passed to the compare function
 	 * Returns: The element in the iterator that matches the comparefunction or NULL when no element matched.MT safe.
 	 */
 	public void* findCustom(GCompareFunc func, void* userData)

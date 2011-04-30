@@ -136,8 +136,8 @@ public class TagSetter
 	/**
 	 * Merges the given list into the setter's list using the given mode.
 	 * Params:
-	 * list =  a tag list to merge from
-	 * mode =  the mode to merge with
+	 * list = a tag list to merge from
+	 * mode = the mode to merge with
 	 */
 	public void mergeTags(TagList list, GstTagMergeMode mode)
 	{
@@ -149,9 +149,9 @@ public class TagSetter
 	 * Adds the given tag / value pairs on the setter using the given merge mode.
 	 * The list must be terminated with NULL.
 	 * Params:
-	 * mode =  the mode to use
-	 * tag =  tag to set
-	 * varArgs =  tag / value pairs to set
+	 * mode = the mode to use
+	 * tag = tag to set
+	 * varArgs = tag / value pairs to set
 	 */
 	public void addTagValist(GstTagMergeMode mode, string tag, void* varArgs)
 	{
@@ -163,9 +163,9 @@ public class TagSetter
 	 * Adds the given tag / GValue pairs on the setter using the given merge mode.
 	 * The list must be terminated with NULL.
 	 * Params:
-	 * mode =  the mode to use
-	 * tag =  tag to set
-	 * varArgs =  tag / GValue pairs to set
+	 * mode = the mode to use
+	 * tag = tag to set
+	 * varArgs = tag / GValue pairs to set
 	 */
 	public void addTagValistValues(GstTagMergeMode mode, string tag, void* varArgs)
 	{
@@ -194,7 +194,7 @@ public class TagSetter
 	 * specified by this interface. The default is GST_TAG_MERGE_KEEP, which keeps
 	 * the tags set with this interface and discards tags from events.
 	 * Params:
-	 * mode =  The mode with which tags are added
+	 * mode = The mode with which tags are added
 	 */
 	public void setTagMergeMode(GstTagMergeMode mode)
 	{

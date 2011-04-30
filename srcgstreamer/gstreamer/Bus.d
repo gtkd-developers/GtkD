@@ -149,6 +149,12 @@ public class Bus : ObjectGst
 		this.gstBus = gstBus;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstBus = cast(GstBus*)obj;
+	}
+	
 	/**
 	 * Adds a bus watch to the default main context with the default priority.
 	 * This function is used to receive asynchronous messages in the main loop.
@@ -290,7 +296,7 @@ public class Bus : ObjectGst
 	 * Post a message on the given bus. Ownership of the message
 	 * is taken by the bus.
 	 * Params:
-	 * message =  The GstMessage to post
+	 * message = The GstMessage to post
 	 * Returns: TRUE if the message could be posted, FALSE if the bus is flushing.MT safe.
 	 */
 	public int post(Message message)
@@ -348,7 +354,7 @@ public class Bus : ObjectGst
 	 * GST_CLOCK_TIME_NONE, this function will block forever until a message was
 	 * posted on the bus.
 	 * Params:
-	 * timeout =  a timeout
+	 * timeout = a timeout
 	 * Returns: The GstMessage that is on the bus after the specified timeoutor NULL if the bus is empty after the timeout expired.The message is taken from the bus and needs to be unreffed withgst_message_unref() after usage.MT safe.Since 0.10.12
 	 */
 	public Message timedPop(GstClockTime timeout)
@@ -368,7 +374,7 @@ public class Bus : ObjectGst
 	 * gst_bus_set_flushing() sets flushing to FALSE.
 	 * MT safe.
 	 * Params:
-	 * flushing =  whether or not to flush the bus
+	 * flushing = whether or not to flush the bus
 	 */
 	public void setFlushing(int flushing)
 	{
@@ -380,8 +386,8 @@ public class Bus : ObjectGst
 	 * A helper GstBusSyncHandler that can be used to convert all synchronous
 	 * messages into signals.
 	 * Params:
-	 * message =  the GstMessage received
-	 * data =  user data
+	 * message = the GstMessage received
+	 * data = user data
 	 * Returns: GST_BUS_PASS
 	 */
 	public GstBusSyncReply syncSignalHandler(Message message, void* data)
@@ -415,10 +421,10 @@ public class Bus : ObjectGst
 	 * The watch can be removed using g_source_remove() or by returning FALSE
 	 * from func.
 	 * Params:
-	 * priority =  The priority of the watch.
-	 * func =  A function to call when a message is received.
-	 * userData =  user data passed to func.
-	 * notify =  the function to call when the source is removed.
+	 * priority = The priority of the watch.
+	 * func = A function to call when a message is received.
+	 * userData = user data passed to func.
+	 * notify = the function to call when the source is removed.
 	 * Returns: The event source id.MT safe.
 	 */
 	public uint addWatchFull(int priority, GstBusFunc func, void* userData, GDestroyNotify notify)
@@ -470,8 +476,8 @@ public class Bus : ObjectGst
 	 * A helper GstBusFunc that can be used to convert all asynchronous messages
 	 * into signals.
 	 * Params:
-	 * message =  the GstMessage received
-	 * data =  user data
+	 * message = the GstMessage received
+	 * data = user data
 	 * Returns: TRUE
 	 */
 	public int asyncSignalFunc(Message message, void* data)
@@ -505,7 +511,7 @@ public class Bus : ObjectGst
 	 * function is called.
 	 * MT safe.
 	 * Params:
-	 * priority =  The priority of the watch.
+	 * priority = The priority of the watch.
 	 */
 	public void addSignalWatchFull(int priority)
 	{
@@ -536,9 +542,9 @@ public class Bus : ObjectGst
 	 * This function will run a main loop from the default main context when
 	 * polling.
 	 * Params:
-	 * events =  a mask of GstMessageType, representing the set of message types to
+	 * events = a mask of GstMessageType, representing the set of message types to
 	 * poll for.
-	 * timeout =  the poll timeout, as a GstClockTimeDiff, or -1 to poll indefinitely.
+	 * timeout = the poll timeout, as a GstClockTimeDiff, or -1 to poll indefinitely.
 	 * Returns: The message that was received, or NULL if the poll timed out.The message is taken from the bus and needs to be unreffed withgst_message_unref() after usage.Signal DetailsThe "message" signalvoid user_function (GstBus *bus, GstMessage *message, gpointer user_data) : Run last / Has detailsA message has been posted on the bus. This signal is emitted from aGSource added to the mainloop. this signal will only be emitted whenthere is a mainloop running.
 	 */
 	public Message poll(GstMessageType events, GstClockTimeDiff timeout)

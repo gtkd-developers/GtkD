@@ -114,7 +114,7 @@ public class MiniObject
 	 * Creates a new mini-object of the desired type.
 	 * MT safe
 	 * Params:
-	 * type =  the GType of the mini-object to create
+	 * type = the GType of the mini-object to create
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType type)
@@ -212,8 +212,8 @@ public class MiniObject
 	 * is done atomically, and the reference counts are updated correctly.
 	 * Either newdata and the value pointed to by olddata may be NULL.
 	 * Params:
-	 * olddata =  pointer to a pointer to a mini-object to be replaced
-	 * newdata =  pointer to new mini-object
+	 * olddata = pointer to a pointer to a mini-object to be replaced
+	 * newdata = pointer to new mini-object
 	 */
 	public static void replace(GstMiniObject** olddata, MiniObject newdata)
 	{
@@ -224,11 +224,11 @@ public class MiniObject
 	/**
 	 * Creates a new GParamSpec instance that hold GstMiniObject references.
 	 * Params:
-	 * name =  the canonical name of the property
-	 * nick =  the nickname of the property
-	 * blurb =  a short description of the property
-	 * objectType =  the GstMiniObjectType for the property
-	 * flags =  a combination of GParamFlags
+	 * name = the canonical name of the property
+	 * nick = the nickname of the property
+	 * blurb = a short description of the property
+	 * objectType = the GstMiniObjectType for the property
+	 * flags = a combination of GParamFlags
 	 * Returns: a newly allocated GParamSpec instance
 	 */
 	public static GParamSpec* gstParamSpecMiniObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
@@ -242,8 +242,8 @@ public class MiniObject
 	 * mini_object.
 	 * The caller retains ownership of the reference.
 	 * Params:
-	 * value =  a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * miniObject =  mini object value to set
+	 * value = a valid GValue of GST_TYPE_MINI_OBJECT derived type
+	 * miniObject = mini object value to set
 	 */
 	public static void gstValueSetMiniObject(Value value, MiniObject miniObject)
 	{
@@ -257,8 +257,8 @@ public class MiniObject
 	 * Takes over the ownership of the caller's reference to mini_object;
 	 * the caller doesn't have to unref it any more.
 	 * Params:
-	 * value =  a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * miniObject =  mini object value to take
+	 * value = a valid GValue of GST_TYPE_MINI_OBJECT derived type
+	 * miniObject = mini object value to take
 	 */
 	public static void gstValueTakeMiniObject(Value value, MiniObject miniObject)
 	{
@@ -270,7 +270,7 @@ public class MiniObject
 	 * Get the contents of a GST_TYPE_MINI_OBJECT derived GValue.
 	 * Does not increase the refcount of the returned object.
 	 * Params:
-	 * value =  a valid GValue of GST_TYPE_MINI_OBJECT derived type
+	 * value = a valid GValue of GST_TYPE_MINI_OBJECT derived type
 	 * Returns: mini object contents of value
 	 */
 	public static MiniObject gstValueGetMiniObject(Value value)

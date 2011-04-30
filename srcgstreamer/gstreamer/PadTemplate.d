@@ -167,6 +167,12 @@ public class PadTemplate : ObjectGst
 		this.gstPadTemplate = gstPadTemplate;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstPadTemplate = cast(GstPadTemplate*)obj;
+	}
+	
 	/**
 	 */
 	int[char[]] connectedSignals;
@@ -204,7 +210,7 @@ public class PadTemplate : ObjectGst
 	/**
 	 * Converts a GstStaticPadTemplate into a GstPadTemplate.
 	 * Params:
-	 * padTemplate =  the static pad template
+	 * padTemplate = the static pad template
 	 * Returns: a new GstPadTemplate.
 	 */
 	public static PadTemplate staticPadTemplateGet(GstStaticPadTemplate* padTemplate)
@@ -221,7 +227,7 @@ public class PadTemplate : ObjectGst
 	/**
 	 * Gets the capabilities of the static pad template.
 	 * Params:
-	 * templ =  a GstStaticPadTemplate to get capabilities of.
+	 * templ = a GstStaticPadTemplate to get capabilities of.
 	 * Returns: the GstCaps of the static pad template. If you need to keep areference to the caps, take a ref (see gst_caps_ref()).
 	 */
 	public static Caps staticPadTemplateGetCaps(GstStaticPadTemplate* templ)
@@ -240,10 +246,10 @@ public class PadTemplate : ObjectGst
 	 * and with the given arguments. This functions takes ownership of the provided
 	 * caps, so be sure to not use them afterwards.
 	 * Params:
-	 * nameTemplate =  the name template.
-	 * direction =  the GstPadDirection of the template.
-	 * presence =  the GstPadPresence of the pad.
-	 * caps =  a GstCaps set for the template. The caps are taken ownership of.
+	 * nameTemplate = the name template.
+	 * direction = the GstPadDirection of the template.
+	 * presence = the GstPadPresence of the pad.
+	 * caps = a GstCaps set for the template. The caps are taken ownership of.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string nameTemplate, GstPadDirection direction, GstPadPresence presence, Caps caps)

@@ -118,8 +118,8 @@ public class TypeFind
 	 * the stream. The returned memory is valid until the typefinding function
 	 * returns and must not be freed.
 	 * Params:
-	 * offset =  The offset
-	 * size =  The number of bytes to return
+	 * offset = The offset
+	 * size = The number of bytes to return
 	 * Returns: the requested data, or NULL if that data is not available.
 	 */
 	public ubyte* peek(long offset, uint size)
@@ -134,8 +134,8 @@ public class TypeFind
 	 * in one call.
 	 * It is up to the caller of the GstTypeFindFunction to interpret these values.
 	 * Params:
-	 * probability =  The probability in percent that the suggestion is right
-	 * caps =  The fixed GstCaps to suggest
+	 * probability = The probability in percent that the suggestion is right
+	 * caps = The fixed GstCaps to suggest
 	 */
 	public void suggest(uint probability, Caps caps)
 	{
@@ -158,16 +158,16 @@ public class TypeFind
 	 * registering this function will be available for typefinding.
 	 * This function is typically called during an element's plugin initialization.
 	 * Params:
-	 * plugin =  A GstPlugin.
-	 * name =  The name for registering
-	 * rank =  The rank (or importance) of this typefind function
-	 * func =  The GstTypeFindFunction to use
-	 * extensions =  Optional extensions that could belong to this type
-	 * possibleCaps =  Optionally the caps that could be returned when typefinding
+	 * plugin = A GstPlugin.
+	 * name = The name for registering
+	 * rank = The rank (or importance) of this typefind function
+	 * func = The GstTypeFindFunction to use
+	 * extensions = Optional extensions that could belong to this type
+	 * possibleCaps = Optionally the caps that could be returned when typefinding
 	 *  succeeds
-	 * data =  Optional user data. This user data must be available until the plugin
+	 * data = Optional user data. This user data must be available until the plugin
 	 *  is unloaded.
-	 * dataNotify =  a GDestroyNotify that will be called on data when the plugin
+	 * dataNotify = a GDestroyNotify that will be called on data when the plugin
 	 *  is unloaded.
 	 * Returns: TRUE on success, FALSE otherwise
 	 */

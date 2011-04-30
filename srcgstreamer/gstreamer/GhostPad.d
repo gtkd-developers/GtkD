@@ -27,13 +27,13 @@
  * outFile = GhostPad
  * strct   = GstGhostPad
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GstPad
  * clss    = GhostPad
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
- * extend  = Pad
+ * extend  = GstPad
  * implements:
  * prefixes:
  * 	- gst_ghost_pad_
@@ -41,7 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_ghost_pad_new
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -67,6 +66,7 @@ private import gstreamer.Pad;
 
 
 
+private import gstreamer.Pad;
 
 /**
  * Description
@@ -123,24 +123,34 @@ public class GhostPad : Pad
 		this.gstGhostPad = gstGhostPad;
 	}
 	
-	/**
-	 * Create a new ghostpad with target as the target. The direction and
-	 * padtemplate will be taken from the target pad.
-	 * Will ref the target.
-	 * Params:
-	 *  name = the name of the new pad, or NULL to assign a default name.
-	 *  target = the pad to ghost.
-	 * Returns:
-	 *  a new GstPad, or NULL in case of an error.
-	 */
-	public this(string name, Pad target)
+	protected void setStruct(GObject* obj)
 	{
-		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
-		this( cast(GstGhostPad*) gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct()) );
+		super.setStruct(obj);
+		gstGhostPad = cast(GstGhostPad*)obj;
 	}
 	
 	/**
 	 */
+	
+	/**
+	 * Create a new ghostpad with target as the target. The direction will be taken
+	 * from the target pad. target must be unlinked.
+	 * Will ref the target.
+	 * Params:
+	 * name = the name of the new pad, or NULL to assign a default name.
+	 * target = the pad to ghost.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, Pad target)
+	{
+		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
+		auto p = gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct())");
+		}
+		this(cast(GstGhostPad*) p);
+	}
 	
 	/**
 	 * Create a new ghostpad without a target with the given direction.
@@ -148,19 +158,19 @@ public class GhostPad : Pad
 	 * gst_ghost_pad_set_target() function.
 	 * The created ghostpad will not have a padtemplate.
 	 * Params:
-	 * name =  the name of the new pad, or NULL to assign a default name.
-	 * dir =  the direction of the ghostpad
-	 * Returns: a new GstPad, or NULL in case of an error.
+	 * name = the name of the new pad, or NULL to assign a default name.
+	 * dir = the direction of the ghostpad
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Pad newNoTarget(string name, GstPadDirection dir)
+	public this (string name, GstPadDirection dir)
 	{
 		// GstPad* gst_ghost_pad_new_no_target (const gchar *name,  GstPadDirection dir);
 		auto p = gst_ghost_pad_new_no_target(Str.toStringz(name), dir);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gst_ghost_pad_new_no_target(Str.toStringz(name), dir)");
 		}
-		return new Pad(cast(GstPad*) p);
+		this(cast(GstGhostPad*) p);
 	}
 	
 	/**
@@ -168,46 +178,46 @@ public class GhostPad : Pad
 	 * from the target pad. The template used on the ghostpad will be template.
 	 * Will ref the target.
 	 * Params:
-	 * name =  the name of the new pad, or NULL to assign a default name.
-	 * target =  the pad to ghost.
-	 * templ =  the GstPadTemplate to use on the ghostpad.
-	 * Returns: a new GstPad, or NULL in case of an error.Since 0.10.10
+	 * name = the name of the new pad, or NULL to assign a default name.
+	 * target = the pad to ghost.
+	 * templ = the GstPadTemplate to use on the ghostpad.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Pad newFromTemplate(string name, Pad target, GstPadTemplate* templ)
+	public this (string name, Pad target, GstPadTemplate* templ)
 	{
 		// GstPad* gst_ghost_pad_new_from_template (const gchar *name,  GstPad *target,  GstPadTemplate *templ);
 		auto p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), templ);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), templ)");
 		}
-		return new Pad(cast(GstPad*) p);
+		this(cast(GstGhostPad*) p);
 	}
 	
 	/**
 	 * Create a new ghostpad based on templ, without setting a target. The
 	 * direction will be taken from the templ.
 	 * Params:
-	 * name =  the name of the new pad, or NULL to assign a default name.
-	 * templ =  the GstPadTemplate to create the ghostpad from.
-	 * Returns: a new GstPad, or NULL in case of an error.Since 0.10.10
+	 * name = the name of the new pad, or NULL to assign a default name.
+	 * templ = the GstPadTemplate to create the ghostpad from.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Pad newNoTargetFromTemplate(string name, GstPadTemplate* templ)
+	public this (string name, GstPadTemplate* templ)
 	{
 		// GstPad* gst_ghost_pad_new_no_target_from_template  (const gchar *name,  GstPadTemplate *templ);
 		auto p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), templ);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), templ)");
 		}
-		return new Pad(cast(GstPad*) p);
+		this(cast(GstGhostPad*) p);
 	}
 	
 	/**
 	 * Set the new target of the ghostpad gpad. Any existing target
 	 * is unlinked and links to the new target are established.
 	 * Params:
-	 * newtarget =  the new pad target
+	 * newtarget = the new pad target
 	 * Returns: TRUE if the new target could be set. This function can return FALSEwhen the internal pads could not be linked.
 	 */
 	public int setTarget(Pad newtarget)

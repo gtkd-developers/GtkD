@@ -22,10 +22,10 @@
 
 module gstreamerc.gstinterfacestypes;
 
-private import gtkc.glibtypes;
-private import gtkc.gobjecttypes;
-private import gtkc.gthreadtypes;
-private import glib.Str;
+public import gtkc.glibtypes;
 
+/**
+ * Main Gtk struct.
+ */
 public struct GstXOverlay{}
 

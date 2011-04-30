@@ -255,8 +255,8 @@ public class Event
 	 * New custom events can also be created by subclassing the event type if
 	 * needed.
 	 * Params:
-	 * type =  The type of the new event
-	 * structure =  The structure for the event. The event will take ownership of
+	 * type = The type of the new event
+	 * structure = The structure for the event. The event will take ownership of
 	 * the structure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -278,7 +278,7 @@ public class Event
 	 * The latency is mostly used in live sinks and is always expressed in
 	 * the time format.
 	 * Params:
-	 * latency =  the new latency value
+	 * latency = the new latency value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GstClockTime latency)
@@ -297,12 +297,12 @@ public class Event
 	 * This method calls gst_event_new_new_segment_full() passing a default
 	 * value of 1.0 for applied_rate
 	 * Params:
-	 * update =  is this segment an update to a previous one
-	 * rate =  a new rate for playback
-	 * format =  The format of the segment values
-	 * start =  the start value of the segment
-	 * stop =  the stop value of the segment
-	 * position =  stream position
+	 * update = is this segment an update to a previous one
+	 * rate = a new rate for playback
+	 * format = The format of the segment values
+	 * start = the start value of the segment
+	 * stop = the stop value of the segment
+	 * position = stream position
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int update, double rate, GstFormat format, long start, long stop, long position)
@@ -338,13 +338,13 @@ public class Event
 	 * incoming timestamps and buffer content by half and output a newsegment event
 	 * with rate of 1.0 and applied_rate of 2.0
 	 * Params:
-	 * update =  Whether this segment is an update to a previous one
-	 * rate =  A new rate for playback
-	 * appliedRate =  The rate factor which has already been applied
-	 * format =  The format of the segment values
-	 * start =  The start value of the segment
-	 * stop =  The stop value of the segment
-	 * position =  stream position
+	 * update = Whether this segment is an update to a previous one
+	 * rate = A new rate for playback
+	 * appliedRate = The rate factor which has already been applied
+	 * format = The format of the segment values
+	 * start = The start value of the segment
+	 * stop = The stop value of the segment
+	 * position = stream position
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int update, double rate, double appliedRate, GstFormat format, long start, long stop, long position)
@@ -387,9 +387,9 @@ public class Event
 	 * The application can use general event probes to intercept the QoS
 	 * event and implement custom application specific QoS handling.
 	 * Params:
-	 * proportion =  the proportion of the qos message
-	 * diff =  The time difference of the last Clock sync
-	 * timestamp =  The timestamp of the buffer
+	 * proportion = the proportion of the qos message
+	 * diff = The time difference of the last Clock sync
+	 * timestamp = The timestamp of the buffer
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double proportion, GstClockTimeDiff diff, GstClockTime timestamp)
@@ -429,13 +429,13 @@ public class Event
 	 * GST_QUERY_POSITION and update the playback segment current position with a
 	 * GST_SEEK_TYPE_SET to the desired position.
 	 * Params:
-	 * rate =  The new playback rate
-	 * format =  The format of the seek values
-	 * flags =  The optional seek flags
-	 * startType =  The type and flags for the new start position
-	 * start =  The value of the new start position
-	 * stopType =  The type and flags for the new stop position
-	 * stop =  The value of the new stop position
+	 * rate = The new playback rate
+	 * format = The format of the seek values
+	 * flags = The optional seek flags
+	 * startType = The type and flags for the new start position
+	 * start = The value of the new start position
+	 * stopType = The type and flags for the new stop position
+	 * stop = The value of the new stop position
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop)
@@ -452,7 +452,7 @@ public class Event
 	/**
 	 * Generates a metadata tag event from the given taglist.
 	 * Params:
-	 * taglist =  metadata list
+	 * taglist = metadata list
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TagList taglist)
@@ -469,10 +469,10 @@ public class Event
 	/**
 	 * Get the format, minsize, maxsize and async-flag in the buffersize event.
 	 * Params:
-	 * format =  A pointer to store the format in
-	 * minsize =  A pointer to store the minsize in
-	 * maxsize =  A pointer to store the maxsize in
-	 * async =  A pointer to store the async-flag in
+	 * format = A pointer to store the format in
+	 * minsize = A pointer to store the minsize in
+	 * maxsize = A pointer to store the maxsize in
+	 * async = A pointer to store the async-flag in
 	 */
 	public void parseBufferSize(GstFormat* format, long* minsize, long* maxsize, int* async)
 	{
@@ -483,7 +483,7 @@ public class Event
 	/**
 	 * Get the latency in the latency event.
 	 * Params:
-	 * latency =  A pointer to store the latency in.
+	 * latency = A pointer to store the latency in.
 	 * Since 0.10.12
 	 */
 	public void parseLatency(GstClockTime* latency)
@@ -499,12 +499,12 @@ public class Event
 	 * segment. See gst_event_new_new_segment_full() for a full description
 	 * of the newsegment event.
 	 * Params:
-	 * update =  A pointer to the update flag of the segment
-	 * rate =  A pointer to the rate of the segment
-	 * format =  A pointer to the format of the newsegment values
-	 * start =  A pointer to store the start value in
-	 * stop =  A pointer to store the stop value in
-	 * position =  A pointer to store the stream time in
+	 * update = A pointer to the update flag of the segment
+	 * rate = A pointer to the rate of the segment
+	 * format = A pointer to the format of the newsegment values
+	 * start = A pointer to store the start value in
+	 * stop = A pointer to store the stop value in
+	 * position = A pointer to store the stream time in
 	 */
 	public void parseNewSegment(int* update, double* rate, GstFormat* format, long* start, long* stop, long* position)
 	{
@@ -517,13 +517,13 @@ public class Event
 	 * position in the newsegment event. See gst_event_new_new_segment_full()
 	 * for a full description of the newsegment event.
 	 * Params:
-	 * update =  A pointer to the update flag of the segment
-	 * rate =  A pointer to the rate of the segment
-	 * appliedRate =  A pointer to the applied_rate of the segment
-	 * format =  A pointer to the format of the newsegment values
-	 * start =  A pointer to store the start value in
-	 * stop =  A pointer to store the stop value in
-	 * position =  A pointer to store the stream time in
+	 * update = A pointer to the update flag of the segment
+	 * rate = A pointer to the rate of the segment
+	 * appliedRate = A pointer to the applied_rate of the segment
+	 * format = A pointer to the format of the newsegment values
+	 * start = A pointer to store the start value in
+	 * stop = A pointer to store the stop value in
+	 * position = A pointer to store the stream time in
 	 * Since 0.10.6
 	 */
 	public void parseNewSegmentFull(int* update, double* rate, double* appliedRate, GstFormat* format, long* start, long* stop, long* position)
@@ -536,9 +536,9 @@ public class Event
 	 * Get the proportion, diff and timestamp in the qos event. See
 	 * gst_event_new_qos() for more information about the different QoS values.
 	 * Params:
-	 * proportion =  A pointer to store the proportion in
-	 * diff =  A pointer to store the diff in
-	 * timestamp =  A pointer to store the timestamp in
+	 * proportion = A pointer to store the proportion in
+	 * diff = A pointer to store the diff in
+	 * timestamp = A pointer to store the timestamp in
 	 */
 	public void parseQos(double* proportion, GstClockTimeDiff* diff, GstClockTime* timestamp)
 	{
@@ -549,13 +549,13 @@ public class Event
 	/**
 	 * Parses a seek event and stores the results in the given result locations.
 	 * Params:
-	 * rate =  result location for the rate
-	 * format =  result location for the stream format
-	 * flags =  result location for the GstSeekFlags
-	 * startType =  result location for the GstSeekType of the start position
-	 * start =  result location for the start postion expressed in format
-	 * stopType =  result location for the GstSeekType of the stop position
-	 * stop =  result location for the stop postion expressed in format
+	 * rate = result location for the rate
+	 * format = result location for the stream format
+	 * flags = result location for the GstSeekFlags
+	 * startType = result location for the GstSeekType of the start position
+	 * start = result location for the start postion expressed in format
+	 * stopType = result location for the GstSeekType of the stop position
+	 * stop = result location for the stop postion expressed in format
 	 */
 	public void parseSeek(double* rate, GstFormat* format, GstSeekFlags* flags, GstSeekType* startType, long* start, GstSeekType* stopType, long* stop)
 	{
@@ -566,7 +566,7 @@ public class Event
 	/**
 	 * Parses a tag event and stores the results in the given taglist location.
 	 * Params:
-	 * taglist =  pointer to metadata list
+	 * taglist = pointer to metadata list
 	 */
 	public void parseTag(GstTagList** taglist)
 	{
@@ -592,7 +592,7 @@ public class Event
 	/**
 	 * Gets the GstEventTypeFlags associated with type.
 	 * Params:
-	 * type =  a GstEventType
+	 * type = a GstEventType
 	 * Returns: a GstEventTypeFlags.
 	 */
 	public static GstEventTypeFlags typeGetFlags(GstEventType type)
@@ -604,7 +604,7 @@ public class Event
 	/**
 	 * Get a printable name for the given event type. Do not modify or free.
 	 * Params:
-	 * type =  the event type
+	 * type = the event type
 	 * Returns: a reference to the static name of the event.
 	 */
 	public static string typeGetName(GstEventType type)
@@ -616,7 +616,7 @@ public class Event
 	/**
 	 * Get the unique quark for the given event type.
 	 * Params:
-	 * type =  the event type
+	 * type = the event type
 	 * Returns: the quark associated with the event type
 	 */
 	public static GQuark typeToQuark(GstEventType type)

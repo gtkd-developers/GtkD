@@ -139,6 +139,12 @@ public class ElementFactory : PluginFeature
 		this.gstElementFactory = gstElementFactory;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstElementFactory = cast(GstElementFactory*)obj;
+	}
+	
 	/**
 	 * Create a new element of the type defined by the given element factory.
 	 * The element will receive a guaranteed unique name,
@@ -161,10 +167,10 @@ public class ElementFactory : PluginFeature
 	 * Create a new elementfactory capable of instantiating objects of the
 	 * type and add the factory to plugin.
 	 * Params:
-	 * plugin =  GstPlugin to register the element with
-	 * name =  name of elements of this type
-	 * rank =  rank of element (higher rank means more importance when autoplugging)
-	 * type =  GType of element to register
+	 * plugin = GstPlugin to register the element with
+	 * name = name of elements of this type
+	 * rank = rank of element (higher rank means more importance when autoplugging)
+	 * type = GType of element to register
 	 * Returns: TRUE, if the registering succeeded, FALSE on error
 	 */
 	public static int register(Plugin plugin, string name, uint rank, GType type)
@@ -177,7 +183,7 @@ public class ElementFactory : PluginFeature
 	 * Search for an element factory of the given name. Refs the returned
 	 * element factory; caller is responsible for unreffing.
 	 * Params:
-	 * name =  name of factory to find
+	 * name = name of factory to find
 	 * Returns: GstElementFactory if found, NULL otherwise
 	 */
 	public static ElementFactory find(string name)
@@ -281,7 +287,7 @@ public class ElementFactory : PluginFeature
 	 * It will be given the name supplied, since all elements require a name as
 	 * their first argument.
 	 * Params:
-	 * name =  name of new element
+	 * name = name of new element
 	 * Returns: new GstElement or NULL if the element couldn't be created
 	 */
 	public Element create(string name)
@@ -301,8 +307,8 @@ public class ElementFactory : PluginFeature
 	 * consisting of the element factory name and a number.
 	 * If name is given, it will be given the name supplied.
 	 * Params:
-	 * factoryname =  a named factory to instantiate
-	 * name =  name of new element
+	 * factoryname = a named factory to instantiate
+	 * name = name of new element
 	 * Returns: new GstElement or NULL if unable to create element
 	 */
 	public static Element make(string factoryname, string name)
@@ -319,7 +325,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 * Checks if the factory can sink the given capability.
 	 * Params:
-	 * caps =  the caps to check
+	 * caps = the caps to check
 	 * Returns: true if it can sink the capabilities
 	 */
 	public int canSinkCaps(Caps caps)
@@ -331,7 +337,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 * Checks if the factory can source the given capability.
 	 * Params:
-	 * caps =  the caps to check
+	 * caps = the caps to check
 	 * Returns: true if it can src the capabilities
 	 */
 	public int canSrcCaps(Caps caps)

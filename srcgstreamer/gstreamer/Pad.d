@@ -161,6 +161,12 @@ public class Pad : ObjectGst
 		this.gstPad = gstPad;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstPad = cast(GstPad*)obj;
+	}
+	
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 * This one is additional to make gstreamer.Element addOnPadAdded()
@@ -369,7 +375,7 @@ public class Pad : ObjectGst
 	/**
 	 * Links the source pad and the sink pad.
 	 * Params:
-	 * sinkpad =  the sink GstPad to link.
+	 * sinkpad = the sink GstPad to link.
 	 * Returns: A result code indicating if the connection worked or what went wrong.MT Safe.
 	 */
 	public GstPadLinkReturn link(Pad sinkpad)
@@ -382,7 +388,7 @@ public class Pad : ObjectGst
 	 * Unlinks the source pad from the sink pad. Will emit the "unlinked" signal on
 	 * both pads.
 	 * Params:
-	 * sinkpad =  the sink GstPad to unlink.
+	 * sinkpad = the sink GstPad to unlink.
 	 * Returns: TRUE if the pads were unlinked. This function returns FALSE ifthe pads were not linked together.MT safe.
 	 */
 	public int unlink(Pad sinkpad)
@@ -405,7 +411,7 @@ public class Pad : ObjectGst
 	 * Checks if the source pad and the sink pad can be linked.
 	 * Both srcpad and sinkpad must be unlinked.
 	 * Params:
-	 * sinkpad =  the sink GstPad to link.
+	 * sinkpad = the sink GstPad to link.
 	 * Returns: TRUE if the pads can be linked, FALSE otherwise.
 	 */
 	public int canLink(Pad sinkpad)
@@ -494,7 +500,7 @@ public class Pad : ObjectGst
 	 * It is possible to set NULL caps, which will make the pad unnegotiated
 	 * again.
 	 * Params:
-	 * caps =  a GstCaps to set.
+	 * caps = a GstCaps to set.
 	 * Returns: TRUE if the caps could be set. FALSE if the caps were not fixedor bad parameters were provided to this function.MT safe.
 	 */
 	public int setCaps(Caps caps)
@@ -563,7 +569,7 @@ public class Pad : ObjectGst
 	 * a shortcut for gst_pad_set_blocked_async() with a NULL
 	 * callback.
 	 * Params:
-	 * blocked =  boolean indicating we should block or unblock
+	 * blocked = boolean indicating we should block or unblock
 	 * Returns: TRUE if the pad could be blocked. This function can fail wrong parameters were passed or the pad was already in the requested state.MT safe.
 	 */
 	public int setBlocked(int blocked)
@@ -583,10 +589,10 @@ public class Pad : ObjectGst
 	 * You can pass NULL as the callback to make this call block. Be careful with
 	 * this blocking call as it might not return for reasons stated above.
 	 * Params:
-	 * blocked =  boolean indicating whether the pad should be blocked or unblocked
-	 * callback =  GstPadBlockCallback that will be called when the
+	 * blocked = boolean indicating whether the pad should be blocked or unblocked
+	 * callback = GstPadBlockCallback that will be called when the
 	 *  operation succeeds
-	 * userData =  user data passed to the callback
+	 * userData = user data passed to the callback
 	 * Returns: TRUE if the pad could be blocked. This function can fail if wrong parameters were passed or the pad was already in the requested state.MT safe.
 	 */
 	public int setBlockedAsync(int blocked, GstPadBlockCallback callback, void* userData)
@@ -638,11 +644,11 @@ public class Pad : ObjectGst
 	 * remove a probe, use the appropriate function, such as
 	 * gst_pad_remove_data_probe().
 	 * Params:
-	 * handler =  function to call when data is passed over pad
-	 * data =  data to pass along with the handler
+	 * handler = function to call when data is passed over pad
+	 * data = data to pass along with the handler
 	 * Returns: The handler id.
 	 */
-	public uint addDataProbe(GCallback handler, void* data)
+	public gulong addDataProbe(GCallback handler, void* data)
 	{
 		// gulong gst_pad_add_data_probe (GstPad *pad,  GCallback handler,  gpointer data);
 		return gst_pad_add_data_probe(gstPad, handler, data);
@@ -652,11 +658,11 @@ public class Pad : ObjectGst
 	 * Adds a probe that will be called for all buffers passing through a pad. See
 	 * gst_pad_add_data_probe() for more information.
 	 * Params:
-	 * handler =  function to call when data is passed over pad
-	 * data =  data to pass along with the handler
+	 * handler = function to call when data is passed over pad
+	 * data = data to pass along with the handler
 	 * Returns: The handler id
 	 */
-	public uint addBufferProbe(GCallback handler, void* data)
+	public gulong addBufferProbe(GCallback handler, void* data)
 	{
 		// gulong gst_pad_add_buffer_probe (GstPad *pad,  GCallback handler,  gpointer data);
 		return gst_pad_add_buffer_probe(gstPad, handler, data);
@@ -666,11 +672,11 @@ public class Pad : ObjectGst
 	 * Adds a probe that will be called for all events passing through a pad. See
 	 * gst_pad_add_data_probe() for more information.
 	 * Params:
-	 * handler =  function to call when data is passed over pad
-	 * data =  data to pass along with the handler
+	 * handler = function to call when data is passed over pad
+	 * data = data to pass along with the handler
 	 * Returns: The handler id
 	 */
-	public uint addEventProbe(GCallback handler, void* data)
+	public gulong addEventProbe(GCallback handler, void* data)
 	{
 		// gulong gst_pad_add_event_probe (GstPad *pad,  GCallback handler,  gpointer data);
 		return gst_pad_add_event_probe(gstPad, handler, data);
@@ -679,7 +685,7 @@ public class Pad : ObjectGst
 	/**
 	 * Removes a data probe from pad.
 	 * Params:
-	 * handlerId =  handler id returned from gst_pad_add_data_probe
+	 * handlerId = handler id returned from gst_pad_add_data_probe
 	 */
 	public void removeDataProbe(uint handlerId)
 	{
@@ -690,7 +696,7 @@ public class Pad : ObjectGst
 	/**
 	 * Removes a buffer probe from pad.
 	 * Params:
-	 * handlerId =  handler id returned from gst_pad_add_buffer_probe
+	 * handlerId = handler id returned from gst_pad_add_buffer_probe
 	 */
 	public void removeBufferProbe(uint handlerId)
 	{
@@ -701,7 +707,7 @@ public class Pad : ObjectGst
 	/**
 	 * Removes an event probe from pad.
 	 * Params:
-	 * handlerId =  handler id returned from gst_pad_add_event_probe
+	 * handlerId = handler id returned from gst_pad_add_event_probe
 	 */
 	public void removeEventProbe(uint handlerId)
 	{
@@ -715,8 +721,8 @@ public class Pad : ObjectGst
 	 * will be assigned.
 	 * This function makes a copy of the name so you can safely free the name.
 	 * Params:
-	 * name =  the name of the new pad.
-	 * direction =  the GstPadDirection of the pad.
+	 * name = the name of the new pad.
+	 * direction = the GstPadDirection of the pad.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, GstPadDirection direction)
@@ -736,8 +742,8 @@ public class Pad : ObjectGst
 	 * will be assigned.
 	 * This function makes a copy of the name so you can safely free the name.
 	 * Params:
-	 * templ =  the pad template to use
-	 * name =  the name of the element
+	 * templ = the pad template to use
+	 * name = the name of the element
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (PadTemplate templ, string name)
@@ -757,8 +763,8 @@ public class Pad : ObjectGst
 	 * will be assigned.
 	 * This function makes a copy of the name so you can safely free the name.
 	 * Params:
-	 * templ =  the GstStaticPadTemplate to use
-	 * name =  the name of the element
+	 * templ = the GstStaticPadTemplate to use
+	 * name = the name of the element
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GstStaticPadTemplate* templ, string name)
@@ -779,10 +785,10 @@ public class Pad : ObjectGst
 	 * You need to check the caps of the buffer after performing this
 	 * function and renegotiate to the format if needed.
 	 * Params:
-	 * offset =  the offset of the new buffer in the stream
-	 * size =  the size of the new buffer
-	 * caps =  the caps of the new buffer
-	 * buf =  a newly allocated buffer
+	 * offset = the offset of the new buffer in the stream
+	 * size = the size of the new buffer
+	 * caps = the caps of the new buffer
+	 * buf = a newly allocated buffer
 	 * Returns: a result code indicating success of the operation. Anyresult code other than GST_FLOW_OK is an error and buf shouldnot be used.An error can occur if the pad is not connected or when the downstreampeer elements cannot provide an acceptable buffer.MT safe.
 	 */
 	public GstFlowReturn allocBuffer(ulong offset, int size, Caps caps, GstBuffer** buf)
@@ -796,10 +802,10 @@ public class Pad : ObjectGst
 	 * automatically calls gst_pad_set_caps() when the caps of the
 	 * newly allocated buffer are different from the pad caps.
 	 * Params:
-	 * offset =  the offset of the new buffer in the stream
-	 * size =  the size of the new buffer
-	 * caps =  the caps of the new buffer
-	 * buf =  a newly allocated buffer
+	 * offset = the offset of the new buffer in the stream
+	 * size = the size of the new buffer
+	 * caps = the caps of the new buffer
+	 * buf = a newly allocated buffer
 	 * Returns: a result code indicating success of the operation. Anyresult code other than GST_FLOW_OK is an error and buf shouldnot be used.An error can occur if the pad is not connected or when the downstreampeer elements cannot provide an acceptable buffer.MT safe.
 	 */
 	public GstFlowReturn allocBufferAndSetCaps(ulong offset, int size, Caps caps, GstBuffer** buf)
@@ -812,7 +818,7 @@ public class Pad : ObjectGst
 	 * Sets the given bufferalloc function for the pad. Note that the
 	 * bufferalloc function can only be set on sinkpads.
 	 * Params:
-	 * bufalloc =  the GstPadBufferAllocFunction to set.
+	 * bufalloc = the GstPadBufferAllocFunction to set.
 	 */
 	public void setBufferallocFunction(GstPadBufferAllocFunction bufalloc)
 	{
@@ -824,7 +830,7 @@ public class Pad : ObjectGst
 	 * Sets the given chain function for the pad. The chain function is called to
 	 * process a GstBuffer input buffer. see GstPadChainFunction for more details.
 	 * Params:
-	 * chain =  the GstPadChainFunction to set.
+	 * chain = the GstPadChainFunction to set.
 	 */
 	public void setChainFunction(GstPadChainFunction chain)
 	{
@@ -836,7 +842,7 @@ public class Pad : ObjectGst
 	 * Sets the given checkgetrange function for the pad. Implement this function on
 	 * a pad if you dynamically support getrange based scheduling on the pad.
 	 * Params:
-	 * check =  the GstPadCheckGetRangeFunction to set.
+	 * check = the GstPadCheckGetRangeFunction to set.
 	 */
 	public void setCheckgetrangeFunction(GstPadCheckGetRangeFunction check)
 	{
@@ -854,9 +860,9 @@ public class Pad : ObjectGst
 	 * buffer's caps must either be unset or the same as what is already configured
 	 * on pad. Renegotiation within a running pull-mode pipeline is not supported.
 	 * Params:
-	 * offset =  The start offset of the buffer
-	 * size =  The length of the buffer
-	 * buffer =  a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
+	 * offset = The start offset of the buffer
+	 * size = The length of the buffer
+	 * buffer = a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
 	 * Returns: a GstFlowReturn from the pad.MT safe.
 	 */
 	public GstFlowReturn getRange(ulong offset, uint size, GstBuffer** buffer)
@@ -870,7 +876,7 @@ public class Pad : ObjectGst
 	 * produce a new GstBuffer to start the processing pipeline. see
 	 * GstPadGetRangeFunction for a description of the getrange function.
 	 * Params:
-	 * get =  the GstPadGetRangeFunction to set.
+	 * get = the GstPadGetRangeFunction to set.
 	 */
 	public void setGetrangeFunction(GstPadGetRangeFunction get)
 	{
@@ -881,7 +887,7 @@ public class Pad : ObjectGst
 	/**
 	 * Sets the given event handler for the pad.
 	 * Params:
-	 * event =  the GstPadEventFunction to set.
+	 * event = the GstPadEventFunction to set.
 	 */
 	public void setEventFunction(GstPadEventFunction event)
 	{
@@ -899,7 +905,7 @@ public class Pad : ObjectGst
 	 * If link is installed on a source pad, it should call the GstPadLinkFunction
 	 * of the peer sink pad, if present.
 	 * Params:
-	 * link =  the GstPadLinkFunction to set.
+	 * link = the GstPadLinkFunction to set.
 	 */
 	public void setLinkFunction(GstPadLinkFunction link)
 	{
@@ -911,7 +917,7 @@ public class Pad : ObjectGst
 	 * Sets the given unlink function for the pad. It will be called
 	 * when the pad is unlinked.
 	 * Params:
-	 * unlink =  the GstPadUnlinkFunction to set.
+	 * unlink = the GstPadUnlinkFunction to set.
 	 */
 	public void setUnlinkFunction(GstPadUnlinkFunction unlink)
 	{
@@ -922,7 +928,7 @@ public class Pad : ObjectGst
 	/**
 	 * Check if the given pad accepts the caps.
 	 * Params:
-	 * caps =  a GstCaps to check on the pad
+	 * caps = a GstCaps to check on the pad
 	 * Returns: TRUE if the pad can accept the caps.
 	 */
 	public int acceptCaps(Caps caps)
@@ -937,7 +943,7 @@ public class Pad : ObjectGst
 	 * acceptcaps function to NULL restores the default behaviour of allowing
 	 * any caps that matches the caps from gst_pad_get_caps.
 	 * Params:
-	 * acceptcaps =  the GstPadAcceptCapsFunction to set.
+	 * acceptcaps = the GstPadAcceptCapsFunction to set.
 	 */
 	public void setAcceptcapsFunction(GstPadAcceptCapsFunction acceptcaps)
 	{
@@ -964,7 +970,7 @@ public class Pad : ObjectGst
 	 * Note that the return value from getcaps is owned by the caller, so the caller
 	 * should unref the caps after usage.
 	 * Params:
-	 * getcaps =  the GstPadGetCapsFunction to set.
+	 * getcaps = the GstPadGetCapsFunction to set.
 	 */
 	public void setGetcapsFunction(GstPadGetCapsFunction getcaps)
 	{
@@ -998,7 +1004,7 @@ public class Pad : ObjectGst
 	 * structures to process the new media type. If this new type is not
 	 * acceptable, the setcaps function should return FALSE.
 	 * Params:
-	 * setcaps =  the GstPadSetCapsFunction to set.
+	 * setcaps = the GstPadSetCapsFunction to set.
 	 */
 	public void setSetcapsFunction(GstPadSetCapsFunction setcaps)
 	{
@@ -1011,7 +1017,7 @@ public class Pad : ObjectGst
 	 * same element as pad. If gst_pad_set_caps() fails on any pad,
 	 * the proxy setcaps fails. May be used only during negotiation.
 	 * Params:
-	 * caps =  the GstCaps to link with
+	 * caps = the GstCaps to link with
 	 * Returns: TRUE if sucessful
 	 */
 	public int proxySetcaps(Caps caps)
@@ -1024,7 +1030,7 @@ public class Pad : ObjectGst
 	 * Fixate a caps on the given pad. Modifies the caps in place, so you should
 	 * make sure that the caps are actually writable (see gst_caps_make_writable()).
 	 * Params:
-	 * caps =  the GstCaps to fixate
+	 * caps = the GstCaps to fixate
 	 */
 	public void fixateCaps(Caps caps)
 	{
@@ -1037,7 +1043,7 @@ public class Pad : ObjectGst
 	 * will be called whenever the default values for a GstCaps needs to be
 	 * filled in.
 	 * Params:
-	 * fixatecaps =  the GstPadFixateCapsFunction to set.
+	 * fixatecaps = the GstPadFixateCapsFunction to set.
 	 */
 	public void setFixatecapsFunction(GstPadFixateCapsFunction fixatecaps)
 	{
@@ -1066,7 +1072,7 @@ public class Pad : ObjectGst
 	 * Check if the peer of pad accepts caps. If pad has no peer, this function
 	 * returns TRUE.
 	 * Params:
-	 * caps =  a GstCaps to check on the pad
+	 * caps = a GstCaps to check on the pad
 	 * Returns: TRUE if the peer of pad can accept the caps or pad has no peer.
 	 */
 	public int peerAcceptCaps(Caps caps)
@@ -1081,7 +1087,7 @@ public class Pad : ObjectGst
 	 * the actual activation. Only makes sense to set on sink pads.
 	 * Call this function if your sink pad can start a pull-based task.
 	 * Params:
-	 * activate =  the GstPadActivateFunction to set.
+	 * activate = the GstPadActivateFunction to set.
 	 */
 	public void setActivateFunction(GstPadActivateFunction activate)
 	{
@@ -1093,7 +1099,7 @@ public class Pad : ObjectGst
 	 * Sets the given activate_push function for the pad. An activate_push function
 	 * prepares the element for pushing. See XXX part-activation.txt for details.
 	 * Params:
-	 * activatepush =  the GstPadActivateModeFunction to set.
+	 * activatepush = the GstPadActivateModeFunction to set.
 	 */
 	public void setActivatepushFunction(GstPadActivateModeFunction activatepush)
 	{
@@ -1106,7 +1112,7 @@ public class Pad : ObjectGst
 	 * prepares the element and any upstream connections for pulling. See XXX
 	 * part-activation.txt for details.
 	 * Params:
-	 * activatepull =  the GstPadActivateModeFunction to set.
+	 * activatepull = the GstPadActivateModeFunction to set.
 	 */
 	public void setActivatepullFunction(GstPadActivateModeFunction activatepull)
 	{
@@ -1128,7 +1134,7 @@ public class Pad : ObjectGst
 	 * In all cases, success or failure, the caller loses its reference to buffer
 	 * after calling this function.
 	 * Params:
-	 * buffer =  the GstBuffer to push returns GST_FLOW_ERROR if not.
+	 * buffer = the GstBuffer to push returns GST_FLOW_ERROR if not.
 	 * Returns: a GstFlowReturn from the peer pad.MT safe.
 	 */
 	public GstFlowReturn push(Buffer buffer)
@@ -1144,7 +1150,7 @@ public class Pad : ObjectGst
 	 * This function takes owership of the provided event so you should
 	 * gst_event_ref() it if you want to reuse the event after this call.
 	 * Params:
-	 * event =  the GstEvent to send to the pad.
+	 * event = the GstEvent to send to the pad.
 	 * Returns: TRUE if the event was handled.MT safe.
 	 */
 	public int pushEvent(Event event)
@@ -1179,9 +1185,9 @@ public class Pad : ObjectGst
 	 * buffer's caps must either be unset or the same as what is already configured
 	 * on pad. Renegotiation within a running pull-mode pipeline is not supported.
 	 * Params:
-	 * offset =  The start offset of the buffer
-	 * size =  The length of the buffer
-	 * buffer =  a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
+	 * offset = The start offset of the buffer
+	 * size = The length of the buffer
+	 * buffer = a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
 	 * Returns: a GstFlowReturn from the peer pad.When this function returns GST_FLOW_OK, buffer will contain a validGstBuffer that should be freed with gst_buffer_unref() after usage.buffer may not be used or freed when any other return value than GST_FLOW_OK is returned.MT safe.
 	 */
 	public GstFlowReturn pullRange(ulong offset, uint size, GstBuffer** buffer)
@@ -1198,7 +1204,7 @@ public class Pad : ObjectGst
 	 * function.
 	 * If you don't know what this is, you probably don't want to call it.
 	 * Params:
-	 * active =  whether or not the pad should be active.
+	 * active = whether or not the pad should be active.
 	 * Returns: TRUE if the operation was successful.MT safe.
 	 */
 	public int activatePull(int active)
@@ -1212,7 +1218,7 @@ public class Pad : ObjectGst
 	 * pad's activatepushfunc. For use from within pad activation functions only.
 	 * If you don't know what this is, you probably don't want to call it.
 	 * Params:
-	 * active =  whether the pad should be active or not.
+	 * active = whether the pad should be active or not.
 	 * Returns: TRUE if the operation was successful.MT safe.
 	 */
 	public int activatePush(int active)
@@ -1240,7 +1246,7 @@ public class Pad : ObjectGst
 	 * This function takes owership of the provided event so you should
 	 * gst_event_ref() it if you want to reuse the event after this call.
 	 * Params:
-	 * event =  the GstEvent to send to the pad.
+	 * event = the GstEvent to send to the pad.
 	 * Returns: TRUE if the event was handled.
 	 */
 	public int sendEvent(Event event)
@@ -1256,7 +1262,7 @@ public class Pad : ObjectGst
 	 * pads that are internally linked to pad, only one will be sent an event.
 	 * Multi-sinkpad elements should implement custom event handlers.
 	 * Params:
-	 * event =  the GstEvent to handle.
+	 * event = the GstEvent to handle.
 	 * Returns: TRUE if the event was sent succesfully.
 	 */
 	public int eventDefault(Event event)
@@ -1273,7 +1279,7 @@ public class Pad : ObjectGst
 	 * Again, the caller is responsible for both the allocation and deallocation of
 	 * the query structure.
 	 * Params:
-	 * query =  the GstQuery to perform.
+	 * query = the GstQuery to perform.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int query(Query query)
@@ -1289,7 +1295,7 @@ public class Pad : ObjectGst
 	 * pad, only one will be sent the query.
 	 * Multi-sinkpad elements should implement custom query handlers.
 	 * Params:
-	 * query =  the GstQuery to handle.
+	 * query = the GstQuery to handle.
 	 * Returns: TRUE if the query was performed succesfully.
 	 */
 	public int queryDefault(Query query)
@@ -1301,9 +1307,9 @@ public class Pad : ObjectGst
 	/**
 	 * Queries a pad for the stream position.
 	 * Params:
-	 * format =  a pointer to the GstFormat asked for.
+	 * format = a pointer to the GstFormat asked for.
 	 *  On return contains the GstFormat used.
-	 * cur =  A location in which to store the current position, or NULL.
+	 * cur = A location in which to store the current position, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryPosition(GstFormat* format, long* cur)
@@ -1315,9 +1321,9 @@ public class Pad : ObjectGst
 	/**
 	 * Queries a pad for the total stream duration.
 	 * Params:
-	 * format =  a pointer to the GstFormat asked for.
+	 * format = a pointer to the GstFormat asked for.
 	 *  On return contains the GstFormat used.
-	 * duration =  A location in which to store the total duration, or NULL.
+	 * duration = A location in which to store the total duration, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryDuration(GstFormat* format, long* duration)
@@ -1329,10 +1335,10 @@ public class Pad : ObjectGst
 	/**
 	 * Queries a pad to convert src_val in src_format to dest_format.
 	 * Params:
-	 * srcFormat =  a GstFormat to convert from.
-	 * srcVal =  a value to convert.
-	 * destFormat =  a pointer to the GstFormat to convert to.
-	 * destVal =  a pointer to the result.
+	 * srcFormat = a GstFormat to convert from.
+	 * srcVal = a value to convert.
+	 * destFormat = a pointer to the GstFormat to convert to.
+	 * destVal = a pointer to the result.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryConvert(GstFormat srcFormat, long srcVal, GstFormat* destFormat, long* destVal)
@@ -1344,9 +1350,9 @@ public class Pad : ObjectGst
 	/**
 	 * Queries the peer of a given sink pad for the stream position.
 	 * Params:
-	 * format =  a pointer to the GstFormat asked for.
+	 * format = a pointer to the GstFormat asked for.
 	 *  On return contains the GstFormat used.
-	 * cur =  A location in which to store the current position, or NULL.
+	 * cur = A location in which to store the current position, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryPeerPosition(GstFormat* format, long* cur)
@@ -1358,9 +1364,9 @@ public class Pad : ObjectGst
 	/**
 	 * Queries the peer pad of a given sink pad for the total stream duration.
 	 * Params:
-	 * format =  a pointer to the GstFormat asked for.
+	 * format = a pointer to the GstFormat asked for.
 	 *  On return contains the GstFormat used.
-	 * duration =  A location in which to store the total duration, or NULL.
+	 * duration = A location in which to store the total duration, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryPeerDuration(GstFormat* format, long* duration)
@@ -1373,10 +1379,10 @@ public class Pad : ObjectGst
 	 * Queries the peer pad of a given sink pad to convert src_val in src_format
 	 * to dest_format.
 	 * Params:
-	 * srcFormat =  a GstFormat to convert from.
-	 * srcVal =  a value to convert.
-	 * destFormat =  a pointer to the GstFormat to convert to.
-	 * destVal =  a pointer to the result.
+	 * srcFormat = a GstFormat to convert from.
+	 * srcVal = a value to convert.
+	 * destFormat = a pointer to the GstFormat to convert to.
+	 * destVal = a pointer to the result.
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryPeerConvert(GstFormat srcFormat, long srcVal, GstFormat* destFormat, long* destVal)
@@ -1388,7 +1394,7 @@ public class Pad : ObjectGst
 	/**
 	 * Set the given query function for the pad.
 	 * Params:
-	 * query =  the GstPadQueryFunction to set.
+	 * query = the GstPadQueryFunction to set.
 	 */
 	public void setQueryFunction(GstPadQueryFunction query)
 	{
@@ -1399,7 +1405,7 @@ public class Pad : ObjectGst
 	/**
 	 * Set the given query type function for the pad.
 	 * Params:
-	 * typeFunc =  the GstPadQueryTypeFunction to set.
+	 * typeFunc = the GstPadQueryTypeFunction to set.
 	 */
 	public void setQueryTypeFunction(GstPadQueryTypeFunction typeFunc)
 	{
@@ -1432,7 +1438,7 @@ public class Pad : ObjectGst
 	/**
 	 * Sets the given internal link function for the pad.
 	 * Params:
-	 * intlink =  the GstPadIntLinkFunction to set.
+	 * intlink = the GstPadIntLinkFunction to set.
 	 */
 	public void setInternalLinkFunction(GstPadIntLinkFunction intlink)
 	{
@@ -1482,8 +1488,8 @@ public class Pad : ObjectGst
 	 * The GstPadDispatcherFunction should return TRUE when no further pads
 	 * need to be processed.
 	 * Params:
-	 * dispatch =  the GstDispatcherFunction to call.
-	 * data =  gpointer user data passed to the dispatcher function.
+	 * dispatch = the GstDispatcherFunction to call.
+	 * data = gpointer user data passed to the dispatcher function.
 	 * Returns: TRUE if one of the dispatcher functions returned TRUE.
 	 */
 	public int dispatcher(GstPadDispatcherFunction dispatch, void* data)
@@ -1497,7 +1503,7 @@ public class Pad : ObjectGst
 	 * This function can only be used by the element that owns the pad.
 	 * No locking is performed in this function.
 	 * Params:
-	 * priv =  The private data to attach to the pad.
+	 * priv = The private data to attach to the pad.
 	 */
 	public void setElementPrivate(void* priv)
 	{
@@ -1530,7 +1536,7 @@ public class Pad : ObjectGst
 	 * In all cases, success or failure, the caller loses its reference to buffer
 	 * after calling this function.
 	 * Params:
-	 * buffer =  the GstBuffer to send, return GST_FLOW_ERROR if not.
+	 * buffer = the GstBuffer to send, return GST_FLOW_ERROR if not.
 	 * Returns: a GstFlowReturn from the pad.MT safe.
 	 */
 	public GstFlowReturn chain(Buffer buffer)
@@ -1545,8 +1551,8 @@ public class Pad : ObjectGst
 	 * The GST_PAD_STREAM_LOCK of pad will automatically be acquired
 	 * before func is called.
 	 * Params:
-	 * func =  the task function to call
-	 * data =  data passed to the task function
+	 * func = the task function to call
+	 * data = data passed to the task function
 	 * Returns: a TRUE if the task could be started.
 	 */
 	public int startTask(GstTaskFunction func, void* data)
@@ -1592,7 +1598,7 @@ public class Pad : ObjectGst
 	 * gst_pad_activate_push() or gst_pad_activate_pull(), as appropriate, with a
 	 * FALSE argument.
 	 * Params:
-	 * active =  whether or not the pad should be active.
+	 * active = whether or not the pad should be active.
 	 * Returns: TRUE if the operation was successful.MT safe.
 	 */
 	public int setActive(int active)

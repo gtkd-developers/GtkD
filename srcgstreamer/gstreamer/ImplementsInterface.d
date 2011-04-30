@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gstreamer.Element
  * structWrap:
  * 	- GstElement* -> Element
  * module aliases:
@@ -57,8 +58,8 @@ public  import gstreamerc.gstreamertypes;
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 
-private import gstreamer.Element;
 
+private import gstreamer.Element;
 
 
 
@@ -107,8 +108,8 @@ public class ImplementsInterface
 	 * Test whether the given element implements a certain interface of type
 	 * iface_type, and test whether it is supported for this specific instance.
 	 * Params:
-	 * element =  GstElement to check for the implementation of the interface
-	 * ifaceType =  (final) type of the interface which we want to be implemented
+	 * element = GstElement to check for the implementation of the interface
+	 * ifaceType = (final) type of the interface which we want to be implemented
 	 * Returns: whether or not the element implements the interface.
 	 */
 	public static int elementImplementsInterface(Element element, GType ifaceType)
@@ -121,8 +122,8 @@ public class ImplementsInterface
 	 * cast a given object to an interface type, and check whether this
 	 * interface is supported for this specific instance.
 	 * Params:
-	 * from =  the object (any sort) from which to cast to the interface
-	 * type =  the interface type to cast to
+	 * from = the object (any sort) from which to cast to the interface
+	 * type = the interface type to cast to
 	 * Returns: a gpointer to the interface type
 	 */
 	public static void* implementsInterfaceCast(void* from, GType type)
@@ -135,8 +136,8 @@ public class ImplementsInterface
 	 * check a given object for an interface implementation, and check
 	 * whether this interface is supported for this specific instance.
 	 * Params:
-	 * from =  the object (any sort) from which to check from for the interface
-	 * type =  the interface type to check for
+	 * from = the object (any sort) from which to check from for the interface
+	 * type = the interface type to check for
 	 * Returns: whether or not the object implements the given interface
 	 */
 	public static int implementsInterfaceCheck(void* from, GType type)

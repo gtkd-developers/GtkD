@@ -118,6 +118,12 @@ public class SystemClock : Clock
 		this.gstSystemClock = gstSystemClock;
 	}
 	
+	protected void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gstSystemClock = cast(GstSystemClock*)obj;
+	}
+	
 	/**
 	 */
 	

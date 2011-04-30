@@ -149,11 +149,11 @@ public class Segment
 	 * updated. If clip_start or clip_stop are different from start or stop
 	 * respectively, the region fell partially in the segment.
 	 * Params:
-	 * format =  the format of the segment.
-	 * start =  the start position in the segment
-	 * stop =  the stop position in the segment
-	 * clipStart =  the clipped start position in the segment
-	 * clipStop =  the clipped stop position in the segment
+	 * format = the format of the segment.
+	 * start = the start position in the segment
+	 * stop = the stop position in the segment
+	 * clipStart = the clipped start position in the segment
+	 * clipStop = the clipped stop position in the segment
 	 * Returns: TRUE if the given start and stop times fall partially or  completely in segment, FALSE if the values are completely outside  of the segment.
 	 */
 	public int clip(GstFormat format, long start, long stop, long* clipStart, long* clipStop)
@@ -168,7 +168,7 @@ public class Segment
 	 * flags are set.
 	 * Initialize segment to its default values.
 	 * Params:
-	 * format =  the format of the segment.
+	 * format = the format of the segment.
 	 */
 	public void init(GstFormat format)
 	{
@@ -208,8 +208,8 @@ public class Segment
 	 * This field should be set to allow seeking requests relative to the
 	 * duration.
 	 * Params:
-	 * format =  the format of the segment.
-	 * duration =  the duration of the segment info or -1 if unknown.
+	 * format = the format of the segment.
+	 * duration = the duration of the segment info or -1 if unknown.
 	 */
 	public void setDuration(GstFormat format, long duration)
 	{
@@ -222,8 +222,8 @@ public class Segment
 	 * This field should be set to allow seeking requests relative to the
 	 * current playing position.
 	 * Params:
-	 * format =  the format of the segment.
-	 * position =  the position
+	 * format = the format of the segment.
+	 * position = the position
 	 */
 	public void setLastStop(GstFormat format, long position)
 	{
@@ -235,13 +235,13 @@ public class Segment
 	 * Update the segment structure with the field values of a new segment event and
 	 * with a default applied_rate of 1.0.
 	 * Params:
-	 * segment =  a GstSegment structure.
-	 * update =  flag indicating a new segment is started or updated
-	 * rate =  the rate of the segment.
-	 * format =  the format of the segment.
-	 * start =  the new start value
-	 * stop =  the new stop value
-	 * time =  the new stream time
+	 * segment = a GstSegment structure.
+	 * update = flag indicating a new segment is started or updated
+	 * rate = the rate of the segment.
+	 * format = the format of the segment.
+	 * start = the new start value
+	 * stop = the new stop value
+	 * time = the new stream time
 	 * Since 0.10.6
 	 */
 	public void setNewsegment(int update, double rate, GstFormat format, long start, long stop, long time)
@@ -253,14 +253,14 @@ public class Segment
 	/**
 	 * Update the segment structure with the field values of a new segment event.
 	 * Params:
-	 * segment =  a GstSegment structure.
-	 * update =  flag indicating a new segment is started or updated
-	 * rate =  the rate of the segment.
-	 * appliedRate =  the applied rate of the segment.
-	 * format =  the format of the segment.
-	 * start =  the new start value
-	 * stop =  the new stop value
-	 * time =  the new stream time
+	 * segment = a GstSegment structure.
+	 * update = flag indicating a new segment is started or updated
+	 * rate = the rate of the segment.
+	 * appliedRate = the applied rate of the segment.
+	 * format = the format of the segment.
+	 * start = the new start value
+	 * stop = the new stop value
+	 * time = the new stream time
 	 */
 	public void setNewsegmentFull(int update, double rate, double appliedRate, GstFormat format, long start, long stop, long time)
 	{
@@ -292,14 +292,14 @@ public class Segment
 	 * last_stop field. This field can be FALSE if, for example, only the rate
 	 * has been changed but not the playback position.
 	 * Params:
-	 * rate =  the rate of the segment.
-	 * format =  the format of the segment.
-	 * flags =  the seek flags for the segment
-	 * startType =  the seek method
-	 * start =  the seek start value
-	 * stopType =  the seek method
-	 * stop =  the seek stop value
-	 * update =  boolean holding whether last_stop was updated.
+	 * rate = the rate of the segment.
+	 * format = the format of the segment.
+	 * flags = the seek flags for the segment
+	 * startType = the seek method
+	 * start = the seek start value
+	 * stopType = the seek method
+	 * stop = the seek stop value
+	 * update = boolean holding whether last_stop was updated.
 	 */
 	public void setSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop, int* update)
 	{
@@ -317,8 +317,8 @@ public class Segment
 	 * 0.
 	 * This function returns -1 if the position is outside of segment start and stop.
 	 * Params:
-	 * format =  the format of the segment.
-	 * position =  the position in the segment
+	 * format = the format of the segment.
+	 * position = the position in the segment
 	 * Returns: the position as the total running time or -1 when an invalid positionwas given.
 	 */
 	public long toRunningTime(GstFormat format, long position)
@@ -338,8 +338,8 @@ public class Segment
 	 * The stream time is always between 0 and the total duration of the
 	 * media stream.
 	 * Params:
-	 * format =  the format of the segment.
-	 * position =  the position in the segment
+	 * format = the format of the segment.
+	 * position = the position in the segment
 	 * Returns: the position in stream_time or -1 when an invalid positionwas given.
 	 */
 	public long toStreamTime(GstFormat format, long position)
