@@ -324,6 +324,7 @@ public class GtkWrapper : WrapperIF
                 debug(lookup)writefln("(%s) %s=%s", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
                 switch ( defReader.getKey() )
                 {
+					case "alias": loadAA(aliases, defReader, errors); defReader.next(); break;
                     case "addTypedefs": lookupTypedefs ~= loadTextMultiLine("addTypedefs"); defReader.next();break;
                     case "addAliases": lookupAliases ~= loadTextMultiLine("addAliases"); defReader.next();break;
                     case "addEnums": lookupEnums ~= loadTextMultiLine("addEnums"); defReader.next();break;
@@ -332,6 +333,7 @@ public class GtkWrapper : WrapperIF
                     case "addFuncts": lookupFuncts ~= loadTextMultiLine("addFuncts"); defReader.next();break;
                     case "addUnions": lookupUnions ~= loadTextMultiLine("addUnions"); defReader.next();break;
                     case "addConstants": lookupConstants ~= loadTextMultiLine("addConstants"); defReader.next();break;
+                    case "enumType": loadAA(enumTypes, defReader, errors); defReader.next(); break;
                     case "srcout": srcOut =
 			    defReader.getValue();defReader.next(); break;
 		    case "srcdir": srcDir = defReader.getValue();

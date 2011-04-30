@@ -150,8 +150,6 @@ srcdir: srcgda
 package: gda gda
 bind: gdac
 
-##gstreamerD wrapping is not on by default
-##because of the hand-editing that is still required.
 #srcdir: srcgstreamer
 #package: gstreamer gstreamer
 #package: gstinterfaces gstinterfaces
@@ -227,8 +225,6 @@ srcdir: srcgda
 bindDir: gdac
 lookup: APILookupGda.txt
 
-##gstreamerD wrapping is not on by default
-##because of the hand-editing that is still required.
 #srcdir: srcgstreamer
 #bindDir: gstreamerc
 #lookup: APILookupGstInterfaces.txt
@@ -240,11 +236,6 @@ lookup: APILookupGda.txt
 #srcout: ../srcgstreamer
 #copy: gstreamer.d
 #copy: gstreamertypes.d
-
-#wrap: gstreamerc
-#srcout: ../srcgstreamer
-#copy: gstinterfaces.d
-#copy: gstinterfacestypes.d
 
 #Hack to put the build text in the correct place.
 srcdir: src

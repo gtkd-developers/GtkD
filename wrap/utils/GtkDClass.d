@@ -2783,6 +2783,27 @@ public class GtkDClass
 				refValue = std.string.strip(refValue[0..refValue.length-1]);
 				needComa = true;
 			}
+
+			bool needParam = false;
+			char[] bitShift;
+			if ( startsWith(refValue, '(') )
+			{
+				if ( std.string.find(refValue, ' ') > 0 )
+				{
+					bitShift = refValue[std.string.find(refValue, ' ') .. $];
+					refValue = refValue[1 .. std.string.find(refValue, ' ')];
+
+					needParam = true;
+				}
+				else if ( std.string.find(refValue, '<') > 0 )
+				{
+					bitShift = refValue[std.string.find(refValue, '<') .. $];
+					refValue = refValue[1 .. std.string.find(refValue, '<')];
+
+					needParam = true;
+				}
+			}
+
 			debug(enumToGtkD)writefln("\t refValue = %s", refValue);
 
 			debug(enumToGtkD)
@@ -2795,13 +2816,18 @@ public class GtkDClass
 
 			if ( refValue in wrapper.getEnumTypes() )
 			{
-				converted = converted[0..pos+1]
-							~ " "
-							~ wrapper.getEnumTypes()[refValue]
-							//~ "."
-							//~ refValue
-							~ (needComa ? "," : "" )
-							;
+				converted = converted[0..pos+1]~ " ";
+
+				if (needParam)
+					converted ~= "(";
+
+				converted ~= wrapper.getEnumTypes()[refValue];
+
+				if (needParam)
+					converted ~= bitShift;
+
+				if (needComa)
+					converted ~= ",";
 			}
 		}
 		debug(enumToGtkD)writefln("enumLine (%s) AFTER  %s", enumType, converted);

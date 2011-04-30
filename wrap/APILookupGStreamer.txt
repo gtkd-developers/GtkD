@@ -30,31 +30,29 @@
 #At the moment gstreamerc/gstreamer.d and gstreamerc/gstreamertypes.d
 #have to be copied from hand edited versions from wrap/.
 #The copying is done automatically in APILookup.txt
-#Also GstGhostPad.d has to have it's constructor adjusted by hand,
-#and this isn't done automatically. You should replace Pad* with GstPad*.
-#I have no idea why GtkWrapper is doing that.
-#Also it creates two unnecessary files gstreamerc/lib.d gstreamerc/libtypes.d
-#which have to be removed by hand.
 
 
+enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.FLAG_LAST
+enumType: GST_OBJECT_FLAG_LAST GstObjectFlags.FLAG_LAST
+enumType: GST_MINI_OBJECT_FLAG_READONLY GstMiniObjectFlags.READONLY
+enumType: GST_MINI_OBJECT_FLAG_LAST GstMiniObjectFlags.FLAG_LAST
+enumType: GST_STATE_NULL GstState.NULL
+enumType: GST_STATE_READY GstState.READY
+enumType: GST_STATE_PAUSED GstState.PAUSED
+enumType: GST_STATE_PLAYING GstState.PLAYING
 
-# These are enums for gstreamer. There should be a way for these to be moved to APILookupGStreamer.txt.
-# currently it just hangs up. These don't work for the moment.
-#enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.FLAG_LAST
-
+alias: GstXmlNodePtr void*
+alias: xmlNodePtr void*
 
 addTypedefs: start
-private import gtkc.glibtypes;
-private import gtkc.gobjecttypes;
-private import gtkc.gthreadtypes;
-private import glib.Str;
-
+public import gtkc.glibtypes;
+public import gtkc.gthreadtypes;
+public import gtkc.gobjecttypes;
 addTypedefs: end
 
-#private import gstreamerc.gstreamertypes;
-#private import gstreamerc.gstreamer;
-
 addAliases: start
+alias void* GstXmlNodePtr;
+alias void* xmlNodePtr;
 addAliases: end
 
 addEnums: start

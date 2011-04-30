@@ -44,15 +44,8 @@
 
 
 addTypedefs: start
-private import gtkc.glibtypes;
-private import gtkc.gobjecttypes;
-private import gtkc.gthreadtypes;
-private import glib.Str;
-
+public import gtkc.glibtypes;
 addTypedefs: end
-
-#private import gstreamerc.gstreamertypes;
-#private import gstreamerc.gstreamer;
 
 addAliases: start
 addAliases: end
