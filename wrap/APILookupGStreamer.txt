@@ -40,6 +40,7 @@ enumType: GST_STATE_NULL GstState.NULL
 enumType: GST_STATE_READY GstState.READY
 enumType: GST_STATE_PAUSED GstState.PAUSED
 enumType: GST_STATE_PLAYING GstState.PLAYING
+enumType: GST_BIN_FLAG_LAST GstBinFlags.FLAG_LAST
 
 alias: GstXmlNodePtr void*
 alias: xmlNodePtr void*

@@ -2776,32 +2776,14 @@ public class GtkDClass
 		if ( pos > 0 )
 		{
 			char[] refValue = std.string.strip(converted.dup[pos+1..converted.length]);
+			converted = converted[0..pos+1]~ " ";
+
 			debug(enumToGtkD)writefln("\t refValue = %s", refValue);
 			bool needComa = false;
 			if ( endsWith(refValue, ',') )
 			{
 				refValue = std.string.strip(refValue[0..refValue.length-1]);
 				needComa = true;
-			}
-
-			bool needParam = false;
-			char[] bitShift;
-			if ( startsWith(refValue, '(') )
-			{
-				if ( std.string.find(refValue, ' ') > 0 )
-				{
-					bitShift = refValue[std.string.find(refValue, ' ') .. $];
-					refValue = refValue[1 .. std.string.find(refValue, ' ')];
-
-					needParam = true;
-				}
-				else if ( std.string.find(refValue, '<') > 0 )
-				{
-					bitShift = refValue[std.string.find(refValue, '<') .. $];
-					refValue = refValue[1 .. std.string.find(refValue, '<')];
-
-					needParam = true;
-				}
 			}
 
 			debug(enumToGtkD)writefln("\t refValue = %s", refValue);
@@ -2814,21 +2796,49 @@ public class GtkDClass
 				}
 			}
 
-			if ( refValue in wrapper.getEnumTypes() )
+			if ( std.string.find(refValue, ' ') > 0 && std.string.find(refValue, '<') > 0 )
 			{
-				converted = converted[0..pos+1]~ " ";
+				char[][] parts = std.string.split(refValue);
 
-				if (needParam)
-					converted ~= "(";
+				foreach ( part; parts )
+				{
+					if ( startsWith(part, "(") )
+					{
+						converted ~= "(";
+						part = part[1 .. $];
+					}
 
-				converted ~= wrapper.getEnumTypes()[refValue];
+					if ( part in wrapper.getEnumTypes() )
+					{
+						part = wrapper.getEnumTypes()[part] ~" ";
+					}
+					else if ( std.string.find(part, "<<") > 0 )
+					{
+						char[][] values = std.string.split(part, "<<");
 
-				if (needParam)
-					converted ~= bitShift;
+						if ( values[0] in wrapper.getEnumTypes() )
+							values[0] = wrapper.getEnumTypes()[values[0]];
+						if ( values[1] in wrapper.getEnumTypes() )
+							values[1] = wrapper.getEnumTypes()[values[1]];
 
-				if (needComa)
-					converted ~= ",";
+						part = values[0] ~" << "~ values[1] ~ " ";
+					}
+
+					converted ~= part ~" ";
+				}
 			}
+			else
+			{
+				if ( refValue in wrapper.getEnumTypes() )
+					converted ~= wrapper.getEnumTypes()[refValue];
+				else
+					converted ~= refValue;
+			}
+
+			converted = std.string.stripr(converted);
+
+			if (needComa)
+				converted ~= ",";
 		}
 		debug(enumToGtkD)writefln("enumLine (%s) AFTER  %s", enumType, converted);
 
