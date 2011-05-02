@@ -1525,6 +1525,9 @@ public class GtkDClass
 				;
 		}
 
+		//TODO: add an option for this to the APILookup files
+		if ( enumName == "GstEventType" || enumName == "GstEventTypeFlags" )
+			return;
 
 		if ( startsWith(enumName, "Gtk")
 			 || isGdkPrefix(enumName)
@@ -2827,12 +2830,13 @@ public class GtkDClass
 					converted ~= part ~" ";
 				}
 			}
+			else if ( refValue in wrapper.getEnumTypes() )
+			{
+				converted ~= wrapper.getEnumTypes()[refValue];
+			}
 			else
 			{
-				if ( refValue in wrapper.getEnumTypes() )
-					converted ~= wrapper.getEnumTypes()[refValue];
-				else
-					converted ~= refValue;
+				converted ~= refValue;
 			}
 
 			converted = std.string.stripr(converted);

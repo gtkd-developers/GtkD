@@ -35,12 +35,17 @@
 enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.FLAG_LAST
 enumType: GST_OBJECT_FLAG_LAST GstObjectFlags.FLAG_LAST
 enumType: GST_MINI_OBJECT_FLAG_READONLY GstMiniObjectFlags.READONLY
-enumType: GST_MINI_OBJECT_FLAG_LAST GstMiniObjectFlags.FLAG_LAST
+enumType: GST_MINI_OBJECT_FLAG_LAST GstMiniObjectFlags.LAST
 enumType: GST_STATE_NULL GstState.NULL
 enumType: GST_STATE_READY GstState.READY
 enumType: GST_STATE_PAUSED GstState.PAUSED
 enumType: GST_STATE_PLAYING GstState.PLAYING
-enumType: GST_BIN_FLAG_LAST GstBinFlags.FLAG_LAST
+enumType: GST_BIN_FLAG_LAST GstBinFlags.GST_BIN_FLAG_LAST
+
+alias: GST_SEEK_TYPE_NONE NONE
+alias: GST_SEEK_TYPE_CUR CUR
+alias: GST_SEEK_TYPE_SET SET
+alias: GST_SEEK_TYPE_END END
 
 alias: GstXmlNodePtr void*
 alias: xmlNodePtr void*
@@ -57,6 +62,52 @@ alias void* xmlNodePtr;
 addAliases: end
 
 addEnums: start
+/**
+ * GstEventTypeFlags indicate the aspects of the different GstEventType
+ * values. You can get the type flags of a GstEventType with the
+ * gst_event_type_get_flags() function.
+ * GST_EVENT_TYPE_UPSTREAM
+ */
+public enum GstEventTypeFlags
+{
+	UPSTREAM = 1 << 0,
+	DOWNSTREAM = 1 << 1,
+	SERIALIZED = 1 << 2,
+}
+alias GstEventTypeFlags EventTypeFlags;
+
+/**
+ * GstEventType lists the standard event types that can be sent in a pipeline.
+ * The custom event types can be used for private messages between elements
+ * that can't be expressed using normal
+ * GStreamer buffer passing semantics. Custom events carry an arbitrary
+ * GstStructure.
+ * Specific custom events are distinguished by the name of the structure.
+ * GST_EVENT_UNKNOWN
+ */
+public enum GstEventType
+{
+	UNKNOWN = 0,
+	/+* bidirectional events +/
+	FLUSH_START = 16 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM,
+	FLUSH_STOP = 32 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	/+* downstream serialized events +/
+	EOS = 80 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	NEWSEGMENT = 96 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	TAG = 112 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	BUFFERSIZE = 128 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	/+* upstream events +/
+	QOS = 240 | GstEventTypeFlags.UPSTREAM,
+	SEEK = 256 | GstEventTypeFlags.UPSTREAM,
+	NAVIGATION = 272 | GstEventTypeFlags.UPSTREAM,
+	/+* custom events start here +/
+	CUSTOM_UPSTREAM = 512 | GstEventTypeFlags.UPSTREAM,
+	CUSTOM_DOWNSTREAM = 512 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	CUSTOM_DOWNSTREAM_OOB = 512 | GstEventTypeFlags.DOWNSTREAM,
+	CUSTOM_BOTH = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+	CUSTOM_BOTH_OOB = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM
+}
+alias GstEventType EventType;
 addEnums: end
 
 addStructs: start
@@ -142,6 +193,238 @@ srcout: srcgstreamer
 ###########################################################
 ### GStreamer #############################################
 ###########################################################
+
+file: gstreamer-GstMiniObject.html
+struct: GstMiniObject
+class: MiniObject
+prefix: gst_mini_object_
+import: glib.Str
+#import: gobject.Type
+#structWrap: GType Type
+import: gobject.Value
+structWrap: GstMiniObject* MiniObject
+structWrap: GstMiniObject MiniObject
+structWrap: GValue* Value
+outFile: MiniObject
+
+file: GstObject.html
+struct: GstObject
+class: ObjectGst
+prefix: gst_object_
+prefix: gst_
+#libxml2 missing:
+nocode: gst_object_save_thyself
+nocode: gst_object_restore_thyself
+nocode: gst_class_signal_emit_by_name
+#this is removed because of GstObjectClass* not working yet
+nocode: gst_class_signal_connect
+import: glib.Str
+import: gobject.ObjectG
+import: glib.ErrorG
+import: glib.ListG
+structWrap: GstObject* ObjectGst
+structWrap: GObject* ObjectG
+structWrap: GError* ErrorG
+structWrap: GList* ListG
+nocode: gst_object_ref
+code: start
+	/**
+	 * Increments the refence count on object. This function
+	 * does not take the lock on object because it relies on
+	 * atomic refcounting.
+	 * This object returns the input parameter to ease writing
+	 * constructs like :
+	 *  result = gst_object_ref (object->parent);
+	 * Returns:
+	 *  A pointer to object
+	 */
+	public void* reference()
+	{
+		// gpointer gst_object_ref (gpointer object);
+		return gst_object_ref( gstObject );
+	}
+	/*public static void* ref(void* object)
+	{
+		// gpointer gst_object_ref (gpointer object);
+		return gst_object_ref(object);
+	}*/
+code: end
+outFile: ObjectGst
+
+file: GstElement.html
+struct: GstElement
+class: Element
+prefix: gst_element_
+prefix: gst_
+#nocode: GstState
+#prefix: GST_BIN_
+#prefix: GST_STATE_CHANGE_
+#prefix: GST_STATE_ GstState.
+#prefix: GST_
+import: glib.Str
+import: gtkc.gobject
+import: gstreamer.Pad
+import: gstreamer.Clock
+import: gstreamer.Caps
+import: gstreamer.Iterator
+import: gstreamer.Index
+import: gstreamer.TagList
+import: gstreamer.Message
+import: gstreamer.Query
+#import: gstreamer.Format
+import: gstreamer.Event
+import: gstreamer.Bus
+structWrap: GstBus* Bus
+#import: gstreamer.QueryType
+#I didn't do this:
+#import: gobject.ObjectG
+#structWrap: GObject* ObjectG
+#I tried this instead:
+structWrap: GObject* Pad
+structWrap: GstElement* Element
+structWrap: GstPad* Pad
+structWrap: GstClock* Clock
+structWrap: GstCaps* Caps
+structWrap: GstIterator* Iterator
+structWrap: GstIndex* Index
+structWrap: GstTagList* TagList
+structWrap: GstMessage* Message
+structWrap: GstQuery* Query
+#structWrap: GstFormat* Format
+#structWrap: GstFormat Format
+structWrap: GstEvent* Event
+#structWrap: GstQueryType* QueryType
+#TODO: GstClockTime
+#where's GList: structWrap: GList
+#import: gdk.Cursor
+#structWrap: GdkCursor* Cursor
+#nocode: pad-added #this doesn't seem to work.
+code: start
+	/**
+	 * Queries an element for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_pos;
+		queryPosition( &form, &cur_pos );
+		return cur_pos;
+	}
+
+	/**
+	 * Queries an element for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_dur;
+		queryDuration( &form, &cur_dur );
+		return cur_dur;
+	}
+
+	/**
+	 *	This set's the filename for a filesrc element.
+	 */
+	public void location( string set )
+	{
+		//g_object_set( G_OBJECT(getElementStruct()), "location", set, NULL);
+		setProperty("location", set);
+	}
+
+	/**
+	 * Set the caps property of an Element.
+	 */
+	void caps( Caps cp )
+	{
+		g_object_set( getElementStruct(), Str.toStringz("caps"), cp.getCapsStruct(), null );
+	}
+
+	/**
+	* For your convenience in gstreamerD: you can seek to the
+	* position of the pipeline measured in time_nanoseconds.
+	*/
+	public int seek( ulong time_nanoseconds ) //gint64
+	{
+		return seek( 1.0, GstFormat.TIME, GstSeekFlags.FLUSH,
+								GstSeekType.SET, time_nanoseconds,
+								GstSeekType.NONE, GST_CLOCK_TIME_NONE);
+	}
+	
+	/**
+	* Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
+	*/
+	public Pad[] pads()
+	{
+		Pad[] result = new Pad[0];
+		
+		Iterator iter = iteratePads();
+		GstPad* obu_c = null;
+		iter.next( cast(void**) &obu_c );
+		while( obu_c !is null )
+		{
+			Pad tmpobu = new Pad( obu_c );
+			//writefln( "iterating Padname: ", tmpobu.getName() );
+			result.length = result.length + 1;
+			result[result.length-1] = tmpobu;	
+			
+			obu_c = null;
+			iter.next( cast(void**) &obu_c );
+		}
+		//writefln("no more pads.");
+		return result;
+	}
+
+//HANDEDIT: This is a way to add disconnectOnPadAdded
+//There still doesn't seem to be a way to put it
+//there automatically...
+/*	
+	protected uint padAddedHandlerId;
+	void delegate(Pad, Element)[] onPadAddedListeners;
+	void addOnPadAdded(void delegate(Pad, Element) dlg)
+	{
+		if ( !("pad-added" in connectedSignals) )
+		{
+			padAddedHandlerId = Signals.connectData(
+			getStruct(),
+			"pad-added",
+			cast(GCallback)&callBackPadAdded,
+			cast(void*)this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["pad-added"] = 1;
+		}
+		onPadAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
+	{
+		bit consumed = false;
+		
+		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
+		{
+			dlg(new Pad(newPad), element);
+		}
+		
+		return consumed;
+	}
+	void disconnectOnPadAdded()
+	{
+		if( "pad-added" in connectedSignals )
+		{
+			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
+			padAddedHandlerId = 0;
+			connectedSignals["pad-added"] = 0;
+			onPadAddedListeners = null;
+		}
+	}
+*/	
+code: end
+outFile: Element
 
 file: gstreamer-Gst.html
 class: GStreamer
@@ -333,181 +616,6 @@ prefix: gst_
 import: glib.Str
 structWrap: GstClock* Clock
 outFile: Clock
-
-file: GstElement.html
-struct: GstElement
-class: Element
-prefix: gst_element_
-prefix: gst_
-#nocode: GstState
-#prefix: GST_BIN_
-#prefix: GST_STATE_CHANGE_
-#prefix: GST_STATE_ GstState.
-#prefix: GST_
-import: glib.Str
-import: gtkc.gobject
-import: gstreamer.Pad
-import: gstreamer.Clock
-import: gstreamer.Caps
-import: gstreamer.Iterator
-import: gstreamer.Index
-import: gstreamer.TagList
-import: gstreamer.Message
-import: gstreamer.Query
-#import: gstreamer.Format
-import: gstreamer.Event
-import: gstreamer.Bus
-structWrap: GstBus* Bus
-#import: gstreamer.QueryType
-#I didn't do this:
-#import: gobject.ObjectG
-#structWrap: GObject* ObjectG
-#I tried this instead:
-structWrap: GObject* Pad
-structWrap: GstElement* Element
-structWrap: GstPad* Pad
-structWrap: GstClock* Clock
-structWrap: GstCaps* Caps
-structWrap: GstIterator* Iterator
-structWrap: GstIndex* Index
-structWrap: GstTagList* TagList
-structWrap: GstMessage* Message
-structWrap: GstQuery* Query
-#structWrap: GstFormat* Format
-#structWrap: GstFormat Format
-structWrap: GstEvent* Event
-#structWrap: GstQueryType* QueryType
-#TODO: GstClockTime
-#where's GList: structWrap: GList
-#import: gdk.Cursor
-#structWrap: GdkCursor* Cursor
-#nocode: pad-added #this doesn't seem to work.
-code: start
-	/**
-	 * Queries an element for the stream position.
-	 * This is a convenience function for gstreamerD.
-	 * Returns:
-	 *  The current position in nanoseconds - GstFormat.TIME.
-	 */
-	public long queryPosition()
-	{
-		GstFormat form = GstFormat.TIME;
-		long cur_pos;
-		queryPosition( &form, &cur_pos );
-		return cur_pos;
-	}
-
-	/**
-	 * Queries an element for the stream duration.
-	 * This is a convenience function for gstreamerD.
-	 * Returns:
-	 *  The duration in nanoseconds - GstFormat.TIME.
-	 */
-	public long queryDuration()
-	{
-		GstFormat form = GstFormat.TIME;
-		long cur_dur;
-		queryDuration( &form, &cur_dur );
-		return cur_dur;
-	}
-
-	/**
-	 *	This set's the filename for a filesrc element.
-	 */
-	public void location( string set )
-	{
-		//g_object_set( G_OBJECT(getElementStruct()), "location", set, NULL);
-		setProperty("location", set);
-	}
-
-	/**
-	 * Set the caps property of an Element.
-	 */
-	void caps( Caps cp )
-	{
-		g_object_set( getElementStruct(), Str.toStringz("caps"), cp.getCapsStruct(), null );
-	}
-
-	/**
-	* For your convenience in gstreamerD: you can seek to the
-	* position of the pipeline measured in time_nanoseconds.
-	*/
-	public int seek( ulong time_nanoseconds ) //gint64
-	{
-		return seek( 1.0, GstFormat.TIME, GstSeekFlags.FLUSH,
-								GstSeekType.SET, time_nanoseconds,
-								GstSeekType.NONE, GST_CLOCK_TIME_NONE);
-	}
-	
-	/**
-	* Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
-	*/
-	public Pad[] pads()
-	{
-		Pad[] result = new Pad[0];
-		
-		Iterator iter = iteratePads();
-		GstPad* obu_c = null;
-		iter.next( cast(void**) &obu_c );
-		while( obu_c !is null )
-		{
-			Pad tmpobu = new Pad( obu_c );
-			//writefln( "iterating Padname: ", tmpobu.getName() );
-			result.length = result.length + 1;
-			result[result.length-1] = tmpobu;	
-			
-			obu_c = null;
-			iter.next( cast(void**) &obu_c );
-		}
-		//writefln("no more pads.");
-		return result;
-	}
-
-//HANDEDIT: This is a way to add disconnectOnPadAdded
-//There still doesn't seem to be a way to put it
-//there automatically...
-/*	
-	protected uint padAddedHandlerId;
-	void delegate(Pad, Element)[] onPadAddedListeners;
-	void addOnPadAdded(void delegate(Pad, Element) dlg)
-	{
-		if ( !("pad-added" in connectedSignals) )
-		{
-			padAddedHandlerId = Signals.connectData(
-			getStruct(),
-			"pad-added",
-			cast(GCallback)&callBackPadAdded,
-			cast(void*)this,
-			null,
-			cast(ConnectFlags)0);
-			connectedSignals["pad-added"] = 1;
-		}
-		onPadAddedListeners ~= dlg;
-	}
-	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
-	{
-		bit consumed = false;
-		
-		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
-		{
-			dlg(new Pad(newPad), element);
-		}
-		
-		return consumed;
-	}
-	void disconnectOnPadAdded()
-	{
-		if( "pad-added" in connectedSignals )
-		{
-			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
-			padAddedHandlerId = 0;
-			connectedSignals["pad-added"] = 0;
-			onPadAddedListeners = null;
-		}
-	}
-*/	
-code: end
-outFile: Element
 
 file: GstElementFactory.html
 struct: GstElementFactory
@@ -1111,63 +1219,6 @@ out: gst_message_parse_info gerror
 out: gst_message_parse_warning debug
 out: gst_message_parse_warning gerror
 outFile: Message
-
-file: gstreamer-GstMiniObject.html
-struct: GstMiniObject
-class: MiniObject
-prefix: gst_mini_object_
-import: glib.Str
-#import: gobject.Type
-#structWrap: GType Type
-import: gobject.Value
-structWrap: GstMiniObject* MiniObject
-structWrap: GstMiniObject MiniObject
-structWrap: GValue* Value
-outFile: MiniObject
-
-file: GstObject.html
-struct: GstObject
-class: ObjectGst
-prefix: gst_object_
-prefix: gst_
-#libxml2 missing:
-nocode: gst_object_save_thyself
-nocode: gst_object_restore_thyself
-nocode: gst_class_signal_emit_by_name
-#this is removed because of GstObjectClass* not working yet
-nocode: gst_class_signal_connect
-import: glib.Str
-import: gobject.ObjectG
-import: glib.ErrorG
-import: glib.ListG
-structWrap: GstObject* ObjectGst
-structWrap: GObject* ObjectG
-structWrap: GError* ErrorG
-structWrap: GList* ListG
-nocode: gst_object_ref
-code: start
-	/**
-	 * Increments the refence count on object. This function
-	 * does not take the lock on object because it relies on
-	 * atomic refcounting.
-	 * This object returns the input parameter to ease writing
-	 * constructs like :
-	 *  result = gst_object_ref (object->parent);
-	 * Returns:
-	 *  A pointer to object
-	 */
-	public void* reference()
-	{
-		// gpointer gst_object_ref (gpointer object);
-		return gst_object_ref( gstObject );
-	}
-	/*public static void* ref(void* object)
-	{
-		// gpointer gst_object_ref (gpointer object);
-		return gst_object_ref(object);
-	}*/
-code: end
-outFile: ObjectGst
 
 file: GstPadTemplate.html
 struct: GstPadTemplate
