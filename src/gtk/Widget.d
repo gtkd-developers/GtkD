@@ -696,6 +696,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
+			addEvents(EventMask.BUTTON_PRESS_MASK);
 			addEvents(EventMask.BUTTON_RELEASE_MASK);
 			Signals.connectData(
 			getStruct(),

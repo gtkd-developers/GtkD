@@ -1100,7 +1100,10 @@ public class GtkDClass
 				switch ( signalName )
 				{
 					case  "button-press-event": text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);"; break;
-					case  "button-release-event": text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);"; break;
+					case  "button-release-event":
+						text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);";
+						text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);";
+						break;
 					case  "motion-notify-event": text ~= "addEvents(EventMask.POINTER_MOTION_MASK);"; break;
 					default:
 						break;
