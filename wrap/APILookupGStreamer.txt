@@ -40,12 +40,13 @@ enumType: GST_STATE_NULL GstState.NULL
 enumType: GST_STATE_READY GstState.READY
 enumType: GST_STATE_PAUSED GstState.PAUSED
 enumType: GST_STATE_PLAYING GstState.PLAYING
-enumType: GST_BIN_FLAG_LAST GstBinFlags.GST_BIN_FLAG_LAST
+enumType: FLAG_LAST GstBinFlags.FLAG_LAST
 
 alias: GST_SEEK_TYPE_NONE NONE
 alias: GST_SEEK_TYPE_CUR CUR
 alias: GST_SEEK_TYPE_SET SET
 alias: GST_SEEK_TYPE_END END
+alias: GST_BIN_FLAG_LAST FLAG_LAST
 
 alias: GstXmlNodePtr void*
 alias: xmlNodePtr void*
@@ -57,97 +58,141 @@ public import gtkc.gobjecttypes;
 addTypedefs: end
 
 addAliases: start
-alias void* GstXmlNodePtr;
-alias void* xmlNodePtr;
+	align(1):
+
+	alias void* GstXmlNodePtr;
+	alias void* xmlNodePtr;
 addAliases: end
 
 addEnums: start
-/**
- * GstEventTypeFlags indicate the aspects of the different GstEventType
- * values. You can get the type flags of a GstEventType with the
- * gst_event_type_get_flags() function.
- * GST_EVENT_TYPE_UPSTREAM
- */
-public enum GstEventTypeFlags
-{
-	UPSTREAM = 1 << 0,
-	DOWNSTREAM = 1 << 1,
-	SERIALIZED = 1 << 2,
-}
-alias GstEventTypeFlags EventTypeFlags;
+	/**
+	 * GstEventTypeFlags indicate the aspects of the different GstEventType
+	 * values. You can get the type flags of a GstEventType with the
+	 * gst_event_type_get_flags() function.
+	 * GST_EVENT_TYPE_UPSTREAM
+	 */
+	public enum GstEventTypeFlags
+	{
+		UPSTREAM = 1 << 0,
+		DOWNSTREAM = 1 << 1,
+		SERIALIZED = 1 << 2,
+	}
+	alias GstEventTypeFlags EventTypeFlags;
 
-/**
- * GstEventType lists the standard event types that can be sent in a pipeline.
- * The custom event types can be used for private messages between elements
- * that can't be expressed using normal
- * GStreamer buffer passing semantics. Custom events carry an arbitrary
- * GstStructure.
- * Specific custom events are distinguished by the name of the structure.
- * GST_EVENT_UNKNOWN
- */
-public enum GstEventType
-{
-	UNKNOWN = 0,
-	/+* bidirectional events +/
-	FLUSH_START = 16 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM,
-	FLUSH_STOP = 32 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	/+* downstream serialized events +/
-	EOS = 80 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	NEWSEGMENT = 96 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	TAG = 112 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	BUFFERSIZE = 128 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	/+* upstream events +/
-	QOS = 240 | GstEventTypeFlags.UPSTREAM,
-	SEEK = 256 | GstEventTypeFlags.UPSTREAM,
-	NAVIGATION = 272 | GstEventTypeFlags.UPSTREAM,
-	/+* custom events start here +/
-	CUSTOM_UPSTREAM = 512 | GstEventTypeFlags.UPSTREAM,
-	CUSTOM_DOWNSTREAM = 512 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	CUSTOM_DOWNSTREAM_OOB = 512 | GstEventTypeFlags.DOWNSTREAM,
-	CUSTOM_BOTH = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-	CUSTOM_BOTH_OOB = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM
-}
-alias GstEventType EventType;
+	/**
+	 * GstEventType lists the standard event types that can be sent in a pipeline.
+	 * The custom event types can be used for private messages between elements
+	 * that can't be expressed using normal
+	 * GStreamer buffer passing semantics. Custom events carry an arbitrary
+	 * GstStructure.
+	 * Specific custom events are distinguished by the name of the structure.
+	 * GST_EVENT_UNKNOWN
+	 */
+	public enum GstEventType
+	{
+		UNKNOWN = 0,
+		/+* bidirectional events +/
+		FLUSH_START = 16 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM,
+		FLUSH_STOP = 32 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		/+* downstream serialized events +/
+		EOS = 80 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		NEWSEGMENT = 96 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		TAG = 112 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		BUFFERSIZE = 128 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		/+* upstream events +/
+		QOS = 240 | GstEventTypeFlags.UPSTREAM,
+		SEEK = 256 | GstEventTypeFlags.UPSTREAM,
+		NAVIGATION = 272 | GstEventTypeFlags.UPSTREAM,
+		/+* custom events start here +/
+		CUSTOM_UPSTREAM = 512 | GstEventTypeFlags.UPSTREAM,
+		CUSTOM_DOWNSTREAM = 512 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		CUSTOM_DOWNSTREAM_OOB = 512 | GstEventTypeFlags.DOWNSTREAM,
+		CUSTOM_BOTH = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		CUSTOM_BOTH_OOB = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM
+	}
+	alias GstEventType EventType;
+
 addEnums: end
 
 addStructs: start
-/+
-#	/**
-#	* GstMiniObject.
-#	* Base class for refcounted lightweight objects.
-#	* GTypeInstance instance;
-#	*/
-#	public struct GstMiniObject
-#	{
-#		GTypeInstance instanc;
-#		//< public >// with COW
-#		int refcount;//gint refcount;
-#		uint flags;//guint flags;
-#
-#		//< private >
-#		gpointer _gst_reserved;
-#	}
-#
-#	struct GstMessage
-#	{
-#		GstMiniObject mini_object;
-#
-#		/*< private > *//* with MESSAGE_LOCK */
-#		GMutex* lock;                 /* lock and cond for async delivery */
-#		GCond* cond;
-#
-#		/*< public > *//* with COW */
-#		GstMessageType type;
-#		ulong timestamp;//guint64 timestamp;
-#		GstObject* src;
-#
-#		GstStructure* structure;
-#
-#		/*< private > */
-#		gpointer _gst_reserved[GST_PADDING];
-#	}
-#
-+/
+	align(1) public struct GstBuffer
+	{
+		GstMiniObject mini_object;
+	
+		/*< public >*/ /* with COW */
+		/* pointer to data and its size */
+		guint8 *data;
+		guint size;
+	
+		/* timestamp */
+		GstClockTime timestamp;
+		GstClockTime duration;
+	
+		/* the media type of this buffer */
+		GstCaps* caps;
+	
+		/* media specific offset */
+		guint64 offset;
+		guint64 offset_end;
+	
+		guint8 *malloc_data;
+	
+		/*< private >*/
+		gpointer _gst_reserved[GST_PADDING];
+	}
+
+	struct GstObjectClass {
+		GObjectClass parent_class;
+
+		gchar   *path_string_separator;
+		GObject	*signal_object;
+
+		GStaticRecMutex *lock;
+
+		/* signals */
+		extern(C) void function(GstObject* object, GstObject* parent) parent_set;
+		extern(C) void function(GstObject* object, GstObject* parent) parent_unset;
+		extern(C) void function(GstObject* object, GstXmlNodePtr parent) object_saved;
+		extern(C) void function(GstObject* object, GstObject* orig, GParamSpec* pspec) deep_notify;
+	
+		/*< public >*/ 
+		/* virtual methods for subclasses */
+		extern(C) GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) save_thyself;
+		extern(C) void          function(GstObject* object, GstXmlNodePtr self) restore_thyself;
+
+		/*< private >*/
+		gpointer _gst_reserved[GST_PADDING];
+	}
+
+	align(1) struct GstMessage
+	{
+		GstMiniObject mini_object;
+
+		/*< private > *//* with MESSAGE_LOCK */
+		GMutex* lock;                 /* lock and cond for async delivery */
+		GCond* cond;
+
+		/*< public > *//* with COW */
+		GstMessageType type;
+		ulong timestamp;//guint64 timestamp;
+		GstObject* src;
+
+		GstStructure* structure;
+
+		/*< private > */
+		gpointer _gst_reserved[GST_PADDING];
+	}
+
+	align(1) public struct GstMiniObject
+	{
+		GTypeInstance instanc;
+		//< public >// with COW
+		int refcount;//gint refcount;
+		uint flags;//guint flags;
+
+		//< private >
+		gpointer _gst_reserved;
+	}
 addStructs: end
 
 addTypes: start
@@ -162,7 +207,6 @@ addUnions: end
 addConstants: start
 	/***** default padding of structures *****/
 	const long GST_PADDING = 4;
-	//#define GST_PADDING_INIT	{0}
 
 	/***** padding for very extensible base classes *****/
 	const long GST_PADDING_LARGE = 20;
@@ -181,9 +225,7 @@ addConstants: start
 	//#define GST_CLOCK_TIME_NONE		((GstClockTime) -1)
 	const long GST_CLOCK_TIME_NONE = -1L;
 	public alias GST_CLOCK_TIME_NONE CLOCK_TIME_NONE;
-
 addConstants: end
-
 
 # must start with wrap
 
@@ -196,6 +238,7 @@ srcout: srcgstreamer
 
 file: gstreamer-GstMiniObject.html
 struct: GstMiniObject
+nostruct: GstMiniObject
 class: MiniObject
 prefix: gst_mini_object_
 import: glib.Str
@@ -492,6 +535,7 @@ outFile: Bin
 
 file: gstreamer-GstBuffer.html
 struct: GstBuffer
+nostruct: GstBuffer
 class: Buffer
 prefix: gst_buffer_
 prefix: gst_
@@ -959,6 +1003,7 @@ outFile: Pad
 
 file: gstreamer-GstMessage.html
 struct: GstMessage
+nostruct: GstMessage
 class: Message
 prefix: gst_message_
 prefix: gst_

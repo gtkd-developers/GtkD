@@ -150,10 +150,10 @@ srcdir: srcgda
 package: gda gda
 bind: gdac
 
-#srcdir: srcgstreamer
-#package: gstreamer gstreamer
-#package: gstinterfaces gstinterfaces
-#bind: gstreamerc
+srcdir: srcgstreamer
+package: gstreamer gstreamer
+package: gstinterfaces gstinterfaces
+bind: gstreamerc
 
 # define other packages to create
 
@@ -225,17 +225,10 @@ srcdir: srcgda
 bindDir: gdac
 lookup: APILookupGda.txt
 
-#srcdir: srcgstreamer
-#bindDir: gstreamerc
-#lookup: APILookupGstInterfaces.txt
-#lookup: APILookupGStreamer.txt
-
-##This is a hack to put the hand edited gstreamer versions there.
-##This should be removed when we get these files automatically.
-#wrap: gstreamerc
-#srcout: ../srcgstreamer
-#copy: gstreamer.d
-#copy: gstreamertypes.d
+srcdir: srcgstreamer
+bindDir: gstreamerc
+lookup: APILookupGstInterfaces.txt
+lookup: APILookupGStreamer.txt
 
 #Hack to put the build text in the correct place.
 srcdir: src
