@@ -39,6 +39,7 @@
  * 	- gst_message_
  * 	- gst_
  * omit structs:
+ * 	- GstMessage
  * omit prefixes:
  * omit code:
  * 	- gst_message_parse_tag

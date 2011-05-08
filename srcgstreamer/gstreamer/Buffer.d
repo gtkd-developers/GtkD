@@ -39,6 +39,7 @@
  * 	- gst_buffer_
  * 	- gst_
  * omit structs:
+ * 	- GstBuffer
  * omit prefixes:
  * omit code:
  * omit signals:

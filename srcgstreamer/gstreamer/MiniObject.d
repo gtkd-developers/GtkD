@@ -38,6 +38,7 @@
  * prefixes:
  * 	- gst_mini_object_
  * omit structs:
+ * 	- GstMiniObject
  * omit prefixes:
  * omit code:
  * omit signals:

@@ -32,13 +32,109 @@ private import gstreamerc.gstreamertypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-private import gtkc.glibtypes;
-private import gtkc.gobjecttypes;
-private import gtkc.gthreadtypes;
-private import glib.Str;
-
 static this()
 {
+	// gstreamer.MiniObject
+
+	Linker.link(gst_mini_object_new, "gst_mini_object_new", LIBRARY.GSTREAMER);
+	Linker.link(gst_mini_object_copy, "gst_mini_object_copy", LIBRARY.GSTREAMER);
+	Linker.link(gst_mini_object_is_writable, "gst_mini_object_is_writable", LIBRARY.GSTREAMER);
+	Linker.link(gst_mini_object_make_writable, "gst_mini_object_make_writable", LIBRARY.GSTREAMER);
+	Linker.link(gst_mini_object_ref, "gst_mini_object_ref", LIBRARY.GSTREAMER);
+	Linker.link(gst_mini_object_unref, "gst_mini_object_unref", LIBRARY.GSTREAMER);
+	Linker.link(gst_mini_object_replace, "gst_mini_object_replace", LIBRARY.GSTREAMER);
+	Linker.link(gst_param_spec_mini_object, "gst_param_spec_mini_object", LIBRARY.GSTREAMER);
+	Linker.link(gst_value_set_mini_object, "gst_value_set_mini_object", LIBRARY.GSTREAMER);
+	Linker.link(gst_value_take_mini_object, "gst_value_take_mini_object", LIBRARY.GSTREAMER);
+	Linker.link(gst_value_get_mini_object, "gst_value_get_mini_object", LIBRARY.GSTREAMER);
+
+	// gstreamer.ObjectGst
+
+	Linker.link(gst_object_set_name, "gst_object_set_name", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_get_name, "gst_object_get_name", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_set_parent, "gst_object_set_parent", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_get_parent, "gst_object_get_parent", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_unparent, "gst_object_unparent", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_get_name_prefix, "gst_object_get_name_prefix", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_set_name_prefix, "gst_object_set_name_prefix", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_default_deep_notify, "gst_object_default_deep_notify", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_default_error, "gst_object_default_error", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_check_uniqueness, "gst_object_check_uniqueness", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_has_ancestor, "gst_object_has_ancestor", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_save_thyself, "gst_object_save_thyself", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_restore_thyself, "gst_object_restore_thyself", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_ref, "gst_object_ref", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_unref, "gst_object_unref", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_sink, "gst_object_sink", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_replace, "gst_object_replace", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_get_path_string, "gst_object_get_path_string", LIBRARY.GSTREAMER);
+	Linker.link(gst_class_signal_connect, "gst_class_signal_connect", LIBRARY.GSTREAMER);
+	Linker.link(gst_class_signal_emit_by_name, "gst_class_signal_emit_by_name", LIBRARY.GSTREAMER);
+
+	// gstreamer.Element
+
+	Linker.link(gst_element_class_add_pad_template, "gst_element_class_add_pad_template", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_class_get_pad_template, "gst_element_class_get_pad_template", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_class_get_pad_template_list, "gst_element_class_get_pad_template_list", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_class_install_std_props, "gst_element_class_install_std_props", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_class_set_details, "gst_element_class_set_details", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_add_pad, "gst_element_add_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_pad, "gst_element_get_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_create_all_pads, "gst_element_create_all_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_compatible_pad, "gst_element_get_compatible_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_compatible_pad_template, "gst_element_get_compatible_pad_template", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_request_pad, "gst_element_get_request_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_static_pad, "gst_element_get_static_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_no_more_pads, "gst_element_no_more_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_release_request_pad, "gst_element_release_request_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_remove_pad, "gst_element_remove_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_iterate_pads, "gst_element_iterate_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_iterate_sink_pads, "gst_element_iterate_sink_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_iterate_src_pads, "gst_element_iterate_src_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_link, "gst_element_link", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_unlink, "gst_element_unlink", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_link_many, "gst_element_link_many", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_unlink_many, "gst_element_unlink_many", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_link_pads, "gst_element_link_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_unlink_pads, "gst_element_unlink_pads", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_link_pads_filtered, "gst_element_link_pads_filtered", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_link_filtered, "gst_element_link_filtered", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_set_base_time, "gst_element_set_base_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_base_time, "gst_element_get_base_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_set_bus, "gst_element_set_bus", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_bus, "gst_element_get_bus", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_factory, "gst_element_get_factory", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_set_index, "gst_element_set_index", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_index, "gst_element_get_index", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_is_indexable, "gst_element_is_indexable", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_requires_clock, "gst_element_requires_clock", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_set_clock, "gst_element_set_clock", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_clock, "gst_element_get_clock", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_provides_clock, "gst_element_provides_clock", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_provide_clock, "gst_element_provide_clock", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_set_state, "gst_element_set_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_state, "gst_element_get_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_set_locked_state, "gst_element_set_locked_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_is_locked_state, "gst_element_is_locked_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_abort_state, "gst_element_abort_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_continue_state, "gst_element_continue_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_lost_state, "gst_element_lost_state", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_state_get_name, "gst_element_state_get_name", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_state_change_return_get_name, "gst_element_state_change_return_get_name", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_sync_state_with_parent, "gst_element_sync_state_with_parent", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_found_tags, "gst_element_found_tags", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_found_tags_for_pad, "gst_element_found_tags_for_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_message_full, "gst_element_message_full", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_post_message, "gst_element_post_message", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_query_types, "gst_element_get_query_types", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_query, "gst_element_query", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_query_convert, "gst_element_query_convert", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_query_position, "gst_element_query_position", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_query_duration, "gst_element_query_duration", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_send_event, "gst_element_send_event", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_seek_simple, "gst_element_seek_simple", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_seek, "gst_element_seek", LIBRARY.GSTREAMER);
+
 	// gstreamer.GStreamer
 
 	Linker.link(gst_init, "gst_init", LIBRARY.GSTREAMER);
@@ -139,8 +235,8 @@ static this()
 	Linker.link(gst_caps_union, "gst_caps_union", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_normalize, "gst_caps_normalize", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_do_simplify, "gst_caps_do_simplify", LIBRARY.GSTREAMER);
-	//Linker.link(gst_caps_save_thyself, "gst_caps_save_thyself", LIBRARY.GSTREAMER);
-	//Linker.link(gst_caps_load_thyself, "gst_caps_load_thyself", LIBRARY.GSTREAMER);
+	Linker.link(gst_caps_save_thyself, "gst_caps_save_thyself", LIBRARY.GSTREAMER);
+	Linker.link(gst_caps_load_thyself, "gst_caps_load_thyself", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_replace, "gst_caps_replace", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_to_string, "gst_caps_to_string", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_from_string, "gst_caps_from_string", LIBRARY.GSTREAMER);
@@ -171,70 +267,6 @@ static this()
 	Linker.link(gst_clock_id_compare_func, "gst_clock_id_compare_func", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_id_ref, "gst_clock_id_ref", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_id_unref, "gst_clock_id_unref", LIBRARY.GSTREAMER);
-
-	// gstreamer.Element
-
-	Linker.link(gst_element_class_add_pad_template, "gst_element_class_add_pad_template", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_class_get_pad_template, "gst_element_class_get_pad_template", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_class_get_pad_template_list, "gst_element_class_get_pad_template_list", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_class_install_std_props, "gst_element_class_install_std_props", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_class_set_details, "gst_element_class_set_details", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_add_pad, "gst_element_add_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_pad, "gst_element_get_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_create_all_pads, "gst_element_create_all_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_compatible_pad, "gst_element_get_compatible_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_compatible_pad_template, "gst_element_get_compatible_pad_template", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_request_pad, "gst_element_get_request_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_static_pad, "gst_element_get_static_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_no_more_pads, "gst_element_no_more_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_release_request_pad, "gst_element_release_request_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_remove_pad, "gst_element_remove_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_iterate_pads, "gst_element_iterate_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_iterate_sink_pads, "gst_element_iterate_sink_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_iterate_src_pads, "gst_element_iterate_src_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_link, "gst_element_link", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_unlink, "gst_element_unlink", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_link_many, "gst_element_link_many", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_unlink_many, "gst_element_unlink_many", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_link_pads, "gst_element_link_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_unlink_pads, "gst_element_unlink_pads", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_link_pads_filtered, "gst_element_link_pads_filtered", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_link_filtered, "gst_element_link_filtered", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_set_base_time, "gst_element_set_base_time", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_base_time, "gst_element_get_base_time", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_set_bus, "gst_element_set_bus", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_bus, "gst_element_get_bus", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_factory, "gst_element_get_factory", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_set_index, "gst_element_set_index", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_index, "gst_element_get_index", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_is_indexable, "gst_element_is_indexable", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_requires_clock, "gst_element_requires_clock", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_set_clock, "gst_element_set_clock", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_clock, "gst_element_get_clock", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_provides_clock, "gst_element_provides_clock", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_provide_clock, "gst_element_provide_clock", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_set_state, "gst_element_set_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_state, "gst_element_get_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_set_locked_state, "gst_element_set_locked_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_is_locked_state, "gst_element_is_locked_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_abort_state, "gst_element_abort_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_continue_state, "gst_element_continue_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_lost_state, "gst_element_lost_state", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_state_get_name, "gst_element_state_get_name", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_state_change_return_get_name, "gst_element_state_change_return_get_name", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_sync_state_with_parent, "gst_element_sync_state_with_parent", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_found_tags, "gst_element_found_tags", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_found_tags_for_pad, "gst_element_found_tags_for_pad", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_message_full, "gst_element_message_full", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_post_message, "gst_element_post_message", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_get_query_types, "gst_element_get_query_types", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_query, "gst_element_query", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_query_convert, "gst_element_query_convert", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_query_position, "gst_element_query_position", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_query_duration, "gst_element_query_duration", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_send_event, "gst_element_send_event", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_seek_simple, "gst_element_seek_simple", LIBRARY.GSTREAMER);
-	Linker.link(gst_element_seek, "gst_element_seek", LIBRARY.GSTREAMER);
 
 	// gstreamer.ElementFactory
 
@@ -432,7 +464,7 @@ static this()
 	Linker.link(gst_pad_set_internal_link_function, "gst_pad_set_internal_link_function", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_internal_links, "gst_pad_get_internal_links", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_internal_links_default, "gst_pad_get_internal_links_default", LIBRARY.GSTREAMER);
-	//Linker.link(gst_pad_load_and_link, "gst_pad_load_and_link", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_load_and_link, "gst_pad_load_and_link", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_dispatcher, "gst_pad_dispatcher", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_element_private, "gst_pad_set_element_private", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_element_private, "gst_pad_get_element_private", LIBRARY.GSTREAMER);
@@ -478,43 +510,6 @@ static this()
 	Linker.link(gst_message_parse_warning, "gst_message_parse_warning", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_duration, "gst_message_parse_duration", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_ref, "gst_message_ref", LIBRARY.GSTREAMER);
-
-	// gstreamer.MiniObject
-
-	Linker.link(gst_mini_object_new, "gst_mini_object_new", LIBRARY.GSTREAMER);
-	Linker.link(gst_mini_object_copy, "gst_mini_object_copy", LIBRARY.GSTREAMER);
-	Linker.link(gst_mini_object_is_writable, "gst_mini_object_is_writable", LIBRARY.GSTREAMER);
-	Linker.link(gst_mini_object_make_writable, "gst_mini_object_make_writable", LIBRARY.GSTREAMER);
-	Linker.link(gst_mini_object_ref, "gst_mini_object_ref", LIBRARY.GSTREAMER);
-	Linker.link(gst_mini_object_unref, "gst_mini_object_unref", LIBRARY.GSTREAMER);
-	Linker.link(gst_mini_object_replace, "gst_mini_object_replace", LIBRARY.GSTREAMER);
-	Linker.link(gst_param_spec_mini_object, "gst_param_spec_mini_object", LIBRARY.GSTREAMER);
-	Linker.link(gst_value_set_mini_object, "gst_value_set_mini_object", LIBRARY.GSTREAMER);
-	Linker.link(gst_value_take_mini_object, "gst_value_take_mini_object", LIBRARY.GSTREAMER);
-	Linker.link(gst_value_get_mini_object, "gst_value_get_mini_object", LIBRARY.GSTREAMER);
-
-	// gstreamer.ObjectGst
-
-	Linker.link(gst_object_set_name, "gst_object_set_name", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_get_name, "gst_object_get_name", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_set_parent, "gst_object_set_parent", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_get_parent, "gst_object_get_parent", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_unparent, "gst_object_unparent", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_get_name_prefix, "gst_object_get_name_prefix", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_set_name_prefix, "gst_object_set_name_prefix", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_default_deep_notify, "gst_object_default_deep_notify", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_default_error, "gst_object_default_error", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_check_uniqueness, "gst_object_check_uniqueness", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_has_ancestor, "gst_object_has_ancestor", LIBRARY.GSTREAMER);
-	//Linker.link(gst_object_save_thyself, "gst_object_save_thyself", LIBRARY.GSTREAMER);
-	//Linker.link(gst_object_restore_thyself, "gst_object_restore_thyself", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_ref, "gst_object_ref", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_unref, "gst_object_unref", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_sink, "gst_object_sink", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_replace, "gst_object_replace", LIBRARY.GSTREAMER);
-	Linker.link(gst_object_get_path_string, "gst_object_get_path_string", LIBRARY.GSTREAMER);
-	//Linker.link(gst_class_signal_connect, "gst_class_signal_connect", LIBRARY.GSTREAMER);
-	//Linker.link(gst_class_signal_emit_by_name, "gst_class_signal_emit_by_name", LIBRARY.GSTREAMER);
 
 	// gstreamer.PadTemplate
 
@@ -793,8 +788,110 @@ static this()
 	Linker.link(gst_type_find_factory_call_function, "gst_type_find_factory_call_function", LIBRARY.GSTREAMER);
 }
 
-extern(C)
+mixin( gshared ~"extern(C)
 {
+	
+	// gstreamer.MiniObject
+	
+	GstMiniObject* function(GType type) c_gst_mini_object_new;
+	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_copy;
+	gboolean function(GstMiniObject* miniObject) c_gst_mini_object_is_writable;
+	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_make_writable;
+	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_ref;
+	void function(GstMiniObject* miniObject) c_gst_mini_object_unref;
+	void function(GstMiniObject** olddata, GstMiniObject* newdata) c_gst_mini_object_replace;
+	GParamSpec* function(char* name, char* nick, char* blurb, GType objectType, GParamFlags flags) c_gst_param_spec_mini_object;
+	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_set_mini_object;
+	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_take_mini_object;
+	GstMiniObject* function(GValue* value) c_gst_value_get_mini_object;
+	
+	// gstreamer.ObjectGst
+	
+	gboolean function(GstObject* object, gchar* name) c_gst_object_set_name;
+	gchar* function(GstObject* object) c_gst_object_get_name;
+	gboolean function(GstObject* object, GstObject* parent) c_gst_object_set_parent;
+	GstObject* function(GstObject* object) c_gst_object_get_parent;
+	void function(GstObject* object) c_gst_object_unparent;
+	gchar* function(GstObject* object) c_gst_object_get_name_prefix;
+	void function(GstObject* object, gchar* namePrefix) c_gst_object_set_name_prefix;
+	void function(GObject* object, GstObject* orig, GParamSpec* pspec, gchar** excludedProps) c_gst_object_default_deep_notify;
+	void function(GstObject* source, GError* error, gchar* dbug) c_gst_object_default_error;
+	gboolean function(GList* list, gchar* name) c_gst_object_check_uniqueness;
+	gboolean function(GstObject* object, GstObject* ancestor) c_gst_object_has_ancestor;
+	GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) c_gst_object_save_thyself;
+	void function(GstObject* object, GstXmlNodePtr self) c_gst_object_restore_thyself;
+	gpointer function(gpointer object) c_gst_object_ref;
+	void function(gpointer object) c_gst_object_unref;
+	void function(gpointer object) c_gst_object_sink;
+	void function(GstObject** oldobj, GstObject* newobj) c_gst_object_replace;
+	gchar* function(GstObject* object) c_gst_object_get_path_string;
+	guint function(GstObjectClass* klass, gchar* name, gpointer func, gpointer funcData) c_gst_class_signal_connect;
+	void function(GstObject* object, gchar* name, GstXmlNodePtr self) c_gst_class_signal_emit_by_name;
+	
+	// gstreamer.Element
+	
+	void function(GstElementClass* klass, GstPadTemplate* templ) c_gst_element_class_add_pad_template;
+	GstPadTemplate* function(GstElementClass* elementClass, gchar* name) c_gst_element_class_get_pad_template;
+	GList* function(GstElementClass* elementClass) c_gst_element_class_get_pad_template_list;
+	void function(GstElementClass* klass, gchar* firstName, ... ) c_gst_element_class_install_std_props;
+	void function(GstElementClass* klass, GstElementDetails* details) c_gst_element_class_set_details;
+	gboolean function(GstElement* element, GstPad* pad) c_gst_element_add_pad;
+	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_pad;
+	void function(GstElement* element) c_gst_element_create_all_pads;
+	GstPad* function(GstElement* element, GstPad* pad, GstCaps* caps) c_gst_element_get_compatible_pad;
+	GstPadTemplate* function(GstElement* element, GstPadTemplate* compattempl) c_gst_element_get_compatible_pad_template;
+	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_request_pad;
+	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_static_pad;
+	void function(GstElement* element) c_gst_element_no_more_pads;
+	void function(GstElement* element, GstPad* pad) c_gst_element_release_request_pad;
+	gboolean function(GstElement* element, GstPad* pad) c_gst_element_remove_pad;
+	GstIterator* function(GstElement* element) c_gst_element_iterate_pads;
+	GstIterator* function(GstElement* element) c_gst_element_iterate_sink_pads;
+	GstIterator* function(GstElement* element) c_gst_element_iterate_src_pads;
+	gboolean function(GstElement* src, GstElement* dest) c_gst_element_link;
+	void function(GstElement* src, GstElement* dest) c_gst_element_unlink;
+	gboolean function(GstElement* element1, GstElement* element2, ... ) c_gst_element_link_many;
+	void function(GstElement* element1, GstElement* element2, ... ) c_gst_element_unlink_many;
+	gboolean function(GstElement* src, gchar* srcpadname, GstElement* dest, gchar* destpadname) c_gst_element_link_pads;
+	void function(GstElement* src, gchar* srcpadname, GstElement* dest, gchar* destpadname) c_gst_element_unlink_pads;
+	gboolean function(GstElement* src, gchar* srcpadname, GstElement* dest, gchar* destpadname, GstCaps* filter) c_gst_element_link_pads_filtered;
+	gboolean function(GstElement* src, GstElement* dest, GstCaps* filter) c_gst_element_link_filtered;
+	void function(GstElement* element, GstClockTime time) c_gst_element_set_base_time;
+	GstClockTime function(GstElement* element) c_gst_element_get_base_time;
+	void function(GstElement* element, GstBus* bus) c_gst_element_set_bus;
+	GstBus* function(GstElement* element) c_gst_element_get_bus;
+	GstElementFactory* function(GstElement* element) c_gst_element_get_factory;
+	void function(GstElement* element, GstIndex* index) c_gst_element_set_index;
+	GstIndex* function(GstElement* element) c_gst_element_get_index;
+	gboolean function(GstElement* element) c_gst_element_is_indexable;
+	gboolean function(GstElement* element) c_gst_element_requires_clock;
+	gboolean function(GstElement* element, GstClock* clock) c_gst_element_set_clock;
+	GstClock* function(GstElement* element) c_gst_element_get_clock;
+	gboolean function(GstElement* element) c_gst_element_provides_clock;
+	GstClock* function(GstElement* element) c_gst_element_provide_clock;
+	GstStateChangeReturn function(GstElement* element, GstState state) c_gst_element_set_state;
+	GstStateChangeReturn function(GstElement* element, GstState* state, GstState* pending, GstClockTime timeout) c_gst_element_get_state;
+	gboolean function(GstElement* element, gboolean lockedState) c_gst_element_set_locked_state;
+	gboolean function(GstElement* element) c_gst_element_is_locked_state;
+	void function(GstElement* element) c_gst_element_abort_state;
+	GstStateChangeReturn function(GstElement* element, GstStateChangeReturn ret) c_gst_element_continue_state;
+	void function(GstElement* element) c_gst_element_lost_state;
+	gchar* function(GstState state) c_gst_element_state_get_name;
+	gchar* function(GstStateChangeReturn stateRet) c_gst_element_state_change_return_get_name;
+	gboolean function(GstElement* element) c_gst_element_sync_state_with_parent;
+	void function(GstElement* element, GstTagList* list) c_gst_element_found_tags;
+	void function(GstElement* element, GstPad* pad, GstTagList* list) c_gst_element_found_tags_for_pad;
+	void function(GstElement* element, GstMessageType type, GQuark domain, gint code, gchar* text, gchar* dbug, gchar* file, gchar* funct, gint line) c_gst_element_message_full;
+	gboolean function(GstElement* element, GstMessage* message) c_gst_element_post_message;
+	GstQueryType* function(GstElement* element) c_gst_element_get_query_types;
+	gboolean function(GstElement* element, GstQuery* query) c_gst_element_query;
+	gboolean function(GstElement* element, GstFormat srcFormat, gint64 srcVal, GstFormat* destFormat, gint64* destVal) c_gst_element_query_convert;
+	gboolean function(GstElement* element, GstFormat* format, gint64* cur) c_gst_element_query_position;
+	gboolean function(GstElement* element, GstFormat* format, gint64* duration) c_gst_element_query_duration;
+	gboolean function(GstElement* element, GstEvent* event) c_gst_element_send_event;
+	gboolean function(GstElement* element, GstFormat format, GstSeekFlags seekFlags, gint64 seekPos) c_gst_element_seek_simple;
+	gboolean function(GstElement* element, gdouble rate, GstFormat format, GstSeekFlags flags, GstSeekType curType, gint64 cur, GstSeekType stopType, gint64 stop) c_gst_element_seek;
+	
 	// gstreamer.GStreamer
 	
 	void function(int* argc, char**[] argv) c_gst_init;
@@ -895,8 +992,8 @@ extern(C)
 	GstCaps* function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_union;
 	GstCaps* function(GstCaps* caps) c_gst_caps_normalize;
 	gboolean function(GstCaps* caps) c_gst_caps_do_simplify;
-	//typedef xmlNodePtr function(GstCaps* caps, xmlNodePtr parent) c_gst_caps_save_thyself;
-	//typedef GstCaps* function(xmlNodePtr parent) c_gst_caps_load_thyself;
+	xmlNodePtr function(GstCaps* caps, xmlNodePtr parent) c_gst_caps_save_thyself;
+	GstCaps* function(xmlNodePtr parent) c_gst_caps_load_thyself;
 	void function(GstCaps** caps, GstCaps* newcaps) c_gst_caps_replace;
 	gchar* function(GstCaps* caps) c_gst_caps_to_string;
 	GstCaps* function(gchar* string) c_gst_caps_from_string;
@@ -927,70 +1024,6 @@ extern(C)
 	gint function(gconstpointer id1, gconstpointer id2) c_gst_clock_id_compare_func;
 	GstClockID function(GstClockID id) c_gst_clock_id_ref;
 	void function(GstClockID id) c_gst_clock_id_unref;
-	
-	// gstreamer.Element
-	
-	void function(GstElementClass* klass, GstPadTemplate* templ) c_gst_element_class_add_pad_template;
-	GstPadTemplate* function(GstElementClass* elementClass, gchar* name) c_gst_element_class_get_pad_template;
-	GList* function(GstElementClass* elementClass) c_gst_element_class_get_pad_template_list;
-	void function(GstElementClass* klass, gchar* firstName, ... ) c_gst_element_class_install_std_props;
-	void function(GstElementClass* klass, GstElementDetails* details) c_gst_element_class_set_details;
-	gboolean function(GstElement* element, GstPad* pad) c_gst_element_add_pad;
-	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_pad;
-	void function(GstElement* element) c_gst_element_create_all_pads;
-	GstPad* function(GstElement* element, GstPad* pad, GstCaps* caps) c_gst_element_get_compatible_pad;
-	GstPadTemplate* function(GstElement* element, GstPadTemplate* compattempl) c_gst_element_get_compatible_pad_template;
-	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_request_pad;
-	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_static_pad;
-	void function(GstElement* element) c_gst_element_no_more_pads;
-	void function(GstElement* element, GstPad* pad) c_gst_element_release_request_pad;
-	gboolean function(GstElement* element, GstPad* pad) c_gst_element_remove_pad;
-	GstIterator* function(GstElement* element) c_gst_element_iterate_pads;
-	GstIterator* function(GstElement* element) c_gst_element_iterate_sink_pads;
-	GstIterator* function(GstElement* element) c_gst_element_iterate_src_pads;
-	gboolean function(GstElement* src, GstElement* dest) c_gst_element_link;
-	void function(GstElement* src, GstElement* dest) c_gst_element_unlink;
-	gboolean function(GstElement* element1, GstElement* element2, ... ) c_gst_element_link_many;
-	void function(GstElement* element1, GstElement* element2, ... ) c_gst_element_unlink_many;
-	gboolean function(GstElement* src, gchar* srcpadname, GstElement* dest, gchar* destpadname) c_gst_element_link_pads;
-	void function(GstElement* src, gchar* srcpadname, GstElement* dest, gchar* destpadname) c_gst_element_unlink_pads;
-	gboolean function(GstElement* src, gchar* srcpadname, GstElement* dest, gchar* destpadname, GstCaps* filter) c_gst_element_link_pads_filtered;
-	gboolean function(GstElement* src, GstElement* dest, GstCaps* filter) c_gst_element_link_filtered;
-	void function(GstElement* element, GstClockTime time) c_gst_element_set_base_time;
-	GstClockTime function(GstElement* element) c_gst_element_get_base_time;
-	void function(GstElement* element, GstBus* bus) c_gst_element_set_bus;
-	GstBus* function(GstElement* element) c_gst_element_get_bus;
-	GstElementFactory* function(GstElement* element) c_gst_element_get_factory;
-	void function(GstElement* element, GstIndex* index) c_gst_element_set_index;
-	GstIndex* function(GstElement* element) c_gst_element_get_index;
-	gboolean function(GstElement* element) c_gst_element_is_indexable;
-	gboolean function(GstElement* element) c_gst_element_requires_clock;
-	gboolean function(GstElement* element, GstClock* clock) c_gst_element_set_clock;
-	GstClock* function(GstElement* element) c_gst_element_get_clock;
-	gboolean function(GstElement* element) c_gst_element_provides_clock;
-	GstClock* function(GstElement* element) c_gst_element_provide_clock;
-	GstStateChangeReturn function(GstElement* element, GstState state) c_gst_element_set_state;
-	GstStateChangeReturn function(GstElement* element, GstState* state, GstState* pending, GstClockTime timeout) c_gst_element_get_state;
-	gboolean function(GstElement* element, gboolean lockedState) c_gst_element_set_locked_state;
-	gboolean function(GstElement* element) c_gst_element_is_locked_state;
-	void function(GstElement* element) c_gst_element_abort_state;
-	GstStateChangeReturn function(GstElement* element, GstStateChangeReturn ret) c_gst_element_continue_state;
-	void function(GstElement* element) c_gst_element_lost_state;
-	gchar* function(GstState state) c_gst_element_state_get_name;
-	gchar* function(GstStateChangeReturn stateRet) c_gst_element_state_change_return_get_name;
-	gboolean function(GstElement* element) c_gst_element_sync_state_with_parent;
-	void function(GstElement* element, GstTagList* list) c_gst_element_found_tags;
-	void function(GstElement* element, GstPad* pad, GstTagList* list) c_gst_element_found_tags_for_pad;
-	void function(GstElement* element, GstMessageType type, GQuark domain, gint code, gchar* text, gchar* dbug, gchar* file, gchar* funct, gint line) c_gst_element_message_full;
-	gboolean function(GstElement* element, GstMessage* message) c_gst_element_post_message;
-	GstQueryType* function(GstElement* element) c_gst_element_get_query_types;
-	gboolean function(GstElement* element, GstQuery* query) c_gst_element_query;
-	gboolean function(GstElement* element, GstFormat srcFormat, gint64 srcVal, GstFormat* destFormat, gint64* destVal) c_gst_element_query_convert;
-	gboolean function(GstElement* element, GstFormat* format, gint64* cur) c_gst_element_query_position;
-	gboolean function(GstElement* element, GstFormat* format, gint64* duration) c_gst_element_query_duration;
-	gboolean function(GstElement* element, GstEvent* event) c_gst_element_send_event;
-	gboolean function(GstElement* element, GstFormat format, GstSeekFlags seekFlags, gint64 seekPos) c_gst_element_seek_simple;
-	gboolean function(GstElement* element, gdouble rate, GstFormat format, GstSeekFlags flags, GstSeekType curType, gint64 cur, GstSeekType stopType, gint64 stop) c_gst_element_seek;
 	
 	// gstreamer.ElementFactory
 	
@@ -1188,7 +1221,7 @@ extern(C)
 	void function(GstPad* pad, GstPadIntLinkFunction intlink) c_gst_pad_set_internal_link_function;
 	GList* function(GstPad* pad) c_gst_pad_get_internal_links;
 	GList* function(GstPad* pad) c_gst_pad_get_internal_links_default;
-	//typedef void function(xmlNodePtr self, GstObject* parent) c_gst_pad_load_and_link;
+	void function(xmlNodePtr self, GstObject* parent) c_gst_pad_load_and_link;
 	gboolean function(GstPad* pad, GstPadDispatcherFunction dispatch, gpointer data) c_gst_pad_dispatcher;
 	void function(GstPad* pad, gpointer priv) c_gst_pad_set_element_private;
 	gpointer function(GstPad* pad) c_gst_pad_get_element_private;
@@ -1234,43 +1267,6 @@ extern(C)
 	void function(GstMessage* message, GError** gerror, gchar** dbug) c_gst_message_parse_warning;
 	void function(GstMessage* message, GstFormat* format, gint64* duration) c_gst_message_parse_duration;
 	GstMessage* function(GstMessage* msg) c_gst_message_ref;
-	
-	// gstreamer.MiniObject
-	
-	GstMiniObject* function(GType type) c_gst_mini_object_new;
-	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_copy;
-	gboolean function(GstMiniObject* miniObject) c_gst_mini_object_is_writable;
-	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_make_writable;
-	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_ref;
-	void function(GstMiniObject* miniObject) c_gst_mini_object_unref;
-	void function(GstMiniObject** olddata, GstMiniObject* newdata) c_gst_mini_object_replace;
-	GParamSpec* function(char* name, char* nick, char* blurb, GType objectType, GParamFlags flags) c_gst_param_spec_mini_object;
-	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_set_mini_object;
-	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_take_mini_object;
-	GstMiniObject* function(GValue* value) c_gst_value_get_mini_object;
-	
-	// gstreamer.ObjectGst
-	
-	gboolean function(GstObject* object, gchar* name) c_gst_object_set_name;
-	gchar* function(GstObject* object) c_gst_object_get_name;
-	gboolean function(GstObject* object, GstObject* parent) c_gst_object_set_parent;
-	GstObject* function(GstObject* object) c_gst_object_get_parent;
-	void function(GstObject* object) c_gst_object_unparent;
-	gchar* function(GstObject* object) c_gst_object_get_name_prefix;
-	void function(GstObject* object, gchar* namePrefix) c_gst_object_set_name_prefix;
-	void function(GObject* object, GstObject* orig, GParamSpec* pspec, gchar** excludedProps) c_gst_object_default_deep_notify;
-	void function(GstObject* source, GError* error, gchar* dbug) c_gst_object_default_error;
-	gboolean function(GList* list, gchar* name) c_gst_object_check_uniqueness;
-	gboolean function(GstObject* object, GstObject* ancestor) c_gst_object_has_ancestor;
-	//typedef GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) c_gst_object_save_thyself;
-	//typedef void function(GstObject* object, GstXmlNodePtr self) c_gst_object_restore_thyself;
-	gpointer function(gpointer object) c_gst_object_ref;
-	void function(gpointer object) c_gst_object_unref;
-	void function(gpointer object) c_gst_object_sink;
-	void function(GstObject** oldobj, GstObject* newobj) c_gst_object_replace;
-	gchar* function(GstObject* object) c_gst_object_get_path_string;
-	//typedef guint function(GstObjectClass* klass, gchar* name, gpointer func, gpointer funcData) c_gst_class_signal_connect;
-	//typedef void function(GstObject* object, gchar* name, GstXmlNodePtr self) c_gst_class_signal_emit_by_name;
 	
 	// gstreamer.PadTemplate
 	
@@ -1547,7 +1543,108 @@ extern(C)
 	gchar** function(GstTypeFindFactory* factory) c_gst_type_find_factory_get_extensions;
 	GstCaps* function(GstTypeFindFactory* factory) c_gst_type_find_factory_get_caps;
 	void function(GstTypeFindFactory* factory, GstTypeFind* find) c_gst_type_find_factory_call_function;
-}
+}");
+
+// gstreamer.MiniObject
+
+alias c_gst_mini_object_new  gst_mini_object_new;
+alias c_gst_mini_object_copy  gst_mini_object_copy;
+alias c_gst_mini_object_is_writable  gst_mini_object_is_writable;
+alias c_gst_mini_object_make_writable  gst_mini_object_make_writable;
+alias c_gst_mini_object_ref  gst_mini_object_ref;
+alias c_gst_mini_object_unref  gst_mini_object_unref;
+alias c_gst_mini_object_replace  gst_mini_object_replace;
+alias c_gst_param_spec_mini_object  gst_param_spec_mini_object;
+alias c_gst_value_set_mini_object  gst_value_set_mini_object;
+alias c_gst_value_take_mini_object  gst_value_take_mini_object;
+alias c_gst_value_get_mini_object  gst_value_get_mini_object;
+
+// gstreamer.ObjectGst
+
+alias c_gst_object_set_name  gst_object_set_name;
+alias c_gst_object_get_name  gst_object_get_name;
+alias c_gst_object_set_parent  gst_object_set_parent;
+alias c_gst_object_get_parent  gst_object_get_parent;
+alias c_gst_object_unparent  gst_object_unparent;
+alias c_gst_object_get_name_prefix  gst_object_get_name_prefix;
+alias c_gst_object_set_name_prefix  gst_object_set_name_prefix;
+alias c_gst_object_default_deep_notify  gst_object_default_deep_notify;
+alias c_gst_object_default_error  gst_object_default_error;
+alias c_gst_object_check_uniqueness  gst_object_check_uniqueness;
+alias c_gst_object_has_ancestor  gst_object_has_ancestor;
+alias c_gst_object_save_thyself  gst_object_save_thyself;
+alias c_gst_object_restore_thyself  gst_object_restore_thyself;
+alias c_gst_object_ref  gst_object_ref;
+alias c_gst_object_unref  gst_object_unref;
+alias c_gst_object_sink  gst_object_sink;
+alias c_gst_object_replace  gst_object_replace;
+alias c_gst_object_get_path_string  gst_object_get_path_string;
+alias c_gst_class_signal_connect  gst_class_signal_connect;
+alias c_gst_class_signal_emit_by_name  gst_class_signal_emit_by_name;
+
+// gstreamer.Element
+
+alias c_gst_element_class_add_pad_template  gst_element_class_add_pad_template;
+alias c_gst_element_class_get_pad_template  gst_element_class_get_pad_template;
+alias c_gst_element_class_get_pad_template_list  gst_element_class_get_pad_template_list;
+alias c_gst_element_class_install_std_props  gst_element_class_install_std_props;
+alias c_gst_element_class_set_details  gst_element_class_set_details;
+alias c_gst_element_add_pad  gst_element_add_pad;
+alias c_gst_element_get_pad  gst_element_get_pad;
+alias c_gst_element_create_all_pads  gst_element_create_all_pads;
+alias c_gst_element_get_compatible_pad  gst_element_get_compatible_pad;
+alias c_gst_element_get_compatible_pad_template  gst_element_get_compatible_pad_template;
+alias c_gst_element_get_request_pad  gst_element_get_request_pad;
+alias c_gst_element_get_static_pad  gst_element_get_static_pad;
+alias c_gst_element_no_more_pads  gst_element_no_more_pads;
+alias c_gst_element_release_request_pad  gst_element_release_request_pad;
+alias c_gst_element_remove_pad  gst_element_remove_pad;
+alias c_gst_element_iterate_pads  gst_element_iterate_pads;
+alias c_gst_element_iterate_sink_pads  gst_element_iterate_sink_pads;
+alias c_gst_element_iterate_src_pads  gst_element_iterate_src_pads;
+alias c_gst_element_link  gst_element_link;
+alias c_gst_element_unlink  gst_element_unlink;
+alias c_gst_element_link_many  gst_element_link_many;
+alias c_gst_element_unlink_many  gst_element_unlink_many;
+alias c_gst_element_link_pads  gst_element_link_pads;
+alias c_gst_element_unlink_pads  gst_element_unlink_pads;
+alias c_gst_element_link_pads_filtered  gst_element_link_pads_filtered;
+alias c_gst_element_link_filtered  gst_element_link_filtered;
+alias c_gst_element_set_base_time  gst_element_set_base_time;
+alias c_gst_element_get_base_time  gst_element_get_base_time;
+alias c_gst_element_set_bus  gst_element_set_bus;
+alias c_gst_element_get_bus  gst_element_get_bus;
+alias c_gst_element_get_factory  gst_element_get_factory;
+alias c_gst_element_set_index  gst_element_set_index;
+alias c_gst_element_get_index  gst_element_get_index;
+alias c_gst_element_is_indexable  gst_element_is_indexable;
+alias c_gst_element_requires_clock  gst_element_requires_clock;
+alias c_gst_element_set_clock  gst_element_set_clock;
+alias c_gst_element_get_clock  gst_element_get_clock;
+alias c_gst_element_provides_clock  gst_element_provides_clock;
+alias c_gst_element_provide_clock  gst_element_provide_clock;
+alias c_gst_element_set_state  gst_element_set_state;
+alias c_gst_element_get_state  gst_element_get_state;
+alias c_gst_element_set_locked_state  gst_element_set_locked_state;
+alias c_gst_element_is_locked_state  gst_element_is_locked_state;
+alias c_gst_element_abort_state  gst_element_abort_state;
+alias c_gst_element_continue_state  gst_element_continue_state;
+alias c_gst_element_lost_state  gst_element_lost_state;
+alias c_gst_element_state_get_name  gst_element_state_get_name;
+alias c_gst_element_state_change_return_get_name  gst_element_state_change_return_get_name;
+alias c_gst_element_sync_state_with_parent  gst_element_sync_state_with_parent;
+alias c_gst_element_found_tags  gst_element_found_tags;
+alias c_gst_element_found_tags_for_pad  gst_element_found_tags_for_pad;
+alias c_gst_element_message_full  gst_element_message_full;
+alias c_gst_element_post_message  gst_element_post_message;
+alias c_gst_element_get_query_types  gst_element_get_query_types;
+alias c_gst_element_query  gst_element_query;
+alias c_gst_element_query_convert  gst_element_query_convert;
+alias c_gst_element_query_position  gst_element_query_position;
+alias c_gst_element_query_duration  gst_element_query_duration;
+alias c_gst_element_send_event  gst_element_send_event;
+alias c_gst_element_seek_simple  gst_element_seek_simple;
+alias c_gst_element_seek  gst_element_seek;
 
 // gstreamer.GStreamer
 
@@ -1649,8 +1746,8 @@ alias c_gst_caps_intersect  gst_caps_intersect;
 alias c_gst_caps_union  gst_caps_union;
 alias c_gst_caps_normalize  gst_caps_normalize;
 alias c_gst_caps_do_simplify  gst_caps_do_simplify;
-//alias c_gst_caps_save_thyself  gst_caps_save_thyself;
-//alias c_gst_caps_load_thyself  gst_caps_load_thyself;
+alias c_gst_caps_save_thyself  gst_caps_save_thyself;
+alias c_gst_caps_load_thyself  gst_caps_load_thyself;
 alias c_gst_caps_replace  gst_caps_replace;
 alias c_gst_caps_to_string  gst_caps_to_string;
 alias c_gst_caps_from_string  gst_caps_from_string;
@@ -1681,70 +1778,6 @@ alias c_gst_clock_id_unschedule  gst_clock_id_unschedule;
 alias c_gst_clock_id_compare_func  gst_clock_id_compare_func;
 alias c_gst_clock_id_ref  gst_clock_id_ref;
 alias c_gst_clock_id_unref  gst_clock_id_unref;
-
-// gstreamer.Element
-
-alias c_gst_element_class_add_pad_template  gst_element_class_add_pad_template;
-alias c_gst_element_class_get_pad_template  gst_element_class_get_pad_template;
-alias c_gst_element_class_get_pad_template_list  gst_element_class_get_pad_template_list;
-alias c_gst_element_class_install_std_props  gst_element_class_install_std_props;
-alias c_gst_element_class_set_details  gst_element_class_set_details;
-alias c_gst_element_add_pad  gst_element_add_pad;
-alias c_gst_element_get_pad  gst_element_get_pad;
-alias c_gst_element_create_all_pads  gst_element_create_all_pads;
-alias c_gst_element_get_compatible_pad  gst_element_get_compatible_pad;
-alias c_gst_element_get_compatible_pad_template  gst_element_get_compatible_pad_template;
-alias c_gst_element_get_request_pad  gst_element_get_request_pad;
-alias c_gst_element_get_static_pad  gst_element_get_static_pad;
-alias c_gst_element_no_more_pads  gst_element_no_more_pads;
-alias c_gst_element_release_request_pad  gst_element_release_request_pad;
-alias c_gst_element_remove_pad  gst_element_remove_pad;
-alias c_gst_element_iterate_pads  gst_element_iterate_pads;
-alias c_gst_element_iterate_sink_pads  gst_element_iterate_sink_pads;
-alias c_gst_element_iterate_src_pads  gst_element_iterate_src_pads;
-alias c_gst_element_link  gst_element_link;
-alias c_gst_element_unlink  gst_element_unlink;
-alias c_gst_element_link_many  gst_element_link_many;
-alias c_gst_element_unlink_many  gst_element_unlink_many;
-alias c_gst_element_link_pads  gst_element_link_pads;
-alias c_gst_element_unlink_pads  gst_element_unlink_pads;
-alias c_gst_element_link_pads_filtered  gst_element_link_pads_filtered;
-alias c_gst_element_link_filtered  gst_element_link_filtered;
-alias c_gst_element_set_base_time  gst_element_set_base_time;
-alias c_gst_element_get_base_time  gst_element_get_base_time;
-alias c_gst_element_set_bus  gst_element_set_bus;
-alias c_gst_element_get_bus  gst_element_get_bus;
-alias c_gst_element_get_factory  gst_element_get_factory;
-alias c_gst_element_set_index  gst_element_set_index;
-alias c_gst_element_get_index  gst_element_get_index;
-alias c_gst_element_is_indexable  gst_element_is_indexable;
-alias c_gst_element_requires_clock  gst_element_requires_clock;
-alias c_gst_element_set_clock  gst_element_set_clock;
-alias c_gst_element_get_clock  gst_element_get_clock;
-alias c_gst_element_provides_clock  gst_element_provides_clock;
-alias c_gst_element_provide_clock  gst_element_provide_clock;
-alias c_gst_element_set_state  gst_element_set_state;
-alias c_gst_element_get_state  gst_element_get_state;
-alias c_gst_element_set_locked_state  gst_element_set_locked_state;
-alias c_gst_element_is_locked_state  gst_element_is_locked_state;
-alias c_gst_element_abort_state  gst_element_abort_state;
-alias c_gst_element_continue_state  gst_element_continue_state;
-alias c_gst_element_lost_state  gst_element_lost_state;
-alias c_gst_element_state_get_name  gst_element_state_get_name;
-alias c_gst_element_state_change_return_get_name  gst_element_state_change_return_get_name;
-alias c_gst_element_sync_state_with_parent  gst_element_sync_state_with_parent;
-alias c_gst_element_found_tags  gst_element_found_tags;
-alias c_gst_element_found_tags_for_pad  gst_element_found_tags_for_pad;
-alias c_gst_element_message_full  gst_element_message_full;
-alias c_gst_element_post_message  gst_element_post_message;
-alias c_gst_element_get_query_types  gst_element_get_query_types;
-alias c_gst_element_query  gst_element_query;
-alias c_gst_element_query_convert  gst_element_query_convert;
-alias c_gst_element_query_position  gst_element_query_position;
-alias c_gst_element_query_duration  gst_element_query_duration;
-alias c_gst_element_send_event  gst_element_send_event;
-alias c_gst_element_seek_simple  gst_element_seek_simple;
-alias c_gst_element_seek  gst_element_seek;
 
 // gstreamer.ElementFactory
 
@@ -1942,7 +1975,7 @@ alias c_gst_pad_get_query_types_default  gst_pad_get_query_types_default;
 alias c_gst_pad_set_internal_link_function  gst_pad_set_internal_link_function;
 alias c_gst_pad_get_internal_links  gst_pad_get_internal_links;
 alias c_gst_pad_get_internal_links_default  gst_pad_get_internal_links_default;
-//alias c_gst_pad_load_and_link  gst_pad_load_and_link;
+alias c_gst_pad_load_and_link  gst_pad_load_and_link;
 alias c_gst_pad_dispatcher  gst_pad_dispatcher;
 alias c_gst_pad_set_element_private  gst_pad_set_element_private;
 alias c_gst_pad_get_element_private  gst_pad_get_element_private;
@@ -1988,43 +2021,6 @@ alias c_gst_message_parse_buffering  gst_message_parse_buffering;
 alias c_gst_message_parse_warning  gst_message_parse_warning;
 alias c_gst_message_parse_duration  gst_message_parse_duration;
 alias c_gst_message_ref  gst_message_ref;
-
-// gstreamer.MiniObject
-
-alias c_gst_mini_object_new  gst_mini_object_new;
-alias c_gst_mini_object_copy  gst_mini_object_copy;
-alias c_gst_mini_object_is_writable  gst_mini_object_is_writable;
-alias c_gst_mini_object_make_writable  gst_mini_object_make_writable;
-alias c_gst_mini_object_ref  gst_mini_object_ref;
-alias c_gst_mini_object_unref  gst_mini_object_unref;
-alias c_gst_mini_object_replace  gst_mini_object_replace;
-alias c_gst_param_spec_mini_object  gst_param_spec_mini_object;
-alias c_gst_value_set_mini_object  gst_value_set_mini_object;
-alias c_gst_value_take_mini_object  gst_value_take_mini_object;
-alias c_gst_value_get_mini_object  gst_value_get_mini_object;
-
-// gstreamer.ObjectGst
-
-alias c_gst_object_set_name  gst_object_set_name;
-alias c_gst_object_get_name  gst_object_get_name;
-alias c_gst_object_set_parent  gst_object_set_parent;
-alias c_gst_object_get_parent  gst_object_get_parent;
-alias c_gst_object_unparent  gst_object_unparent;
-alias c_gst_object_get_name_prefix  gst_object_get_name_prefix;
-alias c_gst_object_set_name_prefix  gst_object_set_name_prefix;
-alias c_gst_object_default_deep_notify  gst_object_default_deep_notify;
-alias c_gst_object_default_error  gst_object_default_error;
-alias c_gst_object_check_uniqueness  gst_object_check_uniqueness;
-alias c_gst_object_has_ancestor  gst_object_has_ancestor;
-//alias c_gst_object_save_thyself  gst_object_save_thyself;
-//alias c_gst_object_restore_thyself  gst_object_restore_thyself;
-alias c_gst_object_ref  gst_object_ref;
-alias c_gst_object_unref  gst_object_unref;
-alias c_gst_object_sink  gst_object_sink;
-alias c_gst_object_replace  gst_object_replace;
-alias c_gst_object_get_path_string  gst_object_get_path_string;
-//alias c_gst_class_signal_connect  gst_class_signal_connect;
-//alias c_gst_class_signal_emit_by_name  gst_class_signal_emit_by_name;
 
 // gstreamer.PadTemplate
 
