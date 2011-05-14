@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ObjectGst
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -45,17 +45,18 @@
  * 	- gst_object_restore_thyself
  * 	- gst_class_signal_emit_by_name
  * 	- gst_class_signal_connect
- * 	- gst_object_ref
  * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.ObjectG
  * 	- glib.ErrorG
  * 	- glib.ListG
+ * 	- gobject.ParamSpec
  * structWrap:
  * 	- GError* -> ErrorG
  * 	- GList* -> ListG
  * 	- GObject* -> ObjectG
+ * 	- GParamSpec* -> ParamSpec
  * 	- GstObject* -> ObjectGst
  * module aliases:
  * local aliases:
@@ -76,6 +77,7 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import glib.ErrorG;
 private import glib.ListG;
+private import gobject.ParamSpec;
 
 
 
@@ -171,37 +173,16 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * Increments the refence count on object. This function
-	 * does not take the lock on object because it relies on
-	 * atomic refcounting.
-	 * This object returns the input parameter to ease writing
-	 * constructs like :
-	 *  result = gst_object_ref (object->parent);
-	 * Returns:
-	 *  A pointer to object
-	 */
-	public void* reference()
-	{
-		// gpointer gst_object_ref (gpointer object);
-		return gst_object_ref( gstObject );
-	}
-	/*public static void* ref(void* object)
-	{
-		// gpointer gst_object_ref (gpointer object);
-		return gst_object_ref(object);
-	}*/
-	
-	/**
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(ObjectG, GParamSpec*, ObjectGst)[] onDeepNotifyListeners;
+	void delegate(ObjectG, ParamSpec, ObjectGst)[] onDeepNotifyListeners;
 	/**
 	 * The deep notify signal is used to be notified of property changes. It is
 	 * typically attached to the toplevel bin to receive notifications from all
 	 * the elements contained in that bin.
 	 */
-	void addOnDeepNotify(void delegate(ObjectG, GParamSpec*, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDeepNotify(void delegate(ObjectG, ParamSpec, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("deep-notify" in connectedSignals) )
 		{
@@ -218,9 +199,9 @@ public class ObjectGst : ObjectG
 	}
 	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GObject* propObject, GParamSpec* prop, ObjectGst objectGst)
 	{
-		foreach ( void delegate(ObjectG, GParamSpec*, ObjectGst) dlg ; objectGst.onDeepNotifyListeners )
+		foreach ( void delegate(ObjectG, ParamSpec, ObjectGst) dlg ; objectGst.onDeepNotifyListeners )
 		{
-			dlg(new ObjectG(propObject), prop, objectGst);
+			dlg(new ObjectG(propObject), new ParamSpec(prop), objectGst);
 		}
 	}
 	
@@ -418,10 +399,10 @@ public class ObjectGst : ObjectG
 	 * excludedProps = a set of user-specified properties to exclude or
 	 *  NULL to show all changes.
 	 */
-	public static void defaultDeepNotify(ObjectG object, ObjectGst orig, GParamSpec* pspec, char** excludedProps)
+	public static void defaultDeepNotify(ObjectG object, ObjectGst orig, ParamSpec pspec, string[] excludedProps)
 	{
 		// void gst_object_default_deep_notify (GObject *object,  GstObject *orig,  GParamSpec *pspec,  gchar **excluded_props);
-		gst_object_default_deep_notify((object is null) ? null : object.getObjectGStruct(), (orig is null) ? null : orig.getObjectGstStruct(), pspec, excludedProps);
+		gst_object_default_deep_notify((object is null) ? null : object.getObjectGStruct(), (orig is null) ? null : orig.getObjectGstStruct(), (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringzArray(excludedProps));
 	}
 	
 	/**
@@ -465,6 +446,21 @@ public class ObjectGst : ObjectG
 	{
 		// gboolean gst_object_has_ancestor (GstObject *object,  GstObject *ancestor);
 		return gst_object_has_ancestor(gstObject, (ancestor is null) ? null : ancestor.getObjectGstStruct());
+	}
+	
+	/**
+	 * Increments the refence count on object. This function
+	 * does not take the lock on object because it relies on
+	 * atomic refcounting.
+	 * This object returns the input parameter to ease writing
+	 * Params:
+	 * object = a GstObject to reference
+	 * Returns: A pointer to object
+	 */
+	public static void* doref(void* object)
+	{
+		// gpointer gst_object_ref (gpointer object);
+		return gst_object_ref(object);
 	}
 	
 	/**
@@ -514,10 +510,14 @@ public class ObjectGst : ObjectG
 	 * oldobj = pointer to a place of a GstObject to replace
 	 * newobj = a new GstObject
 	 */
-	public static void replace(GstObject** oldobj, ObjectGst newobj)
+	public static void replace(ref ObjectGst oldobj, ObjectGst newobj)
 	{
 		// void gst_object_replace (GstObject **oldobj,  GstObject *newobj);
-		gst_object_replace(oldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
+		GstObject* outoldobj = (oldobj is null) ? null : oldobj.getObjectGstStruct();
+		
+		gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
+		
+		oldobj = new ObjectGst(outoldobj);
 	}
 	
 	/**

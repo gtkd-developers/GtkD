@@ -44,10 +44,11 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ParamSpec
  * 	- gobject.Value
  * structWrap:
+ * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
- * 	- GstMiniObject -> MiniObject
  * 	- GstMiniObject* -> MiniObject
  * module aliases:
  * local aliases:
@@ -63,6 +64,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gobject.ParamSpec;
 private import gobject.Value;
 
 
@@ -216,10 +218,14 @@ public class MiniObject
 	 * olddata = pointer to a pointer to a mini-object to be replaced
 	 * newdata = pointer to new mini-object
 	 */
-	public static void replace(GstMiniObject** olddata, MiniObject newdata)
+	public static void replace(ref MiniObject olddata, MiniObject newdata)
 	{
 		// void gst_mini_object_replace (GstMiniObject **olddata,  GstMiniObject *newdata);
-		gst_mini_object_replace(olddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
+		GstMiniObject* outolddata = (olddata is null) ? null : olddata.getMiniObjectStruct();
+		
+		gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
+		
+		olddata = new MiniObject(outolddata);
 	}
 	
 	/**
@@ -232,10 +238,15 @@ public class MiniObject
 	 * flags = a combination of GParamFlags
 	 * Returns: a newly allocated GParamSpec instance
 	 */
-	public static GParamSpec* gstParamSpecMiniObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
+	public static ParamSpec gstParamSpecMiniObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
 		// GParamSpec* gst_param_spec_mini_object (const char *name,  const char *nick,  const char *blurb,  GType object_type,  GParamFlags flags);
-		return gst_param_spec_mini_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
+		auto p = gst_param_spec_mini_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**

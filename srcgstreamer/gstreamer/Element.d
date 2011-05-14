@@ -45,9 +45,12 @@
  * imports:
  * 	- glib.Str
  * 	- gtkc.gobject
+ * 	- glib.ListG
  * 	- gstreamer.Pad
+ * 	- gstreamer.PadTemplate
  * 	- gstreamer.Clock
  * 	- gstreamer.Caps
+ * 	- gstreamer.ElementFactory
  * 	- gstreamer.Iterator
  * 	- gstreamer.Index
  * 	- gstreamer.TagList
@@ -56,16 +59,19 @@
  * 	- gstreamer.Event
  * 	- gstreamer.Bus
  * structWrap:
+ * 	- GList -> ListG
  * 	- GObject* -> Pad
  * 	- GstBus* -> Bus
  * 	- GstCaps* -> Caps
  * 	- GstClock* -> Clock
  * 	- GstElement* -> Element
+ * 	- GstElementFactory* -> ElementFactory
  * 	- GstEvent* -> Event
  * 	- GstIndex* -> Index
  * 	- GstIterator* -> Iterator
  * 	- GstMessage* -> Message
  * 	- GstPad* -> Pad
+ * 	- GstPadTemplate* -> PadTemplate
  * 	- GstQuery* -> Query
  * 	- GstTagList* -> TagList
  * module aliases:
@@ -85,9 +91,12 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtkc.gobject;
+private import glib.ListG;
 private import gstreamer.Pad;
+private import gstreamer.PadTemplate;
 private import gstreamer.Clock;
 private import gstreamer.Caps;
+private import gstreamer.ElementFactory;
 private import gstreamer.Iterator;
 private import gstreamer.Index;
 private import gstreamer.TagList;
@@ -200,7 +209,7 @@ public class Element : ObjectGst
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_pos;
-		queryPosition( &form, &cur_pos );
+		queryPosition( form, cur_pos );
 		return cur_pos;
 	}
 	
@@ -214,7 +223,7 @@ public class Element : ObjectGst
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_dur;
-		queryDuration( &form, &cur_dur );
+		queryDuration( form, cur_dur );
 		return cur_dur;
 	}
 	
@@ -269,50 +278,6 @@ public class Element : ObjectGst
 		//writefln("no more pads.");
 		return result;
 	}
-	
-	//HANDEDIT: This is a way to add disconnectOnPadAdded
-	//There still doesn't seem to be a way to put it
-	//there automatically...
-	/*
-	protected uint padAddedHandlerId;
-	void delegate(Pad, Element)[] onPadAddedListeners;
-	void addOnPadAdded(void delegate(Pad, Element) dlg)
-	{
-		if ( !("pad-added" in connectedSignals) )
-		{
-			padAddedHandlerId = Signals.connectData(
-			getStruct(),
-			"pad-added",
-			cast(GCallback)&callBackPadAdded,
-			cast(void*)this,
-			null,
-			cast(ConnectFlags)0);
-			connectedSignals["pad-added"] = 1;
-		}
-		onPadAddedListeners ~= dlg;
-	}
-	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
-	{
-		bit consumed = false;
-		
-		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
-		{
-			dlg(new Pad(newPad), element);
-		}
-		
-		return consumed;
-	}
-	void disconnectOnPadAdded()
-	{
-		if( "pad-added" in connectedSignals )
-		{
-			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
-			padAddedHandlerId = 0;
-			connectedSignals["pad-added"] = 0;
-			onPadAddedListeners = null;
-		}
-	}
-	 */
 	
 	/**
 	 */
@@ -409,10 +374,10 @@ public class Element : ObjectGst
 	 * klass = the GstElementClass to add the pad template to.
 	 * templ = a GstPadTemplate to add to the element class.
 	 */
-	public static void classAddPadTemplate(GstElementClass* klass, GstPadTemplate* templ)
+	public static void classAddPadTemplate(GstElementClass* klass, PadTemplate templ)
 	{
 		// void gst_element_class_add_pad_template  (GstElementClass *klass,  GstPadTemplate *templ);
-		gst_element_class_add_pad_template(klass, templ);
+		gst_element_class_add_pad_template(klass, (templ is null) ? null : templ.getPadTemplateStruct());
 	}
 	
 	/**
@@ -426,10 +391,15 @@ public class Element : ObjectGst
 	 * name = the name of the GstPadTemplate to get.
 	 * Returns: the GstPadTemplate with the given name, or NULL if none was found.No unreferencing is necessary.
 	 */
-	public static GstPadTemplate* classGetPadTemplate(GstElementClass* elementClass, string name)
+	public static PadTemplate classGetPadTemplate(GstElementClass* elementClass, string name)
 	{
 		// GstPadTemplate* gst_element_class_get_pad_template  (GstElementClass *element_class,  const gchar *name);
-		return gst_element_class_get_pad_template(elementClass, Str.toStringz(name));
+		auto p = gst_element_class_get_pad_template(elementClass, Str.toStringz(name));
+		if(p is null)
+		{
+			return null;
+		}
+		return new PadTemplate(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -542,10 +512,15 @@ public class Element : ObjectGst
 	 * compattempl = the GstPadTemplate to find a compatible template for.
 	 * Returns: a compatible GstPadTemplate, or NULL if none was found. Nounreferencing is necessary.
 	 */
-	public GstPadTemplate* getCompatiblePadTemplate(GstPadTemplate* compattempl)
+	public PadTemplate getCompatiblePadTemplate(PadTemplate compattempl)
 	{
 		// GstPadTemplate* gst_element_get_compatible_pad_template  (GstElement *element,  GstPadTemplate *compattempl);
-		return gst_element_get_compatible_pad_template(gstElement, compattempl);
+		auto p = gst_element_get_compatible_pad_template(gstElement, (compattempl is null) ? null : compattempl.getPadTemplateStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new PadTemplate(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -839,10 +814,15 @@ public class Element : ObjectGst
 	 * Retrieves the factory that was used to create this element.
 	 * Returns: the GstElementFactory used for creating this element.no refcounting is needed.
 	 */
-	public GstElementFactory* getFactory()
+	public ElementFactory getFactory()
 	{
 		// GstElementFactory* gst_element_get_factory (GstElement *element);
-		return gst_element_get_factory(gstElement);
+		auto p = gst_element_get_factory(gstElement);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ElementFactory(cast(GstElementFactory*) p);
 	}
 	
 	/**
@@ -1000,10 +980,10 @@ public class Element : ObjectGst
 	 *  state change or GST_CLOCK_TIME_NONE for infinite timeout.
 	 * Returns: GST_STATE_CHANGE_SUCCESS if the element has no more pending state and the last state change succeeded, GST_STATE_CHANGE_ASYNC if the element is still performing a state change or GST_STATE_CHANGE_FAILURE if the last state change failed.MT safe.
 	 */
-	public GstStateChangeReturn getState(GstState* state, GstState* pending, GstClockTime timeout)
+	public GstStateChangeReturn getState(out GstState state, out GstState pending, GstClockTime timeout)
 	{
 		// GstStateChangeReturn gst_element_get_state (GstElement *element,  GstState *state,  GstState *pending,  GstClockTime timeout);
-		return gst_element_get_state(gstElement, state, pending, timeout);
+		return gst_element_get_state(gstElement, &state, &pending, timeout);
 	}
 	
 	/**
@@ -1224,10 +1204,10 @@ public class Element : ObjectGst
 	 * destVal = a pointer to the result.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryConvert(GstFormat srcFormat, long srcVal, GstFormat* destFormat, long* destVal)
+	public int queryConvert(GstFormat srcFormat, long srcVal, ref GstFormat destFormat, long* destVal)
 	{
 		// gboolean gst_element_query_convert (GstElement *element,  GstFormat src_format,  gint64 src_val,  GstFormat *dest_format,  gint64 *dest_val);
-		return gst_element_query_convert(gstElement, srcFormat, srcVal, destFormat, destVal);
+		return gst_element_query_convert(gstElement, srcFormat, srcVal, &destFormat, destVal);
 	}
 	
 	/**
@@ -1238,10 +1218,10 @@ public class Element : ObjectGst
 	 * cur = A location in which to store the current position, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryPosition(GstFormat* format, long* cur)
+	public int queryPosition(ref GstFormat format, ref long cur)
 	{
 		// gboolean gst_element_query_position (GstElement *element,  GstFormat *format,  gint64 *cur);
-		return gst_element_query_position(gstElement, format, cur);
+		return gst_element_query_position(gstElement, &format, &cur);
 	}
 	
 	/**
@@ -1252,10 +1232,10 @@ public class Element : ObjectGst
 	 * duration = A location in which to store the total duration, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryDuration(GstFormat* format, long* duration)
+	public int queryDuration(ref GstFormat format, ref long duration)
 	{
 		// gboolean gst_element_query_duration (GstElement *element,  GstFormat *format,  gint64 *duration);
-		return gst_element_query_duration(gstElement, format, duration);
+		return gst_element_query_duration(gstElement, &format, &duration);
 	}
 	
 	/**

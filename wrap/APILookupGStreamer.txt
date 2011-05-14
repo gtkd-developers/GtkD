@@ -242,12 +242,12 @@ nostruct: GstMiniObject
 class: MiniObject
 prefix: gst_mini_object_
 import: glib.Str
-#import: gobject.Type
-#structWrap: GType Type
+import: gobject.ParamSpec
 import: gobject.Value
 structWrap: GstMiniObject* MiniObject
-structWrap: GstMiniObject MiniObject
+structWrap: GParamSpec* ParamSpec
 structWrap: GValue* Value
+inout: gst_mini_object_replace olddata
 outFile: MiniObject
 
 file: GstObject.html
@@ -265,33 +265,14 @@ import: glib.Str
 import: gobject.ObjectG
 import: glib.ErrorG
 import: glib.ListG
+import: gobject.ParamSpec
 structWrap: GstObject* ObjectGst
 structWrap: GObject* ObjectG
 structWrap: GError* ErrorG
 structWrap: GList* ListG
-nocode: gst_object_ref
-code: start
-	/**
-	 * Increments the refence count on object. This function
-	 * does not take the lock on object because it relies on
-	 * atomic refcounting.
-	 * This object returns the input parameter to ease writing
-	 * constructs like :
-	 *  result = gst_object_ref (object->parent);
-	 * Returns:
-	 *  A pointer to object
-	 */
-	public void* reference()
-	{
-		// gpointer gst_object_ref (gpointer object);
-		return gst_object_ref( gstObject );
-	}
-	/*public static void* ref(void* object)
-	{
-		// gpointer gst_object_ref (gpointer object);
-		return gst_object_ref(object);
-	}*/
-code: end
+structWrap: GParamSpec* ParamSpec
+array: gst_object_default_deep_notify excluded_props
+inout: gst_object_replace oldobj
 outFile: ObjectGst
 
 file: GstElement.html
@@ -299,22 +280,19 @@ struct: GstElement
 class: Element
 prefix: gst_element_
 prefix: gst_
-#nocode: GstState
-#prefix: GST_BIN_
-#prefix: GST_STATE_CHANGE_
-#prefix: GST_STATE_ GstState.
-#prefix: GST_
 import: glib.Str
 import: gtkc.gobject
+import: glib.ListG
 import: gstreamer.Pad
+import: gstreamer.PadTemplate
 import: gstreamer.Clock
 import: gstreamer.Caps
+import: gstreamer.ElementFactory
 import: gstreamer.Iterator
 import: gstreamer.Index
 import: gstreamer.TagList
 import: gstreamer.Message
 import: gstreamer.Query
-#import: gstreamer.Format
 import: gstreamer.Event
 import: gstreamer.Bus
 structWrap: GstBus* Bus
@@ -324,8 +302,11 @@ structWrap: GstBus* Bus
 #structWrap: GObject* ObjectG
 #I tried this instead:
 structWrap: GObject* Pad
+structWrap: GList ListG
 structWrap: GstElement* Element
+structWrap: GstElementFactory* ElementFactory
 structWrap: GstPad* Pad
+structWrap: GstPadTemplate* PadTemplate
 structWrap: GstClock* Clock
 structWrap: GstCaps* Caps
 structWrap: GstIterator* Iterator
@@ -333,15 +314,18 @@ structWrap: GstIndex* Index
 structWrap: GstTagList* TagList
 structWrap: GstMessage* Message
 structWrap: GstQuery* Query
-#structWrap: GstFormat* Format
-#structWrap: GstFormat Format
 structWrap: GstEvent* Event
 #structWrap: GstQueryType* QueryType
-#TODO: GstClockTime
-#where's GList: structWrap: GList
-#import: gdk.Cursor
-#structWrap: GdkCursor* Cursor
-#nocode: pad-added #this doesn't seem to work.
+#structWrap: GstFormat* GstFormat
+
+out: gst_element_get_state state
+out: gst_element_get_state pending
+inout: gst_element_query_convert dest_format
+inout: gst_element_query_position format
+inout: gst_element_query_position cur
+inout: gst_element_query_duration format
+inout: gst_element_query_duration duration
+
 code: start
 	/**
 	 * Queries an element for the stream position.
@@ -353,7 +337,7 @@ code: start
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_pos;
-		queryPosition( &form, &cur_pos );
+		queryPosition( form, cur_pos );
 		return cur_pos;
 	}
 
@@ -367,7 +351,7 @@ code: start
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_dur;
-		queryDuration( &form, &cur_dur );
+		queryDuration( form, cur_dur );
 		return cur_dur;
 	}
 
@@ -422,50 +406,6 @@ code: start
 		//writefln("no more pads.");
 		return result;
 	}
-
-//HANDEDIT: This is a way to add disconnectOnPadAdded
-//There still doesn't seem to be a way to put it
-//there automatically...
-/*	
-	protected uint padAddedHandlerId;
-	void delegate(Pad, Element)[] onPadAddedListeners;
-	void addOnPadAdded(void delegate(Pad, Element) dlg)
-	{
-		if ( !("pad-added" in connectedSignals) )
-		{
-			padAddedHandlerId = Signals.connectData(
-			getStruct(),
-			"pad-added",
-			cast(GCallback)&callBackPadAdded,
-			cast(void*)this,
-			null,
-			cast(ConnectFlags)0);
-			connectedSignals["pad-added"] = 1;
-		}
-		onPadAddedListeners ~= dlg;
-	}
-	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
-	{
-		bit consumed = false;
-		
-		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
-		{
-			dlg(new Pad(newPad), element);
-		}
-		
-		return consumed;
-	}
-	void disconnectOnPadAdded()
-	{
-		if( "pad-added" in connectedSignals )
-		{
-			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
-			padAddedHandlerId = 0;
-			connectedSignals["pad-added"] = 0;
-			onPadAddedListeners = null;
-		}
-	}
-*/	
 code: end
 outFile: Element
 
