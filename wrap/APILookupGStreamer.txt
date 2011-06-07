@@ -412,11 +412,17 @@ outFile: Element
 file: gstreamer-Gst.html
 class: GStreamer
 prefix: gst_
-#GOptionGroup*
 import: glib.ErrorG
 import: glib.GException
 import: glib.Str
+import: glib.OptionGroup
+structWrap: GOptionGroup* OptionGroup
 nocode: gst_init
+
+inout: gst_version major
+inout: gst_version minor
+inout: gst_version micro
+inout: gst_version nano
 code: start
 
 	/**

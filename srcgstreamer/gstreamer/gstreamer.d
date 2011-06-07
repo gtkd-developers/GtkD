@@ -46,7 +46,9 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.Str
+ * 	- glib.OptionGroup
  * structWrap:
+ * 	- GOptionGroup* -> OptionGroup
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,6 +65,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.OptionGroup;
 
 
 
@@ -190,10 +193,15 @@ public class GStreamer
 	 * (see the example at the beginning of this section).
 	 * Returns: a pointer to GStreamer's option group.
 	 */
-	public static GOptionGroup* initGetOptionGroup()
+	public static OptionGroup initGetOptionGroup()
 	{
 		// GOptionGroup* gst_init_get_option_group (void);
-		return gst_init_get_option_group();
+		auto p = gst_init_get_option_group();
+		if(p is null)
+		{
+			return null;
+		}
+		return new OptionGroup(cast(GOptionGroup*) p);
 	}
 	
 	/**
@@ -218,10 +226,10 @@ public class GStreamer
 	 * micro = pointer to a guint to store the micro version number
 	 * nano = pointer to a guint to store the nano version number
 	 */
-	public static void versio(uint* major, uint* minor, uint* micro, uint* nano)
+	public static void versio(ref uint major, ref uint minor, ref uint micro, ref uint nano)
 	{
 		// void gst_version (guint *major,  guint *minor,  guint *micro,  guint *nano);
-		gst_version(major, minor, micro, nano);
+		gst_version(&major, &minor, &micro, &nano);
 	}
 	
 	/**
