@@ -445,27 +445,20 @@ outFile: gstreamer
 
 file: GstBin.html
 struct: GstBin
+ctorStruct: GstElement
 class: Bin
 prefix: gst_bin_
 prefix: gst_
 import: glib.Str
 import: gstreamer.Element
 import: gstreamer.Iterator
-nocode: gst_bin_new
-code: start
-	/**
-	 * Creates a new bin with the given name.
-	 * Params:
-	 *  name = the name of the new bin
-	 * Returns:
-	 *  a new GstBin
-	 */
-	public this(string name)
-	{
-		// GstElement* gst_bin_new (const gchar *name);
-		this( cast(GstBin*) gst_bin_new(Str.toStringz(name)) );
-	}
+import: gstreamer.Pad
+structWrap: GstBin* Bin
+structWrap: GstElement* Element
+structWrap: GstIterator* Iterator
+structWrap: GstPad* Pad
 
+code: start
 	/** */
 	public this(Element elem)
 	{
@@ -473,10 +466,6 @@ code: start
 		this.gstBin = cast(GstBin*)elem.getElementStruct();
 	}
 code: end
-structWrap: GstBin* Bin
-structWrap: GstElement* Element
-structWrap: GstIterator* Iterator
-#... addMany and removeMany
 outFile: Bin
 
 file: gstreamer-GstBuffer.html
@@ -569,10 +558,15 @@ prefix: gst_caps_
 prefix: gst_
 import: glib.Str
 import: gstreamer.Structure
+structWrap: GstCaps* Caps
+structWrap: GstStructure* Structure
+
 #libxml2 missing:
 nocode: gst_caps_save_thyself
 nocode: gst_caps_load_thyself
 nocode: gst_caps_new_any
+inout: gst_caps_replace caps
+
 code: start
 	/**
 	 * Creates a new GstCaps that indicates that it is compatible with
@@ -586,9 +580,6 @@ code: start
 		return new Caps(cast(GstCaps*)gst_caps_new_any() );
 	}
 code: end
-structWrap: GstCaps* Caps
-structWrap: GstStructure* Structure
-#TODO: take a look at replace and it's GstCaps**
 outFile: Caps
 
 #file: gstreamer-GstChildProxy.html
@@ -605,6 +596,13 @@ prefix: gst_clock_
 prefix: gst_
 import: glib.Str
 structWrap: GstClock* Clock
+
+out: gst_clock_add_observation r_squared
+out: gst_clock_get_calibration internal
+out: gst_clock_get_calibration external
+out: gst_clock_get_calibration rate_num
+out: gst_clock_get_calibration rate_denom
+inout: gst_clock_id_wait jitter
 outFile: Clock
 
 file: GstElementFactory.html

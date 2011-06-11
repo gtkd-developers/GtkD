@@ -193,10 +193,10 @@ public class Clock : ObjectGst
 	 * rSquared = a pointer to hold the result
 	 * Returns: TRUE if enough observations were added to run the regression algorithm.MT safe.
 	 */
-	public int addObservation(GstClockTime slave, GstClockTime master, double* rSquared)
+	public int addObservation(GstClockTime slave, GstClockTime master, out double rSquared)
 	{
 		// gboolean gst_clock_add_observation (GstClock *clock,  GstClockTime slave,  GstClockTime master,  gdouble *r_squared);
-		return gst_clock_add_observation(gstClock, slave, master, rSquared);
+		return gst_clock_add_observation(gstClock, slave, master, &rSquared);
 	}
 	
 	/**
@@ -341,10 +341,10 @@ public class Clock : ObjectGst
 	 * rateNum = a location to store the rate numerator
 	 * rateDenom = a location to store the rate denominator
 	 */
-	public void getCalibration(GstClockTime* internal, GstClockTime* external, GstClockTime* rateNum, GstClockTime* rateDenom)
+	public void getCalibration(out GstClockTime internal, out GstClockTime external, out GstClockTime rateNum, out GstClockTime rateDenom)
 	{
 		// void gst_clock_get_calibration (GstClock *clock,  GstClockTime *internal,  GstClockTime *external,  GstClockTime *rate_num,  GstClockTime *rate_denom);
-		gst_clock_get_calibration(gstClock, internal, external, rateNum, rateDenom);
+		gst_clock_get_calibration(gstClock, &internal, &external, &rateNum, &rateDenom);
 	}
 	
 	/**
@@ -398,10 +398,10 @@ public class Clock : ObjectGst
 	 * jitter = A pointer that will contain the jitter, can be NULL.
 	 * Returns: the result of the blocking wait. GST_CLOCK_EARLY will be returnedif the current clock time is past the time of id, GST_CLOCK_OK if id was scheduled in time. GST_CLOCK_UNSCHEDULED if id was unscheduled with gst_clock_id_unschedule().MT safe.
 	 */
-	public static GstClockReturn idWait(GstClockID id, GstClockTimeDiff* jitter)
+	public static GstClockReturn idWait(GstClockID id, ref GstClockTimeDiff jitter)
 	{
 		// GstClockReturn gst_clock_id_wait (GstClockID id,  GstClockTimeDiff *jitter);
-		return gst_clock_id_wait(id, jitter);
+		return gst_clock_id_wait(id, &jitter);
 	}
 	
 	/**

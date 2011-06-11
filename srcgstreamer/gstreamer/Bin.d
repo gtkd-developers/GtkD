@@ -27,7 +27,7 @@
  * outFile = Bin
  * strct   = GstBin
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GstElement
  * clss    = Bin
  * interf  = 
  * class Code: Yes
@@ -41,16 +41,17 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_bin_new
  * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Element
  * 	- gstreamer.Iterator
+ * 	- gstreamer.Pad
  * structWrap:
  * 	- GstBin* -> Bin
  * 	- GstElement* -> Element
  * 	- GstIterator* -> Iterator
+ * 	- GstPad* -> Pad
  * module aliases:
  * local aliases:
  * overrides:
@@ -69,6 +70,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gstreamer.Element;
 private import gstreamer.Iterator;
+private import gstreamer.Pad;
 
 
 
@@ -206,19 +208,6 @@ public class Bin : Element
 		gstBin = cast(GstBin*)obj;
 	}
 	
-	/**
-	 * Creates a new bin with the given name.
-	 * Params:
-	 *  name = the name of the new bin
-	 * Returns:
-	 *  a new GstBin
-	 */
-	public this(string name)
-	{
-		// GstElement* gst_bin_new (const gchar *name);
-		this( cast(GstBin*) gst_bin_new(Str.toStringz(name)) );
-	}
-	
 	/** */
 	public this(Element elem)
 	{
@@ -284,6 +273,23 @@ public class Bin : Element
 		}
 	}
 	
+	
+	/**
+	 * Creates a new bin with the given name.
+	 * Params:
+	 * name = the name of the new bin
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name)
+	{
+		// GstElement* gst_bin_new (const gchar *name);
+		auto p = gst_bin_new(Str.toStringz(name));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_bin_new(Str.toStringz(name))");
+		}
+		this(cast(GstBin*) p);
+	}
 	
 	/**
 	 * Adds the given element to the bin. Sets the element's parent, and thus
@@ -511,9 +517,14 @@ public class Bin : Element
 	 * direction = whether to look for an unconnected source or sink pad
 	 * Returns: unconnected pad of the given direction, or NULL.Since 0.10.3
 	 */
-	public GstPad* findUnconnectedPad(GstPadDirection direction)
+	public Pad findUnconnectedPad(GstPadDirection direction)
 	{
 		// GstPad* gst_bin_find_unconnected_pad (GstBin *bin,  GstPadDirection direction);
-		return gst_bin_find_unconnected_pad(gstBin, direction);
+		auto p = gst_bin_find_unconnected_pad(gstBin, direction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pad(cast(GstPad*) p);
 	}
 }

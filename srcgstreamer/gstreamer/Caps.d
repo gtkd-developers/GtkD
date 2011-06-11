@@ -515,10 +515,14 @@ public class Caps
 	 * caps = a pointer to GstCaps
 	 * newcaps = a GstCaps to replace *caps
 	 */
-	public static void replace(GstCaps** caps, Caps newcaps)
+	public static void replace(ref Caps caps, Caps newcaps)
 	{
 		// void gst_caps_replace (GstCaps **caps,  GstCaps *newcaps);
-		gst_caps_replace(caps, (newcaps is null) ? null : newcaps.getCapsStruct());
+		GstCaps* outcaps = (caps is null) ? null : caps.getCapsStruct();
+		
+		gst_caps_replace(&outcaps, (newcaps is null) ? null : newcaps.getCapsStruct());
+		
+		caps = new Caps(outcaps);
 	}
 	
 	/**
