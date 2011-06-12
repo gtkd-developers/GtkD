@@ -474,10 +474,10 @@ public class Event
 	 * maxsize = A pointer to store the maxsize in
 	 * async = A pointer to store the async-flag in
 	 */
-	public void parseBufferSize(GstFormat* format, long* minsize, long* maxsize, int* async)
+	public void parseBufferSize(out GstFormat format, out long minsize, out long maxsize, out int async)
 	{
 		// void gst_event_parse_buffer_size (GstEvent *event,  GstFormat *format,  gint64 *minsize,  gint64 *maxsize,  gboolean *async);
-		gst_event_parse_buffer_size(gstEvent, format, minsize, maxsize, async);
+		gst_event_parse_buffer_size(gstEvent, &format, &minsize, &maxsize, &async);
 	}
 	
 	/**
@@ -486,10 +486,10 @@ public class Event
 	 * latency = A pointer to store the latency in.
 	 * Since 0.10.12
 	 */
-	public void parseLatency(GstClockTime* latency)
+	public void parseLatency(ref GstClockTime latency)
 	{
 		// void gst_event_parse_latency (GstEvent *event,  GstClockTime *latency);
-		gst_event_parse_latency(gstEvent, latency);
+		gst_event_parse_latency(gstEvent, &latency);
 	}
 	
 	/**
@@ -506,10 +506,10 @@ public class Event
 	 * stop = A pointer to store the stop value in
 	 * position = A pointer to store the stream time in
 	 */
-	public void parseNewSegment(int* update, double* rate, GstFormat* format, long* start, long* stop, long* position)
+	public void parseNewSegment(ref int update, ref double rate, ref GstFormat format, out long start, out long stop, out long position)
 	{
 		// void gst_event_parse_new_segment (GstEvent *event,  gboolean *update,  gdouble *rate,  GstFormat *format,  gint64 *start,  gint64 *stop,  gint64 *position);
-		gst_event_parse_new_segment(gstEvent, update, rate, format, start, stop, position);
+		gst_event_parse_new_segment(gstEvent, &update, &rate, &format, &start, &stop, &position);
 	}
 	
 	/**
@@ -526,10 +526,10 @@ public class Event
 	 * position = A pointer to store the stream time in
 	 * Since 0.10.6
 	 */
-	public void parseNewSegmentFull(int* update, double* rate, double* appliedRate, GstFormat* format, long* start, long* stop, long* position)
+	public void parseNewSegmentFull(ref int update, ref double rate, ref double appliedRate, ref GstFormat format, out long start, out long stop, out long position)
 	{
 		// void gst_event_parse_new_segment_full  (GstEvent *event,  gboolean *update,  gdouble *rate,  gdouble *applied_rate,  GstFormat *format,  gint64 *start,  gint64 *stop,  gint64 *position);
-		gst_event_parse_new_segment_full(gstEvent, update, rate, appliedRate, format, start, stop, position);
+		gst_event_parse_new_segment_full(gstEvent, &update, &rate, &appliedRate, &format, &start, &stop, &position);
 	}
 	
 	/**
@@ -540,10 +540,10 @@ public class Event
 	 * diff = A pointer to store the diff in
 	 * timestamp = A pointer to store the timestamp in
 	 */
-	public void parseQos(double* proportion, GstClockTimeDiff* diff, GstClockTime* timestamp)
+	public void parseQos(out double proportion, out GstClockTimeDiff diff, out GstClockTime timestamp)
 	{
 		// void gst_event_parse_qos (GstEvent *event,  gdouble *proportion,  GstClockTimeDiff *diff,  GstClockTime *timestamp);
-		gst_event_parse_qos(gstEvent, proportion, diff, timestamp);
+		gst_event_parse_qos(gstEvent, &proportion, &diff, &timestamp);
 	}
 	
 	/**
@@ -557,10 +557,10 @@ public class Event
 	 * stopType = result location for the GstSeekType of the stop position
 	 * stop = result location for the stop postion expressed in format
 	 */
-	public void parseSeek(double* rate, GstFormat* format, GstSeekFlags* flags, GstSeekType* startType, long* start, GstSeekType* stopType, long* stop)
+	public void parseSeek(out double rate, out GstFormat format, out GstSeekFlags flags, out GstSeekType startType, out long start, out GstSeekType stopType, out long stop)
 	{
 		// void gst_event_parse_seek (GstEvent *event,  gdouble *rate,  GstFormat *format,  GstSeekFlags *flags,  GstSeekType *start_type,  gint64 *start,  GstSeekType *stop_type,  gint64 *stop);
-		gst_event_parse_seek(gstEvent, rate, format, flags, startType, start, stopType, stop);
+		gst_event_parse_seek(gstEvent, &rate, &format, &flags, &startType, &start, &stopType, &stop);
 	}
 	
 	/**
@@ -568,10 +568,14 @@ public class Event
 	 * Params:
 	 * taglist = pointer to metadata list
 	 */
-	public void parseTag(GstTagList** taglist)
+	public void parseTag(out TagList taglist)
 	{
 		// void gst_event_parse_tag (GstEvent *event,  GstTagList **taglist);
-		gst_event_parse_tag(gstEvent, taglist);
+		GstTagList* outtaglist = null;
+		
+		gst_event_parse_tag(gstEvent, &outtaglist);
+		
+		taglist = new TagList(outtaglist);
 	}
 	
 	/**

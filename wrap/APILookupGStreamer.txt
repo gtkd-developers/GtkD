@@ -644,7 +644,46 @@ struct: GstEvent
 class: Event
 prefix: gst_event_
 prefix: gst_
-#This might not be necessary:
+import: glib.Str
+import: gstreamer.Structure
+import: gstreamer.TagList
+import: gstreamer.MiniObject
+structWrap: GstEvent* Event
+structWrap: GstStructure* Structure
+structWrap: GstTagList* TagList
+structWrap: GstMiniObject* MiniObject
+structWrap: GstMiniObject MiniObject
+
+out: gst_event_parse_buffer_size format
+out: gst_event_parse_buffer_size minsize
+out: gst_event_parse_buffer_size maxsize
+out: gst_event_parse_buffer_size async
+inout: gst_event_parse_latency latency
+inout: gst_event_parse_new_segment update
+inout: gst_event_parse_new_segment rate
+inout: gst_event_parse_new_segment format
+out: gst_event_parse_new_segment start
+out: gst_event_parse_new_segment stop
+out: gst_event_parse_new_segment position
+inout: gst_event_parse_new_segment_full update
+inout: gst_event_parse_new_segment_full rate
+inout: gst_event_parse_new_segment_full applied_rate
+inout: gst_event_parse_new_segment_full format
+out: gst_event_parse_new_segment_full start
+out: gst_event_parse_new_segment_full stop
+out: gst_event_parse_new_segment_full position
+out: gst_event_parse_qos proportion
+out: gst_event_parse_qos diff
+out: gst_event_parse_qos timestamp
+out: gst_event_parse_seek rate
+out: gst_event_parse_seek format
+out: gst_event_parse_seek flags
+out: gst_event_parse_seek start_type
+out: gst_event_parse_seek start
+out: gst_event_parse_seek stop_type
+out: gst_event_parse_seek stop
+out: gst_event_parse_tag taglist
+
 nocode: gst_event_new_buffer_size
 code: start
 	/**
@@ -740,17 +779,6 @@ code: start
 		return new Event(cast(GstEvent*)gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct()) );
 	}
 code: end
-import: glib.Str
-import: gstreamer.Structure
-#import: gstreamer.Format
-import: gstreamer.TagList
-import: gstreamer.MiniObject
-structWrap: GstEvent* Event
-structWrap: GstStructure* Structure
-#structWrap: GstFormat* Format
-structWrap: GstTagList* TagList
-structWrap: GstMiniObject* MiniObject
-structWrap: GstMiniObject MiniObject
 outFile: Event
 
 file: gstreamer-GstFormat.html
