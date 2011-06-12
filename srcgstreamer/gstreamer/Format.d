@@ -25,7 +25,7 @@
  * inFile  = gstreamer-GstFormat.html
  * outPack = gstreamer
  * outFile = Format
- * strct   = GstFormat
+ * strct   = 
  * realStrct=
  * ctorStrct=
  * clss    = 
@@ -64,10 +64,6 @@ private import glib.Str;
 private import gstreamer.Iterator;
 
 
-
-
-/** the main Gtk struct */
-protected GstFormat* gstFormat;
 
 
 /**
@@ -130,10 +126,10 @@ public static GstFormat getByNick(string nick)
  * format = the format to find
  * Returns: TRUE if the format is found inside the array
  */
-public int formatsContains(GstFormat format)
+public static int formatsContains(GstFormat[] formats, GstFormat format)
 {
 	// gboolean gst_formats_contains (const GstFormat *formats,  GstFormat format);
-	return gst_formats_contains(gstFormat, format);
+	return gst_formats_contains(formats.ptr, format);
 }
 
 /**

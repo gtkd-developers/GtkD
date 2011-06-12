@@ -289,10 +289,10 @@ public class Index : ObjectGst
 	 * id = a pointer to a gint to hold the id
 	 * Returns: TRUE if the writer would be mapped to an id.
 	 */
-	public int getWriterId(ObjectGst writer, int* id)
+	public int getWriterId(ObjectGst writer, ref int id)
 	{
 		// gboolean gst_index_get_writer_id (GstIndex *index,  GstObject *writer,  gint *id);
-		return gst_index_get_writer_id(gstIndex, (writer is null) ? null : writer.getObjectGstStruct(), id);
+		return gst_index_get_writer_id(gstIndex, (writer is null) ? null : writer.getObjectGstStruct(), &id);
 	}
 	
 	/**
@@ -420,9 +420,9 @@ public class Index : ObjectGst
 	 * value = a pointer to store the value
 	 * Returns: TRUE if there was a value associated with the givenformat.
 	 */
-	public static int entryAssocMap(GstIndexEntry* entry, GstFormat format, long* value)
+	public static int entryAssocMap(GstIndexEntry* entry, GstFormat format, out long value)
 	{
 		// gboolean gst_index_entry_assoc_map (GstIndexEntry *entry,  GstFormat format,  gint64 *value);
-		return gst_index_entry_assoc_map(entry, format, value);
+		return gst_index_entry_assoc_map(entry, format, &value);
 	}
 }

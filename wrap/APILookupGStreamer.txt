@@ -782,14 +782,12 @@ code: end
 outFile: Event
 
 file: gstreamer-GstFormat.html
-struct: GstFormat
-#class: Format
-import: glib.Str
-import: gstreamer.Iterator
 prefix: gst_format_
 prefix: gst_
-#structWrap: GstFormat* Format
+import: glib.Str
+import: gstreamer.Iterator
 structWrap: GstIterator* Iterator
+array: gst_formats_contains formats
 outFile: Format
 
 file: gstreamer-GstGError.html
@@ -806,17 +804,18 @@ prefix: gst_ghost_pad_
 prefix: gst_
 import: glib.Str
 import: gstreamer.Pad
+import: gstreamer.PadTemplate
 structWrap: GstGhostPad* GhostPad
-#structWrap: GstProxyPad* ProxyPad
 structWrap: GstPad* Pad
+structWrap: GstPadTemplate* PadTemplate
 outFile: GhostPad
 
 file: GstImplementsInterface.html
 struct: GstImplementsInterface
 class: ImplementsInterface
+prefix: gst_element_
 prefix: gst_
 #prefix: gst_implements_interface_ #problem results in keyword cast
-prefix: gst_element_
 import: gstreamer.Element
 structWrap: GstElement* Element
 outFile: ImplementsInterface
@@ -829,10 +828,11 @@ prefix: gst_index_
 prefix: gst_
 import: glib.Str
 import: gstreamer.ObjectGst
-#import: gstreamer.Format
 structWrap: GstIndex* Index
 structWrap: GstObject* ObjectGst
-#structWrap: GstFormat Format
+
+inout: gst_index_get_writer_id id
+out: gst_index_entry_assoc_map value
 outFile: Index
 
 file: GstIndexFactory.html
@@ -852,9 +852,11 @@ class: Iterator
 prefix: gst_iterator_
 prefix: gst_
 import: glib.Str
-#GType
-#GMutex*
+import: gthread.Mutex
+structWrap: GMutex* Mutex
 structWrap: GstIterator* Iterator
+
+inout: gst_iterator_new master_cookie
 outFile: Iterator
 
 file: GstPad.html

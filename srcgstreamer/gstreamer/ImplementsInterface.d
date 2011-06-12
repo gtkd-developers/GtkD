@@ -36,8 +36,8 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gst_
  * 	- gst_element_
+ * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -112,7 +112,7 @@ public class ImplementsInterface
 	 * ifaceType = (final) type of the interface which we want to be implemented
 	 * Returns: whether or not the element implements the interface.
 	 */
-	public static int elementImplementsInterface(Element element, GType ifaceType)
+	public static int implementsInterface(Element element, GType ifaceType)
 	{
 		// gboolean gst_element_implements_interface  (GstElement *element,  GType iface_type);
 		return gst_element_implements_interface((element is null) ? null : element.getElementStruct(), ifaceType);

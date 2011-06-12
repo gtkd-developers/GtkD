@@ -44,7 +44,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gthread.Mutex
  * structWrap:
+ * 	- GMutex* -> Mutex
  * 	- GstIterator* -> Iterator
  * module aliases:
  * local aliases:
@@ -60,6 +62,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gthread.Mutex;
 
 
 
@@ -147,13 +150,13 @@ public class Iterator
 	 * free = function to free the iterator
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (uint size, GType type, GMutex* lock, uint* masterCookie, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free)
+	public this (uint size, GType type, Mutex lock, ref uint masterCookie, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free)
 	{
 		// GstIterator* gst_iterator_new (guint size,  GType type,  GMutex *lock,  guint32 *master_cookie,  GstIteratorNextFunction next,  GstIteratorItemFunction item,  GstIteratorResyncFunction resync,  GstIteratorFreeFunction free);
-		auto p = gst_iterator_new(size, type, lock, masterCookie, next, item, resync, free);
+		auto p = gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), &masterCookie, next, item, resync, free);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_iterator_new(size, type, lock, masterCookie, next, item, resync, free)");
+			throw new ConstructionException("null returned by gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), &masterCookie, next, item, resync, free)");
 		}
 		this(cast(GstIterator*) p);
 	}
@@ -170,13 +173,13 @@ public class Iterator
 	 * free = function to call when the iterator is freed
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GType type, GMutex* lock, uint* masterCookie, GList** list, void* owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free)
+	public this (GType type, Mutex lock, uint* masterCookie, GList** list, void* owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free)
 	{
 		// GstIterator* gst_iterator_new_list (GType type,  GMutex *lock,  guint32 *master_cookie,  GList **list,  gpointer owner,  GstIteratorItemFunction item,  GstIteratorDisposeFunction free);
-		auto p = gst_iterator_new_list(type, lock, masterCookie, list, owner, item, free);
+		auto p = gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item, free);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_iterator_new_list(type, lock, masterCookie, list, owner, item, free)");
+			throw new ConstructionException("null returned by gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item, free)");
 		}
 		this(cast(GstIterator*) p);
 	}

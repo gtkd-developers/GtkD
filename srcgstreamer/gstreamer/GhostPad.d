@@ -45,9 +45,11 @@
  * imports:
  * 	- glib.Str
  * 	- gstreamer.Pad
+ * 	- gstreamer.PadTemplate
  * structWrap:
  * 	- GstGhostPad* -> GhostPad
  * 	- GstPad* -> Pad
+ * 	- GstPadTemplate* -> PadTemplate
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,6 +65,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gstreamer.Pad;
+private import gstreamer.PadTemplate;
 
 
 
@@ -183,13 +186,13 @@ public class GhostPad : Pad
 	 * templ = the GstPadTemplate to use on the ghostpad.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, Pad target, GstPadTemplate* templ)
+	public this (string name, Pad target, PadTemplate templ)
 	{
 		// GstPad* gst_ghost_pad_new_from_template (const gchar *name,  GstPad *target,  GstPadTemplate *templ);
-		auto p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), templ);
+		auto p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), (templ is null) ? null : templ.getPadTemplateStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), templ)");
+			throw new ConstructionException("null returned by gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), (templ is null) ? null : templ.getPadTemplateStruct())");
 		}
 		this(cast(GstGhostPad*) p);
 	}
@@ -202,13 +205,13 @@ public class GhostPad : Pad
 	 * templ = the GstPadTemplate to create the ghostpad from.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, GstPadTemplate* templ)
+	public this (string name, PadTemplate templ)
 	{
 		// GstPad* gst_ghost_pad_new_no_target_from_template  (const gchar *name,  GstPadTemplate *templ);
-		auto p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), templ);
+		auto p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), (templ is null) ? null : templ.getPadTemplateStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), templ)");
+			throw new ConstructionException("null returned by gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), (templ is null) ? null : templ.getPadTemplateStruct())");
 		}
 		this(cast(GstGhostPad*) p);
 	}
