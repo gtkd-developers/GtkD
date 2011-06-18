@@ -92,10 +92,10 @@ version(darwinX11)
 	//of GTK+. This directory is according to the Macports http://www.macports.org
 	//default installation location. There should be installation instructions
 	//in the gtkD wiki at DSource.
-	const char[] DIRECTORY = "/opt/local/lib/";
-	const char[] INTERFACE = "x11";
+	const string DIRECTORY = "/opt/local/lib/";
+	const string INTERFACE = "x11";
 
-	const char[][LIBRARY.max+1] importLibs =
+	const string[LIBRARY.max+1] importLibs =
 	[
 		LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
 		LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
@@ -104,9 +104,11 @@ version(darwinX11)
 		LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
 		LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
 		LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
+		LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
 		LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
 		LIBRARY.GTK:           DIRECTORY~"libgtk-"~INTERFACE~"-2.0.dylib",
 		LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
+		LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
 		LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
 		LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
 		LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
@@ -127,9 +129,9 @@ else //default version (The Quartz GTK+ Framework):
 	//that package and need to be installed separately,
 	//possibly through Macports.
 
-	const char[] FRAMEWORKS_DIR = "/Library/Frameworks/";
-	const char[] INTERFACE = "quartz";
-	const char[] DIRECTORY = "/opt/local/lib/";
+	const string FRAMEWORKS_DIR = "/Library/Frameworks/";
+	const string INTERFACE = "quartz";
+	const string DIRECTORY = "/opt/local/lib/";
 
 	//On OS X we can just specify the framework. But we could also
 	//specify the individual libraries like this:

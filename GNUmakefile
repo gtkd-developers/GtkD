@@ -32,9 +32,7 @@ else
     output=-o $@
 endif
 
-ifeq ("$(OS)","Darwin")
-    LDFLAGS+=-Wl,-undefined,dynamic_lookup
-else ifeq ("$(OS)","Linux")
+ifeq ("$(OS)","Linux")
     LDFLAGS+=$(LINKERFLAG)-ldl
 endif
 
@@ -119,7 +117,11 @@ OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g')
 
 # -Isrc
 
-libs: gtkd gtkdgl sv
+ifeq ("$(OS)","Darwin")
+    libs: gtkd
+else
+    libs: gtkd gtkdgl sv
+endif
 
 gtkd:      $(LIBNAME_GTKD)
 gtkdgl:    $(LIBNAME_GTKDGL)
@@ -164,31 +166,45 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO) $(LIBNAME_GTKD)
 
 #######################################################################
 
-install: libs
+ifeq ("$(OS)","Darwin")
+    install: install-gtkd
+else
+    install: install-gtkd install-gtkdgl install-gtkdsv
+endif
+
+install-gtkd: gtkd
 	install -d $(DESTDIR)$(prefix)/include/d
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -d $(DESTDIR)$(prefix)/lib
 	install -m 644 $(LIBNAME_GTKD)   $(DESTDIR)$(prefix)/lib
+
+install-gtkdgl: gtkdgl install-gtkd
+	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -m 644 $(LIBNAME_GTKDGL) $(DESTDIR)$(prefix)/lib
+
+install-gtkdsv: sv install-gtkd
+	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -m 644 $(LIBNAME_GTKDSV) $(DESTDIR)$(prefix)/lib
 
-install-gda: install
+install-gda: gda install-gtkd
 	(cd srcgda; echo $(SOURCES_GTKDGDA) | sed -e s,srcgda/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -m 644 $(LIBNAME_GTKDGDA) $(DESTDIR)$(prefix)/lib
 
-install-gstreamer: install
+install-gstreamer: gstreamer install-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/lib
 
-uninstall:
+uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKD)
+
+uninstall-gtkdgl:
+	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDGL)
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDSV)
+
+uninstall-gtkdsv:
+	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
+	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDSV)	
 
 uninstall-gda:
 	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
