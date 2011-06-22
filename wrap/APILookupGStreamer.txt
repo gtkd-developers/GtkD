@@ -862,9 +862,7 @@ outFile: Iterator
 file: GstPad.html
 struct: GstPad
 class: Pad
-#prefix: GST_OBJECT_
 prefix: gst_pad_
-prefix: gst_element_
 prefix: gst_
 #libxml2 missing:
 nocode: gst_pad_load_and_link
@@ -876,7 +874,6 @@ import: gstreamer.Caps
 import: gstreamer.Buffer
 import: gstreamer.Event
 import: gstreamer.Query
-#import: gstreamer.Format
 import: glib.ListG
 structWrap: GstPad* Pad
 structWrap: GstElement* Element
@@ -886,10 +883,27 @@ structWrap: GstCaps* Caps
 structWrap: GstBuffer* Buffer
 structWrap: GstEvent* Event
 structWrap: GstQuery* Query
-#structWrap: GstFormat* Format
-#structWrap: GstFormat Format
 structWrap: GList* ListG
-#import: gtkc.gobject
+
+out: gst_pad_alloc_buffer buf
+out: gst_pad_alloc_buffer_and_set_caps buf
+inout: gst_pad_get_range buffer
+inout: gst_pad_pull_range buffer
+inout: gst_pad_query_position format
+out: gst_pad_query_position cur
+inout: gst_pad_query_duration format
+out: gst_pad_query_duration duration
+inout: gst_pad_query_convert dest_format
+out: gst_pad_query_convert dest_val
+inout: gst_pad_query_peer_position format
+out: gst_pad_query_peer_position cur
+inout: gst_pad_query_peer_duration format
+out: gst_pad_query_peer_duration duration
+inout: gst_pad_query_peer_convert dest_format
+out: gst_pad_query_peer_convert dest_val
+#TODO: zero terminated array?
+#array: gst_pad_get_query_types Return
+#array: gst_pad_get_query_types_default Return
 code: start
 	/**
 	 * Sets our main struct and passes it to the parent class.
@@ -912,7 +926,7 @@ code: start
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_pos;
-		queryPosition( &form, &cur_pos );
+		queryPosition( form, cur_pos );
 		return cur_pos;
 	}
 
@@ -926,7 +940,7 @@ code: start
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_dur;
-		queryDuration( &form, &cur_dur );
+		queryDuration( form, cur_dur );
 		return cur_dur;
 	}
 	

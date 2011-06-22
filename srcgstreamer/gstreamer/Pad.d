@@ -37,7 +37,6 @@
  * implements:
  * prefixes:
  * 	- gst_pad_
- * 	- gst_element_
  * 	- gst_
  * omit structs:
  * omit prefixes:
@@ -188,7 +187,7 @@ public class Pad : ObjectGst
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_pos;
-		queryPosition( &form, &cur_pos );
+		queryPosition( form, cur_pos );
 		return cur_pos;
 	}
 	
@@ -202,7 +201,7 @@ public class Pad : ObjectGst
 	{
 		GstFormat form = GstFormat.TIME;
 		long cur_dur;
-		queryDuration( &form, &cur_dur );
+		queryDuration( form, cur_dur );
 		return cur_dur;
 	}
 	
@@ -791,10 +790,15 @@ public class Pad : ObjectGst
 	 * buf = a newly allocated buffer
 	 * Returns: a result code indicating success of the operation. Anyresult code other than GST_FLOW_OK is an error and buf shouldnot be used.An error can occur if the pad is not connected or when the downstreampeer elements cannot provide an acceptable buffer.MT safe.
 	 */
-	public GstFlowReturn allocBuffer(ulong offset, int size, Caps caps, GstBuffer** buf)
+	public GstFlowReturn allocBuffer(ulong offset, int size, Caps caps, out Buffer buf)
 	{
 		// GstFlowReturn gst_pad_alloc_buffer (GstPad *pad,  guint64 offset,  gint size,  GstCaps *caps,  GstBuffer **buf);
-		return gst_pad_alloc_buffer(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), buf);
+		GstBuffer* outbuf = null;
+		
+		auto p = gst_pad_alloc_buffer(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), &outbuf);
+		
+		buf = new Buffer(outbuf);
+		return p;
 	}
 	
 	/**
@@ -808,10 +812,15 @@ public class Pad : ObjectGst
 	 * buf = a newly allocated buffer
 	 * Returns: a result code indicating success of the operation. Anyresult code other than GST_FLOW_OK is an error and buf shouldnot be used.An error can occur if the pad is not connected or when the downstreampeer elements cannot provide an acceptable buffer.MT safe.
 	 */
-	public GstFlowReturn allocBufferAndSetCaps(ulong offset, int size, Caps caps, GstBuffer** buf)
+	public GstFlowReturn allocBufferAndSetCaps(ulong offset, int size, Caps caps, out Buffer buf)
 	{
 		// GstFlowReturn gst_pad_alloc_buffer_and_set_caps  (GstPad *pad,  guint64 offset,  gint size,  GstCaps *caps,  GstBuffer **buf);
-		return gst_pad_alloc_buffer_and_set_caps(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), buf);
+		GstBuffer* outbuf = null;
+		
+		auto p = gst_pad_alloc_buffer_and_set_caps(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), &outbuf);
+		
+		buf = new Buffer(outbuf);
+		return p;
 	}
 	
 	/**
@@ -865,10 +874,15 @@ public class Pad : ObjectGst
 	 * buffer = a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
 	 * Returns: a GstFlowReturn from the pad.MT safe.
 	 */
-	public GstFlowReturn getRange(ulong offset, uint size, GstBuffer** buffer)
+	public GstFlowReturn getRange(ulong offset, uint size, ref Buffer buffer)
 	{
 		// GstFlowReturn gst_pad_get_range (GstPad *pad,  guint64 offset,  guint size,  GstBuffer **buffer);
-		return gst_pad_get_range(gstPad, offset, size, buffer);
+		GstBuffer* outbuffer = (buffer is null) ? null : buffer.getBufferStruct();
+		
+		auto p = gst_pad_get_range(gstPad, offset, size, &outbuffer);
+		
+		buffer = new Buffer(outbuffer);
+		return p;
 	}
 	
 	/**
@@ -1190,10 +1204,15 @@ public class Pad : ObjectGst
 	 * buffer = a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
 	 * Returns: a GstFlowReturn from the peer pad.When this function returns GST_FLOW_OK, buffer will contain a validGstBuffer that should be freed with gst_buffer_unref() after usage.buffer may not be used or freed when any other return value than GST_FLOW_OK is returned.MT safe.
 	 */
-	public GstFlowReturn pullRange(ulong offset, uint size, GstBuffer** buffer)
+	public GstFlowReturn pullRange(ulong offset, uint size, ref Buffer buffer)
 	{
 		// GstFlowReturn gst_pad_pull_range (GstPad *pad,  guint64 offset,  guint size,  GstBuffer **buffer);
-		return gst_pad_pull_range(gstPad, offset, size, buffer);
+		GstBuffer* outbuffer = (buffer is null) ? null : buffer.getBufferStruct();
+		
+		auto p = gst_pad_pull_range(gstPad, offset, size, &outbuffer);
+		
+		buffer = new Buffer(outbuffer);
+		return p;
 	}
 	
 	/**
@@ -1312,10 +1331,10 @@ public class Pad : ObjectGst
 	 * cur = A location in which to store the current position, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryPosition(GstFormat* format, long* cur)
+	public int queryPosition(ref GstFormat format, out long cur)
 	{
 		// gboolean gst_pad_query_position (GstPad *pad,  GstFormat *format,  gint64 *cur);
-		return gst_pad_query_position(gstPad, format, cur);
+		return gst_pad_query_position(gstPad, &format, &cur);
 	}
 	
 	/**
@@ -1326,10 +1345,10 @@ public class Pad : ObjectGst
 	 * duration = A location in which to store the total duration, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryDuration(GstFormat* format, long* duration)
+	public int queryDuration(ref GstFormat format, out long duration)
 	{
 		// gboolean gst_pad_query_duration (GstPad *pad,  GstFormat *format,  gint64 *duration);
-		return gst_pad_query_duration(gstPad, format, duration);
+		return gst_pad_query_duration(gstPad, &format, &duration);
 	}
 	
 	/**
@@ -1341,10 +1360,10 @@ public class Pad : ObjectGst
 	 * destVal = a pointer to the result.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryConvert(GstFormat srcFormat, long srcVal, GstFormat* destFormat, long* destVal)
+	public int queryConvert(GstFormat srcFormat, long srcVal, ref GstFormat destFormat, out long destVal)
 	{
 		// gboolean gst_pad_query_convert (GstPad *pad,  GstFormat src_format,  gint64 src_val,  GstFormat *dest_format,  gint64 *dest_val);
-		return gst_pad_query_convert(gstPad, srcFormat, srcVal, destFormat, destVal);
+		return gst_pad_query_convert(gstPad, srcFormat, srcVal, &destFormat, &destVal);
 	}
 	
 	/**
@@ -1355,10 +1374,10 @@ public class Pad : ObjectGst
 	 * cur = A location in which to store the current position, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryPeerPosition(GstFormat* format, long* cur)
+	public int queryPeerPosition(ref GstFormat format, out long cur)
 	{
 		// gboolean gst_pad_query_peer_position (GstPad *pad,  GstFormat *format,  gint64 *cur);
-		return gst_pad_query_peer_position(gstPad, format, cur);
+		return gst_pad_query_peer_position(gstPad, &format, &cur);
 	}
 	
 	/**
@@ -1369,10 +1388,10 @@ public class Pad : ObjectGst
 	 * duration = A location in which to store the total duration, or NULL.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryPeerDuration(GstFormat* format, long* duration)
+	public int queryPeerDuration(ref GstFormat format, out long duration)
 	{
 		// gboolean gst_pad_query_peer_duration (GstPad *pad,  GstFormat *format,  gint64 *duration);
-		return gst_pad_query_peer_duration(gstPad, format, duration);
+		return gst_pad_query_peer_duration(gstPad, &format, &duration);
 	}
 	
 	/**
@@ -1385,10 +1404,10 @@ public class Pad : ObjectGst
 	 * destVal = a pointer to the result.
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryPeerConvert(GstFormat srcFormat, long srcVal, GstFormat* destFormat, long* destVal)
+	public int queryPeerConvert(GstFormat srcFormat, long srcVal, ref GstFormat destFormat, out long destVal)
 	{
 		// gboolean gst_pad_query_peer_convert (GstPad *pad,  GstFormat src_format,  gint64 src_val,  GstFormat *dest_format,  gint64 *dest_val);
-		return gst_pad_query_peer_convert(gstPad, srcFormat, srcVal, destFormat, destVal);
+		return gst_pad_query_peer_convert(gstPad, srcFormat, srcVal, &destFormat, &destVal);
 	}
 	
 	/**
