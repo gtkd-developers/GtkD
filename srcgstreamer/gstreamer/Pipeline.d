@@ -27,10 +27,10 @@
  * outFile = Pipeline
  * strct   = GstPipeline
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GstElement
  * clss    = Pipeline
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -165,13 +165,6 @@ public class Pipeline : Bin
 		gstPipeline = cast(GstPipeline*)obj;
 	}
 	
-	/** */
-	public this (string name)
-	{
-		this.gstPipeline = cast(GstPipeline*) gst_pipeline_new(Str.toStringz(name));
-		super(cast(GstBin*)this.gstPipeline);
-	}
-	
 	/**
 	 */
 	
@@ -179,17 +172,17 @@ public class Pipeline : Bin
 	 * Create a new pipeline with the given name.
 	 * Params:
 	 * name = name of new pipeline
-	 * Returns: newly created GstPipelineMT safe.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Element newPipeline(string name)
+	public this (string name)
 	{
 		// GstElement* gst_pipeline_new (const gchar *name);
 		auto p = gst_pipeline_new(Str.toStringz(name));
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gst_pipeline_new(Str.toStringz(name))");
 		}
-		return new Element(cast(GstElement*) p);
+		this(cast(GstPipeline*) p);
 	}
 	
 	/**

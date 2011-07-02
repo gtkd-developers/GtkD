@@ -63,6 +63,7 @@
  * 	- glib.ErrorG
  * 	- gstreamer.TagList
  * structWrap:
+ * 	- GError* -> ErrorG
  * 	- GQuark -> Quark
  * 	- GstClock* -> Clock
  * 	- GstMessage* -> Message
@@ -590,10 +591,14 @@ public class Message
 	 * Params:
 	 * clock = A pointer to hold the lost clock
 	 */
-	public void parseClockLost(GstClock** clock)
+	public void parseClockLost(out Clock clock)
 	{
 		// void gst_message_parse_clock_lost (GstMessage *message,  GstClock **clock);
-		gst_message_parse_clock_lost(gstMessage, clock);
+		GstClock* outclock = null;
+		
+		gst_message_parse_clock_lost(gstMessage, &outclock);
+		
+		clock = new Clock(outclock);
 	}
 	
 	/**
@@ -604,10 +609,14 @@ public class Message
 	 * clock = A pointer to hold a clock object.
 	 * ready = A pointer to hold the ready flag.
 	 */
-	public void parseClockProvide(GstClock** clock, int* ready)
+	public void parseClockProvide(out Clock clock, out int ready)
 	{
 		// void gst_message_parse_clock_provide (GstMessage *message,  GstClock **clock,  gboolean *ready);
-		gst_message_parse_clock_provide(gstMessage, clock, ready);
+		GstClock* outclock = null;
+		
+		gst_message_parse_clock_provide(gstMessage, &outclock, &ready);
+		
+		clock = new Clock(outclock);
 	}
 	
 	/**
@@ -618,13 +627,15 @@ public class Message
 	 * gerror = Location for the GError
 	 * dbug = Location for the debug message, or NULL
 	 */
-	public void parseError(out GError* gerror, out string dbug)
+	public void parseError(out ErrorG gerror, out string dbug)
 	{
 		// void gst_message_parse_error (GstMessage *message,  GError **gerror,  gchar **debug);
+		GError* outgerror = null;
 		char* outdbug = null;
 		
-		gst_message_parse_error(gstMessage, &gerror, &outdbug);
+		gst_message_parse_error(gstMessage, &outgerror, &outdbug);
 		
+		gerror = new ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -637,13 +648,15 @@ public class Message
 	 * dbug = Location for the debug message, or NULL
 	 * Since 0.10.12
 	 */
-	public void parseInfo(out GError* gerror, out string dbug)
+	public void parseInfo(out ErrorG gerror, out string dbug)
 	{
 		// void gst_message_parse_info (GstMessage *message,  GError **gerror,  gchar **debug);
+		GError* outgerror = null;
 		char* outdbug = null;
 		
-		gst_message_parse_info(gstMessage, &gerror, &outdbug);
+		gst_message_parse_info(gstMessage, &outgerror, &outdbug);
 		
+		gerror = new ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -654,10 +667,14 @@ public class Message
 	 * Params:
 	 * clock = A pointer to hold the selected new clock
 	 */
-	public void parseNewClock(GstClock** clock)
+	public void parseNewClock(out Clock clock)
 	{
 		// void gst_message_parse_new_clock (GstMessage *message,  GstClock **clock);
-		gst_message_parse_new_clock(gstMessage, clock);
+		GstClock* outclock = null;
+		
+		gst_message_parse_new_clock(gstMessage, &outclock);
+		
+		clock = new Clock(outclock);
 	}
 	
 	/**
@@ -667,10 +684,10 @@ public class Message
 	 * format = Result location for the format, or NULL
 	 * position = Result location for the position, or NULL
 	 */
-	public void parseSegmentDone(GstFormat* format, long* position)
+	public void parseSegmentDone(out GstFormat format, out long position)
 	{
 		// void gst_message_parse_segment_done (GstMessage *message,  GstFormat *format,  gint64 *position);
-		gst_message_parse_segment_done(gstMessage, format, position);
+		gst_message_parse_segment_done(gstMessage, &format, &position);
 	}
 	
 	/**
@@ -680,10 +697,10 @@ public class Message
 	 * format = Result location for the format, or NULL
 	 * position = Result location for the position, or NULL
 	 */
-	public void parseSegmentStart(GstFormat* format, long* position)
+	public void parseSegmentStart(out GstFormat format, out long position)
 	{
 		// void gst_message_parse_segment_start (GstMessage *message,  GstFormat *format,  gint64 *position);
-		gst_message_parse_segment_start(gstMessage, format, position);
+		gst_message_parse_segment_start(gstMessage, &format, &position);
 	}
 	
 	/**
@@ -708,10 +725,10 @@ public class Message
 	 * Since 0.10.11
 	 * MT safe.
 	 */
-	public void parseBuffering(int* percent)
+	public void parseBuffering(out int percent)
 	{
 		// void gst_message_parse_buffering (GstMessage *message,  gint *percent);
-		gst_message_parse_buffering(gstMessage, percent);
+		gst_message_parse_buffering(gstMessage, &percent);
 	}
 	
 	/**
@@ -722,13 +739,15 @@ public class Message
 	 * gerror = Location for the GError
 	 * dbug = Location for the debug message, or NULL
 	 */
-	public void parseWarning(out GError* gerror, out string dbug)
+	public void parseWarning(out ErrorG gerror, out string dbug)
 	{
 		// void gst_message_parse_warning (GstMessage *message,  GError **gerror,  gchar **debug);
+		GError* outgerror = null;
 		char* outdbug = null;
 		
-		gst_message_parse_warning(gstMessage, &gerror, &outdbug);
+		gst_message_parse_warning(gstMessage, &outgerror, &outdbug);
 		
+		gerror = new ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -742,10 +761,10 @@ public class Message
 	 * format = Result location for the format, or NULL
 	 * duration = Result location for the duration, or NULL
 	 */
-	public void parseDuration(GstFormat* format, long* duration)
+	public void parseDuration(out GstFormat format, out long duration)
 	{
 		// void gst_message_parse_duration (GstMessage *message,  GstFormat *format,  gint64 *duration);
-		gst_message_parse_duration(gstMessage, format, duration);
+		gst_message_parse_duration(gstMessage, &format, &duration);
 	}
 	
 	/**

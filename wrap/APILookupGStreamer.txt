@@ -995,6 +995,39 @@ nostruct: GstMessage
 class: Message
 prefix: gst_message_
 prefix: gst_
+import: glib.Str
+import: glib.Quark
+import: gstreamer.Structure
+import: gstreamer.ObjectGst
+import: gstreamer.Clock
+import: glib.ErrorG
+import: gstreamer.TagList
+structWrap: GstMessage* Message
+structWrap: GQuark Quark
+structWrap: GstStructure* Structure
+structWrap: GstObject* ObjectGst
+structWrap: GstClock* Clock
+structWrap: GError* ErrorG
+structWrap: GstTagList* TagList
+
+out: gst_message_parse_clock_lost clock
+out: gst_message_parse_clock_provide clock
+out: gst_message_parse_clock_provide ready
+out: gst_message_parse_error debug
+out: gst_message_parse_error gerror
+out: gst_message_parse_info debug
+out: gst_message_parse_info gerror
+out: gst_message_parse_warning debug
+out: gst_message_parse_warning gerror
+out: gst_message_parse_new_clock clock
+out: gst_message_parse_segment_done format
+out: gst_message_parse_segment_done position
+out: gst_message_parse_segment_start format
+out: gst_message_parse_segment_start position
+out: gst_message_parse_buffering percent
+out: gst_message_parse_duration format
+out: gst_message_parse_duration duration
+
 nocode: gst_message_parse_tag
 #I'm not so sure about the following:
 nocode: gst_message_type_to_quark
@@ -1007,6 +1040,7 @@ nocode: gst_message_new_state_dirty
 nocode: gst_message_new_eos
 nocode: gst_message_new_error
 nocode: gst_message_new_info
+
 #This is a way to get the type of the message:
 code: start
 	/**
@@ -1226,31 +1260,6 @@ code: start
 		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
 	}
 code: end
-import: glib.Str
-import: glib.Quark
-import: gstreamer.Structure
-import: gstreamer.ObjectGst
-import: gstreamer.Clock
-import: glib.ErrorG
-#import: gstreamer.Format
-import: gstreamer.TagList
-structWrap: GstMessage* Message
-structWrap: GQuark Quark
-structWrap: GstStructure* Structure
-structWrap: GstObject* ObjectGst
-structWrap: GstClock* Clock
-#structWrap: GError* ErrorG 
-#GstClock**
-#structWrap: GFormat Format
-#structWrap: GFormat* Format
-structWrap: GstTagList* TagList
-
-out: gst_message_parse_error debug
-out: gst_message_parse_error gerror
-out: gst_message_parse_info debug
-out: gst_message_parse_info gerror
-out: gst_message_parse_warning debug
-out: gst_message_parse_warning gerror
 outFile: Message
 
 file: GstPadTemplate.html
@@ -1295,17 +1304,10 @@ outFile: Parse
 
 file: GstPipeline.html
 struct: GstPipeline
+ctorStruct: GstElement
 class: Pipeline
 prefix: gst_pipeline_
 prefix: gst_
-code: start
-/** */
-public this (string name)
-{
-	this.gstPipeline = cast(GstPipeline*) gst_pipeline_new(Str.toStringz(name));
-	super(cast(GstBin*)this.gstPipeline);
-}
-code: end
 import: glib.Str
 import: gstreamer.Element
 import: gstreamer.Clock
@@ -1322,8 +1324,6 @@ class: Plugin
 prefix: gst_plugin_
 prefix: gst_
 import: glib.Str
-#import: glib.Quark
-#structWrap: GQuark Quark
 import: glib.Module
 import: glib.ErrorG
 import: glib.GException
