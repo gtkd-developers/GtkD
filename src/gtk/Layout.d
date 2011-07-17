@@ -126,7 +126,7 @@ public class Layout : Container
 		this.gtkLayout = gtkLayout;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkLayout = cast(GtkLayout*)obj;

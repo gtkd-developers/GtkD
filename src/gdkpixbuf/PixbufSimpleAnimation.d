@@ -114,7 +114,7 @@ public class PixbufSimpleAnimation : ObjectG
 		this.gdkPixbufSimpleAnim = gdkPixbufSimpleAnim;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkPixbufSimpleAnim = cast(GdkPixbufSimpleAnim*)obj;

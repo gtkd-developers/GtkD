@@ -126,7 +126,7 @@ public class ScaleButton : Button, OrientableIF
 		this.gtkScaleButton = gtkScaleButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkScaleButton = cast(GtkScaleButton*)obj;

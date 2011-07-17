@@ -131,7 +131,7 @@ public class PixbufAnimation : ObjectG
 		this.gdkPixbufAnimation = gdkPixbufAnimation;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkPixbufAnimation = cast(GdkPixbufAnimation*)obj;

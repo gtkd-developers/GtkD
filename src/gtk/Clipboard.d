@@ -175,7 +175,7 @@ public class Clipboard : ObjectG
 		this.gtkClipboard = gtkClipboard;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkClipboard = cast(GtkClipboard*)obj;

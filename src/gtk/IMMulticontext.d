@@ -113,7 +113,7 @@ public class IMMulticontext : IMContext
 		this.gtkIMMulticontext = gtkIMMulticontext;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkIMMulticontext = cast(GtkIMMulticontext*)obj;

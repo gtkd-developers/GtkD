@@ -108,7 +108,7 @@ public class SeparatorMenuItem : MenuItem
 		this.gtkSeparatorMenuItem = gtkSeparatorMenuItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSeparatorMenuItem = cast(GtkSeparatorMenuItem*)obj;

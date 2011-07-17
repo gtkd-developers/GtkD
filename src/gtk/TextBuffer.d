@@ -177,7 +177,7 @@ public class TextBuffer : ObjectG
 		this.gtkTextBuffer = gtkTextBuffer;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTextBuffer = cast(GtkTextBuffer*)obj;

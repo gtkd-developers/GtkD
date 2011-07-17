@@ -126,7 +126,7 @@ public class Pixmap : Drawable
 		this.gdkPixmap = gdkPixmap;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkPixmap = cast(GdkPixmap*)obj;

@@ -123,7 +123,7 @@ public class OutputStream : ObjectG
 		this.gOutputStream = gOutputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gOutputStream = cast(GOutputStream*)obj;

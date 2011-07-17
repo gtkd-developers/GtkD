@@ -123,7 +123,7 @@ public class Viewport : Bin
 		this.gtkViewport = gtkViewport;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkViewport = cast(GtkViewport*)obj;

@@ -108,7 +108,7 @@ public class EventBox : Bin
 		this.gtkEventBox = gtkEventBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkEventBox = cast(GtkEventBox*)obj;

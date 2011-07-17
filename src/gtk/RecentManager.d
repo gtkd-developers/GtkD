@@ -176,7 +176,7 @@ public class RecentManager : ObjectG
 		this.gtkRecentManager = gtkRecentManager;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRecentManager = cast(GtkRecentManager*)obj;

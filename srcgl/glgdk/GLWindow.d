@@ -111,7 +111,7 @@ public class GLWindow : Drawable
 		this.gdkGLWindow = gdkGLWindow;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkGLWindow = cast(GdkGLWindow*)obj;

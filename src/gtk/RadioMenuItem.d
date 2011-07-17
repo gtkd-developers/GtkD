@@ -144,7 +144,7 @@ public class RadioMenuItem : CheckMenuItem
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRadioMenuItem = cast(GtkRadioMenuItem*)obj;

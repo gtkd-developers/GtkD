@@ -126,7 +126,7 @@ public class SocketService : SocketListener
 		this.gSocketService = gSocketService;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gSocketService = cast(GSocketService*)obj;

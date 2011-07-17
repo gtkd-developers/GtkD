@@ -177,7 +177,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 		this.gSimpleAsyncResult = gSimpleAsyncResult;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gSimpleAsyncResult = cast(GSimpleAsyncResult*)obj;

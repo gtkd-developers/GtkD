@@ -170,7 +170,7 @@ public class Drawable : ObjectG
 		this.gdkDrawable = gdkDrawable;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkDrawable = cast(GdkDrawable*)obj;

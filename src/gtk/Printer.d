@@ -124,7 +124,7 @@ public class Printer : ObjectG
 		this.gtkPrinter = gtkPrinter;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPrinter = cast(GtkPrinter*)obj;

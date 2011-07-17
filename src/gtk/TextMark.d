@@ -130,7 +130,7 @@ public class TextMark : ObjectG
 		this.gtkTextMark = gtkTextMark;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTextMark = cast(GtkTextMark*)obj;

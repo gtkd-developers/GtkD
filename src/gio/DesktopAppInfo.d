@@ -123,7 +123,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 		this.gDesktopAppInfo = gDesktopAppInfo;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gDesktopAppInfo = cast(GDesktopAppInfo*)obj;

@@ -133,7 +133,7 @@ public class ObjectAtk : ObjectG
 		this.atkObject = atkObject;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		atkObject = cast(AtkObject*)obj;

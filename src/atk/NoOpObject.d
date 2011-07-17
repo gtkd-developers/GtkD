@@ -113,7 +113,7 @@ public class NoOpObject : ObjectAtk
 		this.atkNoOpObject = atkNoOpObject;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		atkNoOpObject = cast(AtkNoOpObject*)obj;

@@ -118,7 +118,7 @@ public class ThreadedSocketService : SocketService
 		this.gThreadedSocketService = gThreadedSocketService;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gThreadedSocketService = cast(GThreadedSocketService*)obj;

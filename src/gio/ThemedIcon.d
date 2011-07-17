@@ -119,7 +119,7 @@ public class ThemedIcon : ObjectG, IconIF
 		this.gThemedIcon = gThemedIcon;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gThemedIcon = cast(GThemedIcon*)obj;

@@ -1944,14 +1944,14 @@ alias GtkPrintQuality PrintQuality;
  */
 public enum GtkNumberUpLayout
 {
-	LEFT_TO_RIGHT_TOP_TO_BOTTOM, /+*< nick=lrtb >+/
-	LEFT_TO_RIGHT_BOTTOM_TO_TOP, /+*< nick=lrbt >+/
-	RIGHT_TO_LEFT_TOP_TO_BOTTOM, /+*< nick=rltb >+/
-	RIGHT_TO_LEFT_BOTTOM_TO_TOP, /+*< nick=rlbt >+/
-	TOP_TO_BOTTOM_LEFT_TO_RIGHT, /+*< nick=tblr >+/
-	TOP_TO_BOTTOM_RIGHT_TO_LEFT, /+*< nick=tbrl >+/
-	BOTTOM_TO_TOP_LEFT_TO_RIGHT, /+*< nick=btlr >+/
-	BOTTOM_TO_TOP_RIGHT_TO_LEFT /+*< nick=btrl >+/
+	LEFT_TO_RIGHT_TOP_TO_BOTTOM, /+*< nick= lrtb >+/
+	LEFT_TO_RIGHT_BOTTOM_TO_TOP, /+*< nick= lrbt >+/
+	RIGHT_TO_LEFT_TOP_TO_BOTTOM, /+*< nick= rltb >+/
+	RIGHT_TO_LEFT_BOTTOM_TO_TOP, /+*< nick= rlbt >+/
+	TOP_TO_BOTTOM_LEFT_TO_RIGHT, /+*< nick= tblr >+/
+	TOP_TO_BOTTOM_RIGHT_TO_LEFT, /+*< nick= tbrl >+/
+	BOTTOM_TO_TOP_LEFT_TO_RIGHT, /+*< nick= btlr >+/
+	BOTTOM_TO_TOP_RIGHT_TO_LEFT /+*< nick= btrl >+/
 }
 alias GtkNumberUpLayout NumberUpLayout;
 

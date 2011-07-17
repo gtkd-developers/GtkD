@@ -149,7 +149,7 @@ public class Bus : ObjectGst
 		this.gstBus = gstBus;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstBus = cast(GstBus*)obj;

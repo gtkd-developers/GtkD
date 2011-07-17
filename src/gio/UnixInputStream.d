@@ -110,7 +110,7 @@ public class UnixInputStream : InputStream
 		this.gUnixInputStream = gUnixInputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gUnixInputStream = cast(GUnixInputStream*)obj;

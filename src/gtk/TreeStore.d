@@ -166,7 +166,7 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 		this.gtkTreeStore = gtkTreeStore;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTreeStore = cast(GtkTreeStore*)obj;

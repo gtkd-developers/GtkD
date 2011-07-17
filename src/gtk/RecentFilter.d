@@ -122,7 +122,7 @@ public class RecentFilter : ObjectGtk
 		this.gtkRecentFilter = gtkRecentFilter;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRecentFilter = cast(GtkRecentFilter*)obj;

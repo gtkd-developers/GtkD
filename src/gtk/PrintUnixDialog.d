@@ -184,7 +184,7 @@ public class PrintUnixDialog : Dialog
 		this.gtkPrintUnixDialog = gtkPrintUnixDialog;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPrintUnixDialog = cast(GtkPrintUnixDialog*)obj;

@@ -111,7 +111,7 @@ public class CellRendererProgress : CellRenderer
 		this.gtkCellRendererProgress = gtkCellRendererProgress;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkCellRendererProgress = cast(GtkCellRendererProgress*)obj;

@@ -135,7 +135,7 @@ public class AccelGroup : ObjectG
 		this.gtkAccelGroup = gtkAccelGroup;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAccelGroup = cast(GtkAccelGroup*)obj;

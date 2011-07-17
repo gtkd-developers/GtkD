@@ -114,7 +114,7 @@ public class TcpConnection : SocketConnection
 		this.gTcpConnection = gTcpConnection;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gTcpConnection = cast(GTcpConnection*)obj;

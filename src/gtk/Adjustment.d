@@ -121,7 +121,7 @@ public class Adjustment : ObjectGtk
 		this.gtkAdjustment = gtkAdjustment;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAdjustment = cast(GtkAdjustment*)obj;

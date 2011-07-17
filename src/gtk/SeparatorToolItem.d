@@ -115,7 +115,7 @@ public class SeparatorToolItem : ToolItem
 		this.gtkSeparatorToolItem = gtkSeparatorToolItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSeparatorToolItem = cast(GtkSeparatorToolItem*)obj;

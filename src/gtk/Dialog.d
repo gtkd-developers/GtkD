@@ -252,7 +252,7 @@ public class Dialog : Window
 		this.gtkDialog = gtkDialog;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkDialog = cast(GtkDialog*)obj;

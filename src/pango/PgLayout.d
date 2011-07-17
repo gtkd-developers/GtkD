@@ -137,7 +137,7 @@ public class PgLayout : ObjectG
 		this.pangoLayout = pangoLayout;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		pangoLayout = cast(PangoLayout*)obj;

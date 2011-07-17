@@ -134,7 +134,7 @@ public class VolumeMonitor : ObjectG
 		this.gVolumeMonitor = gVolumeMonitor;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gVolumeMonitor = cast(GVolumeMonitor*)obj;

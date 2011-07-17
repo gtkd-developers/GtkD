@@ -113,7 +113,7 @@ public class IOModule : TypeModule
 		this.gIOModule = gIOModule;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gIOModule = cast(GIOModule*)obj;

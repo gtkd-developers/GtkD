@@ -155,7 +155,7 @@ public class Tooltip : ObjectG
 		this.gtkTooltip = gtkTooltip;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTooltip = cast(GtkTooltip*)obj;

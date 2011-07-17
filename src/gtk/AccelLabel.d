@@ -173,7 +173,7 @@ public class AccelLabel : Label
 		this.gtkAccelLabel = gtkAccelLabel;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAccelLabel = cast(GtkAccelLabel*)obj;

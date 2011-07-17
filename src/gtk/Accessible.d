@@ -105,7 +105,7 @@ public class Accessible : ObjectAtk
 		this.gtkAccessible = gtkAccessible;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAccessible = cast(GtkAccessible*)obj;

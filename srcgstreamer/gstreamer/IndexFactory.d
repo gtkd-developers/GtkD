@@ -112,7 +112,7 @@ public class IndexFactory : PluginFeature
 		this.gstIndexFactory = gstIndexFactory;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstIndexFactory = cast(GstIndexFactory*)obj;

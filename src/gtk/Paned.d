@@ -170,7 +170,7 @@ public class Paned : Container, OrientableIF
 		this.gtkPaned = gtkPaned;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPaned = cast(GtkPaned*)obj;

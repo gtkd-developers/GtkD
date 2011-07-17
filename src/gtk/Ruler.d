@@ -124,7 +124,7 @@ public class Ruler : Widget, OrientableIF
 		this.gtkRuler = gtkRuler;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRuler = cast(GtkRuler*)obj;

@@ -113,7 +113,7 @@ public class Progress : Widget
 		this.gtkProgress = gtkProgress;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkProgress = cast(GtkProgress*)obj;

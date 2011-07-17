@@ -119,7 +119,7 @@ public class DataInputStream : BufferedInputStream
 		this.gDataInputStream = gDataInputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gDataInputStream = cast(GDataInputStream*)obj;

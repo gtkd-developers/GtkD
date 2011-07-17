@@ -131,7 +131,7 @@ public class MountOperation : GioMountOperation
 		this.gtkMountOperation = gtkMountOperation;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMountOperation = cast(GtkMountOperation*)obj;

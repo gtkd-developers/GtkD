@@ -169,7 +169,7 @@ public class Socket : ObjectG, InitableIF
 		this.gSocket = gSocket;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gSocket = cast(GSocket*)obj;

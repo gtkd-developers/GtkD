@@ -194,7 +194,7 @@ public class SpinButton : Entry
 		this.gtkSpinButton = gtkSpinButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSpinButton = cast(GtkSpinButton*)obj;

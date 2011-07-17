@@ -159,7 +159,7 @@ public class Pipeline : Bin
 		this.gstPipeline = gstPipeline;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstPipeline = cast(GstPipeline*)obj;

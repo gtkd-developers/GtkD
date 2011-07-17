@@ -135,7 +135,7 @@ public class SourceBuffer : TextBuffer
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSourceBuffer = cast(GtkSourceBuffer*)obj;

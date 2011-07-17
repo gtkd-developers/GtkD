@@ -137,7 +137,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 		this.gtkTreeModelFilter = gtkTreeModelFilter;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTreeModelFilter = cast(GtkTreeModelFilter*)obj;

@@ -128,7 +128,7 @@ public class SourceView : TextView
 		this.gtkSourceView = gtkSourceView;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSourceView = cast(GtkSourceView*)obj;

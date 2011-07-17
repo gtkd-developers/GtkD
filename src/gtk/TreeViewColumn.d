@@ -146,7 +146,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTreeViewColumn = cast(GtkTreeViewColumn*)obj;

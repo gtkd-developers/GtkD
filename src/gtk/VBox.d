@@ -109,7 +109,7 @@ public class VBox : Box
 		this.gtkVBox = gtkVBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkVBox = cast(GtkVBox*)obj;

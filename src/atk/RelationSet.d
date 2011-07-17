@@ -119,7 +119,7 @@ public class RelationSet : ObjectG
 		this.atkRelationSet = atkRelationSet;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		atkRelationSet = cast(AtkRelationSet*)obj;

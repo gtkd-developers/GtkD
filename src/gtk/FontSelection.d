@@ -128,7 +128,7 @@ public class FontSelection : VBox
 		this.gtkFontSelection = gtkFontSelection;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkFontSelection = cast(GtkFontSelection*)obj;

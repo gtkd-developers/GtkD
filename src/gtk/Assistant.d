@@ -123,7 +123,7 @@ public class Assistant : Window
 		this.gtkAssistant = gtkAssistant;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAssistant = cast(GtkAssistant*)obj;

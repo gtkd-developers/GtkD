@@ -116,7 +116,7 @@ public class SourceStyleScheme : ObjectG
 		this.gtkSourceStyleScheme = gtkSourceStyleScheme;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSourceStyleScheme = cast(GtkSourceStyleScheme*)obj;

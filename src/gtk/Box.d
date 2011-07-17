@@ -150,7 +150,7 @@ public class Box : Container, OrientableIF
 		this.gtkBox = gtkBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkBox = cast(GtkBox*)obj;

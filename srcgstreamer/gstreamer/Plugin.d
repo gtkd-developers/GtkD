@@ -135,7 +135,7 @@ public class Plugin : ObjectGst
 		this.gstPlugin = gstPlugin;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstPlugin = cast(GstPlugin*)obj;

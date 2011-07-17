@@ -119,7 +119,7 @@ public class ImageMenuItem : MenuItem
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkImageMenuItem = cast(GtkImageMenuItem*)obj;

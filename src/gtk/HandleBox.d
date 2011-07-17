@@ -126,7 +126,7 @@ public class HandleBox : Bin
 		this.gtkHandleBox = gtkHandleBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkHandleBox = cast(GtkHandleBox*)obj;

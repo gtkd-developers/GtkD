@@ -116,7 +116,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 		this.gFileIcon = gFileIcon;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFileIcon = cast(GFileIcon*)obj;

@@ -149,7 +149,7 @@ public class GC : ObjectG
 		this.gdkGC = gdkGC;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkGC = cast(GdkGC*)obj;

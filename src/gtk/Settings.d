@@ -145,7 +145,7 @@ public class Settings : ObjectG
 		this.gtkSettings = gtkSettings;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSettings = cast(GtkSettings*)obj;

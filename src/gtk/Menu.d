@@ -190,7 +190,7 @@ public class Menu : MenuShell
 		this.gtkMenu = gtkMenu;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMenu = cast(GtkMenu*)obj;

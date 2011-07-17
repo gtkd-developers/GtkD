@@ -130,7 +130,7 @@ public class PgFontMap : ObjectG
 		this.pangoFontMap = pangoFontMap;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		pangoFontMap = cast(PangoFontMap*)obj;

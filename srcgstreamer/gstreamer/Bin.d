@@ -202,7 +202,7 @@ public class Bin : Element
 		this.gstBin = gstBin;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstBin = cast(GstBin*)obj;

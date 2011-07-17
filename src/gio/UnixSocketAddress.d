@@ -107,7 +107,7 @@ public class UnixSocketAddress : SocketAddress
 		this.gUnixSocketAddress = gUnixSocketAddress;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gUnixSocketAddress = cast(GUnixSocketAddress*)obj;

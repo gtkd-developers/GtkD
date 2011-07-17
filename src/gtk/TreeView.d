@@ -201,7 +201,7 @@ public class TreeView : Container
 		this.gtkTreeView = gtkTreeView;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTreeView = cast(GtkTreeView*)obj;

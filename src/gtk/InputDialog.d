@@ -123,7 +123,7 @@ public class InputDialog : Dialog
 		this.gtkInputDialog = gtkInputDialog;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkInputDialog = cast(GtkInputDialog*)obj;

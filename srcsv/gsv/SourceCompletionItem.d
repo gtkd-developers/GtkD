@@ -114,7 +114,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 		this.gtkSourceCompletionItem = gtkSourceCompletionItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSourceCompletionItem = cast(GtkSourceCompletionItem*)obj;

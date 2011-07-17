@@ -112,7 +112,7 @@ public class Separator : Widget, OrientableIF
 		this.gtkSeparator = gtkSeparator;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSeparator = cast(GtkSeparator*)obj;

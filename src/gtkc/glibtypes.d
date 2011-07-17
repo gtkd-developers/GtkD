@@ -310,12 +310,12 @@ alias GIOChannelError IOChannelError;
  */
 public enum GIOCondition
 {
-	IN =1,
-	OUT =4,
-	PRI =2,
-	ERR =8,
-	HUP =16,
-	NVAL =32
+	IN = 1,
+	OUT = 4,
+	PRI = 2,
+	ERR = 8,
+	HUP = 16,
+	NVAL = 32
 }
 alias GIOCondition IOCondition;
 

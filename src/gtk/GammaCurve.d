@@ -114,7 +114,7 @@ public class GammaCurve : VBox
 		this.gtkGammaCurve = gtkGammaCurve;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkGammaCurve = cast(GtkGammaCurve*)obj;

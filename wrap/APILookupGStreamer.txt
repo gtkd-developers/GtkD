@@ -1342,22 +1342,7 @@ import: glib.Str
 import: glib.ListG
 structWrap: GstPluginFeature* PluginFeature
 structWrap: GList* ListG
-nocode: gst_plugin_feature_set_name
-code: start
-	/**
-	 * Sets the name of a plugin feature. The name uniquely identifies a feature
-	 * within all features of the same type. Renaming a plugin feature is not
-	 * allowed. A copy is made of the name so you should free the supplied name
-	 * after calling this function.
-	 * Params:
-	 *  name = the name to set
-	 */
-	public void setFeatureName(string name)
-	{
-		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
-		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));
-	}
-code: end
+alias: setName setFeatureName
 outFile: PluginFeature
 
 file: gstreamer-GstQuery.html
@@ -1497,6 +1482,7 @@ import: gobject.Value
 #structWrap: GType Type
 structWrap: GstStructure* Structure
 structWrap: GValue* Value
+override: toString
 #GDate**
 outFile: Structure
 

@@ -117,7 +117,7 @@ public class Alignment : Bin
 		this.gtkAlignment = gtkAlignment;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAlignment = cast(GtkAlignment*)obj;

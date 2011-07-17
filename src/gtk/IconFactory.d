@@ -176,7 +176,7 @@ public class IconFactory : ObjectG
 		this.gtkIconFactory = gtkIconFactory;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkIconFactory = cast(GtkIconFactory*)obj;

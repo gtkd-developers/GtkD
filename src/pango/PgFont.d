@@ -136,7 +136,7 @@ public class PgFont : ObjectG
 		this.pangoFont = pangoFont;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		pangoFont = cast(PangoFont*)obj;

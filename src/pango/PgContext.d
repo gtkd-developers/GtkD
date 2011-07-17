@@ -150,7 +150,7 @@ public class PgContext : ObjectG
 		this.pangoContext = pangoContext;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		pangoContext = cast(PangoContext*)obj;

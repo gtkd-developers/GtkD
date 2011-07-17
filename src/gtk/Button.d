@@ -128,7 +128,7 @@ public class Button : Bin, ActivatableIF
 		this.gtkButton = gtkButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkButton = cast(GtkButton*)obj;

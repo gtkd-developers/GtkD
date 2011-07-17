@@ -122,7 +122,7 @@ public class GLConfig : ObjectG
 		this.gdkGLConfig = gdkGLConfig;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkGLConfig = cast(GdkGLConfig*)obj;

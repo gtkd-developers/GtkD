@@ -358,7 +358,7 @@ public class Builder : ObjectG
 		this.gtkBuilder = gtkBuilder;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkBuilder = cast(GtkBuilder*)obj;

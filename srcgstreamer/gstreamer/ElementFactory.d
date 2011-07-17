@@ -139,7 +139,7 @@ public class ElementFactory : PluginFeature
 		this.gstElementFactory = gstElementFactory;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstElementFactory = cast(GstElementFactory*)obj;

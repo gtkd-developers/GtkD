@@ -157,7 +157,7 @@ public class Action : ObjectG, BuildableIF
 		this.gtkAction = gtkAction;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAction = cast(GtkAction*)obj;

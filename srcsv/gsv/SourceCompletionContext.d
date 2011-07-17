@@ -118,7 +118,7 @@ public class SourceCompletionContext : ObjectG
 		this.gtkSourceCompletionContext = gtkSourceCompletionContext;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSourceCompletionContext = cast(GtkSourceCompletionContext*)obj;

@@ -115,7 +115,7 @@ public class ColorButton : Button
 		this.gtkColorButton = gtkColorButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkColorButton = cast(GtkColorButton*)obj;

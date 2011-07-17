@@ -193,7 +193,7 @@ public class Element : ObjectGst
 		this.gstElement = gstElement;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstElement = cast(GstElement*)obj;

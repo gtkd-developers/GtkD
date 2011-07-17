@@ -111,7 +111,7 @@ public class VPaned : Paned
 		this.gtkVPaned = gtkVPaned;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkVPaned = cast(GtkVPaned*)obj;

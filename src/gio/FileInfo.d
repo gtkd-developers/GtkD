@@ -141,7 +141,7 @@ public class FileInfo : ObjectG
 		this.gFileInfo = gFileInfo;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFileInfo = cast(GFileInfo*)obj;

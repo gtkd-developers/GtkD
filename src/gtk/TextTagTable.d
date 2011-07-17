@@ -116,7 +116,7 @@ public class TextTagTable : ObjectG
 		this.gtkTextTagTable = gtkTextTagTable;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTextTagTable = cast(GtkTextTagTable*)obj;

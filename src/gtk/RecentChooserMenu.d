@@ -138,7 +138,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 		this.gtkRecentChooserMenu = gtkRecentChooserMenu;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRecentChooserMenu = cast(GtkRecentChooserMenu*)obj;

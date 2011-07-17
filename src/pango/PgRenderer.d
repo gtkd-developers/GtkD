@@ -132,7 +132,7 @@ public class PgRenderer : ObjectG
 		this.pangoRenderer = pangoRenderer;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		pangoRenderer = cast(PangoRenderer*)obj;

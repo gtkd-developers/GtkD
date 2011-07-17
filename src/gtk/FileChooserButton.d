@@ -145,7 +145,7 @@ public class FileChooserButton : HBox, FileChooserIF
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkFileChooserButton = cast(GtkFileChooserButton*)obj;

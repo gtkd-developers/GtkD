@@ -146,7 +146,7 @@ public class StatusIcon : ObjectG
 		this.gtkStatusIcon = gtkStatusIcon;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkStatusIcon = cast(GtkStatusIcon*)obj;

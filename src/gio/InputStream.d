@@ -120,7 +120,7 @@ public class InputStream : ObjectG
 		this.gInputStream = gInputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gInputStream = cast(GInputStream*)obj;

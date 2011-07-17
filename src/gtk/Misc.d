@@ -113,7 +113,7 @@ public class Misc : Widget
 		this.gtkMisc = gtkMisc;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMisc = cast(GtkMisc*)obj;

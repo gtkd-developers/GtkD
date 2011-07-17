@@ -122,7 +122,7 @@ public class CellRendererPixbuf : CellRenderer
 		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkCellRendererPixbuf = cast(GtkCellRendererPixbuf*)obj;

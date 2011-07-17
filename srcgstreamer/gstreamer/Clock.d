@@ -168,7 +168,7 @@ public class Clock : ObjectGst
 		this.gstClock = gstClock;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstClock = cast(GstClock*)obj;

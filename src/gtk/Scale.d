@@ -128,7 +128,7 @@ public class Scale : Range
 		this.gtkScale = gtkScale;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkScale = cast(GtkScale*)obj;

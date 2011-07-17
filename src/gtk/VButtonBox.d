@@ -120,7 +120,7 @@ public class VButtonBox : ButtonBox
 		this.gtkVButtonBox = gtkVButtonBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkVButtonBox = cast(GtkVButtonBox*)obj;

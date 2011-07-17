@@ -133,7 +133,7 @@ public class SocketClient : ObjectG
 		this.gSocketClient = gSocketClient;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gSocketClient = cast(GSocketClient*)obj;

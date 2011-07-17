@@ -111,7 +111,7 @@ public class ToggleAction : Action
 		this.gtkToggleAction = gtkToggleAction;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkToggleAction = cast(GtkToggleAction*)obj;

@@ -135,7 +135,7 @@ public class CellView : Widget, CellLayoutIF
 		this.gtkCellView = gtkCellView;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkCellView = cast(GtkCellView*)obj;

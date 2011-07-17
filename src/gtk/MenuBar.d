@@ -115,7 +115,7 @@ public class MenuBar : MenuShell
 		this.gtkMenuBar = gtkMenuBar;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMenuBar = cast(GtkMenuBar*)obj;

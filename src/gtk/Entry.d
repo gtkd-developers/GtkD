@@ -179,7 +179,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		this.gtkEntry = gtkEntry;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkEntry = cast(GtkEntry*)obj;

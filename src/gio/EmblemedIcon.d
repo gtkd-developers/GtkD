@@ -123,7 +123,7 @@ public class EmblemedIcon : ObjectG, IconIF
 		this.gEmblemedIcon = gEmblemedIcon;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gEmblemedIcon = cast(GEmblemedIcon*)obj;

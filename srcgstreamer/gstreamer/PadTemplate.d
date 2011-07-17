@@ -167,7 +167,7 @@ public class PadTemplate : ObjectGst
 		this.gstPadTemplate = gstPadTemplate;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstPadTemplate = cast(GstPadTemplate*)obj;

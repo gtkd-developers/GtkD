@@ -241,7 +241,7 @@ public class Image : Misc
 		this.gtkImage = gtkImage;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkImage = cast(GtkImage*)obj;

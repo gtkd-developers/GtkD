@@ -202,7 +202,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		this.gtkPrintOperation = gtkPrintOperation;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPrintOperation = cast(GtkPrintOperation*)obj;

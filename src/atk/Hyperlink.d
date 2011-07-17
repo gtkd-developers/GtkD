@@ -116,7 +116,7 @@ public class Hyperlink : ObjectG
 		this.atkHyperlink = atkHyperlink;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		atkHyperlink = cast(AtkHyperlink*)obj;

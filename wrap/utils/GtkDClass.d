@@ -646,11 +646,10 @@ public class GtkDClass
 							text ~= "this."~var~" = "~var~";";
 							text ~= "}";
 
-							if ( (parentName.length > 0 || convParms.strct == "GObject")
-								&& gtkDParentName != "Surface" )
+							if ( parentName.length > 0 && gtkDParentName != "Surface" )
 							{
 								text ~= "";
-								text ~= "protected void setStruct(GObject* obj)";
+								text ~= "protected override void setStruct(GObject* obj)";
 								text ~= "{";
 								text ~= "	super.setStruct(obj);";
 								text ~= "	"~var~" = cast("~gtkStruct~"*)obj;";

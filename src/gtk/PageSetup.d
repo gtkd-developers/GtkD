@@ -162,7 +162,7 @@ public class PageSetup : ObjectG
 		this.gtkPageSetup = gtkPageSetup;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPageSetup = cast(GtkPageSetup*)obj;

@@ -129,7 +129,7 @@ public class MenuToolButton : ToolButton
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMenuToolButton = cast(GtkMenuToolButton*)obj;

@@ -159,7 +159,7 @@ public class ToggleButton : Button
 		this.gtkToggleButton = gtkToggleButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkToggleButton = cast(GtkToggleButton*)obj;

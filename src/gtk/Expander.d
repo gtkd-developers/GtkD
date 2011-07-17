@@ -171,7 +171,7 @@ public class Expander : Bin
 		this.gtkExpander = gtkExpander;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkExpander = cast(GtkExpander*)obj;

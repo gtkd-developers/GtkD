@@ -146,7 +146,7 @@ public class ScrolledWindow : Bin
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkScrolledWindow = cast(GtkScrolledWindow*)obj;

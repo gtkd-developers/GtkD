@@ -117,7 +117,7 @@ public class Emblem : ObjectG, IconIF
 		this.gEmblem = gEmblem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gEmblem = cast(GEmblem*)obj;

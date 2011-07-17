@@ -126,7 +126,7 @@ public class GhostPad : Pad
 		this.gstGhostPad = gstGhostPad;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstGhostPad = cast(GstGhostPad*)obj;

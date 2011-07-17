@@ -152,7 +152,7 @@ public class CellRenderer : ObjectGtk
 		this.gtkCellRenderer = gtkCellRenderer;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkCellRenderer = cast(GtkCellRenderer*)obj;

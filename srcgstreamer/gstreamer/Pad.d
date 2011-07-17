@@ -160,7 +160,7 @@ public class Pad : ObjectGst
 		this.gstPad = gstPad;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstPad = cast(GstPad*)obj;

@@ -276,7 +276,7 @@ public class Widget : ObjectGtk, BuildableIF
 		this.gtkWidget = gtkWidget;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkWidget = cast(GtkWidget*)obj;
@@ -696,7 +696,6 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
-			addEvents(EventMask.BUTTON_PRESS_MASK);
 			addEvents(EventMask.BUTTON_RELEASE_MASK);
 			Signals.connectData(
 			getStruct(),

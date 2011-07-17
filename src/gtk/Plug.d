@@ -121,7 +121,7 @@ public class Plug : Window
 		this.gtkPlug = gtkPlug;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPlug = cast(GtkPlug*)obj;

@@ -110,7 +110,7 @@ public class UnixMountMonitor : ObjectG
 		this.gUnixMountMonitor = gUnixMountMonitor;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gUnixMountMonitor = cast(GUnixMountMonitor*)obj;

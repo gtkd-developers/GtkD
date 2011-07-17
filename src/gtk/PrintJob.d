@@ -134,7 +134,7 @@ public class PrintJob : ObjectG
 		this.gtkPrintJob = gtkPrintJob;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkPrintJob = cast(GtkPrintJob*)obj;

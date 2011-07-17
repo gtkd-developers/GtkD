@@ -114,7 +114,7 @@ public class VScrollbar : Scrollbar
 		this.gtkVScrollbar = gtkVScrollbar;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkVScrollbar = cast(GtkVScrollbar*)obj;

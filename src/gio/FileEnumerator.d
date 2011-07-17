@@ -135,7 +135,7 @@ public class FileEnumerator : ObjectG
 		this.gFileEnumerator = gFileEnumerator;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFileEnumerator = cast(GFileEnumerator*)obj;

@@ -118,7 +118,7 @@ public class CellRendererText : CellRenderer
 		this.gtkCellRendererText = gtkCellRendererText;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkCellRendererText = cast(GtkCellRendererText*)obj;

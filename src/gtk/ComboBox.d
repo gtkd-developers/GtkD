@@ -152,7 +152,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		this.gtkComboBox = gtkComboBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkComboBox = cast(GtkComboBox*)obj;

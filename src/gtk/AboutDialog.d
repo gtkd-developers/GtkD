@@ -162,7 +162,7 @@ public class AboutDialog : Dialog
 		this.gtkAboutDialog = gtkAboutDialog;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkAboutDialog = cast(GtkAboutDialog*)obj;

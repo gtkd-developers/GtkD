@@ -111,7 +111,7 @@ public class FilenameCompleter : ObjectG
 		this.gFilenameCompleter = gFilenameCompleter;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFilenameCompleter = cast(GFilenameCompleter*)obj;

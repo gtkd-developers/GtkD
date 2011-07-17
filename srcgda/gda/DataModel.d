@@ -118,7 +118,7 @@ public class DataModel : ObjectG
 		this.gdaDataModel = gdaDataModel;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdaDataModel = cast(GdaDataModel*)obj;

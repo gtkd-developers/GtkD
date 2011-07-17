@@ -150,7 +150,7 @@ public class TreeSelection : ObjectG
 		this.gtkTreeSelection = gtkTreeSelection;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTreeSelection = cast(GtkTreeSelection*)obj;

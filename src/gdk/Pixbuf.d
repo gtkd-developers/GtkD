@@ -141,7 +141,7 @@ public class Pixbuf : ObjectG
 		this.gdkPixbuf = gdkPixbuf;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkPixbuf = cast(GdkPixbuf*)obj;

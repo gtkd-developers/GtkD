@@ -162,7 +162,7 @@ public class MessageDialog : Dialog
 		this.gtkMessageDialog = gtkMessageDialog;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMessageDialog = cast(GtkMessageDialog*)obj;

@@ -124,7 +124,7 @@ public class MountOperation : ObjectG
 		this.gMountOperation = gMountOperation;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gMountOperation = cast(GMountOperation*)obj;

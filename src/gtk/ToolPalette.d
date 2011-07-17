@@ -217,7 +217,7 @@ public class ToolPalette : Container, OrientableIF
 		this.gtkToolPalette = gtkToolPalette;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkToolPalette = cast(GtkToolPalette*)obj;

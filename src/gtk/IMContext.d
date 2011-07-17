@@ -173,7 +173,7 @@ public class IMContext : ObjectG
 		this.gtkIMContext = gtkIMContext;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkIMContext = cast(GtkIMContext*)obj;

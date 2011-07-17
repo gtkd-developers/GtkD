@@ -115,7 +115,7 @@ public class Relation : ObjectG
 		this.atkRelation = atkRelation;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		atkRelation = cast(AtkRelation*)obj;

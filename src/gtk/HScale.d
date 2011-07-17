@@ -112,7 +112,7 @@ public class HScale : Scale
 		this.gtkHScale = gtkHScale;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkHScale = cast(GtkHScale*)obj;

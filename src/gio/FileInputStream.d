@@ -132,7 +132,7 @@ public class FileInputStream : InputStream, SeekableIF
 		this.gFileInputStream = gFileInputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFileInputStream = cast(GFileInputStream*)obj;

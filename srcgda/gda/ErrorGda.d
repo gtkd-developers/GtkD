@@ -109,7 +109,7 @@ public class ErrorGda : ObjectG
 		this.gdaError = gdaError;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdaError = cast(GdaError*)obj;

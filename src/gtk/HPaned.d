@@ -112,7 +112,7 @@ public class HPaned : Paned
 		this.gtkHPaned = gtkHPaned;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkHPaned = cast(GtkHPaned*)obj;

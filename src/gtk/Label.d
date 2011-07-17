@@ -236,7 +236,7 @@ public class Label : Misc
 		this.gtkLabel = gtkLabel;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkLabel = cast(GtkLabel*)obj;

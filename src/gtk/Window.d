@@ -153,7 +153,7 @@ public class Window : Bin
 		this.gtkWindow = gtkWindow;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkWindow = cast(GtkWindow*)obj;

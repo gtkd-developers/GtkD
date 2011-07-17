@@ -187,7 +187,7 @@ public class InfoBar : HBox
 		this.gtkInfoBar = gtkInfoBar;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkInfoBar = cast(GtkInfoBar*)obj;

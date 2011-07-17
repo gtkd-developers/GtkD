@@ -170,7 +170,7 @@ public class ObjectGtk : ObjectG
 		this.gtkObject = gtkObject;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkObject = cast(GtkObject*)obj;

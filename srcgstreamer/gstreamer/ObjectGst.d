@@ -166,7 +166,7 @@ public class ObjectGst : ObjectG
 		this.gstObject = gstObject;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstObject = cast(GstObject*)obj;

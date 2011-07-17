@@ -117,7 +117,7 @@ public class ToggleToolButton : ToolButton
 		this.gtkToggleToolButton = gtkToggleToolButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkToggleToolButton = cast(GtkToggleToolButton*)obj;

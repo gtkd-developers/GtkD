@@ -115,7 +115,7 @@ public class Index : ObjectGst
 		this.gstIndex = gstIndex;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstIndex = cast(GstIndex*)obj;

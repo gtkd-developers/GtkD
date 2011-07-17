@@ -139,7 +139,7 @@ public class Connection : ObjectG
 		this.gdaConnection = gdaConnection;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdaConnection = cast(GdaConnection*)obj;

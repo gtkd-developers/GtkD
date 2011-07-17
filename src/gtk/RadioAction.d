@@ -115,7 +115,7 @@ public class RadioAction : ToggleAction
 		this.gtkRadioAction = gtkRadioAction;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRadioAction = cast(GtkRadioAction*)obj;

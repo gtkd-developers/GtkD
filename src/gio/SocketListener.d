@@ -130,7 +130,7 @@ public class SocketListener : ObjectG
 		this.gSocketListener = gSocketListener;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gSocketListener = cast(GSocketListener*)obj;

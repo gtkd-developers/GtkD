@@ -179,7 +179,7 @@ public class RadioButton : CheckButton
 		this.gtkRadioButton = gtkRadioButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkRadioButton = cast(GtkRadioButton*)obj;

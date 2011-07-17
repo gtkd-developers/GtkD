@@ -119,7 +119,7 @@ public class FileChooserWidget : VBox
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkFileChooserWidget = cast(GtkFileChooserWidget*)obj;

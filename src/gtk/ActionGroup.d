@@ -170,7 +170,7 @@ public class ActionGroup : ObjectG, BuildableIF
 		this.gtkActionGroup = gtkActionGroup;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkActionGroup = cast(GtkActionGroup*)obj;

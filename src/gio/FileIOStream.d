@@ -140,7 +140,7 @@ public class FileIOStream : IOStream, SeekableIF
 		this.gFileIOStream = gFileIOStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFileIOStream = cast(GFileIOStream*)obj;

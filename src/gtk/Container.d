@@ -219,7 +219,7 @@ public class Container : Widget
 		this.gtkContainer = gtkContainer;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkContainer = cast(GtkContainer*)obj;

@@ -146,7 +146,7 @@ public class Style : ObjectG
 		this.gtkStyle = gtkStyle;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkStyle = cast(GtkStyle*)obj;

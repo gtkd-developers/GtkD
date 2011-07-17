@@ -117,7 +117,7 @@ public class SourceCompletionInfo : Window
 		this.gtkSourceCompletionInfo = gtkSourceCompletionInfo;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSourceCompletionInfo = cast(GtkSourceCompletionInfo*)obj;

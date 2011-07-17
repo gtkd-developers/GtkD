@@ -143,7 +143,7 @@ public class TextView : Container
 		this.gtkTextView = gtkTextView;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTextView = cast(GtkTextView*)obj;

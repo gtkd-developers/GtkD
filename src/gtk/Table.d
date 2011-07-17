@@ -122,7 +122,7 @@ public class Table : Container
 		this.gtkTable = gtkTable;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkTable = cast(GtkTable*)obj;

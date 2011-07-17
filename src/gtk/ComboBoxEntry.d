@@ -137,7 +137,7 @@ public class ComboBoxEntry : ComboBox
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkComboBoxEntry = cast(GtkComboBoxEntry*)obj;

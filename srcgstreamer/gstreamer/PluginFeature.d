@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = PluginFeature
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,7 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_plugin_feature_set_name
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -113,24 +112,10 @@ public class PluginFeature : ObjectGst
 		this.gstPluginFeature = gstPluginFeature;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstPluginFeature = cast(GstPluginFeature*)obj;
-	}
-	
-	/**
-	 * Sets the name of a plugin feature. The name uniquely identifies a feature
-	 * within all features of the same type. Renaming a plugin feature is not
-	 * allowed. A copy is made of the name so you should free the supplied name
-	 * after calling this function.
-	 * Params:
-	 *  name = the name to set
-	 */
-	public void setFeatureName(string name)
-	{
-		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
-		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));
 	}
 	
 	/**
@@ -158,6 +143,20 @@ public class PluginFeature : ObjectGst
 	{
 		// void gst_plugin_feature_set_rank (GstPluginFeature *feature,  guint rank);
 		gst_plugin_feature_set_rank(gstPluginFeature, rank);
+	}
+	
+	/**
+	 * Sets the name of a plugin feature. The name uniquely identifies a feature
+	 * within all features of the same type. Renaming a plugin feature is not
+	 * allowed. A copy is made of the name so you should free the supplied name
+	 * after calling this function.
+	 * Params:
+	 * name = the name to set
+	 */
+	public void setName(string name)
+	{
+		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
+		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));
 	}
 	
 	/**

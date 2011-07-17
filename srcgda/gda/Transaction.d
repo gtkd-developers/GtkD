@@ -106,7 +106,7 @@ public class Transaction : ObjectG
 		this.gdaTransaction = gdaTransaction;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdaTransaction = cast(GdaTransaction*)obj;

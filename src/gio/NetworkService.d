@@ -119,7 +119,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 		this.gNetworkService = gNetworkService;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gNetworkService = cast(GNetworkService*)obj;

@@ -212,7 +212,7 @@ public class File : ObjectG
 		this.gFile = gFile;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gFile = cast(GFile*)obj;

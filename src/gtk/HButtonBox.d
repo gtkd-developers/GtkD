@@ -120,7 +120,7 @@ public class HButtonBox : ButtonBox
 		this.gtkHButtonBox = gtkHButtonBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkHButtonBox = cast(GtkHButtonBox*)obj;

@@ -109,7 +109,7 @@ public class Spinner : DrawingArea
 		this.gtkSpinner = gtkSpinner;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkSpinner = cast(GtkSpinner*)obj;

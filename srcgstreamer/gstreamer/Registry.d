@@ -160,7 +160,7 @@ public class Registry : ObjectGst
 		this.gstRegistry = gstRegistry;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gstRegistry = cast(GstRegistry*)obj;

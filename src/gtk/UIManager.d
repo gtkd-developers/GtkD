@@ -357,7 +357,7 @@ public class UIManager : ObjectG, BuildableIF
 		this.gtkUIManager = gtkUIManager;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkUIManager = cast(GtkUIManager*)obj;

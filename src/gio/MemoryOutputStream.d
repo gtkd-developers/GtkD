@@ -111,7 +111,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 		this.gMemoryOutputStream = gMemoryOutputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gMemoryOutputStream = cast(GMemoryOutputStream*)obj;

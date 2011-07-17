@@ -117,7 +117,7 @@ public class CheckMenuItem : MenuItem
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkCheckMenuItem = cast(GtkCheckMenuItem*)obj;

@@ -111,7 +111,7 @@ public class ZlibCompressor : ObjectG, ConverterIF
 		this.gZlibCompressor = gZlibCompressor;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gZlibCompressor = cast(GZlibCompressor*)obj;

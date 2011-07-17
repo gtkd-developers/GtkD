@@ -125,7 +125,7 @@ public class PgEngine : ObjectG
 		this.pangoEngine = pangoEngine;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		pangoEngine = cast(PangoEngine*)obj;

@@ -130,7 +130,7 @@ public class Client : ObjectG
 		this.gdaClient = gdaClient;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdaClient = cast(GdaClient*)obj;

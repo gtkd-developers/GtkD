@@ -128,7 +128,7 @@ public class BufferedInputStream : FilterInputStream
 		this.gBufferedInputStream = gBufferedInputStream;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gBufferedInputStream = cast(GBufferedInputStream*)obj;

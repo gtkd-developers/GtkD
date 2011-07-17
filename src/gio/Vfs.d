@@ -111,7 +111,7 @@ public class Vfs : ObjectG
 		this.gVfs = gVfs;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gVfs = cast(GVfs*)obj;

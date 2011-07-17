@@ -144,7 +144,7 @@ public class MenuItem : Item, ActivatableIF
 		this.gtkMenuItem = gtkMenuItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkMenuItem = cast(GtkMenuItem*)obj;

@@ -129,7 +129,7 @@ public class ButtonBox : Box
 		this.gtkButtonBox = gtkButtonBox;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkButtonBox = cast(GtkButtonBox*)obj;

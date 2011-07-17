@@ -109,7 +109,7 @@ public class Item : Bin
 		this.gtkItem = gtkItem;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkItem = cast(GtkItem*)obj;

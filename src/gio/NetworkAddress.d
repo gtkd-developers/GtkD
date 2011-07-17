@@ -122,7 +122,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 		this.gNetworkAddress = gNetworkAddress;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gNetworkAddress = cast(GNetworkAddress*)obj;

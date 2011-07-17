@@ -171,7 +171,7 @@ public class DrawingArea : Widget
 		this.gtkDrawingArea = gtkDrawingArea;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkDrawingArea = cast(GtkDrawingArea*)obj;

@@ -111,7 +111,7 @@ public class FontButton : Button
 		this.gtkFontButton = gtkFontButton;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gtkFontButton = cast(GtkFontButton*)obj;

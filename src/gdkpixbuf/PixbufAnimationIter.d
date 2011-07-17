@@ -117,7 +117,7 @@ public class PixbufAnimationIter : ObjectG
 		this.gdkPixbufAnimationIter = gdkPixbufAnimationIter;
 	}
 	
-	protected void setStruct(GObject* obj)
+	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
 		gdkPixbufAnimationIter = cast(GdkPixbufAnimationIter*)obj;
