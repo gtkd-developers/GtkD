@@ -50,6 +50,7 @@
  * 	- GstPluginFeature* -> PluginFeature
  * module aliases:
  * local aliases:
+ * 	- setName -> setFeatureName
  * overrides:
  */
 
@@ -153,7 +154,7 @@ public class PluginFeature : ObjectGst
 	 * Params:
 	 * name = the name to set
 	 */
-	public void setName(string name)
+	public void setFeatureName(string name)
 	{
 		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
 		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));

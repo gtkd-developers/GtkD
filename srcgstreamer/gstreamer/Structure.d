@@ -51,6 +51,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gstreamer.Structure;
@@ -619,7 +620,7 @@ public class Structure
 	 * Converts structure to a human-readable string representation.
 	 * Returns: a pointer to string allocated by g_malloc(). g_free() afterusage.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar* gst_structure_to_string (const GstStructure *structure);
 		return Str.toString(gst_structure_to_string(gstStructure));
