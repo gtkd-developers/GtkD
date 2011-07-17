@@ -44,8 +44,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.Date
  * 	- gobject.Value
  * structWrap:
+ * 	- GDate* -> Date
  * 	- GValue* -> Value
  * 	- GstStructure* -> Structure
  * module aliases:
@@ -63,6 +65,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.Date;
 private import gobject.Value;
 
 
@@ -440,10 +443,10 @@ public class Structure
 	 * value = a pointer to a gboolean to set
 	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a boolean, thisfunction returns FALSE.
 	 */
-	public int getBoolean(string fieldname, int* value)
+	public int getBoolean(string fieldname, out int value)
 	{
 		// gboolean gst_structure_get_boolean (const GstStructure *structure,  const gchar *fieldname,  gboolean *value);
-		return gst_structure_get_boolean(gstStructure, Str.toStringz(fieldname), value);
+		return gst_structure_get_boolean(gstStructure, Str.toStringz(fieldname), &value);
 	}
 	
 	/**
@@ -457,10 +460,10 @@ public class Structure
 	 * value = a pointer to an int to set
 	 * Returns:FALSE.
 	 */
-	public int getInt(string fieldname, int* value)
+	public int getInt(string fieldname, out int value)
 	{
 		// gboolean gst_structure_get_int (const GstStructure *structure,  const gchar *fieldname,  gint *value);
-		return gst_structure_get_int(gstStructure, Str.toStringz(fieldname), value);
+		return gst_structure_get_int(gstStructure, Str.toStringz(fieldname), &value);
 	}
 	
 	/**
@@ -474,10 +477,10 @@ public class Structure
 	 * value = a pointer to a GstFourcc to set
 	 * Returns:FALSE.
 	 */
-	public int getFourcc(string fieldname, uint* value)
+	public int getFourcc(string fieldname, out uint value)
 	{
 		// gboolean gst_structure_get_fourcc (const GstStructure *structure,  const gchar *fieldname,  guint32 *value);
-		return gst_structure_get_fourcc(gstStructure, Str.toStringz(fieldname), value);
+		return gst_structure_get_fourcc(gstStructure, Str.toStringz(fieldname), &value);
 	}
 	
 	/**
@@ -489,10 +492,10 @@ public class Structure
 	 * value = a pointer to a GstFourcc to set
 	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a double, this function returns FALSE.
 	 */
-	public int getDouble(string fieldname, double* value)
+	public int getDouble(string fieldname, out double value)
 	{
 		// gboolean gst_structure_get_double (const GstStructure *structure,  const gchar *fieldname,  gdouble *value);
-		return gst_structure_get_double(gstStructure, Str.toStringz(fieldname), value);
+		return gst_structure_get_double(gstStructure, Str.toStringz(fieldname), &value);
 	}
 	
 	/**
@@ -522,10 +525,15 @@ public class Structure
 	 * value = a pointer to a GDate to set
 	 * Returns:FALSE.
 	 */
-	public int getDate(string fieldname, GDate** value)
+	public int getDate(string fieldname, out Date value)
 	{
 		// gboolean gst_structure_get_date (const GstStructure *structure,  const gchar *fieldname,  GDate **value);
-		return gst_structure_get_date(gstStructure, Str.toStringz(fieldname), value);
+		GDate* outvalue = null;
+		
+		auto p = gst_structure_get_date(gstStructure, Str.toStringz(fieldname), &outvalue);
+		
+		value = new Date(outvalue);
+		return p;
 	}
 	
 	/**
@@ -537,10 +545,10 @@ public class Structure
 	 * value = a pointer to a GstClockTime to set
 	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a GstClockTime, this function returns FALSE.
 	 */
-	public int getClockTime(string fieldname, GstClockTime* value)
+	public int getClockTime(string fieldname, out GstClockTime value)
 	{
 		// gboolean gst_structure_get_clock_time (const GstStructure *structure,  const gchar *fieldname,  GstClockTime *value);
-		return gst_structure_get_clock_time(gstStructure, Str.toStringz(fieldname), value);
+		return gst_structure_get_clock_time(gstStructure, Str.toStringz(fieldname), &value);
 	}
 	
 	/**
@@ -553,10 +561,10 @@ public class Structure
 	 * value = a pointer to an int to set
 	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain an enum of the giventype, this function returns FALSE.
 	 */
-	public int getEnum(string fieldname, GType enumtype, int* value)
+	public int getEnum(string fieldname, GType enumtype, out int value)
 	{
 		// gboolean gst_structure_get_enum (const GstStructure *structure,  const gchar *fieldname,  GType enumtype,  gint *value);
-		return gst_structure_get_enum(gstStructure, Str.toStringz(fieldname), enumtype, value);
+		return gst_structure_get_enum(gstStructure, Str.toStringz(fieldname), enumtype, &value);
 	}
 	
 	/**
@@ -569,10 +577,10 @@ public class Structure
 	 * valueDenominator = a pointer to an int to set
 	 * Returns: TRUE if the values could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a GstFraction, this function returns FALSE.
 	 */
-	public int getFraction(string fieldname, int* valueNumerator, int* valueDenominator)
+	public int getFraction(string fieldname, out int valueNumerator, out int valueDenominator)
 	{
 		// gboolean gst_structure_get_fraction (const GstStructure *structure,  const gchar *fieldname,  gint *value_numerator,  gint *value_denominator);
-		return gst_structure_get_fraction(gstStructure, Str.toStringz(fieldname), valueNumerator, valueDenominator);
+		return gst_structure_get_fraction(gstStructure, Str.toStringz(fieldname), &valueNumerator, &valueDenominator);
 	}
 	
 	/**
@@ -635,10 +643,14 @@ public class Structure
 	 * end = pointer to store the end of the string in.
 	 * Returns: a new GstStructure or NULL when the string could notbe parsed. Free after usage.
 	 */
-	public static Structure fromString(string string, char** end)
+	public static Structure fromString(string string, out string end)
 	{
 		// GstStructure* gst_structure_from_string (const gchar *string,  gchar **end);
-		auto p = gst_structure_from_string(Str.toStringz(string), end);
+		char* outend = null;
+		
+		auto p = gst_structure_from_string(Str.toStringz(string), &outend);
+		
+		end = Str.toString(outend);
 		if(p is null)
 		{
 			return null;

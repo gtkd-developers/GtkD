@@ -1487,9 +1487,11 @@ class: Segment
 prefix: gst_segment_
 prefix: gst_
 import: glib.Str
-#import: gstreamer.Format
 structWrap: GstSegment* Segment
-#structWrap: GstFormat Format
+
+inout: gst_segment_clip clip_start
+inout: gst_segment_clip clip_stop
+inout: gst_segment_set_seek update
 outFile: Segment
 
 file: gstreamer-GstStructure.html
@@ -1498,15 +1500,23 @@ class: Structure
 prefix: gst_structure_
 prefix: gst_
 import: glib.Str
-#import: glib.Quark
-#structWrap: GQuark Quark
+import: glib.Date
 import: gobject.Value
-#import: gobject.Type
-#structWrap: GType Type
 structWrap: GstStructure* Structure
+structWrap: GDate* Date
 structWrap: GValue* Value
+
 override: toString
-#GDate**
+out: gst_structure_get_boolean value
+out: gst_structure_get_int value
+out: gst_structure_get_fourcc value
+out: gst_structure_get_double value
+out: gst_structure_get_date value
+out: gst_structure_get_clock_time value
+out: gst_structure_get_enum value
+out: gst_structure_get_fraction value_numerator
+out: gst_structure_get_fraction value_denominator
+out: gst_structure_from_string end
 outFile: Structure
 
 file: GstSystemClock.html

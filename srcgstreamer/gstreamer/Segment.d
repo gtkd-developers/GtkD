@@ -156,10 +156,10 @@ public class Segment
 	 * clipStop = the clipped stop position in the segment
 	 * Returns: TRUE if the given start and stop times fall partially or  completely in segment, FALSE if the values are completely outside  of the segment.
 	 */
-	public int clip(GstFormat format, long start, long stop, long* clipStart, long* clipStop)
+	public int clip(GstFormat format, long start, long stop, ref long clipStart, ref long clipStop)
 	{
 		// gboolean gst_segment_clip (GstSegment *segment,  GstFormat format,  gint64 start,  gint64 stop,  gint64 *clip_start,  gint64 *clip_stop);
-		return gst_segment_clip(gstSegment, format, start, stop, clipStart, clipStop);
+		return gst_segment_clip(gstSegment, format, start, stop, &clipStart, &clipStop);
 	}
 	
 	/**
@@ -301,10 +301,10 @@ public class Segment
 	 * stop = the seek stop value
 	 * update = boolean holding whether last_stop was updated.
 	 */
-	public void setSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop, int* update)
+	public void setSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop, ref int update)
 	{
 		// void gst_segment_set_seek (GstSegment *segment,  gdouble rate,  GstFormat format,  GstSeekFlags flags,  GstSeekType start_type,  gint64 start,  GstSeekType stop_type,  gint64 stop,  gboolean *update);
-		gst_segment_set_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, update);
+		gst_segment_set_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, &update);
 	}
 	
 	/**
