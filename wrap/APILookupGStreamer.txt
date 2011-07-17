@@ -1350,6 +1350,36 @@ struct: GstQuery
 class: Query
 prefix: gst_query_
 prefix: gst_
+import: glib.Str
+import: gstreamer.Iterator
+import: gstreamer.Structure
+structWrap: GstIterator* Iterator
+structWrap: GstQuery* Query
+structWrap: GstStructure* Structure
+
+inout: gst_query_parse_convert src_format
+inout: gst_query_parse_convert src_value
+inout: gst_query_parse_convert dest_format
+inout: gst_query_parse_convert dest_value
+inout: gst_query_parse_position format
+inout: gst_query_parse_position cur
+inout: gst_query_parse_duration format
+inout: gst_query_parse_duration duration
+inout: gst_query_parse_latency live
+inout: gst_query_parse_latency min_latency
+inout: gst_query_parse_latency max_latency
+inout: gst_query_parse_seeking format
+inout: gst_query_parse_seeking seekable
+inout: gst_query_parse_seeking segment_start
+inout: gst_query_parse_seeking segment_end
+array: gst_query_set_formatsv formats n_formats
+out: gst_query_parse_formats_length n_formats
+out: gst_query_parse_formats_nth format
+inout: gst_query_parse_segment rate
+inout: gst_query_parse_segment format
+inout: gst_query_parse_segment start_value
+inout: gst_query_parse_segment stop_value
+
 nocode: gst_query_new_position
 code: start
 	/**
@@ -1432,13 +1462,6 @@ code: start
 		return new Query(cast(GstQuery*)gst_query_new_segment(format) );
 	}
 code: end
-import: glib.Str
-import: gstreamer.Structure
-#import: gstreamer.Format
-structWrap: GstQuery* Query
-structWrap: GstStructure* Structure
-#structWrap: GstFormat Format
-#structWrap: GstFormat* Format
 outFile: Query
 
 file: GstRegistry.html

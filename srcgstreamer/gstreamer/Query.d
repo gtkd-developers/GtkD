@@ -49,8 +49,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gstreamer.Iterator
  * 	- gstreamer.Structure
  * structWrap:
+ * 	- GstIterator* -> Iterator
  * 	- GstQuery* -> Query
  * 	- GstStructure* -> Structure
  * module aliases:
@@ -67,6 +69,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gstreamer.Iterator;
 private import gstreamer.Structure;
 
 
@@ -276,10 +279,15 @@ public class Query
 	 * iterated over are read only.
 	 * Returns: A GstIterator of GstQueryTypeDefinition.
 	 */
-	public static GstIterator* typeIterateDefinitions()
+	public static Iterator typeIterateDefinitions()
 	{
 		// GstIterator* gst_query_type_iterate_definitions  (void);
-		return gst_query_type_iterate_definitions();
+		auto p = gst_query_type_iterate_definitions();
+		if(p is null)
+		{
+			return null;
+		}
+		return new Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -360,10 +368,10 @@ public class Query
 	 * destFormat = the storage for the GstFormat of the destination value, or NULL
 	 * destValue = the storage for the destination value, or NULL
 	 */
-	public void parseConvert(GstFormat* srcFormat, long* srcValue, GstFormat* destFormat, long* destValue)
+	public void parseConvert(ref GstFormat srcFormat, ref long srcValue, ref GstFormat destFormat, ref long destValue)
 	{
 		// void gst_query_parse_convert (GstQuery *query,  GstFormat *src_format,  gint64 *src_value,  GstFormat *dest_format,  gint64 *dest_value);
-		gst_query_parse_convert(gstQuery, srcFormat, srcValue, destFormat, destValue);
+		gst_query_parse_convert(gstQuery, &srcFormat, &srcValue, &destFormat, &destValue);
 	}
 	
 	/**
@@ -385,10 +393,10 @@ public class Query
 	 * format = the storage for the GstFormat of the position values (may be NULL)
 	 * cur = the storage for the current position (may be NULL)
 	 */
-	public void parsePosition(GstFormat* format, long* cur)
+	public void parsePosition(ref GstFormat format, ref long cur)
 	{
 		// void gst_query_parse_position (GstQuery *query,  GstFormat *format,  gint64 *cur);
-		gst_query_parse_position(gstQuery, format, cur);
+		gst_query_parse_position(gstQuery, &format, &cur);
 	}
 	
 	/**
@@ -410,10 +418,10 @@ public class Query
 	 * format = the storage for the GstFormat of the duration value, or NULL.
 	 * duration = the storage for the total duration, or NULL.
 	 */
-	public void parseDuration(GstFormat* format, long* duration)
+	public void parseDuration(ref GstFormat format, ref long duration)
 	{
 		// void gst_query_parse_duration (GstQuery *query,  GstFormat *format,  gint64 *duration);
-		gst_query_parse_duration(gstQuery, format, duration);
+		gst_query_parse_duration(gstQuery, &format, &duration);
 	}
 	
 	/**
@@ -442,10 +450,10 @@ public class Query
 	 * maxLatency = the storage for the max latency or NULL
 	 * Since 0.10.12
 	 */
-	public void parseLatency(int* live, GstClockTime* minLatency, GstClockTime* maxLatency)
+	public void parseLatency(ref int live, ref GstClockTime minLatency, ref GstClockTime maxLatency)
 	{
 		// void gst_query_parse_latency (GstQuery *query,  gboolean *live,  GstClockTime *min_latency,  GstClockTime *max_latency);
-		gst_query_parse_latency(gstQuery, live, minLatency, maxLatency);
+		gst_query_parse_latency(gstQuery, &live, &minLatency, &maxLatency);
 	}
 	
 	/**
@@ -486,24 +494,23 @@ public class Query
 	 * segmentStart = the segment_start to set
 	 * segmentEnd = the segment_end to set
 	 */
-	public void parseSeeking(GstFormat* format, int* seekable, long* segmentStart, long* segmentEnd)
+	public void parseSeeking(ref GstFormat format, ref int seekable, ref long segmentStart, ref long segmentEnd)
 	{
 		// void gst_query_parse_seeking (GstQuery *query,  GstFormat *format,  gboolean *seekable,  gint64 *segment_start,  gint64 *segment_end);
-		gst_query_parse_seeking(gstQuery, format, seekable, segmentStart, segmentEnd);
+		gst_query_parse_seeking(gstQuery, &format, &seekable, &segmentStart, &segmentEnd);
 	}
 	
 	/**
 	 * Set the formats query result fields in query. The number of formats passed
 	 * in the formats array must be equal to n_formats.
 	 * Params:
-	 * nFormats = the number of formats to set.
 	 * formats = An array containing n_formats GstFormat values.
 	 * Since 0.10.4
 	 */
-	public void setFormatsv(int nFormats, GstFormat* formats)
+	public void setFormatsv(GstFormat[] formats)
 	{
 		// void gst_query_set_formatsv (GstQuery *query,  gint n_formats,  GstFormat *formats);
-		gst_query_set_formatsv(gstQuery, nFormats, formats);
+		gst_query_set_formatsv(gstQuery, cast(int) formats.length, formats.ptr);
 	}
 	
 	/**
@@ -512,10 +519,10 @@ public class Query
 	 * nFormats = the number of formats in this query.
 	 * Since 0.10.4
 	 */
-	public void parseFormatsLength(uint* nFormats)
+	public void parseFormatsLength(out uint nFormats)
 	{
 		// void gst_query_parse_formats_length (GstQuery *query,  guint *n_formats);
-		gst_query_parse_formats_length(gstQuery, nFormats);
+		gst_query_parse_formats_length(gstQuery, &nFormats);
 	}
 	
 	/**
@@ -527,10 +534,10 @@ public class Query
 	 * format = a pointer to store the nth format
 	 * Since 0.10.4
 	 */
-	public void parseFormatsNth(uint nth, GstFormat* format)
+	public void parseFormatsNth(uint nth, out GstFormat format)
 	{
 		// void gst_query_parse_formats_nth (GstQuery *query,  guint nth,  GstFormat *format);
-		gst_query_parse_formats_nth(gstQuery, nth, format);
+		gst_query_parse_formats_nth(gstQuery, nth, &format);
 	}
 	
 	/**
@@ -566,9 +573,9 @@ public class Query
 	 * startValue = the storage for the start value, or NULL
 	 * stopValue = the storage for the stop value, or NULL
 	 */
-	public void parseSegment(double* rate, GstFormat* format, long* startValue, long* stopValue)
+	public void parseSegment(ref double rate, ref GstFormat format, ref long startValue, ref long stopValue)
 	{
 		// void gst_query_parse_segment (GstQuery *query,  gdouble *rate,  GstFormat *format,  gint64 *start_value,  gint64 *stop_value);
-		gst_query_parse_segment(gstQuery, rate, format, startValue, stopValue);
+		gst_query_parse_segment(gstQuery, &rate, &format, &startValue, &stopValue);
 	}
 }
