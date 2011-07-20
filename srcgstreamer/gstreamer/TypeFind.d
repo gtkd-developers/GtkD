@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = TypeFind
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gst_type_find_peek
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -109,9 +110,6 @@ public class TypeFind
 	}
 	
 	/**
-	 */
-	
-	/**
 	 * Returns the size bytes of the stream to identify beginning at offset. If
 	 * offset is a positive number, the offset is relative to the beginning of the
 	 * stream, if offset is a negative number the offset is relative to the end of
@@ -122,11 +120,16 @@ public class TypeFind
 	 * size = The number of bytes to return
 	 * Returns: the requested data, or NULL if that data is not available.
 	 */
-	public ubyte* peek(long offset, uint size)
+	public ubyte[] peek(long offset, uint size)
 	{
 		// guint8* gst_type_find_peek (GstTypeFind *find,  gint64 offset,  guint size);
-		return gst_type_find_peek(gstTypeFind, offset, size);
+		ubyte* buff = gst_type_find_peek(gstTypeFind, offset, size);
+		
+		return buff[0 .. size];
 	}
+	
+	/**
+	 */
 	
 	/**
 	 * If a GstTypeFindFunction calls this function it suggests the caps with the
@@ -171,9 +174,9 @@ public class TypeFind
 	 *  is unloaded.
 	 * Returns: TRUE on success, FALSE otherwise
 	 */
-	public static int register(Plugin plugin, string name, uint rank, GstTypeFindFunction func, char** extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
+	public static int register(Plugin plugin, string name, uint rank, GstTypeFindFunction func, string[] extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
 	{
 		// gboolean gst_type_find_register (GstPlugin *plugin,  const gchar *name,  guint rank,  GstTypeFindFunction func,  gchar **extensions,  const GstCaps *possible_caps,  gpointer data,  GDestroyNotify data_notify);
-		return gst_type_find_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, func, extensions, (possibleCaps is null) ? null : possibleCaps.getCapsStruct(), data, dataNotify);
+		return gst_type_find_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, func, Str.toStringzArray(extensions), (possibleCaps is null) ? null : possibleCaps.getCapsStruct(), data, dataNotify);
 	}
 }

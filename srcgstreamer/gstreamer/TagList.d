@@ -44,8 +44,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.Date
  * 	- gobject.Value
  * structWrap:
+ * 	- GDate* -> Date
  * 	- GValue* -> Value
  * 	- GstTagList* -> TagList
  * module aliases:
@@ -62,6 +64,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.Date;
 private import gobject.Value;
 
 
@@ -471,10 +474,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUchar(string tag, char* value)
+	public int getUchar(string tag, ref char value)
 	{
 		// gboolean gst_tag_list_get_uchar (const GstTagList *list,  const gchar *tag,  guchar *value);
-		return gst_tag_list_get_uchar(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_uchar(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -486,10 +489,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUcharIndex(string tag, uint index, char* value)
+	public int getUcharIndex(string tag, uint index, ref char value)
 	{
 		// gboolean gst_tag_list_get_uchar_index (const GstTagList *list,  const gchar *tag,  guint index,  guchar *value);
-		return gst_tag_list_get_uchar_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_uchar_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -500,10 +503,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getBoolean(string tag, int* value)
+	public int getBoolean(string tag, ref int value)
 	{
 		// gboolean gst_tag_list_get_boolean (const GstTagList *list,  const gchar *tag,  gboolean *value);
-		return gst_tag_list_get_boolean(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_boolean(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -515,10 +518,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getBooleanIndex(string tag, uint index, int* value)
+	public int getBooleanIndex(string tag, uint index, ref int value)
 	{
 		// gboolean gst_tag_list_get_boolean_index (const GstTagList *list,  const gchar *tag,  guint index,  gboolean *value);
-		return gst_tag_list_get_boolean_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_boolean_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -529,10 +532,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getInt(string tag, int* value)
+	public int getInt(string tag, ref int value)
 	{
 		// gboolean gst_tag_list_get_int (const GstTagList *list,  const gchar *tag,  gint *value);
-		return gst_tag_list_get_int(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_int(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -544,10 +547,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getIntIndex(string tag, uint index, int* value)
+	public int getIntIndex(string tag, uint index, ref int value)
 	{
 		// gboolean gst_tag_list_get_int_index (const GstTagList *list,  const gchar *tag,  guint index,  gint *value);
-		return gst_tag_list_get_int_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_int_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -558,10 +561,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUint(string tag, uint* value)
+	public int getUint(string tag, ref uint value)
 	{
 		// gboolean gst_tag_list_get_uint (const GstTagList *list,  const gchar *tag,  guint *value);
-		return gst_tag_list_get_uint(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_uint(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -573,10 +576,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUintIndex(string tag, uint index, uint* value)
+	public int getUintIndex(string tag, uint index, ref uint value)
 	{
 		// gboolean gst_tag_list_get_uint_index (const GstTagList *list,  const gchar *tag,  guint index,  guint *value);
-		return gst_tag_list_get_uint_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_uint_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -587,10 +590,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getLong(string tag, glong* value)
+	public int getLong(string tag, ref glong value)
 	{
 		// gboolean gst_tag_list_get_long (const GstTagList *list,  const gchar *tag,  glong *value);
-		return gst_tag_list_get_long(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_long(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -602,10 +605,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getLongIndex(string tag, uint index, glong* value)
+	public int getLongIndex(string tag, uint index, ref glong value)
 	{
 		// gboolean gst_tag_list_get_long_index (const GstTagList *list,  const gchar *tag,  guint index,  glong *value);
-		return gst_tag_list_get_long_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_long_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -616,10 +619,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUlong(string tag, gulong* value)
+	public int getUlong(string tag, ref gulong value)
 	{
 		// gboolean gst_tag_list_get_ulong (const GstTagList *list,  const gchar *tag,  gulong *value);
-		return gst_tag_list_get_ulong(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_ulong(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -631,10 +634,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUlongIndex(string tag, uint index, gulong* value)
+	public int getUlongIndex(string tag, uint index, ref gulong value)
 	{
 		// gboolean gst_tag_list_get_ulong_index (const GstTagList *list,  const gchar *tag,  guint index,  gulong *value);
-		return gst_tag_list_get_ulong_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_ulong_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -645,10 +648,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getInt64(string tag, long* value)
+	public int getInt64(string tag, ref long value)
 	{
 		// gboolean gst_tag_list_get_int64 (const GstTagList *list,  const gchar *tag,  gint64 *value);
-		return gst_tag_list_get_int64(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_int64(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -660,10 +663,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getInt64_Index(string tag, uint index, long* value)
+	public int getInt64_Index(string tag, uint index, ref long value)
 	{
 		// gboolean gst_tag_list_get_int64_index (const GstTagList *list,  const gchar *tag,  guint index,  gint64 *value);
-		return gst_tag_list_get_int64_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_int64_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -674,10 +677,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUint64(string tag, ulong* value)
+	public int getUint64(string tag, ref ulong value)
 	{
 		// gboolean gst_tag_list_get_uint64 (const GstTagList *list,  const gchar *tag,  guint64 *value);
-		return gst_tag_list_get_uint64(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_uint64(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -689,10 +692,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getUint64_Index(string tag, uint index, ulong* value)
+	public int getUint64_Index(string tag, uint index, ref ulong value)
 	{
 		// gboolean gst_tag_list_get_uint64_index (const GstTagList *list,  const gchar *tag,  guint index,  guint64 *value);
-		return gst_tag_list_get_uint64_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_uint64_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -703,10 +706,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getFloat(string tag, float* value)
+	public int getFloat(string tag, ref float value)
 	{
 		// gboolean gst_tag_list_get_float (const GstTagList *list,  const gchar *tag,  gfloat *value);
-		return gst_tag_list_get_float(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_float(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -718,10 +721,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getFloatIndex(string tag, uint index, float* value)
+	public int getFloatIndex(string tag, uint index, ref float value)
 	{
 		// gboolean gst_tag_list_get_float_index (const GstTagList *list,  const gchar *tag,  guint index,  gfloat *value);
-		return gst_tag_list_get_float_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_float_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -732,10 +735,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getDouble(string tag, double* value)
+	public int getDouble(string tag, ref double value)
 	{
 		// gboolean gst_tag_list_get_double (const GstTagList *list,  const gchar *tag,  gdouble *value);
-		return gst_tag_list_get_double(gstTagList, Str.toStringz(tag), value);
+		return gst_tag_list_get_double(gstTagList, Str.toStringz(tag), &value);
 	}
 	
 	/**
@@ -747,10 +750,10 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getDoubleIndex(string tag, uint index, double* value)
+	public int getDoubleIndex(string tag, uint index, ref double value)
 	{
 		// gboolean gst_tag_list_get_double_index (const GstTagList *list,  const gchar *tag,  guint index,  gdouble *value);
-		return gst_tag_list_get_double_index(gstTagList, Str.toStringz(tag), index, value);
+		return gst_tag_list_get_double_index(gstTagList, Str.toStringz(tag), index, &value);
 	}
 	
 	/**
@@ -765,10 +768,15 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getString(string tag, char** value)
+	public int getString(string tag, ref string value)
 	{
 		// gboolean gst_tag_list_get_string (const GstTagList *list,  const gchar *tag,  gchar **value);
-		return gst_tag_list_get_string(gstTagList, Str.toStringz(tag), value);
+		char* outvalue = Str.toStringz(value);
+		
+		auto p = gst_tag_list_get_string(gstTagList, Str.toStringz(tag), &outvalue);
+		
+		value = Str.toString(outvalue);
+		return p;
 	}
 	
 	/**
@@ -782,10 +790,15 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list.
 	 */
-	public int getStringIndex(string tag, uint index, char** value)
+	public int getStringIndex(string tag, uint index, ref string value)
 	{
 		// gboolean gst_tag_list_get_string_index (const GstTagList *list,  const gchar *tag,  guint index,  gchar **value);
-		return gst_tag_list_get_string_index(gstTagList, Str.toStringz(tag), index, value);
+		char* outvalue = Str.toStringz(value);
+		
+		auto p = gst_tag_list_get_string_index(gstTagList, Str.toStringz(tag), index, &outvalue);
+		
+		value = Str.toString(outvalue);
+		return p;
 	}
 	
 	/**
@@ -825,10 +838,15 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list or if it was NULL.
 	 */
-	public int getDate(string tag, GDate** value)
+	public int getDate(string tag, ref Date value)
 	{
 		// gboolean gst_tag_list_get_date (const GstTagList *list,  const gchar *tag,  GDate **value);
-		return gst_tag_list_get_date(gstTagList, Str.toStringz(tag), value);
+		GDate* outvalue = (value is null) ? null : value.getDateStruct();
+		
+		auto p = gst_tag_list_get_date(gstTagList, Str.toStringz(tag), &outvalue);
+		
+		value = new Date(outvalue);
+		return p;
 	}
 	
 	/**
@@ -840,9 +858,14 @@ public class TagList
 	 * value = location for the result
 	 * Returns: TRUE, if a value was copied, FALSE if the tag didn't exist in the given list or if it was NULL.
 	 */
-	public int getDateIndex(string tag, uint index, GDate** value)
+	public int getDateIndex(string tag, uint index, ref Date value)
 	{
 		// gboolean gst_tag_list_get_date_index (const GstTagList *list,  const gchar *tag,  guint index,  GDate **value);
-		return gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, value);
+		GDate* outvalue = (value is null) ? null : value.getDateStruct();
+		
+		auto p = gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, &outvalue);
+		
+		value = new Date(outvalue);
+		return p;
 	}
 }

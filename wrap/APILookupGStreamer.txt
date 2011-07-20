@@ -1535,13 +1535,36 @@ class: TagList
 prefix: gst_tag_list_
 prefix: gst_tag_
 import: glib.Str
-#import: gobject.Type
-#structWrap: GType Type
-#structWrap: GType* Type
+import: glib.Date
 import: gobject.Value
-structWrap: GstTagList* TagList
+structWrap: GDate* Date
 structWrap: GValue* Value
-#GDate**
+structWrap: GstTagList* TagList
+
+inout: gst_tag_list_get_uchar value
+inout: gst_tag_list_get_uchar_index value
+inout: gst_tag_list_get_boolean value
+inout: gst_tag_list_get_boolean_index value
+inout: gst_tag_list_get_int value
+inout: gst_tag_list_get_int_index value
+inout: gst_tag_list_get_uint value
+inout: gst_tag_list_get_uint_index value
+inout: gst_tag_list_get_long value
+inout: gst_tag_list_get_long_index value
+inout: gst_tag_list_get_ulong value
+inout: gst_tag_list_get_ulong_index value
+inout: gst_tag_list_get_int64 value
+inout: gst_tag_list_get_int64_index value
+inout: gst_tag_list_get_uint64 value
+inout: gst_tag_list_get_uint64_index value
+inout: gst_tag_list_get_float value
+inout: gst_tag_list_get_float_index value
+inout: gst_tag_list_get_double value
+inout: gst_tag_list_get_double_index value
+inout: gst_tag_list_get_string value
+inout: gst_tag_list_get_string_index value
+inout: gst_tag_list_get_date value
+inout: gst_tag_list_get_date_index value
 outFile: TagList
 
 file: GstTagSetter.html
@@ -1561,8 +1584,9 @@ class: Task
 prefix: gst_task_
 prefix: gst_
 import: glib.Str
+import: gthread.StaticRecMutex
 structWrap: GstTask* Task
-#GStaticRecMutex*
+structWrap: GStaticRecMutex* StaticRecMutex
 outFile: Task
 
 file: gstreamer-GstTypeFind.html
@@ -1576,6 +1600,28 @@ import: gstreamer.Plugin
 structWrap: GstTypeFind* TypeFind
 structWrap: GstCaps* Caps
 structWrap: GstPlugin* Plugin
+array: gst_type_find_register extensions
+nocode: gst_type_find_peek
+code: start
+	/**
+	 * Returns the size bytes of the stream to identify beginning at offset. If
+	 * offset is a positive number, the offset is relative to the beginning of the
+	 * stream, if offset is a negative number the offset is relative to the end of
+	 * the stream. The returned memory is valid until the typefinding function
+	 * returns and must not be freed.
+	 * Params:
+	 * offset = The offset
+	 * size = The number of bytes to return
+	 * Returns: the requested data, or NULL if that data is not available.
+	 */
+	public ubyte[] peek(long offset, uint size)
+	{
+		// guint8* gst_type_find_peek (GstTypeFind *find,  gint64 offset,  guint size);
+		ubyte* buff = gst_type_find_peek(gstTypeFind, offset, size);
+
+		return buff[0 .. size];
+	}
+code: end
 outFile: TypeFind
 
 file: GstTypeFindFactory.html
@@ -1602,42 +1648,4 @@ outFile: TypeFindFactory
 #structWrap: GstXML* XML
 #structWrap: GstElement* Element
 #outFile: XML
-
-# ProxyPad doesn't seem to exist anywhere. Atleast we don't seem to need it.
-#file:
-#class: ProxyPad
-#extend: Pad
-#import: gstreamer.Pad
-#code: start
-#//public class ProxyPad : Pad
-#//{
-#	/** the main Gtk struct */
-#	//protected GstProxyPad* gstProxyPad;
-#	protected GstPad* gstProxyPad;
-#
-#
-#	public GstPad* getProxyPadStruct()
-#	{
-#		return gstProxyPad;
-#	}
-#
-#
-#	/** the main Gtk struct as a void* */
-#	protected void* getStruct()
-#	{
-#		return cast(void*)gstProxyPad;
-#	}
-#
-#	/**
-#	 * Sets our main struct and passes it to the parent class
-#	 */
-#	public this (GstPad* gstProxyPad)
-#	{
-#		super(cast(GstObject*)gstProxyPad);
-#		this.gstProxyPad = gstProxyPad;
-#	}
-#//}
-#
-#code: end
-#outfile: ProxyPad
 
