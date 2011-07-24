@@ -4036,14 +4036,14 @@ mixin( gshared ~"extern(C)
 	GtkIconTheme* function() c_gtk_icon_theme_get_default;
 	GtkIconTheme* function(GdkScreen* screen) c_gtk_icon_theme_get_for_screen;
 	void function(GtkIconTheme* iconTheme, GdkScreen* screen) c_gtk_icon_theme_set_screen;
-	void function(GtkIconTheme* iconTheme, gchar*[] path, gint nElements) c_gtk_icon_theme_set_search_path;
-	void function(GtkIconTheme* iconTheme, gchar**[] path, gint* nElements) c_gtk_icon_theme_get_search_path;
+	void function(GtkIconTheme* iconTheme, gchar** path, gint nElements) c_gtk_icon_theme_set_search_path;
+	void function(GtkIconTheme* iconTheme, gchar*** path, gint* nElements) c_gtk_icon_theme_get_search_path;
 	void function(GtkIconTheme* iconTheme, gchar* path) c_gtk_icon_theme_append_search_path;
 	void function(GtkIconTheme* iconTheme, gchar* path) c_gtk_icon_theme_prepend_search_path;
 	void function(GtkIconTheme* iconTheme, gchar* themeName) c_gtk_icon_theme_set_custom_theme;
 	gboolean function(GtkIconTheme* iconTheme, gchar* iconName) c_gtk_icon_theme_has_icon;
 	GtkIconInfo* function(GtkIconTheme* iconTheme, gchar* iconName, gint size, GtkIconLookupFlags flags) c_gtk_icon_theme_lookup_icon;
-	GtkIconInfo* function(GtkIconTheme* iconTheme, gchar*[] iconNames, gint size, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon;
+	GtkIconInfo* function(GtkIconTheme* iconTheme, gchar** iconNames, gint size, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon;
 	GtkIconInfo* function(GtkIconTheme* iconTheme, GIcon* icon, gint size, GtkIconLookupFlags flags) c_gtk_icon_theme_lookup_by_gicon;
 	GdkPixbuf* function(GtkIconTheme* iconTheme, gchar* iconName, gint size, GtkIconLookupFlags flags, GError** error) c_gtk_icon_theme_load_icon;
 	GList* function(GtkIconTheme* iconTheme) c_gtk_icon_theme_list_contexts;
@@ -7464,8 +7464,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkCurve* curve) c_gtk_curve_reset;
 	void function(GtkCurve* curve, gfloat gamma) c_gtk_curve_set_gamma;
 	void function(GtkCurve* curve, gfloat minX, gfloat maxX, gfloat minY, gfloat maxY) c_gtk_curve_set_range;
-	void function(GtkCurve* curve, int veclen, gfloat[] vector) c_gtk_curve_get_vector;
-	void function(GtkCurve* curve, int veclen, gfloat[] vector) c_gtk_curve_set_vector;
+	void function(GtkCurve* curve, int veclen, gfloat* vector) c_gtk_curve_get_vector;
+	void function(GtkCurve* curve, int veclen, gfloat* vector) c_gtk_curve_set_vector;
 	void function(GtkCurve* curve, GtkCurveType type) c_gtk_curve_set_curve_type;
 	
 	// gtk.GammaCurve

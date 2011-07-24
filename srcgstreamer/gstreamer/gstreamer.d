@@ -166,7 +166,7 @@ public class GStreamer
 	 * Returns: TRUE if GStreamer could be initialized.
 	 * Throws: GException on failure.
 	 */
-	public static int initCheck(int* argc, char**[] argv)
+	public static int initCheck(int* argc, char*** argv)
 	{
 		// gboolean gst_init_check (int *argc,  char **argv[],  GError **err);
 		GError* err = null;

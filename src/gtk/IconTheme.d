@@ -345,7 +345,7 @@ public class IconTheme : ObjectG
 	 * path = array of directories that are searched for icon themes
 	 * nElements = number of elements in path.
 	 */
-	public void setSearchPath(char*[] path, int nElements)
+	public void setSearchPath(char** path, int nElements)
 	{
 		// void gtk_icon_theme_set_search_path (GtkIconTheme *icon_theme,  const gchar *path[],  gint n_elements);
 		gtk_icon_theme_set_search_path(gtkIconTheme, path, nElements);
@@ -360,7 +360,7 @@ public class IconTheme : ObjectG
 	 * nElements = location to store number of elements
 	 *  in path, or NULL
 	 */
-	public void getSearchPath(char**[] path, int* nElements)
+	public void getSearchPath(char*** path, int* nElements)
 	{
 		// void gtk_icon_theme_get_search_path (GtkIconTheme *icon_theme,  gchar **path[],  gint *n_elements);
 		gtk_icon_theme_get_search_path(gtkIconTheme, path, nElements);
@@ -462,7 +462,7 @@ public class IconTheme : ObjectG
 	 * flags = flags modifying the behavior of the icon lookup
 	 * Returns: a GtkIconInfo structure containing informationabout the icon, or NULL if the icon wasn't found. Free withgtk_icon_info_free()
 	 */
-	public IconInfo chooseIcon(char*[] iconNames, int size, GtkIconLookupFlags flags)
+	public IconInfo chooseIcon(char** iconNames, int size, GtkIconLookupFlags flags)
 	{
 		// GtkIconInfo * gtk_icon_theme_choose_icon (GtkIconTheme *icon_theme,  const gchar *icon_names[],  gint size,  GtkIconLookupFlags flags);
 		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, iconNames, size, flags);

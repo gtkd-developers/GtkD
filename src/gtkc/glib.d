@@ -2275,11 +2275,11 @@ mixin( gshared ~"extern(C)
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean value) c_g_key_file_set_boolean;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint value) c_g_key_file_set_integer;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble value) c_g_key_file_set_double;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar*[] list, gsize length) c_g_key_file_set_string_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar*[] list, gsize length) c_g_key_file_set_locale_string_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean[] list, gsize length) c_g_key_file_set_boolean_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint[] list, gsize length) c_g_key_file_set_integer_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble[] list, gsize length) c_g_key_file_set_double_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar** list, gsize length) c_g_key_file_set_string_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar** list, gsize length) c_g_key_file_set_locale_string_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean* list, gsize length) c_g_key_file_set_boolean_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint* list, gsize length) c_g_key_file_set_integer_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble* list, gsize length) c_g_key_file_set_double_list;
 	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* comment, GError** error) c_g_key_file_set_comment;
 	gboolean function(GKeyFile* keyFile, gchar* groupName, GError** error) c_g_key_file_remove_group;
 	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error) c_g_key_file_remove_key;

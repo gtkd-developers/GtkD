@@ -473,7 +473,7 @@ mixin( gshared ~"extern(C)
 	
 	// gda.Gda
 	
-	void function(gchar* appId, gchar* versio, gint nargs, gchar*[] args) c_gda_init;
+	void function(gchar* appId, gchar* versio, gint nargs, gchar** args) c_gda_init;
 	void function(GdaInitFunc initFunc, gpointer userData) c_gda_main_run;
 	void function() c_gda_main_quit;
 	gchar* function(GdaValueType type) c_gda_type_to_string;
@@ -592,7 +592,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdaConnection* cnc, gchar* name) c_gda_connection_change_database;
 	gboolean function(GdaConnection* cnc, gchar* name) c_gda_connection_create_database;
 	gboolean function(GdaConnection* cnc, gchar* name) c_gda_connection_drop_database;
-	gboolean function(GdaConnection* cnc, gchar* tableName, GdaFieldAttributes*[] attributes) c_gda_connection_create_table;
+	gboolean function(GdaConnection* cnc, gchar* tableName, GdaFieldAttributes** attributes) c_gda_connection_create_table;
 	gboolean function(GdaConnection* cnc, gchar* tableName) c_gda_connection_drop_table;
 	GList* function(GdaConnection* cnc, GdaCommand* cmd, GdaParameterList* params) c_gda_connection_execute_command;
 	gchar* function(GdaConnection* cnc, GdaDataModel* recset) c_gda_connection_get_last_insert_id;

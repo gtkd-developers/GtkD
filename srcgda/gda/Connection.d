@@ -385,7 +385,7 @@ public class Connection : ObjectG
 	 * attributes = description of all fields for the new table.
 	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
-	public int createTable(string tableName, GdaFieldAttributes*[] attributes)
+	public int createTable(string tableName, GdaFieldAttributes** attributes)
 	{
 		// gboolean gda_connection_create_table (GdaConnection *cnc,  const gchar *table_name,  const GdaFieldAttributes *attributes[]);
 		return gda_connection_create_table(gdaConnection, Str.toStringz(tableName), attributes);

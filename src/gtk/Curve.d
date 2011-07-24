@@ -232,7 +232,7 @@ public class Curve : DrawingArea
 	 * veclen = the number of points to calculate.
 	 * vector = returns the points.
 	 */
-	public void getVector(int veclen, float[] vector)
+	public void getVector(int veclen, float* vector)
 	{
 		// void gtk_curve_get_vector (GtkCurve *curve,  int veclen,  gfloat vector[]);
 		gtk_curve_get_vector(gtkCurve, veclen, vector);
@@ -247,7 +247,7 @@ public class Curve : DrawingArea
 	 * veclen = the number of points.
 	 * vector = the points on the curve.
 	 */
-	public void setVector(int veclen, float[] vector)
+	public void setVector(int veclen, float* vector)
 	{
 		// void gtk_curve_set_vector (GtkCurve *curve,  int veclen,  gfloat vector[]);
 		gtk_curve_set_vector(gtkCurve, veclen, vector);

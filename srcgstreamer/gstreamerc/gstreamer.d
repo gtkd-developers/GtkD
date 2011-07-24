@@ -894,8 +894,8 @@ mixin( gshared ~"extern(C)
 	
 	// gstreamer.GStreamer
 	
-	void function(int* argc, char**[] argv) c_gst_init;
-	gboolean function(int* argc, char**[] argv, GError** err) c_gst_init_check;
+	void function(int* argc, char*** argv) c_gst_init;
+	gboolean function(int* argc, char*** argv, GError** err) c_gst_init_check;
 	GOptionGroup* function() c_gst_init_get_option_group;
 	void function() c_gst_deinit;
 	void function(guint* major, guint* minor, guint* micro, guint* nano) c_gst_version;

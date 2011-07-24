@@ -3003,7 +3003,7 @@ public class GtkDClass
 		}
 		while ( GtkDClass.endsWith(name, "[]") )
 		{
-			type ~= "[]";
+			type ~= "*";
 			name = std.string.strip(name[0..name.length-2]);
 		}
 		debug(type)writefln("type after %s", type);

@@ -492,7 +492,7 @@ public class GC : ObjectG
 	 * dashList = an array of dash lengths.
 	 * n = the number of elements in dash_list.
 	 */
-	public void setDashes(int dashOffset, byte[] dashList, int n)
+	public void setDashes(int dashOffset, byte* dashList, int n)
 	{
 		// void gdk_gc_set_dashes (GdkGC *gc,  gint dash_offset,  gint8 dash_list[],  gint n);
 		gdk_gc_set_dashes(gdkGC, dashOffset, dashList, n);

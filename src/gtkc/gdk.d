@@ -905,7 +905,7 @@ mixin( gshared ~"extern(C)
 	void function(GdkGC* gc, GdkSubwindowMode mode) c_gdk_gc_set_subwindow;
 	void function(GdkGC* gc, gboolean exposures) c_gdk_gc_set_exposures;
 	void function(GdkGC* gc, gint lineWidth, GdkLineStyle lineStyle, GdkCapStyle capStyle, GdkJoinStyle joinStyle) c_gdk_gc_set_line_attributes;
-	void function(GdkGC* gc, gint dashOffset, gint8[] dashList, gint n) c_gdk_gc_set_dashes;
+	void function(GdkGC* gc, gint dashOffset, gint8* dashList, gint n) c_gdk_gc_set_dashes;
 	void function(GdkGC* dstGc, GdkGC* srcGc) c_gdk_gc_copy;
 	void function(GdkGC* gc, GdkColormap* colormap) c_gdk_gc_set_colormap;
 	GdkColormap* function(GdkGC* gc) c_gdk_gc_get_colormap;
