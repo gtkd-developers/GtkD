@@ -501,7 +501,7 @@ public class TreeIter
 			long    dataLong;
 			double  dataFloat;
 			double  dataDouble;
-			char[]  dataString;
+			string  dataString;
 			
 			void*   dataUser;
 		}
