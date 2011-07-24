@@ -343,12 +343,11 @@ public class IconTheme : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * path = array of directories that are searched for icon themes
-	 * nElements = number of elements in path.
 	 */
-	public void setSearchPath(char** path, int nElements)
+	public void setSearchPath(string[] path)
 	{
 		// void gtk_icon_theme_set_search_path (GtkIconTheme *icon_theme,  const gchar *path[],  gint n_elements);
-		gtk_icon_theme_set_search_path(gtkIconTheme, path, nElements);
+		gtk_icon_theme_set_search_path(gtkIconTheme, Str.toStringzArray(path), cast(int) path.length);
 	}
 	
 	/**
@@ -357,13 +356,20 @@ public class IconTheme : ObjectG
 	 * Params:
 	 * path = location to store a list of icon theme path directories or NULL
 	 *  The stored value should be freed with g_strfreev().. allow-none. out.
-	 * nElements = location to store number of elements
-	 *  in path, or NULL
 	 */
-	public void getSearchPath(char*** path, int* nElements)
+	public void getSearchPath(out string[] path)
 	{
 		// void gtk_icon_theme_get_search_path (GtkIconTheme *icon_theme,  gchar **path[],  gint *n_elements);
-		gtk_icon_theme_get_search_path(gtkIconTheme, path, nElements);
+		char** outpath = null;
+		int nElements;
+		
+		gtk_icon_theme_get_search_path(gtkIconTheme, &outpath, &nElements);
+		
+		path = null;
+		foreach ( cstr; outpath[0 .. nElements] )
+		{
+			path ~= Str.toString(cstr);
+		}
 	}
 	
 	/**
@@ -462,10 +468,10 @@ public class IconTheme : ObjectG
 	 * flags = flags modifying the behavior of the icon lookup
 	 * Returns: a GtkIconInfo structure containing informationabout the icon, or NULL if the icon wasn't found. Free withgtk_icon_info_free()
 	 */
-	public IconInfo chooseIcon(char** iconNames, int size, GtkIconLookupFlags flags)
+	public IconInfo chooseIcon(string[] iconNames, int size, GtkIconLookupFlags flags)
 	{
 		// GtkIconInfo * gtk_icon_theme_choose_icon (GtkIconTheme *icon_theme,  const gchar *icon_names[],  gint size,  GtkIconLookupFlags flags);
-		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, iconNames, size, flags);
+		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, Str.toStringzArray(iconNames), size, flags);
 		if(p is null)
 		{
 			return null;

@@ -272,6 +272,7 @@ import: gdk.Region
 structWrap: GdkRegion* Region
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
+array: gdk_gc_set_dashes dash_list n
 nocode: gdk_gc_ref
 nocode: gdk_gc_unref
 outFile: GC

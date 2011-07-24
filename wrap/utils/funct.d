@@ -758,6 +758,7 @@ public struct Funct
 			else if ( parmsWrap[i] == "out string[]" || parmsWrap[i] == "ref string[]" )
 			{
 				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				char[] lenid = GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases);
 
 				if ( parmsWrap[i] == "out string[]" )
 					bd ~= "char** out"~ id ~" = null;";
@@ -771,7 +772,19 @@ public struct Funct
 						bd ~= "int "~ GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases) ~" = cast(int) "~ id ~".length;";
 
 				gtkCall ~= "&out"~ id;
-				end ~= id ~" = Str.toStringArray(out"~ id ~");";
+
+				if ( lenid.length > 0 )
+				{
+					end ~= id ~" = null;";
+					end ~= "foreach ( cstr; out"~ id ~"[0 .. "~ lenid ~"] )";
+					end ~= "{";
+					end ~= "	"~ id ~" ~= Str.toString(cstr);";
+					end ~= "}";
+				}
+				else
+				{
+					end ~= id ~" = Str.toStringArray(out"~ id ~");";
+				}
 			}
 			else if ( (GtkDClass.startsWith(parmsWrap[i], "out") ||
 				GtkDClass.startsWith(parmsWrap[i], "ref")) &&

@@ -94,7 +94,11 @@ public class GLtInit
 		
 		gtk_gl_init(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 	}
 	
 	/**
@@ -117,7 +121,11 @@ public class GLtInit
 		
 		auto p = gtk_gl_init_check(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 	
@@ -140,7 +148,11 @@ public class GLtInit
 		
 		auto p = gtk_gl_parse_args(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 }

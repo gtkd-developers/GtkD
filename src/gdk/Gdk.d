@@ -98,7 +98,11 @@ public class Gdk
 		
 		gdk_init(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 	}
 	
 	/**
@@ -115,7 +119,11 @@ public class Gdk
 		
 		auto p = gdk_init_check(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 	
@@ -138,7 +146,11 @@ public class Gdk
 		
 		gdk_parse_args(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 	}
 	
 	/**

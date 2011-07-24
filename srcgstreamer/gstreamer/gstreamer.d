@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = GStreamer
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,7 +40,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_init
  * omit signals:
  * imports:
  * 	- glib.ErrorG
@@ -134,22 +133,39 @@ public class GStreamer
 {
 	
 	/**
-	 * Call this function before using any other GStreamer functions in your applications.
 	 */
-	public static void init(string[] args) //public static void init(int* argc, char**[] argv)
-	{
-		char** argv = cast(char**) new char*[args.length];
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(char*)p;
-		}
-		
-		gst_init(&argc, null);//cast(char**[])&argv);
-	}
 	
 	/**
+	 * Initializes the GStreamer library, setting up internal path lists,
+	 * registering built-in elements, and loading standard plugins.
+	 * This function should be called before calling any other GLib functions. If
+	 * this is not an option, your program must initialise the GLib thread system
+	 * using g_thread_init() before any other GLib functions are called.
+	 * Note
+	 * This function will terminate your program if it was unable to initialize
+	 * GStreamer for some reason. If you want your program to fall back,
+	 * use gst_init_check() instead.
+	 * WARNING: This function does not work in the same way as corresponding
+	 * functions in other glib-style libraries, such as gtk_init(). In
+	 * particular, unknown command line options cause this function to
+	 * abort program execution.
+	 * Params:
+	 * argv = pointer to application's argv
 	 */
+	public static void init(ref string[] argv)
+	{
+		// void gst_init (int *argc,  char **argv[]);
+		char** outargv = Str.toStringzArray(argv);
+		int argc = cast(int) argv.length;
+		
+		gst_init(&argc, &outargv);
+		
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
+	}
 	
 	/**
 	 * Initializes the GStreamer library, setting up internal path lists,
@@ -161,23 +177,29 @@ public class GStreamer
 	 * this is not an option, your program must initialise the GLib thread system
 	 * using g_thread_init() before any other GLib functions are called.
 	 * Params:
-	 * argc = pointer to application's argc
 	 * argv = pointer to application's argv
 	 * Returns: TRUE if GStreamer could be initialized.
 	 * Throws: GException on failure.
 	 */
-	public static int initCheck(int* argc, char*** argv)
+	public static int initCheck(ref string[] argv)
 	{
 		// gboolean gst_init_check (int *argc,  char **argv[],  GError **err);
+		char** outargv = Str.toStringzArray(argv);
+		int argc = cast(int) argv.length;
 		GError* err = null;
 		
-		auto p = gst_init_check(argc, argv, &err);
+		auto p = gst_init_check(&argc, &outargv, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 	

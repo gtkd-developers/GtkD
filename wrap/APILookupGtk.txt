@@ -627,6 +627,11 @@ import: glib.ErrorG
 import: glib.GException
 import: glib.ListG
 structWrap: GList* ListG
+
+array: gtk_icon_theme_set_search_path path n_elements
+out: gtk_icon_theme_get_search_path path
+array: gtk_icon_theme_get_search_path path n_elements
+array: gtk_icon_theme_choose_icon icon_names
 outFile: IconTheme
 
 struct: GtkIconInfo
@@ -8427,6 +8432,8 @@ struct: GtkCurve
 class: Curve
 prefix: gtk_curve_
 prefix: gtk_
+array: gtk_curve_get_vector vector veclen
+array: gtk_curve_set_vector vector veclen
 outFile: Curve
 
 file: GtkGammaCurve.html

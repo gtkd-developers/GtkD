@@ -905,12 +905,11 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * list = an array of string values
-	 * length = number of string values in list
 	 */
-	public void setStringList(string groupName, string key, char** list, gsize length)
+	public void setStringList(string groupName, string key, string[] list)
 	{
 		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar * const list[],  gsize length);
-		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
+		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringzArray(list), cast(int) list.length);
 	}
 	
 	/**
@@ -923,12 +922,11 @@ public class KeyFile
 	 * key = a key
 	 * locale = a locale identifier
 	 * list = a NULL-terminated array of locale string values
-	 * length = the length of list
 	 */
-	public void setLocaleStringList(string groupName, string key, string locale, char** list, gsize length)
+	public void setLocaleStringList(string groupName, string key, string locale, string[] list)
 	{
 		// void g_key_file_set_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar * const list[],  gsize length);
-		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), list, length);
+		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringzArray(list), cast(int) list.length);
 	}
 	
 	/**
@@ -940,12 +938,11 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * list = an array of boolean values
-	 * length = length of list
 	 */
-	public void setBooleanList(string groupName, string key, int* list, gsize length)
+	public void setBooleanList(string groupName, string key, int[] list)
 	{
 		// void g_key_file_set_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gboolean list[],  gsize length);
-		g_key_file_set_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
+		g_key_file_set_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list.ptr, cast(int) list.length);
 	}
 	
 	/**
@@ -956,12 +953,11 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * list = an array of integer values
-	 * length = number of integer values in list
 	 */
-	public void setIntegerList(string groupName, string key, int* list, gsize length)
+	public void setIntegerList(string groupName, string key, int[] list)
 	{
 		// void g_key_file_set_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint list[],  gsize length);
-		g_key_file_set_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
+		g_key_file_set_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list.ptr, cast(int) list.length);
 	}
 	
 	/**
@@ -972,12 +968,11 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * list = an array of double values
-	 * length = number of double values in list
 	 */
-	public void setDoubleList(string groupName, string key, double* list, gsize length)
+	public void setDoubleList(string groupName, string key, double[] list)
 	{
 		// void g_key_file_set_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gdouble list[],  gsize length);
-		g_key_file_set_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
+		g_key_file_set_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list.ptr, cast(int) list.length);
 	}
 	
 	/**

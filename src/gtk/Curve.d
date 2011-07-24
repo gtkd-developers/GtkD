@@ -229,13 +229,12 @@ public class Curve : DrawingArea
 	 * gtk_curve_get_vector has been deprecated since version 2.20 and should not be used in newly-written code. Don't use this widget anymore.
 	 * Returns a vector of points representing the curve.
 	 * Params:
-	 * veclen = the number of points to calculate.
 	 * vector = returns the points.
 	 */
-	public void getVector(int veclen, float* vector)
+	public void getVector(float[] vector)
 	{
 		// void gtk_curve_get_vector (GtkCurve *curve,  int veclen,  gfloat vector[]);
-		gtk_curve_get_vector(gtkCurve, veclen, vector);
+		gtk_curve_get_vector(gtkCurve, cast(int) vector.length, vector.ptr);
 	}
 	
 	/**
@@ -244,13 +243,12 @@ public class Curve : DrawingArea
 	 * Sets the vector of points on the curve.
 	 * The curve type is set to GTK_CURVE_TYPE_FREE.
 	 * Params:
-	 * veclen = the number of points.
 	 * vector = the points on the curve.
 	 */
-	public void setVector(int veclen, float* vector)
+	public void setVector(float[] vector)
 	{
 		// void gtk_curve_set_vector (GtkCurve *curve,  int veclen,  gfloat vector[]);
-		gtk_curve_set_vector(gtkCurve, veclen, vector);
+		gtk_curve_set_vector(gtkCurve, cast(int) vector.length, vector.ptr);
 	}
 	
 	/**

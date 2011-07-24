@@ -269,7 +269,11 @@ public class Main
 		
 		auto p = gtk_parse_args(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 	
@@ -326,7 +330,11 @@ public class Main
 		
 		auto p = gtk_init_check(&argc, &outargv);
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 	
@@ -364,7 +372,11 @@ public class Main
 			throw new GException( new ErrorG(err) );
 		}
 		
-		argv = Str.toStringArray(outargv);
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 		return p;
 	}
 	

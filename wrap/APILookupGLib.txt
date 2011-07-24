@@ -1876,6 +1876,11 @@ out: g_key_file_get_double_list length
 array: g_key_file_get_boolean_list Return length
 array: g_key_file_get_integer_list Return length
 array: g_key_file_get_double_list Return length
+array: g_key_file_set_string_list list length
+array: g_key_file_set_locale_string_list list length
+array: g_key_file_set_boolean_list list length
+array: g_key_file_set_integer_list list length
+array: g_key_file_set_double_list list length
 
 nocode: g_key_file_load_from_dirs
 

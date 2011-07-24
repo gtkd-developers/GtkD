@@ -417,30 +417,15 @@ import: glib.GException
 import: glib.Str
 import: glib.OptionGroup
 structWrap: GOptionGroup* OptionGroup
-nocode: gst_init
 
 inout: gst_version major
 inout: gst_version minor
 inout: gst_version micro
 inout: gst_version nano
-code: start
-
-	/**
-	 * Call this function before using any other GStreamer functions in your applications.
-	 */
-	public static void init(string[] args) //public static void init(int* argc, char**[] argv)
-	{
-		char** argv = cast(char**) new char*[args.length];
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(char*)p;
-		}
-
-		gst_init(&argc, null);//cast(char**[])&argv);
-	}
-
-code: end
+inout: gst_init argv
+array: gst_init argv argc
+inout: gst_init_check argv
+array: gst_init_check argv argc
 outFile: gstreamer
 
 file: GstBin.html

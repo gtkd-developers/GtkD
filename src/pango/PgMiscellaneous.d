@@ -238,7 +238,11 @@ public class PgMiscellaneous
 		
 		pango_lookup_aliases(Str.toStringz(fontname), &outfamilies, &nFamilies);
 		
-		families = Str.toStringArray(outfamilies);
+		families = null;
+		foreach ( cstr; outfamilies[0 .. nFamilies] )
+		{
+			families ~= Str.toString(cstr);
+		}
 	}
 	
 	/**
