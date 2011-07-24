@@ -248,7 +248,7 @@ public class Element : ObjectGst
 	 * For your convenience in gstreamerD: you can seek to the
 	 * position of the pipeline measured in time_nanoseconds.
 	 */
-	public int seek( ulong time_nanoseconds ) //gint64
+	public int seek( long time_nanoseconds ) //gint64
 	{
 		return seek( 1.0, GstFormat.TIME, GstSeekFlags.FLUSH,
 		GstSeekType.SET, time_nanoseconds,

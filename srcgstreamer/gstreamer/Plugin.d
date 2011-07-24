@@ -55,6 +55,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- getName
  */
 
 module gstreamer.Plugin;
@@ -158,7 +159,7 @@ public class Plugin : ObjectGst
 	 * Get the short name of the plugin
 	 * Returns: the name of the plugin
 	 */
-	public string getName()
+	public override string getName()
 	{
 		// const gchar* gst_plugin_get_name (GstPlugin *plugin);
 		return Str.toString(gst_plugin_get_name(gstPlugin));

@@ -376,7 +376,7 @@ code: start
 	* For your convenience in gstreamerD: you can seek to the
 	* position of the pipeline measured in time_nanoseconds.
 	*/
-	public int seek( ulong time_nanoseconds ) //gint64
+	public int seek( long time_nanoseconds ) //gint64
 	{
 		return seek( 1.0, GstFormat.TIME, GstSeekFlags.FLUSH,
 								GstSeekType.SET, time_nanoseconds,
@@ -556,6 +556,7 @@ struct: GstCaps
 class: Caps
 prefix: gst_caps_
 prefix: gst_
+override: toString
 import: glib.Str
 import: gstreamer.Structure
 structWrap: GstCaps* Caps
@@ -1308,6 +1309,9 @@ ctorStruct: GstElement
 class: Pipeline
 prefix: gst_pipeline_
 prefix: gst_
+override: getBus
+override: setClock
+override: getClock
 import: glib.Str
 import: gstreamer.Element
 import: gstreamer.Clock
@@ -1323,6 +1327,7 @@ struct: GstPlugin
 class: Plugin
 prefix: gst_plugin_
 prefix: gst_
+override: getName
 import: glib.Str
 import: glib.Module
 import: glib.ErrorG
@@ -1338,6 +1343,7 @@ struct: GstPluginFeature
 class: PluginFeature
 prefix: gst_plugin_feature_
 prefix: gst_
+override: getName
 import: glib.Str
 import: glib.ListG
 structWrap: GstPluginFeature* PluginFeature

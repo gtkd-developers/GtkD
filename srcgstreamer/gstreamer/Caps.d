@@ -54,6 +54,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gstreamer.Caps;
@@ -530,7 +531,7 @@ public class Caps
 	 * can be converted back to a GstCaps by gst_caps_from_string().
 	 * Returns: a newly allocated string representing caps.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar* gst_caps_to_string (const GstCaps *caps);
 		return Str.toString(gst_caps_to_string(gstCaps));

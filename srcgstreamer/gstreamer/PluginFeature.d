@@ -52,6 +52,7 @@
  * local aliases:
  * 	- setName -> setFeatureName
  * overrides:
+ * 	- getName
  */
 
 module gstreamer.PluginFeature;
@@ -174,7 +175,7 @@ public class PluginFeature : ObjectGst
 	 * Gets the name of a plugin feature.
 	 * Returns: the name
 	 */
-	public string getName()
+	public override string getName()
 	{
 		// const gchar* gst_plugin_feature_get_name (GstPluginFeature *feature);
 		return Str.toString(gst_plugin_feature_get_name(gstPluginFeature));

@@ -55,6 +55,9 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- getBus
+ * 	- setClock
+ * 	- getClock
  */
 
 module gstreamer.Pipeline;
@@ -189,7 +192,7 @@ public class Pipeline : Bin
 	 * Gets the GstBus of pipeline.
 	 * Returns: a GstBus, unref after usage.MT safe.
 	 */
-	public Bus getBus()
+	public override Bus getBus()
 	{
 		// GstBus* gst_pipeline_get_bus (GstPipeline *pipeline);
 		auto p = gst_pipeline_get_bus(gstPipeline);
@@ -207,7 +210,7 @@ public class Pipeline : Bin
 	 * clock = the clock to set
 	 * Returns: TRUE if the clock could be set on the pipeline. FALSE if some element did not accept the clock.MT safe.
 	 */
-	public int setClock(Clock clock)
+	public override int setClock(Clock clock)
 	{
 		// gboolean gst_pipeline_set_clock (GstPipeline *pipeline,  GstClock *clock);
 		return gst_pipeline_set_clock(gstPipeline, (clock is null) ? null : clock.getClockStruct());
@@ -217,7 +220,7 @@ public class Pipeline : Bin
 	 * Gets the current clock used by pipeline.
 	 * Returns: a GstClock, unref after usage.
 	 */
-	public Clock getClock()
+	public override Clock getClock()
 	{
 		// GstClock* gst_pipeline_get_clock (GstPipeline *pipeline);
 		auto p = gst_pipeline_get_clock(gstPipeline);
