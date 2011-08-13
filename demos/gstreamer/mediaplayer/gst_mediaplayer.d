@@ -9,12 +9,11 @@ module gst_mediaplayer;
 import tango.util.log.Trace;//Thread safe console output.
 import Util = tango.text.Util;
 import Integer = tango.text.convert.Integer;
-import tango.util.collection.LinkSeq;
 import Stringz = tango.stdc.stringz;
 
+import tango.sys.Environment;
 import tango.io.FilePath;
-import PathUtil = tango.util.PathUtil;//for normalize, which didn't remove ../
-import tango.io.FileSystem;
+import tango.io.Path;
 
 //gtkD imports:
 import gtk.Main;
@@ -43,6 +42,7 @@ import gobject.Value;
 import gstreamer.gstreamer;
 
 import gobject.ObjectG;
+import glib.ErrorG;
 import gstreamer.Element;
 import gstreamer.Bin;
 import gstreamer.Pipeline;
@@ -163,11 +163,11 @@ public:
 
 			case GstMessageType.ERROR:
 			{
-				string  dbug;
-				GError* err;
+				string dbug;
+				ErrorG err;
 				msg.parseError(err, dbug);
 				//g_free (dbug);
-				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.message), dbug );
+				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.getErrorGStruct().message), dbug );
 				//g_error_free (err);
 				Main.quit();
 			break;
@@ -246,9 +246,9 @@ public:
 		if( args[0][0] == '.' && args[0][1] == '.' )
 			starts_with_two_dots = true;
 		
-		mypath = FileSystem.toAbsolute( mypath );//This will add /home/user...
+		mypath = mypath.absolute(Environment.cwd());//This will add /home/user...
 		if( starts_with_two_dots )
-			g_appDir = PathUtil.normalize( mypath.path() );//This will get rid of the trailing /../
+			g_appDir = normalize( mypath.path() );//This will get rid of the trailing /../
 		else g_appDir = mypath.path();
 		
 		if( remove_trailing_dotslash == true )
@@ -490,7 +490,7 @@ int main(char[][] args)
 	GStreamer.init(args);
 
 	Trace.formatln("Checking version of GStreamer...");
-	GStreamer.versio(&major, &minor, &micro, &nano);
+	GStreamer.versio(major, minor, micro, nano);
 	Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
 
 	GstMediaPlayer gstMediaPlayer = new GstMediaPlayer(args);

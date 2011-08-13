@@ -13,7 +13,6 @@ module gstreamer_helloworld;
 import tango.util.log.Trace;//Thread safe console output.
 import Util = tango.text.Util;
 import Integer = tango.text.convert.Integer;
-import tango.util.collection.LinkSeq;
 import Stringz = tango.stdc.stringz;
 
 
@@ -26,6 +25,7 @@ import gtk.Main;
 import gstreamer.gstreamer;
 
 import gobject.ObjectG;
+import glib.ErrorG;
 import gstreamer.Element;
 import gstreamer.Pipeline;
 import gstreamer.ElementFactory;
@@ -60,12 +60,11 @@ public:
 
 			case GstMessageType.ERROR:
 			{
-				string  dbug;
-				GError* err;
+				string dbug;
+				ErrorG err;
 				msg.parseError(err, dbug);
 				//g_free (dbug);
-				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.message), dbug );
-				//g_error_free (err);
+				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.getErrorGStruct().message), dbug );
 				Main.quit();
 			break;
 			}
@@ -185,7 +184,7 @@ int main(char[][] args)
 	}
 
 	Trace.formatln("Checking version of GStreamer...");
-	GStreamer.versio(&major, &minor, &micro, &nano);
+	GStreamer.versio(major, minor, micro, nano);
 	Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
 
 	Trace.formatln( "The file is: {}", args[1] );
