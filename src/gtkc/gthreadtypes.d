@@ -173,7 +173,23 @@ public struct GThread{}
  * The GMutex struct is an opaque data structure to represent a mutex
  * (mutual exclusion). It can be used to protect data against shared
  * access. Take for example the following function:
- * Example  2.  A function which will not work in a threaded environment
+ * It is easy to see that this won't work in a multi-threaded
+ * application. There current_number must be protected against shared
+ * access. A first naive implementation would be:
+ * This looks like it would work, but there is a race condition while
+ * constructing the mutex and this code cannot work reliable. Please do
+ * not use such constructs in your own programs! One working solution
+ * is:
+ * GStaticMutex provides a simpler and safer way of doing this.
+ * If you want to use a mutex, and your code should also work without
+ * calling g_thread_init() first, then you can not use a GMutex, as
+ * g_mutex_new() requires that the thread system be initialized. Use a
+ * GStaticMutex instead.
+ * A GMutex should only be accessed via the following functions.
+ * Note
+ * All of the g_mutex_* functions are
+ * actually macros. Apart from taking their addresses, you can however
+ * use them as if they were functions.
  */
 public struct GMutex{}
 
@@ -184,7 +200,26 @@ public struct GMutex{}
  * but can be defined at compile-time. Here is a shorter, easier and
  * safer version of our give_me_next_number()
  * example:
- * Example  5.
+ * Sometimes you would like to dynamically create a mutex. If you don't
+ * want to require prior calling to g_thread_init(), because your code
+ * should also be usable in non-threaded programs, you are not able to
+ * use g_mutex_new() and thus GMutex, as that requires a prior call to
+ * g_thread_init(). In theses cases you can also use a GStaticMutex.
+ * It must be initialized with g_static_mutex_init() before using it
+ * and freed with with g_static_mutex_free() when not needed anymore to
+ * free up any allocated resources.
+ * Even though GStaticMutex is not opaque, it should only be used with
+ * the following functions, as it is defined differently on different
+ * platforms.
+ * All of the g_static_mutex_* functions apart
+ * from g_static_mutex_get_mutex can also be used
+ * even if g_thread_init() has not yet been called. Then they do
+ * nothing, apart from g_static_mutex_trylock,
+ * which does nothing but returning TRUE.
+ * Note
+ * All of the g_static_mutex_*
+ * functions are actually macros. Apart from taking their addresses, you
+ * can however use them as if they were functions.
  */
 public struct GStaticMutex{}
 
@@ -215,7 +250,35 @@ public struct GStaticRecMutex{}
  * desirable that several readers can read at once, whereas of course
  * only one writer may write at a time. Take a look at the following
  * example:
- * Example  7.  An array with access functions
+ * This example shows an array which can be accessed by many readers
+ * (the my_array_get() function) simultaneously,
+ * whereas the writers (the my_array_set()
+ * function) will only be allowed once at a time and only if no readers
+ * currently access the array. This is because of the potentially
+ * dangerous resizing of the array. Using these functions is fully
+ * multi-thread safe now.
+ * Most of the time, writers should have precedence over readers. That
+ * means, for this implementation, that as soon as a writer wants to
+ * lock the data, no other reader is allowed to lock the data, whereas,
+ * of course, the readers that already have locked the data are allowed
+ * to finish their operation. As soon as the last reader unlocks the
+ * data, the writer will lock it.
+ * Even though GStaticRWLock is not opaque, it should only be used
+ * with the following functions.
+ * All of the g_static_rw_lock_* functions can be
+ * used even if g_thread_init() has not been called. Then they do
+ * nothing, apart from g_static_rw_lock_*_trylock,
+ * which does nothing but returning TRUE.
+ * Note
+ * A read-write lock has a higher overhead than a mutex. For
+ * example, both g_static_rw_lock_reader_lock() and
+ * g_static_rw_lock_reader_unlock() have to lock and unlock a
+ * GStaticMutex, so it takes at least twice the time to lock and unlock
+ * a GStaticRWLock that it does to lock and unlock a GStaticMutex. So
+ * only data structures that are accessed by multiple readers, and which
+ * keep the lock for a considerable time justify a GStaticRWLock. The
+ * above example most probably would fare better with a
+ * GStaticMutex.
  */
 public struct GStaticRWLock{}
 
@@ -226,7 +289,23 @@ public struct GStaticRWLock{}
  * condition to be false. If other threads change the state of this
  * condition they signal the GCond, and that causes the waiting
  * threads to be woken up.
- * Example  8.
+ * Whenever a thread calls pop_data() now, it will
+ * wait until current_data is non-NULL, i.e. until some other thread
+ * has called push_data().
+ * Note
+ * It is important to use the g_cond_wait() and
+ * g_cond_timed_wait() functions only inside a loop which checks for the
+ * condition to be true. It is not guaranteed that the waiting thread
+ * will find the condition fulfilled after it wakes up, even if the
+ * signaling thread left the condition in that state: another thread may
+ * have altered the condition before the waiting thread got the chance
+ * to be woken up, even if the condition itself is protected by a
+ * GMutex, like above.
+ * A GCond should only be accessed via the following functions.
+ * Note
+ * All of the g_cond_* functions are
+ * actually macros. Apart from taking their addresses, you can however
+ * use them as if they were functions.
  */
 public struct GCond{}
 
@@ -239,7 +318,17 @@ public struct GCond{}
  * above. Suppose we don't want current_number to be
  * shared between the threads, but instead to be private to each thread.
  * This can be done as follows:
- * Example  9.  Using GPrivate for per-thread data
+ * Here the pointer belonging to the key
+ * current_number_key is read. If it is NULL, it has
+ * not been set yet. Then get memory for an integer value, assign this
+ * memory to the pointer and write the pointer back. Now we have an
+ * integer value that is private to the current thread.
+ * The GPrivate struct should only be accessed via the following
+ * functions.
+ * Note
+ * All of the g_private_* functions are
+ * actually macros. Apart from taking their addresses, you can however
+ * use them as if they were functions.
  */
 public struct GPrivate{}
 
@@ -251,7 +340,6 @@ public struct GPrivate{}
  * similar to the difference between GMutex and GStaticMutex. Now
  * look at our give_me_next_number() example with
  * GStaticPrivate:
- * Example  10.  Using GStaticPrivate for per-thread data
  */
 public struct GStaticPrivate{}
 
@@ -284,32 +372,6 @@ public struct GOnce
  * of the variable you intent to protect with the lock. Look at our
  * give_me_next_number() example using the
  * G_LOCK_* macros:
- * Example  6.  Using the G_LOCK_* convenience macros
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- *  G_LOCK_DEFINE (current_number);
- * int
- * give_me_next_number (void)
- * {
-	 *  static int current_number = 0;
-	 *  int ret_val;
-	 *  G_LOCK (current_number);
-	 *  ret_val = current_number = calc_next_number (current_number);
-	 *  G_UNLOCK (current_number);
-	 *  return ret_val;
- * }
  * name  :
  * the name of the lock.
  */
@@ -374,22 +436,6 @@ public struct GOnce
  * Note
  * Calling g_once() recursively on the same GOnce struct in
  * func will lead to a deadlock.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- *  gpointer
- * get_debug_flags (void)
- * {
-	 *  static GOnce my_once = G_ONCE_INIT;
-	 *  g_once (my_once, parse_debug_flags, NULL);
-	 *  return my_once.retval;
- * }
  * once  :
  * a GOnce structure
  * func  :

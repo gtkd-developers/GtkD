@@ -134,7 +134,7 @@ public class PgMiscellaneous
 	 * Skips 0 or more characters of white space.
 	 * Params:
 	 * pos = in/out string position
-	 * Returns: FALSE if skipping the white space leavesthe position at a '\0' character.
+	 * Returns: FALSE if skipping the white space leaves the position at a '\0' character.
 	 */
 	public static int skipSpace(ref string pos)
 	{
@@ -213,7 +213,7 @@ public class PgMiscellaneous
 	 *  ~/.pangorc, and getenv (PANGO_RC_FILE).)
 	 * Params:
 	 * key = Key to look up, in the form "SECTION/KEY".
-	 * Returns: the value, if found, otherwise NULL. The value is anewly-allocated string and must be freed with g_free().
+	 * Returns: the value, if found, otherwise NULL. The value is a newly-allocated string and must be freed with g_free().
 	 */
 	public static string configKeyGet(string key)
 	{
@@ -345,7 +345,7 @@ public class PgMiscellaneous
 	 * (which is set at compile time). On Windows, returns the etc\pango
 	 * subdirectory of the Pango installation directory (which is deduced
 	 * at run time from the DLL's location).
-	 * Returns: the Pango sysconf directory. The returned string shouldnot be freed.
+	 * Returns: the Pango sysconf directory. The returned string should not be freed.
 	 */
 	public static string getSysconfSubdirectory()
 	{
@@ -358,7 +358,7 @@ public class PgMiscellaneous
 	 * (which is set at compile time). On Windows, returns the lib\pango
 	 * subdirectory of the Pango installation directory (which is deduced
 	 * at run time from the DLL's location).
-	 * Returns: the Pango lib directory. The returned string shouldnot be freed.
+	 * Returns: the Pango lib directory. The returned string should not be freed.
 	 */
 	public static string getLibSubdirectory()
 	{

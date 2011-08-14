@@ -236,7 +236,7 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Returns the current GdkGLContext.
-	 * Returns: the current GdkGLContext or NULL if there is no current context.<<Frame Buffer ConfigurationRendering Surface>>
+	 * Returns: the current GdkGLContext or NULL if there is no current context. <<Frame Buffer Configuration Rendering Surface>>
 	 */
 	public static GLContext getCurrent()
 	{

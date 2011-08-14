@@ -388,7 +388,7 @@ public class Variant
 	/**
 	 * Increases the reference count of value.
 	 * Since 2.24
-	 * Returns:the same value
+	 * Returns: the same value
 	 */
 	public Variant doref()
 	{
@@ -422,7 +422,7 @@ public class Variant
 	 * maintaining normal refcounting semantics in situations where values
 	 * are not floating.
 	 * Since 2.24
-	 * Returns:the same value
+	 * Returns: the same value
 	 */
 	public Variant refSink()
 	{
@@ -443,7 +443,7 @@ public class Variant
 	 * See g_variant_ref_sink() for more information about floating reference
 	 * counts.
 	 * Since 2.26
-	 * Returns:whether value is floating
+	 * Returns: whether value is floating
 	 */
 	public int isFloating()
 	{
@@ -456,7 +456,7 @@ public class Variant
 	 * The return value is valid for the lifetime of value and must not
 	 * be freed.
 	 * Since 2.24
-	 * Returns:a GVariantType
+	 * Returns: a GVariantType
 	 */
 	public VariantType getType()
 	{
@@ -474,7 +474,7 @@ public class Variant
 	 * g_variant_type_peek_string(), this string is nul-terminated. This
 	 * string belongs to GVariant and must not be freed.
 	 * Since 2.24
-	 * Returns:the type string for the type of value
+	 * Returns: the type string for the type of value
 	 */
 	public string getTypeString()
 	{
@@ -487,7 +487,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * type = a GVariantType
-	 * Returns:TRUE if the type of value matches type
+	 * Returns: TRUE if the type of value matches type
 	 */
 	public int isOfType(VariantType type)
 	{
@@ -497,7 +497,7 @@ public class Variant
 	
 	/**
 	 * Checks if value is a container.
-	 * Returns:TRUE if value is a container
+	 * Returns: TRUE if value is a container
 	 */
 	public int isContainer()
 	{
@@ -525,7 +525,7 @@ public class Variant
 	 * Params:
 	 * one = a basic-typed GVariant instance. [type GVariant]
 	 * two = a GVariant instance of the same type. [type GVariant]
-	 * Returns:negative value if a < b; zero if a = b; positive value if a > b.
+	 * Returns: negative value if a < b; zero if a = b; positive value if a > b.
 	 */
 	public static int compare(void* one, void* two)
 	{
@@ -536,7 +536,7 @@ public class Variant
 	/**
 	 * Classifies value according to its top-level type.
 	 * Since 2.24
-	 * Returns:the GVariantClass of value
+	 * Returns: the GVariantClass of value
 	 */
 	public GVariantClass classify()
 	{
@@ -799,7 +799,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * string = a normal C nul-terminated string
-	 * Returns:TRUE if string is a DBus object path
+	 * Returns: TRUE if string is a DBus object path
 	 */
 	public static int isObjectPath(string string)
 	{
@@ -816,7 +816,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * string = a normal C nul-terminated string
-	 * Returns:TRUE if string is a DBus type signature
+	 * Returns: TRUE if string is a DBus type signature
 	 */
 	public static int isSignature(string string)
 	{
@@ -870,7 +870,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_BOOLEAN.
 	 * Since 2.24
-	 * Returns:TRUE or FALSE
+	 * Returns: TRUE or FALSE
 	 */
 	public int getBoolean()
 	{
@@ -883,7 +883,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_BYTE.
 	 * Since 2.24
-	 * Returns:a guchar
+	 * Returns: a guchar
 	 */
 	public char getByte()
 	{
@@ -896,7 +896,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_INT16.
 	 * Since 2.24
-	 * Returns:a gint16
+	 * Returns: a gint16
 	 */
 	public short getInt16()
 	{
@@ -909,7 +909,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_UINT16.
 	 * Since 2.24
-	 * Returns:a guint16
+	 * Returns: a guint16
 	 */
 	public ushort getUint16()
 	{
@@ -922,7 +922,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_INT32.
 	 * Since 2.24
-	 * Returns:a gint32
+	 * Returns: a gint32
 	 */
 	public int getInt32()
 	{
@@ -935,7 +935,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_UINT32.
 	 * Since 2.24
-	 * Returns:a guint32
+	 * Returns: a guint32
 	 */
 	public uint getUint32()
 	{
@@ -948,7 +948,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_INT64.
 	 * Since 2.24
-	 * Returns:a gint64
+	 * Returns: a gint64
 	 */
 	public long getInt64()
 	{
@@ -961,7 +961,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_UINT64.
 	 * Since 2.24
-	 * Returns:a guint64
+	 * Returns: a guint64
 	 */
 	public ulong getUint64()
 	{
@@ -977,7 +977,7 @@ public class Variant
 	 * that are sent alongside a DBus message. If you're not interacting
 	 * with DBus, you probably don't need them.
 	 * Since 2.24
-	 * Returns:a gint32
+	 * Returns: a gint32
 	 */
 	public int getHandle()
 	{
@@ -990,7 +990,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_DOUBLE.
 	 * Since 2.24
-	 * Returns:a gdouble
+	 * Returns: a gdouble
 	 */
 	public double getDouble()
 	{
@@ -1013,7 +1013,7 @@ public class Variant
 	 * Params:
 	 * length = a pointer to a gsize,
 	 *  to store the length. [allow-none][default NULL][out NULL]
-	 * Returns:the constant string, utf8 encoded
+	 * Returns: the constant string, utf8 encoded
 	 */
 	public string getString(out gsize length)
 	{
@@ -1027,7 +1027,7 @@ public class Variant
 	 * The string will always be utf8 encoded.
 	 * The return value must be freed using g_free().
 	 * Since 2.24
-	 * Returns:a newly allocated string, utf8 encoded
+	 * Returns: a newly allocated string, utf8 encoded
 	 */
 	public string dupString()
 	{
@@ -1042,7 +1042,7 @@ public class Variant
 	 * Unboxes value. The result is the GVariant instance that was
 	 * contained in value.
 	 * Since 2.24
-	 * Returns:the item contained in the variant
+	 * Returns: the item contained in the variant
 	 */
 	public Variant getVariant()
 	{
@@ -1065,7 +1065,7 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.24
-	 * Returns: an array of constantstrings. [array length=length][transfer container length=length]
+	 * Returns: an array of constant strings. [array length=length][transfer container length=length]
 	 */
 	public string[] getStrv()
 	{
@@ -1122,7 +1122,7 @@ public class Variant
 	 * array of bytes.
 	 * The return value remains valid as long as value exists.
 	 * Since 2.26
-	 * Returns:the constant string
+	 * Returns: the constant string
 	 */
 	public string getBytestring()
 	{
@@ -1135,7 +1135,7 @@ public class Variant
 	 * returning a constant string, the string is duplicated.
 	 * The return value must be freed using g_free().
 	 * Since 2.26
-	 * Returns:a newly allocated string
+	 * Returns: a newly allocated string
 	 */
 	public string dupBytestring()
 	{
@@ -1344,7 +1344,7 @@ public class Variant
 	 * only on the type). For dictionary entries, it is always 2
 	 * This function is O(1).
 	 * Since 2.24
-	 * Returns:the number of children in the container
+	 * Returns: the number of children in the container
 	 */
 	public gsize nChildren()
 	{
@@ -1363,7 +1363,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * index = the index of the child to fetch
-	 * Returns:the child at the specified index
+	 * Returns: the child at the specified index
 	 */
 	public Variant getChildValue(gsize index)
 	{
@@ -1411,7 +1411,7 @@ public class Variant
 	 * operation which is approximately O(n) in the number of values
 	 * involved.
 	 * Since 2.24
-	 * Returns:the serialised size of value
+	 * Returns: the serialised size of value
 	 */
 	public gsize getSize()
 	{
@@ -1434,7 +1434,7 @@ public class Variant
 	 * serialisation occurs implicitly and is approximately O(n) in the size
 	 * of the result.
 	 * Since 2.24
-	 * Returns:the serialised form of value, or NULL
+	 * Returns: the serialised form of value, or NULL
 	 */
 	public void* getData()
 	{
@@ -1508,7 +1508,7 @@ public class Variant
 	 * bytes and containers containing only these things (recursively).
 	 * The returned value is always in normal form and is marked as trusted.
 	 * Since 2.24
-	 * Returns:the byteswapped form of value
+	 * Returns: the byteswapped form of value
 	 */
 	public Variant byteswap()
 	{
@@ -1535,7 +1535,7 @@ public class Variant
 	 * data from untrusted sources and you want to ensure your serialised
 	 * output is definitely in normal form.
 	 * Since 2.24
-	 * Returns:a trusted GVariant
+	 * Returns: a trusted GVariant
 	 */
 	public Variant getNormalForm()
 	{
@@ -1558,7 +1558,7 @@ public class Variant
 	 * being trusted. If the value was already marked as being trusted then
 	 * this function will immediately return TRUE.
 	 * Since 2.24
-	 * Returns:TRUE if value is in normal form
+	 * Returns: TRUE if value is in normal form
 	 */
 	public int isNormalForm()
 	{
@@ -1577,7 +1577,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * value = a basic GVariant value as a gconstpointer. [type GVariant]
-	 * Returns:a hash value corresponding to value
+	 * Returns: a hash value corresponding to value
 	 */
 	public static uint hash(void* value)
 	{
@@ -1593,7 +1593,7 @@ public class Variant
 	 * Params:
 	 * one = a GVariant instance. [type GVariant]
 	 * two = a GVariant instance. [type GVariant]
-	 * Returns:TRUE if one and two are equal
+	 * Returns: TRUE if one and two are equal
 	 */
 	public static int equal(void* one, void* two)
 	{
@@ -1608,7 +1608,7 @@ public class Variant
 	 * Params:
 	 * typeAnnotate = TRUE if type information should be included in
 	 *  the output
-	 * Returns:a newly-allocated string holding the result.
+	 * Returns: a newly-allocated string holding the result.
 	 */
 	public string print(int typeAnnotate)
 	{
@@ -1625,7 +1625,7 @@ public class Variant
 	 * string = a GString, or NULL. [allow-none][default NULL]
 	 * typeAnnotate = TRUE if type information should be included in
 	 *  the output
-	 * Returns:a GString containing the string
+	 * Returns: a GString containing the string
 	 */
 	public StringG printString(StringG string, int typeAnnotate)
 	{
@@ -1665,7 +1665,7 @@ public class Variant
 	 * text = a string containing a GVariant in text form
 	 * limit = a pointer to the end of text, or NULL
 	 * endptr = a location to store the end pointer, or NULL
-	 * Returns:a reference to a GVariant, or NULL
+	 * Returns: a reference to a GVariant, or NULL
 	 * Throws: GException on failure.
 	 */
 	public static Variant parse(VariantType type, string text, string limit, out string endptr)

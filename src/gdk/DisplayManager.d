@@ -161,7 +161,7 @@ public class DisplayManager : ObjectG
 	/**
 	 * Gets the singleton GdkDisplayManager object.
 	 * Since 2.2
-	 * Returns: The global GdkDisplayManager singleton; gdk_parse_pargs(),gdk_init(), or gdk_init_check() must have been called first.. transfer none.
+	 * Returns: The global GdkDisplayManager singleton; gdk_parse_pargs(), gdk_init(), or gdk_init_check() must have been called first. . transfer none.
 	 */
 	public static DisplayManager get()
 	{
@@ -177,7 +177,7 @@ public class DisplayManager : ObjectG
 	/**
 	 * Gets the default GdkDisplay.
 	 * Since 2.2
-	 * Returns: a GdkDisplay, or NULL if there is no default display.. transfer none.
+	 * Returns: a GdkDisplay, or NULL if there is no default display. . transfer none.
 	 */
 	public Display getDefaultDisplay()
 	{

@@ -243,7 +243,7 @@ public class ProgressBar : Progress
 	 * if any, otherwise NULL. The return value is a reference
 	 * to the text, not a copy of it, so will become invalid
 	 * if you change the text in the progress bar.
-	 * Returns: text, or NULL; this string is owned by the widgetand should not be modified or freed.
+	 * Returns: text, or NULL; this string is owned by the widget and should not be modified or freed.
 	 */
 	public string getText()
 	{

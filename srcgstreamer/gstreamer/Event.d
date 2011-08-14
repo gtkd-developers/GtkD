@@ -100,22 +100,6 @@ private import gstreamer.MiniObject;
  * construct and use seek events.
  * To do that gst_event_new_seek() is used to create a seek event. It takes
  * the needed parameters to specity seeking time and mode.
- * Example8.performing a seek on a pipeline
- *  GstEvent *event;
- *  gboolean result;
- *  ...
- *  // construct a seek event to play the media from second 2 to 5, flush
- *  // the pipeline to decrease latency.
- *  event = gst_event_new_seek (1.0,
- *  GST_FORMAT_TIME,
- *  GST_SEEK_FLAG_FLUSH,
- *  GST_SEEK_TYPE_SET, 2 * GST_SECOND,
- *  GST_SEEK_TYPE_SET, 5 * GST_SECOND);
- *  ...
- *  result = gst_element_send_event (pipeline, event);
- *  if (!result)
- *  g_warning ("seek failed");
- *  ...
  * Last reviewed on 2006-09-6 (0.10.10)
  */
 public class Event
@@ -232,7 +216,7 @@ public class Event
 	
 	/**
 	 * Access the structure of the event.
-	 * Returns: The structure of the event. The structure is stillowned by the event, which means that you should not free it andthat the pointer becomes invalid when you free the event.MT safe.
+	 * Returns: The structure of the event. The structure is still owned by the event, which means that you should not free it and that the pointer becomes invalid when you free the event. MT safe.
 	 */
 	public Structure getStructure()
 	{

@@ -103,18 +103,12 @@ private import gobject.ObjectG;
  * nothing if an object is already sunk (has no floating reference).
  * When you add a GstElement to its parent container, the parent container will
  * do this:
- *  gst_object_ref (GST_OBJECT (child_element));
- *  gst_object_sink (GST_OBJECT (child_element));
  * This means that the container now owns a reference to the child element
  * (since it called gst_object_ref()), and the child element has no floating
  * reference.
  * The purpose of the floating reference is to keep the child element alive
  * until you add it to a parent container, which then manages the lifetime of
  * the object itself:
- *  element = gst_element_factory_make (factoryname, name);
- *  // element has one floating reference to keep it alive
- *  gst_bin_add (GST_BIN (bin), element);
- *  // element has one non-floating reference owned by the container
  * Another effect of this is, that calling gst_object_unref() on a bin object,
  * will also destoy all the GstElement objects in it. The same is true for
  * calling gst_bin_remove().
@@ -295,7 +289,7 @@ public class ObjectGst : ObjectG
 	 * retains ownership of the name it sent.
 	 * Params:
 	 * name = new name of object
-	 * Returns: TRUE if the name could be set. Since Objects that havea parent cannot be renamed, this function returns FALSE in thosecases.MT safe. This function grabs and releases object's LOCK.
+	 * Returns: TRUE if the name could be set. Since Objects that have a parent cannot be renamed, this function returns FALSE in those cases. MT safe. This function grabs and releases object's LOCK.
 	 */
 	public int setName(string name)
 	{
@@ -308,7 +302,7 @@ public class ObjectGst : ObjectG
 	 * Caller should g_free() the return value after usage.
 	 * For a nameless object, this returns NULL, which you can safely g_free()
 	 * as well.
-	 * Returns: the name of object. g_free() after usage.MT safe. This function grabs and releases object's LOCK.
+	 * Returns: the name of object. g_free() after usage. MT safe. This function grabs and releases object's LOCK.
 	 */
 	public string getName()
 	{
@@ -323,7 +317,7 @@ public class ObjectGst : ObjectG
 	 * was successfully set.
 	 * Params:
 	 * parent = new parent of object
-	 * Returns: TRUE if parent could be set or FALSE when objectalready had a parent or object and parent are the same.MT safe. Grabs and releases object's LOCK.
+	 * Returns: TRUE if parent could be set or FALSE when object already had a parent or object and parent are the same. MT safe. Grabs and releases object's LOCK.
 	 */
 	public int setParent(ObjectGst parent)
 	{
@@ -334,7 +328,7 @@ public class ObjectGst : ObjectG
 	/**
 	 * Returns the parent of object. This function increases the refcount
 	 * of the parent object so you should gst_object_unref() it after usage.
-	 * Returns: parent of object, this can be NULL if object has no parent. unref after usage.MT safe. Grabs and releases object's LOCK.
+	 * Returns: parent of object, this can be NULL if object has no parent. unref after usage. MT safe. Grabs and releases object's LOCK.
 	 */
 	public ObjectGst getParent()
 	{
@@ -363,7 +357,7 @@ public class ObjectGst : ObjectG
 	 * Caller should g_free() the return value after usage.
 	 * For a prefixless object, this returns NULL, which you can safely g_free()
 	 * as well.
-	 * Returns: the name prefix of object. g_free() after usage.MT safe. This function grabs and releases object's LOCK.
+	 * Returns: the name prefix of object. g_free() after usage. MT safe. This function grabs and releases object's LOCK.
 	 */
 	public string getNamePrefix()
 	{
@@ -427,7 +421,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 * list = a list of GstObject to check through
 	 * name = the name to search for
-	 * Returns: TRUE if a GstObject named name does not appear in list, FALSE if it does.MT safe. Grabs and releases the LOCK of each object in the list.
+	 * Returns: TRUE if a GstObject named name does not appear in list, FALSE if it does. MT safe. Grabs and releases the LOCK of each object in the list.
 	 */
 	public static int checkUniqueness(ListG list, string name)
 	{
@@ -440,7 +434,7 @@ public class ObjectGst : ObjectG
 	 * the hierarchy.
 	 * Params:
 	 * ancestor = a GstObject to check as ancestor
-	 * Returns: TRUE if ancestor is an ancestor of object.MT safe. Grabs and releases object's locks.
+	 * Returns: TRUE if ancestor is an ancestor of object. MT safe. Grabs and releases object's locks.
 	 */
 	public int hasAncestor(ObjectGst ancestor)
 	{
@@ -523,7 +517,7 @@ public class ObjectGst : ObjectG
 	/**
 	 * Generates a string describing the path of object in
 	 * the object hierarchy. Only useful (or used) for debugging.
-	 * Returns: a string describing the path of object. You must g_free() the string after usage.MT safe. Grabs and releases the GstObject's LOCK for all objects in the hierarchy.
+	 * Returns: a string describing the path of object. You must g_free() the string after usage. MT safe. Grabs and releases the GstObject's LOCK for all objects in the hierarchy.
 	 */
 	public string getPathString()
 	{

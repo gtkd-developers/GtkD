@@ -144,7 +144,7 @@ public class URI
 	 * escapedString = a string.
 	 * escapedStringEnd = a string.
 	 * illegalCharacters = an optional string of illegal characters not to be allowed.
-	 * Returns: an unescaped version of escaped_string or NULL on error.The returned string should be freed when no longer needed.
+	 * Returns: an unescaped version of escaped_string or NULL on error. The returned string should be freed when no longer needed.
 	 */
 	public static string unescapeSegment(string escapedString, string escapedStringEnd, string illegalCharacters)
 	{

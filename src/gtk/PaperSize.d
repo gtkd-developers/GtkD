@@ -236,7 +236,7 @@ public class PaperSize
 	 * Params:
 	 * includeCustom = whether to include custom paper sizes
 	 *  as defined in the page setup dialog
-	 * Returns: a newly allocated list of newly allocated GtkPaperSize objects. element-type GtkPaperSize. transfer full GtkPaperSize.
+	 * Returns: a newly allocated list of newly allocated GtkPaperSize objects . element-type GtkPaperSize. transfer full GtkPaperSize.
 	 */
 	public static ListG getPaperSizes(int includeCustom)
 	{
@@ -391,7 +391,7 @@ public class PaperSize
 	 * Returns the name of the default paper size, which
 	 * depends on the current locale.
 	 * Since 2.10
-	 * Returns: the name of the default paper size. The stringis owned by GTK+ and should not be modified.
+	 * Returns: the name of the default paper size. The string is owned by GTK+ and should not be modified.
 	 */
 	public static string getDefault()
 	{

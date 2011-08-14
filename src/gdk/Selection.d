@@ -118,7 +118,7 @@ public class Selection
 	 * sendEvent = if TRUE, and the new owner is different
 	 *  from the current owner, the current owner
 	 *  will be sent a SelectionClear event.
-	 * Returns:TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
+	 * Returns: TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
 	 */
 	public static int ownerSet(Window owner, GdkAtom selection, uint time, int sendEvent)
 	{
@@ -151,7 +151,7 @@ public class Selection
 	 * Determines the owner of the given selection.
 	 * Params:
 	 * selection = an atom indentifying a selection.
-	 * Returns:if there is a selection owner for this window, and it is a window known to the current process, the GdkWindow that owns the selection, otherwise NULL. Note that the return value may be owned by a different process if a foreign window was previously created for that window, but a new foreign window will never be created by this call.
+	 * Returns: if there is a selection owner for this window, and it is a window known to the current process, the GdkWindow that owns the selection, otherwise NULL. Note that the return value may be owned by a different process if a foreign window was previously created for that window, but a new foreign window will never be created by this call.
 	 */
 	public static Window ownerGet(GdkAtom selection)
 	{
@@ -173,7 +173,7 @@ public class Selection
 	 * Params:
 	 * display = a GdkDisplay.
 	 * selection = an atom indentifying a selection.
-	 * Returns: if there is a selection owner for this window, and it is a  window known to the current process, the GdkWindow that owns the  selection, otherwise NULL.
+	 * Returns: if there is a selection owner for this window, and it is a window known to the current process, the GdkWindow that owns the selection, otherwise NULL.
 	 */
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
 	{

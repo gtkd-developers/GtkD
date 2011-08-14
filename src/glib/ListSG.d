@@ -146,7 +146,7 @@ public class ListSG
 	 * Allocates space for one GSList element. It is called by the
 	 * g_slist_append(), g_slist_prepend(), g_slist_insert() and
 	 * g_slist_insert_sorted() functions and so is rarely used on its own.
-	 * Returns:a pointer to the newly-allocated GSList element.
+	 * Returns: a pointer to the newly-allocated GSList element.
 	 */
 	public static ListSG alloc()
 	{
@@ -169,24 +169,6 @@ public class ListSG
 	 * to find the end, which is inefficient when adding multiple
 	 * elements. A common idiom to avoid the inefficiency is to prepend
 	 * the elements and reverse the list when all elements have been added.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 *  /+* Notice that these are initialized to the empty list. +/
-	 * GSList *list = NULL, *number_list = NULL;
-	 * /+* This is a list of strings. +/
-	 * list = g_slist_append (list, "first");
-	 * list = g_slist_append (list, "second");
-	 * /+* This is a list of integers. +/
-	 * number_list = g_slist_append (number_list, GINT_TO_POINTER (27));
-	 * number_list = g_slist_append (number_list, GINT_TO_POINTER (14));
 	 * Params:
 	 * data = the data for the new element
 	 * Returns: the new start of the GSList
@@ -207,14 +189,6 @@ public class ListSG
 	 * Note
 	 * The return value is the new start of the list, which
 	 * may have changed, so make sure you store the new value.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 *  /+* Notice that it is initialized to the empty list. +/
-	 * GSList *list = NULL;
-	 * list = g_slist_prepend (list, "last");
-	 * list = g_slist_prepend (list, "first");
 	 * Params:
 	 * data = the data for the new element
 	 * Returns: the new start of the GSList

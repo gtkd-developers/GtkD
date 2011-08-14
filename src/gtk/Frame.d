@@ -80,23 +80,6 @@ private import gtk.Bin;
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
- * Example  45.  A UI definition fragment with GtkFrame
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- *  <object class="GtkFrame">
- *  <child type="label">
- *  <object class="GtkLabel" id="frame-label"/>
- *  </child>
- *  <child>
- *  <object class="GtkEntry" id="frame-content"/>
- *  </child>
- * </object>
  */
 public class Frame : Bin
 {

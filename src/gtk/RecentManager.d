@@ -97,43 +97,7 @@ private import gobject.ObjectG;
  * files is shared with other people using them. In case the
  * default screen is being used, adding a new recently used
  * file is as simple as:
- *  1
- * 2
- * 3
- *  GtkRecentManager *manager;
- * manager = gtk_recent_manager_get_default ();
- * gtk_recent_manager_add_item (manager, file_uri);
  * While looking up a recently used file is as simple as:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- *  GtkRecentManager *manager;
- * GtkRecentInfo *info;
- * GError *error = NULL;
- * manager = gtk_recent_manager_get_default ();
- * info = gtk_recent_manager_lookup_item (manager, file_uri, error);
- * if (error)
- *  {
-	 *  g_warning ("Could not find the file: %s", error->message);
-	 *  g_error_free (error);
- *  }
- * else
- *  {
-	 *  /+* Use the info object +/
-	 *  gtk_recent_info_unref (info);
- *  }
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentManager : ObjectG
@@ -242,7 +206,7 @@ public class RecentManager : ObjectG
 	 * in your application without caring about memory management. The
 	 * returned instance will be freed when you application terminates.
 	 * Since 2.10
-	 * Returns: A unique GtkRecentManager. Do not ref or unref it.. transfer none.
+	 * Returns: A unique GtkRecentManager. Do not ref or unref it. . transfer none.
 	 */
 	public static RecentManager getDefault()
 	{
@@ -342,7 +306,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 * uri = a valid URI
 	 * recentData = metadata of the resource
-	 * Returns: TRUE if the new item was successfully added to therecently used resources list, FALSE otherwise.
+	 * Returns: TRUE if the new item was successfully added to the recently used resources list, FALSE otherwise.
 	 */
 	public int addFull(string uri, GtkRecentData* recentData)
 	{
@@ -473,7 +437,7 @@ public class RecentManager : ObjectG
 	/**
 	 * Gets the list of recently used resources.
 	 * Since 2.10
-	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free().. element-type GtkRecentInfo. transfer full GtkRecentInfo.
+	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free(). . element-type GtkRecentInfo. transfer full GtkRecentInfo.
 	 */
 	public ListG getItems()
 	{

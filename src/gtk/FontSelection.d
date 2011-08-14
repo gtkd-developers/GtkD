@@ -177,7 +177,7 @@ public class FontSelection : VBox
 	 * For example, "Helvetica Italic Bold 12" could be normalized to
 	 * "Helvetica Bold Italic 12". Use pango_font_description_equal()
 	 * if you want to compare two font descriptions.
-	 * Returns: A string with the name of the current font, or NULL if  no font is selected. You must free this string with g_free().
+	 * Returns: A string with the name of the current font, or NULL if no font is selected. You must free this string with g_free().
 	 */
 	public string getFontName()
 	{
@@ -192,7 +192,7 @@ public class FontSelection : VBox
 	 * fontsel is inserted in a toplevel window before you call this function.
 	 * Params:
 	 * fontname = a font name like "Helvetica 12" or "Times Bold 18"
-	 * Returns: TRUE if the font could be set successfully; FALSE if no  such font exists or if the fontsel doesn't belong to a particular  screen yet.
+	 * Returns: TRUE if the font could be set successfully; FALSE if no such font exists or if the fontsel doesn't belong to a particular screen yet.
 	 */
 	public int setFontName(string fontname)
 	{
@@ -202,7 +202,7 @@ public class FontSelection : VBox
 	
 	/**
 	 * Gets the text displayed in the preview area.
-	 * Returns: the text displayed in the preview area.  This string is owned by the widget and should not be  modified or freed
+	 * Returns: the text displayed in the preview area. This string is owned by the widget and should not be modified or freed
 	 */
 	public string getPreviewText()
 	{
@@ -226,7 +226,7 @@ public class FontSelection : VBox
 	 * Gets the PangoFontFace representing the selected font group
 	 * details (i.e. family, slant, weight, width, etc).
 	 * Since 2.14
-	 * Returns: A PangoFontFace representing the selected font  group details. The returned object is owned by fontsel and must not be modified or freed.
+	 * Returns: A PangoFontFace representing the selected font group details. The returned object is owned by fontsel and must not be modified or freed.
 	 */
 	public PgFontFace getFace()
 	{
@@ -259,7 +259,7 @@ public class FontSelection : VBox
 	/**
 	 * Gets the PangoFontFamily representing the selected font family.
 	 * Since 2.14
-	 * Returns: A PangoFontFamily representing the selected font family. Font families are a collection of font faces. The  returned object is owned by fontsel and must not be modified  or freed.
+	 * Returns: A PangoFontFamily representing the selected font family. Font families are a collection of font faces. The returned object is owned by fontsel and must not be modified or freed.
 	 */
 	public PgFontFamily getFamily()
 	{
@@ -275,7 +275,7 @@ public class FontSelection : VBox
 	/**
 	 * The selected font size.
 	 * Since 2.14
-	 * Returns: A n integer representing the selected font size,  or -1 if no font size is selected.
+	 * Returns: A n integer representing the selected font size, or -1 if no font size is selected.
 	 */
 	public int getSize()
 	{

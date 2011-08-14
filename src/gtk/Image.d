@@ -104,10 +104,6 @@ private import gtk.Misc;
  * GdkPixbuf ("pixel buffer") from a file, and then display that.
  * There's a convenience function to do this, gtk_image_new_from_file(),
  * used as follows:
- *  1
- * 2
- *  GtkWidget *image;
- * image = gtk_image_new_from_file ("myfile.png");
  * If the file isn't loaded successfully, the image will contain a
  * "broken image" icon similar to that used in many web browsers.
  * If you want to handle errors in loading the file yourself,
@@ -123,71 +119,6 @@ private import gtk.Misc;
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
- * Example  12.  Handling button press events on a
- * GtkImage.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- * 35
- *  static gboolean
- * button_press_callback (GtkWidget *event_box,
- *  GdkEventButton *event,
- *  gpointer data)
- * {
-	 *  g_print ("Event box clicked at coordinates %f,%f\n",
-	 *  event->x, event->y);
-	 *  /+* Returning TRUE means we handled the event, so the signal
-	 *  * emission should be stopped (don't call any further
-	 *  * callbacks that may be connected). Return FALSE
-	 *  * to continue invoking callbacks.
-	 *  +/
-	 *  return TRUE;
- * }
- * static GtkWidget*
- * create_image (void)
- * {
-	 *  GtkWidget *image;
-	 *  GtkWidget *event_box;
-	 *  image = gtk_image_new_from_file ("myfile.png");
-	 *  event_box = gtk_event_box_new ();
-	 *  gtk_container_add (GTK_CONTAINER (event_box), image);
-	 *  g_signal_connect (G_OBJECT (event_box),
-	 *  "button_press_event",
-	 *  G_CALLBACK (button_press_callback),
-	 *  image);
-	 *  return image;
- * }
  * When handling events on the event box, keep in mind that coordinates
  * in the image may be different from event box coordinates due to
  * the alignment and padding settings on the image (see GtkMisc).
@@ -350,7 +281,7 @@ public class Image : Misc
 	 * GTK_IMAGE_PIXBUF (see gtk_image_get_storage_type()).
 	 * The caller of this function does not own a reference to the
 	 * returned pixbuf.
-	 * Returns: the displayed pixbuf, or NULL ifthe image is empty. transfer none.
+	 * Returns: the displayed pixbuf, or NULL if the image is empty. transfer none.
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -415,7 +346,7 @@ public class Image : Misc
 	 * GTK_IMAGE_ANIMATION (see gtk_image_get_storage_type()).
 	 * The caller of this function does not own a reference to the
 	 * returned animation.
-	 * Returns: the displayed animation, or NULL ifthe image is empty. transfer none.
+	 * Returns: the displayed animation, or NULL if the image is empty. transfer none.
 	 */
 	public PixbufAnimation getAnimation()
 	{

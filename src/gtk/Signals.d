@@ -179,7 +179,7 @@ public class Signals
 	 * you don't want a return value.
 	 * args = an array of GtkTypes, describing the prototype to
 	 * the callbacks.
-	 * Returns:the signal id.
+	 * Returns: the signal id.
 	 */
 	public static uint newv(string name, GtkSignalRunType signalFlags, GType objectType, uint functionOffset, GSignalCMarshaller marshaller, GType returnVal, GType[] args)
 	{
@@ -259,7 +259,7 @@ public class Signals
 	 * after = whether to invoke the user-defined handler after the signal, or to let
 	 * the signal's default behavior preside (i.e. depending on GTK_RUN_FIRST
 	 * and GTK_RUN_LAST).
-	 * Returns:the connection id.
+	 * Returns: the connection id.
 	 */
 	public static gulong connectFull(ObjectGtk object, string name, GCallback func, GtkCallbackMarshal unsupported, void* data, GDestroyNotify destroyFunc, int objectSignal, int after)
 	{

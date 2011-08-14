@@ -297,7 +297,7 @@ public class ToolButton : ToolItem
 	 * Returns whether underscores in the label property are used as mnemonics
 	 * on menu items on the overflow menu. See gtk_tool_button_set_use_underline().
 	 * Since 2.4
-	 * Returns: TRUE if underscores in the label property are used asmnemonics on menu items on the overflow menu.
+	 * Returns: TRUE if underscores in the label property are used as mnemonics on menu items on the overflow menu.
 	 */
 	public int getUseUnderline()
 	{
@@ -351,7 +351,7 @@ public class ToolButton : ToolItem
 	 * Returns the name of the themed icon for the tool button,
 	 * see gtk_tool_button_set_icon_name().
 	 * Since 2.8
-	 * Returns: the icon name or NULL if the tool button hasno themed icon
+	 * Returns: the icon name or NULL if the tool button has no themed icon
 	 */
 	public string getIconName()
 	{

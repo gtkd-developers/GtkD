@@ -254,7 +254,7 @@ public class Screen : ObjectG
 	 * Gets the default screen for the default display. (See
 	 * gdk_display_get_default()).
 	 * Since 2.2
-	 * Returns: a GdkScreen, or NULL if there is no default display.. transfer none.
+	 * Returns: a GdkScreen, or NULL if there is no default display. . transfer none.
 	 */
 	public static Screen getDefault()
 	{
@@ -270,7 +270,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the default colormap for screen.
 	 * Since 2.2
-	 * Returns: the default GdkColormap.. transfer none.
+	 * Returns: the default GdkColormap. . transfer none.
 	 */
 	public Colormap getDefaultColormap()
 	{
@@ -298,7 +298,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the system's default colormap for screen
 	 * Since 2.2
-	 * Returns: the default colormap for screen.. transfer none.
+	 * Returns: the default colormap for screen. . transfer none.
 	 */
 	public Colormap getSystemColormap()
 	{
@@ -316,7 +316,7 @@ public class Screen : ObjectG
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
 	 * Since 2.2
-	 * Returns: the system visual. transfer none.
+	 * Returns: the system visual . transfer none.
 	 */
 	public Visual getSystemVisual()
 	{
@@ -336,7 +336,7 @@ public class Screen : ObjectG
 	 * it can render to any colormap and visual. So there's no need to
 	 * call this function.
 	 * Since 2.2
-	 * Returns: the preferred colormap. transfer none.
+	 * Returns: the preferred colormap . transfer none.
 	 */
 	public Colormap getRgbColormap()
 	{
@@ -357,7 +357,7 @@ public class Screen : ObjectG
 	 * the optimal one in those previous versions. GdkRGB can now render to
 	 * drawables with any visual.
 	 * Since 2.2
-	 * Returns: The GdkVisual chosen by GdkRGB.. transfer none.
+	 * Returns: The GdkVisual chosen by GdkRGB. . transfer none.
 	 */
 	public Visual getRgbVisual()
 	{
@@ -383,7 +383,7 @@ public class Screen : ObjectG
 	 * For setting an overall opacity for a top-level window, see
 	 * gdk_window_set_opacity().
 	 * Since 2.8
-	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available.. transfer none.
+	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available. . transfer none.
 	 */
 	public Colormap getRgbaColormap()
 	{
@@ -401,7 +401,7 @@ public class Screen : ObjectG
 	 * alpha channel. See the docs for gdk_screen_get_rgba_colormap()
 	 * for caveats.
 	 * Since 2.8
-	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available.. transfer none.
+	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available. . transfer none.
 	 */
 	public Visual getRgbaVisual()
 	{
@@ -421,7 +421,7 @@ public class Screen : ObjectG
 	 * On X11 this function returns whether a compositing manager is
 	 * compositing screen.
 	 * Since 2.10
-	 * Returns: Whether windows with RGBA visuals can reasonably beexpected to have their alpha channels drawn correctly on the screen.
+	 * Returns: Whether windows with RGBA visuals can reasonably be expected to have their alpha channels drawn correctly on the screen.
 	 */
 	public int isComposited()
 	{
@@ -432,7 +432,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the root window of screen.
 	 * Since 2.2
-	 * Returns: the root window. transfer none.
+	 * Returns: the root window . transfer none.
 	 */
 	public Window getRootWindow()
 	{
@@ -635,7 +635,7 @@ public class Screen : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * window = a GdkWindow
-	 * Returns:the monitor number in which most of window is located, or if window does not intersect any monitors, a monitor, close to window.
+	 * Returns: the monitor number in which most of window is located, or if window does not intersect any monitors, a monitor, close to window.
 	 */
 	public int getMonitorAtWindow(Window window)
 	{
@@ -758,7 +758,7 @@ public class Screen : ObjectG
 	 * Gets the resolution for font handling on the screen; see
 	 * gdk_screen_set_resolution() for full details.
 	 * Since 2.10
-	 * Returns: the current resolution, or -1 if no resolutionhas been set.
+	 * Returns: the current resolution, or -1 if no resolution has been set.
 	 */
 	public double getResolution()
 	{

@@ -87,48 +87,8 @@ private import glib.Str;
  * This is why most functions in GLib and GTK+ do not use the GError facility.
  * Functions that can fail take a return location for a GError as their last argument.
  * For example:
- *  1
- * 2
- * 3
- * 4
- *  gboolean g_file_get_contents (const gchar *filename,
- *  gchar **contents,
- *  gsize *length,
- *  GError **error);
  * If you pass a non-NULL value for the error argument, it should
  * point to a location where an error can be placed. For example:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- *  gchar *contents;
- * GError *err = NULL;
- * g_file_get_contents ("foo.txt", contents, NULL, err);
- * g_assert ((contents == NULL  err != NULL) || (contents != NULL  err == NULL));
- * if (err != NULL)
- *  {
-	 *  /+* Report error to user, and free error +/
-	 *  g_assert (contents == NULL);
-	 *  fprintf (stderr, "Unable to read file: %s\n", err->message);
-	 *  g_error_free (err);
- *  }
- * else
- *  {
-	 *  /+* Use file contents +/
-	 *  g_assert (contents != NULL);
- *  }
  * Note that err != NULL in this example is a
  * reliable indicator of whether
  * g_file_get_contents() failed. Additionally, g_file_get_contents() returns
@@ -136,14 +96,6 @@ private import glib.Str;
  * Because g_file_get_contents() returns FALSE on failure, if you are only
  * interested in whether it failed and don't need to display an error message, you
  * can pass NULL for the error argument:
- *  1
- * 2
- * 3
- * 4
- *  if (g_file_get_contents ("foo.txt", contents, NULL, NULL)) /+* ignore errors +/
- *  /+* no error occurred +/ ;
- * else
- *  /+* error +/ ;
  * The GError object contains three fields: domain indicates
  * the module the error-reporting function is located in, code
  * indicates the specific error that occurred, and message is a
@@ -161,136 +113,14 @@ private import glib.Str;
  * g_set_error(). Typically, if a fatal error occurs you want to g_set_error(),
  * then return immediately. g_set_error() does nothing if the error location passed
  * to it is NULL. Here's an example:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- *  gint
- * foo_open_file (GError **error)
- * {
-	 *  gint fd;
-	 *  fd = open ("file.txt", O_RDONLY);
-	 *  if (fd < 0)
-	 *  {
-		 *  g_set_error (error,
-		 *  FOO_ERROR, /+* error domain +/
-		 *  FOO_ERROR_BLAH, /+* error code +/
-		 *  "Failed to open file: %s", /+* error message format string +/
-		 *  g_strerror (errno));
-		 *  return -1;
-	 *  }
-	 *  else
-	 *  return fd;
- * }
  * Things are somewhat more complicated if you yourself call another function that
  * can report a GError. If the sub-function indicates fatal errors in some way
  * other than reporting a GError, such as by returning TRUE on success, you can
  * simply do the following:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- *  gboolean
- * my_function_that_can_fail (GError **err)
- * {
-	 *  g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-	 *  if (!sub_function_that_can_fail (err))
-	 *  {
-		 *  /+* assert that error was set by the sub-function +/
-		 *  g_assert (err == NULL || *err != NULL);
-		 *  return FALSE;
-	 *  }
-	 *  /+* otherwise continue, no error occurred +/
-	 *  g_assert (err == NULL || *err == NULL);
- * }
  * If the sub-function does not indicate errors other than by reporting a GError,
  * you need to create a temporary GError since the passed-in one may be NULL.
  * g_propagate_error() is intended for use in this case.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- *  gboolean
- * my_function_that_can_fail (GError **err)
- * {
-	 *  GError *tmp_error;
-	 *  g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-	 *  tmp_error = NULL;
-	 *  sub_function_that_can_fail (tmp_error);
-	 *  if (tmp_error != NULL)
-	 *  {
-		 *  /+* store tmp_error in err, if err != NULL,
-		 *  * otherwise call g_error_free() on tmp_error
-		 *  +/
-		 *  g_propagate_error (err, tmp_error);
-		 *  return FALSE;
-	 *  }
-	 *  /+* otherwise continue, no error occurred +/
- * }
  * Error pileups are always a bug. For example, this code is incorrect:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- *  gboolean
- * my_function_that_can_fail (GError **err)
- * {
-	 *  GError *tmp_error;
-	 *  g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-	 *  tmp_error = NULL;
-	 *  sub_function_that_can_fail (tmp_error);
-	 *  other_function_that_can_fail (tmp_error);
-	 *  if (tmp_error != NULL)
-	 *  {
-		 *  g_propagate_error (err, tmp_error);
-		 *  return FALSE;
-	 *  }
- * }
  * tmp_error should be checked immediately after
  * sub_function_that_can_fail(), and either cleared or propagated upward. The rule
  * is: after each error, you must either handle the error, or return it to the
@@ -298,34 +128,6 @@ private import glib.Str;
  * equivalent of handling an error by always doing nothing about it. So the
  * following code is fine, assuming errors in sub_function_that_can_fail() are not
  * fatal to my_function_that_can_fail():
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- *  gboolean
- * my_function_that_can_fail (GError **err)
- * {
-	 *  GError *tmp_error;
-	 *  g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-	 *  sub_function_that_can_fail (NULL); /+* ignore errors +/
-	 *  tmp_error = NULL;
-	 *  other_function_that_can_fail (tmp_error);
-	 *  if (tmp_error != NULL)
-	 *  {
-		 *  g_propagate_error (err, tmp_error);
-		 *  return FALSE;
-	 *  }
- * }
  * Note that passing NULL for the error location ignores
  * errors; it's equivalent to try { sub_function_that_can_fail(); } catch
  * (...) {} in C++. It does not mean to leave errors
@@ -334,18 +136,6 @@ private import glib.Str;
  * The error domain is called
  * <NAMESPACE>_<MODULE>_ERROR, for example
  * G_SPAWN_ERROR or G_THREAD_ERROR:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- *  #define G_SPAWN_ERROR g_spawn_error_quark ()
- * GQuark
- * g_spawn_error_quark (void)
- * {
-	 *  return g_quark_from_static_string ("g-spawn-error-quark");
- * }
  * The quark function for the error domain is called <namespace>_<module>_error_quark, for example g_spawn_error_quark() or %g_thread_error_quark().
  * The error codes are in an enumeration called
  * <Namespace><Module>Error; for example,

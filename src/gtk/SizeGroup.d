@@ -111,21 +111,6 @@ private import gobject.ObjectG;
  * size group are specified by a <widgets> element that may
  * contain multiple <widget> elements, one for each member
  * of the size group. The name attribute gives the id of the widget.
- * Example  51.  A UI definition fragment with GtkSizeGroup
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- *  <object class="GtkSizeGroup">
- *  <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
- *  <widgets>
- *  <widget name="radio1"/>
- *  <widget name="radio2"/>
- *  </widgets>
- * </object>
  */
 public class SizeGroup : ObjectG, BuildableIF
 {
@@ -278,7 +263,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Returns the list of widgets associated with size_group.
 	 * Since 2.10
-	 * Returns: a GSList of widgets. The list is owned by GTK+ and should not be modified.. element-type GtkWidget. transfer none GtkWidget.
+	 * Returns: a GSList of widgets. The list is owned by GTK+ and should not be modified. . element-type GtkWidget. transfer none GtkWidget.
 	 */
 	public ListSG getWidgets()
 	{

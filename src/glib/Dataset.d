@@ -118,7 +118,7 @@ public class Dataset
 	 * Params:
 	 * datasetLocation = the location identifying the dataset.
 	 * keyId = the GQuark id to identify the data element.
-	 * Returns:the data element corresponding to the GQuark, or NULL if it is not found.
+	 * Returns: the data element corresponding to the GQuark, or NULL if it is not found.
 	 */
 	public static void* idGetData(void* datasetLocation, GQuark keyId)
 	{
@@ -132,7 +132,7 @@ public class Dataset
 	 * Params:
 	 * datasetLocation = the location identifying the dataset.
 	 * keyId = the GQuark ID identifying the data element.
-	 * Returns:the data previously stored at key_id, or NULL if none.
+	 * Returns: the data previously stored at key_id, or NULL if none.
 	 */
 	public static void* idRemoveNoNotify(void* datasetLocation, GQuark keyId)
 	{

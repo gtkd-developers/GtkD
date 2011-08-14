@@ -119,7 +119,7 @@ public class Bitmap
 	 * data = a pointer to the XBM data.
 	 * width = the width of the new pixmap in pixels.
 	 * height = the height of the new pixmap in pixels.
-	 * Returns:the GdkBitmap
+	 * Returns: the GdkBitmap
 	 */
 	public static Bitmap createFromData(Drawable drawable, string data, int width, int height)
 	{

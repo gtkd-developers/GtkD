@@ -235,7 +235,7 @@ public class StateSet : ObjectG
 	 * Constructs the union of the two sets.
 	 * Params:
 	 * compareSet = another AtkStateSet
-	 * Returns: a new AtkStateSet which is the union of the two sets,returning NULL is empty.
+	 * Returns: a new AtkStateSet which is the union of the two sets, returning NULL is empty.
 	 */
 	public StateSet orSets(StateSet compareSet)
 	{

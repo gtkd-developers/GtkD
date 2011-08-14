@@ -91,20 +91,10 @@ private import gobject.ObjectG;
  * is already sunk (has no floating reference).
  * When you add a widget to its parent container, the parent container
  * will do this:
- *  1
- *  g_object_ref_sink (G_OBJECT (child_widget));
  * This means that the container now owns a reference to the child widget
  * and the child widget has no floating reference.
  * The purpose of the floating reference is to keep the child widget alive
  * until you add it to a parent container:
- *  1
- * 2
- * 3
- * 4
- *  button = gtk_button_new ();
- * /+* button has one floating reference to keep it alive +/
- * gtk_container_add (GTK_CONTAINER (container), button);
- * /+* button has one non-floating reference owned by the container +/
  * GtkWindow is a special case, because GTK+ itself will ref/sink it on creation.
  * That is, after calling gtk_window_new(), the GtkWindow will have one
  * reference which is owned by GTK+, and no floating references.
@@ -313,7 +303,7 @@ public class ObjectGtk : ObjectG
 	 * Get the object's user data pointer.
 	 * This is intended to be a pointer for your convenience in
 	 * writing applications.
-	 * Returns:the user data field for object.
+	 * Returns: the user data field for object.
 	 */
 	public void* getUserData()
 	{
@@ -385,7 +375,7 @@ public class ObjectGtk : ObjectG
 	 * to get an id from a string.
 	 * Params:
 	 * dataId = quark of the key.
-	 * Returns:the data if found, or NULL if no such data exists.
+	 * Returns: the data if found, or NULL if no such data exists.
 	 */
 	public void* getDataById(GQuark dataId)
 	{

@@ -139,7 +139,7 @@ public class Image
 	 * Sets the textual description for this image.
 	 * Params:
 	 * description = a string description to set for image
-	 * Returns: boolean TRUE, or FALSE if operation couldnot be completed.
+	 * Returns: boolean TRUE, or FALSE if operation could not be completed.
 	 */
 	public int setImageDescription(string description)
 	{
@@ -163,7 +163,7 @@ public class Image
 	
 	/**
 	 * Since ATK 1.12
-	 * Returns:a string corresponding to the POSIX LC_MESSAGES locale used by the image description, or NULL if the image does not specify a locale.
+	 * Returns: a string corresponding to the POSIX LC_MESSAGES locale used by the image description, or NULL if the image does not specify a locale.
 	 */
 	public string getImageLocale()
 	{

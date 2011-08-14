@@ -186,7 +186,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Gets the raw binary address data from address.
 	 * Since 2.22
-	 * Returns: a pointer to an internal array of the bytes in address,which should not be modified, stored, or freed. The size of thisarray can be gotten with g_inet_address_get_native_size().
+	 * Returns: a pointer to an internal array of the bytes in address, which should not be modified, stored, or freed. The size of this array can be gotten with g_inet_address_get_native_size().
 	 */
 	public ubyte[] toBytes()
 	{
@@ -210,7 +210,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Converts address to string form.
 	 * Since 2.22
-	 * Returns: a representation of address as a string, which should befreed after use.
+	 * Returns: a representation of address as a string, which should be freed after use.
 	 */
 	public override string toString()
 	{

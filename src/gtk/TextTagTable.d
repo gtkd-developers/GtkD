@@ -287,7 +287,7 @@ public class TextTagTable : ObjectG
 	 * Returns the size of the table (number of tags)
 	 * Params:
 	 * table = a GtkTextTagTable
-	 * Returns: number of tags in tableSignal DetailsThe "tag-added" signalvoid user_function (GtkTextTagTable *texttagtable, GtkTextTag *arg1, gpointer user_data) : Run Last
+	 * Returns: number of tags in table Signal Details The "tag-added" signal void user_function (GtkTextTagTable *texttagtable, GtkTextTag *arg1, gpointer user_data) : Run Last
 	 */
 	public int tableGetSize()
 	{

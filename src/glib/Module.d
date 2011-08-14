@@ -86,77 +86,6 @@ private import glib.Str;
  * If your module introduces static data to common subsystems in the running
  * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
- * Example  11.  Calling a function defined in a GModule
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- * 35
- *  /+* the function signature for 'say_hello' +/
- * typedef void (* SayHelloFunc) (const char *message);
- * gboolean
- * just_say_hello (const char *filename, GError **error)
- * {
-	 *  SayHelloFunc say_hello;
-	 *  GModule *module;
-	 *  module = g_module_open (filename, G_MODULE_BIND_LAZY);
-	 *  if (!module)
-	 *  {
-		 *  g_set_error (error, FOO_ERROR, FOO_ERROR_BLAH,
-		 *  "%s", g_module_error ());
-		 *  return FALSE;
-	 *  }
-	 *  if (!g_module_symbol (module, "say_hello", (gpointer *)say_hello))
-	 *  {
-		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN,
-		 *  "%s: %s", filename, g_module_error ());
-		 *  if (!g_module_close (module))
-		 *  g_warning ("%s: %s", filename, g_module_error ());
-		 *  return FALSE;
-	 *  }
-	 *  if (say_hello == NULL)
-	 *  {
-		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN, "symbol say_hello is NULL");
-		 *  if (!g_module_close (module))
-		 *  g_warning ("%s: %s", filename, g_module_error ());
-		 *  return FALSE;
-	 *  }
-	 *  /+* call our function in the module +/
-	 *  say_hello ("Hello world!");
-	 *  if (!g_module_close (module))
-	 *  g_warning ("%s: %s", filename, g_module_error ());
-	 *  return TRUE;
- * }
  */
 public class Module
 {
@@ -195,7 +124,7 @@ public class Module
 	
 	/**
 	 * Checks if modules are supported on the current platform.
-	 * Returns:TRUE if modules are supported.
+	 * Returns: TRUE if modules are supported.
 	 */
 	public static int supported()
 	{
@@ -221,7 +150,7 @@ public class Module
 	 * string to indicate that the standard platform-specific directories will be
 	 * used, though that is not recommended.
 	 * moduleName = the name of the module.
-	 * Returns:the complete path of the module, including the standard libraryprefix and suffix. This should be freed when no longer needed.
+	 * Returns: the complete path of the module, including the standard library prefix and suffix. This should be freed when no longer needed.
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
@@ -245,7 +174,7 @@ public class Module
 	 *  a GModule representing the main program itself.
 	 * flags = the flags used for opening the module. This can be the logical
 	 * OR of any of the GModuleFlags.
-	 * Returns:a GModule on success, or NULL on failure.
+	 * Returns: a GModule on success, or NULL on failure.
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
@@ -264,7 +193,7 @@ public class Module
 	 * Params:
 	 * symbolName = the name of the symbol to find.
 	 * symbol = returns the pointer to the symbol value.
-	 * Returns:TRUE on success.
+	 * Returns: TRUE on success.
 	 */
 	public int symbol(string symbolName, void** symbol)
 	{
@@ -274,7 +203,7 @@ public class Module
 	
 	/**
 	 * Gets the filename from a GModule.
-	 * Returns:the filename of the module, or "main" if the module is the mainprogram itself.
+	 * Returns: the filename of the module, or "main" if the module is the main program itself.
 	 */
 	public string name()
 	{
@@ -294,7 +223,7 @@ public class Module
 	
 	/**
 	 * Closes a module.
-	 * Returns:TRUE on success.
+	 * Returns: TRUE on success.
 	 */
 	public int close()
 	{
@@ -304,7 +233,7 @@ public class Module
 	
 	/**
 	 * Gets a string describing the last module error.
-	 * Returns:a string describing the last module error.
+	 * Returns: a string describing the last module error.
 	 */
 	public static string error()
 	{

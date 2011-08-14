@@ -123,7 +123,7 @@ public class Pixdata
 	 * Params:
 	 * pixbuf = the data to fill pixdata with.
 	 * useRle = whether to use run-length encoding for the pixel data.
-	 * Returns: If ure_rle is TRUE, a pointer to the newly-allocated memory  for the run-length encoded pixel data, otherwise NULL.
+	 * Returns: If ure_rle is TRUE, a pointer to the newly-allocated memory for the run-length encoded pixel data, otherwise NULL.
 	 */
 	public void* fromPixbuf(Pixbuf pixbuf, int useRle)
 	{
@@ -165,7 +165,7 @@ public class Pixdata
 	 * The byte stream consists of a straightforward writeout of the
 	 * GdkPixdata fields in network byte order, plus the pixel_data
 	 * bytes the structure points to.
-	 * Returns: A newly-allocated string containing the serializedGdkPixdata structure.
+	 * Returns: A newly-allocated string containing the serialized GdkPixdata structure.
 	 */
 	public ubyte[] serialize()
 	{
@@ -185,7 +185,7 @@ public class Pixdata
 	 * or GDK_PIXBUF_ERROR_UNKNOWN_TYPE.
 	 * Params:
 	 * stream = stream of bytes containing a serialized GdkPixdata structure.
-	 * Returns: Upon successful deserialization TRUE is returned,FALSE otherwise.
+	 * Returns: Upon successful deserialization TRUE is returned, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int deserialize(ubyte[] stream)

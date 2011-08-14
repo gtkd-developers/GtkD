@@ -140,7 +140,7 @@ public template IconT(TStruct)
 	 *  If icon is a GThemedIcon with exactly one name, the encoding is
 	 *  simply the name (such as network-server).
 	 * Since 2.20
-	 * Returns: An allocated NUL-terminated UTF8 string or NULL if icon can'tbe serialized. Use g_free() to free.
+	 * Returns: An allocated NUL-terminated UTF8 string or NULL if icon can't be serialized. Use g_free() to free.
 	 */
 	public override string toString()
 	{

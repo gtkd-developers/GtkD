@@ -145,7 +145,7 @@ public class Hypertext
 	 * link_index
 	 * Params:
 	 * linkIndex = an integer specifying the desired link
-	 * Returns: the link in this hypertext document atindex link_index
+	 * Returns: the link in this hypertext document at index link_index
 	 */
 	public Hyperlink getLink(int linkIndex)
 	{
@@ -173,7 +173,7 @@ public class Hypertext
 	 * the character specified by char_index.
 	 * Params:
 	 * charIndex = a character index
-	 * Returns: an index into the array of hyperlinks in hypertext,or -1 if there is no hyperlink associated with this character.Signal DetailsThe "link-selected" signalvoid user_function (AtkHypertext *atkhypertext, gint arg1, gpointer user_data) : Run LastThe "link-selected" signal is emitted by an AtkHyperText object when one ofthe hyperlinks associated with the object is selected.
+	 * Returns: an index into the array of hyperlinks in hypertext, or -1 if there is no hyperlink associated with this character. Signal Details The "link-selected" signal void user_function (AtkHypertext *atkhypertext, gint arg1, gpointer user_data) : Run Last The "link-selected" signal is emitted by an AtkHyperText object when one of the hyperlinks associated with the object is selected.
 	 */
 	public int getLinkIndex(int charIndex)
 	{

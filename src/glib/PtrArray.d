@@ -78,30 +78,6 @@ private import glib.ConstructionException;
  * To access an element of a pointer array, use g_ptr_array_index().
  * To set the size of a pointer array, use g_ptr_array_set_size().
  * To free a pointer array, use g_ptr_array_free().
- * Example  21.  Using a GPtrArray
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- *  GPtrArray *gparray;
- * gchar *string1 = "one", *string2 = "two", *string3 = "three";
- * gparray = g_ptr_array_new ();
- * g_ptr_array_add (gparray, (gpointer) string1);
- * g_ptr_array_add (gparray, (gpointer) string2);
- * g_ptr_array_add (gparray, (gpointer) string3);
- * if (g_ptr_array_index (gparray, 0) != (gpointer) string1)
- *  g_print ("ERROR: got %p instead of %p\n",
- *  g_ptr_array_index (gparray, 0), string1);
- * g_ptr_array_free (gparray, TRUE);
  */
 public class PtrArray
 {
@@ -160,7 +136,7 @@ public class PtrArray
 	 * the size of the array is still 0.
 	 * Params:
 	 * reservedSize = number of pointers preallocated.
-	 * Returns:the new GPtrArray.
+	 * Returns: the new GPtrArray.
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{
@@ -259,7 +235,7 @@ public class PtrArray
 	 * pointer was not found.
 	 * Params:
 	 * data = the pointer to remove.
-	 * Returns:TRUE if the pointer is removed. FALSE if the pointer is not found in the array.
+	 * Returns: TRUE if the pointer is removed. FALSE if the pointer is not found in the array.
 	 */
 	public int remove(void* data)
 	{
@@ -274,7 +250,7 @@ public class PtrArray
 	 * element.
 	 * Params:
 	 * index = the index of the pointer to remove.
-	 * Returns:the pointer which was removed.
+	 * Returns: the pointer which was removed.
 	 */
 	public void* removeIndex(uint index)
 	{
@@ -292,7 +268,7 @@ public class PtrArray
 	 * pointer was not found.
 	 * Params:
 	 * data = the pointer to remove.
-	 * Returns:TRUE if the pointer was found in the array.
+	 * Returns: TRUE if the pointer was found in the array.
 	 */
 	public int removeFast(void* data)
 	{
@@ -308,7 +284,7 @@ public class PtrArray
 	 * GDestroyNotify function it is called for the removed element.
 	 * Params:
 	 * index = the index of the pointer to remove.
-	 * Returns:the pointer which was removed.
+	 * Returns: the pointer which was removed.
 	 */
 	public void* removeIndexFast(uint index)
 	{
@@ -396,7 +372,7 @@ public class PtrArray
 	 * GDestroyNotify function has been set for array.
 	 * Params:
 	 * freeSeg = if TRUE the actual pointer array is freed as well.
-	 * Returns:the pointer array if free_seg is FALSE, otherwise NULL. The pointer array should be freed using g_free().
+	 * Returns: the pointer array if free_seg is FALSE, otherwise NULL. The pointer array should be freed using g_free().
 	 */
 	public void** free(int freeSeg)
 	{

@@ -192,7 +192,7 @@ public class QuarkList
 	 * Searches for the value identified by name in the given GdaQuarkList.
 	 * Params:
 	 * name = the name of the value to search for.
-	 * Returns: the value associated with the given key if found, or NULLif not found.
+	 * Returns: the value associated with the given key if found, or NULL if not found.
 	 */
 	public string find(string name)
 	{

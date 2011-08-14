@@ -154,7 +154,7 @@ public class EventBox : Bin
 	 * windows of its child. See gtk_event_box_set_above_child() for
 	 * details.
 	 * Since 2.4
-	 * Returns: TRUE if the event box window is above the windowof its child.
+	 * Returns: TRUE if the event box window is above the window of its child.
 	 */
 	public int getAboveChild()
 	{

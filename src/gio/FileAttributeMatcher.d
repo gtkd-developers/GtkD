@@ -206,7 +206,7 @@ public class FileAttributeMatcher
 	 * TODO: this is awkwardly worded.
 	 * Params:
 	 * ns = a string containing a file attribute namespace.
-	 * Returns: TRUE if the matcher matches all of the entriesin the given ns, FALSE otherwise.
+	 * Returns: TRUE if the matcher matches all of the entries in the given ns, FALSE otherwise.
 	 */
 	public int enumerateNamespace(string ns)
 	{

@@ -440,7 +440,7 @@ public class SourceCompletion : ObjectGtk
 	 * position will be used.
 	 * Params:
 	 * position = A GtkTextIter
-	 * Returns: a new GtkSourceCompletionContext. The reference being returnedis a 'floating' reference, so if you invoke gtk_source_completion_showwith this context you don't need to unref it.
+	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it.
 	 */
 	public SourceCompletionContext createContext(TextIter position)
 	{

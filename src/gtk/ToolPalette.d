@@ -92,90 +92,11 @@ private import gtk.Container;
  * instead they are added to a GtkToolItemGroup which can than be added
  * to a GtkToolPalette. To add a GtkToolItemGroup to a GtkToolPalette,
  * use gtk_container_add().
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- *  GtkWidget *palette, *group;
- * GtkToolItem *item;
- * palette = gtk_tool_palette_new ();
- * group = gtk_tool_item_group_new (_("Test Category"));
- * gtk_container_add (GTK_CONTAINER (palette), group);
- * item = gtk_tool_button_new_from_stock (GTK_STOCK_OK);
- * gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
  * The easiest way to use drag and drop with GtkToolPalette is to call
  * gtk_tool_palette_add_drag_dest() with the desired drag source palette
  * and the desired drag target widget. Then gtk_tool_palette_get_drag_item()
  * can be used to get the dragged item in the "drag-data-received"
  * signal handler of the drag target.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- *  static void
- * passive_canvas_drag_data_received (GtkWidget *widget,
- *  GdkDragContext *context,
- *  gint x,
- *  gint y,
- *  GtkSelectionData *selection,
- *  guint info,
- *  guint time,
- *  gpointer data)
- * {
-	 *  GtkWidget *palette;
-	 *  GtkWidget *item;
-	 *  /+* Get the dragged item +/
-	 *  palette = gtk_widget_get_ancestor (gtk_drag_get_source_widget (context),
-	 *  GTK_TYPE_TOOL_PALETTE);
-	 *  if (palette != NULL)
-	 *  item = gtk_tool_palette_get_drag_item (GTK_TOOL_PALETTE (palette),
-	 *  selection);
-	 *  /+* Do something with item +/
- * }
- * GtkWidget *target, palette;
- * palette = gtk_tool_palette_new ();
- * target = gtk_drawing_area_new ();
- * g_signal_connect (G_OBJECT (target), "drag-data-received",
- *  G_CALLBACK (passive_canvas_drag_data_received), NULL);
- * gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
- *  GTK_DEST_DEFAULT_ALL,
- *  GTK_TOOL_PALETTE_DRAG_ITEMS,
- *  GDK_ACTION_COPY);
  */
 public class ToolPalette : Container, OrientableIF
 {
@@ -366,7 +287,7 @@ public class ToolPalette : Container, OrientableIF
 	 * Gets the size of icons in the tool palette.
 	 * See gtk_tool_palette_set_icon_size().
 	 * Since 2.20
-	 * Returns: the GtkIconSize of icons in the tool palette. type int
+	 * Returns: the GtkIconSize of icons in the tool palette . type int
 	 */
 	public GtkIconSize getIconSize()
 	{

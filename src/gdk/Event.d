@@ -145,7 +145,7 @@ public class Event
 	/**
 	 * If there is an event waiting in the event queue of some open
 	 * display, returns a copy of it. See gdk_display_peek_event().
-	 * Returns: a copy of the first GdkEvent on some event queue, or NULL if noevents are in any queues. The returned GdkEvent should be freed withgdk_event_free().
+	 * Returns: a copy of the first GdkEvent on some event queue, or NULL if no events are in any queues. The returned GdkEvent should be freed with gdk_event_free().
 	 */
 	public static Event peek()
 	{
@@ -162,7 +162,7 @@ public class Event
 	 * Checks all open displays for a GdkEvent to process,to be processed
 	 * on, fetching events from the windowing system if necessary.
 	 * See gdk_display_get_event().
-	 * Returns: the next GdkEvent to be processed, or NULL if no eventsare pending. The returned GdkEvent should be freed with gdk_event_free().
+	 * Returns: the next GdkEvent to be processed, or NULL if no events are pending. The returned GdkEvent should be freed with gdk_event_free().
 	 */
 	public static Event get()
 	{
@@ -183,7 +183,7 @@ public class Event
 	 * GraphicsExpose events are handled before the widget is scrolled.
 	 * Params:
 	 * window = the GdkWindow to wait for the events for.
-	 * Returns: a GdkEventExpose if a GraphicsExpose was received, or NULL if aNoExpose event was received.
+	 * Returns: a GdkEventExpose if a GraphicsExpose was received, or NULL if a NoExpose event was received.
 	 */
 	public static Event getGraphicsExpose(Window window)
 	{
@@ -228,7 +228,7 @@ public class Event
 	/**
 	 * Copies a GdkEvent, copying or incrementing the reference count of the
 	 * resources associated with it (e.g. GdkWindow's and strings).
-	 * Returns: a copy of event. The returned GdkEvent should be freed withgdk_event_free().
+	 * Returns: a copy of event. The returned GdkEvent should be freed with gdk_event_free().
 	 */
 	public Event copy()
 	{

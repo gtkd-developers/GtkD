@@ -153,7 +153,7 @@ public interface MountIF
 	
 	/**
 	 * Gets the name of mount.
-	 * Returns: the name for the given mount.  The returned string should be freed with g_free() when no longer needed.
+	 * Returns: the name for the given mount. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getName();
 	
@@ -168,7 +168,7 @@ public interface MountIF
 	
 	/**
 	 * Gets the icon for mount.
-	 * Returns: a GIcon. The returned object should be unreffed with  g_object_unref() when no longer needed.
+	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed.
 	 */
 	public IconIF getIcon();
 	
@@ -176,19 +176,19 @@ public interface MountIF
 	 * Gets the drive for the mount.
 	 * This is a convenience method for getting the GVolume and then
 	 * using that object to get the GDrive.
-	 * Returns: a GDrive or NULL if mount is not associated with a volume or a drive. The returned object should be unreffed with  g_object_unref() when no longer needed.
+	 * Returns: a GDrive or NULL if mount is not associated with a volume or a drive. The returned object should be unreffed with g_object_unref() when no longer needed.
 	 */
 	public DriveIF getDrive();
 	
 	/**
 	 * Gets the root directory on mount.
-	 * Returns: a GFile.  The returned object should be unreffed with  g_object_unref() when no longer needed.
+	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed.
 	 */
 	public File getRoot();
 	
 	/**
 	 * Gets the volume for the mount.
-	 * Returns: a GVolume or NULL if mount is not associated with a volume. The returned object should be unreffed with  g_object_unref() when no longer needed.
+	 * Returns: a GVolume or NULL if mount is not associated with a volume. The returned object should be unreffed with g_object_unref() when no longer needed.
 	 */
 	public VolumeIF getVolume();
 	
@@ -381,7 +381,7 @@ public interface MountIF
 	 * Since 2.18
 	 * Params:
 	 * result = a GAsyncResult
-	 * Returns: a NULL-terminated array of content types or NULL on error.  Caller should free this array with g_strfreev() when done with it.
+	 * Returns: a NULL-terminated array of content types or NULL on error. Caller should free this array with g_strfreev() when done with it.
 	 * Throws: GException on failure.
 	 */
 	public string[] guessContentTypeFinish(AsyncResultIF result);

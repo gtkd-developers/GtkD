@@ -297,7 +297,7 @@ public class DataModel : ObjectG
 	 * the column's title.
 	 * Params:
 	 * title = column title.
-	 * Returns: the position of the column in the data model, or -1if the column could not be found.
+	 * Returns: the position of the column in the data model, or -1 if the column could not be found.
 	 */
 	public int getColumnPosition(string title)
 	{
@@ -329,7 +329,7 @@ public class DataModel : ObjectG
 	 * Params:
 	 * col = column number.
 	 * row = row number.
-	 * Returns: a GdaValue containing the value stored in the givenposition, or NULL on error (out-of-bound position, etc).
+	 * Returns: a GdaValue containing the value stored in the given position, or NULL on error (out-of-bound position, etc).
 	 */
 	public Value getValueAt(int col, int row)
 	{
@@ -501,7 +501,7 @@ public class DataModel : ObjectG
 	
 	/**
 	 * Converts the given model into a comma-separated series of rows.
-	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
+	 * Returns: the representation of the model. You should free this string when you no longer need it.
 	 */
 	public string toCommaSeparated()
 	{
@@ -511,7 +511,7 @@ public class DataModel : ObjectG
 	
 	/**
 	 * Converts the given model into a tab-separated series of rows.
-	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
+	 * Returns: the representation of the model. You should free this string when you no longer need it.
 	 */
 	public string toTabSeparated()
 	{
@@ -523,7 +523,7 @@ public class DataModel : ObjectG
 	 * Converts the given model into a XML representation.
 	 * Params:
 	 * standalone = whether ...
-	 * Returns: the representation of the model. You should free thisstring when you no longer need it.
+	 * Returns: the representation of the model. You should free this string when you no longer need it.
 	 */
 	public string toXml(int standalone)
 	{

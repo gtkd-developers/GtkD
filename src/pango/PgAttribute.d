@@ -187,7 +187,7 @@ public class PgAttribute
 	 * Since 1.22
 	 * Params:
 	 * type = an attribute type ID to fetch the name for
-	 * Returns: the type ID name (which may be NULL), or NULL if type isa built-in Pango attribute type or invalid.
+	 * Returns: the type ID name (which may be NULL), or NULL if type is a built-in Pango attribute type or invalid.
 	 */
 	public static string typeGetName(PangoAttrType type)
 	{

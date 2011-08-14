@@ -189,7 +189,7 @@ public class PgFontDescription
 	 * being loaded, but still compare FALSE.)
 	 * Params:
 	 * desc2 = another PangoFontDescription
-	 * Returns: TRUE if the two font descriptions are identical,	 FALSE otherwise.
+	 * Returns: TRUE if the two font descriptions are identical, FALSE otherwise.
 	 */
 	public int equal(PgFontDescription desc2)
 	{

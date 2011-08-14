@@ -93,10 +93,6 @@ private import gtk.Dialog;
  * If you want provide your own hooks overriding the default ones, it is
  * important to do so before setting the website and email URL properties,
  * like this:
- *  1
- * 2
- *  gtk_about_dialog_set_url_hook (GTK_ABOUT_DIALOG (dialog), launch_url, NULL, NULL);
- * gtk_about_dialog_set_website (GTK_ABOUT_DIALOG (dialog), app_url);
  * To disable the default hooks, you can pass NULL as the hook func. Then,
  * the GtkAboutDialog widget will not display the website or the
  * email addresses as clickable.
@@ -108,16 +104,6 @@ private import gtk.Dialog;
  * application, but in order to ensure proper translation of the title,
  * applications should set the title property explicitly when constructing
  * a GtkAboutDialog, as shown in the following example:
- *  1
- * 2
- * 3
- * 4
- * 5
- *  gtk_show_about_dialog (NULL,
- *  "program-name", "ExampleCode",
- *  "logo", example_logo,
- *  "title" _("About ExampleCode"),
- *  NULL);
  * Note that prior to GTK+ 2.12, the "program-name" property
  * was called "name". This was changed to avoid the conflict with the
  * "name" property.

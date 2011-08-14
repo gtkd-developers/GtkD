@@ -652,7 +652,7 @@ public class Str
 	 * format = a standard printf() format string, but notice
 	 *  string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
-	 * Returns: the number of bytes which would be produced if the buffer  was large enough.
+	 * Returns: the number of bytes which would be produced if the buffer was large enough.
 	 */
 	public static int vsnprintf(string string, gulong n, string format, void* args)
 	{
@@ -691,7 +691,7 @@ public class Str
 	 * Params:
 	 * format = the format string. See the printf() documentation.
 	 * args = the parameters to be inserted into the format string.
-	 * Returns:the maximum space needed to store the formatted string.
+	 * Returns: the maximum space needed to store the formatted string.
 	 */
 	public static gsize printfStringUpperBound(string format, void* args)
 	{
@@ -709,7 +709,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII alphanumeric character
+	 * Returns: TRUE if c is an ASCII alphanumeric character
 	 */
 	public static int asciiIsalnum(char c)
 	{
@@ -727,7 +727,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII alphabetic character
+	 * Returns: TRUE if c is an ASCII alphabetic character
 	 */
 	public static int asciiIsalpha(char c)
 	{
@@ -745,7 +745,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII control character.
+	 * Returns: TRUE if c is an ASCII control character.
 	 */
 	public static int asciiIscntrl(char c)
 	{
@@ -761,7 +761,7 @@ public class Str
 	 * non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII digit.
+	 * Returns: TRUE if c is an ASCII digit.
 	 */
 	public static int asciiIsdigit(char c)
 	{
@@ -779,7 +779,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII printing character other than space.
+	 * Returns: TRUE if c is an ASCII printing character other than space.
 	 */
 	public static int asciiIsgraph(char c)
 	{
@@ -797,7 +797,7 @@ public class Str
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII lower case letter
+	 * Returns: TRUE if c is an ASCII lower case letter
 	 */
 	public static int asciiIslower(char c)
 	{
@@ -815,7 +815,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII printing character.
+	 * Returns: TRUE if c is an ASCII printing character.
 	 */
 	public static int asciiIsprint(char c)
 	{
@@ -833,7 +833,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII punctuation character.
+	 * Returns: TRUE if c is an ASCII punctuation character.
 	 */
 	public static int asciiIspunct(char c)
 	{
@@ -851,7 +851,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII white-space character
+	 * Returns: TRUE if c is an ASCII white-space character
 	 */
 	public static int asciiIsspace(char c)
 	{
@@ -869,7 +869,7 @@ public class Str
 	 * before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII upper case letter
+	 * Returns: TRUE if c is an ASCII upper case letter
 	 */
 	public static int asciiIsupper(char c)
 	{
@@ -885,7 +885,7 @@ public class Str
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
-	 * Returns:TRUE if c is an ASCII hexadecimal-digit character.
+	 * Returns: TRUE if c is an ASCII hexadecimal-digit character.
 	 */
 	public static int asciiIsxdigit(char c)
 	{
@@ -900,7 +900,7 @@ public class Str
 	 * are signed.
 	 * Params:
 	 * c = an ASCII character.
-	 * Returns: If c is a decimal digit (according tog_ascii_isdigit()), its numeric value. Otherwise, -1.
+	 * Returns: If c is a decimal digit (according to g_ascii_isdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int asciiDigitValue(char c)
 	{
@@ -915,7 +915,7 @@ public class Str
 	 * are signed.
 	 * Params:
 	 * c = an ASCII character.
-	 * Returns: If c is a hex digit (according tog_ascii_isxdigit()), its numeric value. Otherwise, -1.
+	 * Returns: If c is a hex digit (according to g_ascii_isxdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int asciiXdigitValue(char c)
 	{
@@ -1341,7 +1341,7 @@ public class Str
 	 * Also see g_strchomp() and g_strstrip().
 	 * Params:
 	 * string = a string to remove the leading whitespace from.
-	 * Returns:string.
+	 * Returns: string.
 	 */
 	public static string strchug(string string)
 	{
@@ -1356,7 +1356,7 @@ public class Str
 	 * Also see g_strchug() and g_strstrip().
 	 * Params:
 	 * string = a string to remove the trailing whitespace from.
-	 * Returns:string.
+	 * Returns: string.
 	 */
 	public static string strchomp(string string)
 	{
@@ -1375,7 +1375,7 @@ public class Str
 	 * delimiters = a string containing the current delimiters, or NULL to use the
 	 * standard delimiters defined in G_STR_DELIMITERS.
 	 * newDelimiter = the new delimiter character.
-	 * Returns:string.
+	 * Returns: string.
 	 */
 	public static string strdelimit(string string, string delimiters, char newDelimiter)
 	{
@@ -1394,7 +1394,7 @@ public class Str
 	 * Params:
 	 * source = a string to escape.
 	 * exceptions = a string of characters not to escape in source.
-	 * Returns:a newly-allocated copy of source with certaincharacters escaped. See above.
+	 * Returns: a newly-allocated copy of source with certain characters escaped. See above.
 	 */
 	public static string strescape(string source, string exceptions)
 	{
@@ -1407,7 +1407,7 @@ public class Str
 	 * does the reverse conversion of g_strescape().
 	 * Params:
 	 * source = a string to compress.
-	 * Returns:a newly-allocated copy of source with all escaped character compressed.
+	 * Returns: a newly-allocated copy of source with all escaped character compressed.
 	 */
 	public static string strcompress(string source)
 	{
@@ -1424,7 +1424,7 @@ public class Str
 	 * string = a nul-terminated array of bytes.
 	 * validChars = bytes permitted in string.
 	 * substitutor = replacement character for disallowed bytes.
-	 * Returns:string.
+	 * Returns: string.
 	 */
 	public static string strcanon(string string, string validChars, char substitutor)
 	{

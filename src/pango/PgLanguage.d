@@ -173,7 +173,7 @@ public class PgLanguage
 	 * Since 1.4
 	 * Params:
 	 * script = a PangoScript
-	 * Returns: TRUE if script is one of the scripts usedto write language or if nothing is known about language(including the case that language is NULL),FALSE otherwise.
+	 * Returns: TRUE if script is one of the scripts used to write language or if nothing is known about language (including the case that language is NULL), FALSE otherwise.
 	 */
 	public int includesScript(PangoScript script)
 	{
@@ -200,7 +200,7 @@ public class PgLanguage
 	 * Since 1.22
 	 * Params:
 	 * numScripts = location to return number of scripts, or NULL
-	 * Returns: An array of PangoScript values, with thenumber of entries in the array stored in num_scripts, orNULL if Pango does not have any information about thisparticular language tag (also the case if language is NULL).The returned array is owned by Pango and should not be modifiedor freed.
+	 * Returns: An array of PangoScript values, with the number of entries in the array stored in num_scripts, or NULL if Pango does not have any information about this particular language tag (also the case if language is NULL). The returned array is owned by Pango and should not be modified or freed.
 	 */
 	public PangoScript* getScripts(int* numScripts)
 	{

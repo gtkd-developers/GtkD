@@ -99,49 +99,6 @@ private import gtk.PrintSettings;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example  46.  The high-level printing API
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- *  static GtkPrintSettings *settings = NULL;
- * static void
- * do_print (void)
- * {
-	 *  GtkPrintOperation *print;
-	 *  GtkPrintOperationResult res;
-	 *  print = gtk_print_operation_new ();
-	 *  if (settings != NULL)
-	 *  gtk_print_operation_set_print_settings (print, settings);
-	 *  g_signal_connect (print, "begin_print", G_CALLBACK (begin_print), NULL);
-	 *  g_signal_connect (print, "draw_page", G_CALLBACK (draw_page), NULL);
-	 *  res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-	 *  GTK_WINDOW (main_window), NULL);
-	 *  if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
-	 *  {
-		 *  if (settings != NULL)
-		 *  g_object_unref (settings);
-		 *  settings = g_object_ref (gtk_print_operation_get_print_settings (print));
-	 *  }
-	 *  g_object_unref (print);
- * }
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions

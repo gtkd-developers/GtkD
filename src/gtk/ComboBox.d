@@ -506,7 +506,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * gtk_tree_path_get_indices (path)[0], where
 	 * path is the GtkTreePath of the active item.
 	 * Since 2.4
-	 * Returns: An integer which is the index of the currently active item,  or -1 if there's no active item.
+	 * Returns: An integer which is the index of the currently active item, or -1 if there's no active item.
 	 */
 	public int getActive()
 	{
@@ -557,7 +557,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	/**
 	 * Returns the GtkTreeModel which is acting as data source for combo_box.
 	 * Since 2.4
-	 * Returns: A GtkTreeModel which was passed during construction.. transfer none.
+	 * Returns: A GtkTreeModel which was passed during construction. . transfer none.
 	 */
 	public TreeModelIF getModel()
 	{
@@ -764,7 +764,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Gets the current title of the menu in tearoff mode. See
 	 * gtk_combo_box_set_add_tearoffs().
 	 * Since 2.10
-	 * Returns: the menu's title in tearoff mode. This is an internal copy of thestring which must not be freed.
+	 * Returns: the menu's title in tearoff mode. This is an internal copy of the string which must not be freed.
 	 */
 	public string getTitle()
 	{
@@ -792,7 +792,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Returns whether the combo box grabs focus when it is clicked
 	 * with the mouse. See gtk_combo_box_set_focus_on_click().
 	 * Since 2.6
-	 * Returns: TRUE if the combo box grabs focus when it is  clicked with the mouse.
+	 * Returns: TRUE if the combo box grabs focus when it is clicked with the mouse.
 	 */
 	public int getFocusOnClick()
 	{

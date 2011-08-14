@@ -522,7 +522,7 @@ public class Button : Bin, ActivatableIF
 	
 	/**
 	 * Returns the current relief style of the given GtkButton.
-	 * Returns:The current GtkReliefStyle
+	 * Returns: The current GtkReliefStyle
 	 */
 	public GtkReliefStyle getRelief()
 	{
@@ -536,7 +536,7 @@ public class Button : Bin, ActivatableIF
 	 * been set the return value will be NULL. This will be the
 	 * case if you create an empty button with gtk_button_new() to
 	 * use as a container.
-	 * Returns: The text of the label widget. This string is ownedby the widget and must not be modified or freed.
+	 * Returns: The text of the label widget. This string is owned by the widget and must not be modified or freed.
 	 */
 	public string getLabel()
 	{

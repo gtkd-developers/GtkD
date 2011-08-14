@@ -353,7 +353,7 @@ public class Printer : ObjectG
 	 * This will return and empty list unless the printer's details are
 	 * available, see gtk_printer_has_details() and gtk_printer_request_details().
 	 * Since 2.12
-	 * Returns: a newly allocated list of newly allocated GtkPageSetup s.. element-type GtkPageSetup. transfer full GtkPageSetup.
+	 * Returns: a newly allocated list of newly allocated GtkPageSetup s. . element-type GtkPageSetup. transfer full GtkPageSetup.
 	 */
 	public ListG listPapers()
 	{
@@ -372,7 +372,7 @@ public class Printer : ObjectG
 	 * Params:
 	 * a = a GtkPrinter
 	 * b = another GtkPrinter
-	 * Returns: 0 if the printer match, a negative value if a < b,  or a positive value if a > b
+	 * Returns: 0 if the printer match, a negative value if a < b, or a positive value if a > b
 	 */
 	public int compare(Printer b)
 	{

@@ -143,7 +143,7 @@ public class RelationSet : ObjectG
 	 * specified type.
 	 * Params:
 	 * relationship = an AtkRelationType
-	 * Returns: TRUE if relationship is the relationship type of a relationin set, FALSE otherwise
+	 * Returns: TRUE if relationship is the relationship type of a relation in set, FALSE otherwise
 	 */
 	public int atkRelationSetContains(AtkRelationType relationship)
 	{

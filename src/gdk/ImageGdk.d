@@ -274,7 +274,7 @@ public class ImageGdk
 	 * Params:
 	 * x = the x coordinate of the pixel to get.
 	 * y = the y coordinate of the pixel to get.
-	 * Returns:the pixel value at the given position.
+	 * Returns: the pixel value at the given position.
 	 */
 	public uint getPixel(int x, int y)
 	{

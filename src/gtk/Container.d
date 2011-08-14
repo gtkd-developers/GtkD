@@ -158,23 +158,6 @@ private import gtk.Widget;
  * supports a <packing> element for children, which can
  * contain multiple <property> elements that specify
  * child properties for the child.
- * Example  52.  Child properties in UI definitions
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- *  <object class="GtkVBox">
- *  <child>
- *  <object class="GtkLabel"/>
- *  <packing>
- *  <property name="pack-type">start</property>
- *  </packing>
- *  </child>
- * </object>
  * Since 2.16, child properties can also be marked as translatable using
  * the same "translatable", "comments" and "context" attributes that are used
  * for regular properties.
@@ -806,7 +789,7 @@ public class Container : Widget
 	 * Returns all child properties of a container class.
 	 * Params:
 	 * cclass = a GtkContainerClass
-	 * Returns:a newly allocated NULL-terminated array of GParamSpec*.  The array must be freed with g_free().
+	 * Returns: a newly allocated NULL-terminated array of GParamSpec*. The array must be freed with g_free().
 	 */
 	public static ParamSpec[] classListChildProperties(GObjectClass* cclass)
 	{

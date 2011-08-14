@@ -183,36 +183,6 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Note that func is called whenever a row is inserted, when it may still be
 	 * empty. The visible function should therefore take special care of empty
 	 * rows, like in the example below.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 *  static gboolean
-	 * visible_func (GtkTreeModel *model,
-	 *  GtkTreeIter *iter,
-	 *  gpointer data)
-	 * {
-		 *  /+* Visible if row is non-empty and first column is "HI" +/
-		 *  gchar *str;
-		 *  gboolean visible = FALSE;
-		 *  gtk_tree_model_get (model, iter, 0, str, -1);
-		 *  if (str  strcmp (str, "HI") == 0)
-		 *  visible = TRUE;
-		 *  g_free (str);
-		 *  return visible;
-	 * }
 	 * Since 2.4
 	 * Params:
 	 * func = A GtkTreeModelFilterVisibleFunc, the visible function.
@@ -286,7 +256,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * filter = A GtkTreeModelFilter.
 	 * filterIter = An uninitialized GtkTreeIter.
 	 * childIter = A valid GtkTreeIter pointing to a row on the child model.
-	 * Returns: TRUE, if filter_iter was set, i.e. if child_iter is avalid iterator pointing to a visible row in child model.
+	 * Returns: TRUE, if filter_iter was set, i.e. if child_iter is a valid iterator pointing to a visible row in child model.
 	 */
 	public int convertChildIterToIter(TreeIter filterIter, TreeIter childIter)
 	{

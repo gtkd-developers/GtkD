@@ -92,52 +92,6 @@ private import glib.Str;
  * the bookmark as "private" to the applications and groups that has it
  * registered; the URI and MIME type of an icon, to be used when displaying
  * the bookmark inside a GUI.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- *  <?xml version="1.0"?>
- * <!DOCTYPE xbel PUBLIC
- *  "+//IDN python.org//DTD XML Bookmark Exchange Language 1.0//EN//XML"
- *  "http://www.python.org/topics/xml/dtds/xbel-1.0.dtd">
- * <xbel version="1.0"
- *  xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
- *  xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks">
- *  <bookmark href="file:///home/ebassi/bookmark-spec/bookmark-spec.xml">
- *  <title>Desktop Bookmarks Spec</title>
- *  <info>
- *  <metadata owner="http://freedesktop.org">
- *  <mime:mime-type>text/xml</mime:mime-type>
- *  <bookmark:applications>
- *  <bookmark:application name="GEdit" count="2" exec="gedit %u" timestamp="1115726763"/>
- *  <bookmark:application name="GViM" count="7" exec="gvim %f" timestamp="1115726812"/>
- *  </bookmark:applications>
- *  <bookmark:groups>
- *  <bookmark:group>Editors</bookmark:group>
- *  </bookmark:groups>
- *  </metadata>
- *  </info>
- *  </bookmark>
- * </xbel
  * A bookmark file might contain more than one bookmark; each bookmark
  * is accessed through its URI.
  * The important caveat of bookmark files is that when you add a new

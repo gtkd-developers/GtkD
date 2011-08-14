@@ -226,7 +226,7 @@ public template AppInfoT(TStruct)
 	 * Gets the display name of the application. The display name is often more
 	 * descriptive to the user than the name itself.
 	 * Since 2.24
-	 * Returns: the display name of the application for appinfo, or the name ifno display name is available.
+	 * Returns: the display name of the application for appinfo, or the name if no display name is available.
 	 */
 	public string getDisplayName()
 	{
@@ -258,7 +258,7 @@ public template AppInfoT(TStruct)
 	 * Gets the commandline with which the application will be
 	 * started.
 	 * Since 2.20
-	 * Returns: a string containing the appinfo's commandline,  or NULL if this information is not available
+	 * Returns: a string containing the appinfo's commandline, or NULL if this information is not available
 	 */
 	public string getCommandline()
 	{
@@ -486,7 +486,7 @@ public template AppInfoT(TStruct)
 	
 	/**
 	 * Checks if a supported content type can be removed from an application.
-	 * Returns: TRUE if it is possible to remove supported  content types from a given appinfo, FALSE if not.
+	 * Returns: TRUE if it is possible to remove supported content types from a given appinfo, FALSE if not.
 	 */
 	public int canRemoveSupportsType()
 	{

@@ -160,24 +160,6 @@ public class ListG
 	 * to find the end, which is inefficient when adding multiple
 	 * elements. A common idiom to avoid the inefficiency is to prepend
 	 * the elements and reverse the list when all elements have been added.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 *  /+* Notice that these are initialized to the empty list. +/
-	 * GList *list = NULL, *number_list = NULL;
-	 * /+* This is a list of strings. +/
-	 * list = g_list_append (list, "first");
-	 * list = g_list_append (list, "second");
-	 * /+* This is a list of integers. +/
-	 * number_list = g_list_append (number_list, GINT_TO_POINTER (27));
-	 * number_list = g_list_append (number_list, GINT_TO_POINTER (14));
 	 * Params:
 	 * data = the data for the new element
 	 * Returns: the new start of the GList
@@ -198,14 +180,6 @@ public class ListG
 	 * Note
 	 * The return value is the new start of the list, which
 	 * may have changed, so make sure you store the new value.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 *  /+* Notice that it is initialized to the empty list. +/
-	 * GList *list = NULL;
-	 * list = g_list_prepend (list, "last");
-	 * list = g_list_prepend (list, "first");
 	 * Params:
 	 * data = the data for the new element
 	 * Returns: the new start of the GList
@@ -375,7 +349,7 @@ public class ListG
 	 * Allocates space for one GList element. It is called by
 	 * g_list_append(), g_list_prepend(), g_list_insert() and
 	 * g_list_insert_sorted() and so is rarely used on its own.
-	 * Returns:a pointer to the newly-allocated GList element.
+	 * Returns: a pointer to the newly-allocated GList element.
 	 */
 	public static ListG alloc()
 	{
@@ -542,7 +516,7 @@ public class ListG
 	
 	/**
 	 * Gets the first element in a GList.
-	 * Returns: the first element in the GList,  or NULL if the GList has no elements
+	 * Returns: the first element in the GList, or NULL if the GList has no elements
 	 */
 	public ListG first()
 	{
@@ -557,7 +531,7 @@ public class ListG
 	
 	/**
 	 * Gets the last element in a GList.
-	 * Returns: the last element in the GList,  or NULL if the GList has no elements
+	 * Returns: the last element in the GList, or NULL if the GList has no elements
 	 */
 	public ListG last()
 	{
@@ -574,7 +548,7 @@ public class ListG
 	 * Gets the element at the given position in a GList.
 	 * Params:
 	 * n = the position of the element, counting from 0
-	 * Returns: the element, or NULL if the position is off  the end of the GList
+	 * Returns: the element, or NULL if the position is off the end of the GList
 	 */
 	public ListG nth(uint n)
 	{
@@ -591,7 +565,7 @@ public class ListG
 	 * Gets the data of the element at the given position.
 	 * Params:
 	 * n = the position of the element
-	 * Returns: the element's data, or NULL if the position  is off the end of the GList
+	 * Returns: the element's data, or NULL if the position is off the end of the GList
 	 */
 	public void* nthData(uint n)
 	{
@@ -603,7 +577,7 @@ public class ListG
 	 * Gets the element n places before list.
 	 * Params:
 	 * n = the position of the element, counting from 0
-	 * Returns: the element, or NULL if the position is  off the end of the GList
+	 * Returns: the element, or NULL if the position is off the end of the GList
 	 */
 	public ListG nthPrev(uint n)
 	{
@@ -621,7 +595,7 @@ public class ListG
 	 * contains the given data.
 	 * Params:
 	 * data = the element data to find
-	 * Returns: the found GList element,  or NULL if it is not found
+	 * Returns: the found GList element, or NULL if it is not found
 	 */
 	public ListG find(void* data)
 	{
@@ -663,7 +637,7 @@ public class ListG
 	 * in the GList (starting from 0).
 	 * Params:
 	 * llink = an element in the GList
-	 * Returns: the position of the element in the GList,  or -1 if the element is not found
+	 * Returns: the position of the element in the GList, or -1 if the element is not found
 	 */
 	public int position(ListG llink)
 	{
@@ -676,7 +650,7 @@ public class ListG
 	 * the given data (starting from 0).
 	 * Params:
 	 * data = the data to find
-	 * Returns: the index of the element containing the data,  or -1 if the data is not found
+	 * Returns: the index of the element containing the data, or -1 if the data is not found
 	 */
 	public int index(void* data)
 	{

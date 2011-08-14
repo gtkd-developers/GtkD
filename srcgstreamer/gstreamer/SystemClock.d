@@ -131,7 +131,7 @@ public class SystemClock : Clock
 	 * Get a handle to the default system clock. The refcount of the
 	 * clock will be increased so you need to unref the clock after
 	 * usage.
-	 * Returns: the default clock.MT safe.
+	 * Returns: the default clock. MT safe.
 	 */
 	public static Clock obtain()
 	{

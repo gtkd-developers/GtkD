@@ -539,7 +539,7 @@ public template RecentChooserT(TStruct)
 	 * The return value of this function is affected by the "sort-type" and
 	 * "limit" properties of chooser.
 	 * Since 2.10
-	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free().. element-type GtkRecentInfo. transfer full GtkRecentInfo.
+	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free(). . element-type GtkRecentInfo. transfer full GtkRecentInfo.
 	 */
 	public ListG getItems()
 	{
@@ -604,7 +604,7 @@ public template RecentChooserT(TStruct)
 	/**
 	 * Gets the GtkRecentFilter objects held by chooser.
 	 * Since 2.10
-	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free().. element-type GtkRecentFilter. transfer container GtkRecentFilter.
+	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free(). . element-type GtkRecentFilter. transfer container GtkRecentFilter.
 	 */
 	public ListSG listFilters()
 	{

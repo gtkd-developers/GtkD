@@ -202,7 +202,7 @@ public template TreeSortableT(TStruct)
 	 * Returns TRUE if the model has a default sort function. This is used
 	 * primarily by GtkTreeViewColumns in order to determine if a model can
 	 * go back to the default state, or not.
-	 * Returns: TRUE, if the model has a default sort functionSignal DetailsThe "sort-column-changed" signalvoid user_function (GtkTreeSortable *sortable, gpointer user_data) : Run LastThe ::sort-column-changed signal is emitted when the sort columnor sort order of sortable is changed. The signal is emitted beforethe contents of sortable are resorted.
+	 * Returns: TRUE, if the model has a default sort function Signal Details The "sort-column-changed" signal void user_function (GtkTreeSortable *sortable, gpointer user_data) : Run Last The ::sort-column-changed signal is emitted when the sort column or sort order of sortable is changed. The signal is emitted before the contents of sortable are resorted.
 	 */
 	public int hasDefaultSortFunc()
 	{

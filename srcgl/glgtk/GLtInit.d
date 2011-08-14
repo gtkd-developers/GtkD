@@ -111,7 +111,7 @@ public class GLtInit
 	 * argv = Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gtk_gl_init() are stripped before return.
-	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
+	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 */
 	public static int initCheck(ref string[] argv)
 	{
@@ -138,7 +138,7 @@ public class GLtInit
 	 * gtk_gl_init(), or gtk_gl_init_check().
 	 * Params:
 	 * argv = the array of command line arguments.
-	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartIII.GtkGLExt API ReferenceOpenGL-Capable Widget>>
+	 * Returns: TRUE if initialization succeeded, otherwise FALSE. <<PartIII.GtkGLExt API Reference OpenGL-Capable Widget>>
 	 */
 	public static int parseArgs(ref string[] argv)
 	{

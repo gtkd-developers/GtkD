@@ -202,7 +202,7 @@ public class Thread
 	 * This function is actually a macro. Apart from taking the
 	 * address of it you can however use it as if it was a
 	 * function.
-	 * Returns:TRUE, if the thread system is initialized.
+	 * Returns: TRUE, if the thread system is initialized.
 	 */
 	public static int supported()
 	{
@@ -234,7 +234,7 @@ public class Thread
 	 * func = a function to execute in the new thread.
 	 * data = an argument to supply to the new thread.
 	 * joinable = should this thread be joinable?
-	 * Returns:the new GThread on success.
+	 * Returns: the new GThread on success.
 	 * Throws: GException on failure.
 	 */
 	public static Thread create(GThreadFunc func, void* data, int joinable)
@@ -291,7 +291,7 @@ public class Thread
 	 * joinable = should this thread be joinable?
 	 * bound = should this thread be bound to a system thread?
 	 * priority = a priority for the thread.
-	 * Returns:the new GThread on success.
+	 * Returns: the new GThread on success.
 	 * Throws: GException on failure.
 	 */
 	public static Thread createFull(GThreadFunc func, void* data, gulong stackSize, int joinable, int bound, GThreadPriority priority)
@@ -316,7 +316,7 @@ public class Thread
 	/**
 	 * This functions returns the GThread corresponding to the calling
 	 * thread.
-	 * Returns:the current thread.
+	 * Returns: the current thread.
 	 */
 	public static Thread self()
 	{
@@ -336,7 +336,7 @@ public class Thread
 	 * thread must have been created with joinable=TRUE in
 	 * g_thread_create(). The value returned by func or given to
 	 * g_thread_exit() by thread is returned by this function.
-	 * Returns:the return value of the thread.
+	 * Returns: the return value of the thread.
 	 */
 	public void* join()
 	{
@@ -379,8 +379,6 @@ public class Thread
 	 * waiting thread will be woken up and get retval as the return value
 	 * of g_thread_join(). If the current thread is not joinable, retval
 	 * is ignored. Calling
-	 *  1
-	 *  g_thread_exit (retval);
 	 * is equivalent to returning retval from the function func, as given
 	 * to g_thread_create().
 	 * Note
@@ -429,7 +427,7 @@ public class Thread
 	 * Params:
 	 * valueLocation = location of a static initializable variable
 	 *  containing 0.
-	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otherwise
+	 * Returns: TRUE if the initialization section should be entered, FALSE and blocks otherwise
 	 */
 	public static int onceInitEnter(out gsize valueLocation)
 	{
@@ -491,7 +489,7 @@ public class Thread
 	 * Params:
 	 * address = a pointer to an integer
 	 * lockBit = a bit value between 0 and 31
-	 * Returns:TRUE if the lock was acquired
+	 * Returns: TRUE if the lock was acquired
 	 */
 	public static int bitTrylock(ref int address, int lockBit)
 	{

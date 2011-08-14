@@ -149,7 +149,7 @@ public class StringGChunk
 	 * duplicates.
 	 * Params:
 	 * string = the string to add
-	 * Returns: a pointer to the copy of string within  the GStringChunk
+	 * Returns: a pointer to the copy of string within the GStringChunk
 	 */
 	public string insert(string string)
 	{

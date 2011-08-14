@@ -77,31 +77,6 @@ private import glib.Str;
  * To access an element of an array, use g_array_index().
  * To set the size of an array, use g_array_set_size().
  * To free an array, use g_array_free().
- * Example  19.  Using a GArray to store gint values
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- *  GArray *garray;
- * gint i;
- * /+* We create a new array to store gint values.
- *  We don't want it zero-terminated or cleared to 0's. +/
- * garray = g_array_new (FALSE, FALSE, sizeof (gint));
- * for (i = 0; i < 10000; i++)
- *  g_array_append_val (garray, i);
- * for (i = 0; i < 10000; i++)
- *  if (g_array_index (garray, gint, i) != i)
- *  g_print ("ERROR: got %d instead of %d\n",
- *  g_array_index (garray, gint, i), i);
- * g_array_free (garray, TRUE);
  */
 public class ArrayG
 {
@@ -171,7 +146,7 @@ public class ArrayG
 	 *  allocation.
 	 * elementSize = size of each element in the array.
 	 * reservedSize = number of elements preallocated.
-	 * Returns:the new GArray.
+	 * Returns: the new GArray.
 	 */
 	public static ArrayG sizedNew(int zeroTerminated, int clear, uint elementSize, uint reservedSize)
 	{
@@ -230,7 +205,7 @@ public class ArrayG
 	 * Params:
 	 * data = a pointer to the elements to append to the end of the array.
 	 * len = the number of elements to append.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
@@ -252,7 +227,7 @@ public class ArrayG
 	 * data = a pointer to the elements to prepend to the start of the
 	 *  array.
 	 * len = the number of elements to prepend.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
@@ -271,7 +246,7 @@ public class ArrayG
 	 * index = the index to place the elements at.
 	 * data = a pointer to the elements to insert.
 	 * len = the number of elements to insert.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
@@ -289,7 +264,7 @@ public class ArrayG
 	 * elements are moved down one place.
 	 * Params:
 	 * index = the index of the element to remove.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG removeIndex(uint index)
 	{
@@ -309,7 +284,7 @@ public class ArrayG
 	 * g_array_remove_index().
 	 * Params:
 	 * index = the index of the element to remove.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
@@ -329,7 +304,7 @@ public class ArrayG
 	 * Params:
 	 * index = the index of the first element to remove.
 	 * length = the number of elements to remove.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG removeRange(uint index, uint length)
 	{
@@ -376,7 +351,7 @@ public class ArrayG
 	 * was created with clear_ set to TRUE, the new elements are set to 0.
 	 * Params:
 	 * length = the new size of the GArray.
-	 * Returns:the GArray.
+	 * Returns: the GArray.
 	 */
 	public ArrayG setSize(uint length)
 	{
@@ -402,7 +377,7 @@ public class ArrayG
 	 * they should be freed separately.
 	 * Params:
 	 * freeSegment = if TRUE the actual element data is freed as well.
-	 * Returns:the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
+	 * Returns: the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
 	 */
 	public string free(int freeSegment)
 	{

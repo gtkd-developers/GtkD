@@ -336,43 +336,6 @@ public class Regex
 	 * i.e. you must free it regardless if regular expression actually matched.
 	 * To retrieve all the non-overlapping matches of the pattern in
 	 * string you can use g_match_info_next().
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 *  static void
-	 * print_uppercase_words (const gchar *string)
-	 * {
-		 *  /+* Print all uppercase-only words. +/
-		 *  GRegex *regex;
-		 *  GMatchInfo *match_info;
-		 *  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
-		 *  g_regex_match (regex, string, 0, match_info);
-		 *  while (g_match_info_matches (match_info))
-		 *  {
-			 *  gchar *word = g_match_info_fetch (match_info, 0);
-			 *  g_print ("Found: %s\n", word);
-			 *  g_free (word);
-			 *  g_match_info_next (match_info, NULL);
-		 *  }
-		 *  g_match_info_free (match_info);
-		 *  g_regex_unref (regex);
-	 * }
 	 * string is not copied and is used in GMatchInfo internally. If
 	 * you use any GMatchInfo method (except g_match_info_free()) after
 	 * freeing or modifying string then the behaviour is undefined.
@@ -413,55 +376,6 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * To retrieve all the non-overlapping matches of the pattern in
 	 * string you can use g_match_info_next().
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 *  static void
-	 * print_uppercase_words (const gchar *string)
-	 * {
-		 *  /+* Print all uppercase-only words. +/
-		 *  GRegex *regex;
-		 *  GMatchInfo *match_info;
-		 *  GError *error = NULL;
-		 *  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
-		 *  g_regex_match_full (regex, string, -1, 0, 0, match_info, error);
-		 *  while (g_match_info_matches (match_info))
-		 *  {
-			 *  gchar *word = g_match_info_fetch (match_info, 0);
-			 *  g_print ("Found: %s\n", word);
-			 *  g_free (word);
-			 *  g_match_info_next (match_info, error);
-		 *  }
-		 *  g_match_info_free (match_info);
-		 *  g_regex_unref (regex);
-		 *  if (error != NULL)
-		 *  {
-			 *  g_printerr ("Error while matching: %s\n", error->message);
-			 *  g_error_free (error);
-		 *  }
-	 * }
 	 * Since 2.14
 	 * Params:
 	 * string = the string to scan for matches. [array length=string_len]

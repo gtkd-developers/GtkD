@@ -313,7 +313,7 @@ public class DragContext
 	 * display = the GdkDisplay where the destination window resides
 	 * xid = the windowing system id of the destination window.
 	 * protocol = location where the supported DND protocol is returned.
-	 * Returns:the windowing system id of the window where the drop should happen. This  may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
+	 * Returns: the windowing system id of the window where the drop should happen. This may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
 	 */
 	public static GdkNativeWindow gdkDragGetProtocolForDisplay(Display display, GdkNativeWindow xid, out GdkDragProtocol protocol)
 	{

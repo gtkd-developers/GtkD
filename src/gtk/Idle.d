@@ -83,43 +83,6 @@ private import glib.ConstructionException;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example  2.  Typical main function for a GTK+ application
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  int
- * main (int argc, char **argv)
- * {
-	 *  /+* Initialize i18n support +/
-	 *  gtk_set_locale ();
-	 *  /+* Initialize the widget set +/
-	 *  gtk_init (argc, argv);
-	 *  /+* Create the main window +/
-	 *  mainwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  /+* Set up our GUI elements +/
-	 *  ...
-	 *  /+* Show the application window +/
-	 *  gtk_widget_show_all (mainwin);
-	 *  /+* Enter the main event loop, and wait for user interaction +/
-	 *  gtk_main ();
-	 *  /+* The user lost interest +/
-	 *  return 0;
- * }
  * It's OK to use the GLib main loop directly instead of gtk_main(),
  * though it involves slightly more typing. See GMainLoop in the GLib
  * documentation.
@@ -235,7 +198,7 @@ public class Idle
 	 * GTK_PRIORITY_DEFAULT, which is rather low.
 	 * Params:
 	 * data = The information to pass to the function.
-	 * Returns:a unique handle for this registration.
+	 * Returns: a unique handle for this registration.
 	 */
 	public static uint add(GtkFunction funct, void* data)
 	{
@@ -254,7 +217,7 @@ public class Idle
 	 * Note that you will interfere with GTK+ if you use a priority above
 	 * GTK_PRIORITY_RESIZE.
 	 * data = Data to pass to that function.
-	 * Returns:A unique id for the event source.
+	 * Returns: A unique id for the event source.
 	 */
 	public static uint addPriority(int priority, GtkFunction funct, void* data)
 	{
@@ -275,7 +238,7 @@ public class Idle
 	 * marshal = The marshaller to use instead of the function (if non-NULL).
 	 * data = Data to pass to that function.
 	 * destroy = Function to call when the timeout is destroyed or NULL.
-	 * Returns:A unique id for the event source.
+	 * Returns: A unique id for the event source.
 	 */
 	public static uint addFull(int priority, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
 	{

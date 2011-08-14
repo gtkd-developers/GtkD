@@ -82,45 +82,7 @@ private import gtk.Dialog;
  * you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
  * makes the dialog modal and waits for the user to respond to it. gtk_dialog_run()
  * returns when any dialog button is clicked.
- * Example  8.  A modal dialog.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- *  dialog = gtk_message_dialog_new (main_application_window,
- *  GTK_DIALOG_DESTROY_WITH_PARENT,
- *  GTK_MESSAGE_ERROR,
- *  GTK_BUTTONS_CLOSE,
- *  "Error loading file '%s': %s",
- *  filename, g_strerror (errno));
- * gtk_dialog_run (GTK_DIALOG (dialog));
- * gtk_widget_destroy (dialog);
  * You might do a non-modal GtkMessageDialog as follows:
- * Example  9.  A non-modal dialog.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- *  dialog = gtk_message_dialog_new (main_application_window,
- *  GTK_DIALOG_DESTROY_WITH_PARENT,
- *  GTK_MESSAGE_ERROR,
- *  GTK_BUTTONS_CLOSE,
- *  "Error loading file '%s': %s",
- *  filename, g_strerror (errno));
- * /+* Destroy the dialog when the user responds to it (e.g. clicks a button) +/
- * g_signal_connect_swapped (dialog, "response",
- *  G_CALLBACK (gtk_widget_destroy),
- *  dialog);
  */
 public class MessageDialog : Dialog
 {

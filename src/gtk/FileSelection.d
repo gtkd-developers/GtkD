@@ -80,61 +80,6 @@ private import gtk.Dialog;
  * that match a given pattern. This can be used for example, to show only
  * *.txt files, or only files beginning with gtk*.
  * Simple file operations; create directory, delete file, and rename file, are available from buttons at the top of the dialog. These can be hidden using gtk_file_selection_hide_fileop_buttons() and shown again using gtk_file_selection_show_fileop_buttons().
- * Example  61.  Getting a filename from the user.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- *  /+* The file selection widget and the string to store the chosen filename +/
- * void store_filename (GtkWidget *widget, gpointer user_data) {
-	 *  GtkWidget *file_selector = GTK_WIDGET (user_data);
-	 *  const gchar *selected_filename;
-	 *  selected_filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
-	 *  g_print ("Selected filename: %s\n", selected_filename);
- * }
- * void create_file_selection (void) {
-	 *  GtkWidget *file_selector;
-	 *  /+* Create the selector +/
-	 *  file_selector = gtk_file_selection_new ("Please select a file for editing.");
-	 *  g_signal_connect (GTK_FILE_SELECTION (file_selector)->ok_button,
-	 *  "clicked",
-	 *  G_CALLBACK (store_filename),
-	 *  file_selector);
-	 *  /+* Ensure that the dialog box is destroyed when the user clicks a button. +/
-	 *  g_signal_connect_swapped (GTK_FILE_SELECTION (file_selector)->ok_button,
-	 *  "clicked",
-	 *  G_CALLBACK (gtk_widget_destroy),
-	 *  file_selector);
-	 *  g_signal_connect_swapped (GTK_FILE_SELECTION (file_selector)->cancel_button,
-	 *  "clicked",
-	 *  G_CALLBACK (gtk_widget_destroy),
-	 *  file_selector);
-	 *  /+* Display that dialog +/
-	 *  gtk_widget_show (file_selector);
- * }
  */
 public class FileSelection : Dialog
 {
@@ -286,7 +231,7 @@ public class FileSelection : Dialog
 	 * in the file list.
 	 * The filenames are in the GLib file name encoding. To convert to
 	 * UTF-8, call g_filename_to_utf8() on each string.
-	 * Returns: a newly-allocated NULL-terminated array of strings. Useg_strfreev() to free it.
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public string[] getSelections()
 	{
@@ -314,7 +259,7 @@ public class FileSelection : Dialog
 	 * gtk_file_selection_get_select_multiple is deprecated and should not be used in newly-written code.
 	 * Determines whether or not the user is allowed to select multiple files in
 	 * the file list. See gtk_file_selection_set_select_multiple().
-	 * Returns: TRUE if the user is allowed to select multiple files in thefile list
+	 * Returns: TRUE if the user is allowed to select multiple files in the file list
 	 */
 	public int getSelectMultiple()
 	{

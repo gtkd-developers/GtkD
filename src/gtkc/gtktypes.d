@@ -5152,30 +5152,6 @@ public struct GtkProgress{}
  * Here is how one passes an integer as user data,
  * for when you just want to specify a constant int
  * as parameter to your function:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- *  static void button_clicked_int (GtkButton* button, gpointer func_data)
- * {
-	 * 	g_print ("button pressed: %d\n", GPOINTER_TO_INT (func_data));
- * }
- * /+* By calling this function, you will make the g_print above
- *  * execute, printing the number passed as `to_print'. +/
- * static void attach_print_signal (GtkButton* button, gint to_print)
- * {
-	 * 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-	 * 		GTK_SIGNAL_FUNC (button_clicked_int),
-	 * 		GINT_TO_POINTER (to_print));
- * }
  * object  :
  * the object associated with the signal, e.g. if a button
  * is getting pressed, this is that button.
@@ -5223,8 +5199,6 @@ public struct GtkProgress{}
  * This is useful for passing a standard function in as a callback.
  * For example, if you wanted a button's press to gtk_widget_show()
  * some widget, you could write:
- *  1
- *  gtk_signal_connect_object (button, "clicked", gtk_widget_show, window);
  * object  :
  * the object which emits the signal.
  * name  :

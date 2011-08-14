@@ -152,7 +152,7 @@ public template AsyncInitableT(TStruct)
 	 * Since 2.22
 	 * Params:
 	 * res = a GAsyncResult.
-	 * Returns: TRUE if successful. If an error has occurred, this functionwill return FALSE and set error appropriately if present.
+	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
 	public int gAsyncInitableInitFinish(AsyncResultIF res)

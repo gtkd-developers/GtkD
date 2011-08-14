@@ -232,7 +232,7 @@ public template VolumeT(TStruct)
 	 * the file system UUID for the volume in question and should be
 	 * considered an opaque string. Returns NULL if there is no UUID
 	 * available.
-	 * Returns: the UUID for volume or NULL if no UUID can be computed. The returned string should be freed with g_free()  when no longer needed.
+	 * Returns: the UUID for volume or NULL if no UUID can be computed. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getUuid()
 	{
@@ -326,7 +326,7 @@ public template VolumeT(TStruct)
 	 * implementations to find the underlying mount to shadow, see
 	 * g_mount_is_shadowed() for more details.
 	 * Since 2.18
-	 * Returns: the activation root of volume or NULL. Useg_object_unref() to free.
+	 * Returns: the activation root of volume or NULL. Use g_object_unref() to free.
 	 */
 	public File getActivationRoot()
 	{
@@ -496,7 +496,7 @@ public template VolumeT(TStruct)
 	 * for more information about volume identifiers.
 	 * Params:
 	 * kind = the kind of identifier to return
-	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GVolume doesn't have this kind of identifierSignal DetailsThe "changed" signalvoid user_function (GVolume *arg0, gpointer user_data) : Run LastEmitted when the volume has been changed.
+	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GVolume doesn't have this kind of identifier Signal Details The "changed" signal void user_function (GVolume *arg0, gpointer user_data) : Run Last Emitted when the volume has been changed.
 	 */
 	public string getIdentifier(string kind)
 	{

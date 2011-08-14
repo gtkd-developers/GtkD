@@ -328,7 +328,7 @@ public class MainLoop
 	 * Params:
 	 * fds = file descriptors to poll
 	 * timeout = amount of time to wait, in milliseconds, or -1 to wait forever
-	 * Returns: the number of entries in fds whose revents fieldswere filled in, or 0 if the operation timed out, or -1 on error orif the call was interrupted.
+	 * Returns: the number of entries in fds whose revents fields were filled in, or 0 if the operation timed out, or -1 on error or if the call was interrupted.
 	 */
 	public static int poll(GPollFD[] fds, int timeout)
 	{

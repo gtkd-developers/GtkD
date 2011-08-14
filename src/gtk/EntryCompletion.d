@@ -595,7 +595,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Returns whether the completion popup window will be resized to the
 	 * width of the entry.
 	 * Since 2.8
-	 * Returns: TRUE if the popup window will be resized to the width of  the entry
+	 * Returns: TRUE if the popup window will be resized to the width of the entry
 	 */
 	public int getPopupSetWidth()
 	{

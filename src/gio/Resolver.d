@@ -225,7 +225,7 @@ public class Resolver : ObjectG
 	 * Params:
 	 * hostname = the hostname to look up
 	 * cancellable = a GCancellable, or NULL
-	 * Returns: a GList of GInetAddress, or NULL on error. Youmust unref each of the addresses and free the list when you aredone with it. (You can use g_resolver_free_addresses() to do this.)
+	 * Returns: a GList of GInetAddress, or NULL on error. You must unref each of the addresses and free the list when you are done with it. (You can use g_resolver_free_addresses() to do this.)
 	 * Throws: GException on failure.
 	 */
 	public ListG lookupByName(string hostname, Cancellable cancellable)
@@ -274,7 +274,7 @@ public class Resolver : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = the result passed to your GAsyncReadyCallback
-	 * Returns: a GList of GInetAddress, or NULL on error. Seeg_resolver_lookup_by_name() for more details.
+	 * Returns: a GList of GInetAddress, or NULL on error. See g_resolver_lookup_by_name() for more details.
 	 * Throws: GException on failure.
 	 */
 	public ListG lookupByNameFinish(AsyncResultIF result)
@@ -367,7 +367,7 @@ public class Resolver : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = the result passed to your GAsyncReadyCallback
-	 * Returns: a hostname (either ASCII-only, or in ASCII-encodedform), or NULL on error.
+	 * Returns: a hostname (either ASCII-only, or in ASCII-encoded form), or NULL on error.
 	 * Throws: GException on failure.
 	 */
 	public string lookupByAddressFinish(AsyncResultIF result)
@@ -410,7 +410,7 @@ public class Resolver : ObjectG
 	 * protocol = the networking protocol to use for service (eg, "tcp")
 	 * domain = the DNS domain to look up the service in
 	 * cancellable = a GCancellable, or NULL
-	 * Returns: a GList of GSrvTarget, or NULL on error. You mustfree each of the targets and the list when you are done with it.(You can use g_resolver_free_targets() to do this.)
+	 * Returns: a GList of GSrvTarget, or NULL on error. You must free each of the targets and the list when you are done with it. (You can use g_resolver_free_targets() to do this.)
 	 * Throws: GException on failure.
 	 */
 	public ListG lookupService(string service, string protocol, string domain, Cancellable cancellable)
@@ -462,7 +462,7 @@ public class Resolver : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = the result passed to your GAsyncReadyCallback
-	 * Returns: a GList of GSrvTarget, or NULL on error. Seeg_resolver_lookup_service() for more details.
+	 * Returns: a GList of GSrvTarget, or NULL on error. See g_resolver_lookup_service() for more details.
 	 * Throws: GException on failure.
 	 */
 	public ListG lookupServiceFinish(AsyncResultIF result)

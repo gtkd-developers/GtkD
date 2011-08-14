@@ -98,33 +98,8 @@ private import gstreamer.ObjectGst;
  * or gst_pad_new_from_static_template()) or to add to an element class
  * (see gst_element_class_add_pad_template()).
  * The following code example shows the code to create a pad from a padtemplate.
- * Example12.Create a pad from a padtemplate
- *  GstStaticPadTemplate my_template =
- *  GST_STATIC_PAD_TEMPLATE (
- *  "sink", // the name of the pad
- *  GST_PAD_SINK, // the direction of the pad
- *  GST_PAD_ALWAYS, // when this pad will be present
- *  GST_STATIC_CAPS ( // the capabilities of the padtemplate
- *  "audio/x-raw-int, "
- *  "channels = (int) [ 1, 6 ]"
- *  )
- *  )
- *  void
- *  my_method (void)
- *  {
-	 *  GstPad *pad;
-	 *  pad = gst_pad_new_from_static_template (my_template, "sink");
-	 *  ...
- *  }
  * The following example shows you how to add the padtemplate to an
  * element class, this is usually done in the base_init of the class:
- *  static void
- *  my_element_base_init (gpointer g_class)
- *  {
-	 *  GstElementClass *gstelement_class = GST_ELEMENT_CLASS (g_class);
-	 *  gst_element_class_add_pad_template (gstelement_class,
-	 *  gst_static_pad_template_get (my_template));
- *  }
  * Last reviewed on 2006-02-14 (0.10.3)
  */
 public class PadTemplate : ObjectGst
@@ -228,7 +203,7 @@ public class PadTemplate : ObjectGst
 	 * Gets the capabilities of the static pad template.
 	 * Params:
 	 * templ = a GstStaticPadTemplate to get capabilities of.
-	 * Returns: the GstCaps of the static pad template. If you need to keep areference to the caps, take a ref (see gst_caps_ref()).
+	 * Returns: the GstCaps of the static pad template. If you need to keep a reference to the caps, take a ref (see gst_caps_ref()).
 	 */
 	public static Caps staticPadTemplateGetCaps(GstStaticPadTemplate* templ)
 	{
@@ -265,7 +240,7 @@ public class PadTemplate : ObjectGst
 	
 	/**
 	 * Gets the capabilities of the pad template.
-	 * Returns: the GstCaps of the pad template. If you need to keep a reference tothe caps, take a ref (see gst_caps_ref()).Signal DetailsThe "pad-created" signalvoid user_function (GstPadTemplate *pad_template, GstPad *pad, gpointer user_data) : Run lastThis signal is fired when an element creates a pad from this template.
+	 * Returns: the GstCaps of the pad template. If you need to keep a reference to the caps, take a ref (see gst_caps_ref()). Signal Details The "pad-created" signal void user_function (GstPadTemplate *pad_template, GstPad *pad, gpointer user_data) : Run last This signal is fired when an element creates a pad from this template.
 	 */
 	public Caps getCaps()
 	{

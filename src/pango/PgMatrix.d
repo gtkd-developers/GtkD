@@ -337,7 +337,7 @@ public class PgMatrix
 	 * Since 1.12
 	 * Params:
 	 * matrix = a PangoMatrix, may be NULL
-	 * Returns: the scale factor of matrix on the height of the font,or 1.0 if matrix is NULL.
+	 * Returns: the scale factor of matrix on the height of the font, or 1.0 if matrix is NULL.
 	 */
 	public double matrixGetFontScaleFactor()
 	{

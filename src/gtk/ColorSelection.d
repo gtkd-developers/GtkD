@@ -320,7 +320,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Gets the current state of the colorsel.
-	 * Returns: TRUE if the user is currently dragging a color around, and FALSEif the selection has stopped.
+	 * Returns: TRUE if the user is currently dragging a color around, and FALSE if the selection has stopped.
 	 */
 	public int isAdjusting()
 	{

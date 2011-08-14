@@ -958,7 +958,7 @@ public class StatusIcon : ObjectG
 	 *  in which the status icon is embedded, or NULL. A panel
 	 *  at the top or bottom of the screen is horizontal, a panel
 	 *  at the left or right is vertical.. out. allow-none.
-	 * Returns: TRUE if the location information has  been filled in
+	 * Returns: TRUE if the location information has been filled in
 	 */
 	public int getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)
 	{

@@ -81,43 +81,6 @@ private import gtk.Button;
  * gtk_toggle_button_set_active(), and retrieved using
  * gtk_toggle_button_get_active().
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled.
- * Example  16.  Creating two GtkToggleButton widgets.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  void make_toggles (void) {
-	 *  GtkWidget *dialog, *toggle1, *toggle2;
-	 *  dialog = gtk_dialog_new ();
-	 *  toggle1 = gtk_toggle_button_new_with_label ("Hi, i'm a toggle button.");
-	 *  /+* Makes this toggle button invisible +/
-	 *  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle1), TRUE);
-	 *  g_signal_connect (toggle1, "toggled",
-	 *  G_CALLBACK (output_state), NULL);
-	 *  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-	 *  toggle1, FALSE, FALSE, 2);
-	 *  toggle2 = gtk_toggle_button_new_with_label ("Hi, i'm another toggle button.");
-	 *  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle2), FALSE);
-	 *  g_signal_connect (toggle2, "toggled",
-	 *  G_CALLBACK (output_state), NULL);
-	 *  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-	 *  toggle2, FALSE, FALSE, 2);
-	 *  gtk_widget_show_all (dialog);
- * }
  */
 public class ToggleButton : Button
 {
@@ -294,7 +257,7 @@ public class ToggleButton : Button
 	/**
 	 * Queries a GtkToggleButton and returns its current state. Returns TRUE if
 	 * the toggle button is pressed in and FALSE if it is raised.
-	 * Returns:a gboolean value.
+	 * Returns: a gboolean value.
 	 */
 	public int getActive()
 	{

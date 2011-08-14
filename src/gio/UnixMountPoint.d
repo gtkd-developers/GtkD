@@ -127,7 +127,7 @@ public class UnixMountPoint
 	 * Compares two unix mount points.
 	 * Params:
 	 * mount2 = a GUnixMount.
-	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to,or less than mount2, respectively.
+	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to, or less than mount2, respectively.
 	 */
 	public int compare(UnixMountPoint mount2)
 	{
@@ -213,7 +213,7 @@ public class UnixMountPoint
 	/**
 	 * Guesses the name of a Unix mount point.
 	 * The result is a translated string.
-	 * Returns: A newly allocated string that must  be freed with g_free()
+	 * Returns: A newly allocated string that must be freed with g_free()
 	 */
 	public string guessName()
 	{

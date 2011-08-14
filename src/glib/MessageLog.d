@@ -100,23 +100,6 @@ public class MessageLog
 	 * Note that since the G_LOG_LEVEL_ERROR log level is always fatal, if
 	 * you want to set a handler for this log level you must combine it with
 	 * G_LOG_FLAG_FATAL.
-	 * Example  12.  Adding a log handler for all warning messages in the default
-	 * (application) domain
-	 *  1
-	 * 2
-	 *  g_log_set_handler (NULL, G_LOG_LEVEL_WARNING | G_LOG_FLAG_FATAL
-	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * Example  13.  Adding a log handler for all critical messages from GTK+
-	 *  1
-	 * 2
-	 *  g_log_set_handler ("Gtk", G_LOG_LEVEL_CRITICAL | G_LOG_FLAG_FATAL
-	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * Example  14.  Adding a log handler for all messages from
-	 * GLib
-	 *  1
-	 * 2
-	 *  g_log_set_handler ("GLib", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
-	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
 	 * Params:
 	 * logDomain = the log domain, or NULL for the default "" application domain.
 	 * logLevels = the log levels to apply the log handler for. To handle fatal
@@ -124,7 +107,7 @@ public class MessageLog
 	 * G_LOG_FLAG_FATAL and G_LOG_FLAG_RECURSION bit flags.
 	 * logFunc = the log handler function.
 	 * userData = data passed to the log handler.
-	 * Returns:the id of the new handler.
+	 * Returns: the id of the new handler.
 	 */
 	public static uint logSetHandler(string logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData)
 	{
@@ -155,7 +138,7 @@ public class MessageLog
 	 * Params:
 	 * fatalMask = the mask containing bits set for each level of error which is
 	 * to be fatal.
-	 * Returns:the old fatal mask.
+	 * Returns: the old fatal mask.
 	 */
 	public static GLogLevelFlags logSetAlwaysFatal(GLogLevelFlags fatalMask)
 	{
@@ -169,7 +152,7 @@ public class MessageLog
 	 * Params:
 	 * logDomain = the log domain.
 	 * fatalMask = the new fatal mask.
-	 * Returns:the old fatal mask for the log domain.
+	 * Returns: the old fatal mask for the log domain.
 	 */
 	public static GLogLevelFlags logSetFatalMask(string logDomain, GLogLevelFlags fatalMask)
 	{
@@ -206,7 +189,7 @@ public class MessageLog
 	 * Params:
 	 * logFunc = the log handler function.
 	 * userData = data passed to the log handler.
-	 * Returns:the previous default log handler
+	 * Returns: the previous default log handler
 	 */
 	public static GLogFunc logSetDefaultHandler(GLogFunc logFunc, void* userData)
 	{

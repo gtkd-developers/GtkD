@@ -224,7 +224,7 @@ public class TagList
 	 * Gets the flag of tag.
 	 * Params:
 	 * tag = the tag
-	 * Returns:the flag of this tag.
+	 * Returns: the flag of this tag.
 	 */
 	public static GstTagFlag getFlag(string tag)
 	{
@@ -274,7 +274,7 @@ public class TagList
 	
 	/**
 	 * Checks if the given taglist is empty.
-	 * Returns: TRUE if the taglist is empty, otherwise FALSE.Since 0.10.11
+	 * Returns: TRUE if the taglist is empty, otherwise FALSE. Since 0.10.11
 	 */
 	public int isEmpty()
 	{

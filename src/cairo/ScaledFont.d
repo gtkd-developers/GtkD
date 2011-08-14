@@ -273,7 +273,7 @@ public class ScaledFont
 	 * clusters = pointer to array of cluster mapping information to fill, or NULL
 	 * clusterFlags = pointer to location to store cluster flags corresponding to the
 	 *  output clusters, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS upon success, or an error statusif the input values are wrong or if conversion failed. If the inputvalues are correct but the conversion failed, the error status is alsoset on scaled_font.
+	 * Returns: CAIRO_STATUS_SUCCESS upon success, or an error status if the input values are wrong or if conversion failed. If the input values are correct but the conversion failed, the error status is also set on scaled_font.
 	 */
 	public cairo_status_t textToGlyphs(double x, double y, string utf8, int utf8_Len, out cairo_glyph_t[] glyphs, out cairo_text_cluster_t[] clusters, out cairo_text_cluster_flags_t clusterFlags)
 	{
@@ -293,7 +293,7 @@ public class ScaledFont
 	/**
 	 * Gets the font face that this scaled font was created for.
 	 * Since 1.2
-	 * Returns: The cairo_font_face_t with which scaled_font wascreated.
+	 * Returns: The cairo_font_face_t with which scaled_font was created.
 	 */
 	public FontFace getFontFace()
 	{
@@ -374,7 +374,7 @@ public class ScaledFont
 	/**
 	 * Returns the current reference count of scaled_font.
 	 * Since 1.4
-	 * Returns: the current reference count of scaled_font. If theobject is a nil object, 0 will be returned.
+	 * Returns: the current reference count of scaled_font. If the object is a nil object, 0 will be returned.
 	 */
 	public uint getReferenceCount()
 	{
@@ -393,7 +393,7 @@ public class ScaledFont
 	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * cairo_t is destroyed or when new user data is attached using the
 	 * same key.
-	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a slot could not be allocated for the user data.
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{

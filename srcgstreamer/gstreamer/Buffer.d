@@ -79,16 +79,6 @@ private import gstreamer.Caps;
  * created one will typically allocate memory for it and set the size of the
  * buffer data. The following example creates a buffer that can hold a given
  * video frame with a given width, height and bits per plane.
- * Example3.Creating a buffer for a video frame
- *  GstBuffer *buffer;
- *  gint size, width, height, bpp;
- *  ...
- *  size = width * height * bpp;
- *  buffer = gst_buffer_new();
- *  GST_BUFFER_SIZE (buffer) = size;
- *  GST_BUFFER_MALLOCDATA (buffer) = g_malloc (size);
- *  GST_BUFFER_DATA (buffer) = GST_BUFFER_MALLOCDATA (buffer);
- *  ...
  * Alternatively, use gst_buffer_new_and_alloc()
  * to create a buffer with preallocated data of a given size.
  * The data pointed to by the buffer can be retrieved with the GST_BUFFER_DATA()
@@ -266,7 +256,7 @@ public class Buffer
 	 * Gets the media type of the buffer. This can be NULL if there
 	 * is no media type attached to this buffer.
 	 * Returns: a reference to the GstCaps. unref after usage.
-	 * Returns:NULL if there were no caps on this buffer.
+	 * Returns: NULL if there were no caps on this buffer.
 	 */
 	public Caps getCaps()
 	{
@@ -307,7 +297,7 @@ public class Buffer
 	 * offset = the offset into parent GstBuffer at which the new sub-buffer
 	 *  begins.
 	 * size = the size of the new GstBuffer sub-buffer, in bytes.
-	 * Returns:NULL if the arguments were invalid.
+	 * Returns: NULL if the arguments were invalid.
 	 */
 	public Buffer createSub(uint offset, uint size)
 	{
@@ -327,7 +317,7 @@ public class Buffer
 	 * MT safe.
 	 * Params:
 	 * buf2 = the second GstBuffer.
-	 * Returns: TRUE if the buffers are contiguous,FALSE if a copy would be required.
+	 * Returns: TRUE if the buffers are contiguous, FALSE if a copy would be required.
 	 */
 	public int isSpanFast(Buffer buf2)
 	{
@@ -351,7 +341,7 @@ public class Buffer
 	 * buffer should start.
 	 * buf2 = the second source GstBuffer to merge.
 	 * len = the total length of the new buffer.
-	 * Returns:NULL if the arguments are invalid.
+	 * Returns: NULL if the arguments are invalid.
 	 */
 	public Buffer span(uint offset, Buffer buf2, uint len)
 	{

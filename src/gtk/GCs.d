@@ -93,7 +93,7 @@ public class GCs
 	 * values = a GdkGCValues struct containing settings for the GdkGC.
 	 * valuesMask = a set of flags indicating which of the fields in values has
 	 * been set.
-	 * Returns:a GdkGC.
+	 * Returns: a GdkGC.
 	 */
 	public static GC get(int depth, Colormap colormap, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{

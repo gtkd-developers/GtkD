@@ -84,20 +84,6 @@ private import gstreamer.Structure;
  * Query values can be set using gst_query_set_xxx(), and parsed using
  * gst_query_parse_xxx() helpers.
  * The following example shows how to query the duration of a pipeline:
- * Example13.Query duration on a pipeline
- *  GstQuery *query;
- *  gboolean res;
- *  query = gst_query_new_duration (GST_FORMAT_TIME);
- *  res = gst_element_query (pipeline, query);
- *  if (res) {
-	 *  gint64 duration;
-	 *  gst_query_parse_duration (query, NULL, duration);
-	 *  g_print ("duration = %"GST_TIME_FORMAT, GST_TIME_ARGS (duration));
- *  }
- *  else {
-	 *  g_print ("duration query failed...");
- *  }
- *  gst_query_unref (query);
  * Last reviewed on 2006-02-14 (0.10.4)
  */
 public class Query
@@ -229,7 +215,7 @@ public class Query
 	 * Params:
 	 * nick = The nick of the new query
 	 * description = The description of the new query
-	 * Returns: A new GstQueryType or an already registered querywith the same nick.
+	 * Returns: A new GstQueryType or an already registered query with the same nick.
 	 */
 	public static GstQueryType typeRegister(string nick, string description)
 	{
@@ -241,7 +227,7 @@ public class Query
 	 * Get the query type registered with nick.
 	 * Params:
 	 * nick = The nick of the query
-	 * Returns: The query registered with nick or GST_QUERY_NONEif the query was not registered.
+	 * Returns: The query registered with nick or GST_QUERY_NONE if the query was not registered.
 	 */
 	public static GstQueryType typeGetByNick(string nick)
 	{
@@ -311,7 +297,7 @@ public class Query
 	
 	/**
 	 * Get the structure of a query.
-	 * Returns: The GstStructure of the query. The structure is still ownedby the query and will therefore be freed when the query is unreffed.
+	 * Returns: The GstStructure of the query. The structure is still owned by the query and will therefore be freed when the query is unreffed.
 	 */
 	public Structure getStructure()
 	{

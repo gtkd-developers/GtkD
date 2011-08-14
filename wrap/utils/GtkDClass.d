@@ -2244,7 +2244,7 @@ public class GtkDClass
 									while(i+1 < comments.length && stilInParam(comments[i+1]))
 									{
 										i++;
-										ret ~= comments[i];
+										ret ~= " " ~ comments[i].strip();
 									}
 								}
 								else if(find(comments[i], "See Also") == 0 || find(comments[i], "Property Details") == 0)

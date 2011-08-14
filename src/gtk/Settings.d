@@ -92,14 +92,6 @@ private import gobject.ObjectG;
  * facility. When doing so, you need to be aware that settings that are specific
  * to individual widgets may not be available before the widget type has been
  * realized at least once. The following example demonstrates a way to do this:
- *  1
- * 2
- * 3
- * 4
- *  gtk_init (argc, argv);
- * /+* make sure the type is realized +/
- * g_type_class_unref (g_type_class_ref (GTK_TYPE_IMAGE_MENU_ITEM));
- * g_object_set (gtk_settings_get_default (), "gtk-menu-images", FALSE, NULL);
  * There is one GtkSettings instance per screen. It can be obtained with
  * gtk_settings_get_for_screen(), but in many cases, it is more convenient
  * to use gtk_widget_get_settings(). gtk_settings_get_default() returns the
@@ -217,7 +209,7 @@ public class Settings : ObjectG
 	 * pspec = a GParamSpec
 	 * gstring = the GString to be parsed
 	 * propertyValue = a GValue which must hold GdkColor values.
-	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GdkColor.
+	 * Returns: TRUE if gstring could be parsed and property_value has been set to the resulting GdkColor.
 	 */
 	public static int rcPropertyParseColor(ParamSpec pspec, StringG gstring, Value propertyValue)
 	{
@@ -236,7 +228,7 @@ public class Settings : ObjectG
 	 * pspec = a GParamSpec
 	 * gstring = the GString to be parsed
 	 * propertyValue = a GValue which must hold enum values.
-	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GEnumValue.
+	 * Returns: TRUE if gstring could be parsed and property_value has been set to the resulting GEnumValue.
 	 */
 	public static int rcPropertyParseEnum(ParamSpec pspec, StringG gstring, Value propertyValue)
 	{
@@ -254,7 +246,7 @@ public class Settings : ObjectG
 	 * pspec = a GParamSpec
 	 * gstring = the GString to be parsed
 	 * propertyValue = a GValue which must hold flags values.
-	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting flags value.
+	 * Returns: TRUE if gstring could be parsed and property_value has been set to the resulting flags value.
 	 */
 	public static int rcPropertyParseFlags(ParamSpec pspec, StringG gstring, Value propertyValue)
 	{
@@ -271,7 +263,7 @@ public class Settings : ObjectG
 	 * pspec = a GParamSpec
 	 * gstring = the GString to be parsed
 	 * propertyValue = a GValue which must hold boxed values.
-	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GtkRequisition.
+	 * Returns: TRUE if gstring could be parsed and property_value has been set to the resulting GtkRequisition.
 	 */
 	public static int rcPropertyParseRequisition(ParamSpec pspec, StringG gstring, Value propertyValue)
 	{
@@ -289,7 +281,7 @@ public class Settings : ObjectG
 	 * pspec = a GParamSpec
 	 * gstring = the GString to be parsed
 	 * propertyValue = a GValue which must hold boxed values.
-	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GtkBorder.
+	 * Returns: TRUE if gstring could be parsed and property_value has been set to the resulting GtkBorder.
 	 */
 	public static int rcPropertyParseBorder(ParamSpec pspec, StringG gstring, Value propertyValue)
 	{

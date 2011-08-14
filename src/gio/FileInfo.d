@@ -195,7 +195,7 @@ public class FileInfo : ObjectG
 	 * Checks if a file info structure has an attribute named attribute.
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: TRUE if Ginfo has an attribute named attribute,  FALSE otherwise.
+	 * Returns: TRUE if Ginfo has an attribute named attribute, FALSE otherwise.
 	 */
 	public int hasAttribute(string attribute)
 	{
@@ -273,7 +273,7 @@ public class FileInfo : ObjectG
 	 * type = return location for the attribute type, or NULL
 	 * valuePp = return location for the attribute value, or NULL
 	 * status = return location for the attribute status, or NULL
-	 * Returns: TRUE if info has an attribute named attribute,  FALSE otherwise.
+	 * Returns: TRUE if info has an attribute named attribute, FALSE otherwise.
 	 */
 	public int getAttributeData(string attribute, out GFileAttributeType type, out void* valuePp, out GFileAttributeStatus status)
 	{
@@ -285,7 +285,7 @@ public class FileInfo : ObjectG
 	 * Gets the attribute status for an attribute key.
 	 * Params:
 	 * attribute = a file attribute key
-	 * Returns: a GFileAttributeStatus for the given attribute, or  G_FILE_ATTRIBUTE_STATUS_UNSET if the key is invalid.
+	 * Returns: a GFileAttributeStatus for the given attribute, or G_FILE_ATTRIBUTE_STATUS_UNSET if the key is invalid.
 	 */
 	public GFileAttributeStatus getAttributeStatus(string attribute)
 	{
@@ -312,7 +312,7 @@ public class FileInfo : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: the contents of the attribute value as a stringv, orNULL otherwise. Do not free.
+	 * Returns: the contents of the attribute value as a stringv, or NULL otherwise. Do not free.
 	 */
 	public string[] getAttributeStringv(string attribute)
 	{
@@ -407,7 +407,7 @@ public class FileInfo : ObjectG
 	 * not contain a GObject, NULL will be returned.
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: a GObject associated with the given attribute, orNULL otherwise.
+	 * Returns: a GObject associated with the given attribute, or NULL otherwise.
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{

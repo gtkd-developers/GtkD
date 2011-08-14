@@ -107,97 +107,6 @@ private import gdk.Visual;
  * accelerated using mediaLib, which provides hardware acceleration on Intel,
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
- * Example  4.  A simple example program using GdkRGB
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- * 35
- * 36
- * 37
- * 38
- * 39
- * 40
- * 41
- * 42
- * 43
- * 44
- * 45
- *  #include <gtk/gtk.h>
- * #define IMAGE_WIDTH	256
- * #define IMAGE_HEIGHT	256
- * guchar rgbbuf[IMAGE_WIDTH * IMAGE_HEIGHT * 3];
- * gboolean on_darea_expose (GtkWidget *widget,
- * 			 GdkEventExpose *event,
- * 			 gpointer user_data);
- * int
- * main (int argc, char *argv[])
- * {
-	 *  GtkWidget *window, *darea;
-	 *  gint x, y;
-	 *  guchar *pos;
-	 *  gtk_init (argc, argv);
-	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  darea = gtk_drawing_area_new ();
-	 *  gtk_widget_set_size_request (darea, IMAGE_WIDTH, IMAGE_HEIGHT);
-	 *  gtk_container_add (GTK_CONTAINER (window), darea);
-	 *  gtk_signal_connect (GTK_OBJECT (darea), "expose-event",
-	 *  GTK_SIGNAL_FUNC (on_darea_expose), NULL);
-	 *  gtk_widget_show_all (window);
-	 *  /+* Set up the RGB buffer. +/
-	 *  pos = rgbbuf;
-	 *  for (y = 0; y < IMAGE_HEIGHT; y++)
-	 *  {
-		 *  for (x = 0; x < IMAGE_WIDTH; x++)
-		 * 	{
-			 * 	 *pos++ = x - x % 32;			/+* Red. +/
-			 * 	 *pos++ = (x / 32) * 4 + y - y % 32;	/+* Green. +/
-			 * 	 *pos++ = y - y % 32;			/+* Blue. +/
-		 * 	}
-	 *  }
-	 *  gtk_main ();
-	 *  return 0;
- * }
- * gboolean
- * on_darea_expose (GtkWidget *widget,
- * 		 GdkEventExpose *event,
- * 		 gpointer user_data)
- * {
-	 *  gdk_draw_rgb_image (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
-	 * 		 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT,
-	 * 		 GDK_RGB_DITHER_MAX, rgbbuf, IMAGE_WIDTH * 3);
-	 *  return TRUE;
- * }
  */
 public class RGB
 {
@@ -407,7 +316,7 @@ public class RGB
 	 * a GdkColor struct.
 	 * Params:
 	 * rgb = The color, represented as a 0xRRGGBB integer value.
-	 * Returns:The X pixel value.
+	 * Returns: The X pixel value.
 	 */
 	public static gulong rgbXpixelFromRgb(uint rgb)
 	{
@@ -512,7 +421,7 @@ public class RGB
 	 * useful for presenting a user interface choice to the user about which
 	 * dither mode is desired; if the display is not ditherable, it may make
 	 * sense to gray out or hide the corresponding UI widget.
-	 * Returns:TRUE if the preferred visual is ditherable.
+	 * Returns: TRUE if the preferred visual is ditherable.
 	 */
 	public static int rgbDitherable()
 	{
@@ -527,7 +436,7 @@ public class RGB
 	 * make sense to gray out or hide the corresponding UI widget.
 	 * Params:
 	 * cmap = a GdkColormap
-	 * Returns:TRUE if the visual associated with cmap is ditherable.
+	 * Returns: TRUE if the visual associated with cmap is ditherable.
 	 */
 	public static int rgbColormapDitherable(Colormap cmap)
 	{

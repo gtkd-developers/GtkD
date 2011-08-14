@@ -113,43 +113,6 @@ private import gdk.Threads;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
- * Example  2.  Typical main function for a GTK+ application
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  int
- * main (int argc, char **argv)
- * {
-	 *  /+* Initialize i18n support +/
-	 *  gtk_set_locale ();
-	 *  /+* Initialize the widget set +/
-	 *  gtk_init (argc, argv);
-	 *  /+* Create the main window +/
-	 *  mainwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  /+* Set up our GUI elements +/
-	 *  ...
-	 *  /+* Show the application window +/
-	 *  gtk_widget_show_all (mainwin);
-	 *  /+* Enter the main event loop, and wait for user interaction +/
-	 *  gtk_main ();
-	 *  /+* The user lost interest +/
-	 *  return 0;
- * }
  * It's OK to use the GLib main loop directly instead of gtk_main(),
  * though it involves slightly more typing. See GMainLoop in the GLib
  * documentation.
@@ -205,7 +168,7 @@ public class Main
 	 * program environment. This is the same as calling the C library function
 	 * setlocale (LC_ALL, "") but also takes care of the
 	 * locale specific setup of the windowing system used by GDK.
-	 * Returns: a string corresponding to the locale set, typically in theform lang_COUNTRY, where lang is an ISO-639 language code, andCOUNTRY is an ISO-3166 country code. On Unix, this form matches theresult of the setlocale(); it is also used on other machines, such as Windows, where the C library returns a different result. The string is owned by GTK+ and should not be modified or freed.
+	 * Returns: a string corresponding to the locale set, typically in the form lang_COUNTRY, where lang is an ISO-639 language code, and COUNTRY is an ISO-3166 country code. On Unix, this form matches the result of the setlocale(); it is also used on other machines, such as Windows, where the C library returns a different result. The string is owned by GTK+ and should not be modified or freed.
 	 */
 	public static string setLocale()
 	{
@@ -236,7 +199,7 @@ public class Main
 	 * right-to-left or left-to-right text direction.
 	 * This function is equivalent to pango_language_get_default(). See
 	 * that function for details.
-	 * Returns: the default language as a PangoLanguage, must not befreed
+	 * Returns: the default language as a PangoLanguage, must not be freed
 	 */
 	public static PgLanguage getDefaultLanguage()
 	{
@@ -320,7 +283,7 @@ public class Main
 	 * Params:
 	 * argv = Address of the argv parameter of main().
 	 *  Any parameters understood by gtk_init() are stripped before return.. array length=argc. inout length=argc. allow-none length=argc.
-	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
+	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 */
 	public static int initCheck(ref string[] argv)
 	{
@@ -355,7 +318,7 @@ public class Main
 	 * translationDomain = a translation domain to use for translating
 	 *  the --help output for the options in entries
 	 *  with gettext(), or NULL
-	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
+	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public static int initWithArgs(ref string[] argv, string parameterString, GOptionEntry[] entries, string translationDomain)
@@ -416,20 +379,7 @@ public class Main
 	/**
 	 * Checks if any events are pending. This can be used to update the GUI
 	 * and invoke timeouts etc. while doing some time intensive computation.
-	 * Example  3.  Updating the GUI during a long computation.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 *  /+* computation going on +/
-	 * ...
-	 *  while (gtk_events_pending ())
-	 *  gtk_main_iteration ();
-	 * ...
-	 * /+* computation continued +/
-	 * Returns:TRUE if any events are pending, FALSE otherwise.
+	 * Returns: TRUE if any events are pending, FALSE otherwise.
 	 */
 	public static int eventsPending()
 	{
@@ -451,7 +401,7 @@ public class Main
 	/**
 	 * Asks for the current nesting level of the main loop. This can be useful
 	 * when calling gtk_quit_add().
-	 * Returns:the nesting level of the current invocation of the main loop.
+	 * Returns: the nesting level of the current invocation of the main loop.
 	 */
 	public static uint level()
 	{
@@ -474,7 +424,7 @@ public class Main
 	 * processed GTK+ will block until the next event is noticed. If you don't
 	 * want to block look at gtk_main_iteration_do() or check if any events are
 	 * pending with gtk_events_pending() first.
-	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Returns: TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int iteration()
 	{
@@ -487,7 +437,7 @@ public class Main
 	 * return or block dependent on the value of blocking.
 	 * Params:
 	 * blocking = TRUE if you want GTK+ to block if no events are pending.
-	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Returns: TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int iterationDo(int blocking)
 	{
@@ -526,7 +476,7 @@ public class Main
 	
 	/**
 	 * Queries the current grab of the default window group.
-	 * Returns:The widget which currently has the grab or NULL if no grab is active.
+	 * Returns: The widget which currently has the grab or NULL if no grab is active.
 	 */
 	public static Widget grabGetCurrent()
 	{
@@ -583,7 +533,7 @@ public class Main
 	 *  can pass 0 here to have the function run at the termination of the current
 	 *  mainloop.
 	 * data = Pointer to pass when calling function.
-	 * Returns:A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
+	 * Returns: A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
 	public static uint quitAdd(uint mainLevel, GtkFunction funct, void* data)
 	{
@@ -607,7 +557,7 @@ public class Main
 	 *  ignored.
 	 * data = Pointer to pass when calling function.
 	 * destroy = Function to call to destruct data. Gets data as argument.
-	 * Returns:A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
+	 * Returns: A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
 	public static uint quitAddFull(uint mainLevel, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
 	{
@@ -649,7 +599,7 @@ public class Main
 	 * data = callback data passed to function.
 	 * destroy = callback function to call with data when the input
 	 *  handler is removed, or NULL.
-	 * Returns:A unique id for the event source; to be used with gtk_input_remove().
+	 * Returns: A unique id for the event source; to be used with gtk_input_remove().
 	 */
 	public static uint inputAddFull(int source, GdkInputCondition condition, GdkInputFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
 	{
@@ -676,7 +626,7 @@ public class Main
 	 * Params:
 	 * snooper = a GtkKeySnoopFunc.
 	 * funcData = data to pass to snooper.
-	 * Returns:a unique id for this key snooper for use with gtk_key_snooper_remove().
+	 * Returns: a unique id for this key snooper for use with gtk_key_snooper_remove().
 	 */
 	public static uint keySnooperInstall(GtkKeySnoopFunc snooper, void* funcData)
 	{

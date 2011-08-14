@@ -204,7 +204,7 @@ public class PgAttributeIterator
 	 * Gets a list of all attributes at the current position of the
 	 * iterator.
 	 * Since 1.2
-	 * Returns:element-type Pango.Attribute): (transfer full. element-type Pango.Attribute): (transfer full.
+	 * Returns: element-type Pango.Attribute): (transfer full. element-type Pango.Attribute): (transfer full.
 	 */
 	public ListSG getAttrs()
 	{

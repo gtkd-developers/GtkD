@@ -377,7 +377,7 @@ public class PixbufLoader : ObjectG
 	 * or G_FILE_ERROR domains.
 	 * Params:
 	 * buf = Pointer to image data.
-	 * Returns: TRUE if the write was successful, or FALSE if the loadercannot parse the buffer.
+	 * Returns: TRUE if the write was successful, or FALSE if the loader cannot parse the buffer.
 	 * Throws: GException on failure.
 	 */
 	public int write(char[] buf)
@@ -425,7 +425,7 @@ public class PixbufLoader : ObjectG
 	 * using it. Additionally, if the loader is an animation, it will
 	 * return the "static image" of the animation
 	 * (see gdk_pixbuf_animation_get_static_image()).
-	 * Returns: The GdkPixbuf that the loader is creating, or NULL if notenough data has been read to determine how to create the image buffer.
+	 * Returns: The GdkPixbuf that the loader is creating, or NULL if not enough data has been read to determine how to create the image buffer.
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -467,7 +467,7 @@ public class PixbufLoader : ObjectG
 	 * domains. If you're just cancelling a load rather than expecting it
 	 * to be finished, passing NULL for error to ignore it is
 	 * reasonable.
-	 * Returns: TRUE if all image data written so far was successfully passed out via the update_area signalSignal DetailsThe "area-prepared" signalvoid user_function (GdkPixbufLoader *loader, gpointer user_data) : Run LastThis signal is emitted when the pixbuf loader has allocated thepixbuf in the desired size. After this signal is emitted, applications can call gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
+	 * Returns: TRUE if all image data written so far was successfully passed out via the update_area signal Signal Details The "area-prepared" signal void user_function (GdkPixbufLoader *loader, gpointer user_data) : Run Last This signal is emitted when the pixbuf loader has allocated the pixbuf in the desired size. After this signal is emitted, applications can call gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
 	 * Throws: GException on failure.
 	 */
 	public int close()

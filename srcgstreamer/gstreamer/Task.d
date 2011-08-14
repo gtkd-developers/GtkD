@@ -163,7 +163,7 @@ public class Task : ObjectGst
 	 * Params:
 	 * func = The GstTaskFunction to use
 	 * data = User data to pass to func
-	 * Returns: A new GstTask.MT safe.
+	 * Returns: A new GstTask. MT safe.
 	 */
 	public static Task create(GstTaskFunction func, void* data)
 	{
@@ -178,7 +178,7 @@ public class Task : ObjectGst
 	
 	/**
 	 * Get the current state of the task.
-	 * Returns: The GstTaskState of the taskMT safe.
+	 * Returns: The GstTaskState of the task MT safe.
 	 */
 	public GstTaskState getState()
 	{
@@ -193,7 +193,7 @@ public class Task : ObjectGst
 	 * This function cannot be called from within a task function as this
 	 * would cause a deadlock. The function will detect this and print a
 	 * g_warning.
-	 * Returns: TRUE if the task could be joined.MT safe.
+	 * Returns: TRUE if the task could be joined. MT safe.
 	 */
 	public int join()
 	{
@@ -206,7 +206,7 @@ public class Task : ObjectGst
 	 * stopped state, in which case a thread will be started and will remain
 	 * in the paused state. This function does not wait for the task to complete
 	 * the paused state.
-	 * Returns: TRUE if the task could be paused.MT safe.
+	 * Returns: TRUE if the task could be paused. MT safe.
 	 */
 	public int pause()
 	{
@@ -232,7 +232,7 @@ public class Task : ObjectGst
 	/**
 	 * Starts task. The task must have a lock associated with it using
 	 * gst_task_set_lock() or thsi function will return FALSE.
-	 * Returns: TRUE if the task could be started.MT safe.
+	 * Returns: TRUE if the task could be started. MT safe.
 	 */
 	public int start()
 	{
@@ -244,7 +244,7 @@ public class Task : ObjectGst
 	 * Stops task. This method merely schedules the task to stop and
 	 * will not wait for the task to have completely stopped. Use
 	 * gst_task_join() to stop and wait for completion.
-	 * Returns: TRUE if the task could be stopped.MT safe.
+	 * Returns: TRUE if the task could be stopped. MT safe.
 	 */
 	public int stop()
 	{

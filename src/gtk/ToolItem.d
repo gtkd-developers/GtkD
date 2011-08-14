@@ -322,7 +322,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether tool_item is the same size as other homogeneous
 	 * items. See gtk_tool_item_set_homogeneous().
 	 * Since 2.4
-	 * Returns: TRUE if the item is the same size as other homogeneousitems.
+	 * Returns: TRUE if the item is the same size as other homogeneous items.
 	 */
 	public int getHomogeneous()
 	{
@@ -444,7 +444,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether the tool_item is visible on toolbars that are
 	 * docked horizontally.
 	 * Since 2.4
-	 * Returns: TRUE if tool_item is visible on toolbars that aredocked horizontally.
+	 * Returns: TRUE if tool_item is visible on toolbars that are docked horizontally.
 	 */
 	public int getVisibleHorizontal()
 	{
@@ -513,7 +513,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem should call this function to find out how text should
 	 * be ellipsized.
 	 * Since 2.20
-	 * Returns: a PangoEllipsizeMode indicating how text in tool_itemshould be ellipsized.
+	 * Returns: a PangoEllipsizeMode indicating how text in tool_item should be ellipsized.
 	 */
 	public PangoEllipsizeMode getEllipsizeMode()
 	{
@@ -526,7 +526,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem should call this function to find out what size icons
 	 * they should use.
 	 * Since 2.4
-	 * Returns: a GtkIconSize indicating the icon sizeused for tool_item. type int
+	 * Returns: a GtkIconSize indicating the icon size used for tool_item . type int
 	 */
 	public GtkIconSize getIconSize()
 	{
@@ -539,7 +539,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem should call this function to find out what size icons
 	 * they should use.
 	 * Since 2.4
-	 * Returns: a GtkOrientation indicating the orientationused for tool_item
+	 * Returns: a GtkOrientation indicating the orientation used for tool_item
 	 */
 	public GtkOrientation getOrientation()
 	{
@@ -553,7 +553,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem::toolbar_reconfigured signal to find out in what style
 	 * the toolbar is displayed and change themselves accordingly
 	 * Since 2.4
-	 * Returns: A GtkToolbarStyle indicating the toolbar style usedfor tool_item.
+	 * Returns: A GtkToolbarStyle indicating the toolbar style used for tool_item.
 	 */
 	public GtkToolbarStyle getToolbarStyle()
 	{
@@ -567,7 +567,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * of the "toolbar_reconfigured" signal to find out the
 	 * relief style of buttons.
 	 * Since 2.4
-	 * Returns: a GtkReliefStyle indicating the relief style usedfor tool_item.
+	 * Returns: a GtkReliefStyle indicating the relief style used for tool_item.
 	 */
 	public GtkReliefStyle getReliefStyle()
 	{
@@ -580,7 +580,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem should call this function to find out how text should
 	 * be aligned.
 	 * Since 2.20
-	 * Returns: a gfloat indicating the horizontal text alignmentused for tool_item
+	 * Returns: a gfloat indicating the horizontal text alignment used for tool_item
 	 */
 	public float getTextAlignment()
 	{
@@ -593,7 +593,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem should call this function to find out how text should
 	 * be orientated.
 	 * Since 2.20
-	 * Returns: a GtkOrientation indicating the text orientationused for tool_item
+	 * Returns: a GtkOrientation indicating the text orientation used for tool_item
 	 */
 	public GtkOrientation getTextOrientation()
 	{
@@ -606,7 +606,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * gtk_tool_item_set_proxy_menu_item(), ie. the GtkMenuItem
 	 * that is going to appear in the overflow menu.
 	 * Since 2.4
-	 * Returns: The GtkMenuItem that is going to appear in theoverflow menu for tool_item.. transfer none.
+	 * Returns: The GtkMenuItem that is going to appear in the overflow menu for tool_item. . transfer none.
 	 */
 	public Widget retrieveProxyMenuItem()
 	{
@@ -629,7 +629,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Since 2.4
 	 * Params:
 	 * menuItemId = a string used to identify the menu item
-	 * Returns: The GtkMenuItem passed togtk_tool_item_set_proxy_menu_item(), if the menu_item_ids match.
+	 * Returns: The GtkMenuItem passed to gtk_tool_item_set_proxy_menu_item(), if the menu_item_ids match.
 	 */
 	public Widget getProxyMenuItem(string menuItemId)
 	{

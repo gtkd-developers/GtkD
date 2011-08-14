@@ -108,27 +108,6 @@ private import gobject.ObjectG;
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
- * Example  35.  A GtkDialog UI definition fragment.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- *  <object class="GtkActionGroup" id="actiongroup">
- *  <child>
- *  <object class="GtkAction" id="About">
- *  <property name="name">About</property>
- *  <property name="stock_id">gtk-about</property>
- *  <signal handler="about_activate" name="activate"/>
- *  </object>
- *  <accelerator key="F1" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK"/>
- *  </child>
- * </object>
  */
 public class ActionGroup : ObjectG, BuildableIF
 {
@@ -402,7 +381,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * actionName = the name of the action
-	 * Returns: the action, or NULL if no action by that name exists. transfer-none
+	 * Returns: the action, or NULL if no action by that name exists . transfer-none
 	 */
 	public Action getAction(string actionName)
 	{
@@ -418,7 +397,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	/**
 	 * Lists the actions in the action group.
 	 * Since 2.4
-	 * Returns: an allocated list of the action objects in the action group. element-type GtkAction. transfer container GtkAction.
+	 * Returns: an allocated list of the action objects in the action group . element-type GtkAction. transfer container GtkAction.
 	 */
 	public ListG listActions()
 	{

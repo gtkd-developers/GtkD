@@ -278,7 +278,7 @@ public class Plugin : ObjectGst
 	 * Loads the given plugin and refs it. Caller needs to unref after use.
 	 * Params:
 	 * filename = the plugin filename to load
-	 * Returns: a reference to the existing loaded GstPlugin, a reference to thenewly-loaded GstPlugin, or NULL if an error occurred.
+	 * Returns: a reference to the existing loaded GstPlugin, a reference to the newly-loaded GstPlugin, or NULL if an error occurred.
 	 * Throws: GException on failure.
 	 */
 	public static Plugin loadFile(string filename)

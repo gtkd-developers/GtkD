@@ -593,7 +593,7 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * freeSegment = if TRUE the actual character data is freed as well
-	 * Returns: the character data of string  (i.e. NULL if free_segment is TRUE)
+	 * Returns: the character data of string (i.e. NULL if free_segment is TRUE)
 	 */
 	public string free(int freeSegment)
 	{
@@ -655,7 +655,7 @@ public class StringG
 	 * Params:
 	 * v = a GString
 	 * v2 = another GString
-	 * Returns: TRUE if they strings are the same length and contain the  same bytes
+	 * Returns: TRUE if they strings are the same length and contain the same bytes
 	 */
 	public int equal(StringG v2)
 	{

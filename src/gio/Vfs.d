@@ -124,7 +124,7 @@ public class Vfs : ObjectG
 	 * Gets a GFile for path.
 	 * Params:
 	 * path = a string containing a VFS path.
-	 * Returns: a GFile.  Free the returned object with g_object_unref().
+	 * Returns: a GFile. Free the returned object with g_object_unref().
 	 */
 	public File getFileForPath(string path)
 	{
@@ -144,7 +144,7 @@ public class Vfs : ObjectG
 	 * is malformed or if the URI scheme is not supported.
 	 * Params:
 	 * uri = a string containing a URI
-	 * Returns: a GFile.  Free the returned object with g_object_unref().
+	 * Returns: a GFile. Free the returned object with g_object_unref().
 	 */
 	public File getFileForUri(string uri)
 	{
@@ -218,7 +218,7 @@ public class Vfs : ObjectG
 	
 	/**
 	 * Gets a list of URI schemes supported by vfs.
-	 * Returns: a NULL-terminated array of strings. The returned array belongs to GIO and must  not be freed or modified.
+	 * Returns: a NULL-terminated array of strings. The returned array belongs to GIO and must not be freed or modified.
 	 */
 	public string[] getSupportedUriSchemes()
 	{

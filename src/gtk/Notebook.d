@@ -92,31 +92,6 @@ private import gtk.Container;
  * To add a child widget in the notebooks action area, specify
  * "action-start" or "action-end" as the "type" attribute of the <child>
  * element.
- * Example  43.  A UI definition fragment with GtkNotebook
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- *  <object class="GtkNotebook">
- *  <child>
- *  <object class="GtkLabel" id="notebook-content">
- *  <property name="label">Content</property>
- *  </object>
- *  </child>
- *  <child type="tab">
- *  <object class="GtkLabel" id="notebook-tab">
- *  <property name="label">Tab</property>
- *  </object>
- *  </child>
- * </object>
  */
 public class Notebook : Container
 {
@@ -515,7 +490,7 @@ public class Notebook : Container
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.. allow-none.
-	 * Returns: the index (starting from 0) of the appendedpage in the notebook, or -1 if function fails
+	 * Returns: the index (starting from 0) of the appended page in the notebook, or -1 if function fails
 	 */
 	public int appendPage(Widget child, Widget tabLabel)
 	{
@@ -536,7 +511,7 @@ public class Notebook : Container
 	 *  a newly created label with the same text as tab_label;
 	 *  If tab_label is not a GtkLabel, menu_label must be
 	 *  specified if the page-switch menu is to be used.. allow-none.
-	 * Returns: the index (starting from 0) of the appendedpage in the notebook, or -1 if function fails
+	 * Returns: the index (starting from 0) of the appended page in the notebook, or -1 if function fails
 	 */
 	public int appendPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
 	{
@@ -550,7 +525,7 @@ public class Notebook : Container
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
 	 *  or NULL to use the default label, 'page N'.. allow-none.
-	 * Returns: the index (starting from 0) of the prependedpage in the notebook, or -1 if function fails
+	 * Returns: the index (starting from 0) of the prepended page in the notebook, or -1 if function fails
 	 */
 	public int prependPage(Widget child, Widget tabLabel)
 	{
@@ -571,7 +546,7 @@ public class Notebook : Container
 	 *  a newly created label with the same text as tab_label;
 	 *  If tab_label is not a GtkLabel, menu_label must be
 	 *  specified if the page-switch menu is to be used.. allow-none.
-	 * Returns: the index (starting from 0) of the prependedpage in the notebook, or -1 if function fails
+	 * Returns: the index (starting from 0) of the prepended page in the notebook, or -1 if function fails
 	 */
 	public int prependPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
 	{
@@ -587,7 +562,7 @@ public class Notebook : Container
 	 *  or NULL to use the default label, 'page N'.. allow-none.
 	 * position = the index (starting at 0) at which to insert the page,
 	 *  or -1 to append the page after all other pages.
-	 * Returns: the index (starting from 0) of the insertedpage in the notebook, or -1 if function fails
+	 * Returns: the index (starting from 0) of the inserted page in the notebook, or -1 if function fails
 	 */
 	public int insertPage(Widget child, Widget tabLabel, int position)
 	{
@@ -610,7 +585,7 @@ public class Notebook : Container
 	 *  specified if the page-switch menu is to be used.. allow-none.
 	 * position = the index (starting at 0) at which to insert the page,
 	 *  or -1 to append the page after all other pages.
-	 * Returns: the index (starting from 0) of the insertedpage in the notebook
+	 * Returns: the index (starting from 0) of the inserted page in the notebook
 	 */
 	public int insertPageMenu(Widget child, Widget tabLabel, Widget menuLabel, int position)
 	{
@@ -765,7 +740,7 @@ public class Notebook : Container
 	
 	/**
 	 * Returns the page number of the current page.
-	 * Returns: the index (starting from 0) of the currentpage in the notebook. If the notebook has no pages, then-1 will be returned.
+	 * Returns: the index (starting from 0) of the current page in the notebook. If the notebook has no pages, then -1 will be returned.
 	 */
 	public int getCurrentPage()
 	{
@@ -795,7 +770,7 @@ public class Notebook : Container
 	 * Params:
 	 * pageNum = the index of a page in the notebook, or -1
 	 *  to get the last page.
-	 * Returns: the child widget, or NULL if page_num isout of bounds.. transfer none.
+	 * Returns: the child widget, or NULL if page_num is out of bounds.. transfer none.
 	 */
 	public Widget getNthPage(int pageNum)
 	{
@@ -992,42 +967,6 @@ public class Notebook : Container
 	 * destination and accept the target "GTK_NOTEBOOK_TAB". The notebook
 	 * will fill the selection with a GtkWidget** pointing to the child
 	 * widget that corresponds to the dropped tab.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 *  static void
-	 * on_drop_zone_drag_data_received (GtkWidget *widget,
-	 *  GdkDragContext *context,
-	 *  gint x,
-	 *  gint y,
-	 *  GtkSelectionData *selection_data,
-	 *  guint info,
-	 *  guint time,
-	 *  gpointer user_data)
-	 * {
-		 *  GtkWidget *notebook;
-		 *  GtkWidget **child;
-		 *  notebook = gtk_drag_get_source_widget (context);
-		 *  child = (void*) selection_data->data;
-		 *  process_widget (*child);
-		 *  gtk_container_remove (GTK_CONTAINER (notebook), *child);
-	 * }
 	 * If you want a notebook to accept drags from other widgets,
 	 * you will have to set your own DnD code to do it.
 	 * Since 2.10

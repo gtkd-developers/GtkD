@@ -139,7 +139,7 @@ public class GLQuery
 	 * GLX extensions) are not reported by gdk_gl_query_gl_extension().
 	 * Params:
 	 * extension = name of OpenGL extension.
-	 * Returns: TRUE if the OpenGL extension is supported, FALSE if not  supported.
+	 * Returns: TRUE if the OpenGL extension is supported, FALSE if not supported.
 	 */
 	public static int glExtension(string extension)
 	{
@@ -151,7 +151,7 @@ public class GLQuery
 	 * Returns the address of the OpenGL, GLU, or GLX function.
 	 * Params:
 	 * procName = function name.
-	 * Returns: the address of the function named by proc_name.<<InitializationFrame Buffer Configuration>>
+	 * Returns: the address of the function named by proc_name. <<Initialization Frame Buffer Configuration>>
 	 */
 	public static GdkGLProc getProcAddress(string procName)
 	{

@@ -103,7 +103,7 @@ public class Parse
 	 * can try to play the pipeline.
 	 * Params:
 	 * pipelineDescription = the command line describing the pipeline
-	 * Returns: a new element on success, NULL on failure. If more than one toplevelelement is specified by the pipeline_description, all elements are put intoa GstPipeline, which than is returned.
+	 * Returns: a new element on success, NULL on failure. If more than one toplevel element is specified by the pipeline_description, all elements are put into a GstPipeline, which than is returned.
 	 * Throws: GException on failure.
 	 */
 	public static Element launch(string pipelineDescription)
@@ -168,7 +168,7 @@ public class Parse
 	 * ghostUnconnectedPads = whether to automatically create ghost pads
 	 *  for unconnected source or sink pads within
 	 *  the bin
-	 * Returns: a newly-created bin, or NULL if an error occurred.Since 0.10.3
+	 * Returns: a newly-created bin, or NULL if an error occurred. Since 0.10.3
 	 * Throws: GException on failure.
 	 */
 	public static Element binFromDescription(string binDescription, int ghostUnconnectedPads)

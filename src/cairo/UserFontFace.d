@@ -146,7 +146,7 @@ public class UserFontFace
 	/**
 	 * Gets the scaled-font initialization function of a user-font.
 	 * Since 1.8
-	 * Returns: The init callback of font_faceor NULL if none set.
+	 * Returns: The init callback of font_face or NULL if none set.
 	 */
 	public cairo_user_scaled_font_init_func_t getInitFunc()
 	{
@@ -177,7 +177,7 @@ public class UserFontFace
 	/**
 	 * Gets the glyph rendering function of a user-font.
 	 * Since 1.8
-	 * Returns: The render_glyph callback of font_faceor NULL if none set.
+	 * Returns: The render_glyph callback of font_face or NULL if none set.
 	 */
 	public cairo_user_scaled_font_render_glyph_func_t getRenderGlyphFunc()
 	{
@@ -205,7 +205,7 @@ public class UserFontFace
 	/**
 	 * Gets the unicode-to-glyph conversion function of a user-font.
 	 * Since 1.8
-	 * Returns: The unicode_to_glyph callback of font_faceor NULL if none set.
+	 * Returns: The unicode_to_glyph callback of font_face or NULL if none set.
 	 */
 	public cairo_user_scaled_font_unicode_to_glyph_func_t getUnicodeToGlyphFunc()
 	{
@@ -233,7 +233,7 @@ public class UserFontFace
 	/**
 	 * Gets the text-to-glyphs conversion function of a user-font.
 	 * Since 1.8
-	 * Returns: The text_to_glyphs callback of font_faceor NULL if none set.
+	 * Returns: The text_to_glyphs callback of font_face or NULL if none set.
 	 */
 	public cairo_user_scaled_font_text_to_glyphs_func_t getTextToGlyphsFunc()
 	{

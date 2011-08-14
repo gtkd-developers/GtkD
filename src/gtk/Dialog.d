@@ -119,49 +119,6 @@ private import gtk.Window;
  * For the simple dialog in the following example, in reality you'd probably use
  * GtkMessageDialog to save yourself some effort. But you'd need to create the
  * dialog contents manually if you had more than a simple message in the dialog.
- * Example  6.  Simple GtkDialog usage.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- *  /+* Function to open a dialog box displaying the message provided. +/
- * void quick_message (gchar *message) {
-	 *  GtkWidget *dialog, *label, *content_area;
-	 *  /+* Create the widgets +/
-	 *  dialog = gtk_dialog_new_with_buttons ("Message",
-	 *  main_application_window,
-	 *  GTK_DIALOG_DESTROY_WITH_PARENT,
-	 *  GTK_STOCK_OK,
-	 *  GTK_RESPONSE_NONE,
-	 *  NULL);
-	 *  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-	 *  label = gtk_label_new (message);
-	 *  /+* Ensure that the dialog box is destroyed when the user responds. +/
-	 *  g_signal_connect_swapped (dialog,
-	 *  "response",
-	 *  G_CALLBACK (gtk_widget_destroy),
-	 *  dialog);
-	 *  /+* Add the label, and show everything we've added to the dialog. +/
-	 *  gtk_container_add (GTK_CONTAINER (content_area), label);
-	 *  gtk_widget_show_all (dialog);
- * }
  * GtkDialog as GtkBuildable
  * The GtkDialog implementation of the GtkBuildable interface exposes the
  * vbox and action_area as internal children with the names "vbox" and
@@ -170,47 +127,6 @@ private import gtk.Window;
  * can contain multiple <action-widget> elements. The "response"
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
- * Example  7.  A GtkDialog UI definition fragment.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- *  <object class="GtkDialog" id="dialog1">
- *  <child internal-child="vbox">"
- *  <object class="GtkVBox" id="vbox">
- *  <child internal-child="action_area">
- *  <object class="GtkHButtonBox" id="button_box">
- *  <child>
- *  <object class="GtkButton" id="button_cancel"/>
- *  </child>
- *  <child>
- *  <object class="GtkButton" id="button_ok"/>
- *  </child>
- *  </object>
- *  </child>
- *  </object>
- *  </child>
- *  <action-widgets>
- *  <action-widget response="3">button_ok</action-widget>
- *  <action-widget response="-5">button_cancel</action-widget>
- *  </action-widgets>
- * </object>
  */
 public class Dialog : Window
 {

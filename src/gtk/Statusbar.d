@@ -236,7 +236,7 @@ public class Statusbar : HBox
 	 * contextId = the message's context id, as returned by
 	 *  gtk_statusbar_get_context_id()
 	 * text = the message to add to the statusbar
-	 * Returns: a message id that can be used with  gtk_statusbar_remove().
+	 * Returns: a message id that can be used with gtk_statusbar_remove().
 	 */
 	public uint push(uint contextId, string text)
 	{

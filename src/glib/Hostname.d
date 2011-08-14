@@ -88,7 +88,7 @@ public class Hostname
 	 * Since 2.22
 	 * Params:
 	 * hostname = a valid UTF-8 or ASCII hostname
-	 * Returns: an ASCII hostname, which must be freed, or NULL ifhostname is in some way invalid.
+	 * Returns: an ASCII hostname, which must be freed, or NULL if hostname is in some way invalid.
 	 */
 	public static string toAscii(string hostname)
 	{
@@ -106,7 +106,7 @@ public class Hostname
 	 * Since 2.22
 	 * Params:
 	 * hostname = a valid UTF-8 or ASCII hostname
-	 * Returns: a UTF-8 hostname, which must be freed, or NULL ifhostname is in some way invalid.
+	 * Returns: a UTF-8 hostname, which must be freed, or NULL if hostname is in some way invalid.
 	 */
 	public static string toUnicode(string hostname)
 	{
@@ -143,7 +143,7 @@ public class Hostname
 	 * Since 2.22
 	 * Params:
 	 * hostname = a hostname
-	 * Returns: TRUE if hostname contains any ASCII-encodedsegments.
+	 * Returns: TRUE if hostname contains any ASCII-encoded segments.
 	 */
 	public static int isAsciiEncoded(string hostname)
 	{

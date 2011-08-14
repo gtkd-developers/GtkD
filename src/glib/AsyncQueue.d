@@ -250,7 +250,7 @@ public class AsyncQueue
 	/**
 	 * Tries to pop data from the queue. If no data is available, NULL is
 	 * returned.
-	 * Returns: data from the queue or NULL, when no data isavailable immediately.
+	 * Returns: data from the queue or NULL, when no data is available immediately.
 	 */
 	public void* tryPop()
 	{
@@ -265,7 +265,7 @@ public class AsyncQueue
 	 * and g_time_val_add() can be used.
 	 * Params:
 	 * endTime = a GTimeVal, determining the final time.
-	 * Returns: data from the queue or NULL, when no data isreceived before end_time.
+	 * Returns: data from the queue or NULL, when no data is received before end_time.
 	 */
 	public void* timedPop(TimeVal endTime)
 	{
@@ -412,7 +412,7 @@ public class AsyncQueue
 	 * Tries to pop data from the queue. If no data is available, NULL is
 	 * returned. This function must be called while holding the queue's
 	 * lock.
-	 * Returns: data from the queue or NULL, when no data isavailable immediately.
+	 * Returns: data from the queue or NULL, when no data is available immediately.
 	 */
 	public void* tryPopUnlocked()
 	{
@@ -428,7 +428,7 @@ public class AsyncQueue
 	 * and g_time_val_add() can be used.
 	 * Params:
 	 * endTime = a GTimeVal, determining the final time.
-	 * Returns: data from the queue or NULL, when no data isreceived before end_time.
+	 * Returns: data from the queue or NULL, when no data is received before end_time.
 	 */
 	public void* timedPopUnlocked(TimeVal endTime)
 	{

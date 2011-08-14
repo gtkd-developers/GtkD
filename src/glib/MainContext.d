@@ -501,7 +501,7 @@ public class MainContext
 	 * non-default context, so it is not safe to assume that this will
 	 * always return NULL if threads are not initialized.)
 	 * Since 2.22
-	 * Returns: the thread-default GMainContext, or NULL if thethread-default context is the global default context.
+	 * Returns: the thread-default GMainContext, or NULL if the thread-default context is the global default context.
 	 */
 	public static MainContext getThreadDefault()
 	{

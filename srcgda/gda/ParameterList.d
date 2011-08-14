@@ -173,7 +173,7 @@ public class ParameterList
 	
 	/**
 	 * Gets the names of all parameters in the parameter list.
-	 * Returns: a GList containing the names of the parameters. Afterusing it, you should free this list by calling g_list_free.
+	 * Returns: a GList containing the names of the parameters. After using it, you should free this list by calling g_list_free.
 	 */
 	public ListG getNames()
 	{
@@ -190,7 +190,7 @@ public class ParameterList
 	 * Gets a GdaParameter from the parameter list given its name.
 	 * Params:
 	 * name = name of the parameter to search for.
-	 * Returns: the GdaParameter identified by name, if found, or NULLif not found.
+	 * Returns: the GdaParameter identified by name, if found, or NULL if not found.
 	 */
 	public Parameter find(string name)
 	{

@@ -74,29 +74,6 @@ private import gthread.Mutex;
  * Various GStreamer objects provide access to their internal structures using
  * an iterator.
  * The basic use pattern of an iterator is as follows:
- * Example10.Using an iterator
- *  it = _get_iterator(object);
- *  done = FALSE;
- *  while (!done) {
-	 *  switch (gst_iterator_next (it, item)) {
-		 *  case GST_ITERATOR_OK:
-		 *  ... use/change item here...
-		 *  gst_object_unref (item);
-		 *  break;
-		 *  case GST_ITERATOR_RESYNC:
-		 *  ...rollback changes to items...
-		 *  gst_iterator_resync (it);
-		 *  break;
-		 *  case GST_ITERATOR_ERROR:
-		 *  ...wrong parameter were given...
-		 *  done = TRUE;
-		 *  break;
-		 *  case GST_ITERATOR_DONE:
-		 *  done = TRUE;
-		 *  break;
-	 *  }
- *  }
- *  gst_iterator_free (it);
  * Last reviewed on 2005-11-09 (0.9.4)
  */
 public class Iterator
@@ -190,7 +167,7 @@ public class Iterator
 	 * increased and should therefore be unreffed after usage.
 	 * Params:
 	 * elem = pointer to hold next element
-	 * Returns: The result of the iteration. Unref after usage if this isa refcounted object.MT safe.
+	 * Returns: The result of the iteration. Unref after usage if this is a refcounted object. MT safe.
 	 */
 	public GstIteratorResult next(void** elem)
 	{
@@ -244,7 +221,7 @@ public class Iterator
 	 * Params:
 	 * func = the compare function to select elements
 	 * userData = user data passed to the compare function
-	 * Returns: a new GstIterator.MT safe.
+	 * Returns: a new GstIterator. MT safe.
 	 */
 	public Iterator filter(GCompareFunc func, void* userData)
 	{
@@ -274,7 +251,7 @@ public class Iterator
 	 * func = the fold function
 	 * ret = the seed value passed to the fold function
 	 * userData = user data passed to the fold function
-	 * Returns: A GstIteratorResult, as described above.MT safe.
+	 * Returns: A GstIteratorResult, as described above. MT safe.
 	 */
 	public GstIteratorResult fold(GstIteratorFoldFunction func, GValue* ret, void* userData)
 	{
@@ -288,7 +265,7 @@ public class Iterator
 	 * Params:
 	 * func = the function to call for each element.
 	 * userData = user data passed to the function
-	 * Returns: the result call to gst_iterator_fold(). The iterator will not befreed.MT safe.
+	 * Returns: the result call to gst_iterator_fold(). The iterator will not be freed. MT safe.
 	 */
 	public GstIteratorResult foreac(GFunc func, void* userData)
 	{
@@ -305,7 +282,7 @@ public class Iterator
 	 * Params:
 	 * func = the compare function to use
 	 * userData = user data passed to the compare function
-	 * Returns: The element in the iterator that matches the comparefunction or NULL when no element matched.MT safe.
+	 * Returns: The element in the iterator that matches the compare function or NULL when no element matched. MT safe.
 	 */
 	public void* findCustom(GCompareFunc func, void* userData)
 	{

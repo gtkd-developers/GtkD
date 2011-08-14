@@ -245,49 +245,6 @@ private import gobject.ObjectG;
  * in a UI definition by specifying the "type" attribute on a <child>
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
- * Example  58.  A GtkBuilder UI Definition
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- *  <interface>
- *  <object class="GtkDialog" id="dialog1">
- *  <child internal-child="vbox">
- *  <object class="GtkVBox" id="vbox1">
- *  <property name="border-width">10</property>
- *  <child internal-child="action_area">
- *  <object class="GtkHButtonBox" id="hbuttonbox1">
- *  <property name="border-width">20</property>
- *  <child>
- *  <object class="GtkButton" id="ok_button">
- *  <property name="label">gtk-ok</property>
- *  <property name="use-stock">TRUE</property>
- *  <signal name="clicked" handler="ok_button_clicked"/>
- *  </object>
- *  </child>
- *  </object>
- *  </child>
- *  </object>
- *  </child>
- *  </object>
- * </interface>
  * Beyond this general structure, several object classes define
  * their own XML DTD fragments for filling in the ANY placeholders
  * in the DTD above. Note that a custom element in a <child>
@@ -792,7 +749,7 @@ public class Builder : ObjectG
 	/**
 	 * Gets the translation domain of builder.
 	 * Since 2.12
-	 * Returns: the translation domain. This string is ownedby the builder object and must not be modified or freed.
+	 * Returns: the translation domain. This string is owned by the builder object and must not be modified or freed.
 	 */
 	public string getTranslationDomain()
 	{
@@ -807,7 +764,7 @@ public class Builder : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * typeName = type name to lookup
-	 * Returns: the GType found for type_name or G_TYPE_INVALID  if no type was found
+	 * Returns: the GType found for type_name or G_TYPE_INVALID if no type was found
 	 */
 	public GType getTypeFromName(string typeName)
 	{

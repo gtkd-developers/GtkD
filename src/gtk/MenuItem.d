@@ -92,17 +92,6 @@ private import gtk.Item;
  * The GtkMenuItem implementation of the GtkBuildable interface
  * supports adding a submenu by specifying "submenu" as the "type"
  * attribute of a <child> element.
- * Example  31.  A UI definition fragment with submenus
- *  1
- * 2
- * 3
- * 4
- * 5
- *  <object class="GtkMenuItem">
- *  <child type="submenu">
- *  <object class="GtkMenu"/>
- *  </child>
- * </object>
  */
 public class MenuItem : Item, ActivatableIF
 {

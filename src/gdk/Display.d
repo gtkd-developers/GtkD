@@ -177,7 +177,7 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * displayName = the name of the display to open
-	 * Returns:a GdkDisplay, or NULL if the display could not be opened.
+	 * Returns: a GdkDisplay, or NULL if the display could not be opened.
 	 */
 	public static Display open(string displayName)
 	{
@@ -195,7 +195,7 @@ public class Display : ObjectG
 	 * function for
 	 * gdk_display_manager_get_default_display (gdk_display_manager_get()).
 	 * Since 2.2
-	 * Returns: a GdkDisplay, or NULL if there is no default display.. transfer none.
+	 * Returns: a GdkDisplay, or NULL if there is no default display. . transfer none.
 	 */
 	public static Display getDefault()
 	{
@@ -211,7 +211,7 @@ public class Display : ObjectG
 	/**
 	 * Gets the name of the display.
 	 * Since 2.2
-	 * Returns: a string representing the display name. This string is ownedby GDK and should not be modified or freed.
+	 * Returns: a string representing the display name. This string is owned by GDK and should not be modified or freed.
 	 */
 	public string getName()
 	{
@@ -375,7 +375,7 @@ public class Display : ObjectG
 	 * Gets the next GdkEvent to be processed for display, fetching events from the
 	 * windowing system if necessary.
 	 * Since 2.2
-	 * Returns: the next GdkEvent to be processed, or NULL if no eventsare pending. The returned GdkEvent should be freed with gdk_event_free().
+	 * Returns: the next GdkEvent to be processed, or NULL if no events are pending. The returned GdkEvent should be freed with gdk_event_free().
 	 */
 	public Event getEvent()
 	{
@@ -394,7 +394,7 @@ public class Display : ObjectG
 	 * not get more events from the windowing system. It only checks the events
 	 * that have already been moved to the GDK event queue.)
 	 * Since 2.2
-	 * Returns: a copy of the first GdkEvent on the event queue, or NULL if no events are in the queue. The returned GdkEvent should be freed withgdk_event_free().
+	 * Returns: a copy of the first GdkEvent on the event queue, or NULL if no events are in the queue. The returned GdkEvent should be freed with gdk_event_free().
 	 */
 	public Event peekEvent()
 	{
@@ -501,7 +501,7 @@ public class Display : ObjectG
 	 *  to the window origin, or NULL. out. allow-none.
 	 * winY = return location for y coordinate of the pointer location relative
 	 *   to the window origin, or NULL. out. allow-none.
-	 * Returns: the window under the mouse pointer, or NULL. transfer none.
+	 * Returns: the window under the mouse pointer, or NULL . transfer none.
 	 */
 	public Window getWindowAtPointer(out int winX, out int winY)
 	{
@@ -628,7 +628,7 @@ public class Display : ObjectG
 	 * Returns whether GdkEventOwnerChange events will be
 	 * sent when the owner of a selection changes.
 	 * Since 2.6
-	 * Returns: whether GdkEventOwnerChange events will  be sent.
+	 * Returns: whether GdkEventOwnerChange events will be sent.
 	 */
 	public int supportsSelectionNotification()
 	{
@@ -643,7 +643,7 @@ public class Display : ObjectG
 	 * Params:
 	 * selection = the GdkAtom naming the selection for which
 	 *  ownership change notification is requested
-	 * Returns: whether GdkEventOwnerChange events will  be sent.
+	 * Returns: whether GdkEventOwnerChange events will be sent.
 	 */
 	public int requestSelectionNotification(GdkAtom selection)
 	{

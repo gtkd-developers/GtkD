@@ -496,7 +496,7 @@ public class CharacterSet
 	 * freed.
 	 * Params:
 	 * charset = return location for character set name
-	 * Returns: TRUE if the returned charset is UTF-8[1]  Note that some encodings may allow nul bytes to  occur inside strings. In that case, using -1 for  the len parameter is unsafe.[2] Despite the fact that byes_read can return information about partial characters, the g_convert_... functionsare not generally suitable for streaming. If the underlying converter being used maintains internal state, then this won't be preserved across successive calls to g_convert(), g_convert_with_iconv() or g_convert_with_fallback(). (An example of this is the GNU C converter for CP1255 which does not emit a base character until it knows that the next character is not a mark that could combine with the base character.)
+	 * Returns: TRUE if the returned charset is UTF-8 [1] Note that some encodings may allow nul bytes to occur inside strings. In that case, using -1 for the len parameter is unsafe. [2] Despite the fact that byes_read can return information about partial characters, the g_convert_... functions are not generally suitable for streaming. If the underlying converter being used maintains internal state, then this won't be preserved across successive calls to g_convert(), g_convert_with_iconv() or g_convert_with_fallback(). (An example of this is the GNU C converter for CP1255 which does not emit a base character until it knows that the next character is not a mark that could combine with the base character.)
 	 */
 	public static int getCharset(out string charset)
 	{

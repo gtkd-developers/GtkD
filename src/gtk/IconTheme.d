@@ -131,44 +131,6 @@ private import gobject.ObjectG;
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
  * being used, looking up an icon can be as simple as:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- *  GError *error = NULL;
- * GtkIconTheme *icon_theme;
- * GdkPixbuf *pixbuf;
- * icon_theme = gtk_icon_theme_get_default ();
- * pixbuf = gtk_icon_theme_load_icon (icon_theme,
- *  "my-icon-name", /+* icon name +/
- *  48, /+* size +/
- *  0, /+* flags +/
- *  error);
- * if (!pixbuf)
- *  {
-	 *  g_warning ("Couldn't load icon: %s", error->message);
-	 *  g_error_free (error);
- *  }
- * else
- *  {
-	 *  /+* Use the pixbuf +/
-	 *  g_object_unref (pixbuf);
- *  }
  */
 public class IconTheme : ObjectG
 {
@@ -274,7 +236,7 @@ public class IconTheme : ObjectG
 	 * Gets the icon theme for the default screen. See
 	 * gtk_icon_theme_get_for_screen().
 	 * Since 2.4
-	 * Returns: A unique GtkIconTheme associated with the default screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it.. transfer none.
+	 * Returns: A unique GtkIconTheme associated with the default screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it. . transfer none.
 	 */
 	public static IconTheme getDefault()
 	{
@@ -299,7 +261,7 @@ public class IconTheme : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * screen = a GdkScreen
-	 * Returns: A unique GtkIconTheme associated with the given screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it.. transfer none.
+	 * Returns: A unique GtkIconTheme associated with the given screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it. . transfer none.
 	 */
 	public static IconTheme getForScreen(Screen screen)
 	{
@@ -439,7 +401,7 @@ public class IconTheme : ObjectG
 	 * iconName = the name of the icon to lookup
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: a GtkIconInfo structure containing informationabout the icon, or NULL if the icon wasn't found. Free withgtk_icon_info_free()
+	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
 	 */
 	public IconInfo lookupIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
@@ -466,7 +428,7 @@ public class IconTheme : ObjectG
 	 * iconNames = NULL-terminated array of icon names to lookup
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: a GtkIconInfo structure containing informationabout the icon, or NULL if the icon wasn't found. Free withgtk_icon_info_free()
+	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
 	 */
 	public IconInfo chooseIcon(string[] iconNames, int size, GtkIconLookupFlags flags)
 	{
@@ -489,7 +451,7 @@ public class IconTheme : ObjectG
 	 * icon = the GIcon to look up
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: a GtkIconInfo structure containing  information about the icon, or NULL if the icon  wasn't found. Free with gtk_icon_info_free()
+	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
 	 */
 	public IconInfo lookupByGicon(IconIF icon, int size, GtkIconLookupFlags flags)
 	{
@@ -546,7 +508,7 @@ public class IconTheme : ObjectG
 	 * Gets the list of contexts available within the current
 	 * hierarchy of icon themes
 	 * Since 2.12
-	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free().. element-type utf8. transfer full utf8.
+	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). . element-type utf8. transfer full utf8.
 	 */
 	public ListG listContexts()
 	{
@@ -569,7 +531,7 @@ public class IconTheme : ObjectG
 	 * Params:
 	 * context = a string identifying a particular type of icon,
 	 *  or NULL to list all icons.
-	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free().. element-type utf8. transfer none utf8.
+	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). . element-type utf8. transfer none utf8.
 	 */
 	public ListG listIcons(string context)
 	{
@@ -590,7 +552,7 @@ public class IconTheme : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * iconName = the name of an icon
-	 * Returns: An newly allocated array describing the sizes atwhich the icon is available. The array should be freed with g_free()when it is no longer needed.
+	 * Returns: An newly allocated array describing the sizes at which the icon is available. The array should be freed with g_free() when it is no longer needed.
 	 */
 	public int* getIconSizes(string iconName)
 	{

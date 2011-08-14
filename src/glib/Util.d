@@ -208,7 +208,7 @@ public class Util
 	 * environment variables, they are expanded.
 	 * Params:
 	 * variable = the environment variable to get, in the GLib file name encoding.
-	 * Returns: the value of the environment variable, or NULL ifthe environment variable is not found. The returned string may beoverwritten by the next call to g_getenv(), g_setenv() org_unsetenv().
+	 * Returns: the value of the environment variable, or NULL if the environment variable is not found. The returned string may be overwritten by the next call to g_getenv(), g_setenv() or g_unsetenv().
 	 */
 	public static string getenv(string variable)
 	{
@@ -255,7 +255,7 @@ public class Util
 	/**
 	 * Gets the names of all variables set in the environment.
 	 * Since 2.8
-	 * Returns: a NULL-terminated list of strings which must be freedwith g_strfreev().Programs that want to be portable to Windows should typically usethis function and g_getenv() instead of using the environ arrayfrom the C library directly. On Windows, the strings in the environarray are in system codepage encoding, while in most of the typicaluse cases for environment variables in GLib-using programs you wantthe UTF-8 encoding that this function and g_getenv() provide.
+	 * Returns: a NULL-terminated list of strings which must be freed with g_strfreev(). Programs that want to be portable to Windows should typically use this function and g_getenv() instead of using the environ array from the C library directly. On Windows, the strings in the environ array are in system codepage encoding, while in most of the typical use cases for environment variables in GLib-using programs you want the UTF-8 encoding that this function and g_getenv() provide.
 	 */
 	public static string[] listenv()
 	{
@@ -302,7 +302,7 @@ public class Util
 	 * C:\Documents and Settings\username\Local Settings\Temporary Internet Files.
 	 * See documentation for CSIDL_INTERNET_CACHE.
 	 * Since 2.6
-	 * Returns: a string owned by GLib that must not be modified  or freed.
+	 * Returns: a string owned by GLib that must not be modified or freed.
 	 */
 	public static string getUserCacheDir()
 	{
@@ -320,7 +320,7 @@ public class Util
 	 * On Windows is the virtual folder that represents the My Documents
 	 * desktop item. See documentation for CSIDL_PERSONAL.
 	 * Since 2.6
-	 * Returns: a string owned by GLib that must not be modified  or freed.
+	 * Returns: a string owned by GLib that must not be modified or freed.
 	 */
 	public static string getUserDataDir()
 	{
@@ -340,7 +340,7 @@ public class Util
 	 * C:\Documents and Settings\username\Application. See documentation for
 	 * CSIDL_APPDATA.
 	 * Since 2.6
-	 * Returns: a string owned by GLib that must not be modified  or freed.
+	 * Returns: a string owned by GLib that must not be modified or freed.
 	 */
 	public static string getUserConfigDir()
 	{
@@ -393,7 +393,7 @@ public class Util
 	 * Note that on Windows the returned list can vary depending on where
 	 * this function is called.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
+	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed.
 	 */
 	public static string[] getSystemDataDirs()
 	{
@@ -415,7 +415,7 @@ public class Util
 	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
 	 * This information will not roam and is available to anyone using the computer.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
+	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed.
 	 */
 	public static string[] getSystemConfigDirs()
 	{
@@ -564,7 +564,7 @@ public class Util
 	 * file_name is empty, it gets ".".
 	 * Params:
 	 * fileName = the name of the file.
-	 * Returns: a newly allocated string containing the last component of  the filename.
+	 * Returns: a newly allocated string containing the last component of the filename.
 	 */
 	public static string pathGetBasename(string fileName)
 	{
@@ -669,7 +669,7 @@ public class Util
 	 * Params:
 	 * mask = a gulong containing flags.
 	 * nthBit = the index of the bit to start the search from.
-	 * Returns:the index of the first bit set which is higher than nth_bit.
+	 * Returns: the index of the first bit set which is higher than nth_bit.
 	 */
 	public static int bitNthLsf(gulong mask, int nthBit)
 	{
@@ -685,7 +685,7 @@ public class Util
 	 * Params:
 	 * mask = a gulong containing flags.
 	 * nthBit = the index of the bit to start the search from.
-	 * Returns:the index of the first bit set which is lower than nth_bit.
+	 * Returns: the index of the first bit set which is lower than nth_bit.
 	 */
 	public static int bitNthMsf(gulong mask, int nthBit)
 	{
@@ -698,7 +698,7 @@ public class Util
 	 * e.g. if number is 4, 3 bits are needed.
 	 * Params:
 	 * number = a guint.
-	 * Returns:the number of bits used to hold number.
+	 * Returns: the number of bits used to hold number.
 	 */
 	public static uint bitStorage(gulong number)
 	{
@@ -714,7 +714,7 @@ public class Util
 	 * each prime is approximately 1.5-2 times the previous prime.
 	 * Params:
 	 * num = a guint.
-	 * Returns:the smallest prime number from a built-in array of primes which islarger than num.
+	 * Returns: the smallest prime number from a built-in array of primes which is larger than num.
 	 */
 	public static uint spacedPrimesClosest(uint num)
 	{

@@ -385,7 +385,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Since 2.4
 	 * Params:
 	 * n = A position on the toolbar
-	 * Returns: The n'th GtkToolItem on toolbar, or NULL if thereisn't an n'th item.
+	 * Returns: The n'th GtkToolItem on toolbar, or NULL if there isn't an n'th item.
 	 */
 	public ToolItem getNthItem(int n)
 	{

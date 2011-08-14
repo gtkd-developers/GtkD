@@ -85,15 +85,6 @@ private import gstreamer.Structure;
  * pointed to by the buffer with gst_buffer_set_caps(). Caps attached to
  * a GstBuffer allow for format negotiation upstream and downstream.
  * A GstCaps can be constructed with the following code fragment:
- * Example4.Creating caps
- *  GstCaps *caps;
- *  caps = gst_caps_new_simple ("video/x-raw-yuv",
- *  "format", GST_TYPE_FOURCC, GST_MAKE_FOURCC ('I', '4', '2', '0'),
- *  "framerate", GST_TYPE_FRACTION, 25, 1,
- *  "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
- *  "width", G_TYPE_INT, 320,
- *  "height", G_TYPE_INT, 240,
- *  NULL);
  * A GstCaps is fixed when it has no properties with ranges or lists. Use
  * gst_caps_is_fixed() to test for fixed caps. Only fixed caps can be
  * set on a GstPad or GstBuffer.
@@ -227,7 +218,7 @@ public class Caps
 	 * Converts a GstStaticCaps to a GstCaps.
 	 * Params:
 	 * staticCaps = the GstStaticCaps to convert
-	 * Returns: A pointer to the GstCaps. Unref after usage. Since thecore holds an additional ref to the returned caps,use gst_caps_make_writable() on the returned caps to modify it.
+	 * Returns: A pointer to the GstCaps. Unref after usage. Since the core holds an additional ref to the returned caps, use gst_caps_make_writable() on the returned caps to modify it.
 	 */
 	public static Caps staticCapsGet(GstStaticCaps* staticCaps)
 	{

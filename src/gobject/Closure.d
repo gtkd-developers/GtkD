@@ -308,30 +308,6 @@ public class Closure
 	 * Allocates a struct of the given size and initializes the initial
 	 * part as a GClosure. This function is mainly useful when
 	 * implementing new types of closures.
-	 * typedef struct _MyClosure MyClosure;
-	 * struct _MyClosure
-	 * {
-		 *  GClosure closure;
-		 *  // extra data goes here
-	 * };
-	 * static void
-	 * my_closure_finalize (gpointer notify_data,
-	 *  GClosure *closure)
-	 * {
-		 *  MyClosure *my_closure = (MyClosure *)closure;
-		 *  // free extra data here
-	 * }
-	 * MyClosure *my_closure_new (gpointer data)
-	 * {
-		 *  GClosure *closure;
-		 *  MyClosure *my_closure;
-		 *  closure = g_closure_new_simple (sizeof (MyClosure), data);
-		 *  my_closure = (MyClosure *) closure;
-		 *  // initialize extra data here
-		 *  g_closure_add_finalize_notifier (closure, notify_data,
-		 *  my_closure_finalize);
-		 *  return my_closure;
-	 * }
 	 * Params:
 	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 *  sizeof (GClosure)

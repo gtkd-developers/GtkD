@@ -276,7 +276,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * closure = the closure to remove from this accelerator group, or NULL
 	 *  to remove all closures. allow-none.
-	 * Returns:TRUE if the closure was found and got disconnected
+	 * Returns: TRUE if the closure was found and got disconnected
 	 */
 	public int disconnect(Closure closure)
 	{
@@ -290,7 +290,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
-	 * Returns:TRUE if there was an accelerator which could be  removed, FALSE otherwise
+	 * Returns: TRUE if there was an accelerator which could be removed, FALSE otherwise
 	 */
 	public int disconnectKey(uint accelKey, GdkModifierType accelMods)
 	{
@@ -360,7 +360,7 @@ public class AccelGroup : ObjectG
 	 * Locks are added and removed using gtk_accel_group_lock() and
 	 * gtk_accel_group_unlock().
 	 * Since 2.14
-	 * Returns: TRUE if there are 1 or more locks on the accel_group,FALSE otherwise.
+	 * Returns: TRUE if there are 1 or more locks on the accel_group, FALSE otherwise.
 	 */
 	public int getIsLocked()
 	{
@@ -438,7 +438,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * findFunc = a function to filter the entries of accel_group with
 	 * data = data to pass to find_func
-	 * Returns:the key of the first entry passing find_func. The key is owned by GTK+ and must not be freed.
+	 * Returns: the key of the first entry passing find_func. The key is owned by GTK+ and must not be freed.
 	 */
 	public GtkAccelKey* find(GtkAccelGroupFindFunc findFunc, void* data)
 	{
@@ -455,7 +455,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * keyval = a GDK keyval
 	 * modifiers = modifier mask
-	 * Returns:TRUE if the accelerator is valid
+	 * Returns: TRUE if the accelerator is valid
 	 */
 	public static int acceleratorValid(uint keyval, GdkModifierType modifiers)
 	{
@@ -537,7 +537,7 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 * Gets the value set by gtk_accelerator_set_default_mod_mask().
-	 * Returns:the default accelerator modifier mask
+	 * Returns: the default accelerator modifier mask
 	 */
 	public static uint acceleratorGetDefaultModMask()
 	{

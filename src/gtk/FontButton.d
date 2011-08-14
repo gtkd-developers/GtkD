@@ -196,7 +196,7 @@ public class FontButton : Button
 	 * Since 2.4
 	 * Params:
 	 * fontname = Name of font to display in font selection dialog
-	 * Returns: Return value of gtk_font_selection_dialog_set_font_name() if thefont selection dialog exists, otherwise FALSE.
+	 * Returns: Return value of gtk_font_selection_dialog_set_font_name() if the font selection dialog exists, otherwise FALSE.
 	 */
 	public int setFontName(string fontname)
 	{

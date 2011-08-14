@@ -3235,11 +3235,6 @@ public struct GVariantBuilder{}
  * Checks the version of the GLib library.
  * Returns TRUE if the version of the GLib header files is the same
  * as or newer than the passed-in version.
- * Example  1.  Checking the version of the GLib library
- *  1
- * 2
- *  if (!GLIB_CHECK_VERSION (1, 2, 0))
- *  g_error ("GLib version 1.2.0 or above is needed");
  * major  :
  * the major version number.
  * minor  :
@@ -3657,10 +3652,6 @@ public struct GVariantBuilder{}
  * used as a context. This is mainly useful for short strings which
  * may need different translations, depending on the context in which
  * they are used.
- *  1
- * 2
- *  label1 = C_("Navigation", "Back");
- * label2 = C_("Body part", "Back");
  * Note
  * If you are using the C_() macro, you need to make sure that you
  * pass --keyword=C_:1c,2 to xgettext when extracting
@@ -3681,31 +3672,6 @@ public struct GVariantBuilder{}
  * This is useful in situations where the translated strings can't
  * be directly used, e.g. in string array initializers.
  * To get the translated string, call gettext() at runtime.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- *  {
-	 *  static const char *messages[] = {
-		 *  N_("some very meaningful message"),
-		 *  N_("and another one")
-	 *  };
-	 *  const char *string;
-	 *  ...
-	 *  string
-	 *  = index > 1 ? _("a default message") : gettext (messages[index]);
-	 *  fputs (string);
-	 *  ...
- * }
  * String  :
  * the string to be translated
  * Since 2.4
@@ -3718,31 +3684,6 @@ public struct GVariantBuilder{}
  * This is useful in situations where the translated strings can't
  * be directly used, e.g. in string array initializers.
  * To get the translated string, you should call g_dpgettext2() at runtime.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- *  {
-	 *  static const char *messages[] = {
-		 *  NC_("some context", "some very meaningful message"),
-		 *  NC_("some context", "and another one")
-	 *  };
-	 *  const char *string;
-	 *  ...
-	 *  string
-	 *  = index > 1 ? g_dpgettext2 (NULL, "some context", "a default message") : g_dpgettext2 (NULL, "some context", messages[index]);
-	 *  fputs (string);
-	 *  ...
- * }
  * Note
  * If you are using the NC_() macro, you need to make sure that you
  * pass --keyword=NC_:1c,2 to xgettext when extracting
@@ -4125,15 +4066,6 @@ public struct GVariantBuilder{}
 /*
  * Returns the element of a GArray at the given index. The return
  * value is cast to the given type.
- * Example  20.  Getting a pointer to an element in a GArray
- *  1
- * 2
- * 3
- * 4
- *  EDayViewEvent *event;
- * /+* This gets a pointer to the 4th element
- *  in the array of EDayViewEvent structs. +/
- * event = g_array_index (events, EDayViewEvent, 3);
  * a  :
  * a GArray.
  * t  :

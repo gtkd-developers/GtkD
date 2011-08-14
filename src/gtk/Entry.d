@@ -891,7 +891,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * This function returns the entry's "inner-border" property. See
 	 * gtk_entry_set_inner_border() for more information.
 	 * Since 2.10
-	 * Returns: the entry's GtkBorder, or NULL if none was set.. transfer none.
+	 * Returns: the entry's GtkBorder, or NULL if none was set. . transfer none.
 	 */
 	public Border getInnerBorder()
 	{
@@ -1189,7 +1189,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Retrieves the horizontal cursor adjustment for the entry.
 	 * See gtk_entry_set_cursor_hadjustment().
 	 * Since 2.12
-	 * Returns: the horizontal cursor adjustment, or NULL if none has been set.. transfer none.
+	 * Returns: the horizontal cursor adjustment, or NULL if none has been set. . transfer none.
 	 */
 	public Adjustment getCursorHadjustment()
 	{

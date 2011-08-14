@@ -205,7 +205,7 @@ public class GLDrawable
 	
 	/**
 	 * Returns the current GdkGLDrawable.
-	 * Returns: the current GdkGLDrawable or NULL if there is no current drawable.<<Rendering ContextOpenGL Pixmap>>
+	 * Returns: the current GdkGLDrawable or NULL if there is no current drawable. <<Rendering Context OpenGL Pixmap>>
 	 */
 	public static GLDrawable getCurrent()
 	{

@@ -313,7 +313,7 @@ public class Visual
 	/**
 	 * Gets the screen to which this visual belongs
 	 * Since 2.2
-	 * Returns: the screen to which this visual belongs.. transfer none.
+	 * Returns: the screen to which this visual belongs. . transfer none.
 	 */
 	public Screen getScreen()
 	{

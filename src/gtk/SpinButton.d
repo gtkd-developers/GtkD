@@ -79,80 +79,6 @@ private import gtk.Entry;
  * that it can be checked to ensure it is in a given range.
  * The main properties of a GtkSpinButton are through a GtkAdjustment. See the
  * GtkAdjustment section for more details about an adjustment's properties.
- * Example  17.  Using a GtkSpinButton to get an integer.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  /+* Provides a function to retrieve an integer value from a GtkSpinButton
- *  * and creates a spin button to model percentage values.
- *  +/
- * gint grab_int_value (GtkSpinButton *a_spinner, gpointer user_data) {
-	 *  return gtk_spin_button_get_value_as_int (a_spinner);
- * }
- * void create_integer_spin_button (void) {
-	 *  GtkWidget *window, *spinner;
-	 *  GtkAdjustment *spinner_adj;
-	 *  spinner_adj = (GtkAdjustment *) gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 5.0, 5.0);
-	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
-	 *  /+* creates the spinner, with no decimal places +/
-	 *  spinner = gtk_spin_button_new (spinner_adj, 1.0, 0);
-	 *  gtk_container_add (GTK_CONTAINER (window), spinner);
-	 *  gtk_widget_show_all (window);
-	 *  return;
- * }
- * Example  18.  Using a GtkSpinButton to get a floating point value.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  /+* Provides a function to retrieve a floating point value from a
- *  * GtkSpinButton, and creates a high precision spin button.
- *  +/
- * gfloat grab_int_value (GtkSpinButton *a_spinner, gpointer user_data) {
-	 *  return gtk_spin_button_get_value (a_spinner);
- * }
- * void create_floating_spin_button (void) {
-	 *  GtkWidget *window, *spinner;
-	 *  GtkAdjustment *spinner_adj;
-	 *  spinner_adj = (GtkAdjustment *) gtk_adjustment_new (2.500, 0.0, 5.0, 0.001, 0.1, 0.1);
-	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
-	 *  /+* creates the spinner, with three decimal places +/
-	 *  spinner = gtk_spin_button_new (spinner_adj, 0.001, 3);
-	 *  gtk_container_add (GTK_CONTAINER (window), spinner);
-	 *  gtk_widget_show_all (window);
-	 *  return;
- * }
  */
 public class SpinButton : Entry
 {
@@ -260,44 +186,6 @@ public class SpinButton : Entry
 	/**
 	 * The ::output signal can be used to change to formatting
 	 * of the value that is displayed in the spin buttons entry.
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 *  /+* show leading zeros +/
-	 * static gboolean
-	 * on_output (GtkSpinButton *spin,
-	 *  gpointer data)
-	 * {
-		 *  GtkAdjustment *adj;
-		 *  gchar *text;
-		 *  int value;
-		 *  adj = gtk_spin_button_get_adjustment (spin);
-		 *  value = (int)gtk_adjustment_get_value (adj);
-		 *  text = g_strdup_printf ("%02d", value);
-		 *  gtk_entry_set_text (GTK_ENTRY (spin), text);
-		 *  g_free (text);
-		 *
-		 *  return TRUE;
-	 * }
-	 *
-	 *
-	 *
 	 */
 	void addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

@@ -96,7 +96,7 @@ public interface ToolShellIF
 	 * Retrieves the icon size for the tool shell. Tool items must not call this
 	 * function directly, but rely on gtk_tool_item_get_icon_size() instead.
 	 * Since 2.14
-	 * Returns: the current size for icons of shell. type int
+	 * Returns: the current size for icons of shell . type int
 	 */
 	public GtkIconSize getIconSize();
 	

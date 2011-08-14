@@ -97,43 +97,6 @@ private import gtk.CheckButton;
  * To remove a GtkRadioButton from one group and make it part of a new one, use gtk_radio_button_set_group().
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
- * Example  15.  How to create a group of two radio buttons.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  void create_radio_buttons (void) {
-	 *  GtkWidget *window, *radio1, *radio2, *box, *entry;
-	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  box = gtk_vbox_new (TRUE, 2);
-	 *  /+* Create a radio button with a GtkEntry widget +/
-	 *  radio1 = gtk_radio_button_new (NULL);
-	 *  entry = gtk_entry_new ();
-	 *  gtk_container_add (GTK_CONTAINER (radio1), entry);
-	 *  /+* Create a radio button with a label +/
-	 *  radio2 = gtk_radio_button_new_with_label_from_widget (GTK_RADIO_BUTTON (radio1),
-	 * 							"I'm the second radio button.");
-	 *  /+* Pack them into a box, then show all the widgets +/
-	 *  gtk_box_pack_start (GTK_BOX (box), radio1, TRUE, TRUE, 2);
-	 *  gtk_box_pack_start (GTK_BOX (box), radio2, TRUE, TRUE, 2);
-	 *  gtk_container_add (GTK_CONTAINER (window), box);
-	 *  gtk_widget_show_all (window);
-	 *  return;
- * }
  * When an unselected button in the group is clicked the clicked button
  * receives the "toggled" signal, as does the previously selected button.
  * Inside the "toggled" handler, gtk_toggle_button_get_active() can be used
@@ -370,7 +333,7 @@ public class RadioButton : CheckButton
 	
 	/**
 	 * Retrieves the group assigned to a radio button.
-	 * Returns: a linked listcontaining all the radio buttons in the same groupas radio_button. The returned list is owned by the radio buttonand must not be modified or freed.. element-type GtkRadioButton. transfer none GtkRadioButton.
+	 * Returns: a linked list containing all the radio buttons in the same group as radio_button. The returned list is owned by the radio button and must not be modified or freed.. element-type GtkRadioButton. transfer none GtkRadioButton.
 	 */
 	public ListSG getGroup()
 	{

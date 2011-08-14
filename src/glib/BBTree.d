@@ -275,7 +275,7 @@ public class BBTree
 	 * fast.
 	 * Params:
 	 * key = the key to look up.
-	 * Returns: the value corresponding to the key, or NULL if the key wasnot found.
+	 * Returns: the value corresponding to the key, or NULL if the key was not found.
 	 */
 	public void* lookup(void* key)
 	{
@@ -367,7 +367,7 @@ public class BBTree
 	 * If the key does not exist in the GTree, the function does nothing.
 	 * Params:
 	 * key = the key to remove.
-	 * Returns: TRUE if the key was found (prior to 2.8, this function returned  nothing)
+	 * Returns: TRUE if the key was found (prior to 2.8, this function returned nothing)
 	 */
 	public int remove(void* key)
 	{
@@ -381,7 +381,7 @@ public class BBTree
 	 * If the key does not exist in the GTree, the function does nothing.
 	 * Params:
 	 * key = the key to remove.
-	 * Returns: TRUE if the key was found (prior to 2.8, this function returned  nothing)
+	 * Returns: TRUE if the key was found (prior to 2.8, this function returned nothing)
 	 */
 	public int steal(void* key)
 	{

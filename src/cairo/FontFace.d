@@ -163,7 +163,7 @@ public class FontFace
 	/**
 	 * Returns the current reference count of font_face.
 	 * Since 1.4
-	 * Returns: the current reference count of font_face. If theobject is a nil object, 0 will be returned.
+	 * Returns: the current reference count of font_face. If the object is a nil object, 0 will be returned.
 	 */
 	public uint getReferenceCount()
 	{
@@ -181,7 +181,7 @@ public class FontFace
 	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * font face is destroyed or when new user data is attached using the
 	 * same key.
-	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a slot could not be allocated for the user data.
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{

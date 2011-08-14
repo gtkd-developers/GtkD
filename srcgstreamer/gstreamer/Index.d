@@ -208,7 +208,7 @@ public class Index : ObjectGst
 	 * Set the current groupnumber to the given argument.
 	 * Params:
 	 * groupnum = the groupnumber to set
-	 * Returns: TRUE if the operation succeeded, FALSE if the groupdid not exist.
+	 * Returns: TRUE if the operation succeeded, FALSE if the group did not exist.
 	 */
 	public int setGroup(int groupnum)
 	{
@@ -418,7 +418,7 @@ public class Index : ObjectGst
 	 * entry = the index to search
 	 * format = the format of the value the find
 	 * value = a pointer to store the value
-	 * Returns: TRUE if there was a value associated with the givenformat.
+	 * Returns: TRUE if there was a value associated with the given format.
 	 */
 	public static int entryAssocMap(GstIndexEntry* entry, GstFormat format, out long value)
 	{

@@ -85,42 +85,10 @@ private import glib.OptionGroup;
  * gst_init() before it can be used. You should pass pointers to the main argc
  * and argv variables so that GStreamer can process its own command line
  * options, as shown in the following example.
- * Example1.Initializing the gstreamer library
- * int
- * main (int argc, char *argv[])
- * {
-	 *  // initialize the GStreamer library
-	 *  gst_init (argc, argv);
-	 *  ...
- * }
  * It's allowed to pass two NULL pointers to gst_init() in case you don't want
  * to pass the command line args to GStreamer.
  * You can also use GOption to initialize your own parameters as shown in
  * the next code fragment:
- * Example2.Initializing own parameters when initializing gstreamer
- * static gboolean stats = FALSE;
- * ...
- * int
- * main (int argc, char *argv[])
- * {
-	 *  GOptionEntry options[] = {
-		 *  {"tags", 't', 0, G_OPTION_ARG_NONE, tags,
-		 *  N_("Output tags (also known as metadata)"), NULL},
-	 *  {NULL}
- *  };
- *  // must initialise the threading system before using any other GLib funtion
- *  if (!g_thread_supported())
- *  g_thread_init (NULL);
- *  ctx = g_option_context_new ("[ADDITIONAL ARGUMENTS]");
- *  g_option_context_add_main_entries (ctx, options, GETTEXT_PACKAGE);
- *  g_option_context_add_group (ctx, gst_init_get_option_group());
- *  if (!g_option_context_parse (ctx, argc, argv, err)) {
-	 *  g_print ("Error initializing: %s\n", GST_STR_NULL (err->message));
-	 *  exit (1);
- *  }
- *  g_option_context_free (ctx);
- * ...
- * }
  * Use gst_version() to query the library version at runtime or use the
  * GST_VERSION_* macros to find the version at compile time. Optionally
  * gst_version_string() returns a printable string.
@@ -272,7 +240,7 @@ public class GStreamer
 	 * Applications might want to disable this behaviour with the
 	 * gst_segtrap_set_enabled() function. This is typically done if the application
 	 * wants to install its own handler without GStreamer interfering.
-	 * Returns: TRUE if GStreamer is allowed to install a custom SIGSEGV handler.Since 0.10.10
+	 * Returns: TRUE if GStreamer is allowed to install a custom SIGSEGV handler. Since 0.10.10
 	 */
 	public static int segtrapIsEnabled()
 	{
@@ -298,7 +266,7 @@ public class GStreamer
 	 * registry file.
 	 * Applications might want to disable this behaviour with the
 	 * gst_registry_fork_set_enabled() function.
-	 * Returns: TRUE if GStreamer will use fork() when rebuilding the registry. Onplatforms without fork(), this function will always return FALSE.Since 0.10.10
+	 * Returns: TRUE if GStreamer will use fork() when rebuilding the registry. On platforms without fork(), this function will always return FALSE. Since 0.10.10
 	 */
 	public static int registryForkIsEnabled()
 	{
@@ -335,7 +303,7 @@ public class GStreamer
 	 * any elements or access the GStreamer registry while the update is in
 	 * progress.
 	 * Note that this function may block for a significant amount of time.
-	 * Returns: TRUE if the registry has been updated successfully (does not imply that there were changes), otherwise FALSE.Since 0.10.12
+	 * Returns: TRUE if the registry has been updated successfully (does not imply that there were changes), otherwise FALSE. Since 0.10.12
 	 */
 	public static int updateRegistry()
 	{

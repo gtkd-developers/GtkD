@@ -87,16 +87,6 @@ private import gstreamer.PluginFeature;
  * functions to create element instances or use gst_element_factory_make() as a
  * convenient shortcut.
  * The following code example shows you how to create a GstFileSrc element.
- * Example6.Using an element factory
- *  include <gst/gst.h>
- *  GstElement *src;
- *  GstElementFactory *srcfactory;
- *  gst_init(argc,argv);
- *  srcfactory = gst_element_factory_find("filesrc");
- *  g_return_if_fail(srcfactory != NULL);
- *  src = gst_element_factory_create(srcfactory,"src");
- *  g_return_if_fail(src != NULL);
- *  ...
  * Last reviewed on 2005-11-23 (0.9.5)
  */
 public class ElementFactory : PluginFeature
@@ -201,7 +191,7 @@ public class ElementFactory : PluginFeature
 	 * Get the GType for elements managed by this factory. The type can
 	 * only be retrieved if the element factory is loaded, which can be
 	 * assured with gst_plugin_feature_load().
-	 * Returns: the GType for elements managed by this factory or 0 ifthe factory is not loaded.
+	 * Returns: the GType for elements managed by this factory or 0 if the factory is not loaded.
 	 */
 	public GType getElementType()
 	{

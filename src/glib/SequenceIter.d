@@ -175,7 +175,7 @@ public class SequenceIter
 	 * Returns an iterator pointing to the previous position before iter. If
 	 * iter is the begin iterator, the begin iterator is returned.
 	 * Since 2.14
-	 * Returns: a GSequenceIter pointing to the previous position beforeiter.
+	 * Returns: a GSequenceIter pointing to the previous position before iter.
 	 */
 	public SequenceIter prev()
 	{
@@ -245,7 +245,7 @@ public class SequenceIter
 	 * Params:
 	 * a = a GSequenceIter
 	 * b = a GSequenceIter
-	 * Returns: A negative number if a comes before b, 0 if they areequal, and a positive number if a comes after b.
+	 * Returns: A negative number if a comes before b, 0 if they are equal, and a positive number if a comes after b.
 	 */
 	public int compare(SequenceIter b)
 	{

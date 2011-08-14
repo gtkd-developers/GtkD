@@ -93,62 +93,6 @@ private import gtk.MenuShell;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
- * Example  29.  Connecting the popup signal handler.
- *  1
- * 2
- * 3
- *  /+* connect our handler which will popup the menu +/
- * g_signal_connect_swapped (window, "button_press_event",
- * 	G_CALLBACK (my_popup_handler), menu);
- * Example  30.  Signal handler which displays a popup menu.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- *  static gint
- * my_popup_handler (GtkWidget *widget, GdkEvent *event)
- * {
-	 *  GtkMenu *menu;
-	 *  GdkEventButton *event_button;
-	 *  g_return_val_if_fail (widget != NULL, FALSE);
-	 *  g_return_val_if_fail (GTK_IS_MENU (widget), FALSE);
-	 *  g_return_val_if_fail (event != NULL, FALSE);
-	 *  /+* The "widget" is the menu that was supplied when
-	 *  * g_signal_connect_swapped() was called.
-	 *  +/
-	 *  menu = GTK_MENU (widget);
-	 *  if (event->type == GDK_BUTTON_PRESS)
-	 *  {
-		 *  event_button = (GdkEventButton *) event;
-		 *  if (event_button->button == 3)
-		 * 	{
-			 * 	 gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
-			 * 			 event_button->button, event_button->time);
-			 * 	 return TRUE;
-		 * 	}
-	 *  }
-	 *  return FALSE;
- * }
  */
 public class Menu : MenuShell
 {
@@ -381,7 +325,7 @@ public class Menu : MenuShell
 	/**
 	 * Gets the GtkAccelGroup which holds global accelerators for the menu.
 	 * See gtk_menu_set_accel_group().
-	 * Returns:the GtkAccelGroup associated with the menu.
+	 * Returns: the GtkAccelGroup associated with the menu.
 	 */
 	public AccelGroup getAccelGroup()
 	{
@@ -441,7 +385,7 @@ public class Menu : MenuShell
 	
 	/**
 	 * Returns the title of the menu. See gtk_menu_set_title().
-	 * Returns: the title of the menu, or NULL if the menu has notitle set on it. This string is owned by the widget and shouldnot be modified or freed.
+	 * Returns: the title of the menu, or NULL if the menu has no title set on it. This string is owned by the widget and should not be modified or freed.
 	 */
 	public string getTitle()
 	{
@@ -536,7 +480,7 @@ public class Menu : MenuShell
 	/**
 	 * Returns the selected menu item from the menu. This is used by the
 	 * GtkOptionMenu.
-	 * Returns:the GtkMenuItem that was last selected in the menu. If a selection has not yet been made, the first menu item is selected.
+	 * Returns: the GtkMenuItem that was last selected in the menu. If a selection has not yet been made, the first menu item is selected.
 	 */
 	public Widget getActive()
 	{
@@ -603,7 +547,7 @@ public class Menu : MenuShell
 	
 	/**
 	 * Returns the GtkWidget that the menu is attached to.
-	 * Returns:the GtkWidget that the menu is attached to.
+	 * Returns: the GtkWidget that the menu is attached to.
 	 */
 	public Widget getAttachWidget()
 	{
@@ -622,7 +566,7 @@ public class Menu : MenuShell
 	 * Since 2.6
 	 * Params:
 	 * widget = a GtkWidget
-	 * Returns: the list of menus attached to his widget.. element-type GtkWidget. transfer none GtkWidget.
+	 * Returns: the list of menus attached to his widget. . element-type GtkWidget. transfer none GtkWidget.
 	 */
 	public static ListG getForAttachWidget(Widget widget)
 	{

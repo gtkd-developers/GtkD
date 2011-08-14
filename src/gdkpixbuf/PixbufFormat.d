@@ -224,7 +224,7 @@ public class PixbufFormat
 	 * Returns the filename extensions typically used for files in the
 	 * given format.
 	 * Since 2.2
-	 * Returns: a NULL-terminated array of filename extensions which must befreed with g_strfreev() when it is no longer needed.
+	 * Returns: a NULL-terminated array of filename extensions which must be freed with g_strfreev() when it is no longer needed.
 	 */
 	public string[] getExtensions()
 	{
@@ -305,7 +305,7 @@ public class PixbufFormat
 	 * filename = The name of the file to identify.
 	 * width = Return location for the width of the image, or NULL
 	 * height = Return location for the height of the image, or NULL
-	 * Returns: A GdkPixbufFormat describing the image format of the file  or NULL if the image format wasn't recognized. The return value  is owned by GdkPixbuf and should not be freed.
+	 * Returns: A GdkPixbufFormat describing the image format of the file or NULL if the image format wasn't recognized. The return value is owned by GdkPixbuf and should not be freed.
 	 */
 	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
 	{

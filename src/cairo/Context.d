@@ -412,7 +412,7 @@ public class Context
 	 * (ie. cairo_status() != CAIRO_STATUS_SUCCESS).
 	 * A nil surface is indicated by cairo_surface_status()
 	 * != CAIRO_STATUS_SUCCESS.
-	 * Returns: the target surface. This object is owned by cairo. Tokeep a reference to it, you must call cairo_surface_reference().
+	 * Returns: the target surface. This object is owned by cairo. To keep a reference to it, you must call cairo_surface_reference().
 	 */
 	public Surface getTarget()
 	{
@@ -486,7 +486,7 @@ public class Context
 	 * changes to the graphics state will not be visible outside the
 	 * group.
 	 * Since 1.2
-	 * Returns: a newly created (surface) pattern containing theresults of all drawing operations performed to the group. Thecaller owns the returned object and should callcairo_pattern_destroy() when finished with it.
+	 * Returns: a newly created (surface) pattern containing the results of all drawing operations performed to the group. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it.
 	 */
 	public Pattern popGroup()
 	{
@@ -523,7 +523,7 @@ public class Context
 	 * A nil surface is indicated by cairo_surface_status()
 	 * != CAIRO_STATUS_SUCCESS.
 	 * Since 1.2
-	 * Returns: the target surface. This object is owned by cairo. Tokeep a reference to it, you must call cairo_surface_reference().
+	 * Returns: the target surface. This object is owned by cairo. To keep a reference to it, you must call cairo_surface_reference().
 	 */
 	public Surface getGroupTarget()
 	{
@@ -625,7 +625,7 @@ public class Context
 	
 	/**
 	 * Gets the current source pattern for cr.
-	 * Returns: the current source pattern. This object is owned bycairo. To keep a reference to it, you must callcairo_pattern_reference().
+	 * Returns: the current source pattern. This object is owned by cairo. To keep a reference to it, you must call cairo_pattern_reference().
 	 */
 	public Pattern getSource()
 	{
@@ -1033,7 +1033,7 @@ public class Context
 	 * user-space rectangles. The status may have other values to indicate
 	 * other errors.
 	 * Since 1.4
-	 * Returns: the current clip region as a list of rectangles in user coordinates,which should be destroyed using cairo_rectangle_list_destroy().
+	 * Returns: the current clip region as a list of rectangles in user coordinates, which should be destroyed using cairo_rectangle_list_destroy().
 	 */
 	public cairo_rectangle_list_t* copyClipRectangleList()
 	{
@@ -1102,7 +1102,7 @@ public class Context
 	 * Params:
 	 * x = X coordinate of the point to test
 	 * y = Y coordinate of the point to test
-	 * Returns: A non-zero value if the point is inside, or zero ifoutside.
+	 * Returns: A non-zero value if the point is inside, or zero if outside.
 	 */
 	public cairo_bool_t inFill(double x, double y)
 	{
@@ -1236,7 +1236,7 @@ public class Context
 	 * Params:
 	 * x = X coordinate of the point to test
 	 * y = Y coordinate of the point to test
-	 * Returns: A non-zero value if the point is inside, or zero ifoutside.
+	 * Returns: A non-zero value if the point is inside, or zero if outside.
 	 */
 	public cairo_bool_t inStroke(double x, double y)
 	{
@@ -1273,7 +1273,7 @@ public class Context
 	/**
 	 * Returns the current reference count of cr.
 	 * Since 1.4
-	 * Returns: the current reference count of cr. If theobject is a nil object, 0 will be returned.
+	 * Returns: the current reference count of cr. If the object is a nil object, 0 will be returned.
 	 */
 	public uint getReferenceCount()
 	{
@@ -1292,7 +1292,7 @@ public class Context
 	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * cairo_t is destroyed or when new user data is attached using the
 	 * same key.
-	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a slot could not be allocated for the user data.
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{
@@ -1323,7 +1323,7 @@ public class Context
 	 * This function will always return a valid pointer, but the result
 	 * will have no data (data==NULL and
 	 * num_data==0), if either of the following
-	 * Returns: the copy of the current path. The caller owns thereturned object and should call cairo_path_destroy() when finishedwith it.
+	 * Returns: the copy of the current path. The caller owns the returned object and should call cairo_path_destroy() when finished with it.
 	 */
 	public cairo_path_t* copyPath()
 	{
@@ -1344,7 +1344,7 @@ public class Context
 	 * This function will always return a valid pointer, but the result
 	 * will have no data (data==NULL and
 	 * num_data==0), if either of the following
-	 * Returns: the copy of the current path. The caller owns thereturned object and should call cairo_path_destroy() when finishedwith it.
+	 * Returns: the copy of the current path. The caller owns the returned object and should call cairo_path_destroy() when finished with it.
 	 */
 	public cairo_path_t* copyPathFlat()
 	{
@@ -2016,7 +2016,7 @@ public class Context
 	
 	/**
 	 * Gets the current font face for a cairo_t.
-	 * Returns: the current font face. This object is owned bycairo. To keep a reference to it, you must callcairo_font_face_reference().This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_font_face_t object will be returned on whichcairo_font_face_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_font_face() with a nil font will trigger an error thatwill shutdown the cairo_t object).
+	 * Returns: the current font face. This object is owned by cairo. To keep a reference to it, you must call cairo_font_face_reference(). This function never returns NULL. If memory cannot be allocated, a special "nil" cairo_font_face_t object will be returned on which cairo_font_face_status() returns CAIRO_STATUS_NO_MEMORY. Using this nil object will cause its error state to propagate to other objects it is passed to, (for example, calling cairo_set_font_face() with a nil font will trigger an error that will shutdown the cairo_t object).
 	 */
 	public FontFace getFontFace()
 	{
@@ -2048,7 +2048,7 @@ public class Context
 	/**
 	 * Gets the current scaled font for a cairo_t.
 	 * Since 1.4
-	 * Returns: the current scaled font. This object is owned bycairo. To keep a reference to it, you must callcairo_scaled_font_reference().This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_scaled_font_t object will be returned on whichcairo_scaled_font_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_scaled_font() with a nil font will trigger an error thatwill shutdown the cairo_t object).
+	 * Returns: the current scaled font. This object is owned by cairo. To keep a reference to it, you must call cairo_scaled_font_reference(). This function never returns NULL. If memory cannot be allocated, a special "nil" cairo_scaled_font_t object will be returned on which cairo_scaled_font_status() returns CAIRO_STATUS_NO_MEMORY. Using this nil object will cause its error state to propagate to other objects it is passed to, (for example, calling cairo_set_scaled_font() with a nil font will trigger an error that will shutdown the cairo_t object).
 	 */
 	public ScaledFont getScaledFont()
 	{
@@ -2221,7 +2221,7 @@ public class Context
 	 * Since 1.8
 	 * Params:
 	 * fontFace = A toy font face
-	 * Returns: The family name. This string is owned by the font faceand remains valid as long as the font face is alive (referenced).
+	 * Returns: The family name. This string is owned by the font face and remains valid as long as the font face is alive (referenced).
 	 */
 	public static string toyFontFaceGetFamily(FontFace fontFace)
 	{

@@ -190,7 +190,7 @@ public class Pipeline : Bin
 	
 	/**
 	 * Gets the GstBus of pipeline.
-	 * Returns: a GstBus, unref after usage.MT safe.
+	 * Returns: a GstBus, unref after usage. MT safe.
 	 */
 	public override Bus getBus()
 	{
@@ -208,7 +208,7 @@ public class Pipeline : Bin
 	 * to all the elements managed by the pipeline.
 	 * Params:
 	 * clock = the clock to set
-	 * Returns: TRUE if the clock could be set on the pipeline. FALSE if some element did not accept the clock.MT safe.
+	 * Returns: TRUE if the clock could be set on the pipeline. FALSE if some element did not accept the clock. MT safe.
 	 */
 	public override int setClock(Clock clock)
 	{
@@ -288,7 +288,7 @@ public class Pipeline : Bin
 	 * This function returns GST_CLOCK_TIME_NONE if the pipeline was
 	 * configured to not handle the management of the element's base time
 	 * (see gst_pipeline_set_new_stream_time()).
-	 * Returns: a GstClockTime.MT safe.
+	 * Returns: a GstClockTime. MT safe.
 	 */
 	public GstClockTime getLastStreamTime()
 	{
@@ -322,7 +322,7 @@ public class Pipeline : Bin
 	/**
 	 * Check if pipeline will automatically flush messages when going to
 	 * the NULL state.
-	 * Returns: whether the pipeline will automatically flush its bus whengoing from READY to NULL state or not.MT safe.Since 0.10.4
+	 * Returns: whether the pipeline will automatically flush its bus when going from READY to NULL state or not. MT safe. Since 0.10.4
 	 */
 	public int getAutoFlushBus()
 	{
@@ -351,7 +351,7 @@ public class Pipeline : Bin
 	
 	/**
 	 * Get the configured delay (see gst_pipeline_set_delay()).
-	 * Returns: The configured delay.MT safe.Since 0.10.5
+	 * Returns: The configured delay. MT safe. Since 0.10.5
 	 */
 	public GstClockTime getDelay()
 	{

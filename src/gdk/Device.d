@@ -224,7 +224,7 @@ public class Device
 	 * entire screen or to a single window.
 	 * Params:
 	 * mode = the input mode.
-	 * Returns:TRUE if the mode was successfully changed.
+	 * Returns: TRUE if the mode was successfully changed.
 	 */
 	public int setMode(GdkInputMode mode)
 	{

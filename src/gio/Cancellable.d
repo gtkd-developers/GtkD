@@ -146,48 +146,6 @@ public class Cancellable : ObjectG
 	 * are two helper functions: g_cancellable_connect() and
 	 * g_cancellable_disconnect() which protect against problems
 	 * like this.
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 *  /+* Make sure we don't do any unnecessary work if already cancelled +/
-	 * if (g_cancellable_set_error_if_cancelled (cancellable))
-	 *  return;
-	 * /+* Set up all the data needed to be able to
-	 *  * handle cancellation of the operation +/
-	 * my_data = my_data_new (...);
-	 * id = 0;
-	 * if (cancellable)
-	 *  id = g_cancellable_connect (cancellable,
-	 * 			 G_CALLBACK (cancelled_handler)
-	 * 			 data, NULL);
-	 * /+* cancellable operation here... +/
-	 * g_cancellable_disconnect (cancellable, id);
-	 * /+* cancelled_handler is never called after this, it
-	 *  * is now safe to free the data +/
-	 * my_data_free (my_data);
-	 *
-	 *
-	 *
 	 * Note that the cancelled signal is emitted in the thread that
 	 * the user cancelled from, which may be the main thread. So, the
 	 * cancellable signal should not do something that can block.
@@ -304,7 +262,7 @@ public class Cancellable : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * pollfd = a pointer to a GPollFD
-	 * Returns: TRUE if pollfd was successfully initialized, FALSE on  failure to prepare the cancellable.
+	 * Returns: TRUE if pollfd was successfully initialized, FALSE on failure to prepare the cancellable.
 	 */
 	public int makePollfd(GPollFD* pollfd)
 	{
@@ -331,7 +289,7 @@ public class Cancellable : ObjectG
 	
 	/**
 	 * Gets the top cancellable from the stack.
-	 * Returns: a GCancellable from the top of the stack, or NULLif the stack is empty.
+	 * Returns: a GCancellable from the top of the stack, or NULL if the stack is empty.
 	 */
 	public static Cancellable getCurrent()
 	{

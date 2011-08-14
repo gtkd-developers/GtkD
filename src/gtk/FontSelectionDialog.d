@@ -175,7 +175,7 @@ public class FontSelectionDialog : Dialog
 	 * structure. For example, "Helvetica Italic Bold 12" could be normalized
 	 * to "Helvetica Bold Italic 12". Use pango_font_description_equal()
 	 * if you want to compare two font descriptions.
-	 * Returns: A string with the name of the current font, or NULL if no  font is selected. You must free this string with g_free().
+	 * Returns: A string with the name of the current font, or NULL if no font is selected. You must free this string with g_free().
 	 */
 	public string getFontName()
 	{
@@ -197,7 +197,7 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Gets the text displayed in the preview area.
-	 * Returns: the text displayed in the preview area.  This string is owned by the widget and should not be  modified or freed
+	 * Returns: the text displayed in the preview area. This string is owned by the widget and should not be modified or freed
 	 */
 	public string getPreviewText()
 	{

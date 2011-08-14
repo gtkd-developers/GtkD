@@ -137,7 +137,7 @@ public class Action
 	 * Gets the number of accessible actions available on the object.
 	 * If there are more than one, the first one is considered the
 	 * "default" action of the object.
-	 * Returns: a the number of actions, or 0 if action does notimplement this interface.
+	 * Returns: a the number of actions, or 0 if action does not implement this interface.
 	 */
 	public int getNActions()
 	{
@@ -149,7 +149,7 @@ public class Action
 	 * Returns a description of the specified action of the object.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
-	 * Returns:a description string, or NULLif action does not implement this interface.
+	 * Returns: a description string, or NULL if action does not implement this interface.
 	 */
 	public string getDescription(int i)
 	{
@@ -173,7 +173,7 @@ public class Action
 	 * NIL.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
-	 * Returns:a name string, or NULLif action does not implement this interface.
+	 * Returns: a name string, or NULL if action does not implement this interface.
 	 */
 	public string getName(int i)
 	{
@@ -185,7 +185,7 @@ public class Action
 	 * Returns the localized name of the specified action of the object.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
-	 * Returns:a name string, or NULLif action does not implement this interface.
+	 * Returns: a name string, or NULL if action does not implement this interface.
 	 */
 	public string getLocalizedName(int i)
 	{
@@ -207,7 +207,7 @@ public class Action
 	 * enclosing menus or dialogs.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
-	 * Returns:a string representing the available keybindings, or NULLif there is no keybinding for this action.
+	 * Returns: a string representing the available keybindings, or NULL if there is no keybinding for this action.
 	 */
 	public string getKeybinding(int i)
 	{

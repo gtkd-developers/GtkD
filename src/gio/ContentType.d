@@ -91,7 +91,7 @@ public class ContentType
 	 * Params:
 	 * type1 = a content type string.
 	 * type2 = a content type string.
-	 * Returns: TRUE if the two strings are identical or equivalent,FALSE otherwise.
+	 * Returns: TRUE if the two strings are identical or equivalent, FALSE otherwise.
 	 */
 	public static int equals(string type1, string type2)
 	{
@@ -104,7 +104,7 @@ public class ContentType
 	 * Params:
 	 * type = a content type string.
 	 * supertype = a string.
-	 * Returns: TRUE if type is a kind of supertype,FALSE otherwise.
+	 * Returns: TRUE if type is a kind of supertype, FALSE otherwise.
 	 */
 	public static int isA(string type, string supertype)
 	{
@@ -172,7 +172,7 @@ public class ContentType
 	 * things like text files can be executables (i.e. scripts and batch files).
 	 * Params:
 	 * type = a content type string.
-	 * Returns: TRUE if the file type corresponds to a type thatcan be executable, FALSE otherwise.
+	 * Returns: TRUE if the file type corresponds to a type that can be executable, FALSE otherwise.
 	 */
 	public static int canBeExecutable(string type)
 	{
@@ -222,7 +222,7 @@ public class ContentType
 	 * Since 2.18
 	 * Params:
 	 * root = the root of the tree to guess a type for
-	 * Returns: an NULL-terminated array of zero or more content types, or NULL.  Free with g_strfreev()
+	 * Returns: an NULL-terminated array of zero or more content types, or NULL. Free with g_strfreev()
 	 */
 	public static string[] guessForTree(File root)
 	{

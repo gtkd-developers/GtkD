@@ -391,7 +391,7 @@ public class Structure
 	 * Params:
 	 * func = a function to call for each field
 	 * userData = private data
-	 * Returns: TRUE if the supplied function returns TRUE For each of the fields,FALSE otherwise.
+	 * Returns: TRUE if the supplied function returns TRUE For each of the fields, FALSE otherwise.
 	 */
 	public int foreac(GstStructureForeachFunc func, void* userData)
 	{
@@ -441,7 +441,7 @@ public class Structure
 	 * Params:
 	 * fieldname = the name of a field
 	 * value = a pointer to a gboolean to set
-	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a boolean, thisfunction returns FALSE.
+	 * Returns: TRUE if the value could be set correctly. If there was no field with fieldname or the existing field did not contain a boolean, this function returns FALSE.
 	 */
 	public int getBoolean(string fieldname, out int value)
 	{
@@ -458,7 +458,7 @@ public class Structure
 	 * Params:
 	 * fieldname = the name of a field
 	 * value = a pointer to an int to set
-	 * Returns:FALSE.
+	 * Returns: FALSE.
 	 */
 	public int getInt(string fieldname, out int value)
 	{
@@ -475,7 +475,7 @@ public class Structure
 	 * Params:
 	 * fieldname = the name of a field
 	 * value = a pointer to a GstFourcc to set
-	 * Returns:FALSE.
+	 * Returns: FALSE.
 	 */
 	public int getFourcc(string fieldname, out uint value)
 	{
@@ -490,7 +490,7 @@ public class Structure
 	 * Params:
 	 * fieldname = the name of a field
 	 * value = a pointer to a GstFourcc to set
-	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a double, this function returns FALSE.
+	 * Returns: TRUE if the value could be set correctly. If there was no field with fieldname or the existing field did not contain a double, this function returns FALSE.
 	 */
 	public int getDouble(string fieldname, out double value)
 	{
@@ -506,7 +506,7 @@ public class Structure
 	 * call to a gst_structure_*() function with the given structure.
 	 * Params:
 	 * fieldname = the name of a field
-	 * Returns: a pointer to the string or NULL when the field did not existor did not contain a string.
+	 * Returns: a pointer to the string or NULL when the field did not exist or did not contain a string.
 	 */
 	public string getString(string fieldname)
 	{
@@ -523,7 +523,7 @@ public class Structure
 	 * Params:
 	 * fieldname = the name of a field
 	 * value = a pointer to a GDate to set
-	 * Returns:FALSE.
+	 * Returns: FALSE.
 	 */
 	public int getDate(string fieldname, out Date value)
 	{
@@ -543,7 +543,7 @@ public class Structure
 	 * Params:
 	 * fieldname = the name of a field
 	 * value = a pointer to a GstClockTime to set
-	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a GstClockTime, this function returns FALSE.
+	 * Returns: TRUE if the value could be set correctly. If there was no field with fieldname or the existing field did not contain a GstClockTime, this function returns FALSE.
 	 */
 	public int getClockTime(string fieldname, out GstClockTime value)
 	{
@@ -559,7 +559,7 @@ public class Structure
 	 * fieldname = the name of a field
 	 * enumtype = the enum type of a field
 	 * value = a pointer to an int to set
-	 * Returns: TRUE if the value could be set correctly. If there was no fieldwith fieldname or the existing field did not contain an enum of the giventype, this function returns FALSE.
+	 * Returns: TRUE if the value could be set correctly. If there was no field with fieldname or the existing field did not contain an enum of the given type, this function returns FALSE.
 	 */
 	public int getEnum(string fieldname, GType enumtype, out int value)
 	{
@@ -575,7 +575,7 @@ public class Structure
 	 * fieldname = the name of a field
 	 * valueNumerator = a pointer to an int to set
 	 * valueDenominator = a pointer to an int to set
-	 * Returns: TRUE if the values could be set correctly. If there was no fieldwith fieldname or the existing field did not contain a GstFraction, this function returns FALSE.
+	 * Returns: TRUE if the values could be set correctly. If there was no field with fieldname or the existing field did not contain a GstFraction, this function returns FALSE.
 	 */
 	public int getFraction(string fieldname, out int valueNumerator, out int valueDenominator)
 	{
@@ -590,7 +590,7 @@ public class Structure
 	 * Params:
 	 * func = a function to call for each field
 	 * userData = private data
-	 * Returns: TRUE if the supplied function returns TRUE For each of the fields,FALSE otherwise.
+	 * Returns: TRUE if the supplied function returns TRUE For each of the fields, FALSE otherwise.
 	 */
 	public int mapInPlace(GstStructureMapFunc func, void* userData)
 	{
@@ -626,7 +626,7 @@ public class Structure
 	
 	/**
 	 * Converts structure to a human-readable string representation.
-	 * Returns: a pointer to string allocated by g_malloc(). g_free() afterusage.
+	 * Returns: a pointer to string allocated by g_malloc(). g_free() after usage.
 	 */
 	public override string toString()
 	{
@@ -641,7 +641,7 @@ public class Structure
 	 * Params:
 	 * string = a string representation of a GstStructure.
 	 * end = pointer to store the end of the string in.
-	 * Returns: a new GstStructure or NULL when the string could notbe parsed. Free after usage.
+	 * Returns: a new GstStructure or NULL when the string could not be parsed. Free after usage.
 	 */
 	public static Structure fromString(string string, out string end)
 	{

@@ -147,7 +147,7 @@ public class WindowsUtils
 	 * the same way as above.
 	 * Params:
 	 * dllName = The name of a DLL that a package provides in UTF-8, or NULL.
-	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding,i.e. UTF-8. The return value should be freed with g_free() when notneeded any longer. If the function fails NULL is returned.
+	 * Returns: a string containing the installation directory for package. The string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when not needed any longer. If the function fails NULL is returned.
 	 */
 	public static string getPackageInstallationDirectory(string p, string dllName)
 	{
@@ -179,7 +179,7 @@ public class WindowsUtils
 	 * Since 2.16
 	 * Params:
 	 * hmodule = The Win32 handle for a DLL loaded into the current process, or NULL
-	 * Returns: a string containing the guessed installation directory forthe software package hmodule is from. The string is in the GLibfile name encoding, i.e. UTF-8. The return value should be freedwith g_free() when not needed any longer. If the function failsNULL is returned.
+	 * Returns: a string containing the guessed installation directory for the software package hmodule is from. The string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when not needed any longer. If the function fails NULL is returned.
 	 */
 	public static string getPackageInstallationDirectoryOfModule(void* hmodule)
 	{
@@ -205,7 +205,7 @@ public class WindowsUtils
 	 * Params:
 	 * dllName = The name of a DLL that a package provides, in UTF-8, or NULL.
 	 * subdir = A subdirectory of the package installation directory, also in UTF-8
-	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8. The return value should befreed with g_free() when no longer needed. If something goes wrong,NULL is returned.
+	 * Returns: a string containing the complete path to subdir inside the installation directory of package. The returned string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when no longer needed. If something goes wrong, NULL is returned.
 	 */
 	public static string getPackageInstallationSubdirectory(string p, string dllName, string subdir)
 	{
@@ -252,7 +252,7 @@ public class WindowsUtils
 	 * Since 2.8
 	 * Params:
 	 * utf8filename = a UTF-8 encoded filename.
-	 * Returns: The converted filename, or NULL on conversionfailure and lack of short names.
+	 * Returns: The converted filename, or NULL on conversion failure and lack of short names.
 	 */
 	public static string localeFilenameFromUtf8(string utf8filename)
 	{

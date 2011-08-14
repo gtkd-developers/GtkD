@@ -360,7 +360,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the accessible description of the accessible.
-	 * Returns: a character string representing the accessible descriptionof the accessible.
+	 * Returns: a character string representing the accessible description of the accessible.
 	 */
 	public string getDescription()
 	{
@@ -385,7 +385,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the number of accessible children of the accessible.
-	 * Returns: an integer representing the number of accessible childrenof the accessible.
+	 * Returns: an integer representing the number of accessible children of the accessible.
 	 */
 	public int getNAccessibleChildren()
 	{
@@ -399,7 +399,7 @@ public class ObjectAtk : ObjectG
 	 * at index 0, the second at index 1 and so on.
 	 * Params:
 	 * i = a gint representing the position of the child, starting from 0
-	 * Returns: an AtkObject representing the specified accessible childof the accessible.
+	 * Returns: an AtkObject representing the specified accessible child of the accessible.
 	 */
 	public ObjectAtk refAccessibleChild(int i)
 	{
@@ -465,7 +465,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets a reference to the state set of the accessible; the caller must
 	 * unreference it when it is no longer needed.
-	 * Returns: a reference to an AtkStateSet which is the stateset of the accessible
+	 * Returns: a reference to an AtkStateSet which is the state set of the accessible
 	 */
 	public StateSet refStateSet()
 	{
@@ -587,7 +587,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 * relationship = The AtkRelationType of the relation
 	 * target = The AtkObject which is to be the target of the relation.
-	 * Returns:TRUE if the relationship is added.
+	 * Returns: TRUE if the relationship is added.
 	 */
 	public int addRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
@@ -600,7 +600,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 * relationship = The AtkRelationType of the relation
 	 * target = The AtkObject which is the target of the relation to be removed.
-	 * Returns:TRUE if the relationship is removed.
+	 * Returns: TRUE if the relationship is removed.
 	 */
 	public int removeRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
@@ -650,7 +650,7 @@ public class ObjectAtk : ObjectG
 	 * Get the AtkRole type corresponding to a rolew name.
 	 * Params:
 	 * name = a string which is the (non-localized) name of an ATK role.
-	 * Returns: the AtkRole enumerated type corresponding to the specifiedname, or ATK_ROLE_INVALID if no matching role is found.
+	 * Returns: the AtkRole enumerated type corresponding to the specified name, or ATK_ROLE_INVALID if no matching role is found.
 	 */
 	public static AtkRole roleForName(string name)
 	{

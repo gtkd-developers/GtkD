@@ -145,26 +145,6 @@ public class Scale : Range
 	 * value. That string will then be used to display the scale's value.
 	 * Here's an example signal handler which displays a value 1.0 as
 	 * with "-->1.0<--".
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 *  static gchar*
-	 * format_value_callback (GtkScale *scale,
-	 *  gdouble value)
-	 * {
-		 *  return g_strdup_printf ("-->%0.*g<--",
-		 *  gtk_scale_get_digits (scale), value);
-	 *  }
-	 *
-	 *
-	 *
 	 */
 	void addOnFormatValue(string delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -263,7 +243,7 @@ public class Scale : Range
 	 * The returned object is owned by the scale so does
 	 * not need to be freed by the caller.
 	 * Since 2.4
-	 * Returns: the PangoLayout for this scale, or NULL  if the "draw-value" property is FALSE.
+	 * Returns: the PangoLayout for this scale, or NULL if the "draw-value" property is FALSE.
 	 */
 	public PgLayout getLayout()
 	{

@@ -186,7 +186,7 @@ public class FontOption
 	 * Compares two font options objects for equality.
 	 * Params:
 	 * other = another cairo_font_options_t
-	 * Returns: TRUE if all fields of the two font options objects match.Note that this function will return FALSE if either object is inerror.
+	 * Returns: TRUE if all fields of the two font options objects match. Note that this function will return FALSE if either object is in error.
 	 */
 	public cairo_bool_t equal(FontOption other)
 	{

@@ -191,7 +191,7 @@ public class Clock : ObjectGst
 	 * slave = a time on the slave
 	 * master = a time on the master
 	 * rSquared = a pointer to hold the result
-	 * Returns: TRUE if enough observations were added to run the regression algorithm.MT safe.
+	 * Returns: TRUE if enough observations were added to run the regression algorithm. MT safe.
 	 */
 	public int addObservation(GstClockTime slave, GstClockTime master, out double rSquared)
 	{
@@ -210,7 +210,7 @@ public class Clock : ObjectGst
 	 * and time offsets.
 	 * Params:
 	 * master = a master GstClock
-	 * Returns: TRUE if the clock is capable of being slaved to a master clock. Trying to set a master on a clock without the GST_CLOCK_FLAG_CAN_SET_MASTER flag will make this function return FALSE.MT safe.
+	 * Returns: TRUE if the clock is capable of being slaved to a master clock. Trying to set a master on a clock without the GST_CLOCK_FLAG_CAN_SET_MASTER flag will make this function return FALSE. MT safe.
 	 */
 	public int setMaster(Clock master)
 	{
@@ -221,7 +221,7 @@ public class Clock : ObjectGst
 	/**
 	 * Get the master clock that clock is slaved to or NULL when the clock is
 	 * not slaved to any master clock.
-	 * Returns: a master GstClock or NULL when this clock is not slaved to a masterclock. Unref after usage.MT safe.
+	 * Returns: a master GstClock or NULL when this clock is not slaved to a master clock. Unref after usage. MT safe.
 	 */
 	public Clock getMaster()
 	{
@@ -253,7 +253,7 @@ public class Clock : ObjectGst
 	/**
 	 * Get the accuracy of the clock. The accuracy of the clock is the granularity
 	 * of the values returned by gst_clock_get_time().
-	 * Returns: the resolution of the clock in units of GstClockTime.MT safe.
+	 * Returns: the resolution of the clock in units of GstClockTime. MT safe.
 	 */
 	public GstClockTime getResolution()
 	{
@@ -265,7 +265,7 @@ public class Clock : ObjectGst
 	 * Gets the current time of the given clock. The time is always
 	 * monotonically increasing and adjusted according to the current
 	 * offset and rate.
-	 * Returns: the time of the clock. Or GST_CLOCK_TIME_NONE whengiving wrong input.MT safe.
+	 * Returns: the time of the clock. Or GST_CLOCK_TIME_NONE when giving wrong input. MT safe.
 	 */
 	public GstClockTime getTime()
 	{
@@ -279,7 +279,7 @@ public class Clock : ObjectGst
 	 * unreffed after usage.
 	 * Params:
 	 * time = the requested time
-	 * Returns: A GstClockID that can be used to request the time notification.MT safe.
+	 * Returns: A GstClockID that can be used to request the time notification. MT safe.
 	 */
 	public GstClockID newSingleShotId(GstClockTime time)
 	{
@@ -295,7 +295,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 * startTime = the requested start time
 	 * interval = the requested interval
-	 * Returns: A GstClockID that can be used to request the time notification.MT safe.
+	 * Returns: A GstClockID that can be used to request the time notification. MT safe.
 	 */
 	public GstClockID newPeriodicId(GstClockTime startTime, GstClockTime interval)
 	{
@@ -306,7 +306,7 @@ public class Clock : ObjectGst
 	/**
 	 * Gets the current internal time of the given clock. The time is returned
 	 * unadjusted for the offset and the rate.
-	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE whengiving wrong input.MT safe.
+	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when giving wrong input. MT safe.
 	 */
 	public GstClockTime getInternalTime()
 	{
@@ -321,7 +321,7 @@ public class Clock : ObjectGst
 	 * clock's OBJECT_LOCK held and is mainly used by clock subclasses.
 	 * Params:
 	 * internal = a clock time
-	 * Returns: the converted time of the clock.MT safe.
+	 * Returns: the converted time of the clock. MT safe.
 	 */
 	public GstClockTime adjustUnlocked(GstClockTime internal)
 	{
@@ -372,7 +372,7 @@ public class Clock : ObjectGst
 	 * Get the time of the clock ID
 	 * Params:
 	 * id = The GstClockID to query
-	 * Returns: the time of the given clock id.MT safe.
+	 * Returns: the time of the given clock id. MT safe.
 	 */
 	public static GstClockTime idGetTime(GstClockID id)
 	{
@@ -396,7 +396,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 * id = The GstClockID to wait on
 	 * jitter = A pointer that will contain the jitter, can be NULL.
-	 * Returns: the result of the blocking wait. GST_CLOCK_EARLY will be returnedif the current clock time is past the time of id, GST_CLOCK_OK if id was scheduled in time. GST_CLOCK_UNSCHEDULED if id was unscheduled with gst_clock_id_unschedule().MT safe.
+	 * Returns: the result of the blocking wait. GST_CLOCK_EARLY will be returned if the current clock time is past the time of id, GST_CLOCK_OK if id was scheduled in time. GST_CLOCK_UNSCHEDULED if id was unscheduled with gst_clock_id_unschedule(). MT safe.
 	 */
 	public static GstClockReturn idWait(GstClockID id, ref GstClockTimeDiff jitter)
 	{
@@ -414,7 +414,7 @@ public class Clock : ObjectGst
 	 * id = a GstClockID to wait on
 	 * func = The callback function
 	 * userData = User data passed in the calback
-	 * Returns: the result of the non blocking wait.MT safe.
+	 * Returns: the result of the non blocking wait. MT safe.
 	 */
 	public static GstClockReturn idWaitAsync(GstClockID id, GstClockCallback func, void* userData)
 	{
@@ -443,7 +443,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 * id1 = A GstClockID
 	 * id2 = A GstClockID to compare with
-	 * Returns: negative value if a < b; zero if a = b; positive value if a > bMT safe.
+	 * Returns: negative value if a < b; zero if a = b; positive value if a > b MT safe.
 	 */
 	public static int idCompareFunc(void* id1, void* id2)
 	{
@@ -455,7 +455,7 @@ public class Clock : ObjectGst
 	 * Increase the refcount of given id.
 	 * Params:
 	 * id = The GstClockID to ref
-	 * Returns: The same GstClockID with increased refcount.MT safe.
+	 * Returns: The same GstClockID with increased refcount. MT safe.
 	 */
 	public static GstClockID idRef(GstClockID id)
 	{

@@ -207,7 +207,7 @@ public class RadioAction : ToggleAction
 	 * Note that the returned list is only valid until the next change
 	 * to the group.
 	 * Since 2.4
-	 * Returns: the list representing the radio group for this object. element-type GtkAction. transfer none GtkAction.
+	 * Returns: the list representing the radio group for this object . element-type GtkAction. transfer none GtkAction.
 	 */
 	public ListSG getGroup()
 	{

@@ -133,7 +133,7 @@ public class UnixMountEntry
 	 * Compares two unix mounts.
 	 * Params:
 	 * mount2 = second GUnixMountEntry to compare.
-	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to,or less than mount2, respectively.
+	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to, or less than mount2, respectively.
 	 */
 	public int compare(UnixMountEntry mount2)
 	{
@@ -329,7 +329,7 @@ public class UnixMountEntry
 	 * Params:
 	 * mountPath = a mount path, e.g. /media/disk
 	 *  or /usr
-	 * Returns: TRUE if mount_path is considered an implementation detail  of the OS.Signal DetailsThe "mountpoints-changed" signalvoid user_function (GUnixMountMonitor *monitor, gpointer user_data) : Run LastEmitted when the unix mount points have changed.
+	 * Returns: TRUE if mount_path is considered an implementation detail of the OS. Signal Details The "mountpoints-changed" signal void user_function (GUnixMountMonitor *monitor, gpointer user_data) : Run Last Emitted when the unix mount points have changed.
 	 */
 	public static int isMountPathSystemInternal(string mountPath)
 	{

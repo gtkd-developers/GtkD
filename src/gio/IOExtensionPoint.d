@@ -83,27 +83,6 @@ private import gio.IOExtension;
  * that implements the functionality. Additionally, each implementation
  * of an extension point has a name, and a priority. Use
  * g_io_extension_point_implement() to implement an extension point.
- *  1
- * 2
- * 3
- * 4
- * 5
- *  GIOExtensionPoint *ep;
- * /+* Register an extension point +/
- * ep = g_io_extension_point_register ("my-extension-point");
- * g_io_extension_point_set_required_type (ep, MY_TYPE_EXAMPLE);
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- *  /+* Implement an extension point +/
- * G_DEFINE_TYPE (MyExampleImpl, my_example_impl, MY_TYPE_EXAMPLE);
- * g_io_extension_point_implement ("my-extension-point",
- *  my_example_impl_get_type (),
- *  "my-example",
- *  10);
  *  It is up to the code that registered the extension point how
  *  it uses the implementations that have been associated with it.
  *  Depending on the use case, it may use all implementations, or
@@ -180,7 +159,7 @@ public class IOExtensionPoint
 	
 	/**
 	 * Gets the required type for extension_point.
-	 * Returns: the GType that all implementations must have,  or G_TYPE_INVALID if the extension point has no required type
+	 * Returns: the GType that all implementations must have, or G_TYPE_INVALID if the extension point has no required type
 	 */
 	public GType getRequiredType()
 	{

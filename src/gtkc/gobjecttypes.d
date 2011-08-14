@@ -1466,45 +1466,7 @@ public struct GValueArray
 /*
  * The most general convenience macro for type implementations, on which
  * G_DEFINE_TYPE(), etc are based.
- * G_DEFINE_TYPE_EXTENDED (GtkGadget,
- *  gtk_gadget,
- *  GTK_TYPE_WIDGET,
- *  0,
- *  G_IMPLEMENT_INTERFACE (TYPE_GIZMO,
- *  gtk_gadget_gizmo_init));
  * expands to
- * static void gtk_gadget_init (GtkGadget *self);
- * static void gtk_gadget_class_init (GtkGadgetClass *klass);
- * static gpointer gtk_gadget_parent_class = NULL;
- * static void gtk_gadget_class_intern_init (gpointer klass)
- * {
-	 *  gtk_gadget_parent_class = g_type_class_peek_parent (klass);
-	 *  gtk_gadget_class_init ((GtkGadgetClass*) klass);
- * }
- * GType
- * gtk_gadget_get_type (void)
- * {
-	 *  static volatile gsize g_define_type_id__volatile = 0;
-	 *  if (g_once_init_enter (g_define_type_id__volatile))
-	 *  {
-		 *  GType g_define_type_id =
-		 *  g_type_register_static_simple (GTK_TYPE_WIDGET,
-		 *  g_intern_static_string ("GtkGadget"),
-		 *  sizeof (GtkGadgetClass),
-		 *  (GClassInitFunc) gtk_gadget_class_intern_init,
-		 *  sizeof (GtkGadget),
-		 *  (GInstanceInitFunc) gtk_gadget_init,
-		 *  (GTypeFlags) flags);
-		 *  {
-			 *  static const GInterfaceInfo g_implement_interface_info = {
-				 *  (GInterfaceInitFunc) gtk_gadget_gizmo_init
-			 *  };
-			 *  g_type_add_interface_static (g_define_type_id, TYPE_GIZMO, g_implement_interface_info);
-		 *  }
-		 *  g_once_init_leave (g_define_type_id__volatile, g_define_type_id);
-	 *  }
-	 *  return g_define_type_id__volatile;
- * }
  * The only pieces which have to be manually provided are the definitions of
  * the instance and class structure and the definitions of the instance and
  * class init functions.
@@ -1548,55 +1510,7 @@ public struct GValueArray
 /*
  * A more general version of G_DEFINE_DYNAMIC_TYPE() which
  * allows to specify GTypeFlags and custom code.
- * G_DEFINE_DYNAMIC_TYPE_EXTENDED (GtkGadget,
- *  gtk_gadget,
- *  GTK_TYPE_THING,
- *  0,
- *  G_IMPLEMENT_INTERFACE_DYNAMIC (TYPE_GIZMO,
- *  gtk_gadget_gizmo_init));
  * expands to
- * static void gtk_gadget_init (GtkGadget *self);
- * static void gtk_gadget_class_init (GtkGadgetClass *klass);
- * static void gtk_gadget_class_finalize (GtkGadgetClass *klass);
- * static gpointer gtk_gadget_parent_class = NULL;
- * static GType gtk_gadget_type_id = 0;
- * static void gtk_gadget_class_intern_init (gpointer klass)
- * {
-	 *  gtk_gadget_parent_class = g_type_class_peek_parent (klass);
-	 *  gtk_gadget_class_init ((GtkGadgetClass*) klass);
- * }
- * GType
- * gtk_gadget_get_type (void)
- * {
-	 *  return gtk_gadget_type_id;
- * }
- * static void
- * gtk_gadget_register_type (GTypeModule *type_module)
- * {
-	 *  const GTypeInfo g_define_type_info = {
-		 *  sizeof (GtkGadgetClass),
-		 *  (GBaseInitFunc) NULL,
-		 *  (GBaseFinalizeFunc) NULL,
-		 *  (GClassInitFunc) gtk_gadget_class_intern_init,
-		 *  (GClassFinalizeFunc) gtk_gadget_class_finalize,
-		 *  NULL, // class_data
-		 *  sizeof (GtkGadget),
-		 *  0, // n_preallocs
-		 *  (GInstanceInitFunc) gtk_gadget_init,
-		 *  NULL // value_table
-	 *  };
-	 *  gtk_gadget_type_id = g_type_module_register_type (type_module,
-	 *  GTK_TYPE_THING,
-	 *  GtkGadget,
-	 *  g_define_type_info,
-	 *  (GTypeFlags) flags);
-	 *  {
-		 *  const GInterfaceInfo g_implement_interface_info = {
-			 *  (GInterfaceInitFunc) gtk_gadget_gizmo_init
-		 *  };
-		 *  g_type_module_add_interface (type_module, g_define_type_id, TYPE_GIZMO, g_implement_interface_info);
-	 *  }
- * }
  * TypeName  :
  *  The name of the new type, in Camel case.
  * type_name  :
@@ -1753,9 +1667,6 @@ public struct GValueArray
  * This signal is typically used to obtain change notification for a
  * single property, by specifying the property name as a detail in the
  * g_signal_connect() call, like this:
- * g_signal_connect (text_view->buffer, "notify::paste-target-list",
- *  G_CALLBACK (gtk_text_view_target_list_notify),
- *  text_view)
  * It is important to note that you must use
  * canonical parameter names as
  * detail strings for the notify signal.
@@ -2788,46 +2699,6 @@ public typedef extern(C) void  function (void*) GBaseFinalizeFunc;
  * is performed for class initialization of derived types as well.
  * An example may help to correspond the intend of the different class
  * initializers:
- * typedef struct {
-	 *  GObjectClass parent_class;
-	 *  gint static_integer;
-	 *  gchar *dynamic_string;
- * } TypeAClass;
- * static void
- * type_a_base_class_init (TypeAClass *class)
- * {
-	 *  class->dynamic_string = g_strdup ("some string");
- * }
- * static void
- * type_a_base_class_finalize (TypeAClass *class)
- * {
-	 *  g_free (class->dynamic_string);
- * }
- * static void
- * type_a_class_init (TypeAClass *class)
- * {
-	 *  class->static_integer = 42;
- * }
- * typedef struct {
-	 *  TypeAClass parent_class;
-	 *  gfloat static_float;
-	 *  GString *dynamic_gstring;
- * } TypeBClass;
- * static void
- * type_b_base_class_init (TypeBClass *class)
- * {
-	 *  class->dynamic_gstring = g_string_new ("some other string");
- * }
- * static void
- * type_b_base_class_finalize (TypeBClass *class)
- * {
-	 *  g_string_free (class->dynamic_gstring);
- * }
- * static void
- * type_b_class_init (TypeBClass *class)
- * {
-	 *  class->static_float = 3.14159265358979323846;
- * }
  * Initialization of TypeBClass will first cause initialization of
  * TypeAClass (derived classes reference their parent classes, see
  * g_type_class_ref() on this).

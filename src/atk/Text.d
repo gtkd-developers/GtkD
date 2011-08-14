@@ -434,7 +434,7 @@ public class Text
 	 * the character to be inserted at the caret location.
 	 * startOffset = the address to put the start offset of the range
 	 * endOffset = the address to put the end offset of the range
-	 * Returns: an AtkAttributeSet which contains the attributes explicitly setat offset. This AtkAttributeSet should be freed by a call toatk_attribute_set_free().
+	 * Returns: an AtkAttributeSet which contains the attributes explicitly set at offset. This AtkAttributeSet should be freed by a call to atk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getRunAttributes(int offset, out int startOffset, out int endOffset)
 	{
@@ -447,7 +447,7 @@ public class Text
 	 * attributes for the text. See the enum AtkTextAttribute for types of text
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
-	 * Returns: an AtkAttributeSet which contains the default values of attributes.at offset. This AtkAttributeSet should be freed by a call toatk_attribute_set_free().
+	 * Returns: an AtkAttributeSet which contains the default values of attributes. at offset. This AtkAttributeSet should be freed by a call to atk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getDefaultAttributes()
 	{
@@ -474,7 +474,7 @@ public class Text
 	 * y = screen y-position of character
 	 * coords = specify whether coordinates are relative to the screen or
 	 * widget window
-	 * Returns: the offset to the character which is located atthe specified x and y coordinates.
+	 * Returns: the offset to the character which is located at the specified x and y coordinates.
 	 */
 	public int getOffsetAtPoint(int x, int y, AtkCoordType coords)
 	{
@@ -490,7 +490,7 @@ public class Text
 	 * coordType = Specify whether coordinates are relative to the screen or widget window.
 	 * xClipType = Specify the horizontal clip type.
 	 * yClipType = Specify the vertical clip type.
-	 * Returns: Array of AtkTextRange. The last element of the array returned  by this function will be NULL.
+	 * Returns: Array of AtkTextRange. The last element of the array returned by this function will be NULL.
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
@@ -658,7 +658,7 @@ public class Text
 	 * Get the AtkTextAttribute type corresponding to a text attribute name.
 	 * Params:
 	 * name = a string which is the (non-localized) name of an ATK text attribute.
-	 * Returns: the AtkTextAttribute enumerated type corresponding to the specifiedname, or ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
+	 * Returns: the AtkTextAttribute enumerated type corresponding to the specified name, or ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
 	 */
 	public static AtkTextAttribute attributeForName(string name)
 	{
@@ -671,7 +671,7 @@ public class Text
 	 * Params:
 	 * attr = The AtkTextAttribute for which a value is required
 	 * index = The index of the required value
-	 * Returns: a string containing the value; this string should not be freed;NULL is returned if there are no values maintained for the attr value. Signal DetailsThe "text-attributes-changed" signalvoid user_function (AtkText *atktext, gpointer user_data) : Run LastThe "text-attributes-changed" signal is emitted when the text attributes ofthe text of an object which implements AtkText changes.
+	 * Returns: a string containing the value; this string should not be freed; NULL is returned if there are no values maintained for the attr value. Signal Details The "text-attributes-changed" signal void user_function (AtkText *atktext, gpointer user_data) : Run Last The "text-attributes-changed" signal is emitted when the text attributes of the text of an object which implements AtkText changes.
 	 */
 	public static string attributeGetValue(AtkTextAttribute attr, int index)
 	{

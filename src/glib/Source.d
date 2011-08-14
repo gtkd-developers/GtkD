@@ -235,7 +235,7 @@ public class Source
 	 * that context. Remove it by calling g_source_destroy().
 	 * Params:
 	 * context = a GMainContext (if NULL, the default context will be used)
-	 * Returns: the ID (greater than 0) for the source within the  GMainContext.
+	 * Returns: the ID (greater than 0) for the source within the GMainContext.
 	 */
 	public uint attach(MainContext context)
 	{
@@ -259,89 +259,11 @@ public class Source
 	 * This is important when you operate upon your objects
 	 * from within idle handlers, but may have freed the object
 	 * before the dispatch of your idle handler.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 *  static gboolean
-	 * idle_callback (gpointer data)
-	 * {
-		 *  SomeWidget *self = data;
-		 *  GDK_THREADS_ENTER ();
-		 *  /+* do stuff with self +/
-		 *  self->idle_id = 0;
-		 *  GDK_THREADS_LEAVE ();
-		 *  return FALSE;
-	 * }
-	 * static void
-	 * some_widget_do_stuff_later (SomeWidget *self)
-	 * {
-		 *  self->idle_id = g_idle_add (idle_callback, self);
-	 * }
-	 * static void
-	 * some_widget_finalize (GObject *object)
-	 * {
-		 *  SomeWidget *self = SOME_WIDGET (object);
-		 *  if (self->idle_id)
-		 *  g_source_remove (self->idle_id);
-		 *  G_OBJECT_CLASS (parent_class)->finalize (object);
-	 * }
 	 * This will fail in a multi-threaded application if the
 	 * widget is destroyed before the idle handler fires due
 	 * to the use after free in the callback. A solution, to
 	 * this particular problem, is to check to if the source
 	 * has already been destroy within the callback.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 *  static gboolean
-	 * idle_callback (gpointer data)
-	 * {
-		 *  SomeWidget *self = data;
-		 *  GDK_THREADS_ENTER ();
-		 *  if (!g_source_is_destroyed (g_main_current_source ()))
-		 *  {
-			 *  /+* do stuff with self +/
-		 *  }
-		 *  GDK_THREADS_LEAVE ();
-		 *  return FALSE;
-	 * }
 	 * Since 2.12
 	 * Returns: TRUE if the source has been destroyed
 	 */

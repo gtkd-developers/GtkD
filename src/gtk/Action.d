@@ -487,7 +487,7 @@ public class Action : ObjectG, BuildableIF
 	 * Returns the proxy widgets for an action.
 	 * See also gtk_widget_get_action().
 	 * Since 2.4
-	 * Returns: a GSList of proxy widgets. The list is owned by GTK+and must not be modified.. element-type GtkWidget. transfer none GtkWidget.
+	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. . element-type GtkWidget. transfer none GtkWidget.
 	 */
 	public ListSG getProxies()
 	{
@@ -617,7 +617,7 @@ public class Action : ObjectG, BuildableIF
 	/**
 	 * Returns the accel path for this action.
 	 * Since 2.6
-	 * Returns: the accel path for this action, or NULL if none is set. The returned string is owned by GTK+  and must not be freed or modified.
+	 * Returns: the accel path for this action, or NULL if none is set. The returned string is owned by GTK+ and must not be freed or modified.
 	 */
 	public string getAccelPath()
 	{

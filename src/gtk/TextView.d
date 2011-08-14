@@ -1529,7 +1529,7 @@ public class TextView : Container
 	 * override the defaults. The returned array will be NULL if
 	 * "standard" (8-space) tabs are used. Free the return value
 	 * with pango_tab_array_free().
-	 * Returns: copy of default tab array, or NULL if "standard"  tabs are used; must be freed with pango_tab_array_free().
+	 * Returns: copy of default tab array, or NULL if "standard" tabs are used; must be freed with pango_tab_array_free().
 	 */
 	public PgTabArray getTabs()
 	{
@@ -1563,7 +1563,7 @@ public class TextView : Container
 	 * Returns whether pressing the Tab key inserts a tab characters.
 	 * gtk_text_view_set_accepts_tab().
 	 * Since 2.4
-	 * Returns: TRUE if pressing the Tab key inserts a tab character,  FALSE if pressing the Tab key moves the keyboard focus.
+	 * Returns: TRUE if pressing the Tab key inserts a tab character, FALSE if pressing the Tab key moves the keyboard focus.
 	 */
 	public int getAcceptsTab()
 	{

@@ -299,7 +299,7 @@ public class Bin : Element
 	 * MT safe.
 	 * Params:
 	 * element = the GstElement to add
-	 * Returns: TRUE if the element could be added, FALSE ifthe bin does not want to accept the element.
+	 * Returns: TRUE if the element could be added, FALSE if the bin does not want to accept the element.
 	 */
 	public int add(Element element)
 	{
@@ -319,7 +319,7 @@ public class Bin : Element
 	 * MT safe.
 	 * Params:
 	 * element = the GstElement to remove
-	 * Returns: TRUE if the element could be removed, FALSE ifthe bin does not want to remove the element.
+	 * Returns: TRUE if the element could be removed, FALSE if the bin does not want to remove the element.
 	 */
 	public int remove(Element element)
 	{
@@ -515,7 +515,7 @@ public class Bin : Element
 	 * pad when it is not needed any longer.
 	 * Params:
 	 * direction = whether to look for an unconnected source or sink pad
-	 * Returns: unconnected pad of the given direction, or NULL.Since 0.10.3
+	 * Returns: unconnected pad of the given direction, or NULL. Since 0.10.3
 	 */
 	public Pad findUnconnectedPad(GstPadDirection direction)
 	{

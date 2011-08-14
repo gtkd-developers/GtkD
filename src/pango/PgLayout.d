@@ -195,7 +195,7 @@ public class PgLayout : ObjectG
 	
 	/**
 	 * Retrieves the PangoContext used for this layout.
-	 * Returns: the PangoContext for the layout. This does nothave an additional refcount added, so if you want to keepa copy of this around, you must reference it yourself.
+	 * Returns: the PangoContext for the layout. This does not have an additional refcount added, so if you want to keep a copy of this around, you must reference it yourself.
 	 */
 	public PgContext getContext()
 	{
@@ -386,7 +386,7 @@ public class PgLayout : ObjectG
 	 * Gets the height of layout used for ellipsization. See
 	 * pango_layout_set_height() for details.
 	 * Since 1.20
-	 * Returns: the height, in Pango units if positive, ornumber of lines if negative.
+	 * Returns: the height, in Pango units if positive, or number of lines if negative.
 	 */
 	public int getHeight()
 	{
@@ -426,7 +426,7 @@ public class PgLayout : ObjectG
 	 * and there are paragraphs exceeding the layout width that have
 	 * to be wrapped.
 	 * Since 1.16
-	 * Returns: TRUE if any paragraphs had to be wrapped, FALSEotherwise.
+	 * Returns: TRUE if any paragraphs had to be wrapped, FALSE otherwise.
 	 */
 	public int isWrapped()
 	{
@@ -459,7 +459,7 @@ public class PgLayout : ObjectG
 	 * Gets the type of ellipsization being performed for layout.
 	 * See pango_layout_set_ellipsize()
 	 * Since 1.6
-	 * Returns: the current ellipsization mode for layout.Use pango_layout_is_ellipsized() to query whether any paragraphswere actually ellipsized.
+	 * Returns: the current ellipsization mode for layout. Use pango_layout_is_ellipsized() to query whether any paragraphs were actually ellipsized.
 	 */
 	public PangoEllipsizeMode getEllipsize()
 	{
@@ -474,7 +474,7 @@ public class PgLayout : ObjectG
 	 * and there are paragraphs exceeding that width that have to be
 	 * ellipsized.
 	 * Since 1.16
-	 * Returns: TRUE if any paragraphs had to be ellipsized, FALSEotherwise.
+	 * Returns: TRUE if any paragraphs had to be ellipsized, FALSE otherwise.
 	 */
 	public int isEllipsized()
 	{
@@ -669,7 +669,7 @@ public class PgLayout : ObjectG
 	
 	/**
 	 * Obtains the value set by pango_layout_set_single_paragraph_mode().
-	 * Returns: TRUE if the layout does not break paragraphs atparagraph separator characters, FALSE otherwise.
+	 * Returns: TRUE if the layout does not break paragraphs at paragraph separator characters, FALSE otherwise.
 	 */
 	public int getSingleParagraphMode()
 	{
@@ -973,7 +973,7 @@ public class PgLayout : ObjectG
 	 * Returns the lines of the layout as a list.
 	 * Use the faster pango_layout_get_lines_readonly() if you do not plan
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
-	 * Returns:element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
+	 * Returns: element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
 	 */
 	public ListSG getLines()
 	{
@@ -992,7 +992,7 @@ public class PgLayout : ObjectG
 	 * but the user is not expected
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 * Since 1.16
-	 * Returns:element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
+	 * Returns: element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
 	 */
 	public ListSG getLinesReadonly()
 	{

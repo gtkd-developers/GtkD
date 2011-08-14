@@ -185,7 +185,7 @@ public class BufferedOutputStream : FilterOutputStream
 	
 	/**
 	 * Checks if the buffer automatically grows as data is added.
-	 * Returns: TRUE if the stream's buffer automatically grows,FALSE otherwise.
+	 * Returns: TRUE if the stream's buffer automatically grows, FALSE otherwise.
 	 */
 	public int getAutoGrow()
 	{

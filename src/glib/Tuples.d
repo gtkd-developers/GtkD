@@ -149,7 +149,7 @@ public class Tuples
 	 * Params:
 	 * index = the index of the record.
 	 * field = the field to return.
-	 * Returns:the field of the record.
+	 * Returns: the field of the record.
 	 */
 	public void* index(int index, int field)
 	{

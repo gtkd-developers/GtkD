@@ -188,7 +188,7 @@ public class ButtonBox : Box
 	
 	/**
 	 * Retrieves the method being used to arrange the buttons in a button box.
-	 * Returns:the method used to layout buttons in widget.
+	 * Returns: the method used to layout buttons in widget.
 	 */
 	public GtkButtonBoxStyle getLayout()
 	{

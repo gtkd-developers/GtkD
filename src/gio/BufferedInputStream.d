@@ -258,7 +258,7 @@ public class BufferedInputStream : FilterInputStream
 	 * Params:
 	 * count = the number of bytes that will be read from the stream.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: the number of bytes read into stream's buffer, up to count,  or -1 on error.
+	 * Returns: the number of bytes read into stream's buffer, up to count, or -1 on error.
 	 * Throws: GException on failure.
 	 */
 	public gssize fill(gssize count, Cancellable cancellable)

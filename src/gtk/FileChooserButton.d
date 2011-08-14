@@ -82,21 +82,6 @@ private import gtk.HBox;
  * The user can then use that dialog to change the file associated with
  * that button. This widget does not support setting the "select-multiple"
  * property to TRUE.
- * Example  41.  Create a button to let the user select a file in /etc
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- *  {
-	 *  GtkWidget *button;
-	 *  button = gtk_file_chooser_button_new (_("Select a file"),
-	 *  GTK_FILE_CHOOSER_ACTION_OPEN);
-	 *  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (button),
-	 *  "/etc");
- * }
  * The GtkFileChooserButton supports the GtkFileChooserActions GTK_FILE_CHOOSER_ACTION_OPEN and GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
  * Important
  * The GtkFileChooserButton will ellipsize the label,

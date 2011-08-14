@@ -111,7 +111,7 @@ public class GLdInit
 	 * argv = Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
-	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
+	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 */
 	public static int initCheck(ref string[] argv)
 	{
@@ -138,7 +138,7 @@ public class GLdInit
 	 * gdk_gl_init(), or gdk_gl_init_check().
 	 * Params:
 	 * argv = the array of command line arguments.
-	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartII.GdkGLExt API ReferenceQuery>>
+	 * Returns: TRUE if initialization succeeded, otherwise FALSE. <<PartII.GdkGLExt API Reference Query>>
 	 */
 	public static int parseArgs(ref string[] argv)
 	{

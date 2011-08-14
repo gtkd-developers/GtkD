@@ -284,7 +284,7 @@ public class File : ObjectG
 	 * This call does no blocking i/o.
 	 * Params:
 	 * file = gconstpointer to a GFile.
-	 * Returns: 0 if file is not a valid GFile, otherwise an  integer that can be used as hash value for the GFile.  This function is intended for easily hashing a GFile to  add to a GHashTable or similar data structure.
+	 * Returns: 0 if file is not a valid GFile, otherwise an integer that can be used as hash value for the GFile. This function is intended for easily hashing a GFile to add to a GHashTable or similar data structure.
 	 */
 	public static uint hash(void* file)
 	{
@@ -319,7 +319,7 @@ public class File : ObjectG
 	 * can get by requesting the G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME
 	 * attribute with g_file_query_info().
 	 * This call does no blocking i/o.
-	 * Returns: string containing the GFile's base name, or NULL  if given GFile is invalid. The returned string should be  freed with g_free() when no longer needed.
+	 * Returns: string containing the GFile's base name, or NULL if given GFile is invalid. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getBasename()
 	{
@@ -330,7 +330,7 @@ public class File : ObjectG
 	/**
 	 * Gets the local pathname for GFile, if one exists.
 	 * This call does no blocking i/o.
-	 * Returns: string containing the GFile's path, or NULL if  no such path exists. The returned string should be  freed with g_free() when no longer needed.
+	 * Returns: string containing the GFile's path, or NULL if no such path exists. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getPath()
 	{
@@ -361,7 +361,7 @@ public class File : ObjectG
 	 * to UTF8 the pathname is used, otherwise the IRI is used
 	 * (a form of URI that allows UTF8 characters unescaped).
 	 * This call does no blocking i/o.
-	 * Returns: a string containing the GFile's parse name. The returned  string should be freed with g_free() when no longer needed.
+	 * Returns: a string containing the GFile's parse name. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getParseName()
 	{
@@ -374,7 +374,7 @@ public class File : ObjectG
 	 * If the file represents the root directory of the
 	 * file system, then NULL will be returned.
 	 * This call does no blocking i/o.
-	 * Returns: a GFile structure to the parent of the given GFile or NULL if there is no parent.  Free the returned object with g_object_unref().
+	 * Returns: a GFile structure to the parent of the given GFile or NULL if there is no parent. Free the returned object with g_object_unref().
 	 */
 	public File getParent()
 	{
@@ -433,7 +433,7 @@ public class File : ObjectG
 	 * This call does no blocking i/o.
 	 * Params:
 	 * displayName = string to a possible child.
-	 * Returns: a GFile to the specified child, or  NULL if the display name couldn't be converted.  Free the returned object with g_object_unref().
+	 * Returns: a GFile to the specified child, or NULL if the display name couldn't be converted. Free the returned object with g_object_unref().
 	 * Throws: GException on failure.
 	 */
 	public File getChildForDisplayName(string displayName)
@@ -466,7 +466,7 @@ public class File : ObjectG
 	 * of prefix.
 	 * Params:
 	 * prefix = input GFile.
-	 * Returns: TRUE if the files's parent, grandparent, etc is prefix.  FALSE otherwise.
+	 * Returns: TRUE if the files's parent, grandparent, etc is prefix. FALSE otherwise.
 	 */
 	public int hasPrefix(File prefix)
 	{
@@ -479,7 +479,7 @@ public class File : ObjectG
 	 * This call does no blocking i/o.
 	 * Params:
 	 * descendant = input GFile.
-	 * Returns: string with the relative path from descendant  to parent, or NULL if descendant doesn't have parent as prefix.  The returned string should be freed with g_free() when no longer needed.
+	 * Returns: string with the relative path from descendant to parent, or NULL if descendant doesn't have parent as prefix. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getRelativePath(File descendant)
 	{
@@ -492,7 +492,7 @@ public class File : ObjectG
 	 * This call does no blocking i/o.
 	 * Params:
 	 * relativePath = a given relative path string.
-	 * Returns: GFile to the resolved path. NULL if relative_path  is NULL or if file is invalid. Free the returned object with g_object_unref().
+	 * Returns: GFile to the resolved path. NULL if relative_path is NULL or if file is invalid. Free the returned object with g_object_unref().
 	 */
 	public File resolveRelativePath(string relativePath)
 	{
@@ -538,7 +538,7 @@ public class File : ObjectG
 	
 	/**
 	 * Gets the URI scheme for a GFile.
-	 * Returns: a string containing the URI scheme for the given  GFile. The returned string should be freed with g_free()  when no longer needed.
+	 * Returns: a string containing the URI scheme for the given GFile. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getUriScheme()
 	{
@@ -685,7 +685,7 @@ public class File : ObjectG
 	 * Params:
 	 * flags = a set of GFileCreateFlags.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFileOutputStream for the newly created file, or  NULL on error. Free the returned object with g_object_unref().
+	 * Returns: a GFileOutputStream for the newly created file, or NULL on error. Free the returned object with g_object_unref().
 	 * Throws: GException on failure.
 	 */
 	public FileOutputStream create(GFileCreateFlags flags, Cancellable cancellable)
@@ -749,7 +749,7 @@ public class File : ObjectG
 	 * makeBackup = TRUE if a backup should be created.
 	 * flags = a set of GFileCreateFlags.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFileOutputStream or NULL on error.  Free the returned object with g_object_unref().
+	 * Returns: a GFileOutputStream or NULL on error. Free the returned object with g_object_unref().
 	 * Throws: GException on failure.
 	 */
 	public FileOutputStream replace(string etag, int makeBackup, GFileCreateFlags flags, Cancellable cancellable)
@@ -1165,7 +1165,7 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GAppInfo if the handle was found, NULL if there were errors.When you are done with it, release it with g_object_unref()
+	 * Returns: a GAppInfo if the handle was found, NULL if there were errors. When you are done with it, release it with g_object_unref()
 	 * Throws: GException on failure.
 	 */
 	public AppInfoIF queryDefaultHandler(Cancellable cancellable)
@@ -1286,7 +1286,7 @@ public class File : ObjectG
 	 * attributes = an attribute query string.
 	 * flags = a set of GFileQueryInfoFlags.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: A GFileEnumerator if successful, NULL on error.  Free the returned object with g_object_unref().
+	 * Returns: A GFileEnumerator if successful, NULL on error. Free the returned object with g_object_unref().
 	 * Throws: GException on failure.
 	 */
 	public FileEnumerator enumerateChildren(string attributes, GFileQueryInfoFlags flags, Cancellable cancellable)
@@ -1372,7 +1372,7 @@ public class File : ObjectG
 	 * Params:
 	 * displayName = a string.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFile specifying what file was renamed to, or NULL  if there was an error. Free the returned object with g_object_unref().
+	 * Returns: a GFile specifying what file was renamed to, or NULL if there was an error. Free the returned object with g_object_unref().
 	 * Throws: GException on failure.
 	 */
 	public File setDisplayName(string displayName, Cancellable cancellable)
@@ -1692,7 +1692,7 @@ public class File : ObjectG
 	 * Since 2.18
 	 * Params:
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: TRUE if all directories have been successfully created, FALSEotherwise.
+	 * Returns: TRUE if all directories have been successfully created, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int makeDirectoryWithParents(Cancellable cancellable)
@@ -1747,7 +1747,7 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFileAttributeInfoList describing the settable attributes.When you are done with it, release it with g_file_attribute_info_list_unref()
+	 * Returns: a GFileAttributeInfoList describing the settable attributes. When you are done with it, release it with g_file_attribute_info_list_unref()
 	 * Throws: GException on failure.
 	 */
 	public FileAttributeInfoList querySettableAttributes(Cancellable cancellable)
@@ -1778,7 +1778,7 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFileAttributeInfoList describing the writable namespaces.When you are done with it, release it with g_file_attribute_info_list_unref()
+	 * Returns: a GFileAttributeInfoList describing the writable namespaces. When you are done with it, release it with g_file_attribute_info_list_unref()
 	 * Throws: GException on failure.
 	 */
 	public FileAttributeInfoList queryWritableNamespaces(Cancellable cancellable)
@@ -2162,7 +2162,7 @@ public class File : ObjectG
 	 * with g_file_unmount_mountable().
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int unmountMountableFinish(AsyncResultIF result)
@@ -2208,7 +2208,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int unmountMountableWithOperationFinish(AsyncResultIF result)
@@ -2301,7 +2301,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if the file was ejected successfully. FALSEotherwise.
+	 * Returns: TRUE if the file was ejected successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int ejectMountableWithOperationFinish(AsyncResultIF result)
@@ -2349,7 +2349,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int startMountableFinish(AsyncResultIF result)
@@ -2395,7 +2395,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int stopMountableFinish(AsyncResultIF result)
@@ -2439,7 +2439,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if the operation finished successfully. FALSEotherwise.
+	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int pollMountableFinish(AsyncResultIF result)
@@ -2482,7 +2482,7 @@ public class File : ObjectG
 	 * Finishes a mount operation started by g_file_mount_enclosing_volume().
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if successful. If an errorhas occurred, this function will return FALSE and set errorappropriately if present.
+	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
 	public int mountEnclosingVolumeFinish(AsyncResultIF result)
@@ -2609,7 +2609,7 @@ public class File : ObjectG
 	 *  or NULL if the length is not needed
 	 * etagOut = a location to place the current entity tag for the file,
 	 *  or NULL if the entity tag is not needed
-	 * Returns: TRUE if the file's contents were successfully loaded.FALSE if there were errors.
+	 * Returns: TRUE if the file's contents were successfully loaded. FALSE if there were errors.
 	 * Throws: GException on failure.
 	 */
 	public int loadContents(Cancellable cancellable, out string contents, out gsize length, out string etagOut)
@@ -2766,7 +2766,7 @@ public class File : ObjectG
 	 *  for the document. This should be freed with g_free() when no longer
 	 *  needed, or NULL
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: TRUE if successful. If an errorhas occurred, this function will return FALSE and set errorappropriately if present.
+	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
 	public int replaceContents(string contents, gsize length, string etag, int makeBackup, GFileCreateFlags flags, out string newEtag, Cancellable cancellable)

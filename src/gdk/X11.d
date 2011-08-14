@@ -169,7 +169,7 @@ public class X11
 	 * XID.
 	 * Params:
 	 * anid = a native window handle.
-	 * Returns: the GdkWindow wrapper for the native window,  or NULL if there is none.
+	 * Returns: the GdkWindow wrapper for the native window, or NULL if there is none.
 	 */
 	public static Window gdkWindowLookup(GdkNativeWindow anid)
 	{

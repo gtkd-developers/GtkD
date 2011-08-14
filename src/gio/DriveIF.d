@@ -154,7 +154,7 @@ public interface DriveIF
 	
 	/**
 	 * Gets the name of drive.
-	 * Returns: a string containing drive's name. The returned  string should be freed when no longer needed.
+	 * Returns: a string containing drive's name. The returned string should be freed when no longer needed.
 	 */
 	public string getName();
 	
@@ -249,7 +249,7 @@ public interface DriveIF
 	
 	/**
 	 * Checks if drive is capabable of automatically detecting media changes.
-	 * Returns: TRUE if the drive is capabable of automatically detecting  media changes, FALSE otherwise.
+	 * Returns: TRUE if the drive is capabable of automatically detecting media changes, FALSE otherwise.
 	 */
 	public int isMediaCheckAutomatic();
 	
@@ -372,7 +372,7 @@ public interface DriveIF
 	 * Gets the identifier of the given kind for drive.
 	 * Params:
 	 * kind = the kind of identifier to return
-	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GDrive doesn't have this kind of identifier.Signal DetailsThe "changed" signalvoid user_function (GDrive *drive, gpointer user_data) : Run LastEmitted when the drive's state has changed.
+	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GDrive doesn't have this kind of identifier. Signal Details The "changed" signal void user_function (GDrive *drive, gpointer user_data) : Run Last Emitted when the drive's state has changed.
 	 */
 	public string getIdentifier(string kind);
 }

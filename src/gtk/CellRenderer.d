@@ -202,42 +202,6 @@ public class CellRenderer : ObjectGtk
 	 * Note that GTK+ doesn't guarantee that cell renderers will
 	 * continue to use the same kind of widget for editing in future
 	 * releases, therefore you should check the type of editable
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 *  static void
-	 * text_editing_started (GtkCellRenderer *cell,
-	 *  GtkCellEditable *editable,
-	 *  const gchar *path,
-	 *  gpointer data)
-	 * {
-		 *  if (GTK_IS_ENTRY (editable))
-		 *  {
-			 *  GtkEntry *entry = GTK_ENTRY (editable);
-			 *
-			 *  /+* ... create a GtkEntryCompletion +/
-			 *
-			 *  gtk_entry_set_completion (entry, completion);
-		 *  }
-	 * }
-	 *
-	 *
-	 *
 	 * Since 2.6
 	 * See Also
 	 * GtkCellRendererText,GtkCellRendererPixbuf,GtkCellRendererToggle

@@ -97,21 +97,6 @@ private import gtk.Bin;
  * custom <accel-groups> element, which supports any number of <group>
  * elements representing the GtkAccelGroup objects you want to add to your
  * window (synonymous with gtk_window_add_accel_group().
- * Example  10.  A UI definition fragment with accel groups
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- *  <object class="GtkWindow">
- *  <accel-groups>
- *  <group name="accelgroup1"/>
- *  </accel-groups>
- * </object>
- * ...
- * <object class="GtkAccelGroup" id="accelgroup1"/>
  */
 public class Window : Bin
 {
@@ -632,7 +617,7 @@ public class Window : Bin
 	/**
 	 * Returns the GdkScreen associated with window.
 	 * Since 2.2
-	 * Returns: a GdkScreen.. transfer none.
+	 * Returns: a GdkScreen. . transfer none.
 	 */
 	public override Screen getScreen()
 	{
@@ -724,7 +709,7 @@ public class Window : Bin
 	 * Params:
 	 * keyval = the mnemonic
 	 * modifier = the modifiers
-	 * Returns:TRUE if the activation is done.
+	 * Returns: TRUE if the activation is done.
 	 */
 	public int mnemonicActivate(uint keyval, GdkModifierType modifier)
 	{
@@ -1680,7 +1665,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_focus_on_map().
 	 * Since 2.6
-	 * Returns: TRUE if window should receive the input focus whenmapped.
+	 * Returns: TRUE if window should receive the input focus when mapped.
 	 */
 	public int getFocusOnMap()
 	{
@@ -1693,7 +1678,7 @@ public class Window : Bin
 	 * window is NULL or if window does not have an explicit
 	 * window group.
 	 * Since 2.10
-	 * Returns: the GtkWindowGroup for a window or the default group. transfer none.
+	 * Returns: the GtkWindowGroup for a window or the default group . transfer none.
 	 */
 	public WindowGroup getGroup()
 	{
@@ -1752,83 +1737,6 @@ public class Window : Bin
 	 * to be called when the window has its "final" size, i.e. after calling
 	 * gtk_widget_show_all() on the contents and gtk_window_set_geometry_hints()
 	 * on the window.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 * 30
-	 * 31
-	 * 32
-	 * 33
-	 * 34
-	 * 35
-	 * 36
-	 * 37
-	 * 38
-	 * 39
-	 * 40
-	 * 41
-	 * 42
-	 * 43
-	 *  #include <gtk/gtk.h>
-	 * static void
-	 * fill_with_content (GtkWidget *vbox)
-	 * {
-		 *  /+* fill with content... +/
-	 * }
-	 * int
-	 * main (int argc, char *argv[])
-	 * {
-		 *  GtkWidget *window, *vbox;
-		 *  GdkGeometry size_hints = {
-			 *  100, 50, 0, 0, 100, 50, 10, 10, 0.0, 0.0, GDK_GRAVITY_NORTH_WEST
-		 *  };
-		 *  gtk_init (argc, argv);
-		 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-		 *  vbox = gtk_vbox_new (FALSE, 0);
-		 *  gtk_container_add (GTK_CONTAINER (window), vbox);
-		 *  fill_with_content (vbox);
-		 *  gtk_widget_show_all (vbox);
-		 *  gtk_window_set_geometry_hints (GTK_WINDOW (window),
-		 * 	 			 window,
-		 * 				 size_hints,
-		 * 				 GDK_HINT_MIN_SIZE |
-		 * 				 GDK_HINT_BASE_SIZE |
-		 * 				 GDK_HINT_RESIZE_INC);
-		 *  if (argc > 1)
-		 *  {
-			 *  if (!gtk_window_parse_geometry (GTK_WINDOW (window), argv[1]))
-			 *  fprintf (stderr, "Failed to parse '%s'\n", argv[1]);
-		 *  }
-		 *  gtk_widget_show_all (window);
-		 *  gtk_main ();
-		 *  return 0;
-	 * }
 	 * Params:
 	 * geometry = geometry string
 	 * Returns: TRUE if string was parsed successfully

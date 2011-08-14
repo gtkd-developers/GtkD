@@ -91,53 +91,6 @@ private import gtk.HBox;
  * classified as error message, warning, informational message, etc,
  * by using gtk_info_bar_set_message_type(). GTK+ uses the message type
  * to determine the background color of the message area.
- * Example  14.  Simple GtkInfoBar usage.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- *  /+* set up info bar +/
- * info_bar = gtk_info_bar_new ();
- * gtk_widget_set_no_show_all (info_bar, TRUE);
- * message_label = gtk_label_new ("");
- * gtk_widget_show (message_label);
- * content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar));
- * gtk_container_add (GTK_CONTAINER (content_area), message_label);
- * gtk_info_bar_add_button (GTK_INFO_BAR (info_bar),
- *  GTK_STOCK_OK, GTK_RESPONSE_OK);
- * g_signal_connect (info_bar, "response",
- *  G_CALLBACK (gtk_widget_hide), NULL);
- * gtk_table_attach (GTK_TABLE (table),
- *  info_bar,
- *  0, 1, 2, 3,
- *  GTK_EXPAND | GTK_FILL, 0,
- *  0, 0);
- * /+* ... +/
- * /+* show an error message +/
- * gtk_label_set_text (GTK_LABEL (message_label), error_message);
- * gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar),
- *  GTK_MESSAGE_ERROR);
- * gtk_widget_show (info_bar);
  * GtkInfoBar as GtkBuildable
  * The GtkInfoBar implementation of the GtkBuildable interface exposes
  * the content area and action area as internal children with the names

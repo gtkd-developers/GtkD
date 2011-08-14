@@ -369,7 +369,7 @@ public class SourceBuffer : TextBuffer
 	/**
 	 * Determines whether bracket match highlighting is activated for the
 	 * source buffer.
-	 * Returns: TRUE if the source buffer will highlight matchingbrackets.
+	 * Returns: TRUE if the source buffer will highlight matching brackets.
 	 */
 	public int getHighlightMatchingBrackets()
 	{
@@ -391,7 +391,7 @@ public class SourceBuffer : TextBuffer
 	
 	/**
 	 * Returns the GtkSourceStyleScheme currently used in buffer.
-	 * Returns: the GtkSourceStyleScheme set bygtk_source_buffer_set_style_scheme(), or NULL.
+	 * Returns: the GtkSourceStyleScheme set by gtk_source_buffer_set_style_scheme(), or NULL.
 	 */
 	public SourceStyleScheme getStyleScheme()
 	{

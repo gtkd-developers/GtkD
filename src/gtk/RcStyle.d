@@ -117,8 +117,6 @@ private import gobject.ObjectG;
  * by the widget, widget_class,
  * and class declarations. As an example
  * of such a statement:
- *  1
- *  widget "mywindow.*.GtkEntry" style "my-entry-class"
  * attaches the style "my-entry-class" to all
  * widgets whose widget path matches the
  * pattern "mywindow.*.GtkEntry".
@@ -138,8 +136,6 @@ private import gobject.ObjectG;
  * Since GTK+ 2.10,widget_class paths can also contain
  * <classname> substrings, which are matching
  * the class with the given name and any derived classes. For instance,
- *  1
- *  widget_class "*<GtkMenuItem>.GtkLabel" style "my-style"
  * will match GtkLabel widgets which are contained in any kind of menu item.
  * So, if you have a GtkEntry named "myentry", inside of a
  * horizontal box in a window named "mywindow", then the
@@ -148,8 +144,6 @@ private import gobject.ObjectG;
  * Matching against class is a little different. The pattern match is done
  * against all class names in the widgets class hierarchy (not the layout
  * hierarchy) in sequence, so the pattern:
- *  1
- *  class "GtkButton" style "my-style"
  * will match not just GtkButton widgets, but also GtkToggleButton and
  * GtkCheckButton widgets, since those classes derive from GtkButton.
  * Additionally, a priority can be specified for each pattern, and styles
@@ -188,19 +182,7 @@ private import gobject.ObjectG;
  *  This reduces the overall amount of RC styles that have to be considered
  *  for a match across a group of applications.
  *  Merge multiple styles which use the same matching rule, for instance:
- *  1
- * 2
- * 3
- * 4
- *  style "Foo" { foo_content }
- * class "X" style "Foo"
- * style "Bar" { bar_content }
- * class "X" style "Bar"
  *  is faster to match as:
- *  1
- * 2
- *  style "FooBar" { foo_content bar_content }
- * class "X" style "FooBar"
  *  Use of wildcards should be avoided, this can reduce the individual RC style
  *  match to a single integer comparison in most cases.
  *  To avoid complex recursive matching, specification of full class names
@@ -389,12 +371,6 @@ private import gobject.ObjectG;
  *  This is an abbreviation for
  *  shade (0.7, color).
  * Here are some examples of color expressions:
- *  1
- * 2
- * 3
- *  mix (0.5, "red", "blue")
- * shade (1.5, mix (0.3, "#0abbc0", { 0.3, 0.5, 0.9 }))
- * lighter (@foreground)
  * In a stock definition, icon sources are specified as a
  * 4-tuple of image filename or icon name, text direction, widget state, and size, in that
  * order. Each icon source specifies an image filename or icon name to use with a given
@@ -406,57 +382,13 @@ private import gobject.ObjectG;
  * wildcard, and if direction/state/size are omitted they default to
  * *. So for example, the following specifies different icons to
  * use for left-to-right and right-to-left languages:
- *  1
- * 2
- * 3
- * 4
- * 5
- *  stock["my-stock-item"] =
- * {
-	 *  { "itemltr.png", LTR, *, * },
- *  { "itemrtl.png", RTL, *, * }
- * }
  * This could be abbreviated as follows:
- *  1
- * 2
- * 3
- * 4
- * 5
- *  stock["my-stock-item"] =
- * {
-	 *  { "itemltr.png", LTR },
- *  { "itemrtl.png", RTL }
- * }
  * You can specify custom icons for specific sizes, as follows:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- *  stock["my-stock-item"] =
- * {
-	 *  { "itemmenusize.png", *, *, "gtk-menu" },
- *  { "itemtoolbarsize.png", *, *, "gtk-large-toolbar" }
- *  { "itemgeneric.png" } /+* implicit *, *, * as a fallback +/
- * }
  * The sizes that come with GTK+ itself are "gtk-menu",
  * "gtk-small-toolbar", "gtk-large-toolbar",
  * "gtk-button", "gtk-dialog". Applications
  * can define other sizes.
  * It's also possible to use custom icons for a given state, for example:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- *  stock["my-stock-item"] =
- * {
-	 *  { "itemprelight.png", *, PRELIGHT },
-	 *  { "iteminsensitive.png", *, INSENSITIVE },
-	 *  { "itemgeneric.png" } /+* implicit *, *, * as a fallback +/
- * }
  * When selecting an icon source to use, GTK+ will consider text direction most
  * important, state second, and size third. It will select the best match based on
  * those criteria. If an attribute matches exactly (e.g. you specified
@@ -468,20 +400,6 @@ private import gobject.ObjectG;
  * Key bindings allow the user to specify actions to be
  * taken on particular key presses. The form of a binding
  * set declaration is:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- *  binding <em class="replaceable"><code>name</code></em> {
-	 *  bind <em class="replaceable"><code>key</code></em> {
-		 *  <em class="replaceable"><code>signalname</code></em> (<em class="replaceable"><code>param</code></em>, ...)
-		 *  ...
-	 *  }
-	 *  ...
- * }
  * key is a string consisting of a
  * series of modifiers followed by the name of a key. The
  * modifiers can be:
@@ -758,7 +676,7 @@ public class RcStyle : ObjectG
 	/**
 	 * Retrieves the current list of RC files that will be parsed
 	 * at the end of gtk_init().
-	 * Returns: A NULL-terminated array of filenames. This memoryis owned by GTK+ and must not be freed by the application.If you want to store this information, you should make a copy.
+	 * Returns: A NULL-terminated array of filenames. This memory is owned by GTK+ and must not be freed by the application. If you want to store this information, you should make a copy.
 	 */
 	public static string[] getDefaultFiles()
 	{
@@ -818,7 +736,7 @@ public class RcStyle : ObjectG
 	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
 	 * state = A pointer to a GtkStateType variable in which to
 	 * store the result.
-	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
+	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found.
 	 */
 	public static uint parseState(ScannerG scanner, out GtkStateType state)
 	{
@@ -833,7 +751,7 @@ public class RcStyle : ObjectG
 	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
 	 * priority = A pointer to GtkPathPriorityType variable in which
 	 * to store the result.
-	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
+	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found.
 	 */
 	public static uint parsePriority(ScannerG scanner, out GtkPathPriorityType priority)
 	{
@@ -890,7 +808,7 @@ public class RcStyle : ObjectG
 	 * environment variable for more details about looking up modules. This
 	 * function is useful solely for utilities supplied with GTK+ and should
 	 * not be used by applications under normal circumstances.
-	 * Returns:a newly-allocated string containing the path in which to  look for IM modules.
+	 * Returns: a newly-allocated string containing the path in which to look for IM modules.
 	 */
 	public static string getImModulePath()
 	{
@@ -902,7 +820,7 @@ public class RcStyle : ObjectG
 	 * Obtains the path to the IM modules file. See the documentation
 	 * of the GTK_IM_MODULE_FILE
 	 * environment variable for more details.
-	 * Returns:a newly-allocated string containing the name of the filelisting the IM modules available for loading
+	 * Returns: a newly-allocated string containing the name of the file listing the IM modules available for loading
 	 */
 	public static string getImModuleFile()
 	{
@@ -914,7 +832,7 @@ public class RcStyle : ObjectG
 	 * Returns the standard directory in which themes should
 	 * be installed. (GTK+ does not actually use this directory
 	 * itself.)
-	 * Returns:The directory (must be freed with g_free()).
+	 * Returns: The directory (must be freed with g_free()).
 	 */
 	public static string getThemeDir()
 	{
@@ -925,7 +843,7 @@ public class RcStyle : ObjectG
 	/**
 	 * Creates a new GtkRcStyle with no fields set and
 	 * a reference count of 1.
-	 * Returns:the newly-created GtkRcStyle
+	 * Returns: the newly-created GtkRcStyle
 	 */
 	public static RcStyle styleNew()
 	{

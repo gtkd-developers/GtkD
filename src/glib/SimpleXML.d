@@ -227,7 +227,7 @@ public class SimpleXML
 	 * give the element_name as passed to those functions. For the parent
 	 * elements, see g_markup_parse_context_get_element_stack().
 	 * Since 2.2
-	 * Returns:the name of the currently open element, or NULL
+	 * Returns: the name of the currently open element, or NULL
 	 */
 	public string getElement()
 	{
@@ -351,73 +351,6 @@ public class SimpleXML
 	 * interface.
 	 * As an example, see the following implementation of a simple
 	 * parser that counts the number of tags encountered.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 * 30
-	 * 31
-	 * 32
-	 * 33
-	 * 34
-	 * 35
-	 * 36
-	 *  typedef struct
-	 * {
-		 *  gint tag_count;
-	 * } CounterData;
-	 * static void
-	 * counter_start_element (GMarkupParseContext *context,
-	 *  const gchar *element_name,
-	 *  const gchar **attribute_names,
-	 *  const gchar **attribute_values,
-	 *  gpointer user_data,
-	 *  GError **error)
-	 * {
-		 *  CounterData *data = user_data;
-		 *  data->tag_count++;
-	 * }
-	 * static void
-	 * counter_error (GMarkupParseContext *context,
-	 *  GError *error,
-	 *  gpointer user_data)
-	 * {
-		 *  CounterData *data = user_data;
-		 *  g_slice_free (CounterData, data);
-	 * }
-	 * static GMarkupParser counter_subparser =
-	 * {
-		 *  counter_start_element,
-		 *  NULL,
-		 *  NULL,
-		 *  NULL,
-		 *  counter_error
-	 * };
 	 * In order to allow this parser to be easily used as a subparser, the
 	 * Since 2.18
 	 * Params:

@@ -109,7 +109,7 @@ public class Gdk
 	 * Initialize the library for use.
 	 * Params:
 	 * argv = . array length=argc. inout length=argc.
-	 * Returns:TRUE if initialization succeeded.
+	 * Returns: TRUE if initialization succeeded.
 	 */
 	public static int initCheck(ref string[] argv)
 	{
@@ -170,7 +170,7 @@ public class Gdk
 	 * system call. This function is called by gtk_set_locale() and so GTK+
 	 * applications should use that instead.
 	 * The locale to use is determined by the LANG environment variable,
-	 * Returns:the resulting locale.
+	 * Returns: the resulting locale.
 	 */
 	public static string setLocale()
 	{
@@ -252,7 +252,7 @@ public class Gdk
 	 * been set with gdk_set_program_class() or with the --class
 	 * commandline option, the default value is the program name (determined
 	 * with g_get_prgname()) with the first character converted to uppercase.
-	 * Returns:the program class.
+	 * Returns: the program class.
 	 */
 	public static string getProgramClass()
 	{
@@ -276,7 +276,7 @@ public class Gdk
 	/**
 	 * Gets the name of the display, which usually comes from the DISPLAY
 	 * environment variable or the --display command line option.
-	 * Returns:the name of the display.
+	 * Returns: the name of the display.
 	 */
 	public static string getDisplay()
 	{
@@ -318,7 +318,7 @@ public class Gdk
 	/**
 	 * Returns the width of the default screen in millimeters.
 	 * Note that on many X servers this value will not be correct.
-	 * Returns: the width of the default screen in millimeters,though it is not always correct.
+	 * Returns: the width of the default screen in millimeters, though it is not always correct.
 	 */
 	public static int screenWidthMm()
 	{
@@ -329,7 +329,7 @@ public class Gdk
 	/**
 	 * Returns the height of the default screen in millimeters.
 	 * Note that on many X servers this value will not be correct.
-	 * Returns: the height of the default screen in millimeters,though it is not always correct.
+	 * Returns: the height of the default screen in millimeters, though it is not always correct.
 	 */
 	public static int screenHeightMm()
 	{
@@ -377,7 +377,7 @@ public class Gdk
 	 * time = the timestamp of the event which led to this pointer grab. This usually
 	 * comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used if
 	 * the time isn't known.
-	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns: GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus pointerGrab(Window window, int ownerEvents, GdkEventMask eventMask, Window confineTo, Cursor cursor, uint time)
 	{
@@ -442,7 +442,7 @@ public class Gdk
 	 * independant of the event mask set by the application.
 	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 	 * available.
-	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns: GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus keyboardGrab(Window window, int ownerEvents, uint time)
 	{
@@ -481,7 +481,7 @@ public class Gdk
 	 * It enables much faster drawing by communicating with the X server through
 	 * SYSV shared memory calls. However, it can only be used if the X client and
 	 * server are on the same machine and the server supports it.
-	 * Returns:TRUE if use of the MIT shared memory extension will be attempted.
+	 * Returns: TRUE if use of the MIT shared memory extension will be attempted.
 	 */
 	public static int getUseXshm()
 	{
@@ -509,23 +509,6 @@ public class Gdk
 	 * This function allows X errors to be trapped instead of the normal behavior
 	 * of exiting the application. It should only be used if it is not possible to
 	 * avoid the X error in any other way.
-	 * Example  1.  Trapping an X error
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 *  gdk_error_trap_push ();
-	 * /+* ... Call the X function which may cause an error here ... +/
-	 * /+* Flush the X queue to catch errors now. +/
-	 * gdk_flush ();
-	 * if (gdk_error_trap_pop ())
-	 *  {
-		 *  /+* ... Handle the error here ... +/
-	 *  }
 	 */
 	public static void errorTrapPush()
 	{
@@ -535,7 +518,7 @@ public class Gdk
 	
 	/**
 	 * Removes the X error trap installed with gdk_error_trap_push().
-	 * Returns:the X error code, or 0 if no error occurred.
+	 * Returns: the X error code, or 0 if no error occurred.
 	 */
 	public static int errorTrapPop()
 	{

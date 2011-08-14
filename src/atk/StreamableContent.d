@@ -130,7 +130,7 @@ public class StreamableContent
 	 * type is at position 0, the second at position 1, and so on.
 	 * Params:
 	 * i = a gint representing the position of the mime type starting from 0
-	 * Returns:: a gchar* representing the specified mime type; the callershould not free the character string.
+	 * Returns: : a gchar* representing the specified mime type; the caller should not free the character string.
 	 */
 	public string getMimeType(int i)
 	{
@@ -142,7 +142,7 @@ public class StreamableContent
 	 * Gets the content in the specified mime type.
 	 * Params:
 	 * mimeType = a gchar* representing the mime type
-	 * Returns: A GIOChannel which contains the content in the specified mimetype.
+	 * Returns: A GIOChannel which contains the content in the specified mime type.
 	 */
 	public IOChannel getStream(string mimeType)
 	{
@@ -167,7 +167,7 @@ public class StreamableContent
 	 * Params:
 	 * mimeType = a gchar* representing the mime type, or NULL to request a URI
 	 * for the default mime type.
-	 * Returns: Returns a string representing a URI, or NULL if no corresponding URIcan be constructed.
+	 * Returns: Returns a string representing a URI, or NULL if no corresponding URI can be constructed.
 	 */
 	public string getUri(string mimeType)
 	{

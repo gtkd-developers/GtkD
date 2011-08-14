@@ -149,55 +149,6 @@ private import gobject.ObjectG;
  * would mess up path lookup) and must be usable as XML attributes when
  * enclosed in doublequotes, thus they must not '"' characters or references
  * to the quot; entity.
- * Example  33.  A UI definition
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- *  <ui>
- *  <menubar>
- *  <menu name="FileMenu" action="FileMenuAction">
- *  <menuitem name="New" action="New2Action" />
- *  <placeholder name="FileMenuAdditions" />
- *  </menu>
- *  <menu name="JustifyMenu" action="JustifyMenuAction">
- *  <menuitem name="Left" action="justify-left"/>
- *  <menuitem name="Centre" action="justify-center"/>
- *  <menuitem name="Right" action="justify-right"/>
- *  <menuitem name="Fill" action="justify-fill"/>
- *  </menu>
- *  </menubar>
- *  <toolbar action="toolbar1">
- *  <placeholder name="JustifyToolItems">
- *  <separator/>
- *  <toolitem name="Left" action="justify-left"/>
- *  <toolitem name="Centre" action="justify-center"/>
- *  <toolitem name="Right" action="justify-right"/>
- *  <toolitem name="Fill" action="justify-fill"/>
- *  <separator/>
- *  </placeholder>
- *  </toolbar>
- * </ui>
  * The constructed widget hierarchy is very similar to the element tree
  * of the XML, with the exception that placeholders are merged into their
  * parents. The correspondence of XML elements to widgets should be
@@ -271,51 +222,6 @@ private import gobject.ObjectG;
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
  * "constructor" attribute. See the example below.
- * Example  34.  An embedded GtkUIManager UI definition
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- *  <object class="GtkUIManager" id="uiman">
- *  <child>
- *  <object class="GtkActionGroup" id="actiongroup">
- *  <child>
- *  <object class="GtkAction" id="file">
- *  <property name="label">_File</property>
- *  </object>
- *  </child>
- *  </object>
- *  </child>
- *  <ui>
- *  <menubar name="menubar1">
- *  <menu action="file">
- *  </menu>
- *  </menubar>
- *  </ui>
- * </object>
- * <object class="GtkWindow" id="main-window">
- *  <child>
- *  <object class="GtkMenuBar" id="menubar1" constructor="uiman"/>
- *  </child>
- * </object>
  */
 public class UIManager : ObjectG, BuildableIF
 {
@@ -629,7 +535,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the list of action groups associated with self.
 	 * Since 2.4
-	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified.. element-type GtkActionGroup. transfer none GtkActionGroup.
+	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified. . element-type GtkActionGroup. transfer none GtkActionGroup.
 	 */
 	public ListG getActionGroups()
 	{
@@ -645,7 +551,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the GtkAccelGroup associated with self.
 	 * Since 2.4
-	 * Returns: the GtkAccelGroup.. transfer none.
+	 * Returns: the GtkAccelGroup. . transfer none.
 	 */
 	public AccelGroup getAccelGroup()
 	{
@@ -673,7 +579,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * path = a path
-	 * Returns: the widget found by following the path, or NULL if no widget was found.. transfer none.
+	 * Returns: the widget found by following the path, or NULL if no widget was found. . transfer none.
 	 */
 	public Widget getWidget(string path)
 	{
@@ -693,7 +599,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * types = specifies the types of toplevel widgets to include. Allowed
 	 *  types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
 	 *  GTK_UI_MANAGER_POPUP.
-	 * Returns: a newly-allocated GSList ofall toplevel widgets of the requested types. Free the returned list with g_slist_free().. element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: a newly-allocated GSList of all toplevel widgets of the requested types. Free the returned list with g_slist_free(). . element-type GtkWidget. transfer container GtkWidget.
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
@@ -712,7 +618,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * path = a path
-	 * Returns: the action whose proxy widget is found by following the path,  or NULL if no widget was found.
+	 * Returns: the action whose proxy widget is found by following the path, or NULL if no widget was found.
 	 */
 	public Action getAction(string path)
 	{

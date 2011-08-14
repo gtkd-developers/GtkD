@@ -102,7 +102,7 @@ public class PgScript
 	 * Since 1.4
 	 * Params:
 	 * script = a PangoScript
-	 * Returns: a PangoLanguage that is representativeof the script, or NULL if no such language exists.
+	 * Returns: a PangoLanguage that is representative of the script, or NULL if no such language exists.
 	 */
 	public static PgLanguage scriptGetSampleLanguage(PangoScript script)
 	{

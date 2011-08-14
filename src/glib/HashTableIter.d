@@ -129,21 +129,6 @@ public class HashTableIter
 	 * Initializes a key/value pair iterator and associates it with
 	 * hash_table. Modifying the hash table after calling this function
 	 * invalidates the returned iterator.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 *  GHashTableIter iter;
-	 * gpointer key, value;
-	 * g_hash_table_iter_init (iter, hash_table);
-	 * while (g_hash_table_iter_next (iter, key, value))
-	 *  {
-		 *  /+* do something with key and value +/
-	 *  }
 	 * Since 2.16
 	 * Params:
 	 * hashTable = a GHashTable.

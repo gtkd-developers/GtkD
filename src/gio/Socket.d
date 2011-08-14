@@ -588,7 +588,7 @@ public class Socket : ObjectG, InitableIF
 	 * buffer = the buffer containing the data to send.
 	 * size = the number of bytes to send
 	 * cancellable = a GCancellable or NULL
-	 * Returns: Number of bytes written (which may be less than size), or -1on error
+	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize send(string buffer, gsize size, Cancellable cancellable)
@@ -617,7 +617,7 @@ public class Socket : ObjectG, InitableIF
 	 * buffer = the buffer containing the data to send.
 	 * size = the number of bytes to send
 	 * cancellable = a GCancellable or NULL
-	 * Returns: Number of bytes written (which may be less than size), or -1on error
+	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize sendTo(SocketAddress address, string buffer, gsize size, Cancellable cancellable)
@@ -675,7 +675,7 @@ public class Socket : ObjectG, InitableIF
 	 *  NULL.
 	 * flags = an int containing GSocketMsgFlags flags
 	 * cancellable = a GCancellable or NULL
-	 * Returns: Number of bytes written (which may be less than size), or -1on error
+	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize sendMessage(SocketAddress address, GOutputVector[] vectors, ref GSocketControlMessage[] messages, int flags, Cancellable cancellable)

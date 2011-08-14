@@ -87,19 +87,6 @@ private import gtk.Misc;
  * custom <attributes> element, which supports any number of <attribute>
  * elements. the <attribute> element has attributes named name, value,
  * start and end and allows you to specify PangoAttribute values for this label.
- * Example  13.  A UI definition fragment specifying Pango attributes
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- *  <object class="GtkLabel">
- *  <attributes>
- *  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
- *  <attribute name="background" value="red" start="5" end="10"/>"
- *  </attributes>
- * </object>
  * The start and end attributes specify the range of characters to which the
  * Pango attribute applies. If start and end are not specified, the attribute is
  * applied to the whole text. Note that specifying ranges does not make much
@@ -118,40 +105,16 @@ private import gtk.Misc;
  * mnemonic's target widget, you have to tell the label about the target
  * using gtk_label_set_mnemonic_widget(). Here's a simple example where
  * the label is inside a button:
- *  1
- * 2
- * 3
- * 4
- *  /+* Pressing Alt+H will activate this button +/
- * button = gtk_button_new ();
- * label = gtk_label_new_with_mnemonic ("_Hello");
- * gtk_container_add (GTK_CONTAINER (button), label);
  * There's a convenience function to create buttons with a mnemonic label
  * already inside:
- *  1
- * 2
- *  /+* Pressing Alt+H will activate this button +/
- * button = gtk_button_new_with_mnemonic ("_Hello");
  * To create a mnemonic for a widget alongside the label, such as a
  * GtkEntry, you have to point the label at the entry with
  * gtk_label_set_mnemonic_widget():
- *  1
- * 2
- * 3
- * 4
- *  /+* Pressing Alt+H will focus the entry +/
- * entry = gtk_entry_new ();
- * label = gtk_label_new_with_mnemonic ("_Hello");
- * gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
  * <hr>
  * Markup (styled text)
  * To make it easy to format text in a label (changing colors, fonts,
  * etc.), label text can be provided in a simple markup format.
  * Here's how to create a label with a small font:
- *  1
- * 2
- *  label = gtk_label_new (NULL);
- * gtk_label_set_markup (GTK_LABEL (label), "<small>Small text</small>");
  * (See complete documentation of available
  * tags in the Pango manual.)
  * The markup passed to gtk_label_set_markup() must be valid; for example,
@@ -191,8 +154,6 @@ private import gtk.Misc;
  * a with href and title attributes. GTK+ renders links similar to the
  * way they appear in web browsers, with colored, underlined text. The title
  * attribute is displayed as a tooltip on the link. An example looks like this:
- *  1
- *  gtk_label_set_markup (label, "Go to the <a href=\"http://www.gtk.org\" title=\"lt;igt;Our/igt; website\">GTK+ website</a> for more...");
  * It is possible to implement custom handling for links and their tooltips with
  * the "activate-link" signal and the gtk_label_get_current_uri() function.
  */
@@ -617,7 +578,7 @@ public class Label : Misc
 	 * probably only used within the GTK+ library itself for menu items and such.
 	 * Params:
 	 * string = The string you want to parse for underlines.
-	 * Returns:The lowercase keyval of the last character underlined.
+	 * Returns: The lowercase keyval of the last character underlined.
 	 */
 	public uint parseUline(string string)
 	{

@@ -312,7 +312,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the horizontal scrollbar of scrolled_window.
 	 * Since 2.8
-	 * Returns: the horizontal scrollbar of the scrolled window, or  NULL if it does not have one.
+	 * Returns: the horizontal scrollbar of the scrolled window, or NULL if it does not have one.
 	 */
 	public Widget getHscrollbar()
 	{
@@ -453,7 +453,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Gets the placement of the contents with respect to the scrollbars
 	 * for the scrolled window. See gtk_scrolled_window_set_placement().
-	 * Returns: the current placement value.See also gtk_scrolled_window_set_placement() andgtk_scrolled_window_unset_placement().
+	 * Returns: the current placement value. See also gtk_scrolled_window_set_placement() and gtk_scrolled_window_unset_placement().
 	 */
 	public GtkCornerType getPlacement()
 	{

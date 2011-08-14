@@ -115,7 +115,7 @@ public class PgVertical
 	 * Since 1.16
 	 * Params:
 	 * matrix = a PangoMatrix
-	 * Returns: the gravity of matrix, which will never bePANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
+	 * Returns: the gravity of matrix, which will never be PANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
 	 */
 	public static PangoGravity gravityGetForMatrix(PgMatrix matrix)
 	{
@@ -134,7 +134,7 @@ public class PgVertical
 	 * script = PangoScript to query
 	 * baseGravity = base gravity of the paragraph
 	 * hint = orientation hint
-	 * Returns: resolved gravity suitable to use for a run of textwith script.
+	 * Returns: resolved gravity suitable to use for a run of text with script.
 	 */
 	public static PangoGravity gravityGetForScript(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)
 	{
@@ -160,7 +160,7 @@ public class PgVertical
 	 * wide = TRUE for wide characters as returned by g_unichar_iswide()
 	 * baseGravity = base gravity of the paragraph
 	 * hint = orientation hint
-	 * Returns: resolved gravity suitable to use for a run of textwith script and wide.
+	 * Returns: resolved gravity suitable to use for a run of text with script and wide.
 	 */
 	public static PangoGravity gravityGetForScriptAndWidth(PangoScript script, int wide, PangoGravity baseGravity, PangoGravityHint hint)
 	{

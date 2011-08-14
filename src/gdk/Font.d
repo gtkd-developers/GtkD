@@ -85,8 +85,6 @@ private import pango.PgFontDescription;
  * consists of a sequence of fields separated (and surrounded by) '-'
  * characters. For example, Adobe Helvetica Bold 12 pt, has the
  * full description:
- *  1
- *  "-adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1"
  * The fields in the XLFD are:
  * Foundry
  * the company or organization where the font originated.
@@ -129,8 +127,6 @@ private import pango.PgFontDescription;
  * '*' can be used as a wildcard to match any portion of
  * the XLFD. For instance, the above example could
  * also be specified as
- *  1
- *  "-*-helvetica-bold-r-normal--*-120-*-*-*-*-iso8859-1"
  * It is generally a good idea to use wildcards for any
  * portion of the XLFD that your program does not care
  * about specifically, since that will improve the
@@ -281,7 +277,7 @@ public class Font
 	 * Params:
 	 * display = a GdkDisplay
 	 * fontName = a XLFD describing the font to load.
-	 * Returns:a GdkFont, or NULL if the font could not be loaded.
+	 * Returns: a GdkFont, or NULL if the font could not be loaded.
 	 */
 	public static Font loadForDisplay(Display display, string fontName)
 	{
@@ -327,7 +323,7 @@ public class Font
 	 * display = a GdkDisplay
 	 * fontsetName = a comma-separated list of XLFDs describing
 	 *  the component fonts of the fontset to load.
-	 * Returns:a GdkFont, or NULL if the fontset could not be loaded.
+	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
 	public static Font fontsetLoadForDisplay(Display display, string fontsetName)
 	{
@@ -350,7 +346,7 @@ public class Font
 	 * to use Pango. Using Pango directly will produce better results.
 	 * Params:
 	 * fontDesc = a PangoFontDescription.
-	 * Returns: the newly loaded font, or NULL if the fontcannot be loaded.
+	 * Returns: the newly loaded font, or NULL if the font cannot be loaded.
 	 */
 	public static Font fromDescription(PgFontDescription fontDesc)
 	{
@@ -375,7 +371,7 @@ public class Font
 	 * Params:
 	 * display = a GdkDisplay
 	 * fontDesc = a PangoFontDescription.
-	 * Returns: the newly loaded font, or NULL if the fontcannot be loaded.
+	 * Returns: the newly loaded font, or NULL if the font cannot be loaded.
 	 */
 	public static Font fromDescriptionForDisplay(Display display, PgFontDescription fontDesc)
 	{
@@ -709,7 +705,7 @@ public class Font
 	 * Multi-Byte String').
 	 * Params:
 	 * src = a wide character string.
-	 * Returns: the multi-byte string corresponding to src, or NULL if theconversion failed. The returned string should be freed with g_free() when nolonger needed.
+	 * Returns: the multi-byte string corresponding to src, or NULL if the conversion failed. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public static string wcstombs(GdkWChar* src)
 	{
@@ -727,7 +723,7 @@ public class Font
 	 * dest = the space to place the converted wide character string into.
 	 * src = the multi-byte string to convert, which must be nul-terminated.
 	 * destMax = the maximum number of wide characters to place in dest.
-	 * Returns: the number of wide characters written into dest, or -1 if  the conversion failed.
+	 * Returns: the number of wide characters written into dest, or -1 if the conversion failed.
 	 */
 	public static int mbstowcs(GdkWChar* dest, string src, int destMax)
 	{

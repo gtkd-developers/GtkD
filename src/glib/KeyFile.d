@@ -81,32 +81,6 @@ private import glib.Str;
  * Desktop
  * Entry Specification, here is a quick summary: Key files
  * consists of groups of key-value pairs, interspersed with comments.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- *  # this is just an example
- * # there can be comments before the first group
- * [First Group]
- * Name=Key File Example\tthis value shows\nescaping
- * # localized strings are stored in multiple key-value pairs
- * Welcome=Hello
- * Welcome[de]=Hallo
- * Welcome[fr_FR]=Bonjour
- * Welcome[it]=Ciao
- * Welcome[be@latin]=Hello
- * [Another Group]
- * Numbers=2;20;-200;0
- * Booleans=true;false;true;true
  * Lines beginning with a '#' and blank lines are considered comments.
  * Groups are started by a header line containing the group name enclosed
  * in '[' and ']', and ended implicitly by the start of the next group or
@@ -381,7 +355,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * length = return location for the number of returned groups, or NULL
-	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public string[] getGroups(out gsize length)
 	{
@@ -399,7 +373,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * length = return location for the number of keys returned, or NULL
-	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
 	public string[] getKeys(string groupName, out gsize length)
@@ -422,7 +396,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * groupName = a group name
-	 * Returns: TRUE if group_name is a part of key_file, FALSEotherwise.
+	 * Returns: TRUE if group_name is a part of key_file, FALSE otherwise.
 	 */
 	public int hasGroup(string groupName)
 	{
@@ -437,7 +411,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key name
-	 * Returns: TRUE if key is a part of group_name, FALSEotherwise.
+	 * Returns: TRUE if key is a part of group_name, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int hasKey(string groupName, string key)
@@ -466,7 +440,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
+	 * Returns: a newly allocated string or NULL if the specified key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getValue(string groupName, string key)
@@ -496,7 +470,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
+	 * Returns: a newly allocated string or NULL if the specified key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getString(string groupName, string key)
@@ -527,7 +501,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * locale = a locale identifier or NULL
-	 * Returns: a newly allocated string or NULL if the specified  key cannot be found.
+	 * Returns: a newly allocated string or NULL if the specified key cannot be found.
 	 * Throws: GException on failure.
 	 */
 	public string getLocaleString(string groupName, string key, string locale)
@@ -556,7 +530,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * Returns: the value associated with the key as a boolean,  or FALSE if the key was not found or could not be parsed.
+	 * Returns: the value associated with the key as a boolean, or FALSE if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public int getBoolean(string groupName, string key)
@@ -611,7 +585,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a non-NULL group name
 	 * key = a non-NULL key
-	 * Returns: the value associated with the key as a signed 64-bit integer, or0 if the key was not found or could not be parsed.
+	 * Returns: the value associated with the key as a signed 64-bit integer, or 0 if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public long getInt64(string groupName, string key)
@@ -637,7 +611,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a non-NULL group name
 	 * key = a non-NULL key
-	 * Returns: the value associated with the key as an unsigned 64-bit integer,or 0 if the key was not found or could not be parsed.
+	 * Returns: the value associated with the key as an unsigned 64-bit integer, or 0 if the key was not found or could not be parsed.
 	 * Throws: GException on failure.
 	 */
 	public ulong getUint64(string groupName, string key)
@@ -695,7 +669,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * length = return location for the number of returned strings, or NULL
-	 * Returns: a NULL-terminated string array or NULL if the specified  key cannot be found. The array should be freed with g_strfreev().
+	 * Returns: a NULL-terminated string array or NULL if the specified key cannot be found. The array should be freed with g_strfreev().
 	 * Throws: GException on failure.
 	 */
 	public string[] getStringList(string groupName, string key, out gsize length)

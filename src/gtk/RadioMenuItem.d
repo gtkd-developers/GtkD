@@ -82,27 +82,6 @@ private import gtk.CheckMenuItem;
  * remove itself and its list item when it is destroyed.
  * The correct way to create a group of radio menu items is approximatively
  * this:
- * Example  32.  How to create a group of radio menu items.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- *  GSList *group = NULL;
- * GtkWidget *item;
- * gint i;
- * for (i = 0; i < 5; i++)
- * {
-	 *  item = gtk_radio_menu_item_new_with_label (group, "This is an example");
-	 *  group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-	 *  if (i == 1)
-	 *  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
- * }
  */
 public class RadioMenuItem : CheckMenuItem
 {
@@ -307,7 +286,7 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Returns the group to which the radio menu item belongs, as a GList of
 	 * GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
-	 * Returns:the group of radio_menu_item.
+	 * Returns: the group of radio_menu_item.
 	 */
 	public ListSG getGroup()
 	{

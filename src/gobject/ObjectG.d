@@ -105,18 +105,11 @@ version(Tango) {
  * This means that it is not specifically claimed to be "owned" by
  * any code portion. The main motivation for providing floating references is
  * C convenience. In particular, it allows code to be written as:
- * container = create_container();
- * container_add_child (container, create_child());
  * If container_add_child() will g_object_ref_sink() the
  * passed in child, no reference of the newly created child is leaked.
  * Without floating references, container_add_child()
  * can only g_object_ref() the new child, so to implement this code without
  * reference leaks, it would have to be written as:
- * Child *child;
- * container = create_container();
- * child = create_child();
- * container_add_child (container, child);
- * g_object_unref (child);
  * The floating reference can be converted into
  * an ordinary reference by calling g_object_ref_sink().
  * For already sunken objects (objects that don't have a floating reference
@@ -129,15 +122,6 @@ version(Tango) {
  * Some object implementations may need to save an objects floating state
  * across certain code portions (an example is GtkMenu), to achive this, the
  * following sequence can be used:
- * // save floating state
- * gboolean was_floating = g_object_is_floating (object);
- * g_object_ref_sink (object);
- * // protected code portion
- * ...;
- * // restore floating state
- * if (was_floating)
- *  g_object_force_floating (object);
- * g_obejct_unref (object); // release previously acquired reference
  */
 public class ObjectG
 {
@@ -316,9 +300,6 @@ public class ObjectG
 	 * is called to reinstate the previous value.
 	 * This signal is typically used to obtain change notification for a
 	 * single property, by specifying the property name as a detail in the
-	 * g_signal_connect (text_view->buffer, "notify::paste-target-list",
-	 *  G_CALLBACK (gtk_text_view_target_list_notify),
-	 *  text_view)
 	 * It is important to note that you must use
 	 * canonical parameter names as
 	 * detail strings for the notify signal.

@@ -84,48 +84,6 @@ private import gtk.Dialog;
  *  Note that GtkFileChooserDialog does not have any methods of its
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
- * Example  42.  Typical usage
- * 	In the simplest of cases, you can the following code to use
- * 	GtkFileChooserDialog to select a file for opening:
- * GtkWidget *dialog;
- * dialog = gtk_file_chooser_dialog_new ("Open File",
- * 				 parent_window,
- * 				 GTK_FILE_CHOOSER_ACTION_OPEN,
- * 				 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
- * 				 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
- * 				 NULL);
- * if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
- *  {
-	 *  char *filename;
-	 *  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-	 *  open_file (filename);
-	 *  g_free (filename);
- *  }
- * gtk_widget_destroy (dialog);
- *  To use a dialog for saving, you can use this:
- * GtkWidget *dialog;
- * dialog = gtk_file_chooser_dialog_new ("Save File",
- * 				 parent_window,
- * 				 GTK_FILE_CHOOSER_ACTION_SAVE,
- * 				 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
- * 				 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
- * 				 NULL);
- * gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog), TRUE);
- * if (user_edited_a_new_document)
- *  {
-	 *  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), default_folder_for_saving);
-	 *  gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "Untitled document");
- *  }
- * else
- *  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), filename_for_existing_document);
- * if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
- *  {
-	 *  char *filename;
-	 *  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-	 *  save_to_file (filename);
-	 *  g_free (filename);
- *  }
- * gtk_widget_destroy (dialog);
  * Response Codes
  *  GtkFileChooserDialog inherits from GtkDialog, so buttons that
  *  go in its action area have response codes such as

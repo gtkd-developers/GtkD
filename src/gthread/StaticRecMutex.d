@@ -184,7 +184,7 @@ public class StaticRecMutex
 	 * TRUE. If mutex is already locked by the calling thread, this
 	 * functions increases the depth of mutex and immediately returns
 	 * TRUE.
-	 * Returns:TRUE, if mutex could be locked.
+	 * Returns: TRUE, if mutex could be locked.
 	 */
 	public int trylock()
 	{
@@ -225,7 +225,7 @@ public class StaticRecMutex
 	 * before the call to g_static_rec_mutex_unlock_full() you can call
 	 * g_static_rec_mutex_lock_full() with the depth returned by this
 	 * function.
-	 * Returns:number of times mutex has been locked by the current thread.
+	 * Returns: number of times mutex has been locked by the current thread.
 	 */
 	public uint unlockFull()
 	{

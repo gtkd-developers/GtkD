@@ -214,7 +214,7 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_get_value is deprecated and should not be used in newly-written code.
 	 * Returns the current progress complete value.
-	 * Returns:the current progress complete value.
+	 * Returns: the current progress complete value.
 	 */
 	public double getValue()
 	{
@@ -244,7 +244,7 @@ public class Progress : Widget
 	 * Returns the current text associated with the GtkProgress. This
 	 * text is the based on the underlying format string after any substitutions
 	 * are made.
-	 * Returns:the text indicating the current progress.
+	 * Returns: the text indicating the current progress.
 	 */
 	public string getCurrentText()
 	{
@@ -259,7 +259,7 @@ public class Progress : Widget
 	 * The current value for the GtkProgress remains unchanged.
 	 * Params:
 	 * value = an absolute progress value to use when formatting the progress text.
-	 * Returns:a string indicating the progress.
+	 * Returns: a string indicating the progress.
 	 */
 	public string getTextFromValue(double value)
 	{
@@ -271,7 +271,7 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_get_current_percentage is deprecated and should not be used in newly-written code.
 	 * Returns the current progress as a percentage.
-	 * Returns:a number between 0.0 and 1.0 indicating the percentage complete.
+	 * Returns: a number between 0.0 and 1.0 indicating the percentage complete.
 	 */
 	public double getCurrentPercentage()
 	{
@@ -286,7 +286,7 @@ public class Progress : Widget
 	 * absolute progress value.
 	 * Params:
 	 * value = an absolute progress value.
-	 * Returns:a number between 0.0 and 1.0 indicating the percentage completerepresented by value.
+	 * Returns: a number between 0.0 and 1.0 indicating the percentage complete represented by value.
 	 */
 	public double getPercentageFromValue(double value)
 	{

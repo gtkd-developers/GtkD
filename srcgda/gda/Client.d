@@ -191,7 +191,7 @@ public class Client : ObjectG
 	 * providerId = provider ID to connect to.
 	 * cncString = connection string.
 	 * options = options for the connection (see GdaConnectionOptions).
-	 * Returns: the opened connection if successful, NULL if there isan error.
+	 * Returns: the opened connection if successful, NULL if there is an error.
 	 */
 	public Connection openConnectionFromString(string providerId, string cncString, GdaConnectionOptions options)
 	{
@@ -231,7 +231,7 @@ public class Client : ObjectG
 	 * dsn = data source name.
 	 * username = user name.
 	 * password = password for username.
-	 * Returns: a pointer to the found connection, or NULL if it could notbe found.
+	 * Returns: a pointer to the found connection, or NULL if it could not be found.
 	 */
 	public Connection findConnection(string dsn, string username, string password)
 	{
@@ -353,7 +353,7 @@ public class Client : ObjectG
 	 * and gda_connection_rollback_transaction.
 	 * Params:
 	 * xaction = a GdaTransaction object.
-	 * Returns: TRUE if all transactions could be started successfully,or FALSE if one of them fails.
+	 * Returns: TRUE if all transactions could be started successfully, or FALSE if one of them fails.
 	 */
 	public int beginTransaction(Transaction xaction)
 	{
@@ -371,7 +371,7 @@ public class Client : ObjectG
 	 * and gda_connection_rollback_transaction.
 	 * Params:
 	 * xaction = a GdaTransaction object.
-	 * Returns: TRUE if all transactions could be committed successfully,or FALSE if one of them fails.
+	 * Returns: TRUE if all transactions could be committed successfully, or FALSE if one of them fails.
 	 */
 	public int commitTransaction(Transaction xaction)
 	{
@@ -389,7 +389,7 @@ public class Client : ObjectG
 	 * and gda_connection_rollback_transaction.
 	 * Params:
 	 * xaction = a GdaTransaction object.
-	 * Returns: TRUE if all transactions could be cancelled successfully,or FALSE if one of them fails.
+	 * Returns: TRUE if all transactions could be cancelled successfully, or FALSE if one of them fails.
 	 */
 	public int rollbackTransaction(Transaction xaction)
 	{

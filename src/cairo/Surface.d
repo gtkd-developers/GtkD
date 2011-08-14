@@ -123,7 +123,7 @@ public class Surface
 	 * content = the content for the new surface
 	 * width = width of the new surface, (in device-space units)
 	 * height = height of the new surface (in device-space units)
-	 * Returns: a pointer to the newly allocated surface. The callerowns the surface and should call cairo_surface_destroy() when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if other is already in an error stateor any other error occurs.
+	 * Returns: a pointer to the newly allocated surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
 	 */
 	public Surface createSimilar(cairo_content_t content, int width, int height)
 	{
@@ -169,7 +169,7 @@ public class Surface
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * surface.
-	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NULL_POINTER,CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_READ_ERROR,CAIRO_STATUS_INVALID_CONTENT, CAIRO_STATUS_INVALID_FORMAT, orCAIRO_STATUS_INVALID_VISUAL.
+	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NULL_POINTER, CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_READ_ERROR, CAIRO_STATUS_INVALID_CONTENT, CAIRO_STATUS_INVALID_FORMAT, or CAIRO_STATUS_INVALID_VISUAL.
 	 */
 	public cairo_status_t status()
 	{
@@ -369,7 +369,7 @@ public class Surface
 	/**
 	 * Returns the current reference count of surface.
 	 * Since 1.4
-	 * Returns: the current reference count of surface. If theobject is a nil object, 0 will be returned.
+	 * Returns: the current reference count of surface. If the object is a nil object, 0 will be returned.
 	 */
 	public uint getReferenceCount()
 	{
@@ -387,7 +387,7 @@ public class Surface
 	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * surface is destroyed or when new user data is attached using the
 	 * same key.
-	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a slot could not be allocated for the user data.
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{

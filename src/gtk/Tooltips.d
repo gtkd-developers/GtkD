@@ -86,57 +86,6 @@ private import gtk.ObjectGtk;
  * widget inside a GtkEventBox and add a tooltip to that instead.
  * The default appearance of all tooltips in a program is determined by the current GTK+ theme that the user has selected.
  * Information about the tooltip (if any) associated with an arbitrary widget can be retrieved using gtk_tooltips_data_get().
- * Example  62.  Adding tooltips to buttons.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- *  GtkWidget *load_button, *save_button, *hbox;
- * GtkTooltips *button_bar_tips;
- * button_bar_tips = gtk_tooltips_new ();
- * /+* Create the buttons and pack them into a GtkHBox +/
- * hbox = gtk_hbox_new (TRUE, 2);
- * load_button = gtk_button_new_with_label ("Load a file");
- * gtk_box_pack_start (GTK_BOX (hbox), load_button, TRUE, TRUE, 2);
- * gtk_widget_show (load_button);
- * save_button = gtk_button_new_with_label ("Save a file");
- * gtk_box_pack_start (GTK_BOX (hbox), save_button, TRUE, TRUE, 2);
- * gtk_widget_show (save_button);
- * gtk_widget_show (hbox);
- * /+* Add the tips +/
- * gtk_tooltips_set_tip (GTK_TOOLTIPS (button_bar_tips), load_button,
- * 				 "Load a new document into this window",
- * 				 "Requests the filename of a document.
- * 				 This will then be loaded into the current
- * 				 window, replacing the contents of whatever
- * 				 is already loaded.");
- * gtk_tooltips_set_tip (GTK_TOOLTIPS (button_bar_tips), save_button,
- * 				 "Saves the current document to a file",
- * 				 "If you have saved the document previously,
- * 				 then the new version will be saved over the
- * 				 old one. Otherwise, you will be prompted for
- * 				 a filename.");
  */
 public class Tooltips : ObjectGtk
 {
@@ -260,7 +209,7 @@ public class Tooltips : ObjectGtk
 	 * Retrieves any GtkTooltipsData previously associated with the given widget.
 	 * Params:
 	 * widget = a GtkWidget.
-	 * Returns:a GtkTooltipsData struct, or NULL if the widget has no tooltip.
+	 * Returns: a GtkTooltipsData struct, or NULL if the widget has no tooltip.
 	 */
 	public static GtkTooltipsData* dataGet(Widget widget)
 	{

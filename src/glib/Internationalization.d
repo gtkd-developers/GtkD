@@ -72,10 +72,6 @@ private import glib.Str;
  * glib/gi18n.h. For use in a library, must include
  * glib/gi18n-lib.h after defining
  * the GETTEXT_PACKAGE macro suitably for your library:
- *  1
- * 2
- *  #define GETTEXT_PACKAGE "gtk20"
- * #include <glib/gi18n-lib.h>
  * The gettext manual covers details of how to set up message extraction
  * with xgettext.
  */
@@ -226,7 +222,7 @@ public class Internationalization
 	 * LC_ALL, LC_MESSAGES and LANG
 	 * to find the list of locales specified by the user.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib  that must not be modified or freed.
+	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed.
 	 */
 	public static string[] getLanguageNames()
 	{

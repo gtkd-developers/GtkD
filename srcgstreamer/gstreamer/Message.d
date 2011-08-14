@@ -103,8 +103,6 @@ private import gstreamer.TagList;
  * Messages are posted by objects in the pipeline and are passed to the
  * application using the GstBus.
  * The basic use pattern of posting a message on a GstBus is as follows:
- * Example11.Posting a GstMessage
- *  gst_bus_post (bus, gst_message_new_eos());
  * A GstElement usually posts messages on the bus provided by the parent
  * container using gst_element_post_message().
  * Last reviewed on 2005-11-09 (0.9.4)
@@ -375,7 +373,7 @@ public class Message
 	
 	/**
 	 * Access the structure of the message.
-	 * Returns: The structure of the message. The structure is stillowned by the message, which means that you should not free it andthat the pointer becomes invalid when you free the message.MT safe.
+	 * Returns: The structure of the message. The structure is still owned by the message, which means that you should not free it and that the pointer becomes invalid when you free the message. MT safe.
 	 */
 	public Structure getStructure()
 	{

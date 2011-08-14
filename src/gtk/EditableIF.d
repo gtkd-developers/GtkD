@@ -75,43 +75,6 @@ private import glib.Str;
  * As an example of the latter usage, by connecting
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
- * Example  19.  Forcing entry to uppercase.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- *  #include <ctype.h>
- * void
- * insert_text_handler (GtkEditable *editable,
- *  const gchar *text,
- *  gint length,
- *  gint *position,
- *  gpointer data)
- * {
-	 *  int i;
-	 *  gchar *result = g_utf8_strup (text, length);
-	 *  g_signal_handlers_block_by_func (editable,
-	 * 				 (gpointer) insert_text_handler, data);
-	 *  gtk_editable_insert_text (editable, result, length, position);
-	 *  g_signal_handlers_unblock_by_func (editable,
-	 *  (gpointer) insert_text_handler, data);
-	 *  g_signal_stop_emission_by_name (editable, "insert_text");
-	 *  g_free (result);
- * }
  */
 public interface EditableIF
 {
@@ -280,7 +243,7 @@ public interface EditableIF
 	/**
 	 * Retrieves whether editable is editable. See
 	 * gtk_editable_set_editable().
-	 * Returns: TRUE if editable is editable.Signal DetailsThe "changed" signalvoid user_function (GtkEditable *editable, gpointer user_data) : Run LastThe ::changed signal is emitted at the end of a singleuser-visible operation on the contents of the GtkEditable.E.g., a paste operation that replaces the contents of theselection will cause only one signal emission (even though itis implemented by first deleting the selection, then insertingthe new content, and may cause multiple ::notify::text signalsto be emitted).
+	 * Returns: TRUE if editable is editable. Signal Details The "changed" signal void user_function (GtkEditable *editable, gpointer user_data) : Run Last The ::changed signal is emitted at the end of a single user-visible operation on the contents of the GtkEditable. E.g., a paste operation that replaces the contents of the selection will cause only one signal emission (even though it is implemented by first deleting the selection, then inserting the new content, and may cause multiple ::notify::text signals to be emitted).
 	 */
 	public int getEditable();
 }

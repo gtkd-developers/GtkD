@@ -169,7 +169,7 @@ public class Pixmap : Drawable
 	 * depth = the depth (number of bits per pixel) of the new pixmap.
 	 * fg = the foreground color.
 	 * bg = the background color.
-	 * Returns:the GdkPixmap
+	 * Returns: the GdkPixmap
 	 */
 	public static Pixmap createFromData(Drawable drawable, string data, int width, int height, int depth, Color fg, Color bg)
 	{

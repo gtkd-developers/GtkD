@@ -140,7 +140,7 @@ public class InetSocketAddress : SocketAddress
 	/**
 	 * Gets address's GInetAddress.
 	 * Since 2.22
-	 * Returns: the GInetAddress for address, which must beg_object_ref()'d if it will be stored
+	 * Returns: the GInetAddress for address, which must be g_object_ref()'d if it will be stored
 	 */
 	public InetAddress getAddress()
 	{

@@ -356,7 +356,7 @@ public class Style : ObjectG
 	 *  don't scale.
 	 * widget = the widget. allow-none.
 	 * detail = a style detail. allow-none.
-	 * Returns:a newly-created GdkPixbuf containing the rendered icon
+	 * Returns: a newly-created GdkPixbuf containing the rendered icon
 	 */
 	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{

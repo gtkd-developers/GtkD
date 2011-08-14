@@ -517,7 +517,7 @@ public class Value
 	
 	/**
 	 * Tests if a given value is of type GDA_VALUE_TYPE_NULL.
-	 * Returns: a boolean that says whether or not value is of typeGDA_VALUE_TYPE_NULL.
+	 * Returns: a boolean that says whether or not value is of type GDA_VALUE_TYPE_NULL.
 	 */
 	public int isNull()
 	{
@@ -1034,7 +1034,7 @@ public class Value
 	 * Params:
 	 * asString = the stringified representation of the value.
 	 * type = the type of the value
-	 * Returns: TRUE if the value has been properly converted to type fromits string representation. FALSE otherwise.
+	 * Returns: TRUE if the value has been properly converted to type from its string representation. FALSE otherwise.
 	 */
 	public int setFromString(string asString, GdaValueType type)
 	{
@@ -1061,7 +1061,7 @@ public class Value
 	 * Compares two values of the same type.
 	 * Params:
 	 * value2 = the other GdaValue to be compared to value1.
-	 * Returns: if both values have the same type, returns 0 if both containthe same value, an integer less than 0 if value1 is less than value2 oran integer greater than 0 if value1 is greater than value2.
+	 * Returns: if both values have the same type, returns 0 if both contain the same value, an integer less than 0 if value1 is less than value2 or an integer greater than 0 if value1 is greater than value2.
 	 */
 	public int compare(Value value2)
 	{
@@ -1071,7 +1071,7 @@ public class Value
 	
 	/**
 	 * Converts a GdaValue to its string representation as indicated by this
-	 * Returns: a string formatted according to the printf() style indicated inthe preceding table. Free the value with a g_free() when you've finishedusing it.
+	 * Returns: a string formatted according to the printf() style indicated in the preceding table. Free the value with a g_free() when you've finished using it.
 	 */
 	public string stringify()
 	{

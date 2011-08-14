@@ -267,7 +267,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the GdkKeymap attached to the default display.
-	 * Returns:the GdkKeymap attached to the default display.
+	 * Returns: the GdkKeymap attached to the default display.
 	 */
 	public static Keymap getDefault()
 	{
@@ -285,7 +285,7 @@ public class Keymap : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * display = the GdkDisplay.
-	 * Returns:the GdkKeymap attached to display.
+	 * Returns: the GdkKeymap attached to display.
 	 */
 	public static Keymap getForDisplay(Display display)
 	{
@@ -331,22 +331,6 @@ public class Keymap : ObjectG
 	 * symbol is shifted, so when comparing a key press to a
 	 * <Control>plus accelerator <Shift> should
 	 * be masked out.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 *  /+* We want to ignore irrelevant modifiers like ScrollLock +/
-	 * #define ALL_ACCELS_MASK (GDK_CONTROL_MASK | GDK_SHIFT_MASK | GDK_MOD1_MASK)
-	 * gdk_keymap_translate_keyboard_state (keymap, event->hardware_keycode,
-	 *  event->state, event->group,
-	 *  keyval, NULL, NULL, consumed);
-	 * if (keyval == GDK_PLUS
-	 *  (event->state  ~consumed  ALL_ACCELS_MASK) == GDK_CONTROL_MASK)
-	 *  /+* Control was pressed +/
 	 * An older interpretation consumed_modifiers was that it contained
 	 * all modifiers that might affect the translation of the key;
 	 * this allowed accelerators to be stored with irrelevant consumed
@@ -426,7 +410,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns the direction of effective layout of the keymap.
 	 * Returns the direction of the keymap.
-	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL  if it can determine the direction. PANGO_DIRECTION_NEUTRAL  otherwise.
+	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the direction. PANGO_DIRECTION_NEUTRAL otherwise.
 	 */
 	public PangoDirection getDirection()
 	{
@@ -500,7 +484,7 @@ public class Keymap : ObjectG
 	 * but without the leading "GDK_".
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:a string containing the name of the key, or NULL if keyval is nota valid key. The string should not be modified.
+	 * Returns: a string containing the name of the key, or NULL if keyval is not a valid key. The string should not be modified.
 	 */
 	public static string gdkKeyvalName(uint keyval)
 	{
@@ -512,7 +496,7 @@ public class Keymap : ObjectG
 	 * Converts a key name to a key value.
 	 * Params:
 	 * keyvalName = a key name.
-	 * Returns:the corresponding key value, or GDK_VoidSymbol if the key name isnot a valid key.
+	 * Returns: the corresponding key value, or GDK_VoidSymbol if the key name is not a valid key.
 	 */
 	public static uint gdkKeyvalFromName(string keyvalName)
 	{
@@ -538,7 +522,7 @@ public class Keymap : ObjectG
 	 * Converts a key value to upper case, if applicable.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:the upper case form of keyval, or keyval itself if it is alreadyin upper case or it is not subject to case conversion.
+	 * Returns: the upper case form of keyval, or keyval itself if it is already in upper case or it is not subject to case conversion.
 	 */
 	public static uint gdkKeyvalToUpper(uint keyval)
 	{
@@ -550,7 +534,7 @@ public class Keymap : ObjectG
 	 * Converts a key value to lower case, if applicable.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:the lower case form of keyval, or keyval itself if it is alreadyin lower case or it is not subject to case conversion.
+	 * Returns: the lower case form of keyval, or keyval itself if it is already in lower case or it is not subject to case conversion.
 	 */
 	public static uint gdkKeyvalToLower(uint keyval)
 	{
@@ -562,7 +546,7 @@ public class Keymap : ObjectG
 	 * Returns TRUE if the given key value is in upper case.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:TRUE if keyval is in upper case, or if keyval is not subject tocase conversion.
+	 * Returns: TRUE if keyval is in upper case, or if keyval is not subject to case conversion.
 	 */
 	public static int gdkKeyvalIsUpper(uint keyval)
 	{
@@ -574,7 +558,7 @@ public class Keymap : ObjectG
 	 * Returns TRUE if the given key value is in lower case.
 	 * Params:
 	 * keyval = a key value.
-	 * Returns:TRUE if keyval is in lower case, or if keyval is not subject tocase conversion.
+	 * Returns: TRUE if keyval is in lower case, or if keyval is not subject to case conversion.
 	 */
 	public static int gdkKeyvalIsLower(uint keyval)
 	{
@@ -600,7 +584,7 @@ public class Keymap : ObjectG
 	 * Since 2.0
 	 * Params:
 	 * wc = a ISO10646 encoded character
-	 * Returns: the corresponding GDK key symbol, if one exists. or, if there is no corresponding symbol,  wc | 0x01000000Signal DetailsThe "direction-changed" signalvoid user_function (GdkKeymap *keymap, gpointer user_data) : Run LastThe ::direction-changed signal gets emitted when the direction ofthe keymap changes.
+	 * Returns: the corresponding GDK key symbol, if one exists. or, if there is no corresponding symbol, wc | 0x01000000 Signal Details The "direction-changed" signal void user_function (GdkKeymap *keymap, gpointer user_data) : Run Last The ::direction-changed signal gets emitted when the direction of the keymap changes.
 	 */
 	public static uint gdkUnicodeToKeyval(uint wc)
 	{

@@ -91,19 +91,6 @@ private import glib.Str;
  * (where groupname is the name of a
  * GOptionGroup) and write a text similar to the one shown in the
  * following example to stdout.
- * Usage:
- *  testtreemodel [OPTION...] - test tree model performance
- * Help Options:
- *  -h, --help Show help options
- *  --help-all Show all help options
- *  --help-gtk Show GTK+ Options
- * Application Options:
- *  -r, --repeats=N Average over N repetitions
- *  -m, --max-size=M Test up to 2^M items
- *  --display=DISPLAY X display to use
- *  -v, --verbose Be verbose
- *  -b, --beep Beep when done
- *  --rand Randomize the data
  * GOption groups options in GOptionGroups, which makes it easy to
  * incorporate options from multiple sources. The intended use for this is
  * to let applications collect option groups from the libraries it uses,
@@ -116,69 +103,6 @@ private import glib.Str;
  * g_option_context_parse().
  * Here is a complete example of setting up GOption to parse the example
  * commandline above and produce the example help output.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- *  static gint repeats = 2;
- * static gint max_size = 8;
- * static gboolean verbose = FALSE;
- * static gboolean beep = FALSE;
- * static gboolean rand = FALSE;
- * static GOptionEntry entries[] =
- * {
-	 *  { "repeats", 'r', 0, G_OPTION_ARG_INT, repeats, "Average over N repetitions", "N" },
-	 *  { "max-size", 'm', 0, G_OPTION_ARG_INT, max_size, "Test up to 2^M items", "M" },
-	 *  { "verbose", 'v', 0, G_OPTION_ARG_NONE, verbose, "Be verbose", NULL },
-	 *  { "beep", 'b', 0, G_OPTION_ARG_NONE, beep, "Beep when done", NULL },
-	 *  { "rand", 0, 0, G_OPTION_ARG_NONE, rand, "Randomize the data", NULL },
- *  { NULL }
- * };
- * int
- * main (int argc, char *argv[])
- * {
-	 *  GError *error = NULL;
-	 *  GOptionContext *context;
-	 *  context = g_option_context_new ("- test tree model performance");
-	 *  g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
-	 *  g_option_context_add_group (context, gtk_get_option_group (TRUE));
-	 *  if (!g_option_context_parse (context, argc, argv, error))
-	 *  {
-		 *  g_print ("option parsing failed: %s\n", error->message);
-		 *  exit (1);
-	 *  }
-	 *  /+* ... +/
- * }
  */
 public class OptionGroup
 {

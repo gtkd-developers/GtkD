@@ -605,7 +605,7 @@ public class IconView : Container, CellLayoutIF
 	 * Params:
 	 * x = The x position to be identified
 	 * y = The y position to be identified
-	 * Returns: The GtkTreePath corresponding to the icon or NULLif no icon exists at that position.
+	 * Returns: The GtkTreePath corresponding to the icon or NULL if no icon exists at that position.
 	 */
 	public TreePath getPathAtPos(int x, int y)
 	{
@@ -987,7 +987,7 @@ public class IconView : Container, CellLayoutIF
 	 * want to convert the returned list into a list of GtkTreeRowReferences.
 	 * To do this, you can use gtk_tree_row_reference_new().
 	 * Since 2.6
-	 * Returns: A GList containing a GtkTreePath for each selected row.. element-type GtkTreePath. transfer full GtkTreePath.
+	 * Returns: A GList containing a GtkTreePath for each selected row. . element-type GtkTreePath. transfer full GtkTreePath.
 	 */
 	public ListG getSelectedItems()
 	{
@@ -1168,7 +1168,7 @@ public class IconView : Container, CellLayoutIF
 	 * Returns the column of icon_view's model which is being used for
 	 * displaying tooltips on icon_view's rows.
 	 * Since 2.12
-	 * Returns: the index of the tooltip column that is currently beingused, or -1 if this is disabled.
+	 * Returns: the index of the tooltip column that is currently being used, or -1 if this is disabled.
 	 */
 	public int getTooltipColumn()
 	{

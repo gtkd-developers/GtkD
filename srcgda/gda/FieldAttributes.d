@@ -129,7 +129,7 @@ public class FieldAttributes
 	
 	/**
 	 * Creates a new GdaFieldAttributes object from an existing one.
-	 * Returns: a newly allocated GdaFieldAttributes with a copy of the datain fa.
+	 * Returns: a newly allocated GdaFieldAttributes with a copy of the data in fa.
 	 */
 	public FieldAttributes copy()
 	{
@@ -385,7 +385,7 @@ public class FieldAttributes
 	}
 	
 	/**
-	 * Returns: the position of the field the attributes refer to in thecontaining data model.
+	 * Returns: the position of the field the attributes refer to in the containing data model.
 	 */
 	public int getPosition()
 	{

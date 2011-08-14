@@ -115,89 +115,6 @@ private import gobject.ObjectG;
  * application writer to call gtk_tree_model_row_changed to emit the
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
- * Example  26.  Creating a simple list store.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- * 35
- * 36
- * 37
- * 38
- * 39
- * 40
- * 41
- *  enum {
-	 *  COLUMN_STRING,
-	 *  COLUMN_INT,
-	 *  COLUMN_BOOLEAN,
-	 *  N_COLUMNS
- * };
- * {
-	 *  GtkListStore *list_store;
-	 *  GtkTreePath *path;
-	 *  GtkTreeIter iter;
-	 *  gint i;
-	 *  list_store = gtk_list_store_new (N_COLUMNS,
-	 *  G_TYPE_STRING,
-	 *  G_TYPE_INT,
-	 *  G_TYPE_BOOLEAN);
-	 *  for (i = 0; i < 10; i++)
-	 *  {
-		 *  gchar *some_data;
-		 *  some_data = get_some_data (i);
-		 *  /+* Add a new row to the model +/
-		 *  gtk_list_store_append (list_store, iter);
-		 *  gtk_list_store_set (list_store, iter,
-		 *  COLUMN_STRING, some_data,
-		 *  COLUMN_INT, i,
-		 *  COLUMN_BOOLEAN, FALSE,
-		 *  -1);
-		 *  /+* As the store will keep a copy of the string internally, we
-		 *  * free some_data.
-		 *  +/
-		 *  g_free (some_data);
-	 *  }
-	 *  /+* Modify a particular row +/
-	 *  path = gtk_tree_path_new_from_string ("4");
-	 *  gtk_tree_model_get_iter (GTK_TREE_MODEL (list_store),
-	 *  iter,
-	 *  path);
-	 *  gtk_tree_path_free (path);
-	 *  gtk_list_store_set (list_store, iter,
-	 *  COLUMN_BOOLEAN, TRUE,
-	 *  -1);
- * }
  * Performance Considerations
  * Internally, the GtkListStore was implemented with a linked list with a
  * tail pointer prior to GTK+ 2.6. As a result, it was fast at data
@@ -236,45 +153,6 @@ private import gobject.ObjectG;
  * to specify the content of a list store in a UI definition,
  * data, not presentation,
  * and common wisdom is to separate the two, as far as possible.
- * Example  27.  A UI Definition fragment for a list store
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- *  <object class="GtkListStore">
- *  <columns>
- *  <column type="gchararray"/>
- *  <column type="gchararray"/>
- *  <column type="gint"/>
- *  </columns>
- *  <data>
- *  <row>
- *  <col id="0">John</col>
- *  <col id="1">Doe</col>
- *  <col id="2">25</col>
- *  </row>
- *  <row>
- *  <col id="0">Johan</col>
- *  <col id="1">Dahlin</col>
- *  <col id="2">50</col>
- *  </row>
- *  </data>
- * </object>
  */
 public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF
 {

@@ -110,49 +110,6 @@ private import gobject.ObjectG;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
- * Example  46.  The high-level printing API
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- *  static GtkPrintSettings *settings = NULL;
- * static void
- * do_print (void)
- * {
-	 *  GtkPrintOperation *print;
-	 *  GtkPrintOperationResult res;
-	 *  print = gtk_print_operation_new ();
-	 *  if (settings != NULL)
-	 *  gtk_print_operation_set_print_settings (print, settings);
-	 *  g_signal_connect (print, "begin_print", G_CALLBACK (begin_print), NULL);
-	 *  g_signal_connect (print, "draw_page", G_CALLBACK (draw_page), NULL);
-	 *  res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-	 *  GTK_WINDOW (main_window), NULL);
-	 *  if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
-	 *  {
-		 *  if (settings != NULL)
-		 *  g_object_unref (settings);
-		 *  settings = g_object_ref (gtk_print_operation_get_print_settings (print));
-	 *  }
-	 *  g_object_unref (print);
- * }
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions
@@ -355,88 +312,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Emitted for every page that is printed. The signal handler
 	 * must render the page_nr's page onto the cairo context obtained
 	 * from context using gtk_print_context_get_cairo_context().
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 * 30
-	 * 31
-	 * 32
-	 * 33
-	 * 34
-	 * 35
-	 * 36
-	 * 37
-	 * 38
-	 *  static void
-	 * draw_page (GtkPrintOperation *operation,
-	 *  GtkPrintContext *context,
-	 *  gint page_nr,
-	 *  gpointer user_data)
-	 * {
-		 *  cairo_t *cr;
-		 *  PangoLayout *layout;
-		 *  gdouble width, text_height;
-		 *  gint layout_height;
-		 *  PangoFontDescription *desc;
-		 *
-		 *  cr = gtk_print_context_get_cairo_context (context);
-		 *  width = gtk_print_context_get_width (context);
-		 *
-		 *  cairo_rectangle (cr, 0, 0, width, HEADER_HEIGHT);
-		 *
-		 *  cairo_set_source_rgb (cr, 0.8, 0.8, 0.8);
-		 *  cairo_fill (cr);
-		 *
-		 *  layout = gtk_print_context_create_pango_layout (context);
-		 *
-		 *  desc = pango_font_description_from_string ("sans 14");
-		 *  pango_layout_set_font_description (layout, desc);
-		 *  pango_font_description_free (desc);
-		 *
-		 *  pango_layout_set_text (layout, "some text", -1);
-		 *  pango_layout_set_width (layout, width * PANGO_SCALE);
-		 *  pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
-		 *
-		 *  pango_layout_get_size (layout, NULL, layout_height);
-		 *  text_height = (gdouble)layout_height / PANGO_SCALE;
-		 *
-		 *  cairo_move_to (cr, width / 2, (HEADER_HEIGHT - text_height) / 2);
-		 *  pango_cairo_show_layout (cr, layout);
-		 *
-		 *  g_object_unref (layout);
-	 * }
-	 *
-	 *
-	 *
 	 * Use gtk_print_operation_set_use_full_page() and
 	 * gtk_print_operation_set_unit() before starting the print operation
 	 * to set up the transformation of the cairo context according to your
@@ -965,79 +840,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * "done" signal will be emitted with the result of the
 	 * operation when the it is done (i.e. when the dialog is canceled, or when
 	 * the print succeeds or fails).
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 * 30
-	 * 31
-	 * 32
-	 * 33
-	 * 34
-	 * 35
-	 *  if (settings != NULL)
-	 *  gtk_print_operation_set_print_settings (print, settings);
-	 * if (page_setup != NULL)
-	 *  gtk_print_operation_set_default_page_setup (print, page_setup);
-	 * g_signal_connect (print, "begin-print",
-	 *  G_CALLBACK (begin_print), data);
-	 * g_signal_connect (print, "draw-page",
-	 *  G_CALLBACK (draw_page), data);
-	 * res = gtk_print_operation_run (print,
-	 *  GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-	 *  parent,
-	 *  error);
-	 * if (res == GTK_PRINT_OPERATION_RESULT_ERROR)
-	 *  {
-		 *  error_dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
-		 *  			 GTK_DIALOG_DESTROY_WITH_PARENT,
-		 * 					 GTK_MESSAGE_ERROR,
-		 * 					 GTK_BUTTONS_CLOSE,
-		 * 					 "Error printing file:\n%s",
-		 * 					 error->message);
-		 *  g_signal_connect (error_dialog, "response",
-		 *  G_CALLBACK (gtk_widget_destroy), NULL);
-		 *  gtk_widget_show (error_dialog);
-		 *  g_error_free (error);
-	 *  }
-	 * else if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
-	 *  {
-		 *  if (settings != NULL)
-		 * g_object_unref (settings);
-		 *  settings = g_object_ref (gtk_print_operation_get_print_settings (print));
-	 *  }
 	 * Note that gtk_print_operation_run() can only be called once on a
 	 * given GtkPrintOperation.
 	 * Since 2.10
 	 * Params:
 	 * action = the action to start
 	 * parent = Transient parent of the dialog. allow-none.
-	 * Returns: the result of the print operation. A return value of  GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain  the used print settings with gtk_print_operation_get_print_settings()  and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the "done" signal when  done.
+	 * Returns: the result of the print operation. A return value of GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain the used print settings with gtk_print_operation_get_print_settings() and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the "done" signal when done.
 	 * Throws: GException on failure.
 	 */
 	public GtkPrintOperationResult run(GtkPrintOperationAction action, Window parent)

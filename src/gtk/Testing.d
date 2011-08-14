@@ -202,7 +202,7 @@ public class Testing
 	 * Since 2.14
 	 * Params:
 	 * nTypes = location to store number of types
-	 * Returns:0-terminated array of type ids
+	 * Returns: 0-terminated array of type ids
 	 */
 	public static GType* listAllTypes(uint* nTypes)
 	{

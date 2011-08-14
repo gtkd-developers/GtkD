@@ -119,7 +119,7 @@ public class Checksum
 	 * Since 2.16
 	 * Params:
 	 * checksumType = a GChecksumType
-	 * Returns: the checksum length, or -1 if checksum_type isnot supported.
+	 * Returns: the checksum length, or -1 if checksum_type is not supported.
 	 */
 	public static gssize typeGetLength(GChecksumType checksumType)
 	{

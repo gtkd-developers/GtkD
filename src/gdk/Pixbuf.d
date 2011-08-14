@@ -306,37 +306,6 @@ public class Pixbuf : ObjectG
 	 *  padding at the end of a row. The "rowstride" value of a pixbuf,
 	 *  as returned by gdk_pixbuf_get_rowstride(), indicates the number
 	 *  of bytes between rows.
-	 * Example  1.  put_pixel() example
-	 * 	The following code illustrates a simple put_pixel()
-	 * 	function for RGB pixbufs with 8 bits per channel with an alpha
-	 * 	channel. It is not included in the gdk-pixbuf library for
-	 * 	performance reasons; rather than making several function calls
-	 * 	for each pixel, your own code can take shortcuts.
-	 * static void
-	 * put_pixel (GdkPixbuf *pixbuf, int x, int y, guchar red, guchar green, guchar blue, guchar alpha)
-	 * {
-		 *  int width, height, rowstride, n_channels;
-		 *  guchar *pixels, *p;
-		 *  n_channels = gdk_pixbuf_get_n_channels (pixbuf);
-		 *  g_assert (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB);
-		 *  g_assert (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8);
-		 *  g_assert (gdk_pixbuf_get_has_alpha (pixbuf));
-		 *  g_assert (n_channels == 4);
-		 *  width = gdk_pixbuf_get_width (pixbuf);
-		 *  height = gdk_pixbuf_get_height (pixbuf);
-		 *  g_assert (x >= 0  x < width);
-		 *  g_assert (y >= 0  y < height);
-		 *  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-		 *  pixels = gdk_pixbuf_get_pixels (pixbuf);
-		 *  p = pixels + y * rowstride + x * n_channels;
-		 *  p[0] = red;
-		 *  p[1] = green;
-		 *  p[2] = blue;
-		 *  p[3] = alpha;
-	 * }
-	 * 	This function will not work for pixbufs with images that are
-	 * 	other than 8 bits per sample or channel, but it will work for
-	 * 	most of the pixbufs that GTK+ uses.
 	 * Note
 	 * 	If you are doing memcpy() of raw pixbuf data, note that the
 	 * 	last row in the pixbuf may not be as wide as the full
@@ -426,45 +395,6 @@ public class Pixbuf : ObjectG
 	 *  image doesn't have an alpha channel, calling
 	 *  gdk_pixbuf_composite_color() function has exactly the same effect
 	 *  as calling gdk_pixbuf_scale().
-	 * Example  2.  Handling an expose event.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 *  gboolean
-	 * expose_cb (GtkWidget *widget, GdkEventExpose *event, gpointer data)
-	 * {
-		 *  GdkPixbuf *dest;
-		 *  dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, event->area.width, event->area.height);
-		 *  gdk_pixbuf_composite_color (pixbuf, dest,
-		 *  0, 0, event->area.width, event->area.height,
-		 *  -event->area.x, -event->area.y,
-		 *  (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
-		 *  (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
-		 *  GDK_INTERP_BILINEAR, 255,
-		 *  event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
-		 *  gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL], dest,
-		 *  0, 0, event->area.x, event->area.y,
-		 *  event->area.width, event->area.height,
-		 *  GDK_RGB_DITHER_NORMAL, event->area.x, event->area.y);
-		 *  gdk_pixbuf_unref (dest);
-		 *  return TRUE;
-	 * }
 	 */
 	
 	/**
@@ -781,7 +711,7 @@ public class Pixbuf : ObjectG
 	/**
 	 * Creates a new GdkPixbuf with a copy of the information in the specified
 	 * pixbuf.
-	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL ifnot enough memory could be allocated.
+	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL if not enough memory could be allocated.
 	 */
 	public Pixbuf copy()
 	{
@@ -836,7 +766,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
-	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data”for information about how the pixel data is stored inmemory.
+	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data” for information about how the pixel data is stored in memory.
 	 */
 	public char* getPixels()
 	{
@@ -1149,7 +1079,7 @@ public class Pixbuf : ObjectG
 	 * destWidth = the width of destination image
 	 * destHeight = the height of destination image
 	 * interpType = the interpolation type for the transformation.
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
 	 */
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
@@ -1204,7 +1134,7 @@ public class Pixbuf : ObjectG
 	 * checkSize = the size of checks in the checkboard (must be a power of two)
 	 * color1 = the color of check at upper left
 	 * color2 = the color of the other check
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
@@ -1286,7 +1216,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * angle = the angle to rotate by
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
 	 */
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
@@ -1305,7 +1235,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * horizontal = TRUE to flip horizontally, FALSE to flip vertically
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
 	 */
 	public Pixbuf flip(int horizontal)
 	{
@@ -1396,7 +1326,7 @@ public class Pixbuf : ObjectG
 	 * appropriate transform will be performed so that the pixbuf
 	 * is oriented correctly.
 	 * Since 2.12
-	 * Returns: A newly-created pixbuf, or a reference to theinput pixbuf (with an increased reference count).
+	 * Returns: A newly-created pixbuf, or a reference to the input pixbuf (with an increased reference count).
 	 */
 	public Pixbuf applyEmbeddedOrientation()
 	{

@@ -375,7 +375,7 @@ public class DragAndDrop
 	
 	/**
 	 * Determines the source widget for a drag.
-	 * Returns:if the drag is occurring within a single application, a pointer to the source widget. Otherwise, NULL.
+	 * Returns: if the drag is occurring within a single application, a pointer to the source widget. Otherwise, NULL.
 	 */
 	public Widget getSourceWidget()
 	{

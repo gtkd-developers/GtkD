@@ -221,7 +221,7 @@ public class ItemFactory : ObjectGtk
 	 * GtkItemFactoryEntry from which the widget was created.)
 	 * Params:
 	 * widget = a widget
-	 * Returns:the full path to widget if it has been created by an item factory, NULL otherwise. This value is owned by GTK+ and must not be modified or freed.
+	 * Returns: the full path to widget if it has been created by an item factory, NULL otherwise. This value is owned by GTK+ and must not be modified or freed.
 	 */
 	public static string pathFromWidget(Widget widget)
 	{
@@ -470,7 +470,7 @@ public class ItemFactory : ObjectGtk
 	 * Obtains the popup_data which was passed to
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
-	 * Returns:popup_data associated with ifactory
+	 * Returns: popup_data associated with ifactory
 	 */
 	public void* popupData()
 	{
@@ -486,7 +486,7 @@ public class ItemFactory : ObjectGtk
 	 * is popped down again.
 	 * Params:
 	 * widget = a widget
-	 * Returns:popup_data associated with the item factory from which widget was created, or NULL if widget wasn't created by an item factory
+	 * Returns: popup_data associated with the item factory from which widget was created, or NULL if widget wasn't created by an item factory
 	 */
 	public static void* popupDataFromWidget(Widget widget)
 	{

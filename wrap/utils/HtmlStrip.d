@@ -30,14 +30,15 @@ public class HtmlStrip
 	
 	private import std.file;
 	private import std.stdio;
+	private import std.string;
 
-	public bit convertComment = true;
-	public bit markHR = true;
-	public bit markP = true;
-	public bit markH = true;
-	public bit removeEmptyLines = true;
-	public bit removeExtraSpaces = true;
-	
+	public bool convertComment = true;
+	public bool markHR = true;
+	public bool markP = true;
+	public bool markH = true;
+	public bool removeEmptyLines = true;
+	public bool removeExtraSpaces = true;
+
 	public this()
 	{
 		
@@ -49,9 +50,10 @@ public class HtmlStrip
 		char[] stripped;
 		char pc = ' ';
 		char[] mark;
-		bit inAmper = false;
+		bool inAmper = false;
+		bool inCode = false;
 		char[] amper;
-		
+
 		foreach ( char c ; htmlText )
 		{
 			switch ( c )
@@ -78,6 +80,15 @@ public class HtmlStrip
 					else if ( markH && (mark == "/h3" || mark == "/H3") )
 					{
 						stripped ~= "\n";
+					}
+					else if ( mark == "div class=\"informalexample\"" || mark == "div class=\"example\"" )
+					{
+						inCode = true;
+						stripped ~= "$(DDOC_COMMENT example)";
+					}
+					else if ( mark == "/div" )
+					{
+						inCode = false;
 					}
 					break;
 					
@@ -112,11 +123,11 @@ public class HtmlStrip
 							c = '\0';
 						}
 					}
-					if ( c == '\0'  )
+					if ( c == '\0' )
 					{
 						// ignore it
 					}
-					else if ( markupCount <= 0 )
+					else if ( markupCount <= 0 && !inCode )
 					{
 						if ( convertComment && pc == '/' && c == '*' )
 						{
@@ -154,7 +165,7 @@ public class HtmlStrip
 							stripped ~= c;
 						}
 					}
-					else
+					else if ( markupCount > 0 )
 					{
 						mark ~= c;
 					}
@@ -167,7 +178,7 @@ public class HtmlStrip
 		{
 			cleanUTF(stripped);
 		}
-		
+				
 		return stripped;
 	}
 	
@@ -177,7 +188,7 @@ public class HtmlStrip
 		char[] text = cast(char[])std.file.read(filename);
 		
 		//writefln("Original html:\n%s", text);
-		
+
 		return strip(text);
 	}
 	

@@ -332,7 +332,7 @@ public class Pad : ObjectGst
 	 * Gets the direction of the pad. The direction of the pad is
 	 * decided at construction time so this function does not take
 	 * the LOCK.
-	 * Returns: the GstPadDirection of the pad.MT safe.
+	 * Returns: the GstPadDirection of the pad. MT safe.
 	 */
 	public GstPadDirection getDirection()
 	{
@@ -343,7 +343,7 @@ public class Pad : ObjectGst
 	/**
 	 * Gets the parent of pad, cast to a GstElement. If a pad has no parent or
 	 * its parent is not an element, return NULL.
-	 * Returns: The parent of the pad. The caller has a reference on the parent, sounref when you're finished with it.MT safe.
+	 * Returns: The parent of the pad. The caller has a reference on the parent, so unref when you're finished with it. MT safe.
 	 */
 	public Element getParentElement()
 	{
@@ -358,7 +358,7 @@ public class Pad : ObjectGst
 	
 	/**
 	 * Gets the template for pad.
-	 * Returns: the GstPadTemplate from which this pad was instantiated, or NULLif this pad has no template.FIXME: currently returns an unrefcounted padtemplate.
+	 * Returns: the GstPadTemplate from which this pad was instantiated, or NULL if this pad has no template. FIXME: currently returns an unrefcounted padtemplate.
 	 */
 	public PadTemplate getPadTemplate()
 	{
@@ -375,7 +375,7 @@ public class Pad : ObjectGst
 	 * Links the source pad and the sink pad.
 	 * Params:
 	 * sinkpad = the sink GstPad to link.
-	 * Returns: A result code indicating if the connection worked or what went wrong.MT Safe.
+	 * Returns: A result code indicating if the connection worked or what went wrong. MT Safe.
 	 */
 	public GstPadLinkReturn link(Pad sinkpad)
 	{
@@ -388,7 +388,7 @@ public class Pad : ObjectGst
 	 * both pads.
 	 * Params:
 	 * sinkpad = the sink GstPad to unlink.
-	 * Returns: TRUE if the pads were unlinked. This function returns FALSE ifthe pads were not linked together.MT safe.
+	 * Returns: TRUE if the pads were unlinked. This function returns FALSE if the pads were not linked together. MT safe.
 	 */
 	public int unlink(Pad sinkpad)
 	{
@@ -398,7 +398,7 @@ public class Pad : ObjectGst
 	
 	/**
 	 * Checks if a pad is linked to another pad or not.
-	 * Returns: TRUE if the pad is linked, FALSE otherwise.MT safe.
+	 * Returns: TRUE if the pad is linked, FALSE otherwise. MT safe.
 	 */
 	public int isLinked()
 	{
@@ -426,7 +426,7 @@ public class Pad : ObjectGst
 	 * gst_pad_get_caps returns all possible caps a pad can operate with, using
 	 * the pad's get_caps function;
 	 * this returns the pad template caps if not explicitly set.
-	 * Returns: a newly allocated copy of the GstCaps of this pad.MT safe.
+	 * Returns: a newly allocated copy of the GstCaps of this pad. MT safe.
 	 */
 	public Caps getCaps()
 	{
@@ -445,7 +445,7 @@ public class Pad : ObjectGst
 	 * The allowed capabilities is calculated as the intersection of the results of
 	 * calling gst_pad_get_caps() on pad and its peer. The caller owns a reference
 	 * on the resulting caps.
-	 * Returns: the allowed GstCaps of the pad link. Unref the caps when you nolonger need it. This function returns NULL when pad has no peer.MT safe.
+	 * Returns: the allowed GstCaps of the pad link. Unref the caps when you no longer need it. This function returns NULL when pad has no peer. MT safe.
 	 */
 	public Caps getAllowedCaps()
 	{
@@ -464,7 +464,7 @@ public class Pad : ObjectGst
 	 * This function can be used on both src and sinkpads. Note that srcpads are
 	 * always negotiated before sinkpads so it is possible that the negotiated caps
 	 * on the srcpad do not match the negotiated caps of the peer.
-	 * Returns: the negotiated GstCaps of the pad link. Free the caps whenyou no longer need it. This function returns NULL when the pad has nopeer or is not negotiated yet.MT safe.
+	 * Returns: the negotiated GstCaps of the pad link. Free the caps when you no longer need it. This function returns NULL when the pad has no peer or is not negotiated yet. MT safe.
 	 */
 	public Caps getNegotiatedCaps()
 	{
@@ -479,7 +479,7 @@ public class Pad : ObjectGst
 	
 	/**
 	 * Gets the capabilities for pad's template.
-	 * Returns: the GstCaps of this pad template. If you intend to keep a referenceon the caps, make a copy (see gst_caps_copy()).
+	 * Returns: the GstCaps of this pad template. If you intend to keep a reference on the caps, make a copy (see gst_caps_copy()).
 	 */
 	public Caps getPadTemplateCaps()
 	{
@@ -500,7 +500,7 @@ public class Pad : ObjectGst
 	 * again.
 	 * Params:
 	 * caps = a GstCaps to set.
-	 * Returns: TRUE if the caps could be set. FALSE if the caps were not fixedor bad parameters were provided to this function.MT safe.
+	 * Returns: TRUE if the caps could be set. FALSE if the caps were not fixed or bad parameters were provided to this function. MT safe.
 	 */
 	public int setCaps(Caps caps)
 	{
@@ -511,7 +511,7 @@ public class Pad : ObjectGst
 	/**
 	 * Gets the peer of pad. This function refs the peer pad so
 	 * you need to unref it after use.
-	 * Returns: the peer GstPad. Unref after usage.MT safe.
+	 * Returns: the peer GstPad. Unref after usage. MT safe.
 	 */
 	public Pad getPeer()
 	{
@@ -526,7 +526,7 @@ public class Pad : ObjectGst
 	
 	/**
 	 * Gets the capabilities of the peer connected to this pad.
-	 * Returns: the GstCaps of the peer pad. This function returns a new caps, so usegst_caps_unref to get rid of it. this function returns NULL if there is nopeer pad.
+	 * Returns: the GstCaps of the peer pad. This function returns a new caps, so use gst_caps_unref to get rid of it. this function returns NULL if there is no peer pad.
 	 */
 	public Caps peerGetCaps()
 	{
@@ -555,7 +555,7 @@ public class Pad : ObjectGst
 	
 	/**
 	 * Query if a pad is active
-	 * Returns: TRUE if the pad is active.MT safe.
+	 * Returns: TRUE if the pad is active. MT safe.
 	 */
 	public int isActive()
 	{
@@ -569,7 +569,7 @@ public class Pad : ObjectGst
 	 * callback.
 	 * Params:
 	 * blocked = boolean indicating we should block or unblock
-	 * Returns: TRUE if the pad could be blocked. This function can fail wrong parameters were passed or the pad was already in the requested state.MT safe.
+	 * Returns: TRUE if the pad could be blocked. This function can fail wrong parameters were passed or the pad was already in the requested state. MT safe.
 	 */
 	public int setBlocked(int blocked)
 	{
@@ -592,7 +592,7 @@ public class Pad : ObjectGst
 	 * callback = GstPadBlockCallback that will be called when the
 	 *  operation succeeds
 	 * userData = user data passed to the callback
-	 * Returns: TRUE if the pad could be blocked. This function can fail if wrong parameters were passed or the pad was already in the requested state.MT safe.
+	 * Returns: TRUE if the pad could be blocked. This function can fail if wrong parameters were passed or the pad was already in the requested state. MT safe.
 	 */
 	public int setBlockedAsync(int blocked, GstPadBlockCallback callback, void* userData)
 	{
@@ -604,7 +604,7 @@ public class Pad : ObjectGst
 	 * Checks if the pad is blocked or not. This function returns the
 	 * last requested state of the pad. It is not certain that the pad
 	 * is actually blocking at this point (see gst_pad_is_blocking()).
-	 * Returns: TRUE if the pad is blocked.MT safe.
+	 * Returns: TRUE if the pad is blocked. MT safe.
 	 */
 	public int isBlocked()
 	{
@@ -615,7 +615,7 @@ public class Pad : ObjectGst
 	/**
 	 * Checks if the pad is blocking or not. This is a guaranteed state
 	 * of whether the pad is actually blocking on a GstBuffer or a GstEvent.
-	 * Returns: TRUE if the pad is blocking.MT safe.Since 0.10.11
+	 * Returns: TRUE if the pad is blocking. MT safe. Since 0.10.11
 	 */
 	public int isBlocking()
 	{
@@ -788,7 +788,7 @@ public class Pad : ObjectGst
 	 * size = the size of the new buffer
 	 * caps = the caps of the new buffer
 	 * buf = a newly allocated buffer
-	 * Returns: a result code indicating success of the operation. Anyresult code other than GST_FLOW_OK is an error and buf shouldnot be used.An error can occur if the pad is not connected or when the downstreampeer elements cannot provide an acceptable buffer.MT safe.
+	 * Returns: a result code indicating success of the operation. Any result code other than GST_FLOW_OK is an error and buf should not be used. An error can occur if the pad is not connected or when the downstream peer elements cannot provide an acceptable buffer. MT safe.
 	 */
 	public GstFlowReturn allocBuffer(ulong offset, int size, Caps caps, out Buffer buf)
 	{
@@ -810,7 +810,7 @@ public class Pad : ObjectGst
 	 * size = the size of the new buffer
 	 * caps = the caps of the new buffer
 	 * buf = a newly allocated buffer
-	 * Returns: a result code indicating success of the operation. Anyresult code other than GST_FLOW_OK is an error and buf shouldnot be used.An error can occur if the pad is not connected or when the downstreampeer elements cannot provide an acceptable buffer.MT safe.
+	 * Returns: a result code indicating success of the operation. Any result code other than GST_FLOW_OK is an error and buf should not be used. An error can occur if the pad is not connected or when the downstream peer elements cannot provide an acceptable buffer. MT safe.
 	 */
 	public GstFlowReturn allocBufferAndSetCaps(ulong offset, int size, Caps caps, out Buffer buf)
 	{
@@ -872,7 +872,7 @@ public class Pad : ObjectGst
 	 * offset = The start offset of the buffer
 	 * size = The length of the buffer
 	 * buffer = a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
-	 * Returns: a GstFlowReturn from the pad.MT safe.
+	 * Returns: a GstFlowReturn from the pad. MT safe.
 	 */
 	public GstFlowReturn getRange(ulong offset, uint size, ref Buffer buffer)
 	{
@@ -1149,7 +1149,7 @@ public class Pad : ObjectGst
 	 * after calling this function.
 	 * Params:
 	 * buffer = the GstBuffer to push returns GST_FLOW_ERROR if not.
-	 * Returns: a GstFlowReturn from the peer pad.MT safe.
+	 * Returns: a GstFlowReturn from the peer pad. MT safe.
 	 */
 	public GstFlowReturn push(Buffer buffer)
 	{
@@ -1165,7 +1165,7 @@ public class Pad : ObjectGst
 	 * gst_event_ref() it if you want to reuse the event after this call.
 	 * Params:
 	 * event = the GstEvent to send to the pad.
-	 * Returns: TRUE if the event was handled.MT safe.
+	 * Returns: TRUE if the event was handled. MT safe.
 	 */
 	public int pushEvent(Event event)
 	{
@@ -1180,7 +1180,7 @@ public class Pad : ObjectGst
 	 * The peer sourcepad can implement a custom GstPadCheckGetRangeFunction
 	 * if it needs to perform some logic to determine if pull_range is
 	 * possible.
-	 * Returns: a gboolean with the result.MT safe.
+	 * Returns: a gboolean with the result. MT safe.
 	 */
 	public int checkPullRange()
 	{
@@ -1202,7 +1202,7 @@ public class Pad : ObjectGst
 	 * offset = The start offset of the buffer
 	 * size = The length of the buffer
 	 * buffer = a pointer to hold the GstBuffer, returns GST_FLOW_ERROR if NULL.
-	 * Returns: a GstFlowReturn from the peer pad.When this function returns GST_FLOW_OK, buffer will contain a validGstBuffer that should be freed with gst_buffer_unref() after usage.buffer may not be used or freed when any other return value than GST_FLOW_OK is returned.MT safe.
+	 * Returns: a GstFlowReturn from the peer pad. When this function returns GST_FLOW_OK, buffer will contain a valid GstBuffer that should be freed with gst_buffer_unref() after usage. buffer may not be used or freed when any other return value than GST_FLOW_OK is returned. MT safe.
 	 */
 	public GstFlowReturn pullRange(ulong offset, uint size, ref Buffer buffer)
 	{
@@ -1224,7 +1224,7 @@ public class Pad : ObjectGst
 	 * If you don't know what this is, you probably don't want to call it.
 	 * Params:
 	 * active = whether or not the pad should be active.
-	 * Returns: TRUE if the operation was successful.MT safe.
+	 * Returns: TRUE if the operation was successful. MT safe.
 	 */
 	public int activatePull(int active)
 	{
@@ -1238,7 +1238,7 @@ public class Pad : ObjectGst
 	 * If you don't know what this is, you probably don't want to call it.
 	 * Params:
 	 * active = whether the pad should be active or not.
-	 * Returns: TRUE if the operation was successful.MT safe.
+	 * Returns: TRUE if the operation was successful. MT safe.
 	 */
 	public int activatePush(int active)
 	{
@@ -1446,7 +1446,7 @@ public class Pad : ObjectGst
 	/**
 	 * Invoke the default dispatcher for the query types on
 	 * the pad.
-	 * Returns: an zero-terminated array of GstQueryType, or NULL if none of theinternally-linked pads has a query types function.
+	 * Returns: an zero-terminated array of GstQueryType, or NULL if none of the internally-linked pads has a query types function.
 	 */
 	public GstQueryType* getQueryTypesDefault()
 	{
@@ -1469,7 +1469,7 @@ public class Pad : ObjectGst
 	 * Gets a list of pads to which the given pad is linked to
 	 * inside of the parent element.
 	 * The caller must free this list after use.
-	 * Returns: a newly allocated GList of pads.Not MT safe.
+	 * Returns: a newly allocated GList of pads. Not MT safe.
 	 */
 	public ListG getInternalLinks()
 	{
@@ -1488,7 +1488,7 @@ public class Pad : ObjectGst
 	 * This is the default handler, and thus returns a list of all of the
 	 * pads inside the parent element with opposite direction.
 	 * The caller must free this list after use.
-	 * Returns: a newly allocated GList of pads, or NULL if the pad has no parent.Not MT safe.
+	 * Returns: a newly allocated GList of pads, or NULL if the pad has no parent. Not MT safe.
 	 */
 	public ListG getInternalLinksDefault()
 	{
@@ -1556,7 +1556,7 @@ public class Pad : ObjectGst
 	 * after calling this function.
 	 * Params:
 	 * buffer = the GstBuffer to send, return GST_FLOW_ERROR if not.
-	 * Returns: a GstFlowReturn from the pad.MT safe.
+	 * Returns: a GstFlowReturn from the pad. MT safe.
 	 */
 	public GstFlowReturn chain(Buffer buffer)
 	{
@@ -1583,7 +1583,7 @@ public class Pad : ObjectGst
 	/**
 	 * Pause the task of pad. This function will also make sure that the
 	 * function executed by the task will effectively stop.
-	 * Returns: a TRUE if the task could be paused or FALSE when the padhas no task.
+	 * Returns: a TRUE if the task could be paused or FALSE when the pad has no task.
 	 */
 	public int pauseTask()
 	{
@@ -1618,7 +1618,7 @@ public class Pad : ObjectGst
 	 * FALSE argument.
 	 * Params:
 	 * active = whether or not the pad should be active.
-	 * Returns: TRUE if the operation was successful.MT safe.
+	 * Returns: TRUE if the operation was successful. MT safe.
 	 */
 	public int setActive(int active)
 	{

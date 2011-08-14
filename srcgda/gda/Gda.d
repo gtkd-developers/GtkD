@@ -127,7 +127,7 @@ public class Gda
 	/**
 	 * Params:
 	 * type = Type to convert from.
-	 * Returns: the string representing the given GdaValueType.This is not necessarily the same string used to describe the column type in a SQL statement.Use gda_connection_get_schema() with GDA_CONNECTION_SCHEMA_TYPES to get the actual types supported by the provider.
+	 * Returns: the string representing the given GdaValueType. This is not necessarily the same string used to describe the column type in a SQL statement. Use gda_connection_get_schema() with GDA_CONNECTION_SCHEMA_TYPES to get the actual types supported by the provider.
 	 */
 	public static string typeToString(GdaValueType type)
 	{
@@ -171,7 +171,7 @@ public class Gda
 	 * Params:
 	 * sql = a SQL command containing placeholders for values.
 	 * params = a list of values for the placeholders.
-	 * Returns: the SQL string with all placeholders replaced, or NULLon error. On success, the returned string must be freed by the callerwhen no longer needed.
+	 * Returns: the SQL string with all placeholders replaced, or NULL on error. On success, the returned string must be freed by the caller when no longer needed.
 	 */
 	public static string sqlReplacePlaceholders(string sql, ParameterList params)
 	{
@@ -185,7 +185,7 @@ public class Gda
 	 * It is the caller's responsibility to free the returned value.
 	 * Params:
 	 * filename = path for the file to be loaded.
-	 * Returns: the file contents as a newly-allocated string, or NULLif there is an error.
+	 * Returns: the file contents as a newly-allocated string, or NULL if there is an error.
 	 */
 	public static string fileLoad(string filename)
 	{

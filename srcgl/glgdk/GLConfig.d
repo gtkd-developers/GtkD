@@ -422,7 +422,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configured frame buffer has accumulation buffer.
-	 * Returns: TRUE if the frame buffer has accumulation buffer, FALSE otherwise.<<QueryRendering Context>>
+	 * Returns: TRUE if the frame buffer has accumulation buffer, FALSE otherwise. <<Query Rendering Context>>
 	 */
 	public int hasAccumBuffer()
 	{

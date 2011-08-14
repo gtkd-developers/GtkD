@@ -2137,7 +2137,16 @@ public struct GdkColormap
  * Main Gtk struct.
  * The GdkVisual structure contains information about
  * a particular visual.
- * Example  5.  Constructing a pixel value from components
+ * GObject  parent_instance;
+ * inherited portion from GObject
+ * GdkVisualType  type;
+ * The type of this visual.
+ * gint  depth;
+ * The number of bits per pixel.
+ * GdkByteOrder  byte_order;
+ * The byte-order for this visual.
+ * gint  colormap_size;
+ * The number of entries in the colormap, for
  */
 public struct GdkVisual
 {
@@ -2228,6 +2237,34 @@ public struct GdkWindow{}
  * the "character grid" will be allowed.
  * Here's an example of how the terminal example would be implemented, assuming
  * a terminal area widget called "terminal" and a toplevel window "toplevel":
+ * The other useful fields are the min_aspect and max_aspect fields; these
+ * contain a width/height ratio as a floating point number. If a geometry widget is
+ * set, the aspect applies to the geometry widget rather than the entire window.
+ * The most common use of these hints is probably to set min_aspect and
+ * max_aspect to the same value, thus forcing the window to keep a constant aspect
+ * ratio.
+ * gint  min_width;
+ * minimum width of window (or -1 to use requisition, with GtkWindow only)
+ * gint  min_height;
+ * minimum height of window (or -1 to use requisition, with GtkWindow only)
+ * gint  max_width;
+ * maximum width of window (or -1 to use requisition, with GtkWindow only)
+ * gint  max_height;
+ * maximum height of window (or -1 to use requisition, with GtkWindow only)
+ * gint  base_width;
+ * allowed window widths are base_width + width_inc * N where N is any integer (-1 allowed with GtkWindow)
+ * gint  base_height;
+ * allowed window widths are base_height + height_inc * N where N is any integer (-1 allowed with GtkWindow)
+ * gint  width_inc;
+ * width resize increment
+ * gint  height_inc;
+ * height resize increment
+ * gdouble  min_aspect;
+ * minimum width/height ratio
+ * gdouble  max_aspect;
+ * maximum width/height ratio
+ * GdkGravity  win_gravity;
+ * window gravity, see gtk_window_set_gravity()
  */
 public struct GdkGeometry
 {

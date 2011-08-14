@@ -193,7 +193,7 @@ public class Mutex
 	 * both FALSE or TRUE, if the current thread already has locked
 	 * mutex. Use GStaticRecMutex, if you need recursive
 	 * mutexes.
-	 * Returns:TRUE, if mutex could be locked.
+	 * Returns: TRUE, if mutex could be locked.
 	 */
 	public int trylock()
 	{

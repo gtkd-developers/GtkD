@@ -303,7 +303,7 @@ public class Config
 	 * path = configuration path to listen to.
 	 * func = callback function.
 	 * userData = data to be passed to the callback function.
-	 * Returns: the ID of the listener, which you will need forcalling gda_config_remove_listener. If an error occurs,0 is returned.
+	 * Returns: the ID of the listener, which you will need for calling gda_config_remove_listener. If an error occurs, 0 is returned.
 	 */
 	public static uint addListener(string path, GdaConfigListenerFunc func, void* userData)
 	{

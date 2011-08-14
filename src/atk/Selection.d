@@ -177,7 +177,7 @@ public class Selection
 	 * Params:
 	 * i = a gint specifying the index in the selection set. (e.g. the
 	 * ith selection as opposed to the ith child).
-	 * Returns: an AtkObject representing the selected accessible , or NULLif selection does not implement this interface.
+	 * Returns: an AtkObject representing the selected accessible , or NULL if selection does not implement this interface.
 	 */
 	public ObjectAtk refSelection(int i)
 	{
@@ -196,7 +196,7 @@ public class Selection
 	 * indication of whether AtkSelectionIface is implemented, they should
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
-	 * Returns: a gint representing the number of items selected, or 0if selection does not implement this interface.
+	 * Returns: a gint representing the number of items selected, or 0 if selection does not implement this interface.
 	 */
 	public int getSelectionCount()
 	{
@@ -212,7 +212,7 @@ public class Selection
 	 * atk_get_accessible_value() convenience method.
 	 * Params:
 	 * i = a gint specifying the child index.
-	 * Returns: a gboolean representing the specified child is selected, or 0if selection does not implement this interface.
+	 * Returns: a gboolean representing the specified child is selected, or 0 if selection does not implement this interface.
 	 */
 	public int isChildSelected(int i)
 	{
@@ -236,7 +236,7 @@ public class Selection
 	/**
 	 * Causes every child of the object to be selected if the object
 	 * supports multiple selections.
-	 * Returns: TRUE if success, FALSE otherwise.Signal DetailsThe "selection-changed" signalvoid user_function (AtkSelection *atkselection, gpointer user_data) : Run LastThe "selection-changed" signal is emitted by an object which implementsAtkSelection interface when the selection changes.
+	 * Returns: TRUE if success, FALSE otherwise. Signal Details The "selection-changed" signal void user_function (AtkSelection *atkselection, gpointer user_data) : Run Last The "selection-changed" signal is emitted by an object which implements AtkSelection interface when the selection changes.
 	 */
 	public int selectAllSelection()
 	{

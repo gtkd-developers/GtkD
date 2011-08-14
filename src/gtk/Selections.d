@@ -253,7 +253,7 @@ public class Selections
 	 * Since 2.6
 	 * Params:
 	 * selectionData = a GtkSelectionData
-	 * Returns: if the selection data contained a recognized image type and it could be converted to a GdkPixbuf, a  newly allocated pixbuf is returned, otherwise NULL. If the result is non-NULL it must be freed with g_object_unref().
+	 * Returns: if the selection data contained a recognized image type and it could be converted to a GdkPixbuf, a newly allocated pixbuf is returned, otherwise NULL. If the result is non-NULL it must be freed with g_object_unref().
 	 */
 	public static Pixbuf dataGetPixbuf(GtkSelectionData* selectionData)
 	{
@@ -287,7 +287,7 @@ public class Selections
 	 * Since 2.6
 	 * Params:
 	 * selectionData = a GtkSelectionData
-	 * Returns: if the selection data contains a list of URIs, a newly allocated NULL-terminated string array containing the URIs, otherwise NULL. If the result is non-NULL it must be freed with g_strfreev().. array zero-terminated=1. element-type utf8. transfer full utf8.
+	 * Returns: if the selection data contains a list of URIs, a newly allocated NULL-terminated string array containing the URIs, otherwise NULL. If the result is non-NULL it must be freed with g_strfreev(). . array zero-terminated=1. element-type utf8. transfer full utf8.
 	 */
 	public static string[] dataGetUris(GtkSelectionData* selectionData)
 	{

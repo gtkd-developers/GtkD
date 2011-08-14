@@ -131,35 +131,6 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements in UI definitions.
- * Example  22.  A UI definition fragment with GtkTreeView
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- *  <object class="GtkTreeView" id="treeview">
- *  <property name="model">liststore1</property>
- *  <child>
- *  <object class="GtkTreeViewColumn" id="test-column">
- *  <property name="title">Test</property>
- *  <child>
- *  <object class="GtkCellRendererText" id="test-renderer"/>
- *  <attributes>
- *  <attribute name="text">1</attribute>
- *  </attributes>
- *  </child>
- *  </object>
- *  </child>
- * </object>
  */
 public class TreeView : Container
 {
@@ -800,7 +771,7 @@ public class TreeView : Container
 	 * Returns the amount, in pixels, of extra indentation for child levels
 	 * in tree_view.
 	 * Since 2.12
-	 * Returns: the amount of extra indentation for child levels intree_view. A return value of 0 means that this feature is disabled.
+	 * Returns: the amount of extra indentation for child levels in tree_view. A return value of 0 means that this feature is disabled.
 	 */
 	public int getLevelIndentation()
 	{
@@ -811,7 +782,7 @@ public class TreeView : Container
 	/**
 	 * Returns whether or not expanders are drawn in tree_view.
 	 * Since 2.12
-	 * Returns: TRUE if expanders are drawn in tree_view, FALSEotherwise.
+	 * Returns: TRUE if expanders are drawn in tree_view, FALSE otherwise.
 	 */
 	public int getShowExpanders()
 	{
@@ -916,7 +887,7 @@ public class TreeView : Container
 	
 	/**
 	 * Gets the GtkAdjustment currently being used for the horizontal aspect.
-	 * Returns: A GtkAdjustment object, or NULL if none is currently beingused.
+	 * Returns: A GtkAdjustment object, or NULL if none is currently being used.
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -942,7 +913,7 @@ public class TreeView : Container
 	
 	/**
 	 * Gets the GtkAdjustment currently being used for the vertical aspect.
-	 * Returns: A GtkAdjustment object, or NULL if none is currently beingused.
+	 * Returns: A GtkAdjustment object, or NULL if none is currently being used.
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -1119,7 +1090,7 @@ public class TreeView : Container
 	 * Gets the GtkTreeViewColumn at the given position in the tree_view.
 	 * Params:
 	 * n = The position of the column, counting from 0.
-	 * Returns: The GtkTreeViewColumn, or NULL if the position is outside therange of columns.
+	 * Returns: The GtkTreeViewColumn, or NULL if the position is outside the range of columns.
 	 */
 	public TreeViewColumn getColumn(int n)
 	{
@@ -1815,7 +1786,7 @@ public class TreeView : Container
 	 * dragY = the position to determine the destination row for
 	 * path = Return location for the path of the highlighted row, or NULL.. allow-none.
 	 * pos = Return location for the drop position, or NULL. allow-none.
-	 * Returns: whether there is a row at the given position, TRUE if thisis indeed the case.
+	 * Returns: whether there is a row at the given position, TRUE if this is indeed the case.
 	 */
 	public int getDestRowAtPos(int dragX, int dragY, out TreePath path, out GtkTreeViewDropPosition pos)
 	{
@@ -2134,7 +2105,7 @@ public class TreeView : Container
 	 * Returns whether a rubber banding operation is currently being done
 	 * in tree_view.
 	 * Since 2.12
-	 * Returns: TRUE if a rubber banding operation is currently beingdone in tree_view.
+	 * Returns: TRUE if a rubber banding operation is currently being done in tree_view.
 	 */
 	public int isRubberBandingActive()
 	{
@@ -2145,7 +2116,7 @@ public class TreeView : Container
 	/**
 	 * Returns whether or not tree lines are drawn in tree_view.
 	 * Since 2.10
-	 * Returns: TRUE if tree lines are drawn in tree_view, FALSEotherwise.
+	 * Returns: TRUE if tree lines are drawn in tree_view, FALSE otherwise.
 	 */
 	public int getEnableTreeLines()
 	{
@@ -2169,7 +2140,7 @@ public class TreeView : Container
 	/**
 	 * Returns which grid lines are enabled in tree_view.
 	 * Since 2.10
-	 * Returns: a GtkTreeViewGridLines value indicating which grid linesare enabled.
+	 * Returns: a GtkTreeViewGridLines value indicating which grid lines are enabled.
 	 */
 	public GtkTreeViewGridLines getGridLines()
 	{
@@ -2266,7 +2237,7 @@ public class TreeView : Container
 	 * Returns the column of tree_view's model which is being used for
 	 * displaying tooltips on tree_view's rows.
 	 * Since 2.12
-	 * Returns: the index of the tooltip column that is currently beingused, or -1 if this is disabled.
+	 * Returns: the index of the tooltip column that is currently being used, or -1 if this is disabled.
 	 */
 	public int getTooltipColumn()
 	{

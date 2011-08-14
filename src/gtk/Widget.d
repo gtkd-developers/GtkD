@@ -195,46 +195,10 @@ private import gtk.ObjectGtk;
  * The GtkWidget implementation of the GtkBuildable interface supports a
  * custom <accelerator> element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
- * Example  54.  A UI definition fragment specifying an accelerator
- *  1
- * 2
- * 3
- *  <object class="GtkButton">
- *  <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
- * </object>
  * In addition to accelerators, GtkWidget also support a
  * custom <accessible> element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
- * Example  55.  A UI definition fragment specifying an accessible
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- *  <object class="GtkButton" id="label1"/>
- *  <property name="label">I am a Label for a Button</property>
- * </object>
- * <object class="GtkButton" id="button1">
- *  <accessibility>
- *  <action action_name="click" translatable="yes">Click the button.</action>
- *  <relation target="label1" type="labelled-by"/>
- *  </accessibility>
- *  <child internal-child="accessible">
- *  <object class="AtkObject" id="a11y-button1">
- *  <property name="AtkObject::name">Clickable Button</property>
- *  </object>
- *  </child>
- * </object>
  */
 public class Widget : ObjectGtk, BuildableIF
 {
@@ -1129,86 +1093,6 @@ public class Widget : ObjectGtk, BuildableIF
 	 * the data was processed successfully.
 	 * The handler may inspect and modify drag_context->action before calling
 	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 * 30
-	 * 31
-	 * 32
-	 * 33
-	 * 34
-	 * 35
-	 * 36
-	 * 37
-	 *  void
-	 * drag_data_received (GtkWidget *widget,
-	 *  GdkDragContext *drag_context,
-	 *  gint x,
-	 *  gint y,
-	 *  GtkSelectionData *data,
-	 *  guint info,
-	 *  guint time)
-	 * {
-		 *  if ((data->length >= 0)  (data->format == 8))
-		 *  {
-			 *  if (drag_context->action == GDK_ACTION_ASK)
-			 *  {
-				 *  GtkWidget *dialog;
-				 *  gint response;
-				 *
-				 *  dialog = gtk_message_dialog_new (NULL,
-				 *  GTK_DIALOG_MODAL |
-				 *  GTK_DIALOG_DESTROY_WITH_PARENT,
-				 *  GTK_MESSAGE_INFO,
-				 *  GTK_BUTTONS_YES_NO,
-				 *  "Move the data ?\n");
-				 *  response = gtk_dialog_run (GTK_DIALOG (dialog));
-				 *  gtk_widget_destroy (dialog);
-				 *
-				 *  if (response == GTK_RESPONSE_YES)
-				 *  drag_context->action = GDK_ACTION_MOVE;
-				 *  else
-				 *  drag_context->action = GDK_ACTION_COPY;
-			 *  }
-			 *
-			 *  gtk_drag_finish (drag_context, TRUE, FALSE, time);
-			 *  return;
-		 *  }
-		 *
-		 *  gtk_drag_finish (drag_context, FALSE, FALSE, time);
-	 *  }
-	 *
-	 *
-	 *
 	 */
 	void addOnDragDataReceived(void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1391,132 +1275,6 @@ public class Widget : ObjectGtk, BuildableIF
 	 * last "drag-leave" and if not, treat the drag-motion signal as
 	 * an "enter" signal. Upon an "enter", the handler will typically highlight
 	 * the drop site with gtk_drag_highlight().
-	 *
-	 *
-	 *
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 * 19
-	 * 20
-	 * 21
-	 * 22
-	 * 23
-	 * 24
-	 * 25
-	 * 26
-	 * 27
-	 * 28
-	 * 29
-	 * 30
-	 * 31
-	 * 32
-	 * 33
-	 * 34
-	 * 35
-	 * 36
-	 * 37
-	 * 38
-	 * 39
-	 * 40
-	 * 41
-	 * 42
-	 * 43
-	 * 44
-	 * 45
-	 * 46
-	 * 47
-	 * 48
-	 * 49
-	 * 50
-	 * 51
-	 * 52
-	 * 53
-	 * 54
-	 * 55
-	 * 56
-	 * 57
-	 * 58
-	 * 59
-	 * 60
-	 *  static void
-	 * drag_motion (GtkWidget *widget,
-	 *  GdkDragContext *context,
-	 *  gint x,
-	 *  gint y,
-	 *  guint time)
-	 * {
-		 *  GdkAtom target;
-		 *
-		 *  PrivateData *private_data = GET_PRIVATE_DATA (widget);
-		 *
-		 *  if (!private_data->drag_highlight)
-		 *  {
-			 *  private_data->drag_highlight = 1;
-			 *  gtk_drag_highlight (widget);
-		 *  }
-		 *
-		 *  target = gtk_drag_dest_find_target (widget, context, NULL);
-		 *  if (target == GDK_NONE)
-		 *  gdk_drag_status (context, 0, time);
-		 *  else
-		 *  {
-			 *  private_data->pending_status = context->suggested_action;
-			 *  gtk_drag_get_data (widget, context, target, time);
-		 *  }
-		 *
-		 *  return TRUE;
-	 * }
-	 *
-	 * static void
-	 * drag_data_received (GtkWidget *widget,
-	 *  GdkDragContext *context,
-	 *  gint x,
-	 *  gint y,
-	 *  GtkSelectionData *selection_data,
-	 *  guint info,
-	 *  guint time)
-	 * {
-		 *  PrivateData *private_data = GET_PRIVATE_DATA (widget);
-		 *
-		 *  if (private_data->suggested_action)
-		 *  {
-			 *  private_data->suggested_action = 0;
-			 *
-			 *  /+* We are getting this data due to a request in drag_motion,
-			 *  * rather than due to a request in drag_drop, so we are just
-			 *  * supposed to call gdk_drag_status (), not actually paste in
-			 *  * the data.
-			 *  +/
-			 *  str = gtk_selection_data_get_text (selection_data);
-			 *  if (!data_is_acceptable (str))
-			 *  gdk_drag_status (context, 0, time);
-			 *  else
-			 *  gdk_drag_status (context, private_data->suggested_action, time);
-		 *  }
-		 *  else
-		 *  {
-			 *  /+* accept the drop +/
-		 *  }
-	 * }
-	 *
-	 *
-	 *
 	 */
 	void addOnDragMotion(bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3371,7 +3129,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * accelGroup = accel group for this widget
 	 * accelKey = GDK keyval of the accelerator
 	 * accelMods = modifier key combination of the accelerator
-	 * Returns:whether an accelerator was installed and could be removed
+	 * Returns: whether an accelerator was installed and could be removed
 	 */
 	public int removeAccelerator(AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods)
 	{
@@ -3415,7 +3173,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * by connecting to the GtkAccelGroup::accel-changed signal of the
 	 * GtkAccelGroup of a closure which can be found out with
 	 * gtk_accel_group_from_accel_closure().
-	 * Returns:a newly allocated GList of closures
+	 * Returns: a newly allocated GList of closures
 	 */
 	public ListG listAccelClosures()
 	{
@@ -3458,7 +3216,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * window.
 	 * Params:
 	 * event = a GdkEvent
-	 * Returns: return from the event signal emission (TRUE if  the event was handled)
+	 * Returns: return from the event signal emission (TRUE if the event was handled)
 	 */
 	public int event(Event event)
 	{
@@ -3566,7 +3324,7 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Retrieves the name of a widget. See gtk_widget_set_name() for the
 	 * significance of widget names.
-	 * Returns: name of the widget. This string is owned by GTK+ andshould not be modified or freed
+	 * Returns: name of the widget. This string is owned by GTK+ and should not be modified or freed
 	 */
 	public string getName()
 	{
@@ -3769,16 +3527,6 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To reliably find the toplevel GtkWindow, use
 	 * gtk_widget_get_toplevel() and check if the TOPLEVEL flags
 	 * is set on the result.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 *  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
-	 * if (gtk_widget_is_toplevel (toplevel))
-	 *  {
-		 *  /+* Perform action on toplevel. +/
-	 *  }
 	 * Returns: the topmost ancestor of widget, or widget itself if there's no ancestor.. transfer none.
 	 */
 	public Widget getToplevel()
@@ -3895,7 +3643,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * intermediate containers.
 	 * Params:
 	 * ancestor = another GtkWidget
-	 * Returns: TRUE if ancestor contains widget as a child,  grandchild, great grandchild, etc.
+	 * Returns: TRUE if ancestor contains widget as a child, grandchild, great grandchild, etc.
 	 */
 	public int isAncestor(Widget ancestor)
 	{
@@ -4214,7 +3962,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Obtains the composite name of a widget.
-	 * Returns: the composite name of widget, or NULL if widget is not a composite child. The string should be freed when it is no  longer needed.
+	 * Returns: the composite name of widget, or NULL if widget is not a composite child. The string should be freed when it is no longer needed.
 	 */
 	public string getCompositeName()
 	{
@@ -4744,7 +4492,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.2
 	 * Params:
 	 * klass = a GtkWidgetClass
-	 * Returns:an newly allocated array of GParamSpec*. The array must  be freed with g_free().
+	 * Returns: an newly allocated array of GParamSpec*. The array must be freed with g_free().
 	 */
 	public static ParamSpec[] classListStyleProperties(GtkWidgetClass* klass)
 	{
@@ -4774,7 +4522,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  widget->allocation. That is, relative to widget->window
 	 *  for NO_WINDOW widgets; relative to the parent window
 	 *  of widget->window for widgets with their own window.
-	 * Returns:A newly allocated region holding the intersection of widget and region. The coordinates of the return value are relative to widget->window for NO_WINDOW widgets, and relative to the parent window of widget->window for widgets with their own window.
+	 * Returns: A newly allocated region holding the intersection of widget and region. The coordinates of the return value are relative to widget->window for NO_WINDOW widgets, and relative to the parent window of widget->window for widgets with their own window.
 	 */
 	public Region regionIntersect(Region region)
 	{
@@ -4799,7 +4547,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * with a call to gdk_window_process_updates().
 	 * Params:
 	 * event = a expose GdkEvent
-	 * Returns: return from the event signal emission (TRUE if  the event was handled)
+	 * Returns: return from the event signal emission (TRUE if the event was handled)
 	 */
 	public int sendExpose(Event event)
 	{
@@ -4995,7 +4743,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  default clipboard. Another common value
 	 *  is GDK_SELECTION_PRIMARY, which gives
 	 *  the primary X selection.
-	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent for all time.. transfer none.
+	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent for all time. . transfer none.
 	 */
 	public Clipboard getClipboard(GdkAtom selection)
 	{
@@ -5016,7 +4764,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * resources when a widget has been realized, and you should
 	 * free those resources when the widget is unrealized.
 	 * Since 2.2
-	 * Returns: the GdkDisplay for the toplevel for this widget.. transfer none.
+	 * Returns: the GdkDisplay for the toplevel for this widget. . transfer none.
 	 */
 	public Display getDisplay()
 	{
@@ -5038,7 +4786,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * create display specific resources when a widget has been realized,
 	 * and you should free those resources when the widget is unrealized.
 	 * Since 2.2
-	 * Returns: the GdkWindow root window for the toplevel for this widget.. transfer none.
+	 * Returns: the GdkWindow root window for the toplevel for this widget. . transfer none.
 	 */
 	public Window getRootWindow()
 	{
@@ -5060,7 +4808,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * resources when a widget has been realized, and you should
 	 * free those resources when the widget is unrealized.
 	 * Since 2.2
-	 * Returns: the GdkScreen for the toplevel for this widget.. transfer none.
+	 * Returns: the GdkScreen for the toplevel for this widget. . transfer none.
 	 */
 	public Screen getScreen()
 	{
@@ -5215,7 +4963,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * (GFunc)g_object_ref, NULL) first, and then unref all the
 	 * widgets afterwards.
 	 * Since 2.4
-	 * Returns: the list of mnemonic labels; free this list with g_list_free() when you are done with it.. element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: the list of mnemonic labels; free this list with g_list_free() when you are done with it. . element-type GtkWidget. transfer container GtkWidget.
 	 */
 	public ListG listMnemonicLabels()
 	{
@@ -5288,7 +5036,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * in the future if used on a widget that has a composited
 	 * window in its hierarchy (as set by gdk_window_set_composited()).
 	 * Since 2.10
-	 * Returns: TRUE if the widget can rely on its alphachannel being drawn correctly.
+	 * Returns: TRUE if the widget can rely on its alpha channel being drawn correctly.
 	 */
 	public int isComposited()
 	{
@@ -5386,7 +5134,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * GtkWindow created by default, or the custom tooltip window set
 	 * using gtk_widget_set_tooltip_window().
 	 * Since 2.12
-	 * Returns: The GtkWindow of the current tooltip.. transfer none.
+	 * Returns: The GtkWindow of the current tooltip. . transfer none.
 	 */
 	public GtkWindow* getTooltipWindow()
 	{

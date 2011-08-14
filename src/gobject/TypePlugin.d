@@ -68,10 +68,6 @@ private import glib.ConstructionException;
  *  The type is initially introduced (usually upon loading the module
  *  the first time, or by your main application that knows what modules
  *  introduces what types), like this:
- *  new_type_id = g_type_register_dynamic (parent_type_id,
- *  "TypeName",
- *  new_type_plugin,
- *  type_flags);
  *  where new_type_plugin is an implementation of the
  *  GTypePlugin interface.
  *  The type's implementation is referenced, e.g. through

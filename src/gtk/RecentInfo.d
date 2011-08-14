@@ -86,43 +86,7 @@ private import gdk.Pixbuf;
  * files is shared with other people using them. In case the
  * default screen is being used, adding a new recently used
  * file is as simple as:
- *  1
- * 2
- * 3
- *  GtkRecentManager *manager;
- * manager = gtk_recent_manager_get_default ();
- * gtk_recent_manager_add_item (manager, file_uri);
  * While looking up a recently used file is as simple as:
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- *  GtkRecentManager *manager;
- * GtkRecentInfo *info;
- * GError *error = NULL;
- * manager = gtk_recent_manager_get_default ();
- * info = gtk_recent_manager_lookup_item (manager, file_uri, error);
- * if (error)
- *  {
-	 *  g_warning ("Could not find the file: %s", error->message);
-	 *  g_error_free (error);
- *  }
- * else
- *  {
-	 *  /+* Use the info object +/
-	 *  gtk_recent_info_unref (info);
- *  }
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentInfo
@@ -309,7 +273,7 @@ public class RecentInfo
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 * Since 2.10
-	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.. array length=length zero-terminated=1.
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it. . array length=length zero-terminated=1.
 	 */
 	public string[] getApplications()
 	{
@@ -343,7 +307,7 @@ public class RecentInfo
 	 * array of returned group names will be NULL terminated, so length might
 	 * optionally be NULL.
 	 * Since 2.10
-	 * Returns: a newly allocatedNULL terminated array of strings. Use g_strfreev() to free it.. array length=length zero-terminated=1.
+	 * Returns: a newly allocated NULL terminated array of strings. Use g_strfreev() to free it. . array length=length zero-terminated=1.
 	 */
 	public string[] getGroups()
 	{

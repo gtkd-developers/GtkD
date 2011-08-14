@@ -100,31 +100,15 @@ private import gobject.ObjectG;
  * loadable modules. An input method module is a small shared library which
  * implements a subclass of GtkIMContext or GtkIMContextSimple and exports
  * these four functions:
- *  1
- *  void im_module_init(<GTKDOCLINK HREF="GTypeModule">GTypeModule</GTKDOCLINK> *module);
  * This function should register the GType of the GtkIMContext subclass which
  * implements the input method by means of g_type_module_register_type(). Note
  * that g_type_register_static() cannot be used as the type needs to be
  * registered dynamically.
- *  1
- *  void im_module_exit(void);
  * Here goes any cleanup code your input method might require on module unload.
- *  1
- * 2
- * 3
- * 4
- * 5
- *  void im_module_list(const <a class="link" href="GtkIMContext.html#GtkIMContextInfo" title="GtkIMContextInfo">GtkIMContextInfo</a> ***contexts, int *n_contexts)
- * {
-	 *  *contexts = info_list;
-	 *  *n_contexts = G_N_ELEMENTS (info_list);
- * }
  * This function returns the list of input methods provided by the module. The
  * example implementation above shows a common solution and simply returns a
  * pointer to statically defined array of GtkIMContextInfo items for each
  * provided input method.
- *  1
- *  <a class="link" href="GtkIMContext.html" title="GtkIMContext">GtkIMContext</a> * im_module_create(const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *context_id);
  * This function should return a pointer to a newly created instance of the
  * GtkIMContext subclass identified by context_id. The context ID is the same
  * as specified in the GtkIMContextInfo array returned by im_module_list().
@@ -551,7 +535,7 @@ public class IMContext : ObjectG
 	 * offset = offset from cursor position in chars;
 	 *  a negative value means start before the cursor.
 	 * nChars = number of characters to delete.
-	 * Returns: TRUE if the signal was handled.Signal DetailsThe "commit" signalvoid user_function (GtkIMContext *context, gchar *str, gpointer user_data) : Run LastThe ::commit signal is emitted when a complete input sequencehas been entered by the user. This can be a single characterimmediately after a key press or the final result of preediting.
+	 * Returns: TRUE if the signal was handled. Signal Details The "commit" signal void user_function (GtkIMContext *context, gchar *str, gpointer user_data) : Run Last The ::commit signal is emitted when a complete input sequence has been entered by the user. This can be a single character immediately after a key press or the final result of preediting.
 	 */
 	public int deleteSurrounding(int offset, int nChars)
 	{

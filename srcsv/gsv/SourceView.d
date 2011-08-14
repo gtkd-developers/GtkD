@@ -466,7 +466,7 @@ public class SourceView : TextView
 	 * Since 2.2
 	 * Params:
 	 * category = a mark category.
-	 * Returns: the priority or if categoryexists but no priority was set, it defaults to 0.
+	 * Returns: the priority or if category exists but no priority was set, it defaults to 0.
 	 */
 	public int getMarkCategoryPriority(string category)
 	{
@@ -558,7 +558,7 @@ public class SourceView : TextView
 	 * Params:
 	 * category = a mark category.
 	 * dest = destination GdkColor structure to fill in.
-	 * Returns: TRUE if background color for category was setand dest is set to a valid color, or FALSE otherwise.
+	 * Returns: TRUE if background color for category was set and dest is set to a valid color, or FALSE otherwise.
 	 */
 	public int getMarkCategoryBackground(string category, Color dest)
 	{
@@ -586,37 +586,6 @@ public class SourceView : TextView
 	 * If you also specified a function with
 	 * gtk_source_view_set_mark_category_tooltip_markup_func() the markup
 	 * variant takes precedence.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 * 10
-	 * 11
-	 * 12
-	 * 13
-	 * 14
-	 * 15
-	 * 16
-	 * 17
-	 * 18
-	 *  static gchar *
-	 * tooltip_func (GtkSourceMark *mark,
-	 *  gpointer user_data)
-	 * {
-		 *  gchar *text;
-		 *  text = get_tooltip_for_mark (mark, user_data);
-		 *  return text;
-	 * }
-	 * ...
-	 * GtkSourceView *view;
-	 * gtk_source_view_set_mark_category_tooltip_func (view, other-mark,
-	 *  tooltip_func,
-	 *  NULL, NULL);
 	 * Since 2.8
 	 * Params:
 	 * category = a mark category.

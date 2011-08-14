@@ -84,37 +84,6 @@ private import gtk.Widget;
  * Note that GDK automatically clears the exposed area
  * to the background color before sending the expose event, and
  * that drawing is implicitly clipped to the exposed area.
- * Example  50.  Simple GtkDrawingArea usage.
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- *  gboolean
- * expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
- * {
-	 *  gdk_draw_arc (widget->window,
-	 *  widget->style->fg_gc[gtk_widget_get_state (widget)],
-	 *  TRUE,
-	 *  0, 0, widget->allocation.width, widget->allocation.height,
-	 *  0, 64 * 360);
-	 *  return TRUE;
- * }
- * [...]
- *  GtkWidget *drawing_area = gtk_drawing_area_new ();
- *  gtk_widget_set_size_request (drawing_area, 100, 100);
- *  g_signal_connect (G_OBJECT (drawing_area), "expose_event",
- *  G_CALLBACK (expose_event_callback), NULL);
  * Expose events are normally delivered when a drawing area first comes
  * onscreen, or when it's covered by another window and then uncovered
  * (exposed). You can also force an expose event by adding to the "damage

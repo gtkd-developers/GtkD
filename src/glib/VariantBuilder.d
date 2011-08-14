@@ -285,7 +285,7 @@ public class VariantBuilder
 	 * Don't call this on stack-allocated GVariantBuilder instances or bad
 	 * things will happen.
 	 * Since 2.24
-	 * Returns:a new reference to builder
+	 * Returns: a new reference to builder
 	 */
 	public VariantBuilder doref()
 	{

@@ -250,7 +250,7 @@ public class IOChannel
 	 * issued, and GLib assumes that it is the file descriptor you mean.
 	 * Params:
 	 * fd = a file descriptor.
-	 * Returns:a new GIOChannel.
+	 * Returns: a new GIOChannel.
 	 */
 	public static IOChannel unixNew(int fd)
 	{
@@ -267,7 +267,7 @@ public class IOChannel
 	 * Returns the file descriptor of the GIOChannel.
 	 * On Windows this function returns the file descriptor or socket of
 	 * the GIOChannel.
-	 * Returns:the file descriptor of the GIOChannel.
+	 * Returns: the file descriptor of the GIOChannel.
 	 */
 	public int unixGetFd()
 	{
@@ -297,7 +297,7 @@ public class IOChannel
 	 * This function is available only in GLib on Windows.
 	 * Params:
 	 * fd = a C library file descriptor.
-	 * Returns:a new GIOChannel.
+	 * Returns: a new GIOChannel.
 	 */
 	public static IOChannel win32_NewFd(int fd)
 	{
@@ -319,7 +319,7 @@ public class IOChannel
 	 * implementation and unavoidable.
 	 * Params:
 	 * socket = a Winsock socket
-	 * Returns:a new GIOChannel
+	 * Returns: a new GIOChannel
 	 */
 	public static IOChannel win32_NewSocket(int socket)
 	{
@@ -338,7 +338,7 @@ public class IOChannel
 	 * Windows messages for the window in question.
 	 * Params:
 	 * hwnd = a window handle.
-	 * Returns:a new GIOChannel.
+	 * Returns: a new GIOChannel.
 	 */
 	public static IOChannel win32_NewMessages(gsize hwnd)
 	{
@@ -603,7 +603,7 @@ public class IOChannel
 	 * Converts an errno error number to a GIOChannelError.
 	 * Params:
 	 * en = an errno error number, e.g. EINVAL
-	 * Returns: a GIOChannelError error number, e.g.  G_IO_CHANNEL_ERROR_INVAL.
+	 * Returns: a GIOChannelError error number, e.g. G_IO_CHANNEL_ERROR_INVAL.
 	 */
 	public static GIOChannelError errorFromErrno(int en)
 	{

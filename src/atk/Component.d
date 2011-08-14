@@ -148,7 +148,7 @@ public class Component
 	 * already added it is not added again
 	 * Params:
 	 * handler = The AtkFocusHandler to be attached to component
-	 * Returns: a handler id which can be used in atk_component_remove_focus_handleror zero if the handler was already added.
+	 * Returns: a handler id which can be used in atk_component_remove_focus_handler or zero if the handler was already added.
 	 */
 	public uint addFocusHandler(AtkFocusHandler handler)
 	{
@@ -163,7 +163,7 @@ public class Component
 	 * y = y coordinate
 	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
-	 * Returns: TRUE or FALSE indicating whether the specified point is withinthe extent of the component or not
+	 * Returns: TRUE or FALSE indicating whether the specified point is within the extent of the component or not
 	 */
 	public int contains(int x, int y, AtkCoordType coordType)
 	{

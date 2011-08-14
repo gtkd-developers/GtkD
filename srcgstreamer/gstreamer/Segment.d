@@ -154,7 +154,7 @@ public class Segment
 	 * stop = the stop position in the segment
 	 * clipStart = the clipped start position in the segment
 	 * clipStop = the clipped stop position in the segment
-	 * Returns: TRUE if the given start and stop times fall partially or  completely in segment, FALSE if the values are completely outside  of the segment.
+	 * Returns: TRUE if the given start and stop times fall partially or completely in segment, FALSE if the values are completely outside of the segment.
 	 */
 	public int clip(GstFormat format, long start, long stop, ref long clipStart, ref long clipStop)
 	{
@@ -319,7 +319,7 @@ public class Segment
 	 * Params:
 	 * format = the format of the segment.
 	 * position = the position in the segment
-	 * Returns: the position as the total running time or -1 when an invalid positionwas given.
+	 * Returns: the position as the total running time or -1 when an invalid position was given.
 	 */
 	public long toRunningTime(GstFormat format, long position)
 	{
@@ -340,7 +340,7 @@ public class Segment
 	 * Params:
 	 * format = the format of the segment.
 	 * position = the position in the segment
-	 * Returns: the position in stream_time or -1 when an invalid positionwas given.
+	 * Returns: the position in stream_time or -1 when an invalid position was given.
 	 */
 	public long toStreamTime(GstFormat format, long position)
 	{

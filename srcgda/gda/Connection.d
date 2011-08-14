@@ -255,7 +255,7 @@ public class Connection : ObjectG
 	}
 	
 	/**
-	 * Returns:the data source name the connection object is connectedto.
+	 * Returns: the data source name the connection object is connected to.
 	 */
 	public string getDsn()
 	{
@@ -415,7 +415,7 @@ public class Connection : ObjectG
 	 * Params:
 	 * cmd = a GdaCommand.
 	 * params = parameter list.
-	 * Returns: a list of GdaDataModel's, as returned by the underlyingprovider.
+	 * Returns: a list of GdaDataModel's, as returned by the underlying provider.
 	 */
 	public ListG executeCommand(Command cmd, ParameterList params)
 	{
@@ -434,7 +434,7 @@ public class Connection : ObjectG
 	 * the underlying provider should try to get the last insert ID for the given result set.
 	 * Params:
 	 * recset = recordset.
-	 * Returns: a string representing the ID of the last inserted row, or NULLif an error occurred or no row has been inserted. It is the caller'sreponsibility to free the returned string.
+	 * Returns: a string representing the ID of the last inserted row, or NULL if an error occurred or no row has been inserted. It is the caller's reponsibility to free the returned string.
 	 */
 	public string getLastInsertId(DataModel recset)
 	{
@@ -450,7 +450,7 @@ public class Connection : ObjectG
 	 * Params:
 	 * cmd = a GdaCommand.
 	 * params = parameter list.
-	 * Returns: a GdaDataModel containing the data returned by thedata source, or NULL on error.
+	 * Returns: a GdaDataModel containing the data returned by the data source, or NULL on error.
 	 */
 	public DataModel executeSingleCommand(Command cmd, ParameterList params)
 	{
@@ -469,7 +469,7 @@ public class Connection : ObjectG
 	 * Params:
 	 * cmd = a GdaCommand.
 	 * params = parameter list.
-	 * Returns: the number of affected rows by the executed command,or -1 on error.
+	 * Returns: the number of affected rows by the executed command, or -1 on error.
 	 */
 	public int executeNonQuery(Command cmd, ParameterList params)
 	{
@@ -485,7 +485,7 @@ public class Connection : ObjectG
 	 * gda_connection_supports function.
 	 * Params:
 	 * xaction = a GdaTransaction object.
-	 * Returns: TRUE if the transaction was started successfully, FALSEotherwise.
+	 * Returns: TRUE if the transaction was started successfully, FALSE otherwise.
 	 */
 	public int beginTransaction(Transaction xaction)
 	{
@@ -498,7 +498,7 @@ public class Connection : ObjectG
 	 * gda_connection_begin_transaction() first.
 	 * Params:
 	 * xaction = a GdaTransaction object.
-	 * Returns: TRUE if the transaction was finished successfully,FALSE otherwise.
+	 * Returns: TRUE if the transaction was finished successfully, FALSE otherwise.
 	 */
 	public int commitTransaction(Transaction xaction)
 	{
@@ -525,7 +525,7 @@ public class Connection : ObjectG
 	 * Creates a BLOB (Binary Large OBject) with read/write access.
 	 * Params:
 	 * blob = a user-allocated GdaBlob structure.
-	 * Returns: FALSE if the database does not support BLOBs. TRUE otherwiseand the GdaBlob is created and ready to be used.
+	 * Returns: FALSE if the database does not support BLOBs. TRUE otherwise and the GdaBlob is created and ready to be used.
 	 */
 	public int createBlob(Blob blob)
 	{
@@ -573,7 +573,7 @@ public class Connection : ObjectG
 	 * Params:
 	 * schema = database schema to get.
 	 * params = parameter list.
-	 * Returns: a GdaDataModel containing the data required. The caller is responsibleof freeing the returned model.
+	 * Returns: a GdaDataModel containing the data required. The caller is responsible of freeing the returned model.
 	 */
 	public DataModel getSchema(GdaConnectionSchema schema, ParameterList params)
 	{

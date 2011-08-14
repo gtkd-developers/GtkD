@@ -155,7 +155,7 @@ public class DataList
 	 * Params:
 	 * datalist = a datalist.
 	 * keyId = the GQuark identifying a data element.
-	 * Returns:the data element, or NULL if it is not found.
+	 * Returns: the data element, or NULL if it is not found.
 	 */
 	public static void* idGetData(GData** datalist, GQuark keyId)
 	{
@@ -169,7 +169,7 @@ public class DataList
 	 * Params:
 	 * datalist = a datalist.
 	 * keyId = the GQuark identifying a data element.
-	 * Returns:the data previously stored at key_id, or NULL if none.
+	 * Returns: the data previously stored at key_id, or NULL if none.
 	 */
 	public static void* idRemoveNoNotify(GData** datalist, GQuark keyId)
 	{

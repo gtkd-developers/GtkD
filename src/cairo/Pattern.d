@@ -173,7 +173,7 @@ public class Pattern
 	 * Since 1.4
 	 * Params:
 	 * count = return value for the number of color stops, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a gradientpattern.
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a gradient pattern.
 	 */
 	public cairo_status_t getColorStopCount(out int count)
 	{
@@ -193,7 +193,7 @@ public class Pattern
 	 * green = return value for green component of color, or NULL
 	 * blue = return value for blue component of color, or NULL
 	 * alpha = return value for alpha component of color, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_INVALID_INDEXif index is not valid for the given pattern. If the pattern isnot a gradient pattern, CAIRO_STATUS_PATTERN_TYPE_MISMATCH isreturned.
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_INVALID_INDEX if index is not valid for the given pattern. If the pattern is not a gradient pattern, CAIRO_STATUS_PATTERN_TYPE_MISMATCH is returned.
 	 */
 	public cairo_status_t getColorStopRgba(int index, out double offset, out double red, out double green, out double blue, out double alpha)
 	{
@@ -210,7 +210,7 @@ public class Pattern
 	 * red = red component of the color
 	 * green = green component of the color
 	 * blue = blue component of the color
-	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, or an error pattern in case of no memory. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it. This function will always return a valid pointer, but if an error occurred the pattern status will be set to an error. To inspect the status of a pattern use cairo_pattern_status().
 	 */
 	public static Pattern createRgb(double red, double green, double blue)
 	{
@@ -233,7 +233,7 @@ public class Pattern
 	 * green = green component of the color
 	 * blue = blue component of the color
 	 * alpha = alpha component of the color
-	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, or an error pattern in case of no memory. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it. This function will always return a valid pointer, but if an error occurred the pattern status will be set to an error. To inspect the status of a pattern use cairo_pattern_status().
 	 */
 	public static Pattern createRgba(double red, double green, double blue, double alpha)
 	{
@@ -254,7 +254,7 @@ public class Pattern
 	 * green = return value for green component of color, or NULL
 	 * blue = return value for blue component of color, or NULL
 	 * alpha = return value for alpha component of color, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a solidcolor pattern.
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a solid color pattern.
 	 */
 	public cairo_status_t getRgba(out double red, out double green, out double blue, out double alpha)
 	{
@@ -266,7 +266,7 @@ public class Pattern
 	 * Create a new cairo_pattern_t for the given surface.
 	 * Params:
 	 * surface = the surface
-	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, or an error pattern in case of no memory. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it. This function will always return a valid pointer, but if an error occurred the pattern status will be set to an error. To inspect the status of a pattern use cairo_pattern_status().
 	 */
 	public static Pattern createForSurface(Surface surface)
 	{
@@ -286,7 +286,7 @@ public class Pattern
 	 * Since 1.4
 	 * Params:
 	 * surface = return value for surface of pattern, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a surfacepattern.
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a surface pattern.
 	 */
 	public cairo_status_t getSurface(out Surface surface)
 	{
@@ -313,7 +313,7 @@ public class Pattern
 	 * y0 = y coordinate of the start point
 	 * x1 = x coordinate of the end point
 	 * y1 = y coordinate of the end point
-	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, or an error pattern in case of no memory. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it. This function will always return a valid pointer, but if an error occurred the pattern status will be set to an error. To inspect the status of a pattern use cairo_pattern_status().
 	 */
 	public static Pattern createLinear(double x0, double y0, double x1, double y1)
 	{
@@ -334,7 +334,7 @@ public class Pattern
 	 * y0 = return value for the y coordinate of the first point, or NULL
 	 * x1 = return value for the x coordinate of the second point, or NULL
 	 * y1 = return value for the y coordinate of the second point, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a lineargradient pattern.
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a linear gradient pattern.
 	 */
 	public cairo_status_t getLinearPoints(out double x0, out double y0, out double x1, out double y1)
 	{
@@ -358,7 +358,7 @@ public class Pattern
 	 * cx1 = x coordinate for the center of the end circle
 	 * cy1 = y coordinate for the center of the end circle
 	 * radius1 = radius of the end circle
-	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, or an error pattern in case of no memory. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it. This function will always return a valid pointer, but if an error occurred the pattern status will be set to an error. To inspect the status of a pattern use cairo_pattern_status().
 	 */
 	public static Pattern createRadial(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
 	{
@@ -382,7 +382,7 @@ public class Pattern
 	 * x1 = return value for the x coordinate of the center of the second circle, or NULL
 	 * y1 = return value for the y coordinate of the center of the second circle, or NULL
 	 * r1 = return value for the radius of the second circle, or NULL
-	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a radialgradient pattern.
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a radial gradient pattern.
 	 */
 	public cairo_status_t getRadialCircles(out double x0, out double y0, out double r0, out double x1, out double y1, out double r1)
 	{
@@ -423,7 +423,7 @@ public class Pattern
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * pattern.
-	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NO_MEMORY, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH.
+	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NO_MEMORY, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
 	 */
 	public cairo_status_t status()
 	{
@@ -450,7 +450,7 @@ public class Pattern
 	/**
 	 * Gets the current extend mode for a pattern. See cairo_extend_t
 	 * for details on the semantics of each extend strategy.
-	 * Returns: the current extend strategy used for drawing thepattern.
+	 * Returns: the current extend strategy used for drawing the pattern.
 	 */
 	public cairo_extend_t getExtend()
 	{
@@ -535,7 +535,7 @@ public class Pattern
 	/**
 	 * Returns the current reference count of pattern.
 	 * Since 1.4
-	 * Returns: the current reference count of pattern. If theobject is a nil object, 0 will be returned.
+	 * Returns: the current reference count of pattern. If the object is a nil object, 0 will be returned.
 	 */
 	public uint getReferenceCount()
 	{
@@ -554,7 +554,7 @@ public class Pattern
 	 * destroy = a cairo_destroy_func_t which will be called when the
 	 * cairo_t is destroyed or when new user data is attached using the
 	 * same key.
-	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a slot could not be allocated for the user data.
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{

@@ -297,7 +297,7 @@ public class Bus : ObjectGst
 	 * is taken by the bus.
 	 * Params:
 	 * message = The GstMessage to post
-	 * Returns: TRUE if the message could be posted, FALSE if the bus is flushing.MT safe.
+	 * Returns: TRUE if the message could be posted, FALSE if the bus is flushing. MT safe.
 	 */
 	public int post(Message message)
 	{
@@ -308,7 +308,7 @@ public class Bus : ObjectGst
 	/**
 	 * Check if there are pending messages on the bus that
 	 * should be handled.
-	 * Returns: TRUE if there are messages on the bus to be handled, FALSE otherwise.MT safe.
+	 * Returns: TRUE if there are messages on the bus to be handled, FALSE otherwise. MT safe.
 	 */
 	public int havePending()
 	{
@@ -320,7 +320,7 @@ public class Bus : ObjectGst
 	 * Peek the message on the top of the bus' queue. The message will remain
 	 * on the bus' message queue. A reference is returned, and needs to be unreffed
 	 * by the caller.
-	 * Returns: The GstMessage that is on the bus, or NULL if the bus is empty.MT safe.
+	 * Returns: The GstMessage that is on the bus, or NULL if the bus is empty. MT safe.
 	 */
 	public Message peek()
 	{
@@ -335,7 +335,7 @@ public class Bus : ObjectGst
 	
 	/**
 	 * Get a message from the bus.
-	 * Returns: The GstMessage that is on the bus, or NULL if the bus is empty.The message is taken from the bus and needs to be unreffed withgst_message_unref() after usage.MT safe.
+	 * Returns: The GstMessage that is on the bus, or NULL if the bus is empty. The message is taken from the bus and needs to be unreffed with gst_message_unref() after usage. MT safe.
 	 */
 	public Message pop()
 	{
@@ -355,7 +355,7 @@ public class Bus : ObjectGst
 	 * posted on the bus.
 	 * Params:
 	 * timeout = a timeout
-	 * Returns: The GstMessage that is on the bus after the specified timeoutor NULL if the bus is empty after the timeout expired.The message is taken from the bus and needs to be unreffed withgst_message_unref() after usage.MT safe.Since 0.10.12
+	 * Returns: The GstMessage that is on the bus after the specified timeout or NULL if the bus is empty after the timeout expired. The message is taken from the bus and needs to be unreffed with gst_message_unref() after usage. MT safe. Since 0.10.12
 	 */
 	public Message timedPop(GstClockTime timeout)
 	{
@@ -425,7 +425,7 @@ public class Bus : ObjectGst
 	 * func = A function to call when a message is received.
 	 * userData = user data passed to func.
 	 * notify = the function to call when the source is removed.
-	 * Returns: The event source id.MT safe.
+	 * Returns: The event source id. MT safe.
 	 */
 	public uint addWatchFull(int priority, GstBusFunc func, void* userData, GDestroyNotify notify)
 	{
@@ -545,7 +545,7 @@ public class Bus : ObjectGst
 	 * events = a mask of GstMessageType, representing the set of message types to
 	 * poll for.
 	 * timeout = the poll timeout, as a GstClockTimeDiff, or -1 to poll indefinitely.
-	 * Returns: The message that was received, or NULL if the poll timed out.The message is taken from the bus and needs to be unreffed withgst_message_unref() after usage.Signal DetailsThe "message" signalvoid user_function (GstBus *bus, GstMessage *message, gpointer user_data) : Run last / Has detailsA message has been posted on the bus. This signal is emitted from aGSource added to the mainloop. this signal will only be emitted whenthere is a mainloop running.
+	 * Returns: The message that was received, or NULL if the poll timed out. The message is taken from the bus and needs to be unreffed with gst_message_unref() after usage. Signal Details The "message" signal void user_function (GstBus *bus, GstMessage *message, gpointer user_data) : Run last / Has details A message has been posted on the bus. This signal is emitted from a GSource added to the mainloop. this signal will only be emitted when there is a mainloop running.
 	 */
 	public Message poll(GstMessageType events, GstClockTimeDiff timeout)
 	{

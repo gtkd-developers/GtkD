@@ -300,7 +300,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	
 	/**
 	 * Returns TRUE if tree_column is visible.
-	 * Returns: whether the column is visible or not. If it is visible, thenthe tree will show the column.
+	 * Returns: whether the column is visible or not. If it is visible, then the tree will show the column.
 	 */
 	public int getVisible()
 	{
@@ -461,7 +461,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	
 	/**
 	 * Returns the title of the widget.
-	 * Returns: the title of the column. This string should not bemodified or freed.
+	 * Returns: the title of the column. This string should not be modified or freed.
 	 */
 	public string getTitle()
 	{

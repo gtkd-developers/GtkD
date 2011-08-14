@@ -221,7 +221,7 @@ public class GhostPad : Pad
 	 * is unlinked and links to the new target are established.
 	 * Params:
 	 * newtarget = the new pad target
-	 * Returns: TRUE if the new target could be set. This function can return FALSEwhen the internal pads could not be linked.
+	 * Returns: TRUE if the new target could be set. This function can return FALSE when the internal pads could not be linked.
 	 */
 	public int setTarget(Pad newtarget)
 	{
@@ -231,7 +231,7 @@ public class GhostPad : Pad
 	
 	/**
 	 * Get the target pad of gpad. Unref target pad after usage.
-	 * Returns: the target GstPad, can be NULL if the ghostpadhas no target set. Unref target pad after usage.
+	 * Returns: the target GstPad, can be NULL if the ghostpad has no target set. Unref target pad after usage.
 	 */
 	public Pad getTarget()
 	{

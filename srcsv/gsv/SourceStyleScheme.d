@@ -157,7 +157,7 @@ public class SourceStyleScheme : ObjectG
 	
 	/**
 	 * Since 2.0
-	 * Returns: a NULL-terminated array containing the scheme authors orNULL if no author is specified by the stylescheme.
+	 * Returns: a NULL-terminated array containing the scheme authors or NULL if no author is specified by the style scheme.
 	 */
 	public string[] getAuthors()
 	{
@@ -167,7 +167,7 @@ public class SourceStyleScheme : ObjectG
 	
 	/**
 	 * Since 2.0
-	 * Returns: scheme file name if the scheme was created parsing astyle scheme file or NULL in the other cases.
+	 * Returns: scheme file name if the scheme was created parsing a style scheme file or NULL in the other cases.
 	 */
 	public string getFilename()
 	{
@@ -179,7 +179,7 @@ public class SourceStyleScheme : ObjectG
 	 * Since 2.0
 	 * Params:
 	 * styleId = id of the style to retrieve.
-	 * Returns: style which corresponds to style_id in the scheme,or NULL when no style with this name found. It is owned by schemeand may not be unref'ed.
+	 * Returns: style which corresponds to style_id in the scheme, or NULL when no style with this name found. It is owned by scheme and may not be unref'ed.
 	 */
 	public SourceStyle getStyle(string styleId)
 	{

@@ -106,7 +106,7 @@ public class GLFont
 	 * first = the index of the first glyph to be taken.
 	 * count = the number of glyphs to be taken.
 	 * listBase = the index of the first display list to be generated.
-	 * Returns: the PangoFont used, or NULL if no font matched.<<OpenGL WindowGeometric Object Rendering>>
+	 * Returns: the PangoFont used, or NULL if no font matched. <<OpenGL Window Geometric Object Rendering>>
 	 */
 	public static PgFont usePangoFontForDisplay(Display display, PgFontDescription fontDesc, int first, int count, int listBase)
 	{

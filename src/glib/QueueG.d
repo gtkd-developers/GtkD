@@ -597,7 +597,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * n = the position of the link
-	 * Returns: The link at the n'th position, or NULL if n is off theend of the list
+	 * Returns: The link at the n'th position, or NULL if n is off the end of the list
 	 */
 	public ListG peekNthLink(uint n)
 	{
@@ -615,7 +615,7 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * link = A GList link
-	 * Returns: The position of link_, or -1 if the link isnot part of queue
+	 * Returns: The position of link_, or -1 if the link is not part of queue
 	 */
 	public int linkIndex(ListG link)
 	{

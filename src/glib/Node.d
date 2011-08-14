@@ -355,7 +355,7 @@ public class Node
 	 * which contains the given data.
 	 * Params:
 	 * data = the data to find
-	 * Returns: the index of the child of node which contains  data, or -1 if the data is not found
+	 * Returns: the index of the child of node which contains data, or -1 if the data is not found
 	 */
 	public int childIndex(void* data)
 	{

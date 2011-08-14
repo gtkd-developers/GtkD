@@ -276,7 +276,7 @@ public class Assistant : Window
 	/**
 	 * Returns the page number of the current page
 	 * Since 2.10
-	 * Returns: The index (starting from 0) of the current page inthe assistant, if the assistant has no pages, -1 will be returned
+	 * Returns: The index (starting from 0) of the current page in the assistant, if the assistant has no pages, -1 will be returned
 	 */
 	public int getCurrentPage()
 	{
@@ -462,7 +462,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * Returns: the header image for page, or NULLif there's no header image for the page.
+	 * Returns: the header image for page, or NULL if there's no header image for the page.
 	 */
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
@@ -494,7 +494,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * Returns: the side image for page, or NULLif there's no side image for the page.
+	 * Returns: the side image for page, or NULL if there's no side image for the page.
 	 */
 	public Pixbuf getPageSideImage(Widget page)
 	{

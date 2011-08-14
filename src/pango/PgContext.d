@@ -230,7 +230,7 @@ public class PgContext : ObjectG
 	 *  This must be >= 0.
 	 * attrs = the set of attributes that apply to text.
 	 * cachedIter = Cached attribute iterator, or NULL
-	 * Returns: a GList of PangoItem structures. The items should befreed using pango_item_free() probably in combination with g_list_foreach(),and the list itself using g_list_free().
+	 * Returns: a GList of PangoItem structures. The items should be freed using pango_item_free() probably in combination with g_list_foreach(), and the list itself using g_list_free().
 	 */
 	public ListG itemizeWithBaseDir(PangoDirection baseDir, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
@@ -249,7 +249,7 @@ public class PgContext : ObjectG
 	 * The original list is unmodified.
 	 * Params:
 	 * logicalItems = a GList of PangoItem in logical order.
-	 * Returns: a GList of PangoItem structures in visual order.(Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
+	 * Returns: a GList of PangoItem structures in visual order. (Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
 	 */
 	public static ListG reorderItems(ListG logicalItems)
 	{
@@ -697,7 +697,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 * text = the text to process
 	 * length = length of text in bytes (may be -1 if text is nul-terminated)
-	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
+	 * Returns: The direction corresponding to the first strong character. If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
 	 */
 	public static PangoDirection findBaseDir(string text, int length)
 	{
@@ -716,7 +716,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 * ch = a Unicode character
 	 * mirroredCh = location to store the mirrored character
-	 * Returns: TRUE if ch has a mirrored character and mirrored_ch isfilled in, FALSE otherwise
+	 * Returns: TRUE if ch has a mirrored character and mirrored_ch is filled in, FALSE otherwise
 	 */
 	public static int getMirrorChar(gunichar ch, gunichar* mirroredCh)
 	{
@@ -732,7 +732,7 @@ public class PgContext : ObjectG
 	 * Since 1.22
 	 * Params:
 	 * ch = a Unicode character
-	 * Returns: the bidirectional character type, as used in theUnicode bidirectional algorithm.
+	 * Returns: the bidirectional character type, as used in the Unicode bidirectional algorithm.
 	 */
 	public static PangoBidiType bidiTypeForUnichar(gunichar ch)
 	{

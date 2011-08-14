@@ -343,7 +343,7 @@ public class Table
 	 * Params:
 	 * row = a gint representing a row in table
 	 * column = a gint representing a column in table
-	 * Returns: a gint representing the index at specified position.The value -1 is returned if the object at row,column is not a childof table or table does not implement this interface.
+	 * Returns: a gint representing the index at specified position. The value -1 is returned if the object at row,column is not a child of table or table does not implement this interface.
 	 */
 	public int getIndexAt(int row, int column)
 	{
@@ -355,7 +355,7 @@ public class Table
 	 * Gets a gint representing the column at the specified index_.
 	 * Params:
 	 * index = a gint representing an index in table
-	 * Returns: a gint representing the column at the specified index,or -1 if the table does not implement this interface
+	 * Returns: a gint representing the column at the specified index, or -1 if the table does not implement this interface
 	 */
 	public int getColumnAtIndex(int index)
 	{
@@ -367,7 +367,7 @@ public class Table
 	 * Gets a gint representing the row at the specified index_.
 	 * Params:
 	 * index = a gint representing an index in table
-	 * Returns: a gint representing the row at the specified index,or -1 if the table does not implement this interface
+	 * Returns: a gint representing the row at the specified index, or -1 if the table does not implement this interface
 	 */
 	public int getRowAtIndex(int index)
 	{
@@ -377,7 +377,7 @@ public class Table
 	
 	/**
 	 * Gets the number of columns in the table.
-	 * Returns: a gint representing the number of columns, or 0if value does not implement this interface.
+	 * Returns: a gint representing the number of columns, or 0 if value does not implement this interface.
 	 */
 	public int getNColumns()
 	{
@@ -387,7 +387,7 @@ public class Table
 	
 	/**
 	 * Gets the number of rows in the table.
-	 * Returns: a gint representing the number of rows, or 0if value does not implement this interface.
+	 * Returns: a gint representing the number of rows, or 0 if value does not implement this interface.
 	 */
 	public int getNRows()
 	{
@@ -401,7 +401,7 @@ public class Table
 	 * Params:
 	 * row = a gint representing a row in table
 	 * column = a gint representing a column in table
-	 * Returns: a gint representing the column extent at specified position, or 0if value does not implement this interface.
+	 * Returns: a gint representing the column extent at specified position, or 0 if value does not implement this interface.
 	 */
 	public int getColumnExtentAt(int row, int column)
 	{
@@ -415,7 +415,7 @@ public class Table
 	 * Params:
 	 * row = a gint representing a row in table
 	 * column = a gint representing a column in table
-	 * Returns: a gint representing the row extent at specified position, or 0if value does not implement this interface.
+	 * Returns: a gint representing the row extent at specified position, or 0 if value does not implement this interface.
 	 */
 	public int getRowExtentAt(int row, int column)
 	{
@@ -425,7 +425,7 @@ public class Table
 	
 	/**
 	 * Gets the caption for the table.
-	 * Returns: a AtkObject* representing the table caption, or NULLif value does not implement this interface.
+	 * Returns: a AtkObject* representing the table caption, or NULL if value does not implement this interface.
 	 */
 	public ObjectAtk getCaption()
 	{
@@ -442,7 +442,7 @@ public class Table
 	 * Gets the description text of the specified column in the table
 	 * Params:
 	 * column = a gint representing a column in table
-	 * Returns: a gchar* representing the column description, or NULLif value does not implement this interface.
+	 * Returns: a gchar* representing the column description, or NULL if value does not implement this interface.
 	 */
 	public string getColumnDescription(int column)
 	{
@@ -454,7 +454,7 @@ public class Table
 	 * Gets the description text of the specified row in the table
 	 * Params:
 	 * row = a gint representing a row in table
-	 * Returns: a gchar* representing the row description, or NULLif value does not implement this interface.
+	 * Returns: a gchar* representing the row description, or NULL if value does not implement this interface.
 	 */
 	public string getRowDescription(int row)
 	{
@@ -466,7 +466,7 @@ public class Table
 	 * Gets the column header of a specified column in an accessible table.
 	 * Params:
 	 * column = a gint representing a column in the table
-	 * Returns: a AtkObject* representing the specified column header, orNULL if value does not implement this interface.
+	 * Returns: a AtkObject* representing the specified column header, or NULL if value does not implement this interface.
 	 */
 	public ObjectAtk getColumnHeader(int column)
 	{
@@ -483,7 +483,7 @@ public class Table
 	 * Gets the row header of a specified row in an accessible table.
 	 * Params:
 	 * row = a gint representing a row in the table
-	 * Returns: a AtkObject* representing the specified row header, orNULL if value does not implement this interface.
+	 * Returns: a AtkObject* representing the specified row header, or NULL if value does not implement this interface.
 	 */
 	public ObjectAtk getRowHeader(int row)
 	{
@@ -498,7 +498,7 @@ public class Table
 	
 	/**
 	 * Gets the summary description of the table.
-	 * Returns: a AtkObject* representing a summary description of the table,or zero if value does not implement this interface.
+	 * Returns: a AtkObject* representing a summary description of the table, or zero if value does not implement this interface.
 	 */
 	public ObjectAtk getSummary()
 	{
@@ -589,7 +589,7 @@ public class Table
 	 * the selected column numbers. This array should be freed by the caller.
 	 * Params:
 	 * selected = a gint** that is to contain the selected columns numbers
-	 * Returns: a gint representing the number of selected columns,or 0 if value does not implement this interface.
+	 * Returns: a gint representing the number of selected columns, or 0 if value does not implement this interface.
 	 */
 	public int getSelectedColumns(out int[] selected)
 	{
@@ -607,7 +607,7 @@ public class Table
 	 * the selected row numbers. This array should be freed by the caller.
 	 * Params:
 	 * selected = a gint** that is to contain the selected row numbers
-	 * Returns: a gint representing the number of selected rows,or zero if value does not implement this interface.
+	 * Returns: a gint representing the number of selected rows, or zero if value does not implement this interface.
 	 */
 	public int getSelectedRows(out int[] selected)
 	{
@@ -625,7 +625,7 @@ public class Table
 	 * is selected
 	 * Params:
 	 * column = a gint representing a column in table
-	 * Returns: a gboolean representing if the column is selected, or 0if value does not implement this interface.
+	 * Returns: a gboolean representing if the column is selected, or 0 if value does not implement this interface.
 	 */
 	public int isColumnSelected(int column)
 	{
@@ -638,7 +638,7 @@ public class Table
 	 * is selected
 	 * Params:
 	 * row = a gint representing a row in table
-	 * Returns: a gboolean representing if the row is selected, or 0if value does not implement this interface.
+	 * Returns: a gboolean representing if the row is selected, or 0 if value does not implement this interface.
 	 */
 	public int isRowSelected(int row)
 	{
@@ -652,7 +652,7 @@ public class Table
 	 * Params:
 	 * row = a gint representing a row in table
 	 * column = a gint representing a column in table
-	 * Returns: a gboolean representing if the cell is selected, or 0if value does not implement this interface.
+	 * Returns: a gboolean representing if the cell is selected, or 0 if value does not implement this interface.
 	 */
 	public int isSelected(int row, int column)
 	{
@@ -676,7 +676,7 @@ public class Table
 	 * Adds the specified row to the selection.
 	 * Params:
 	 * row = a gint representing a row in table
-	 * Returns: a gboolean representing if row was successfully added to selection,or 0 if value does not implement this interface.
+	 * Returns: a gboolean representing if row was successfully added to selection, or 0 if value does not implement this interface.
 	 */
 	public int addRowSelection(int row)
 	{
@@ -688,7 +688,7 @@ public class Table
 	 * Adds the specified column to the selection.
 	 * Params:
 	 * column = a gint representing a column in table
-	 * Returns: a gboolean representing if the column was successfully removed fromthe selection, or 0 if value does not implement this interface.
+	 * Returns: a gboolean representing if the column was successfully removed from the selection, or 0 if value does not implement this interface.
 	 */
 	public int removeColumnSelection(int column)
 	{
@@ -700,7 +700,7 @@ public class Table
 	 * Removes the specified row from the selection.
 	 * Params:
 	 * row = a gint representing a row in table
-	 * Returns: a gboolean representing if the row was successfully removed fromthe selection, or 0 if value does not implement this interface.Signal DetailsThe "column-deleted" signalvoid user_function (AtkTable *atktable, gint arg1, gint arg2, gpointer user_data) : Run LastThe "column-deleted" signal is emitted by an object which implements theAtkTable interface when a column is deleted.
+	 * Returns: a gboolean representing if the row was successfully removed from the selection, or 0 if value does not implement this interface. Signal Details The "column-deleted" signal void user_function (AtkTable *atktable, gint arg1, gint arg2, gpointer user_data) : Run Last The "column-deleted" signal is emitted by an object which implements the AtkTable interface when a column is deleted.
 	 */
 	public int removeRowSelection(int row)
 	{

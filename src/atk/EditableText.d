@@ -114,7 +114,7 @@ public class EditableText
 	 * attribSet = an AtkAttributeSet
 	 * startOffset = start of range in which to set attributes
 	 * endOffset = end of range in which to set attributes
-	 * Returns: TRUE if attributes successfully set for the specifiedrange, otherwise FALSE
+	 * Returns: TRUE if attributes successfully set for the specified range, otherwise FALSE
 	 */
 	public int setRunAttributes(AtkAttributeSet* attribSet, int startOffset, int endOffset)
 	{

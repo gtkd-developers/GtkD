@@ -129,22 +129,6 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * If realloc_fn is non-NULL, it will be used for resizing the internal
 	 * storage when necessary. To construct a fixed-size output stream,
 	 * pass NULL as realloc_fn.
-	 *  1
-	 * 2
-	 * 3
-	 * 4
-	 * 5
-	 * 6
-	 * 7
-	 * 8
-	 * 9
-	 *  /+* a stream that can grow +/
-	 * stream = g_memory_output_stream_new (NULL, 0, realloc, free);
-	 * /+* another stream that can grow +/
-	 * stream2 = g_memory_output_stream_new (NULL, 0, g_realloc, g_free);
-	 * /+* a fixed-size stream +/
-	 * data = malloc (200);
-	 * stream3 = g_memory_output_stream_new (data, 200, NULL, free);
 	 * Params:
 	 * data = pointer to a chunk of memory to use, or NULL
 	 * size = the size of data

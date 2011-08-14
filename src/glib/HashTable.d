@@ -298,7 +298,7 @@ public class HashTable
 	 * Params:
 	 * predicate = function to test the key/value pairs for a certain property.
 	 * userData = user data to pass to the function.
-	 * Returns: The value of the first key/value pair is returned, for whichfunc evaluates to TRUE. If no pair with the requested property is found,NULL is returned.
+	 * Returns: The value of the first key/value pair is returned, for which func evaluates to TRUE. If no pair with the requested property is found, NULL is returned.
 	 */
 	public void* find(GHRFunc predicate, void* userData)
 	{

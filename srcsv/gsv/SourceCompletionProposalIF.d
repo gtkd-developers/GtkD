@@ -156,7 +156,7 @@ public interface SourceCompletionProposalIF
 	 * completion model. By default, it uses direct equality (g_direct_equal).
 	 * Params:
 	 * other = A GtkSourceCompletionProposal
-	 * Returns: TRUE if proposal and object are the same proposalSignal DetailsThe "changed" signalvoid user_function (GtkSourceCompletionProposal *proposal, gpointer user_data) : Run Last / ActionEmitted when the proposal has changed. The completion popupwill react to this by updating the shown information.
+	 * Returns: TRUE if proposal and object are the same proposal Signal Details The "changed" signal void user_function (GtkSourceCompletionProposal *proposal, gpointer user_data) : Run Last / Action Emitted when the proposal has changed. The completion popup will react to this by updating the shown information.
 	 */
 	public int equal(SourceCompletionProposalIF other);
 }

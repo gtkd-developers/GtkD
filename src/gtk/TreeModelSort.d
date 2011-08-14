@@ -104,125 +104,11 @@ private import gobject.ObjectG;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
- * Example  23.  Using a GtkTreeModelSort
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- *  {
-	 *  GtkTreeView *tree_view1;
-	 *  GtkTreeView *tree_view2;
-	 *  GtkTreeModel *sort_model1;
-	 *  GtkTreeModel *sort_model2;
-	 *  GtkTreeModel *child_model;
-	 *  /+* get the child model +/
-	 *  child_model = get_my_model ();
-	 *  /+* Create the first tree +/
-	 *  sort_model1 = gtk_tree_model_sort_new_with_model (child_model);
-	 *  tree_view1 = gtk_tree_view_new_with_model (sort_model1);
-	 *  /+* Create the second tree +/
-	 *  sort_model2 = gtk_tree_model_sort_new_with_model (child_model);
-	 *  tree_view2 = gtk_tree_view_new_with_model (sort_model2);
-	 *  /+* Now we can sort the two models independently +/
-	 *  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model1),
-	 *  COLUMN_1, GTK_SORT_ASCENDING);
-	 *  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model2),
-	 *  COLUMN_1, GTK_SORT_DESCENDING);
- * }
  * To demonstrate how to access the underlying child model from the sort
  * model, the next example will be a callback for the GtkTreeSelection
  * "changed" signal. In this callback, we get a string from COLUMN_1 of
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
- * Example  24.  Accessing the child model of in a selection changed callback
- *  1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- * 22
- * 23
- * 24
- * 25
- * 26
- * 27
- * 28
- * 29
- * 30
- * 31
- * 32
- * 33
- * 34
- * 35
- * 36
- *  void
- * selection_changed (GtkTreeSelection *selection, gpointer data)
- * {
-	 *  GtkTreeModel *sort_model = NULL;
-	 *  GtkTreeModel *child_model;
-	 *  GtkTreeIter sort_iter;
-	 *  GtkTreeIter child_iter;
-	 *  char *some_data = NULL;
-	 *  char *modified_data;
-	 *  /+* Get the current selected row and the model. +/
-	 *  if (! gtk_tree_selection_get_selected (selection,
-	 *  sort_model,
-	 *  sort_iter))
-	 *  return;
-	 *  /+* Look up the current value on the selected row and get a new value
-	 *  * to change it to.
-	 *  +/
-	 *  gtk_tree_model_get (GTK_TREE_MODEL (sort_model), sort_iter,
-	 *  COLUMN_1, some_data,
-	 *  -1);
-	 *  modified_data = change_the_data (some_data);
-	 *  g_free (some_data);
-	 *  /+* Get an iterator on the child model, instead of the sort model. +/
-	 *  gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (sort_model),
-	 *  child_iter,
-	 *  sort_iter);
-	 *  /+* Get the child model and change the value of the row. In this
-	 *  * example, the child model is a GtkListStore. It could be any other
-	 *  * type of model, though.
-	 *  +/
-	 *  child_model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (sort_model));
-	 *  gtk_list_store_set (GTK_LIST_STORE (child_model), child_iter,
-	 *  COLUMN_1, modified_data,
-	 *  -1);
-	 *  g_free (modified_data);
- * }
  */
 public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortableIF
 {
@@ -341,7 +227,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * Params:
 	 * sortIter = An uninitialized GtkTreeIter.
 	 * childIter = A valid GtkTreeIter pointing to a row on the child model
-	 * Returns: TRUE, if sort_iter was set, i.e. if sort_iter is avalid iterator pointer to a visible row in the child model.
+	 * Returns: TRUE, if sort_iter was set, i.e. if sort_iter is a valid iterator pointer to a visible row in the child model.
 	 */
 	public int convertChildIterToIter(TreeIter sortIter, TreeIter childIter)
 	{

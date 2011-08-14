@@ -70,7 +70,7 @@ private import glib.Str;
  * Params:
  * domain = the GStreamer error domain this error belongs to.
  * code = the error code belonging to the domain.
- * Returns: a newly allocated string describing the error message in thecurrent locale.
+ * Returns: a newly allocated string describing the error message in the current locale.
  */
 public static string errorGetMessage(GQuark domain, int code)
 {

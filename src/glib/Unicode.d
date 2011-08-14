@@ -402,7 +402,7 @@ public class Unicode
 	 * digit.
 	 * Params:
 	 * c = a Unicode character
-	 * Returns: If c is a decimal digit (according tog_unichar_isdigit()), its numeric value. Otherwise, -1.
+	 * Returns: If c is a decimal digit (according to g_unichar_isdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int unicharDigitValue(gunichar c)
 	{
@@ -415,7 +415,7 @@ public class Unicode
 	 * digit.
 	 * Params:
 	 * c = a Unicode character
-	 * Returns: If c is a hex digit (according tog_unichar_isxdigit()), its numeric value. Otherwise, -1.
+	 * Returns: If c is a hex digit (according to g_unichar_isxdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int unicharXdigitValue(gunichar c)
 	{
@@ -557,7 +557,7 @@ public class Unicode
 	 * p = a pointer to Unicode character encoded as UTF-8
 	 * maxLen = the maximum number of bytes to read, or -1, for no maximum or
 	 *  if p is nul-terminated
-	 * Returns: the resulting character. If p points to a partial sequence at the end of a string that could begin a valid  character (or if max_len is zero), returns (gunichar)-2;  otherwise, if p does not point to a valid UTF-8 encoded  Unicode character, returns (gunichar)-1.
+	 * Returns: the resulting character. If p points to a partial sequence at the end of a string that could begin a valid character (or if max_len is zero), returns (gunichar)-2; otherwise, if p does not point to a valid UTF-8 encoded Unicode character, returns (gunichar)-1.
 	 */
 	public static gunichar utf8_GetCharValidated(string p, gssize maxLen)
 	{
@@ -699,7 +699,7 @@ public class Unicode
 	 * p = a nul-terminated UTF-8 encoded string
 	 * len = the maximum length of p
 	 * c = a Unicode character
-	 * Returns: NULL if the string does not contain the character,  otherwise, a pointer to the start of the leftmost occurrence of  the character in the string.
+	 * Returns: NULL if the string does not contain the character, otherwise, a pointer to the start of the leftmost occurrence of the character in the string.
 	 */
 	public static string utf8_Strchr(string p, gssize len, gunichar c)
 	{
@@ -715,7 +715,7 @@ public class Unicode
 	 * p = a nul-terminated UTF-8 encoded string
 	 * len = the maximum length of p
 	 * c = a Unicode character
-	 * Returns: NULL if the string does not contain the character,  otherwise, a pointer to the start of the rightmost occurrence of the  character in the string.
+	 * Returns: NULL if the string does not contain the character, otherwise, a pointer to the start of the rightmost occurrence of the character in the string.
 	 */
 	public static string utf8_Strrchr(string p, gssize len, gunichar c)
 	{
@@ -880,7 +880,7 @@ public class Unicode
 	 * Params:
 	 * str1 = a UTF-8 encoded string
 	 * str2 = a UTF-8 encoded string
-	 * Returns: < 0 if str1 compares before str2,  0 if they compare equal, > 0 if str1 compares after str2.
+	 * Returns: < 0 if str1 compares before str2, 0 if they compare equal, > 0 if str1 compares after str2.
 	 */
 	public static int utf8_Collate(string str1, string str2)
 	{
@@ -1134,7 +1134,7 @@ public class Unicode
 	 * itemsWritten = location to store number of bytes written or NULL.
 	 *  The value here stored does not include the trailing 0
 	 *  byte.
-	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input  character.
+	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input character.
 	 * Throws: GException on failure.
 	 */
 	public static string ucs4_ToUtf8(gunichar* str, glong len, out glong itemsRead, out glong itemsWritten)
