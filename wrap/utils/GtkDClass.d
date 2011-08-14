@@ -2987,7 +2987,8 @@ public class GtkDClass
 		debug(name)writefln("name before %s", name);
 		name = std.string.strip(name);
 		while ( name.length > 0
-				&& (GtkDClass.startsWith(name,"const") || name[0] == '*' )
+				&& (GtkDClass.startsWith(name,"const") || name[0] == '*'
+				|| GtkDClass.startsWith(name,"G_GNUC_MAY_ALIAS") )
 			  )
 		{
 			if ( name[0] == '*' )
@@ -2995,9 +2996,13 @@ public class GtkDClass
 				type = type.dup ~ '*';
 				name = std.string.strip(name[1..name.length]);
 			}
-			else
+			else if (GtkDClass.startsWith(name,"const"))
 			{
 				name = std.string.strip(name[5..name.length]);
+			}
+			else
+			{
+				name = std.string.strip(name[16..name.length]);
 			}
 			name = std.string.strip(name);
 		}

@@ -125,7 +125,8 @@ public class Directory
 	
 	/**
 	 * Opens a directory for reading. The names of the files in the
-	 * directory can then be retrieved using g_dir_read_name().
+	 * directory can then be retrieved using g_dir_read_name(). Note
+	 * that the ordering is not defined.
 	 * Params:
 	 * path = the path to the directory you are interested in. On Unix
 	 *  in the on-disk encoding. On Windows in UTF-8
@@ -153,9 +154,14 @@ public class Directory
 	}
 	
 	/**
-	 * Retrieves the name of the next entry in the directory. The '.' and
-	 * '..' entries are omitted. On Windows, the returned name is in
-	 * UTF-8. On Unix, it is in the on-disk encoding.
+	 * Retrieves the name of another entry in the directory, or NULL.
+	 * The order of entries returned from this function is not defined,
+	 * and may vary by file system or other operating-system dependent
+	 * factors.
+	 * On Unix, the '.' and '..' entries are omitted, and the returned
+	 * name is in the on-disk encoding.
+	 * On Windows, as is true of all GLib functions which operate on
+	 * filenames, the returned name is in UTF-8.
 	 * Returns: The entry's name or NULL if there are no  more entries. The return value is owned by GLib and must not be modified or freed.
 	 */
 	public string readName()

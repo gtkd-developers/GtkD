@@ -87,6 +87,9 @@ private import glib.ConstructionException;
  * field, use g_relation_delete().
  * To destroy the GRelation, use g_relation_destroy().
  * To help debug GRelation objects, use g_relation_print().
+ * GRelation has been marked as deprecated, since this API has never
+ * been fully implemented, is not very actively maintained and rarely
+ * used.
  */
 public class Tuples
 {
@@ -124,6 +127,8 @@ public class Tuples
 	 */
 	
 	/**
+	 * Warning
+	 * g_tuples_destroy has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Frees the records which were returned by g_relation_select(). This
 	 * should always be called after g_relation_select() when you are
 	 * finished with the records. The records are not removed from the
@@ -136,13 +141,15 @@ public class Tuples
 	}
 	
 	/**
+	 * Warning
+	 * g_tuples_index has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Gets a field from the records returned by g_relation_select(). It
 	 * returns the given field of the record at the given index. The
 	 * returned value should not be changed.
 	 * Params:
 	 * index = the index of the record.
 	 * field = the field to return.
-	 * Returns: the field of the record.
+	 * Returns:the field of the record.
 	 */
 	public void* index(int index, int field)
 	{

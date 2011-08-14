@@ -158,7 +158,7 @@ public class StaticPrivate
 	/**
 	 * Works like g_private_get() only for a GStaticPrivate.
 	 * This function works even if g_thread_init() has not yet been called.
-	 * Returns: the corresponding pointer.
+	 * Returns:the corresponding pointer.
 	 */
 	public void* get()
 	{

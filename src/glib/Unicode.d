@@ -1082,14 +1082,14 @@ public class Unicode
 		// gchar* g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_utf16_to_utf8(str, len, &itemsRead, &itemsWritten, &err));
+		auto p = g_utf16_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -1142,14 +1142,14 @@ public class Unicode
 		// gchar* g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_ucs4_to_utf8(str, len, &itemsRead, &itemsWritten, &err));
+		auto p = g_ucs4_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**

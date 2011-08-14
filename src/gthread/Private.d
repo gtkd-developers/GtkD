@@ -188,7 +188,7 @@ public class Private
 	 * call. Instead, NULL will be returned in all threads directly after
 	 * g_thread_init(), regardless of any g_private_set() calls issued
 	 * before threading system intialization.
-	 * Returns: the corresponding pointer.
+	 * Returns:the corresponding pointer.
 	 */
 	public void* get()
 	{

@@ -82,6 +82,8 @@ private import glib.Str;
  * retrieves the item's string from the data structure. You can change
  * the way in which strings are compared by setting a different
  * GCompletionStrncmpFunc in g_completion_set_compare().
+ * GCompletion has been marked as deprecated, since this API is rarely
+ * used and not very actively maintained.
  */
 public class StringCompletion
 {
@@ -119,6 +121,8 @@ public class StringCompletion
 	 */
 	
 	/**
+	 * Warning
+	 * g_completion_new is deprecated and should not be used in newly-written code.
 	 * Creates a new GCompletion.
 	 * Params:
 	 * func = the function to be called to return the string representing
@@ -138,6 +142,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_add_items has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Adds items to the GCompletion.
 	 * Params:
 	 * items = the list of items to add.
@@ -149,6 +155,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_remove_items has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Removes items from a GCompletion.
 	 * Params:
 	 * items = the items to remove.
@@ -160,6 +168,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_clear_items has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Removes all items from the GCompletion.
 	 */
 	public void clearItems()
@@ -169,6 +179,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_complete has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Attempts to complete the string prefix using the GCompletion
 	 * target items.
 	 * Params:
@@ -178,7 +190,7 @@ public class StringCompletion
 	 *  common to all items that matched prefix, or NULL if
 	 *  no items matched prefix. This string should be freed
 	 *  when no longer needed.
-	 * Returns: the list of items whose strings begin with prefix. This should not be changed.
+	 * Returns:the list of items whose strings begin with prefix. This should not be changed.
 	 */
 	public ListG complete(string prefix, out string newPrefix)
 	{
@@ -196,6 +208,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_complete_utf8 has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Attempts to complete the string prefix using the GCompletion target items.
 	 * In contrast to g_completion_complete(), this function returns the largest common
 	 * prefix that is a valid UTF-8 string, omitting a possible common partial
@@ -227,6 +241,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_set_compare has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Sets the function to use for string comparisons. The default string
 	 * comparison function is strncmp().
 	 * Params:
@@ -240,6 +256,8 @@ public class StringCompletion
 	}
 	
 	/**
+	 * Warning
+	 * g_completion_free has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Frees all memory used by the GCompletion.
 	 */
 	public void free()

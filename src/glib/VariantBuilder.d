@@ -285,7 +285,7 @@ public class VariantBuilder
 	 * Don't call this on stack-allocated GVariantBuilder instances or bad
 	 * things will happen.
 	 * Since 2.24
-	 * Returns: a new reference to builder
+	 * Returns:a new reference to builder
 	 */
 	public VariantBuilder doref()
 	{
@@ -397,13 +397,10 @@ public class VariantBuilder
 	
 	/**
 	 * Ends the builder process and returns the constructed value.
-	 * This call automatically reduces the reference count on builder by
-	 * one, unless it has previously had g_variant_builder_no_autofree()
-	 * called on it. Unless you've taken other actions, this is usually
-	 * sufficient to free builder.
-	 * Even if additional references are held, it is not permissible to use
-	 * builder in any way after this call except for further reference
-	 * counting operations.
+	 * It is not permissible to use builder in any way after this call
+	 * except for reference counting operations (in the case of a
+	 * heap-allocated GVariantBuilder) or by reinitialising it with
+	 * g_variant_builder_init() (in the case of stack-allocated).
 	 * It is an error to call this function in any way that would create an
 	 * inconsistent value to be constructed (ie: insufficient number of
 	 * items added to a container with a specific number of children
@@ -412,7 +409,7 @@ public class VariantBuilder
 	 * have been added; in this case it is impossible to infer the type of
 	 * the empty array.
 	 * Since 2.24
-	 * Returns: a new, floating, GVariant
+	 * Returns: a new, floating, GVariant. [transfer none]
 	 */
 	public Variant end()
 	{

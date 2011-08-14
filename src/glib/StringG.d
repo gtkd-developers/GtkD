@@ -65,10 +65,11 @@ private import glib.Str;
 
 /**
  * Description
- * A GString is similar to a standard C string, except that it grows
- * automatically as text is appended or inserted. Also, it stores the
- * length of the string, so can be used for binary data with embedded
- * nul bytes.
+ * A GString is an object that handles the memory management of a C string
+ * for you. You can think of it as similar to a Java StringBuffer.
+ * In addition to the string itself, GString stores the length of the string,
+ * so can be used for binary data with embedded nul bytes. To access the C
+ * string managed by the GString string, simply use string->str.
  */
 public class StringG
 {
@@ -307,7 +308,7 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * unescaped = a string
-	 * reservedCharsAllowed = a string of reserved characters allowed to be used
+	 * reservedCharsAllowed = a string of reserved characters allowed to be used, or NULL
 	 * allowUtf8 = set TRUE if the escaped string may include UTF8 characters
 	 * Returns: string
 	 */

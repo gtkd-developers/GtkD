@@ -140,12 +140,11 @@ public class SimpleXML
 	 * Note that this function doesn't protect whitespace and line endings
 	 * from being processed according to the XML rules for normalization
 	 * of line endings and attribute values.
-	 * Note also that if given a string containing them, this function
-	 * will produce character references in the range of x1; ..
-	 * x1f; for all control sequences except for tabstop, newline
-	 * and carriage return. The character references in this range are
-	 * not valid XML 1.0, but they are valid XML 1.1 and will be accepted
-	 * by the GMarkup parser.
+	 * Note also that this function will produce character references in
+	 * the range of x1; ... x1f; for all control sequences
+	 * except for tabstop, newline and carriage return. The character
+	 * references in this range are not valid XML 1.0, but they are
+	 * valid XML 1.1 and will be accepted by the GMarkup parser.
 	 * Params:
 	 * text = some valid UTF-8 text
 	 * length = length of text in bytes, or -1 if the text is nul-terminated
@@ -228,7 +227,7 @@ public class SimpleXML
 	 * give the element_name as passed to those functions. For the parent
 	 * elements, see g_markup_parse_context_get_element_stack().
 	 * Since 2.2
-	 * Returns: the name of the currently open element, or NULL
+	 * Returns:the name of the currently open element, or NULL
 	 */
 	public string getElement()
 	{
@@ -352,7 +351,43 @@ public class SimpleXML
 	 * interface.
 	 * As an example, see the following implementation of a simple
 	 * parser that counts the number of tags encountered.
-	 * typedef struct
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
+	 * 21
+	 * 22
+	 * 23
+	 * 24
+	 * 25
+	 * 26
+	 * 27
+	 * 28
+	 * 29
+	 * 30
+	 * 31
+	 * 32
+	 * 33
+	 * 34
+	 * 35
+	 * 36
+	 *  typedef struct
 	 * {
 		 *  gint tag_count;
 	 * } CounterData;
@@ -391,7 +426,7 @@ public class SimpleXML
 	 */
 	public void push(GMarkupParser* parser, void* userData)
 	{
-		// void g_markup_parse_context_push (GMarkupParseContext *context,  GMarkupParser *parser,  gpointer user_data);
+		// void g_markup_parse_context_push (GMarkupParseContext *context,  const GMarkupParser *parser,  gpointer user_data);
 		g_markup_parse_context_push(gMarkupParseContext, parser, userData);
 	}
 	

@@ -43,6 +43,10 @@
  * 	- g_variant_builder_
  * omit code:
  * 	- g_variant_new_boolean
+ * 	- g_variant_new_bytestring_array
+ * 	- g_variant_new_object_path
+ * 	- g_variant_new_signature
+ * 	- g_variant_new_bytestring
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -290,6 +294,84 @@ public class Variant
 	}
 	
 	/**
+	 * Creates a DBus object path GVariant with the contents of string.
+	 * string must be a valid DBus object path.
+	 * Use Variant.isObjectPath() if you're not sure.
+	 * Since 2.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromObjectPath(string path)
+	{
+		auto p = g_variant_new_object_path(Str.toStringz(path));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_object_path");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates a DBus type signature GVariant with the contents of string.
+	 * string must be a valid DBus type signature.
+	 * Use Variant.isSignature() if you're not sure.
+	 * Since 2.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromSignature(string signature)
+	{
+		auto p = g_variant_new_signature(Str.toStringz(signature));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_signature");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Creates an array-of-bytes GVariant with the contents of string.
+	 * This function is just like new Variant(string) except that the string
+	 * need not be valid utf8.
+	 *
+	 * The nul terminator character at the end of the string is stored in
+	 * the array.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromByteString(string byteString)
+	{
+		auto p = g_variant_new_bytestring(Str.toStringz(byteString));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_bytestring");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Constructs an array of bytestring GVariant from the given array of
+	 * strings. If length is -1 then strv is NULL-terminated.
+	 * Since 2.26
+	 *
+	 * Params:
+	 *     strv   = an array of strings.
+	 *     length = the length of strv, or -1
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromByteStringArray(string[] strv)
+	{
+		// GVariant * g_variant_new_bytestring_array (const gchar * const *strv,  gssize length);
+		auto p = g_variant_new_bytestring_array(Str.toStringzArray(strv), strv.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_bytestring_array(strv, length)");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -306,7 +388,7 @@ public class Variant
 	/**
 	 * Increases the reference count of value.
 	 * Since 2.24
-	 * Returns: the same value
+	 * Returns:the same value
 	 */
 	public Variant doref()
 	{
@@ -340,7 +422,7 @@ public class Variant
 	 * maintaining normal refcounting semantics in situations where values
 	 * are not floating.
 	 * Since 2.24
-	 * Returns: the same value
+	 * Returns:the same value
 	 */
 	public Variant refSink()
 	{
@@ -354,11 +436,27 @@ public class Variant
 	}
 	
 	/**
+	 * Checks whether value has a floating reference count.
+	 * This function should only ever be used to assert that a given variant
+	 * is or is not floating, or for debug purposes. To acquire a reference
+	 * to a variant that might be floating, always use g_variant_ref_sink().
+	 * See g_variant_ref_sink() for more information about floating reference
+	 * counts.
+	 * Since 2.26
+	 * Returns:whether value is floating
+	 */
+	public int isFloating()
+	{
+		// gboolean g_variant_is_floating (GVariant *value);
+		return g_variant_is_floating(gVariant);
+	}
+	
+	/**
 	 * Determines the type of value.
 	 * The return value is valid for the lifetime of value and must not
 	 * be freed.
 	 * Since 2.24
-	 * Returns: a GVariantType
+	 * Returns:a GVariantType
 	 */
 	public VariantType getType()
 	{
@@ -376,7 +474,7 @@ public class Variant
 	 * g_variant_type_peek_string(), this string is nul-terminated. This
 	 * string belongs to GVariant and must not be freed.
 	 * Since 2.24
-	 * Returns: the type string for the type of value
+	 * Returns:the type string for the type of value
 	 */
 	public string getTypeString()
 	{
@@ -389,7 +487,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * type = a GVariantType
-	 * Returns: TRUE if the type of value matches type
+	 * Returns:TRUE if the type of value matches type
 	 */
 	public int isOfType(VariantType type)
 	{
@@ -399,7 +497,7 @@ public class Variant
 	
 	/**
 	 * Checks if value is a container.
-	 * Returns: TRUE if value is a container
+	 * Returns:TRUE if value is a container
 	 */
 	public int isContainer()
 	{
@@ -408,9 +506,37 @@ public class Variant
 	}
 	
 	/**
+	 * Compares one and two.
+	 * The types of one and two are gconstpointer only to allow use of
+	 * this function with GTree, GPtrArray, etc. They must each be a
+	 * GVariant.
+	 * Comparison is only defined for basic types (ie: booleans, numbers,
+	 * strings). For booleans, FALSE is less than TRUE. Numbers are
+	 * ordered in the usual way. Strings are in ASCII lexographical order.
+	 * It is a programmer error to attempt to compare container values or
+	 * two values that have types that are not exactly equal. For example,
+	 * you can not compare a 32-bit signed integer with a 32-bit unsigned
+	 * integer. Also note that this function is not particularly
+	 * well-behaved when it comes to comparison of doubles; in particular,
+	 * the handling of incomparable values (ie: NaN) is undefined.
+	 * If you only require an equality comparison, g_variant_equal() is more
+	 * general.
+	 * Since 2.26
+	 * Params:
+	 * one = a basic-typed GVariant instance. [type GVariant]
+	 * two = a GVariant instance of the same type. [type GVariant]
+	 * Returns:negative value if a < b; zero if a = b; positive value if a > b.
+	 */
+	public static int compare(void* one, void* two)
+	{
+		// gint g_variant_compare (gconstpointer one,  gconstpointer two);
+		return g_variant_compare(one, two);
+	}
+	
+	/**
 	 * Classifies value according to its top-level type.
 	 * Since 2.24
-	 * Returns: the GVariantClass of value
+	 * Returns:the GVariantClass of value
 	 */
 	public GVariantClass classify()
 	{
@@ -437,7 +563,8 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * formatString = a string that is prefixed with a format string
-	 * endptr = location to store the end pointer, or NULL
+	 * endptr = location to store the end pointer,
+	 *  or NULL. [allow-none][default NULL]
 	 * app = a pointer to a va_list
 	 */
 	public void getVa(string formatString, out string endptr, void** app)
@@ -480,7 +607,8 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * formatString = a string that is prefixed with a format string
-	 * endptr = location to store the end pointer, or NULL
+	 * endptr = location to store the end pointer,
+	 *  or NULL. [allow-none][default NULL]
 	 * app = a pointer to a va_list
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -643,9 +771,10 @@ public class Variant
 	
 	/**
 	 * Creates a string GVariant with the contents of string.
+	 * string must be valid utf8.
 	 * Since 2.24
 	 * Params:
-	 * string = a normal C nul-terminated string
+	 * string = a normal utf8 nul-terminated string
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string string)
@@ -670,7 +799,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * string = a normal C nul-terminated string
-	 * Returns: TRUE if string is a DBus object path
+	 * Returns:TRUE if string is a DBus object path
 	 */
 	public static int isObjectPath(string string)
 	{
@@ -680,14 +809,14 @@ public class Variant
 	
 	/**
 	 * Determines if a given string is a valid DBus type signature. You
-	 * should ensure that a string is a valid DBus object path before
+	 * should ensure that a string is a valid DBus type signature before
 	 * passing it to g_variant_new_signature().
 	 * DBus type signatures consist of zero or more definite GVariantType
 	 * strings in sequence.
 	 * Since 2.24
 	 * Params:
 	 * string = a normal C nul-terminated string
-	 * Returns: TRUE if string is a DBus type signature
+	 * Returns:TRUE if string is a DBus type signature
 	 */
 	public static int isSignature(string string)
 	{
@@ -698,6 +827,8 @@ public class Variant
 	/**
 	 * Boxes value. The result is a GVariant instance representing a
 	 * variant containing the original value.
+	 * If child is a floating reference (see g_variant_ref_sink()), the new
+	 * instance takes ownership of child.
 	 * Since 2.24
 	 * Params:
 	 * value = a GVariance instance
@@ -717,11 +848,10 @@ public class Variant
 	/**
 	 * Constructs an array of strings GVariant from the given array of
 	 * strings.
-	 * If length is not -1 then it gives the maximum length of strv. In
-	 * any case, a NULL pointer in strv is taken as a terminator.
+	 * If length is -1 then strv is NULL-terminated.
 	 * Since 2.24
 	 * Params:
-	 * strv = an array of strings
+	 * strv = an array of strings. [array length=length][element-type utf8]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string[] strv)
@@ -740,7 +870,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_BOOLEAN.
 	 * Since 2.24
-	 * Returns: TRUE or FALSE
+	 * Returns:TRUE or FALSE
 	 */
 	public int getBoolean()
 	{
@@ -753,7 +883,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_BYTE.
 	 * Since 2.24
-	 * Returns: a guchar
+	 * Returns:a guchar
 	 */
 	public char getByte()
 	{
@@ -766,7 +896,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_INT16.
 	 * Since 2.24
-	 * Returns: a gint16
+	 * Returns:a gint16
 	 */
 	public short getInt16()
 	{
@@ -779,7 +909,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_UINT16.
 	 * Since 2.24
-	 * Returns: a guint16
+	 * Returns:a guint16
 	 */
 	public ushort getUint16()
 	{
@@ -792,7 +922,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_INT32.
 	 * Since 2.24
-	 * Returns: a gint32
+	 * Returns:a gint32
 	 */
 	public int getInt32()
 	{
@@ -805,7 +935,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_UINT32.
 	 * Since 2.24
-	 * Returns: a guint32
+	 * Returns:a guint32
 	 */
 	public uint getUint32()
 	{
@@ -818,7 +948,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_INT64.
 	 * Since 2.24
-	 * Returns: a gint64
+	 * Returns:a gint64
 	 */
 	public long getInt64()
 	{
@@ -831,7 +961,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_UINT64.
 	 * Since 2.24
-	 * Returns: a guint64
+	 * Returns:a guint64
 	 */
 	public ulong getUint64()
 	{
@@ -847,7 +977,7 @@ public class Variant
 	 * that are sent alongside a DBus message. If you're not interacting
 	 * with DBus, you probably don't need them.
 	 * Since 2.24
-	 * Returns: a gint32
+	 * Returns:a gint32
 	 */
 	public int getHandle()
 	{
@@ -860,7 +990,7 @@ public class Variant
 	 * It is an error to call this function with a value of any type
 	 * other than G_VARIANT_TYPE_DOUBLE.
 	 * Since 2.24
-	 * Returns: a gdouble
+	 * Returns:a gdouble
 	 */
 	public double getDouble()
 	{
@@ -872,6 +1002,7 @@ public class Variant
 	 * Returns the string value of a GVariant instance with a string
 	 * type. This includes the types G_VARIANT_TYPE_STRING,
 	 * G_VARIANT_TYPE_OBJECT_PATH and G_VARIANT_TYPE_SIGNATURE.
+	 * The string will always be utf8 encoded.
 	 * If length is non-NULL then the length of the string (in bytes) is
 	 * returned there. For trusted values, this information is already
 	 * known. For untrusted values, a strlen() will be performed.
@@ -880,8 +1011,9 @@ public class Variant
 	 * The return value remains valid as long as value exists.
 	 * Since 2.24
 	 * Params:
-	 * length = a pointer to a gsize, to store the length
-	 * Returns: the constant string
+	 * length = a pointer to a gsize,
+	 *  to store the length. [allow-none][default NULL][out NULL]
+	 * Returns:the constant string, utf8 encoded
 	 */
 	public string getString(out gsize length)
 	{
@@ -892,23 +1024,25 @@ public class Variant
 	/**
 	 * Similar to g_variant_get_string() except that instead of returning
 	 * a constant string, the string is duplicated.
+	 * The string will always be utf8 encoded.
 	 * The return value must be freed using g_free().
 	 * Since 2.24
-	 * Returns: a newly allocated string
+	 * Returns:a newly allocated string, utf8 encoded
 	 */
-	public char[] dupString()
+	public string dupString()
 	{
 		// gchar * g_variant_dup_string (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_string(gVariant, &length);
-		return p[0 .. length];
+		
+		return Str.toString(p, length);
 	}
 	
 	/**
 	 * Unboxes value. The result is the GVariant instance that was
 	 * contained in value.
 	 * Since 2.24
-	 * Returns: the item contained in the variant
+	 * Returns:the item contained in the variant
 	 */
 	public Variant getVariant()
 	{
@@ -931,13 +1065,21 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.24
-	 * Returns: an array of constant strings
+	 * Returns: an array of constantstrings. [array length=length][transfer container length=length]
 	 */
 	public string[] getStrv()
 	{
 		// const gchar ** g_variant_get_strv (GVariant *value,  gsize *length);
 		gsize length;
-		return Str.toStringArray(g_variant_get_strv(gVariant, &length));
+		auto p = g_variant_get_strv(gVariant, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -950,25 +1092,127 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.24
-	 * Returns: an array of constant strings
+	 * Returns: an array of strings. [array length=length]
 	 */
 	public string[] dupStrv()
 	{
 		// gchar ** g_variant_dup_strv (GVariant *value,  gsize *length);
 		gsize length;
-		return Str.toStringArray(g_variant_dup_strv(gVariant, &length));
+		auto p = g_variant_dup_strv(gVariant, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
-	 * Depending on if value is NULL, either wraps value inside of a
+	 * Returns the string value of a GVariant instance with an
+	 * array-of-bytes type. The string has no particular encoding.
+	 * If the array does not end with a nul terminator character, the empty
+	 * string is returned. For this reason, you can always trust that a
+	 * non-NULL nul-terminated string will be returned by this function.
+	 * If the array contains a nul terminator character somewhere other than
+	 * the last byte then the returned string is the string, up to the first
+	 * such nul character.
+	 * It is an error to call this function with a value that is not an
+	 * array of bytes.
+	 * The return value remains valid as long as value exists.
+	 * Since 2.26
+	 * Returns:the constant string
+	 */
+	public string getBytestring()
+	{
+		// const gchar * g_variant_get_bytestring (GVariant *value);
+		return Str.toString(g_variant_get_bytestring(gVariant));
+	}
+	
+	/**
+	 * Similar to g_variant_get_bytestring() except that instead of
+	 * returning a constant string, the string is duplicated.
+	 * The return value must be freed using g_free().
+	 * Since 2.26
+	 * Returns:a newly allocated string
+	 */
+	public string dupBytestring()
+	{
+		// gchar * g_variant_dup_bytestring (GVariant *value,  gsize *length);
+		gsize length;
+		auto p = g_variant_dup_bytestring(gVariant, &length);
+		
+		return Str.toString(p, length);
+	}
+	
+	/**
+	 * Gets the contents of an array of array of bytes GVariant. This call
+	 * makes a shallow copy; the return result should be released with
+	 * g_free(), but the individual strings must not be modified.
+	 * If length is non-NULL then the number of elements in the result is
+	 * stored there. In any case, the resulting array will be
+	 * NULL-terminated.
+	 * For an empty array, length will be set to 0 and a pointer to a
+	 * NULL pointer will be returned.
+	 * Since 2.26
+	 * Returns: an array of constant strings. [array length=length]
+	 */
+	public string[] getBytestringArray()
+	{
+		// const gchar ** g_variant_get_bytestring_array (GVariant *value,  gsize *length);
+		gsize length;
+		auto p = g_variant_get_bytestring_array(gVariant, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
+	}
+	
+	/**
+	 * Gets the contents of an array of array of bytes GVariant. This call
+	 * makes a deep copy; the return result should be released with
+	 * g_strfreev().
+	 * If length is non-NULL then the number of elements in the result is
+	 * stored there. In any case, the resulting array will be
+	 * NULL-terminated.
+	 * For an empty array, length will be set to 0 and a pointer to a
+	 * NULL pointer will be returned.
+	 * Since 2.26
+	 * Returns: an array of strings. [array length=length]
+	 */
+	public string[] dupBytestringArray()
+	{
+		// gchar ** g_variant_dup_bytestring_array (GVariant *value,  gsize *length);
+		gsize length;
+		auto p = g_variant_dup_bytestring_array(gVariant, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
+	}
+	
+	/**
+	 * Depending on if child is NULL, either wraps child inside of a
 	 * maybe container or creates a Nothing instance for the given type.
-	 * At least one of type and value must be non-NULL. If type is
-	 * non-NULL then it must be a definite type. If they are both
-	 * non-NULL then type must be the type of value.
+	 * At least one of child_type and child must be non-NULL.
+	 * If child_type is non-NULL then it must be a definite type.
+	 * If they are both non-NULL then child_type must be the type
+	 * of child.
+	 * If child is a floating reference (see g_variant_ref_sink()), the new
+	 * instance takes ownership of child.
 	 * Since 2.24
 	 * Params:
-	 * childType = the GVariantType of the child
-	 * child = the child value, or NULL
+	 * childType = the GVariantType of the child, or NULL. [allow-none]
+	 * child = the child value, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (VariantType childType, Variant child)
@@ -992,10 +1236,13 @@ public class Variant
 	 * in the children array may be NULL.
 	 * All items in the array must have the same type, which must be the
 	 * same as child_type, if given.
+	 * If the children are floating references (see g_variant_ref_sink()), the
+	 * new instance takes ownership of them as if via g_variant_ref_sink().
 	 * Since 2.24
 	 * Params:
-	 * childType = the element type of the new array
-	 * children = an array of GVariant pointers, the children
+	 * childType = the element type of the new array. [allow-none]
+	 * children = an array of
+	 *  GVariant pointers, the children. [allow-none][array length=n_children]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (VariantType childType, Variant[] children)
@@ -1021,9 +1268,11 @@ public class Variant
 	 * type is determined from the types of children. No entry in the
 	 * children array may be NULL.
 	 * If n_children is 0 then the unit tuple is constructed.
+	 * If the children are floating references (see g_variant_ref_sink()), the
+	 * new instance takes ownership of them as if via g_variant_ref_sink().
 	 * Since 2.24
 	 * Params:
-	 * children = the items to make the tuple out of
+	 * children = the items to make the tuple out of. [array length=n_children]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Variant[] children)
@@ -1048,6 +1297,8 @@ public class Variant
 	 * Creates a new dictionary entry GVariant. key and value must be
 	 * non-NULL.
 	 * key must be a value of a basic type (ie: not a container).
+	 * If the key or value are floating references (see g_variant_ref_sink()),
+	 * the new instance takes ownership of them as if via g_variant_ref_sink().
 	 * Since 2.24
 	 * Params:
 	 * key = a basic GVariant, the key
@@ -1069,7 +1320,7 @@ public class Variant
 	 * Given a maybe-typed GVariant instance, extract its value. If the
 	 * value is Nothing, then this function returns NULL.
 	 * Since 2.24
-	 * Returns: the contents of value, or NULL
+	 * Returns: the contents of value, or NULL. [allow-none]
 	 */
 	public Variant getMaybe()
 	{
@@ -1093,7 +1344,7 @@ public class Variant
 	 * only on the type). For dictionary entries, it is always 2
 	 * This function is O(1).
 	 * Since 2.24
-	 * Returns: the number of children in the container
+	 * Returns:the number of children in the container
 	 */
 	public gsize nChildren()
 	{
@@ -1112,7 +1363,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * index = the index of the child to fetch
-	 * Returns: the child at the specified index
+	 * Returns:the child at the specified index
 	 */
 	public Variant getChildValue(gsize index)
 	{
@@ -1141,7 +1392,7 @@ public class Variant
 	 * Params:
 	 * nElements = a pointer to the location to store the number of items
 	 * elementSize = the size of each element
-	 * Returns: a pointer to the fixed array
+	 * Returns: a pointer to the fixed array. [array length=n_elements]
 	 */
 	public void* getFixedArray(gsize* nElements, gsize elementSize)
 	{
@@ -1160,7 +1411,7 @@ public class Variant
 	 * operation which is approximately O(n) in the number of values
 	 * involved.
 	 * Since 2.24
-	 * Returns: the serialised size of value
+	 * Returns:the serialised size of value
 	 */
 	public gsize getSize()
 	{
@@ -1183,7 +1434,7 @@ public class Variant
 	 * serialisation occurs implicitly and is approximately O(n) in the size
 	 * of the result.
 	 * Since 2.24
-	 * Returns: the serialised form of value, or NULL
+	 * Returns:the serialised form of value, or NULL
 	 */
 	public void* getData()
 	{
@@ -1227,7 +1478,7 @@ public class Variant
 	 * before this function returns.
 	 * Since 2.24
 	 * Params:
-	 * type = a GVariantType
+	 * type = a definite GVariantType
 	 * data = the serialised data
 	 * size = the size of data
 	 * trusted = TRUE if data is definitely in normal form
@@ -1257,7 +1508,7 @@ public class Variant
 	 * bytes and containers containing only these things (recursively).
 	 * The returned value is always in normal form and is marked as trusted.
 	 * Since 2.24
-	 * Returns: the byteswapped form of value
+	 * Returns:the byteswapped form of value
 	 */
 	public Variant byteswap()
 	{
@@ -1284,7 +1535,7 @@ public class Variant
 	 * data from untrusted sources and you want to ensure your serialised
 	 * output is definitely in normal form.
 	 * Since 2.24
-	 * Returns: a trusted GVariant
+	 * Returns:a trusted GVariant
 	 */
 	public Variant getNormalForm()
 	{
@@ -1307,7 +1558,7 @@ public class Variant
 	 * being trusted. If the value was already marked as being trusted then
 	 * this function will immediately return TRUE.
 	 * Since 2.24
-	 * Returns: TRUE if value is in normal form
+	 * Returns:TRUE if value is in normal form
 	 */
 	public int isNormalForm()
 	{
@@ -1325,8 +1576,8 @@ public class Variant
 	 * function with GHashTable. value must be a GVariant.
 	 * Since 2.24
 	 * Params:
-	 * value = a basic GVariant value as a gconstpointer
-	 * Returns: a hash value corresponding to value
+	 * value = a basic GVariant value as a gconstpointer. [type GVariant]
+	 * Returns:a hash value corresponding to value
 	 */
 	public static uint hash(void* value)
 	{
@@ -1340,9 +1591,9 @@ public class Variant
 	 * this function with GHashTable. They must each be a GVariant.
 	 * Since 2.24
 	 * Params:
-	 * one = a GVariant instance
-	 * two = a GVariant instance
-	 * Returns: TRUE if one and two are equal
+	 * one = a GVariant instance. [type GVariant]
+	 * two = a GVariant instance. [type GVariant]
+	 * Returns:TRUE if one and two are equal
 	 */
 	public static int equal(void* one, void* two)
 	{
@@ -1357,7 +1608,7 @@ public class Variant
 	 * Params:
 	 * typeAnnotate = TRUE if type information should be included in
 	 *  the output
-	 * Returns: a newly-allocated string holding the result.
+	 * Returns:a newly-allocated string holding the result.
 	 */
 	public string print(int typeAnnotate)
 	{
@@ -1371,10 +1622,10 @@ public class Variant
 	 * a new empty GString is allocated and it is returned.
 	 * Since 2.24
 	 * Params:
-	 * string = a GString, or NULL
+	 * string = a GString, or NULL. [allow-none][default NULL]
 	 * typeAnnotate = TRUE if type information should be included in
 	 *  the output
-	 * Returns: a GString containing the string
+	 * Returns:a GString containing the string
 	 */
 	public StringG printString(StringG string, int typeAnnotate)
 	{
@@ -1414,7 +1665,7 @@ public class Variant
 	 * text = a string containing a GVariant in text form
 	 * limit = a pointer to the end of text, or NULL
 	 * endptr = a location to store the end pointer, or NULL
-	 * Returns: a reference to a GVariant, or NULL
+	 * Returns:a reference to a GVariant, or NULL
 	 * Throws: GException on failure.
 	 */
 	public static Variant parse(VariantType type, string text, string limit, out string endptr)

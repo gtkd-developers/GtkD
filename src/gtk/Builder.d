@@ -556,6 +556,11 @@ public class Builder : ObjectG
 			alias toUpper toupper;
 			alias toLower tolower;
 		}
+		version(D_Version2)
+		{
+			alias toUpper toupper;
+			alias toLower tolower;
+		}
 		
 		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
 		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";

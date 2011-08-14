@@ -87,13 +87,33 @@ private import glib.Str;
  * This is why most functions in GLib and GTK+ do not use the GError facility.
  * Functions that can fail take a return location for a GError as their last argument.
  * For example:
- * gboolean g_file_get_contents (const gchar *filename,
- * 	 gchar **contents,
+ *  1
+ * 2
+ * 3
+ * 4
+ *  gboolean g_file_get_contents (const gchar *filename,
+ *  gchar **contents,
  *  gsize *length,
  *  GError **error);
  * If you pass a non-NULL value for the error argument, it should
  * point to a location where an error can be placed. For example:
- * gchar *contents;
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ *  gchar *contents;
  * GError *err = NULL;
  * g_file_get_contents ("foo.txt", contents, NULL, err);
  * g_assert ((contents == NULL  err != NULL) || (contents != NULL  err == NULL));
@@ -116,7 +136,11 @@ private import glib.Str;
  * Because g_file_get_contents() returns FALSE on failure, if you are only
  * interested in whether it failed and don't need to display an error message, you
  * can pass NULL for the error argument:
- * if (g_file_get_contents ("foo.txt", contents, NULL, NULL)) /+* ignore errors +/
+ *  1
+ * 2
+ * 3
+ * 4
+ *  if (g_file_get_contents ("foo.txt", contents, NULL, NULL)) /+* ignore errors +/
  *  /+* no error occurred +/ ;
  * else
  *  /+* error +/ ;
@@ -137,7 +161,24 @@ private import glib.Str;
  * g_set_error(). Typically, if a fatal error occurs you want to g_set_error(),
  * then return immediately. g_set_error() does nothing if the error location passed
  * to it is NULL. Here's an example:
- * gint
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ *  gint
  * foo_open_file (GError **error)
  * {
 	 *  gint fd;
@@ -158,7 +199,20 @@ private import glib.Str;
  * can report a GError. If the sub-function indicates fatal errors in some way
  * other than reporting a GError, such as by returning TRUE on success, you can
  * simply do the following:
- * gboolean
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ *  gboolean
  * my_function_that_can_fail (GError **err)
  * {
 	 *  g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
@@ -174,7 +228,24 @@ private import glib.Str;
  * If the sub-function does not indicate errors other than by reporting a GError,
  * you need to create a temporary GError since the passed-in one may be NULL.
  * g_propagate_error() is intended for use in this case.
- * gboolean
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ *  gboolean
  * my_function_that_can_fail (GError **err)
  * {
 	 *  GError *tmp_error;
@@ -192,7 +263,21 @@ private import glib.Str;
 	 *  /+* otherwise continue, no error occurred +/
  * }
  * Error pileups are always a bug. For example, this code is incorrect:
- * gboolean
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ *  gboolean
  * my_function_that_can_fail (GError **err)
  * {
 	 *  GError *tmp_error;
@@ -213,7 +298,21 @@ private import glib.Str;
  * equivalent of handling an error by always doing nothing about it. So the
  * following code is fine, assuming errors in sub_function_that_can_fail() are not
  * fatal to my_function_that_can_fail():
- * gboolean
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ *  gboolean
  * my_function_that_can_fail (GError **err)
  * {
 	 *  GError *tmp_error;
@@ -235,12 +334,19 @@ private import glib.Str;
  * The error domain is called
  * <NAMESPACE>_<MODULE>_ERROR, for example
  * G_SPAWN_ERROR or G_THREAD_ERROR:
- * #define G_SPAWN_ERROR g_spawn_error_quark ()
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ *  #define G_SPAWN_ERROR g_spawn_error_quark ()
  * GQuark
  * g_spawn_error_quark (void)
  * {
 	 *  return g_quark_from_static_string ("g-spawn-error-quark");
  * }
+ * The quark function for the error domain is called <namespace>_<module>_error_quark, for example g_spawn_error_quark() or %g_thread_error_quark().
  * The error codes are in an enumeration called
  * <Namespace><Module>Error; for example,
  * GThreadError or GSpawnError.

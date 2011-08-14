@@ -331,14 +331,14 @@ public class Resolver : ObjectG
 		// gchar * g_resolver_lookup_by_address (GResolver *resolver,  GInetAddress *address,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_resolver_lookup_by_address(gResolver, address, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
+		auto p = g_resolver_lookup_by_address(gResolver, address, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -375,14 +375,14 @@ public class Resolver : ObjectG
 		// gchar * g_resolver_lookup_by_address_finish (GResolver *resolver,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_resolver_lookup_by_address_finish(gResolver, (result is null) ? null : result.getAsyncResultTStruct(), &err));
+		auto p = g_resolver_lookup_by_address_finish(gResolver, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**

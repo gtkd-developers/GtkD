@@ -84,11 +84,20 @@ public struct Funct
 		GtkDClass.adjustTypeName(type, name);
 
 		if ( type == "gchar**" || type == "char**" )
+		{
 			typeWrap = "string[]";
+		}
 		else if ( name in convParms.array && "Return" in convParms.array[name] )
+		{
 			typeWrap = getWrappedType(type.dup[0 .. $-1], convParms) ~ "[]";
+
+			if ( typeWrap == "char[]" || typeWrap == "gchar[]" )
+				typeWrap = "string";
+		}
 		else
+		{
 			typeWrap = getWrappedType(type.dup, convParms);
+		}
 
 		GtkDClass.skip(p, text,'(');
 		int countBrace = 0;
@@ -1016,17 +1025,25 @@ public struct Funct
 					{
 						/* Returned strings get special care. */
 						//return Str.toString(gtk_function(arg1...argN)).dup;
-						if ( !wrapError && end.length == 0 )
+						if ( !wrapError && !(name in convParms.array && "Return" in convParms.array[name]) )
 							bd ~= "return Str.toString(" ~ gtkCall ~ ");";
 						else
 						{
-							bd ~= "auto p = Str.toString(" ~ gtkCall ~ ");";
+							bd ~= "auto p = " ~ gtkCall ~ ";";
 							checkError();
 
 							if ( end.length > 0 )
 								bd ~= end;
 
-							bd ~= "return p;";
+							if (name in convParms.array && "Return" in convParms.array[name])
+							{
+								char[] lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
+
+								bd ~= "";
+								bd ~= "return Str.toString(p, "~ lenid ~");";
+							}
+							else
+								bd ~= "return Str.toString(p);";
 						}
 
 						return bd;
@@ -1035,17 +1052,31 @@ public struct Funct
 					{
 						/* Returned strings get special care. */
 						//return Str.toString(gtk_function(arg1...argN)).dup;
-						if ( !wrapError && end.length == 0 )
+						if ( !wrapError && !(name in convParms.array && "Return" in convParms.array[name]) )
 							bd ~= "return Str.toStringArray(" ~ gtkCall ~ ");";
 						else
 						{
-							bd ~= "auto p = Str.toStringArray(" ~ gtkCall ~ ");";
+							bd ~= "\nauto p = " ~ gtkCall ~ ";";
 							checkError();
 
 							if ( end.length > 0 )
 								bd ~= end;
 
-							bd ~= "return p;";
+							if (name in convParms.array && "Return" in convParms.array[name])
+							{
+								char[] lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
+
+								bd ~= "";
+								bd ~= "string[] strArray = null;"; 
+								bd ~= "foreach ( cstr; p[0 .. "~ lenid ~"] )"; 
+								bd ~= "{"; 
+								bd ~= "    strArray ~= Str.toString(cstr);"; 
+								bd ~= "}"; 
+								bd ~= "";
+								bd ~= "return strArray;";
+							}
+							else
+								bd ~= "return Str.toStringArray(p);";
 						}
 
 						return bd;

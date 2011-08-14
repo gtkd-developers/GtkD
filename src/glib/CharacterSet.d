@@ -72,93 +72,85 @@ private import glib.GException;
 
 /**
  * Description
+ * The g_convert() family of function wraps the functionality of iconv(). In
+ * addition to pure character set conversions, GLib has functions to deal
+ * with the extra complications of encodings for file names.
  * File Name Encodings
- * 	Historically, Unix has not had a defined encoding for file
- * 	names: a file name is valid as long as it does not have path
- * 	separators in it ("/"). However, displaying file names may
- * 	require conversion: from the character set in which they were
- * 	created, to the character set in which the application
- * 	operates. Consider the Spanish file name
- * 	"Presentación.sxi". If the
- * 	application which created it uses ISO-8859-1 for its encoding,
- * 	then the actual file name on disk would look like this:
+ * Historically, Unix has not had a defined encoding for file
+ * names: a file name is valid as long as it does not have path
+ * separators in it ("/"). However, displaying file names may
+ * require conversion: from the character set in which they were
+ * created, to the character set in which the application
+ * operates. Consider the Spanish file name
+ * "Presentación.sxi". If the
+ * application which created it uses ISO-8859-1 for its encoding,
  * Character: P r e s e n t a c i ó n . s x i
  * Hex code: 50 72 65 73 65 6e 74 61 63 69 f3 6e 2e 73 78 69
- * 	However, if the application use UTF-8, the actual file name on
- * 	disk would look like this:
+ * However, if the application use UTF-8, the actual file name on
+ * disk would look like this:
  * Character: P r e s e n t a c i ó n . s x i
  * Hex code: 50 72 65 73 65 6e 74 61 63 69 c3 b3 6e 2e 73 78 69
- * 	Glib uses UTF-8 for its strings, and GUI toolkits like GTK+
- * 	that use Glib do the same thing. If you get a file name from
- * 	the file system, for example, from
- * 	readdir(3) or from g_dir_read_name(),
- * 	and you wish to display the file name to the user, you
- * 	will need to convert it into UTF-8. The
- * 	opposite case is when the user types the name of a file he
- * 	wishes to save: the toolkit will give you that string in
- * 	UTF-8 encoding, and you will need to convert it to the
- * 	character set used for file names before you can create the
- * 	file with open(2) or
- * 	fopen(3).
- * 	By default, Glib assumes that file names on disk are in UTF-8
- * 	encoding. This is a valid assumption for file systems which
- * 	were created relatively recently: most applications use UTF-8
- * 	encoding for their strings, and that is also what they use for
- * 	the file names they create. However, older file systems may
- * 	still contain file names created in "older" encodings, such as
- * 	ISO-8859-1. In this case, for compatibility reasons, you may
- * 	want to instruct Glib to use that particular encoding for file
- * 	names rather than UTF-8. You can do this by specifying the
- * 	encoding for file names in the G_FILENAME_ENCODING
- * 	environment variable. For example, if your installation uses
- * 	ISO-8859-1 for file names, you can put this in your
- * 	~/.profile:
+ * Glib uses UTF-8 for its strings, and GUI toolkits like GTK+
+ * that use Glib do the same thing. If you get a file name from
+ * the file system, for example, from readdir(3) or from g_dir_read_name(),
+ * and you wish to display the file name to the user, you
+ * will need to convert it into UTF-8. The
+ * opposite case is when the user types the name of a file he
+ * wishes to save: the toolkit will give you that string in
+ * UTF-8 encoding, and you will need to convert it to the
+ * character set used for file names before you can create the
+ * file with open(2) or fopen(3).
+ * By default, Glib assumes that file names on disk are in UTF-8
+ * encoding. This is a valid assumption for file systems which
+ * were created relatively recently: most applications use UTF-8
+ * encoding for their strings, and that is also what they use for
+ * the file names they create. However, older file systems may
+ * still contain file names created in "older" encodings, such as
+ * ISO-8859-1. In this case, for compatibility reasons, you may
+ * want to instruct Glib to use that particular encoding for file
+ * names rather than UTF-8. You can do this by specifying the
+ * encoding for file names in the G_FILENAME_ENCODING
+ * environment variable. For example, if your installation uses
+ * ISO-8859-1 for file names, you can put this in your
+ * ~/.profile:
  * export G_FILENAME_ENCODING=ISO-8859-1
- * 	Glib provides the functions g_filename_to_utf8()
- * 	and g_filename_from_utf8()
- * 	to perform the necessary conversions. These functions convert
- * 	file names from the encoding specified in
- * 	G_FILENAME_ENCODING to UTF-8 and vice-versa.
- * 	 Figure  2, “Conversion between File Name Encodings” illustrates how
- * 	these functions are used to convert between UTF-8 and the
- * 	encoding for file names in the file system.
+ * Glib provides the functions g_filename_to_utf8() and
+ * g_filename_from_utf8() to perform the necessary conversions. These
+ * functions convert file names from the encoding specified in
+ * G_FILENAME_ENCODING to UTF-8 and vice-versa.
+ *  Figure  2, “Conversion between File Name Encodings” illustrates how
+ * these functions are used to convert between UTF-8 and the
+ * encoding for file names in the file system.
  * Figure  2.  Conversion between File Name Encodings
  * Checklist for Application Writers
- * 	 This section is a practical summary of the detailed
- * 	 description above. You can use this as a checklist of
- * 	 things to do to make sure your applications process file
- * 	 name encodings correctly.
- * 	 If you get a file name from the file system from a
- * 	 function such as readdir(3) or
- * 	 gtk_file_chooser_get_filename(),
- * 	 you do not need to do any conversion to pass that
- * 	 file name to functions like open(2),
- * 	 rename(2), or
- * 	 fopen(3) — those are "raw"
- * 	 file names which the file system understands.
- * 	 If you need to display a file name, convert it to UTF-8
- * 	 first by using g_filename_to_utf8().
- * 	 If conversion fails, display a string like
- * 	 "Unknown file name". Do
- * 	 not convert this string back into the
- * 	 encoding used for file names if you wish to pass it to
- * 	 the file system; use the original file name instead.
- * 	 For example, the document window of a word processor
- * 	 could display "Unknown file name" in its title bar but
- * 	 still let the user save the file, as it would keep the
- * 	 raw file name internally. This can happen if the user
- * 	 has not set the G_FILENAME_ENCODING
- * 	 environment variable even though he has files whose
- * 	 names are not encoded in UTF-8.
- * 	 If your user interface lets the user type a file name
- * 	 for saving or renaming, convert it to the encoding used
- * 	 for file names in the file system by using g_filename_from_utf8().
- * 	 Pass the converted file name to functions like
- * 	 fopen(3). If conversion fails, ask
- * 	 the user to enter a different file name. This can
- * 	 happen if the user types Japanese characters when
- * 	 G_FILENAME_ENCODING is set to
- * 	 ISO-8859-1, for example.
+ * This section is a practical summary of the detailed
+ * description above. You can use this as a checklist of
+ * things to do to make sure your applications process file
+ * name encodings correctly.
+ * If you get a file name from the file system from a function
+ * such as readdir(3) or gtk_file_chooser_get_filename(),
+ * you do not need to do any conversion to pass that
+ * file name to functions like open(2), rename(2), or
+ * fopen(3) — those are "raw" file names which the file
+ * system understands.
+ * If you need to display a file name, convert it to UTF-8 first by
+ * using g_filename_to_utf8(). If conversion fails, display a string like
+ * "Unknown file name". Do not
+ * convert this string back into the encoding used for file names if you
+ * wish to pass it to the file system; use the original file name instead.
+ * For example, the document window of a word processor could display
+ * "Unknown file name" in its title bar but still let the user save the
+ * file, as it would keep the raw file name internally. This can happen
+ * if the user has not set the G_FILENAME_ENCODING
+ * environment variable even though he has files whose names are not
+ * encoded in UTF-8.
+ * If your user interface lets the user type a file name for saving or
+ * renaming, convert it to the encoding used for file names in the file
+ * system by using g_filename_from_utf8(). Pass the converted file name
+ * to functions like fopen(3). If conversion fails, ask the user to enter
+ * a different file name. This can happen if the user types Japanese
+ * characters when G_FILENAME_ENCODING is set to
+ * ISO-8859-1, for example.
  */
 public class CharacterSet
 {
@@ -194,14 +186,14 @@ public class CharacterSet
 		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), &bytesRead, &bytesWritten, &err));
+		auto p = g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -240,14 +232,14 @@ public class CharacterSet
 		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  const gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), &bytesRead, &bytesWritten, &err));
+		auto p = g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -278,14 +270,14 @@ public class CharacterSet
 		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err));
+		auto p = g_locale_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -315,14 +307,14 @@ public class CharacterSet
 		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err));
+		auto p = g_filename_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -352,68 +344,14 @@ public class CharacterSet
 		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err));
+		auto p = g_filename_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
-	}
-	
-	/**
-	 * Converts an escaped ASCII-encoded URI to a local filename in the
-	 * encoding used for filenames.
-	 * Params:
-	 * uri = a uri describing a filename (escaped, encoded in ASCII).
-	 * hostname = Location to store hostname for the URI, or NULL.
-	 *  If there is no hostname in the URI, NULL will be
-	 *  stored in this location.
-	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
-	 * Throws: GException on failure.
-	 */
-	public static string filenameFromUri(string uri, out string hostname)
-	{
-		// gchar * g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		char* outhostname = null;
-		GError* err = null;
-		
-		auto p = Str.toString(g_filename_from_uri(Str.toStringz(uri), &outhostname, &err));
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		hostname = Str.toString(outhostname);
-		return p;
-	}
-	
-	/**
-	 * Converts an absolute filename to an escaped ASCII-encoded URI, with the path
-	 * component following Section 3.3. of RFC 2396.
-	 * Params:
-	 * filename = an absolute filename specified in the GLib file name encoding,
-	 *  which is the on-disk file name bytes on Unix, and UTF-8 on
-	 *  Windows
-	 * hostname = A UTF-8 encoded hostname, or NULL for none.
-	 * Returns: a newly-allocated string holding the resulting URI, or NULL on an error.
-	 * Throws: GException on failure.
-	 */
-	public static string filenameToUri(string filename, string hostname)
-	{
-		// gchar * g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
-		GError* err = null;
-		
-		auto p = Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), &err));
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -531,14 +469,14 @@ public class CharacterSet
 		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err));
+		auto p = g_locale_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**

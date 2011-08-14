@@ -87,7 +87,42 @@ private import glib.Str;
  * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
  * Example  11.  Calling a function defined in a GModule
- * /+* the function signature for 'say_hello' +/
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ *  /+* the function signature for 'say_hello' +/
  * typedef void (* SayHelloFunc) (const char *message);
  * gboolean
  * just_say_hello (const char *filename, GError **error)
@@ -98,22 +133,22 @@ private import glib.Str;
 	 *  if (!module)
 	 *  {
 		 *  g_set_error (error, FOO_ERROR, FOO_ERROR_BLAH,
-		 * 		 "%s", g_module_error ());
+		 *  "%s", g_module_error ());
 		 *  return FALSE;
 	 *  }
 	 *  if (!g_module_symbol (module, "say_hello", (gpointer *)say_hello))
 	 *  {
 		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN,
-		 * 		 "%s: %s", filename, g_module_error ());
+		 *  "%s: %s", filename, g_module_error ());
 		 *  if (!g_module_close (module))
-		 * 	g_warning ("%s: %s", filename, g_module_error ());
+		 *  g_warning ("%s: %s", filename, g_module_error ());
 		 *  return FALSE;
 	 *  }
 	 *  if (say_hello == NULL)
 	 *  {
 		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN, "symbol say_hello is NULL");
 		 *  if (!g_module_close (module))
-		 * 	g_warning ("%s: %s", filename, g_module_error ());
+		 *  g_warning ("%s: %s", filename, g_module_error ());
 		 *  return FALSE;
 	 *  }
 	 *  /+* call our function in the module +/

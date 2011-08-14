@@ -104,6 +104,8 @@ version (Windows)
 		extern (C) FILE*  fdopen(int, char*);
 	}
 }
+
+alias void GStatBuf;
 addTypedefs: end
 
 addAliases: start
@@ -557,6 +559,7 @@ struct: GSource
 class: Source
 prefix: g_source_
 strictPrefix: Yes
+import: glib.Str
 #import: glib.SourceFuncs
 #structWrap: GSourceFuncs* SourceFuncs
 structWrap: GSource* Source
@@ -816,12 +819,18 @@ code: start
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
 	 */
-	public static string toString(char *s)
+	public static string toString(char *s, size_t len = 0)
 	{
+		if ( s is null )
+			return cast(string)null;
+
+		if ( len == 0 )
+			len = strlen(s);
+		
 		version(D_Version2)
-			return s ? s[0 .. strlen(s)].idup : cast(string)null;
+			return s[0 .. len].idup;
 		else
-			return s ? s[0 .. strlen(s)].dup : cast(string)null;
+			return s[0 .. len].dup;
 	}
 	
 	/*********************************
@@ -1142,6 +1151,54 @@ import: glib.Str
 structWrap: GDate* Date
 outFile: Date
 
+file: glib-GTimeZone.html
+struct: GTimeZone
+class: TimeZone
+prefix: g_time_zone_
+import: glib.Str
+structWrap: GTimeZone* TimeZone
+outFile: TimeZone
+
+file: glib-GDateTime.html
+struct: GDateTime
+class: DateTime
+prefix: g_date_time_
+import: glib.Str
+import: glib.TimeZone
+import: glib.TimeVal
+structWrap: GDateTime* DateTime
+structWrap: GTimeZone* TimeZone
+structWrap: GTimeVal* TimeVal
+structWrap: gconstpointer DateTime
+
+code: start
+	override bool opEquals(Object rhs)
+	{
+		DateTime date = cast(DateTime)rhs;
+
+		if ( date is null )
+			return false;
+
+		return equal(this, date) != 0;
+	}
+
+	override int opCmp(Object rhs)
+	{
+		DateTime date = cast(DateTime)rhs;
+
+		if ( date is null )
+			return int.min;
+
+		return compare(this, date);
+	}
+
+	override hash_t toHash()
+	{
+		return hash(this);
+	}
+code: end
+outFile: DateTime
+
 file: glib-Random-Numbers.html
 struct: GRand
 class: RandG
@@ -1318,6 +1375,7 @@ code: start
 	//fdopen for Windows is defined in gtkc.glibtypes.
 
 	version(Tango) alias splitLines splitlines;
+	version(D_Version2) alias splitLines splitlines;
 
 	string workingDirectory = ".";
 	string[] argv;
@@ -1666,6 +1724,8 @@ file: glib-URI-Functions.html
 class: URI
 prefix: g_uri_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 outFile: URI
 
 file: glib-Hostname-Utilities.html
@@ -2277,6 +2337,29 @@ alias: string str
 
 out: g_variant_type_string_scan endptr
 array: g_variant_type_new_tuple items length
+
+nocode: g_variant_type_new_maybe
+code: start
+	/**
+	 * Constructs the type corresponding to a maybe instance containing
+	 * type type or Nothing.
+	 * It is appropriate to call g_variant_type_free() on the return value.
+	 * Since 2.24
+	 * Params:
+	 * element = a GVariantType
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static VariantType newMaybe(VariantType element)
+	{
+		// GVariantType * g_variant_type_new_maybe (const GVariantType *element);
+		auto p = g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct())");
+		}
+		return new VariantType(cast(GVariantType*) p);
+	}
+code: end
 outFile: VariantType
 
 file: glib-GVariant.html
@@ -2295,10 +2378,14 @@ structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
 alias: byte b
 nocode: g_variant_new_boolean
+nocode: g_variant_new_bytestring_array
+nocode: g_variant_new_object_path
+nocode: g_variant_new_signature
+nocode: g_variant_new_bytestring
 
 array: g_variant_get_strv Return length
 array: g_variant_dup_strv Return length
-#array: g_variant_get_fixed_array value n_elements
+#array: g_variant_get_fixed_array Return n_elements
 array: g_variant_new_tuple children n_children
 array: g_variant_new_array children n_children
 out: g_variant_get_string length
@@ -2307,6 +2394,9 @@ array: g_variant_new_strv strv length
 out: g_variant_new_va endptr
 out: g_variant_get_va endptr
 out: g_variant_parse endptr
+array: g_variant_dup_bytestring Return length
+array: g_variant_dup_bytestring_array Return length
+array: g_variant_get_bytestring_array Return length
 
 code: start
 	/**
@@ -2325,6 +2415,84 @@ code: start
 			throw new ConstructionException("null returned by g_variant_new_boolean(boolean)");
 		}
 		this(cast(GVariant*) p);
+	}
+
+	/**
+	 * Creates a DBus object path GVariant with the contents of string.
+	 * string must be a valid DBus object path.
+	 * Use Variant.isObjectPath() if you're not sure.
+	 * Since 2.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromObjectPath(string path)
+	{
+		auto p = g_variant_new_object_path(Str.toStringz(path));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_object_path");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+
+	/**
+	 * Creates a DBus type signature GVariant with the contents of string.
+	 * string must be a valid DBus type signature.
+	 * Use Variant.isSignature() if you're not sure.
+	 * Since 2.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromSignature(string signature)
+	{
+		auto p = g_variant_new_signature(Str.toStringz(signature));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_signature");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+
+	/**
+	 * Creates an array-of-bytes GVariant with the contents of string.
+	 * This function is just like new Variant(string) except that the string
+	 * need not be valid utf8.
+	 * 
+	 * The nul terminator character at the end of the string is stored in
+	 * the array.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromByteString(string byteString)
+	{
+		auto p = g_variant_new_bytestring(Str.toStringz(byteString));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_bytestring");
+		}
+		return new Variant(cast(GVariant*) p);
+	}	
+
+	/**
+	 * Constructs an array of bytestring GVariant from the given array of
+	 * strings. If length is -1 then strv is NULL-terminated.
+	 * Since 2.26
+	 * 
+	 * Params:
+	 *     strv   = an array of strings.
+	 *     length = the length of strv, or -1
+	 * 
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromByteStringArray(string[] strv)
+	{
+		// GVariant * g_variant_new_bytestring_array (const gchar * const *strv,  gssize length);
+		auto p = g_variant_new_bytestring_array(Str.toStringzArray(strv), strv.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_bytestring_array(strv, length)");
+		}
+		return new Variant(cast(GVariant*) p);
 	}
 code: end
 outFile: Variant

@@ -112,12 +112,18 @@ public class Str
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
 	 */
-	public static string toString(char *s)
+	public static string toString(char *s, size_t len = 0)
 	{
+		if ( s is null )
+		return cast(string)null;
+		
+		if ( len == 0 )
+		len = strlen(s);
+		
 		version(D_Version2)
-		return s ? s[0 .. strlen(s)].idup : cast(string)null;
+		return s[0 .. len].idup;
 		else
-		return s ? s[0 .. strlen(s)].dup : cast(string)null;
+		return s[0 .. len].dup;
 	}
 	
 	/*********************************
@@ -358,7 +364,7 @@ public class Str
 	 * Params:
 	 * str = the string to duplicate
 	 * n = the maximum number of bytes to copy from str
-	 * Returns: a newly-allocated buffer containing the first n bytes  of str, nul-terminated
+	 * Returns: a newly-allocated buffer containing the first n bytes of str, nul-terminated
 	 */
 	public static string strndup(string str, gsize n)
 	{
@@ -490,6 +496,7 @@ public class Str
 	/**
 	 * Compares str1 and str2 like strcmp(). Handles NULL
 	 * gracefully by sorting it before non-NULL strings.
+	 * Comparing two NULL pointers returns 0.
 	 * Since 2.16
 	 * Params:
 	 * str1 = a C string or NULL
@@ -547,7 +554,7 @@ public class Str
 	 * src = source buffer
 	 * destSize = length of dest buffer in bytes (not length of existing string
 	 *  inside dest)
-	 * Returns:size of attempted result, which isMIN (dest_size, strlen (original dest)) + strlen (src),so if retval >= dest_size, truncation occurred.
+	 * Returns: size of attempted result, which is MIN (dest_size, strlen (original dest)) + strlen (src), so if retval >= dest_size, truncation occurred.
 	 */
 	public static gsize strlcat(string dest, string src, gsize destSize)
 	{
@@ -931,7 +938,7 @@ public class Str
 	 * Params:
 	 * s1 = string to compare with s2.
 	 * s2 = string to compare with s1.
-	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2, or a positive value if s1 > s2.
 	 */
 	public static int asciiStrcasecmp(string s1, string s2)
 	{
@@ -952,7 +959,7 @@ public class Str
 	 * s1 = string to compare with s2.
 	 * s2 = string to compare with s1.
 	 * n = number of characters to compare.
-	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2, or a positive value if s1 > s2.
 	 */
 	public static int asciiStrncasecmp(string s1, string s2, gsize n)
 	{
@@ -1098,7 +1105,7 @@ public class Str
 	 * Params:
 	 * s1 = a string.
 	 * s2 = a string to compare with s1.
-	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2, or a positive value if s1 > s2.
 	 */
 	public static int strcasecmp(string s1, string s2)
 	{
@@ -1128,7 +1135,7 @@ public class Str
 	 * s1 = a string.
 	 * s2 = a string to compare with s1.
 	 * n = the maximum number of characters to compare.
-	 * Returns: 0 if the strings match, a negative value if s1 < s2,  or a positive value if s1 > s2.
+	 * Returns: 0 if the strings match, a negative value if s1 < s2, or a positive value if s1 > s2.
 	 */
 	public static int strncasecmp(string s1, string s2, uint n)
 	{
@@ -1442,7 +1449,7 @@ public class Str
 	 *  max_tokens is reached.
 	 * maxTokens = the maximum number of pieces to split string into. If this is
 	 *  less than 1, the string is split completely.
-	 * Returns: a newly-allocated NULL-terminated array of strings. Use  g_strfreev() to free it.
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public static string[] strsplit(string string, string delimiter, int maxTokens)
 	{
@@ -1475,7 +1482,7 @@ public class Str
 	 *  to split the string.
 	 * maxTokens = The maximum number of tokens to split string into.
 	 *  If this is less than 1, the string is split completely
-	 * Returns: a newly-allocated NULL-terminated array of strings. Use  g_strfreev() to free it.
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public static string[] strsplitSet(string string, string delimiters, int maxTokens)
 	{
@@ -1532,7 +1539,7 @@ public class Str
 	 * Params:
 	 * errnum = the system error number. See the standard C errno
 	 *  documentation
-	 * Returns: a UTF-8 string describing the error code. If the error code  is unknown, it returns "unknown error (<code>)". The string  can only be used until the next call to g_strerror()
+	 * Returns: a UTF-8 string describing the error code. If the error code is unknown, it returns "unknown error (<code>)". The string can only be used until the next call to g_strerror()
 	 */
 	public static string strerror(int errnum)
 	{
@@ -1548,7 +1555,7 @@ public class Str
 	 * Params:
 	 * signum = the signal number. See the signal
 	 *  documentation
-	 * Returns: a UTF-8 string describing the signal. If the signal is unknown, it returns "unknown signal (<signum>)". The string can only be  used until the next call to g_strsignal()
+	 * Returns: a UTF-8 string describing the signal. If the signal is unknown, it returns "unknown signal (<signum>)". The string can only be used until the next call to g_strsignal()
 	 */
 	public static string strsignal(int signum)
 	{

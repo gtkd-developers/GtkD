@@ -316,6 +316,7 @@ public class Date
 	 * Sets the value of a date from a GTimeVal value. Note that the
 	 * tv_usec member is ignored, because GDate can't make use of the
 	 * additional precision.
+	 * The time to date conversion is done using the user's current timezone.
 	 * Since 2.10
 	 * Params:
 	 * timeval = GTimeVal value to set

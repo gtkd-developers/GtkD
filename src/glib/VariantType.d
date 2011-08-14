@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = VariantType
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_variant_type_new_maybe
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -270,6 +271,26 @@ public class VariantType
 	}
 	
 	/**
+	 * Constructs the type corresponding to a maybe instance containing
+	 * type type or Nothing.
+	 * It is appropriate to call g_variant_type_free() on the return value.
+	 * Since 2.24
+	 * Params:
+	 * element = a GVariantType
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static VariantType newMaybe(VariantType element)
+	{
+		// GVariantType * g_variant_type_new_maybe (const GVariantType *element);
+		auto p = g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct())");
+		}
+		return new VariantType(cast(GVariantType*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -289,7 +310,7 @@ public class VariantType
 	 * Makes a copy of a GVariantType. It is appropriate to call
 	 * g_variant_type_free() on the return value. type may not be NULL.
 	 * Since 2.24
-	 * Returns: a new GVariantType
+	 * Returns:a new GVariantType
 	 */
 	public VariantType copy()
 	{
@@ -331,7 +352,7 @@ public class VariantType
 	 * Since 2.24
 	 * Params:
 	 * typeString = a pointer to any string
-	 * Returns: TRUE if type_string is exactly one valid type string
+	 * Returns:TRUE if type_string is exactly one valid type string
 	 */
 	public static int stringIsValid(string typeString)
 	{
@@ -355,7 +376,7 @@ public class VariantType
 	 * string = a pointer to any string
 	 * limit = the end of string, or NULL
 	 * endptr = location to store the end pointer, or NULL
-	 * Returns: TRUE if a valid type string was found
+	 * Returns:TRUE if a valid type string was found
 	 */
 	public static int stringScan(string str, string limit, out string endptr)
 	{
@@ -373,7 +394,7 @@ public class VariantType
 	 * type. This function must be used to determine the valid extent of
 	 * the memory region returned by g_variant_type_peek_string().
 	 * Since 2.24
-	 * Returns: the length of the corresponding type string
+	 * Returns:the length of the corresponding type string
 	 */
 	public gsize getStringLength()
 	{
@@ -387,7 +408,7 @@ public class VariantType
 	 * must call g_variant_type_get_string_length().
 	 * To get a nul-terminated string, see g_variant_type_dup_string().
 	 * Since 2.24
-	 * Returns: the corresponding type string (not nul-terminated)
+	 * Returns:the corresponding type string (not nul-terminated)
 	 */
 	public string peekString()
 	{
@@ -400,7 +421,7 @@ public class VariantType
 	 * type. The returned string is nul-terminated. It is appropriate to
 	 * call g_free() on the return value.
 	 * Since 2.24
-	 * Returns: the corresponding type string
+	 * Returns:the corresponding type string
 	 */
 	public string dupString()
 	{
@@ -418,7 +439,7 @@ public class VariantType
 	 * indefinite type like G_VARIANT_TYPE_ARRAY, however, will result in
 	 * FALSE being returned.
 	 * Since 2.24
-	 * Returns: TRUE if type is definite
+	 * Returns:TRUE if type is definite
 	 */
 	public int isDefinite()
 	{
@@ -434,7 +455,7 @@ public class VariantType
 	 * definite subtype is a container -- G_VARIANT_TYPE_ARRAY, for
 	 * example.
 	 * Since 2.24
-	 * Returns: TRUE if type is a container type
+	 * Returns:TRUE if type is a container type
 	 */
 	public int isContainer()
 	{
@@ -450,7 +471,7 @@ public class VariantType
 	 * This function returns FALSE for all indefinite types except
 	 * G_VARIANT_TYPE_BASIC.
 	 * Since 2.24
-	 * Returns: TRUE if type is a basic type
+	 * Returns:TRUE if type is a basic type
 	 */
 	public int isBasic()
 	{
@@ -465,7 +486,7 @@ public class VariantType
 	 * definite subtype is a maybe type -- G_VARIANT_TYPE_MAYBE, for
 	 * example.
 	 * Since 2.24
-	 * Returns: TRUE if type is a maybe type
+	 * Returns:TRUE if type is a maybe type
 	 */
 	public int isMaybe()
 	{
@@ -480,7 +501,7 @@ public class VariantType
 	 * definite subtype is an array type -- G_VARIANT_TYPE_ARRAY, for
 	 * example.
 	 * Since 2.24
-	 * Returns: TRUE if type is an array type
+	 * Returns:TRUE if type is an array type
 	 */
 	public int isArray()
 	{
@@ -496,7 +517,7 @@ public class VariantType
 	 * definite subtype is a tuple type -- G_VARIANT_TYPE_TUPLE, for
 	 * example.
 	 * Since 2.24
-	 * Returns: TRUE if type is a tuple type
+	 * Returns:TRUE if type is a tuple type
 	 */
 	public int isTuple()
 	{
@@ -511,7 +532,7 @@ public class VariantType
 	 * definite subtype is a dictionary entry type --
 	 * G_VARIANT_TYPE_DICT_ENTRY, for example.
 	 * Since 2.24
-	 * Returns: TRUE if type is a dictionary entry type
+	 * Returns:TRUE if type is a dictionary entry type
 	 */
 	public int isDictEntry()
 	{
@@ -522,7 +543,7 @@ public class VariantType
 	/**
 	 * Determines if the given type is the variant type.
 	 * Since 2.24
-	 * Returns: TRUE if type is the variant type
+	 * Returns:TRUE if type is the variant type
 	 */
 	public int isVariant()
 	{
@@ -538,7 +559,7 @@ public class VariantType
 	 * Since 2.24
 	 * Params:
 	 * type = a GVariantType
-	 * Returns: the hash value
+	 * Returns:the hash value
 	 */
 	public static uint hash(void* type)
 	{
@@ -559,7 +580,7 @@ public class VariantType
 	 * Params:
 	 * type1 = a GVariantType
 	 * type2 = a GVariantType
-	 * Returns: TRUE if type1 and type2 are exactly equal
+	 * Returns:TRUE if type1 and type2 are exactly equal
 	 */
 	public static int equal(void* type1, void* type2)
 	{
@@ -576,7 +597,7 @@ public class VariantType
 	 * Params:
 	 * type = a GVariantType
 	 * supertype = a GVariantType
-	 * Returns: TRUE if type is a subtype of supertype
+	 * Returns:TRUE if type is a subtype of supertype
 	 */
 	public int isSubtypeOf(VariantType supertype)
 	{
@@ -585,8 +606,8 @@ public class VariantType
 	}
 	
 	/**
-	 * Constructs the type corresponding to a maybe instance containing
-	 * type type or Nothing.
+	 * Constructs the type corresponding to an array of elements of the
+	 * type type.
 	 * It is appropriate to call g_variant_type_free() on the return value.
 	 * Since 2.24
 	 * Params:
@@ -595,11 +616,11 @@ public class VariantType
 	 */
 	public this (VariantType element)
 	{
-		// GVariantType * g_variant_type_new_maybe (const GVariantType *element);
-		auto p = g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct());
+		// GVariantType * g_variant_type_new_array (const GVariantType *element);
+		auto p = g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct())");
+			throw new ConstructionException("null returned by g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct())");
 		}
 		this(cast(GVariantType*) p);
 	}
@@ -657,7 +678,7 @@ public class VariantType
 	 * Determines the element type of an array or maybe type.
 	 * This function may only be used with array or maybe types.
 	 * Since 2.24
-	 * Returns: the element type of type
+	 * Returns:the element type of type
 	 */
 	public VariantType element()
 	{
@@ -679,7 +700,7 @@ public class VariantType
 	 * In the case of a dictionary entry type, this function will always
 	 * return 2.
 	 * Since 2.24
-	 * Returns: the number of items in type
+	 * Returns:the number of items in type
 	 */
 	public gsize nItems()
 	{
@@ -699,7 +720,7 @@ public class VariantType
 	 * This call, together with g_variant_type_next() provides an iterator
 	 * interface over tuple and dictionary entry types.
 	 * Since 2.24
-	 * Returns: the first item type of type, or NULL
+	 * Returns:the first item type of type, or NULL
 	 */
 	public VariantType first()
 	{
@@ -722,7 +743,7 @@ public class VariantType
 	 * entry then this call returns NULL.
 	 * For tuples, NULL is returned when type is the last item in a tuple.
 	 * Since 2.24
-	 * Returns: the next GVariantType after type, or NULL
+	 * Returns:the next GVariantType after type, or NULL
 	 */
 	public VariantType next()
 	{
@@ -741,7 +762,7 @@ public class VariantType
 	 * than the additional restriction, this call is equivalent to
 	 * g_variant_type_first().
 	 * Since 2.24
-	 * Returns: the key type of the dictionary entry
+	 * Returns:the key type of the dictionary entry
 	 */
 	public VariantType key()
 	{
@@ -758,7 +779,7 @@ public class VariantType
 	 * Determines the value type of a dictionary entry type.
 	 * This function may only be used with a dictionary entry type.
 	 * Since 2.24
-	 * Returns: the value type of the dictionary entry
+	 * Returns:the value type of the dictionary entry
 	 */
 	public VariantType value()
 	{

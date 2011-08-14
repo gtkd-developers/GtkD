@@ -72,7 +72,9 @@ private import glib.Str;
  * glib/gi18n.h. For use in a library, must include
  * glib/gi18n-lib.h after defining
  * the GETTEXT_PACKAGE macro suitably for your library:
- * #define GETTEXT_PACKAGE "gtk20"
+ *  1
+ * 2
+ *  #define GETTEXT_PACKAGE "gtk20"
  * #include <glib/gi18n-lib.h>
  * The gettext manual covers details of how to set up message extraction
  * with xgettext.
@@ -107,6 +109,25 @@ public class Internationalization
 	{
 		// const gchar * g_dgettext (const gchar *domain,  const gchar *msgid);
 		return Str.toString(g_dgettext(Str.toStringz(domain), Str.toStringz(msgid)));
+	}
+	
+	/**
+	 * This is a variant of g_dgettext() that allows specifying a locale
+	 * category instead of always using LC_MESSAGES. See g_dgettext() for
+	 * more information about how this functions differs from calling
+	 * dcgettext() directly.
+	 * Since 2.26
+	 * Params:
+	 * domain = the translation domain to use, or NULL to use
+	 *  the domain set with textdomain(). [allow-none]
+	 * msgid = message to translate
+	 * category = a locale category
+	 * Returns: the translated string for the given locale category
+	 */
+	public static string dcgettext(string domain, string msgid, int category)
+	{
+		// const gchar * g_dcgettext (const gchar *domain,  const gchar *msgid,  int category);
+		return Str.toString(g_dcgettext(Str.toStringz(domain), Str.toStringz(msgid), category));
 	}
 	
 	/**

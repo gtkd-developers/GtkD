@@ -70,29 +70,52 @@ private import glib.Str;
 /**
  * Description
  * GBookmarkFile lets you parse, edit or create files containing bookmarks
- * to URI, along with some meta-data about the resource pointed by the URI like
- * its MIME type, the application that is registering the bookmark and the
- * icon that should be used to represent the bookmark. The data is stored using
- * the
+ * to URI, along with some meta-data about the resource pointed by the URI
+ * like its MIME type, the application that is registering the bookmark and
+ * the icon that should be used to represent the bookmark. The data is stored
+ * using the
  * Desktop Bookmark
  * Specification.
  * The syntax of the bookmark files is described in detail inside the Desktop
- * Bookmark Specification, here is a quick summary: bookmark files use a sub-class
- * of the
- * XML Bookmark Exchange Language specification, consisting
- * of valid UTF-8 encoded XML, under the xbel root element;
- * each bookmark is stored inside a bookmark element, using
- * its URI: no relative paths can be used inside a bookmark file. The bookmark
- * may have a user defined title and description, to be used instead of the URI.
- * Under the metadata element, with its owner
+ * Bookmark Specification, here is a quick summary: bookmark files use a
+ * sub-class of the XML Bookmark Exchange Language
+ * specification, consisting of valid UTF-8 encoded XML, under the
+ * xbel root element; each bookmark is stored inside a
+ * bookmark element, using its URI: no relative paths can
+ * be used inside a bookmark file. The bookmark may have a user defined title
+ * and description, to be used instead of the URI. Under the
+ * metadata element, with its owner
  * attribute set to http://freedesktop.org, is stored the
  * meta-data about a resource pointed by its URI. The meta-data consists of
  * the resource's MIME type; the applications that have registered a bookmark;
  * the groups to which a bookmark belongs to; a visibility flag, used to set
  * the bookmark as "private" to the applications and groups that has it
- * registered; the URI and MIME type of an icon, to be used when displaying the
- * bookmark inside a GUI.
- * <?xml version="1.0"?>
+ * registered; the URI and MIME type of an icon, to be used when displaying
+ * the bookmark inside a GUI.
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ *  <?xml version="1.0"?>
  * <!DOCTYPE xbel PUBLIC
  *  "+//IDN python.org//DTD XML Bookmark Exchange Language 1.0//EN//XML"
  *  "http://www.python.org/topics/xml/dtds/xbel-1.0.dtd">
@@ -104,24 +127,24 @@ private import glib.Str;
  *  <info>
  *  <metadata owner="http://freedesktop.org">
  *  <mime:mime-type>text/xml</mime:mime-type>
- * 	<bookmark:applications>
+ *  <bookmark:applications>
  *  <bookmark:application name="GEdit" count="2" exec="gedit %u" timestamp="1115726763"/>
  *  <bookmark:application name="GViM" count="7" exec="gvim %f" timestamp="1115726812"/>
- * 	</bookmark:applications>
- * 	<bookmark:groups>
- * 	 <bookmark:group>Editors</bookmark:group>
- * 	</bookmark:groups>
+ *  </bookmark:applications>
+ *  <bookmark:groups>
+ *  <bookmark:group>Editors</bookmark:group>
+ *  </bookmark:groups>
  *  </metadata>
  *  </info>
  *  </bookmark>
- * </xbel>
- * A bookmark file might contain more than one bookmark; each bookmark is accessed
- * through its URI.
- * The important caveat of bookmark files is that when you add a new bookmark you
- * must also add the application that is registering it, using
- * g_bookmark_file_add_application() or g_bookmark_file_set_app_info(). If a
- * bookmark has no applications then it won't be dumped when creating the
- * on disk representation, using g_bookmark_file_to_data() or
+ * </xbel
+ * A bookmark file might contain more than one bookmark; each bookmark
+ * is accessed through its URI.
+ * The important caveat of bookmark files is that when you add a new
+ * bookmark you must also add the application that is registering it, using
+ * g_bookmark_file_add_application() or g_bookmark_file_set_app_info().
+ * If a bookmark has no applications then it won't be dumped when creating
+ * the on disk representation, using g_bookmark_file_to_data() or
  * g_bookmark_file_to_file().
  * The GBookmarkFile parser was added in GLib 2.12.
  */
@@ -300,14 +323,14 @@ public class BookmarkFile
 		// gchar * g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_bookmark_file_to_data(gBookmarkFile, &length, &err));
+		auto p = g_bookmark_file_to_data(gBookmarkFile, &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -443,14 +466,14 @@ public class BookmarkFile
 		// gchar * g_bookmark_file_get_title (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), &err));
+		auto p = g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -468,14 +491,14 @@ public class BookmarkFile
 		// gchar * g_bookmark_file_get_description (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), &err));
+		auto p = g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -495,14 +518,14 @@ public class BookmarkFile
 		// gchar * g_bookmark_file_get_mime_type (GBookmarkFile *bookmark,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), &err));
+		auto p = g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -656,14 +679,14 @@ public class BookmarkFile
 		// gchar ** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err));
+		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**
@@ -683,14 +706,14 @@ public class BookmarkFile
 		// gchar ** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err));
+		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**

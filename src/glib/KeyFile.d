@@ -81,7 +81,20 @@ private import glib.Str;
  * Desktop
  * Entry Specification, here is a quick summary: Key files
  * consists of groups of key-value pairs, interspersed with comments.
- * # this is just an example
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ *  # this is just an example
  * # there can be comments before the first group
  * [First Group]
  * Name=Key File Example\tthis value shows\nescaping
@@ -340,14 +353,14 @@ public class KeyFile
 		// gchar * g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_key_file_to_data(gKeyFile, &length, &err));
+		auto p = g_key_file_to_data(gKeyFile, &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -394,14 +407,14 @@ public class KeyFile
 		// gchar ** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err));
+		auto p = g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**
@@ -461,14 +474,14 @@ public class KeyFile
 		// gchar * g_key_file_get_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err));
+		auto p = g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -491,14 +504,14 @@ public class KeyFile
 		// gchar * g_key_file_get_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err));
+		auto p = g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -522,14 +535,14 @@ public class KeyFile
 		// gchar * g_key_file_get_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &err));
+		auto p = g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -591,6 +604,58 @@ public class KeyFile
 	}
 	
 	/**
+	 * Returns the value associated with key under group_name as a signed
+	 * 64-bit integer. This is similar to g_key_file_get_integer() but can return
+	 * 64-bit results without truncation.
+	 * Since 2.26
+	 * Params:
+	 * groupName = a non-NULL group name
+	 * key = a non-NULL key
+	 * Returns: the value associated with the key as a signed 64-bit integer, or0 if the key was not found or could not be parsed.
+	 * Throws: GException on failure.
+	 */
+	public long getInt64(string groupName, string key)
+	{
+		// gint64 g_key_file_get_int64 (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		GError* err = null;
+		
+		auto p = g_key_file_get_int64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Returns the value associated with key under group_name as an unsigned
+	 * 64-bit integer. This is similar to g_key_file_get_integer() but can return
+	 * large positive results without truncation.
+	 * Since 2.26
+	 * Params:
+	 * groupName = a non-NULL group name
+	 * key = a non-NULL key
+	 * Returns: the value associated with the key as an unsigned 64-bit integer,or 0 if the key was not found or could not be parsed.
+	 * Throws: GException on failure.
+	 */
+	public ulong getUint64(string groupName, string key)
+	{
+		// guint64 g_key_file_get_uint64 (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		GError* err = null;
+		
+		auto p = g_key_file_get_uint64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Returns the value associated with key under group_name as a
 	 * double. If group_name is NULL, the start_group is used.
 	 * If key cannot be found then 0.0 is returned and error is set to
@@ -638,14 +703,14 @@ public class KeyFile
 		// gchar ** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err));
+		auto p = g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**
@@ -672,14 +737,14 @@ public class KeyFile
 		// gchar ** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err));
+		auto p = g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**
@@ -789,14 +854,14 @@ public class KeyFile
 		// gchar * g_key_file_get_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err));
+		auto p = g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -879,6 +944,36 @@ public class KeyFile
 	{
 		// void g_key_file_set_integer (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint value);
 		g_key_file_set_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
+	}
+	
+	/**
+	 * Associates a new integer value with key under group_name.
+	 * If key cannot be found then it is created.
+	 * Since 2.26
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * value = an integer value
+	 */
+	public void setInt64(string groupName, string key, long value)
+	{
+		// void g_key_file_set_int64 (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint64 value);
+		g_key_file_set_int64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
+	}
+	
+	/**
+	 * Associates a new integer value with key under group_name.
+	 * If key cannot be found then it is created.
+	 * Since 2.26
+	 * Params:
+	 * groupName = a group name
+	 * key = a key
+	 * value = an integer value
+	 */
+	public void setUint64(string groupName, string key, ulong value)
+	{
+		// void g_key_file_set_uint64 (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  guint64 value);
+		g_key_file_set_uint64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
 	}
 	
 	/**

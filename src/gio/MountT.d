@@ -622,14 +622,14 @@ public template MountT(TStruct)
 		// gchar ** g_mount_guess_content_type_finish (GMount *mount,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_mount_guess_content_type_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err));
+		auto p = g_mount_guess_content_type_finish(getMountTStruct(), (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**
@@ -653,14 +653,14 @@ public template MountT(TStruct)
 		// gchar ** g_mount_guess_content_type_sync (GMount *mount,  gboolean force_rescan,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_mount_guess_content_type_sync(getMountTStruct(), forceRescan, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
+		auto p = g_mount_guess_content_type_sync(getMountTStruct(), forceRescan, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**

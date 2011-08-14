@@ -295,7 +295,12 @@ public class Util
 	 * data specific to particular user.
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
-	 * XDG Base Directory Specification
+	 * XDG Base Directory Specification.
+	 * In this case the directory retrieved will be XDG_CACHE_HOME.
+	 * On Windows is the directory that serves as a common repository for
+	 * temporary Internet files. A typical path is
+	 * C:\Documents and Settings\username\Local Settings\Temporary Internet Files.
+	 * See documentation for CSIDL_INTERNET_CACHE.
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
@@ -310,7 +315,10 @@ public class Util
 	 * as icons that is customized for a particular user.
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
-	 * XDG Base Directory Specification
+	 * XDG Base Directory Specification.
+	 * In this case the directory retrieved will be XDG_DATA_HOME.
+	 * On Windows is the virtual folder that represents the My Documents
+	 * desktop item. See documentation for CSIDL_PERSONAL.
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
@@ -325,7 +333,12 @@ public class Util
 	 * configuration information such as user preferences and settings.
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
-	 * XDG Base Directory Specification
+	 * XDG Base Directory Specification.
+	 * In this case the directory retrieved will be XDG_CONFIG_HOME.
+	 * On Windows is the directory that serves as a common repository for
+	 * application-specific data. A typical path is
+	 * C:\Documents and Settings\username\Application. See documentation for
+	 * CSIDL_APPDATA.
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
@@ -361,6 +374,7 @@ public class Util
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
 	 * XDG Base Directory Specification
+	 * In this case the list of directories retrieved will be XDG_DATA_DIRS.
 	 * On Windows the first elements in the list are the Application Data
 	 * and Documents folders for All Users. (These can be determined only
 	 * on Windows 2000 or later and are not present in the list on other
@@ -392,7 +406,14 @@ public class Util
 	 * system-wide configuration information.
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
-	 * XDG Base Directory Specification
+	 * XDG Base Directory Specification.
+	 * In this case the list of directories retrieved will be XDG_CONFIG_DIRS.
+	 * On Windows is the directory that contains application data for all users.
+	 * A typical path is C:\Documents and Settings\All Users\Application Data.
+	 * This folder is used for application data that is not user specific.
+	 * For example, an application can store a spell-check dictionary, a database
+	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
+	 * This information will not roam and is available to anyone using the computer.
 	 * Since 2.6
 	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
@@ -469,7 +490,7 @@ public class Util
 	 * TMP, and TEMP in that order. If none
 	 * of those are defined "/tmp" is returned on UNIX and "C:\" on Windows.
 	 * The encoding of the returned string is system-defined. On Windows,
-	 * it is always UTF-8. The return value is never NULL.
+	 * it is always UTF-8. The return value is never NULL or the empty string.
 	 * Returns: the directory to use for temporary files.
 	 */
 	public static string getTmpDir()

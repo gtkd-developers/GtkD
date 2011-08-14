@@ -134,7 +134,7 @@ public class Base64
 	 * Params:
 	 * data = the binary data to encode
 	 * len = the length of data
-	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must  be freed with g_free().
+	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must be freed with g_free().
 	 */
 	public static string encode(char* data, gsize len)
 	{

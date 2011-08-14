@@ -92,6 +92,9 @@ private import glib.Tuples;
  * field, use g_relation_delete().
  * To destroy the GRelation, use g_relation_destroy().
  * To help debug GRelation objects, use g_relation_print().
+ * GRelation has been marked as deprecated, since this API has never
+ * been fully implemented, is not very actively maintained and rarely
+ * used.
  */
 public class Relation
 {
@@ -158,6 +161,8 @@ public class Relation
 	 */
 	
 	/**
+	 * Warning
+	 * g_relation_new has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Creates a new GRelation with the given number of fields. Note that
 	 * currently the number of fields must be 2.
 	 * Params:
@@ -176,6 +181,8 @@ public class Relation
 	}
 	
 	/**
+	 * Warning
+	 * g_relation_index has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Creates an index on the given field. Note that this must be called
 	 * before any records are added to the GRelation.
 	 * Params:
@@ -190,12 +197,14 @@ public class Relation
 	}
 	
 	/**
+	 * Warning
+	 * g_relation_count has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Returns the number of tuples in a GRelation that have the given
 	 * value in the given field.
 	 * Params:
 	 * key = the value to compare with.
 	 * field = the field of each record to match.
-	 * Returns: the number of matches.
+	 * Returns:the number of matches.
 	 */
 	public int count(void* key, int field)
 	{
@@ -204,13 +213,15 @@ public class Relation
 	}
 	
 	/**
+	 * Warning
+	 * g_relation_select has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Returns all of the tuples which have the given key in the given
 	 * field. Use g_tuples_index() to access the returned records. The
 	 * returned records should be freed with g_tuples_destroy().
 	 * Params:
 	 * key = the value to compare with.
 	 * field = the field of each record to match.
-	 * Returns: the records (tuples) that matched.
+	 * Returns:the records (tuples) that matched.
 	 */
 	public Tuples select(void* key, int field)
 	{
@@ -224,12 +235,14 @@ public class Relation
 	}
 	
 	/**
+	 * Warning
+	 * g_relation_delete has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Deletes any records from a GRelation that have the given key value
 	 * in the given field.
 	 * Params:
 	 * key = the value to compare with.
 	 * field = the field of each record to match.
-	 * Returns: the number of records deleted.
+	 * Returns:the number of records deleted.
 	 */
 	public int delet(void* key, int field)
 	{
@@ -238,6 +251,8 @@ public class Relation
 	}
 	
 	/**
+	 * Warning
+	 * g_relation_destroy has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Destroys the GRelation, freeing all memory allocated. However, it
 	 * does not free memory allocated for the tuple data, so you should
 	 * free that first if appropriate.

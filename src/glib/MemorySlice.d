@@ -86,34 +86,61 @@ private import glib.ConstructionException;
  * friends, as long as objects are not resized during their lifetime and the
  * object size used at allocation time is still available when freeing.
  * Example  15.  Using the slice allocator
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
  *  gchar *mem[10000];
- *  gint i;
- *  /+* Allocate 10000 blocks. +/
- *  for (i = 0; i < 10000; i++)
+ * gint i;
+ * /+* Allocate 10000 blocks. +/
+ * for (i = 0; i < 10000; i++)
  *  {
 	 *  mem[i] = g_slice_alloc (50);
 	 *  /+* Fill in the memory with some junk. +/
 	 *  for (j = 0; j < 50; j++)
-	 * 	mem[i][j] = i * j;
+	 *  mem[i][j] = i * j;
  *  }
- *  /+* Now free all of the blocks. +/
- *  for (i = 0; i < 10000; i++)
+ * /+* Now free all of the blocks. +/
+ * for (i = 0; i < 10000; i++)
  *  {
 	 *  g_slice_free1 (50, mem[i]);
  *  }
  * Example  16.  Using the slice allocator with data structures
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
  *  GRealArray *array;
- *  /+* Allocate one block, using the g_slice_new() macro. +/
- *  array = g_slice_new (GRealArray);
- *  /+* We can now use array just like a normal pointer to a structure. +/
- *  array->data = NULL;
- *  array->len = 0;
- *  array->alloc = 0;
- *  array->zero_terminated = (zero_terminated ? 1 : 0);
- *  array->clear = (clear ? 1 : 0);
- *  array->elt_size = elt_size;
- *  /+* We can free the block, so it can be reused. +/
- *  g_slice_free (GRealArray, array);
+ * /+* Allocate one block, using the g_slice_new() macro. +/
+ * array = g_slice_new (GRealArray);
+ * /+* We can now use array just like a normal pointer to a structure. +/
+ * array->data = NULL;
+ * array->len = 0;
+ * array->alloc = 0;
+ * array->zero_terminated = (zero_terminated ? 1 : 0);
+ * array->clear = (clear ? 1 : 0);
+ * array->elt_size = elt_size;
+ * /+* We can free the block, so it can be reused. +/
+ * g_slice_free (GRealArray, array);
  */
 public class MemorySlice
 {

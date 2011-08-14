@@ -273,7 +273,7 @@ public class VariantIter
 	 * A reference is taken to the container that iter is iterating over
 	 * and will be releated only when g_variant_iter_free() is called.
 	 * Since 2.24
-	 * Returns: a new heap-allocated GVariantIter
+	 * Returns:a new heap-allocated GVariantIter
 	 */
 	public VariantIter copy()
 	{
@@ -307,7 +307,7 @@ public class VariantIter
 	 * Since 2.24
 	 * Params:
 	 * value = a container GVariant
-	 * Returns: the number of items in value
+	 * Returns:the number of items in value
 	 */
 	public gsize init(Variant value)
 	{
@@ -321,7 +321,7 @@ public class VariantIter
 	 * of items remaining.
 	 * This function might be useful for preallocation of arrays.
 	 * Since 2.24
-	 * Returns: the number of children in the container
+	 * Returns:the number of children in the container
 	 */
 	public gsize nChildren()
 	{
@@ -358,10 +358,28 @@ public class VariantIter
 	 * Use g_variant_unref() to drop your reference on the return value when
 	 * you no longer need it.
 	 * Example  23.  Iterating with g_variant_iter_next_value()
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
 	 *  /+* recursively iterate a container +/
-	 *  void
-	 *  iterate_container_recursive (GVariant *container)
-	 *  {
+	 * void
+	 * iterate_container_recursive (GVariant *container)
+	 * {
 		 *  GVariantIter iter;
 		 *  GVariant *child;
 		 *  g_variant_iter_init (iter, dictionary);
@@ -372,9 +390,9 @@ public class VariantIter
 			 *  iterate_container_recursive (child);
 			 *  g_variant_unref (child);
 		 *  }
-	 *  }
+	 * }
 	 * Since 2.24
-	 * Returns: a GVariant, or NULL
+	 * Returns: a GVariant, or NULL. [allow-none]
 	 */
 	public Variant nextValue()
 	{

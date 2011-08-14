@@ -147,7 +147,7 @@ public class Pattern
 	 * match the same set of strings.
 	 * Params:
 	 * pspec2 = another GPatternSpec
-	 * Returns: Whether the compiled patterns are equal
+	 * Returns:Whether the compiled patterns are equal
 	 */
 	public int equal(Pattern pspec2)
 	{
@@ -177,7 +177,7 @@ public class Pattern
 	 *  not g_utf8_strlen())
 	 * string = the UTF-8 encoded string to match
 	 * stringReversed = the reverse of string or NULL
-	 * Returns: TRUE if string matches pspec
+	 * Returns:TRUE if string matches pspec
 	 */
 	public int match(uint stringLength, string string, string stringReversed)
 	{
@@ -191,7 +191,7 @@ public class Pattern
 	 * g_pattern_match() instead while supplying the reversed string.
 	 * Params:
 	 * string = the UTF-8 encoded string to match
-	 * Returns: TRUE if string matches pspec
+	 * Returns:TRUE if string matches pspec
 	 */
 	public int matchString(string string)
 	{
@@ -207,7 +207,7 @@ public class Pattern
 	 * Params:
 	 * pattern = the UTF-8 encoded pattern
 	 * string = the UTF-8 encoded string to match
-	 * Returns: TRUE if string matches pspec
+	 * Returns:TRUE if string matches pspec
 	 */
 	public static int matchSimple(string pattern, string string)
 	{

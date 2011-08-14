@@ -146,7 +146,7 @@ public class ListSG
 	 * Allocates space for one GSList element. It is called by the
 	 * g_slist_append(), g_slist_prepend(), g_slist_insert() and
 	 * g_slist_insert_sorted() functions and so is rarely used on its own.
-	 * Returns: a pointer to the newly-allocated GSList element.
+	 * Returns:a pointer to the newly-allocated GSList element.
 	 */
 	public static ListSG alloc()
 	{
@@ -169,7 +169,17 @@ public class ListSG
 	 * to find the end, which is inefficient when adding multiple
 	 * elements. A common idiom to avoid the inefficiency is to prepend
 	 * the elements and reverse the list when all elements have been added.
-	 * /+* Notice that these are initialized to the empty list. +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 *  /+* Notice that these are initialized to the empty list. +/
 	 * GSList *list = NULL, *number_list = NULL;
 	 * /+* This is a list of strings. +/
 	 * list = g_slist_append (list, "first");
@@ -197,7 +207,11 @@ public class ListSG
 	 * Note
 	 * The return value is the new start of the list, which
 	 * may have changed, so make sure you store the new value.
-	 * /+* Notice that it is initialized to the empty list. +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 *  /+* Notice that it is initialized to the empty list. +/
 	 * GSList *list = NULL;
 	 * list = g_slist_prepend (list, "last");
 	 * list = g_slist_prepend (list, "first");
@@ -518,7 +532,7 @@ public class ListSG
 	 * Gets the last element in a GSList.
 	 * Note
 	 * This function iterates over the whole list.
-	 * Returns: the last element in the GSList,  or NULL if the GSList has no elements
+	 * Returns: the last element in the GSList, or NULL if the GSList has no elements
 	 */
 	public ListSG last()
 	{
@@ -535,7 +549,7 @@ public class ListSG
 	 * Gets the element at the given position in a GSList.
 	 * Params:
 	 * n = the position of the element, counting from 0
-	 * Returns: the element, or NULL if the position is off  the end of the GSList
+	 * Returns: the element, or NULL if the position is off the end of the GSList
 	 */
 	public ListSG nth(uint n)
 	{
@@ -552,7 +566,7 @@ public class ListSG
 	 * Gets the data of the element at the given position.
 	 * Params:
 	 * n = the position of the element
-	 * Returns: the element's data, or NULL if the position  is off the end of the GSList
+	 * Returns: the element's data, or NULL if the position is off the end of the GSList
 	 */
 	public void* nthData(uint n)
 	{
@@ -565,7 +579,7 @@ public class ListSG
 	 * contains the given data.
 	 * Params:
 	 * data = the element data to find
-	 * Returns: the found GSList element,  or NULL if it is not found
+	 * Returns: the found GSList element, or NULL if it is not found
 	 */
 	public ListSG find(void* data)
 	{
@@ -607,7 +621,7 @@ public class ListSG
 	 * in the GSList (starting from 0).
 	 * Params:
 	 * llink = an element in the GSList
-	 * Returns: the position of the element in the GSList,  or -1 if the element is not found
+	 * Returns: the position of the element in the GSList, or -1 if the element is not found
 	 */
 	public int position(ListSG llink)
 	{
@@ -620,7 +634,7 @@ public class ListSG
 	 * the given data (starting from 0).
 	 * Params:
 	 * data = the data to find
-	 * Returns: the index of the element containing the data,  or -1 if the data is not found
+	 * Returns: the index of the element containing the data, or -1 if the data is not found
 	 */
 	public int index(void* data)
 	{

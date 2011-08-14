@@ -128,6 +128,9 @@ static this()
 	Linker.link(g_source_set_can_recurse, "g_source_set_can_recurse", LIBRARY.GLIB);
 	Linker.link(g_source_get_can_recurse, "g_source_get_can_recurse", LIBRARY.GLIB);
 	Linker.link(g_source_get_id, "g_source_get_id", LIBRARY.GLIB);
+	Linker.link(g_source_get_name, "g_source_get_name", LIBRARY.GLIB);
+	Linker.link(g_source_set_name, "g_source_set_name", LIBRARY.GLIB);
+	Linker.link(g_source_set_name_by_id, "g_source_set_name_by_id", LIBRARY.GLIB);
 	Linker.link(g_source_get_context, "g_source_get_context", LIBRARY.GLIB);
 	Linker.link(g_source_set_callback, "g_source_set_callback", LIBRARY.GLIB);
 	Linker.link(g_source_set_callback_indirect, "g_source_set_callback_indirect", LIBRARY.GLIB);
@@ -377,8 +380,6 @@ static this()
 	Linker.link(g_locale_to_utf8, "g_locale_to_utf8", LIBRARY.GLIB);
 	Linker.link(g_filename_to_utf8, "g_filename_to_utf8", LIBRARY.GLIB);
 	Linker.link(g_filename_from_utf8, "g_filename_from_utf8", LIBRARY.GLIB);
-	Linker.link(g_filename_from_uri, "g_filename_from_uri", LIBRARY.GLIB);
-	Linker.link(g_filename_to_uri, "g_filename_to_uri", LIBRARY.GLIB);
 	Linker.link(g_get_filename_charsets, "g_get_filename_charsets", LIBRARY.GLIB);
 	Linker.link(g_filename_display_name, "g_filename_display_name", LIBRARY.GLIB);
 	Linker.link(g_filename_display_basename, "g_filename_display_basename", LIBRARY.GLIB);
@@ -471,6 +472,7 @@ static this()
 	// glib.Internationalization
 
 	Linker.link(g_dgettext, "g_dgettext", LIBRARY.GLIB);
+	Linker.link(g_dcgettext, "g_dcgettext", LIBRARY.GLIB);
 	Linker.link(g_dngettext, "g_dngettext", LIBRARY.GLIB);
 	Linker.link(g_dpgettext, "g_dpgettext", LIBRARY.GLIB);
 	Linker.link(g_dpgettext2, "g_dpgettext2", LIBRARY.GLIB);
@@ -535,6 +537,64 @@ static this()
 	Linker.link(g_date_valid_dmy, "g_date_valid_dmy", LIBRARY.GLIB);
 	Linker.link(g_date_valid_julian, "g_date_valid_julian", LIBRARY.GLIB);
 	Linker.link(g_date_valid_weekday, "g_date_valid_weekday", LIBRARY.GLIB);
+
+	// glib.TimeZone
+
+	Linker.link(g_time_zone_unref, "g_time_zone_unref", LIBRARY.GLIB);
+	Linker.link(g_time_zone_ref, "g_time_zone_ref", LIBRARY.GLIB);
+	Linker.link(g_time_zone_new, "g_time_zone_new", LIBRARY.GLIB);
+	Linker.link(g_time_zone_new_local, "g_time_zone_new_local", LIBRARY.GLIB);
+	Linker.link(g_time_zone_new_utc, "g_time_zone_new_utc", LIBRARY.GLIB);
+
+	// glib.DateTime
+
+	Linker.link(g_date_time_unref, "g_date_time_unref", LIBRARY.GLIB);
+	Linker.link(g_date_time_ref, "g_date_time_ref", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_now, "g_date_time_new_now", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_now_local, "g_date_time_new_now_local", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_now_utc, "g_date_time_new_now_utc", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_from_unix_local, "g_date_time_new_from_unix_local", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_from_unix_utc, "g_date_time_new_from_unix_utc", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_from_timeval_local, "g_date_time_new_from_timeval_local", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_from_timeval_utc, "g_date_time_new_from_timeval_utc", LIBRARY.GLIB);
+	Linker.link(g_date_time_new, "g_date_time_new", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_local, "g_date_time_new_local", LIBRARY.GLIB);
+	Linker.link(g_date_time_new_utc, "g_date_time_new_utc", LIBRARY.GLIB);
+	Linker.link(g_date_time_add, "g_date_time_add", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_years, "g_date_time_add_years", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_months, "g_date_time_add_months", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_weeks, "g_date_time_add_weeks", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_days, "g_date_time_add_days", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_hours, "g_date_time_add_hours", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_minutes, "g_date_time_add_minutes", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_seconds, "g_date_time_add_seconds", LIBRARY.GLIB);
+	Linker.link(g_date_time_add_full, "g_date_time_add_full", LIBRARY.GLIB);
+	Linker.link(g_date_time_compare, "g_date_time_compare", LIBRARY.GLIB);
+	Linker.link(g_date_time_difference, "g_date_time_difference", LIBRARY.GLIB);
+	Linker.link(g_date_time_hash, "g_date_time_hash", LIBRARY.GLIB);
+	Linker.link(g_date_time_equal, "g_date_time_equal", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_ymd, "g_date_time_get_ymd", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_year, "g_date_time_get_year", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_month, "g_date_time_get_month", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_day_of_month, "g_date_time_get_day_of_month", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_week_numbering_year, "g_date_time_get_week_numbering_year", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_week_of_year, "g_date_time_get_week_of_year", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_day_of_week, "g_date_time_get_day_of_week", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_day_of_year, "g_date_time_get_day_of_year", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_hour, "g_date_time_get_hour", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_minute, "g_date_time_get_minute", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_second, "g_date_time_get_second", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_microsecond, "g_date_time_get_microsecond", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_seconds, "g_date_time_get_seconds", LIBRARY.GLIB);
+	Linker.link(g_date_time_to_unix, "g_date_time_to_unix", LIBRARY.GLIB);
+	Linker.link(g_date_time_to_timeval, "g_date_time_to_timeval", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_utc_offset, "g_date_time_get_utc_offset", LIBRARY.GLIB);
+	Linker.link(g_date_time_get_timezone_abbreviation, "g_date_time_get_timezone_abbreviation", LIBRARY.GLIB);
+	Linker.link(g_date_time_is_daylight_savings, "g_date_time_is_daylight_savings", LIBRARY.GLIB);
+	Linker.link(g_date_time_to_timezone, "g_date_time_to_timezone", LIBRARY.GLIB);
+	Linker.link(g_date_time_to_local, "g_date_time_to_local", LIBRARY.GLIB);
+	Linker.link(g_date_time_to_utc, "g_date_time_to_utc", LIBRARY.GLIB);
+	Linker.link(g_date_time_format, "g_date_time_format", LIBRARY.GLIB);
 
 	// glib.RandG
 
@@ -702,6 +762,8 @@ static this()
 	Linker.link(g_uri_unescape_string, "g_uri_unescape_string", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_segment, "g_uri_unescape_segment", LIBRARY.GLIB);
 	Linker.link(g_uri_list_extract_uris, "g_uri_list_extract_uris", LIBRARY.GLIB);
+	Linker.link(g_filename_from_uri, "g_filename_from_uri", LIBRARY.GLIB);
+	Linker.link(g_filename_to_uri, "g_filename_to_uri", LIBRARY.GLIB);
 
 	// glib.Hostname
 
@@ -766,6 +828,8 @@ static this()
 	Linker.link(g_regex_get_max_backref, "g_regex_get_max_backref", LIBRARY.GLIB);
 	Linker.link(g_regex_get_capture_count, "g_regex_get_capture_count", LIBRARY.GLIB);
 	Linker.link(g_regex_get_string_number, "g_regex_get_string_number", LIBRARY.GLIB);
+	Linker.link(g_regex_get_compile_flags, "g_regex_get_compile_flags", LIBRARY.GLIB);
+	Linker.link(g_regex_get_match_flags, "g_regex_get_match_flags", LIBRARY.GLIB);
 	Linker.link(g_regex_escape_string, "g_regex_escape_string", LIBRARY.GLIB);
 	Linker.link(g_regex_match_simple, "g_regex_match_simple", LIBRARY.GLIB);
 	Linker.link(g_regex_match, "g_regex_match", LIBRARY.GLIB);
@@ -833,6 +897,8 @@ static this()
 	Linker.link(g_key_file_get_locale_string, "g_key_file_get_locale_string", LIBRARY.GLIB);
 	Linker.link(g_key_file_get_boolean, "g_key_file_get_boolean", LIBRARY.GLIB);
 	Linker.link(g_key_file_get_integer, "g_key_file_get_integer", LIBRARY.GLIB);
+	Linker.link(g_key_file_get_int64, "g_key_file_get_int64", LIBRARY.GLIB);
+	Linker.link(g_key_file_get_uint64, "g_key_file_get_uint64", LIBRARY.GLIB);
 	Linker.link(g_key_file_get_double, "g_key_file_get_double", LIBRARY.GLIB);
 	Linker.link(g_key_file_get_string_list, "g_key_file_get_string_list", LIBRARY.GLIB);
 	Linker.link(g_key_file_get_locale_string_list, "g_key_file_get_locale_string_list", LIBRARY.GLIB);
@@ -845,6 +911,8 @@ static this()
 	Linker.link(g_key_file_set_locale_string, "g_key_file_set_locale_string", LIBRARY.GLIB);
 	Linker.link(g_key_file_set_boolean, "g_key_file_set_boolean", LIBRARY.GLIB);
 	Linker.link(g_key_file_set_integer, "g_key_file_set_integer", LIBRARY.GLIB);
+	Linker.link(g_key_file_set_int64, "g_key_file_set_int64", LIBRARY.GLIB);
+	Linker.link(g_key_file_set_uint64, "g_key_file_set_uint64", LIBRARY.GLIB);
 	Linker.link(g_key_file_set_double, "g_key_file_set_double", LIBRARY.GLIB);
 	Linker.link(g_key_file_set_string_list, "g_key_file_set_string_list", LIBRARY.GLIB);
 	Linker.link(g_key_file_set_locale_string_list, "g_key_file_set_locale_string_list", LIBRARY.GLIB);
@@ -1371,10 +1439,12 @@ static this()
 	Linker.link(g_variant_unref, "g_variant_unref", LIBRARY.GLIB);
 	Linker.link(g_variant_ref, "g_variant_ref", LIBRARY.GLIB);
 	Linker.link(g_variant_ref_sink, "g_variant_ref_sink", LIBRARY.GLIB);
+	Linker.link(g_variant_is_floating, "g_variant_is_floating", LIBRARY.GLIB);
 	Linker.link(g_variant_get_type, "g_variant_get_type", LIBRARY.GLIB);
 	Linker.link(g_variant_get_type_string, "g_variant_get_type_string", LIBRARY.GLIB);
 	Linker.link(g_variant_is_of_type, "g_variant_is_of_type", LIBRARY.GLIB);
 	Linker.link(g_variant_is_container, "g_variant_is_container", LIBRARY.GLIB);
+	Linker.link(g_variant_compare, "g_variant_compare", LIBRARY.GLIB);
 	Linker.link(g_variant_classify, "g_variant_classify", LIBRARY.GLIB);
 	Linker.link(g_variant_get, "g_variant_get", LIBRARY.GLIB);
 	Linker.link(g_variant_get_va, "g_variant_get_va", LIBRARY.GLIB);
@@ -1397,6 +1467,8 @@ static this()
 	Linker.link(g_variant_is_signature, "g_variant_is_signature", LIBRARY.GLIB);
 	Linker.link(g_variant_new_variant, "g_variant_new_variant", LIBRARY.GLIB);
 	Linker.link(g_variant_new_strv, "g_variant_new_strv", LIBRARY.GLIB);
+	Linker.link(g_variant_new_bytestring, "g_variant_new_bytestring", LIBRARY.GLIB);
+	Linker.link(g_variant_new_bytestring_array, "g_variant_new_bytestring_array", LIBRARY.GLIB);
 	Linker.link(g_variant_get_boolean, "g_variant_get_boolean", LIBRARY.GLIB);
 	Linker.link(g_variant_get_byte, "g_variant_get_byte", LIBRARY.GLIB);
 	Linker.link(g_variant_get_int16, "g_variant_get_int16", LIBRARY.GLIB);
@@ -1412,6 +1484,10 @@ static this()
 	Linker.link(g_variant_get_variant, "g_variant_get_variant", LIBRARY.GLIB);
 	Linker.link(g_variant_get_strv, "g_variant_get_strv", LIBRARY.GLIB);
 	Linker.link(g_variant_dup_strv, "g_variant_dup_strv", LIBRARY.GLIB);
+	Linker.link(g_variant_get_bytestring, "g_variant_get_bytestring", LIBRARY.GLIB);
+	Linker.link(g_variant_dup_bytestring, "g_variant_dup_bytestring", LIBRARY.GLIB);
+	Linker.link(g_variant_get_bytestring_array, "g_variant_get_bytestring_array", LIBRARY.GLIB);
+	Linker.link(g_variant_dup_bytestring_array, "g_variant_dup_bytestring_array", LIBRARY.GLIB);
 	Linker.link(g_variant_new_maybe, "g_variant_new_maybe", LIBRARY.GLIB);
 	Linker.link(g_variant_new_array, "g_variant_new_array", LIBRARY.GLIB);
 	Linker.link(g_variant_new_tuple, "g_variant_new_tuple", LIBRARY.GLIB);
@@ -1456,6 +1532,7 @@ static this()
 	Linker.link(g_variant_builder_clear, "g_variant_builder_clear", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_add_value, "g_variant_builder_add_value", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_add, "g_variant_builder_add", LIBRARY.GLIB);
+	Linker.link(g_variant_builder_add_parsed, "g_variant_builder_add_parsed", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_end, "g_variant_builder_end", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_open, "g_variant_builder_open", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_close, "g_variant_builder_close", LIBRARY.GLIB);
@@ -1557,6 +1634,9 @@ mixin( gshared ~"extern(C)
 	void function(GSource* source, gboolean canRecurse) c_g_source_set_can_recurse;
 	gboolean function(GSource* source) c_g_source_get_can_recurse;
 	guint function(GSource* source) c_g_source_get_id;
+	char* function(GSource* source) c_g_source_get_name;
+	void function(GSource* source, char* name) c_g_source_set_name;
+	void function(guint tag, char* name) c_g_source_set_name_by_id;
 	GMainContext* function(GSource* source) c_g_source_get_context;
 	void function(GSource* source, GSourceFunc func, gpointer data, GDestroyNotify notify) c_g_source_set_callback;
 	void function(GSource* source, gpointer callbackData, GSourceCallbackFuncs* callbackFuncs) c_g_source_set_callback_indirect;
@@ -1806,8 +1886,6 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_locale_to_utf8;
 	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_to_utf8;
 	gchar* function(gchar* utf8string, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_from_utf8;
-	gchar* function(gchar* uri, gchar** hostname, GError** error) c_g_filename_from_uri;
-	gchar* function(gchar* filename, gchar* hostname, GError** error) c_g_filename_to_uri;
 	gboolean function(gchar*** charsets) c_g_get_filename_charsets;
 	gchar* function(gchar* filename) c_g_filename_display_name;
 	gchar* function(gchar* filename) c_g_filename_display_basename;
@@ -1900,6 +1978,7 @@ mixin( gshared ~"extern(C)
 	// glib.Internationalization
 	
 	gchar* function(gchar* domain, gchar* msgid) c_g_dgettext;
+	gchar* function(gchar* domain, gchar* msgid, int category) c_g_dcgettext;
 	gchar* function(gchar* domain, gchar* msgid, gchar* msgidPlural, gulong n) c_g_dngettext;
 	gchar* function(gchar* domain, gchar* msgctxtid, gsize msgidoffset) c_g_dpgettext;
 	gchar* function(gchar* domain, gchar* context, gchar* msgid) c_g_dpgettext2;
@@ -1964,6 +2043,64 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDateDay day, GDateMonth month, GDateYear year) c_g_date_valid_dmy;
 	gboolean function(guint32 julianDate) c_g_date_valid_julian;
 	gboolean function(GDateWeekday weekday) c_g_date_valid_weekday;
+	
+	// glib.TimeZone
+	
+	void function(GTimeZone* tz) c_g_time_zone_unref;
+	GTimeZone* function(GTimeZone* tz) c_g_time_zone_ref;
+	GTimeZone* function(gchar* identifier) c_g_time_zone_new;
+	GTimeZone* function() c_g_time_zone_new_local;
+	GTimeZone* function() c_g_time_zone_new_utc;
+	
+	// glib.DateTime
+	
+	void function(GDateTime* datetime) c_g_date_time_unref;
+	GDateTime* function(GDateTime* datetime) c_g_date_time_ref;
+	GDateTime* function(GTimeZone* tz) c_g_date_time_new_now;
+	GDateTime* function() c_g_date_time_new_now_local;
+	GDateTime* function() c_g_date_time_new_now_utc;
+	GDateTime* function(gint64 t) c_g_date_time_new_from_unix_local;
+	GDateTime* function(gint64 t) c_g_date_time_new_from_unix_utc;
+	GDateTime* function(GTimeVal* tv) c_g_date_time_new_from_timeval_local;
+	GDateTime* function(GTimeVal* tv) c_g_date_time_new_from_timeval_utc;
+	GDateTime* function(GTimeZone* tz, gint year, gint month, gint day, gint hour, gint minute, gdouble seconds) c_g_date_time_new;
+	GDateTime* function(gint year, gint month, gint day, gint hour, gint minute, gdouble seconds) c_g_date_time_new_local;
+	GDateTime* function(gint year, gint month, gint day, gint hour, gint minute, gdouble seconds) c_g_date_time_new_utc;
+	GDateTime* function(GDateTime* datetime, GTimeSpan timespan) c_g_date_time_add;
+	GDateTime* function(GDateTime* datetime, gint years) c_g_date_time_add_years;
+	GDateTime* function(GDateTime* datetime, gint months) c_g_date_time_add_months;
+	GDateTime* function(GDateTime* datetime, gint weeks) c_g_date_time_add_weeks;
+	GDateTime* function(GDateTime* datetime, gint days) c_g_date_time_add_days;
+	GDateTime* function(GDateTime* datetime, gint hours) c_g_date_time_add_hours;
+	GDateTime* function(GDateTime* datetime, gint minutes) c_g_date_time_add_minutes;
+	GDateTime* function(GDateTime* datetime, gdouble seconds) c_g_date_time_add_seconds;
+	GDateTime* function(GDateTime* datetime, gint years, gint months, gint days, gint hours, gint minutes, gdouble seconds) c_g_date_time_add_full;
+	gint function(gconstpointer dt1, gconstpointer dt2) c_g_date_time_compare;
+	GTimeSpan function(GDateTime* end, GDateTime* begin) c_g_date_time_difference;
+	guint function(gconstpointer datetime) c_g_date_time_hash;
+	gboolean function(gconstpointer dt1, gconstpointer dt2) c_g_date_time_equal;
+	void function(GDateTime* datetime, gint* year, gint* month, gint* day) c_g_date_time_get_ymd;
+	gint function(GDateTime* datetime) c_g_date_time_get_year;
+	gint function(GDateTime* datetime) c_g_date_time_get_month;
+	gint function(GDateTime* datetime) c_g_date_time_get_day_of_month;
+	gint function(GDateTime* datetime) c_g_date_time_get_week_numbering_year;
+	gint function(GDateTime* datetime) c_g_date_time_get_week_of_year;
+	gint function(GDateTime* datetime) c_g_date_time_get_day_of_week;
+	gint function(GDateTime* datetime) c_g_date_time_get_day_of_year;
+	gint function(GDateTime* datetime) c_g_date_time_get_hour;
+	gint function(GDateTime* datetime) c_g_date_time_get_minute;
+	gint function(GDateTime* datetime) c_g_date_time_get_second;
+	gint function(GDateTime* datetime) c_g_date_time_get_microsecond;
+	gdouble function(GDateTime* datetime) c_g_date_time_get_seconds;
+	gint64 function(GDateTime* datetime) c_g_date_time_to_unix;
+	gboolean function(GDateTime* datetime, GTimeVal* tv) c_g_date_time_to_timeval;
+	GTimeSpan function(GDateTime* datetime) c_g_date_time_get_utc_offset;
+	gchar* function(GDateTime* datetime) c_g_date_time_get_timezone_abbreviation;
+	gboolean function(GDateTime* datetime) c_g_date_time_is_daylight_savings;
+	GDateTime* function(GDateTime* datetime, GTimeZone* tz) c_g_date_time_to_timezone;
+	GDateTime* function(GDateTime* datetime) c_g_date_time_to_local;
+	GDateTime* function(GDateTime* datetime) c_g_date_time_to_utc;
+	gchar* function(GDateTime* datetime, gchar* format) c_g_date_time_format;
 	
 	// glib.RandG
 	
@@ -2095,8 +2232,8 @@ mixin( gshared ~"extern(C)
 	int function(gchar* filename, int flags, int mode) c_g_open;
 	int function(gchar* oldfilename, gchar* newfilename) c_g_rename;
 	int function(gchar* filename, int mode) c_g_mkdir;
-	int function(gchar* filename, void* buf) c_g_stat;
-	int function(gchar* filename, void* buf) c_g_lstat;
+	int function(gchar* filename, GStatBuf* buf) c_g_stat;
+	int function(gchar* filename, GStatBuf* buf) c_g_lstat;
 	int function(gchar* filename) c_g_unlink;
 	int function(gchar* filename) c_g_remove;
 	int function(gchar* filename) c_g_rmdir;
@@ -2131,6 +2268,8 @@ mixin( gshared ~"extern(C)
 	char* function(char* escapedString, char* illegalCharacters) c_g_uri_unescape_string;
 	char* function(char* escapedString, char* escapedStringEnd, char* illegalCharacters) c_g_uri_unescape_segment;
 	gchar** function(gchar* uriList) c_g_uri_list_extract_uris;
+	gchar* function(gchar* uri, gchar** hostname, GError** error) c_g_filename_from_uri;
+	gchar* function(gchar* filename, gchar* hostname, GError** error) c_g_filename_to_uri;
 	
 	// glib.Hostname
 	
@@ -2195,6 +2334,8 @@ mixin( gshared ~"extern(C)
 	gint function(GRegex* regex) c_g_regex_get_max_backref;
 	gint function(GRegex* regex) c_g_regex_get_capture_count;
 	gint function(GRegex* regex, gchar* name) c_g_regex_get_string_number;
+	GRegexCompileFlags function(GRegex* regex) c_g_regex_get_compile_flags;
+	GRegexMatchFlags function(GRegex* regex) c_g_regex_get_match_flags;
 	gchar* function(gchar* string, gint length) c_g_regex_escape_string;
 	gboolean function(gchar* pattern, gchar* string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions) c_g_regex_match_simple;
 	gboolean function(GRegex* regex, gchar* string, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo) c_g_regex_match;
@@ -2262,6 +2403,8 @@ mixin( gshared ~"extern(C)
 	gchar* function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, GError** error) c_g_key_file_get_locale_string;
 	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error) c_g_key_file_get_boolean;
 	gint function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error) c_g_key_file_get_integer;
+	gint64 function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error) c_g_key_file_get_int64;
+	guint64 function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error) c_g_key_file_get_uint64;
 	gdouble function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error) c_g_key_file_get_double;
 	gchar** function(GKeyFile* keyFile, gchar* groupName, gchar* key, gsize* length, GError** error) c_g_key_file_get_string_list;
 	gchar** function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gsize* length, GError** error) c_g_key_file_get_locale_string_list;
@@ -2274,6 +2417,8 @@ mixin( gshared ~"extern(C)
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar* string) c_g_key_file_set_locale_string;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean value) c_g_key_file_set_boolean;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint value) c_g_key_file_set_integer;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint64 value) c_g_key_file_set_int64;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, guint64 value) c_g_key_file_set_uint64;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble value) c_g_key_file_set_double;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar** list, gsize length) c_g_key_file_set_string_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar** list, gsize length) c_g_key_file_set_locale_string_list;
@@ -2800,10 +2945,12 @@ mixin( gshared ~"extern(C)
 	void function(GVariant* value) c_g_variant_unref;
 	GVariant* function(GVariant* value) c_g_variant_ref;
 	GVariant* function(GVariant* value) c_g_variant_ref_sink;
+	gboolean function(GVariant* value) c_g_variant_is_floating;
 	GVariantType* function(GVariant* value) c_g_variant_get_type;
 	gchar* function(GVariant* value) c_g_variant_get_type_string;
 	gboolean function(GVariant* value, GVariantType* type) c_g_variant_is_of_type;
 	gboolean function(GVariant* value) c_g_variant_is_container;
+	gint function(gconstpointer one, gconstpointer two) c_g_variant_compare;
 	GVariantClass function(GVariant* value) c_g_variant_classify;
 	void function(GVariant* value, gchar* formatString, ... ) c_g_variant_get;
 	void function(GVariant* value, gchar* formatString, gchar** endptr, va_list* app) c_g_variant_get_va;
@@ -2826,6 +2973,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* string) c_g_variant_is_signature;
 	GVariant* function(GVariant* value) c_g_variant_new_variant;
 	GVariant* function(gchar** strv, gssize length) c_g_variant_new_strv;
+	GVariant* function(gchar* string) c_g_variant_new_bytestring;
+	GVariant* function(gchar** strv, gssize length) c_g_variant_new_bytestring_array;
 	gboolean function(GVariant* value) c_g_variant_get_boolean;
 	guchar function(GVariant* value) c_g_variant_get_byte;
 	gint16 function(GVariant* value) c_g_variant_get_int16;
@@ -2841,6 +2990,10 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GVariant* value) c_g_variant_get_variant;
 	gchar** function(GVariant* value, gsize* length) c_g_variant_get_strv;
 	gchar** function(GVariant* value, gsize* length) c_g_variant_dup_strv;
+	gchar* function(GVariant* value) c_g_variant_get_bytestring;
+	gchar* function(GVariant* value, gsize* length) c_g_variant_dup_bytestring;
+	gchar** function(GVariant* value, gsize* length) c_g_variant_get_bytestring_array;
+	gchar** function(GVariant* value, gsize* length) c_g_variant_dup_bytestring_array;
 	GVariant* function(GVariantType* childType, GVariant* child) c_g_variant_new_maybe;
 	GVariant* function(GVariantType* childType, GVariant** children, gsize nChildren) c_g_variant_new_array;
 	GVariant* function(GVariant** children, gsize nChildren) c_g_variant_new_tuple;
@@ -2885,6 +3038,7 @@ mixin( gshared ~"extern(C)
 	void function(GVariantBuilder* builder) c_g_variant_builder_clear;
 	void function(GVariantBuilder* builder, GVariant* value) c_g_variant_builder_add_value;
 	void function(GVariantBuilder* builder, gchar* formatString, ... ) c_g_variant_builder_add;
+	void function(GVariantBuilder* builder, gchar* format, ... ) c_g_variant_builder_add_parsed;
 	GVariant* function(GVariantBuilder* builder) c_g_variant_builder_end;
 	void function(GVariantBuilder* builder, GVariantType* type) c_g_variant_builder_open;
 	void function(GVariantBuilder* builder) c_g_variant_builder_close;
@@ -2983,6 +3137,9 @@ alias c_g_source_get_priority  g_source_get_priority;
 alias c_g_source_set_can_recurse  g_source_set_can_recurse;
 alias c_g_source_get_can_recurse  g_source_get_can_recurse;
 alias c_g_source_get_id  g_source_get_id;
+alias c_g_source_get_name  g_source_get_name;
+alias c_g_source_set_name  g_source_set_name;
+alias c_g_source_set_name_by_id  g_source_set_name_by_id;
 alias c_g_source_get_context  g_source_get_context;
 alias c_g_source_set_callback  g_source_set_callback;
 alias c_g_source_set_callback_indirect  g_source_set_callback_indirect;
@@ -3232,8 +3389,6 @@ alias c_g_convert_with_fallback  g_convert_with_fallback;
 alias c_g_locale_to_utf8  g_locale_to_utf8;
 alias c_g_filename_to_utf8  g_filename_to_utf8;
 alias c_g_filename_from_utf8  g_filename_from_utf8;
-alias c_g_filename_from_uri  g_filename_from_uri;
-alias c_g_filename_to_uri  g_filename_to_uri;
 alias c_g_get_filename_charsets  g_get_filename_charsets;
 alias c_g_filename_display_name  g_filename_display_name;
 alias c_g_filename_display_basename  g_filename_display_basename;
@@ -3326,6 +3481,7 @@ alias c_g_compute_checksum_for_string  g_compute_checksum_for_string;
 // glib.Internationalization
 
 alias c_g_dgettext  g_dgettext;
+alias c_g_dcgettext  g_dcgettext;
 alias c_g_dngettext  g_dngettext;
 alias c_g_dpgettext  g_dpgettext;
 alias c_g_dpgettext2  g_dpgettext2;
@@ -3390,6 +3546,64 @@ alias c_g_date_valid_year  g_date_valid_year;
 alias c_g_date_valid_dmy  g_date_valid_dmy;
 alias c_g_date_valid_julian  g_date_valid_julian;
 alias c_g_date_valid_weekday  g_date_valid_weekday;
+
+// glib.TimeZone
+
+alias c_g_time_zone_unref  g_time_zone_unref;
+alias c_g_time_zone_ref  g_time_zone_ref;
+alias c_g_time_zone_new  g_time_zone_new;
+alias c_g_time_zone_new_local  g_time_zone_new_local;
+alias c_g_time_zone_new_utc  g_time_zone_new_utc;
+
+// glib.DateTime
+
+alias c_g_date_time_unref  g_date_time_unref;
+alias c_g_date_time_ref  g_date_time_ref;
+alias c_g_date_time_new_now  g_date_time_new_now;
+alias c_g_date_time_new_now_local  g_date_time_new_now_local;
+alias c_g_date_time_new_now_utc  g_date_time_new_now_utc;
+alias c_g_date_time_new_from_unix_local  g_date_time_new_from_unix_local;
+alias c_g_date_time_new_from_unix_utc  g_date_time_new_from_unix_utc;
+alias c_g_date_time_new_from_timeval_local  g_date_time_new_from_timeval_local;
+alias c_g_date_time_new_from_timeval_utc  g_date_time_new_from_timeval_utc;
+alias c_g_date_time_new  g_date_time_new;
+alias c_g_date_time_new_local  g_date_time_new_local;
+alias c_g_date_time_new_utc  g_date_time_new_utc;
+alias c_g_date_time_add  g_date_time_add;
+alias c_g_date_time_add_years  g_date_time_add_years;
+alias c_g_date_time_add_months  g_date_time_add_months;
+alias c_g_date_time_add_weeks  g_date_time_add_weeks;
+alias c_g_date_time_add_days  g_date_time_add_days;
+alias c_g_date_time_add_hours  g_date_time_add_hours;
+alias c_g_date_time_add_minutes  g_date_time_add_minutes;
+alias c_g_date_time_add_seconds  g_date_time_add_seconds;
+alias c_g_date_time_add_full  g_date_time_add_full;
+alias c_g_date_time_compare  g_date_time_compare;
+alias c_g_date_time_difference  g_date_time_difference;
+alias c_g_date_time_hash  g_date_time_hash;
+alias c_g_date_time_equal  g_date_time_equal;
+alias c_g_date_time_get_ymd  g_date_time_get_ymd;
+alias c_g_date_time_get_year  g_date_time_get_year;
+alias c_g_date_time_get_month  g_date_time_get_month;
+alias c_g_date_time_get_day_of_month  g_date_time_get_day_of_month;
+alias c_g_date_time_get_week_numbering_year  g_date_time_get_week_numbering_year;
+alias c_g_date_time_get_week_of_year  g_date_time_get_week_of_year;
+alias c_g_date_time_get_day_of_week  g_date_time_get_day_of_week;
+alias c_g_date_time_get_day_of_year  g_date_time_get_day_of_year;
+alias c_g_date_time_get_hour  g_date_time_get_hour;
+alias c_g_date_time_get_minute  g_date_time_get_minute;
+alias c_g_date_time_get_second  g_date_time_get_second;
+alias c_g_date_time_get_microsecond  g_date_time_get_microsecond;
+alias c_g_date_time_get_seconds  g_date_time_get_seconds;
+alias c_g_date_time_to_unix  g_date_time_to_unix;
+alias c_g_date_time_to_timeval  g_date_time_to_timeval;
+alias c_g_date_time_get_utc_offset  g_date_time_get_utc_offset;
+alias c_g_date_time_get_timezone_abbreviation  g_date_time_get_timezone_abbreviation;
+alias c_g_date_time_is_daylight_savings  g_date_time_is_daylight_savings;
+alias c_g_date_time_to_timezone  g_date_time_to_timezone;
+alias c_g_date_time_to_local  g_date_time_to_local;
+alias c_g_date_time_to_utc  g_date_time_to_utc;
+alias c_g_date_time_format  g_date_time_format;
 
 // glib.RandG
 
@@ -3557,6 +3771,8 @@ alias c_g_uri_escape_string  g_uri_escape_string;
 alias c_g_uri_unescape_string  g_uri_unescape_string;
 alias c_g_uri_unescape_segment  g_uri_unescape_segment;
 alias c_g_uri_list_extract_uris  g_uri_list_extract_uris;
+alias c_g_filename_from_uri  g_filename_from_uri;
+alias c_g_filename_to_uri  g_filename_to_uri;
 
 // glib.Hostname
 
@@ -3621,6 +3837,8 @@ alias c_g_regex_get_pattern  g_regex_get_pattern;
 alias c_g_regex_get_max_backref  g_regex_get_max_backref;
 alias c_g_regex_get_capture_count  g_regex_get_capture_count;
 alias c_g_regex_get_string_number  g_regex_get_string_number;
+alias c_g_regex_get_compile_flags  g_regex_get_compile_flags;
+alias c_g_regex_get_match_flags  g_regex_get_match_flags;
 alias c_g_regex_escape_string  g_regex_escape_string;
 alias c_g_regex_match_simple  g_regex_match_simple;
 alias c_g_regex_match  g_regex_match;
@@ -3688,6 +3906,8 @@ alias c_g_key_file_get_string  g_key_file_get_string;
 alias c_g_key_file_get_locale_string  g_key_file_get_locale_string;
 alias c_g_key_file_get_boolean  g_key_file_get_boolean;
 alias c_g_key_file_get_integer  g_key_file_get_integer;
+alias c_g_key_file_get_int64  g_key_file_get_int64;
+alias c_g_key_file_get_uint64  g_key_file_get_uint64;
 alias c_g_key_file_get_double  g_key_file_get_double;
 alias c_g_key_file_get_string_list  g_key_file_get_string_list;
 alias c_g_key_file_get_locale_string_list  g_key_file_get_locale_string_list;
@@ -3700,6 +3920,8 @@ alias c_g_key_file_set_string  g_key_file_set_string;
 alias c_g_key_file_set_locale_string  g_key_file_set_locale_string;
 alias c_g_key_file_set_boolean  g_key_file_set_boolean;
 alias c_g_key_file_set_integer  g_key_file_set_integer;
+alias c_g_key_file_set_int64  g_key_file_set_int64;
+alias c_g_key_file_set_uint64  g_key_file_set_uint64;
 alias c_g_key_file_set_double  g_key_file_set_double;
 alias c_g_key_file_set_string_list  g_key_file_set_string_list;
 alias c_g_key_file_set_locale_string_list  g_key_file_set_locale_string_list;
@@ -4226,10 +4448,12 @@ alias c_g_variant_type_value  g_variant_type_value;
 alias c_g_variant_unref  g_variant_unref;
 alias c_g_variant_ref  g_variant_ref;
 alias c_g_variant_ref_sink  g_variant_ref_sink;
+alias c_g_variant_is_floating  g_variant_is_floating;
 alias c_g_variant_get_type  g_variant_get_type;
 alias c_g_variant_get_type_string  g_variant_get_type_string;
 alias c_g_variant_is_of_type  g_variant_is_of_type;
 alias c_g_variant_is_container  g_variant_is_container;
+alias c_g_variant_compare  g_variant_compare;
 alias c_g_variant_classify  g_variant_classify;
 alias c_g_variant_get  g_variant_get;
 alias c_g_variant_get_va  g_variant_get_va;
@@ -4252,6 +4476,8 @@ alias c_g_variant_new_signature  g_variant_new_signature;
 alias c_g_variant_is_signature  g_variant_is_signature;
 alias c_g_variant_new_variant  g_variant_new_variant;
 alias c_g_variant_new_strv  g_variant_new_strv;
+alias c_g_variant_new_bytestring  g_variant_new_bytestring;
+alias c_g_variant_new_bytestring_array  g_variant_new_bytestring_array;
 alias c_g_variant_get_boolean  g_variant_get_boolean;
 alias c_g_variant_get_byte  g_variant_get_byte;
 alias c_g_variant_get_int16  g_variant_get_int16;
@@ -4267,6 +4493,10 @@ alias c_g_variant_dup_string  g_variant_dup_string;
 alias c_g_variant_get_variant  g_variant_get_variant;
 alias c_g_variant_get_strv  g_variant_get_strv;
 alias c_g_variant_dup_strv  g_variant_dup_strv;
+alias c_g_variant_get_bytestring  g_variant_get_bytestring;
+alias c_g_variant_dup_bytestring  g_variant_dup_bytestring;
+alias c_g_variant_get_bytestring_array  g_variant_get_bytestring_array;
+alias c_g_variant_dup_bytestring_array  g_variant_dup_bytestring_array;
 alias c_g_variant_new_maybe  g_variant_new_maybe;
 alias c_g_variant_new_array  g_variant_new_array;
 alias c_g_variant_new_tuple  g_variant_new_tuple;
@@ -4311,6 +4541,7 @@ alias c_g_variant_builder_init  g_variant_builder_init;
 alias c_g_variant_builder_clear  g_variant_builder_clear;
 alias c_g_variant_builder_add_value  g_variant_builder_add_value;
 alias c_g_variant_builder_add  g_variant_builder_add;
+alias c_g_variant_builder_add_parsed  g_variant_builder_add_parsed;
 alias c_g_variant_builder_end  g_variant_builder_end;
 alias c_g_variant_builder_open  g_variant_builder_open;
 alias c_g_variant_builder_close  g_variant_builder_close;

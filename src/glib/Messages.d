@@ -117,12 +117,31 @@ public class Messages
 	 * Prompts the user with [E]xit, [H]alt, show [S]tack trace or [P]roceed.
 	 * This function is intended to be used for debugging use only. The following
 	 * example shows how it can be used together with the g_log() functions.
-	 * #include <glib.h>
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 *  #include <glib.h>
 	 * static void
 	 * log_handler (const gchar *log_domain,
-	 * 	 GLogLevelFlags log_level,
-	 * 	 const gchar *message,
-	 * 	 gpointer user_data)
+	 *  GLogLevelFlags log_level,
+	 *  const gchar *message,
+	 *  gpointer user_data)
 	 * {
 		 *  g_log_default_handler (log_domain, log_level, message, user_data);
 		 *  g_on_error_query (MY_PROGRAM_NAME);
@@ -130,11 +149,11 @@ public class Messages
 	 * int main (int argc, char *argv[])
 	 * {
 		 *  g_log_set_handler (MY_LOG_DOMAIN,
-		 * 		 G_LOG_LEVEL_WARNING |
+		 *  G_LOG_LEVEL_WARNING |
 		 *  G_LOG_LEVEL_ERROR |
 		 *  G_LOG_LEVEL_CRITICAL,
-		 * 		 log_handler,
-		 * 		 NULL);
+		 *  log_handler,
+		 *  NULL);
 		 *  /+* ... +/
 		 * If [E]xit is selected, the application terminates with a call to
 		 * _exit(0).

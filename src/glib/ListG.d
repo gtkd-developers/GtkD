@@ -160,7 +160,17 @@ public class ListG
 	 * to find the end, which is inefficient when adding multiple
 	 * elements. A common idiom to avoid the inefficiency is to prepend
 	 * the elements and reverse the list when all elements have been added.
-	 * /+* Notice that these are initialized to the empty list. +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 *  /+* Notice that these are initialized to the empty list. +/
 	 * GList *list = NULL, *number_list = NULL;
 	 * /+* This is a list of strings. +/
 	 * list = g_list_append (list, "first");
@@ -188,7 +198,11 @@ public class ListG
 	 * Note
 	 * The return value is the new start of the list, which
 	 * may have changed, so make sure you store the new value.
-	 * /+* Notice that it is initialized to the empty list. +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 *  /+* Notice that it is initialized to the empty list. +/
 	 * GList *list = NULL;
 	 * list = g_list_prepend (list, "last");
 	 * list = g_list_prepend (list, "first");
@@ -361,7 +375,7 @@ public class ListG
 	 * Allocates space for one GList element. It is called by
 	 * g_list_append(), g_list_prepend(), g_list_insert() and
 	 * g_list_insert_sorted() and so is rarely used on its own.
-	 * Returns: a pointer to the newly-allocated GList element.
+	 * Returns:a pointer to the newly-allocated GList element.
 	 */
 	public static ListG alloc()
 	{

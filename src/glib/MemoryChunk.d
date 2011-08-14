@@ -101,49 +101,92 @@ private import glib.Str;
  * To help debug memory chunks, use g_mem_chunk_info() and
  * g_mem_chunk_print().
  * Example  17.  Using a GMemChunk
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
  *  GMemChunk *mem_chunk;
- *  gchar *mem[10000];
- *  gint i;
- *  /+* Create a GMemChunk with atoms 50 bytes long, and memory
+ * gchar *mem[10000];
+ * gint i;
+ * /+* Create a GMemChunk with atoms 50 bytes long, and memory
  *  blocks holding 100 bytes. Note that this means that only 2 atoms
  *  fit into each memory block and so isn't very efficient. +/
- *  mem_chunk = g_mem_chunk_new ("test mem chunk", 50, 100, G_ALLOC_AND_FREE);
- *  /+* Now allocate 10000 atoms. +/
- *  for (i = 0; i < 10000; i++)
+ * mem_chunk = g_mem_chunk_new ("test mem chunk", 50, 100, G_ALLOC_AND_FREE);
+ * /+* Now allocate 10000 atoms. +/
+ * for (i = 0; i < 10000; i++)
  *  {
 	 *  mem[i] = g_chunk_new (gchar, mem_chunk);
 	 *  /+* Fill in the atom memory with some junk. +/
 	 *  for (j = 0; j < 50; j++)
 	 *  mem[i][j] = i * j;
  *  }
- *  /+* Now free all of the atoms. Note that since we are going to
+ * /+* Now free all of the atoms. Note that since we are going to
  *  destroy the GMemChunk, this wouldn't normally be used. +/
- *  for (i = 0; i < 10000; i++)
+ * for (i = 0; i < 10000; i++)
  *  {
 	 *  g_mem_chunk_free (mem_chunk, mem[i]);
  *  }
- *  /+* We are finished with the GMemChunk, so we destroy it. +/
- *  g_mem_chunk_destroy (mem_chunk);
+ * /+* We are finished with the GMemChunk, so we destroy it. +/
+ * g_mem_chunk_destroy (mem_chunk);
  * Example  18.  Using a GMemChunk with data structures
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
  *  GMemChunk *array_mem_chunk;
- *  GRealArray *array;
- *  /+* Create a GMemChunk to hold GRealArray structures, using
+ * GRealArray *array;
+ * /+* Create a GMemChunk to hold GRealArray structures, using
  *  the g_mem_chunk_create() convenience macro. We want 1024 atoms in each
  *  memory block, and we want to be able to free individual atoms. +/
- *  array_mem_chunk = g_mem_chunk_create (GRealArray, 1024, G_ALLOC_AND_FREE);
- *  /+* Allocate one atom, using the g_chunk_new() convenience macro. +/
- *  array = g_chunk_new (GRealArray, array_mem_chunk);
- *  /+* We can now use array just like a normal pointer to a structure. +/
- *  array->data = NULL;
- *  array->len = 0;
- *  array->alloc = 0;
- *  array->zero_terminated = (zero_terminated ? 1 : 0);
- *  array->clear = (clear ? 1 : 0);
- *  array->elt_size = elt_size;
- *  /+* We can free the element, so it can be reused. +/
- *  g_chunk_free (array, array_mem_chunk);
- *  /+* We destroy the GMemChunk when we are finished with it. +/
- *  g_mem_chunk_destroy (array_mem_chunk);
+ * array_mem_chunk = g_mem_chunk_create (GRealArray, 1024, G_ALLOC_AND_FREE);
+ * /+* Allocate one atom, using the g_chunk_new() convenience macro. +/
+ * array = g_chunk_new (GRealArray, array_mem_chunk);
+ * /+* We can now use array just like a normal pointer to a structure. +/
+ * array->data = NULL;
+ * array->len = 0;
+ * array->alloc = 0;
+ * array->zero_terminated = (zero_terminated ? 1 : 0);
+ * array->clear = (clear ? 1 : 0);
+ * array->elt_size = elt_size;
+ * /+* We can free the element, so it can be reused. +/
+ * g_chunk_free (array, array_mem_chunk);
+ * /+* We destroy the GMemChunk when we are finished with it. +/
+ * g_mem_chunk_destroy (array_mem_chunk);
  */
 public class MemoryChunk
 {
@@ -248,7 +291,7 @@ public class MemoryChunk
 	 * Warning
 	 * g_mem_chunk_alloc has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_alloc() instead
 	 * Allocates an atom of memory from a GMemChunk.
-	 * Returns: a pointer to the allocated atom.
+	 * Returns:a pointer to the allocated atom.
 	 */
 	public void* alloc()
 	{
@@ -261,7 +304,7 @@ public class MemoryChunk
 	 * g_mem_chunk_alloc0 has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_alloc0() instead
 	 * Allocates an atom of memory from a GMemChunk, setting the memory to
 	 * 0.
-	 * Returns: a pointer to the allocated atom.
+	 * Returns:a pointer to the allocated atom.
 	 */
 	public void* alloc0()
 	{

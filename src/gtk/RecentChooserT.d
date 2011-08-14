@@ -564,7 +564,15 @@ public template RecentChooserT(TStruct)
 	{
 		// gchar ** gtk_recent_chooser_get_uris (GtkRecentChooser *chooser,  gsize *length);
 		gsize length;
-		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserTStruct(), &length));
+		auto p = gtk_recent_chooser_get_uris(getRecentChooserTStruct(), &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**

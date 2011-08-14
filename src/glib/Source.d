@@ -42,6 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.MainContext
  * 	- glib.TimeVal
  * structWrap:
@@ -61,6 +62,7 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.MainContext;
 private import glib.TimeVal;
 
@@ -69,67 +71,64 @@ private import glib.TimeVal;
 
 /**
  * Description
- *  The main event loop manages all the available sources of events for
- *  GLib and GTK+ applications. These events can come from any number of
- *  different types of sources such as file descriptors (plain files,
- *  pipes or sockets) and timeouts. New types of event sources can also
- *  be added using g_source_attach().
- *  To allow multiple independent sets of sources to be handled in
- *  different threads, each source is associated with a GMainContext.
- *  A GMainContext can only be running in a single thread, but
- *  sources can be added to it and removed from it from other threads.
- *  Each event source is assigned a priority. The default priority,
- *  G_PRIORITY_DEFAULT, is 0. Values less than 0 denote higher
- *  priorities. Values greater than 0 denote lower priorities. Events
- *  from high priority sources are always processed before events from
- *  lower priority sources.
- *  Idle functions can also be added, and assigned a priority. These will
- *  be run whenever no events with a higher priority are ready to be
- *  processed.
- *  The GMainLoop data type represents a main event loop. A GMainLoop
- *  is created with g_main_loop_new(). After adding the initial event sources,
- *  g_main_loop_run() is called. This continuously checks for new events from
- *  each of the event sources and dispatches them. Finally, the
- *  processing of an event from one of the sources leads to a call to
- *  g_main_loop_quit() to exit the main loop, and g_main_loop_run() returns.
- *  It is possible to create new instances of GMainLoop recursively.
- *  This is often used in GTK+ applications when showing modal dialog
- *  boxes. Note that event sources are associated with a particular
- *  GMainContext, and will be checked and dispatched for all main
- *  loops associated with that GMainContext.
- *  GTK+ contains wrappers of some of these functions, e.g. gtk_main(),
- *  gtk_main_quit() and gtk_events_pending().
- * Creating new sources types
- *  One of the unusual features of the GTK+ main loop functionality
- *  is that new types of event source can be created and used in
- *  addition to the builtin type of event source. A new event source
- *  type is used for handling GDK events. A new source type is
- *  created by deriving from the GSource
- *  structure. The derived type of source is represented by a
- *  structure that has the GSource structure as a first element,
- *  and other elements specific to the new source type. To create
- *  an instance of the new source type, call g_source_new() passing
- *  in the size of the derived structure and a table of functions.
- *  These GSourceFuncs determine the behavior of the new source
- *  types.
- *  New source types basically interact with the main context
- *  in two ways. Their prepare function in GSourceFuncs can set
- *  a timeout to determine the maximum amount of time that the
- *  main loop will sleep before checking the source again. In
- *  addition, or as well, the source can add file descriptors to
- *  the set that the main context checks using g_source_add_poll().
+ * The main event loop manages all the available sources of events for
+ * GLib and GTK+ applications. These events can come from any number of
+ * different types of sources such as file descriptors (plain files,
+ * pipes or sockets) and timeouts. New types of event sources can also
+ * be added using g_source_attach().
+ * To allow multiple independent sets of sources to be handled in
+ * different threads, each source is associated with a GMainContext.
+ * A GMainContext can only be running in a single thread, but
+ * sources can be added to it and removed from it from other threads.
+ * Each event source is assigned a priority. The default priority,
+ * G_PRIORITY_DEFAULT, is 0. Values less than 0 denote higher priorities.
+ * Values greater than 0 denote lower priorities. Events from high priority
+ * sources are always processed before events from lower priority sources.
+ * Idle functions can also be added, and assigned a priority. These will
+ * be run whenever no events with a higher priority are ready to be processed.
+ * The GMainLoop data type represents a main event loop. A GMainLoop is
+ * created with g_main_loop_new(). After adding the initial event sources,
+ * g_main_loop_run() is called. This continuously checks for new events from
+ * each of the event sources and dispatches them. Finally, the processing of
+ * an event from one of the sources leads to a call to g_main_loop_quit() to
+ * exit the main loop, and g_main_loop_run() returns.
+ * It is possible to create new instances of GMainLoop recursively.
+ * This is often used in GTK+ applications when showing modal dialog
+ * boxes. Note that event sources are associated with a particular
+ * GMainContext, and will be checked and dispatched for all main
+ * loops associated with that GMainContext.
+ * GTK+ contains wrappers of some of these functions, e.g. gtk_main(),
+ * gtk_main_quit() and gtk_events_pending().
+ * Creating new source types
+ * One of the unusual features of the GMainLoop functionality
+ * is that new types of event source can be created and used in
+ * addition to the builtin type of event source. A new event source
+ * type is used for handling GDK events. A new source type is created
+ * by deriving from the GSource structure.
+ * The derived type of source is represented by a structure that has
+ * the GSource structure as a first element, and other elements specific
+ * to the new source type. To create an instance of the new source type,
+ * call g_source_new() passing in the size of the derived structure and
+ * a table of functions. These GSourceFuncs determine the behavior of
+ * the new source type.
+ * New source types basically interact with the main context
+ * in two ways. Their prepare function in GSourceFuncs can set a timeout
+ * to determine the maximum amount of time that the main loop will sleep
+ * before checking the source again. In addition, or as well, the source
+ * can add file descriptors to the set that the main context checks using
+ * g_source_add_poll().
  * <hr>
  * Customizing the main loop iteration
- *  Single iterations of a GMainContext can be run with
- *  g_main_context_iteration(). In some cases, more detailed control
- *  of exactly how the details of the main loop work is desired,
- *  for instance, when integrating the GMainLoop with an external
- *  main loop. In such cases, you can call the component functions
- *  of g_main_context_iteration() directly. These functions
- *  are g_main_context_prepare(), g_main_context_query(),
- *  g_main_context_check() and g_main_context_dispatch().
- *  The operation of these functions can best be seen in terms
- *  of a state diagram, as shown in Figure  1, “States of a Main Context”.
+ * Single iterations of a GMainContext can be run with
+ * g_main_context_iteration(). In some cases, more detailed control
+ * of exactly how the details of the main loop work is desired, for
+ * instance, when integrating the GMainLoop with an external main loop.
+ * In such cases, you can call the component functions of
+ * g_main_context_iteration() directly. These functions are
+ * g_main_context_prepare(), g_main_context_query(),
+ * g_main_context_check() and g_main_context_dispatch().
+ * The operation of these functions can best be seen in terms
+ * of a state diagram, as shown in Figure  1, “States of a Main Context”.
  * Figure  1.  States of a Main Context
  */
 public class Source
@@ -260,7 +259,36 @@ public class Source
 	 * This is important when you operate upon your objects
 	 * from within idle handlers, but may have freed the object
 	 * before the dispatch of your idle handler.
-	 * static gboolean
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
+	 * 21
+	 * 22
+	 * 23
+	 * 24
+	 * 25
+	 * 26
+	 * 27
+	 * 28
+	 * 29
+	 *  static gboolean
 	 * idle_callback (gpointer data)
 	 * {
 		 *  SomeWidget *self = data;
@@ -288,7 +316,21 @@ public class Source
 	 * to the use after free in the callback. A solution, to
 	 * this particular problem, is to check to if the source
 	 * has already been destroy within the callback.
-	 * static gboolean
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 *  static gboolean
 	 * idle_callback (gpointer data)
 	 * {
 		 *  SomeWidget *self = data;
@@ -368,6 +410,54 @@ public class Source
 	{
 		// guint g_source_get_id (GSource *source);
 		return g_source_get_id(gSource);
+	}
+	
+	/**
+	 * Gets a name for the source, used in debugging and profiling.
+	 * The name may be NULL if it has never been set with
+	 * g_source_set_name().
+	 * Since 2.26
+	 * Returns: the name of the source
+	 */
+	public string getName()
+	{
+		// const char* g_source_get_name (GSource *source);
+		return Str.toString(g_source_get_name(gSource));
+	}
+	
+	/**
+	 * Sets a name for the source, used in debugging and profiling.
+	 * The name defaults to NULL.
+	 * The source name should describe in a human-readable way
+	 * what the source does. For example, "X11 event queue"
+	 * or "GTK+ repaint idle handler" or whatever it is.
+	 * It is permitted to call this function multiple times, but is not
+	 * recommended due to the potential performance impact. For example,
+	 * one could change the name in the "check" function of a GSourceFuncs
+	 * to include details like the event type in the source name.
+	 * Since 2.26
+	 * Params:
+	 * name = debug name for the source
+	 */
+	public void setName(string name)
+	{
+		// void g_source_set_name (GSource *source,  const char *name);
+		g_source_set_name(gSource, Str.toStringz(name));
+	}
+	
+	/**
+	 * Sets the name of a source using its ID.
+	 * This is a convenience utility to set source names from the return
+	 * value of g_idle_add(), g_timeout_add(), etc.
+	 * Since 2.26
+	 * Params:
+	 * tag = a GSource ID
+	 * name = debug name for the source
+	 */
+	public static void setNameById(uint tag, string name)
+	{
+		// void g_source_set_name_by_id (guint tag,  const char *name);
+		g_source_set_name_by_id(tag, Str.toStringz(name));
 	}
 	
 	/**

@@ -192,7 +192,7 @@ public class RWLock
 	 * g_static_rw_lock_reader_unlock().
 	 * Params:
 	 * lock = a GStaticRWLock to lock for reading.
-	 * Returns: TRUE, if lock could be locked for reading.
+	 * Returns:TRUE, if lock could be locked for reading.
 	 */
 	public int readerTrylock()
 	{
@@ -235,7 +235,7 @@ public class RWLock
 	 * lock has to be unlocked by g_static_rw_lock_writer_unlock().
 	 * Params:
 	 * lock = a GStaticRWLock to lock for writing.
-	 * Returns: TRUE, if lock could be locked for writing.
+	 * Returns:TRUE, if lock could be locked for writing.
 	 */
 	public int writerTrylock()
 	{

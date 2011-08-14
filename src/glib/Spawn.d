@@ -117,6 +117,7 @@ public class Spawn
 	//fdopen for Windows is defined in gtkc.glibtypes.
 	
 	version(Tango) alias splitLines splitlines;
+	version(D_Version2) alias splitLines splitlines;
 	
 	string workingDirectory = ".";
 	string[] argv;

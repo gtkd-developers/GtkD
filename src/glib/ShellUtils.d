@@ -158,13 +158,13 @@ public class ShellUtils
 		// gchar* g_shell_unquote (const gchar *quoted_string,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_shell_unquote(Str.toStringz(quotedString), &err));
+		auto p = g_shell_unquote(Str.toStringz(quotedString), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 }

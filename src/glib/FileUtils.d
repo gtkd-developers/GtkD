@@ -201,7 +201,13 @@ public class FileUtils
 	 * For example, you might think you could use G_FILE_TEST_IS_SYMLINK
 	 * to know whether it is safe to write to a file without being
 	 * tricked into writing into a different location. It doesn't work!
-	 * /+* DON'T DO THIS +/
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 *  /+* DON'T DO THIS +/
 	 *  if (!g_file_test (filename, G_FILE_TEST_IS_SYMLINK))
 	 *  {
 		 *  fd = g_open (filename, O_WRONLY);
@@ -327,14 +333,14 @@ public class FileUtils
 		// gchar * g_file_read_link (const gchar *filename,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_file_read_link(Str.toStringz(filename), &err));
+		auto p = g_file_read_link(Str.toStringz(filename), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -422,6 +428,18 @@ public class FileUtils
 	 * the C library checks only the FAT-style READONLY attribute and does
 	 * not look at the ACL at all. Thus on Windows the protection bits in
 	 * the st_mode field are a fabrication of little use.
+	 * On Windows the Microsoft C libraries have several variants of the
+	 * stat struct and stat() function with names
+	 * like "_stat", "_stat32", "_stat32i64" and "_stat64i32". The one
+	 * used here is for 32-bit code the one with 32-bit size and time
+	 * fields, specifically called "_stat32".
+	 * In Microsoft's compiler, by default "struct stat" means one with
+	 * 64-bit time fields while in MinGW "struct stat" is the legacy one
+	 * with 32-bit fields. To hopefully clear up this messs, the gstdio.h
+	 * header defines a type GStatBuf which is the appropriate struct type
+	 * depending on the platform and/or compiler being used. On POSIX it
+	 * is just "struct stat", but note that even on POSIX platforms,
+	 * "stat" might be a macro.
 	 * See your C library manual for more details about stat().
 	 * Since 2.6
 	 * Params:
@@ -430,9 +448,9 @@ public class FileUtils
 	 *  will be filled with the file information
 	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
-	public static int stat(string filename, void* buf)
+	public static int stat(string filename, GStatBuf* buf)
 	{
-		// int g_stat (const gchar *filename,  struct _g_stat_struct *buf);
+		// int g_stat (const gchar *filename,  GStatBuf *buf);
 		return g_stat(Str.toStringz(filename), buf);
 	}
 	
@@ -450,9 +468,9 @@ public class FileUtils
 	 *  will be filled with the file information
 	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
-	public static int lstat(string filename, void* buf)
+	public static int lstat(string filename, GStatBuf* buf)
 	{
-		// int g_lstat (const gchar *filename,  struct _g_stat_struct *buf);
+		// int g_lstat (const gchar *filename,  GStatBuf *buf);
 		return g_lstat(Str.toStringz(filename), buf);
 	}
 	

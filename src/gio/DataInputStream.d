@@ -363,14 +363,14 @@ public class DataInputStream : BufferedInputStream
 		// char * g_data_input_stream_read_line (GDataInputStream *stream,  gsize *length,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_data_input_stream_read_line(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
+		auto p = g_data_input_stream_read_line(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -408,14 +408,14 @@ public class DataInputStream : BufferedInputStream
 		// char * g_data_input_stream_read_line_finish  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_data_input_stream_read_line_finish(gDataInputStream, &result, length, &err));
+		auto p = g_data_input_stream_read_line_finish(gDataInputStream, &result, length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -435,14 +435,14 @@ public class DataInputStream : BufferedInputStream
 		// char * g_data_input_stream_read_until (GDataInputStream *stream,  const gchar *stop_chars,  gsize *length,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_data_input_stream_read_until(gDataInputStream, Str.toStringz(stopChars), &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err));
+		auto p = g_data_input_stream_read_until(gDataInputStream, Str.toStringz(stopChars), &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -484,13 +484,13 @@ public class DataInputStream : BufferedInputStream
 		// char * g_data_input_stream_read_until_finish  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_data_input_stream_read_until_finish(gDataInputStream, &result, length, &err));
+		auto p = g_data_input_stream_read_until_finish(gDataInputStream, &result, length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 }

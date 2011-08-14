@@ -42,6 +42,8 @@ private import glib.Checksum;
 private import glib.Internationalization;
 private import glib.TimeVal;
 private import glib.Date;
+private import glib.TimeZone;
+private import glib.DateTime;
 private import glib.RandG;
 private import glib.Util;
 private import glib.ScannerG;

@@ -76,48 +76,47 @@ private import glib.MatchInfo;
  * The g_regex_*() functions implement regular
  * expression pattern matching using syntax and semantics similar to
  * Perl regular expression.
- * Some functions accept a start_position argument,
- * setting it differs from just passing over a shortened string and setting
- * G_REGEX_MATCH_NOTBOL in the case of a pattern that begins with any kind
- * of lookbehind assertion.
+ * Some functions accept a start_position argument, setting it differs
+ * from just passing over a shortened string and setting G_REGEX_MATCH_NOTBOL
+ * in the case of a pattern that begins with any kind of lookbehind assertion.
  * For example, consider the pattern "\Biss\B" which finds occurrences of "iss"
  * in the middle of words. ("\B" matches only if the current position in the
  * subject is not a word boundary.) When applied to the string "Mississipi"
  * from the fourth byte, namely "issipi", it does not match, because "\B" is
  * always false at the start of the subject, which is deemed to be a word
  * boundary. However, if the entire string is passed , but with
- * start_position set to 4, it finds the second
- * occurrence of "iss" because it is able to look behind the starting point
- * to discover that it is preceded by a letter.
+ * start_position set to 4, it finds the second occurrence of "iss" because
+ * it is able to look behind the starting point to discover that it is
+ * preceded by a letter.
  * Note that, unless you set the G_REGEX_RAW flag, all the strings passed
  * to these functions must be encoded in UTF-8. The lengths and the positions
  * inside the strings are in bytes and not in characters, so, for instance,
- * "\xc3\xa0" (i.e. "  ") is two bytes long but it is treated as a single
- * character. If you set G_REGEX_RAW the strings can be non-valid UTF-8
- * strings and a byte is treated as a character, so "\xc3\xa0" is two bytes
- * and two characters long.
- * When matching a pattern, "\n" matches only against a "\n" character in the
- * string, and "\r" matches only a "\r" character. To match any newline sequence
- * use "\R". This particular group matches either the two-character sequence
- * CR + LF ("\r\n"), or one of the single characters LF (linefeed, U+000A, "\n"), VT
- * (vertical tab, U+000B, "\v"), FF (formfeed, U+000C, "\f"), CR (carriage return,
- * U+000D, "\r"), NEL (next line, U+0085), LS (line separator, U+2028), or PS
- * (paragraph separator, U+2029).
- * The behaviour of the dot, circumflex, and dollar metacharacters are affected by
- * newline characters, the default is to recognize any newline character (the same
- * characters recognized by "\R"). This can be changed with G_REGEX_NEWLINE_CR,
- * G_REGEX_NEWLINE_LF and G_REGEX_NEWLINE_CRLF compile options,
- * and with G_REGEX_MATCH_NEWLINE_ANY, G_REGEX_MATCH_NEWLINE_CR,
- * G_REGEX_MATCH_NEWLINE_LF and G_REGEX_MATCH_NEWLINE_CRLF match options.
- * These settings are also relevant when compiling a pattern if
- * G_REGEX_EXTENDED is set, and an unescaped "#" outside a character class is
- * encountered. This indicates a comment that lasts until after the next
- * newline.
+ * "\xc3\xa0" (i.e. "  ") is two bytes long but it is treated as a
+ * single character. If you set G_REGEX_RAW the strings can be non-valid
+ * UTF-8 strings and a byte is treated as a character, so "\xc3\xa0" is two
+ * bytes and two characters long.
+ * When matching a pattern, "\n" matches only against a "\n" character in
+ * the string, and "\r" matches only a "\r" character. To match any newline
+ * sequence use "\R". This particular group matches either the two-character
+ * sequence CR + LF ("\r\n"), or one of the single characters LF (linefeed,
+ * U+000A, "\n"), VT vertical tab, U+000B, "\v"), FF (formfeed, U+000C, "\f"),
+ * CR (carriage return, U+000D, "\r"), NEL (next line, U+0085), LS (line
+ * separator, U+2028), or PS (paragraph separator, U+2029).
+ * The behaviour of the dot, circumflex, and dollar metacharacters are
+ * affected by newline characters, the default is to recognize any newline
+ * character (the same characters recognized by "\R"). This can be changed
+ * with G_REGEX_NEWLINE_CR, G_REGEX_NEWLINE_LF and G_REGEX_NEWLINE_CRLF
+ * compile options, and with G_REGEX_MATCH_NEWLINE_ANY,
+ * G_REGEX_MATCH_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF and
+ * G_REGEX_MATCH_NEWLINE_CRLF match options. These settings are also
+ * relevant when compiling a pattern if G_REGEX_EXTENDED is set, and an
+ * unescaped "#" outside a character class is encountered. This indicates
+ * a comment that lasts until after the next newline.
  * Creating and manipulating the same GRegex structure from different
  * threads is not a problem as GRegex does not modify its internal
- * state between creation and destruction, on the other hand GMatchInfo is
- * not threadsafe.
- * The regular expressions low level functionalities are obtained through
+ * state between creation and destruction, on the other hand GMatchInfo
+ * is not threadsafe.
+ * The regular expressions low-level functionalities are obtained through
  * the excellent PCRE library
  * written by Philip Hazel.
  */
@@ -254,12 +253,34 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * name = name of the subexpression
-	 * Returns: The number of the subexpression or -1 if name  does not exists
+	 * Returns: The number of the subexpression or -1 if name does not exists
 	 */
 	public int getStringNumber(string name)
 	{
 		// gint g_regex_get_string_number (const GRegex *regex,  const gchar *name);
 		return g_regex_get_string_number(gRegex, Str.toStringz(name));
+	}
+	
+	/**
+	 * Returns the compile options that regex was created with.
+	 * Since 2.26
+	 * Returns: flags from GRegexCompileFlags
+	 */
+	public GRegexCompileFlags getCompileFlags()
+	{
+		// GRegexCompileFlags g_regex_get_compile_flags (const GRegex *regex);
+		return g_regex_get_compile_flags(gRegex);
+	}
+	
+	/**
+	 * Returns the match options that regex was created with.
+	 * Since 2.26
+	 * Returns: flags from GRegexMatchFlags
+	 */
+	public GRegexMatchFlags getMatchFlags()
+	{
+		// GRegexMatchFlags g_regex_get_match_flags (const GRegex *regex);
+		return g_regex_get_match_flags(gRegex);
 	}
 	
 	/**
@@ -271,7 +292,7 @@ public class Regex
 	 * in length.
 	 * Since 2.14
 	 * Params:
-	 * string = the string to escape
+	 * string = the string to escape. [array length=length]
 	 * length = the length of string, or -1 if string is nul-terminated
 	 * Returns: a newly-allocated escaped string
 	 */
@@ -315,7 +336,26 @@ public class Regex
 	 * i.e. you must free it regardless if regular expression actually matched.
 	 * To retrieve all the non-overlapping matches of the pattern in
 	 * string you can use g_match_info_next().
-	 * static void
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 *  static void
 	 * print_uppercase_words (const gchar *string)
 	 * {
 		 *  /+* Print all uppercase-only words. +/
@@ -340,8 +380,8 @@ public class Regex
 	 * Params:
 	 * string = the string to scan for matches
 	 * matchOptions = match options
-	 * matchInfo = pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
+	 * matchInfo = pointer to location where to store
+	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
 	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -373,7 +413,32 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * To retrieve all the non-overlapping matches of the pattern in
 	 * string you can use g_match_info_next().
-	 * static void
+	 *  1
+	 * 2
+	 * 3
+	 * 4
+	 * 5
+	 * 6
+	 * 7
+	 * 8
+	 * 9
+	 * 10
+	 * 11
+	 * 12
+	 * 13
+	 * 14
+	 * 15
+	 * 16
+	 * 17
+	 * 18
+	 * 19
+	 * 20
+	 * 21
+	 * 22
+	 * 23
+	 * 24
+	 * 25
+	 *  static void
 	 * print_uppercase_words (const gchar *string)
 	 * {
 		 *  /+* Print all uppercase-only words. +/
@@ -399,12 +464,12 @@ public class Regex
 	 * }
 	 * Since 2.14
 	 * Params:
-	 * string = the string to scan for matches
+	 * string = the string to scan for matches. [array length=string_len]
 	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match options
-	 * matchInfo = pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
+	 * matchInfo = pointer to location where to store
+	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
@@ -442,8 +507,8 @@ public class Regex
 	 * Params:
 	 * string = the string to scan for matches
 	 * matchOptions = match options
-	 * matchInfo = pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
+	 * matchInfo = pointer to location where to store
+	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
 	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -490,12 +555,12 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * Since 2.14
 	 * Params:
-	 * string = the string to scan for matches
+	 * string = the string to scan for matches. [array length=string_len]
 	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match options
-	 * matchInfo = pointer to location where to store the GMatchInfo,
-	 *  or NULL if you do not need it
+	 * matchInfo = pointer to location where to store
+	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
@@ -603,7 +668,7 @@ public class Regex
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 * Since 2.14
 	 * Params:
-	 * string = the string to split with the pattern
+	 * string = the string to split with the pattern. [array length=string_len]
 	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match time option flags
@@ -617,14 +682,14 @@ public class Regex
 		// gchar ** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toStringArray(g_regex_split_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, maxTokens, &err));
+		auto p = g_regex_split_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, maxTokens, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toStringArray(p);
 	}
 	
 	/**
@@ -637,7 +702,7 @@ public class Regex
 	 * of a character. To include a literal '\' in the replacement, write '\\'.
 	 * Since 2.14
 	 * Params:
-	 * string = the string to perform matches against
+	 * string = the string to perform matches against. [array length=string_len]
 	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * replacement = text to replace each match with
@@ -650,14 +715,14 @@ public class Regex
 		// gchar * g_regex_replace (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_regex_replace(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err));
+		auto p = g_regex_replace(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -670,7 +735,7 @@ public class Regex
 	 * assertion, such as "\b".
 	 * Since 2.14
 	 * Params:
-	 * string = the string to perform matches against
+	 * string = the string to perform matches against. [array length=string_len]
 	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * replacement = text to replace each match with
@@ -683,14 +748,14 @@ public class Regex
 		// gchar * g_regex_replace_literal (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_regex_replace_literal(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err));
+		auto p = g_regex_replace_literal(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -702,7 +767,7 @@ public class Regex
 	 * The following example uses g_regex_replace_eval() to replace multiple
 	 * Since 2.14
 	 * Params:
-	 * string = string to perform matches against
+	 * string = string to perform matches against. [array length=string_len]
 	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = options for the match
@@ -716,14 +781,14 @@ public class Regex
 		// gchar * g_regex_replace_eval (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GRegexEvalCallback eval,  gpointer user_data,  GError **error);
 		GError* err = null;
 		
-		auto p = Str.toString(g_regex_replace_eval(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, eval, userData, &err));
+		auto p = g_regex_replace_eval(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, eval, userData, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
 	
 	/**
@@ -739,7 +804,7 @@ public class Regex
 	 * Params:
 	 * replacement = the replacement string
 	 * hasReferences = location to store information about
-	 *  references in replacement or NULL
+	 *  references in replacement or NULL. [out][allow-none]
 	 * Returns: whether replacement is a valid replacement string
 	 * Throws: GException on failure.
 	 */

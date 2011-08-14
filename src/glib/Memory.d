@@ -84,7 +84,7 @@ public class Memory
 	 * If n_bytes is 0 it returns NULL.
 	 * Params:
 	 * nBytes = the number of bytes to allocate
-	 * Returns:a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 */
 	public static void* malloc(gsize nBytes)
 	{
@@ -97,7 +97,7 @@ public class Memory
 	 * If n_bytes is 0 it returns NULL.
 	 * Params:
 	 * nBytes = the number of bytes to allocate
-	 * Returns:a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 */
 	public static void* malloc0(gsize nBytes)
 	{
@@ -114,7 +114,7 @@ public class Memory
 	 * Params:
 	 * mem = the memory to reallocate
 	 * nBytes = new size of the memory in bytes
-	 * Returns:the new address of the allocated memory
+	 * Returns: the new address of the allocated memory
 	 */
 	public static void* realloc(void* mem, gsize nBytes)
 	{
@@ -127,7 +127,7 @@ public class Memory
 	 * Contrast with g_malloc(), which aborts the program on failure.
 	 * Params:
 	 * nBytes = number of bytes to allocate.
-	 * Returns:the allocated memory, or NULL.
+	 * Returns: the allocated memory, or NULL.
 	 */
 	public static void* tryMalloc(gsize nBytes)
 	{
@@ -141,7 +141,7 @@ public class Memory
 	 * Since 2.8
 	 * Params:
 	 * nBytes = number of bytes to allocate
-	 * Returns:the allocated memory, or NULL
+	 * Returns: the allocated memory, or NULL
 	 */
 	public static void* tryMalloc0(gsize nBytes)
 	{
@@ -156,7 +156,7 @@ public class Memory
 	 * Params:
 	 * mem = previously-allocated memory, or NULL.
 	 * nBytes = number of bytes to allocate.
-	 * Returns:the allocated memory, or NULL.
+	 * Returns: the allocated memory, or NULL.
 	 */
 	public static void* tryRealloc(void* mem, gsize nBytes)
 	{
@@ -171,7 +171,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
-	 * Returns:a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 */
 	public static void* mallocN(gsize nBlocks, gsize nBlockBytes)
 	{
@@ -186,7 +186,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
-	 * Returns:a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 */
 	public static void* malloc0_N(gsize nBlocks, gsize nBlockBytes)
 	{
@@ -202,7 +202,7 @@ public class Memory
 	 * mem = the memory to reallocate
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
-	 * Returns:the new address of the allocated memory
+	 * Returns: the new address of the allocated memory
 	 */
 	public static void* reallocN(void* mem, gsize nBlocks, gsize nBlockBytes)
 	{
@@ -217,7 +217,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
-	 * Returns:the allocated memory, or NULL.
+	 * Returns: the allocated memory, or NULL.
 	 */
 	public static void* tryMallocN(gsize nBlocks, gsize nBlockBytes)
 	{
@@ -232,7 +232,7 @@ public class Memory
 	 * Params:
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
-	 * Returns:the allocated memory, or NULL
+	 * Returns: the allocated memory, or NULL
 	 */
 	public static void* tryMalloc0_N(gsize nBlocks, gsize nBlockBytes)
 	{
@@ -248,7 +248,7 @@ public class Memory
 	 * mem = previously-allocated memory, or NULL.
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
-	 * Returns:the allocated memory, or NULL.
+	 * Returns: the allocated memory, or NULL.
 	 */
 	public static void* tryReallocN(void* mem, gsize nBlocks, gsize nBlockBytes)
 	{
@@ -274,7 +274,7 @@ public class Memory
 	 * Params:
 	 * mem = the memory to copy.
 	 * byteSize = the number of bytes to copy.
-	 * Returns:a pointer to the newly-allocated copy of the memory, or NULL if memis NULL.
+	 * Returns: a pointer to the newly-allocated copy of the memory, or NULL if mem is NULL.
 	 */
 	public static void* memdup(void* mem, uint byteSize)
 	{

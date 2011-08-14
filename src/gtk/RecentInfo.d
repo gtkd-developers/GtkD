@@ -315,7 +315,15 @@ public class RecentInfo
 	{
 		// gchar ** gtk_recent_info_get_applications (GtkRecentInfo *info,  gsize *length);
 		gsize length;
-		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, &length));
+		auto p = gtk_recent_info_get_applications(gtkRecentInfo, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -341,7 +349,15 @@ public class RecentInfo
 	{
 		// gchar ** gtk_recent_info_get_groups (GtkRecentInfo *info,  gsize *length);
 		gsize length;
-		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, &length));
+		auto p = gtk_recent_info_get_groups(gtkRecentInfo, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**

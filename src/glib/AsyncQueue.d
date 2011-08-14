@@ -69,8 +69,8 @@ private import glib.TimeVal;
  * Often you need to communicate between different threads. In general
  * it's safer not to do this by shared memory, but by explicit message
  * passing. These messages only make sense asynchronously for
- * multi-threaded applications though, as a synchronous operation could as
- * well be done in the same thread.
+ * multi-threaded applications though, as a synchronous operation could
+ * as well be done in the same thread.
  * Asynchronous queues are an exception from most other GLib data
  * structures, as they can be used simultaneously from multiple threads
  * without explicit locking and they bring their own builtin reference
@@ -80,10 +80,10 @@ private import glib.TimeVal;
  * g_async_queue_new(). A newly-created queue will get the reference
  * count 1. Whenever another thread is creating a new reference of (that
  * is, pointer to) the queue, it has to increase the reference count
- * (using g_async_queue_ref()). Also, before removing this reference, the
- * reference count has to be decreased (using
- * g_async_queue_unref()). After that the queue might no longer exist so
- * you must not access it after that point.
+ * (using g_async_queue_ref()). Also, before removing this reference,
+ * the reference count has to be decreased (using g_async_queue_unref()).
+ * After that the queue might no longer exist so you must not access
+ * it after that point.
  * A thread, which wants to send a message to that queue simply calls
  * g_async_queue_push() to push the message to the queue.
  * A thread, which is expecting messages from an asynchronous queue
@@ -93,14 +93,14 @@ private import glib.TimeVal;
  * and returned. The functions g_async_queue_try_pop() and
  * g_async_queue_timed_pop() can be used to only check for the presence
  * of messages or to only wait a certain time for messages respectively.
- * For almost every function there exist two variants, one that locks the
- * queue and one that doesn't. That way you can hold the queue lock
+ * For almost every function there exist two variants, one that locks
+ * the queue and one that doesn't. That way you can hold the queue lock
  * (acquire it with g_async_queue_lock() and release it with
- * g_async_queue_unlock()) over multiple queue accessing
- * instructions. This can be necessary to ensure the integrity of the
- * queue, but should only be used when really necessary, as it can make
- * your life harder if used unwisely. Normally you should only use the
- * locking function variants (those without the suffix _unlocked)
+ * g_async_queue_unlock()) over multiple queue accessing instructions.
+ * This can be necessary to ensure the integrity of the queue, but should
+ * only be used when really necessary, as it can make your life harder
+ * if used unwisely. Normally you should only use the locking function
+ * variants (those without the suffix _unlocked)
  */
 public class AsyncQueue
 {

@@ -71,19 +71,35 @@ private import glib.ConstructionException;
  * To set the size of a GByteArray, use g_byte_array_set_size().
  * To free a GByteArray, use g_byte_array_free().
  * Example  22.  Using a GByteArray
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
  *  GByteArray *gbarray;
- *  gint i;
- *  gbarray = g_byte_array_new ();
- *  for (i = 0; i < 10000; i++)
+ * gint i;
+ * gbarray = g_byte_array_new ();
+ * for (i = 0; i < 10000; i++)
  *  g_byte_array_append (gbarray, (guint8*) "abcd", 4);
- *  for (i = 0; i < 10000; i++)
+ * for (i = 0; i < 10000; i++)
  *  {
 	 *  g_assert (gbarray->data[4*i] == 'a');
 	 *  g_assert (gbarray->data[4*i+1] == 'b');
 	 *  g_assert (gbarray->data[4*i+2] == 'c');
 	 *  g_assert (gbarray->data[4*i+3] == 'd');
  *  }
- *  g_byte_array_free (gbarray, TRUE);
+ * g_byte_array_free (gbarray, TRUE);
  */
 public class ByteArray
 {
@@ -142,7 +158,7 @@ public class ByteArray
 	 * 0.
 	 * Params:
 	 * reservedSize = number of bytes preallocated.
-	 * Returns: the new GByteArray.
+	 * Returns:the new GByteArray.
 	 */
 	public static ByteArray sizedNew(uint reservedSize)
 	{
@@ -190,7 +206,7 @@ public class ByteArray
 	 * grow in size automatically if necessary.
 	 * Params:
 	 * data = the byte data to be added.
-	 * Returns: the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public ByteArray append(ubyte[] data)
 	{
@@ -208,7 +224,7 @@ public class ByteArray
 	 * grow in size automatically if necessary.
 	 * Params:
 	 * data = the byte data to be added.
-	 * Returns: the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public ByteArray prepend(ubyte[] data)
 	{
@@ -226,7 +242,7 @@ public class ByteArray
 	 * following bytes are moved down one place.
 	 * Params:
 	 * index = the index of the byte to remove.
-	 * Returns: the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public ByteArray removeIndex(uint index)
 	{
@@ -246,7 +262,7 @@ public class ByteArray
 	 * than g_byte_array_remove_index().
 	 * Params:
 	 * index = the index of the byte to remove.
-	 * Returns: the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public ByteArray removeIndexFast(uint index)
 	{
@@ -266,7 +282,7 @@ public class ByteArray
 	 * Params:
 	 * index = the index of the first byte to remove.
 	 * length = the number of bytes to remove.
-	 * Returns: the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public ByteArray removeRange(uint index, uint length)
 	{
@@ -312,7 +328,7 @@ public class ByteArray
 	 * Sets the size of the GByteArray, expanding it if necessary.
 	 * Params:
 	 * length = the new size of the GByteArray.
-	 * Returns: the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public ByteArray setSize(uint length)
 	{
@@ -332,7 +348,7 @@ public class ByteArray
 	 * the size of array will be set to zero.
 	 * Params:
 	 * freeSegment = if TRUE the actual byte data is freed as well.
-	 * Returns: the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
+	 * Returns:the element data if free_segment is FALSE, otherwise NULL. The element data should be freed using g_free().
 	 */
 	public ubyte* free(int freeSegment)
 	{

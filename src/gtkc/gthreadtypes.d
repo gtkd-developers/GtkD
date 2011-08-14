@@ -28,7 +28,7 @@ public import gtkc.glibtypes;
 /**
  * Possible errors of thread related functions.
  * G_THREAD_ERROR_AGAIN
- *  a thread couldn't be created due to resource
+ * a thread couldn't be created due to resource
  *  shortage. Try again later.
  */
 public enum GThreadError
@@ -46,13 +46,13 @@ alias GThreadError ThreadError;
  * seem to be different scheduling for different priorities. All in all
  * try to avoid being dependent on priorities.
  * G_THREAD_PRIORITY_LOW
- *  a priority lower than normal
+ * a priority lower than normal
  * G_THREAD_PRIORITY_NORMAL
- *  the default priority
+ * the default priority
  * G_THREAD_PRIORITY_HIGH
- *  a priority higher than normal
+ * a priority higher than normal
  * G_THREAD_PRIORITY_URGENT
- *  the highest priority
+ * the highest priority
  */
 public enum GThreadPriority
 {
@@ -67,11 +67,11 @@ alias GThreadPriority ThreadPriority;
  * The possible statuses of a one-time initialization function
  * controlled by a GOnce struct.
  * G_ONCE_STATUS_NOTCALLED
- *  the function has not been called yet.
+ * the function has not been called yet.
  * G_ONCE_STATUS_PROGRESS
- *  the function call is currently in progress.
+ * the function call is currently in progress.
  * G_ONCE_STATUS_READY
- *  the function has been called.
+ * the function has been called.
  * Since 2.4
  */
 public enum GOnceStatus
@@ -93,6 +93,43 @@ alias GOnceStatus OnceStatus;
  * Do not use this struct unless you know what you are
  * doing.
  * mutex_new  ()
+ * virtual function pointer for g_mutex_new()
+ * mutex_lock  ()
+ * virtual function pointer for g_mutex_lock()
+ * mutex_trylock  ()
+ * virtual function pointer for g_mutex_trylock()
+ * mutex_unlock  ()
+ * virtual function pointer for g_mutex_unlock()
+ * mutex_free  ()
+ * virtual function pointer for g_mutex_free()
+ * cond_new  ()
+ * virtual function pointer for g_cond_new()
+ * cond_signal  ()
+ * virtual function pointer for g_cond_signal()
+ * cond_broadcast  ()
+ * virtual function pointer for g_cond_broadcast()
+ * cond_wait  ()
+ * virtual function pointer for g_cond_wait()
+ * cond_timed_wait  ()
+ * virtual function pointer for g_cond_timed_wait()
+ * cond_free  ()
+ * virtual function pointer for g_cond_free()
+ * private_new  ()
+ * virtual function pointer for g_private_new()
+ * private_get  ()
+ * virtual function pointer for g_private_get()
+ * private_set  ()
+ * virtual function pointer for g_private_set()
+ * thread_create  ()
+ * virtual function pointer for g_thread_create()
+ * thread_yield  ()
+ * virtual function pointer for g_thread_yield()
+ * thread_join  ()
+ * virtual function pointer for g_thread_join()
+ * thread_exit  ()
+ * virtual function pointer for g_thread_exit()
+ * thread_set_priority  ()
+ * virtual function pointer for
  */
 public struct GThreadFunctions
 {
@@ -224,6 +261,9 @@ public struct GStaticPrivate{}
  * one-time initialization function must have its own unique GOnce
  * struct.
  * volatile  GOnceStatus  status;
+ * the status of the GOnce
+ * volatile  gpointer  retval;
+ * the value returned by the call to the function, if status
  */
 public struct GOnce
 {
@@ -245,19 +285,33 @@ public struct GOnce
  * give_me_next_number() example using the
  * G_LOCK_* macros:
  * Example  6.  Using the G_LOCK_* convenience macros
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
  *  G_LOCK_DEFINE (current_number);
- *  int
- *  give_me_next_number (void)
- *  {
+ * int
+ * give_me_next_number (void)
+ * {
 	 *  static int current_number = 0;
 	 *  int ret_val;
 	 *  G_LOCK (current_number);
 	 *  ret_val = current_number = calc_next_number (current_number);
 	 *  G_UNLOCK (current_number);
 	 *  return ret_val;
- *  }
+ * }
  * name  :
- *  the name of the lock.
+ * the name of the lock.
  */
 // TODO
 // #define G_LOCK_DEFINE(name)
@@ -265,7 +319,7 @@ public struct GOnce
 /*
  * This works like G_LOCK_DEFINE, but it creates a static object.
  * name  :
- *  the name of the lock.
+ * the name of the lock.
  */
 // TODO
 // #define G_LOCK_DEFINE_STATIC(name)
@@ -274,7 +328,7 @@ public struct GOnce
  * This declares a lock, that is defined with G_LOCK_DEFINE in another
  * module.
  * name  :
- *  the name of the lock.
+ * the name of the lock.
  */
 // TODO
 // #define G_LOCK_EXTERN(name)
@@ -283,7 +337,7 @@ public struct GOnce
  * Works like g_mutex_lock(), but for a lock defined with
  * G_LOCK_DEFINE.
  * name  :
- *  the name of the lock.
+ * the name of the lock.
  */
 // TODO
 // #define G_LOCK(name)
@@ -292,9 +346,9 @@ public struct GOnce
  * Works like g_mutex_trylock(), but for a lock defined with
  * G_LOCK_DEFINE.
  * name  :
- *  the name of the lock.
+ * the name of the lock.
  * Returns  :
- *  TRUE, if the lock could be locked.
+ * TRUE, if the lock could be locked.
  */
 // TODO
 // #define G_TRYLOCK(name)
@@ -303,7 +357,7 @@ public struct GOnce
  * Works like g_mutex_unlock(), but for a lock defined with
  * G_LOCK_DEFINE.
  * name  :
- *  the name of the lock.
+ * the name of the lock.
  */
 // TODO
 // #define G_UNLOCK(name)
@@ -320,21 +374,30 @@ public struct GOnce
  * Note
  * Calling g_once() recursively on the same GOnce struct in
  * func will lead to a deadlock.
+ *  1
+ * 2
+ * 3
+ * 4
+ * 5
+ * 6
+ * 7
+ * 8
+ * 9
  *  gpointer
- *  get_debug_flags (void)
- *  {
+ * get_debug_flags (void)
+ * {
 	 *  static GOnce my_once = G_ONCE_INIT;
 	 *  g_once (my_once, parse_debug_flags, NULL);
 	 *  return my_once.retval;
- *  }
+ * }
  * once  :
- *  a GOnce structure
+ * a GOnce structure
  * func  :
- *  the GThreadFunc function associated to once. This function
+ * the GThreadFunc function associated to once. This function
  *  is called only once, regardless of the number of times it and
  *  its associated GOnce struct are passed to g_once().
  * arg  :
- *  data to be passed to func
+ * data to be passed to func
  * Since 2.4
  */
 // TODO
@@ -344,9 +407,9 @@ public struct GOnce
  * Specifies the type of the func functions passed to
  * g_thread_create() or g_thread_create_full().
  * data  :
- *  data passed to the thread.
+ * data passed to the thread.
  * Returns  :
- *  the return value of the thread, which will be returned by
+ * the return value of the thread, which will be returned by
  *  g_thread_join().
  */
 // gpointer (*GThreadFunc) (gpointer data);
