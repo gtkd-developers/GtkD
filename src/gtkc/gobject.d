@@ -103,6 +103,7 @@ static this()
 	// gobject.ObjectG
 
 	Linker.link(g_object_class_install_property, "g_object_class_install_property", LIBRARY.GOBJECT);
+	Linker.link(g_object_class_install_properties, "g_object_class_install_properties", LIBRARY.GOBJECT);
 	Linker.link(g_object_class_find_property, "g_object_class_find_property", LIBRARY.GOBJECT);
 	Linker.link(g_object_class_list_properties, "g_object_class_list_properties", LIBRARY.GOBJECT);
 	Linker.link(g_object_class_override_property, "g_object_class_override_property", LIBRARY.GOBJECT);
@@ -127,6 +128,7 @@ static this()
 	Linker.link(g_object_set, "g_object_set", LIBRARY.GOBJECT);
 	Linker.link(g_object_get, "g_object_get", LIBRARY.GOBJECT);
 	Linker.link(g_object_notify, "g_object_notify", LIBRARY.GOBJECT);
+	Linker.link(g_object_notify_by_pspec, "g_object_notify_by_pspec", LIBRARY.GOBJECT);
 	Linker.link(g_object_freeze_notify, "g_object_freeze_notify", LIBRARY.GOBJECT);
 	Linker.link(g_object_thaw_notify, "g_object_thaw_notify", LIBRARY.GOBJECT);
 	Linker.link(g_object_get_data, "g_object_get_data", LIBRARY.GOBJECT);
@@ -256,6 +258,11 @@ static this()
 	Linker.link(g_param_spec_gtype, "g_param_spec_gtype", LIBRARY.GOBJECT);
 	Linker.link(g_value_get_gtype, "g_value_get_gtype", LIBRARY.GOBJECT);
 	Linker.link(g_value_set_gtype, "g_value_set_gtype", LIBRARY.GOBJECT);
+	Linker.link(g_param_spec_variant, "g_param_spec_variant", LIBRARY.GOBJECT);
+	Linker.link(g_value_get_variant, "g_value_get_variant", LIBRARY.GOBJECT);
+	Linker.link(g_value_dup_variant, "g_value_dup_variant", LIBRARY.GOBJECT);
+	Linker.link(g_value_set_variant, "g_value_set_variant", LIBRARY.GOBJECT);
+	Linker.link(g_value_take_variant, "g_value_take_variant", LIBRARY.GOBJECT);
 
 	// gobject.ParamSpec
 
@@ -369,6 +376,7 @@ static this()
 	Linker.link(g_cclosure_marshal_VOID__BOXED, "g_cclosure_marshal_VOID__BOXED", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__POINTER, "g_cclosure_marshal_VOID__POINTER", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__OBJECT, "g_cclosure_marshal_VOID__OBJECT", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__VARIANT, "g_cclosure_marshal_VOID__VARIANT", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_STRING__OBJECT_POINTER, "g_cclosure_marshal_STRING__OBJECT_POINTER", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__UINT_POINTER, "g_cclosure_marshal_VOID__UINT_POINTER", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_BOOLEAN__FLAGS, "g_cclosure_marshal_BOOLEAN__FLAGS", LIBRARY.GOBJECT);
@@ -385,6 +393,17 @@ static this()
 	Linker.link(g_value_array_remove, "g_value_array_remove", LIBRARY.GOBJECT);
 	Linker.link(g_value_array_sort, "g_value_array_sort", LIBRARY.GOBJECT);
 	Linker.link(g_value_array_sort_with_data, "g_value_array_sort_with_data", LIBRARY.GOBJECT);
+
+	// gobject.Binding
+
+	Linker.link(g_binding_get_source, "g_binding_get_source", LIBRARY.GOBJECT);
+	Linker.link(g_binding_get_source_property, "g_binding_get_source_property", LIBRARY.GOBJECT);
+	Linker.link(g_binding_get_target, "g_binding_get_target", LIBRARY.GOBJECT);
+	Linker.link(g_binding_get_target_property, "g_binding_get_target_property", LIBRARY.GOBJECT);
+	Linker.link(g_binding_get_flags, "g_binding_get_flags", LIBRARY.GOBJECT);
+	Linker.link(g_object_bind_property, "g_object_bind_property", LIBRARY.GOBJECT);
+	Linker.link(g_object_bind_property_full, "g_object_bind_property_full", LIBRARY.GOBJECT);
+	Linker.link(g_object_bind_property_with_closures, "g_object_bind_property_with_closures", LIBRARY.GOBJECT);
 }
 
 mixin( gshared ~"extern(C)
@@ -459,6 +478,7 @@ mixin( gshared ~"extern(C)
 	// gobject.ObjectG
 	
 	void function(GObjectClass* oclass, guint propertyId, GParamSpec* pspec) c_g_object_class_install_property;
+	void function(GObjectClass* oclass, guint nPspecs, GParamSpec** pspecs) c_g_object_class_install_properties;
 	GParamSpec* function(GObjectClass* oclass, gchar* propertyName) c_g_object_class_find_property;
 	GParamSpec** function(GObjectClass* oclass, guint* nProperties) c_g_object_class_list_properties;
 	void function(GObjectClass* oclass, guint propertyId, gchar* name) c_g_object_class_override_property;
@@ -483,6 +503,7 @@ mixin( gshared ~"extern(C)
 	void function(gpointer object, gchar* firstPropertyName, ... ) c_g_object_set;
 	void function(gpointer object, gchar* firstPropertyName, ... ) c_g_object_get;
 	void function(GObject* object, gchar* propertyName) c_g_object_notify;
+	void function(GObject* object, GParamSpec* pspec) c_g_object_notify_by_pspec;
 	void function(GObject* object) c_g_object_freeze_notify;
 	void function(GObject* object) c_g_object_thaw_notify;
 	gpointer function(GObject* object, gchar* key) c_g_object_get_data;
@@ -612,6 +633,11 @@ mixin( gshared ~"extern(C)
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GType isAType, GParamFlags flags) c_g_param_spec_gtype;
 	GType function(GValue* value) c_g_value_get_gtype;
 	void function(GValue* value, GType vGtype) c_g_value_set_gtype;
+	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GVariantType* type, GVariant* defaultValue, GParamFlags flags) c_g_param_spec_variant;
+	GVariant* function(GValue* value) c_g_value_get_variant;
+	GVariant* function(GValue* value) c_g_value_dup_variant;
+	void function(GValue* value, GVariant* variant) c_g_value_set_variant;
+	void function(GValue* value, GVariant* variant) c_g_value_take_variant;
 	
 	// gobject.ParamSpec
 	
@@ -725,6 +751,7 @@ mixin( gshared ~"extern(C)
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__BOXED;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__OBJECT;
+	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__VARIANT;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_STRING__OBJECT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__UINT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_BOOLEAN__FLAGS;
@@ -741,6 +768,17 @@ mixin( gshared ~"extern(C)
 	GValueArray* function(GValueArray* valueArray, guint index) c_g_value_array_remove;
 	GValueArray* function(GValueArray* valueArray, GCompareFunc compareFunc) c_g_value_array_sort;
 	GValueArray* function(GValueArray* valueArray, GCompareDataFunc compareFunc, gpointer userData) c_g_value_array_sort_with_data;
+	
+	// gobject.Binding
+	
+	GObject* function(GBinding* binding) c_g_binding_get_source;
+	gchar* function(GBinding* binding) c_g_binding_get_source_property;
+	GObject* function(GBinding* binding) c_g_binding_get_target;
+	gchar* function(GBinding* binding) c_g_binding_get_target_property;
+	GBindingFlags function(GBinding* binding) c_g_binding_get_flags;
+	GBinding* function(gpointer source, gchar* sourceProperty, gpointer target, gchar* targetProperty, GBindingFlags flags) c_g_object_bind_property;
+	GBinding* function(gpointer source, gchar* sourceProperty, gpointer target, gchar* targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, gpointer userData, GDestroyNotify notify) c_g_object_bind_property_full;
+	GBinding* function(gpointer source, gchar* sourceProperty, gpointer target, gchar* targetProperty, GBindingFlags flags, GClosure* transformTo, GClosure* transformFrom) c_g_object_bind_property_with_closures;
 }");
 
 // gobject.Type
@@ -812,6 +850,7 @@ alias c_g_type_module_register_flags  g_type_module_register_flags;
 // gobject.ObjectG
 
 alias c_g_object_class_install_property  g_object_class_install_property;
+alias c_g_object_class_install_properties  g_object_class_install_properties;
 alias c_g_object_class_find_property  g_object_class_find_property;
 alias c_g_object_class_list_properties  g_object_class_list_properties;
 alias c_g_object_class_override_property  g_object_class_override_property;
@@ -836,6 +875,7 @@ alias c_g_object_disconnect  g_object_disconnect;
 alias c_g_object_set  g_object_set;
 alias c_g_object_get  g_object_get;
 alias c_g_object_notify  g_object_notify;
+alias c_g_object_notify_by_pspec  g_object_notify_by_pspec;
 alias c_g_object_freeze_notify  g_object_freeze_notify;
 alias c_g_object_thaw_notify  g_object_thaw_notify;
 alias c_g_object_get_data  g_object_get_data;
@@ -965,6 +1005,11 @@ alias c_g_param_spec_override  g_param_spec_override;
 alias c_g_param_spec_gtype  g_param_spec_gtype;
 alias c_g_value_get_gtype  g_value_get_gtype;
 alias c_g_value_set_gtype  g_value_set_gtype;
+alias c_g_param_spec_variant  g_param_spec_variant;
+alias c_g_value_get_variant  g_value_get_variant;
+alias c_g_value_dup_variant  g_value_dup_variant;
+alias c_g_value_set_variant  g_value_set_variant;
+alias c_g_value_take_variant  g_value_take_variant;
 
 // gobject.ParamSpec
 
@@ -1078,6 +1123,7 @@ alias c_g_cclosure_marshal_VOID__PARAM  g_cclosure_marshal_VOID__PARAM;
 alias c_g_cclosure_marshal_VOID__BOXED  g_cclosure_marshal_VOID__BOXED;
 alias c_g_cclosure_marshal_VOID__POINTER  g_cclosure_marshal_VOID__POINTER;
 alias c_g_cclosure_marshal_VOID__OBJECT  g_cclosure_marshal_VOID__OBJECT;
+alias c_g_cclosure_marshal_VOID__VARIANT  g_cclosure_marshal_VOID__VARIANT;
 alias c_g_cclosure_marshal_STRING__OBJECT_POINTER  g_cclosure_marshal_STRING__OBJECT_POINTER;
 alias c_g_cclosure_marshal_VOID__UINT_POINTER  g_cclosure_marshal_VOID__UINT_POINTER;
 alias c_g_cclosure_marshal_BOOLEAN__FLAGS  g_cclosure_marshal_BOOLEAN__FLAGS;
@@ -1094,3 +1140,14 @@ alias c_g_value_array_insert  g_value_array_insert;
 alias c_g_value_array_remove  g_value_array_remove;
 alias c_g_value_array_sort  g_value_array_sort;
 alias c_g_value_array_sort_with_data  g_value_array_sort_with_data;
+
+// gobject.Binding
+
+alias c_g_binding_get_source  g_binding_get_source;
+alias c_g_binding_get_source_property  g_binding_get_source_property;
+alias c_g_binding_get_target  g_binding_get_target;
+alias c_g_binding_get_target_property  g_binding_get_target_property;
+alias c_g_binding_get_flags  g_binding_get_flags;
+alias c_g_object_bind_property  g_object_bind_property;
+alias c_g_object_bind_property_full  g_object_bind_property_full;
+alias c_g_object_bind_property_with_closures  g_object_bind_property_with_closures;

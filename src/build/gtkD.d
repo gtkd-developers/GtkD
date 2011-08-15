@@ -117,6 +117,7 @@ private import gobject.Signals;
 private import gobject.Closure;
 private import gobject.CClosure;
 private import gobject.ValueArray;
+private import gobject.Binding;
 
 private import gio.File;
 private import gio.FileAttributeInfoList;

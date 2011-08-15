@@ -347,6 +347,34 @@ public class ObjectG
 	}
 	
 	/**
+	 * Installs new properties from an array of GParamSpecs. This is
+	 * usually done in the class initializer.
+	 * The property id of each property is the index of each GParamSpec in
+	 * the pspecs array.
+	 * The property id of 0 is treated specially by GObject and it should not
+	 * be used to store a GParamSpec.
+	 * This function should be used if you plan to use a static array of
+	 * GParamSpecs and g_object_notify_by_pspec(). For instance, this
+	 * Since 2.26
+	 * Params:
+	 * oclass = a GObjectClass
+	 * pspecs = the GParamSpecs array
+	 *  defining the new properties. [array length=n_pspecs]
+	 */
+	public static void classInstallProperties(GObjectClass* oclass, ParamSpec[] pspecs)
+	{
+		// void g_object_class_install_properties (GObjectClass *oclass,  guint n_pspecs,  GParamSpec **pspecs);
+		
+		GParamSpec*[] pspecsArray = new GParamSpec*[pspecs.length];
+		for ( int i = 0; i < pspecs.length ; i++ )
+		{
+			pspecsArray[i] = pspecs[i].getParamSpecStruct();
+		}
+		
+		g_object_class_install_properties(oclass, cast(int) pspecs.length, pspecsArray.ptr);
+	}
+	
+	/**
 	 * Looks up the GParamSpec for a property of a class.
 	 * Params:
 	 * oclass = a GObjectClass
@@ -702,6 +730,9 @@ public class ObjectG
 	
 	/**
 	 * Emits a "notify" signal for the property property_name on object.
+	 * When possible, eg. when signaling a property change from within the class
+	 * that registered the property, you should use g_object_notify_by_pspec()
+	 * instead.
 	 * Params:
 	 * propertyName = the name of a property installed on the class of object.
 	 */
@@ -709,6 +740,23 @@ public class ObjectG
 	{
 		// void g_object_notify (GObject *object,  const gchar *property_name);
 		g_object_notify(gObject, Str.toStringz(propertyName));
+	}
+	
+	/**
+	 * Emits a "notify" signal for the property specified by pspec on object.
+	 * This function omits the property name lookup, hence it is faster than
+	 * g_object_notify().
+	 * One way to avoid using g_object_notify() from within the
+	 * class that registered the properties, and using g_object_notify_by_pspec()
+	 * instead, is to store the GParamSpec used with
+	 * Since 2.26
+	 * Params:
+	 * pspec = the GParamSpec of a property installed on the class of object.
+	 */
+	public void notifyByPspec(ParamSpec pspec)
+	{
+		// void g_object_notify_by_pspec (GObject *object,  GParamSpec *pspec);
+		g_object_notify_by_pspec(gObject, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**

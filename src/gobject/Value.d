@@ -48,9 +48,13 @@
  * 	- glib.Str
  * 	- gobject.ParamSpec
  * 	- gdk.Pixbuf
+ * 	- glib.Variant
+ * 	- glib.VariantType
  * structWrap:
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
+ * 	- GVariant* -> Variant
+ * 	- GVariantType* -> VariantType
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,6 +71,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ParamSpec;
 private import gdk.Pixbuf;
+private import glib.Variant;
+private import glib.VariantType;
 
 
 
@@ -1461,5 +1467,99 @@ public class Value
 	{
 		// void g_value_set_gtype (GValue *value,  GType v_gtype);
 		g_value_set_gtype(gValue, vGtype);
+	}
+	
+	/**
+	 * Creates a new GParamSpecVariant instance specifying a GVariant
+	 * property.
+	 * If default_value is floating, it is consumed.
+	 * See g_param_spec_internal() for details on property names.
+	 * Since 2.26
+	 * Params:
+	 * name = canonical name of the property specified
+	 * nick = nick name for the property specified
+	 * blurb = description of the property specified
+	 * type = a GVariantType
+	 * defaultValue = a GVariant of type type to use as the
+	 *  default value, or NULL. [allow-none]
+	 * flags = flags for the property specified
+	 * Returns: the newly created GParamSpec
+	 */
+	public static ParamSpec gParamSpecVariant(string name, string nick, string blurb, VariantType type, Variant defaultValue, GParamFlags flags)
+	{
+		// GParamSpec* g_param_spec_variant (const gchar *name,  const gchar *nick,  const gchar *blurb,  const GVariantType *type,  GVariant *default_value,  GParamFlags flags);
+		auto p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(), flags);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
+	}
+	
+	/**
+	 * Get the contents of a variant GValue.
+	 * Since 2.26
+	 * Returns: variant contents of value
+	 */
+	public Variant getVariant()
+	{
+		// GVariant* g_value_get_variant (const GValue *value);
+		auto p = g_value_get_variant(gValue);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Get the contents of a variant GValue, increasing its refcount.
+	 * Since 2.26
+	 * Returns: variant contents of value, should be unrefed using g_variant_unref() when no longer needed
+	 */
+	public Variant dupVariant()
+	{
+		// GVariant* g_value_dup_variant (const GValue *value);
+		auto p = g_value_dup_variant(gValue);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Set the contents of a variant GValue to variant.
+	 * If the variant is floating, it is consumed.
+	 * Since 2.26
+	 * Params:
+	 * variant = a GVariant, or NULL
+	 */
+	public void setVariant(Variant variant)
+	{
+		// void g_value_set_variant (GValue *value,  GVariant *variant);
+		g_value_set_variant(gValue, (variant is null) ? null : variant.getVariantStruct());
+	}
+	
+	/**
+	 * Set the contents of a variant GValue to variant, and takes over
+	 * the ownership of the caller's reference to variant;
+	 * the caller doesn't have to unref it any more (i.e. the reference
+	 * count of the variant is not increased).
+	 * It is a programmer error to pass a floating variant to this function.
+	 * In particular this means that callbacks in closures, and signal handlers
+	 * for signals of return type G_TYPE_VARIANT, must never return floating
+	 * variants.
+	 * If you want the GValue to hold its own reference to variant, use
+	 * g_value_set_variant() instead.
+	 * This is an internal function introduced mainly for C marshallers.
+	 * Since 2.26
+	 * Params:
+	 * variant = a GVariant, or NULL
+	 */
+	public void takeVariant(Variant variant)
+	{
+		// void g_value_take_variant (GValue *value,  GVariant *variant);
+		g_value_take_variant(gValue, (variant is null) ? null : variant.getVariantStruct());
 	}
 }

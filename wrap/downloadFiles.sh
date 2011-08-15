@@ -7,8 +7,8 @@ curl http://developer.gnome.org/glib/glib-html-2.26.1.tar.gz | tar xvfz -
 ln -s glib-html-2.26.1 gthread
 ln -s glib-html-2.26.1 glib
 #GOBJECT
-curl http://library.gnome.org/devel/gobject/gobject-html-2.24.0.tar.gz | tar xvfz -
-ln -s gobject-html-2.24.0 gobject
+curl http://developer.gnome.org/gobject/gobject-html-2.26.1.tar.gz | tar xvfz -
+ln -s gobject-html-2.26.1 gobject
 #GIO
 curl http://library.gnome.org/devel/gio/gio-html-2.24.1.tar.gz | tar xvfz -
 ln -s gio-html-2.24.1 gio

@@ -84,7 +84,7 @@ public class HtmlStrip
 					else if ( mark == "div class=\"informalexample\"" || mark == "div class=\"example\"" )
 					{
 						inCode = true;
-						stripped ~= "$(DDOC_COMMENT example)";
+						stripped ~= "\n$(DDOC_COMMENT example)\n";
 					}
 					else if ( mark == "/div" )
 					{

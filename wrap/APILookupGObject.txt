@@ -247,8 +247,6 @@ prefix: g_object_
 #structWrap: GObjectClass* ObjectClass
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
-#import: gobject.ParamSpec*
-#structWrap: GParamSpec** ParamSpec*
 #import: gobject.Parameter
 #structWrap: GParameter* Parameter
 import: gobject.Value
@@ -263,6 +261,7 @@ import: gtkc.Loader
 array: g_object_class_list_properties Return n_properties
 array: g_object_interface_list_properties Return n_properties_p
 array: g_object_newv parameters n_parameters
+array: g_object_class_install_properties pspecs n_pspecs
 
 code: start
 	protected bool isGcRoot;
@@ -451,6 +450,10 @@ structWrap: GValue* Value
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
 import: gdk.Pixbuf
+import: glib.Variant
+structWrap: GVariant* Variant
+import: glib.VariantType
+structWrap: GVariantType* VariantType
 
 nocode: g_value_init
 nocode: g_value_reset
@@ -648,3 +651,18 @@ import: gobject.Value
 structWrap: GValue* Value
 structWrap: GValueArray* ValueArray
 outFile: ValueArray
+
+file: GBinding.html
+struct: GBinding
+class: Binding
+prefix: g_binding_
+import: glib.Str
+import: gobject.ObjectG
+import: gobject.Closure
+import: gobject.Value
+structWrap: GObject* ObjectG
+structWrap: gpointer ObjectG
+structWrap: GBinding* Binding
+structWrap: GClosure* Closure
+structWrap: GValue* Value
+outFile: Binding

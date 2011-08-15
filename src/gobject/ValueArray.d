@@ -168,9 +168,10 @@ public class ValueArray
 	}
 	
 	/**
-	 * Insert a copy of value as last element of value_array.
+	 * Insert a copy of value as last element of value_array. If value is
+	 * NULL, an uninitialized value is appended.
 	 * Params:
-	 * value = GValue to copy into GValueArray
+	 * value = GValue to copy into GValueArray, or NULL
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray append(Value value)
@@ -185,9 +186,10 @@ public class ValueArray
 	}
 	
 	/**
-	 * Insert a copy of value as first element of value_array.
+	 * Insert a copy of value as first element of value_array. If value is
+	 * NULL, an uninitialized value is prepended.
 	 * Params:
-	 * value = GValue to copy into GValueArray
+	 * value = GValue to copy into GValueArray, or NULL
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray prepend(Value value)
@@ -202,10 +204,11 @@ public class ValueArray
 	}
 	
 	/**
-	 * Insert a copy of value at specified position into value_array.
+	 * Insert a copy of value at specified position into value_array. If value
+	 * is NULL, an uninitialized value is inserted.
 	 * Params:
 	 * index = insertion position, must be <= value_array->n_values
-	 * value = GValue to copy into GValueArray
+	 * value = GValue to copy into GValueArray, or NULL
 	 * Returns: the GValueArray passed in as value_array
 	 */
 	public ValueArray insert(uint index, Value value)

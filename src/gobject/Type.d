@@ -325,15 +325,22 @@ public class Type
 	}
 	
 	/**
-	 * Registers a private structure for an instantiatable type;
-	 * when an object is allocated, the private structures for
+	 * Registers a private structure for an instantiatable type.
+	 * When an object is allocated, the private structures for
 	 * the type and all of its parent types are allocated
 	 * sequentially in the same memory block as the public
-	 * structures. This function should be called in the
-	 * type's class_init() function.
+	 * structures.
+	 * Note that the accumulated size of the private structures of
+	 * a type and all its parent types cannot excced 64kB.
+	 * This function should be called in the type's class_init() function.
 	 * The private structure can be retrieved using the
-	 * G_TYPE_CLASS_GET_PRIVATE() macro.
-	 * Since 2.24
+	 * G_TYPE_INSTANCE_GET_PRIVATE() macro.
+	 * The following example shows attaching a private structure
+	 * MyObjectPrivate to an object
+	 * MyObject defined in the standard GObject
+	 * fashion.
+	 * type's class_init() function.
+	 * Since 2.4
 	 * Params:
 	 * gClass = class structure for an instantiatable type
 	 * privateSize = size of private structure.
